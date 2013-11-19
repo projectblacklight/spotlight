@@ -1,0 +1,3 @@
+# extra gems to load into the test app go here
+
+gem 'blacklight'

@@ -17,3 +17,6 @@ rerun.txt
 pickle-email-*.html
 .project
 config/initializers/secret_token.rb
+spec/internal
+Gemfile.lock
+jetty
