@@ -1,0 +1,17 @@
+en:
+  activerecord:
+    models:
+      spotlight:
+        page: Page
+  helpers:
+    submit:
+      new: Add new %{model}
+      view: View
+      edit: Edit
+      destroy: Destroy
+      destroy_are_you_sure: "Are you sure?"
+  spotlight:
+    curation:
+      header: "Curation"
+    feature_pages:
+      header: "Feature Pages"

@@ -1,0 +1,31 @@
+<h1>Listing attachments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>File</th>
+      <th>Uid</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @attachments.each do |attachment| %>
+      <tr>
+        <td><%= attachment.name %></td>
+        <td><%= attachment.file %></td>
+        <td><%= attachment.uid %></td>
+        <td><%= link_to 'Show', attachment %></td>
+        <td><%= link_to 'Edit', edit_attachment_path(attachment) %></td>
+        <td><%= link_to 'Destroy', attachment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Attachment', new_attachment_path %>

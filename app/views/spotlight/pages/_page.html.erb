@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <a class="pull-right btn btn-text" data-toggle="collapse" href="#collapse-page-<%= page.id %>">Options
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+    <h3 class="panel-title"><%= page.title %></h3>
+  </div>
+  <div id="collapse-page-<%= page.id %>" class="panel-collapse collapse">
+    <div class="panel-body">
+    
+    </div>
+  </div>
+  <div class="panel-footer">
+   <%= link_to t('helpers.submit.view'), [spotlight, page], :class => 'btn btn-text' %>
+   <%= link_to t('helpers.submit.edit'), spotlight.edit_page_path(page), :class => 'btn btn-text' %>
+
+    <%= link_to t('helpers.submit.destroy'), [spotlight, page], method: :delete, data: { confirm: t('helpers.submit.destroy_are_you_sure') }, :class => 'btn btn-text' %>
+  </div>
+</div>
