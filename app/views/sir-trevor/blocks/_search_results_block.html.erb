@@ -1,0 +1,8 @@
+<div class="documents">
+<%- docs = get_search_results(Rack::Utils.parse_query(block['search'])).last %>
+<%- if docs.empty? %>
+  (EMPTY SEARCH RESULTS? )
+<%- else %>
+  <%= render docs , :as => :document %>
+<%- end %>
+</div>

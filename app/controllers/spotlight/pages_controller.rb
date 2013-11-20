@@ -2,6 +2,12 @@ require_dependency "spotlight/application_controller"
 
 module Spotlight
   class PagesController < ApplicationController
+    include Blacklight::Base
+
+    copy_blacklight_config_from(CatalogController)
+
+    helper_method :get_search_results
+
     before_action :set_page, only: [:show, :edit, :update, :destroy]
 
     # GET /pages
