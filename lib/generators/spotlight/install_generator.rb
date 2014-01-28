@@ -15,7 +15,7 @@ module Spotlight
     end
 
     def add_roles_to_user
-      inject_into_class 'app/models/user.rb', User, "  has_many :roles, class_name: 'Spotlight::Role'"
+      inject_into_class 'app/models/user.rb', User, "  include Spotlight::User"
     end
   end
 end
