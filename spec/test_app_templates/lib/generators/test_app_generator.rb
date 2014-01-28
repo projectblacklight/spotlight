@@ -6,7 +6,7 @@ class TestAppGenerator < Rails::Generators::Base
   def run_blacklight_generator
     say_status("warning", "GENERATING BL", :yellow)       
 
-    generate 'blacklight'
+    generate 'blacklight', '--devise'
   end
 
   def run_spotlight_migrations
@@ -14,7 +14,7 @@ class TestAppGenerator < Rails::Generators::Base
     rake "db:migrate"
   end
 
-  def add_spotlight_routes
+  def add_spotlight_routes_and_assets
     generate 'spotlight:install'
   end
 end

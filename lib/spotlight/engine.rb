@@ -1,7 +1,10 @@
 module Spotlight
   class Engine < ::Rails::Engine
     isolate_namespace Spotlight
-    require 'sir-trevor-rails'
-    require 'carrierwave'
+    initializer "require dependencies" do
+      require 'sir-trevor-rails'
+      require 'carrierwave'
+      require 'cancan'
+    end
   end
 end
