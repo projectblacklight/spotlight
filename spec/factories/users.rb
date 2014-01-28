@@ -5,7 +5,7 @@ FactoryGirl.define do
 
     factory :user_with_exhibit do
       after(:create) do |user, evaluator|
-        create_list(:role, 1, user: user)
+        create_list(:role, 1, user: user, exhibit: Spotlight::Exhibit.default)
       end
     end
   end
