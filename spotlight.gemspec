@@ -7,11 +7,10 @@ require "spotlight/version"
 Gem::Specification.new do |s|
   s.name        = "spotlight"
   s.version     = Spotlight::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Spotlight."
-  s.description = "TODO: Description of Spotlight."
+  s.authors     = ["Chris Beer", "Jessie Keck", "Gary Geisler", "Justin Coyne"]
+  s.email       = ["exhibits-feedback@lists.stanford.edu"]
+  s.homepage    = "https://github.com/sul-dlss/spotlight"
+  s.summary     = "Enable librarians, curators,   and others who are responsible for digital collections to create   attractive, feature-rich websites that feature these collections."
 
   s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
