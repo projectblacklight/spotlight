@@ -19,11 +19,14 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 4.0.1"
   s.add_dependency "blacklight"
   s.add_dependency "cancan"
+  s.add_dependency "sir-trevor-rails"
+  s.add_dependency "carrierwave"
+  s.add_dependency "mini_magick"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "capybara"
   s.add_development_dependency "poltergeist"
-  s.add_development_dependency "engine_cart", ">= 0.1.2"
+  s.add_development_dependency "engine_cart", ">= 0.1.3"
   s.add_development_dependency "jettywrapper"
 end

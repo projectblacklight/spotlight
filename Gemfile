@@ -19,7 +19,6 @@ group :test do
   gem 'devise-guests'
   gem "bootstrap-sass"
   gem 'turbolinks'
-  gem 'poltergeist'
 end
 
 if File.exists?('spec/test_app_templates/Gemfile.extra')

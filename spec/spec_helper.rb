@@ -1,10 +1,10 @@
+require 'engine_cart'
+EngineCart.load_application!
+
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/poltergeist'
 require 'spotlight'
-require 'engine_cart'
-
-EngineCart.load_application!
 
 Capybara.javascript_driver = :poltergeist
 

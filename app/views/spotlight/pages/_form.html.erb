@@ -1,0 +1,25 @@
+<%= form_for([spotlight, @page], role: 'form') do |f| %>
+  <% if @page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @page.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :title, class: 'sr-only' %>
+    <%= f.text_field :title, class: 'form-control input-lg', placeholder: "Title" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :content, class: 'sr-only' %>
+    <%= f.sir_trevor_text_area :content %>
+  </div>
+  <div class="actions">
+    <%= f.submit class: 'btn btn-default' %>
+  </div>
+<% end %>
