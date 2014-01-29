@@ -1,5 +1,5 @@
-class Spotlight::ExhibitsController < ::ApplicationController
-  before_filter :create_exhibit
+class Spotlight::ExhibitsController < ApplicationController
+  before_filter :default_exhibit
 
   def edit
     authorize! :create, @exhibit
@@ -7,7 +7,7 @@ class Spotlight::ExhibitsController < ::ApplicationController
 
   protected
 
-  def create_exhibit
-    @exhibit = Spotlight::Exhibit.first_or_create(name: 'default')
+  def default_exhibit
+    @exhibit = Spotlight::Exhibit.default
   end
 end
