@@ -1,1 +1,31 @@
-<h1>Edit exhibit</h1>
+<%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal, right: "col-sm-5" do |f| %>
+  <div class="row">
+    <h1>Administration</h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-5">
+      <h2><small>Settings</small></h2>
+    </div>
+    <div class="col-sm-2">
+      <%= f.submit "Save changes" %>
+    </div>
+  </div>
+  <div class="row">
+    <%= f.text_field :title %>
+    <%= f.text_field :subtitle %>
+    <%= f.form_group(:contact_emails, label: { text: nil, class: nil }, help: nil) do %>
+      <%= f.fields_for :contact_emails, @exhibit.contact_emails do |e| %>
+        <% if e.index == 0 %>
+        <div class="input-group">
+          <%= text_field_tag "#{e.object_name}[email]", e.object, class: 'form-control' %>
+          <span id='another-email' class="input-group-addon">+</span>
+        </div>
+        <% else %>
+          <%= text_field_tag "#{e.object_name}[email]", e.object, class: 'form-control' %>
+        <% end %>
+      <% end %>
+    <%end %>
+    <%= f.text_area :description %>
+  </div>
+<% end %>
+

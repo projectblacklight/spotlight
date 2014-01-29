@@ -5,6 +5,7 @@ module Spotlight
       require 'sir-trevor-rails'
       require 'carrierwave'
       require 'cancan'
+      require 'bootstrap_form'
     end
   end
 end
