@@ -1,3 +1,6 @@
+#Load blacklight which will give spotlight views a higher preference than those in blacklight
+require 'blacklight'
+
 module Spotlight
   class Engine < ::Rails::Engine
     isolate_namespace Spotlight
