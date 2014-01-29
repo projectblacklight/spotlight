@@ -1,0 +1,15 @@
+<%- document = get_solr_response_for_doc_id(block.values).last -%>
+<div>
+  <div class="record-thumbnail panel panel-default">
+    <%- if has_thumbnail? document -%>
+      <div class="panel-body">
+        <%= render_thumbnail_tag(document) %>
+      </div>
+    <%- end -%>
+    <%- if should_render_record_thumbnail_title?(document, block) -%>
+      <div class="panel-footer">
+        <%= document_heading(document).try(:join) %>
+      </div>
+    <%- end -%>
+  </div>
+</div>

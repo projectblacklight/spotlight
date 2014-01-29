@@ -6,7 +6,7 @@ module Spotlight
 
     copy_blacklight_config_from(CatalogController)
 
-    helper_method :get_search_results
+    helper_method :get_search_results, :get_solr_response_for_doc_id
 
     before_action :set_page, only: [:show, :edit, :update, :destroy]
 
