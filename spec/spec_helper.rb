@@ -20,4 +20,5 @@ FactoryGirl.find_definitions
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.include Devise::TestHelpers, type: :controller
+  config.include Controllers::EngineHelpers, type: :controller
 end

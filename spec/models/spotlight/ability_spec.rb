@@ -15,7 +15,7 @@ describe Spotlight::Ability do
       exhibit.save!
     end
     subject { Ability.new(user) }
-    it { should be_able_to(:create, exhibit) }
+    it { should be_able_to(:update, exhibit) }
 
   end
 end
