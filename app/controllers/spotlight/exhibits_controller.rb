@@ -1,4 +1,4 @@
-class Spotlight::ExhibitsController < ApplicationController
+class Spotlight::ExhibitsController < Spotlight::ApplicationController
   before_filter :default_exhibit
 
   def edit
