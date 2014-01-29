@@ -47,10 +47,10 @@ namespace :spotlight do
   end
 
   desc "Load fixtures"
-  task :fixtures do
+  task :fixtures => ['engine_cart:generate'] do
     within_test_app do
-    #  system "rake solr:marc:index_test_data RAILS_ENV=test"
-    #  abort "Error running fixtures" unless $?.success?
+      system "rake spotlight_test:solr:seed RAILS_ENV=test"
+      abort "Error running fixtures" unless $?.success?
     end
   end
 end
