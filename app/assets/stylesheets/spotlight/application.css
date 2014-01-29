@@ -12,3 +12,8 @@
  *= require sir-trevor
  *= require_tree .
  */
+
+/* See projectblacklight/blacklight#719 */
+#search-navbar {
+  z-index: -1;
+}
