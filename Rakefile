@@ -24,7 +24,7 @@ RSpec::Core::RakeTask.new(:spec)
 require 'jettywrapper'
 
 require 'engine_cart/rake_task'
-task :ci => ['engine_cart:generate', 'jetty:clean'] do
+task :ci => ['engine_cart:generate', 'jetty:clean', 'spotlight:configure_jetty'] do
   ENV['environment'] = "test"
   jetty_params = Jettywrapper.load_config
   jetty_params[:startup_wait]= 60
@@ -37,7 +37,15 @@ task :ci => ['engine_cart:generate', 'jetty:clean'] do
   end
 end
 
+
 namespace :spotlight do
+  desc "Copies the default SOLR config for the bundled Testing Server"
+  task :configure_jetty do
+    FileList['solr_conf/conf/*'].each do |f|  
+      cp("#{f}", 'jetty/solr/blacklight-core/conf/', :verbose => true)
+    end
+  end
+
   desc "Load fixtures"
   task :fixtures do
     within_test_app do
