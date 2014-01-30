@@ -19,6 +19,7 @@ group :test do
   gem 'devise-guests'
   gem "bootstrap-sass"
   gem 'turbolinks'
+  gem 'jquery-rails'
 end
 
 if File.exists?('spec/test_app_templates/Gemfile.extra')

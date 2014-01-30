@@ -12,6 +12,5 @@
 //
 //= require jquery
 //= require sir-trevor
-//= require spotlight/spotlight 
-//= require spotlight/search_result_block
-//= require spotlight/exhibits
+//= require spotlight/spotlight
+//= require_tree .
