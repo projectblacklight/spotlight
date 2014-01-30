@@ -16,5 +16,10 @@ module Spotlight::Ability
       # any curator or admin role
       exhibit.roles.where(id: user.role_ids).any?
     end
+
+    can :create, Spotlight::Search do |search|
+      # any curator or admin role
+      Spotlight::Exhibit.default.roles.where(id: user.role_ids).any?
+    end
   end
 end

@@ -32,3 +32,9 @@ Then run:
 ```
 $ rails g spotlight:install
 ```
+
+Create an administrator
+```
+$ rails c
+> Spotlight::Role.create!(user: User.first, exhibit: Spotlight::Exhibit.default, role: 'admin')
+```
