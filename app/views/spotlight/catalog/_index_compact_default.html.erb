@@ -1,0 +1,26 @@
+      <% # header bar for doc items in index view -%>
+      <td>
+        <%- if has_thumbnail?(document) && tn = render_thumbnail_tag(document, {}, :counter => document_counter_with_offset(document_counter)) %>
+        <div class="thumbnail">
+          <%= tn %>
+        </div>  
+        <%- end %>
+      </td>
+      <td>
+        
+        <%# main title container for doc partial view 
+            How many bootstrap columns need to be reserved
+            for bookmarks control depends on size. 
+        -%>
+         <h5 class="index_title col-sm-9 col-lg-10">
+         <% counter = document_counter_with_offset(document_counter) %>
+         <%= link_to_document document, :label=>document_show_link_field(document), :counter => counter %>
+        </h5>
+
+      </td>
+
+      <td>
+        <%= Date.parse document['timestamp'] %>
+      </td>
+      
+
