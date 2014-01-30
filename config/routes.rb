@@ -3,4 +3,5 @@ Spotlight::Engine.routes.draw do
   resources :pages
   resources :exhibits, only: [:edit, :update]
   resources :catalog, only: [:index]
+  resources :searches, only: [:create]
 end

@@ -19,5 +19,6 @@ describe Spotlight::Ability do
     let(:user) { FactoryGirl.create(:exhibit_curator) }
     subject { Ability.new(user) }
     it { should be_able_to(:curate, exhibit) }
+    it { should be_able_to(:create, Spotlight::Search) }
   end
 end
