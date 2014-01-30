@@ -4,6 +4,10 @@ class Spotlight::Exhibit < ActiveRecord::Base
   has_many :roles
   has_many :searches
   has_many :pages
+  
+  belongs_to :blacklight_configuration, class_name: Spotlight::BlacklightConfiguration
+  accepts_nested_attributes_for :blacklight_configuration
+  delegate :blacklight_config, to: :blacklight_configuration
 
   serialize :facets, Array
   serialize :contact_emails, Array
@@ -28,7 +32,10 @@ class Spotlight::Exhibit < ActiveRecord::Base
   end
   
   def self.default
-    self.where(name: DEFAULT).first || self.create!(name: DEFAULT, title: 'Default exhibit'.freeze)
+    self.find_or_create_by!(name: DEFAULT) do |e|
+      e.title = 'Default exhibit'.freeze
+      e.blacklight_configuration = Spotlight::BlacklightConfiguration.create!
+    end
   end
 
   protected
