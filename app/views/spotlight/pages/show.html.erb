@@ -4,6 +4,6 @@
 </h1>
 
 <div>
-  <%= render_sir_trevor @page.content %>
+  <%= render_sir_trevor(@page.content) unless @page.content.blank? %>
 </div>
 
