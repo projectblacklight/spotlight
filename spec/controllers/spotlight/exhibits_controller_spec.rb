@@ -18,7 +18,7 @@ describe Spotlight::ExhibitsController do
   end
 
   describe "when signed in" do
-    let(:user) { FactoryGirl.create(:user_with_exhibit) }
+    let(:user) { FactoryGirl.create(:exhibit_admin) }
     before {sign_in user }
     describe "#edit" do
       it "should be successful" do
