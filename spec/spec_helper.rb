@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/poltergeist'
 require 'spotlight'
+require 'database_cleaner'
 
 Capybara.javascript_driver = :poltergeist
 
@@ -18,7 +19,21 @@ FactoryGirl.find_definitions
 
 
 RSpec.configure do |config|
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
+
+  config.before :each do
+    if Capybara.current_driver == :rack_test
+      DatabaseCleaner.strategy = :transaction
+    else
+      DatabaseCleaner.strategy = :truncation
+    end
+    DatabaseCleaner.start
+  end
+
+  config.after do
+    DatabaseCleaner.clean
+  end
+
   config.include Devise::TestHelpers, type: :controller
   config.include Devise::TestHelpers, type: :view
   config.include Controllers::EngineHelpers, type: :controller
