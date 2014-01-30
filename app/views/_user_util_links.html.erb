@@ -7,7 +7,9 @@
           <% if can? :update, Spotlight::Exhibit.default %>
             <li><%= link_to "Administration", spotlight.edit_exhibit_path(Spotlight::Exhibit.default) %></li>
           <% end %>
-          <li><a href="#">Curation</a></li>
+          <% if can? :curate, Spotlight::Exhibit.default %>
+            <li><%= link_to "Curation", spotlight.catalog_index_path %></li>
+          <% end %>
           <li class="divider"></li>
           <li><%= link_to t('spotlight.header_links.logout'), destroy_user_session_path %></li>
         </ul>
