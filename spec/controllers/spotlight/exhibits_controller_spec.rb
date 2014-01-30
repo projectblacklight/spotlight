@@ -15,6 +15,12 @@ describe Spotlight::ExhibitsController do
         expect{ patch :update, id: exhibit }.to raise_error CanCan::AccessDenied
       end
     end
+
+    describe "#edit_metadata_fields" do
+      it "should not be allowed" do
+        expect{ get :edit_metadata_fields, id: exhibit}.to raise_error CanCan::AccessDenied
+      end
+    end
   end
 
   describe "when signed in" do
@@ -26,6 +32,14 @@ describe Spotlight::ExhibitsController do
         expect(response).to be_successful
       end
     end
+
+    describe "#edit_metadata_fields" do
+      it "should be successful" do
+        get :edit_metadata_fields, id: exhibit
+        expect(response).to be_successful
+      end
+    end
+
     describe "#update" do
       it "should be successful" do
         patch :update, id: exhibit, exhibit: { title: "Foo", subtitle: "Bar",
@@ -37,6 +51,17 @@ describe Spotlight::ExhibitsController do
           expect(saved.subtitle).to eq 'Bar'
           expect(saved.description).to eq 'Baz'
           expect(saved.contact_emails).to eq ['bess@stanford.edu', 'naomi@stanford.edu']
+        end
+      end
+
+      it "should update metadata fields" do
+        patch :update, id: exhibit, exhibit: { blacklight_configuration_attributes: { facet_fields: ['a', 'b'], show_fields: ['c', 'd'], index_fields: { list: ['e', 'f']} }}
+        expect(flash[:notice]).to eq "The exhibit was saved."
+        expect(response).to redirect_to main_app.root_path
+        assigns[:exhibit].tap do |saved|
+          expect(saved.blacklight_configuration.facet_fields).to eq ['a', 'b']
+          expect(saved.blacklight_configuration.show_fields).to eq ['c', 'd']
+          expect(saved.blacklight_configuration.index_fields['list']).to eq ['e', 'f']
         end
       end
     end
