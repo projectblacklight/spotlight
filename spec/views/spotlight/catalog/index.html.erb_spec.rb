@@ -7,6 +7,7 @@ module Spotlight
     end
     it "should render the sidebar" do
       assign(:response, [])
+      assign(:exhibit, stub_model(Spotlight::Exhibit))
       stub_template '_search_header.html.erb' => 'header'
       stub_template '_zero_results.html.erb' => 'nuffin'
       stub_template '_results_pagination.html.erb' => '0'

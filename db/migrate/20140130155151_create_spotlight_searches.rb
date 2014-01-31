@@ -3,10 +3,10 @@ class CreateSpotlightSearches < ActiveRecord::Migration
     create_table :spotlight_searches do |t|
       t.string :title
       t.text :query_params
-      t.references :user
+      t.references :exhibit
       t.timestamps
     end
 
-    add_index :spotlight_searches, :user_id
+    add_index :spotlight_searches, :exhibit_id
   end
 end

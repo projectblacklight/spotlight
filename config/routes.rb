@@ -1,7 +1,8 @@
 Spotlight::Engine.routes.draw do
   resources :attachments
-  resources :pages
-  resources :exhibits, only: [:edit, :update]
-  resources :catalog, only: [:index]
-  resources :searches, only: [:create]
+  resources :exhibits, only: [:edit, :update] do
+    resources :pages, shallow: true
+    resources :searches, only: [:create]
+    resources :catalog, only: [:index]
+  end
 end

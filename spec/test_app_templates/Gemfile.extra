@@ -2,4 +2,9 @@
 
 gem 'blacklight', '5.0.0.pre3'
 gem 'sir-trevor-rails', :github => 'sul-dlss/sir-trevor-rails'
-gem 'factory_girl'
+group :test do
+  gem 'factory_girl'
+  gem 'rspec-rails'
+  gem 'poltergeist'
+  gem 'database_cleaner'
+end

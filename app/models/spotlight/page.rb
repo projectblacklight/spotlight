@@ -5,8 +5,10 @@ module Spotlight
                              :foreign_key => "parent_page_id"
 
     belongs_to :parent_page, :class_name  => "Spotlight::Page"
+    belongs_to :exhibit
 
     validates :weight, :inclusion => { :in => Proc.new{ 0..Spotlight::Page::MAX_PAGES } }
+    validates :exhibit, presence: true
 
     default_scope { order("weight ASC") }
   end

@@ -5,7 +5,7 @@ describe Spotlight::SearchesController do
 
   describe "when the user is not authorized" do
     it "should show all the items" do
-      expect { post :create }.to raise_error CanCan::AccessDenied
+      expect { post :create, exhibit_id: Spotlight::Exhibit.default }.to raise_error CanCan::AccessDenied
     end
   end
 
@@ -15,7 +15,7 @@ describe Spotlight::SearchesController do
     end
 
     it "should show all the items" do
-      post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_sim"=>["map"]}
+      post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_sim"=>["map"]}, exhibit_id: Spotlight::Exhibit.default
       expect(response).to redirect_to main_app.catalog_index_path
       expect(flash[:notice]).to eq "Search has been saved"
       expect(assigns[:search].title).to eq "A bunch of maps"

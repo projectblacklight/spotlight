@@ -3,4 +3,4 @@
 <%= render 'form' %>
 
 <%= link_to 'Show', [spotlight, @page] %> |
-<%= link_to 'Back', spotlight.pages_path %>
+<%= link_to 'Back', spotlight.exhibit_pages_path(@page.exhibit) %>
