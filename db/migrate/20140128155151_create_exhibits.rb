@@ -6,7 +6,7 @@ class CreateExhibits < ActiveRecord::Migration
       t.string :subtitle
       t.text :description
       t.text :contact_emails
-      t.text :facets
+      t.references :blacklight_configuration
       t.timestamps
     end
 

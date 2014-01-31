@@ -8,7 +8,7 @@ module Spotlight::Ability
     # until this PR is merged: https://github.com/ryanb/cancan/pull/917
     # can :create, Spotlight::Exhibit, admin_roles: { id: user.role_ids } 
     # Until then, workaround:
-    can :update, Spotlight::Exhibit do |exhibit|
+    can [:update, :edit_metadata_fields], Spotlight::Exhibit do |exhibit|
       exhibit.roles.where(id: user.role_ids, role: 'admin').any?
     end
 

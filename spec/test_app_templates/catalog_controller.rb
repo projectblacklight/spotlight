@@ -68,25 +68,25 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display 
-    config.add_index_field 'language_ssm', :label => 'Language:'
-    config.add_index_field 'abstract_tesim', :label => 'Abstract:'
-    config.add_index_field 'note_mapuse_tesim', :label => 'Type:'
-    config.add_index_field 'note_source_tesim', :label => 'Source:'
-    config.add_index_field 'subject_geographic_tesim', :label => 'Geographic Subject:' 
-    config.add_index_field 'subject_temporal_tesim', :label => 'Temporal Subject:' 
+    config.add_index_field 'language_ssm', :label => 'Language'
+    config.add_index_field 'abstract_tesim', :label => 'Abstract'
+    config.add_index_field 'note_mapuse_tesim', :label => 'Type'
+    config.add_index_field 'note_source_tesim', :label => 'Source'
+    config.add_index_field 'subject_geographic_tesim', :label => 'Geographic Subject'
+    config.add_index_field 'subject_temporal_tesim', :label => 'Temporal Subject'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display 
-    config.add_show_field 'note_phys_desc_tesim', :label => 'Note:' 
-    config.add_show_field 'note_source_tesim', :label => 'Source:' 
-    config.add_show_field 'note_desc_note_tesim', :label => 'Note:' 
-    config.add_show_field 'note_references_tesim', :label => 'References:' 
-    config.add_show_field 'note_provenance_tesim', :label => 'Provenance:' 
-    config.add_show_field 'note_page_num_tesim', :label => 'Page Number:' 
-    config.add_show_field 'subject_geographic_tesim', :label => 'Geographic Subject:' 
-    config.add_show_field 'subject_temporal_tesim', :label => 'Temporal Subject:' 
-    config.add_show_field 'personal_name_ssm', :label => 'Personal Names:' 
-    config.add_show_field 'corporate_name_ssm', :label => 'Corporate Names:' 
+    config.add_show_field 'note_phys_desc_tesim', :label => 'Note'
+    config.add_show_field 'note_source_tesim', :label => 'Source'
+    config.add_show_field 'note_desc_note_tesim', :label => 'Note'
+    config.add_show_field 'note_references_tesim', :label => 'References'
+    config.add_show_field 'note_provenance_tesim', :label => 'Provenance'
+    config.add_show_field 'note_page_num_tesim', :label => 'Page Number'
+    config.add_show_field 'subject_geographic_tesim', :label => 'Geographic Subject'
+    config.add_show_field 'subject_temporal_tesim', :label => 'Temporal Subject'
+    config.add_show_field 'personal_name_ssm', :label => 'Personal Names'
+    config.add_show_field 'corporate_name_ssm', :label => 'Corporate Names'
 
   end
 
