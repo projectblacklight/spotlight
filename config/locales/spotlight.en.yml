@@ -1,8 +1,5 @@
 en:
-  activerecord:
-    models:
-      spotlight:
-        page: Page
+  cancel: "Cancel"
   helpers:
     submit:
       new: Add new %{model}
@@ -10,11 +7,35 @@ en:
       edit: Edit
       destroy: Destroy
       destroy_are_you_sure: "Are you sure?"
+      exhibit:
+        submit: "Save"
+        update: "Save changes"
+      search:
+        create: "Save"
+        submit: "Save"
+  activerecord:
+    models:
+      spotlight:
+        page: Page
   spotlight:
+    administration:
+      header: "Administration"
+      settings:
+        header: "Settings"
+    items:
+      header: "Curation - Items"
+      title: "Title"
+      date_added: "Date Added"
     curation:
       header: "Curation"
+      metadata_fields:
+        header: "Metadata Fields"
     feature_pages:
       header: "Feature Pages"
+      options: "Options"
     header_links:
       login: "Sign in"
       logout: "Sign out"
+    saved_search:
+      label: "Save this search"
+      title: "Saved search title"

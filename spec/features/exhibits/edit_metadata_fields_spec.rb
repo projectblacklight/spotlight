@@ -13,7 +13,7 @@ describe "Editing metadata fields", type: :feature do
     visit spotlight.edit_metadata_exhibit_path Spotlight::Exhibit.default
 
     expect(page).to have_content "Curation Metadata Fields"
-    expect(page).to have_button "Save changes"
+    expect(page).to have_button "Save"
 
     select "Language", from: "List"
     select "Type", from: "List"

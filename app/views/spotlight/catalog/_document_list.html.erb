@@ -1,7 +1,7 @@
 <% # container for all documents in index view -%>
 <table id="documents" class="table">
   <thead>
-    <tr><td class="col-sm-3"></td><th class="col-sm-6">Title</th><th class="col-sm-3">Date Added</th></tr>
+    <tr><td class="col-sm-3"></td><th class="col-sm-6"><%= t(:'spotlight.catalog.title') %></th><th class="col-sm-3"><%= t(:'spotlight.catalog.date_added') %></th></tr>
   </thead>
   <%= render documents, :as => :document %>
 </table>

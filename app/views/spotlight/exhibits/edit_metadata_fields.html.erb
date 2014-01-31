@@ -1,13 +1,15 @@
+<%= render 'spotlight/shared/curation_sidebar' %>
+<div id="content" class="col-md-9">
 <%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal, right: "col-sm-5" do |f| %>
     <div class="row">
-      <h1>Curation</h1>
+      <h1><%= t('spotlight.curation.header') %></h1>
     </div>
     <div class="row">
       <div class="col-sm-5">
-        <h2><small>Metadata Fields</small></h2>
+        <h2><small><%= t('spotlight.curation.metadata_fields.header') %></small></h2>
       </div>
       <div class="col-sm-2">
-        <%= f.submit "Save changes" %>
+        <%= f.submit nil %>
       </div>
     </div>
 
@@ -27,3 +29,4 @@
 
    <% end %>
 <% end %>
+</div>
