@@ -28,8 +28,10 @@ module Spotlight
       end
       it "settable valid maximum" do
         original_pages = Spotlight::Page::MAX_PAGES
+        Spotlight::Page.send(:remove_const, 'MAX_PAGES')
         Spotlight::Page::MAX_PAGES = 51
         expect(high_weight).to be_valid
+        Spotlight::Page.send(:remove_const, 'MAX_PAGES')
         Spotlight::Page::MAX_PAGES = original_pages
       end
     end
