@@ -1,0 +1,24 @@
+<%= render 'spotlight/shared/curation_sidebar' %>
+<div id="content" class="col-md-9">
+  <% @page_title = t(:'spotlight.curation.browse.title') %>
+
+  <div class="row">
+    <h1><%= t :'spotlight.curation.header' %></h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-10">
+      <h2><small><%= t :'spotlight.curation.browse.header' %></small></h2>
+    </div>
+    <div class="col-sm-2">
+      <%= submit_tag t(:'spotlight.curation.browse.update'), class: "btn btn-default" %>
+    </div>
+  </div>
+
+  <h4>Browse Categories <span class="label label-default"><%=@searches.count%></span></h4>
+  <div class="browse-instuctions">Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page.</div>
+  <table class="table table-striped">
+    <% @searches.each do |search| %>
+      <%=render search %>
+    <% end %>
+  </table>
+</div>

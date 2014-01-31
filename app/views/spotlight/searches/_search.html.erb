@@ -1,0 +1,18 @@
+<tr class="saved-search">
+  <td><%= check_box_tag 'landing_page', search.id %></td>
+  <td><div class="thumbnail"><a><%= image_tag(search.representative_image) if search.representative_image %></a></div></td>
+  <td class="col-sm-5">
+    <div class="title"><%= search.title %></div>
+    <div class="count"><%= search.count %> items</div>
+    <div class="actions"><%=link_to "Edit", edit_search_path(search) %> &bull; <%=link_to "Delete", search_path(search), method: :delete %></div>
+  </td>
+
+  <td class="col-sm-5">
+    <% if search.description %>
+      <%=search.description %>
+    <% else %>
+      <span class="missing-description"><%= link_to "Edit this Saved Search", edit_search_path(search) %> to add a description.</span>
+    <% end %>
+  </td>
+
+</tr>

@@ -6,7 +6,7 @@
     <li><%= link_to "Metadata", spotlight.edit_metadata_exhibit_path(@exhibit) %></li>
     <li class="disabled"><%= link_to "Tags", "#" %></li>
     <li class="disabled"><%= link_to "Search facets", "#" %></li>
-    <li class="disabled"><%= link_to "Browse", "#" %>
+    <li><%= link_to "Browse", spotlight.exhibit_searches_path(@exhibit) %></li>
     <li class="disabled"><%= link_to "Feature pages", "#" %></li>
     <li class="disabled"><%= link_to "About pages", "#" %></li>
   </ul>

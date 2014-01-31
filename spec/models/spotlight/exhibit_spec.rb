@@ -26,5 +26,12 @@ describe Spotlight::Exhibit do
     expect(subject.errors[:contact_emails]).to eq ['@-foo is not valid']
   end
 
+  it "should have searches" do
+    subject.save!
+    search = Spotlight::Search.create!(exhibit: subject)
+    Search.create! # it shouldn't get one of these
+    expect(subject.searches).to eq [search]
+  end
+
    
 end
