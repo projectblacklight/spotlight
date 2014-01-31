@@ -1,0 +1,29 @@
+<%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal, right: "col-sm-5" do |f| %>
+    <div class="row">
+      <h1>Curation</h1>
+    </div>
+    <div class="row">
+      <div class="col-sm-5">
+        <h2><small>Metadata Fields</small></h2>
+      </div>
+      <div class="col-sm-2">
+        <%= f.submit "Save changes" %>
+      </div>
+    </div>
+
+   <%= f.fields_for :blacklight_configuration, @exhibit.blacklight_configuration do |c| %>
+
+      <div class="row">
+        <%= c.select :show_fields, options_for_select(Spotlight::CatalogController.blacklight_config.show_fields.map { |k,v| [v.label,k] }, @exhibit.blacklight_configuration.show_fields), { }, multiple: true %> 
+      </div>
+
+      <%= c.fields_for :index_fields do |idxf| %>
+        <% @exhibit.blacklight_configuration.default_blacklight_config.document_index_view_types.each do |type| %>
+          <div class="row">
+            <%= idxf.select type, options_for_select(Spotlight::CatalogController.blacklight_config.index_fields.map { |k,v| [v.label,k] }, @exhibit.blacklight_configuration.index_fields_for_view(type)), { }, multiple: true %> 
+          </div>
+        <% end %>
+      <% end %>
+
+   <% end %>
+<% end %>
