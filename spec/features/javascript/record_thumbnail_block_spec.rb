@@ -1,9 +1,13 @@
 require "spec_helper"
 
 feature "Record Thumbnail Block" do
+  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
+  before { login_as exhibit_curator }
+
   scenario "should allow you to add a thumbnail to a page within an exhibit", :js => true do
     # create page
-    visit spotlight.new_page_path
+    # TODO find this via a menu
+    visit spotlight.new_exhibit_page_path(Spotlight::Exhibit.default)
     # fill in title
     fill_in "page_title", :with => "Exhibit Title"
     # click to add widget
@@ -27,7 +31,8 @@ feature "Record Thumbnail Block" do
   end
   scenario "should allow you to optionally display the title with the image", :js => true do
     # create page
-    visit spotlight.new_page_path
+    # TODO find this via a menu
+    visit spotlight.new_exhibit_page_path(Spotlight::Exhibit.default)
     # fill in title
     fill_in "page_title", :with => "Exhibit Title"
     # click to add widget

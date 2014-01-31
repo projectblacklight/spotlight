@@ -2,7 +2,8 @@ require 'spec_helper'
 
 module Spotlight
   describe "spotlight/pages/index" do
-    before(:each) do
+    before do
+      assign(:exhibit, stub_model(Exhibit))
       assign(:pages, [
         stub_model(Page,
           :title => "Title",

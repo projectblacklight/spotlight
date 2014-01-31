@@ -2,6 +2,9 @@ require 'mail'
 class Spotlight::Exhibit < ActiveRecord::Base
   DEFAULT = 'default'.freeze
   has_many :roles
+  has_many :searches
+  has_many :pages
+
   serialize :facets, Array
   serialize :contact_emails, Array
 

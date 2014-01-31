@@ -6,11 +6,11 @@ module Spotlight
       routes { Spotlight::Engine.routes }
 
       it "routes to #index" do
-        get("/pages").should route_to("spotlight/pages#index")
+        get("/exhibits/1/pages").should route_to("spotlight/pages#index", exhibit_id: '1')
       end
 
       it "routes to #new" do
-        get("/pages/new").should route_to("spotlight/pages#new")
+        get("/exhibits/1/pages/new").should route_to("spotlight/pages#new", exhibit_id: '1')
       end
 
       it "routes to #show" do
@@ -22,7 +22,7 @@ module Spotlight
       end
 
       it "routes to #create" do
-        post("/pages").should route_to("spotlight/pages#create")
+        post("/exhibits/1/pages").should route_to("spotlight/pages#create", exhibit_id: '1')
       end
 
       it "routes to #update" do

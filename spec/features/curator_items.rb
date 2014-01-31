@@ -1,0 +1,15 @@
+require 'spec_helper'
+
+describe "A curator can see the items page" do
+  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
+
+  it "should work" do
+    login_as exhibit_curator
+
+    visit '/'
+    within '.dropdown-menu' do
+      click_link 'Curation'
+    end
+    expect(page).to have_content "Items"
+  end
+end
