@@ -7,10 +7,20 @@ EngineCart.load_application!
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/poltergeist'
-require 'spotlight'
+Capybara.javascript_driver = :poltergeist
+
 require 'database_cleaner'
 
-Capybara.javascript_driver = :poltergeist
+if ENV["COVERAGE"] or ENV["CI"]
+  require 'simplecov'
+  require 'coveralls'
+
+  SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+  SimpleCov.start
+end
+
+require 'spotlight'
+
 
 Dir["./spec/support/**/*.rb"].sort.each {|f| require f}
 
