@@ -26,6 +26,10 @@ module Spotlight
       main_app_url_helper?(method) or super
     end
 
+    def new_spotlight_page_path_for(exhibit, model=page_model)
+      spotlight.send(:"new_exhibit_#{model}_path", exhibit)
+    end
+
     private
 
     def main_app_url_helper?(method)

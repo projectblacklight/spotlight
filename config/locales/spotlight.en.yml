@@ -37,6 +37,8 @@ en:
     feature_pages:
       header: "Feature Pages"
       options: "Options"
+    about_pages:
+      header: "About Pages"
     header_links:
       login: "Sign in"
       logout: "Sign out"

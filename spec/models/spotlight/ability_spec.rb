@@ -8,7 +8,7 @@ describe Spotlight::Ability do
     subject { Ability.new(nil) }
     it { should_not be_able_to(:create, exhibit) }
     it { should be_able_to(:read, exhibit) }
-    it { should be_able_to(:read, FactoryGirl.create(:page)) }
+    it { should be_able_to(:read, FactoryGirl.create(:feature_page)) }
     it { should_not be_able_to(:create, Spotlight::Page) }
     it { should be_able_to(:read, FactoryGirl.create(:search)) }
   end
@@ -28,8 +28,8 @@ describe Spotlight::Ability do
     it { should be_able_to(:read, exhibit) }
 
 
-    it { should be_able_to(:update, FactoryGirl.create(:page)) }
+    it { should be_able_to(:update, FactoryGirl.create(:feature_page)) }
     it { should be_able_to(:create, Spotlight::Page) }
-    it { should be_able_to(:destroy, FactoryGirl.create(:page)) }
+    it { should be_able_to(:destroy, FactoryGirl.create(:feature_page)) }
   end
 end

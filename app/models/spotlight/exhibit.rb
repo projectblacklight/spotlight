@@ -3,7 +3,8 @@ class Spotlight::Exhibit < ActiveRecord::Base
   DEFAULT = 'default'.freeze
   has_many :roles
   has_many :searches
-  has_many :pages
+  has_many :about_pages
+  has_many :feature_pages
 
   belongs_to :blacklight_configuration, class_name: Spotlight::BlacklightConfiguration
   accepts_nested_attributes_for :blacklight_configuration

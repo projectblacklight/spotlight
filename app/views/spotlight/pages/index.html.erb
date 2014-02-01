@@ -1,10 +1,10 @@
 <h1><%= t :'spotlight.curation.header' %></h1>
-<h2 class="text-muted"><%= t :'spotlight.feature_pages.header' %></h2>
+<h2 class="text-muted"><%= t :"spotlight.#{page_model.pluralize}.header" %></h2>
 
 <div class="panel-group">
-<%= render @pages %>
+  <%= render @pages %>
 </div>
 
 <div>
-<%= link_to t(:'helpers.submit.new', :model => Spotlight::Page.model_name.human.downcase), spotlight.new_exhibit_page_path(@exhibit), :class => ' btn btn-primary' %>
+  <%= link_to t(:'helpers.submit.new', :model => "Page"), new_spotlight_page_path_for(@exhibit), :class => ' btn btn-primary' %>
 </div>

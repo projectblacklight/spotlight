@@ -4,6 +4,7 @@ module Spotlight
   describe "spotlight/catalog/index.html.erb" do
     before do
       view.stub(:blacklight_config).and_return(CatalogController.blacklight_config)
+      view.stub(:spotlight_page_path_for).and_return(nil)
     end
     it "should render the sidebar" do
       assign(:response, [])

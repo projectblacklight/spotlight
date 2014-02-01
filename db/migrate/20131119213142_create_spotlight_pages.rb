@@ -1,16 +1,23 @@
 class CreateSpotlightPages < ActiveRecord::Migration
   def change
-    create_table :spotlight_pages do |t|
-      t.string  :title
-      t.text    :content
-      t.integer :weight, :default => 0
-      t.boolean :display_sidebar
-      t.boolean :published
+    create_table :spotlight_feature_pages do |t|
+      define_table(t)
       t.integer :parent_page_id
-      t.references :exhibit
-      t.timestamps
+      t.boolean :display_sidebar
     end
-    add_index :spotlight_pages, :exhibit_id
-    add_index :spotlight_pages, :parent_page_id
+    create_table :spotlight_about_pages do |t|
+      define_table(t)
+    end
+    add_index :spotlight_feature_pages, :exhibit_id
+    add_index :spotlight_feature_pages, :parent_page_id
+    add_index :spotlight_about_pages,   :exhibit_id
+  end
+  def define_table(t)
+    t.string     :title
+    t.text       :content
+    t.integer    :weight, :default => 0
+    t.boolean    :published
+    t.references :exhibit
+    t.timestamps
   end
 end

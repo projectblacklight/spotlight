@@ -1,22 +1,22 @@
 require 'spec_helper'
 
 module Spotlight
-  describe Page do
+  describe FeaturePage do
     describe "default_scope" do
-      let!(:page1) { FactoryGirl.create(:page, weight: 5) }
-      let!(:page2) { FactoryGirl.create(:page, weight: 1) }
-      let!(:page3) { FactoryGirl.create(:page, weight: 10) }
+      let!(:page1) { FactoryGirl.create(:feature_page, weight: 5) }
+      let!(:page2) { FactoryGirl.create(:feature_page, weight: 1) }
+      let!(:page3) { FactoryGirl.create(:feature_page, weight: 10) }
       it "should order by weight" do
-        expect(Spotlight::Page.all.map(&:weight)).to eq [1, 5, 10]
+        expect(Spotlight::FeaturePage.all.map(&:weight)).to eq [1, 5, 10]
       end
     end
 
     describe "weight" do
-      let(:good_weight) { FactoryGirl.build(:page, weight: 10) }
-      let(:low_weight)  { FactoryGirl.build(:page, weight: -1) }
-      let(:high_weight) { FactoryGirl.build(:page, weight:  51) }
+      let(:good_weight) { FactoryGirl.build(:feature_page, weight: 10) }
+      let(:low_weight)  { FactoryGirl.build(:feature_page, weight: -1) }
+      let(:high_weight) { FactoryGirl.build(:feature_page, weight:  51) }
       it "should default to 0" do
-        expect(Page.new.weight).to eq 0
+        expect(FeaturePage.new.weight).to eq 0
       end
       it "should validate when in the 0 to 50 range" do
         expect(good_weight).to be_valid
@@ -33,9 +33,9 @@ module Spotlight
     end
 
     describe "relationships" do
-      let(:parent)  { FactoryGirl.create(:page) }
-      let!(:child1) { FactoryGirl.create(:page, :parent_page => parent ) }
-      let!(:child2) { FactoryGirl.create(:page, :parent_page => parent ) }
+      let(:parent)  { FactoryGirl.create(:feature_page) }
+      let!(:child1) { FactoryGirl.create(:feature_page, :parent_page => parent ) }
+      let!(:child2) { FactoryGirl.create(:feature_page, :parent_page => parent ) }
       it "child pages should have a parent_page" do
         [child1, child2].each do |child|
            expect(child.parent_page).to eq parent

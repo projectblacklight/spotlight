@@ -7,7 +7,7 @@
     <li class="disabled"><%= link_to "Tags", "#" %></li>
     <li class="disabled"><%= link_to "Search facets", "#" %></li>
     <li><%= link_to "Browse", spotlight.exhibit_searches_path(@exhibit) %></li>
-    <li class="disabled"><%= link_to "Feature pages", "#" %></li>
-    <li class="disabled"><%= link_to "About pages", "#" %></li>
+    <li><%= link_to "Feature pages", spotlight.exhibit_feature_pages_path(@exhibit) %></li>
+    <li><%= link_to "About pages", spotlight.exhibit_about_pages_path(@exhibit) %></li>
   </ul>
 </div>
