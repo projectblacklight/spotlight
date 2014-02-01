@@ -10,6 +10,7 @@ describe Spotlight::Ability do
     it { should be_able_to(:read, exhibit) }
     it { should be_able_to(:read, FactoryGirl.create(:page)) }
     it { should_not be_able_to(:create, Spotlight::Page) }
+    it { should be_able_to(:read, FactoryGirl.create(:search)) }
   end
 
   describe "a user with admin role" do

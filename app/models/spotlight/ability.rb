@@ -17,7 +17,7 @@ module Spotlight::Ability
       exhibit.roles.where(id: user.role_ids).any?
     end
 
-    can :read, [Spotlight::Exhibit, Spotlight::Page]
+    can [:read, :index], [Spotlight::Exhibit, Spotlight::Page, Spotlight::Search]
 
     can :create, [Spotlight::Search, Spotlight::Page] if Spotlight::Exhibit.default.roles.where(id: user.role_ids).any?
 

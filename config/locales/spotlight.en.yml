@@ -22,11 +22,15 @@ en:
       header: "Administration"
       settings:
         header: "Settings"
-    items:
-      header: "Curation - Items"
-      title: "Title"
-      date_added: "Date Added"
     curation:
+      items:
+        header: "Items"
+        title: "Curation - Items"
+        date_added: "Date Added"
+      browse:
+        header: "Browse"
+        title: "Curation - Browse"
+        update: "Save changes"
       header: "Curation"
       metadata_fields:
         header: "Metadata Fields"

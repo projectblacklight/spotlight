@@ -5,6 +5,7 @@ module Spotlight
     load_and_authorize_resource through: :exhibit, only: [:index, :new, :create]
 
     include Blacklight::Base
+    include Blacklight::Catalog::SearchContext
 
     copy_blacklight_config_from(CatalogController)
 
