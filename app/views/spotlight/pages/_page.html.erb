@@ -11,9 +11,9 @@
     </div>
   </div>
   <div class="panel-footer">
-   <%= link_to t('helpers.submit.view'), [spotlight, page], :class => 'btn btn-text' %>
-   <%= link_to t('helpers.submit.edit'), spotlight.edit_page_path(page), :class => 'btn btn-text' %>
+   <%= link_to t('helpers.submit.view'), [spotlight, page.exhibit, page], :class => 'btn btn-text' %>
+   <%= link_to t('helpers.submit.edit'), [spotlight, :edit, page.exhibit, page], :class => 'btn btn-text' %>
 
-    <%= link_to t('helpers.submit.destroy'), [spotlight, page], method: :delete, data: { confirm: t('helpers.submit.destroy_are_you_sure') }, :class => 'btn btn-text' %>
+   <%= link_to t('helpers.submit.destroy'), [spotlight, page.exhibit, page], method: :delete, data: { confirm: t('helpers.submit.destroy_are_you_sure') }, :class => 'btn btn-text' %>
   </div>
 </div>

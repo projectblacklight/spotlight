@@ -7,9 +7,11 @@ feature "Record Thumbnail Block" do
   scenario "should allow you to add a thumbnail to a page within an exhibit", :js => true do
     # create page
     # TODO find this via a menu
-    visit spotlight.new_exhibit_page_path(Spotlight::Exhibit.default)
+    visit spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default)
+    click_link "Feature pages"
+    click_link "Add new Page"
     # fill in title
-    fill_in "page_title", :with => "Exhibit Title"
+    fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
     find("[data-icon='add']").click
     # click the Record Thumbnail widget
@@ -19,7 +21,7 @@ feature "Record Thumbnail Block" do
     expect(page).to have_css("input#record-thumbnail-id")
     fill_in "record-thumbnail-id", :with => "dq287tq6352"
     # create the page
-    click_button("Create Page")
+    click_button("Create Feature page")
     # veryify that the page was created
     expect(page).to have_content("Page was successfully created.")
     # veryify that the record thumbnail widget is displaying an image from the document.
@@ -32,9 +34,11 @@ feature "Record Thumbnail Block" do
   scenario "should allow you to optionally display the title with the image", :js => true do
     # create page
     # TODO find this via a menu
-    visit spotlight.new_exhibit_page_path(Spotlight::Exhibit.default)
+    visit spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default)
+    click_link "Feature pages"
+    click_link "Add new Page"
     # fill in title
-    fill_in "page_title", :with => "Exhibit Title"
+    fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
     find("[data-icon='add']").click
     # click the Record Thumbnail widget
@@ -46,7 +50,7 @@ feature "Record Thumbnail Block" do
     # display the title
     check("Show title?")
     # create the page
-    click_button("Create Page")
+    click_button("Create Feature page")
     # veryify that the page was created
     expect(page).to have_content("Page was successfully created.")
     # veryify that the record thumbnail widget is displaying image and title from the requested document.

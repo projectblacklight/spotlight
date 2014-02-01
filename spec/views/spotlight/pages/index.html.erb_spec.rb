@@ -2,16 +2,21 @@ require 'spec_helper'
 
 module Spotlight
   describe "spotlight/pages/index" do
+    let(:exhibit) { stub_model(Exhibit) }
     before do
-      assign(:exhibit, stub_model(Exhibit))
+      view.stub(:page_model).and_return("feature_page")
+      view.stub(:new_spotlight_page_path_for).and_return("/")
+      assign(:exhibit, exhibit)
       assign(:pages, [
-        stub_model(Page,
+        stub_model(FeaturePage,
           :title => "Title",
-          :content => "MyText"
+          :content => "MyText",
+          :exhibit => exhibit
         ),
-        stub_model(Page,
+        stub_model(FeaturePage,
           :title => "Title",
-          :content => "MyText"
+          :content => "MyText",
+          :exhibit => exhibit
         )
       ])
     end
