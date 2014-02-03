@@ -43,7 +43,7 @@ module Spotlight
       config.show_fields = config.show_fields.slice *show_fields unless show_fields.blank?
       config.sort_fields = config.sort_fields.slice *sort_fields unless sort_fields.blank?
       config.per_page = (config.per_page & per_page) unless per_page.blank?
-      config.document_index_view_types = (config.document_index_view_types & document_index_view_types) unless document_index_view_types.blank?
+      config.view.select! { |k, v| document_index_view_types.include? k.to_s } unless document_index_view_types.blank?
 
       config
     end

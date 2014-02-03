@@ -8,7 +8,7 @@
     <%- end -%>
     <%- if should_render_record_thumbnail_title?(document, block) -%>
       <div class="panel-footer">
-        <%= document_heading(document).try(:join) %>
+        <%= document_heading(document) %>
       </div>
     <%- end -%>
   </div>
