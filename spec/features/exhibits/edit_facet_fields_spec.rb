@@ -15,12 +15,13 @@ describe "Editing metadata fields", type: :feature do
     expect(page).to have_content "Curation Search Facets"
     expect(page).to have_button "Save"
 
-    select "Language", from: "Facet fields"
-    select "Genre", from: "Facet fields"
+    uncheck "Language"
+    uncheck "Genre"
+    check "Era"
 
     click_on "Save changes"
 
-    expect(Spotlight::Exhibit.default.blacklight_config.facet_fields).to include("language_sim", "genre_sim")
-    expect(Spotlight::Exhibit.default.blacklight_config.facet_fields).to have(2).fields
+    expect(Spotlight::Exhibit.default.blacklight_config.facet_fields.keys).to include("subject_temporal_sim")
+    expect(Spotlight::Exhibit.default.blacklight_config.facet_fields.keys).to_not include("language_sim", "genre_sim")
   end
 end

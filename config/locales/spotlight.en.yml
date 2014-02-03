@@ -36,6 +36,8 @@ en:
         header: "Metadata Fields"
       facet_fields:
         header: "Search Facets"
+        options:
+          label: "Display Label"
     feature_pages:
       header: "Feature Pages"
       options: "Options"

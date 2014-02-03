@@ -32,11 +32,19 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
       :description,
       contact_emails_attributes: [:email],
       blacklight_configuration_attributes: [
-        facet_fields: [],
-        index_fields: [@exhibit.blacklight_configuration.default_blacklight_config.view.keys.inject({}) { |result, element| result[element] = []; result }], 
+        facet_fields: [exhibit_configuration_facet_params(@exhibit.blacklight_configuration.default_blacklight_config.facet_fields.keys)],
+        index_fields: [exhibit_configuration_index_params(@exhibit.blacklight_configuration.default_blacklight_config.view.keys)], 
         show_fields: []
       ]
     )
+  end
+
+  def exhibit_configuration_index_params arr
+    arr.inject({}) { |result, element| result[element] = []; result }
+  end
+
+  def exhibit_configuration_facet_params arr
+    arr.inject({}) { |result, element| result[element] = [:enabled, :label]; result }
   end
 
   def default_exhibit

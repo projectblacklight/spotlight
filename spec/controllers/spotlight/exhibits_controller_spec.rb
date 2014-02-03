@@ -78,11 +78,11 @@ describe Spotlight::ExhibitsController do
       end
 
       it "should update facet fields" do
-        patch :update, id: exhibit, exhibit: { blacklight_configuration_attributes: { facet_fields: ['a', 'b'] }}
+        patch :update, id: exhibit, exhibit: { blacklight_configuration_attributes: { facet_fields: { 'genre_sim' => { enabled: '1', label: "Label"}}  }}
         expect(flash[:notice]).to eq "The exhibit was saved."
         expect(response).to redirect_to main_app.root_path
         assigns[:exhibit].tap do |saved|
-          expect(saved.blacklight_configuration.facet_fields).to eq ['a', 'b']
+          expect(saved.blacklight_configuration.facet_fields.keys).to eq ['genre_sim']
         end
       end
     end

@@ -15,9 +15,25 @@
 
    <%= f.fields_for :blacklight_configuration, @exhibit.blacklight_configuration do |c| %>
 
-      <div class="row">
-        <%= c.select :facet_fields, options_for_select(Spotlight::CatalogController.blacklight_config.facet_fields.map { |k,v| [v.label,k] }, @exhibit.blacklight_configuration.facet_fields), { }, multiple: true %> 
-      </div>
+      <%= c.fields_for :facet_fields do |idxf| %>
+        <% @exhibit.blacklight_configuration.all_facet_fields.each do |key, config| %>
+          <%= idxf.fields_for key do |facet| %>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+              <a class="pull-right btn btn-text" data-toggle="collapse" href="#collapse-facet-<%= key %>"><%= t(:'spotlight.feature_pages.options') %>
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+                <%= facet.check_box :enabled, checked: (@exhibit.blacklight_configuration.facet_fields[key] || {}).fetch(:enabled, true), label: @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label %>
+              </div>
+              <div id="collapse-facet-<%= key %>" class="panel-collapse collapse">
+                <div facet="panel-body">
+                  <%= facet.text_field :label, label: t('spotlight.curation.facet_fields.options.label'), placeholder: @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
 
    <% end %>
 <% end %>

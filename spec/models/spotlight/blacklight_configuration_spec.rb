@@ -11,25 +11,29 @@ describe Spotlight::BlacklightConfiguration do
   describe "facet fields" do
     it "should have facet fields" do
       expect(subject.facet_fields).to be_empty
-      subject.facet_fields << 'title_facet' << 'author_facet'
-      expect(subject.facet_fields).to eq ['title_facet', 'author_facet']
+      subject.facet_fields["title_facet"] = {}
+      subject.facet_fields["author_facet"] = {}
+      expect(subject.facet_fields.keys).to eq ['title_facet', 'author_facet']
     end
 
     it "should filter blank values" do
-      subject.facet_fields << ""
+      subject.facet_fields["title_facet"] = { :something => ""}
       subject.valid?
-      expect(subject.facet_fields).to_not include ""
+      expect(subject.facet_fields["title_facet"].keys).to_not include :something
     end
 
     it "should filter the upstream blacklight config" do
-      subject.facet_fields = ['a', 'c', 'd']
+      subject.facet_fields['a'] = { enabled: true }
+      subject.facet_fields['b'] = { enabled: false }
+      subject.facet_fields['d'] = { enabled: true }
+      
       blacklight_config.add_facet_field 'a'
       blacklight_config.add_facet_field 'b'
       blacklight_config.add_facet_field 'c'
 
-      expect(subject.blacklight_config.facet_fields).to include('a', 'c')
+      expect(subject.blacklight_config.facet_fields).to include('a')
       expect(subject.blacklight_config.facet_fields).to_not include('b')
-      expect(subject.blacklight_config.facet_fields).to have(2).fields
+      expect(subject.blacklight_config.facet_fields).to have(1).fields
     end
   end
 

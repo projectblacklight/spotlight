@@ -3,7 +3,7 @@ require 'blacklight/utils'
 module Spotlight
   class BlacklightConfiguration < ActiveRecord::Base
     has_one :exhibit
-    serialize :facet_fields, Array
+    serialize :facet_fields, Hash
     serialize :index_fields, Hash
     serialize :show_fields, Array
     serialize :sort_fields, Array
@@ -15,10 +15,15 @@ module Spotlight
 
     # get rid of empty values
     before_validation do |model|
-      model.facet_fields.reject!(&:blank?) if model.facet_fields
+      model.facet_fields.each do |k,v|
+        v[:enabled] = (v[:enabled] == "1")
+        v.reject! { |k, v1| v1.blank? }
+      end if model.facet_fields
+
       model.index_fields.each do |k, v|
         v.reject!(&:blank?)
       end if model.index_fields
+
       model.show_fields.reject!(&:blank?) if model.show_fields
       model.sort_fields.reject!(&:blank?) if model.sort_fields
       model.per_page.reject!(&:blank?) if model.per_page
@@ -39,13 +44,33 @@ module Spotlight
       config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
       config.index_fields = config.index_fields.slice *index_fields_for_view(view) unless index_fields_for_view(view).blank?
-      config.facet_fields = config.facet_fields.slice *facet_fields unless facet_fields.blank?
       config.show_fields = config.show_fields.slice *show_fields unless show_fields.blank?
       config.sort_fields = config.sort_fields.slice *sort_fields unless sort_fields.blank?
+      
+      unless facet_fields.blank?
+        active_facet_fields = facet_fields.select { |k,v| v[:enabled] == true }
+        config.facet_fields.slice! *active_facet_fields.keys
+        config.facet_fields = Hash[config.facet_fields.sort_by { |k,v| active_facet_fields.keys.index k }]
+        
+        config.facet_fields.each do |k, v|
+          next if facet_fields[v].blank?
+
+          v.merge! facet_fields[v].symbolize_keys
+          v.normalize! config
+          v.validate!
+        end
+      end
+
       config.per_page = (config.per_page & per_page) unless per_page.blank?
       config.view.select! { |k, v| document_index_view_types.include? k.to_s } unless document_index_view_types.blank?
 
       config
+    end
+
+    def all_facet_fields
+      default_blacklight_config.facet_fields.sort_by { |k,v| facet_fields.keys.index k }
+
+
     end
 
     ##
