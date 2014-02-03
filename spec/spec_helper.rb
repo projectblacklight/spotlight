@@ -10,6 +10,7 @@ require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
 require 'database_cleaner'
+require 'factory_girl'
 
 if ENV["COVERAGE"] or ENV["CI"]
   require 'simplecov'
