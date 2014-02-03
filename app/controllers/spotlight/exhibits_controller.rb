@@ -1,5 +1,7 @@
 class Spotlight::ExhibitsController < Spotlight::ApplicationController
   before_filter :default_exhibit
+  include Blacklight::SolrHelper
+
   authorize_resource
 
   def edit
@@ -13,6 +15,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   ##
   # Edit the index and show view metadata fields
   def edit_facet_fields
+    @fields = blacklight_solr.get('admin/luke', params: { fl: '*', 'json.nl' => 'map' })['fields']
   end
 
   def update

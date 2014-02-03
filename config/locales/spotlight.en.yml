@@ -38,6 +38,12 @@ en:
         header: "Search Facets"
         options:
           label: "Display Label"
+        items_count: 
+          one: "%{count} item"
+          other:  "%{count} items"
+        values_count:
+          one: "%{count} unique value"
+          other: "%{count} unique values"
     feature_pages:
       header: "Feature Pages"
       options: "Options"

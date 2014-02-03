@@ -17,7 +17,7 @@ module Spotlight
     before_validation do |model|
       model.facet_fields.each do |k,v|
         v[:enabled] = (v[:enabled] == "1")
-        v.reject! { |k, v1| v1.blank? }
+        v.reject! { |k, v1| v1.blank? and !v1 === false }
       end if model.facet_fields
 
       model.index_fields.each do |k, v|
@@ -53,9 +53,9 @@ module Spotlight
         config.facet_fields = Hash[config.facet_fields.sort_by { |k,v| active_facet_fields.keys.index k }]
         
         config.facet_fields.each do |k, v|
-          next if facet_fields[v].blank?
+          next if facet_fields[k].blank?
 
-          v.merge! facet_fields[v].symbolize_keys
+          v.merge! facet_fields[k].symbolize_keys
           v.normalize! config
           v.validate!
         end

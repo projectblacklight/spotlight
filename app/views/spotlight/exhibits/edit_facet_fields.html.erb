@@ -18,16 +18,24 @@
       <%= c.fields_for :facet_fields do |idxf| %>
         <% @exhibit.blacklight_configuration.all_facet_fields.each do |key, config| %>
           <%= idxf.fields_for key do |facet| %>
-            <div class="panel panel-default">
+            <div class="panel panel-default facet-config-<%= key.parameterize %>">
               <div class="panel-heading">
-              <a class="pull-right btn btn-text" data-toggle="collapse" href="#collapse-facet-<%= key %>"><%= t(:'spotlight.feature_pages.options') %>
+              <a class="pull-right btn btn-text" data-toggle="collapse" href="#collapse-facet-<%= key.parameterize %>"><%= t(:'spotlight.feature_pages.options') %>
       <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
-                <%= facet.check_box :enabled, checked: (@exhibit.blacklight_configuration.facet_fields[key] || {}).fetch(:enabled, true), label: @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label %>
+                <%= facet.check_box :enabled, checked: (@exhibit.blacklight_configuration.facet_fields[key] || {}).fetch(:enabled, true), label: (@exhibit.blacklight_configuration.facet_fields[key] || {}).fetch(:label, @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label), title: key %>
+
+                <% if metadata =  @fields.fetch(key.to_s, {}) %>
+                <div class="text-muted">
+                  <%= content_tag :span, t(:'spotlight.curation.facet_fields.items_count', count: metadata.fetch('docs', 0)), class: 'btn btn-text' %> •
+
+                  <%= link_to t(:'spotlight.curation.facet_fields.values_count', count: metadata.fetch('distinct', 0)), catalog_facet_path(key), class: 'btn btn-text btn-with-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => render_field_value(metadata.fetch('topTerms', {}).map { |k,v| String.new(k) }, config) %>
+                  <% end %>
+                </div>
               </div>
-              <div id="collapse-facet-<%= key %>" class="panel-collapse collapse">
+              <div id="collapse-facet-<%= key.parameterize %>" class="panel-collapse collapse">
                 <div facet="panel-body">
-                  <%= facet.text_field :label, label: t('spotlight.curation.facet_fields.options.label'), placeholder: @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label %>
+                  <%= facet.text_field :label, value: @exhibit.blacklight_configuration.facet_fields.fetch(key, {})[:label], label: t('spotlight.curation.facet_fields.options.label'), placeholder: @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label %>
                 </div>
               </div>
             </div>
