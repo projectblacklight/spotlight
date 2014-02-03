@@ -5,6 +5,8 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   def edit
   end
 
+  ##
+  # Edit the index and show view metadata fields
   def edit_metadata_fields
   end
 

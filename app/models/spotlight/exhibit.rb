@@ -32,6 +32,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
     self.contact_emails = attributes_collection.map {|e| e['email']}.reject(&:blank?)
   end
   
+  # Find or create the default exhibit
   def self.default
     self.find_or_create_by!(name: DEFAULT) do |e|
       e.title = 'Default exhibit'.freeze

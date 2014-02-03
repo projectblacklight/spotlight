@@ -13,6 +13,7 @@ module Spotlight
     serialize :per_page, Array
     serialize :document_index_view_types, Array
 
+    # get rid of empty values
     before_validation do |model|
       model.facet_fields.reject!(&:blank?) if model.facet_fields
       model.index_fields.each do |k, v|
@@ -24,12 +25,16 @@ module Spotlight
       model.document_index_view_types.reject!(&:blank?) if model.document_index_view_types
     end
 
+    ##
+    # Serialize this configuration to a Blacklight::Configuration object 
+    # appropriate to the current view. If a value isn't set in this record,
+    # it will use the configuration set upstream (in default_blacklight_config)
+    # @param [String] view the configuration may be different depending on the index view selected
     def blacklight_config view = nil
       config = default_blacklight_config.inheritable_copy
 
-      # projectblacklight/blacklight#730 will give us a way to merge (and merge!) directly
-      config.show = Blacklight::OpenStructWithHashAccess.new(config.show.merge(show))
-      config.index = Blacklight::OpenStructWithHashAccess.new(config.show.merge(index))
+      config.show.merge! show unless show.blank?
+      config.index.merge! index unless index.blank?
 
       config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
@@ -43,10 +48,16 @@ module Spotlight
       config
     end
 
+    ##
+    # Get the index fields that should be visible for the given view; if the view is
+    # not found, just use the list view.
+    # @param [String] view 
     def index_fields_for_view view
       index_fields.fetch(view, index_fields[:list])
     end
 
+    ##
+    # Get the "upstream" blacklight configuration to use
     def default_blacklight_config
       ::CatalogController.blacklight_config
     end
