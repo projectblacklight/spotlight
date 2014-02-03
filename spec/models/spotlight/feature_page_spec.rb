@@ -31,7 +31,12 @@ module Spotlight
         expect(high_weight).to be_valid
       end
     end
-
+    describe "feature_page?" do
+      let(:page) { FactoryGirl.create(:feature_page) }
+      it "should return true" do
+        expect(page.feature_page?).to be_true
+      end
+    end
     describe "relationships" do
       let(:parent)  { FactoryGirl.create(:feature_page) }
       let!(:child1) { FactoryGirl.create(:feature_page, :parent_page => parent ) }

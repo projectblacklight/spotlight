@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require sir-trevor
+//= require nestable
 //= require spotlight/spotlight
 //= require bootstrap/tooltip
 //= require bootstrap/popover

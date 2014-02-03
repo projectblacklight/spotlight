@@ -5,6 +5,7 @@ module Spotlight
     let(:exhibit) { stub_model(Exhibit) }
     before do
       view.stub(:page_model).and_return("feature_page")
+      view.stub(:update_all_pages_exhibits_path).and_return("/update")
       view.stub(:new_spotlight_page_path_for).and_return("/")
       assign(:exhibit, exhibit)
       assign(:pages, [

@@ -7,5 +7,8 @@ Spotlight::Engine.routes.draw do
     resources :catalog, only: [:index]
     get 'edit/metadata', on: :member, to: "exhibits#edit_metadata_fields"
     get 'edit/facets', on: :member, to: "exhibits#edit_facet_fields"
+    collection do
+      post :update_all_pages
+    end
   end
 end
