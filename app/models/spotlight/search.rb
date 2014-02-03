@@ -15,7 +15,4 @@ class Spotlight::Search < ActiveRecord::Base
     CatalogController.blacklight_config
   end
 
-  def blacklight_solr
-    @solr ||=  RSolr.connect(Blacklight.solr_config)
-  end
 end

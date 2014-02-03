@@ -5,6 +5,8 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   def edit
   end
 
+  ##
+  # Edit the index and show view metadata fields
   def edit_metadata_fields
   end
 
@@ -26,7 +28,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
       contact_emails_attributes: [:email],
       blacklight_configuration_attributes: [
         facet_fields: [],
-        index_fields: [@exhibit.blacklight_configuration.default_blacklight_config.document_index_view_types.inject({}) { |result, element| result[element] = []; result }], 
+        index_fields: [@exhibit.blacklight_configuration.default_blacklight_config.view.keys.inject({}) { |result, element| result[element] = []; result }], 
         show_fields: []
       ]
     )

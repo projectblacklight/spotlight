@@ -161,15 +161,19 @@ describe Spotlight::BlacklightConfiguration do
 
     it "should filter the upstream blacklight config" do
       subject.document_index_view_types = ['list', 'gallery', 'unknown']
-      blacklight_config.document_index_view_types = ['list', 'gallery', 'something-else']
+      blacklight_config.view.list
+      blacklight_config.view.gallery
+      blacklight_config.view.something
 
-      expect(subject.blacklight_config.document_index_view_types).to eq ['list', 'gallery']
+      expect(subject.blacklight_config.view.keys).to eq [:list, :gallery]
     end
 
     it "should pass through the blacklight configuration when not set" do
-      blacklight_config.document_index_view_types = ['list', 'gallery', 'something-else']
 
-      expect(subject.blacklight_config.document_index_view_types).to eq ['list', 'gallery', 'something-else']
+      blacklight_config.view.list
+      blacklight_config.view.gallery
+      blacklight_config.view.something
+      expect(subject.blacklight_config.view.keys).to eq [:list, :gallery, :something]
     end
   end
 
@@ -196,9 +200,9 @@ describe Spotlight::BlacklightConfiguration do
     end
 
     it "should merge with the blacklight config" do
-      blacklight_config.show.html_title = 'xyz'
-      subject.show[:html_title] = 'abc'
-      expect(subject.blacklight_config.show.html_title).to eq 'abc'
+      blacklight_config.show.title_field = 'xyz'
+      subject.show[:title_field] = 'abc'
+      expect(subject.blacklight_config.show.title_field).to eq 'abc'
     end
   end
 
@@ -210,9 +214,9 @@ describe Spotlight::BlacklightConfiguration do
     end
 
     it "should merge with the blacklight config" do
-      blacklight_config.index.html_title = 'xyz'
-      subject.index[:html_title] = 'abc'
-      expect(subject.blacklight_config.index.html_title).to eq 'abc'
+      blacklight_config.index.title_field = 'xyz'
+      subject.index[:title_field] = 'abc'
+      expect(subject.blacklight_config.index.title_field).to eq 'abc'
     end
   end
 end
