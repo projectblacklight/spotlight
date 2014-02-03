@@ -10,6 +10,11 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   def edit_metadata_fields
   end
 
+  ##
+  # Edit the index and show view metadata fields
+  def edit_facet_fields
+  end
+
   def update
     if @exhibit.update(exhibit_params)
       redirect_to main_app.root_path, notice: "The exhibit was saved."

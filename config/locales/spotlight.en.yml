@@ -34,6 +34,8 @@ en:
       header: "Curation"
       metadata_fields:
         header: "Metadata Fields"
+      facet_fields:
+        header: "Search Facets"
     feature_pages:
       header: "Feature Pages"
       options: "Options"

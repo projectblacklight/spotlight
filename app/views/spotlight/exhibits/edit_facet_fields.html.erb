@@ -1,0 +1,24 @@
+<%= render 'spotlight/shared/curation_sidebar' %>
+<div id="content" class="col-md-9">
+<%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal, right: "col-sm-5" do |f| %>
+    <div class="row">
+      <h1><%= t('spotlight.curation.header') %></h1>
+    </div>
+    <div class="row">
+      <div class="col-sm-5">
+        <h2><small><%= t('spotlight.curation.facet_fields.header') %></small></h2>
+      </div>
+      <div class="col-sm-2">
+        <%= f.submit nil %>
+      </div>
+    </div>
+
+   <%= f.fields_for :blacklight_configuration, @exhibit.blacklight_configuration do |c| %>
+
+      <div class="row">
+        <%= c.select :facet_fields, options_for_select(Spotlight::CatalogController.blacklight_config.facet_fields.map { |k,v| [v.label,k] }, @exhibit.blacklight_configuration.facet_fields), { }, multiple: true %> 
+      </div>
+
+   <% end %>
+<% end %>
+</div>
