@@ -34,7 +34,7 @@
                 </div>
               </div>
               <div id="collapse-facet-<%= key.parameterize %>" class="panel-collapse collapse">
-                <div facet="panel-body">
+                <div class="panel-body">
                   <%= facet.text_field :label, value: @exhibit.blacklight_configuration.facet_fields.fetch(key, {})[:label], label: t('spotlight.curation.facet_fields.options.label'), placeholder: @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label %>
                 </div>
               </div>
