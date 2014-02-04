@@ -1,7 +1,7 @@
 class Spotlight::SearchesController < Spotlight::ApplicationController
-  load_resource :exhibit, class: "Spotlight::Exhibit"
+  load_resource :exhibit, class: "Spotlight::Exhibit", only: [:index, :create]
   before_filter :only_curators
-  load_and_authorize_resource through: :exhibit
+  load_and_authorize_resource through: :exhibit, shallow: true
 
   def create
     params_copy = params.dup
@@ -16,10 +16,23 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   def index
   end
 
+  def edit
+    @exhibit = @search.exhibit
+  end
+
+  def update
+    if @search.update params.require(:search).permit(:title, :short_description, :long_description, :featured_image)
+      redirect_to exhibit_searches_path(@search.exhibit), notice: "Search has been saved"
+    else
+      render :edit
+    end
+
+  end
+
   protected
 
   def only_curators
-    authorize! :curate, @exhibit
+    authorize! :curate, @exhibit if @exhibit
   end
 
   def blacklisted_search_session_params

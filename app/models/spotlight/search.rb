@@ -9,6 +9,10 @@ class Spotlight::Search < ActiveRecord::Base
     query_solr(query_params, rows: 0, facet: false)['response']['numFound']
   end
 
+  def images
+    query_solr(query_params, rows: 1000, fl: blacklight_config.index.thumbnail_field, facet: false)['response']['docs'].map {|result| result[blacklight_config.index.thumbnail_field].first}
+  end
+
   private
 
   def blacklight_config

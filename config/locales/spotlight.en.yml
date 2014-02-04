@@ -33,6 +33,9 @@ en:
         header: "Browse"
         title: "Curation - Browse"
         update: "Save changes"
+        edit:
+          header: "Edit Browse Category"
+          cancel: "Cancel"
       header: "Curation"
       metadata_fields:
         header: "Metadata Fields"

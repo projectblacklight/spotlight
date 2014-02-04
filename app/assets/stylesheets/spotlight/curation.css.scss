@@ -6,3 +6,39 @@
 .missing-description {
   font-style: italic;
 }
+
+
+.panel-heading.search {
+  /* widths don't add up to 100% because of padding of the container. */
+  .checkbox {
+    width: 3%;
+    vertical-align: top;
+    display: inline-block;
+  }
+  .pic {
+    width: 70px;
+    display: inline-block;
+    margin-bottom: 0;
+  }
+  .main {
+    width: 40%;
+    vertical-align: top;
+    display: inline-block;
+  }
+  .description {
+    width: 30%;
+    vertical-align: top;
+    display: inline-block;
+  }
+}
+
+#edit-search {
+  .input-group-addon {
+    background: none;
+    border: none;
+  }
+  #preview {
+    height: 60px;
+    width: 60px;
+  }
+}

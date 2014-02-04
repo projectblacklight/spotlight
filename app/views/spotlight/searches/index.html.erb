@@ -16,9 +16,7 @@
 
   <h4>Browse Categories <span class="label label-default"><%=@searches.count%></span></h4>
   <div class="browse-instuctions">Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page.</div>
-  <table class="table table-striped">
-    <% @searches.each do |search| %>
-      <%=render search %>
-    <% end %>
-  </table>
+  <% @searches.each do |search| %>
+    <%=render search %>
+  <% end %>
 </div>
