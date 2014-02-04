@@ -1,6 +1,8 @@
 #exhibit-masthead, #exhibit-navbar {
   margin-top: -30px;
+  z-index: 1;
 }
+
 #exhibit-masthead {
 padding: 24px 0;
   h1, .h1 {
