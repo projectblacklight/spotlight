@@ -27,14 +27,31 @@ describe Spotlight::SearchesController do
     end
 
     describe "GET index" do
+      let!(:search) { FactoryGirl.create(:search) }
       it "should show all the items" do
-      search = FactoryGirl.create(:search)
         get :index, exhibit_id: search.exhibit_id 
         expect(response).to be_successful
         expect(assigns[:exhibit]).to eq search.exhibit
-        # puts "Sea: #{search.exhibit.searches.to_a}"
-        # puts "assigned #{assigns[:searches].to_a}"
         expect(assigns[:searches]).to include search
+      end
+    end
+
+    describe "GET edit" do
+      let(:search) { FactoryGirl.create(:search) }
+      it "should show edit page" do
+        get :edit, id: search
+        expect(response).to be_successful
+        expect(assigns[:search]).to eq search
+        expect(assigns[:exhibit]).to eq search.exhibit
+      end
+    end
+
+    describe "PATCH update" do
+      let(:search) { FactoryGirl.create(:search) }
+      it "should show edit page" do
+        patch :update, id: search, search: {title: 'Hey man', short_description: 'short', long_description: 'long', featured_image: 'http://lorempixel.com/64/64/'}
+        expect(assigns[:search].title).to eq 'Hey man'
+        expect(response).to redirect_to exhibit_searches_path(search.exhibit) 
       end
     end
   end
