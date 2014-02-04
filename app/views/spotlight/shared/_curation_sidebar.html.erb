@@ -7,7 +7,7 @@
     <li class="disabled"><%= link_to "Tags", "#" %></li>
     <li><%= link_to "Search facets", spotlight.edit_facets_exhibit_path(@exhibit) %></li>
     <li><%= link_to "Browse", spotlight.exhibit_searches_path(@exhibit) %></li>
-    <li><%= link_to "Feature pages", spotlight.exhibit_feature_pages_path(@exhibit) %></li>
-    <li><%= link_to "About pages", spotlight.exhibit_about_pages_path(@exhibit) %></li>
+    <li><%= link_to "Feature pages", spotlight.exhibit_feature_pages_path(@exhibit), 'data-no-turbolink' => true %></li>
+    <li><%= link_to "About pages", spotlight.exhibit_about_pages_path(@exhibit), 'data-no-turbolink' => true %></li>
   </ul>
 </div>
