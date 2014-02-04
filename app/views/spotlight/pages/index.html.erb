@@ -1,10 +1,19 @@
-<h1><%= t :'spotlight.curation.header' %></h1>
-<h2 class="text-muted"><%= t :"spotlight.#{page_model.pluralize}.header" %></h2>
-
-<div class="panel-group">
-  <%= render @pages %>
-</div>
-
+<%= form_tag(update_all_pages_exhibits_path, class: "form-horizontal") do %>
+  <div class="row">
+    <div class="col-xs-10">
+      <h1><%= t :'spotlight.curation.header' %></h1>
+      <h2 class="text-muted"><%= t :"spotlight.#{page_model.pluralize}.header" %></h2>
+    </div>
+    <div class="col-xs-2 pull-right">
+      <%= button_tag(t(:"spotlight.#{page_model.pluralize}.update"), class: "btn btn-default") %>
+    </div>
+  </div>
+  <div class="panel-group dd <%= page_model %>_admin" id="nested-pages">
+    <ol class="dd-list">
+      <%= render @pages %>
+    </ol>
+  </div>
+<%- end -%>
 <div>
   <%= link_to t(:'helpers.submit.new', :model => "Page"), new_spotlight_page_path_for(@exhibit), :class => ' btn btn-primary' %>
 </div>

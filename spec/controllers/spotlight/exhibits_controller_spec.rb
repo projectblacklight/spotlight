@@ -16,6 +16,12 @@ describe Spotlight::ExhibitsController do
       end
     end
 
+    describe "#update_all_pages" do
+      it "should not be allowed" do
+        expect{ post :update_all_pages, id: exhibit }.to raise_error CanCan::AccessDenied
+      end
+    end
+
     describe "#edit_metadata_fields" do
       it "should not be allowed" do
         expect{ get :edit_metadata_fields, id: exhibit}.to raise_error CanCan::AccessDenied
@@ -94,6 +100,38 @@ describe Spotlight::ExhibitsController do
         assigns[:exhibit].tap do |saved|
           expect(saved.blacklight_configuration.facet_fields.keys).to eq ['genre_sim']
         end
+      end
+    end
+    describe "POST #update_all" do
+      before do
+        request.env["HTTP_REFERER"] = "http://example.com"
+      end
+      let!(:page) {FactoryGirl.create(:feature_page, title: "Feature Page Title", exhibit: exhibit)}
+      let(:update_params) { {page.id => {"title" => "This is a new title!"}} }
+      it "receives the pages parameter" do
+       Spotlight::FeaturePage.any_instance.should_receive(:update).with({"title" => "This is a new title!"})
+       post :update_all_pages, id: exhibit, pages: {feature_page: update_params}
+      end
+      it "should update the pages that are passed in the pages hash" do
+        expect(page.title).to eq "Feature Page Title"
+        post :update_all_pages, id: exhibit, pages: {feature_page: update_params}
+        expect(Spotlight::FeaturePage.find(page.id).title).to eq "This is a new title!"
+      end
+    end
+    describe "POST #update_all" do
+      before do
+        request.env["HTTP_REFERER"] = "http://example.com"
+      end
+      let!(:page) {FactoryGirl.create(:feature_page, title: "Feature Page Title", exhibit: exhibit)}
+      let(:update_params) { {page.id => {"title" => "This is a new title!"}} }
+      it "receives the pages parameter" do
+       Spotlight::FeaturePage.any_instance.should_receive(:update).with({"title" => "This is a new title!"})
+       post :update_all_pages, id: exhibit, pages: {feature_page: update_params}
+      end
+      it "should update the pages that are passed in the pages hash" do
+        expect(page.title).to eq "Feature Page Title"
+        post :update_all_pages, id: exhibit, pages: {feature_page: update_params}
+        expect(Spotlight::FeaturePage.find(page.id).title).to eq "This is a new title!"
       end
     end
   end

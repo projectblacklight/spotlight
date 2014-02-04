@@ -20,8 +20,10 @@ en:
   spotlight:
     administration:
       header: "Administration"
+      page_title: "Page title"
       settings:
         header: "Settings"
+      show_sidebar: "Show sidebar"
     curation:
       items:
         header: "Items"
@@ -50,8 +52,10 @@ en:
     feature_pages:
       header: "Feature Pages"
       options: "Options"
+      update: "Save changes"
     about_pages:
       header: "About Pages"
+      update: "Save changes"
     header_links:
       login: "Sign in"
       logout: "Sign out"

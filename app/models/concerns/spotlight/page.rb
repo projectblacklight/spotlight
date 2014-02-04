@@ -14,4 +14,7 @@ module Spotlight::Page
   def to_partial_path
     "spotlight/pages/page"
   end
+  def feature_page?
+    self.is_a?(Spotlight::FeaturePage)
+  end
 end
