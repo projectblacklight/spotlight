@@ -1,0 +1,14 @@
+<% if current_exhibit %>
+<div id="exhibit-navbar" class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <li><%= link_to t(:'curation.home'), root_url %></li>
+      <li><%= link_to t(:'curation.browse'), search_action_url %></li>
+    </ul>
+
+    <div class="navbar-right col-sm-4 col-md-4"> 
+      <%= render_search_bar  %>
+    </div>
+  </div>
+</div>
+<% end %>
