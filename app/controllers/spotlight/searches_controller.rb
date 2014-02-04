@@ -1,5 +1,5 @@
 class Spotlight::SearchesController < Spotlight::ApplicationController
-  load_resource :exhibit, class: "Spotlight::Exhibit", only: [:index, :create]
+  load_resource :exhibit, class: "Spotlight::Exhibit", only: [:index, :create, :update_all]
   before_filter :authenticate_user!
   before_filter :only_curators!
   load_and_authorize_resource through: :exhibit, shallow: true
@@ -25,13 +25,20 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
     if @search.update params.require(:search).permit(:title, :short_description, :long_description, :featured_image)
       redirect_to exhibit_searches_path(@search.exhibit), notice: "Search has been saved"
     else
-      render :edit
+      render action: 'edit'
     end
   end
 
   def destroy
     @search.destroy
     redirect_to exhibit_searches_path(@search.exhibit), alert: "Search was deleted"
+  end
+
+  def update_all
+    @exhibit.searches.find(params[:present]).each do |search|
+      search.update on_landing_page: params[:landing_page].include?(search.id.to_s)
+    end
+    redirect_to main_app.catalog_index_path, notice: "Searches updated"
   end
 
   protected

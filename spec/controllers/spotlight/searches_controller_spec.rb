@@ -60,6 +60,13 @@ describe Spotlight::SearchesController do
         expect(assigns[:search].title).to eq 'Hey man'
         expect(response).to redirect_to exhibit_searches_path(search.exhibit) 
       end
+
+      it "should render edit if there's an error" do
+        Spotlight::Search.any_instance.should_receive(:update).and_return(false)
+        patch :update, id: search, search: {title: 'Hey man', short_description: 'short', long_description: 'long', featured_image: 'http://lorempixel.com/64/64/'}
+        expect(response).to be_successful 
+        expect(response).to render_template 'edit'
+      end
     end
 
     describe "DELETE destroy" do
@@ -71,6 +78,21 @@ describe Spotlight::SearchesController do
         expect(response).to redirect_to exhibit_searches_path(search.exhibit) 
         expect(flash[:alert]).to eq "Search was deleted"
       end
+    end
+
+    describe "POST update_all" do
+      let!(:search2) { FactoryGirl.create(:search, exhibit: search.exhibit, on_landing_page: true ) }
+      let!(:search3) { FactoryGirl.create(:search, exhibit: search.exhibit, on_landing_page: true ) }
+      it "should update whether they are on the landing page" do
+        post :update_all, exhibit_id: search.exhibit, present: [search, search2], landing_page: [search]
+        expect(search.reload.on_landing_page).to be_true
+        expect(search2.reload.on_landing_page).to be_false
+        expect(search3.reload.on_landing_page).to be_true # should remain untouched since it wasn't in present[]
+        expect(response).to redirect_to main_app.catalog_index_path() #TODO change to browse exhibit landing page once that is created. 
+        expect(flash[:notice]).to eq "Searches updated"
+      end
+
+
     end
   end
 end
