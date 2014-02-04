@@ -34,6 +34,9 @@ en:
       header: "Curation"
       metadata_fields:
         header: "Metadata Fields"
+        label: "Field name"
+        view:
+          show: "Item Details"
       facet_fields:
         header: "Search Facets"
         options:
