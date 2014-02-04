@@ -1,5 +1,7 @@
 class Spotlight::ExhibitsController < Spotlight::ApplicationController
   before_filter :default_exhibit
+  include Blacklight::SolrHelper
+
   authorize_resource
 
   def edit
@@ -8,6 +10,12 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   ##
   # Edit the index and show view metadata fields
   def edit_metadata_fields
+  end
+
+  ##
+  # Edit the index and show view metadata fields
+  def edit_facet_fields
+    @fields = blacklight_solr.get('admin/luke', params: { fl: '*', 'json.nl' => 'map' })['fields']
   end
 
   def update
@@ -27,11 +35,19 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
       :description,
       contact_emails_attributes: [:email],
       blacklight_configuration_attributes: [
-        facet_fields: [],
-        index_fields: [@exhibit.blacklight_configuration.default_blacklight_config.view.keys.inject({}) { |result, element| result[element] = []; result }], 
+        facet_fields: [exhibit_configuration_facet_params(@exhibit.blacklight_configuration.default_blacklight_config.facet_fields.keys)],
+        index_fields: [exhibit_configuration_index_params(@exhibit.blacklight_configuration.default_blacklight_config.view.keys)], 
         show_fields: []
       ]
     )
+  end
+
+  def exhibit_configuration_index_params arr
+    arr.inject({}) { |result, element| result[element] = []; result }
+  end
+
+  def exhibit_configuration_facet_params arr
+    arr.inject({}) { |result, element| result[element] = [:enabled, :label]; result }
   end
 
   def default_exhibit

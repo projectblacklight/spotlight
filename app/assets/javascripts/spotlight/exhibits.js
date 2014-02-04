@@ -6,4 +6,6 @@ Spotlight.onLoad(function() {
     input.attr('name', input.attr('name').replace('0', container.children().length));
     container.append(input);
   });
+
+  $('.btn-with-tooltip').tooltip();
 });
