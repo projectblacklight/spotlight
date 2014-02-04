@@ -1,4 +1,5 @@
 class Spotlight::ExhibitsController < Spotlight::ApplicationController
+  before_filter :authenticate_user!
   before_filter :default_exhibit
   include Blacklight::SolrHelper
 

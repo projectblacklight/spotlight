@@ -3,34 +3,52 @@ describe Spotlight::ExhibitsController do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { Spotlight::Exhibit.default }
 
+
+  describe "when the user is not authorized" do
+    before do
+      sign_in FactoryGirl.create(:exhibit_visitor)
+    end
+
+    it "should deny access" do
+      get :edit, id: exhibit 
+      expect(response).to redirect_to main_app.root_path
+      expect(flash[:alert]).to be_present
+    end
+  end
+
   describe "when not logged in" do
     describe "#edit" do
       it "should not be allowed" do
-        expect{ get :edit, id: exhibit}.to raise_error CanCan::AccessDenied
+        get :edit, id: exhibit 
+        expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe "#update" do
       it "should not be allowed" do
-        expect{ patch :update, id: exhibit }.to raise_error CanCan::AccessDenied
+        patch :update, id: exhibit 
+        expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe "#update_all_pages" do
       it "should not be allowed" do
-        expect{ post :update_all_pages, id: exhibit }.to raise_error CanCan::AccessDenied
+        post :update_all_pages, id: exhibit
+        expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe "#edit_metadata_fields" do
       it "should not be allowed" do
-        expect{ get :edit_metadata_fields, id: exhibit}.to raise_error CanCan::AccessDenied
+        get :edit_metadata_fields, id: exhibit
+        expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe "#edit_facet_fields" do
       it "should not be allowed" do
-        expect{ get :edit_facet_fields, id: exhibit}.to raise_error CanCan::AccessDenied
+        get :edit_facet_fields, id: exhibit
+        expect(response).to redirect_to main_app.new_user_session_path
       end
     end
   end

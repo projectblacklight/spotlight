@@ -1,6 +1,7 @@
 class Spotlight::CatalogController < Spotlight::ApplicationController
   include Blacklight::Catalog
   load_resource :exhibit, class: Spotlight::Exhibit
+  before_filter :authenticate_user!
   before_filter :check_authorization
 
   copy_blacklight_config_from ::CatalogController

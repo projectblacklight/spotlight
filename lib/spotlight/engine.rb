@@ -7,6 +7,7 @@ module Spotlight
     initializer "require dependencies" do
       require 'sir-trevor-rails'
       require 'carrierwave'
+      require 'carrierwave/orm/activerecord'
       require 'cancan'
       require 'bootstrap_form'
     end
