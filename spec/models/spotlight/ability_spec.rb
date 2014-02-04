@@ -30,6 +30,7 @@ describe Spotlight::Ability do
     it { should be_able_to(:read, exhibit) }
 
     it { should be_able_to(:create, Spotlight::Search) }
+    it { should be_able_to(:update_all, Spotlight::Search) }
     it { should be_able_to(:update, search) }
     it { should be_able_to(:destroy, search) }
 

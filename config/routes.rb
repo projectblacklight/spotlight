@@ -1,7 +1,11 @@
 Spotlight::Engine.routes.draw do
   resources :attachments
   resources :exhibits, only: [:edit, :update] do
-    resources :searches, shallow: true
+    resources :searches, shallow: true do
+      collection do
+        post :update_all
+      end
+    end
     resources :about, controller: "about_pages", as: "about_pages"
     resources :feature, controller: "feature_pages", as: "feature_pages"
     resources :catalog, only: [:index]
