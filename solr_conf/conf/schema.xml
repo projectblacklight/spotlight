@@ -160,7 +160,7 @@
       destination field is to use the dynamic field syntax.
       copyField also supports a maxChars to copy setting.  -->
 
-    <!-- <copyField source="*_tesim" dest="all_text_timv" maxChars="3000"/> -->
+  <copyField source="*_tesim" dest="all_text_timv" maxChars="3000"/>
 
   <types>
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
