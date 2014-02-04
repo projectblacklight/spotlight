@@ -18,7 +18,13 @@ module Spotlight
       inject_into_class 'app/models/user.rb', User, "  include Spotlight::User"
     end
 
-    def add_catalog_mix
+    def add_controller_mixin
+      inject_into_file 'app/controllers/application_controller.rb', after: "include Blacklight::Controller" do
+        "\n  include Spotlight::Controller\n"
+      end
+    end
+
+    def add_catalog_mixin
       inject_into_file 'app/controllers/catalog_controller.rb', after: "include Blacklight::Catalog" do
         "\n  include Spotlight::Catalog\n"
       end
