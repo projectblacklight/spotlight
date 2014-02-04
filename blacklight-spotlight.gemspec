@@ -5,7 +5,7 @@ require "spotlight/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "spotlight"
+  s.name        = "blacklight-spotlight"
   s.version     = Spotlight::VERSION
   s.authors     = ["Chris Beer", "Jessie Keck", "Gary Geisler", "Justin Coyne"]
   s.email       = ["exhibits-feedback@lists.stanford.edu"]
