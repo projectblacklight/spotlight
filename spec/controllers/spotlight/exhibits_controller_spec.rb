@@ -48,6 +48,7 @@ describe Spotlight::ExhibitsController do
 
     describe "#edit_facet_fields" do
       it "should be successful" do
+        controller.stub_chain(:blacklight_solr, :get).and_return({})
         get :edit_facet_fields, id: exhibit
         expect(response).to be_successful
       end
@@ -68,12 +69,21 @@ describe Spotlight::ExhibitsController do
       end
 
       it "should update metadata fields" do
-        patch :update, id: exhibit, exhibit: { blacklight_configuration_attributes: { show_fields: ['c', 'd'], index_fields: { list: ['e', 'f']} }}
+        exhibit.blacklight_configuration.default_blacklight_config.stub(index_fields: { 'a' => {},  'b' => {},  'c' => {}, 'd' => {},  'e' => {}, 'f' => {} })
+        patch :update, id: exhibit, exhibit: { blacklight_configuration_attributes: {
+          index_fields: {
+            c: { enabled: true, show: true},
+            d: { enabled: true, show: true},
+            e: { enabled: true, list: true},
+            f: { enabled: true, list: true}
+          }
+          }
+        }
+
         expect(flash[:notice]).to eq "The exhibit was saved."
         expect(response).to redirect_to main_app.root_path
         assigns[:exhibit].tap do |saved|
-          expect(saved.blacklight_configuration.show_fields).to eq ['c', 'd']
-          expect(saved.blacklight_configuration.index_fields['list']).to eq ['e', 'f']
+          expect(saved.blacklight_configuration.index_fields).to include 'c', 'd', 'e', 'f'
         end
       end
 

@@ -15,12 +15,16 @@ describe "Editing metadata fields", type: :feature do
     expect(page).to have_content "Curation Metadata Fields"
     expect(page).to have_button "Save"
 
-    select "Language", from: "List"
-    select "Type", from: "List"
+    check :exhibit_blacklight_configuration_attributes_index_fields_language_ssm_show
+    check :exhibit_blacklight_configuration_attributes_index_fields_language_ssm_list
+
+    check :exhibit_blacklight_configuration_attributes_index_fields_abstract_tesim_show
+    check :exhibit_blacklight_configuration_attributes_index_fields_note_mapuse_tesim_list
 
     click_on "Save changes"
 
     expect(Spotlight::Exhibit.default.blacklight_config('list').index_fields).to include("language_ssm", "note_mapuse_tesim")
     expect(Spotlight::Exhibit.default.blacklight_config('list').index_fields).to have(2).fields
+    expect(Spotlight::Exhibit.default.blacklight_config.show_fields).to include("language_ssm", "abstract_tesim")
   end
 end

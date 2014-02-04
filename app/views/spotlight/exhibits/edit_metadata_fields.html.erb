@@ -13,20 +13,34 @@
       </div>
     </div>
 
-   <%= f.fields_for :blacklight_configuration, @exhibit.blacklight_configuration do |c| %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= t :'spotlight.curation.metadata_fields.label' %></th>
+          <th><%= t :'spotlight.curation.metadata_fields.view.show', default: t(:'blacklight.search.view.show') %></th>
+          <% @exhibit.blacklight_configuration.default_blacklight_config.view.keys.each do |type| %>
 
-      <div class="row">
-        <%= c.select :show_fields, options_for_select(Spotlight::CatalogController.blacklight_config.show_fields.map { |k,v| [v.label,k] }, @exhibit.blacklight_configuration.show_fields), { }, multiple: true %> 
-      </div>
-
-      <%= c.fields_for :index_fields do |idxf| %>
-        <% @exhibit.blacklight_configuration.default_blacklight_config.view.keys.each do |type| %>
-          <div class="row">
-            <%= idxf.select type, options_for_select(Spotlight::CatalogController.blacklight_config.index_fields.map { |k,v| [v.label,k] }, @exhibit.blacklight_configuration.index_fields_for_view(type)), { }, multiple: true %> 
-          </div>
+          <th><%= t "spotlight.curation.metadata_fields.view.#{type}", default: t("blacklight.search.view.#{type}") %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+     <%= f.fields_for :blacklight_configuration, @exhibit.blacklight_configuration do |c| %>
+        <%= c.fields_for :index_fields do |idxf| %>
+          <% @exhibit.blacklight_configuration.all_index_fields.each do |key, config| %>
+              <tr>
+                <%= idxf.fields_for key do |field| %>
+                  <td><%= config.label %></td>
+                  <td><%= field.check_box :show, checked: (@exhibit.blacklight_configuration.index_fields[key] || {})[:show], label: "" %></td>
+                  <% @exhibit.blacklight_configuration.default_blacklight_config.view.keys.each do |type| %>
+                  <td><%= field.check_box type, checked: (@exhibit.blacklight_configuration.index_fields[key] || {})[type], label: "" %></td>
+                  <% end %>
+                <% end %>
+              </tr>
+          <% end %>
         <% end %>
-      <% end %>
-
-   <% end %>
+     <% end %>
+     </tbody>
+   </table>
 <% end %>
 </div>

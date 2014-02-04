@@ -17,7 +17,7 @@ describe Spotlight::BlacklightConfiguration do
     end
 
     it "should filter blank values" do
-      subject.facet_fields["title_facet"] = { :something => ""}
+      subject.facet_fields["title_facet"] = { something: "" }
       subject.valid?
       expect(subject.facet_fields["title_facet"].keys).to_not include :something
     end
@@ -26,7 +26,7 @@ describe Spotlight::BlacklightConfiguration do
       subject.facet_fields['a'] = { enabled: true }
       subject.facet_fields['b'] = { enabled: false }
       subject.facet_fields['d'] = { enabled: true }
-      
+
       blacklight_config.add_facet_field 'a'
       blacklight_config.add_facet_field 'b'
       blacklight_config.add_facet_field 'c'
@@ -37,68 +37,67 @@ describe Spotlight::BlacklightConfiguration do
     end
   end
 
-  describe "show fields" do
-    it "should have show fields" do
-      expect(subject.show_fields).to be_empty
-      subject.show_fields << 'title' << 'author'
-      expect(subject.show_fields).to eq ['title', 'author']
-    end
-
-    it "should filter blank values" do
-      subject.show_fields << ""
-      subject.valid?
-      expect(subject.show_fields).to_not include ""
-    end
-
-    it "should filter the upstream blacklight config" do
-      subject.show_fields = ['a', 'c', 'd']
-      blacklight_config.add_show_field 'a'
-      blacklight_config.add_show_field 'b'
-      blacklight_config.add_show_field 'c'
-
-      expect(subject.blacklight_config.show_fields).to include('a', 'c')
-      expect(subject.blacklight_config.show_fields).to_not include('b')
-      expect(subject.blacklight_config.show_fields).to have(2).fields
-    end
-  end
-
   describe "index fields" do
+
     it "should have index fields" do
       expect(subject.index_fields).to be_empty
-      subject.index_fields = { list: ['title', 'author'] }
-      expect(subject.index_fields[:list]).to eq ['title', 'author']
+      subject.index_fields['title'] = {}
+      subject.index_fields['author'] = {}
+      expect(subject.index_fields.keys).to eq ['title', 'author']
     end
 
     it "should filter blank values" do
-      subject.index_fields = { list: ['title', 'author'] }
+      subject.index_fields['title'] = { something: "" }
       subject.valid?
-      expect(subject.index_fields[:list]).to_not include ""
+      expect(subject.index_fields["title"].keys).to_not include :something
     end
 
     it "should filter the upstream blacklight config" do
-      subject.index_fields = { list: ['a', 'c', 'd'] }
+      subject.index_fields['a'] = { enabled: true, list: true }
+      subject.index_fields['c'] = { enabled: false, list: false }
+      subject.index_fields['d'] = { enabled: true, list: true }
+
       blacklight_config.add_index_field 'a'
       blacklight_config.add_index_field 'b'
       blacklight_config.add_index_field 'c'
 
-      expect(subject.blacklight_config.index_fields).to include('a', 'c')
-      expect(subject.blacklight_config.index_fields).to_not include('b')
-      expect(subject.blacklight_config.index_fields).to have(2).fields
+      expect(subject.blacklight_config.index_fields).to include('a')
+      expect(subject.blacklight_config.index_fields).to_not include('b', 'd')
+      expect(subject.blacklight_config.index_fields).to have(1).fields
     end
 
-    it "should filter the upstream blacklight config with the correct view type" do
-      subject.index_fields = { list: ['a', 'c', 'e'], gallery: ['b', 'd'] }
+    it "should filter the upstream blacklight config" do
+      subject.index_fields['a'] = { enabled: true, list: true, gallery: false }
+      subject.index_fields['b'] = { enabled: true, list: false, gallery: true }
+      subject.index_fields['c'] = { enabled: false, list: true, gallery: false }
+      subject.index_fields['d'] = { enabled: true, list: false, gallery: true }
+      subject.index_fields['e'] = { enabled: true, list: true, gallery: false }
+
       blacklight_config.add_index_field 'a'
       blacklight_config.add_index_field 'b'
       blacklight_config.add_index_field 'c'
       blacklight_config.add_index_field 'd'
 
-      expect(subject.blacklight_config(:list).index_fields).to include('a', 'c')
+      expect(subject.blacklight_config(:list).index_fields).to include('a')
       expect(subject.blacklight_config(:gallery).index_fields).to include('b', 'd')
       expect(subject.blacklight_config(:list).index_fields).to_not include('b', 'd')
       expect(subject.blacklight_config(:gallery).index_fields).to_not include('a', 'c')
-      expect(subject.blacklight_config(:list).index_fields).to have(2).fields
+      expect(subject.blacklight_config(:list).index_fields).to have(1).fields
       expect(subject.blacklight_config(:gallery).index_fields).to have(2).fields
+    end
+
+    it "should filter the upstream blacklight config for show fields" do
+      subject.index_fields['a'] = { enabled: true, show: true }
+      subject.index_fields['c'] = { enabled: false, show: false }
+      subject.index_fields['d'] = { enabled: true, show: false }
+
+      blacklight_config.add_index_field 'a'
+      blacklight_config.add_index_field 'b'
+      blacklight_config.add_index_field 'c'
+
+      expect(subject.blacklight_config.show_fields).to include('a')
+      expect(subject.blacklight_config.show_fields).to_not include('b', 'd')
+      expect(subject.blacklight_config.show_fields).to have(1).fields
     end
   end
 
@@ -106,18 +105,22 @@ describe Spotlight::BlacklightConfiguration do
   describe "sort fields" do
     it "should have sort fields" do
       expect(subject.sort_fields).to be_empty
-      subject.sort_fields << 'title' << 'author'
-      expect(subject.sort_fields).to eq ['title', 'author']
+      subject.sort_fields['title'] = {}
+      subject.sort_fields['author'] = {}
+      expect(subject.sort_fields.keys).to eq ['title', 'author']
     end
 
     it "should filter blank values" do
-      subject.sort_fields << ""
+      subject.sort_fields['title'] = { something: "" }
       subject.valid?
-      expect(subject.sort_fields).to_not include ""
+      expect(subject.sort_fields['title'].keys).to_not include :something
     end
 
     it "should filter the upstream blacklight config" do
-      subject.sort_fields = ['a', 'c', 'd']
+      subject.sort_fields['a'] = { enabled: true }
+      subject.sort_fields['c'] = { enabled: true }
+      subject.sort_fields['d'] = { enabled: true }
+
       blacklight_config.add_sort_field 'a'
       blacklight_config.add_sort_field 'b'
       blacklight_config.add_sort_field 'c'
