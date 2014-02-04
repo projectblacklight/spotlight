@@ -27,7 +27,11 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
     else
       render :edit
     end
+  end
 
+  def destroy
+    @search.destroy
+    redirect_to exhibit_searches_path(@search.exhibit), alert: "Search was deleted"
   end
 
   protected

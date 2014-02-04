@@ -26,6 +26,7 @@ describe Spotlight::SearchesController do
     before do
       sign_in FactoryGirl.create(:exhibit_curator)
     end
+    let(:search) { FactoryGirl.create(:search) }
 
     it "should create a saved search" do
       post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_sim"=>["map"]}, exhibit_id: Spotlight::Exhibit.default
@@ -36,7 +37,6 @@ describe Spotlight::SearchesController do
     end
 
     describe "GET index" do
-      let!(:search) { FactoryGirl.create(:search) }
       it "should show all the items" do
         get :index, exhibit_id: search.exhibit_id 
         expect(response).to be_successful
@@ -46,7 +46,6 @@ describe Spotlight::SearchesController do
     end
 
     describe "GET edit" do
-      let(:search) { FactoryGirl.create(:search) }
       it "should show edit page" do
         get :edit, id: search
         expect(response).to be_successful
@@ -56,11 +55,21 @@ describe Spotlight::SearchesController do
     end
 
     describe "PATCH update" do
-      let(:search) { FactoryGirl.create(:search) }
       it "should show edit page" do
         patch :update, id: search, search: {title: 'Hey man', short_description: 'short', long_description: 'long', featured_image: 'http://lorempixel.com/64/64/'}
         expect(assigns[:search].title).to eq 'Hey man'
         expect(response).to redirect_to exhibit_searches_path(search.exhibit) 
+      end
+    end
+
+    describe "DELETE destroy" do
+      let!(:search) { FactoryGirl.create(:search) }
+      it "should remove it" do
+        expect {
+          delete :destroy, id: search
+        }.to change { Spotlight::Search.count }.by(-1)
+        expect(response).to redirect_to exhibit_searches_path(search.exhibit) 
+        expect(flash[:alert]).to eq "Search was deleted"
       end
     end
   end
