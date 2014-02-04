@@ -5,7 +5,7 @@
     <div class="main">
       <div class="title"><%= search.title %></div>
       <div class="count"><%= search.count %> items</div>
-      <div class="actions"><%=link_to "Edit", edit_search_path(search) %> &bull; <%=link_to "Delete", search_path(search), method: :delete %></div>
+      <div class="actions"><%=link_to "Edit", edit_search_path(search) %> &bull; <%=link_to "Delete", search_path(search), method: :delete, confirm: "Are you sure you want to delete this saved search?" %></div>
     </div>
 
     <div class="description">
