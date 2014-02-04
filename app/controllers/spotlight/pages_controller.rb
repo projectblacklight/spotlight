@@ -1,5 +1,7 @@
 module Spotlight
   class PagesController < ApplicationController
+    before_filter :authenticate_user!, except: [:show]
+
     load_resource :exhibit, class: Spotlight::Exhibit, only: [:index, :new, :create]
     load_and_authorize_resource only: [:show, :edit, :update, :destroy]
     load_and_authorize_resource through: :exhibit, only: [:index, :new, :create]

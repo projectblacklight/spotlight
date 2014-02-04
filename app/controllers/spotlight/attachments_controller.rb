@@ -2,6 +2,11 @@ require_dependency "spotlight/application_controller"
 
 module Spotlight
   class AttachmentsController < ApplicationController
+    before_filter :authenticate_user!
+    before_filter do
+      current_user.roles.include? :curator
+    end
+
     before_action :set_attachment, only: [:show, :edit, :update, :destroy]
 
     # GET /attachments

@@ -1,6 +1,7 @@
 class Spotlight::SearchesController < Spotlight::ApplicationController
   load_resource :exhibit, class: "Spotlight::Exhibit", only: [:index, :create]
-  before_filter :only_curators
+  before_filter :authenticate_user!
+  before_filter :only_curators!
   load_and_authorize_resource through: :exhibit, shallow: true
 
   def create
@@ -31,7 +32,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
 
   protected
 
-  def only_curators
+  def only_curators!
     authorize! :curate, @exhibit if @exhibit
   end
 

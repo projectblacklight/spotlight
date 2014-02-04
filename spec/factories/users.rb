@@ -13,6 +13,10 @@ FactoryGirl.define do
         create_list(:role, 1, user: user, exhibit: Spotlight::Exhibit.default, role: 'curate')
       end
     end
+
+    factory :exhibit_visitor do
+      
+    end
   end
 end
   
