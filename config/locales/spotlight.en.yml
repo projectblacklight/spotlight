@@ -26,6 +26,10 @@ en:
       settings:
         header: "Settings"
       show_sidebar: "Show sidebar"
+    browse:
+      item_count:
+        one: "%{count} item"
+        other: "%{count} items"
     contact_form:
       header: "Report a Problem"
     curation:

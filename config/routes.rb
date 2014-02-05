@@ -8,6 +8,8 @@ Spotlight::Engine.routes.draw do
         post :update_all
       end
     end
+
+    resources :browse, only: [:index, :show]
     resources :about, controller: "about_pages", as: "about_pages"
     resources :feature, controller: "feature_pages", as: "feature_pages"
     resources :catalog, only: [:index]
