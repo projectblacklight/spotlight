@@ -130,6 +130,21 @@ describe Spotlight::FeaturePagesController do
       end
     end
 
+    describe "POST update_all" do
+      let!(:page1) { FactoryGirl.create(:feature_page) }
+      let!(:page2) { FactoryGirl.create(:feature_page, exhibit: page1.exhibit) }
+      let!(:page3) { FactoryGirl.create(:feature_page, exhibit: page1.exhibit, parent_page_id: page1.id) }
+      before { request.env["HTTP_REFERER"] = "http://example.com" }
+      it "should update the parent/child relationship" do
+        post :update_all, exhibit_id: page1.exhibit, exhibit: {feature_pages_attributes: [{id: page2.id, parent_page_id: page1.id}]}
+        expect(response).to redirect_to 'http://example.com'
+        expect(flash[:notice]).to eq "Feature pages were successfully updated."
+        expect(page1.parent_page).to be_nil
+        expect(page1.child_pages).to include page2
+        expect(page3.parent_page).to eq page1 # should remain untouched since in wasn't present
+      end
+    end
+
     describe "DELETE destroy" do
       let!(:page) { FactoryGirl.create(:feature_page) }
       it "destroys the requested page" do

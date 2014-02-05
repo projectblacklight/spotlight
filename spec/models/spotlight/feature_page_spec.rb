@@ -50,6 +50,11 @@ module Spotlight
         expect(parent.child_pages.length).to eq 2
         expect(parent.child_pages.map(&:id)).to eq [child1.id, child2.id]
       end
+      it "should define top_level_page? properly" do
+        expect(parent.top_level_page?).to be_true
+        expect(child1.top_level_page?).to be_false
+        expect(child2.top_level_page?).to be_false
+      end
     end
   end
 end

@@ -69,7 +69,7 @@ module Spotlight
     protected
 
     def update_all_page_params
-      params.require(:exhibit).permit("#{page_model.pluralize}_attributes" => [:id, :published, :title, :weight, :display_sidebar ])
+      params.require(:exhibit).permit("#{page_model.pluralize}_attributes" => [:id, :published, :title, :weight, :display_sidebar, :parent_page_id ])
     end
 
     def human_name
