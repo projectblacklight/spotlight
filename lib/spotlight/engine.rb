@@ -1,5 +1,6 @@
 #Load blacklight which will give spotlight views a higher preference than those in blacklight
 require 'blacklight'
+require 'blacklight/gallery'
 
 module Spotlight
   class Engine < ::Rails::Engine

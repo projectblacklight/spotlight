@@ -1,11 +1,11 @@
 <div class="media col-md-6">
-<%= link_to search_action_url(search.query_params), class: 'pull-left' do %>
-  <%= image_tag(search.featured_image) %>
+<%= link_to spotlight.exhibit_browse_path(@exhibit, search), class: 'pull-left' do %>
+  <%= image_tag(search.featured_image, width: 180) %>
 <% end if search.featured_image%>
 
   <div class="media-body">
-  <h4 class="media-heading"><%= link_to search.title, search_action_url(search.query_params) %>
-    <small><%= t 'spotlight.browse.item_count', count: search.count %></small>
+  <h4 class="media-heading"><%= link_to search.title, spotlight.exhibit_browse_path(@exhibit, search) %>
+    <small class="item-count"><%= t 'spotlight.browse.item_count', count: search.count %></small>
   </h4>
 
   <% if search.short_description %>

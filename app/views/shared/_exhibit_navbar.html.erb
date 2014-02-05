@@ -3,7 +3,7 @@
   <div class="container">
     <ul class="nav navbar-nav">
       <li><%= link_to t(:'curation.home'), root_url %></li>
-      <li><%= link_to t(:'curation.browse'), spotlight.exhibit_browse_index_url(current_exhibit) %></li>
+      <li class="<%= "active" if params[:controller] == 'spotlight/browse' %>"><%= link_to t(:'curation.browse'), spotlight.exhibit_browse_index_url(current_exhibit) %></li>
     </ul>
 
     <div class="navbar-right col-sm-4 col-md-4"> 

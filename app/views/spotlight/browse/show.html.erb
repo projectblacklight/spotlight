@@ -1,0 +1,13 @@
+  <div class="media row">
+    <%= image_tag @browse.featured_image, class: 'col-md-3' %>
+    <div class="media-body col-md-9">
+      <h1 class="media-heading"><%= @browse.title %></h1>
+      <small class="item-count"><%= t 'spotlight.browse.item_count', count: @browse.count %></small>
+      <p><%= @browse.long_description %></p>
+    </div>
+  </div>
+
+<div class="col-md-9 col-md-offset-3">
+  <%= render_document_index_with_view(:gallery, @document_list) %>
+  <%= render 'results_pagination' %>
+</div>
