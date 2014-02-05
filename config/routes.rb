@@ -1,5 +1,7 @@
 Spotlight::Engine.routes.draw do
   resources :attachments
+  resource :contact_form, only: [:new, :create]
+
   resources :exhibits, only: [:edit, :update] do
     resources :searches, shallow: true do
       collection do

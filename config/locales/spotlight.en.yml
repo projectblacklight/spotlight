@@ -13,6 +13,8 @@ en:
       search:
         create: "Save"
         submit: "Save"
+      contact_form:
+        create: "Send"
   activerecord:
     models:
       spotlight:
@@ -24,6 +26,8 @@ en:
       settings:
         header: "Settings"
       show_sidebar: "Show sidebar"
+    contact_form:
+      header: "Report a Problem"
     curation:
       items:
         header: "Items"
@@ -62,6 +66,7 @@ en:
     header_links:
       login: "Sign in"
       logout: "Sign out"
+      contact: "Report a problem"
     saved_search:
       label: "Save this search"
       title: "Saved search title"

@@ -17,5 +17,5 @@
     <% else %>
       <li><%= link_to t('spotlight.header_links.login'), new_user_session_path %></li>
     <% end %>
-    <li><a href="#">Report a problem</a></li>
+    <li><%= link_to t('spotlight.header_links.contact'), spotlight.new_contact_form_path %></li>
   </ul>
