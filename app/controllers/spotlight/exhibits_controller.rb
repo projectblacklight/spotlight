@@ -27,17 +27,6 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
     end
   end
 
-  def update_all_pages
-    success = if update_all_params["feature_page"]
-      Spotlight::FeaturePage.update(update_all_params["feature_page"].keys, update_all_params["feature_page"].values)
-    elsif update_all_params["about_page"]
-      Spotlight::AboutPage.update(update_all_params["about_page"].keys, update_all_params["about_page"].values)
-    end
-    notice = "Pages were successfully udpated."
-    notice = "There was an error updating the requested pages." unless success
-    redirect_to :back, notice: notice
-  end
-
   protected
 
   def exhibit_params
@@ -61,10 +50,6 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
 
   def exhibit_configuration_facet_params
     @exhibit.blacklight_configuration.default_blacklight_config.facet_fields.keys.inject({}) { |result, element| result[element] = [:enabled, :label]; result }
-  end
-
-  def update_all_params
-    params.require(:pages)
   end
 
   def default_exhibit

@@ -35,6 +35,7 @@ describe Spotlight::Ability do
     it { should be_able_to(:destroy, search) }
 
     it { should be_able_to(:create, Spotlight::Page) }
+    it { should be_able_to(:update_all, Spotlight::Page) }
     it { should be_able_to(:update, page) }
     it { should be_able_to(:destroy, page) }
   end

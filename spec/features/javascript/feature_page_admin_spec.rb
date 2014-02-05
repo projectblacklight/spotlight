@@ -30,7 +30,7 @@ feature "Feature Pages Adminstration", js:  true do
       fill_in("Page title", with: "NewFeaturePage1")
     end
     click_button "Save changes"
-    expect(page).to have_content("Pages were successfully udpated.")
+    expect(page).to have_content("Feature pages were successfully updated.")
     within("[data-id='#{page1.id}']") do
       within("h3") do
         expect(page).to have_content("NewFeaturePage1")
@@ -42,15 +42,13 @@ feature "Feature Pages Adminstration", js:  true do
     click_link "Feature pages"
     within("[data-id='#{page1.id}']") do
       click_link "Options"
-      expect(page).to have_css("#page_#{page1.id}_display_sidebar", visible: true)
-      find("#page_#{page1.id}_display_sidebar").should_not be_checked
+      expect(field_labeled("Show sidebar")).to_not be_checked
       check "Show sidebar"
     end
     click_button "Save changes"
     within("[data-id='#{page1.id}']") do
       click_link "Options"
-      expect(page).to have_css("#page_#{page1.id}_display_sidebar", visible: true)
-      find("#page_#{page1.id}_display_sidebar").should be_checked
+      expect(field_labeled("Show sidebar")).to be_checked
     end
   end
 end

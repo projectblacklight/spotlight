@@ -91,8 +91,6 @@ describe Spotlight::SearchesController do
         expect(response).to redirect_to main_app.catalog_index_path() #TODO change to browse exhibit landing page once that is created. 
         expect(flash[:notice]).to eq "Searches updated"
       end
-
-
     end
   end
 end

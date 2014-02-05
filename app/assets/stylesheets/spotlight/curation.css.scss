@@ -7,6 +7,18 @@
   font-style: italic;
 }
 
+.panel-heading.page {
+  .checkbox {
+    width: 3%;
+    vertical-align: top;
+    display: inline-block;
+  }
+  .main {
+    width: 80%;
+    vertical-align: top;
+    display: inline-block;
+  }
+}
 
 .panel-heading.search {
   /* widths don't add up to 100% because of padding of the container. */

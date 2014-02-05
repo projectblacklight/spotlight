@@ -13,15 +13,21 @@ function featurePagesWeighting(){
     var data = $(this).nestable('serialize')
     var weight = 0;
     for(var i in data){
-      $("#page_" + data[i]['id'] + "_weight").val(weight);
+      //exhibit_feature_pages_attributes_1_weight
+      weight_field(data[i]['id']).val(weight);
       weight++;
       if(data[i]['children']){
         var children = data[i]['children'];
         for(var child in children){
-          $("#page_" + children[child]['id'] + "_weight").val(weight);
+          weight_field(children[child]['id']).val(weight);
           weight++;
         }
       }
     }
   });
 }
+
+function weight_field(id) {
+  return $("input[data-action=weight_"+id+"]");
+}
+

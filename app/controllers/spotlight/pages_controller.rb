@@ -1,9 +1,9 @@
 module Spotlight
-  class PagesController < ApplicationController
+  class PagesController < Spotlight::ApplicationController
     before_filter :authenticate_user!, except: [:show]
 
-    load_resource :exhibit, class: Spotlight::Exhibit, only: [:index, :new, :create]
-    load_and_authorize_resource only: [:show, :edit, :update, :destroy]
+    load_resource :exhibit, class: Spotlight::Exhibit, only: [:index, :new, :create, :update_all]
+    load_and_authorize_resource only: [:show, :edit, :update, :destroy, :update_all]
     load_and_authorize_resource through: :exhibit, only: [:index, :new, :create]
 
     before_filter :cast_page_instance_variable
@@ -55,6 +55,25 @@ module Spotlight
     def destroy
       @page.destroy
       redirect_to [@page.exhibit, @page], notice: 'Page was successfully destroyed.'
+    end
+
+    def update_all
+      notice = if @exhibit.update update_all_page_params
+        "#{human_name} were successfully updated."
+      else
+        "There was an error updating the requested pages."
+      end
+      redirect_to :back, notice: notice
+    end
+
+    protected
+
+    def update_all_page_params
+      params.require(:exhibit).permit("#{page_model.pluralize}_attributes" => [:id, :published, :title, :weight, :display_sidebar ])
+    end
+
+    def human_name
+      page_model.pluralize.humanize
     end
 
     private
