@@ -24,10 +24,20 @@
         <!--<input type="hidden" id="page_<%= page.id %>_weight" name="pages[<%= page_model %>][<%= page.id %>][weight]" value="<%= page.weight %>" />-->
         <%- if page.feature_page? -%>
           <div class="col-sm-offset-2 col-sm-10">
+            <%= f.hidden_field :parent_page_id, data: {action: "parent_page_#{page.id}"} %>
             <%= f.check_box :display_sidebar, label: t('spotlight.administration.show_sidebar') %>
           </div>
         <%- end -%>
       </div>
     </div>
   </div>
+  <%- unless page.child_pages.blank? -%>
+    <ol class="dd-list">
+      <%- page.child_pages.each do |child_page| -%>
+        <%= parent_form.fields_for page_model.pluralize.to_sym, child_page do |p| %>
+          <%= render partial: 'page', locals: {f: p, parent_form: parent_form} %>
+        <%- end -%>
+      <%- end -%>
+    </ol>
+  <%- end -%>
 </li>

@@ -13,7 +13,9 @@
     <div class="panel-group dd <%= page_model %>_admin" id="nested-pages">
       <ol class="dd-list">
         <%= f.fields_for page_model.pluralize.to_sym do |p| %>
-          <%= render partial: 'page', locals: {f: p} %>
+          <%- if p.object.top_level_page? -%>
+            <%= render partial: 'page', locals: {f: p, parent_form: f} %>
+          <%- end -%>
         <% end %>
       </ol>
     </div>
