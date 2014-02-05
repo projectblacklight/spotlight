@@ -1,31 +1,30 @@
 require 'spec_helper'
 
-module Spotlight
-  describe "spotlight/pages/index" do
-    let(:exhibit) { stub_model(Exhibit) }
-    before do
-      view.stub(:page_model).and_return("feature_page")
-      view.stub(:update_all_pages_exhibits_path).and_return("/update")
-      view.stub(:new_spotlight_page_path_for).and_return("/")
-      assign(:exhibit, exhibit)
-      assign(:pages, [
-        stub_model(FeaturePage,
-          :title => "Title",
-          :content => "MyText",
-          :exhibit => exhibit
-        ),
-        stub_model(FeaturePage,
-          :title => "Title",
-          :content => "MyText",
-          :exhibit => exhibit
-        )
-      ])
-    end
+describe "spotlight/pages/index.html.erb" do
+  let(:pages) {[
+      stub_model(Spotlight::FeaturePage,
+        :title => "Title1",
+        :content => "MyText",
+        exhibit: exhibit
+      ),
+      stub_model(Spotlight::FeaturePage,
+        :title => "Title2",
+        :content => "MyText",
+        exhibit: exhibit
+      )
+    ]}
+  let(:exhibit) { stub_model(Spotlight::Exhibit) }
+  before do
+    exhibit.stub(:feature_pages).and_return pages
+    view.stub(:page_model).and_return("feature_page")
+    view.stub(:update_pages_path).and_return("/update")
+    view.stub(:new_spotlight_page_path_for).and_return("/")
+    assign(:exhibit, exhibit)
+  end
 
-    it "renders a list of pages" do
-      render
-      # Run the generator again with the --webrat flag if you want to use webrat matchers
-      assert_select "h3", :text => "Title".to_s, :count => 2
-    end
+  it "renders a list of pages" do
+    render
+    expect(rendered).to have_selector '.panel-title', text: 'Title1'
+    expect(rendered).to have_selector '.panel-title', text: 'Title2'
   end
 end

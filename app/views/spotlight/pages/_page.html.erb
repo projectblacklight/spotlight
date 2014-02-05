@@ -1,35 +1,30 @@
+<% page = f.object %>
 <li class="dd-item dd3-item" data-id="<%= page.id %>">
   <div class="dd-handle dd3-handle">Drag</div>
   <div class="dd3-content panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading page">
       <a class="pull-right btn btn-text" data-toggle="collapse" href="#collapse-page-<%= page.id %>"><%= t(:'spotlight.feature_pages.options') %>
         <span class="glyphicon glyphicon-chevron-right"></span>
       </a>
-      <h3 class="panel-title"><%= page.title %></h3>
-      <div class="page-links">
-        <%= link_to t('helpers.submit.view'), [spotlight, page.exhibit, page], :class => 'btn btn-text' %> &middot;
-        <%= link_to t('helpers.submit.edit'), [spotlight, :edit, page.exhibit, page], :class => 'btn btn-text' %> &middot;
-        <%= link_to t('helpers.submit.destroy'), [spotlight, page.exhibit, page], method: :delete, data: { confirm: t('helpers.submit.destroy_are_you_sure') }, :class => 'btn btn-text' %>
+      <%= f.check_box :published, label: '' %>
+      <div class="main">
+        <h3 class="panel-title"><%= page.title %></h3>
+        <div class="page-links">
+          <%= link_to t('helpers.submit.view'), [spotlight, page.exhibit, page], :class => 'btn btn-text' %> &middot;
+          <%= link_to t('helpers.submit.edit'), [spotlight, :edit, page.exhibit, page], :class => 'btn btn-text' %> &middot;
+          <%= link_to t('helpers.submit.destroy'), [spotlight, page.exhibit, page], method: :delete, data: { confirm: t('helpers.submit.destroy_are_you_sure') }, :class => 'btn btn-text' %>
+        </div>
       </div>
     </div>
     <div id="collapse-page-<%= page.id %>" class="panel-collapse collapse">
       <div class="panel-body">
-        <div class="form-group">
-          <label for="page_<%= page.id %>_title" class="col-sm-2 control-label"><%= t('spotlight.administration.page_title') %></label>
-          <div class="col-sm-10">
-            <input type="text" id="page_<%= page.id %>_title" name="pages[<%= page_model %>][<%= page.id %>][title]" value="<%= page.title %>" class="form-control" />
-          </div>
-        </div>
-        <input type="hidden" id="page_<%= page.id %>_weight" name="pages[<%= page_model %>][<%= page.id %>][weight]" value="<%= page.weight %>" />
+        <%= f.text_field :title, label: t('spotlight.administration.page_title') %>
+        <%= f.hidden_field :id %>
+        <%= f.hidden_field :weight, data: {action: "weight_#{page.id}"} %>
+        <!--<input type="hidden" id="page_<%= page.id %>_weight" name="pages[<%= page_model %>][<%= page.id %>][weight]" value="<%= page.weight %>" />-->
         <%- if page.feature_page? -%>
-          <div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <input name="pages[<%= page_model %>][<%= page.id %>][display_sidebar]" type="hidden" value="false" />
-                <input  id="page_<%= page.id %>_display_sidebar" name="pages[<%= page_model %>][<%= page.id %>][display_sidebar]" type="checkbox" <%= " checked" if page.display_sidebar %> />
-                <label for="page_<%= page.id %>_display_sidebar"><%= t('spotlight.administration.show_sidebar') %></label>
-              </div>
-            </div>
+          <div class="col-sm-offset-2 col-sm-10">
+            <%= f.check_box :display_sidebar, label: t('spotlight.administration.show_sidebar') %>
           </div>
         <%- end -%>
       </div>

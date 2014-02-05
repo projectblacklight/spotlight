@@ -12,7 +12,7 @@ module Spotlight::Ability
       exhibit.roles.where(id: user.role_ids, role: 'admin').any?
     end
 
-    can [:curate, :update_all_pages], Spotlight::Exhibit do |exhibit|
+    can [:curate], Spotlight::Exhibit do |exhibit|
       # any curator or admin role
       exhibit.roles.where(id: user.role_ids).any?
     end
@@ -22,7 +22,7 @@ module Spotlight::Ability
       # any curator or admin role
     if Spotlight::Exhibit.default.roles.where(id: user.role_ids).any?
       can [:create, :update, :destroy], [Spotlight::Search, Spotlight::Page]
-      can :update_all, Spotlight::Search
+      can :update_all, [Spotlight::Search, Spotlight::Page]
     end
   end
 end

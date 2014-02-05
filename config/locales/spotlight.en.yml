@@ -60,13 +60,13 @@ en:
         values_count:
           one: "%{count} unique value"
           other: "%{count} unique values"
-    feature_pages:
-      header: "Feature Pages"
-      options: "Options"
-      update: "Save changes"
-    about_pages:
-      header: "About Pages"
-      update: "Save changes"
+      feature_pages:
+        header: "Feature Pages"
+        options: "Options"
+        update: "Save changes"
+      about_pages:
+        header: "About Pages"
+        update: "Save changes"
     header_links:
       login: "Sign in"
       logout: "Sign out"

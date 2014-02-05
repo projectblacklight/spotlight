@@ -1,19 +1,24 @@
-<%= form_tag(update_all_pages_exhibits_path, class: "form-horizontal") do %>
-  <div class="row">
-    <div class="col-xs-10">
-      <h1><%= t :'spotlight.curation.header' %></h1>
-      <h2 class="text-muted"><%= t :"spotlight.#{page_model.pluralize}.header" %></h2>
-    </div>
+<%= render 'spotlight/shared/curation_sidebar' %>
+<div id="content" class="col-md-9">
+  <% @page_title = t :"spotlight.curation.#{page_model.pluralize}.header" %>
+  <%= bootstrap_form_for @exhibit, url: update_pages_path(@exhibit), style: :horizontal, right: "col-sm-10" do |f| %>
+    <h1><%= t :'spotlight.curation.header' %></h1>
     <div class="col-xs-2 pull-right">
-      <%= button_tag(t(:"spotlight.#{page_model.pluralize}.update"), class: "btn btn-default") %>
+      <%= button_tag(t(:"spotlight.curation.#{page_model.pluralize}.update"), class: "btn btn-default") %>
     </div>
+    <h2 class="text-muted clearfix"><%= t :"spotlight.curation.#{page_model.pluralize}.header" %></h2>
+
+    <h3>Defined Pages</h3>
+    <p>Select the pages you want to be shown. Drag and drop pages to change the order in which they are displayed in the sidebar.</p>
+    <div class="panel-group dd <%= page_model %>_admin" id="nested-pages">
+      <ol class="dd-list">
+        <%= f.fields_for page_model.pluralize.to_sym do |p| %>
+          <%= render partial: 'page', locals: {f: p} %>
+        <% end %>
+      </ol>
+    </div>
+  <%- end -%>
+  <div>
+    <%= link_to t(:'helpers.submit.new', :model => "Page"), new_spotlight_page_path_for(@exhibit), class: 'btn btn-primary' %>
   </div>
-  <div class="panel-group dd <%= page_model %>_admin" id="nested-pages">
-    <ol class="dd-list">
-      <%= render @pages %>
-    </ol>
-  </div>
-<%- end -%>
-<div>
-  <%= link_to t(:'helpers.submit.new', :model => "Page"), new_spotlight_page_path_for(@exhibit), :class => ' btn btn-primary' %>
 </div>
