@@ -5,7 +5,7 @@
 
   <div class="media-body">
   <h4 class="media-heading"><%= link_to search.title, search_action_url(search.query_params) %>
-    <small><%= t 'spotlight.browse.item_count', count: search.count %></small>
+    <small class="item-count"><%= t 'spotlight.browse.item_count', count: search.count %></small>
   </h4>
 
   <% if search.short_description %>

@@ -4,6 +4,7 @@ module Spotlight
     load_resource class: "Spotlight::Search", only: [:show]
 
     def index
+      @searches = @exhibit.searches
 
     end
 
