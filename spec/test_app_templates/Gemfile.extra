@@ -1,6 +1,6 @@
 # extra gems to load into the test app go here
 
-gem 'blacklight', '5.0.0.pre4'
+gem 'blacklight', '~> 5.0'
 gem 'sir-trevor-rails', :github => 'sul-dlss/sir-trevor-rails'
 
 group :test do
