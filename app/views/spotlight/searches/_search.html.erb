@@ -1,21 +1,27 @@
-<div class="panel panel-default">
-  <div class="panel-heading search">
-    <%# hidden field tag helps differentiate whether the item is not on the page, or was on the page, but not checked %>
-    <div class="checkbox"><%= check_box_tag 'landing_page[]', search.on_landing_page, search.id %><%= hidden_field_tag 'present[]', search.id %></div>
-    <div class="pic thumbnail"><%= image_tag(search.featured_image) if search.featured_image %></div>
-    <div class="main">
-      <div class="title"><%= search.title %></div>
-      <div class="count"><%= t 'spotlight.browse.item_count', count: search.count %></div>
-      <div class="actions"><%=link_to "Edit", edit_search_path(search) %> &bull; <%=link_to "Delete", search_path(search), method: :delete, confirm: "Are you sure you want to delete this saved search?" %></div>
-    </div>
+<% search = f.object %>
+<li class="dd-item dd3-item" data-id="<%= search.id %>">
+  <div class="dd-handle dd3-handle">Drag</div>
+  <div class="dd3-content panel panel-default">
+    <div class="panel-heading search">
+      <%= f.check_box :on_landing_page, label: '' %>
+      
+      <div class="pic thumbnail"><%= image_tag(search.featured_image) if search.featured_image %></div>
+      <div class="main">
+        <div class="title"><%= search.title %></div>
+        <div class="count"><%= t 'spotlight.browse.item_count', count: search.count %></div>
+        <div class="actions"><%=link_to "Edit", edit_search_path(search) %> &bull; <%=link_to "Delete", search_path(search), method: :delete, data: {confirm: "Are you sure you want to delete this saved search?"} %></div>
+        <%= f.hidden_field :id %>
+        <%= f.hidden_field :weight, data: {property: "weight"} %>
+      </div>
 
-    <div class="description">
-      <% if search.short_description %>
-        <%=search.short_description %>
-      <% else %>
-        <span class="missing-description"><%= link_to "Edit this Saved Search", edit_search_path(search) %> to add a description.</span>
-      <% end %>
-    </div>
+      <div class="description">
+        <% if search.short_description.present? %>
+          <%=search.short_description %>
+        <% else %>
+          <span class="missing-description"><%= link_to "Edit this Saved Search", edit_search_path(search) %> to add a description.</span>
+        <% end %>
+      </div>
 
+    </div>
   </div>
-</div>
+</li>

@@ -8,6 +8,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   belongs_to :blacklight_configuration, class_name: Spotlight::BlacklightConfiguration
   accepts_nested_attributes_for :blacklight_configuration
+  accepts_nested_attributes_for :searches
   accepts_nested_attributes_for :about_pages
   accepts_nested_attributes_for :feature_pages
   delegate :blacklight_config, to: :blacklight_configuration

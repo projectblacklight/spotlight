@@ -2,6 +2,7 @@ class Spotlight::Search < ActiveRecord::Base
   self.table_name = 'spotlight_searches'
   belongs_to :exhibit
   serialize :query_params, Hash
+  default_scope { order("weight ASC") }
 
   include Blacklight::SolrHelper
 

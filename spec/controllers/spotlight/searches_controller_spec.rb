@@ -83,13 +83,15 @@ describe Spotlight::SearchesController do
     describe "POST update_all" do
       let!(:search2) { FactoryGirl.create(:search, exhibit: search.exhibit, on_landing_page: true ) }
       let!(:search3) { FactoryGirl.create(:search, exhibit: search.exhibit, on_landing_page: true ) }
+      before { request.env["HTTP_REFERER"] = "http://example.com" }
       it "should update whether they are on the landing page" do
-        post :update_all, exhibit_id: search.exhibit, present: [search, search2], landing_page: [search]
+        post :update_all, exhibit_id: search.exhibit, exhibit: {searches_attributes: [{id: search.id, on_landing_page: true, weight: '1' }, {id: search2.id, on_landing_page: false, weight: '0'}]}
         expect(search.reload.on_landing_page).to be_true
+        expect(search.weight).to eq 1
         expect(search2.reload.on_landing_page).to be_false
-        expect(search3.reload.on_landing_page).to be_true # should remain untouched since it wasn't in present[]
-        expect(response).to redirect_to main_app.catalog_index_path() #TODO change to browse exhibit landing page once that is created. 
-        expect(flash[:notice]).to eq "Searches updated"
+        expect(search3.reload.on_landing_page).to be_true # should remain untouched since it wasn't present
+        expect(response).to redirect_to "http://example.com"
+        expect(flash[:notice]).to eq "Searches were successfully updated."
       end
     end
   end

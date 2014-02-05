@@ -15,4 +15,12 @@ describe Spotlight::Search do
     expect(subject.images).to include "https://stacks.stanford.edu/image/dq287tq6352/dq287tq6352_05_0001_thumb", "https://stacks.stanford.edu/image/jp266yb7109/jp266yb7109_05_0001_thumb"
   end
 
+  describe "default_scope" do
+    let!(:page1) { FactoryGirl.create(:search, weight: 5) }
+    let!(:page2) { FactoryGirl.create(:search, weight: 1) }
+    let!(:page3) { FactoryGirl.create(:search, weight: 10) }
+    it "should order by weight" do
+      expect(Spotlight::Search.all.map(&:weight)).to eq [1, 5, 10]
+    end
+  end
 end
