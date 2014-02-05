@@ -2,7 +2,7 @@
 <div id="content" class="col-md-9">
   <% @page_title = t(:'spotlight.curation.browse.title') %>
 
-  <%= form_tag update_all_exhibit_searches_path(@exhibit) do %>
+  <%= bootstrap_form_for @exhibit, url: update_all_exhibit_searches_path(@exhibit), style: :horizontal, right: "col-sm-10" do |f| %>
 
     <h1><%= t :'spotlight.curation.header' %></h1>
     <h2 class="text-muted"><%= t :'spotlight.curation.browse.header' %></h2>
@@ -13,8 +13,12 @@
 
     <h4 class="clearfix">Browse Categories <span class="label label-default"><%=@searches.count%></span></h4>
     <div class="browse-instuctions">Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page.</div>
-    <% @searches.each do |search| %>
-      <%=render search %>
-    <% end %>
+    <div class="panel-group dd search_admin" id="nested-pages">
+      <ol class="dd-list">
+      <%= f.fields_for :searches do |p| %>
+        <%= render partial: 'search', locals: { f: p} %>
+      <% end %>
+      </ol>
+    </div>
   <% end %>
 </div>

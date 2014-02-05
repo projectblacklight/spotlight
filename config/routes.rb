@@ -5,7 +5,7 @@ Spotlight::Engine.routes.draw do
   resources :exhibits, only: [:edit, :update] do
     resources :searches, shallow: true do
       collection do
-        post :update_all
+        patch :update_all
       end
     end
     resources :browse, only: [:index, :show]

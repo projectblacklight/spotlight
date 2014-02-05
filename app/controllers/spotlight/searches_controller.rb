@@ -35,13 +35,19 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   end
 
   def update_all
-    @exhibit.searches.find(params[:present]).each do |search|
-      search.update on_landing_page: params[:landing_page].include?(search.id.to_s)
+    notice = if @exhibit.update search_params
+      "Searches were successfully updated."
+    else
+      "There was an error updating the requested searches."
     end
-    redirect_to main_app.catalog_index_path, notice: "Searches updated"
+    redirect_to :back, notice: notice
   end
 
   protected
+
+  def search_params
+    params.require(:exhibit).permit("searches_attributes" => [:id, :on_landing_page, :weight])
+  end
 
   def only_curators!
     authorize! :curate, @exhibit if @exhibit
