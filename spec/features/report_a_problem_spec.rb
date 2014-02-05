@@ -3,9 +3,9 @@ require "spec_helper"
 describe "Report a Problem" do
   it "should be a header link" do
     visit catalog_index_path
-    click_on "Report a Problem"
+    click_on "Report a problem"
 
-    expect(page).to have_content "Report a Problem"
+    expect(page).to have_content "Report a problem"
   end
 
   it "should accept a problem report" do
@@ -14,7 +14,7 @@ describe "Report a Problem" do
     e.save
     
     visit catalog_index_path
-    click_on "Report a Problem"
+    click_on "Report a problem"
     expect(find("#contact_form_current_url", visible: false).value).to end_with catalog_index_path 
     fill_in "Name", with: "Some Body"
     fill_in "Email", with: "test@example.com"
