@@ -27,6 +27,7 @@ en:
         header: "Settings"
       show_sidebar: "Show sidebar"
     browse:
+      heading: "Browse Exhibit"
       item_count:
         one: "%{count} item"
         other: "%{count} items"
