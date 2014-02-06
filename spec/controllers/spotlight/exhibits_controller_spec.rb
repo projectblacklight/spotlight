@@ -31,19 +31,6 @@ describe Spotlight::ExhibitsController do
       end
     end
 
-    describe "#edit_metadata_fields" do
-      it "should not be allowed" do
-        get :edit_metadata_fields, id: exhibit
-        expect(response).to redirect_to main_app.new_user_session_path
-      end
-    end
-
-    describe "#edit_facet_fields" do
-      it "should not be allowed" do
-        get :edit_facet_fields, id: exhibit
-        expect(response).to redirect_to main_app.new_user_session_path
-      end
-    end
   end
 
   describe "when signed in" do
@@ -56,20 +43,6 @@ describe Spotlight::ExhibitsController do
       end
     end
 
-    describe "#edit_metadata_fields" do
-      it "should be successful" do
-        get :edit_metadata_fields, id: exhibit
-        expect(response).to be_successful
-      end
-    end
-
-    describe "#edit_facet_fields" do
-      it "should be successful" do
-        controller.stub_chain(:blacklight_solr, :get).and_return({})
-        get :edit_facet_fields, id: exhibit
-        expect(response).to be_successful
-      end
-    end
 
     describe "#update" do
       it "should be successful" do
@@ -82,34 +55,6 @@ describe Spotlight::ExhibitsController do
           expect(saved.subtitle).to eq 'Bar'
           expect(saved.description).to eq 'Baz'
           expect(saved.contact_emails).to eq ['bess@stanford.edu', 'naomi@stanford.edu']
-        end
-      end
-
-      it "should update metadata fields" do
-        exhibit.blacklight_configuration.default_blacklight_config.stub(index_fields: { 'a' => {},  'b' => {},  'c' => {}, 'd' => {},  'e' => {}, 'f' => {} })
-        patch :update, id: exhibit, exhibit: { blacklight_configuration_attributes: {
-          index_fields: {
-            c: { enabled: true, show: true},
-            d: { enabled: true, show: true},
-            e: { enabled: true, list: true},
-            f: { enabled: true, list: true}
-          }
-          }
-        }
-
-        expect(flash[:notice]).to eq "The exhibit was saved."
-        expect(response).to redirect_to main_app.root_path
-        assigns[:exhibit].tap do |saved|
-          expect(saved.blacklight_configuration.index_fields).to include 'c', 'd', 'e', 'f'
-        end
-      end
-
-      it "should update facet fields" do
-        patch :update, id: exhibit, exhibit: { blacklight_configuration_attributes: { facet_fields: { 'genre_sim' => { enabled: '1', label: "Label"}}  }}
-        expect(flash[:notice]).to eq "The exhibit was saved."
-        expect(response).to redirect_to main_app.root_path
-        assigns[:exhibit].tap do |saved|
-          expect(saved.blacklight_configuration.facet_fields.keys).to eq ['genre_sim']
         end
       end
     end

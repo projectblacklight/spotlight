@@ -10,7 +10,7 @@ describe "Editing metadata fields", type: :feature do
   end
 
   it "should allow curators to select and unselect facets for display" do
-    visit spotlight.edit_facets_exhibit_path Spotlight::Exhibit.default
+    visit spotlight.exhibit_edit_facets_path Spotlight::Exhibit.default
 
     expect(page).to have_content "Curation Search Facets"
     expect(page).to have_button "Save"
@@ -26,7 +26,7 @@ describe "Editing metadata fields", type: :feature do
   end
 
   it "should allow curators to set facet labels" do
-    visit spotlight.edit_facets_exhibit_path Spotlight::Exhibit.default
+    visit spotlight.exhibit_edit_facets_path Spotlight::Exhibit.default
 
     within ".facet-config-genre_sim" do
       click_on "Options"
@@ -39,7 +39,7 @@ describe "Editing metadata fields", type: :feature do
   end
 
   it "should display information about the facet" do
-    visit spotlight.edit_facets_exhibit_path Spotlight::Exhibit.default
+    visit spotlight.exhibit_edit_facets_path Spotlight::Exhibit.default
     within  ".facet-config-genre_sim" do
       expect(page).to have_content /\d+ items/
       expect(page).to have_content  /(\d+) unique values/
