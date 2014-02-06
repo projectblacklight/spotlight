@@ -16,9 +16,10 @@ describe "spotlight/pages/index.html.erb" do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   before do
     exhibit.stub(:feature_pages).and_return pages
-    view.stub(:page_model).and_return("feature_page")
-    view.stub(:update_pages_path).and_return("/update")
+    view.stub(:page_model).and_return(:feature_page)
+    view.stub(:page_collection_name).and_return(:feature_pages)
     view.stub(:new_exhibit_feature_page_path).and_return("/exhibit/features")
+    view.stub(:update_all_exhibit_feature_pages_path).and_return("/exhibit/features/update_all")
     assign(:exhibit, exhibit)
   end
 

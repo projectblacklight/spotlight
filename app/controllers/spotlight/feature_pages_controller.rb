@@ -3,7 +3,7 @@ module Spotlight
 
     private
     def page_model
-      "feature_page"
+      :feature_page
     end
     def cast_page_instance_variable
       if @feature_pages
