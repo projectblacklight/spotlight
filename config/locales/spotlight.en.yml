@@ -15,6 +15,14 @@ en:
         submit: "Save"
       contact_form:
         create: "Send"
+      feature_page:
+        create: "Save"
+        submit: "Save changes"
+        update: "Save changes"
+      about_page:
+        create: "Save"
+        submit: "Save changes"
+        update: "Save changes"
   activerecord:
     models:
       spotlight:

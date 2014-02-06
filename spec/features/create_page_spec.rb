@@ -27,7 +27,7 @@ describe "Creating a page", :type => :feature do
     click_link "About pages"
     click_link "Add new Page"
     fill_in "about_page_title", :with => "New Page Title!"
-    click_button "Create About page"
+    click_button "Save"
     expect(page).to have_content "Page was successfully created."
   end
 
@@ -38,7 +38,7 @@ describe "Creating a page", :type => :feature do
     click_link "Feature pages"
     click_link "Add new Page"
     fill_in "feature_page_title", :with => "New Page Title!"
-    click_button "Create Feature page"
+    click_button "Save"
     expect(page).to have_content "Page was successfully created."
   end
 end
