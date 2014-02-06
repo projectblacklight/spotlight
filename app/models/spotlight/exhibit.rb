@@ -36,7 +36,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   end
 
   def main_about_page
-    about_pages.first
+    about_pages.published.first
   end
 
   def home_page
