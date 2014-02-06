@@ -4,7 +4,9 @@ module Spotlight
   describe "shared/_exhibit_navbar" do
     let(:current_exhibit) {  Spotlight::Exhibit.default }
     let(:feature_page) { FactoryGirl.create(:feature_page) }
+    let(:unpublished_feature_page) { FactoryGirl.create(:feature_page, published: false) }
     let(:about_page) { FactoryGirl.create(:about_page) }
+    let(:unpublished_about_page) { FactoryGirl.create(:about_page, published: false) }
 
     before :each do
       view.stub(current_exhibit: current_exhibit)
@@ -43,6 +45,12 @@ module Spotlight
       expect(response).to_not have_link "Curated Features"
     end
 
+    it "should not display links to feature pages that are not published" do
+      unpublished_feature_page
+      render
+      expect(response).to_not have_link "Curated Features"
+    end
+
     it "should link to the browse index" do
       FactoryGirl.create :search
       render
@@ -68,6 +76,12 @@ module Spotlight
     end
 
     it "should not link to the about page if no about page exists" do
+      render
+      expect(response).to_not have_link "About"
+    end
+
+    it "should not to the about page if none are published" do
+      unpublished_about_page
       render
       expect(response).to_not have_link "About"
     end
