@@ -42,6 +42,12 @@ en:
       settings:
         header: "Settings"
       show_sidebar: "Show sidebar"
+    items:
+      current_mode: "You are in %{mode} mode."
+      curation_mode: "Curation"
+      end_user_mode: "end-user"
+      show_link: "Turn off."
+      edit_link: "Enter curation mode."
     browse:
       heading: "Browse Exhibit"
       item_count:

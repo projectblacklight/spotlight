@@ -27,6 +27,7 @@ module Spotlight::Ability
     if Spotlight::Exhibit.default.roles.where(id: user.role_ids).any?
       can [:create, :update, :destroy], [Spotlight::Search, Spotlight::Page]
       can :update_all, [Spotlight::Search, Spotlight::Page]
+      can :edit, SolrDocument
     end
   end
 end

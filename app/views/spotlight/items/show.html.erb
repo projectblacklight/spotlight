@@ -1,0 +1,5 @@
+<h1>Show an item</h1>
+
+<% if can? :edit, @document %>
+  <span class="label label-info"><%= t(:'spotlight.items.current_mode', mode: t(:'spotlight.items.end_user_mode')) %> <%= link_to t(:'spotlight.items.edit_link'), edit_exhibit_item_path(@exhibit, @document) %></span>
+<% end %>

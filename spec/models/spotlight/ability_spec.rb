@@ -13,6 +13,7 @@ describe Spotlight::Ability do
     it { should be_able_to(:read, page) }
     it { should_not be_able_to(:create, Spotlight::Page) }
     it { should be_able_to(:read, search) }
+    it { should_not be_able_to(:edit, SolrDocument.new) }
   end
 
   describe "a user with admin role" do
@@ -38,5 +39,7 @@ describe Spotlight::Ability do
     it { should be_able_to(:update_all, Spotlight::Page) }
     it { should be_able_to(:update, page) }
     it { should be_able_to(:destroy, page) }
+
+    it { should be_able_to(:edit, SolrDocument.new) }
   end
 end
