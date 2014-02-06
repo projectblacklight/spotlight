@@ -1,6 +1,6 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
-<%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal, right: "col-sm-5" do |f| %>
+<%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_blacklight_configuration_path(@exhibit), style: :horizontal, right: "col-sm-5" do |f| %>
     <div class="row">
       <h1><%= t('spotlight.curation.header') %></h1>
     </div>
@@ -25,8 +25,7 @@
         </tr>
       </thead>
       <tbody>
-     <%= f.fields_for :blacklight_configuration, @exhibit.blacklight_configuration do |c| %>
-        <%= c.fields_for :index_fields do |idxf| %>
+        <%= f.fields_for :index_fields do |idxf| %>
           <% @exhibit.blacklight_configuration.all_index_fields.each do |key, config| %>
               <tr>
                 <%= idxf.fields_for key do |field| %>
@@ -39,7 +38,6 @@
               </tr>
           <% end %>
         <% end %>
-     <% end %>
      </tbody>
    </table>
 <% end %>

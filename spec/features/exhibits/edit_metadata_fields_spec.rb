@@ -10,16 +10,16 @@ describe "Editing metadata fields", type: :feature do
   end
 
   it "should work" do
-    visit spotlight.edit_metadata_exhibit_path Spotlight::Exhibit.default
+    visit spotlight.exhibit_edit_metadata_path Spotlight::Exhibit.default
 
     expect(page).to have_content "Curation Metadata Fields"
     expect(page).to have_button "Save"
 
-    check :exhibit_blacklight_configuration_attributes_index_fields_language_ssm_show
-    check :exhibit_blacklight_configuration_attributes_index_fields_language_ssm_list
+    check :blacklight_configuration_index_fields_language_ssm_show
+    check :blacklight_configuration_index_fields_language_ssm_list
 
-    check :exhibit_blacklight_configuration_attributes_index_fields_abstract_tesim_show
-    check :exhibit_blacklight_configuration_attributes_index_fields_note_mapuse_tesim_list
+    check :blacklight_configuration_index_fields_abstract_tesim_show
+    check :blacklight_configuration_index_fields_note_mapuse_tesim_list
 
     click_on "Save changes"
 

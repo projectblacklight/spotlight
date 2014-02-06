@@ -27,6 +27,10 @@ en:
         create: "Save"
         submit: "Save changes"
         update: "Save changes"
+      blacklight_configuration:
+        create: "Save"
+        submit: "Save changes"
+        update: "Save changes"
   activerecord:
     models:
       spotlight:
