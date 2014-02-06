@@ -9,6 +9,12 @@ FactoryGirl.define do
     title "Page1"
     published  true
   end
+
+  factory :home_page, class: Spotlight::HomePage do
+    exhibit Spotlight::Exhibit.default
+    title "Page1"
+    published  true
+  end
 end
   
 

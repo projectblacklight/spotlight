@@ -5,6 +5,8 @@ class Spotlight::Exhibit < ActiveRecord::Base
   has_many :searches
   has_many :about_pages
   has_many :feature_pages
+  has_one :home_page
+  has_many :home_pages
 
   belongs_to :blacklight_configuration, class_name: Spotlight::BlacklightConfiguration
   accepts_nested_attributes_for :blacklight_configuration
@@ -39,10 +41,6 @@ class Spotlight::Exhibit < ActiveRecord::Base
     about_pages.published.first
   end
 
-  def home_page
-    nil
-  end
-  
   # Find or create the default exhibit
   def self.default
     self.find_or_create_by!(name: DEFAULT) do |e|

@@ -51,4 +51,18 @@ feature "Feature Pages Adminstration", js:  true do
       expect(field_labeled("Show sidebar")).to be_checked
     end
   end
+
+  it "should create a new home page" do
+    visit spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default)
+    click_link "Feature pages"
+
+    within ".home_page" do
+      click_link "Add"    
+    end
+
+    fill_in "Title", with: "Home Page Text"
+    click_button "Save"
+
+    expect(page).to have_selector "h3", text: "Exhibit Home"
+  end
 end
