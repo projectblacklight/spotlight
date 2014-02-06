@@ -5,6 +5,10 @@ class Spotlight::Search < ActiveRecord::Base
   default_scope { order("weight ASC") }
   scope :published, -> { where(on_landing_page: true) }
 
+  before_create do
+    self.featured_image ||= default_featured_image 
+  end
+
   include Blacklight::SolrHelper
 
   def count
@@ -13,6 +17,10 @@ class Spotlight::Search < ActiveRecord::Base
 
   def images
     query_solr(query_params, rows: 1000, fl: [blacklight_config.index.title_field, blacklight_config.index.thumbnail_field], facet: false)['response']['docs'].map {|result| [result[blacklight_config.index.title_field].first, result[blacklight_config.index.thumbnail_field].first]}
+  end
+
+  def default_featured_image
+    images.first.last
   end
 
   private
