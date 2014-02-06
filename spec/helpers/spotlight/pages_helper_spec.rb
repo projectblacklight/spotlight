@@ -3,8 +3,8 @@ require 'spec_helper'
 module Spotlight
   describe PagesHelper do
     let(:blacklight_config) { Blacklight::Configuration.new { |config| config.show.title_field = :abc } }
-    let(:titled_document)   { SolrDocument.new( :abc => "value" ) }
-    let(:untitled_document) { SolrDocument.new( :id  => "1234"  ) }
+    let(:titled_document)   { ::SolrDocument.new( :abc => "value" ) }
+    let(:untitled_document) { ::SolrDocument.new( :id  => "1234"  ) }
     before(:each) { helper.stub(:blacklight_config => blacklight_config) }
 
     describe "has_title?" do

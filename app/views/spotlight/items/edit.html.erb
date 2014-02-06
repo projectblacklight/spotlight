@@ -1,3 +1,12 @@
-<h1>Edit an item</h1>
+<div class="pull-right">
+  <% @page_title = document_show_html_title %>
   <span class="label label-warning"><%= t(:'spotlight.items.current_mode', mode: t(:'spotlight.items.curation_mode')) %> <%= link_to t(:'spotlight.items.show_link'), exhibit_item_path(@exhibit, @document) %></span>
+</div>
+<h1 class="clearfix">Edit an item</h1>
+
+<%= bootstrap_form_for @document, url: exhibit_item_path(@exhibit, @document.id) do |f| %>
+  
+  <%= f.text_field :tag_list %>
+  <%= f.submit nil%>
+<% end %>
 

@@ -1,5 +1,15 @@
-<h1>Show an item</h1>
-
 <% if can? :edit, @document %>
-  <span class="label label-info"><%= t(:'spotlight.items.current_mode', mode: t(:'spotlight.items.end_user_mode')) %> <%= link_to t(:'spotlight.items.edit_link'), edit_exhibit_item_path(@exhibit, @document) %></span>
+  <div class="pull-right">
+    <span class="label label-info"><%= t(:'spotlight.items.current_mode', mode: t(:'spotlight.items.end_user_mode')) %> <%= link_to t(:'spotlight.items.edit_link'), edit_exhibit_item_path(@exhibit, @document) %></span>
+  </div>
 <% end %>
+
+<h1 class="clearfix">Show an item</h1>
+
+<p>tags:</p> 
+<ul>
+<% @document.tags.each do |tag| %>
+  <li><%=tag.name %></li>
+<% end %>
+</ul>
+

@@ -10,5 +10,13 @@ module Spotlight
       authorize! :edit, @document
     end
 
+    def update
+      _, @document = get_solr_response_for_doc_id    
+      @document.tag_list = params[:solr_document][:tag_list]
+      @document.save # TODO need to index tags too
+
+      render :show
+    end
+
   end
 end
