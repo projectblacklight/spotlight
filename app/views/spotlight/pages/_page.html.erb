@@ -31,7 +31,7 @@
       </div>
     </div>
   </div>
-  <%- unless page.child_pages.blank? -%>
+  <%- if page.feature_page? and !page.child_pages.blank? -%>
     <ol class="dd-list">
       <%- page.child_pages.each do |child_page| -%>
         <%= parent_form.fields_for page_model.pluralize.to_sym, child_page do |p| %>

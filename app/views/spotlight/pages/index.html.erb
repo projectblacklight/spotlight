@@ -21,6 +21,6 @@
     </div>
   <%- end -%>
   <div>
-    <%= link_to t(:'helpers.submit.new', :model => "Page"), new_spotlight_page_path_for(@exhibit), class: 'btn btn-primary' %>
+    <%= link_to t(:'helpers.submit.new', :model => "Page"), new_polymorphic_path([@exhibit, page_model.to_sym]), class: 'btn btn-primary' %>
   </div>
 </div>

@@ -26,10 +26,6 @@ module Spotlight
       main_app_url_helper?(method) or super
     end
 
-    def new_spotlight_page_path_for(exhibit, model=page_model)
-      spotlight.send(:"new_exhibit_#{model}_path", exhibit)
-    end
-
     def update_pages_path(exhibit, model=page_model)
       model == 'feature_page' ? update_all_exhibit_feature_pages_path(exhibit) : update_all_exhibit_about_pages_path(exhibit)
     end
