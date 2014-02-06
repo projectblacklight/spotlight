@@ -33,6 +33,14 @@ class Spotlight::Exhibit < ActiveRecord::Base
     attributes_collection = emails.is_a?(Hash) ? emails.values : emails
     self.contact_emails = attributes_collection.map {|e| e['email']}.reject(&:blank?)
   end
+
+  def main_about_page
+    about_pages.first
+  end
+
+  def home_page
+    nil
+  end
   
   # Find or create the default exhibit
   def self.default
@@ -40,6 +48,10 @@ class Spotlight::Exhibit < ActiveRecord::Base
       e.title = 'Default exhibit'.freeze
       e.blacklight_configuration = Spotlight::BlacklightConfiguration.create!
     end
+  end
+
+  def has_browse_categories?
+    searches.any?
   end
 
   protected

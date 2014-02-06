@@ -1,9 +1,33 @@
-<% if current_exhibit %>
+<% if current_exhibit -%>
+<% top_level_feature_pages = current_exhibit.feature_pages.at_top_level -%>
 <div id="exhibit-navbar" class="navbar navbar-default navbar-static-top" role="navigation">
   <div class="container">
     <ul class="nav navbar-nav">
-      <li><%= link_to t(:'curation.home'), root_url %></li>
-      <li class="<%= "active" if params[:controller] == 'spotlight/browse' %>"><%= link_to t(:'curation.browse'), spotlight.exhibit_browse_index_url(current_exhibit) %></li>
+      <% if current_exhibit.home_page %>
+        <li class="<%= "active" if current_page?(url_for([spotlight, current_exhibit, current_exhibit.home_page])) %>"><%= link_to t(:'spotlight.curation.home.nav_link'), [spotlight, current_exhibit, current_exhibit.home_page] %></li>
+      <% else %>
+        <li class="<%= "active" if current_page?(root_url) %>"><%= link_to t(:'spotlight.curation.home.nav_catalog_link'), root_url %></li>
+      <% end %>
+      <% unless top_level_feature_pages.empty? %>
+        <% if top_level_feature_pages.length > 1 %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t(:'spotlight.curation.feature_pages.nav_link') %> <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <% top_level_feature_pages.each do |page| %>
+              <li>
+              <%= link_to page.title, [spotlight, current_exhibit, page] %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+        <% else %>
+        <li class="<%= "active" if current_page?(url_for([spotlight, current_exhibit, top_level_feature_pages.first])) %>"><%= link_to top_level_feature_pages.first.title, [spotlight, current_exhibit, top_level_feature_pages.first] %></li>
+        <% end %>
+      <% end %>
+      <% if current_exhibit.has_browse_categories? %>
+      <li class="<%= "active" if on_browse_page? %>"><%= link_to t(:'spotlight.curation.browse.header'), spotlight.exhibit_browse_index_path(current_exhibit) %></li>
+      <% end %>
+      <li class="<%= "active" if on_about_page? %>"><%= link_to t(:'spotlight.curation.about_pages.nav_link'), [spotlight, current_exhibit, current_exhibit.main_about_page] if current_exhibit.main_about_page %></li>
     </ul>
 
     <div class="navbar-right col-sm-4 col-md-4"> 

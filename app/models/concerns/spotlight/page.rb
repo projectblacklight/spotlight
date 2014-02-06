@@ -8,6 +8,7 @@ module Spotlight::Page
     validates :exhibit, presence: true
 
     default_scope { order("weight ASC") }
+    scope :at_top_level, -> { where(parent_page_id: nil) }
   end
   # explicitly set the partial path so that 
   # we don't have to duplicate view logic.
