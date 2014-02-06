@@ -6,6 +6,12 @@ describe Spotlight::Search do
     subject.query_params = {"f"=>{"genre_sim"=>["map"]}}
   end
 
+  it "should have a default feature image" do
+    subject.stub(images: [['title', 'image_url'], ['title1', 'image2']])
+    subject.save
+    expect(subject.featured_image).to eq 'image_url'
+  end
+
   it "should have items" do
     expect(subject.count).to eq 55
   end
