@@ -1,6 +1,5 @@
 module Spotlight
-  class FeaturePage < ActiveRecord::Base
-    include Spotlight::Page
+  class FeaturePage < Spotlight::Page
     has_many   :child_pages, :class_name  => "Spotlight::FeaturePage",
                              :foreign_key => "parent_page_id"
 

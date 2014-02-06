@@ -1,5 +1,4 @@
 module Spotlight
-  class AboutPage < ActiveRecord::Base
-    include Spotlight::Page
+  class AboutPage < Spotlight::Page
   end
 end
