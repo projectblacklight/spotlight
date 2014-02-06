@@ -34,6 +34,9 @@ en:
     contact_form:
       header: "Report a Problem"
     curation:
+      home:
+        nav_link: "Home"
+        nav_catalog_link: "Home"
       items:
         header: "Items"
         title: "Curation - Items"
@@ -62,10 +65,12 @@ en:
           one: "%{count} unique value"
           other: "%{count} unique values"
       feature_pages:
+        nav_link: "Curated Features"
         header: "Feature Pages"
         options: "Options"
         update: "Save changes"
       about_pages:
+        nav_link: "About"
         header: "About Pages"
         update: "Save changes"
     header_links:

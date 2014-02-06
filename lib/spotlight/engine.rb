@@ -12,5 +12,11 @@ module Spotlight
       require 'cancan'
       require 'bootstrap_form'
     end
+
+    # BlacklightHelper is needed by all helpers, so we inject it
+    # into action view base here.
+    initializer 'spotlight.helpers' do |app|
+      ActionView::Base.send :include, Spotlight::MainAppHelpers
+    end
   end
 end
