@@ -10,9 +10,9 @@
       <div class="main">
         <h3 class="panel-title"><%= page.title %></h3>
         <div class="page-links">
-          <%= link_to t('helpers.submit.view'), [spotlight, page.exhibit, page], :class => 'btn btn-text' %> &middot;
-          <%= link_to t('helpers.submit.edit'), [spotlight, :edit, page.exhibit, page], :class => 'btn btn-text' %> &middot;
-          <%= link_to t('helpers.submit.destroy'), [spotlight, page.exhibit, page], method: :delete, data: { confirm: t('helpers.submit.destroy_are_you_sure') }, :class => 'btn btn-text' %>
+          <%= link_to t('helpers.submit.view'), [spotlight, page], :class => 'btn btn-text' %> &middot;
+          <%= link_to t('helpers.submit.edit'), [spotlight, :edit, page], :class => 'btn btn-text' %> &middot;
+          <%= link_to t('helpers.submit.destroy'), [spotlight, page], method: :delete, data: { confirm: t('helpers.submit.destroy_are_you_sure') }, :class => 'btn btn-text' %>
         </div>
       </div>
     </div>
@@ -27,17 +27,17 @@
             <%= f.hidden_field :parent_page_id, data: {property: "parent_page"} %>
             <%= f.check_box :display_sidebar, label: t('spotlight.administration.show_sidebar') %>
           </div>
-        <%- end -%>
+        <% end %>
       </div>
     </div>
   </div>
-  <%- if page.feature_page? and !page.child_pages.blank? -%>
+  <% if page.feature_page? and page.child_pages.present? %>
     <ol class="dd-list">
-      <%- page.child_pages.each do |child_page| -%>
+      <% page.child_pages.each do |child_page| %>
         <%= parent_form.fields_for page_model.pluralize.to_sym, child_page do |p| %>
           <%= render partial: 'page', locals: {f: p, parent_form: parent_form} %>
-        <%- end -%>
-      <%- end -%>
+        <% end %>
+      <% end %>
     </ol>
-  <%- end -%>
+  <% end %>
 </li>
