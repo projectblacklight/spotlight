@@ -13,12 +13,12 @@ Spotlight::Engine.routes.draw do
     get 'edit/metadata', on: :member, to: "exhibits#edit_metadata_fields"
     get 'edit/facets', on: :member, to: "exhibits#edit_facet_fields"
 
-    resources :about, controller: "about_pages", as: "about_pages" do
+    resources :about, controller: "about_pages", as: "about_pages", shallow: true do
       collection do
         patch :update_all
       end
     end
-    resources :feature, controller: "feature_pages", as: "feature_pages" do
+    resources :feature, controller: "feature_pages", as: "feature_pages", shallow: true do
       collection do
         patch :update_all
       end

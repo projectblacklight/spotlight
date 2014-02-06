@@ -25,7 +25,7 @@ feature "Record Thumbnail Block" do
     # veryify that the page was created
     expect(page).to have_content("Page was successfully created.")
     # visit the show page for the document we just saved
-    visit spotlight.exhibit_feature_page_path(exhibit_id: Spotlight::Exhibit.default.id, id: Spotlight::FeaturePage.last.id)
+    visit spotlight.feature_page_path(id: Spotlight::FeaturePage.last)
     # veryify that the record thumbnail widget is displaying an image from the document.
     within(:css, ".panel.record-thumbnail") do
       expect(page).to have_css(".panel-body")
@@ -56,7 +56,7 @@ feature "Record Thumbnail Block" do
     # veryify that the page was created
     expect(page).to have_content("Page was successfully created.")
     # visit the show page for the document we just saved
-    visit spotlight.exhibit_feature_page_path(exhibit_id: Spotlight::Exhibit.default.id, id: Spotlight::FeaturePage.last.id)
+    visit spotlight.feature_page_path(id: Spotlight::FeaturePage.last)
     # veryify that the record thumbnail widget is displaying image and title from the requested document.
     within(:css, ".panel.record-thumbnail") do
       expect(page).to have_css(".panel-body")

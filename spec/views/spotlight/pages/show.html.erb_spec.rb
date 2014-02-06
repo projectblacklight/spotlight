@@ -9,6 +9,8 @@ module Spotlight
         :title => "Title",
         :content => "{}"
       ))
+      stub_template "spotlight/pages/_sidebar.html.erb" => "Sidebar"
+      
     end
 
     it "renders attributes in <p>" do

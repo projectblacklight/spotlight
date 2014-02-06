@@ -20,13 +20,13 @@ module Spotlight
     it "should link to the home page" do
       current_exhibit.stub home_page: feature_page
       render
-      expect(response).to have_link "Home", href: spotlight.exhibit_feature_page_path(current_exhibit, feature_page)
+      expect(response).to have_link "Home", href: spotlight.feature_page_path(feature_page)
     end
 
     it "should link directly to a single feature page" do
       feature_page
       render
-      expect(response).to have_link feature_page.title, href: spotlight.exhibit_feature_page_path(current_exhibit, feature_page)
+      expect(response).to have_link feature_page.title, href: spotlight.feature_page_path(feature_page)
     end
 
     it "should provide a dropdown of multiple feature pages" do
@@ -34,8 +34,8 @@ module Spotlight
       another_page = FactoryGirl.create(:feature_page)
       render
       expect(response).to have_selector ".dropdown .dropdown-toggle", text: "Curated Features"
-      expect(response).to have_link feature_page.title, visible: false, href: spotlight.exhibit_feature_page_path(current_exhibit, feature_page)
-      expect(response).to have_link another_page.title, visible: false,  href: spotlight.exhibit_feature_page_path(current_exhibit, another_page)
+      expect(response).to have_link feature_page.title, visible: false, href: spotlight.feature_page_path(feature_page)
+      expect(response).to have_link another_page.title, visible: false,  href: spotlight.feature_page_path(another_page)
     end
 
     it "should not display links to feature pages if none are defined" do
@@ -64,7 +64,7 @@ module Spotlight
     it "should link to the about page" do
       current_exhibit.stub main_about_page: about_page
       render
-      expect(response).to have_link "About", href: spotlight.exhibit_about_page_path(current_exhibit, about_page)
+      expect(response).to have_link "About", href: spotlight.about_page_path(about_page)
     end
 
     it "should not link to the about page if no about page exists" do
