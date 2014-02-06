@@ -22,7 +22,7 @@ module Spotlight
     it "should link to the home page" do
       current_exhibit.stub home_page: feature_page
       render
-      expect(response).to have_link "Home", href: spotlight.feature_page_path(feature_page)
+      expect(response).to have_link "Home", href: main_app.root_url
     end
 
     it "should link directly to a single feature page" do
