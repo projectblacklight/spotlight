@@ -3,6 +3,7 @@ class Spotlight::Search < ActiveRecord::Base
   belongs_to :exhibit
   serialize :query_params, Hash
   default_scope { order("weight ASC") }
+  scope :published, -> { where(on_landing_page: true) }
 
   include Blacklight::SolrHelper
 
@@ -11,7 +12,7 @@ class Spotlight::Search < ActiveRecord::Base
   end
 
   def images
-    query_solr(query_params, rows: 1000, fl: blacklight_config.index.thumbnail_field, facet: false)['response']['docs'].map {|result| result[blacklight_config.index.thumbnail_field].first}
+    query_solr(query_params, rows: 1000, fl: [blacklight_config.index.title_field, blacklight_config.index.thumbnail_field], facet: false)['response']['docs'].map {|result| [result[blacklight_config.index.title_field].first, result[blacklight_config.index.thumbnail_field].first]}
   end
 
   private

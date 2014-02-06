@@ -1,9 +1,9 @@
   <div class="media row">
-    <%= image_tag @browse.featured_image, class: 'col-md-3' %>
+    <%= image_tag @search.featured_image, class: 'col-md-3' %>
     <div class="media-body col-md-9">
-      <h1 class="media-heading"><%= @browse.title %></h1>
-      <small class="item-count"><%= t 'spotlight.browse.item_count', count: @browse.count %></small>
-      <p><%= @browse.long_description %></p>
+      <h1 class="media-heading"><%= @search.title %></h1>
+      <small class="item-count"><%= t 'spotlight.browse.item_count', count: @search.count %></small>
+      <p><%= @search.long_description %></p>
     </div>
   </div>
 

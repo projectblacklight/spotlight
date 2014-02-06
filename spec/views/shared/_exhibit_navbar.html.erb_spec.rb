@@ -51,20 +51,26 @@ module Spotlight
       expect(response).to_not have_link "Curated Features"
     end
 
-    it "should link to the browse index" do
-      FactoryGirl.create :search
+    it "should link to the browse index if there's a published search" do
+      FactoryGirl.create :published_search
       render
       expect(response).to have_link "Browse", href: spotlight.exhibit_browse_index_path(current_exhibit)
     end
 
     it "should mark the browse button as active if we're on a browse page" do
-      FactoryGirl.create :search
+      FactoryGirl.create :published_search
       view.stub(on_browse_page?: true)
       render
       expect(response).to have_selector "li.active", text: "Browse"
     end
 
     it "should not link to the browse index if no categories are defined" do
+      render
+      expect(response).not_to have_link "Browse"
+    end
+
+    it "should not link to the browse index if only private categories are defined" do
+      FactoryGirl.create :search
       render
       expect(response).not_to have_link "Browse"
     end

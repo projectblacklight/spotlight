@@ -50,7 +50,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   end
 
   def has_browse_categories?
-    searches.any?
+    searches.published.any?
   end
 
   protected
