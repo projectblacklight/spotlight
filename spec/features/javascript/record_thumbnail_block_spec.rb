@@ -21,7 +21,7 @@ feature "Record Thumbnail Block" do
     expect(page).to have_css("input#record-thumbnail-id")
     fill_in "record-thumbnail-id", :with => "dq287tq6352"
     # create the page
-    click_button("Create Feature page")
+    click_button("Save")
     # veryify that the page was created
     expect(page).to have_content("Page was successfully created.")
     # visit the show page for the document we just saved
@@ -52,7 +52,7 @@ feature "Record Thumbnail Block" do
     # display the title
     check("Show title?")
     # create the page
-    click_button("Create Feature page")
+    click_button("Save")
     # veryify that the page was created
     expect(page).to have_content("Page was successfully created.")
     # visit the show page for the document we just saved
