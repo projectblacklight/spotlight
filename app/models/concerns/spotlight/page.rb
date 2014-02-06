@@ -18,6 +18,6 @@ module Spotlight::Page
     self.is_a?(Spotlight::FeaturePage)
   end
   def top_level_page?
-    self.parent_page.blank?
+    self.try(:parent_page).blank?
   end
 end

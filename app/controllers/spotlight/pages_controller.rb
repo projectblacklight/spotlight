@@ -36,7 +36,7 @@ module Spotlight
       @page.attributes = page_params
 
       if @page.save
-        redirect_to [@exhibit, @page], notice: 'Page was successfully created.'
+        redirect_to [@page.exhibit, page_model.pluralize.to_sym], notice: 'Page was successfully created.'
       else
         render action: 'new'
       end
@@ -45,7 +45,7 @@ module Spotlight
     # PATCH/PUT /pages/1
     def update
       if @page.update(page_params)
-        redirect_to [@page.exhibit, @page], notice: 'Page was successfully updated.'
+        redirect_to [@page.exhibit, page_model.pluralize.to_sym], notice: 'Page was successfully updated.'
       else
         render action: 'edit'
       end

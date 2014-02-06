@@ -63,10 +63,9 @@ describe Spotlight::FeaturePagesController do
             assigns(type).should be_persisted
           end
         end
-
-        it "redirects to the created page" do
+        it "redirects to the feature page index" do
           post :create, feature_page: {title: "MyString"}, exhibit_id: Spotlight::Exhibit.default
-          response.should redirect_to([Spotlight::FeaturePage.last.exhibit, Spotlight::FeaturePage.last])
+          response.should redirect_to(exhibit_feature_pages_path(Spotlight::FeaturePage.last.exhibit))
         end
       end
 
@@ -106,9 +105,9 @@ describe Spotlight::FeaturePagesController do
           assigns(:feature_page).should eq(page)
         end
 
-        it "redirects to the page" do
+        it "redirects to the feature page index action" do
           put :update, id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes
-          response.should redirect_to([page.exhibit, page])
+          response.should redirect_to(exhibit_feature_pages_path(page.exhibit.id))
         end
       end
 

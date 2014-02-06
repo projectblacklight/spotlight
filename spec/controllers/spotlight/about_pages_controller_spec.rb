@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Spotlight::AboutPagesController do
   routes { Spotlight::Engine.routes }
+  let(:valid_attributes) { { "title" => "MyString" } }
   describe "when not logged in" do
 
     describe "POST update_all" do
@@ -25,7 +26,19 @@ describe Spotlight::AboutPagesController do
         expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
       end
     end
-
+    describe "POST create" do
+      it "redirects to the feature page index" do
+        post :create, about_page: {title: "MyString"}, exhibit_id: Spotlight::Exhibit.default
+        response.should redirect_to(exhibit_about_pages_path(Spotlight::AboutPage.last.exhibit))
+      end
+    end
+    describe "PUT update" do
+      let!(:page) { FactoryGirl.create(:about_page) }
+      it "redirects to the about page index action" do
+        put :update, id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes
+        response.should redirect_to(exhibit_about_pages_path(page.exhibit.id))
+      end
+    end
     describe "POST update_all" do
       let!(:page1) { FactoryGirl.create(:about_page) }
       let!(:page2) { FactoryGirl.create(:about_page, exhibit: page1.exhibit, published: true ) }

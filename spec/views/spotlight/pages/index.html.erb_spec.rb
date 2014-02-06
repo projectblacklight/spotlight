@@ -18,7 +18,7 @@ describe "spotlight/pages/index.html.erb" do
     exhibit.stub(:feature_pages).and_return pages
     view.stub(:page_model).and_return("feature_page")
     view.stub(:update_pages_path).and_return("/update")
-    view.stub(:new_spotlight_page_path_for).and_return("/")
+    view.stub(:new_exhibit_feature_page_path).and_return("/exhibit/features")
     assign(:exhibit, exhibit)
   end
 
