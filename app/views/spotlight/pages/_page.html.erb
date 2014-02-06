@@ -21,7 +21,6 @@
         <%= f.text_field :title, label: t('spotlight.administration.page_title') %>
         <%= f.hidden_field :id %>
         <%= f.hidden_field :weight, data: {property: "weight"} %>
-        <!--<input type="hidden" id="page_<%= page.id %>_weight" name="pages[<%= page_model %>][<%= page.id %>][weight]" value="<%= page.weight %>" />-->
         <%- if page.feature_page? -%>
           <div class="col-sm-offset-2 col-sm-10">
             <%= f.hidden_field :parent_page_id, data: {property: "parent_page"} %>
@@ -34,7 +33,7 @@
   <% if page.feature_page? and page.child_pages.present? %>
     <ol class="dd-list">
       <% page.child_pages.each do |child_page| %>
-        <%= parent_form.fields_for page_model.pluralize.to_sym, child_page do |p| %>
+        <%= parent_form.fields_for page_collection_name, child_page do |p| %>
           <%= render partial: 'page', locals: {f: p, parent_form: parent_form} %>
         <% end %>
       <% end %>

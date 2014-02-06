@@ -6,7 +6,7 @@ module Spotlight
 
     private
     def page_model
-      "home_page"
+      :home_page
     end
     def cast_page_instance_variable
       if @home_pages

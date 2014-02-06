@@ -3,7 +3,7 @@ module Spotlight
 
     private
     def page_model
-      "about_page"
+      :about_page
     end
     def cast_page_instance_variable
       if @about_pages

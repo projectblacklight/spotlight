@@ -13,7 +13,7 @@ module Spotlight
 
     copy_blacklight_config_from(CatalogController)
 
-    helper_method :get_search_results, :get_solr_response_for_doc_id, :page_model
+    helper_method :get_search_results, :get_solr_response_for_doc_id, :page_model, :page_collection_name
 
     # GET /exhibits/1/pages
     def index
@@ -36,7 +36,7 @@ module Spotlight
       @page.attributes = page_params
 
       if @page.save
-        redirect_to [@page.exhibit, page_model.pluralize.to_sym], notice: 'Page was successfully created.'
+        redirect_to [@page.exhibit, page_collection_name], notice: 'Page was successfully created.'
       else
         render action: 'new'
       end
@@ -45,7 +45,7 @@ module Spotlight
     # PATCH/PUT /pages/1
     def update
       if @page.update(page_params)
-        redirect_to [@page.exhibit, page_model.pluralize.to_sym], notice: 'Page was successfully updated.'
+        redirect_to [@page.exhibit, page_collection_name], notice: 'Page was successfully updated.'
       else
         render action: 'edit'
       end
@@ -69,11 +69,11 @@ module Spotlight
     protected
 
     def update_all_page_params
-      params.require(:exhibit).permit("#{page_model.pluralize}_attributes" => [:id, :published, :title, :weight, :display_sidebar, :parent_page_id ])
+      params.require(:exhibit).permit("#{page_collection_name}_attributes" => [:id, :published, :title, :weight, :display_sidebar, :parent_page_id ])
     end
 
     def human_name
-      page_model.pluralize.humanize
+      page_collection_name.to_s.humanize
     end
 
     private
@@ -81,9 +81,12 @@ module Spotlight
       def page_model
         ""
       end
+      def page_collection_name
+        page_model.to_s.pluralize.to_sym
+      end
       # Only allow a trusted parameter "white list" through.
       def page_params
-        params.require(page_model.to_sym).permit(:title, :content)
+        params.require(page_model).permit(:title, :content)
       end
   end
 end
