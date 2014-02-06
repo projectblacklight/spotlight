@@ -3,6 +3,7 @@ class Spotlight::Search < ActiveRecord::Base
   belongs_to :exhibit
   serialize :query_params, Hash
   default_scope { order("weight ASC") }
+  scope :published, -> { where(on_landing_page: true) }
 
   include Blacklight::SolrHelper
 

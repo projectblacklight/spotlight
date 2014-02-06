@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'spotlight/browse/show' do
-  let(:search) { FactoryGirl.create(:search) }
+  let(:search) { FactoryGirl.create(:published_search) }
   let(:exhibit) { Spotlight::Exhibit.default }
 
   before :each do
@@ -12,7 +12,7 @@ describe 'spotlight/browse/show' do
 
   before :each do
     assign :exhibit, exhibit
-    assign :browse, search
+    assign :search, search
     assign :document_list, []
   end
 
