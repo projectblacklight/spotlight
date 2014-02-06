@@ -8,6 +8,7 @@
     </div>
     <h2 class="text-muted clearfix"><%= t :"spotlight.curation.#{page_model.pluralize}.header" %></h2>
 
+    <%= render partial: 'header' %>
     <h3>Defined Pages</h3>
     <p>Select the pages you want to be shown. Drag and drop pages to change the order in which they are displayed in the sidebar.</p>
     <div class="panel-group dd <%= page_model %>_admin" id="nested-pages">

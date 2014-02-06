@@ -23,6 +23,10 @@ en:
         create: "Save"
         submit: "Save changes"
         update: "Save changes"
+      home_page:
+        create: "Save"
+        submit: "Save changes"
+        update: "Save changes"
   activerecord:
     models:
       spotlight:
@@ -81,6 +85,9 @@ en:
         nav_link: "About"
         header: "About Pages"
         update: "Save changes"
+      home_pages:
+        header: "Homepage"
+        page_title: "Exhibit Home"
     header_links:
       login: "Sign in"
       logout: "Sign out"

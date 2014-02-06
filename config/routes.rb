@@ -23,5 +23,6 @@ Spotlight::Engine.routes.draw do
         patch :update_all
       end
     end
+    resources :home_page, controller: "home_pages", as: "home_pages", shallow: true
   end
 end
