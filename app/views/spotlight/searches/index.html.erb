@@ -8,7 +8,7 @@
     <h2 class="text-muted"><%= t :'spotlight.curation.browse.header' %></h2>
 
     <div class="pull-right">
-      <%= submit_tag t(:'spotlight.curation.browse.update'), class: "btn btn-default" %>
+      <%= submit_tag t(:'spotlight.curation.browse.update'), class: "btn btn-default", disabled: @searches.empty? %>
     </div>
 
     <h4 class="clearfix">Browse Categories <span class="label label-default"><%=@searches.count%></span></h4>
