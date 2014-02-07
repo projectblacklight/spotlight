@@ -36,5 +36,17 @@ module Spotlight
         expect(rendered).to_not have_link "Edit"
       end
     end
+
+    it "should render the sidebar" do
+      @page.display_sidebar = true
+      render
+      expect(rendered).to match("Sidebar")
+    end
+
+    it "should not render the sidebar if the page has it disabled" do
+      @page.stub(display_sidebar: false)
+      render
+      expect(rendered).to_not match("Sidebar")
+    end
   end
 end
