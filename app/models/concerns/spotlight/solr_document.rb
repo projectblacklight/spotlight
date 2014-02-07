@@ -3,12 +3,10 @@ module Spotlight
     extend ActiveSupport::Concern
     included do
       include ArLight
-      include ActiveModel::Dirty
-      def self.base_class
-        self
-      end
       extend ActsAsTaggableOn::Compatibility
       extend ActsAsTaggableOn::Taggable
+      include Blacklight::SolrHelper
+      extend Finder
 
       acts_as_taggable
     end
@@ -23,10 +21,19 @@ module Spotlight
       def primary_key
         :id
       end
+
+      def reindex(id)
+        find(id).reindex
+      end
+    end
+
+    def reindex
+      #TODO implement this
     end
 
     def save
       save_tags
+      reindex
     end
 
     def to_key
@@ -45,4 +52,8 @@ module Spotlight
       !persisted?
     end
   end
+end
+
+ActsAsTaggableOn::Tagging.after_destroy do |obj|
+  ::SolrDocument.reindex(obj.taggable_id)
 end

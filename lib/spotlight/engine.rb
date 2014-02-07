@@ -13,7 +13,6 @@ module Spotlight
       require 'cancan'
       require 'bootstrap_form'
       require 'acts-as-taggable-on'
-      require 'rails3-jquery-autocomplete'
     end
 
     # BlacklightHelper is needed by all helpers, so we inject it
@@ -27,7 +26,11 @@ module Spotlight
       # always be false.
       begin
         ::SolrDocument.send :include, Spotlight::SolrDocument
+      rescue NoMethodError => e
+        # This is not the kind of NameError we want to catch.
+        raise e
       rescue NameError
+        # ignore this kind of error
       end
     end
   end

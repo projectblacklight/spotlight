@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "spotlight/items/edit.html.erb" do
   before do
     assign(:exhibit, stub_model(Spotlight::Exhibit))
-    assign(:document, stub_model(::SolrDocument))
+    assign(:item, stub_model(::SolrDocument))
   end
 
   before do

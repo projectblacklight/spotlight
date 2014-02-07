@@ -4,6 +4,7 @@ describe "spotlight/items/show.html.erb" do
   before do
     assign(:exhibit, stub_model(Spotlight::Exhibit))
     assign(:document, stub_model(SolrDocument))
+    view.stub(:document_show_html_title)
   end
 
   describe "when user can curate" do

@@ -49,7 +49,18 @@ describe Spotlight::ItemsController do
         get :edit, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to be_successful
         expect(assigns[:exhibit]).to eq exhibit
+        expect(assigns[:item]).to be_kind_of SolrDocument
+      end
+    end
+    describe "PATCH update" do
+      let (:exhibit) {Spotlight::Exhibit.default}
+      it "should be successful" do
+        patch :update, exhibit_id: exhibit, id: 'dq287tq6352', solr_document: {tag_list: 'one, two'}
+        expect(response).to be_successful
+        expect(assigns[:exhibit]).to eq exhibit
+        expect(assigns[:item]).to be_kind_of SolrDocument
         expect(assigns[:document]).to be_kind_of SolrDocument
+        expect(assigns[:item].tag_list).to eq ['one', 'two']
       end
     end
   end

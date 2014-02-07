@@ -10,7 +10,8 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration
 
       # You should make sure that the column created is
       # long enough to store the required class names.
-      t.references :taggable, :polymorphic => true
+      t.string :taggable_id
+      t.string :taggable_type
       t.references :tagger, :polymorphic => true
 
       # Limit is created to prevent MySQL error on index

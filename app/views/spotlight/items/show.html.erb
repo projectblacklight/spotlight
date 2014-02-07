@@ -1,10 +1,11 @@
+<% @page_title = document_show_html_title %>
 <% if can? :edit, @document %>
   <div class="pull-right">
     <span class="label label-info"><%= t(:'spotlight.items.current_mode', mode: t(:'spotlight.items.end_user_mode')) %> <%= link_to t(:'spotlight.items.edit_link'), edit_exhibit_item_path(@exhibit, @document) %></span>
   </div>
 <% end %>
 
-<h1 class="clearfix">Show an item</h1>
+<h1 class="clearfix"><%= @page_title %></h1>
 
 <p>tags:</p> 
 <ul>

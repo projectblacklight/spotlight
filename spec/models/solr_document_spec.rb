@@ -15,5 +15,9 @@ describe SolrDocument do
     }.to change { ActsAsTaggableOn::Tag.count}.by(2)
     subject.tag_list.should == ['awesomer', 'slicker']
   end
+
+  it "should have find" do
+    expect(::SolrDocument.find('dq287tq6352')).to be_kind_of SolrDocument
+  end
 end
 

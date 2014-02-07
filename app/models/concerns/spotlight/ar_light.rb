@@ -5,6 +5,12 @@ module Spotlight
     include ActiveRecord::Inheritance
     include ActiveRecord::Associations
     include ActiveRecord::Reflection
+    include ActiveModel::Dirty
+    included do
+      def self.base_class
+        self
+      end
+    end
     def initialize (source_doc={}, solr_response=nil)
       @association_cache = {}
       super
@@ -28,6 +34,7 @@ module Spotlight
 
       def add_autosave_association_callbacks arg
       end
+
     end
   end
 end
