@@ -3,11 +3,7 @@
 <div id="exhibit-navbar" class="navbar navbar-default" role="navigation">
   <div class="container">
     <ul class="nav navbar-nav">
-      <% if current_exhibit.home_page %>
-        <li class="<%= "active" if current_page?(url_for([spotlight, current_exhibit.home_page])) %>"><%= link_to t(:'spotlight.curation.home.nav_link'), [spotlight, current_exhibit.home_page] %></li>
-      <% else %>
-        <li class="<%= "active" if current_page?(root_url) %>"><%= link_to t(:'spotlight.curation.home.nav_catalog_link'), root_url %></li>
-      <% end %>
+      <li class="<%= "active" if current_page?(root_url) %>"><%= link_to t(:'spotlight.curation.home.nav_catalog_link'), root_url %></li>
       <% unless published_top_level_feature_pages.empty? %>
         <% if published_top_level_feature_pages.length > 1 %>
         <li class="dropdown">

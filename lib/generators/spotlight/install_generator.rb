@@ -7,6 +7,11 @@ module Spotlight
 
     def inject_spotlight_routes
       route "mount Spotlight::Engine, at: 'spotlight'"
+      gsub_file 'config/routes.rb', /^\s*root.*/ do |match|
+        "#" + match + " # replaced by spotlight_root"
+      end
+
+      route "spotlight_root"
     end
 
     def assets

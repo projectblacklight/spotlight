@@ -28,4 +28,16 @@ describe Spotlight::HomePagesController do
       end
     end
   end
+
+  describe "Rendering home page" do
+    let!(:page) { FactoryGirl.create(:home_page) }
+    
+    it "should get search results for display facets" do
+      controller.stub(get_search_results: [double, double])
+      get :show, id: page.id
+      expect(assigns[:response]).to_not be_blank
+      expect(assigns[:document_list]).to_not be_blank
+    end
+
+  end
 end
