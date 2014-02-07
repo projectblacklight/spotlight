@@ -27,5 +27,9 @@ module Spotlight
     def top_level_page?
       try(:parent_page).blank?
     end
+
+    def top_level_page_or_self
+      parent_page || self
+    end
   end
 end
