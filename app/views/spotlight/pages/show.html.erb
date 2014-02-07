@@ -1,4 +1,4 @@
-<%= link_to t('helpers.submit.edit'), spotlight.polymorphic_path([:edit, @page]), :class => 'btn btn-primary pull-right' %>
+<%= link_to t('helpers.submit.edit'), spotlight.polymorphic_path([:edit, @page]), :class => 'btn btn-primary pull-right' if can? :edit, @page %>
 <%= render 'sidebar' %>
 <h1>
   <%= @page.title %>

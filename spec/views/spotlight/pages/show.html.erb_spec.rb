@@ -17,5 +17,24 @@ module Spotlight
       render
       rendered.should match(/Title/)
     end
+
+    describe "admin user" do
+
+      let(:user) { FactoryGirl.create(:exhibit_curator) }
+      before {sign_in user }
+
+      it "should have an edit link" do
+        render
+        expect(rendered).to have_link "Edit", href: spotlight.polymorphic_path([:edit, @page])
+      end
+    end
+
+    describe "anonymous user" do
+
+      it "should not give them an edit link" do
+        render
+        expect(rendered).to_not have_link "Edit"
+      end
+    end
   end
 end
