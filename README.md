@@ -18,7 +18,7 @@ $ rake
 Add this line to your application's Gemfile:
 
 ```
-gem 'spotlight'
+gem 'blacklight-spotlight'
 ```
 
 And then execute:
