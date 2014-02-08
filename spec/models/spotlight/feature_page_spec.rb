@@ -10,6 +10,35 @@ describe Spotlight::FeaturePage do
     end
   end
 
+  describe "display_sidebar" do
+    let(:parent)  { FactoryGirl.create(:feature_page) }
+    let(:child) { FactoryGirl.create(:feature_page, parent_page: parent ) }
+    let!(:unpublished_parent)  { FactoryGirl.create(:feature_page, published: false) }
+    let!(:unpublished_child) { FactoryGirl.create(:feature_page, parent_page: unpublished_parent, published: false ) }
+    it "should be set to true on the parent of published child pages" do
+      expect(parent.display_sidebar).to be_false
+      child.save
+      expect(parent.display_sidebar).to be_true
+    end
+    it "should be set to true when publishing a child page" do
+      expect(unpublished_parent.display_sidebar).to be_false
+      unpublished_parent.published = true
+      unpublished_child.published = true
+      unpublished_child.save
+      expect(unpublished_parent.display_sidebar).to be_true
+    end
+    it "should not change the display_sidebar setting when the child page is not published" do
+      unpublished_child.save
+      expect(unpublished_parent.display_sidebar).to be_false
+    end
+    it "should not change the setting when the parent page is not published" do
+      expect(unpublished_parent.display_sidebar).to be_false
+      unpublished_child.published = true
+      unpublished_child.save
+      expect(unpublished_parent.display_sidebar).to be_false
+    end
+  end
+
   describe "weight" do
     let(:good_weight) { FactoryGirl.build(:feature_page, weight: 10) }
     let(:low_weight)  { FactoryGirl.build(:feature_page, weight: -1) }

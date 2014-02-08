@@ -30,6 +30,7 @@ describe "Feature page" do
       end
     end
     describe "when configured to not display" do
+      before { parent_feature_page.display_sidebar = false;  parent_feature_page.save }
       it "should not be present" do
         visit spotlight.feature_page_path(parent_feature_page)
         expect(page).not_to have_css("#sidebar")
