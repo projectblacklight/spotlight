@@ -4,7 +4,7 @@
     <li class="disabled"><%= link_to "Dashboard", "#" %></li>
     <li><%= link_to "Items", spotlight.exhibit_catalog_index_path(@exhibit) %></li>
     <li><%= link_to "Metadata", spotlight.exhibit_edit_metadata_path(@exhibit) %></li>
-    <li class="disabled"><%= link_to "Tags", "#" %></li>
+    <li><%= link_to "Tags", spotlight.exhibit_tags_path(@exhibit) %></li>
     <li><%= link_to "Search facets", spotlight.exhibit_edit_facets_path(@exhibit) %></li>
     <li><%= link_to "Browse", spotlight.exhibit_searches_path(@exhibit) %></li>
     <li><%= link_to "Feature pages", spotlight.exhibit_feature_pages_path(@exhibit), 'data-no-turbolink' => true %></li>

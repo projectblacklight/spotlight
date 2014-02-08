@@ -3,19 +3,20 @@ Spotlight::Engine.routes.draw do
   resource :contact_form, only: [:new, :create]
 
   resources :exhibits, only: [:edit, :update] do
-    resource :blacklight_configuration, only: [:update] do
-    end
+    resource :blacklight_configuration, only: [:update]
 
     get 'edit/metadata', to: "blacklight_configurations#edit_metadata_fields"
     get 'edit/facets', to: "blacklight_configurations#edit_facet_fields"
 
+    resources :catalog, only: [:index]
+    resources :items, only: [:show, :edit, :update] 
     resources :searches, shallow: true do
       collection do
         patch :update_all
       end
     end
     resources :browse, only: [:index, :show]
-    resources :catalog, only: [:index]
+    resources :tags, only: [:index, :destroy]
 
     resources :about, controller: "about_pages", as: "about_pages", shallow: true do
       collection do
