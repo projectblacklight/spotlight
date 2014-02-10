@@ -57,7 +57,7 @@ module Spotlight
       unless show_fields.blank?
         active_show_fields = show_fields.select { |k,v| v[:enabled] == true }
         config.show_fields = config.index_fields.slice *active_show_fields.keys
-        config.show_fields = Hash[config.show_fields.sort_by { |k,v| active_show_fields.keys.index k }]
+        config.show_fields = Hash[config.show_fields.sort_by { |k,v| field_weight(active_show_fields, k)}]
 
         config.index_fields.each do |k, v|
           next if show_fields[k].blank?
@@ -71,7 +71,7 @@ module Spotlight
       unless index_fields_for_view(view).blank?
         active_index_fields = index_fields_for_view(view).select { |k,v| v[:enabled] == true }
         config.index_fields.slice! *active_index_fields.keys
-        config.index_fields = Hash[config.index_fields.sort_by { |k,v| active_index_fields.keys.index k }]
+        config.index_fields = Hash[config.index_fields.sort_by { |k,v| field_weight(active_index_fields, k) }]
 
         config.index_fields.each do |k, v|
           next if index_fields[k].blank?
@@ -85,7 +85,7 @@ module Spotlight
       unless sort_fields.blank?
         active_sort_fields = sort_fields.select { |k,v| v[:enabled] == true }
         config.sort_fields.slice! *active_sort_fields.keys
-        config.sort_fields = Hash[config.sort_fields.sort_by { |k,v| active_sort_fields.keys.index k }]
+        config.sort_fields = Hash[config.sort_fields.sort_by { |k,v| field_weight(active_sort_fields, k) }]
 
         config.sort_fields.each do |k, v|
           next if sort_fields[k].blank?
@@ -99,7 +99,7 @@ module Spotlight
       unless facet_fields.blank?
         active_facet_fields = facet_fields.select { |k,v| v[:enabled] == true }
         config.facet_fields.slice! *active_facet_fields.keys
-        config.facet_fields = Hash[config.facet_fields.sort_by { |k,v| active_facet_fields.keys.index k }]
+        config.facet_fields = Hash[config.facet_fields.sort_by { |k,v| field_weight(active_facet_fields, k) }]
 
         config.facet_fields.each do |k, v|
           next if facet_fields[k].blank?
@@ -117,11 +117,11 @@ module Spotlight
     end
 
     def all_facet_fields
-      default_blacklight_config.facet_fields.sort_by { |k,v| facet_fields.keys.index k }
+      Hash[default_blacklight_config.facet_fields.sort_by { |k,v| field_weight(facet_fields, k) }]
     end
 
     def all_index_fields
-      default_blacklight_config.index_fields.sort_by { |k,v| index_fields.keys.index k }
+      Hash[default_blacklight_config.index_fields.sort_by { |k,v| field_weight(index_fields, k) }]
     end
 
     ##
@@ -141,5 +141,10 @@ module Spotlight
       ::CatalogController.blacklight_config
     end
 
+    protected
+
+    def field_weight fields, index
+      fields.fetch(index, {})[:weight] || (100 + (fields.keys.index(index) || fields.keys.length))
+    end
   end
 end

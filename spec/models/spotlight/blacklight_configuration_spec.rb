@@ -35,6 +35,19 @@ describe Spotlight::BlacklightConfiguration do
       expect(subject.blacklight_config.facet_fields).to_not include('b')
       expect(subject.blacklight_config.facet_fields).to have(1).fields
     end
+
+    it "should order the fields by weight" do
+
+      subject.facet_fields['a'] = { enabled: true, weight: 3 }
+      subject.facet_fields['b'] = { enabled: true, weight: 5 }
+      subject.facet_fields['c'] = { enabled: true, weight: 1 }
+
+      blacklight_config.add_facet_field 'a'
+      blacklight_config.add_facet_field 'b'
+      blacklight_config.add_facet_field 'c'
+
+      expect(subject.blacklight_config.facet_fields.keys).to eq ['c', 'a', 'b']
+    end
   end
 
   describe "index fields" do
@@ -98,6 +111,32 @@ describe Spotlight::BlacklightConfiguration do
       expect(subject.blacklight_config.show_fields).to include('a')
       expect(subject.blacklight_config.show_fields).to_not include('b', 'd')
       expect(subject.blacklight_config.show_fields).to have(1).fields
+    end
+
+    it "should order the fields by weight" do
+
+      subject.index_fields['a'] = { enabled: true, weight: 3, list: true }
+      subject.index_fields['b'] = { enabled: true, weight: 5, list: true }
+      subject.index_fields['c'] = { enabled: true, weight: 1, list: true }
+
+      blacklight_config.add_index_field 'a'
+      blacklight_config.add_index_field 'b'
+      blacklight_config.add_index_field 'c'
+
+      expect(subject.blacklight_config.index_fields.keys).to eq ['c', 'a', 'b']
+    end
+
+    it "should order the fields by weight" do
+
+      subject.index_fields['a'] = { enabled: true, weight: 3, show: true }
+      subject.index_fields['b'] = { enabled: true, weight: 5, show: true }
+      subject.index_fields['c'] = { enabled: true, weight: 1, show: true }
+
+      blacklight_config.add_index_field 'a'
+      blacklight_config.add_index_field 'b'
+      blacklight_config.add_index_field 'c'
+
+      expect(subject.blacklight_config.show_fields.keys).to eq ['c', 'a', 'b']
     end
   end
 
