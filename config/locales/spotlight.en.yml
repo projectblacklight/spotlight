@@ -36,12 +36,6 @@ en:
       spotlight:
         page: Page
   spotlight:
-    administration:
-      header: "Administration"
-      page_title: "Page title"
-      settings:
-        header: "Settings"
-      show_sidebar: "Show sidebar"
     items:
       current_mode: "You are in %{mode} mode."
       curation_mode: "Curation"
@@ -55,6 +49,18 @@ en:
         other: "%{count} items"
     contact_form:
       header: "Report a Problem"
+    administration:
+      header: "Administration"
+      page_title: "Page title"
+      settings:
+        header: "Settings"
+      show_sidebar: "Show sidebar"
+      users:
+        header: Users
+        title: Site Administration - Users
+        remove: "Remove from site"
+        update: "Save"
+        cancel: "Cancel"
     curation:
       home:
         nav_link: "Home"

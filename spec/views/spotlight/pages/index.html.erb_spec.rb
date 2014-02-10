@@ -20,6 +20,7 @@ describe "spotlight/pages/index.html.erb" do
     view.stub(:new_exhibit_feature_page_path).and_return("/exhibit/features")
     view.stub(:update_all_exhibit_feature_pages_path).and_return("/exhibit/features/update_all")
     assign(:exhibit, exhibit)
+    view.stub(:current_exhibit).and_return(exhibit)
   end
 
   it "renders a list of pages" do

@@ -1,4 +1,5 @@
 <div id="sidebar" class="col-md-3" role="complementary">
+  <%= render 'spotlight/shared/admin_sidebar' if can? :update, current_exhibit %>
   <h4>Curation</h4>
   <ul class="nav sidenav">
     <li class="disabled"><%= link_to "Dashboard", "#" %></li>

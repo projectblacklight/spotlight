@@ -29,5 +29,11 @@ Spotlight::Engine.routes.draw do
       end
     end
     resources :home_page, controller: "home_pages", as: "home_pages", shallow: true
+
+    resources :roles, only: [:index, :create, :destroy] do
+      collection do
+        patch :update_all
+      end
+    end
   end
 end

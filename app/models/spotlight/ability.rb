@@ -8,9 +8,10 @@ module Spotlight::Ability
     # until this PR is merged: https://github.com/ryanb/cancan/pull/917
     # can :create, Spotlight::Exhibit, admin_roles: { id: user.role_ids } 
     # Until then, workaround:
-    can [:update], Spotlight::Exhibit do |exhibit|
-      exhibit.roles.where(id: user.role_ids, role: 'admin').any?
-    end
+    can :update, Spotlight::Exhibit, id: user.admin_roles.map(&:exhibit_id)
+
+    can [:index, :update, :destroy], Spotlight::Role, exhibit_id: user.admin_roles.map(&:exhibit_id)
+
 
     can [:update, :edit_metadata_fields, :edit_facet_fields], Spotlight::BlacklightConfiguration do |config|
       config.exhibit.roles.where(id: user.role_ids).any?
@@ -26,7 +27,7 @@ module Spotlight::Ability
       # any curator or admin role
     if Spotlight::Exhibit.default.roles.where(id: user.role_ids).any?
       can [:create, :update, :destroy], [Spotlight::Search, Spotlight::Page]
-      can :update_all, [Spotlight::Search, Spotlight::Page]
+      can :update_all, [Spotlight::Search, Spotlight::Page] #TODO make these specific to the owning exhibit
       can :update, ::SolrDocument
 
       can [:index, :destroy], ActsAsTaggableOn::Tag
