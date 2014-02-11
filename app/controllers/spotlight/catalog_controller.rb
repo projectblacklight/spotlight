@@ -22,13 +22,14 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   def edit
     blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
 
-    blacklight_config.view.edit.partials.insert(1, :edit_tags)
+    blacklight_config.view.edit.partials.insert(1, :edit_exhibit_specific_fields)
+    blacklight_config.view.edit.partials.insert(2, :edit_tags)
   end
 
   def update
-    @document.update(solr_document_params)
+    @document.update(current_exhibit, solr_document_params)
     @document.save # TODO need to index tags too
-    render :show
+    redirect_to main_app.solr_document_path(@document)
   end
 
   def _prefixes
@@ -38,7 +39,11 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   protected
 
   def solr_document_params
-    params.require(:solr_document).permit(:tag_list)
+    params.require(:solr_document).permit(:tag_list, sidecar: { data: [custom_field_params] })
+  end
+
+  def custom_field_params
+    current_exhibit.custom_fields.pluck(:field)
   end
 
   def check_authorization

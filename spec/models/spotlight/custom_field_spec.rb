@@ -12,7 +12,7 @@ describe Spotlight::CustomField do
       subject.exhibit = Spotlight::Exhibit.default
       subject.save
 
-      expect(subject.field).to eq "exhibit_#{Spotlight::Exhibit.defalt.to_param}_xyz"
+      expect(subject.field).to eq "exhibit_#{Spotlight::Exhibit.default.to_param}_xyz"
     end
   end
 end

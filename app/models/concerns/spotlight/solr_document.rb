@@ -27,13 +27,18 @@ module Spotlight
       end
     end
 
-    def update new_attributes
+    def update current_exhibit, new_attributes
       attributes = new_attributes.stringify_keys
 
-      attributes.each do |k, v|
-        send "#{k}=", v
+      if custom_data = attributes.delete("sidecar")
+        sidecar(current_exhibit).update(custom_data)
       end
 
+      attributes.each do |k, v|
+        if respond_to? "#{k}="
+          send "#{k}=", v
+        end
+      end
     end
 
     def reindex
@@ -61,8 +66,8 @@ module Spotlight
       !persisted?
     end
 
-    def exhibit_specific_field exhibit, field
-      nil
+    def sidecar exhibit
+      @sidecar ||= SolrDocumentSidecar.find_or_initialize_by exhibit: exhibit, solr_document_id: self.id
     end
   end
 end

@@ -7,6 +7,10 @@ module Spotlight
       self.field ||= field_name
     end
 
+    def label
+      self.configuration["label"]
+    end
+
     private
     def field_name
       "exhibit_#{self.exhibit.to_param}_#{label.parameterize}"

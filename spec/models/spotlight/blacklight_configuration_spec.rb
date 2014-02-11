@@ -6,6 +6,7 @@ describe Spotlight::BlacklightConfiguration do
 
   before :each do
     subject.stub default_blacklight_config: blacklight_config
+    subject.exhibit = Spotlight::Exhibit.default
   end
 
   describe "facet fields" do
@@ -79,7 +80,14 @@ describe Spotlight::BlacklightConfiguration do
       expect(subject.blacklight_config.index_fields).to have(1).fields
     end
 
-    it "should filter the upstream blacklight config" do
+
+    it "should include any custom fields" do
+      subject.index_fields['a'] = { enabled: true, list: true }
+      subject.stub(custom_index_fields: { 'a' => double(merge!: true, validate!: true, normalize!: true) })
+      expect(subject.blacklight_config.index_fields).to include('a')
+    end
+
+    it "should filter the upstream blacklight config with respect for view types" do
       subject.index_fields['a'] = { enabled: true, list: true, gallery: false }
       subject.index_fields['b'] = { enabled: true, list: false, gallery: true }
       subject.index_fields['c'] = { enabled: false, list: true, gallery: false }
@@ -111,6 +119,14 @@ describe Spotlight::BlacklightConfiguration do
       expect(subject.blacklight_config.show_fields).to include('a')
       expect(subject.blacklight_config.show_fields).to_not include('b', 'd')
       expect(subject.blacklight_config.show_fields).to have(1).fields
+    end
+
+    it "should include any custom fields" do
+      subject.index_fields['a'] = { enabled: true, show: true }
+
+      subject.stub(custom_index_fields: { 'a' => double(merge!: true, validate!: true, normalize!: true) })
+
+      expect(subject.blacklight_config.show_fields).to include('a')
     end
 
     it "should order the fields by weight" do
@@ -263,6 +279,47 @@ describe Spotlight::BlacklightConfiguration do
       blacklight_config.index.title_field = 'xyz'
       subject.index[:title_field] = 'abc'
       expect(subject.blacklight_config.index.title_field).to eq 'abc'
+    end
+  end
+
+  describe "#all_facet_fields" do
+    it "should sort the upstream configuration using this config's facet sorting" do
+      subject.stub(:field_weight) do |arr, key|
+        key
+      end
+
+      expect(subject.all_facet_fields.keys).to eq subject.all_facet_fields.keys.sort
+    end
+  end
+
+  describe "#all_index_fields" do
+    it "should sort the upstream configuration using this config's index sorting" do
+      subject.stub(:field_weight) do |arr, key|
+        key
+      end
+
+      expect(subject.all_index_fields.keys).to eq subject.all_index_fields.keys.sort
+    end
+
+    it "should include custom index fields" do
+      subject.stub(exhibit: double(custom_fields: [
+        stub_model(Spotlight::CustomField, field: "abc", configuration: { a: 1}),
+        stub_model(Spotlight::CustomField, field: "xyz", configuration: { x: 2})
+      ]))
+
+      expect(subject.all_index_fields).to include "abc", "xyz"
+    end
+  end
+  describe "#custom_index_fields" do
+    it "should convert exhibit-specific fields to Blacklight configurations" do
+      subject.stub(exhibit: double(custom_fields: [
+        stub_model(Spotlight::CustomField, field: "abc", configuration: { a: 1}),
+        stub_model(Spotlight::CustomField, field: "xyz", configuration: { x: 2})
+      ]))
+
+      expect(subject.custom_index_fields).to include 'abc', 'xyz'
+      expect(subject.custom_index_fields['abc']).to be_a_kind_of Blacklight::Configuration::SolrField
+      expect(subject.custom_index_fields['abc'].a).to eq 1
     end
   end
 end

@@ -2,7 +2,9 @@ class Spotlight::CustomFieldsController < Spotlight::ApplicationController
   before_filter :authenticate_user!
   
   load_resource :exhibit, class: Spotlight::Exhibit, only: [:index, :new, :create]
-  load_and_authorize_resource through: :exhibit
+  load_and_authorize_resource through: :exhibit, only: [:index, :new, :create]
+
+  load_and_authorize_resource only: [:edit, :update, :destroy]
 
   def new
 
