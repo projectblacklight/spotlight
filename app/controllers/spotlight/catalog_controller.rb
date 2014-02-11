@@ -5,7 +5,18 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   before_filter :check_authorization
 
   copy_blacklight_config_from ::CatalogController
-  self.blacklight_config.index.partials = [:index_compact]
+
+  def admin
+    self.blacklight_config.view.reject! { |k,v| true }
+    self.blacklight_config.view.admin_table.partials = [:index_compact]
+
+    (@response, @document_list) = get_search_results
+    @filters = params[:f] || []
+      
+    respond_to do |format|
+      format.html
+    end
+  end
 
   def _prefixes
     @_prefixes ||= super + ['catalog']

@@ -1,0 +1,23 @@
+@import 'bootstrap';
+
+#documents.table {
+  .documentHeader {
+
+  }
+
+  .row {
+    margin: 0;
+  }
+
+  .index-document-functions { 
+    display: none;
+  }
+
+  .document-thumbnail {
+    @extend .thumbnail;
+
+    img { 
+      max-width: 60px !important;
+    }
+  }
+}
