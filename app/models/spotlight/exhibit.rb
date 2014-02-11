@@ -20,6 +20,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   serialize :facets, Array
   serialize :contact_emails, Array
 
+  after_create :add_default_home_page
   before_save :sanitize_description
   validate :name, :title, presence: true
   validate :valid_emails
@@ -65,6 +66,10 @@ class Spotlight::Exhibit < ActiveRecord::Base
       end
       errors.add :contact_emails, "#{email} is not valid" unless !parsed.nil? && parsed.address == email && parsed.local != email #cannot be a local address
     end
+  end
+
+  def add_default_home_page
+    Spotlight::HomePage.create(exhibit: self).save
   end
 
   def sanitize_description
