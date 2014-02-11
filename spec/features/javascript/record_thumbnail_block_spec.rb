@@ -9,7 +9,12 @@ feature "Record Thumbnail Block" do
     # TODO find this via a menu
     visit spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default)
     click_link "Feature pages"
-    click_link "Add new Page"
+    click_button "Add new Page"
+
+    expect(page).to have_content("Page was successfully created.")
+    within("li.dd-item") do
+      click_link "Edit"
+    end
     # fill in title
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
@@ -23,7 +28,7 @@ feature "Record Thumbnail Block" do
     # create the page
     click_button("Save")
     # veryify that the page was created
-    expect(page).to have_content("Page was successfully created.")
+    expect(page).to have_content("Page was successfully updated.")
     # visit the show page for the document we just saved
     visit spotlight.feature_page_path(id: Spotlight::FeaturePage.last)
     # veryify that the record thumbnail widget is displaying an image from the document.
@@ -38,7 +43,12 @@ feature "Record Thumbnail Block" do
     # TODO find this via a menu
     visit spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default)
     click_link "Feature pages"
-    click_link "Add new Page"
+    click_button "Add new Page"
+
+    expect(page).to have_content("Page was successfully created.")
+    within("li.dd-item") do
+      click_link "Edit"
+    end
     # fill in title
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
@@ -54,7 +64,7 @@ feature "Record Thumbnail Block" do
     # create the page
     click_button("Save")
     # veryify that the page was created
-    expect(page).to have_content("Page was successfully created.")
+    expect(page).to have_content("Page was successfully updated.")
     # visit the show page for the document we just saved
     visit spotlight.feature_page_path(id: Spotlight::FeaturePage.last)
     # veryify that the record thumbnail widget is displaying image and title from the requested document.

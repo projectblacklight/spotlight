@@ -43,8 +43,8 @@ describe Spotlight::FeaturePage do
     let(:good_weight) { FactoryGirl.build(:feature_page, weight: 10) }
     let(:low_weight)  { FactoryGirl.build(:feature_page, weight: -1) }
     let(:high_weight) { FactoryGirl.build(:feature_page, weight:  51) }
-    it "should default to 0" do
-      expect(Spotlight::FeaturePage.new.weight).to eq 0
+    it "should default to 50" do
+      expect(Spotlight::FeaturePage.new.weight).to eq 50
     end
     it "should validate when in the 0 to 50 range" do
       expect(good_weight).to be_valid

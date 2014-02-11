@@ -22,6 +22,9 @@
     </div>
   <%- end -%>
   <div>
-    <%= link_to t(:'helpers.submit.new', :model => "Page"), new_polymorphic_path([@exhibit, page_model]), class: 'btn btn-primary' %>
+    <%= form_for "spotlight/#{page_model}".classify.constantize.new, url: spotlight.polymorphic_path([@exhibit, page_collection_name]) do |f|%>
+      <%= f.hidden_field(:title) %>
+      <%= f.submit t(:'helpers.submit.new', model: "Page"), class: "btn btn-primary" %>
+    <%- end -%>
   </div>
 </div>
