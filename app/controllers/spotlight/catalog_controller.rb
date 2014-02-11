@@ -3,10 +3,11 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   load_resource :exhibit, class: Spotlight::Exhibit
   before_filter :authenticate_user!
   before_filter :check_authorization
+  load_and_authorize_resource instance_name: :document, class: ::SolrDocument, only: [:edit, :update]
 
   copy_blacklight_config_from ::CatalogController
 
-  def admin
+  def index
     self.blacklight_config.view.reject! { |k,v| true }
     self.blacklight_config.view.admin_table.partials = [:index_compact]
 
@@ -18,11 +19,25 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
     end
   end
 
+  def edit
+    blacklight_config.view.edit.partials = [:show_header, :edit_tags]
+  end
+
+  def update
+    @document.update(solr_document_params)
+    @document.save # TODO need to index tags too
+    render :show
+  end
+
   def _prefixes
     @_prefixes ||= super + ['catalog']
   end
 
   protected
+
+  def solr_document_params
+    params.require(:solr_document).permit(:tag_list)
+  end
 
   def check_authorization
     authorize! :curate, @exhibit

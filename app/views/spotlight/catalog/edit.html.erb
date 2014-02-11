@@ -1,0 +1,10 @@
+<%= render partial: 'spotlight/catalog/curation_mode_toggle_default', locals: { document: @document } %>
+
+
+<%= bootstrap_form_for @document, url: edit_exhibit_catalog_path(@exhibit, @document) do |f| %>
+  
+  <%= render_document_partials @document, blacklight_config.view_config(:edit).partials, f: f %>
+
+  <%= f.submit nil%>
+<% end %>
+

@@ -8,7 +8,7 @@
             <li><%= link_to "Administration", spotlight.edit_exhibit_path(Spotlight::Exhibit.default) %></li>
           <% end %>
           <% if can? :curate, Spotlight::Exhibit.default %>
-            <li><%= link_to "Curation", spotlight.exhibit_catalog_path(Spotlight::Exhibit.default) %></li>
+            <li><%= link_to "Curation", spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default) %></li>
           <% end %>
           <li class="divider"></li>
           <li><%= link_to t('spotlight.header_links.logout'), destroy_user_session_path %></li>

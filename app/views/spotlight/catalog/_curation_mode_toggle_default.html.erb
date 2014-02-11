@@ -1,0 +1,7 @@
+<div class="pull-right">
+  <span class="label label-warning">
+    <%= link_to_unless_current t(:'spotlight.items.edit_link'), spotlight.edit_exhibit_catalog_path(current_exhibit, document) do %>
+      <%= link_to t(:'spotlight.items.show_link'), document %>
+    <% end %>
+  </span>
+</div>
