@@ -19,19 +19,6 @@ module Spotlight
     # into action view base here.
     initializer 'spotlight.helpers', after: :set_autoload_paths do |app|
       ActionView::Base.send :include, Spotlight::MainAppHelpers
-
-      # This fails unless Blacklights generators have already run.
-      # (e.g. not during rake engine_cart:generate)
-      # Since it's an autoloaded constant, checking defined? ::SolrDocument will
-      # always be false.
-      begin
-        ::SolrDocument.send :include, Spotlight::SolrDocument
-      rescue NoMethodError => e
-        # This is not the kind of NameError we want to catch.
-        raise e
-      rescue NameError
-        # ignore this kind of error
-      end
     end
   end
 end

@@ -34,5 +34,11 @@ module Spotlight
         "\n  include Spotlight::Catalog\n"
       end
     end
+
+    def add_model_mixin
+      inject_into_file 'app/models/solr_document.rb', after: "include Blacklight::Solr::Document" do
+       "\n  include Spotlight::SolrDocument\n"
+     end
+    end
   end
 end
