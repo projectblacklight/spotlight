@@ -25,20 +25,8 @@ describe "Creating a page", :type => :feature do
     # TODO get here via navigation menus
     visit spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default)
     click_link "About pages"
-    click_link "Add new Page"
-    fill_in "about_page_title", :with => "New Page Title!"
-    click_button "Save"
+    click_button "Add new Page"
     expect(page).to have_content "Page was successfully created."
-  end
-
-  it "should be possible with only a title" do
-    login_as exhibit_curator
-    # TODO get here via navigation menus
-    visit spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default)
-    click_link "Feature pages"
-    click_link "Add new Page"
-    fill_in "feature_page_title", :with => "New Page Title!"
-    click_button "Save"
-    expect(page).to have_content "Page was successfully created."
+    expect(page).to have_css("li.dd-item")
   end
 end

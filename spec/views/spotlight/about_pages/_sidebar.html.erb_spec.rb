@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "spotlight/about_pages/_sidebar.html.erb" do
   let!(:page1) { FactoryGirl.create(:about_page, title: "One", weight: 4) }
   let!(:page2) { FactoryGirl.create(:about_page, exhibit: page1.exhibit, title: "Two", published: false) }
-  let!(:page3) { FactoryGirl.create(:about_page, exhibit: page1.exhibit, title: "Three") }
+  let!(:page3) { FactoryGirl.create(:about_page, exhibit: page1.exhibit, title: "Three", weight: 3) }
   
   before do
     view.stub(current_exhibit: page1.exhibit)

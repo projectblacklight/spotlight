@@ -4,7 +4,7 @@ class CreateSpotlightPages < ActiveRecord::Migration
       t.string     :title
       t.string     :type
       t.text       :content
-      t.integer    :weight, :default => 0
+      t.integer    :weight, default: 50
       t.boolean    :published
       t.references :exhibit
       t.timestamps
