@@ -31,6 +31,10 @@ en:
         create: "Save"
         submit: "Save changes"
         update: "Save changes"
+      solr_document:
+        create: "Save"
+        submit: "Save changes"
+        update: "Save changes"
   activerecord:
     models:
       spotlight:
