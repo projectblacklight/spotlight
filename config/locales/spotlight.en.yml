@@ -31,15 +31,18 @@ en:
         create: "Save"
         submit: "Save changes"
         update: "Save changes"
+      solr_document:
+        create: "Save"
+        submit: "Save changes"
+        update: "Save changes"
   activerecord:
     models:
       spotlight:
         page: Page
   spotlight:
     items:
-      current_mode: "You are in %{mode} mode."
-      curation_mode: "Curation"
-      end_user_mode: "end-user"
+      curation_mode: "You are in curation mode"
+      end_user_mode: "You are in end-user mode"
       show_link: "Turn off."
       edit_link: "Enter curation mode."
     browse:

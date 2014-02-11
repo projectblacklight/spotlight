@@ -52,6 +52,8 @@ module Spotlight
 
       config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
+
+      config.show.partials.unshift "spotlight/catalog/curation_mode_toggle"
       
       show_fields = index_fields_for_view(:show)
       unless show_fields.blank?

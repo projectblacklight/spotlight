@@ -27,6 +27,15 @@ module Spotlight
       end
     end
 
+    def update new_attributes
+      attributes = new_attributes.stringify_keys
+
+      attributes.each do |k, v|
+        send "#{k}=", v
+      end
+
+    end
+
     def reindex
       #TODO implement this
     end
