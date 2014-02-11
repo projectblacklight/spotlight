@@ -53,6 +53,11 @@ en:
     contact_form:
       header: "Report a Problem"
     administration:
+      sidebar:
+        header: Administration
+        dashboard: Dashboard
+        settings: Settings
+        users: Users
       header: "Administration"
       page_title: "Page title"
       settings:
@@ -65,6 +70,16 @@ en:
         update: "Save"
         cancel: "Cancel"
     curation:
+      sidebar:
+        header: Curation
+        dashboard: Dashboard
+        items: Items
+        metadata: Metadata
+        tags: Tags
+        search_facets: Search facets
+        browse: Browse
+        feature_pages: Feature pages
+        about_pages: About pages
       dashboard: "Curation dashboard"
       home:
         nav_link: "Home"
