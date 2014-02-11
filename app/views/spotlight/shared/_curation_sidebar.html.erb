@@ -1,14 +1,14 @@
 <div id="sidebar" class="col-md-3" role="complementary">
   <%= render 'spotlight/shared/admin_sidebar' if can? :update, current_exhibit %>
-  <h4>Curation</h4>
+  <h4><%=t(:'spotlight.curation.sidebar.header') %></h4>
   <ul class="nav sidenav">
-    <li class="disabled"><%= link_to "Dashboard", "#" %></li>
-    <li><%= link_to "Items", spotlight.exhibit_catalog_index_path(@exhibit) %></li>
-    <li><%= link_to "Metadata", spotlight.exhibit_edit_metadata_path(@exhibit) %></li>
-    <li><%= link_to "Tags", spotlight.exhibit_tags_path(@exhibit) %></li>
-    <li><%= link_to "Search facets", spotlight.exhibit_edit_facets_path(@exhibit) %></li>
-    <li><%= link_to "Browse", spotlight.exhibit_searches_path(@exhibit) %></li>
-    <li><%= link_to "Feature pages", spotlight.exhibit_feature_pages_path(@exhibit), 'data-no-turbolink' => true %></li>
-    <li><%= link_to "About pages", spotlight.exhibit_about_pages_path(@exhibit), 'data-no-turbolink' => true %></li>
+    <li class="disabled"><%= link_to t(:'spotlight.curation.sidebar.dashboard'), "#" %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.items'), spotlight.exhibit_catalog_index_path(@exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.metadata'), spotlight.exhibit_edit_metadata_path(@exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.tags'), spotlight.exhibit_tags_path(@exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.search_facets'), spotlight.exhibit_edit_facets_path(@exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.browse'), spotlight.exhibit_searches_path(@exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.feature_pages'), spotlight.exhibit_feature_pages_path(@exhibit), 'data-no-turbolink' => true %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.about_pages'), spotlight.exhibit_about_pages_path(@exhibit), 'data-no-turbolink' => true %></li>
   </ul>
 </div>
