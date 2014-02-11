@@ -10,6 +10,8 @@ Spotlight::Engine.routes.draw do
 
     resources :catalog, only: [:index, :edit, :update]
 
+    resources :custom_fields, shallow: true
+
     resources :searches, shallow: true do
       collection do
         patch :update_all

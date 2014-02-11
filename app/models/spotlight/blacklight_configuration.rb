@@ -123,7 +123,14 @@ module Spotlight
     end
 
     def all_index_fields
-      Hash[default_blacklight_config.index_fields.sort_by { |k,v| field_weight(index_fields, k) }]
+      Hash[default_blacklight_config.index_fields.merge(custom_index_fields).sort_by { |k,v| field_weight(index_fields, k) }]
+    end
+
+    def custom_index_fields
+      Hash[exhibit.custom_fields.map do |x| 
+        field = Blacklight::Configuration::SolrField.new x.configuration.merge(field: x.field, helper_method: :exhibit_specific_field)
+        [x.field, field] 
+      end]
     end
 
     ##

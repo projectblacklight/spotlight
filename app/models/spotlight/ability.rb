@@ -17,6 +17,10 @@ module Spotlight::Ability
       config.exhibit.roles.where(id: user.role_ids).any?
     end
 
+    can :manage, Spotlight::CustomField do |config|
+      config.exhibit.roles.where(id: user.role_ids).any?
+    end
+
     can [:curate], Spotlight::Exhibit do |exhibit|
       # any curator or admin role
       exhibit.roles.where(id: user.role_ids).any?

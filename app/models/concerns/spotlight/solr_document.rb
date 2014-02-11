@@ -60,6 +60,10 @@ module Spotlight
     def new_record?
       !persisted?
     end
+
+    def exhibit_specific_field exhibit, field
+      nil
+    end
   end
 end
 

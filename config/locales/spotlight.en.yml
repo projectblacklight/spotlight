@@ -95,6 +95,9 @@ en:
         edit:
           header: "Edit Browse Category"
           cancel: "Cancel"
+      custom_fields:
+        header: "Custom Field"
+        new_custom_field: "Add new exhibit-specific field"
       header: "Curation"
       metadata_fields:
         header: "Metadata Fields"
