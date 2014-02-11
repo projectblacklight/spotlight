@@ -12,15 +12,21 @@
         <%= f.submit nil %>
       </div>
     </div>
+    <div class="panel-group dd facet_fields" id="nested-fields">
+    <ol class="dd-list">
 
       <%= f.fields_for :facet_fields do |idxf| %>
         <% @exhibit.blacklight_configuration.all_facet_fields.each do |key, config| %>
+          <li class="dd-item" data-id="<%= key.parameterize %>">
+  <div class="dd-handle dd3-handle">Drag</div>
           <%= idxf.fields_for key do |facet| %>
-            <div class="panel panel-default facet-config-<%= key.parameterize %>">
+            <div class="dd3-content panel panel-default facet-config-<%= key.parameterize %>">
               <div class="panel-heading">
               <a class="pull-right btn btn-text" data-toggle="collapse" href="#collapse-facet-<%= key.parameterize %>"><%= t(:'spotlight.feature_pages.options') %>
       <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
+
+                <%= facet.hidden_field :weight, 'data-property' => 'weight' %>
                 <%= facet.check_box :enabled, checked: (@exhibit.blacklight_configuration.facet_fields[key] || {}).fetch(:enabled, true), label: (@exhibit.blacklight_configuration.facet_fields[key] || {}).fetch(:label, @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label), title: key %>
 
                 <% if metadata =  @fields.fetch(key.to_s, {}) %>
@@ -38,7 +44,10 @@
               </div>
             </div>
           <% end %>
+          </li>
         <% end %>
    <% end %>
+   </ol>
+   </div>
 <% end %>
 </div>

@@ -7,6 +7,16 @@ Spotlight.onLoad(function() {
   $('#nested-pages.search_admin').nestable({maxDepth: 1});
   // Handle weighting the pages and their children.
   updateWeightsAndRelationships($('#nested-pages'));
+
+   $.each($('.dd-handle'), function(k, el){
+      var height;
+      if ($(el).next('.dd3-content').length > 0) {
+        height = $(el).next('.dd3-content').outerHeight();
+      } else {
+        height = $(el).closest(".dd-item").outerHeight();
+      }
+      $(el).css('height', height);
+    });
 });
 
 function updateWeightsAndRelationships(selector){

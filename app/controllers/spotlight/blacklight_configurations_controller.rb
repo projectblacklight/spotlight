@@ -36,11 +36,11 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
   def exhibit_configuration_index_params
     views = @blacklight_configuration.default_blacklight_config.view.keys | [:show]
 
-    @blacklight_configuration.default_blacklight_config.index_fields.keys.inject({}) { |result, element| result[element] = ([:enabled] | views); result }
+    @blacklight_configuration.all_index_fields.keys.inject({}) { |result, element| result[element] = ([:enabled, :weight] | views); result }
   end
 
   def exhibit_configuration_facet_params
-    @blacklight_configuration.default_blacklight_config.facet_fields.keys.inject({}) { |result, element| result[element] = [:enabled, :label]; result }
+    @blacklight_configuration.all_facet_fields.keys.inject({}) { |result, element| result[element] = [:enabled, :label, :weight]; result }
   end
 
 end

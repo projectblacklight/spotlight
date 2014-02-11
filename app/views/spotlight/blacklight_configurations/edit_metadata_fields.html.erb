@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <table class="table table-striped">
+    <table id="nested-fields" class="table table-striped">
       <thead>
         <tr>
           <th><%= t :'spotlight.curation.metadata_fields.label' %></th>
@@ -24,12 +24,17 @@
           <% end %>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="metadata_fields dd dd-list">
         <%= f.fields_for :index_fields do |idxf| %>
           <% @exhibit.blacklight_configuration.all_index_fields.each do |key, config| %>
-              <tr>
+              <tr data-id="<%= key.parameterize %>" class="dd-item">
                 <%= idxf.fields_for key do |field| %>
-                  <td><%= config.label %></td>
+                  <td>
+                    <%= field.hidden_field :weight, 'data-property' => 'weight' %>
+                    <div class="dd-handle dd3-handle">Drag</div>
+
+                  <%= config.label %>
+                  </td>
                   <td><%= field.check_box :show, checked: (@exhibit.blacklight_configuration.index_fields[key] || {})[:show], label: "" %></td>
                   <% @exhibit.blacklight_configuration.default_blacklight_config.view.keys.each do |type| %>
                   <td><%= field.check_box type, checked: (@exhibit.blacklight_configuration.index_fields[key] || {})[type], label: "" %></td>

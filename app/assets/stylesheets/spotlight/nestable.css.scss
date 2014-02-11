@@ -8,6 +8,20 @@
   line-height: 20px;
 }
 
+tbody.dd-list {
+  display: table-row-group;
+  padding-left: 0;
+}
+
+tbody.dd-dragel {
+  display: table;
+}
+
+tr.dd-item {
+  display: table-row;
+  position: relative;
+}
+
 .dd-list { display: block; position: relative; margin: 0; padding: 0; list-style: none; }
 .dd-list .dd-list { padding-left: 30px; }
 .dd-collapsed .dd-list { display: none; }
