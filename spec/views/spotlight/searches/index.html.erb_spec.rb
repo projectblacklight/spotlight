@@ -5,6 +5,7 @@ describe "spotlight/searches/index.html.erb" do
 
   before do
     view.stub(update_all_exhibit_searches_path: "/")
+    view.stub(:current_exhibit).and_return(exhibit)
     assign(:exhibit, exhibit)
   end
 

@@ -19,8 +19,13 @@ describe Spotlight::Ability do
 
   describe "a user with admin role" do
     let(:user) { FactoryGirl.create(:exhibit_admin) }
+    let(:role) { FactoryGirl.create(:role, exhibit: user.roles.first.exhibit) }
     subject { Ability.new(user) }
     it { should be_able_to(:update, exhibit) }
+
+    it { should be_able_to(:index,   role) }
+    it { should be_able_to(:destroy, role) }
+    it { should be_able_to(:update,  role) }
   end
 
   describe "a user with curate role" do
