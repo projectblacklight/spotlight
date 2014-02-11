@@ -62,6 +62,7 @@ en:
         header: Users
         title: Site Administration - Users
         remove: "Remove from site"
+        new: "Add a new user"
         update: "Save"
         cancel: "Cancel"
     curation:

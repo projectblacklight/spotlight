@@ -10,7 +10,7 @@ module Spotlight::Ability
     # Until then, workaround:
     can :update, Spotlight::Exhibit, id: user.admin_roles.map(&:exhibit_id)
 
-    can [:index, :update, :destroy], Spotlight::Role, exhibit_id: user.admin_roles.map(&:exhibit_id)
+    can [:index, :update, :destroy, :create], Spotlight::Role, exhibit_id: user.admin_roles.map(&:exhibit_id)
 
 
     can [:update, :edit_metadata_fields, :edit_facet_fields], Spotlight::BlacklightConfiguration do |config|

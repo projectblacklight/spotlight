@@ -7,6 +7,7 @@ module Spotlight
     def index
       # every admin should at least see themseleves
       raise CanCan::AccessDenied if @roles.empty?
+      @exhibit.roles.build
     end
 
     def update_all
@@ -35,11 +36,15 @@ module Spotlight
       attrs = attrs.values if attrs.is_a? Hash
       delete_count = 0
       attrs.each do |item|
-        if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(item['_destroy'])
-          authorize! :destroy, klass.find(item[:id])
-          delete_count += 1
+        if item[:id]
+          if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(item['_destroy'])
+            authorize! :destroy, klass.find(item[:id])
+            delete_count += 1
+          else
+            authorize! :update, klass.find(item[:id])
+          end
         else
-          authorize! :update, klass.find(item[:id])
+          authorize! :create, klass
         end
       end
       delete_count
