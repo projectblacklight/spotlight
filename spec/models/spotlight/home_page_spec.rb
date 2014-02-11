@@ -10,4 +10,14 @@ describe Spotlight::HomePage do
   it "should be published" do
     expect(home_page.published).to be_true
   end
+  describe "content" do
+    it "should include default text" do
+      expect(home_page.content).to match /#{Spotlight::HomePage.default_content_text}/
+    end
+    it "should be parsible JSON that includes the default text" do
+      json = JSON.parse(home_page.content)
+      expect(json).to be_a Hash
+      expect(json["data"].first["data"]["text"]).to eq Spotlight::HomePage.default_content_text
+    end
+  end
 end
