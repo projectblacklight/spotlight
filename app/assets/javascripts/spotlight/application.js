@@ -16,4 +16,5 @@
 //= require spotlight/spotlight
 //= require bootstrap/tooltip
 //= require bootstrap/popover
+//= require bootstrap-tagsinput
 //= require_tree .

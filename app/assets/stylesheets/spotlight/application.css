@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require sir-trevor
+ *= require bootstrap-tagsinput
  *= require_tree .
  */
 

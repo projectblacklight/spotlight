@@ -35,6 +35,9 @@ en:
         create: "Save"
         submit: "Save changes"
         update: "Save changes"
+    label:
+      solr_document:
+        exhibit_tag_list: "Tags"
   activerecord:
     models:
       spotlight:
