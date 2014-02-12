@@ -35,6 +35,11 @@ module Spotlight
       end
     end
 
+    def add_helper
+      copy_file "spotlight_helper.rb", "app/helpers/spotlight_helper.rb"
+      inject_into_class 'app/helpers/application_helper.rb', ApplicationHelper, "  include SpotlightHelper"
+    end
+
     def add_model_mixin
       inject_into_file 'app/models/solr_document.rb', after: "include Blacklight::Solr::Document" do
        "\n  include Spotlight::SolrDocument\n"
