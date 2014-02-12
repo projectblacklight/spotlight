@@ -19,17 +19,17 @@ module Spotlight
         v[:enabled] ||= v.any? { |k1, v1| !v1.blank? }
 
         default_blacklight_config.view.keys.each do |view|
-          v[view] &&= (v[view] == "1")
+          v[view] &&= ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v[view])
         end
 
-        v[:show] &&= (v[:show] == "1")
+        v[:show] &&= ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v[:show])
 
         v.reject! { |k, v1| v1.blank? and !v1 === false }
       end if model.index_fields
 
       [:facet_fields, :sort_fields].each do |field|
         model.send(field).each do |k,v|
-          v[:enabled] &&= (v[:enabled] == "1")
+          v[:enabled] &&= ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v[:enabled])
           v[:enabled] ||= true if v[:enabled].nil?
           v.reject! { |k, v1| v1.blank? and !v1 === false }
         end if model.send(field)
@@ -59,6 +59,8 @@ module Spotlight
       unless show_fields.blank?
         active_show_fields = show_fields.select { |k,v| v[:enabled] == true }
         config.show_fields = config.index_fields.slice *active_show_fields.keys
+        config.show_fields.merge! custom_index_fields.slice(*active_show_fields.keys)
+        
         config.show_fields = Hash[config.show_fields.sort_by { |k,v| field_weight(active_show_fields, k)}]
 
         config.index_fields.each do |k, v|
@@ -73,6 +75,7 @@ module Spotlight
       unless index_fields_for_view(view).blank?
         active_index_fields = index_fields_for_view(view).select { |k,v| v[:enabled] == true }
         config.index_fields.slice! *active_index_fields.keys
+        config.index_fields.merge! custom_index_fields.slice(*active_index_fields.keys)
         config.index_fields = Hash[config.index_fields.sort_by { |k,v| field_weight(active_index_fields, k) }]
 
         config.index_fields.each do |k, v|
@@ -123,7 +126,14 @@ module Spotlight
     end
 
     def all_index_fields
-      Hash[default_blacklight_config.index_fields.sort_by { |k,v| field_weight(index_fields, k) }]
+      Hash[default_blacklight_config.index_fields.merge(custom_index_fields).sort_by { |k,v| field_weight(index_fields, k) }]
+    end
+
+    def custom_index_fields
+      Hash[exhibit.custom_fields.map do |x| 
+        field = Blacklight::Configuration::IndexField.new x.configuration.merge(field: x.field, helper_method: :exhibit_specific_field)
+        [x.field, field] 
+      end]
     end
 
     ##

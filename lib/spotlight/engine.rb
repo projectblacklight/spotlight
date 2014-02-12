@@ -15,10 +15,7 @@ module Spotlight
       require 'acts-as-taggable-on'
     end
 
-    # BlacklightHelper is needed by all helpers, so we inject it
-    # into action view base here.
-    initializer 'spotlight.helpers', after: :set_autoload_paths do |app|
-      ActionView::Base.send :include, Spotlight::MainAppHelpers
-    end
+    Blacklight::Engine.config.inject_blacklight_helpers = false
+
   end
 end
