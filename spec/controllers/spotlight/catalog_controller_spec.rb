@@ -46,11 +46,11 @@ describe Spotlight::CatalogController do
     end
 
     it "should show all the items" do
-      get :index, exhibit_id: Spotlight::Exhibit.default
+      get :admin, exhibit_id: Spotlight::Exhibit.default
       expect(response).to be_successful
       expect(assigns[:document_list]).to be_a Array
       expect(assigns[:exhibit]).to eq Spotlight::Exhibit.default
-      expect(response).to render_template "spotlight/catalog/index"
+      expect(response).to render_template "spotlight/catalog/admin"
     end
 
     before {sign_in FactoryGirl.create(:exhibit_curator)}

@@ -8,7 +8,11 @@ Spotlight::Engine.routes.draw do
     get 'edit/metadata', to: "blacklight_configurations#edit_metadata_fields"
     get 'edit/facets', to: "blacklight_configurations#edit_facet_fields"
 
-    resources :catalog, only: [:index, :edit, :update]
+    resources :catalog, only: [:index, :show, :edit, :update] do
+      collection do
+        get 'admin'
+      end
+    end
 
     resources :custom_fields, shallow: true
 

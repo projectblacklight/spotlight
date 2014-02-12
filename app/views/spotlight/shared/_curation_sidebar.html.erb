@@ -3,7 +3,7 @@
   <h4><%=t(:'spotlight.curation.sidebar.header') %></h4>
   <ul class="nav sidenav">
     <li class="disabled"><%= link_to t(:'spotlight.curation.sidebar.dashboard'), "#" %></li>
-    <li><%= link_to t(:'spotlight.curation.sidebar.items'), spotlight.exhibit_catalog_index_path(@exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.items'), spotlight.admin_exhibit_catalog_index_path(@exhibit) %></li>
     <li><%= link_to t(:'spotlight.curation.sidebar.metadata'), spotlight.exhibit_edit_metadata_path(@exhibit) %></li>
     <li><%= link_to t(:'spotlight.curation.sidebar.tags'), spotlight.exhibit_tags_path(@exhibit) %></li>
     <li><%= link_to t(:'spotlight.curation.sidebar.search_facets'), spotlight.exhibit_edit_facets_path(@exhibit) %></li>

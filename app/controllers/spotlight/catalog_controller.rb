@@ -7,7 +7,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   copy_blacklight_config_from ::CatalogController
 
-  def index
+  def admin
     self.blacklight_config.view.reject! { |k,v| true }
     self.blacklight_config.view.admin_table.partials = [:index_compact]
 
