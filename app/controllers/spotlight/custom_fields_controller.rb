@@ -11,6 +11,7 @@ class Spotlight::CustomFieldsController < Spotlight::ApplicationController
   end
 
   def edit
+    @exhibit = @custom_field.exhibit
   end
 
   def create
@@ -40,6 +41,6 @@ class Spotlight::CustomFieldsController < Spotlight::ApplicationController
   protected
 
   def custom_field_params
-    params.require(:custom_field).permit(configuration: [:label, :short_description])
+    params.require(:custom_field).permit(:label, :short_description)
   end
 end

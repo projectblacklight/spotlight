@@ -1,21 +1,14 @@
 <div id="content" class="col-md-9">
-  <%= bootstrap_form_for [current_exhibit, @custom_field], style: :horizontal, right: "col-sm-5", html: {id: 'edit-search'} do |f| %>
+  <%= bootstrap_form_for @custom_field.new_record? ? [current_exhibit, @custom_field] : @custom_field, style: :horizontal, right: "col-sm-7", html: {id: 'edit-search'} do |f| %>
 
-    <div class="row">
-      <h1><%= t('spotlight.curation.header') %></h1>
+  <h1><%= t('spotlight.curation.header') %></h1>
+  <h2 class="text-muted"><%= t('spotlight.curation.custom_fields.header') %></h2>
+  <%= f.text_field :label %>
+  <%= f.text_area :short_description %>
+  <div class="form-group">
+    <div class="col-sm-offset-5 col-sm-4">
+      <%= link_to t(:"cancel"), exhibit_edit_metadata_path(current_exhibit), class: "btn btn-default" %>
+      <%= f.submit nil %>
     </div>
-    <div class="row">
-      <div class="col-sm-5">
-        <h2><small><%= t('spotlight.curation.custom_fields.header') %></small></h2>
-      </div>
-      <div class="col-sm-2">
-        <%= f.submit nil %>
-      </div>
-    </div>
-  <div class="row">
-    <%= f.fields_for :configuration do |c| %>
-      <%= c.text_field :label %>
-      <%= c.text_area :short_description %>
-    <% end %>
   </div>
 <% end %>

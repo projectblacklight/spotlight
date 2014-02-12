@@ -1,27 +1,47 @@
 require 'spec_helper'
 
 describe "Adding custom metadata fields", type: :feature do
-  include Warden::Test::Helpers
-  Warden.test_mode!
 
-  before :each do
-    admin = FactoryGirl.create(:exhibit_admin)
-    login_as(admin, :scope => :user)
+  let(:admin) { FactoryGirl.create(:exhibit_admin) }
+  before do
+    login_as(admin)
   end
 
   it "should work" do
+    # Add 
+    
     visit spotlight.exhibit_edit_metadata_path Spotlight::Exhibit.default
-
-    expect(page).to have_link "Add new exhibit-specific field"
-
-    click_on "Add new exhibit-specific field"
-
+    click_on "Add new field"
     fill_in "Label", with: "My new custom field"
+    fill_in "Short description", with: "Helps to remind me what this field is for"
 
     click_on "Create Custom field"
 
-    expect(Spotlight::Exhibit.default.custom_fields.last.label).to eq "My new custom field"
+    expect(page).to have_content "Custom field was created"
+    within "#exhibit-specific-fields" do
+      expect(page).to have_selector ".field-label", text: "My new custom field"
+      expect(page).to have_selector ".field-description", text: "Helps to remind me what this field is for"
+      # Edit
+      click_link "Edit"
+    end
 
-    expect(page).to have_content "My new custom field"
+    # on the edit form
+    expect(find_field('Label').value).to eq 'My new custom field'
+    expect(find_field('Short description').value).to eq 'Helps to remind me what this field is for'
+    fill_in 'Short description', with: 'A much better description'
+
+    click_button "Update Custom field"
+
+    expect(page).to have_content "Custom field was updated"
+
+    within "#exhibit-specific-fields" do
+      expect(page).to have_selector ".field-label", text: "My new custom field"
+      expect(page).to have_selector ".field-description", text: "A much better description"
+      # Destroy 
+      click_link "Delete"
+    end
+
+    expect(page).to have_content "Custom field was deleted"
+    
   end
 end
