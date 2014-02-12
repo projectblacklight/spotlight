@@ -46,7 +46,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   end
 
   def solr_document_params
-    params.require(:solr_document).permit(:tag_list, sidecar: { data: [custom_field_params] })
+    params.require(:solr_document).permit(:exhibit_tag_list, sidecar: { data: [custom_field_params] })
   end
 
   def custom_field_params

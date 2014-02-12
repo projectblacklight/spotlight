@@ -20,4 +20,13 @@
       max-width: 60px !important;
     }
   }
+
 }
+
+#document {
+  ul.tags li {
+    @extend .label;
+    @extend .label-default;
+  }
+}
+

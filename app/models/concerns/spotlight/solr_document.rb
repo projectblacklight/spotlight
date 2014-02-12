@@ -34,10 +34,9 @@ module Spotlight
         sidecar(current_exhibit).update(custom_data)
       end
 
-      attributes.each do |k, v|
-        if respond_to? "#{k}="
-          send "#{k}=", v
-        end
+      if tags = attributes.delete("exhibit_tag_list")
+        # Note: this causes a save
+        current_exhibit.tag(self, with: tags, on: :tags)
       end
     end
 
@@ -46,7 +45,7 @@ module Spotlight
     end
 
     def save
-      save_tags
+      save_owned_tags
       reindex
     end
 
