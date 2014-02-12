@@ -1,0 +1,6 @@
+<%# looks suspiciously similar to blacklight's _thumbnail, but skips all the search context + linking -%>
+<%- if has_thumbnail?(document) && tn = render_thumbnail_tag(document, {}, :suppress_link => true) %>
+<div class="thumbnail">
+  <%= tn %>
+</div>  
+<%- end %>
