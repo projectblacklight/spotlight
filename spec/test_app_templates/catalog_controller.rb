@@ -29,6 +29,8 @@ class CatalogController < ApplicationController
     config.index.display_type_field = 'content_metadata_type_ssm'
     config.index.thumbnail_field = :thumbnail_url_ssm
 
+    config.show.partials.insert(1, :image)
+
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
     #
