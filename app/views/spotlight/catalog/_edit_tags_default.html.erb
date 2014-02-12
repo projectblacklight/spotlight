@@ -1,1 +1,1 @@
-<%= f.text_field :tag_list %>
+<%= f.text_field :exhibit_tag_list, value: f.object.tags_from(current_exhibit).to_s %>

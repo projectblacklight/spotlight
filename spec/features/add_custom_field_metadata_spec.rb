@@ -1,14 +1,11 @@
 require 'spec_helper'
 
-describe "Adding custom metadata field data", type: :feature do
-  include Warden::Test::Helpers
-  Warden.test_mode!
-
-  before :each do
-    admin = FactoryGirl.create(:exhibit_admin)
-    custom_field = FactoryGirl.create(:custom_field)
-    login_as(admin, :scope => :user)
-    config = Spotlight::Exhibit.default.blacklight_configuration
+describe "Adding custom metadata field data" do
+  let(:admin) { FactoryGirl.create(:exhibit_admin) }
+  let(:custom_field) { FactoryGirl.create(:custom_field) }
+  let(:config) { Spotlight::Exhibit.default.blacklight_configuration }
+  before do
+    login_as(admin)
     config.index_fields[custom_field.field] = { enabled: true, show: true }
     config.save!
   end

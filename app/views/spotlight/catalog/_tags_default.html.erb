@@ -1,6 +1,5 @@
-<p>tags:</p> 
-<ul>
-<% document.tags.each do |tag| %>
-  <li><%=tag.name %></li>
+<ul class="tags">
+<% document.tags_from(current_exhibit).each do |tag| %>
+  <li><%=tag %></li>
 <% end %>
 </ul>

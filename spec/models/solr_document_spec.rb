@@ -5,15 +5,15 @@ describe SolrDocument do
   its(:to_key) {should == ['abcd123']}
   its(:persisted?) {should be_true}
 
-  its(:tags) {should == [] }
+  it "should have tags on the exhibit" do
+    expect(subject.tags_from(Spotlight::Exhibit.default)).to be_empty
+  end
 
   it "should be able to add tags" do
-    subject.taggings.should eq []
     expect {
-      subject.update Spotlight::Exhibit.default, tag_list: "awesomer, slicker"
-      subject.save
+      Spotlight::Exhibit.default.tag(subject, with: "paris, normandy", on: :tags)
     }.to change { ActsAsTaggableOn::Tag.count}.by(2)
-    subject.tag_list.should eq ['awesomer', 'slicker']
+    subject.tags_from(Spotlight::Exhibit.default).should eq ['paris', 'normandy']
   end
 
   it "should have find" do
@@ -32,6 +32,10 @@ describe SolrDocument do
       subject.stub(sidecar: mock_sidecar)
       mock_sidecar.should_receive(:update).with(data: { 'a' => 1 })
       subject.update Spotlight::Exhibit.default, sidecar: { data: { 'a' => 1 }}
+    end
+    it "should store tags" do
+      subject.update Spotlight::Exhibit.default, exhibit_tag_list: "paris, normandy"
+      subject.tags_from(Spotlight::Exhibit.default).should eq ['paris', 'normandy']
     end
   end
 end

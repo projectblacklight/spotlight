@@ -25,6 +25,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   before_save :sanitize_description
   validate :name, :title, presence: true
   validate :valid_emails
+  acts_as_tagger
 
   # This is necessary so the form will draw as if we have nested attributes (fields_for).
   def contact_emails
