@@ -26,6 +26,7 @@ describe Spotlight::Ability do
     it { should be_able_to(:index,   role) }
     it { should be_able_to(:destroy, role) }
     it { should be_able_to(:update,  role) }
+    it { should be_able_to(:create,  Spotlight::Role) }
   end
 
   describe "a user with curate role" do

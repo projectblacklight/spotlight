@@ -1,0 +1,6 @@
+        <tr data-edit-for="<%= f.object.new_record? ? 'new' : f.object.id %>">
+          <td><%= f.text_field :user_key, hide_label: true %></td>
+          <td><%= f.select :role, {'Admin'=>'admin', 'Curator'=>'curator'}, {}, {hide_label: true} %></td>
+          <td></td>
+        </tr>
+
