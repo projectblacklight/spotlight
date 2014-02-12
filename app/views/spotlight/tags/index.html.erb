@@ -3,7 +3,10 @@
   <% @page_title = t(:'spotlight.curation.tags.title') %>
 
   <h1><%= t :'spotlight.curation.header' %></h1>
-  <h2 class="text-muted"><%= t :'spotlight.curation.tags.header' %></h2>
+  <h4 class="text-muted">
+    <%= t :'spotlight.curation.tags.header' %>
+    <span class="label label-default"><%= @tags.length %></span>
+  </h4>
 
   <table class="table table-striped">
     <thead>
