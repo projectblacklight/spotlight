@@ -15,7 +15,7 @@ describe "Add tags to an item in an exhibit" do
 
     click_on "Enter curation mode."
 
-    fill_in "Exhibit tag list", with: "One, Two and a half, Three"
+    fill_in "Tags", with: "One, Two and a half, Three"
 
     click_on "Save changes"
 
