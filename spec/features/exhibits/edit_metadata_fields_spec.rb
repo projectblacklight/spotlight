@@ -12,8 +12,7 @@ describe "Editing metadata fields", type: :feature do
   it "should work" do
     visit spotlight.exhibit_edit_metadata_path Spotlight::Exhibit.default
 
-    expect(page).to have_content "Curation Metadata Fields"
-    expect(page).to have_button "Save"
+    expect(page).to have_content "Display and Order Metadata Fields"
 
     check :blacklight_configuration_index_fields_language_ssm_show
     check :blacklight_configuration_index_fields_language_ssm_list

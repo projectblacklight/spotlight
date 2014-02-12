@@ -7,8 +7,20 @@ module Spotlight
       self.field ||= field_name
     end
 
+    def label=(label)
+      configuration["label"] = label
+    end
+
     def label
-      self.configuration["label"]
+      configuration["label"]
+    end
+
+    def short_description=(short_description)
+      configuration["short_description"] = short_description
+    end
+
+    def short_description
+      configuration["short_description"]
     end
 
     private
