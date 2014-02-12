@@ -7,7 +7,7 @@ module Spotlight
     end
 
     def current_exhibit
-      Spotlight::Exhibit.default
+      @exhibit ||= Spotlight::Exhibit.default
     end
 
   end
