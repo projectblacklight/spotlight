@@ -36,6 +36,18 @@ module Spotlight
       end
     end
 
+    def curation_mode_label_class
+      if curation_mode?
+        "warning"
+      else
+        "primary"
+      end
+    end
+
+    def curation_mode?
+      params[:action] == "edit"
+    end
+
     private
 
     def main_app_url_helper?(method)
