@@ -38,6 +38,13 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   protected
 
+  ##
+  # Admin catalog controller should not create a new search
+  # session in the blacklight context
+  def start_new_search_session?
+    false
+  end
+
   def solr_document_params
     params.require(:solr_document).permit(:tag_list, sidecar: { data: [custom_field_params] })
   end
