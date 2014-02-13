@@ -43,6 +43,9 @@ en:
       spotlight:
         page: Page
   spotlight:
+    role:
+      admin: "Admin"
+      curator: "Curator"
     items:
       curation_mode: "You are in curation mode."
       end_user_mode: "You are in end-user mode."

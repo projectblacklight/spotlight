@@ -24,23 +24,23 @@ describe Spotlight::RolesController do
 
     describe "PATCH update_all" do
       it "should be successful" do
-        patch :update_all, exhibit_id: exhibit, "exhibit"=>{"roles_attributes"=>{"0"=>{"user_key"=>"cbeer@cbeer.io", "role"=>"curate", "id"=>role.id}, '1' => {"user_key"=>"", "role"=>"admin"}}}
+        patch :update_all, exhibit_id: exhibit, "exhibit"=>{"roles_attributes"=>{"0"=>{"user_key"=>"cbeer@cbeer.io", "role"=>"curator", "id"=>role.id}, '1' => {"user_key"=>"", "role"=>"admin"}}}
         expect(response).to redirect_to exhibit_roles_path(exhibit)
         expect(flash[:notice]).to eq 'User has been updated.'
-        expect(admin.reload.roles.first.role).to eq 'curate'
+        expect(admin.reload.roles.first.role).to eq 'curator'
         expect(admin.reload.roles.first.user.email).to eq 'cbeer@cbeer.io'
       end
 
       it "should authorize records" do
         controller.stub(:authorize!).and_raise(CanCan::AccessDenied)
-        patch :update_all, exhibit_id: exhibit, "exhibit"=>{"roles_attributes"=>{"0"=>{"user_key"=>"cbeer@cbeer.info", "role"=>"curate", "id"=>role.id}}}
+        patch :update_all, exhibit_id: exhibit, "exhibit"=>{"roles_attributes"=>{"0"=>{"user_key"=>"cbeer@cbeer.info", "role"=>"curator", "id"=>role.id}}}
         expect(response).to redirect_to main_app.root_path 
         expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         expect(admin.reload.roles.first.role).to eq 'admin'
       end
 
       it "should destroy records" do
-        patch :update_all, exhibit_id: exhibit, "exhibit"=>{"roles_attributes"=>{"0"=>{"user_key"=>"cbeer@cbeer.info", "role"=>"curate", "id"=>role.id, '_destroy' => '1'}}}
+        patch :update_all, exhibit_id: exhibit, "exhibit"=>{"roles_attributes"=>{"0"=>{"user_key"=>"cbeer@cbeer.info", "role"=>"curator", "id"=>role.id, '_destroy' => '1'}}}
         expect(response).to redirect_to exhibit_roles_path(exhibit)
         expect(admin.reload.roles).to be_empty
         expect(flash[:notice]).to eq 'User has been removed.'
@@ -48,7 +48,7 @@ describe Spotlight::RolesController do
 
       it "should handle failure" do
         Spotlight::Exhibit.any_instance.stub(update: false)
-        patch :update_all, exhibit_id: exhibit, "exhibit"=>{"roles_attributes"=>{"0"=>{"user_key"=>"cbeer@cbeer.info", "role"=>"curate", "id"=>role.id}}}
+        patch :update_all, exhibit_id: exhibit, "exhibit"=>{"roles_attributes"=>{"0"=>{"user_key"=>"cbeer@cbeer.info", "role"=>"curator", "id"=>role.id}}}
         expect(response).to be_successful
         expect(flash[:alert]).to eq 'There was a problem saving the users.'
       end
