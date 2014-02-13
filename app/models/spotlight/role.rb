@@ -1,7 +1,9 @@
 class Spotlight::Role < ActiveRecord::Base
+
+  ROLES = %w(admin curator)
   belongs_to :exhibit
   belongs_to :user, class_name: '::User', autosave: true
-  validates :role, inclusion: { in: %w(admin curate) }
+  validates :role, inclusion: { in: ROLES }
   validates :user_key, presence: true
   validate :user_must_exist, if: -> { user_key.present? }
   validate :user_must_be_unique, if: :user

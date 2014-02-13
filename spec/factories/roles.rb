@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :role, class: Spotlight::Role do
     exhibit
-    role 'curate'
+    role 'curator'
     user
   end
 end
