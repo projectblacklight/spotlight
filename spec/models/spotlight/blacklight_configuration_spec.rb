@@ -266,6 +266,13 @@ describe Spotlight::BlacklightConfiguration do
       subject.show[:title_field] = 'abc'
       expect(subject.blacklight_config.show.title_field).to eq 'abc'
     end
+
+    it "should inject partials" do
+      partials = subject.blacklight_config.show.partials
+
+      expect(partials.first).to eq "spotlight/catalog/curation_mode_toggle"
+      expect(partials).to include "spotlight/catalog/tags"
+    end
   end
 
   describe "index" do
