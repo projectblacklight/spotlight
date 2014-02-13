@@ -1,15 +1,16 @@
 <%- document = get_solr_response_for_doc_id(block.values).last -%>
-<div>
-  <div class="record-thumbnail panel panel-default">
+<div class="item-text">
+  <div class="image-block pull-<%= block['text-align'] %>">
     <%- if has_thumbnail? document -%>
-      <div class="panel-body">
+      <div class="thumbnail">
         <%= render_thumbnail_tag(document) %>
       </div>
     <%- end -%>
     <%- if should_render_record_thumbnail_title?(document, block) -%>
-      <div class="panel-footer">
+      <div class="title">
         <%= document_heading(document) %>
       </div>
     <%- end -%>
   </div>
+  <%= block['item-text'] %>
 </div>

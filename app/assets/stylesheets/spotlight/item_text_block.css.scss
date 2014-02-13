@@ -1,0 +1,39 @@
+@mixin record-thubmnail-textarea {
+  color: #42474b;
+  border: 0.1em solid #d4d4d4;
+  padding: 0 .6em;
+}
+.item-text {
+  .image-block {
+    .thumbnail {
+      margin-bottom: 5;
+    }
+    &.pull-left {
+      .thumbnail {
+        margin-right: 15px;
+      }
+    }
+    &.pull-right {
+      .thumbnail {
+        margin-left: 15px;
+      }
+    }
+    .title {
+      text-align: center;
+    }
+  }
+}
+.item-text-admin {
+  .text-align {
+    margin-top: 15px;
+  }
+  .field {
+    width: 75%;
+  }
+  textarea {
+    &:hover, &:active {
+      @include record-thubmnail-textarea;
+    }
+    @include record-thubmnail-textarea;
+  }
+}
