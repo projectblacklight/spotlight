@@ -7,7 +7,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   copy_blacklight_config_from ::CatalogController
 
-  def index
+  def admin
     self.blacklight_config.view.reject! { |k,v| true }
     self.blacklight_config.view.admin_table.partials = [:index_compact]
 
@@ -19,17 +19,21 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
     end
   end
 
+  def update
+    if params[:solr_document]
+      @document.update(current_exhibit, solr_document_params)
+      @document.save # TODO need to index tags too
+      redirect_to main_app.solr_document_path(@document)
+    else
+      super
+    end
+  end
+
   def edit
     blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
 
     blacklight_config.view.edit.partials.insert(1, :edit_exhibit_specific_fields)
     blacklight_config.view.edit.partials.insert(2, :edit_tags)
-  end
-
-  def update
-    @document.update(current_exhibit, solr_document_params)
-    @document.save # TODO need to index tags too
-    redirect_to main_app.solr_document_path(@document)
   end
 
   def _prefixes
@@ -42,7 +46,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   # Admin catalog controller should not create a new search
   # session in the blacklight context
   def start_new_search_session?
-    false
+    super || params[:action] == 'admin'
   end
 
   def solr_document_params

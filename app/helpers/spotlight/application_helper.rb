@@ -26,6 +26,16 @@ module Spotlight
       main_app_url_helper?(method) or super
     end
 
+    def url_for_document document
+      return nil if document.nil?
+
+      if current_exhibit
+        spotlight.exhibit_catalog_path(current_exhibit, document)
+      else
+        document
+      end
+    end
+
     private
 
     def main_app_url_helper?(method)

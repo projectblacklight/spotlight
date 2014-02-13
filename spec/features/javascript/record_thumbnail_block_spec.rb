@@ -6,8 +6,11 @@ feature "Record Thumbnail Block" do
 
   scenario "should allow you to add a thumbnail to a page within an exhibit", :js => true do
     # create page
-    # TODO find this via a menu
-    visit spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default)
+    visit '/'
+    click_link exhibit_curator.email
+    within '.dropdown-menu' do
+      click_link 'Curation'
+    end
     click_link "Feature pages"
     click_button "Add new Page"
 
@@ -40,8 +43,11 @@ feature "Record Thumbnail Block" do
   end
   scenario "should allow you to optionally display the title with the image", :js => true do
     # create page
-    # TODO find this via a menu
-    visit spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default)
+    visit '/'
+    click_link exhibit_curator.email
+    within '.dropdown-menu' do
+      click_link 'Curation'
+    end
     click_link "Feature pages"
     click_button "Add new Page"
 

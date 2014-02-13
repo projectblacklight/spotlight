@@ -22,8 +22,12 @@ describe "Creating a page", :type => :feature do
 
   it "should be able to create new About Pages" do
     login_as exhibit_curator
-    # TODO get here via navigation menus
-    visit spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default)
+
+    visit '/'
+    within '.dropdown-menu' do
+      click_link 'Curation'
+    end
+
     click_link "About pages"
     click_button "Add new Page"
     expect(page).to have_content "Page was successfully created."

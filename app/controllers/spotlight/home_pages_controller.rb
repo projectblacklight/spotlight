@@ -28,6 +28,10 @@ module Spotlight
     end
     
     private
+    def search_action_url *args
+      exhibit_catalog_index_url(@page.exhibit, *args)
+    end
+
     def blacklight_config
       if @page
         @page.exhibit.blacklight_config

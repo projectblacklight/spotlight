@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spotlight
-  describe "spotlight/catalog/index.html.erb" do
+  describe "spotlight/catalog/admin.html.erb" do
     let(:exhibit) { stub_model(Spotlight::Exhibit)}
     before do
       view.stub(:blacklight_config).and_return(CatalogController.blacklight_config)

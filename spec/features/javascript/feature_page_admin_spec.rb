@@ -20,7 +20,13 @@ feature "Feature Pages Adminstration", js:  true do
   }
   before { login_as exhibit_curator }
   it "should update the page titles" do
-    visit spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default)
+    visit '/'
+    click_link exhibit_curator.email
+
+    within '.dropdown-menu' do
+      click_link 'Curation'
+    end
+
     click_link "Feature pages"
     within("[data-id='#{page1.id}']") do
       within("h3") do
@@ -38,7 +44,11 @@ feature "Feature Pages Adminstration", js:  true do
     end
   end
   it "should store the display_sidebar boolean" do
-    visit spotlight.exhibit_catalog_index_path(Spotlight::Exhibit.default)
+    visit '/'
+    click_link exhibit_curator.email
+    within '.dropdown-menu' do
+      click_link 'Curation'
+    end
     click_link "Feature pages"
     within("[data-id='#{page1.id}']") do
       click_link "Options"
