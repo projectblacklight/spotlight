@@ -29,12 +29,6 @@ module Spotlight
       end
     end
 
-    def add_catalog_mixin
-      inject_into_file 'app/controllers/catalog_controller.rb', after: "include Blacklight::Catalog" do
-        "\n  include Spotlight::Catalog\n"
-      end
-    end
-
     def add_helper
       copy_file "spotlight_helper.rb", "app/helpers/spotlight_helper.rb"
       inject_into_class 'app/helpers/application_helper.rb', ApplicationHelper, "  include SpotlightHelper"

@@ -1,9 +1,10 @@
 class Spotlight::CatalogController < Spotlight::ApplicationController
   include Blacklight::Catalog
+  include Spotlight::Catalog
   load_resource :exhibit, class: Spotlight::Exhibit
-  before_filter :authenticate_user!
-  before_filter :check_authorization
-  load_and_authorize_resource instance_name: :document, class: ::SolrDocument, only: [:edit, :update]
+  before_filter :authenticate_user!, only: [:admin, :edit]
+  before_filter :check_authorization, only: [:admin, :edit]
+  load_and_authorize_resource instance_name: :document, class: ::SolrDocument, only: [:edit]
 
   copy_blacklight_config_from ::CatalogController
 
@@ -21,6 +22,9 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def update
     if params[:solr_document]
+      @document = ::SolrDocument.find params[:id] 
+      authenticate_user!
+      authorize! :update, @document
       @document.update(current_exhibit, solr_document_params)
       @document.save # TODO need to index tags too
       redirect_to main_app.solr_document_path(@document)

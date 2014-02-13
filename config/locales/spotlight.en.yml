@@ -44,8 +44,8 @@ en:
         page: Page
   spotlight:
     items:
-      curation_mode: "You are in curation mode"
-      end_user_mode: "You are in end-user mode"
+      curation_mode: "You are in curation mode."
+      end_user_mode: "You are in end-user mode."
       show_link: "Turn off."
       edit_link: "Enter curation mode."
     browse:

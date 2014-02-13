@@ -59,3 +59,10 @@
   border-top: 1px solid lightgray;
   padding-top: 5px;
  }
+ 
+.label.curation-widget {
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+}
