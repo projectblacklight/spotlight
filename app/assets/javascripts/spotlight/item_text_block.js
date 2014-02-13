@@ -76,6 +76,10 @@ SirTrevor.Blocks.ItemText =  (function(){
       this.setData(data);
     },
 
+    onBlockRender: function() {
+      addAutocompletetoSirTrevorForm();
+    },
+
     loadData: function(data){
       this.$('#' + id_key).val(data[id_key]);
       this.$('#' + title_key).prop('checked', data[title_key]);
