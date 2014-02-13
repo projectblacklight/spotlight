@@ -82,7 +82,7 @@ module Spotlight
         ""
       end
       def page_collection_name
-        page_model.to_s.pluralize.to_sym
+        @page_collection_name ||= page_model.to_s.pluralize
       end
       # Only allow a trusted parameter "white list" through.
       def page_params
