@@ -1,0 +1,11 @@
+.exhibit-admin {
+  input.exhibit-contact {
+    margin-top: 5px;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  #another-email {
+    cursor: hand;
+  }
+}
