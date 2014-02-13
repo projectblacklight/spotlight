@@ -8,7 +8,7 @@ describe "Report a Problem" do
     expect(page).to have_content "Report a problem"
   end
 
-  it "should accept a problem report" do
+  it "should send a problem report to the contact emails cofigured for the exhibit" do
     e = Spotlight::Exhibit.default
     e.contact_emails = ["test@example.com", "test2@example.com"]
     e.save
@@ -22,6 +22,6 @@ describe "Report a Problem" do
 
     click_on "Send"
     expect(ActionMailer::Base.deliveries).to have(1).email
-
+    expect(ActionMailer::Base.deliveries.last.to).to eq e.contact_emails
   end
 end

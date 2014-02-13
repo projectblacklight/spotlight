@@ -12,7 +12,7 @@ module Spotlight
     def headers
       {
         subject: "#{I18n.t(:'blacklight.application_name')} Contact Form",
-        to: Spotlight::Exhibit.default.contact_emails.first,
+        to: Spotlight::Exhibit.default.contact_emails,
         from: %("#{name}" <#{email}>),
         cc: Spotlight::Exhibit.default.contact_emails.join(", ")
       }
