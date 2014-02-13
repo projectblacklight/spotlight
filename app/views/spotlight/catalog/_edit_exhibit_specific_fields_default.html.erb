@@ -1,7 +1,0 @@
-<%= f.fields_for :sidecar do |c| %>
-  <%= c.fields_for :data do |d| %>
-    <% current_exhibit.custom_fields.each do |field| %>
-      <%= d.text_field field.field, value: document.sidecar(current_exhibit).data[field.field], label: field.label %>
-    <% end %>
-  <% end %>
-<% end %>

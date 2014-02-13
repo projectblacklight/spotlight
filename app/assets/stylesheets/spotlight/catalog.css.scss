@@ -39,20 +39,26 @@ form.edit_solr_document {
 .blacklight-catalog-edit, .blacklight-catalog-show {
   .thumbnail {
     @extend .col-md-6;
-    display: inline-block;
+  }
+
+  .edit-fields {
+    float: right;
+    @extend .col-md-6;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
   }
 
   .dl-horizontal {
     @extend .col-md-6;
   }
 
-  .tags {
-    @extend .col-md-6;
-    @extend .pull-right;
-  }
-
   #document {
     @extend .clearfix;
     @extend .row;
   }
+}
+
+.edit_solr_document {
+  @extend .clearfix;
 }

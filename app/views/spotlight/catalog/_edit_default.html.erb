@@ -1,0 +1,14 @@
+<div class="edit-fields">
+  <%= f.fields_for :sidecar do |c| %>
+    <%= c.fields_for :data do |d| %>
+      <% current_exhibit.custom_fields.each do |field| %>
+        <%= d.text_field field.field, value: document.sidecar(current_exhibit).data[field.field], label: field.label %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <div class="edit-tags">
+  <%= f.text_field :exhibit_tag_list, value: f.object.tags_from(current_exhibit).to_s %>
+  </div>
+  <%= f.submit nil%>
+</div>

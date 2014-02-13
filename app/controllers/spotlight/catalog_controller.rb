@@ -36,9 +36,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   def edit
     blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
 
-    blacklight_config.view.edit.partials.insert(2, :edit_exhibit_specific_fields)
-    blacklight_config.view.edit.partials.insert(3, :edit_tags)
-    blacklight_config.view.edit.partials.insert(4, :edit_submit)
+    blacklight_config.view.edit.partials.insert(2, :edit)
   end
 
   def _prefixes
