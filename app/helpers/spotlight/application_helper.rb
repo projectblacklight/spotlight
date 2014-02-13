@@ -1,17 +1,6 @@
 module Spotlight
   module ApplicationHelper
 
-    # search_action_url is a special Blacklight helper (not a route),
-    # so it doesn't get caught by the method_missing logic below.
-    # TODO: we should consider making this configurable
-    def search_action_url *args
-      if controller_path == 'spotlight/catalog'
-        catalog_index_url *args
-      else
-        main_app.catalog_index_url *args
-      end
-    end
-
     # Can search for named routes directly in the main app, omitting
     # the "main_app." prefix
     def method_missing method, *args, &block
