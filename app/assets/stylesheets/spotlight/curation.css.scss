@@ -61,8 +61,16 @@
  }
  
 .label.curation-widget {
+  display: inline-block;
+  margin-top: 1em;
+  padding: 0.7em 1em;
   a {
     color: white;
     text-decoration: underline;
   }
+}
+
+#content-header {
+  height: auto;
+  min-height: 0;
 }

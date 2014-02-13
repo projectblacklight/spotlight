@@ -27,7 +27,3 @@ function addAutocompletetoSirTrevorForm() {
     });
 }
 results.initialize();
-
-Spotlight.onLoad(function() {
-  SirTrevor.EventBus.on("block:create:new", addAutocompletetoSirTrevorForm);
-});

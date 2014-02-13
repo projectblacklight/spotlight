@@ -26,7 +26,7 @@ SirTrevor.Blocks.ItemText =  (function(){
           '<label for="' + id_key + '" class="col-sm-2 control-label">Selected item</label>',
           '<div class="col-sm-6 field">',
             '<input name="' + id_key + '"',
-            ' class="st-input-string form-control st-required ' + type + '" type="text" id="' + id_key + '" />',
+            ' class="st-input-string form-control ' + type + '" type="text" id="' + id_key + '" />',
           '</div>',
         '</div>',
         '<div class="form-group">',
@@ -74,6 +74,10 @@ SirTrevor.Blocks.ItemText =  (function(){
       data[text_key] = this.$('#' + text_key).val();
       data[align_key] = this.$('[name=' + align_key + ']:checked').val();
       this.setData(data);
+    },
+
+    onBlockRender: function() {
+      addAutocompletetoSirTrevorForm();
     },
 
     loadData: function(data){

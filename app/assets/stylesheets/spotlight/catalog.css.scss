@@ -36,3 +36,29 @@ form.edit_solr_document {
   }
 }
 
+.blacklight-catalog-edit, .blacklight-catalog-show {
+  .thumbnail {
+    @extend .col-md-6;
+  }
+
+  .edit-fields {
+    float: right;
+    @extend .col-md-6;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+  }
+
+  .tags, .dl-horizontal {
+    @extend .col-md-6;
+  }
+
+  #document {
+    @extend .clearfix;
+    @extend .row;
+  }
+}
+
+.edit_solr_document {
+  @extend .clearfix;
+}

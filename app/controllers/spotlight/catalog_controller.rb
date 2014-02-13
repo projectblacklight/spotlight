@@ -27,7 +27,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
       authorize! :update, @document
       @document.update(current_exhibit, solr_document_params)
       @document.save # TODO need to index tags too
-      redirect_to main_app.solr_document_path(@document)
+      redirect_to exhibit_catalog_path(current_exhibit, @document)
     else
       super
     end
@@ -35,9 +35,8 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def edit
     blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
-
-    blacklight_config.view.edit.partials.insert(1, :edit_exhibit_specific_fields)
-    blacklight_config.view.edit.partials.insert(2, :edit_tags)
+    blacklight_config.view.edit.partials.delete "spotlight/catalog/tags"
+    blacklight_config.view.edit.partials.insert(2, :edit)
   end
 
   def _prefixes
