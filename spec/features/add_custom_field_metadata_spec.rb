@@ -11,7 +11,7 @@ describe "Adding custom metadata field data" do
   end
 
   it "should work" do
-    visit solr_document_path("dq287tq6352")
+    visit spotlight.exhibit_catalog_path(Spotlight::Exhibit.default, "dq287tq6352")
 
     expect(page).to have_link "Enter curation mode."
 

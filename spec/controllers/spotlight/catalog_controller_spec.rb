@@ -5,9 +5,11 @@ describe Spotlight::CatalogController do
 
   describe "when the user is not authenticated" do
 
-    it "should redirect to the login page" do
-      get :index, exhibit_id: Spotlight::Exhibit.default
-      expect(response).to redirect_to main_app.new_user_session_path
+    describe "GET admin" do
+      it "should redirect to the login page" do
+        get :admin, exhibit_id: Spotlight::Exhibit.default
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
     end
     
     describe "GET edit" do
@@ -24,10 +26,12 @@ describe Spotlight::CatalogController do
       sign_in FactoryGirl.create(:exhibit_visitor)
     end
 
-    it "should deny access" do
-      get :index, exhibit_id: Spotlight::Exhibit.default
-      expect(response).to redirect_to main_app.root_path
-      expect(flash[:alert]).to be_present
+    describe "GET admin" do
+      it "should deny access" do
+        get :admin, exhibit_id: Spotlight::Exhibit.default
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to be_present
+      end
     end
 
     describe "GET edit" do
