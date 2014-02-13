@@ -36,3 +36,23 @@ form.edit_solr_document {
   }
 }
 
+.blacklight-catalog-edit, .blacklight-catalog-show {
+  .thumbnail {
+    @extend .col-md-6;
+    display: inline-block;
+  }
+
+  .dl-horizontal {
+    @extend .col-md-6;
+  }
+
+  .tags {
+    @extend .col-md-6;
+    @extend .pull-right;
+  }
+
+  #document {
+    @extend .clearfix;
+    @extend .row;
+  }
+}
