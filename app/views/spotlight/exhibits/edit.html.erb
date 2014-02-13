@@ -1,5 +1,5 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
-<div id="content" class="col-md-9">
+<div id="content" class="col-md-9 exhibit-admin">
 <%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal, right: "col-sm-5" do |f| %>
   <div class="row">
     <h1><%= t :'spotlight.administration.header' %></h1>
@@ -16,17 +16,17 @@
     <%= f.text_field :title %>
     <%= f.text_field :subtitle %>
     <%= f.form_group(:contact_emails, label: { text: nil, class: nil }, help: nil) do %>
-      <%= f.fields_for :contact_emails, @exhibit.contact_emails do |e| %>
-        <% if e.index == 0 %>
-        <div class="input-group">
-          <%= text_field_tag "#{e.object_name}[email]", e.object, class: 'form-control' %>
-          <span id='another-email' class="input-group-addon">+</span>
-        </div>
+      <%= f.fields_for :contact_emails, @exhibit.contact_emails do |contact| %>
+        <% if contact.index == 0 %>
+          <div class="input-group">
+            <%= text_field_tag "#{contact.object_name}[email]", contact.object, class: 'exhibit-contact form-control' %>
+            <span id='another-email' class="input-group-addon">+</span>
+          </div>
         <% else %>
-          <%= text_field_tag "#{e.object_name}[email]", e.object, class: 'form-control' %>
+          <%= text_field_tag "#{contact.object_name}[email]", contact.object, class: 'exhibit-contact form-control' %>
         <% end %>
       <% end %>
-    <%end %>
+    <% end %>
     <%= f.text_area :description %>
   </div>
 <% end %>

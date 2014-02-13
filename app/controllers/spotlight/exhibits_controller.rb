@@ -6,6 +6,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   authorize_resource
 
   def edit
+    @exhibit.contact_emails << "" unless @exhibit.contact_emails.present?
   end
 
   def update
