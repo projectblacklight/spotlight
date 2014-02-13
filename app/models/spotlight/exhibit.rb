@@ -15,7 +15,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   accepts_nested_attributes_for :searches
   accepts_nested_attributes_for :about_pages
   accepts_nested_attributes_for :feature_pages
-  accepts_nested_attributes_for :roles, allow_destroy: true
+  accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc {|attr| attr['user_key'].blank?}
   delegate :blacklight_config, to: :blacklight_configuration
 
   serialize :facets, Array

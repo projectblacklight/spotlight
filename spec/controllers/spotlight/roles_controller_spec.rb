@@ -24,7 +24,7 @@ describe Spotlight::RolesController do
 
     describe "PATCH update_all" do
       it "should be successful" do
-        patch :update_all, exhibit_id: exhibit, "exhibit"=>{"roles_attributes"=>{"0"=>{"user_key"=>"cbeer@cbeer.io", "role"=>"curate", "id"=>role.id}}}
+        patch :update_all, exhibit_id: exhibit, "exhibit"=>{"roles_attributes"=>{"0"=>{"user_key"=>"cbeer@cbeer.io", "role"=>"curate", "id"=>role.id}, '1' => {"user_key"=>"", "role"=>"admin"}}}
         expect(response).to redirect_to exhibit_roles_path(exhibit)
         expect(flash[:notice]).to eq 'User has been updated.'
         expect(admin.reload.roles.first.role).to eq 'curate'
