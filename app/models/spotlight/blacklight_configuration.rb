@@ -54,7 +54,7 @@ module Spotlight
 
 
       config.show.partials.unshift "spotlight/catalog/curation_mode_toggle"
-      config.show.partials.insert(2, "spotlight/catalog/tags")
+      config.show.partials.insert(3, "spotlight/catalog/tags")
       show_fields = index_fields_for_view(:show)
       unless show_fields.blank?
         active_show_fields = show_fields.select { |k,v| v[:enabled] == true }

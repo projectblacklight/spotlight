@@ -35,7 +35,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def edit
     blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
-
+    blacklight_config.view.edit.partials.delete "spotlight/catalog/tags"
     blacklight_config.view.edit.partials.insert(2, :edit)
   end
 
