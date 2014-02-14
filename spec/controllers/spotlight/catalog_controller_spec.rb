@@ -19,6 +19,18 @@ describe Spotlight::CatalogController do
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
+
+    describe "GET show" do
+      let (:exhibit) {Spotlight::Exhibit.default}
+      let (:document) { SolrDocument.find('dq287tq6352') }
+      it "should show the item" do
+        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Item Detail", document)
+        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", document)
+        get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        expect(response).to be_successful
+      end
+    end
   end
 
   describe "when the user is not authorized" do

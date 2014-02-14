@@ -107,6 +107,7 @@ en:
           show: "Item Details"
         instructions: Select metadata fields to display on each type of page. Click a field name to edit its display label. Drag and drop fields to specify the order they are displayed on the Item Details page.
     catalog:
+      breadcrumb: 'Item Detail'
       fields:
         title: "Title"
         date_added: "Date Added"

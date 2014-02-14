@@ -1,12 +1,21 @@
 class Spotlight::CatalogController < Spotlight::ApplicationController
   include Blacklight::Catalog
   include Spotlight::Catalog
+  include BlacklightHelper
   load_resource :exhibit, class: Spotlight::Exhibit
   before_filter :authenticate_user!, only: [:admin, :edit]
   before_filter :check_authorization, only: [:admin, :edit]
   load_and_authorize_resource instance_name: :document, class: ::SolrDocument, only: [:edit]
 
+  before_filter :attach_breadcrumbs
+
   copy_blacklight_config_from ::CatalogController
+
+  def show
+    super
+    add_breadcrumb t(:'spotlight.catalog.breadcrumb'), @document
+    add_breadcrumb Array(@document[blacklight_config.view_config(:show).title_field]).join(', '), @document
+  end
 
   def admin
     self.blacklight_config.view.reject! { |k,v| true }
@@ -39,11 +48,15 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
     blacklight_config.view.edit.partials.insert(2, :edit)
   end
 
+  protected
+
+  def attach_breadcrumbs
+    add_breadcrumb @exhibit.title, @exhibit
+  end
+
   def _prefixes
     @_prefixes ||= super + ['catalog']
   end
-
-  protected
 
   ##
   # Admin catalog controller should not create a new search
