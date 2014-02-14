@@ -5,6 +5,10 @@ module Spotlight
     load_and_authorize_resource class: ActsAsTaggableOn::Tag
 
     def index
+      respond_to do |format|
+        format.html
+        format.json { render json: @tags.map { |x| x.name } }
+      end
     end
 
     def destroy

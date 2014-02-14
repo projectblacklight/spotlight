@@ -21,6 +21,11 @@ describe Spotlight::TagsController do
         expect(assigns[:tags]).to eq []
         expect(assigns[:exhibit]).to eq exhibit
       end
+
+      it "should have a json serialization" do
+        get :index, exhibit_id: exhibit, format: 'json'
+        expect(response).to be_successful
+      end
     end
 
     describe "DELETE destroy" do
