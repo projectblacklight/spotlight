@@ -5,6 +5,7 @@ describe "spotlight/searches/_search.html.erb" do
   let(:search) { stub_model(Spotlight::Search,
         id: 99, title: "Title1", short_description: "MyText") }
   before do
+    view.send(:extend, Spotlight::CrudLinkHelpers)
     view.stub(:edit_search_path).and_return("/edit")
     view.stub(:search_path).and_return("/search")
 

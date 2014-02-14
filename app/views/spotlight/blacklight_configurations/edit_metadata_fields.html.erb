@@ -5,19 +5,19 @@
     <div class="pull-right">
       <%= f.submit nil %>
     </div>
-    <h2 class="text-muted clearfix"><%= t('spotlight.curation.metadata_fields.header') %></h2>
-    <h3><%= t('spotlight.curation.metadata_fields.order_header') %></h3>
+    <h2 class="text-muted clearfix"><%= t(:'.header') %></h2>
+    <h3><%= t(:'.order_header') %></h3>
 
-    <p class="instuctions">Select metadata fields to display on each type of page. Drag and drop fields to specify the order they are displayed on the Item Details page.</p>
+    <p class="instuctions"><%= t :'.instructions' %></p>
 
     <table id="nested-fields" class="table table-striped">
       <thead>
         <tr>
-          <th><%= t :'spotlight.curation.metadata_fields.label' %></th>
-          <th><%= t :'spotlight.curation.metadata_fields.view.show', default: t(:'blacklight.search.view.show') %></th>
+          <th><%= t :'.fields.label' %></th>
+          <th><%= t :'.view.show', default: t(:'blacklight.search.view.show') %></th>
           <% @exhibit.blacklight_configuration.default_blacklight_config.view.keys.each do |type| %>
 
-          <th><%= t "spotlight.curation.metadata_fields.view.#{type}", default: t("blacklight.search.view.#{type}") %></th>
+          <th><%= t :".view.#{type}", default: t(:".view.#{type}") %></th>
           <% end %>
         </tr>
       </thead>
@@ -28,7 +28,7 @@
                 <%= idxf.fields_for key do |field| %>
                   <td>
                     <%= field.hidden_field :weight, 'data-property' => 'weight' %>
-                    <div class="dd-handle dd3-handle">Drag</div>
+                    <div class="dd-handle dd3-handle"><%= t :drag %></div>
 
                   <%= config.label %>
                   </td>
@@ -45,8 +45,8 @@
 <% end %>
 
 
-    <h3><%= t('spotlight.curation.metadata_fields.exhibit_specific_header') %></h3>
-    <p class="instuctions">You can add metadata fields to supplement the metadata fields that are part of the repository item record.</p>
+    <h3><%= t(:'.exhibit_specific.header') %></h3>
+    <p class="instuctions"><%= t(:'.exhibit_specific.instructions') %></p>
 
     <table class="table table-striped" id="exhibit-specific-fields">
       <tbody>
@@ -55,8 +55,8 @@
             <td>
               <div class="field-label"><%= field.label %></div>
               <div class="actions">
-                <%= link_to t('helpers.submit.edit'), edit_custom_field_path(field), class: 'btn btn-text' %> &middot;
-                <%= link_to t('helpers.submit.destroy'), custom_field_path(field), method: :delete, data: { confirm: t(:'spotlight.curation.metadata_fields.destroy_are_you_sure') }, class: 'btn btn-text' %>
+                <%= edit_link field, class: 'btn btn-text' %> &middot;
+                <%= delete_link field, class: 'btn btn-text' %>
               </div>
             </td>
             <td class="field-description">
@@ -69,5 +69,5 @@
     </table>
 
 
-<%= link_to t(:'spotlight.curation.metadata_fields.new_custom_field'), new_exhibit_custom_field_path(current_exhibit), class: 'btn btn-primary' %>
+<%= exhibit_create_link Spotlight::CustomField.new, class: 'btn btn-primary' %>
 </div>

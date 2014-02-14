@@ -1,8 +1,5 @@
-<div id="content" class="col-md-9">
-  <%= bootstrap_form_for @custom_field.new_record? ? [current_exhibit, @custom_field] : @custom_field, style: :horizontal, right: "col-sm-7", html: {id: 'edit-search'} do |f| %>
+<%= bootstrap_form_for @custom_field.new_record? ? [current_exhibit, @custom_field] : @custom_field, style: :horizontal, right: "col-sm-7", html: {id: 'edit-search'} do |f| %>
 
-  <h1><%= t('spotlight.curation.header') %></h1>
-  <h2 class="text-muted"><%= t('spotlight.curation.custom_fields.header') %></h2>
   <%= f.text_field :label %>
   <%= f.text_area :short_description %>
   <div class="form-group">

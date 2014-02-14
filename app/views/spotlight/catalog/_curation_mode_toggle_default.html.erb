@@ -2,11 +2,11 @@
   <% content_for(:curation_mode_widget) do %>
     <span class="label label-<%= curation_mode_label_class %> curation-widget">
       <%- if curation_mode? -%>
-        <%= t(:'spotlight.items.curation_mode') %> <%= link_to t(:'spotlight.items.show_link'), spotlight.exhibit_catalog_path(current_exhibit.id, document) %>
+        <%= t(:'spotlight.curation.mode.curation') %> <%= link_to t(:'spotlight.curation.link.show'), spotlight.exhibit_catalog_path(current_exhibit.id, document) %>
       <%- else -%>
-        <%= t(:'spotlight.items.end_user_mode') %> <%= link_to t(:'spotlight.items.edit_link'), spotlight.edit_polymorphic_path([current_exhibit, :catalog], id: document.id) %>
+        <%= t(:'spotlight.curation.mode.end_user') %> <%= link_to t(:'spotlight.curation.link.edit'), spotlight.edit_polymorphic_path([current_exhibit, :catalog], id: document.id) %>
       <%- end -%>
     </span>
   </div>
   <% end %>
-<% end %>
+<% end %> 

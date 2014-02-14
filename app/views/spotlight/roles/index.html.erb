@@ -1,17 +1,17 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
-  <% @page_title = t(:'spotlight.administration.users.title') %>
+  <% @page_title = t(:'.title') %>
 
   <h1><%= t :'spotlight.administration.header' %></h1>
-  <h2 class="text-muted"><%= t :'spotlight.administration.users.header' %></h2>
+  <h2 class="text-muted"><%= t :'.header' %></h2>
   <%= bootstrap_form_for @exhibit, url: spotlight.update_all_exhibit_roles_path(@exhibit) do |f| %>
-    <%= button_tag t(:'spotlight.administration.users.new'), class: 'btn btn-default', data: {behavior: 'new-user'} %>
+    <%= exhibit_create_link Spotlight::Role.new, '#', class: 'btn btn-default', data: {behavior: 'new-user'} %>
 
     <table class="table table-striped">
       <thead>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Actions</th>
+        <th><%= t '.name' %></th>
+        <th><%= t '.role' %></th>
+        <th><%= t '.actions' %></th>
       </thead>
       <tbody>
       <%= f.fields_for :roles do |r| %>
@@ -20,8 +20,8 @@
           <tr data-edit-for="new">
             <td></td>
             <td colspan=2>
-              <%= button_tag t(:'spotlight.administration.users.cancel'), class: 'btn btn-text', data: {behavior: 'cancel-edit' } %>
-              <%=f.submit t(:'spotlight.administration.users.update'), class: 'btn btn-primary'%>
+              <%= cancel_link r.object, '#', class: 'btn btn-text', data: {behavior: 'cancel-edit' } %>
+              <%=f.submit nil, class: 'btn btn-primary'%>
             </td>
           </tr>
         <% else %>
@@ -34,12 +34,12 @@
           </tr>
           <%= render partial: 'edit_fields', locals: {f: r} %>
           <tr data-edit-for="<%= r.object.id %>">
-            <td><%= f.submit t(:'spotlight.administration.users.remove'), class: 'btn btn-danger', data: { behavior: 'destroy-user', target: r.object.id} %>
+            <td><%= f.submit action_label(r.object, :destroy), class: 'btn btn-danger', data: { behavior: 'destroy-user', target: r.object.id} %>
             <%= r.hidden_field :_destroy, data: {'destroy-for' => r.object.id} %>
             </td>
             <td colspan=2>
-              <%= button_tag t(:'spotlight.administration.users.cancel'), class: 'btn btn-text', data: {behavior: 'cancel-edit' } %>
-              <%=f.submit t(:'spotlight.administration.users.update'), class: 'btn btn-primary'%>
+              <%= cancel_link r.object, '#', class: 'btn btn-text', data: {behavior: 'cancel-edit' } %>
+              <%=f.submit nil, class: 'btn btn-primary'%>
             </td>
           </tr>
         <% end %>

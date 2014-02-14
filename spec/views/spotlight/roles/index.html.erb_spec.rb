@@ -11,6 +11,7 @@ module Spotlight
       assign(:exhibit, exhibit)
       view.stub(:current_exhibit).and_return(exhibit)
       exhibit.stub(:roles).and_return roles
+      view.send(:extend, Spotlight::CrudLinkHelpers)
     end
 
     it "renders the index page form" do
@@ -21,8 +22,8 @@ module Spotlight
         assert_select "tr[data-edit-for=?]", exhibit.id, 2
         assert_select "input[type='submit'][data-behavior='destroy-user'][data-target=?]", exhibit.id
         assert_select "input[type='hidden'][data-destroy-for=?]", exhibit.id
-        assert_select "button[type='submit'][data-behavior='cancel-edit']"
-        assert_select "input[type='submit'][value='Save']"
+        assert_select "a[data-behavior='cancel-edit']"
+        assert_select "input[type='submit'][value='Save changes']"
       end
     end
   end

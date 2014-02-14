@@ -1,40 +1,47 @@
 en:
   cancel: "Cancel"
+  drag: "Drag"
+  toggle_nav: "Toggle navigation"
   helpers:
-    submit:
-      new: Add new %{model}
+    action:
+      new: Add a new %{model}
       view: View
       edit: Edit
+      edit_long: "Edit this %{model}"
       destroy: Delete
-      destroy_are_you_sure: "Are you sure?"
-      exhibit:
-        submit: "Save"
-        update: "Save changes"
-      search:
+      cancel: Cancel
+      destroy_are_you_sure: "Are you sure you want to delete this %{model}?"
+      update_all: "Save changes"
+      spotlight/search:
+        destroy: "Delete"
+        edit_long: "Edit this saved search"
+      acts_as_taggable_on/tag:
+        destroy: "Delete tag"
+      spotlight/role:
+        create: "Add a new user"
+        destroy: "Remove from site"
+      spotlight/custom_field:
+        create: "Add new field"
+    submit:
+      spotlight_default: &spotlight_default
         create: "Save"
-        submit: "Save"
+        submit: "Save changes"
+        update: "Save changes"
+      page: &spotlight_page
+        create: "Add new page"
+        submit: "Save changes"
+        update: "Save changes"
+      exhibit: *spotlight_default
+      search: *spotlight_default
       contact_form:
         create: "Send"
-      feature_page:
-        create: "Save"
-        submit: "Save changes"
-        update: "Save changes"
-      about_page:
-        create: "Save"
-        submit: "Save changes"
-        update: "Save changes"
-      home_page:
-        create: "Save"
-        submit: "Save changes"
-        update: "Save changes"
-      blacklight_configuration:
-        create: "Save"
-        submit: "Save changes"
-        update: "Save changes"
-      solr_document:
-        create: "Save"
-        submit: "Save changes"
-        update: "Save changes"
+      feature_page: *spotlight_page
+      about_page: *spotlight_page
+      home_page: *spotlight_page
+      blacklight_configuration: *spotlight_default
+      solr_document: *spotlight_default
+      users: *spotlight_default
+      custom_field: *spotlight_default
     label:
       solr_document:
         exhibit_tag_list: "Tags"
@@ -43,21 +50,6 @@ en:
       spotlight:
         page: Page
   spotlight:
-    role:
-      admin: "Admin"
-      curator: "Curator"
-    items:
-      curation_mode: "You are in curation mode."
-      end_user_mode: "You are in end-user mode."
-      show_link: "Turn off."
-      edit_link: "Enter curation mode."
-    browse:
-      heading: "Browse Exhibit"
-      item_count:
-        one: "%{count} item"
-        other: "%{count} items"
-    contact_form:
-      header: "Report a Problem"
     administration:
       sidebar:
         header: Administration
@@ -69,14 +61,13 @@ en:
       settings:
         header: "Settings"
       show_sidebar: "Show sidebar"
-      users:
-        header: Users
-        title: Site Administration - Users
-        remove: "Remove from site"
-        new: "Add a new user"
-        update: "Save"
-        cancel: "Cancel"
     curation:
+      mode:
+        curation: "You are in curation mode."
+        end_user: "You are in end-user mode."
+      link:
+        show: "Turn off."
+        edit: "Enter curation mode."
       sidebar:
         header: Curation
         dashboard: Dashboard
@@ -88,35 +79,14 @@ en:
         feature_pages: Feature pages
         about_pages: About pages
       dashboard: "Curation dashboard"
-      home:
-        nav_link: "Home"
-        nav_catalog_link: "Home"
-      items:
-        header: "Items"
-        title: "Curation - Items"
-        date_added: "Date Added"
-      browse:
-        header: "Browse"
-        title: "Curation - Browse"
-        update: "Save changes"
-        edit:
-          header: "Edit Browse Category"
-          cancel: "Cancel"
-      custom_fields:
-        header: "Custom Field"
+      nav:
+        home: "Home"
       header: "Curation"
-      metadata_fields:
-        header: "Metadata"
-        order_header: "Display and Order Metadata Fields"
-        exhibit_specific_header: "Exhibit-Specific Fields"
-        new_custom_field: "Add new field"
-        destroy_are_you_sure: "Are you sure you want to delete this exhibit-specific field? All existing values entered for this field will be deleted."
-        label: "Field name"
-        view:
-          show: "Item Details"
-      facet_fields:
+    blacklight_configurations:
+      edit_facet_fields:
         header: "Search Facets"
-        options:
+        options: "Options"
+        field:
           label: "Display Label"
         items_count: 
           one: "%{count} item"
@@ -124,21 +94,103 @@ en:
         values_count:
           one: "%{count} unique value"
           other: "%{count} unique values"
-      tags:
+      edit_metadata_fields:
+        fields:
+          label: "Field name"
+        header: "Metadata"
+        order_header: "Display and Order Metadata Fields"
+        exhibit_specific:
+          header: "Exhibit-Specific Fields"
+          instructions:
+            "You can add metadata fields to supplement the metadata fields that are part of the repository item record."
+        view:
+          show: "Item Details"
+        instructions: Select metadata fields to display on each type of page. Drag and drop fields to specify the order they are displayed on the Item Details page.
+    catalog:
+      fields:
+        title: "Title"
+        date_added: "Date Added"
+      admin:
+        title: Curation - Items
+        header: Items
+    contact_form:
+      new:
+        header: "Report a Problem"
+    custom_fields:
+      edit:
+        header: Custom Field
+      new:
+        header: Custom Field
+    exhibits:
+      edit:
+        header: Settings
+    pages:
+      index:
+        pages_header: Defined Pages
+        instructions: Select the pages you want to be shown. Drag and drop pages to change the order in which they are displayed in the sidebar.
+        home_pages:
+          title: Exhibit Home
+          header: Exhibit Home
+        feature_pages:
+          title: Feature Pages
+          header: Feature Pages
+          home_pages_header: Homepage
+        about_pages:
+          title: About Pages
+          header: About Pages
+      new:
+        header: New page
+      edit:
+        header: Edit page
+      form:
+        title_paceholder: "Title"
+    about_pages:
+      nav_link: About
+      sidebar:
+        nav_link: About
+    feature_pages:
+      nav_link: Curated Features
+    roles:
+      index:
+        title: Site Administration - Users
+        header: Users
+        name: "Name"
+        role: "Role"
+        actions: "Actions"
+    searches: &search
+      nav_link: "Browse"
+      index:
+        header: "Browse"
+        title: "Curation - Browse" 
+        categories_header: "Browse Categories"
+        instructions: "Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page."
+      edit:
+        header: "Edit Browse Category"
+        title: "Curation - Browse"
+      search:
+        item_count:
+          one: "%{count} item"
+          other: "%{count} items"
+        missing_description_html: "%{link} to add a description."
+    browse:
+      nav_link: "Browse"
+      index:
+        header: "Browse Exhibit"
+      search:
+        item_count:
+          one: "%{count} item"
+          other: "%{count} items"
+    tags:
+      index:
         title: "Curation - Tags"
         header: "Tags"
-      feature_pages:
-        nav_link: "Curated Features"
-        header: "Feature Pages"
-        options: "Options"
-        update: "Save changes"
-      about_pages:
-        nav_link: "About"
-        header: "About Pages"
-        update: "Save changes"
-      home_pages:
-        header: "Homepage"
-        page_title: "Exhibit Home"
+        name: "Name"
+        taggings:
+          count: "Items tagged"
+        actions: "Actions"
+    role:
+      admin: "Admin"
+      curator: "Curator"
     header_links:
       login: "Sign in"
       logout: "Sign out"

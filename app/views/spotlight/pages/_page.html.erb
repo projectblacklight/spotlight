@@ -1,6 +1,6 @@
 <% page = f.object %>
 <li class="dd-item dd3-item" data-id="<%= page.id %>">
-  <div class="dd-handle dd3-handle">Drag</div>
+  <div class="dd-handle dd3-handle"><%= t :drag %></div>
   <div class="dd3-content panel panel-default">
     <div class="panel-heading page">
       <a class="pull-right btn btn-text" data-toggle="collapse" href="#collapse-page-<%= page.id %>"><%= t(:'spotlight.feature_pages.options') %>
@@ -10,9 +10,9 @@
       <div class="main">
         <h3 class="panel-title"><%= page.title %></h3>
         <div class="page-links">
-          <%= link_to t('helpers.submit.view'), [spotlight, page], :class => 'btn btn-text' %> &middot;
-          <%= link_to t('helpers.submit.edit'), [spotlight, :edit, page], :class => 'btn btn-text' %> &middot;
-          <%= link_to t('helpers.submit.destroy'), [spotlight, page], method: :delete, data: { confirm: t('helpers.submit.destroy_are_you_sure') }, :class => 'btn btn-text' %>
+          <%= view_link page, :class => 'btn btn-text' %> &middot;
+          <%= edit_link page, :class => 'btn btn-text' %> &middot;
+          <%= delete_link page, :class => 'btn btn-text' %>
         </div>
       </div>
     </div>

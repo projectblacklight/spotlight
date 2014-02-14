@@ -15,7 +15,7 @@ describe "Adding custom metadata fields", type: :feature do
     fill_in "Label", with: "My new custom field"
     fill_in "Short description", with: "Helps to remind me what this field is for"
 
-    click_on "Create Custom field"
+    click_on "Save"
 
     expect(page).to have_content "Custom field was created"
     within "#exhibit-specific-fields" do
@@ -30,7 +30,7 @@ describe "Adding custom metadata fields", type: :feature do
     expect(find_field('Short description').value).to eq 'Helps to remind me what this field is for'
     fill_in 'Short description', with: 'A much better description'
 
-    click_button "Update Custom field"
+    click_button "Save changes"
 
     expect(page).to have_content "Custom field was updated"
 
