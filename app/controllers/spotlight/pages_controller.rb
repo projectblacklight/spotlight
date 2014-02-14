@@ -3,10 +3,8 @@ module Spotlight
     before_filter :authenticate_user!, except: [:show]
 
     load_resource :exhibit, class: Spotlight::Exhibit, only: [:index, :new, :create, :update_all]
-    load_and_authorize_resource only: [:show, :edit, :update, :destroy, :update_all]
-    load_and_authorize_resource through: :exhibit, only: [:index, :new, :create]
-
-    before_filter :cast_page_instance_variable
+    load_and_authorize_resource only: [:show, :edit, :update, :destroy, :update_all], instance_name: 'page'
+    load_and_authorize_resource through: :exhibit, only: [:index, :new, :create], instance_name: 'page'
 
     include Blacklight::Base
     include Blacklight::Catalog::SearchContext

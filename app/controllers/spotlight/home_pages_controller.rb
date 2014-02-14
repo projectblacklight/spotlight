@@ -39,16 +39,5 @@ module Spotlight
         Spotlight::Exhibit.default.blacklight_config
       end
     end
-
-    def page_model
-      :home_page
-    end
-    def cast_page_instance_variable
-      if @home_pages
-        @pages = @home_pages
-      elsif @home_page
-        @page = @home_page
-      end
-    end
   end
 end
