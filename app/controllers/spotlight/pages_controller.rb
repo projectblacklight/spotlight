@@ -73,17 +73,17 @@ module Spotlight
     end
 
     def human_name
-      page_collection_name.to_s.humanize
+      @human_name ||= page_collection_name.humanize
     end
 
+    def page_model
+      @page_model ||= controller_name.singularize
+    end
+
+    alias page_collection_name controller_name 
+
     private
-      # We don't have a generic page model since Spotlight::Page is now a concern.
-      def page_model
-        ""
-      end
-      def page_collection_name
-        page_model.to_s.pluralize.to_sym
-      end
+
       # Only allow a trusted parameter "white list" through.
       def page_params
         params.require(page_model).permit(:title, :content)
