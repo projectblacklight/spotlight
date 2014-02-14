@@ -14,6 +14,16 @@ module Spotlight
       
     end
 
+    it "should render the title as a heading" do
+      render
+      expect(rendered).to have_css(".page-title", text: @page.title)
+    end
+    it "should not render an empty heading" do
+      @page.stub(title: nil)
+      render
+      expect(rendered).to_not have_css(".page-title")
+    end
+
     it "renders attributes in <p>" do
       render
       rendered.should match(/Title/)
