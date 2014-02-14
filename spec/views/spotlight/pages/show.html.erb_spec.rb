@@ -4,6 +4,7 @@ module Spotlight
   describe "spotlight/pages/show" do
     let(:exhibit) { stub_model(Exhibit) }
     before(:each) do
+      view.send(:extend, Spotlight::CrudLinkHelpers)
       @page = assign(:page, stub_model(FeaturePage,
         :exhibit => exhibit,
         :title => "Title",

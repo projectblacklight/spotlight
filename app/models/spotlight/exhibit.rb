@@ -71,7 +71,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   end
 
   def add_default_home_page
-    Spotlight::HomePage.create(exhibit: self).save
+    Spotlight::HomePage.create(exhibit: self, title: "Exhibit Home").save
   end
 
   def sanitize_description

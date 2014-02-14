@@ -7,6 +7,7 @@ describe "spotlight/searches/index.html.erb" do
     view.stub(update_all_exhibit_searches_path: "/")
     view.stub(:current_exhibit).and_return(exhibit)
     assign(:exhibit, exhibit)
+    view.send(:extend, Spotlight::CrudLinkHelpers)
   end
 
   describe "Without searches" do

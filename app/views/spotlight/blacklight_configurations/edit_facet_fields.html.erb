@@ -6,7 +6,7 @@
     </div>
     <div class="row">
       <div class="col-sm-5">
-        <h2><small><%= t('spotlight.curation.facet_fields.header') %></small></h2>
+        <h2><small><%= t('.header') %></small></h2>
       </div>
       <div class="col-sm-2">
         <%= f.submit nil %>
@@ -18,11 +18,11 @@
       <%= f.fields_for :facet_fields do |idxf| %>
         <% @exhibit.blacklight_configuration.all_facet_fields.each do |key, config| %>
           <li class="dd-item" data-id="<%= key.parameterize %>">
-  <div class="dd-handle dd3-handle">Drag</div>
+  <div class="dd-handle dd3-handle"><%= t :drag %></div>
           <%= idxf.fields_for key do |facet| %>
             <div class="dd3-content panel panel-default facet-config-<%= key.parameterize %>">
               <div class="panel-heading">
-              <a class="pull-right btn btn-text" data-toggle="collapse" href="#collapse-facet-<%= key.parameterize %>"><%= t(:'spotlight.feature_pages.options') %>
+              <a class="pull-right btn btn-text" data-toggle="collapse" href="#collapse-facet-<%= key.parameterize %>"><%= t(:'.options') %>
       <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
 
@@ -31,15 +31,15 @@
 
                 <% if metadata =  @fields.fetch(key.to_s, {}) %>
                 <div class="text-muted">
-                  <%= content_tag :span, t(:'spotlight.curation.facet_fields.items_count', count: metadata.fetch('docs', 0)), class: 'btn btn-text' %> •
+                  <%= content_tag :span, t(:'.items_count', count: metadata.fetch('docs', 0)), class: 'btn btn-text' %> •
 
-                  <%= link_to t(:'spotlight.curation.facet_fields.values_count', count: metadata.fetch('distinct', 0)), catalog_facet_path(key), class: 'btn btn-text btn-with-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => render_field_value(metadata.fetch('topTerms', {}).map { |k,v| String.new(k) }, config) %>
+                  <%= link_to t(:'.values_count', count: metadata.fetch('distinct', 0)), catalog_facet_path(key), class: 'btn btn-text btn-with-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => render_field_value(metadata.fetch('topTerms', {}).map { |k,v| String.new(k) }, config) %>
                   <% end %>
                 </div>
               </div>
               <div id="collapse-facet-<%= key.parameterize %>" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <%= facet.text_field :label, value: @exhibit.blacklight_configuration.facet_fields.fetch(key, {})[:label], label: t('spotlight.curation.facet_fields.options.label'), placeholder: @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label %>
+                  <%= facet.text_field :label, value: @exhibit.blacklight_configuration.facet_fields.fetch(key, {})[:label], label: t('.field.label'), placeholder: @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label %>
                 </div>
               </div>
             </div>

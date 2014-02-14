@@ -1,26 +1,26 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
-  <% @page_title = t(:'spotlight.curation.tags.title') %>
+  <% @page_title = t(:'.title') %>
 
   <h1><%= t :'spotlight.curation.header' %></h1>
   <h4 class="text-muted">
-    <%= t :'spotlight.curation.tags.header' %>
+    <%= t :'.header' %>
     <span class="label label-default"><%= @tags.length %></span>
   </h4>
 
   <table class="table table-striped">
     <thead>
-      <th>Name</th>
-      <th>Items tagged</th>
+      <th><%= t '.name' %></th>
+      <th><%= t '.taggings.count' %></th>
       <%# TODO last used? %>
-      <th>Actions</th>
+      <th><%= t '.actions' %></th>
     </thead>
     <tbody>
     <% @tags.each do |tag| %>
       <tr>
         <td><%=tag.name %></td>
         <td><%= tag.taggings.count %></td>
-        <td><%= link_to "Delete tag", exhibit_tag_path(@exhibit, tag), method: 'delete', class: 'btn btn-danger' %></td>
+        <td><%= delete_link(tag, exhibit_tag_path(current_exhibit, tag), class: 'btn btn-danger') %></td>
       </tr>
     <% end %>
     </tbody>

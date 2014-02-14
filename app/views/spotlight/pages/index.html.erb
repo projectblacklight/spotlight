@@ -1,16 +1,16 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
-  <% @page_title = t :"spotlight.curation.#{page_collection_name}.header" %>
+  <% @page_title = t :".#{page_collection_name}.title" %>
   <%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, page_collection_name]), style: :horizontal, right: "col-sm-10" do |f| %>
     <h1><%= t :'spotlight.curation.header' %></h1>
     <div class="col-xs-2 pull-right">
-      <%= button_tag(t(:"spotlight.curation.#{page_collection_name}.update"), class: "btn btn-default", disabled: @pages.empty?) %>
+      <%= button_tag action_label(page_collection_name, :update_all), class: "btn btn-default", disabled: @pages.empty? %>
     </div>
-    <h2 class="text-muted clearfix"><%= t :"spotlight.curation.#{page_collection_name}.header" %></h2>
+    <h2 class="text-muted clearfix"><%= t :".#{page_collection_name}.header" %></h2>
 
     <%= render partial: 'header' %>
-    <h3>Defined Pages</h3>
-    <p>Select the pages you want to be shown. Drag and drop pages to change the order in which they are displayed in the sidebar.</p>
+    <h3><%= t :'.pages_header' %></h3>
+    <p><%= t :'.instructions' %></p>
     <div class="panel-group dd <%= page_model %>_admin" id="nested-pages">
       <ol class="dd-list">
         <%= f.fields_for page_collection_name do |p| %>
@@ -24,7 +24,7 @@
   <div>
     <%= form_for "spotlight/#{page_model}".classify.constantize.new, url: spotlight.polymorphic_path([@exhibit, page_collection_name]) do |f|%>
       <%= f.hidden_field(:title) %>
-      <%= f.submit t(:'helpers.submit.new', model: "Page"), class: "btn btn-primary" %>
+      <%= f.submit nil, class: "btn btn-primary" %>
     <%- end -%>
   </div>
 </div>

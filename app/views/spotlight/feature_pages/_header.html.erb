@@ -1,18 +1,14 @@
 <div class="home_page">
-<h3><%= t('spotlight.curation.home_pages.header') %></h3>
-<% if @exhibit.home_page %>
+<h3><%= t('spotlight.pages.index.feature_pages.home_pages_header') %></h3>
   <div class="panel panel-default">
     <div class="panel-heading page">
       <div class="main">
-        <h3 class="panel-title"><%= t('spotlight.curation.home_pages.page_title') %></h3>
+        <h3 class="panel-title"><%= @exhibit.home_page.title %></h3>
         <div class="page-links">
-          <%= link_to t('helpers.submit.view'), [spotlight, @exhibit.home_page], class: 'btn btn-text' %> &middot;
-          <%= link_to t('helpers.submit.edit'), [spotlight, :edit, @exhibit.home_page], class: 'btn btn-text' %>
+          <%= view_link @exhibit.home_page, class: 'btn btn-text' %> &middot;
+          <%= edit_link @exhibit.home_page, class: 'btn btn-text' %>
         </div>
       </div>
     </div>
   </div>
-<% else %>
-  <%= link_to t('spotlight.curation.home_pages.add'), new_exhibit_home_page_path(@exhibit), class: 'btn btn-primary' %>
-<% end %>
 </div>

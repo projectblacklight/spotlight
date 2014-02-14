@@ -1,18 +1,17 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
-  <% @page_title = t(:'spotlight.curation.browse.title') %>
-
+  <% @page_title = t('.title') %>
   <%= bootstrap_form_for @exhibit, url: update_all_exhibit_searches_path(@exhibit), style: :horizontal, right: "col-sm-10" do |f| %>
 
     <h1><%= t :'spotlight.curation.header' %></h1>
-    <h2 class="text-muted"><%= t :'spotlight.curation.browse.header' %></h2>
+    <h2 class="text-muted"><%= t :'.header' %></h2>
 
     <div class="pull-right">
-      <%= submit_tag t(:'spotlight.curation.browse.update'), class: "btn btn-default", disabled: @searches.empty? %>
+      <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-default", disabled: @searches.empty? %>
     </div>
 
-    <h4 class="clearfix">Browse Categories <span class="label label-default"><%=@searches.count%></span></h4>
-    <p class="instuctions">Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page.</p>
+    <h4 class="clearfix"><%= t(:'.categories_header') %> <span class="label label-default"><%=@searches.count%></span></h4>
+    <p class="instuctions"><%= t(:'.instructions') %></p>
     <div class="panel-group dd search_admin" id="nested-pages">
       <ol class="dd-list">
       <%= f.fields_for :searches do |p| %>

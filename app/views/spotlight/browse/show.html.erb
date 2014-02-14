@@ -2,7 +2,7 @@
     <%= image_tag @search.featured_image, class: 'col-md-3' %>
     <div class="media-body col-md-9">
       <h1 class="media-heading"><%= @search.title %></h1>
-      <small class="item-count"><%= t 'spotlight.browse.item_count', count: @search.count %></small>
+      <small class="item-count"><%= t :'spotlight.browse.search.item_count', count: @search.count %></small>
       <p><%= @search.long_description %></p>
     </div>
   </div>

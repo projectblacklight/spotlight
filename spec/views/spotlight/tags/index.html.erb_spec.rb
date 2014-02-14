@@ -9,6 +9,7 @@ describe "spotlight/tags/index.html.erb" do
     assign(:exhibit, exhibit)
     view.stub(exhibit_tag_path: "/tags")
     view.stub(:current_exhibit).and_return(exhibit)
+    view.send(:extend, Spotlight::CrudLinkHelpers)
   end
   describe "Tags" do
     it "should be displayed" do

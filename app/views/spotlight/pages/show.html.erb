@@ -1,7 +1,7 @@
 <%= render 'sidebar' if @page.display_sidebar? %>
 
 <div class="<%= 'col-md-9' if @page.display_sidebar? %>">
-<%= link_to t('helpers.submit.edit'), spotlight.polymorphic_path([:edit, @page]), :class => 'btn btn-primary pull-right' if can? :edit, @page %>
+<%= edit_link @page, class: 'btn btn-primary pull-right' if can? :edit, @page %>
   <h1>
     <%= @page.title %>
   </h1>

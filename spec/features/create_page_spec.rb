@@ -29,7 +29,7 @@ describe "Creating a page", :type => :feature do
     end
 
     click_link "About pages"
-    click_button "Add new Page"
+    click_button "Add new page"
     expect(page).to have_content "Page was successfully created."
     expect(page).to have_css("li.dd-item")
   end

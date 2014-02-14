@@ -1,16 +1,17 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
+  <% @page_title = t('.title') %>
   <%= bootstrap_form_for @search, style: :horizontal, right: "col-sm-5", html: {id: 'edit-search'} do |f| %>
   <h1><%= t :'spotlight.curation.header' %></h1>
-  <h2 class="text-muted"><%= t :'spotlight.curation.browse.edit.header' %></h2>
+  <h2 class="text-muted"><%= t :'.header' %></h2>
   <div class="row">
     <%= f.text_field :title %>
     <%= f.select :featured_image, f.object.images, {}, prepend: "<img id=\"preview\"></img>".html_safe %>
     <%= f.text_area :short_description %>
     <%= f.text_area :long_description %>
     <div class="col-md-4 col-md-offset-4">
-      <%= link_to t(:'spotlight.curation.browse.edit.cancel'), exhibit_searches_path(@exhibit), class: 'btn btn-default' %>
-      <%= f.submit t :'spotlight.curation.browse.update' %>
+      <%= cancel_link @search,exhibit_searches_path(@exhibit), class: 'btn btn-default' %>
+      <%= f.submit nil %>
     </div>
   </div>
 <% end %>

@@ -1,5 +1,6 @@
 module Spotlight
   module ApplicationHelper
+    include CrudLinkHelpers
 
     # Can search for named routes directly in the main app, omitting
     # the "main_app." prefix
@@ -38,6 +39,7 @@ module Spotlight
     end
 
     private
+
 
     def main_app_url_helper?(method)
         (method.to_s.end_with?('_path') or method.to_s.end_with?('_url')) and
