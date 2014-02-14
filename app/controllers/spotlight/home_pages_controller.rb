@@ -8,12 +8,6 @@ module Spotlight
     end
 
     def show
-      @page = @home_page = if params[:id]
-        Spotlight::HomePage.find_by(id: params[:id])
-      else
-        Spotlight::Exhibit.default.home_page
-      end
-
       (@response, @document_list) = get_search_results
 
       if @page.nil? or !@page.published?

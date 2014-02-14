@@ -18,6 +18,31 @@ describe Spotlight::AboutPagesController do
     let(:user) { FactoryGirl.create(:exhibit_curator) }
     before {sign_in user }
 
+    describe "GET show" do
+      let(:page) { FactoryGirl.create(:about_page, weight: 0) }
+      let(:page2) { FactoryGirl.create(:about_page, weight: 5) }
+      let(:exhibit) { page.exhibit }
+      describe "on the main about page" do
+        it "is successful" do
+          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+          expect(controller).to receive(:add_breadcrumb).with("About", page)
+          get :show, id: page
+          expect(assigns(:page)).to eq page
+          expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
+        end
+      end
+      describe "on a different about page" do
+        it "is successful" do
+          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+          expect(controller).to receive(:add_breadcrumb).with('About', page)
+          expect(controller).to receive(:add_breadcrumb).with(page2.title, page2)
+          get :show, id: page2
+          expect(assigns(:page)).to eq page2
+          expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
+        end
+      end
+    end
+
     describe "GET index" do
       let!(:page) { FactoryGirl.create(:about_page) }
       it "is successful" do

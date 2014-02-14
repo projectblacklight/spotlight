@@ -31,13 +31,15 @@ describe Spotlight::HomePagesController do
 
   describe "Rendering home page" do
     let!(:page) { FactoryGirl.create(:home_page) }
+    let(:exhibit) {page.exhibit}
     
     it "should get search results for display facets" do
+      expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
       controller.stub(get_search_results: [double, double])
       get :show, id: page.id
       expect(assigns[:response]).to_not be_blank
       expect(assigns[:document_list]).to_not be_blank
+      expect(assigns[:page]).to eq page
     end
-
   end
 end

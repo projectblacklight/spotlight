@@ -4,6 +4,9 @@ FactoryGirl.define do
     title "Page1"
     published  true
   end
+  factory :feature_subpage, parent: :feature_page do
+    association :parent_page, factory: :feature_page
+  end
   factory :about_page, class: Spotlight::AboutPage do
     exhibit Spotlight::Exhibit.default
     title "Page1"
