@@ -29,11 +29,11 @@ describe Spotlight::TagsController do
     end
 
     describe "DELETE destroy" do
-      let!(:tag) { FactoryGirl.create(:tag) }
+      let!(:tagging) { FactoryGirl.create(:tagging) }
       it "should be successful" do
         expect {
-          delete :destroy, exhibit_id: exhibit, id: tag
-        }.to change { ActsAsTaggableOn::Tag.count }.by(-1)
+          delete :destroy, exhibit_id: exhibit, id: tagging.tag
+        }.to change { ActsAsTaggableOn::Tagging.count }.by(-1)
         expect(response).to redirect_to exhibit_tags_path(exhibit)
       end
     end

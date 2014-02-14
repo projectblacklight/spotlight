@@ -21,7 +21,7 @@ module Spotlight::Ability
       config.exhibit.roles.where(id: user.role_ids).any?
     end
 
-    can [:curate], Spotlight::Exhibit do |exhibit|
+    can [:curate, :tag], Spotlight::Exhibit do |exhibit|
       # any curator or admin role
       exhibit.roles.where(id: user.role_ids).any?
     end
@@ -33,8 +33,6 @@ module Spotlight::Ability
       can [:create, :update, :destroy], [Spotlight::Search, Spotlight::Page]
       can :update_all, [Spotlight::Search, Spotlight::Page] #TODO make these specific to the owning exhibit
       can :update, ::SolrDocument
-
-      can [:index, :destroy], ActsAsTaggableOn::Tag
     end
   end
 end

@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe "spotlight/tags/index.html.erb" do
   let(:exhibit) { Spotlight::Exhibit.default }
-  let(:tag1) { FactoryGirl.create(:tag, name: "TAG1") }
-  let(:tag2) { FactoryGirl.create(:tag, name: "TAG2") }
+  let!(:tag1) { FactoryGirl.create(:tagging) }
+  let!(:tag2) { FactoryGirl.create(:tagging) }
   before do
-    assign(:tags, [tag1, tag2])
     assign(:exhibit, exhibit)
+    assign(:tags, exhibit.owned_tags)
     view.stub(exhibit_tag_path: "/tags")
     view.stub(:current_exhibit).and_return(exhibit)
     view.send(:extend, Spotlight::CrudLinkHelpers)
@@ -14,7 +14,7 @@ describe "spotlight/tags/index.html.erb" do
   describe "Tags" do
     it "should be displayed" do
       render
-      [tag1.name, tag2.name].each do |name|
+      [tag1.tag.name, tag2.tag.name].each do |name|
         expect(rendered).to have_css("td", text: name)
       end
     end
