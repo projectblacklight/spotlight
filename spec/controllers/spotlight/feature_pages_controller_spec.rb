@@ -12,9 +12,8 @@ describe Spotlight::FeaturePagesController do
 
     describe "GET index" do
       let!(:page) { FactoryGirl.create(:feature_page) }
-      it "assigns all feature pages as @pages and @feature_pages" do
+      it "assigns all feature pages as @pages" do
         get :index, exhibit_id: Spotlight::Exhibit.default
-        expect(assigns(:feature_pages)).to include page
         expect(assigns(:pages)).to include page
         expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
       end
@@ -22,29 +21,25 @@ describe Spotlight::FeaturePagesController do
 
     describe "GET show" do
       let(:page) { FactoryGirl.create(:feature_page) }
-      it "assigns the requested page as @page and @feature_page" do
+      it "assigns the requested page as @page" do
         get :show, exhibit_id: page.exhibit.id, id: page
-        assigns(:feature_page).should eq(page)
         assigns(:page).should eq(page)
       end
     end
 
     describe "GET new" do
-      it "assigns a new page as @page and @feature_page" do
+      it "assigns a new page as @page" do
         get :new, exhibit_id: Spotlight::Exhibit.default
-        [:page, :feature_page].each do |type|
-          expect(assigns(type)).to be_a_new(Spotlight::FeaturePage)
-          expect(assigns(type).exhibit).to eq Spotlight::Exhibit.default
-        end
+        expect(assigns(:page)).to be_a_new(Spotlight::FeaturePage)
+        expect(assigns(:page).exhibit).to eq Spotlight::Exhibit.default
       end
     end
 
     describe "GET edit" do
       let(:page) { FactoryGirl.create(:feature_page) }
-      it "assigns the requested page as @page and @feature_page" do
+      it "assigns the requested page as @page" do
         get :edit, exhibit_id: page.exhibit.id,id: page.id
         expect(assigns(:page)).to eq page
-        expect(assigns(:feature_page)).to eq page
       end
     end
 
@@ -56,12 +51,10 @@ describe Spotlight::FeaturePagesController do
           }.to change(Spotlight::FeaturePage, :count).by(1)
         end
 
-        it "assigns a newly created page as @page and @feature_page" do
+        it "assigns a newly created page as @page" do
           post :create, feature_page: {title: "MyString"}, exhibit_id: Spotlight::Exhibit.default
-          [:page, :feature_page].each do |type|
-            assigns(type).should be_a(Spotlight::FeaturePage)
-            assigns(type).should be_persisted
-          end
+          assigns(:page).should be_a(Spotlight::FeaturePage)
+          assigns(:page).should be_persisted
         end
         it "redirects to the feature page index" do
           post :create, feature_page: {title: "MyString"}, exhibit_id: Spotlight::Exhibit.default
@@ -70,12 +63,11 @@ describe Spotlight::FeaturePagesController do
       end
 
       describe "with invalid params" do
-        it "assigns a newly created but unsaved page as @page and @feature_page" do
+        it "assigns a newly created but unsaved page as @page" do
           # Trigger the behavior that occurs when invalid params are submitted
           Spotlight::FeaturePage.any_instance.stub(:save).and_return(false)
           post :create, feature_page: { "title" => "invalid value" }, exhibit_id: Spotlight::Exhibit.default
           assigns(:page).should be_a_new(Spotlight::FeaturePage)
-          assigns(:feature_page).should be_a_new(Spotlight::FeaturePage)
         end
 
         it "re-renders the 'new' template" do
@@ -99,10 +91,9 @@ describe Spotlight::FeaturePagesController do
           put :update, id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes
         end
 
-        it "assigns the requested page as @page and @feature_page" do
+        it "assigns the requested page as @page" do
           put :update, id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes
           assigns(:page).should eq(page)
-          assigns(:feature_page).should eq(page)
         end
 
         it "redirects to the feature page index action" do
@@ -112,12 +103,11 @@ describe Spotlight::FeaturePagesController do
       end
 
       describe "with invalid params" do
-        it "assigns the page as @page and @feature_page" do
+        it "assigns the page as @page" do
           # Trigger the behavior that occurs when invalid params are submitted
           Spotlight::FeaturePage.any_instance.stub(:save).and_return(false)
           put :update, id: page, exhibit_id: page.exhibit.id, feature_page: { "title" => "invalid value" }
           assigns(:page).should eq(page)
-          assigns(:feature_page).should eq(page)
         end
 
         it "re-renders the 'edit' template" do
