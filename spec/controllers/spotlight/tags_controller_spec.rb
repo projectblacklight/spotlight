@@ -21,14 +21,19 @@ describe Spotlight::TagsController do
         expect(assigns[:tags]).to eq []
         expect(assigns[:exhibit]).to eq exhibit
       end
+
+      it "should have a json serialization" do
+        get :index, exhibit_id: exhibit, format: 'json'
+        expect(response).to be_successful
+      end
     end
 
     describe "DELETE destroy" do
-      let!(:tag) { FactoryGirl.create(:tag) }
+      let!(:tagging) { FactoryGirl.create(:tagging) }
       it "should be successful" do
         expect {
-          delete :destroy, exhibit_id: exhibit, id: tag
-        }.to change { ActsAsTaggableOn::Tag.count }.by(-1)
+          delete :destroy, exhibit_id: exhibit, id: tagging.tag
+        }.to change { ActsAsTaggableOn::Tagging.count }.by(-1)
         expect(response).to redirect_to exhibit_tags_path(exhibit)
       end
     end

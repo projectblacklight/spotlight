@@ -24,6 +24,8 @@ module Spotlight
 
       def reindex(id)
         find(id).reindex
+      rescue Blacklight::Exceptions::InvalidSolrID
+        # no-op
       end
     end
 

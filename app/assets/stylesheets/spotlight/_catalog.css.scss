@@ -36,6 +36,16 @@ form.edit_solr_document {
   }
 }
 
+.bootstrap-tagsinput {
+  .twitter-typeahead {
+    width: auto;
+  }
+
+  .tt-input {
+    vertical-align: baseline !important;
+  }
+}
+
 .blacklight-catalog-edit, .blacklight-catalog-show {
   .thumbnail {
     @extend .col-md-6;
