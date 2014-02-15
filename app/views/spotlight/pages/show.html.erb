@@ -1,11 +1,12 @@
 <%= render 'sidebar' if @page.display_sidebar? %>
 
 <div class="<%= 'col-md-9' if @page.display_sidebar? %>">
-<%= edit_link @page, class: 'btn btn-primary pull-right' if can? :edit, @page %>
-  <h1>
-    <%= @page.title %>
-  </h1>
-
+  <%= edit_link @page, class: 'btn btn-primary pull-right' if can? :edit, @page %>
+  <% if @page.title %>
+    <h1 class="page-title">
+      <%= @page.title %>
+    </h1>
+  <% end %>
   <div>
     <%= render_sir_trevor(@page.content) unless @page.content.blank? %>
   </div>
