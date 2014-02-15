@@ -30,7 +30,8 @@
                     <%= field.hidden_field :weight, 'data-property' => 'weight' %>
                     <div class="dd-handle dd3-handle"><%= t :drag %></div>
 
-                  <%= config.label %>
+                  <a href="#edit-in-place" class="field-label"><%= (@exhibit.blacklight_configuration.index_fields[key] || {}).fetch(:label, config.label) %></a>
+                  <%= field.hidden_field :label, value: @exhibit.blacklight_configuration.index_fields.fetch(key, {})[:label], class: 'form-control input-sm' %>
                   </td>
                   <td><%= field.check_box :show, checked: (@exhibit.blacklight_configuration.index_fields[key] || {})[:show], label: "" %></td>
                   <% @exhibit.blacklight_configuration.default_blacklight_config.view.keys.each do |type| %>
