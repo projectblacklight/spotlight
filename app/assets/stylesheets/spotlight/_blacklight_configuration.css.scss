@@ -2,5 +2,15 @@
   .dd-item td:first-child {
     padding-left: 40px;
     position: relative;
+    
+    a {
+      cursor: text;
+      color: inherit;
+      text-decoration: none;
+    }
+    &:hover {
+      background: #F7F7D0;
+      cursor: text;
+    }
   }
 }

@@ -95,7 +95,7 @@ en:
           one: "%{count} unique value"
           other: "%{count} unique values"
       edit_metadata_fields:
-        fields:
+        field:
           label: "Field name"
         header: "Metadata"
         order_header: "Display and Order Metadata Fields"
@@ -105,7 +105,7 @@ en:
             "You can add metadata fields to supplement the metadata fields that are part of the repository item record."
         view:
           show: "Item Details"
-        instructions: Select metadata fields to display on each type of page. Drag and drop fields to specify the order they are displayed on the Item Details page.
+        instructions: Select metadata fields to display on each type of page. Click a field name to edit its display label. Drag and drop fields to specify the order they are displayed on the Item Details page.
     catalog:
       fields:
         title: "Title"
