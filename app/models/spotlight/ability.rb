@@ -28,7 +28,7 @@ module Spotlight::Ability
 
     can [:read, :index], [Spotlight::Exhibit, Spotlight::Page, Spotlight::Search]
 
-      # any curator or admin role
+    # any curator or admin role
     if Spotlight::Exhibit.default.roles.where(id: user.role_ids).any?
       can [:create, :update, :destroy], [Spotlight::Search, Spotlight::Page]
       can :update_all, [Spotlight::Search, Spotlight::Page] #TODO make these specific to the owning exhibit

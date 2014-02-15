@@ -11,9 +11,13 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   copy_blacklight_config_from ::CatalogController
 
+  def index
+    super
+    add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), request.path
+  end
+
   def show
     super
-    add_breadcrumb t(:'spotlight.catalog.breadcrumb'), @document
     add_breadcrumb Array(@document[blacklight_config.view_config(:show).title_field]).join(', '), @document
   end
 

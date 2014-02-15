@@ -25,9 +25,18 @@ describe Spotlight::CatalogController do
       let (:document) { SolrDocument.find('dq287tq6352') }
       it "should show the item" do
         expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
-        expect(controller).to receive(:add_breadcrumb).with("Item Detail", document)
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", document)
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        expect(response).to be_successful
+      end
+    end
+
+    describe "GET index" do
+      let (:exhibit) {Spotlight::Exhibit.default}
+      it "should show the item" do
+        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Search Results", exhibit_catalog_index_path(exhibit))
+        get :index, exhibit_id: exhibit, q: 'map'
         expect(response).to be_successful
       end
     end
