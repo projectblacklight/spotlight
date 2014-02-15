@@ -1,7 +1,6 @@
 class Spotlight::CatalogController < Spotlight::ApplicationController
   include Blacklight::Catalog
   include Spotlight::Catalog
-  include BlacklightHelper
   load_resource :exhibit, class: Spotlight::Exhibit
   before_filter :authenticate_user!, only: [:admin, :edit]
   before_filter :check_authorization, only: [:admin, :edit]
@@ -13,12 +12,13 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def index
     super
-    add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), request.path
+
+    add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), request.fullpath if has_search_parameters?
   end
 
   def show
     super
-    add_breadcrumb Array(@document[blacklight_config.view_config(:show).title_field]).join(', '), @document
+    add_breadcrumb Array(@document[blacklight_config.view_config(:show).title_field]).join(', '), exhibit_catalog_path(@exhibit, @document)
   end
 
   def admin
@@ -54,8 +54,17 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   protected
 
+  # TODO move this out of app/helpers/blacklight/catalog_helper_behavior.rb and into blacklight/catalog.rb
+  def has_search_parameters?
+    !params[:q].blank? or !params[:f].blank? or !params[:search_field].blank?
+  end
+
   def attach_breadcrumbs
-    add_breadcrumb @exhibit.title, @exhibit
+    # The "q: ''" is necessary so that the breadcrumb builder recognizes that a path like this:
+    # /exhibits/1?f%5Bgenre_sim%5D%5B%5D=map&q= is not the same as /exhibits/1
+    # Otherwise the exhibit breadcrumb won't be a link.
+    # see http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-current_page-3F
+    add_breadcrumb @exhibit.title, exhibit_path(@exhibit, q: '')
   end
 
   def _prefixes

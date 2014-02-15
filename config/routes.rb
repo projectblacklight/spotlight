@@ -2,6 +2,7 @@ Spotlight::Engine.routes.draw do
   resources :attachments
   resource :contact_form, only: [:new, :create]
 
+  get 'exhibits/:exhibit_id' => 'catalog#index'
   resources :exhibits, only: [:edit, :update] do
     resource :blacklight_configuration, only: [:update]
 
