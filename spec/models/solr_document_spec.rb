@@ -38,5 +38,26 @@ describe SolrDocument do
       subject.tags_from(Spotlight::Exhibit.default).should eq ['paris', 'normandy']
     end
   end
+
+  describe "#to_solr" do
+    before do
+      subject.stub(sidecar: double(to_solr: { id: 'abcd123', a: 1, b: 2, c: 3 }))
+    end
+
+    it "should include the doc id" do
+      expect(subject.to_solr[:id]).to eq 'abcd123' 
+    end
+
+    it "should include exhibit-specific tags" do
+      Spotlight::Exhibit.default.tag(subject, with: 'paris', on: :tags)
+
+      expect(subject.to_solr).to include :exhibit_1_tags_sim
+      expect(subject.to_solr[:exhibit_1_tags_sim]).to include 'paris'
+    end
+
+    it "should include sidecar fields" do
+      expect(subject.to_solr).to include(a: 1, b: 2, c:3)
+    end
+  end
 end
 

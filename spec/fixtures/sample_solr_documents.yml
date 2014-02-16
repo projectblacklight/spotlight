@@ -62,14 +62,14 @@
   - L'AMERIQUE
   sort_title_tesim:
   - L'AMERIQUE
-  sort_title_si: L'AMERIQUE
-  personal_name_sim:
+  sort_title_ssi: L'AMERIQUE
+  personal_name_ssim:
   - Duval, P. (Pierre), 1619-1682
-  personal_name_teim:
+  personal_name_tesim:
   - Duval, P. (Pierre), 1619-1682
   personal_name_ssm:
   - Duval, P. (Pierre), 1619-1682
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -107,17 +107,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      indeterminable.\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      indeterminable.\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -190,14 +190,14 @@
   - AMERICA
   sort_title_tesim:
   - AMERICA
-  sort_title_si: AMERICA
-  personal_name_sim:
+  sort_title_ssi: AMERICA
+  personal_name_ssim:
   - Clüver, Philipp, 1580-1622
-  personal_name_teim:
+  personal_name_tesim:
   - Clüver, Philipp, 1580-1622
   personal_name_ssm:
   - Clüver, Philipp, 1580-1622
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -232,19 +232,19 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:150,000,000].  [S.l. : s.n.], [172\n      (W 160° --E 20°/N 90°
     --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:150,000,000].  [S.l. : s.n.], [172\n      (W 160° --E 20°/N 90°
     --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -319,14 +319,14 @@
   - AMERIQUE SEPTENTRIONALE
   sort_title_tesim:
   - AMERIQUE SEPTENTRIONALE
-  sort_title_si: AMERIQUE SEPTENTRIONALE
-  personal_name_sim:
+  sort_title_ssi: AMERIQUE SEPTENTRIONALE
+  personal_name_ssim:
   - Manesson-Mallet, Allain, 1630?-1706?
-  personal_name_teim:
+  personal_name_tesim:
   - Manesson-Mallet, Allain, 1630?-1706?
   personal_name_ssm:
   - Manesson-Mallet, Allain, 1630?-1706?
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -359,19 +359,19 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - North America--Maps
   subject_topic_tesim:
   - California as an island--Maps
   - North America--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:80,000,000]\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
   subject_cartographics_tesim:
   - "\n      [ca.1:80,000,000]\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -452,15 +452,15 @@
   sort_title_tesim:
   - AMERICA with those known parts in that unknowne worlde both people and manner
     of buildings Discribed and inlarged by I.S.Ano.1626
-  sort_title_si: AMERICA with those known parts in that unknowne worlde both people
+  sort_title_ssi: AMERICA with those known parts in that unknowne worlde both people
     and manner of buildings Discribed and inlarged by I.S.Ano.1626
-  personal_name_sim:
+  personal_name_ssim:
   - Speed, John, 1552?-1629
-  personal_name_teim:
+  personal_name_tesim:
   - Speed, John, 1552?-1629
   personal_name_ssm:
   - Speed, John, 1552?-1629
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -513,17 +513,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:46,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca. 1:46,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -601,15 +601,15 @@
   sort_title_tesim:
   - PLANISPHERE URANO-GEOGRAPHIQUE c'estadire LES SPHERES CELESTE et TERRESTRE mises
     en plan.
-  sort_title_si: PLANISPHERE URANO-GEOGRAPHIQUE c'estadire LES SPHERES CELESTE et
+  sort_title_ssi: PLANISPHERE URANO-GEOGRAPHIQUE c'estadire LES SPHERES CELESTE et
     TERRESTRE mises en plan.
-  personal_name_sim:
+  personal_name_ssim:
   - Moulart-Sanson, Pierre, d. 1730.
-  personal_name_teim:
+  personal_name_tesim:
   - Moulart-Sanson, Pierre, d. 1730.
   personal_name_ssm:
   - Moulart-Sanson, Pierre, d. 1730.
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -647,17 +647,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:70,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:70,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -725,16 +725,16 @@
   - |-
     Introduction a la Geographie Avec une Description Historique Sur Touttes les parties de la Terre
     Title page
-  sort_title_si: |-
+  sort_title_ssi: |-
     Introduction a la Geographie Avec une Description Historique Sur Touttes les parties de la Terre
     Title page
-  personal_name_sim:
+  personal_name_ssim:
   - Fer, Nicolas de, 1646-1720.
-  personal_name_teim:
+  personal_name_tesim:
   - Fer, Nicolas de, 1646-1720.
   personal_name_ssm:
   - Fer, Nicolas de, 1646-1720.
-  genre_sim:
+  genre_ssim:
   - Early Maps
   - Digital Maps
   genre_tesim:
@@ -759,11 +759,11 @@
     are governed by their own Terms of Use, as well as contractual accessrestrictions.
     The Terms of Use on these external sites always govern thedata available there.
     Please consult with library staff if you havequestions about data access and availability.
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      (W 180° --E 180°/N 85° --S 85°)\n    "
   subject_cartographics_tesim:
   - "\n      (W 180° --E 180°/N 85° --S 85°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - image
   content_metadata_type_ssm:
   - image
@@ -835,14 +835,14 @@
   - L'AMERIQVE
   sort_title_tesim:
   - L'AMERIQVE
-  sort_title_si: L'AMERIQVE
-  personal_name_sim:
+  sort_title_ssi: L'AMERIQVE
+  personal_name_ssim:
   - Duval, P. (Pierre), 1619-1682
-  personal_name_teim:
+  personal_name_tesim:
   - Duval, P. (Pierre), 1619-1682
   personal_name_ssm:
   - Duval, P. (Pierre), 1619-1682
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -876,17 +876,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1: 150,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca. 1: 150,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -979,20 +979,20 @@
   - "[World map]"
   sort_title_tesim:
   - "[World map]"
-  sort_title_si: "[World map]"
-  personal_name_sim:
+  sort_title_ssi: "[World map]"
+  personal_name_ssim:
   - Weigel, Johann Christoph
-  personal_name_teim:
+  personal_name_tesim:
   - Weigel, Johann Christoph
   personal_name_ssm:
   - Weigel, Johann Christoph
-  language_sim:
+  language_ssim:
   - Latin
-  language_teim:
+  language_tesim:
   - Latin
   language_ssm:
   - Latin
-  genre_sim:
+  genre_ssim:
   - map
   - cartographic image
   - Early maps.
@@ -1019,21 +1019,21 @@
   note_Local note_tesim:
   - McLaughlin map number 1245, 1246, 1247.
   - Map of America is McLaughlin map number 217.
-  subject_topic_sim:
+  subject_topic_ssim:
   - World maps
   subject_topic_tesim:
   - World maps
-  subject_genre_sim:
+  subject_genre_ssim:
   - Early works to 1800
   subject_genre_tesim:
   - Early works to 1800
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      Scale approximately 1:170,000,000.\n      (W 180°--E 180°/N 90°--S 90°).\n
     \   "
   subject_cartographics_tesim:
   - "\n      Scale approximately 1:170,000,000.\n      (W 180°--E 180°/N 90°--S 90°).\n
     \   "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - image
   content_metadata_type_ssm:
   - image
@@ -1117,17 +1117,17 @@
     les vns des autres LES ESTATS suivant qu'ils appartiennent presentemet aux FRANÇOIS,
     CASTILLANS, ANGLOIS, SUEDOIS, DANOIS, HOLLANDOIS. Tirée des Relations de toutes
     ces Nations Par le Sr. Sanson, Geographe Ordinaire du Roy
-  sort_title_si: AMERIQUE SEPTENTRIONALE divisée en ses principales parties, ou sont
+  sort_title_ssi: AMERIQUE SEPTENTRIONALE divisée en ses principales parties, ou sont
     distingués les vns des autres LES ESTATS suivant qu'ils appartiennent presentemet
     aux FRANÇOIS, CASTILLANS, ANGLOIS, SUEDOIS, DANOIS, HOLLANDOIS. Tirée des Relations
     de toutes ces Nations Par le Sr. Sanson, Geographe Ordinaire du Roy
-  personal_name_sim:
+  personal_name_ssim:
   - Jaillot, Alexis Hubert, 1632?-1712
-  personal_name_teim:
+  personal_name_tesim:
   - Jaillot, Alexis Hubert, 1632?-1712
   personal_name_ssm:
   - Jaillot, Alexis Hubert, 1632?-1712
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -1175,19 +1175,19 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - North America--Maps
   subject_topic_tesim:
   - California as an island--Maps
   - North America--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:16,000,000].\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
   subject_cartographics_tesim:
   - "\n      [ca. 1:16,000,000].\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -1263,14 +1263,14 @@
   - AMERICÆ nova discriptio.
   sort_title_tesim:
   - AMERICÆ nova discriptio.
-  sort_title_si: AMERICÆ nova discriptio.
-  personal_name_sim:
+  sort_title_ssi: AMERICÆ nova discriptio.
+  personal_name_ssim:
   - Allard, Carel, 1648-ca. 1709
-  personal_name_teim:
+  personal_name_tesim:
   - Allard, Carel, 1648-ca. 1709
   personal_name_ssm:
   - Allard, Carel, 1648-ca. 1709
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -1307,17 +1307,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:45,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:45,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -1387,9 +1387,9 @@
   - KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721 en 1722
   sort_title_tesim:
   - KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721 en 1722
-  sort_title_si: KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721
+  sort_title_ssi: KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721
     en 1722
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -1426,19 +1426,19 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:90,000,000].  [S.l.: s.n., 172\n      (W 160° --E 20°/N 90° --S
     90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:90,000,000].  [S.l.: s.n., 172\n      (W 160° --E 20°/N 90° --S
     90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -1510,14 +1510,14 @@
   - A MAP of AMERICA from the latest and best Observations
   sort_title_tesim:
   - A MAP of AMERICA from the latest and best Observations
-  sort_title_si: A MAP of AMERICA from the latest and best Observations
-  personal_name_sim:
+  sort_title_ssi: A MAP of AMERICA from the latest and best Observations
+  personal_name_ssim:
   - Seale, Richard William
-  personal_name_teim:
+  personal_name_tesim:
   - Seale, Richard William
   personal_name_ssm:
   - Seale, Richard William
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -1549,17 +1549,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps.
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps.
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:45,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca. 1:45,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -1634,15 +1634,15 @@
   sort_title_tesim:
   - 'PLANISPHÆRIVM BRAHEVM, Sive Structura MVNDI TOTIVS, EX HYPOTHESI TYCHONIS BRAHEI
     IN PLANO DELINEATA. [Amstelodami : Apud Joannem Janssonium, 1660].'
-  sort_title_si: 'PLANISPHÆRIVM BRAHEVM, Sive Structura MVNDI TOTIVS, EX HYPOTHESI
+  sort_title_ssi: 'PLANISPHÆRIVM BRAHEVM, Sive Structura MVNDI TOTIVS, EX HYPOTHESI
     TYCHONIS BRAHEI IN PLANO DELINEATA. [Amstelodami : Apud Joannem Janssonium, 1660].'
-  personal_name_sim:
+  personal_name_ssim:
   - Cellarius, Andreas
-  personal_name_teim:
+  personal_name_tesim:
   - Cellarius, Andreas
   personal_name_ssm:
   - Cellarius, Andreas
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -1678,15 +1678,15 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - Astronomy--Charts, diagrams, etc.
   subject_topic_tesim:
   - Astronomy--Charts, diagrams, etc.
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      (W 0° --E 0°/N 90° --N 90°)\n    "
   subject_cartographics_tesim:
   - "\n      (W 0° --E 0°/N 90° --N 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -1792,20 +1792,20 @@
   - La Atlas del mundo o el mundo aguado
   sort_title_tesim:
   - Pas-caart van Zuyd-Zee, tusschen California en ilhas de Ladrones
-  sort_title_si: Pas-caart van Zuyd-Zee, tusschen California en ilhas de Ladrones
-  personal_name_sim:
+  sort_title_ssi: Pas-caart van Zuyd-Zee, tusschen California en ilhas de Ladrones
+  personal_name_ssim:
   - Doncker, Hendrik I.
-  personal_name_teim:
+  personal_name_tesim:
   - Doncker, Hendrik I.
   personal_name_ssm:
   - Doncker, Hendrik I.
-  language_sim:
+  language_ssim:
   - Dutch; Flemish
-  language_teim:
+  language_tesim:
   - Dutch; Flemish
   language_ssm:
   - Dutch; Flemish
-  genre_sim:
+  genre_ssim:
   - map
   - Nautical Charts.
   - Early maps.
@@ -1831,23 +1831,23 @@
   - Issued in his La Atlas del mundo o el mundo aguado. -- Amsterdam, [1669].
   note_Local note_tesim:
   - McLaughlin map number 508.
-  subject_geographic_sim:
+  subject_geographic_ssim:
   - Pacific Ocean
   subject_geographic_tesim:
   - Pacific Ocean
-  subject_temporal_sim:
+  subject_temporal_ssim:
   - '1669'
   subject_temporal_tesim:
   - '1669'
-  subject_genre_sim:
+  subject_genre_ssim:
   - Maps
   subject_genre_tesim:
   - Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      Scale [ca. 1:225,000]\n      (E 110°--W 70°/N 63°--S 53°).\n    "
   subject_cartographics_tesim:
   - "\n      Scale [ca. 1:225,000]\n      (E 110°--W 70°/N 63°--S 53°).\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -1945,12 +1945,12 @@
   - Orbis terrarum tabula recens emendata et in lucem edita
   sort_title_tesim:
   - Orbis terrarum tabula recens emendata et in lucem edita
-  sort_title_si: Orbis terrarum tabula recens emendata et in lucem edita
-  personal_name_sim:
+  sort_title_ssi: Orbis terrarum tabula recens emendata et in lucem edita
+  personal_name_ssim:
   - Stopendael, Daniel.
   - Keur, Pieter.
   - Keur, Jacob.
-  personal_name_teim:
+  personal_name_tesim:
   - Stopendael, Daniel.
   - Keur, Pieter.
   - Keur, Jacob.
@@ -1958,13 +1958,13 @@
   - Stopendael, Daniel.
   - Keur, Pieter.
   - Keur, Jacob.
-  language_sim:
+  language_ssim:
   - Latin
-  language_teim:
+  language_tesim:
   - Latin
   language_ssm:
   - Latin
-  genre_sim:
+  genre_ssim:
   - map
   - Early maps.
   - Digital maps.
@@ -1990,19 +1990,19 @@
   - Includes text on verso in Dutch.
   note_Local note_tesim:
   - McLaughlin map number 1234.
-  subject_topic_sim:
+  subject_topic_ssim:
   - World maps
   subject_topic_tesim:
   - World maps
-  subject_genre_sim:
+  subject_genre_ssim:
   - Early works to 1800
   subject_genre_tesim:
   - Early works to 1800
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      Scale [ca. 1:100,000,000]\n      (W 180°--E 180°/N 90°--S 90°).\n    "
   subject_cartographics_tesim:
   - "\n      Scale [ca. 1:100,000,000]\n      (W 180°--E 180°/N 90°--S 90°).\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - image
   content_metadata_type_ssm:
   - image
@@ -2076,14 +2076,14 @@
   - SITVS TERRÆ CIRCVLIS COELESTIBVS CIRCVNDATÆ.
   sort_title_tesim:
   - SITVS TERRÆ CIRCVLIS COELESTIBVS CIRCVNDATÆ.
-  sort_title_si: SITVS TERRÆ CIRCVLIS COELESTIBVS CIRCVNDATÆ.
-  personal_name_sim:
+  sort_title_ssi: SITVS TERRÆ CIRCVLIS COELESTIBVS CIRCVNDATÆ.
+  personal_name_ssim:
   - Cellarius, Andreas
-  personal_name_teim:
+  personal_name_tesim:
   - Cellarius, Andreas
   personal_name_ssm:
   - Cellarius, Andreas
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -2123,17 +2123,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - Astronomy--Charts, Diagrams, etc.
   - California as an island--Maps
   subject_topic_tesim:
   - Astronomy--Charts, Diagrams, etc.
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      (W 21° --E 159°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      (W 21° --E 159°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -2212,14 +2212,14 @@
   - TYPUS SELENOGRAPHICUS LUNÆ PHASES ET ASPECTUS VARIOS ADUMBRANS.
   sort_title_tesim:
   - TYPUS SELENOGRAPHICUS LUNÆ PHASES ET ASPECTUS VARIOS ADUMBRANS.
-  sort_title_si: TYPUS SELENOGRAPHICUS LUNÆ PHASES ET ASPECTUS VARIOS ADUMBRANS.
-  personal_name_sim:
+  sort_title_ssi: TYPUS SELENOGRAPHICUS LUNÆ PHASES ET ASPECTUS VARIOS ADUMBRANS.
+  personal_name_ssim:
   - Cellarius, Andreas
-  personal_name_teim:
+  personal_name_tesim:
   - Cellarius, Andreas
   personal_name_ssm:
   - Cellarius, Andreas
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -2259,17 +2259,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - Astronomy--Charts, diagrams, etc.
   - California as an island--Maps
   subject_topic_tesim:
   - Astronomy--Charts, diagrams, etc.
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      (W 0° --E 0°/N 90° --N 90°)\n    "
   subject_cartographics_tesim:
   - "\n      (W 0° --E 0°/N 90° --N 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -2365,21 +2365,21 @@
   sort_title_tesim:
   - Planisphaerium terrestre cum utroque coelesti hemisphaerio ... = Vlakke ared-kloot
     met het beide hemelsch half-rond
-  sort_title_si: Planisphaerium terrestre cum utroque coelesti hemisphaerio ... =
+  sort_title_ssi: Planisphaerium terrestre cum utroque coelesti hemisphaerio ... =
     Vlakke ared-kloot met het beide hemelsch half-rond
-  personal_name_sim:
+  personal_name_ssim:
   - Zuerner, Adam Friedrich
-  personal_name_teim:
+  personal_name_tesim:
   - Zuerner, Adam Friedrich
   personal_name_ssm:
   - Zuerner, Adam Friedrich
-  language_sim:
+  language_ssim:
   - Latin
-  language_teim:
+  language_tesim:
   - Latin
   language_ssm:
   - Latin
-  genre_sim:
+  genre_ssim:
   - map
   - Early maps.
   - Maps.
@@ -2400,21 +2400,21 @@
   - Issued in Pieter Schenk's Atlas Contractus.
   note_Local note_tesim:
   - McLaughlin map number 1077.
-  subject_topic_sim:
+  subject_topic_ssim:
   - World maps
   subject_topic_tesim:
   - World maps
-  subject_genre_sim:
+  subject_genre_ssim:
   - Early works to 1800
   subject_genre_tesim:
   - Early works to 1800
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      Scale [ca. 1:95,000,000 at the equator]\n      (W 180°--E 180°/N 90°--S
     90°).\n    "
   subject_cartographics_tesim:
   - "\n      Scale [ca. 1:95,000,000 at the equator]\n      (W 180°--E 180°/N 90°--S
     90°).\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -2485,14 +2485,14 @@
   - AMERICA
   sort_title_tesim:
   - AMERICA
-  sort_title_si: AMERICA
-  personal_name_sim:
+  sort_title_ssi: AMERICA
+  personal_name_ssim:
   - Probst, Johann Michael, d. 1809
-  personal_name_teim:
+  personal_name_tesim:
   - Probst, Johann Michael, d. 1809
   personal_name_ssm:
   - Probst, Johann Michael, d. 1809
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -2527,11 +2527,11 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1: 11,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca. 1: 11,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -2599,15 +2599,15 @@
   - L'AMERIQUE Suivant les dernieres observations de l'Acad. Royale des Sciences.
   sort_title_tesim:
   - L'AMERIQUE Suivant les dernieres observations de l'Acad. Royale des Sciences.
-  sort_title_si: L'AMERIQUE Suivant les dernieres observations de l'Acad. Royale des
+  sort_title_ssi: L'AMERIQUE Suivant les dernieres observations de l'Acad. Royale des
     Sciences.
-  personal_name_sim:
+  personal_name_ssim:
   - Buffier, Claude, 1661-1737
-  personal_name_teim:
+  personal_name_tesim:
   - Buffier, Claude, 1661-1737
   personal_name_ssm:
   - Buffier, Claude, 1661-1737
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -2643,11 +2643,11 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:90,000,000]\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:90,000,000]\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -2728,16 +2728,16 @@
   - AMERIQUE SEPTENTRIONALE Par N. Sanson Geographe Ord.re du Roy. Reveue et changée
     en plusieurs endroits suivant les Memoires les plus recents augmentée et corrigée
     en cette seconde edition
-  sort_title_si: AMERIQUE SEPTENTRIONALE Par N. Sanson Geographe Ord.re du Roy. Reveue
+  sort_title_ssi: AMERIQUE SEPTENTRIONALE Par N. Sanson Geographe Ord.re du Roy. Reveue
     et changée en plusieurs endroits suivant les Memoires les plus recents augmentée
     et corrigée en cette seconde edition
-  personal_name_sim:
+  personal_name_ssim:
   - Sanson, Guillaume
-  personal_name_teim:
+  personal_name_tesim:
   - Sanson, Guillaume
   personal_name_ssm:
   - Sanson, Guillaume
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -2778,19 +2778,19 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - North America--Maps
   subject_topic_tesim:
   - California as an island--Maps
   - North America--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:21,500,000]\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
   subject_cartographics_tesim:
   - "\n      [ca.1:21,500,000]\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -2867,14 +2867,14 @@
   - CONTINENT ARCTIQVE
   sort_title_tesim:
   - CONTINENT ARCTIQVE
-  sort_title_si: CONTINENT ARCTIQVE
-  personal_name_sim:
+  sort_title_ssi: CONTINENT ARCTIQVE
+  personal_name_ssim:
   - Manesson-Mallet, Allain, 1630?-1706?
-  personal_name_teim:
+  personal_name_tesim:
   - Manesson-Mallet, Allain, 1630?-1706?
   personal_name_ssm:
   - Manesson-Mallet, Allain, 1630?-1706?
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -2916,19 +2916,19 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - Northern hemisphere--Maps
   subject_topic_tesim:
   - California as an island--Maps
   - Northern hemisphere--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:130,000,000]\n      Azimuthal Equidistant Polar Projection\n      (W
     0° --E 0°/N 90° --N 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:130,000,000]\n      Azimuthal Equidistant Polar Projection\n      (W
     0° --E 0°/N 90° --N 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -3003,14 +3003,14 @@
   - Novissima et Accuratissima TOTIUS AMERICÆ DESCRIPTIO.
   sort_title_tesim:
   - Novissima et Accuratissima TOTIUS AMERICÆ DESCRIPTIO.
-  sort_title_si: Novissima et Accuratissima TOTIUS AMERICÆ DESCRIPTIO.
-  personal_name_sim:
+  sort_title_ssi: Novissima et Accuratissima TOTIUS AMERICÆ DESCRIPTIO.
+  personal_name_ssim:
   - Danckerts, Justus, 1635-1701
-  personal_name_teim:
+  personal_name_tesim:
   - Danckerts, Justus, 1635-1701
   personal_name_ssm:
   - Danckerts, Justus, 1635-1701
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -3048,17 +3048,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:38,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:38,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -3126,14 +3126,14 @@
   - "[America]"
   sort_title_tesim:
   - "[America]"
-  sort_title_si: "[America]"
-  personal_name_sim:
+  sort_title_ssi: "[America]"
+  personal_name_ssim:
   - Burnet, Thomas, 1635?-1715
-  personal_name_teim:
+  personal_name_tesim:
   - Burnet, Thomas, 1635?-1715
   personal_name_ssm:
   - Burnet, Thomas, 1635?-1715
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -3169,11 +3169,11 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      (W 180° --E 180°/N 85° --S 85°)\n    "
   subject_cartographics_tesim:
   - "\n      (W 180° --E 180°/N 85° --S 85°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -3249,15 +3249,15 @@
   - Recentissima NOVI ORBIS, Sive AMERICÆ SEPTENTRIONALIS et MERIDIONALIS TABULA
   sort_title_tesim:
   - Recentissima NOVI ORBIS, Sive AMERICÆ SEPTENTRIONALIS et MERIDIONALIS TABULA
-  sort_title_si: Recentissima NOVI ORBIS, Sive AMERICÆ SEPTENTRIONALIS et MERIDIONALIS
+  sort_title_ssi: Recentissima NOVI ORBIS, Sive AMERICÆ SEPTENTRIONALIS et MERIDIONALIS
     TABULA
-  personal_name_sim:
+  personal_name_ssim:
   - Allard, Carel, 1648-ca. 1709
-  personal_name_teim:
+  personal_name_tesim:
   - Allard, Carel, 1648-ca. 1709
   personal_name_ssm:
   - Allard, Carel, 1648-ca. 1709
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -3299,17 +3299,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:38,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca. 1:38,000,000].\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -3380,14 +3380,14 @@
   - "[Pacific Ocean]"
   sort_title_tesim:
   - "[Pacific Ocean]"
-  sort_title_si: "[Pacific Ocean]"
-  personal_name_sim:
+  sort_title_ssi: "[Pacific Ocean]"
+  personal_name_ssim:
   - Scherer, Heinrich, 1628-1704.
-  personal_name_teim:
+  personal_name_tesim:
   - Scherer, Heinrich, 1628-1704.
   personal_name_ssm:
   - Scherer, Heinrich, 1628-1704.
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -3433,15 +3433,15 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   subject_topic_tesim:
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:36,000,000]\n      (E 110° --W 70°/N 63° --S 53°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:36,000,000]\n      (E 110° --W 70°/N 63° --S 53°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -3520,14 +3520,14 @@
   - AMERICQVE SEPTENTRIONALE
   sort_title_tesim:
   - AMERICQVE SEPTENTRIONALE
-  sort_title_si: AMERICQVE SEPTENTRIONALE
-  personal_name_sim:
+  sort_title_ssi: AMERICQVE SEPTENTRIONALE
+  personal_name_ssim:
   - Sanson, Nicolas, 1600-1667
-  personal_name_teim:
+  personal_name_tesim:
   - Sanson, Nicolas, 1600-1667
   personal_name_ssm:
   - Sanson, Nicolas, 1600-1667
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -3579,19 +3579,19 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - North America--Maps
   subject_topic_tesim:
   - California as an island--Maps
   - North America--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:40,000,000]\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
   subject_cartographics_tesim:
   - "\n      [ca.1:40,000,000]\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -3695,12 +3695,12 @@
     the best hands'
   sort_title_tesim:
   - "[Maps of the world]"
-  sort_title_si: "[Maps of the world]"
-  personal_name_sim:
+  sort_title_ssi: "[Maps of the world]"
+  personal_name_ssim:
   - Seale, Richard William.
   - Hinton, John
   - Barrow, John teacher of mathematics
-  personal_name_teim:
+  personal_name_tesim:
   - Seale, Richard William.
   - Hinton, John
   - Barrow, John teacher of mathematics
@@ -3708,13 +3708,13 @@
   - Seale, Richard William.
   - Hinton, John
   - Barrow, John teacher of mathematics
-  language_sim:
+  language_ssim:
   - English
-  language_teim:
+  language_tesim:
   - English
   language_ssm:
   - English
-  genre_sim:
+  genre_ssim:
   - map
   - Maps.
   - Digital maps.
@@ -3740,19 +3740,19 @@
     the best hands.'
   note_Local note_tesim:
   - McLaughlin map number 1135.
-  subject_topic_sim:
+  subject_topic_ssim:
   - World maps
   subject_topic_tesim:
   - World maps
-  subject_genre_sim:
+  subject_genre_ssim:
   - Early works to 1800
   subject_genre_tesim:
   - Early works to 1800
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      Scales differ\n      (W 180°--E 180°/N 90°--S 90°).\n    "
   subject_cartographics_tesim:
   - "\n      Scales differ\n      (W 180°--E 180°/N 90°--S 90°).\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - image
   content_metadata_type_ssm:
   - image
@@ -3828,14 +3828,14 @@
   - MAR DEL ZUR HISPANIS MARE PACIFICUM.
   sort_title_tesim:
   - MAR DEL ZUR HISPANIS MARE PACIFICUM.
-  sort_title_si: MAR DEL ZUR HISPANIS MARE PACIFICUM.
-  personal_name_sim:
+  sort_title_ssi: MAR DEL ZUR HISPANIS MARE PACIFICUM.
+  personal_name_ssim:
   - Doncker, Hendrick, 1626-1699
-  personal_name_teim:
+  personal_name_tesim:
   - Doncker, Hendrick, 1626-1699
   personal_name_ssm:
   - Doncker, Hendrick, 1626-1699
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -3872,17 +3872,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:30,000,000]\n      (E 110° --W 70°/N 63° --S 53°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca. 1:30,000,000]\n      (E 110° --W 70°/N 63° --S 53°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -3956,14 +3956,14 @@
   - L'AMERIQVE autrement Le NOVVEAV MONDE et INDES OCCIDENTALES
   sort_title_tesim:
   - L'AMERIQVE autrement Le NOVVEAV MONDE et INDES OCCIDENTALES
-  sort_title_si: L'AMERIQVE autrement Le NOVVEAV MONDE et INDES OCCIDENTALES
-  personal_name_sim:
+  sort_title_ssi: L'AMERIQVE autrement Le NOVVEAV MONDE et INDES OCCIDENTALES
+  personal_name_ssim:
   - Duval, P. (Pierre), 1619-1682
-  personal_name_teim:
+  personal_name_tesim:
   - Duval, P. (Pierre), 1619-1682
   personal_name_ssm:
   - Duval, P. (Pierre), 1619-1682
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -4001,17 +4001,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:36,000,000]\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca. 1:36,000,000]\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -4092,14 +4092,14 @@
   - L'AMERIQVE autrement Le NOVVEAV MONDE et INDES OCCIDENTALES
   sort_title_tesim:
   - L'AMERIQVE autrement Le NOVVEAV MONDE et INDES OCCIDENTALES
-  sort_title_si: L'AMERIQVE autrement Le NOVVEAV MONDE et INDES OCCIDENTALES
-  personal_name_sim:
+  sort_title_ssi: L'AMERIQVE autrement Le NOVVEAV MONDE et INDES OCCIDENTALES
+  personal_name_ssim:
   - Duval, P. (Pierre), 1619-1682
-  personal_name_teim:
+  personal_name_tesim:
   - Duval, P. (Pierre), 1619-1682
   personal_name_ssm:
   - Duval, P. (Pierre), 1619-1682
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -4123,17 +4123,17 @@
     text in North America, and many added place names throughout.
   note_Statement of responsibility_tesim:
   - Par P. Du Val d'Abbeuille Geographe Ordinaire du Roy.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - America--Maps
   subject_topic_tesim:
   - California as an island--Maps
   - America--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:36,000,000]\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca. 1:36,000,000]\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -4226,20 +4226,20 @@
   - "[Americas]"
   sort_title_tesim:
   - "[Americas]"
-  sort_title_si: "[Americas]"
-  personal_name_sim:
+  sort_title_ssi: "[Americas]"
+  personal_name_ssim:
   - Homann, Johann Baptist
-  personal_name_teim:
+  personal_name_tesim:
   - Homann, Johann Baptist
   personal_name_ssm:
   - Homann, Johann Baptist
-  language_sim:
+  language_ssim:
   - Undetermined
-  language_teim:
+  language_tesim:
   - Undetermined
   language_ssm:
   - Undetermined
-  genre_sim:
+  genre_ssim:
   - map
   - Early maps.
   - Digital maps.
@@ -4261,19 +4261,19 @@
   - Folded. 6th map in book.
   note_Local note_tesim:
   - McLaughlin map number 1285.
-  subject_topic_sim:
+  subject_topic_ssim:
   - World maps
   subject_topic_tesim:
   - World maps
-  subject_genre_sim:
+  subject_genre_ssim:
   - Early works to 1800
   subject_genre_tesim:
   - Early works to 1800
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      Scale not given\n      (W 160°--E 10°/N 80°--S 60°).\n    "
   subject_cartographics_tesim:
   - "\n      Scale not given\n      (W 160°--E 10°/N 80°--S 60°).\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - image
   content_metadata_type_ssm:
   - image
@@ -4350,14 +4350,14 @@
   - NOVA TOTIVS AMERICÆ DESCRIPTIO.
   sort_title_tesim:
   - NOVA TOTIVS AMERICÆ DESCRIPTIO.
-  sort_title_si: NOVA TOTIVS AMERICÆ DESCRIPTIO.
-  personal_name_sim:
+  sort_title_ssi: NOVA TOTIVS AMERICÆ DESCRIPTIO.
+  personal_name_ssim:
   - Wit, Frederik de
-  personal_name_teim:
+  personal_name_tesim:
   - Wit, Frederik de
   personal_name_ssm:
   - Wit, Frederik de
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -4402,17 +4402,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:45,000,000]\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:45,000,000]\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -4490,10 +4490,10 @@
   - A New Map of North AMERICA According to the Newest Observations.
   sort_title_tesim:
   - A New Map of North AMERICA According to the Newest Observations.
-  sort_title_si: A New Map of North AMERICA According to the Newest Observations.
-  personal_name_sim:
+  sort_title_ssi: A New Map of North AMERICA According to the Newest Observations.
+  personal_name_ssim:
   - Moll, Herman, d. 1732
-  personal_name_teim:
+  personal_name_tesim:
   - Moll, Herman, d. 1732
   personal_name_ssm:
   - Moll, Herman, d. 1732
@@ -4533,13 +4533,13 @@
     Heinrich Meyer, 1744.'
   note_Statement of responsibility_tesim:
   - By H. Moll Geographer.
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:55,000,000].\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
   subject_cartographics_tesim:
   - "\n      [ca. 1:55,000,000].\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -4619,16 +4619,16 @@
   sort_title_tesim:
   - PLANISPHERE REPRESENTANT TOUTE L'ETENDUE DU MONDE. DANS L'ORDRE QU'ON A SUIVI
     DANS CE LIVRE. NB. LES CHIFFRES SE RAPORTENT AUX CARTES ET AUX PAGES DES DESCRIPTIONS.
-  sort_title_si: PLANISPHERE REPRESENTANT TOUTE L'ETENDUE DU MONDE. DANS L'ORDRE QU'ON
+  sort_title_ssi: PLANISPHERE REPRESENTANT TOUTE L'ETENDUE DU MONDE. DANS L'ORDRE QU'ON
     A SUIVI DANS CE LIVRE. NB. LES CHIFFRES SE RAPORTENT AUX CARTES ET AUX PAGES DES
     DESCRIPTIONS.
-  personal_name_sim:
+  personal_name_ssim:
   - Renard, Louis, b. ca. 1678.
-  personal_name_teim:
+  personal_name_tesim:
   - Renard, Louis, b. ca. 1678.
   personal_name_ssm:
   - Renard, Louis, b. ca. 1678.
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -4668,17 +4668,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - World--Maps
   subject_topic_tesim:
   - California as an island--Maps
   - World--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:140,000,000].\n      (W 0° --E 0°/N 90° --N 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:140,000,000].\n      (W 0° --E 0°/N 90° --N 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -4754,14 +4754,14 @@
   - "'t Noorder deel van WEST-INDIEN"
   sort_title_tesim:
   - "'t Noorder deel van WEST-INDIEN"
-  sort_title_si: "'t Noorder deel van WEST-INDIEN"
-  personal_name_sim:
+  sort_title_ssi: "'t Noorder deel van WEST-INDIEN"
+  personal_name_ssim:
   - Goos, Abraham
-  personal_name_teim:
+  personal_name_tesim:
   - Goos, Abraham
   personal_name_ssm:
   - Goos, Abraham
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -4803,19 +4803,19 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - North America--Maps
   subject_topic_tesim:
   - California as an island--Maps
   - North America--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:60,000,000]\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
   subject_cartographics_tesim:
   - "\n      [ca.1:60,000,000]\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -4892,14 +4892,14 @@
   - AMERIQUE SEPTENTRIONALE
   sort_title_tesim:
   - AMERIQUE SEPTENTRIONALE
-  sort_title_si: AMERIQUE SEPTENTRIONALE
-  personal_name_sim:
+  sort_title_ssi: AMERIQUE SEPTENTRIONALE
+  personal_name_ssim:
   - Ganière, Pierre, 1663-1721
-  personal_name_teim:
+  personal_name_tesim:
   - Ganière, Pierre, 1663-1721
   personal_name_ssm:
   - Ganière, Pierre, 1663-1721
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -4948,19 +4948,19 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps--1695
   - North America--Maps
   subject_topic_tesim:
   - California as an island--Maps--1695
   - North America--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1: 44,000,000].\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
   subject_cartographics_tesim:
   - "\n      [ca. 1: 44,000,000].\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -5039,14 +5039,14 @@
   - "[World]"
   sort_title_tesim:
   - "[World]"
-  sort_title_si: "[World]"
-  personal_name_sim:
+  sort_title_ssi: "[World]"
+  personal_name_ssim:
   - İbrahim Müteferrika, 1674?-1745
-  personal_name_teim:
+  personal_name_tesim:
   - İbrahim Müteferrika, 1674?-1745
   personal_name_ssm:
   - İbrahim Müteferrika, 1674?-1745
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -5083,17 +5083,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - World Maps
   subject_topic_tesim:
   - California as an island--Maps
   - World Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:140,000,000].\n      (W 180° --E 180°/N 85° --S 85°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca. 1:140,000,000].\n      (W 180° --E 180°/N 85° --S 85°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -5167,14 +5167,14 @@
   - NEW MEXICO
   sort_title_tesim:
   - NEW MEXICO
-  sort_title_si: NEW MEXICO
-  personal_name_sim:
+  sort_title_ssi: NEW MEXICO
+  personal_name_ssim:
   - Seller, John, fl. 1658-1698
-  personal_name_teim:
+  personal_name_tesim:
   - Seller, John, fl. 1658-1698
   personal_name_ssm:
   - Seller, John, fl. 1658-1698
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -5216,17 +5216,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - Atlases--Early works to 1800
   - California as an island--Maps
   subject_topic_tesim:
   - Atlases--Early works to 1800
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      indeterminable.\n      (W 125° --W 110°/N 47° --N 31°)\n    "
   subject_cartographics_tesim:
   - "\n      indeterminable.\n      (W 125° --W 110°/N 47° --N 31°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -5289,9 +5289,9 @@
   sort_title_tesim:
   - A Generall Chart of the | SOUTH SEA | from the River of Plate to | Dampiers Streights
     on ye Coast | of NEW GUINEA
-  sort_title_si: A Generall Chart of the | SOUTH SEA | from the River of Plate to
+  sort_title_ssi: A Generall Chart of the | SOUTH SEA | from the River of Plate to
     | Dampiers Streights on ye Coast | of NEW GUINEA
-  genre_sim:
+  genre_ssim:
   - Early Maps
   - Digital Maps
   genre_tesim:
@@ -5316,11 +5316,11 @@
     are governed by their own Terms of Use, as well as contractual accessrestrictions.
     The Terms of Use on these external sites always govern thedata available there.
     Please consult with library staff if you havequestions about data access and availability.
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 31,000,000]\n      (E 110° --W 70°/N 63° --S 53°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca. 31,000,000]\n      (E 110° --W 70°/N 63° --S 53°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - image
   content_metadata_type_ssm:
   - image
@@ -5402,14 +5402,14 @@
   - "[Armenian map of the world]"
   sort_title_tesim:
   - "[Armenian map of the world]"
-  sort_title_si: "[Armenian map of the world]"
-  language_sim:
+  sort_title_ssi: "[Armenian map of the world]"
+  language_ssim:
   - Armenian
-  language_teim:
+  language_tesim:
   - Armenian
   language_ssm:
   - Armenian
-  genre_sim:
+  genre_ssim:
   - map
   - Early maps.
   - Digital maps.
@@ -5432,19 +5432,19 @@
     complete. The Great Wall of China is shown. Includes small ships and compass roses.
   note_Local note_tesim:
   - McLaughlin map number 1165.
-  subject_topic_sim:
+  subject_topic_ssim:
   - World maps
   subject_topic_tesim:
   - World maps
-  subject_genre_sim:
+  subject_genre_ssim:
   - Early works to 1800
   subject_genre_tesim:
   - Early works to 1800
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      Scale not given\n      (W 180°--E 180°/N 90°--S 90°).\n    "
   subject_cartographics_tesim:
   - "\n      Scale not given\n      (W 180°--E 180°/N 90°--S 90°).\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - image
   content_metadata_type_ssm:
   - image
@@ -5515,14 +5515,14 @@
   - A New and Exact Map of ASIA According to the Best Observations
   sort_title_tesim:
   - A New and Exact Map of ASIA According to the Best Observations
-  sort_title_si: A New and Exact Map of ASIA According to the Best Observations
-  personal_name_sim:
+  sort_title_ssi: A New and Exact Map of ASIA According to the Best Observations
+  personal_name_ssim:
   - Overton, Henry, fl. 1751-1764.
-  personal_name_teim:
+  personal_name_tesim:
   - Overton, Henry, fl. 1751-1764.
   personal_name_ssm:
   - Overton, Henry, fl. 1751-1764.
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -5558,15 +5558,15 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - Asia--Maps
   subject_topic_tesim:
   - Asia--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:25,000,000].\n      (W 21° --E 159°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca. 1:25,000,000].\n      (W 21° --E 159°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -5639,14 +5639,14 @@
   - AMERICA SEPTENTRIONALIS
   sort_title_tesim:
   - AMERICA SEPTENTRIONALIS
-  sort_title_si: AMERICA SEPTENTRIONALIS
-  personal_name_sim:
+  sort_title_ssi: AMERICA SEPTENTRIONALIS
+  personal_name_ssim:
   - Müller, Johann Ulrich
-  personal_name_teim:
+  personal_name_tesim:
   - Müller, Johann Ulrich
   personal_name_ssm:
   - Müller, Johann Ulrich
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -5683,19 +5683,19 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - North America--Maps
   subject_topic_tesim:
   - California as an island--Maps
   - North America--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:130,000,000]\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
   subject_cartographics_tesim:
   - "\n      [ca.1:130,000,000]\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -5773,18 +5773,18 @@
   sort_title_tesim:
   - L'AMERIQUE | Suivant les dernieres | Observations de l'Acade= | mie Royale des
     Sciences Seventh of 18 States
-  sort_title_si: L'AMERIQUE | Suivant les dernieres | Observations de l'Acade= | mie
+  sort_title_ssi: L'AMERIQUE | Suivant les dernieres | Observations de l'Acade= | mie
     Royale des Sciences Seventh of 18 States
-  personal_name_sim:
+  personal_name_ssim:
   - Gravé par Denise Macquart.
   - Buffier, Claude
-  personal_name_teim:
+  personal_name_tesim:
   - Gravé par Denise Macquart.
   - Buffier, Claude
   personal_name_ssm:
   - Gravé par Denise Macquart.
   - Buffier, Claude
-  genre_sim:
+  genre_ssim:
   - map
   genre_tesim:
   - map
@@ -5897,11 +5897,11 @@
     are governed by their own Terms of Use, as well as contractual accessrestrictions.
     The Terms of Use on these external sites always govern thedata available there.
     Please consult with library staff if you havequestions about data access and availability.
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:90,000,000], [173\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:90,000,000], [173\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - image
   content_metadata_type_ssm:
   - image
@@ -5981,16 +5981,16 @@
   sort_title_tesim:
   - HEMISPHERE OCCIDENTAL DU GLOBE TERRESTRE contenant L'AMERIQUE SEPTENT.LE et L'AMERIQUE
     M.LE et P.tie des TERRES ARCTIQUES et ANTARCTIQUES Subdivisées en leurs Regions.
-  sort_title_si: HEMISPHERE OCCIDENTAL DU GLOBE TERRESTRE contenant L'AMERIQUE SEPTENT.LE
+  sort_title_ssi: HEMISPHERE OCCIDENTAL DU GLOBE TERRESTRE contenant L'AMERIQUE SEPTENT.LE
     et L'AMERIQUE M.LE et P.tie des TERRES ARCTIQUES et ANTARCTIQUES Subdivisées en
     leurs Regions.
-  personal_name_sim:
+  personal_name_ssim:
   - Moulart-Sanson, Pierre, d. 1730
-  personal_name_teim:
+  personal_name_tesim:
   - Moulart-Sanson, Pierre, d. 1730
   personal_name_ssm:
   - Moulart-Sanson, Pierre, d. 1730
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -6030,17 +6030,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - Western Hemisphere--Maps
   subject_topic_tesim:
   - California as an island--Maps
   - Western Hemisphere--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:140,000,000]\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:140,000,000]\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -6110,15 +6110,15 @@
   sort_title_tesim:
   - 'GEOGRAPHISCHE UNIVERSAL - ZEIG UND SCHLAG-UHR : WEERELD-BEELDIGH WYS EN SLAG
     WERK'
-  sort_title_si: 'GEOGRAPHISCHE UNIVERSAL - ZEIG UND SCHLAG-UHR : WEERELD-BEELDIGH
+  sort_title_ssi: 'GEOGRAPHISCHE UNIVERSAL - ZEIG UND SCHLAG-UHR : WEERELD-BEELDIGH
     WYS EN SLAG WERK'
-  personal_name_sim:
+  personal_name_ssim:
   - Homann, Johann Baptist, 1663-1724
-  personal_name_teim:
+  personal_name_tesim:
   - Homann, Johann Baptist, 1663-1724
   personal_name_ssm:
   - Homann, Johann Baptist, 1663-1724
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -6157,11 +6157,11 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      (W 0° --E 0°/N 90° --N 90°)\n    "
   subject_cartographics_tesim:
   - "\n      (W 0° --E 0°/N 90° --N 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -6242,15 +6242,15 @@
   sort_title_tesim:
   - Pascaart vertoonende de Zeecusten van Chili, Peru, Hispania, Nova, Nova Granada,
     en California.
-  sort_title_si: Pascaart vertoonende de Zeecusten van Chili, Peru, Hispania, Nova,
+  sort_title_ssi: Pascaart vertoonende de Zeecusten van Chili, Peru, Hispania, Nova,
     Nova Granada, en California.
-  personal_name_sim:
+  personal_name_ssim:
   - Doncker, Hendrick, 1626-1699
-  personal_name_teim:
+  personal_name_tesim:
   - Doncker, Hendrick, 1626-1699
   personal_name_ssm:
   - Doncker, Hendrick, 1626-1699
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -6296,19 +6296,19 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - Pacific Ocean--Maps
   subject_topic_tesim:
   - California as an island--Maps
   - Pacific Ocean--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1: 19,000,000]\n      (W 92°15ʹ --W 77°10ʹ/N 18°30ʹ --N 7°10ʹ)\n
     \   "
   subject_cartographics_tesim:
   - "\n      [ca.1: 19,000,000]\n      (W 92°15ʹ --W 77°10ʹ/N 18°30ʹ --N 7°10ʹ)\n
     \   "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -6426,22 +6426,22 @@
   - Mappe-monde pour connoitre les progŕes & les conquestes les plus remarquables
     des Provinces-Vnies, ainsy que celles des Compagnies d'Orient et d'Occident et
     les païs quelles possédent dans l'un et dans l'autre hemisphere
-  sort_title_si: Mappe-monde pour connoitre les progŕes & les conquestes les plus
+  sort_title_ssi: Mappe-monde pour connoitre les progŕes & les conquestes les plus
     remarquables des Provinces-Vnies, ainsy que celles des Compagnies d'Orient et
     d'Occident et les païs quelles possédent dans l'un et dans l'autre hemisphere
-  personal_name_sim:
+  personal_name_ssim:
   - Chatelain, Henri Abraham
-  personal_name_teim:
+  personal_name_tesim:
   - Chatelain, Henri Abraham
   personal_name_ssm:
   - Chatelain, Henri Abraham
-  language_sim:
+  language_ssim:
   - French
-  language_teim:
+  language_tesim:
   - French
   language_ssm:
   - French
-  genre_sim:
+  genre_ssim:
   - map
   - Early maps.
   - Digital maps.
@@ -6479,19 +6479,19 @@
     ou, nouvelle introduction à l''histoire, à la chronologie & à la géographie ancienne
     & moderne ..., Vol. 1 [Map 12]. -- Amsterdam, 1732-39. Final edition of Vol 1.
     dated 1739.'
-  subject_topic_sim:
+  subject_topic_ssim:
   - World maps
   subject_topic_tesim:
   - World maps
-  subject_genre_sim:
+  subject_genre_ssim:
   - Early works to 1800
   subject_genre_tesim:
   - Early works to 1800
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      Scale [ca. 1:60,000,000]\n      (W 180°--E 180°/N 90°--S 90°).\n    "
   subject_cartographics_tesim:
   - "\n      Scale [ca. 1:60,000,000]\n      (W 180°--E 180°/N 90°--S 90°).\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -6566,14 +6566,14 @@
   - AMERICÆ
   sort_title_tesim:
   - AMERICÆ
-  sort_title_si: AMERICÆ
-  personal_name_sim:
+  sort_title_ssi: AMERICÆ
+  personal_name_ssim:
   - Peeters, Jacques, 1637-1695
-  personal_name_teim:
+  personal_name_tesim:
   - Peeters, Jacques, 1637-1695
   personal_name_ssm:
   - Peeters, Jacques, 1637-1695
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -6617,17 +6617,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - America--Maps
   - California as an island--Maps
   subject_topic_tesim:
   - America--Maps
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca.1:150,000,000]\n      (W 160° --E 20°/N 90° --S 90°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca.1:150,000,000]\n      (W 160° --E 20°/N 90° --S 90°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -6719,9 +6719,9 @@
   sort_title_tesim:
   - A Map of the WORLD with the Ships DUKE & DUTCHESS Tract Round it, from 1708 to
     1711. Second of 2 States
-  sort_title_si: A Map of the WORLD with the Ships DUKE & DUTCHESS Tract Round it,
+  sort_title_ssi: A Map of the WORLD with the Ships DUKE & DUTCHESS Tract Round it,
     from 1708 to 1711. Second of 2 States
-  personal_name_sim:
+  personal_name_ssim:
   - "[Woodes Rogers]."
   - Rogers, Woodes
   - Rogers, Woodes
@@ -6733,7 +6733,7 @@
   - Gaete, Hendrik van de
   - Sewel, W.
   - Hondt, Abraham de
-  personal_name_teim:
+  personal_name_tesim:
   - "[Woodes Rogers]."
   - Rogers, Woodes
   - Rogers, Woodes
@@ -6757,7 +6757,7 @@
   - Gaete, Hendrik van de
   - Sewel, W.
   - Hondt, Abraham de
-  genre_sim:
+  genre_ssim:
   - map
   - Book Map
   genre_tesim:
@@ -6798,7 +6798,7 @@
     are governed by their own Terms of Use, as well as contractual accessrestrictions.
     The Terms of Use on these external sites always govern thedata available there.
     Please consult with library staff if you havequestions about data access and availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - World--Maps--1718
   - World--Maps--to 180
   - California as an island--Maps--1718
@@ -6806,11 +6806,11 @@
   - World--Maps--1718
   - World--Maps--to 180
   - California as an island--Maps--1718
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:140,000,000].\n      (W 180° --E 180°/N 85° --S 85°)\n    "
   subject_cartographics_tesim:
   - "\n      [ca. 1:140,000,000].\n      (W 180° --E 180°/N 85° --S 85°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - image
   content_metadata_type_ssm:
   - image
@@ -6896,14 +6896,14 @@
   - Figura prima del capitolo IV., ossia della divisione della terra
   sort_title_tesim:
   - Mappa mondo
-  sort_title_si: Mappa mondo
-  language_sim:
+  sort_title_ssi: Mappa mondo
+  language_ssim:
   - Italian
-  language_teim:
+  language_tesim:
   - Italian
   language_ssm:
   - Italian
-  genre_sim:
+  genre_ssim:
   - map
   - Early maps.
   - Digital maps.
@@ -6924,15 +6924,15 @@
   - Text in Italian.
   note_Local note_tesim:
   - McLaughlin map number 1241.
-  subject_topic_sim:
+  subject_topic_ssim:
   - World maps
   subject_topic_tesim:
   - World maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      Scale [ca. 1:200,000,000]\n      (W 180°--E 180°/N 90°--S 90°).\n    "
   subject_cartographics_tesim:
   - "\n      Scale [ca. 1:200,000,000]\n      (W 180°--E 180°/N 90°--S 90°).\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - image
   content_metadata_type_ssm:
   - image
@@ -7013,15 +7013,15 @@
   sort_title_tesim:
   - A New Map of the World Shewing the Course of Sr. Francis Drake, William Shouten
     and Capt. William Dampiers Voyages Round it.
-  sort_title_si: A New Map of the World Shewing the Course of Sr. Francis Drake, William
+  sort_title_ssi: A New Map of the World Shewing the Course of Sr. Francis Drake, William
     Shouten and Capt. William Dampiers Voyages Round it.
-  personal_name_sim:
+  personal_name_ssim:
   - Moll, Herman, -1732
-  personal_name_teim:
+  personal_name_tesim:
   - Moll, Herman, -1732
   personal_name_ssm:
   - Moll, Herman, -1732
-  genre_sim:
+  genre_ssim:
   - Digital Maps
   - Early Maps
   - map
@@ -7041,17 +7041,17 @@
     around world. Additional islands and place names added in Pacific Ocean on the
     western hemisphere as well as on the eastern hemisphere in Asia and around Australia.
     California now includes the label N. Albion.'
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - World maps
   subject_topic_tesim:
   - California as an island--Maps
   - World maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      (W 180° --E 180°/N 85° --S 85°)\n    "
   subject_cartographics_tesim:
   - "\n      (W 180° --E 180°/N 85° --S 85°)\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -7142,17 +7142,17 @@
     les vns des autres LES ESTATS suivant qu'ils appartiennent presentemet aux FRANÇOIS,
     CASTILLANS, ANGLOIS, SUEDOIS, DANOIS, HOLLANDOIS. Tirée des Relations de toutes
     ces Nations Par le Sr. Sanson, Geographe Ordinaire du Roy
-  sort_title_si: AMERIQUE SEPTENTRIONALE divisée en ses principales parties, ou sont
+  sort_title_ssi: AMERIQUE SEPTENTRIONALE divisée en ses principales parties, ou sont
     distingués les vns des autres LES ESTATS suivant qu'ils appartiennent presentemet
     aux FRANÇOIS, CASTILLANS, ANGLOIS, SUEDOIS, DANOIS, HOLLANDOIS. Tirée des Relations
     de toutes ces Nations Par le Sr. Sanson, Geographe Ordinaire du Roy
-  personal_name_sim:
+  personal_name_ssim:
   - Jaillot, Alexis Hubert, 1632?-1712
-  personal_name_teim:
+  personal_name_tesim:
   - Jaillot, Alexis Hubert, 1632?-1712
   personal_name_ssm:
   - Jaillot, Alexis Hubert, 1632?-1712
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -7225,19 +7225,19 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   - North America--Maps
   subject_topic_tesim:
   - California as an island--Maps
   - North America--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:16,000,000].\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
   subject_cartographics_tesim:
   - "\n      [ca. 1:16,000,000].\n      (W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)\n
     \   "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map
@@ -7326,21 +7326,21 @@
   sort_title_tesim:
   - Mapa mundi, con los meridianos, y paralelos, iguales como los del globo tere-
     y arreglado a las mejores, y ultimas relaciones
-  sort_title_si: Mapa mundi, con los meridianos, y paralelos, iguales como los del
+  sort_title_ssi: Mapa mundi, con los meridianos, y paralelos, iguales como los del
     globo tere- y arreglado a las mejores, y ultimas relaciones
-  personal_name_sim:
+  personal_name_ssim:
   - Minguet é Irol, Pablo
-  personal_name_teim:
+  personal_name_tesim:
   - Minguet é Irol, Pablo
   personal_name_ssm:
   - Minguet é Irol, Pablo
-  language_sim:
+  language_ssim:
   - Spanish; Castilian
-  language_teim:
+  language_tesim:
   - Spanish; Castilian
   language_ssm:
   - Spanish; Castilian
-  genre_sim:
+  genre_ssim:
   - map
   - Early maps.
   - Digital maps.
@@ -7365,19 +7365,19 @@
   - Text in Spanish.
   note_Local note_tesim:
   - McLaughlin map number 1176.
-  subject_topic_sim:
+  subject_topic_ssim:
   - World maps
   subject_topic_tesim:
   - World maps
-  subject_genre_sim:
+  subject_genre_ssim:
   - Early works to 1800
   subject_genre_tesim:
   - Early works to 1800
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      Scale [ca. 1:300,000,000]\n      (W 180°--E 180°/N 90°--S 90°).\n    "
   subject_cartographics_tesim:
   - "\n      Scale [ca. 1:300,000,000]\n      (W 180°--E 180°/N 90°--S 90°).\n    "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - image
   content_metadata_type_ssm:
   - image
@@ -7456,14 +7456,14 @@
   - a Map of the Middle Part of AMERICA
   sort_title_tesim:
   - a Map of the Middle Part of AMERICA
-  sort_title_si: a Map of the Middle Part of AMERICA
-  personal_name_sim:
+  sort_title_ssi: a Map of the Middle Part of AMERICA
+  personal_name_ssim:
   - Moll, Herman, d. 1732
-  personal_name_teim:
+  personal_name_tesim:
   - Moll, Herman, d. 1732
   personal_name_ssm:
   - Moll, Herman, d. 1732
-  genre_sim:
+  genre_ssim:
   - map
   - Digital Maps
   - Early Maps
@@ -7519,17 +7519,17 @@
     The Terms of Use on these external sites always govern the data available there.
     Please consult with library staff if you have questions about data access and
     availability.
-  subject_topic_sim:
+  subject_topic_ssim:
   - California as an island--Maps
   subject_topic_tesim:
   - California as an island--Maps
-  subject_cartographics_sim:
+  subject_cartographics_ssim:
   - "\n      [ca. 1:33,500,000].\n      (W 92°15ʹ --W 77°10ʹ/N 18°30ʹ --N 7°10ʹ)\n
     \   "
   subject_cartographics_tesim:
   - "\n      [ca. 1:33,500,000].\n      (W 92°15ʹ --W 77°10ʹ/N 18°30ʹ --N 7°10ʹ)\n
     \   "
-  content_metadata_type_sim:
+  content_metadata_type_ssim:
   - map
   content_metadata_type_ssm:
   - map

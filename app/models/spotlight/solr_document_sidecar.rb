@@ -5,5 +5,9 @@ module Spotlight
     serialize :data, Hash
 
     delegate :has_key?, to: :data
+
+    def to_solr
+      { id: solr_document_id }.merge(data)
+    end
   end
 end
