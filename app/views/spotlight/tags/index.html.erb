@@ -18,7 +18,7 @@
     <tbody>
     <% @tags.each do |tag| %>
       <tr>
-        <td><%=tag.name %></td>
+        <td><%= link_to tag.name, url_to_tag_facet(tag.name) %></td>
         <td><%= tag.taggings.count %></td>
         <td><%= delete_link(tag, exhibit_tag_path(current_exhibit, tag), class: 'btn btn-danger') %></td>
       </tr>

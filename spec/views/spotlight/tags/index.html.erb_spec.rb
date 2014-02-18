@@ -10,6 +10,7 @@ describe "spotlight/tags/index.html.erb" do
     view.stub(exhibit_tag_path: "/tags")
     view.stub(:current_exhibit).and_return(exhibit)
     view.send(:extend, Spotlight::CrudLinkHelpers)
+    view.stub(:url_to_tag_facet) { |*args| args.first }
   end
   describe "Tags" do
     it "should be displayed" do

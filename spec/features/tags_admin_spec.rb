@@ -9,7 +9,14 @@ describe "Tags Administration" do
       visit spotlight.exhibit_tags_path(Spotlight::Exhibit.default)
       expect(page).to have_css("td", text: tagging.tag.name)
     end
+
+    it "should link tags to a search" do
+      visit spotlight.exhibit_tags_path(Spotlight::Exhibit.default)
+      click_on tagging.tag.name
+      expect(page).to have_content "Remove constraint Exhibit Tags: #{tagging.tag.name}"
+    end
   end
+
   describe "destroy" do
     it "should destroy a tag" do
       visit spotlight.exhibit_tags_path(Spotlight::Exhibit.default)

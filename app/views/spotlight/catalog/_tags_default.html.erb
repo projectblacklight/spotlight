@@ -1,5 +1,5 @@
 <ul class="tags">
 <% document.tags_from(current_exhibit).each do |tag| %>
-  <li><%=tag %></li>
+  <li><%= link_to tag, url_to_tag_facet(tag) %></li>
 <% end %>
 </ul>
