@@ -67,7 +67,7 @@ describe Spotlight::BlacklightConfigurationsController do
     describe "#update" do
 
       it "should update metadata fields" do
-        exhibit.blacklight_configuration.default_blacklight_config.stub(index_fields: { 'a' => {},  'b' => {},  'c' => {}, 'd' => {},  'e' => {}, 'f' => {} })
+        ::CatalogController.stub(blacklight_config: Blacklight::Configuration.new(index_fields: { 'a' => {},  'b' => {},  'c' => {}, 'd' => {},  'e' => {}, 'f' => {} }))
         patch :update, exhibit_id: exhibit, blacklight_configuration: {
           index_fields: {
             c: { enabled: true, show: true},

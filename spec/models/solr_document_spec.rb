@@ -51,8 +51,8 @@ describe SolrDocument do
     it "should include exhibit-specific tags" do
       Spotlight::Exhibit.default.tag(subject, with: 'paris', on: :tags)
 
-      expect(subject.to_solr).to include :exhibit_1_tags_sim
-      expect(subject.to_solr[:exhibit_1_tags_sim]).to include 'paris'
+      expect(subject.to_solr).to include :exhibit_1_tags_ssim
+      expect(subject.to_solr[:exhibit_1_tags_ssim]).to include 'paris'
     end
 
     it "should include sidecar fields" do
