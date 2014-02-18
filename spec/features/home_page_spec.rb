@@ -8,6 +8,6 @@ describe "Home page" do
       click_link 'Curation'
     end
     click_link "Feature pages"
-    expect(page).to have_selector "h3", text: "Exhibit Home"
+    expect(page).to have_selector "h3", text: "Homepage"
   end
 end
