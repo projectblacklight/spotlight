@@ -1,0 +1,12 @@
+<% if can?(:edit, object) %>
+  <% content_for(:curation_mode_widget) do %>
+    <span class="label label-<%= curation_mode_label_class %> curation-widget">
+      <%- if curation_mode? -%>
+        <%= t(:'spotlight.curation.mode.curation') %> <%= link_to t(:'spotlight.curation.link.show'), spotlight.polymorphic_path(object) %>
+      <%- else -%>
+        <%= t(:'spotlight.curation.mode.end_user') %> <%= link_to t(:'spotlight.curation.link.edit'), spotlight.edit_polymorphic_path(object) %>
+      <%- end -%>
+    </span>
+  </div>
+  <% end %>
+<% end %>

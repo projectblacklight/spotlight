@@ -1,7 +1,6 @@
 <%= render 'sidebar' if @page.display_sidebar? %>
 
 <div class="<%= 'col-md-9' if @page.display_sidebar? %>">
-  <%= edit_link @page, class: 'btn btn-primary pull-right' if can? :edit, @page %>
   <% if @page.title %>
     <h1 class="page-title">
       <%= @page.title %>
@@ -11,3 +10,5 @@
     <%= render_sir_trevor(@page.content) unless @page.content.blank? %>
   </div>
 </div>
+
+<%= render "curation_mode_toggle", object: @page %>
