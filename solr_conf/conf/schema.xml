@@ -18,49 +18,65 @@
     <!-- NOTE:  not all possible Solr field types are represented in the dynamic fields -->
 
     <!-- text (_t...) -->
+<!--
     <dynamicField name="*_ti" type="text" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_tim" type="text" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_ts" type="text" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_tsm" type="text" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_tsi" type="text" stored="true" indexed="true" multiValued="false"/>
     <dynamicField name="*_tsim" type="text" stored="true" indexed="true" multiValued="true"/>
+<!--
     <dynamicField name="*_tiv" type="text" stored="false" indexed="true" multiValued="false" termVectors="true" termPositions="true" termOffsets="true"/>
     <dynamicField name="*_timv" type="text" stored="false" indexed="true" multiValued="true" termVectors="true" termPositions="true" termOffsets="true"/>
+-->
     <dynamicField name="*_tsiv" type="text" stored="true" indexed="true" multiValued="false" termVectors="true" termPositions="true" termOffsets="true"/>
     <dynamicField name="*_tsimv" type="text" stored="true" indexed="true" multiValued="true" termVectors="true" termPositions="true" termOffsets="true"/>
     
     <!-- English text (_te...) -->
+<!--
     <dynamicField name="*_tei" type="text_en" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_teim" type="text_en" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_tes" type="text_en" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_tesm" type="text_en" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_tesi" type="text_en" stored="true" indexed="true" multiValued="false"/>
     <dynamicField name="*_tesim" type="text_en" stored="true" indexed="true" multiValued="true"/>
+<!--
     <dynamicField name="*_teiv" type="text_en" stored="false" indexed="true" multiValued="false" termVectors="true" termPositions="true" termOffsets="true"/>
     <dynamicField name="*_teimv" type="text_en" stored="false" indexed="true" multiValued="true" termVectors="true" termPositions="true" termOffsets="true"/>
+-->
     <dynamicField name="*_tesiv" type="text_en" stored="true" indexed="true" multiValued="false" termVectors="true" termPositions="true" termOffsets="true"/>
     <dynamicField name="*_tesimv" type="text_en" stored="true" indexed="true" multiValued="true" termVectors="true" termPositions="true" termOffsets="true"/>
     
     <!-- string (_s...) -->
+<!--
     <dynamicField name="*_si" type="string" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_sim" type="string" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_ss" type="string" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_ssm" type="string" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_ssi" type="string" stored="true" indexed="true" multiValued="false"/>
     <dynamicField name="*_ssim" type="string" stored="true" indexed="true" multiValued="true"/>
+<!--
     <dynamicField name="*_ssort" type="alphaSort" stored="false" indexed="true" multiValued="false"/>
+-->
     
     <!-- integer (_i...) -->
+<!--
     <dynamicField name="*_ii" type="int" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_iim" type="int" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_is" type="int" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_ism" type="int" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_isi" type="int" stored="true" indexed="true" multiValued="false"/>
     <dynamicField name="*_isim" type="int" stored="true" indexed="true" multiValued="true"/>
     
     <!-- trie integer (_it...) (for faster range queries) -->
+<!--
     <dynamicField name="*_iti" type="tint" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_itim" type="tint" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_its" type="tint" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_itsm" type="tint" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_itsi" type="tint" stored="true" indexed="true" multiValued="false"/>
@@ -69,80 +85,102 @@
     <!-- date (_dt...) -->
     <!-- The format for this date field is of the form 1995-12-31T23:59:59Z
          Optional fractional seconds are allowed: 1995-12-31T23:59:59.999Z -->
+<!--
     <dynamicField name="*_dti" type="date" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_dtim" type="date" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_dts" type="date" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_dtsm" type="date" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_dtsi" type="date" stored="true" indexed="true" multiValued="false"/>
     <dynamicField name="*_dtsim" type="date" stored="true" indexed="true" multiValued="true"/>
     
     <!-- trie date (_dtt...) (for faster range queries) -->
+<!--
     <dynamicField name="*_dtti" type="tdate" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_dttim" type="tdate" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_dtts" type="tdate" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_dttsm" type="tdate" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_dttsi" type="tdate" stored="true" indexed="true" multiValued="false"/>
     <dynamicField name="*_dttsim" type="tdate" stored="true" indexed="true" multiValued="true"/>
     
     <!-- long (_l...) -->
+<!--
     <dynamicField name="*_li" type="long" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_lim" type="long" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_ls" type="long" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_lsm" type="long" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_lsi" type="long" stored="true" indexed="true" multiValued="false"/>
     <dynamicField name="*_lsim" type="long" stored="true" indexed="true" multiValued="true"/>
     
     <!-- trie long (_lt...) (for faster range queries) -->
+<!--
     <dynamicField name="*_lti" type="tlong" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_ltim" type="tlong" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_lts" type="tlong" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_ltsm" type="tlong" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_ltsi" type="tlong" stored="true" indexed="true" multiValued="false"/>
     <dynamicField name="*_ltsim" type="tlong" stored="true" indexed="true" multiValued="true"/>
     
     <!-- double (_db...) -->
+<!--
     <dynamicField name="*_dbi" type="double" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_dbim" type="double" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_dbs" type="double" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_dbsm" type="double" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_dbsi" type="double" stored="true" indexed="true" multiValued="false"/>
     <dynamicField name="*_dbsim" type="double" stored="true" indexed="true" multiValued="true"/>
     
     <!-- trie double (_dbt...) (for faster range queries) -->
+<!--
     <dynamicField name="*_dbti" type="tdouble" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_dbtim" type="tdouble" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_dbts" type="tdouble" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_dbtsm" type="tdouble" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_dbtsi" type="tdouble" stored="true" indexed="true" multiValued="false"/>
     <dynamicField name="*_dbtsim" type="tdouble" stored="true" indexed="true" multiValued="true"/>
     
     <!-- float (_f...) -->
+<!--
     <dynamicField name="*_fi" type="float" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_fim" type="float" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_fs" type="float" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_fsm" type="float" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_fsi" type="float" stored="true" indexed="true" multiValued="false"/>
     <dynamicField name="*_fsim" type="float" stored="true" indexed="true" multiValued="true"/>
     
     <!-- trie float (_ft...) (for faster range queries) -->
+<!--
     <dynamicField name="*_fti" type="tfloat" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_ftim" type="tfloat" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_fts" type="tfloat" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_ftsm" type="tfloat" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_ftsi" type="tfloat" stored="true" indexed="true" multiValued="false"/>
     <dynamicField name="*_ftsim" type="tfloat" stored="true" indexed="true" multiValued="true"/>
     
     <!-- boolean (_b...) -->
+<!--
     <dynamicField name="*_bi" type="boolean" stored="false" indexed="true" multiValued="false"/>
+-->
     <dynamicField name="*_bs" type="boolean" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_bsi" type="boolean" stored="true" indexed="true" multiValued="false"/>
     
     <!-- Type used to index the lat and lon components for the "location" FieldType -->
+<!--
     <dynamicField name="*_coordinate" type="tdouble" indexed="true"  stored="false" />
+-->
 
     <!-- location (_ll...) -->
+<!--
     <dynamicField name="*_lli" type="location" stored="false" indexed="true" multiValued="false"/>
     <dynamicField name="*_llim" type="location" stored="false" indexed="true" multiValued="true"/>
+-->
     <dynamicField name="*_lls" type="location" stored="true" indexed="false" multiValued="false"/>
     <dynamicField name="*_llsm" type="location" stored="true" indexed="false" multiValued="true"/>
     <dynamicField name="*_llsi" type="location" stored="true" indexed="true" multiValued="false"/>

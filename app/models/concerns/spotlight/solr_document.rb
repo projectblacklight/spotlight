@@ -43,7 +43,7 @@ module Spotlight
     end
 
     def reindex
-      #TODO implement this
+      # no-op reindex implementation
     end
 
     def save
@@ -69,6 +69,21 @@ module Spotlight
 
     def sidecar exhibit
       @sidecar ||= SolrDocumentSidecar.find_or_initialize_by exhibit: exhibit, solr_document_id: self.id
+    end
+
+    def to_solr
+      { id: id }.reverse_merge(sidecar.to_solr).merge(tags_to_solr)
+    end
+
+    protected
+    def tags_to_solr
+      h = {}
+      taggings.includes(:tag).map do |tagging|
+        key = :"#{tagging.tagger_type.constantize.model_name.param_key}_#{tagging.tagger_id}_tags_sim"
+        h[key] ||= []
+        h[key] << tagging.tag.name
+      end
+      h
     end
   end
 end

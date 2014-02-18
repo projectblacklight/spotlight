@@ -29,11 +29,11 @@ describe Spotlight::SearchesController do
     let(:search) { FactoryGirl.create(:search) }
 
     it "should create a saved search" do
-      post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_sim"=>["map"]}, exhibit_id: Spotlight::Exhibit.default
+      post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_ssim"=>["map"]}, exhibit_id: Spotlight::Exhibit.default
       expect(response).to redirect_to main_app.catalog_index_path
       expect(flash[:notice]).to eq "Search has been saved"
       expect(assigns[:search].title).to eq "A bunch of maps"
-      expect(assigns[:search].query_params).to eq("f"=>{"genre_sim"=>["map"]})
+      expect(assigns[:search].query_params).to eq("f"=>{"genre_ssim"=>["map"]})
     end
 
     describe "GET index" do
