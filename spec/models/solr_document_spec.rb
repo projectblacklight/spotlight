@@ -56,7 +56,7 @@ describe SolrDocument do
     end
 
     it "should include sidecar fields" do
-      expect(subject.to_solr).to include(a: 1, b: 2, c:3)
+      expect(subject.to_solr).to include('a_tesim' => 1, 'b_tesim' => 2, 'c_tesim' => 3)
     end
   end
 end
