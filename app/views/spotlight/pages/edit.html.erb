@@ -3,3 +3,5 @@
 <%= render 'form' %>
 
 <%= link_to t('spotlight.curation.dashboard'), [spotlight, @page.exhibit, :catalog, :index] %>
+
+<%= render "curation_mode_toggle", object: @page %>
