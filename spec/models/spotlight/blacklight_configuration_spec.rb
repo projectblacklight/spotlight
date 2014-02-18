@@ -24,24 +24,24 @@ describe Spotlight::BlacklightConfiguration do
     end
 
     it "should filter the upstream blacklight config" do
-      subject.facet_fields['a'] = { enabled: true }
-      subject.facet_fields['b'] = { enabled: false }
-      subject.facet_fields['d'] = { enabled: true }
+      subject.facet_fields['a'] = { show: true }
+      subject.facet_fields['b'] = { show: false }
+      subject.facet_fields['d'] = { show: true }
 
       blacklight_config.add_facet_field 'a'
       blacklight_config.add_facet_field 'b'
       blacklight_config.add_facet_field 'c'
 
-      expect(subject.blacklight_config.facet_fields).to include('a')
-      expect(subject.blacklight_config.facet_fields).to_not include('b')
-      expect(subject.blacklight_config.facet_fields).to have(1).fields
+      expect(subject.blacklight_config.facet_fields['a'].show).to be_true
+      expect(subject.blacklight_config.facet_fields['b'].show).to be_false
+      expect(subject.blacklight_config.facet_fields['d']).to be_nil
     end
 
     it "should order the fields by weight" do
 
-      subject.facet_fields['a'] = { enabled: true, weight: 3 }
-      subject.facet_fields['b'] = { enabled: true, weight: 5 }
-      subject.facet_fields['c'] = { enabled: true, weight: 1 }
+      subject.facet_fields['a'] = { show: true, weight: 3 }
+      subject.facet_fields['b'] = { show: true, weight: 5 }
+      subject.facet_fields['c'] = { show: true, weight: 1 }
 
       blacklight_config.add_facet_field 'a'
       blacklight_config.add_facet_field 'b'

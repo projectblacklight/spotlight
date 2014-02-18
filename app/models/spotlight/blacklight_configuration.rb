@@ -27,13 +27,17 @@ module Spotlight
         v.reject! { |k, v1| v1.blank? and !v1 === false }
       end if model.index_fields
 
-      [:facet_fields, :sort_fields].each do |field|
-        model.send(field).each do |k,v|
-          v[:enabled] &&= ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v[:enabled])
-          v[:enabled] ||= true if v[:enabled].nil?
-          v.reject! { |k, v1| v1.blank? and !v1 === false }
-        end if model.send(field)
-      end
+      model.facet_fields.each do |k,v|
+        v[:show] &&= ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v[:show])
+        v[:show] ||= true if v[:show].nil?
+        v.reject! { |k, v1| v1.blank? and !v1 === false }
+      end if model.facet_fields
+
+      model.sort_fields.each do |k,v|
+        v[:enabled] &&= ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v[:enabled])
+        v[:enabled] ||= true if v[:enabled].nil?
+        v.reject! { |k, v1| v1.blank? and !v1 === false }
+      end if model.sort_fields
 
       model.per_page.reject!(&:blank?) if model.per_page
       model.document_index_view_types.reject!(&:blank?) if model.document_index_view_types
@@ -102,9 +106,7 @@ module Spotlight
       end
 
       unless facet_fields.blank?
-        active_facet_fields = facet_fields.select { |k,v| v[:enabled] == true }
-        config.facet_fields.slice! *active_facet_fields.keys
-        config.facet_fields = Hash[config.facet_fields.sort_by { |k,v| field_weight(active_facet_fields, k) }]
+        config.facet_fields = Hash[config.facet_fields.sort_by { |k,v| field_weight(facet_fields, k) }]
 
         config.facet_fields.each do |k, v|
           next if facet_fields[k].blank?

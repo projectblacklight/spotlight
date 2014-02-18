@@ -40,7 +40,7 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
   end
 
   def exhibit_configuration_facet_params
-    @blacklight_configuration.all_facet_fields.keys.inject({}) { |result, element| result[element] = [:enabled, :label, :weight]; result }
+    @blacklight_configuration.all_facet_fields.keys.inject({}) { |result, element| result[element] = [:show, :label, :weight]; result }
   end
 
 end
