@@ -24,7 +24,7 @@ feature "Feature Pages Adminstration", js:  true do
     click_link exhibit_curator.email
 
     within '.dropdown-menu' do
-      click_link 'Curation'
+      click_link 'Dashboard'
     end
 
     click_link "Feature pages"
@@ -47,7 +47,7 @@ feature "Feature Pages Adminstration", js:  true do
     visit '/'
     click_link exhibit_curator.email
     within '.dropdown-menu' do
-      click_link 'Curation'
+      click_link 'Dashboard'
     end
     click_link "Feature pages"
     within("[data-id='#{page1.id}']") do

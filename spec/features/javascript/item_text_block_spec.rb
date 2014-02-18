@@ -10,7 +10,7 @@ feature "Record Thumbnail Block" do
     visit '/'
     click_link exhibit_curator.email
     within '.dropdown-menu' do
-      click_link 'Curation'
+      click_link 'Dashboard'
     end
     click_link "Feature pages"
     click_button "Add new page"
@@ -48,7 +48,7 @@ feature "Record Thumbnail Block" do
     visit '/'
     click_link exhibit_curator.email
     within '.dropdown-menu' do
-      click_link 'Curation'
+      click_link 'Dashboard'
     end
     click_link "Feature pages"
     click_button "Add new page"
@@ -89,7 +89,7 @@ feature "Record Thumbnail Block" do
     visit '/'
     click_link exhibit_curator.email
     within '.dropdown-menu' do
-      click_link 'Curation'
+      click_link 'Dashboard'
     end
     click_link "Feature pages"
     click_button "Add new page"
@@ -127,7 +127,7 @@ feature "Record Thumbnail Block" do
     visit '/'
     click_link exhibit_curator.email
     within '.dropdown-menu' do
-      click_link 'Curation'
+      click_link 'Dashboard'
     end
     click_link "Feature pages"
     click_button "Add new page"

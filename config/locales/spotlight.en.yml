@@ -78,7 +78,6 @@ en:
         browse: Browse
         feature_pages: Feature pages
         about_pages: About pages
-      dashboard: "Curation dashboard"
       nav:
         home: "Home"
       header: "Curation"
@@ -123,6 +122,9 @@ en:
         header: Custom Field
       new:
         header: Custom Field
+    dashboard:
+      index:
+        header: Dashboard
     exhibits:
       edit:
         header: Settings

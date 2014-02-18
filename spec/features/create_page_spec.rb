@@ -11,7 +11,7 @@ describe "Creating a page", :type => :feature do
       login_as exhibit_curator
       visit '/'
       within '.dropdown' do
-        click_link 'Curation'
+        click_link 'Dashboard'
       end
       within '#sidebar' do
         click_link "About pages"
@@ -25,7 +25,7 @@ describe "Creating a page", :type => :feature do
 
     visit '/'
     within '.dropdown-menu' do
-      click_link 'Curation'
+      click_link 'Dashboard'
     end
 
     click_link "About pages"

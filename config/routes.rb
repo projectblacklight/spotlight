@@ -17,6 +17,8 @@ Spotlight::Engine.routes.draw do
 
     resources :custom_fields, shallow: true
 
+    resources :dashboard, only: :index
+
     resources :searches, shallow: true do
       collection do
         patch :update_all
