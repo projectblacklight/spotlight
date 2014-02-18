@@ -3,7 +3,7 @@
   <div class="panel panel-default">
     <div class="panel-heading page">
       <div class="main">
-        <h3 class="panel-title"><%= @exhibit.home_page.title %></h3>
+        <h3 class="panel-title"><%= home_page_or_default_title %></h3>
         <div class="page-links">
           <%= view_link @exhibit.home_page, class: 'btn btn-text' %> &middot;
           <%= edit_link @exhibit.home_page, class: 'btn btn-text' %>
