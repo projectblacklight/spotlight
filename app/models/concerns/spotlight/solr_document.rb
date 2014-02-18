@@ -71,20 +71,29 @@ module Spotlight
       @sidecar ||= SolrDocumentSidecar.find_or_initialize_by exhibit: exhibit, solr_document_id: self.id
     end
 
+    def sidecars
+      SolrDocumentSidecar.where(solr_document_id: self.id)
+    end
+
     def to_solr
-      { id: id }.reverse_merge(sidecar.to_solr).merge(tags_to_solr)
+      { id: id }.reverse_merge(sidecars.inject({}) { |result, sidecar| result.merge(sidecar.to_solr) }).merge(tags_to_solr)
+    end
+
+    def self.solr_field_for_tagger tagger
+      :"#{tagger.class.model_name.param_key}_#{tagger.id}_tags_ssim"
     end
 
     protected
     def tags_to_solr
       h = {}
-      taggings.includes(:tag).map do |tagging|
-        key = :"#{tagging.tagger_type.constantize.model_name.param_key}_#{tagging.tagger_id}_tags_sim"
+      taggings.includes(:tag, :tagger).map do |tagging|
+        key = Spotlight::SolrDocument.solr_field_for_tagger(tagging.tagger)
         h[key] ||= []
         h[key] << tagging.tag.name
       end
       h
     end
+
   end
 end
 

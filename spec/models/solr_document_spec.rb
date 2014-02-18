@@ -41,7 +41,7 @@ describe SolrDocument do
 
   describe "#to_solr" do
     before do
-      subject.stub(sidecar: double(to_solr: { id: 'abcd123', a: 1, b: 2, c: 3 }))
+      Spotlight::SolrDocumentSidecar.create! solr_document: subject, data: {a: 1, b: 2, c: 3 }
     end
 
     it "should include the doc id" do

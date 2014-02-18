@@ -10,7 +10,7 @@ describe "Search Facets Administration" do
       expect(page).to have_css("h2", text: "Search Facets")
       within("[data-id='genre_ssim']") do
         expect(page).to have_content("Genre")
-        expect(page).to have_content("54 items")
+        expect(page).to have_content("56 items")
         expect(page).to have_content("10 unique values")
       end
     end
