@@ -86,6 +86,13 @@ module Spotlight
     protected
     def tags_to_solr
       h = {}
+
+      # Adding a placeholder entry in case the last tag for an exhibit
+      # is removed, so we clear out the solr field too.
+      Spotlight::Exhibit.find_each do |exhibit|
+        h[Spotlight::SolrDocument.solr_field_for_tagger(exhibit)] = nil
+      end
+
       taggings.includes(:tag, :tagger).map do |tagging|
         key = Spotlight::SolrDocument.solr_field_for_tagger(tagging.tagger)
         h[key] ||= []
