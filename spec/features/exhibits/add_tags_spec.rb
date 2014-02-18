@@ -27,6 +27,9 @@ describe "Add tags to an item in an exhibit" do
       expect(page).to have_selector  "li", text: "Three"
     end
 
+    click_on "Two and a half"
+
+    expect(page).to have_content "Remove constraint Exhibit Tags: Two and a half"
   end
 end
 

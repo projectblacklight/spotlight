@@ -11,6 +11,6 @@ describe Spotlight::SolrDocumentSidecar do
     end
 
     its(:to_solr) { should include id: 'doc_id' }
-    its(:to_solr) { should include :a, :b, :c }
+    its(:to_solr) { should include 'a_tesim', 'b_tesim', 'c_tesim' }
   end
 end

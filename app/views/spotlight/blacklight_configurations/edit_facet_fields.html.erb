@@ -27,7 +27,7 @@
     </a>
 
                 <%= facet.hidden_field :weight, 'data-property' => 'weight' %>
-                <%= facet.check_box :enabled, checked: (@exhibit.blacklight_configuration.facet_fields[key] || {}).fetch(:enabled, true), label: (@exhibit.blacklight_configuration.facet_fields[key] || {}).fetch(:label, @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label), title: key %>
+                <%= facet.check_box :show, checked: (@exhibit.blacklight_configuration.facet_fields[key] || @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key]).fetch(:show), label: (@exhibit.blacklight_configuration.facet_fields[key] || {}).fetch(:label, @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label), title: key %>
 
                 <% if metadata =  @fields.fetch(key.to_s, {}) %>
                 <div class="text-muted">

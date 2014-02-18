@@ -10,6 +10,12 @@
 
   <directoryFactory name="DirectoryFactory" class="${solr.directoryFactory:solr.StandardDirectoryFactory}"/>
 
+  <updateHandler class="solr.DirectUpdateHandler2">
+    <updateLog>
+      <str name="dir">${solr.core0.data.dir:}</str>
+    </updateLog>
+  </updateHandler>
+
   <!-- solr lib dirs -->
   <lib dir="../lib/contrib/analysis-extras/lib" />
   <lib dir="../lib/contrib/analysis-extras/lucene-libs" />
@@ -78,7 +84,7 @@
        <str name="facet.mincount">1</str>
        <str name="facet.limit">10</str>
        <str name="facet.field">active_fedora_model_ssi</str>
-       <str name="facet.field">subject_sim</str>
+       <str name="facet.field">subject_ssim</str>
        
        <str name="spellcheck">true</str>
        <str name="spellcheck.dictionary">default</str>

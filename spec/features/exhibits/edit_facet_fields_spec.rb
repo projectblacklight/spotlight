@@ -21,8 +21,8 @@ describe "Editing metadata fields", type: :feature do
 
     click_on "Save changes"
 
-    expect(Spotlight::Exhibit.default.blacklight_config.facet_fields.keys).to include("subject_temporal_ssim")
-    expect(Spotlight::Exhibit.default.blacklight_config.facet_fields.keys).to_not include("language_ssim", "genre_ssim")
+    expect(Spotlight::Exhibit.default.blacklight_config.facet_fields.select { |k,v| v.show }.keys).to include("subject_temporal_ssim")
+    expect(Spotlight::Exhibit.default.blacklight_config.facet_fields.select { |k,v| v.show }.keys).to_not include("language_ssim", "genre_ssim")
   end
 
   it "should allow curators to set facet labels" do

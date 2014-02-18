@@ -4,6 +4,9 @@ describe SolrDocument do
   subject { ::SolrDocument.new(id: 'abcd123') }
   its(:to_key) {should == ['abcd123']}
   its(:persisted?) {should be_true}
+  before do
+    subject.stub(reindex: nil)
+  end
 
   it "should have tags on the exhibit" do
     expect(subject.tags_from(Spotlight::Exhibit.default)).to be_empty
@@ -41,7 +44,8 @@ describe SolrDocument do
 
   describe "#to_solr" do
     before do
-      subject.stub(sidecar: double(to_solr: { id: 'abcd123', a: 1, b: 2, c: 3 }))
+      Spotlight::Exhibit.default # by referencing it, we create the default exhibit..
+      Spotlight::SolrDocumentSidecar.create! solr_document: subject, data: {a: 1, b: 2, c: 3 }
     end
 
     it "should include the doc id" do
@@ -51,12 +55,17 @@ describe SolrDocument do
     it "should include exhibit-specific tags" do
       Spotlight::Exhibit.default.tag(subject, with: 'paris', on: :tags)
 
-      expect(subject.to_solr).to include :exhibit_1_tags_sim
-      expect(subject.to_solr[:exhibit_1_tags_sim]).to include 'paris'
+      expect(subject.to_solr).to include :exhibit_1_tags_ssim
+      expect(subject.to_solr[:exhibit_1_tags_ssim]).to include 'paris'
+    end
+
+    it "should include placeholders for all exhibits' tags" do
+      expect(subject.to_solr).to include :exhibit_1_tags_ssim
+      expect(subject.to_solr[:exhibit_1_tags_ssim]).to eq nil
     end
 
     it "should include sidecar fields" do
-      expect(subject.to_solr).to include(a: 1, b: 2, c:3)
+      expect(subject.to_solr).to include('a_tesim' => 1, 'b_tesim' => 2, 'c_tesim' => 3)
     end
   end
 end
