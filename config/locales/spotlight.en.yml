@@ -22,11 +22,16 @@ en:
         destroy: "Remove from site"
       spotlight/custom_field:
         create: "Add new field"
+      spotlight/contact:
+        create: "Add contact"
     submit:
       spotlight_default: &spotlight_default
         create: "Save"
         submit: "Save changes"
         update: "Save changes"
+      contact:
+        create: "Save"
+        update: "Save"
       page: &spotlight_page
         create: "Add new page"
         submit: "Save changes"
@@ -139,9 +144,10 @@ en:
       edit:
         header: Settings
     pages:
-      index:
+      order_pages:
         pages_header: Defined Pages
         instructions: Select the pages you want to be shown. Drag and drop pages to change the order in which they are displayed in the sidebar.
+      index:
         home_pages:
           title: Exhibit Home
           header: Exhibit Home
@@ -158,7 +164,22 @@ en:
         header: Edit page
       form:
         title_placeholder: "Title"
+    contacts:
+      form:
+        name:
+          placeholder: First and last name
+        email:
+          placeholder: Valid email address
+        title:
+          placeholder: Job title most relevant to this exhibit
+        location:
+          placeholder: Name of library or other physical location
     about_pages:
+      index:
+        contacts: Contacts
+        contact:
+          legend: Contact Details
+        instructions: Enter details for each librarian, curator or other contact person for this exhibit. Select the contacts you want to be show in the sidebar of the About Pages. Drag and drop contacts to specify the order in which they are shown in the sidebar.
       nav_link: About
       sidebar:
         nav_link: About

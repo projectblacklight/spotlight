@@ -13,6 +13,8 @@ module Spotlight::Ability
     can [:index, :update, :destroy, :create], Spotlight::Role, exhibit_id: user.admin_roles.map(&:exhibit_id)
 
 
+    can [:create, :update, :destroy], Spotlight::Contact, exhibit_id: user.roles.map(&:exhibit_id)
+
     can [:update, :edit_metadata_fields, :edit_facet_fields], Spotlight::BlacklightConfiguration do |config|
       config.exhibit.roles.where(id: user.role_ids).any?
     end
@@ -34,5 +36,6 @@ module Spotlight::Ability
       can :update_all, [Spotlight::Search, Spotlight::Page] #TODO make these specific to the owning exhibit
       can [:update], ::SolrDocument
     end
+
   end
 end

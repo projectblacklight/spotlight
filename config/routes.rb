@@ -3,6 +3,8 @@ Spotlight::Engine.routes.draw do
   resource :contact_form, only: [:new, :create]
 
   get 'exhibits/:exhibit_id' => 'catalog#index'
+
+  resources :contacts, only: [:edit, :update, :destroy]
   resources :exhibits, only: [:edit, :update] do
     resource :blacklight_configuration, only: [:update]
 
@@ -30,8 +32,11 @@ Spotlight::Engine.routes.draw do
     resources :browse, only: [:index, :show]
     resources :tags, only: [:index, :destroy]
 
+
     resources :about, controller: "about_pages", as: "about_pages", shallow: true do
       collection do
+        patch 'contacts' => 'about_pages#update_contacts'
+        resources :contacts, only: [:new, :create]
         patch :update_all
       end
     end

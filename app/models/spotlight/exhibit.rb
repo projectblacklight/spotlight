@@ -9,12 +9,14 @@ class Spotlight::Exhibit < ActiveRecord::Base
   has_many :home_pages
   has_many :users, through: :roles, class_name: '::User'
   has_many :custom_fields
+  has_many :contacts
 
   belongs_to :blacklight_configuration, class_name: Spotlight::BlacklightConfiguration
   accepts_nested_attributes_for :blacklight_configuration
   accepts_nested_attributes_for :searches
   accepts_nested_attributes_for :about_pages
   accepts_nested_attributes_for :feature_pages
+  accepts_nested_attributes_for :contacts
   accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc {|attr| attr['user_key'].blank?}
   delegate :blacklight_config, to: :blacklight_configuration
 

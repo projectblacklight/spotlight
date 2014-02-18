@@ -1,0 +1,20 @@
+<%= render 'spotlight/shared/curation_sidebar' %>
+<div id="content" class="col-md-9">
+  <%= render 'order_pages' %>
+  <%= bootstrap_form_for @exhibit, url: exhibit_contacts_path(@exhibit),
+      style: :horizontal, html: {class: 'exhibit-contacts'} do |f| %>
+    <h3><%= t :".contacts" %></h3>
+    <p><%= t :'.instructions' %></p>
+    <div class="panel-group dd contacts_admin">
+      <ol class="dd-list">
+        <%= f.fields_for :contacts do |c| %>
+          <%= render partial: 'contact', locals: {f: c} %>
+        <% end %>
+      </ol>
+    </div>
+    <div class="pull-right" style="margin-top: 1em;">
+      <%= f.submit nil %>
+    </div>
+  <% end %>
+  <%= exhibit_create_link Spotlight::Contact.new, class: "btn btn-primary" %>
+</div>

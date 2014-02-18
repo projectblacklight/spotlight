@@ -79,5 +79,28 @@ describe Spotlight::AboutPagesController do
         expect(page3.reload.published).to be_true # should remain untouched since it wasn't in present[]
       end
     end
+
+    describe "PATCH update_contacts" do
+      let!(:contact1) { FactoryGirl.create(:contact, name: 'Aphra Behn', exhibit: exhibit) }
+      let!(:contact2) { FactoryGirl.create(:contact, exhibit: exhibit) }
+      let(:exhibit) { user.roles.first.exhibit }
+      it "should update contacts" do
+        patch :update_contacts, exhibit_id: exhibit, exhibit: {contacts_attributes: [
+          {"show_in_sidebar"=>"1", "id"=>contact1.id},
+          {"show_in_sidebar"=>"0", "id"=>contact2.id}]}
+        expect(response).to redirect_to exhibit_about_pages_path(exhibit)
+        expect(flash[:notice]).to eq 'Contacts were successfully updated.'
+        expect(exhibit.contacts.size).to eq 2
+        expect(exhibit.contacts.published.map(&:name)).to eq ['Aphra Behn']
+      end
+      it "should show index on failure" do
+        Spotlight::Exhibit.any_instance.should_receive(:update).and_return(false)
+        patch :update_contacts, exhibit_id: exhibit, exhibit: {contacts_attributes: [
+          {"show_in_sidebar"=>"1", "name"=>"Justin Coyne", "email"=>"jcoyne@justincoyne.com", "title"=>"", "location"=>"US"},
+          {"show_in_sidebar"=>"0", "name"=>"", "email"=>"", "title"=>"", "location"=>""},
+          {"show_in_sidebar"=>"0", "name"=>"", "email"=>"", "title"=>"Librarian", "location"=>""}]}
+        response.should render_template("index")
+      end
+    end
   end
 end
