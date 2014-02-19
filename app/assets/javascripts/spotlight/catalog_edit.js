@@ -29,4 +29,9 @@ Spotlight.onLoad(function() {
     }));
   }
 
+      $(".visiblity_toggle").bl_checkbox_submit({
+          //css_class is added to elements added, plus used for id base
+          css_class: "toggle_visibility"    
+      }); 
+
 });

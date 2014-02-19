@@ -2,8 +2,8 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   include Blacklight::Catalog
   include Spotlight::Catalog
   load_resource :exhibit, class: Spotlight::Exhibit
-  before_filter :authenticate_user!, only: [:admin, :edit]
-  before_filter :check_authorization, only: [:admin, :edit]
+  before_filter :authenticate_user!, only: [:admin, :edit, :make_public, :make_private]
+  before_filter :check_authorization, only: [:admin, :edit, :make_public, :make_private]
   load_and_authorize_resource instance_name: :document, class: ::SolrDocument, only: [:edit]
 
   before_filter :attach_breadcrumbs
@@ -18,6 +18,12 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def show
     super
+
+    if @document.private? current_exhibit
+      authenticate_user!
+      authorize! :curate, current_exhibit
+    end
+
     if current_browse_category
       add_breadcrumb t(:'spotlight.browse.nav_link'), exhibit_browse_index_path(current_browse_category.exhibit)
       add_breadcrumb current_browse_category.title, exhibit_browse_path(current_browse_category.exhibit, current_browse_category)
@@ -45,7 +51,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
       authenticate_user!
       authorize! :update, @document
       @document.update(current_exhibit, solr_document_params)
-      @document.save # TODO need to index tags too
+      @document.save
       redirect_to exhibit_catalog_path(current_exhibit, @document)
     else
       super
@@ -56,6 +62,28 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
     blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
     blacklight_config.view.edit.partials.delete "spotlight/catalog/tags"
     blacklight_config.view.edit.partials.insert(2, :edit)
+  end
+
+  def make_private
+    @document = ::SolrDocument.find params[:catalog_id] 
+    @document.make_private!(current_exhibit)
+    @document.save
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.json { render json: true }
+    end
+  end
+
+  def make_public
+    @document = ::SolrDocument.find params[:catalog_id] 
+    @document.make_public!(current_exhibit)
+    @document.save
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.json { render json: true }
+    end
   end
 
   protected

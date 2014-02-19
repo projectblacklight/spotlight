@@ -10,4 +10,7 @@
         <%= Date.parse document['timestamp'] %>
       </td>
       
+      <td>
+        <%= render partial: 'document_visibility_control', locals: { document: document} %>
+      </td>
 

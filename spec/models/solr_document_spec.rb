@@ -48,8 +48,7 @@ describe SolrDocument do
 
   describe "#to_solr" do
     before do
-      Spotlight::Exhibit.default # by referencing it, we create the default exhibit..
-      Spotlight::SolrDocumentSidecar.create! solr_document: subject, data: {a: 1, b: 2, c: 3 }
+      Spotlight::SolrDocumentSidecar.create! solr_document: subject, exhibit: Spotlight::Exhibit.default, data: {a: 1, b: 2, c: 3 }
     end
 
     it "should include the doc id" do
@@ -70,6 +69,43 @@ describe SolrDocument do
 
     it "should include sidecar fields" do
       expect(subject.to_solr).to include('a_tesim' => 1, 'b_tesim' => 2, 'c_tesim' => 3)
+    end
+  end
+
+  describe "#public?" do
+    it "should default to public" do
+      expect(subject).to be_public Spotlight::Exhibit.default
+    end
+  end
+
+  describe "#private?" do
+    it "should default to public" do
+      expect(subject).not_to be_private Spotlight::Exhibit.default
+    end
+  end
+
+  describe "#make_public!" do
+    it "should set the object to public" do
+      subject.stub(:reindex)
+      subject.make_public! Spotlight::Exhibit.default
+      expect(subject).not_to be_private Spotlight::Exhibit.default
+    end
+
+    it "should augment existing sidecar data" do
+      subject.stub(:reindex)
+
+      subject.update Spotlight::Exhibit.default, sidecar: { data: { a: 1}} 
+      subject.make_public! Spotlight::Exhibit.default
+      expect(subject.sidecar(Spotlight::Exhibit.default).data[:a]).to eq 1
+    end
+  end
+
+  describe "#make_private!" do
+    it "should set the object to private" do
+      subject.stub(:reindex)
+      subject.make_private! Spotlight::Exhibit.default
+      expect(subject).to be_private Spotlight::Exhibit.default
+
     end
   end
 end

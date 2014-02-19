@@ -83,6 +83,26 @@ module Spotlight
       :"#{tagger.class.model_name.param_key}_#{tagger.id}_tags_ssim"
     end
 
+    def self.visibility_field exhibit
+      :"#{exhibit.class.model_name.param_key}_#{exhibit.id}_public_bsi"
+    end
+
+    def make_public! exhibit
+      sidecar(exhibit).public!
+    end
+
+    def make_private! exhibit
+      sidecar(exhibit).private!
+    end
+
+    def private? exhibit
+      !(public?(exhibit))
+    end
+
+    def public? exhibit
+      sidecar(exhibit).public?
+    end
+
     protected
     def tags_to_solr
       h = {}
