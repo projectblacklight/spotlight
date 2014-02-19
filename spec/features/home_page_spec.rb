@@ -5,7 +5,7 @@ describe "Home page" do
   it "should exist by default on exhibits" do
     visit '/'
     within '.dropdown-menu' do
-      click_link 'Curation'
+      click_link 'Dashboard'
     end
     click_link "Feature pages"
     expect(page).to have_selector "h3", text: "Homepage"
@@ -14,7 +14,7 @@ describe "Home page" do
   it "should allow users to edit the home page title" do
     visit '/'
     within '.dropdown-menu' do
-      click_link 'Curation'
+      click_link 'Dashboard'
     end
     click_link "Feature pages"
     within(".home_page") do

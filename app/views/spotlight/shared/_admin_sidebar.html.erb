@@ -1,6 +1,5 @@
   <h4><%=t(:'spotlight.administration.sidebar.header') %></h4>
   <ul class="nav sidenav">
-    <li class="disabled"><%= link_to t(:'spotlight.administration.sidebar.dashboard'), "#" %></li>
     <li><%= link_to t(:'spotlight.administration.sidebar.settings'), spotlight.edit_exhibit_path(@exhibit) %></li>
     <li><%= link_to t(:'spotlight.administration.sidebar.users'), spotlight.exhibit_roles_path(@exhibit) %></li>
   </ul>
