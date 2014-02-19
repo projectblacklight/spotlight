@@ -17,6 +17,11 @@ module Spotlight
     end
     
     protected
+    ##
+    # Browsing an exhibit should start a new search session
+    def start_new_search_session?
+      params[:action] == 'show'
+    end
 
     # WARNING: Blacklight::Catalog::SearchContext sets @searches in history_session in a before_filter
     # See https://github.com/projectblacklight/blacklight/pull/780

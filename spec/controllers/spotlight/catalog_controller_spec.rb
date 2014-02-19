@@ -23,13 +23,26 @@ describe Spotlight::CatalogController do
     describe "GET show" do
       let (:exhibit) {Spotlight::Exhibit.default}
       let (:document) { SolrDocument.find('dq287tq6352') }
+      let(:search) { FactoryGirl.create(:search) }
       it "should show the item" do
         expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to be_successful
       end
+
+      it "should show the item with breadcrumbs to the browse page" do
+        controller.stub(current_browse_category: search)
+        
+        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
+        expect(controller).to receive(:add_breadcrumb).with("Browse", exhibit_browse_index_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with(search.title, exhibit_browse_path(exhibit, search))
+        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
+        get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        expect(response).to be_successful
+      end
     end
+
 
     describe "GET index" do
       let (:exhibit) {Spotlight::Exhibit.default}
