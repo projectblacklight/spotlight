@@ -18,6 +18,12 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def show
     super
+    if current_browse_category
+      add_breadcrumb t(:'spotlight.browse.nav_link'), exhibit_browse_index_path(current_browse_category.exhibit)
+      add_breadcrumb current_browse_category.title, exhibit_browse_path(current_browse_category.exhibit, current_browse_category)
+    else
+      add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), search_action_url(current_search_session[:query_params]) if current_search_session
+    end
     add_breadcrumb Array(@document[blacklight_config.view_config(:show).title_field]).join(', '), exhibit_catalog_path(@exhibit, @document)
   end
 
@@ -67,6 +73,23 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
     add_breadcrumb @exhibit.title, exhibit_path(@exhibit, q: '')
   end
 
+  ## 
+  # Override Blacklight's #setup_next_and_previous_documents to handle
+  # browse categories too
+  def setup_next_and_previous_documents
+    if current_browse_category
+      index = search_session[:counter].to_i - 1
+      response, documents = get_previous_and_next_documents_for_search index, current_browse_category.query_params
+
+      search_session[:total] = response.total
+      @search_context_response = response
+      @previous_document = documents.first
+      @next_document = documents.last
+    else
+      super
+    end
+  end
+
   def _prefixes
     @_prefixes ||= super + ['catalog']
   end
@@ -88,5 +111,11 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def check_authorization
     authorize! :curate, @exhibit
+  end
+
+  def current_browse_category
+    @current_browse_category ||= if current_search_session and current_search_session.query_params[:action] == "show" and current_search_session.query_params[:controller] == "spotlight/browse"
+      Spotlight::Search.find(current_search_session.query_params[:id])
+    end
   end
 end
