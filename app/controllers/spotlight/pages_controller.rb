@@ -6,6 +6,8 @@ module Spotlight
     load_and_authorize_resource only: [:show, :edit, :update, :destroy, :update_all], instance_name: 'page'
     load_and_authorize_resource through: :exhibit, only: [:index, :new, :create], instance_name: 'page'
 
+    before_filter :attach_breadcrumbs
+
     include Blacklight::Base
     include Blacklight::Catalog::SearchContext
 
@@ -79,6 +81,15 @@ module Spotlight
     end
 
     alias page_collection_name controller_name 
+
+    def attach_breadcrumbs
+      load_exhibit
+      add_breadcrumb @exhibit.title, @exhibit
+    end
+
+    def load_exhibit
+      @exhibit ||= @page.exhibit
+    end
 
     private
 

@@ -20,10 +20,25 @@ describe Spotlight::FeaturePagesController do
     end
 
     describe "GET show" do
-      let(:page) { FactoryGirl.create(:feature_page) }
-      it "assigns the requested page as @page" do
-        get :show, exhibit_id: page.exhibit.id, id: page
-        assigns(:page).should eq(page)
+      let(:exhibit) { page.exhibit }
+      describe "on a top level page" do
+        let(:page) { FactoryGirl.create(:feature_page) }
+        it "assigns the requested page as @page" do
+          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+          expect(controller).to receive(:add_breadcrumb).with(page.title, page)
+          get :show, exhibit_id: page.exhibit.id, id: page
+          assigns(:page).should eq(page)
+        end
+      end
+      describe "on a sub-page" do
+        let(:page) { FactoryGirl.create(:feature_subpage) }
+        it "assigns the requested page as @page" do
+          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+          expect(controller).to receive(:add_breadcrumb).with(page.parent_page.title, page.parent_page)
+          expect(controller).to receive(:add_breadcrumb).with(page.title, page)
+          get :show, exhibit_id: page.exhibit.id, id: page
+          assigns(:page).should eq(page)
+        end
       end
     end
 

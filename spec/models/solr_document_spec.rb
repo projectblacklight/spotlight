@@ -23,6 +23,10 @@ describe SolrDocument do
     expect(::SolrDocument.find('dq287tq6352')).to be_kind_of SolrDocument
   end
 
+  it "should have ==" do
+    expect(::SolrDocument.find('dq287tq6352')).to eq ::SolrDocument.find('dq287tq6352')
+  end
+
   describe "#sidebar" do
     it "should return a sidecar for adding exhibit-specific fields" do
       expect(subject.sidecar(Spotlight::Exhibit.default)).to be_kind_of Spotlight::SolrDocumentSidecar

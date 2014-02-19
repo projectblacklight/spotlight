@@ -43,7 +43,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   end
 
   def main_about_page
-    about_pages.published.first
+    @main_about_page ||= about_pages.published.first
   end
 
   # Find or create the default exhibit

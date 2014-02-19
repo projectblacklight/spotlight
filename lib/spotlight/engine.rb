@@ -6,7 +6,13 @@ require 'spotlight/rails/routes'
 module Spotlight
   class Engine < ::Rails::Engine
     isolate_namespace Spotlight
-    initializer "require dependencies" do
+    # Breadcrumbs on rails must be required outside of an initializer or it doesn't get loaded.
+    require 'breadcrumbs_on_rails'
+
+    config.autoload_paths += %W(
+      #{config.root}/app/builders
+    )
+    initializer "spotlight.initialize" do
       require 'sir-trevor-rails'
       require 'carrierwave'
       require 'carrierwave/orm/activerecord'
@@ -14,6 +20,7 @@ module Spotlight
       require 'bootstrap_form'
       require 'acts-as-taggable-on'
     end
+
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
 
