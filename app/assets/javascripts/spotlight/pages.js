@@ -17,7 +17,14 @@ Spotlight.onLoad(function() {
       }
       $(el).css('height', height);
     });
+
+    SirTrevor.EventBus.on('block:create:new', addTitleToSirTrevorBlock);
+    SirTrevor.EventBus.on('block:create:existing', addTitleToSirTrevorBlock);
 });
+
+function addTitleToSirTrevorBlock(block){
+  block.$inner.append("<div class='st-title'>" + block.title() + "</div>");
+};
 
 function updateWeightsAndRelationships(selector){
   $.each(selector, function() {
