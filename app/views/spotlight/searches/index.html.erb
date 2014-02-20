@@ -19,5 +19,9 @@
       <% end %>
       </ol>
     </div>
+
+    <div class="pull-right">
+      <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-primary", disabled: @searches.empty? %>
+    </div>
   <% end %>
 </div>
