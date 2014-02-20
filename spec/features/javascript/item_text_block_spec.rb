@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Record Thumbnail Block" do
+feature "Item + Image Block" do
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
   before { login_as exhibit_curator }
 
@@ -23,7 +23,7 @@ feature "Record Thumbnail Block" do
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
     find("[data-icon='add']").click
-    # click the Record Thumbnail widget
+    # click the item + image widget
     expect(page).to have_css("a[data-type='item-text']")
     find("a[data-type='item-text']").click
     # fill in the record ID field
@@ -34,8 +34,10 @@ feature "Record Thumbnail Block" do
     # veryify that the page was created
     expect(page).to have_content("Page was successfully updated.", visible: true)
     # visit the show page for the document we just saved
-    visit spotlight.feature_page_path(id: Spotlight::FeaturePage.last)
-    # veryify that the record thumbnail widget is displaying an image from the document.
+    within("li.dd-item") do
+      click_link "View"
+    end
+    # veryify that the item + image widget is displaying an image from the document.
     within(:css, ".item-text") do
       expect(page).to have_css(".thumbnail")
       expect(page).to have_css(".thumbnail a img")
@@ -61,7 +63,7 @@ feature "Record Thumbnail Block" do
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
     find("[data-icon='add']").click
-    # click the Record Thumbnail widget
+    # click the item + image widget
     expect(page).to have_css("a[data-type='item-text']")
     find("a[data-type='item-text']").click
     # fill in the record ID field
@@ -73,9 +75,13 @@ feature "Record Thumbnail Block" do
     click_button("Save changes")
     # veryify that the page was created
     expect(page).to have_content("Page was successfully updated.", visible: true)
+
     # visit the show page for the document we just saved
-    visit spotlight.feature_page_path(id: Spotlight::FeaturePage.last)
-    # veryify that the record thumbnail widget is displaying image and title from the requested document.
+    within("li.dd-item") do
+      click_link "View"
+    end
+
+    # veryify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".item-text") do
       expect(page).to have_css(".thumbnail")
       expect(page).to have_css(".thumbnail a img")
@@ -102,21 +108,24 @@ feature "Record Thumbnail Block" do
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
     find("[data-icon='add']").click
-    # click the Record Thumbnail widget
+    # click the item + image widget
     expect(page).to have_css("a[data-type='item-text']")
     find("a[data-type='item-text']").click
     # fill in the record ID field
     expect(page).to have_css("input#item-id")
     fill_in "item-id", :with => "dq287tq6352"
-    # fill in the text area
-    fill_in "item-text", with: "Some text to annotate this image."
+    # fill in the content-editable div
+    content_editable = find("#item-text")
+    content_editable.set("Some text to annotate this image.")
     # create the page
     click_button("Save changes")
     # veryify that the page was created
     expect(page).to have_content("Page was successfully updated.", visible: true)
     # visit the show page for the document we just saved
-    visit spotlight.feature_page_path(id: Spotlight::FeaturePage.last)
-    # veryify that the record thumbnail widget is displaying image and title from the requested document.
+    within("li.dd-item") do
+      click_link "View"
+    end
+    # veryify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".item-text") do
       expect(page).to have_content "Some text to annotate this image."
     end
@@ -140,14 +149,15 @@ feature "Record Thumbnail Block" do
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
     find("[data-icon='add']").click
-    # click the Record Thumbnail widget
+    # click the item + image widget
     expect(page).to have_css("a[data-type='item-text']")
     find("a[data-type='item-text']").click
     # fill in the record ID field
     expect(page).to have_css("input#item-id")
     fill_in "item-id", :with => "dq287tq6352"
-    # fill in the text area
-    fill_in "item-text", with: "Some text to annotate this image."
+    # fill in the content editable div
+    content_editable = find("#item-text")
+    content_editable.set("Some text to annotate this image.")
     # Select to align the text right
     choose "Right"
     # create the page
@@ -155,8 +165,10 @@ feature "Record Thumbnail Block" do
     # veryify that the page was created
     expect(page).to have_content("Page was successfully updated.", visible: true)
     # visit the show page for the document we just saved
-    visit spotlight.feature_page_path(id: Spotlight::FeaturePage.last)
-    # veryify that the record thumbnail widget is displaying image and title from the requested document.
+    within("li.dd-item") do
+      click_link "View"
+    end
+    # veryify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".item-text") do
       expect(page).to have_content "Some text to annotate this image."
       # should pull the image block the opposite direction of the configured text.
