@@ -10,6 +10,8 @@ module Spotlight
     copy_blacklight_config_from Spotlight::CatalogController
 
     def show
+      authorize! :curate, @exhibit
+
       @pages = Spotlight::Page.recent.limit(5)
       @solr_documents = load_recent_solr_documents 5
 

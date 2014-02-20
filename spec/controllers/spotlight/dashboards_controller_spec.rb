@@ -26,6 +26,15 @@ describe Spotlight::DashboardsController do
       end
     end
   end
+
+  describe "when user does not have access" do
+    before { sign_in FactoryGirl.create(:exhibit_visitor) }
+    it "should not allow show" do
+      get :show, exhibit_id: exhibit.id
+      expect(response).to redirect_to main_app.root_path
+    end
+  end
+
   describe "when not logged in" do
     describe "GET show" do
       it "should redirect to the sign in form" do
