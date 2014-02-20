@@ -61,4 +61,38 @@ feature "Feature Pages Adminstration", js:  true do
       expect(field_labeled("Show sidebar")).to be_checked
     end
   end
+  it "should stay in curation mode if a user has unsaved data" do
+    visit '/'
+    click_link exhibit_curator.email
+    within '.dropdown-menu' do
+      click_link 'Dashboard'
+    end
+    click_link "Feature pages"
+    within("[data-id='#{page1.id}']") do
+      click_link "Edit"
+    end
+    fill_in("Title", with: "Some Fancy Title")
+    click_link "Turn off."
+    expect(page).to have_content "You are in curation mode."
+  end
+  it "should stay in curation mode if a user has unsaved contenteditable data" do
+    visit '/'
+    click_link exhibit_curator.email
+    within '.dropdown-menu' do
+      click_link 'Dashboard'
+    end
+
+    click_link "Feature pages"
+    within("[data-id='#{page1.id}']") do
+      click_link "Edit"
+    end
+
+    find("[data-icon='add']").click
+    find("a[data-type='text']").click
+    content_editable = find(".st-text-block")
+    content_editable.set("Some Facnty Text.")
+
+    click_link "Turn off."
+    expect(page).to have_content "You are in curation mode."
+  end
 end
