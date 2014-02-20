@@ -1,0 +1,6 @@
+<%- if has_thumbnail?(document) && tn = render_thumbnail_tag(document, {}, :counter => document_counter_with_offset(document_counter)) %>
+  <div class="document-thumbnail spotlight-admin-thumbnail">
+    <span class="label label-warning" style="<%= 'display:none;' unless document.private?(current_exhibit) %>" data-label-toggle="<%= document.id %>"><%= t('spotlight.catalog.document_visibility_control.private') %></span>
+    <%= tn %>
+  </div>
+<%- end %>

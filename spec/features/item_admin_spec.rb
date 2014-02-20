@@ -24,5 +24,22 @@ describe "Item Administration" do
         click_button "Make Public"
       end
     end
+    it "should toggle the 'Private' label", js: true do
+      visit spotlight.admin_exhibit_catalog_index_path(exhibit)
+      # The label should be toggled when the checkbox is clicked
+      within "tr[itemscope]:first-child" do
+        expect(page).not_to have_css(".label-warning", text: "Private", visible: true)
+        find("input.toggle_visibility[type='checkbox']").click
+        expect(page).to have_css(".label-warning", text: "Private", visible: true)
+      end
+
+      # The label should show up on page load
+      visit spotlight.admin_exhibit_catalog_index_path(exhibit)
+      within "tr[itemscope]:first-child" do
+        expect(page).to have_css(".label-warning", text: "Private", visible: true)
+        find("input.toggle_visibility[type='checkbox']").click
+        expect(page).not_to have_css(".label-warning", text: "Private", visible: true)
+      end
+    end
   end
 end

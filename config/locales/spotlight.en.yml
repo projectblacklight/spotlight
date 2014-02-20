@@ -126,6 +126,7 @@ en:
           button: Make Private
         inprogress:
           label: ""
+        private: "Private"
       admin:
         title: Curation - Items
         header: Items
