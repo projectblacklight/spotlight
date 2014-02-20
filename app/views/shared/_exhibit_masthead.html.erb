@@ -1,12 +1,12 @@
 <% if current_exhibit %>
 <div id="exhibit-masthead" class="jumbotron">
   <div class="container">
-    <h1>
+    <div class="site-title h1">
       <%= current_exhibit.title %>
       <% if current_exhibit.subtitle %>
         <small><%= current_exhibit.subtitle %></small>
       <% end %>
-    </h1>
+    </div>
   </div>
 </div>
 <% end %>
