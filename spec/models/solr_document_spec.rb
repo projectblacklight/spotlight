@@ -48,7 +48,8 @@ describe SolrDocument do
 
   describe "#to_solr" do
     before do
-      Spotlight::SolrDocumentSidecar.create! solr_document: subject, exhibit: Spotlight::Exhibit.default, data: {a: 1, b: 2, c: 3 }
+      Spotlight::SolrDocumentSidecar.create! solr_document: subject, exhibit: Spotlight::Exhibit.default,
+        data: {'a_tesim' => 1, 'b_tesim' => 2, 'c_tesim' => 3 }
     end
 
     it "should include the doc id" do
@@ -105,7 +106,6 @@ describe SolrDocument do
       subject.stub(:reindex)
       subject.make_private! Spotlight::Exhibit.default
       expect(subject).to be_private Spotlight::Exhibit.default
-
     end
   end
 end
