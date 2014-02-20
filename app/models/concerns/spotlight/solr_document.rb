@@ -9,6 +9,7 @@ module Spotlight
       extend Finder
 
       acts_as_taggable
+      has_many :sidecars, class_name: 'Spotlight::SolrDocumentSidecar'
     end
 
     module ClassMethods
@@ -68,11 +69,7 @@ module Spotlight
     end
 
     def sidecar exhibit
-      @sidecar ||= SolrDocumentSidecar.find_or_initialize_by exhibit: exhibit, solr_document_id: self.id
-    end
-
-    def sidecars
-      SolrDocumentSidecar.where(solr_document_id: self.id)
+      sidecars.first_or_initialize(exhibit: exhibit)
     end
 
     def to_solr

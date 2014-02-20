@@ -8,7 +8,7 @@ describe Spotlight::SolrDocumentSidecar do
 
   describe "#to_solr" do
     before do
-      subject.data = { a: 1, b: 2, c: 3 }
+      subject.data = {'a_tesim' => 1, 'b_tesim' => 2, 'c_tesim' => 3 }
     end
 
     its(:to_solr) { should include id: 'doc_id' }

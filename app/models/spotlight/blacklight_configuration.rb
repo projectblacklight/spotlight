@@ -133,7 +133,7 @@ module Spotlight
 
     def custom_index_fields
       Hash[exhibit.custom_fields.map do |x| 
-        field = Blacklight::Configuration::IndexField.new x.configuration.merge(field: x.field, helper_method: :exhibit_specific_field)
+        field = Blacklight::Configuration::IndexField.new x.configuration.merge(field: x.field)
         [x.field, field] 
       end]
     end
