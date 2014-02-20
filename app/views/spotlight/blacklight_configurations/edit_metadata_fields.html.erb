@@ -1,11 +1,7 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
-<%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_blacklight_configuration_path(@exhibit), style: :horizontal, right: "col-sm-5" do |f| %>
-    <h1><%= t('spotlight.curation.header') %></h1>
-    <div class="pull-right">
-      <%= f.submit nil %>
-    </div>
-    <h2 class="text-muted clearfix"><%= t(:'.header') %></h2>
+<%= curation_page_title %>
+<%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_blacklight_configuration_path(@exhibit), style: :horizontal, right: "col-sm-5", html: { class: 'clearfix'}  do |f| %>
     <h3><%= t(:'.order_header') %></h3>
 
     <p class="instuctions"><%= t :'.instructions' %></p>

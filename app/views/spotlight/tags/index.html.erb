@@ -1,12 +1,6 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
-  <% @page_title = t(:'.title') %>
-
-  <h1><%= t :'spotlight.curation.header' %></h1>
-  <h4 class="text-muted">
-    <%= t :'.header' %>
-    <span class="label label-default"><%= @tags.length %></span>
-  </h4>
+  <%= curation_page_title((t(:'.header') + " "  + content_tag(:span, @tags.length, class: 'label label-default')).html_safe) %>
 
   <table class="table table-striped">
     <thead>

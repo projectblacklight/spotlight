@@ -1,14 +1,7 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
-  <% @page_title = t('.title') %>
+  <%= curation_page_title %>
   <%= bootstrap_form_for @exhibit, url: update_all_exhibit_searches_path(@exhibit), style: :horizontal, right: "col-sm-10" do |f| %>
-
-    <h1><%= t :'spotlight.curation.header' %></h1>
-    <h2 class="text-muted"><%= t :'.header' %></h2>
-
-    <div class="pull-right">
-      <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-default", disabled: @searches.empty? %>
-    </div>
 
     <h4 class="clearfix"><%= t(:'.categories_header') %> <span class="label label-default"><%=@searches.count%></span></h4>
     <p class="instuctions"><%= t(:'.instructions') %></p>

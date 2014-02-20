@@ -1,8 +1,6 @@
 <div id="content" class="col-md-9">
 <%= bootstrap_form_for @contact_form, url: spotlight.contact_form_path(@contact_form), style: :horizontal, right: "col-sm-5" do |f| %>
-  <div class="row">
-    <h1><%= t :'.header' %></h1>
-  </div>
+  <%= curation_page_title %>
   <div class="row">
     <%= f.text_field :name %>
     <%= f.text_field :email %>

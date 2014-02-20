@@ -1,10 +1,7 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9 exhibit-admin">
 <%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal do |f| %>
-  <div class="row">
-    <h1><%= t :'spotlight.administration.header' %></h1>
-    <h2 class="text-muted"><%= t :'.header' %></h2>
-  </div>
+<%= administration_page_title %>
   <div class="row col-md-9">
     <%= f.text_field :title %>
     <%= f.text_field :subtitle %>
