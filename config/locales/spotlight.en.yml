@@ -242,6 +242,7 @@ en:
         taggings:
           count: "Items tagged"
         actions: "Actions"
+        no_tags: "No items in this exhibit have been tagged. You can add tags to an item on the Item Details page while in curation mode."
     role:
       admin: "Admin"
       curator: "Curator"
