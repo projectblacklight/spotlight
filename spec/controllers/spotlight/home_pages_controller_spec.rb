@@ -3,6 +3,9 @@ require 'spec_helper'
 describe Spotlight::HomePagesController do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { "title" => "MyString" } }
+  let(:page) { FactoryGirl.create(:home_page) }
+  let(:exhibit) {page.exhibit}
+    
 
   describe "when signed in as a curator" do
     let(:user) { FactoryGirl.create(:exhibit_curator) }
@@ -14,6 +17,26 @@ describe Spotlight::HomePagesController do
         expect(response).to redirect_to exhibit_feature_pages_path(Spotlight::Exhibit.default)
       end
     end
+
+    describe "GET edit" do
+      describe "when the page title isn't set" do
+        let(:page) { FactoryGirl.create(:home_page, title: nil) }
+        it "should show breadcrumbs" do
+          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+          expect(controller).to receive(:add_breadcrumb).with("Feature pages", exhibit_feature_pages_path(exhibit))
+          expect(controller).to receive(:add_breadcrumb).with("Exhibit Home", edit_home_page_path(page))
+          get :edit, id: page 
+          expect(response).to be_successful 
+        end
+      end
+      it "should show breadcrumbs" do
+        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Feature pages", exhibit_feature_pages_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with(page.title, edit_home_page_path(page))
+        get :edit, id: page 
+        expect(response).to be_successful 
+      end
+    end
     describe "POST create" do
       it "redirects to the feature page index" do
         post :create, home_page: {title: "MyString"}, exhibit_id: Spotlight::Exhibit.default
@@ -21,7 +44,6 @@ describe Spotlight::HomePagesController do
       end
     end
     describe "PUT update" do
-      let!(:page) { FactoryGirl.create(:home_page) }
       it "redirects to the feature page index action" do
         put :update, id: page, exhibit_id: page.exhibit.id, home_page: valid_attributes
         response.should redirect_to(exhibit_home_pages_path(page.exhibit.id))
@@ -30,9 +52,6 @@ describe Spotlight::HomePagesController do
   end
 
   describe "Rendering home page" do
-    let!(:page) { FactoryGirl.create(:home_page) }
-    let(:exhibit) {page.exhibit}
-    
     it "should get search results for display facets" do
       expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
       controller.stub(get_search_results: [double, double])

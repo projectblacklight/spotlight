@@ -1,11 +1,9 @@
-require_dependency "spotlight/application_controller"
-
 module Spotlight
   class DashboardsController < Spotlight::ApplicationController
     include Blacklight::Base
 
     before_filter :authenticate_user!
-    load_resource :exhibit, class: Spotlight::Exhibit
+    load_resource :exhibit, class: Spotlight::Exhibit # TODO need to authorize user?
 
     copy_blacklight_config_from Spotlight::CatalogController
 
@@ -14,6 +12,8 @@ module Spotlight
 
       @pages = Spotlight::Page.recent.limit(5)
       @solr_documents = load_recent_solr_documents 5
+      add_breadcrumb @exhibit.title, @exhibit
+      add_breadcrumb t(:'spotlight.curation.sidebar.dashboard'), exhibit_dashboard_path(@exhibit)
 
       self.blacklight_config.view.reject! { |k,v| true }
       self.blacklight_config.view.admin_table.partials = ['index_compact']

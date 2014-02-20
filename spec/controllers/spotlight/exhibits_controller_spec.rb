@@ -38,6 +38,9 @@ describe Spotlight::ExhibitsController do
     before {sign_in user }
     describe "#edit" do
       it "should be successful" do
+        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Administration", exhibit_dashboard_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with("Settings", edit_exhibit_path(exhibit))
         get :edit, id: exhibit
         expect(response).to be_successful
       end

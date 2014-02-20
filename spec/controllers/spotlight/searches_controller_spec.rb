@@ -27,6 +27,7 @@ describe Spotlight::SearchesController do
       sign_in FactoryGirl.create(:exhibit_curator)
     end
     let(:search) { FactoryGirl.create(:search) }
+    let(:exhibit) { search.exhibit }
 
     it "should create a saved search" do
       post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_ssim"=>["map"]}, exhibit_id: Spotlight::Exhibit.default
@@ -38,6 +39,9 @@ describe Spotlight::SearchesController do
 
     describe "GET index" do
       it "should show all the items" do
+        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with("Browse", exhibit_searches_path(exhibit))
         get :index, exhibit_id: search.exhibit_id 
         expect(response).to be_successful
         expect(assigns[:exhibit]).to eq search.exhibit

@@ -37,6 +37,8 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
     self.blacklight_config.view.reject! { |k,v| true }
     self.blacklight_config.view.admin_table.partials = [:index_compact]
 
+    add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
+    add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)
     (@response, @document_list) = get_search_results
     @filters = params[:f] || []
       
