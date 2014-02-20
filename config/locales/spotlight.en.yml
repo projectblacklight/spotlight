@@ -200,7 +200,7 @@ en:
       index:
         title: Site Administration - Users
         header: Users
-        name: "Name"
+        name: Username
         role: "Role"
         actions: "Actions"
     searches: &search
