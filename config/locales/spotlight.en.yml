@@ -136,9 +136,9 @@ en:
         header: "Report a Problem"
     custom_fields:
       edit:
-        header: Custom Field
+        header: Edit Exhibit-Specific Field
       new:
-        header: Custom Field
+        header: Add Exhibit-Specific Field
     dashboards:
       show:
         header: Dashboard
