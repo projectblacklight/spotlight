@@ -1,0 +1,11 @@
+<tr>
+  <td>
+    <h4 class="panel-title"><%= page.title %></h4>
+    <div class="page-links">
+      <%= view_link page, :class => 'btn btn-text' %> &middot;
+      <%= edit_link page, :class => 'btn btn-text' %>
+    </div>
+  </td>
+  <td><%= page.last_edited_by.to_s if page.last_edited_by %></td>
+  <td><%= l page.updated_at %></td>
+</tr>

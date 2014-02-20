@@ -10,6 +10,10 @@ describe "Item Administration" do
       expect(page).to have_css("h2", text: "Items")
       expect(page).to have_css("table#documents")
       expect(page).to have_css(".pagination")
+      within "tr[itemscope]:first-child" do
+        expect(page).to have_link "View"
+        expect(page).to have_link "Edit"
+      end
     end
 
     it "should have a public/private toggle" do

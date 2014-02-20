@@ -1,0 +1,28 @@
+<h3><%= t :'.header' %></h3>
+
+<div class="btn-toolbar pull-right">
+    <%= bootstrap_form_for Spotlight::FeaturePage.new, url: spotlight.polymorphic_path([@exhibit, 'feature_pages']), html: { class: 'btn-group' } do |f|%>
+      <%= f.hidden_field(:title) %>
+      <%= f.submit t('.new_feature_page'), class: "btn btn-default" %>
+    <%- end -%>
+
+    <%= bootstrap_form_for Spotlight::AboutPage.new, url: spotlight.polymorphic_path([@exhibit, 'about_pages']), html: { class: 'btn-group' } do |f|%>
+      <%= f.hidden_field(:title) %>
+      <%= f.submit t('.new_about_page'), class: "btn btn-default" %>
+    <%- end -%>
+    </div>
+
+<% unless @pages.empty? %>
+<table class="table table-striped">
+<thead>
+  <tr>
+    <th class="col-md-4"><%= t :'.field.title' %></th>
+    <th class="col-md-2"><%= t :'.field.last_edited_by' %></th>
+    <th class="col-md-2"><%= t :'.field.updated_at' %></th>
+  </tr>
+</thead>
+<tbody>
+<%= render partial: 'page', collection: @pages %>
+</tbody>
+</table>
+<% end %>

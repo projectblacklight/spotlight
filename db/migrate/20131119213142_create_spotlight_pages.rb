@@ -7,6 +7,8 @@ class CreateSpotlightPages < ActiveRecord::Migration
       t.integer    :weight, default: 50
       t.boolean    :published
       t.references :exhibit
+      t.integer :created_by_id
+      t.integer :last_edited_by_id
       t.timestamps
       t.integer :parent_page_id
       t.boolean :display_sidebar

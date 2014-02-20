@@ -51,6 +51,7 @@ module Spotlight
         expect(helper.exhibit_create_link(some_model, '#', class: 'btn')).to have_selector 'a.btn'
       end
     end
+
     describe "#edit_link" do
       before do
         helper.stub action_default_value: "Edit"
@@ -67,6 +68,28 @@ module Spotlight
 
       it "should accept link_to options" do
         expect(helper.edit_link(some_model, '#', class: 'btn')).to have_selector 'a.btn'
+      end
+    end
+
+    describe "#exhibit_edit_link" do
+      let(:current_exhibit) { Spotlight::Exhibit.default }
+      let(:some_model) { ::SolrDocument.new  id: 1 }
+      before do
+        helper.stub(current_exhibit: current_exhibit)
+        helper.stub action_default_value: "Edit"
+      end
+
+      it "should be a model-specific edit link" do
+        helper.should_receive(:action_default_value).with(some_model).and_return "Edit"
+        expect(helper.exhibit_edit_link(some_model)).to have_link "Edit", href: spotlight.edit_exhibit_solr_document_path(current_exhibit, some_model)
+      end
+
+      it "should accept an explicit link" do
+        expect(helper.exhibit_edit_link(some_model, '#')).to have_link "Edit", href: "#"
+      end
+
+      it "should accept link_to options" do
+        expect(helper.exhibit_edit_link(some_model, '#', class: 'btn')).to have_selector 'a.btn'
       end
     end
 
