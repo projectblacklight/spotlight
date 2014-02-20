@@ -154,6 +154,9 @@ en:
     exhibits:
       edit:
         header: Settings
+        fields:
+          contact_emails:
+            help_block: Each contact email will receive Report a problem form submissions
     pages:
       order_pages:
         pages_header: Defined Pages
