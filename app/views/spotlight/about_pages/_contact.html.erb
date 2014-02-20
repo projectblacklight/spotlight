@@ -7,6 +7,8 @@
         <%= delete_link f.object, :class => 'btn btn-text' %>
       </div>
       <%= f.check_box :show_in_sidebar, label: '' %>
+      <%= f.hidden_field :id %>
+      <%= f.hidden_field :weight, data: {property: "weight"} %>
       <div class="main">
         <%= render partial: "contact_properties", locals: {contact: f.object} %>
       </div>

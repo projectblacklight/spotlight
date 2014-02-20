@@ -5,8 +5,10 @@ Spotlight.onLoad(function() {
   $('#nested-pages.about_page_admin').nestable({maxDepth: 1});
   $('#nested-pages.feature_page_admin').nestable({maxDepth: 2, expandBtnHTML: "", collapseBtnHTML: ""});
   $('#nested-pages.search_admin').nestable({maxDepth: 1});
+  $('.contacts_admin').nestable({maxDepth: 1});
   // Handle weighting the pages and their children.
   updateWeightsAndRelationships($('#nested-pages'));
+  updateWeightsAndRelationships($('.contacts_admin'));
 
    $.each($('.dd-handle'), function(k, el){
       var height;
@@ -28,18 +30,20 @@ function addTitleToSirTrevorBlock(block){
 
 function updateWeightsAndRelationships(selector){
   $.each(selector, function() {
-    $(this).on('change',function(){
+    $(this).on('change', function(event){
+      // Scope to a container because we may have two orderable sections on the page (e.g. About page has pages and contacts)
+      container = $(event.currentTarget);
       var data = $(this).nestable('serialize')
       var weight = 0;
       for(var i in data){
         var parent_id = data[i]['id'];
-        parent_node = findNode(parent_id)
+        parent_node = findNode(parent_id, container);
         setWeight(parent_node, weight++);
         if(data[i]['children']){
           var children = data[i]['children'];
           for(var child in children){
             var id = children[child]['id']
-            child_node = findNode(id);
+            child_node = findNode(id, container);
             setWeight(child_node, weight++);
             setParent(child_node, parent_id);
           }
@@ -51,8 +55,8 @@ function updateWeightsAndRelationships(selector){
   });
 }
 
-function findNode(id) {
-  return $("[data-id="+id+"]");
+function findNode(id, container) {
+  return container.find("[data-id="+id+"]");
 }
 
 function setWeight(node, weight) {

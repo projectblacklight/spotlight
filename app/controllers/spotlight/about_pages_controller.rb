@@ -22,7 +22,7 @@ module Spotlight
     end
 
     def contact_params
-      params.require(:exhibit).permit("contacts_attributes" => [:id, :show_in_sidebar])
+      params.require(:exhibit).permit("contacts_attributes" => [:id, :show_in_sidebar, :weight])
     end
   end
 end

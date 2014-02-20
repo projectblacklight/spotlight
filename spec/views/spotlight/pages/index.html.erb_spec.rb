@@ -18,7 +18,6 @@ describe "spotlight/pages/index.html.erb" do
     view.send(:extend, Spotlight::CrudLinkHelpers)
     view.stub(:page_model).and_return(:feature_page)
     view.stub(:page_collection_name).and_return(:feature_pages)
-    view.stub(:new_exhibit_feature_page_path).and_return("/exhibit/features")
     view.stub(:update_all_exhibit_feature_pages_path).and_return("/exhibit/features/update_all")
     assign(:exhibit, exhibit)
     view.stub(:current_exhibit).and_return(exhibit)

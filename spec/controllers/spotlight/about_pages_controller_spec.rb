@@ -86,12 +86,14 @@ describe Spotlight::AboutPagesController do
       let(:exhibit) { user.roles.first.exhibit }
       it "should update contacts" do
         patch :update_contacts, exhibit_id: exhibit, exhibit: {contacts_attributes: [
-          {"show_in_sidebar"=>"1", "id"=>contact1.id},
-          {"show_in_sidebar"=>"0", "id"=>contact2.id}]}
+          {"show_in_sidebar"=>"1", "id"=>contact1.id, weight: 1},
+          {"show_in_sidebar"=>"0", "id"=>contact2.id, weight: 2}]}
         expect(response).to redirect_to exhibit_about_pages_path(exhibit)
         expect(flash[:notice]).to eq 'Contacts were successfully updated.'
         expect(exhibit.contacts.size).to eq 2
         expect(exhibit.contacts.published.map(&:name)).to eq ['Aphra Behn']
+        expect(contact1.reload.weight).to eq 1
+        expect(contact2.reload.weight).to eq 2
       end
       it "should show index on failure" do
         Spotlight::Exhibit.any_instance.should_receive(:update).and_return(false)
