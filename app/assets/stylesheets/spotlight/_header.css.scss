@@ -4,8 +4,8 @@
 }
 
 #exhibit-masthead {
-padding: 24px 0;
-  h1, .h1 {
+  padding: 24px 0;
+  .site-title {
     font-size: 30px;
   }
 
@@ -19,5 +19,23 @@ padding: 24px 0;
     padding: 8px 0;
     background: none;
     margin-bottom: 0;
+  }
+}
+
+.col-md-4 {
+  .submit-search-text {
+    // hide 'search' label 
+      // copied from .sr-only, sadly can't seem to use @extend in a media
+      // query like this, have to copy. 
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+  }
+  .glyphicon-search {
+    line-height: $line-height-computed;
   }
 }
