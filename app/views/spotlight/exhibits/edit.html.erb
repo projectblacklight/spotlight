@@ -1,20 +1,14 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9 exhibit-admin">
-<%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal, right: "col-sm-5" do |f| %>
+<%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal do |f| %>
   <div class="row">
     <h1><%= t :'spotlight.administration.header' %></h1>
+    <h2 class="text-muted"><%= t :'.header' %></h2>
   </div>
-  <div class="row">
-    <div class="col-sm-5">
-      <h2><small><%= t :'.header' %></small></h2>
-    </div>
-    <div class="col-sm-2">
-      <%= f.submit nil %>
-    </div>
-  </div>
-  <div class="row">
+  <div class="row col-md-9">
     <%= f.text_field :title %>
     <%= f.text_field :subtitle %>
+    <%= f.text_area :description %>
     <%= f.form_group(:contact_emails, label: { text: nil, class: nil }, help: nil) do %>
       <%= f.fields_for :contact_emails, @exhibit.contact_emails do |contact| %>
         <% if contact.index == 0 %>
@@ -27,7 +21,11 @@
         <% end %>
       <% end %>
     <% end %>
-    <%= f.text_area :description %>
+    <p class="help-block"><%= t :'.fields.contact_emails.help_block' %></p>
+
+    <div class="pull-right">
+      <%= f.submit nil, class: 'btn btn-primary' %>
+    </div>
   </div>
 <% end %>
 </div>
