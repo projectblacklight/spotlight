@@ -1,9 +1,13 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
   <%= curation_page_title %>
+  <h4><%= header_with_count(t(:'.categories_header'), @searches.count) %></h4>
+  
+  <% if @searches.empty? %>
+    <%= t :'.no_saved_searches' %>
+  <% else %>
   <%= bootstrap_form_for @exhibit, url: update_all_exhibit_searches_path(@exhibit), style: :horizontal, right: "col-sm-10" do |f| %>
 
-    <h4 class="clearfix"><%= t(:'.categories_header') %> <span class="label label-default"><%=@searches.count%></span></h4>
     <p class="instuctions"><%= t(:'.instructions') %></p>
     <div class="panel-group dd search_admin" id="nested-pages">
       <ol class="dd-list">
@@ -14,7 +18,8 @@
     </div>
 
     <div class="pull-right">
-      <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-primary", disabled: @searches.empty? %>
+      <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-default" %>
     </div>
+  <% end %>
   <% end %>
 </div>

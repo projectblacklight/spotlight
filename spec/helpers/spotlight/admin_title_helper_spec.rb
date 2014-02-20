@@ -36,4 +36,12 @@ describe Spotlight::AdminTitleHelper do
     end
   end
 
+  describe "#header_with_count" do
+    it "should merge the title with a count label" do
+      val = helper.header_with_count "some title", 5
+      expect(val).to match /some title /
+      expect(val).to have_selector "span.label", text: 5
+    end
+  end
+
 end

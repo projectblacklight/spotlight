@@ -13,7 +13,7 @@ describe "spotlight/searches/index.html.erb" do
     it "should disable the update button" do
       assign(:searches, [])
       render
-      expect(rendered).to have_selector("input[type=submit][value='Save changes'][disabled]")
+      expect(rendered).to have_content "You can save search results"
     end
   end
 end
