@@ -138,9 +138,19 @@ en:
         header: Custom Field
       new:
         header: Custom Field
-    dashboard:
-      index:
+    dashboards:
+      show:
         header: Dashboard
+      page_activity:
+        header: Recent Site Building Activity
+        new_feature_page: "Add new Feature page"
+        new_about_page: "Add new About page"
+        field:
+          title: Title
+          last_edited_by: User
+          updated_at: Last Edited
+      solr_document_activity:
+        header: Recently Updated Items
     exhibits:
       edit:
         header: Settings

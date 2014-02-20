@@ -22,7 +22,7 @@ Spotlight::Engine.routes.draw do
 
     resources :custom_fields, shallow: true
 
-    resources :dashboard, only: :index
+    resource :dashboard, only: :show
 
     resources :searches, shallow: true do
       collection do

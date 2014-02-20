@@ -3,5 +3,8 @@
 <div id="content" class="col-md-9">
   <h1><%= t :'spotlight.curation.header' %></h1>
   <h2 class="text-muted clearfix"><%= t :".header" %></h2>
-  <p>[Dashboard content will go here]</p>
+
+  <%= render 'analytics' %>
+  <%= render 'page_activity' %>
+  <%= render 'solr_document_activity' %>
 </div>

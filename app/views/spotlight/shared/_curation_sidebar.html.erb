@@ -1,5 +1,5 @@
 <div id="sidebar" class="col-md-3" role="complementary">
-  <%= link_to t(:'spotlight.curation.sidebar.dashboard'), spotlight.exhibit_dashboard_index_path(@exhibit) %>
+  <%= link_to t(:'spotlight.curation.sidebar.dashboard'), spotlight.exhibit_dashboard_path(@exhibit) %>
   <%= render 'spotlight/shared/admin_sidebar' if can? :update, current_exhibit %>
   <h4><%=t(:'spotlight.curation.sidebar.header') %></h4>
   <ul class="nav sidenav">

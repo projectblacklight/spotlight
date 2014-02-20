@@ -102,7 +102,7 @@ describe Spotlight::FeaturePagesController do
           # specifies that the Page created on the previous line
           # receives the :update_attributes message with whatever params are
           # submitted in the request.
-          Spotlight::FeaturePage.any_instance.should_receive(:update).with(valid_attributes)
+          Spotlight::FeaturePage.any_instance.should_receive(:update).with(hash_including(valid_attributes))
           put :update, id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes
         end
 

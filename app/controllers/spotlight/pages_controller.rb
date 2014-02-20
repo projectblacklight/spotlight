@@ -34,6 +34,7 @@ module Spotlight
     # POST /exhibits/1/pages
     def create
       @page.attributes = page_params
+      @page.last_edited_by = @page.created_by = current_user
 
       if @page.save
         redirect_to [@page.exhibit, page_collection_name], notice: 'Page was successfully created.'
@@ -44,7 +45,7 @@ module Spotlight
 
     # PATCH/PUT /pages/1
     def update
-      if @page.update(page_params)
+      if @page.update(page_params.merge(last_edited_by: current_user))
         redirect_to [@page.exhibit, page_collection_name], notice: 'Page was successfully updated.'
       else
         render action: 'edit'
