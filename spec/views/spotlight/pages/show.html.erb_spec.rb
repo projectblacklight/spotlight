@@ -5,7 +5,6 @@ module Spotlight
     let(:exhibit) { stub_model(Exhibit) }
     before(:each) do
       view.stub(:current_exhibit).and_return(exhibit)
-      view.send(:extend, Spotlight::CrudLinkHelpers)
       @page = assign(:page, stub_model(FeaturePage,
         :exhibit => exhibit,
         :title => "Title",

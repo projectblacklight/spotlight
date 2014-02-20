@@ -1,6 +1,7 @@
 module Spotlight
   module ApplicationHelper
     include CrudLinkHelpers
+    include AdminTitleHelper
 
     # Can search for named routes directly in the main app, omitting
     # the "main_app." prefix
@@ -44,20 +45,6 @@ module Spotlight
       else
         search_action_url(q: tag)
       end
-    end
-
-    def curation_page_title title = nil
-      page_title t(:'spotlight.curation.header'), title
-
-    end
-
-    def administration_page_title title = nil
-      page_title t(:'spotlight.administration.header'), title
-    end
-
-    def page_title section, title = nil
-      @page_title = t(:'spotlight.html_admin_title', section: section, title: title || t(:'.title', default: :'.header'), application_name: application_name)
-      content_tag(:h1, section) + content_tag(:h2, title || t(:'.header'), class: 'text-muted')
     end
 
     private
