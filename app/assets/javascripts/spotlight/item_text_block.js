@@ -32,8 +32,7 @@ SirTrevor.Blocks.ItemText =  (function(){
         '<div class="form-group">',
           '<label for="' + text_key + '" class="col-sm-2 control-label">Text</label>',
           '<div class="col-sm-6 field">',
-            '<textarea name="' + text_key + '"',
-            ' class="form-control" type="text" id="' + text_key + '" rows="8"></textarea>',
+          '<div id="' + text_key + '" class="st-required st-text-block" contenteditable="true"></div>',
           '</div>',
         '</div>',
       '</div>',
@@ -71,7 +70,14 @@ SirTrevor.Blocks.ItemText =  (function(){
       var data = {};
       data[id_key] = this.$('#' + id_key).val();
       data[title_key] = this.$('#' + title_key).is(':checked');
-      data[text_key] = this.$('#' + text_key).val();
+
+      if (this.hasTextBlock()) {
+        var content = this.getTextBlock().html();
+        if (content.length > 0) {
+          data.text = SirTrevor.toMarkdown(content, this.type);
+        }
+      }
+
       data[align_key] = this.$('[name=' + align_key + ']:checked').val();
       this.setData(data);
     },
@@ -81,9 +87,9 @@ SirTrevor.Blocks.ItemText =  (function(){
     },
 
     loadData: function(data){
+      this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
       this.$('#' + id_key).val(data[id_key]);
       this.$('#' + title_key).prop('checked', data[title_key]);
-      this.$('#' + text_key).val(data[text_key]);
       this.$('#' + align_key + "-" + data[align_key]).prop("checked", true);
     }
   });

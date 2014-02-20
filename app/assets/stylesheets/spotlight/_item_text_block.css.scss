@@ -32,10 +32,16 @@
   .field {
     width: 75%;
   }
-  textarea {
+
+  #item-text {
+    @extend .form-control;
+
+    min-height: 7em;
+
     &:hover, &:active {
       @include record-thubmnail-textarea;
     }
     @include record-thubmnail-textarea;
+    
   }
 }

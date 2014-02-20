@@ -2,3 +2,20 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+
+.st-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  background-color: #34e0c2;
+  padding: 3px 8px;
+  color: white;
+  font-weight: bold;
+}
+
+.st-block__inner:hover {
+  .st-title {
+    display: block;
+  }
+}
