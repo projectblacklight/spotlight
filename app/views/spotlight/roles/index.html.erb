@@ -5,7 +5,6 @@
   <h1><%= t :'spotlight.administration.header' %></h1>
   <h2 class="text-muted"><%= t :'.header' %></h2>
   <%= bootstrap_form_for @exhibit, url: spotlight.update_all_exhibit_roles_path(@exhibit) do |f| %>
-    <%= exhibit_create_link Spotlight::Role.new, '#', class: 'btn btn-default', data: {behavior: 'new-user'} %>
 
     <table class="table table-striped">
       <thead>
@@ -20,8 +19,10 @@
           <tr data-edit-for="new">
             <td></td>
             <td colspan=2>
-              <%= cancel_link r.object, '#', class: 'btn btn-text', data: {behavior: 'cancel-edit' } %>
-              <%=f.submit nil, class: 'btn btn-primary'%>
+              <div class="pull-right">
+                <%= cancel_link r.object, '#', class: 'btn btn-text', data: {behavior: 'cancel-edit' } %>
+                <%=f.submit nil, class: 'btn btn-primary'%>
+              </div>
             </td>
           </tr>
         <% else %>
@@ -38,13 +39,19 @@
             <%= r.hidden_field :_destroy, data: {'destroy-for' => r.object.id} %>
             </td>
             <td colspan=2>
-              <%= cancel_link r.object, '#', class: 'btn btn-text', data: {behavior: 'cancel-edit' } %>
-              <%=f.submit nil, class: 'btn btn-primary'%>
+              <div class="pull-right">
+                <%= cancel_link r.object, '#', class: 'btn btn-text', data: {behavior: 'cancel-edit' } %>
+                <%=f.submit nil, class: 'btn btn-primary'%>
+              </div>
             </td>
           </tr>
         <% end %>
       <% end %>
       </tbody>
     </table>
+
+    <div class="pull-right">
+      <%= exhibit_create_link Spotlight::Role.new, '#', class: 'btn btn-default', data: {behavior: 'new-user'} %>
+    </div>
   <% end %>
 </div>
