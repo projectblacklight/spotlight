@@ -32,7 +32,7 @@ SirTrevor.Blocks.ItemText =  (function(){
         '<div class="form-group">',
           '<label for="' + text_key + '" class="col-sm-2 control-label">Text</label>',
           '<div class="col-sm-6 field">',
-          '<div id="' + text_key + '" class="st-required st-text-block" contenteditable="true"></div>',
+          '<div id="' + text_key + '" class="st-text-block" contenteditable="true"></div>',
           '</div>',
         '</div>',
       '</div>',
@@ -75,6 +75,8 @@ SirTrevor.Blocks.ItemText =  (function(){
         var content = this.getTextBlock().html();
         if (content.length > 0) {
           data.text = SirTrevor.toMarkdown(content, this.type);
+        }else{
+          data.text = "";
         }
       }
 
