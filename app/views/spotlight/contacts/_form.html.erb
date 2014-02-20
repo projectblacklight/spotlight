@@ -5,7 +5,7 @@
   <%= f.text_field :location, placeholder: t(:'.location.placeholder') %>
   <div class="form-group pull-right">
     <%= cancel_link @contact, exhibit_about_pages_path(@contact.exhibit), class: "btn btn-default" %>
-    <%= f.submit nil %>
+    <%= f.submit nil, class: 'btn btn-primary' %>
   </div>
 <% end %>
 

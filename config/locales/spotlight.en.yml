@@ -180,6 +180,10 @@ en:
       form:
         title_placeholder: "Title"
     contacts:
+      edit:
+        header: "Edit Contact"
+      new:
+        header: "Add Exhibit Contact"
       form:
         name:
           placeholder: First and last name
