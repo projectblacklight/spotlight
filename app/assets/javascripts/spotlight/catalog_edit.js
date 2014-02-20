@@ -31,7 +31,14 @@ Spotlight.onLoad(function() {
 
       $(".visiblity_toggle").bl_checkbox_submit({
           //css_class is added to elements added, plus used for id base
-          css_class: "toggle_visibility"    
+          css_class: "toggle_visibility",
+          //success is called at the end of the ajax success callback
+          success: function (){
+            // We store the selector of the label to toggle in a data attribute in the form
+            var private_label = $($(this).data("label-toggle-target"));
+            // Toggle the Private label
+            private_label.slideToggle();
+          }
       }); 
 
 });
