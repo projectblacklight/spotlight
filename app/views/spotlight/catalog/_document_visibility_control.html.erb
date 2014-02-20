@@ -1,0 +1,5 @@
+  <% action = document.private?(current_exhibit) ? :make_public : :make_private %>
+
+  <%= form_tag( exhibit_catalog_visiblity_path( current_exhibit, document ), :method => document.private?(current_exhibit) ? :put : :delete, :class => "visiblity_toggle", "data-doc-id" => document.id, :'data-present' => t('.make_private.label'), :'data-absent' => t('.make_public.label'), :'data-inprogress' => t('.inprogress.label')) do %>  
+        <%= submit_tag(t(".#{action}.button"), :id => "visibility_toggle_#{document.id.to_s.parameterize}", :class => "visibility_#{action}") %>
+      <% end %>

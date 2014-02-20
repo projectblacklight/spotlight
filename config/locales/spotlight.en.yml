@@ -111,6 +111,16 @@ en:
       fields:
         title: "Title"
         date_added: "Date Added"
+        visibility: Public
+      document_visibility_control:
+        make_public:
+          label: ""
+          button: Make Public
+        make_private:
+          label: ""
+          button: Make Private
+        inprogress:
+          label: ""
       admin:
         title: Curation - Items
         header: Items

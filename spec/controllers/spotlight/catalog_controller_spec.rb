@@ -60,6 +60,12 @@ describe Spotlight::CatalogController do
       sign_in FactoryGirl.create(:exhibit_visitor)
     end
 
+    describe "GET index" do
+      it "should apply gated discovery access controls" do
+        expect(controller.solr_search_params_logic).to include :apply_permissive_visibility_filter
+      end
+    end
+
     describe "GET admin" do
       it "should deny access" do
         get :admin, exhibit_id: Spotlight::Exhibit.default
@@ -72,6 +78,37 @@ describe Spotlight::CatalogController do
       let (:exhibit) {Spotlight::Exhibit.default}
       it "should not be allowed" do
         get :edit, exhibit_id: exhibit, id: 'dq287tq6352'
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to eq "You are not authorized to access this page."
+      end
+    end
+
+    describe "GET show with private item" do
+      let (:exhibit) {Spotlight::Exhibit.default}
+      it "should not be allowed" do
+        ::SolrDocument.any_instance.stub(:private?).and_return(true)
+        get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to eq "You are not authorized to access this page."
+      end
+    end
+
+    describe "PUT make_public" do
+
+      let (:exhibit) {Spotlight::Exhibit.default}
+      it "should not be allowed" do
+        put :make_public, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to eq "You are not authorized to access this page."
+      end
+
+    end
+
+    describe "DELETE make_private" do
+
+      let (:exhibit) {Spotlight::Exhibit.default}
+      it "should not be allowed" do
+        delete :make_private, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to eq "You are not authorized to access this page."
       end
@@ -107,6 +144,39 @@ describe Spotlight::CatalogController do
       it "should be successful" do
         patch :update, exhibit_id: exhibit, id: 'dq287tq6352', solr_document: {tag_list: 'one, two'}
         expect(response).to be_redirect
+      end
+    end
+
+
+    describe "PUT make_public" do
+      before do
+        request.env["HTTP_REFERER"] = "where_i_came_from"
+        ::SolrDocument.any_instance.stub(:reindex)
+      end
+
+      let (:exhibit) {Spotlight::Exhibit.default}
+      it "should be successful" do
+        ::SolrDocument.any_instance.should_receive(:reindex)
+        ::SolrDocument.any_instance.should_receive(:make_public!).with(exhibit)
+        put :make_public, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
+        expect(response).to redirect_to "where_i_came_from"
+      end
+
+    end
+
+    describe "DELETE make_private" do
+
+      before do
+        request.env["HTTP_REFERER"] = "where_i_came_from"
+        ::SolrDocument.any_instance.stub(:reindex)
+      end
+
+      let (:exhibit) {Spotlight::Exhibit.default}
+      it "should be successful" do
+        ::SolrDocument.any_instance.should_receive(:reindex)
+        ::SolrDocument.any_instance.should_receive(:make_private!).with(exhibit)
+        delete :make_private, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
+        expect(response).to redirect_to "where_i_came_from"
       end
     end
   end

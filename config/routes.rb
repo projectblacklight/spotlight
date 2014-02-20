@@ -13,6 +13,9 @@ Spotlight::Engine.routes.draw do
       collection do
         get 'admin'
       end
+
+      put 'visiblity', to: "catalog#make_public"
+      delete 'visiblity', to: "catalog#make_private"
     end
 
     resources :custom_fields, shallow: true

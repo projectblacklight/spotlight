@@ -3,6 +3,7 @@ class CreateSpotlightSolrDocumentSidecars < ActiveRecord::Migration
     create_table :spotlight_solr_document_sidecars do |t|
       t.references :exhibit, index: true
       t.string :solr_document_id, index: true
+      t.boolean :public, default: true
       t.text :data
 
       t.timestamps

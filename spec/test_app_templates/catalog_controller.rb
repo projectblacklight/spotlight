@@ -85,6 +85,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'personal_name_ssm', :label => 'Personal Names'
     config.add_show_field 'corporate_name_ssm', :label => 'Corporate Names'
 
+    config.add_sort_field 'score desc, sort_title_ssi asc', :label => 'Relevance' 
   end
 
 

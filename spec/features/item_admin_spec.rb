@@ -11,5 +11,18 @@ describe "Item Administration" do
       expect(page).to have_css("table#documents")
       expect(page).to have_css(".pagination")
     end
+
+    it "should have a public/private toggle" do
+      visit spotlight.admin_exhibit_catalog_index_path(Spotlight::Exhibit.default)
+      within "tr[itemscope]:first-child" do
+        expect(page).to have_button "Make Private"
+        click_button "Make Private"
+      end
+
+      within "tr[itemscope]:first-child" do
+        expect(page).to have_button "Make Public"
+        click_button "Make Public"
+      end
+    end
   end
 end
