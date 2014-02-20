@@ -1,0 +1,5 @@
+          <div itemprop="name" class="name"><%= contact.name %></div>
+          <div itemprop="jobTitle"><%= contact.title %></div>
+          <div itemprop="workLocation"><%= contact.location %></div>
+          <div><%= mail_to contact.email, contact.email, itemprop: "email" %></div>
+

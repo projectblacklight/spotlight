@@ -1,0 +1,28 @@
+  <% @page_title = t :"spotlight.pages.index.#{page_collection_name}.title" %>
+  <%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, page_collection_name]), style: :horizontal, right: "col-sm-10" do |f| %>
+    <h1><%= t :'spotlight.curation.header' %></h1>
+    <div class="col-xs-2 pull-right">
+      <%= button_tag action_label(page_collection_name, :update_all), class: "btn btn-default", disabled: @pages.empty? %>
+    </div>
+    <h2 class="text-muted clearfix"><%= t :"spotlight.pages.index.#{page_collection_name}.header" %></h2>
+
+    <%= render partial: 'header' %>
+    <h3><%= t :'.pages_header' %></h3>
+    <p><%= t :'.instructions' %></p>
+    <div class="panel-group dd <%= page_model %>_admin" id="nested-pages">
+      <ol class="dd-list">
+        <%= f.fields_for page_collection_name do |p| %>
+          <%- if p.object.about_page? || p.object.top_level_page? -%>
+            <%= render partial: 'page', locals: {f: p, parent_form: f} %>
+          <%- end -%>
+        <% end %>
+      </ol>
+    </div>
+  <%- end -%>
+  <div>
+    <%= form_for "spotlight/#{page_model}".classify.constantize.new, url: spotlight.polymorphic_path([@exhibit, page_collection_name]) do |f|%>
+      <%= f.hidden_field(:title) %>
+      <%= f.submit nil, class: "btn btn-primary" %>
+    <%- end -%>
+  </div>
+

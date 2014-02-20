@@ -50,5 +50,12 @@ describe Spotlight::Ability do
     it { should be_able_to(:edit, SolrDocument.new) }
 
     it { should be_able_to(:tag, exhibit) }
+
+    let(:contact) { FactoryGirl.create(:contact, exhibit: exhibit) }
+
+    it { should be_able_to(:edit, contact) }
+    it { should be_able_to(:new, contact) }
+    it { should be_able_to(:create, contact) }
+    it { should be_able_to(:destroy, contact) }
   end
 end

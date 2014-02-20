@@ -33,5 +33,14 @@ describe Spotlight::Exhibit do
     expect(subject.searches).to eq [search]
   end
 
-   
+  describe "contacts" do
+    before do
+      subject.contacts_attributes= [
+        {"show_in_sidebar"=>"0", "name"=>"Justin Coyne", "email"=>"jcoyne@justincoyne.com", "title"=>"", "location"=>"US"},
+        {"show_in_sidebar"=>"0", "name"=>"", "email"=>"", "title"=>"Librarian", "location"=>""}]
+    end
+    it "should accept nested contacts" do
+      expect(subject.contacts.size).to eq 2
+    end
+  end
 end

@@ -1,0 +1,17 @@
+<li class="dd-item dd3-item" data-id="<%= f.object.id %>" itemscope itemtype="http://schema.org/Person">
+  <div class="dd-handle dd3-handle"><%= t :drag %></div>
+  <div class="dd3-content panel panel-default">
+    <div class="panel-heading page">
+      <div class="contact-links pull-right">
+        <%= edit_link f.object, :class => 'btn btn-text' %> &middot;
+        <%= delete_link f.object, :class => 'btn btn-text' %>
+      </div>
+      <%= f.check_box :show_in_sidebar, label: '' %>
+      <div class="main">
+        <%= render partial: "contact_properties", locals: {contact: f.object} %>
+      </div>
+    </div>
+  </div>
+
+</li>
+

@@ -19,3 +19,21 @@
     display: block;
   }
 }
+#sidebar {
+  .contacts-header {
+    margin-top: 40px;
+  }
+  ol.contacts {
+    li {
+      margin-top: 10px;
+      .name {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.contacts_admin .name {
+  font-size: 16px;
+  font-weight: 500;
+}

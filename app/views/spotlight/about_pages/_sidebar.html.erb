@@ -5,4 +5,15 @@
       <li class="<%= 'active' if current_page? page %>"><%= link_to_unless_current page.title, page %></li>
     <% end %>
   </ul>
+
+  <% if current_exhibit.contacts.published.present? %>
+    <h4 class='contacts-header'><%= t :'.contact' %></h4>
+    <ol class="nav sidenav contacts">
+      <% current_exhibit.contacts.published.each do |contact| %>
+        <li itemscope itemtype="http://schema.org/Person">
+          <%= render partial: "contact_properties", locals: {contact: contact} %>
+        </li>
+      <% end %>
+    </ol>
+  <% end %> 
 </div>
