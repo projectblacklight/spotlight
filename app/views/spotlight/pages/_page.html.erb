@@ -8,7 +8,7 @@
       </a>
       <%= f.check_box :published, label: '' %>
       <div class="main">
-        <h3 class="panel-title"><%= page.title %></h3>
+        <h3 class="panel-title"><%= page.title_or_default %></h3>
         <div class="page-links">
           <%= view_link page, :class => 'btn btn-text' %> &middot;
           <%= edit_link page, :class => 'btn btn-text' %> &middot;

@@ -34,5 +34,10 @@ module Spotlight
     def top_level_page_or_self
       parent_page || self
     end
+
+    # Subclasses may override this if they have a default
+    def title_or_default
+      title
+    end
   end
 end

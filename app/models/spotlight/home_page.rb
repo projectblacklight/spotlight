@@ -1,10 +1,23 @@
 module Spotlight
   class HomePage < Spotlight::Page
-    before_save do
+    before_save :publish
+    before_create :default_content
+
+    def title_or_default
+      title.present? ? title : I18n.t('spotlight.pages.index.home_pages.title')
+    end
+
+    private
+    def self.default_content_text
+      "This is placeholder content for the exhibit homepage. Curators of this exhibit can edit this page to customize it for the exhibit."
+    end
+
+    def publish
       self.display_sidebar = true
       self.published = true
     end
-    before_create do
+
+    def default_content
       self.content = {
         "data" => [
           {"type" => "text",
@@ -14,10 +27,6 @@ module Spotlight
           }
         ]
       }.to_json
-    end
-    private
-    def self.default_content_text
-      "This is placeholder content for the exhibit homepage. Curators of this exhibit can edit this page to customize it for the exhibit."
     end
   end
 end
