@@ -17,8 +17,8 @@
           <%= text_field_tag "#{contact.object_name}[email]", contact.object, class: 'exhibit-contact form-control' %>
         <% end %>
       <% end %>
+    <p class="help-block"><%= t(:'.fields.contact_emails.help_block') %></p>
     <% end %>
-    <p class="help-block"><%= t :'.fields.contact_emails.help_block' %></p>
 
     <div class="pull-right">
       <%= f.submit nil, class: 'btn btn-primary' %>
