@@ -8,7 +8,7 @@ describe "A curator can see the items page" do
 
     visit '/'
     within '.dropdown-menu' do
-      click_link 'Curation'
+      click_link 'Dashboard'
     end
     expect(page).to have_content "Items"
   end
