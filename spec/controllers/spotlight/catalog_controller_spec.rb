@@ -48,7 +48,7 @@ describe Spotlight::CatalogController do
       let (:exhibit) {Spotlight::Exhibit.default}
       it "should show the item" do
         expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
-        expect(controller).to receive(:add_breadcrumb).with("Search Results", exhibit_path(exhibit, q:'map'))
+        expect(controller).to receive(:add_breadcrumb).with("Search Results", exhibit_catalog_index_path(exhibit, q:'map'))
         get :index, exhibit_id: exhibit, q: 'map'
         expect(response).to be_successful
       end
@@ -119,19 +119,22 @@ describe Spotlight::CatalogController do
     before do
       sign_in FactoryGirl.create(:exhibit_curator)
     end
+    let (:exhibit) { Spotlight::Exhibit.default }
 
     it "should show all the items" do
-      get :admin, exhibit_id: Spotlight::Exhibit.default
+      expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
+      expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
+      expect(controller).to receive(:add_breadcrumb).with("Items", admin_exhibit_catalog_index_path(exhibit))
+      get :admin, exhibit_id: exhibit
       expect(response).to be_successful
       expect(assigns[:document_list]).to be_a Array
-      expect(assigns[:exhibit]).to eq Spotlight::Exhibit.default
+      expect(assigns[:exhibit]).to eq exhibit
       expect(response).to render_template "spotlight/catalog/admin"
     end
 
     before {sign_in FactoryGirl.create(:exhibit_curator)}
 
     describe "GET edit" do
-      let (:exhibit) {Spotlight::Exhibit.default}
       it "should be successful" do
         get :edit, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to be_successful
@@ -140,7 +143,6 @@ describe Spotlight::CatalogController do
       end
     end
     describe "PATCH update" do
-      let (:exhibit) {Spotlight::Exhibit.default}
       it "should be successful" do
         patch :update, exhibit_id: exhibit, id: 'dq287tq6352', solr_document: {tag_list: 'one, two'}
         expect(response).to be_redirect
@@ -154,7 +156,6 @@ describe Spotlight::CatalogController do
         ::SolrDocument.any_instance.stub(:reindex)
       end
 
-      let (:exhibit) {Spotlight::Exhibit.default}
       it "should be successful" do
         ::SolrDocument.any_instance.should_receive(:reindex)
         ::SolrDocument.any_instance.should_receive(:make_public!).with(exhibit)
@@ -171,7 +172,6 @@ describe Spotlight::CatalogController do
         ::SolrDocument.any_instance.stub(:reindex)
       end
 
-      let (:exhibit) {Spotlight::Exhibit.default}
       it "should be successful" do
         ::SolrDocument.any_instance.should_receive(:reindex)
         ::SolrDocument.any_instance.should_receive(:make_private!).with(exhibit)

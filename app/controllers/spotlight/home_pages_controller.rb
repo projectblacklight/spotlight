@@ -1,7 +1,15 @@
 module Spotlight
   class HomePagesController < Spotlight::PagesController
     include Blacklight::SolrHelper
+    include Spotlight::PagesHelper
+
     skip_authorize_resource only: :show
+
+    def edit
+      add_breadcrumb t(:'spotlight.curation.sidebar.feature_pages'), exhibit_feature_pages_path(@exhibit)
+      add_breadcrumb home_page_or_default_title(@page), edit_home_page_path(@page)
+      super
+    end
 
     def index
       redirect_to exhibit_feature_pages_path(@exhibit)
@@ -22,6 +30,7 @@ module Spotlight
     end
     
     private
+
     def search_action_url *args
       exhibit_catalog_index_url(@page.exhibit, *args)
     end

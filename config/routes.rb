@@ -2,7 +2,7 @@ Spotlight::Engine.routes.draw do
   resources :attachments
   resource :contact_form, only: [:new, :create]
 
-  get 'exhibits/:exhibit_id' => 'catalog#index'
+  get 'exhibits/:id' => 'home_pages#show'
 
   resources :contacts, only: [:edit, :update, :destroy]
   resources :exhibits, only: [:edit, :update] do

@@ -7,6 +7,9 @@ module Spotlight
     def index
       # every admin should at least see themseleves
       raise CanCan::AccessDenied if @roles.empty?
+      add_breadcrumb @exhibit.title, @exhibit
+      add_breadcrumb t(:'spotlight.administration.sidebar.header'), exhibit_dashboard_path(@exhibit)
+      add_breadcrumb t(:'spotlight.administration.sidebar.users'), exhibit_roles_path(@exhibit)
       @exhibit.roles.build
     end
 

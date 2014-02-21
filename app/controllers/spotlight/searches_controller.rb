@@ -3,6 +3,8 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   before_filter :authenticate_user!
   before_filter :only_curators!
   load_and_authorize_resource through: :exhibit, shallow: true
+  before_filter :attach_breadcrumbs, only: [:index, :edit]
+
 
   def create
     params_copy = params.dup
@@ -18,6 +20,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   end
 
   def edit
+    add_breadcrumb @search.title, edit_search_path(@search)
     @exhibit = @search.exhibit
   end
 
@@ -44,6 +47,13 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   end
 
   protected
+
+  def attach_breadcrumbs
+    e = @exhibit || (@search.exhibit if @search)
+    add_breadcrumb e.title, e
+    add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(e)
+    add_breadcrumb t(:'spotlight.curation.sidebar.browse'), exhibit_searches_path(e)
+  end
 
   def search_params
     params.require(:exhibit).permit("searches_attributes" => [:id, :on_landing_page, :weight])

@@ -6,6 +6,9 @@ module Spotlight
     def index
       authorize! :tag, @exhibit
       @tags = @exhibit.owned_tags
+      add_breadcrumb @exhibit.title, @exhibit
+      add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
+      add_breadcrumb t(:'spotlight.curation.sidebar.tags'), exhibit_tags_path(@exhibit)
 
       respond_to do |format|
         format.html
