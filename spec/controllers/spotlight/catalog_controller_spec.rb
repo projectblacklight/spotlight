@@ -46,11 +46,16 @@ describe Spotlight::CatalogController do
 
     describe "GET index" do
       let (:exhibit) {Spotlight::Exhibit.default}
-      it "should show the item" do
+      it "should show the index" do
         expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("Search Results", exhibit_catalog_index_path(exhibit, q:'map'))
         get :index, exhibit_id: exhibit, q: 'map'
         expect(response).to be_successful
+      end
+
+      it "should add the curation widget" do
+        get :index, exhibit_id: exhibit, q: 'map'
+        expect(controller.blacklight_config.show.partials.first).to eq "curation_mode_toggle"
       end
     end
   end

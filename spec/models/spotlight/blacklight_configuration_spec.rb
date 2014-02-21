@@ -269,8 +269,6 @@ describe Spotlight::BlacklightConfiguration do
 
     it "should inject partials" do
       partials = subject.blacklight_config.show.partials
-
-      expect(partials.first).to eq "spotlight/catalog/curation_mode_toggle"
       expect(partials).to include "spotlight/catalog/tags"
     end
   end
