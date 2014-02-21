@@ -1,9 +1,7 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
-  <% @page_title = t('.title') %>
+  <%= curation_page_title %>
   <%= bootstrap_form_for @search, style: :horizontal, right: "col-sm-5", html: {id: 'edit-search'} do |f| %>
-  <h1><%= t :'spotlight.curation.header' %></h1>
-  <h2 class="text-muted"><%= t :'.header' %></h2>
   <div class="row">
     <%= f.text_field :title %>
     <%= f.select :featured_image, f.object.images, {}, prepend: "<img id=\"preview\"></img>".html_safe %>

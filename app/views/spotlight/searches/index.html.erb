@@ -1,17 +1,14 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
-  <% @page_title = t('.title') %>
+  <%= curation_page_title %>
+  <h3><%= header_with_count(t(:'.categories_header'), @searches.count) %></h3>
+  
+  <% if @searches.empty? %>
+    <%= t :'.no_saved_searches' %>
+  <% else %>
   <%= bootstrap_form_for @exhibit, url: update_all_exhibit_searches_path(@exhibit), style: :horizontal, right: "col-sm-10" do |f| %>
 
-    <h1><%= t :'spotlight.curation.header' %></h1>
-    <h2 class="text-muted"><%= t :'.header' %></h2>
-
-    <div class="pull-right">
-      <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-default", disabled: @searches.empty? %>
-    </div>
-
-    <h4 class="clearfix"><%= t(:'.categories_header') %> <span class="label label-default"><%=@searches.count%></span></h4>
-    <p class="instuctions"><%= t(:'.instructions') %></p>
+    <p class="instructions"><%= t(:'.instructions') %></p>
     <div class="panel-group dd search_admin" id="nested-pages">
       <ol class="dd-list">
       <%= f.fields_for :searches do |p| %>
@@ -19,5 +16,10 @@
       <% end %>
       </ol>
     </div>
+
+    <div class="pull-right">
+      <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-default" %>
+    </div>
+  <% end %>
   <% end %>
 </div>

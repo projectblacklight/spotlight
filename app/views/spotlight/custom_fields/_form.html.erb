@@ -1,11 +1,9 @@
-<%= bootstrap_form_for @custom_field.new_record? ? [current_exhibit, @custom_field] : @custom_field, style: :horizontal, right: "col-sm-7", html: {id: 'edit-search'} do |f| %>
+<%= bootstrap_form_for @custom_field.new_record? ? [current_exhibit, @custom_field] : @custom_field, style: :horizontal, html: {class: 'col-md-9', id: 'edit-search'} do |f| %>
 
   <%= f.text_field :label %>
   <%= f.text_area :short_description %>
-  <div class="form-group">
-    <div class="col-sm-offset-5 col-sm-4">
+  <div class="form-group pull-right">
       <%= link_to t(:"cancel"), exhibit_edit_metadata_path(current_exhibit), class: "btn btn-default" %>
-      <%= f.submit nil %>
-    </div>
+      <%= f.submit nil, class: 'btn btn-primary' %>
   </div>
 <% end %>

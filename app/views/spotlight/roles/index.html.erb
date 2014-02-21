@@ -1,9 +1,6 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
-  <% @page_title = t(:'.title') %>
-
-  <h1><%= t :'spotlight.administration.header' %></h1>
-  <h2 class="text-muted"><%= t :'.header' %></h2>
+  <%= administration_page_title %>
   <%= bootstrap_form_for @exhibit, url: spotlight.update_all_exhibit_roles_path(@exhibit) do |f| %>
 
     <table class="table table-striped">

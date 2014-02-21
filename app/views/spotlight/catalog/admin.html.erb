@@ -1,14 +1,7 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
 
-      <% @page_title = t(:'.title') %>
-
-      <div class="row">
-        <h1><%= t :'spotlight.curation.header' %></h1>
-      </div>
-      <div class="row">
-        <h2><small><%= t :'.header' %></small></h2>
-      </div>
+  <%= curation_page_title %>
 
       <%= render 'search_header' %>
 

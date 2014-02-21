@@ -1,0 +1,29 @@
+
+.page-header {
+  border-bottom: none;
+  small {
+    font-size: $font-size-h2;
+    display: block;
+    margin-top: $padding-base-vertical;
+  }
+}
+
+.sidenav {
+
+  margin-bottom: 24px;
+
+  li > a {
+    padding: 3px 15px;
+  }
+
+  .dashboard > a {
+    padding-left: 0;
+  }
+}
+
+h1,h2,h3,h4,h5,h6 {
+  .label {
+    font-size: $font-size-base;
+    vertical-align: super;
+  }
+}

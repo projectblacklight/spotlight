@@ -23,7 +23,6 @@ describe "spotlight/about_pages/index.html.erb" do
     ]}
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   before do
-    view.send(:extend, Spotlight::CrudLinkHelpers)
     view.stub(:page_model).and_return(:about_page)
     view.stub(:page_collection_name).and_return(:about_pages)
     view.stub(:update_all_exhibit_about_pages_path).and_return("/exhibit/about/update_all")

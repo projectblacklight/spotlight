@@ -1,6 +1,7 @@
 module Spotlight
   module ApplicationHelper
     include CrudLinkHelpers
+    include AdminTitleHelper
 
     # Can search for named routes directly in the main app, omitting
     # the "main_app." prefix

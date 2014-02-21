@@ -1,13 +1,10 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
-  <% @page_title = t(:'.title') %>
+  <%= curation_page_title(header_with_count(@tags.length)) %>
 
-  <h1><%= t :'spotlight.curation.header' %></h1>
-  <h4 class="text-muted">
-    <%= t :'.header' %>
-    <span class="label label-default"><%= @tags.length %></span>
-  </h4>
-
+  <% if @tags.empty? %>
+    <p><%= t :'.no_tags' %></p>
+  <% else %>
   <table class="table table-striped">
     <thead>
       <th><%= t '.name' %></th>
@@ -20,9 +17,10 @@
       <tr>
         <td><%= link_to tag.name, url_to_tag_facet(tag.name) %></td>
         <td><%= tag.taggings.count %></td>
-        <td><%= delete_link(tag, exhibit_tag_path(current_exhibit, tag), class: 'btn btn-danger') %></td>
+        <td><%= delete_link(tag, exhibit_tag_path(current_exhibit, tag), class: 'btn btn-danger btn-xs') %></td>
       </tr>
     <% end %>
     </tbody>
   </table>
+  <% end %>
 </div>

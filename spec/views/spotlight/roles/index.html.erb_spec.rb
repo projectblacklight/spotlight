@@ -11,7 +11,6 @@ module Spotlight
       assign(:exhibit, exhibit)
       view.stub(:current_exhibit).and_return(exhibit)
       exhibit.stub(:roles).and_return roles
-      view.send(:extend, Spotlight::CrudLinkHelpers)
     end
 
     it "renders the index page form" do
