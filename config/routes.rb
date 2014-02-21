@@ -10,6 +10,7 @@ Spotlight::Engine.routes.draw do
 
     get 'edit/metadata', to: "blacklight_configurations#edit_metadata_fields"
     get 'edit/facets', to: "blacklight_configurations#edit_facet_fields"
+    get 'metadata', to: 'blacklight_configurations#metadata_fields'
 
     resources :catalog, only: [:index, :show, :edit, :update] do
       collection do

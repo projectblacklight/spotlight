@@ -25,7 +25,6 @@ describe "Adding custom metadata field data" do
     sleep(1) # The data isn't commited to solr immediately.
 
     visit spotlight.exhibit_catalog_path(Spotlight::Exhibit.default, "dq287tq6352")
-
     expect(page).to have_content "Some Field"
     expect(page).to have_content "My new custom field value"
 
