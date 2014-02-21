@@ -1,9 +1,8 @@
 class Spotlight::ExhibitsController < Spotlight::ApplicationController
   before_filter :authenticate_user!
-  before_filter :default_exhibit
   include Blacklight::SolrHelper
 
-  authorize_resource
+  load_and_authorize_resource
 
   def edit
     add_breadcrumb @exhibit.title, @exhibit
@@ -29,9 +28,5 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
       :description,
       contact_emails_attributes: [:email]
     )
-  end
-
-  def default_exhibit
-    @exhibit = Spotlight::Exhibit.default
   end
 end

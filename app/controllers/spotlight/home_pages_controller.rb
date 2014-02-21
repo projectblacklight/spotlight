@@ -37,8 +37,10 @@ module Spotlight
     def blacklight_config
       if @page
         @page.exhibit.blacklight_config
-      else 
-        Spotlight::Exhibit.default.blacklight_config
+      elsif current_exhibit
+        current_exhibit.blacklight_config
+      else
+        super
       end
     end
   end

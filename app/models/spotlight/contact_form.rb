@@ -2,6 +2,7 @@ require 'mail_form'
 
 module Spotlight
   class ContactForm < MailForm::Base
+    attribute :current_exhibit
     attribute :name, validate: false
     attribute :email, validate: /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
     attribute :message
@@ -12,10 +13,11 @@ module Spotlight
     def headers
       {
         subject: "#{I18n.t(:'blacklight.application_name')} Contact Form",
-        to: Spotlight::Exhibit.default.contact_emails.first,
+        to: current_exhibit.contact_emails.first,
         from: %("#{name}" <#{email}>),
-        cc: Spotlight::Exhibit.default.contact_emails.join(", ")
+        cc: current_exhibit.contact_emails.join(", ")
       }
     end
+
   end
 end

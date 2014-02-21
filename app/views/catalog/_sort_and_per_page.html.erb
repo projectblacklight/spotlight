@@ -1,7 +1,7 @@
 <div id="sortAndPerPage" class="clearfix">
   <%= render :partial => "paginate_compact", :object => @response %>
   <div class="search-widgets pull-right">
-    <%= render('save_search') if can?( :curate, Spotlight::Exhibit.default) %>
+    <%= render('save_search') if current_exhibit and can?( :curate, current_exhibit) %>
     <%= render :partial => 'sort_widget' %>
     <%= render :partial => 'per_page_widget' %>
     <%= render :partial => 'view_type_group' %>

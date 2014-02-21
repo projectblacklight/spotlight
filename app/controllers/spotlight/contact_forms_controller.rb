@@ -6,6 +6,7 @@ module Spotlight
 
     def create
       @contact_form = Spotlight::ContactForm.new(contact_form_params)
+      @contact_form.current_exhibit = current_exhibit
       @contact_form.request = request
 
       if @contact_form.valid?
