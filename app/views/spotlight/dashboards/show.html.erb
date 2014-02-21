@@ -4,6 +4,12 @@
   <%= curation_page_title %>
 
   <%= render 'analytics' %>
-  <%= render 'page_activity' %>
-  <%= render 'solr_document_activity' %>
+
+  <div class="pageHistory clearfix">
+    <%= render 'page_activity' %>
+  </div>
+  
+  <div class="updatedItems clearfix">
+    <%= render 'solr_document_activity' %>
+  </div>
 </div>
