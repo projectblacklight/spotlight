@@ -10,8 +10,8 @@ class Spotlight::Exhibit < ActiveRecord::Base
   has_many :users, through: :roles, class_name: '::User'
   has_many :custom_fields
   has_many :contacts
+  has_one :blacklight_configuration, class_name: Spotlight::BlacklightConfiguration
 
-  belongs_to :blacklight_configuration, class_name: Spotlight::BlacklightConfiguration
   accepts_nested_attributes_for :blacklight_configuration
   accepts_nested_attributes_for :searches
   accepts_nested_attributes_for :about_pages

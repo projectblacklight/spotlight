@@ -1,6 +1,7 @@
 class CreateSpotlightBlacklightConfigurations < ActiveRecord::Migration
   def change
     create_table :spotlight_blacklight_configurations do |t|
+      t.references :exhibit
       t.text :facet_fields
       t.text :index_fields
       t.text :search_fields

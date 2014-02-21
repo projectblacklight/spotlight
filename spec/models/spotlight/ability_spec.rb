@@ -11,9 +11,8 @@ describe Spotlight::Ability do
     it { should_not be_able_to(:create, exhibit) }
     it { should be_able_to(:read, exhibit) }
     it { should be_able_to(:read, page) }
-    it { should_not be_able_to(:create, Spotlight::Page) }
+    it { should_not be_able_to(:create, Spotlight::Page.new(exhibit: exhibit)) }
     it { should be_able_to(:read, search) }
-    it { should_not be_able_to(:edit, SolrDocument.new) }
     it { should_not be_able_to(:tag, exhibit) }
   end
 
@@ -46,8 +45,6 @@ describe Spotlight::Ability do
     it { should be_able_to(:update_all, Spotlight::Page) }
     it { should be_able_to(:update, page) }
     it { should be_able_to(:destroy, page) }
-
-    it { should be_able_to(:edit, SolrDocument.new) }
 
     it { should be_able_to(:tag, exhibit) }
 

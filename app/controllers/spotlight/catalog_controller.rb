@@ -4,7 +4,6 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   load_resource :exhibit, class: Spotlight::Exhibit
   before_filter :authenticate_user!, only: [:admin, :edit, :make_public, :make_private]
   before_filter :check_authorization, only: [:admin, :edit, :make_public, :make_private]
-  load_and_authorize_resource instance_name: :document, class: ::SolrDocument, only: [:edit]
 
   before_filter :attach_breadcrumbs
 
@@ -51,7 +50,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
     if params[:solr_document]
       @document = ::SolrDocument.find params[:id] 
       authenticate_user!
-      authorize! :update, @document
+      authorize! :curate, current_exhibit
       @document.update(current_exhibit, solr_document_params)
       @document.save
       redirect_to exhibit_catalog_path(current_exhibit, @document)
@@ -61,6 +60,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   end
 
   def edit
+    @document = ::SolrDocument.find(params[:id])
     blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
     blacklight_config.view.edit.partials.delete "spotlight/catalog/tags"
     blacklight_config.view.edit.partials.insert(2, :edit)
