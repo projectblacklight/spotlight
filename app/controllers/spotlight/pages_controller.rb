@@ -13,7 +13,7 @@ module Spotlight
 
     copy_blacklight_config_from(CatalogController)
 
-    helper_method :get_search_results, :get_solr_response_for_doc_id, :page_model, :page_collection_name
+    helper_method :get_search_results, :get_solr_response_for_doc_id, :get_solr_response_for_field_values, :page_model, :page_collection_name
 
     # GET /exhibits/1/pages
     def index

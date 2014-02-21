@@ -1,0 +1,41 @@
+.item-grid-admin {
+  .field {
+    input[type='text'] {
+      margin-left: 10px;
+      margin-bottom: 10px;
+      width: 89%;
+    }
+    .twitter-typeahead {
+      display: inline !important;
+    }
+  }
+  .field-select {
+    margin-top: 15px;
+    select {
+      display: block;
+      width: 90%;
+    }
+  }
+}
+
+.spotlight-flexbox {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  .box {
+    text-align: center;
+    .title {
+      margin-top: 5px;
+    }
+    img {
+      max-width: 80%;
+    }
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+  }
+}
