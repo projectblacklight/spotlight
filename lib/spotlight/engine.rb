@@ -9,6 +9,7 @@ module Spotlight
     # Breadcrumbs on rails must be required outside of an initializer or it doesn't get loaded.
     require 'breadcrumbs_on_rails'
     require 'carrierwave'
+    require 'social-share-button'
 
     config.autoload_paths += %W(
       #{config.root}/app/builders
@@ -20,7 +21,6 @@ module Spotlight
       require 'bootstrap_form'
       require 'acts-as-taggable-on'
     end
-
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
 

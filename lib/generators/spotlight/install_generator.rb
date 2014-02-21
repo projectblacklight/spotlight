@@ -39,5 +39,9 @@ module Spotlight
        "\n  include Spotlight::SolrDocument\n  include Spotlight::SolrDocument::AtomicUpdates\n"
      end
     end
+
+    def generate_social_share_button_initializer
+      directory 'config'
+    end
   end
 end

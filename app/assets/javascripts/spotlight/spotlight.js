@@ -37,3 +37,11 @@ Spotlight.onLoad(function(){
 
 });
 
+
+
+Spotlight.onLoad(function(){
+  $.each($('.social-share-button a'), function() {
+    $(this).append($(this).attr('title'));
+  });
+});
+
