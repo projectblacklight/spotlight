@@ -3,8 +3,7 @@ module Spotlight
     before_filter :authenticate_user!, except: [:show]
 
     load_resource :exhibit, class: Spotlight::Exhibit, only: [:index, :new, :create, :update_all]
-    load_and_authorize_resource only: [:show, :edit, :update, :destroy, :update_all], instance_name: 'page'
-    load_and_authorize_resource through: :exhibit, only: [:index, :new, :create], instance_name: 'page'
+    load_and_authorize_resource through: :exhibit, shallow: true,  instance_name: 'page'
 
     before_filter :attach_breadcrumbs
 

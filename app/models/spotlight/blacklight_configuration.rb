@@ -2,7 +2,7 @@ require 'blacklight/utils'
 
 module Spotlight
   class BlacklightConfiguration < ActiveRecord::Base
-    has_one :exhibit
+    belongs_to :exhibit
     serialize :facet_fields, Hash
     serialize :index_fields, Hash
     serialize :sort_fields, Hash

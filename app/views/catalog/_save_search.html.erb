@@ -1,7 +1,7 @@
 <%= button_tag t(:'spotlight.saved_search.label'), class: 'btn btn-default',  data: {toggle:"modal", target:"#save-modal"} %>
 <div class="modal fade" id="save-modal" tabindex="-1" role="dialog" aria-labelledby="save-modal-label" aria-hidden="true">
   <div class="modal-dialog">
-  <%= bootstrap_form_for [spotlight, Spotlight::Exhibit.default, Spotlight::Search.new] do |f| %>
+  <%= bootstrap_form_for [spotlight, current_exhibit, Spotlight::Search.new] do |f| %>
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
