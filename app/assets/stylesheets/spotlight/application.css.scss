@@ -9,7 +9,9 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require sir-trevor
- *= require spotlight/spotlight
  *= require bootstrap-tagsinput
  */
+
+@import "spotlight/variables";
+@import 'spotlight/spotlight';
 

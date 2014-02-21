@@ -1,14 +1,13 @@
-@import "bootstrap/variables";
-
-@import "sir-trevor";
-@import "attachments";
-@import "pages";
-@import "browse";
-@import "header";
-@import "catalog";
-@import "curation";
-@import "exhibit_admin";
-@import "item_text_block";
-@import "nestable";
-@import "blacklight_configuration";
-@import "typeahead";
+@import "spotlight/sir-trevor";
+@import "spotlight/attachments";
+@import "spotlight/pages";
+@import "spotlight/browse";
+@import "spotlight/header";
+@import "spotlight/catalog";
+@import "spotlight/curation";
+@import "spotlight/exhibit_admin";
+@import "spotlight/item_text_block";
+@import "spotlight/nestable";
+@import "spotlight/blacklight_configuration";
+@import "spotlight/typeahead";
+@import "spotlight/bootstrap_overrides";
