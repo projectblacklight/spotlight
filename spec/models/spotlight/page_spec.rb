@@ -35,4 +35,11 @@ describe Spotlight::Page do
 
     end
   end
+
+  describe "title_or_default" do
+    subject { FactoryGirl.build(:about_page, title: 'my title') }
+    it "should return the title" do
+      expect(subject.title_or_default).to eq 'my title'
+    end
+  end
 end

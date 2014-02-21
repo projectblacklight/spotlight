@@ -20,4 +20,18 @@ describe Spotlight::HomePage do
       expect(json["data"].first["data"]["text"]).to eq Spotlight::HomePage.default_content_text
     end
   end
+  describe "title_or_default" do
+    describe "when present" do
+      subject { FactoryGirl.build(:home_page, title: "Home Page Title") }
+      its(:title_or_default) { should eq "Home Page Title" }
+    end
+    describe "when blank" do
+      subject { FactoryGirl.build(:home_page, title: "") }
+      its(:title_or_default) { should eq "Exhibit Home" }
+    end
+    describe "when nil" do
+      subject { FactoryGirl.build(:home_page, title: nil) }
+      its(:title_or_default) { should eq "Exhibit Home" }
+    end
+  end
 end

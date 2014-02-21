@@ -31,18 +31,5 @@ module Spotlight
         expect(helper.should_render_record_thumbnail_title?(titled_document, {'show-title' => false})).to be_false
       end
     end
-    describe "home_page_or_default_title" do
-      it "should return the title of an object if present" do
-        home_page.title = "Home Page Title"; home_page.save
-        expect(helper.send(:home_page_or_default_title, current_exhibit.home_page)).to eq("Home Page Title")
-      end
-      it "should return the default i18n string when the title is blank" do
-        home_page.title = ""; home_page.save
-        expect(helper.send(:home_page_or_default_title, current_exhibit.home_page)).to eq("Exhibit Home")
-      end
-      it "should return the default i18n string if no title is present" do
-        expect(helper.send(:home_page_or_default_title, current_exhibit.home_page)).to eq("Exhibit Home")
-      end
-    end
   end
 end

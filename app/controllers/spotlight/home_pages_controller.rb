@@ -1,13 +1,12 @@
 module Spotlight
   class HomePagesController < Spotlight::PagesController
     include Blacklight::SolrHelper
-    include Spotlight::PagesHelper
 
     skip_authorize_resource only: :show
 
     def edit
       add_breadcrumb t(:'spotlight.curation.sidebar.feature_pages'), exhibit_feature_pages_path(@exhibit)
-      add_breadcrumb home_page_or_default_title(@page), edit_home_page_path(@page)
+      add_breadcrumb @page.title_or_default, edit_home_page_path(@page)
       super
     end
 
