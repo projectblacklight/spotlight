@@ -23,11 +23,11 @@ describe "spotlight/about_pages/index.html.erb" do
     ]}
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   before do
-    view.stub(:page_model).and_return(:about_page)
     view.stub(:page_collection_name).and_return(:about_pages)
     view.stub(:update_all_exhibit_about_pages_path).and_return("/exhibit/about/update_all")
     view.stub(:exhibit_contacts_path).and_return("/exhibit/1/contacts")
     exhibit.stub(:contacts => contacts)
+    assign(:page, Spotlight::AboutPage.new)
     assign(:exhibit, exhibit)
     view.stub(:current_exhibit).and_return(exhibit)
     view.lookup_context.prefixes << 'spotlight/pages'

@@ -2,8 +2,8 @@
 // All this logic will automatically be available in application.js.
 Spotlight.onLoad(function() {
   // Initialize Nestable for nested pages
-  $('#nested-pages.about_page_admin').nestable({maxDepth: 1});
-  $('#nested-pages.feature_page_admin').nestable({maxDepth: 2, expandBtnHTML: "", collapseBtnHTML: ""});
+  $('#nested-pages.about_pages_admin').nestable({maxDepth: 1});
+  $('#nested-pages.feature_pages_admin').nestable({maxDepth: 2, expandBtnHTML: "", collapseBtnHTML: ""});
   $('#nested-pages.search_admin').nestable({maxDepth: 1});
   $('.contacts_admin').nestable({maxDepth: 1});
   // Handle weighting the pages and their children.
