@@ -22,9 +22,8 @@ describe "Editing metadata fields", type: :feature do
 
     click_on "Save changes"
 
-    expect(Spotlight::Exhibit.default.blacklight_config('list').index_fields).to include("language_ssm", "note_mapuse_tesim")
-    expect(Spotlight::Exhibit.default.blacklight_config('list').index_fields).to have(2).fields
-    expect(Spotlight::Exhibit.default.blacklight_config.show_fields).to include("language_ssm", "abstract_tesim")
+    expect(Spotlight::Exhibit.default.blacklight_config.index_fields.select { |k, x| x.list }.keys).to eq ['language_ssm', 'note_mapuse_tesim']
+    expect(Spotlight::Exhibit.default.blacklight_config.show_fields.select { |k, x| x.show }.keys).to eq ["language_ssm", "abstract_tesim"]
   end
 
   it "should have in-place editing of labels", js: true do

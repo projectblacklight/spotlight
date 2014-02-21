@@ -8,7 +8,7 @@ module Spotlight
 
     def blacklight_config
       if current_exhibit
-        @blacklight_config ||= current_exhibit.blacklight_config params.fetch(:view, :list)
+        @blacklight_config ||= current_exhibit.blacklight_config
       else
         super
       end

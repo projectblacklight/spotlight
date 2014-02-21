@@ -6,7 +6,7 @@
     <ol class="dd-list">
 
       <%= f.fields_for :facet_fields do |idxf| %>
-        <% @exhibit.blacklight_configuration.all_facet_fields.each do |key, config| %>
+        <% @blacklight_configuration.blacklight_config.facet_fields.each do |key, config| %>
           <li class="dd-item" data-id="<%= key.parameterize %>">
   <div class="dd-handle dd3-handle"><%= t :drag %></div>
           <%= idxf.fields_for key do |facet| %>
@@ -17,7 +17,7 @@
     </a>
 
                 <%= facet.hidden_field :weight, 'data-property' => 'weight' %>
-                <%= facet.check_box :show, checked: (@exhibit.blacklight_configuration.facet_fields[key] || @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key]).fetch(:show), label: (@exhibit.blacklight_configuration.facet_fields[key] || {}).fetch(:label, @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label), title: key %>
+                <%= facet.check_box :show, checked: config.show, label: config.label, title: key %>
 
                 <% if metadata =  @fields.fetch(key.to_s, {}) %>
                 <div class="text-muted">
@@ -29,7 +29,7 @@
               </div>
               <div id="collapse-facet-<%= key.parameterize %>" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <%= facet.text_field :label, value: @exhibit.blacklight_configuration.facet_fields.fetch(key, {})[:label], label: t('.field.label'), placeholder: @exhibit.blacklight_configuration.default_blacklight_config.facet_fields[key].label %>
+                  <%= facet.text_field :label, value: config.label, label: t('.field.label'), placeholder: @blacklight_configuration.default_blacklight_config.facet_fields[key].label %>
                 </div>
               </div>
             </div>

@@ -75,9 +75,11 @@ describe Spotlight::BlacklightConfiguration do
       blacklight_config.add_index_field 'b'
       blacklight_config.add_index_field 'c'
 
-      expect(subject.blacklight_config.index_fields).to include('a')
-      expect(subject.blacklight_config.index_fields).to_not include('b', 'd')
-      expect(subject.blacklight_config.index_fields).to have(1).fields
+      expect(subject.blacklight_config.index_fields['a'].enabled).to be_true
+      expect(subject.blacklight_config.index_fields['a'].list).to be_true
+      expect(subject.blacklight_config.index_fields['b'].enabled).to be_false
+      expect(subject.blacklight_config.index_fields['b'].list).to be_false
+      expect(subject.blacklight_config.index_fields['d']).to be_nil
     end
 
 
@@ -99,12 +101,13 @@ describe Spotlight::BlacklightConfiguration do
       blacklight_config.add_index_field 'c'
       blacklight_config.add_index_field 'd'
 
-      expect(subject.blacklight_config(:list).index_fields).to include('a')
-      expect(subject.blacklight_config(:gallery).index_fields).to include('b', 'd')
-      expect(subject.blacklight_config(:list).index_fields).to_not include('b', 'd')
-      expect(subject.blacklight_config(:gallery).index_fields).to_not include('a', 'c')
-      expect(subject.blacklight_config(:list).index_fields).to have(1).fields
-      expect(subject.blacklight_config(:gallery).index_fields).to have(2).fields
+      expect(subject.blacklight_config.index_fields.select { |k,x| x.list }).to include('a')
+      expect(subject.blacklight_config.index_fields.select { |k,x| x.gallery }).to include('b', 'd')
+      expect(subject.blacklight_config.index_fields.select { |k,x| x.list }).to_not include('b', 'd')
+      expect(subject.blacklight_config.index_fields.select { |k,x| x.gallery }).to_not include('a', 'c')
+      expect(subject.blacklight_config.index_fields.select { |k,x| x.list }).to have(2).fields
+      expect(subject.blacklight_config.index_fields.select { |k,x| x.list && x.enabled }).to have(1).fields
+      expect(subject.blacklight_config.index_fields.select { |k,x| x.gallery }).to have(2).fields
     end
 
     it "should filter the upstream blacklight config for show fields" do
@@ -116,9 +119,9 @@ describe Spotlight::BlacklightConfiguration do
       blacklight_config.add_index_field 'b'
       blacklight_config.add_index_field 'c'
 
-      expect(subject.blacklight_config.show_fields).to include('a')
-      expect(subject.blacklight_config.show_fields).to_not include('b', 'd')
-      expect(subject.blacklight_config.show_fields).to have(1).fields
+      expect(subject.blacklight_config.show_fields.select { |k,x| x.show && x.enabled }).to include('a')
+      expect(subject.blacklight_config.show_fields.select { |k,x| x.show && x.enabled }).to_not include('b', 'd')
+      expect(subject.blacklight_config.show_fields.select { |k,x| x.show && x.enabled }).to have(1).fields
     end
 
     it "should include any custom fields" do
@@ -287,34 +290,6 @@ describe Spotlight::BlacklightConfiguration do
     end
   end
 
-  describe "#all_facet_fields" do
-    it "should sort the upstream configuration using this config's facet sorting" do
-      subject.stub(:field_weight) do |arr, key|
-        key
-      end
-
-      expect(subject.all_facet_fields.keys).to eq subject.all_facet_fields.keys.sort
-    end
-  end
-
-  describe "#all_index_fields" do
-    it "should sort the upstream configuration using this config's index sorting" do
-      subject.stub(:field_weight) do |arr, key|
-        key
-      end
-
-      expect(subject.all_index_fields.keys).to eq subject.all_index_fields.keys.sort
-    end
-
-    it "should include custom index fields" do
-      subject.stub(exhibit: double(custom_fields: [
-        stub_model(Spotlight::CustomField, field: "abc", configuration: { a: 1}),
-        stub_model(Spotlight::CustomField, field: "xyz", configuration: { x: 2})
-      ]))
-
-      expect(subject.all_index_fields).to include "abc", "xyz"
-    end
-  end
   describe "#custom_index_fields" do
     it "should convert exhibit-specific fields to Blacklight configurations" do
       subject.stub(exhibit: double(custom_fields: [
