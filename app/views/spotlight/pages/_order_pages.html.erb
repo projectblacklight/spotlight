@@ -1,4 +1,4 @@
-<%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, page_collection_name]), style: :horizontal, right: "col-sm-10" do |f| %>
+<%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, page_collection_name]), style: :horizontal, right: "col-sm-10", html: {:'data-form-observer' => true} do |f| %>
   <%= curation_page_title t(:"spotlight.pages.index.#{page_collection_name}.header") %>
 
     <%= render partial: 'header' %>
