@@ -16,7 +16,7 @@ var results = new Bloodhound({
 });
 
 function addAutocompletetoSirTrevorForm() {
-  $('input[name="item-id"]').typeahead(null, {
+  $('[data-twitter-typeahead]').typeahead(null, {
       displayKey: 'id',
       source: results.ttAdapter(),
       templates: {
