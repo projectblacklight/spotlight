@@ -4,7 +4,7 @@
     <%= render partial: 'header' %>
     <h3><%= t :'.pages_header' %></h3>
     <p><%= t :'.instructions' %></p>
-    <div class="panel-group dd <%= page_model %>_admin" id="nested-pages">
+    <div class="panel-group dd <%= page_collection_name %>_admin" id="nested-pages">
       <ol class="dd-list">
         <%= f.fields_for page_collection_name do |p| %>
           <%- if p.object.about_page? || p.object.top_level_page? -%>
@@ -19,7 +19,7 @@
     </div>
 <%- end -%>
 <div>
-  <%= form_for "spotlight/#{page_model}".classify.constantize.new, url: spotlight.polymorphic_path([@exhibit, page_collection_name]) do |f|%>
+  <%= form_for @page, url: spotlight.polymorphic_path([@exhibit, page_collection_name]) do |f|%>
     <%= f.hidden_field(:title) %>
     <%= f.submit nil, class: "btn btn-primary" %>
   <%- end -%>

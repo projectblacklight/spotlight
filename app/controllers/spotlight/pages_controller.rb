@@ -13,10 +13,12 @@ module Spotlight
 
     copy_blacklight_config_from(CatalogController)
 
-    helper_method :get_search_results, :get_solr_response_for_doc_id, :get_solr_response_for_field_values, :page_model, :page_collection_name
+    helper_method :get_search_results, :get_solr_response_for_doc_id, :get_solr_response_for_field_values, :page_collection_name
 
     # GET /exhibits/1/pages
     def index
+      # set up a model the inline "add a new page" form
+      @page = CanCan::ControllerResource.new(self).send(:build_resource)
     end
 
     # GET /pages/1
@@ -77,10 +79,6 @@ module Spotlight
       @human_name ||= page_collection_name.humanize
     end
 
-    def page_model
-      @page_model ||= controller_name.singularize
-    end
-
     alias page_collection_name controller_name 
 
     def attach_breadcrumbs
@@ -96,7 +94,7 @@ module Spotlight
 
       # Only allow a trusted parameter "white list" through.
       def page_params
-        params.require(page_model).permit(:title, :content)
+        params.require(controller_name.singularize).permit(:title, :content)
       end
   end
 end

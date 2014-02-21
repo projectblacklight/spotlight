@@ -74,6 +74,8 @@ describe Spotlight::AboutPagesController do
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
         get :index, exhibit_id: Spotlight::Exhibit.default
+        expect(assigns(:page)).to be_kind_of Spotlight::Page
+        expect(assigns(:page)).to be_new_record
         expect(assigns(:pages)).to include page
         expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
       end

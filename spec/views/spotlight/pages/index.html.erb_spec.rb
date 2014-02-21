@@ -15,9 +15,9 @@ describe "spotlight/pages/index.html.erb" do
     ]}
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   before do
-    view.stub(:page_model).and_return(:feature_page)
     view.stub(:page_collection_name).and_return(:feature_pages)
     view.stub(:update_all_exhibit_feature_pages_path).and_return("/exhibit/features/update_all")
+    assign(:page, Spotlight::FeaturePage.new)
     assign(:exhibit, exhibit)
     view.stub(:current_exhibit).and_return(exhibit)
   end
