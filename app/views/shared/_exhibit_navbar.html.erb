@@ -34,11 +34,13 @@
 <% end %>
 <div id="content-header" class="navbar">
   <div class="container">
-    <div class="col-sm-8 col-md-8"> 
-      <%= render_breadcrumbs :builder => Spotlight::BootstrapBreadcrumbsBuilder %>
-    </div>
-    <div class="navbar-right col-sm-4 col-md-4"> 
-      <%= content_for :curation_mode_widget %>
+    <div class="row">
+      <div class="col-sm-8 col-md-8"> 
+        <%= render_breadcrumbs :builder => Spotlight::BootstrapBreadcrumbsBuilder %>
+      </div>
+      <div class="navbar-right col-sm-4 col-md-4"> 
+        <%= content_for :curation_mode_widget %>
+      </div>
     </div>
   </div>
 </div>
