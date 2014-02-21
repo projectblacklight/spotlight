@@ -15,7 +15,7 @@ describe Spotlight::AdminTitleHelper do
     it "should render the section title and the page title" do
       title = helper.page_title("Section", "Title")
       expect(title).to have_selector "h1", text: "Section"
-      expect(title).to have_selector "h2", text: "Title"
+      expect(title).to have_selector "h1 small", text: "Title"
       
     end
   end
@@ -24,7 +24,7 @@ describe Spotlight::AdminTitleHelper do
     it "should render a page title in the curation section" do
       title = helper.curation_page_title "Some title"
       expect(title).to have_selector "h1", text: "Curation"
-      expect(title).to have_selector "h2", text: "Some title"
+      expect(title).to have_selector "h1 small", text: "Some title"
     end
   end
 
@@ -32,7 +32,7 @@ describe Spotlight::AdminTitleHelper do
     it "should render a page title in the administration section" do
       title = helper.administration_page_title "Some title"
       expect(title).to have_selector "h1", text: "Administration"
-      expect(title).to have_selector "h2", text: "Some title"
+      expect(title).to have_selector "h1 small", text: "Some title"
     end
   end
 

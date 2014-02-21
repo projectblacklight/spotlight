@@ -1,7 +1,7 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
 <%= curation_page_title %>
-<%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_blacklight_configuration_path(@exhibit), style: :horizontal, right: "col-sm-5", html: { class: 'clearfix'}  do |f| %>
+<%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_blacklight_configuration_path(@exhibit), style: :horizontal, right: "col-sm-5"  do |f| %>
     <h3><%= t(:'.order_header') %></h3>
 
     <p class="instructions"><%= t :'.instructions' %></p>
@@ -39,8 +39,8 @@
         <% end %>
      </tbody>
   </table>
-  <div class="pull-right">
-    <%= f.submit nil, class: 'btn btn-primary' %>
+  <div class="clearfix">
+    <%= f.submit nil, class: 'btn btn-primary pull-right' %>
   </div>
 <% end %>
 

@@ -7,7 +7,7 @@ describe "Item Administration" do
   describe "admin" do
     it "should have catalog items" do
       visit spotlight.admin_exhibit_catalog_index_path(Spotlight::Exhibit.default)
-      expect(page).to have_css("h2", text: "Items")
+      expect(page).to have_css("h1 small", text: "Items")
       expect(page).to have_css("table#documents")
       expect(page).to have_css(".pagination")
       within "tr[itemscope]:first-child" do

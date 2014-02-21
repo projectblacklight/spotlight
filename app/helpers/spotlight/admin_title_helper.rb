@@ -10,7 +10,7 @@ module Spotlight
 
     def page_title section, title = nil
       @page_title = t(:'spotlight.html_admin_title', section: section, title: title || t(:'.title', default: :'.header'), application_name: application_name)
-      safe_join([content_tag(:h1, section), content_tag(:h2, title || t(:'.header'), class: 'text-muted')], "\n")
+      content_tag(:h1, safe_join([section, content_tag(:small, title || t(:'.header'))], "\n"), class: "page-header")
     end
 
     def header_with_count *args

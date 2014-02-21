@@ -14,4 +14,8 @@
       cursor: text;
     }
   }
+
+  th:first-child {
+    padding-left: 40px;
+  }
 }

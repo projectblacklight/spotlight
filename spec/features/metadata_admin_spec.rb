@@ -7,7 +7,7 @@ describe "Metadata Administration" do
   describe "edit" do
     it "should display the metadata edit page" do
       visit spotlight.exhibit_edit_metadata_path(exhibit)
-      expect(page).to have_css("h2", text: "Metadata")
+      expect(page).to have_css("h1 small", text: "Metadata")
       within("[data-id='language_ssm']") do
         expect(page).to have_css("td", text: "Language")
       end
