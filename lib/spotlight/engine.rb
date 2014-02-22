@@ -21,6 +21,11 @@ module Spotlight
       require 'cancan'
       require 'bootstrap_form'
       require 'acts-as-taggable-on'
+      require 'oembed'
+    end
+
+    initializer "oembed.initialize" do
+      OEmbed::Providers.register_all
     end
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
