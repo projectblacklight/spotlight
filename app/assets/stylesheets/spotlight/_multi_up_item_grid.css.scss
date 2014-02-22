@@ -24,13 +24,22 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  flex-flow: row wrap;
+
   .box {
     text-align: center;
+    padding: 1em;
+    min-width: 125px;
+
+    @media (max-width: $screen-xs-max) {
+      min-width: 200px;
+    }
+
     .title {
       margin-top: 5px;
     }
     img {
-      max-width: 80%;
+      max-width: 100%;
     }
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
