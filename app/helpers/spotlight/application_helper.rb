@@ -47,8 +47,19 @@ module Spotlight
       end
     end
 
+    def should_render_index_field? document, field 
+      super && field_enabled?(field)
+    end
+
+    def should_render_show_field? document, field
+      super && field_enabled?(field, :show)
+    end
+
     private
 
+    def field_enabled? field, view = nil
+       field.enabled && field.send(view || document_index_view_type)
+    end
 
     def main_app_url_helper?(method)
         (method.to_s.end_with?('_path') or method.to_s.end_with?('_url')) and

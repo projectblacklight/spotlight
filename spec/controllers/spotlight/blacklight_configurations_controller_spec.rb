@@ -10,6 +10,12 @@ describe Spotlight::BlacklightConfigurationsController do
     end
 
     it "should deny access" do
+      get :metadata_fields, exhibit_id: exhibit 
+      expect(response).to redirect_to main_app.root_path
+      expect(flash[:alert]).to be_present
+    end
+    
+    it "should deny access" do
       get :edit_metadata_fields, exhibit_id: exhibit 
       expect(response).to redirect_to main_app.root_path
       expect(flash[:alert]).to be_present
@@ -67,6 +73,14 @@ describe Spotlight::BlacklightConfigurationsController do
         controller.stub_chain(:blacklight_solr, :get).and_return({})
         get :edit_facet_fields, exhibit_id: exhibit
         expect(response).to be_successful
+      end
+    end
+
+    describe "#metadata_fields" do
+      it "should be successful" do
+        get :metadata_fields, exhibit_id: exhibit, format: 'json'
+        expect(response).to be_successful
+        expect(JSON.parse(response.body).keys).to eq exhibit.blacklight_config.index_fields.keys
       end
     end
 

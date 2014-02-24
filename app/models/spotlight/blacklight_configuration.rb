@@ -48,39 +48,19 @@ module Spotlight
     # appropriate to the current view. If a value isn't set in this record,
     # it will use the configuration set upstream (in default_blacklight_config)
     # @param [String] view the configuration may be different depending on the index view selected
-    def blacklight_config view = :list
-      config = default_blacklight_config.inheritable_copy
+    def blacklight_config
+      @blacklight_config ||= begin
+        config = default_blacklight_config.inheritable_copy
 
-      config.show.merge! show unless show.blank?
-      config.index.merge! index unless index.blank?
+        config.show.merge! show unless show.blank?
+        config.index.merge! index unless index.blank?
 
-      config.default_solr_params = config.default_solr_params.merge(default_solr_params)
+        config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
+        config.show.partials.insert(2, "spotlight/catalog/tags")
 
-      config.show.partials.unshift "spotlight/catalog/curation_mode_toggle"
-      config.show.partials.insert(3, "spotlight/catalog/tags")
-      show_fields = index_fields_for_view(:show)
-      unless show_fields.blank?
-        active_show_fields = show_fields.select { |k,v| v[:enabled] == true }
-        config.show_fields = config.index_fields.slice *active_show_fields.keys
-        config.show_fields.merge! custom_index_fields.slice(*active_show_fields.keys)
-        
-        config.show_fields = Hash[config.show_fields.sort_by { |k,v| field_weight(active_show_fields, k)}]
-
-        config.index_fields.each do |k, v|
-          next if show_fields[k].blank?
-
-          v.merge! show_fields[k].symbolize_keys
-          v.normalize! config
-          v.validate!
-        end
-      end
-
-      unless index_fields_for_view(view).blank?
-        active_index_fields = index_fields_for_view(view).select { |k,v| v[:enabled] == true }
-        config.index_fields.slice! *active_index_fields.keys
-        config.index_fields.merge! custom_index_fields.slice(*active_index_fields.keys)
-        config.index_fields = Hash[config.index_fields.sort_by { |k,v| field_weight(active_index_fields, k) }]
+        config.index_fields.merge! custom_index_fields
+        config.index_fields = Hash[config.index_fields.sort_by { |k,v| field_weight(index_fields, k) }]
 
         config.index_fields.each do |k, v|
           next if index_fields[k].blank?
@@ -89,46 +69,40 @@ module Spotlight
           v.normalize! config
           v.validate!
         end
-      end
+        
+        config.show_fields = config.index_fields
 
-      unless sort_fields.blank?
-        active_sort_fields = sort_fields.select { |k,v| v[:enabled] == true }
-        config.sort_fields.slice! *active_sort_fields.keys
-        config.sort_fields = Hash[config.sort_fields.sort_by { |k,v| field_weight(active_sort_fields, k) }]
+        unless sort_fields.blank?
+          active_sort_fields = sort_fields.select { |k,v| v[:enabled] == true }
+          config.sort_fields.slice! *active_sort_fields.keys
+          config.sort_fields = Hash[config.sort_fields.sort_by { |k,v| field_weight(active_sort_fields, k) }]
 
-        config.sort_fields.each do |k, v|
-          next if sort_fields[k].blank?
+          config.sort_fields.each do |k, v|
+            next if sort_fields[k].blank?
 
-          v.merge! sort_fields[k].symbolize_keys
-          v.normalize! config
-          v.validate!
+            v.merge! sort_fields[k].symbolize_keys
+            v.normalize! config
+            v.validate!
+          end
         end
-      end
 
-      unless facet_fields.blank?
-        config.facet_fields = Hash[config.facet_fields.sort_by { |k,v| field_weight(facet_fields, k) }]
+        unless facet_fields.blank?
+          config.facet_fields = Hash[config.facet_fields.sort_by { |k,v| field_weight(facet_fields, k) }]
 
-        config.facet_fields.each do |k, v|
-          next if facet_fields[k].blank?
+          config.facet_fields.each do |k, v|
+            next if facet_fields[k].blank?
 
-          v.merge! facet_fields[k].symbolize_keys
-          v.normalize! config
-          v.validate!
+            v.merge! facet_fields[k].symbolize_keys
+            v.normalize! config
+            v.validate!
+          end
         end
+
+        config.per_page = (config.per_page & per_page) unless per_page.blank?
+        config.view.select! { |k, v| document_index_view_types.include? k.to_s } unless document_index_view_types.blank?
+
+        config
       end
-
-      config.per_page = (config.per_page & per_page) unless per_page.blank?
-      config.view.select! { |k, v| document_index_view_types.include? k.to_s } unless document_index_view_types.blank?
-
-      config
-    end
-
-    def all_facet_fields
-      Hash[default_blacklight_config.facet_fields.sort_by { |k,v| field_weight(facet_fields, k) }]
-    end
-
-    def all_index_fields
-      Hash[default_blacklight_config.index_fields.merge(custom_index_fields).sort_by { |k,v| field_weight(index_fields, k) }]
     end
 
     def custom_index_fields
@@ -136,17 +110,6 @@ module Spotlight
         field = Blacklight::Configuration::IndexField.new x.configuration.merge(field: x.field)
         [x.field, field] 
       end]
-    end
-
-    ##
-    # Get the index fields that should be visible for the given view; if the view is
-    # not found, just use the list view.
-    # @param [String] view 
-    def index_fields_for_view view = :list
-      index_fields.select do |key, config|
-        config.with_indifferent_access[:enabled] &&
-          config.with_indifferent_access[view]
-      end
     end
 
     ##

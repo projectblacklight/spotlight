@@ -2,6 +2,7 @@
 require 'blacklight'
 require 'blacklight/gallery'
 require 'spotlight/rails/routes'
+require 'spotlight/utils'
 
 module Spotlight
   class Engine < ::Rails::Engine

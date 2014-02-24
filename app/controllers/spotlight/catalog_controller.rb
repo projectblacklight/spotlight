@@ -7,6 +7,10 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   before_filter :attach_breadcrumbs
 
+  before_filter do
+    blacklight_config.show.partials.unshift "curation_mode_toggle"
+  end
+
   copy_blacklight_config_from ::CatalogController
 
   def index
