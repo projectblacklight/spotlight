@@ -12,9 +12,10 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
   var id_key = key + "-id";
   var display_checkbox = key + "-display";
   var caption_key = key + "-display-caption";
-  var field_key = key + "caption-field";
+  var field_key = key + "-caption-field";
   var max_fields = 5;
   var type = "multi-up-item-grid";
+  var title_key = "spotlight_title_field";
 
   var template = _.template([
     '<div class="form-inline ' + key + '-admin">',
@@ -36,7 +37,8 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
         '<div class="field-select">',
           '<label for="' + field_key + '">Caption field</label>',
           '<select name="' + field_key + '" id="' + field_key + '">',
-            '<option value="title">Title</option>',
+            '<option value="">Select...</option>',
+            '<option value="' + title_key + '">Title</option>',
           '</select>',
         '</div>',
       '</div>',
@@ -65,11 +67,13 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
         data[$(this).attr("id")] = $("[name='" + $(this).attr('name') + "']:checked").val();
       });
       data[caption_key] = this.$('[name=' + caption_key + ']:checked').val();
+      data[field_key] = this.$('[name=' + field_key + '] option:selected').val();
       this.setData(data);
     },
 
     onBlockRender: function() {
       addAutocompletetoSirTrevorForm();
+      loadCaptionField();
     },
 
     loadData: function(data){
@@ -80,8 +84,37 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
         $(this).prop('checked', data[$(this).attr("id")]);
       });
       this.$('#' + caption_key).prop('checked', data[caption_key])
+      // set a data attribute on the select field so the ajax request knows which option to select
+      this.$('select#' + field_key).data('select-after-ajax', data[field_key]);
     }
   });
+  function loadCaptionField(block){
+    var metadata_url = this.$('form[data-metadata-url]').data('metadata-url');
+    var caption_field = this.$('#' + field_key);
+    var caption_selected_value = caption_field.data("select-after-ajax");
+    $.ajax({
+      accepts: "json",
+      url: metadata_url
+    }).success(function(data){
+      if($("option", caption_field).length == 2){
+        var options = "";
+        $.each(data, function(i, field){
+          var selected = ""
+          if (field.field == caption_selected_value) {
+            selected = " selected"
+          }
+          options += "<option " + selected + " value='" + field.field + "'>" + field.label + "</option>";
+        });
+        if(caption_selected_value == title_key){
+          $("option[value='" + title_key + "']", caption_field).prop("selected", true);
+        }
+        caption_field.append(options);
+        // re-serialze the form so the form observer
+        // knows about the new drop dwon options.
+        serializeFormStatus($('form[data-metadata-url]'));
+      }
+    });
+  }
 })();
 function buildInputFields(times, id, checkbox){
   output = ""

@@ -20,5 +20,14 @@ module Spotlight
         object[:id] if object[:display]
       end.compact
     end
+    def multi_up_item_grid_caption(block, document)
+      if block['item-grid-caption-field'].present?
+        if block['item-grid-caption-field'] == 'spotlight_title_field'
+          return document_heading(document)
+        else
+          return render_field_value document[block['item-grid-caption-field']]
+        end
+      end
+    end
   end
 end
