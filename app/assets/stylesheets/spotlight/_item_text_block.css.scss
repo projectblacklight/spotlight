@@ -25,6 +25,11 @@
     }
   }
 }
+
+.st-block input[type="text"] {
+    @extend .form-control;
+}
+
 .item-text-admin {
   .text-align {
     margin-top: 15px;
