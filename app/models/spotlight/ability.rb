@@ -15,6 +15,7 @@ module Spotlight::Ability
 
     # exhibit curator
     can :manage, [
+      Spotlight::Attachment,
       Spotlight::Search,
       Spotlight::Page,
       Spotlight::BlacklightConfiguration,
