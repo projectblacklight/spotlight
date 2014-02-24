@@ -254,3 +254,6 @@ en:
     saved_search:
       label: "Save this search"
       title: "Saved search title"
+  shared:
+    share_follow:
+      share_follow: "Share & Follow"

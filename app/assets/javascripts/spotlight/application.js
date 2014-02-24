@@ -17,4 +17,5 @@
 //= require bootstrap/tooltip
 //= require bootstrap/popover
 //= require bootstrap-tagsinput
+//= require social-share-button
 //= require_tree .
