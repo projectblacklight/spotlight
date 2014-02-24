@@ -22,11 +22,43 @@ describe "Mutli-Up Item Grid", js: true do
 
     find("a[data-type='multi-up-item-grid']").click
 
-    fill_in("item-grid-id_0", with: "dq287tq6352")
-    check("item-grid-display_0")
-    fill_in("item-grid-id_1", with: "jp266yb7109")
-    check("item-grid-display_1")
-    fill_in("item-grid-id_2", with: "zv316zr9542")
+
+    # Poltergeist / Capybara doesn't fire the events typeahead.js
+    # is listening for, so we help it out a little:
+    fill_in("item-grid-id_0_title", with: "dq287tq6352")
+    page.execute_script '
+      $("#item-grid-id_0_title").val("dq287tq6352").keydown();
+      $("#item-grid-id_0_title").typeahead("open");
+      $(".tt-suggestion").click();
+    ';
+    find('.tt-suggestion').click
+ 
+    fill_in("item-grid-id_1_title", with: "jp266yb7109")
+    page.execute_script '
+      $("#item-grid-id_1_title").val("jp266yb7109").keydown();
+      $("#item-grid-id_1_title").typeahead("open");
+      $(".tt-suggestion").click();
+    ';
+    find('.tt-suggestion').click
+
+    fill_in("item-grid-id_2_title", with: "zv316zr9542")
+    page.execute_script '
+      $("#item-grid-id_2_title").val("zv316zr9542").keydown();
+      $("#item-grid-id_2_title").typeahead("open");
+      $(".tt-suggestion").click();
+    ';
+    find('.tt-suggestion').click
+
+
+    ##
+    # Dunno why this isn't working correctly:
+    #   Unable to find checkbox "item-grid-display_2"
+    # uncheck("item-grid-display_2")
+    # instead, we use #execute_script:
+    page.execute_script '
+      $("#item-grid-display_2").prop("checked", false);
+
+    ';
 
     click_button "Save changes"
     expect(page).to have_content("Page was successfully updated.")

@@ -10,6 +10,7 @@
 SirTrevor.Blocks.ItemText =  (function(){
 
   var id_key = "item-id";
+  var id_text_key = "item-text-id";
   var title_key = "show-title";
   var text_key = "item-text"
   var align_key = "text-align"
@@ -23,10 +24,11 @@ SirTrevor.Blocks.ItemText =  (function(){
       '</div>',
       '<div class="col-sm-9">',
         '<div class="form-group">',
-          '<label for="' + id_key + '" class="col-sm-2 control-label">Selected item</label>',
+          '<label for="' + id_text_key + '" class="col-sm-2 control-label">Selected item</label>',
           '<div class="col-sm-6 field">',
-            '<input name="' + id_key + '"',
-            ' class="st-input-string form-control ' + type + '" type="text" id="' + id_key + '" data-twitter-typeahead="true" />',
+            '<input data-id_field="#' + id_key + '" name="' + id_text_key + '"',
+            ' class="st-input-string form-control ' + type + '" type="text" id="' + id_text_key + '" data-twitter-typeahead="true" />',
+            '<input name="' + id_key + '" type="hidden" id="' + id_key + '" />',
           '</div>',
         '</div>',
         '<div class="form-group">',
@@ -69,6 +71,7 @@ SirTrevor.Blocks.ItemText =  (function(){
     toData: function() {
       var data = {};
       data[id_key] = this.$('#' + id_key).val();
+      data[id_text_key] = this.$('#' + id_text_key).val();
       data[title_key] = this.$('#' + title_key).is(':checked');
 
       if (this.hasTextBlock()) {
@@ -86,10 +89,12 @@ SirTrevor.Blocks.ItemText =  (function(){
 
     onBlockRender: function() {
       addAutocompletetoSirTrevorForm();
+      $('#' + id_text_key).focus();
     },
 
     loadData: function(data){
       this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
+      this.$('#' + id_text_key).val(data[id_text_key]);
       this.$('#' + id_key).val(data[id_key]);
       this.$('#' + title_key).prop('checked', data[title_key]);
       this.$('#' + align_key + "-" + data[align_key]).prop("checked", true);

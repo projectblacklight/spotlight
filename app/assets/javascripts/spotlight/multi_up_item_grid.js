@@ -89,7 +89,8 @@ function buildInputFields(times, id, checkbox){
     output += '<div class="col-sm-9 field">';
       output += '<input name="' + checkbox + '_' + i + '" type="hidden" value="false" />';
       output += '<input name="' + checkbox + '_' + i + '" id="' + checkbox + '_' + i + '" type="checkbox" class="item-grid-checkbox" value="true" />';
-      output += '<input name="' + id + '_' + i + '" class="st-input-string item-grid-input form-control" data-twitter-typeahead="true" type="text" id="' + id + '_' + i + '" />';
+      output += '<input name="' + id + '_' + i + '" class="item-grid-input" type="hidden" id="' + id + '_' + i + '" />';
+      output += '<input data-checkbox_field="#' + checkbox + '_' + i + '" data-id_field="#' + id + '_' + i + '" name="' + id + '_' + i + '_title" class="st-input-string item-grid-input form-control" data-twitter-typeahead="true" type="text" id="' + id + '_' + i + '_title" />';
     output += '</div>';
   }
   return output;
