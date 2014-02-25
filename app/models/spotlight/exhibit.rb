@@ -28,6 +28,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   serialize :facets, Array
   serialize :contact_emails, Array
 
+  before_create :initialize_config
   after_create :add_default_home_page
   before_save :sanitize_description
   validate :name, :title, presence: true
@@ -57,7 +58,6 @@ class Spotlight::Exhibit < ActiveRecord::Base
   def self.default
     self.find_or_create_by!(name: DEFAULT) do |e|
       e.title = 'Default exhibit'.freeze
-      e.blacklight_configuration = Spotlight::BlacklightConfiguration.create!
     end
   end
 
@@ -66,6 +66,10 @@ class Spotlight::Exhibit < ActiveRecord::Base
   end
 
   protected
+
+  def initialize_config
+    self.blacklight_configuration ||= Spotlight::BlacklightConfiguration.create!
+  end
 
   def valid_emails
     contact_emails.each do |email|

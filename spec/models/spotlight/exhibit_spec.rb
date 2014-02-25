@@ -26,11 +26,18 @@ describe Spotlight::Exhibit do
     expect(subject.errors[:contact_emails]).to eq ['@-foo is not valid']
   end
 
-  it "should have searches" do
-    subject.save!
-    search = Spotlight::Search.create!(exhibit: subject)
-    Search.create! # it shouldn't get one of these
-    expect(subject.searches).to eq [search]
+  describe "that is saved" do
+    before { subject.save!  }
+
+    it "should have searches" do
+      search = Spotlight::Search.create!(exhibit: subject)
+      Search.create! # it shouldn't get one of these
+      expect(subject.searches).to eq [search]
+    end
+
+    it "should have a configuration" do
+      expect(subject.blacklight_configuration).to be_kind_of Spotlight::BlacklightConfiguration
+    end
   end
 
   describe "contacts" do
