@@ -6,7 +6,7 @@ describe "Adding custom metadata field data" do
   let(:config) { Spotlight::Exhibit.default.blacklight_configuration }
   before do
     login_as(admin)
-    config.index_fields[custom_field.field] = { enabled: true, show: true }
+    config.index_fields[custom_field.field] = { enabled: true, show: true, 'label' => "Some Field" }
     config.save!
   end
 

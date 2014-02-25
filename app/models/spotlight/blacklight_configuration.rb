@@ -50,6 +50,7 @@ module Spotlight
     # @param [String] view the configuration may be different depending on the index view selected
     def blacklight_config
       @blacklight_config ||= begin
+        # Create a new config based on the defaults
         config = default_blacklight_config.inheritable_copy
 
         config.show.merge! show unless show.blank?
@@ -59,9 +60,11 @@ module Spotlight
 
         config.show.partials.insert(2, "spotlight/catalog/tags")
 
+        # Add any custom fields
         config.index_fields.merge! custom_index_fields
         config.index_fields = Hash[config.index_fields.sort_by { |k,v| field_weight(index_fields, k) }]
 
+        # Update with customizations
         config.index_fields.each do |k, v|
           next if index_fields[k].blank?
 

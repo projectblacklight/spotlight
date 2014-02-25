@@ -9,10 +9,16 @@ module Spotlight
 
     def label=(label)
       configuration["label"] = label
+      if (field && exhibit)
+        conf = exhibit.blacklight_configuration
+        conf.index_fields.fetch(field, configuration)['label'] = label
+        conf.save!
+      end
     end
 
     def label
-      configuration["label"]
+      return configuration["label"] unless (field && exhibit)
+      exhibit.blacklight_configuration.index_fields.fetch(field, configuration)['label']
     end
 
     def short_description=(short_description)

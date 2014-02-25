@@ -89,6 +89,12 @@ describe Spotlight::BlacklightConfiguration do
       expect(subject.blacklight_config.index_fields).to include('a')
     end
 
+    it "should prefer the label stored in index fields" do
+      subject.index_fields['a'] = { enabled: true, list: true, label: 'updated val' }
+      subject.stub(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(:field => 'a', label: "Initial value") })
+      expect(subject.blacklight_config.index_fields['a'].label).to eq 'updated val'
+    end
+
     it "should filter the upstream blacklight config with respect for view types" do
       subject.index_fields['a'] = { enabled: true, list: true, gallery: false }
       subject.index_fields['b'] = { enabled: true, list: false, gallery: true }
