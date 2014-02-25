@@ -8,37 +8,28 @@
 */
 
 SirTrevor.Blocks.MultiUpItemGrid =  (function(){
-  var key = "item-grid"
-  var id_key = key + "-id";
-  var display_checkbox = key + "-display";
-  var caption_key = key + "-display-caption";
-  var field_key = key + "-caption-field";
-  var max_fields = 5;
-  var type = "multi-up-item-grid";
-  var title_key = "spotlight_title_field";
-
   var template = _.template([
-    '<div class="form-inline ' + key + '-admin">',
+    '<div class="form-inline <%= key %>-admin">',
       '<div class="widget-header">',
         'This widget displays one to five thumbnail images of repository items in a single row grid. Optionally, you can a caption below each image..',
       '</div>',
       '<div class="col-sm-9">',
-        '<label for="' + id_key + '_0" class="control-label">Selected items to display</label>',
+        '<label for="<%= formId(id_key) %>_0" class="control-label">Selected items to display</label>',
         '<div class="form-group">',
-          buildInputFields(max_fields, id_key, display_checkbox),
+          buildInputFields(5),
         '</div>',
       '</div>',
       '<div class="col-sm-3">',
-        '<label for"' + caption_key + '">',
-          '<input name="' + caption_key + '" type="hidden" value="false" />',
-          '<input name="' + caption_key + '" id="' + caption_key + '" type="checkbox" value="true" />',
+        '<label for="<%= formId(caption_key) %>">',
+          '<input name="<%= caption_key %>" type="hidden" value="false" />',
+          '<input name="<%= caption_key %>" id="<%= formId(caption_key) %>" type="checkbox" value="true" />',
           'Display caption',
         '</label>',
         '<div class="field-select">',
-          '<label for="' + field_key + '">Caption field</label>',
-          '<select name="' + field_key + '" id="' + field_key + '">',
+          '<label for="<%= formId(field_key) %>">Caption field</label>',
+          '<select name="<%= field_key %>" id="<%= formId(field_key) %>">',
             '<option value="">Select...</option>',
-            '<option value="' + title_key + '">Title</option>',
+            '<option value="<%= title_key %>">Title</option>',
           '</select>',
         '</div>',
       '</div>',
@@ -48,7 +39,14 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
 
   return SirTrevor.Block.extend({
 
-    type: type,
+    key: "item-grid",
+    id_key: "item-grid-id",
+    display_checkbox: "item-grid-display",
+    caption_key: "item-grid-display-caption",
+    field_key: "item-grid-caption-field",
+    title_key: "spotlight_title_field",
+
+    type: "multi-up-item-grid",
 
     title: function() { return "Multi-Up Item Grid"; },
 
@@ -56,7 +54,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
       return template(this);
     },
 
-    icon_name: type,
+    icon_name: this.type,
 
     toData: function() {
       var data = {};
@@ -66,14 +64,14 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
       this.$('.item-grid-checkbox').each(function(){
         data[$(this).attr("id")] = $("[name='" + $(this).attr('name') + "']:checked").val();
       });
-      data[caption_key] = this.$('[name=' + caption_key + ']:checked').val();
-      data[field_key] = this.$('[name=' + field_key + '] option:selected').val();
+      data[this.caption_key] = this.$('[name=' + this.caption_key + ']:checked').val();
+      data[this.field_key] = this.$('[name=' + this.field_key + '] option:selected').val();
       this.setData(data);
     },
 
     onBlockRender: function() {
       addAutocompletetoSirTrevorForm();
-      loadCaptionField();
+      this.loadCaptionField();
     },
 
     loadData: function(data){
@@ -83,47 +81,53 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
       this.$('.item-grid-checkbox').each(function(){
         $(this).prop('checked', data[$(this).attr("id")]);
       });
-      this.$('#' + caption_key).prop('checked', data[caption_key])
+      this.$('#' + this.formId(this.caption_key)).prop('checked', data[this.caption_key])
       // set a data attribute on the select field so the ajax request knows which option to select
-      this.$('select#' + field_key).data('select-after-ajax', data[field_key]);
+      this.$('select#' + this.formId(this.field_key)).data('select-after-ajax', data[this.field_key]);
+    },
+
+    formId: function(id) {
+      return this.blockID + "_" + id;
+    },
+
+    loadCaptionField: function(){
+      var block = this;
+      var metadata_url = $('form[data-metadata-url]').data('metadata-url');
+      var caption_field = $('#' + this.formId(this.field_key));
+      var caption_selected_value = caption_field.data("select-after-ajax");
+      $.ajax({
+        accepts: "json",
+        url: metadata_url
+      }).success(function(data){
+        if($("option", caption_field).length == 2){
+          var options = "";
+          $.each(data, function(i, field){
+            var selected = ""
+            if (field.field == caption_selected_value) {
+              selected = " selected"
+            }
+            options += "<option " + selected + " value='" + field.field + "'>" + field.label + "</option>";
+          });
+          if(caption_selected_value == block.title_key){
+            $("option[value='" + block.title_key + "']", caption_field).prop("selected", true);
+          }
+          caption_field.append(options);
+          // re-serialze the form so the form observer
+          // knows about the new drop dwon options.
+          serializeFormStatus($('form[data-metadata-url]'));
+        }
+      });
     }
   });
-  function loadCaptionField(block){
-    var metadata_url = this.$('form[data-metadata-url]').data('metadata-url');
-    var caption_field = this.$('#' + field_key);
-    var caption_selected_value = caption_field.data("select-after-ajax");
-    $.ajax({
-      accepts: "json",
-      url: metadata_url
-    }).success(function(data){
-      if($("option", caption_field).length == 2){
-        var options = "";
-        $.each(data, function(i, field){
-          var selected = ""
-          if (field.field == caption_selected_value) {
-            selected = " selected"
-          }
-          options += "<option " + selected + " value='" + field.field + "'>" + field.label + "</option>";
-        });
-        if(caption_selected_value == title_key){
-          $("option[value='" + title_key + "']", caption_field).prop("selected", true);
-        }
-        caption_field.append(options);
-        // re-serialze the form so the form observer
-        // knows about the new drop dwon options.
-        serializeFormStatus($('form[data-metadata-url]'));
-      }
-    });
-  }
 })();
-function buildInputFields(times, id, checkbox){
+function buildInputFields(times){
   output = ""
   for(var i=0; i < times; i++){
     output += '<div class="col-sm-9 field">';
-      output += '<input name="' + checkbox + '_' + i + '" type="hidden" value="false" />';
-      output += '<input name="' + checkbox + '_' + i + '" id="' + checkbox + '_' + i + '" type="checkbox" class="item-grid-checkbox" value="true" />';
-      output += '<input name="' + id + '_' + i + '" class="item-grid-input" type="hidden" id="' + id + '_' + i + '" />';
-      output += '<input data-checkbox_field="#' + checkbox + '_' + i + '" data-id_field="#' + id + '_' + i + '" name="' + id + '_' + i + '_title" class="st-input-string item-grid-input form-control" data-twitter-typeahead="true" type="text" id="' + id + '_' + i + '_title" />';
+      output += '<input name="<%= display_checkbox + "_' + i + '" %>" type="hidden" value="false" />';
+      output += '<input name="<%= display_checkbox + "_' + i + '" %>" id="<%= formId(display_checkbox + "_' + i + '") %>" type="checkbox" class="item-grid-checkbox" value="true" />';
+      output += '<input name="<%= id_key + "_' + i + '" %>" class="item-grid-input" type="hidden" id="<%= formId(id_key + "_' + i + '") %>" />';
+      output += '<input data-checkbox_field="#<%= formId(display_checkbox + "_' + i + '") %>" data-id_field="#<%= formId(id_key + "_' + i + '") %>" name="<%= id_key + "_' + i + '_title" %>" class="st-input-string item-grid-input form-control" data-twitter-typeahead="true" type="text" id="<%= formId(id_key + "_' + i + '_title") %>" />';
     output += '</div>';
   }
   return output;
