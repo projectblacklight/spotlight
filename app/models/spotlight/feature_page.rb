@@ -1,5 +1,8 @@
 module Spotlight
   class FeaturePage < Spotlight::Page
+    extend FriendlyId
+    friendly_id :title, use: [:slugged,:scoped,:finders], scope: :exhibit
+
     has_many   :child_pages, :class_name  => "Spotlight::FeaturePage",
                              :foreign_key => "parent_page_id"
 

@@ -15,10 +15,6 @@ module Spotlight
     scope :at_top_level, -> { where(parent_page_id: nil) }
     scope :published, -> { where(published: true) }
     scope :recent, -> { order("updated_at DESC").limit(10)}
-
-    before_validation do
-      self.slug = nil
-    end
     
     # explicitly set the partial path so that 
     # we don't have to duplicate view logic.
@@ -46,5 +42,10 @@ module Spotlight
     def title_or_default
       title
     end
+
+    def should_generate_new_friendly_id?
+      title_changed?
+    end
+  
   end
 end
