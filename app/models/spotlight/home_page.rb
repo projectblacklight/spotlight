@@ -1,5 +1,8 @@
 module Spotlight
   class HomePage < Spotlight::Page
+    extend FriendlyId
+    friendly_id :title, use: [:slugged,:scoped,:finders], scope: :exhibit
+
     before_save :publish
     before_create :default_content
 

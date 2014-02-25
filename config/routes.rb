@@ -4,14 +4,14 @@ Spotlight::Engine.routes.draw do
 
   resources :exhibits, only: [:edit, :update] do
     resources :attachments
-    resource :contact_form, only: [:new, :create]
+    resource :contact_form, path: "contact", only: [:new, :create]
     resource :blacklight_configuration, only: [:update]
 
     get 'edit/metadata', to: "blacklight_configurations#edit_metadata_fields"
     get 'edit/facets', to: "blacklight_configurations#edit_facet_fields"
     get 'metadata', to: 'blacklight_configurations#metadata_fields'
 
-    resources :catalog, only: [:index, :show, :edit, :update] do
+    resources :catalog do
       collection do
         get 'admin'
       end
