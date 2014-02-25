@@ -1,21 +1,26 @@
 //= require typeahead.bundle.min.js
 //= require handlebars-v1.3.0.js
 
-var results = new Bloodhound({
-  datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.title); },
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  limit: 10,
-  remote: {
-    url: '/catalog.json?q=%QUERY',
-    filter: function(response) {
-      return $.map(response['response']['docs'], function(doc) {
-        return { id: doc['id'], title: doc['full_title_tesim'][0] }
-      })
+function initBloodhound() {
+  results = new Bloodhound({
+    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.title); },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    limit: 10,
+    remote: {
+      url: $('form[data-autocomplete-url]').data('autocomplete-url') + '?q=%QUERY',
+      filter: function(response) {
+        return $.map(response['docs'], function(doc) {
+          return { id: doc['id'], title: doc['full_title_tesim'][0] }
+        })
+      }
     }
-  }
-});
+  });
+  results.initialize();
+  return results;
+}
 
 function addAutocompletetoSirTrevorForm() {
+  results = initBloodhound();
   $('[data-twitter-typeahead]').typeahead({ highlight: true, hint: false, autoselect: true }, {
       displayKey: 'title',
       source: results.ttAdapter(),
@@ -41,4 +46,3 @@ function addAutocompletetoSirTrevorForm() {
       }
     });
 }
-results.initialize();

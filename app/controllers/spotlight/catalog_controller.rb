@@ -36,6 +36,20 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
     add_breadcrumb Array(@document[blacklight_config.view_config(:show).title_field]).join(', '), exhibit_catalog_path(@exhibit, @document)
   end
 
+  # "id_ng" and "full_title_ng" should be defined in the Solr core's schema.xml.
+  # It's expected that these fields will be set up to have  EdgeNGram filter
+  # setup within their index analyzer. This will ensure that this method returns
+  # results when a partial match is passed in the "q" parameter.
+  def autocomplete
+    (_, @document_list) = get_search_results(params, :fl => 'id full_title_tesim', :qf => 'id_ng full_title_ng')
+      
+    respond_to do |format|
+      format.json do
+        render json: {docs: @document_list}
+      end
+    end
+  end
+
   def admin
     self.blacklight_config.view.reject! { |k,v| true }
     self.blacklight_config.view.admin_table.partials = [:index_compact]

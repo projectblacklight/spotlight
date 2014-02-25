@@ -5,15 +5,16 @@ describe Spotlight::CatalogController do
 
   describe "when the user is not authenticated" do
 
+    let (:exhibit) {Spotlight::Exhibit.default}
+
     describe "GET admin" do
       it "should redirect to the login page" do
-        get :admin, exhibit_id: Spotlight::Exhibit.default
+        get :admin, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
     
     describe "GET edit" do
-      let (:exhibit) {Spotlight::Exhibit.default}
       it "should not be allowed" do
         get :edit, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to redirect_to main_app.new_user_session_path
@@ -21,7 +22,6 @@ describe Spotlight::CatalogController do
     end
 
     describe "GET show" do
-      let (:exhibit) {Spotlight::Exhibit.default}
       let (:document) { SolrDocument.find('dq287tq6352') }
       let(:search) { FactoryGirl.create(:search) }
       it "should show the item" do
@@ -45,7 +45,6 @@ describe Spotlight::CatalogController do
 
 
     describe "GET index" do
-      let (:exhibit) {Spotlight::Exhibit.default}
       it "should show the index" do
         expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("Search Results", exhibit_catalog_index_path(exhibit, q:'map'))
@@ -58,12 +57,32 @@ describe Spotlight::CatalogController do
         expect(controller.blacklight_config.show.partials.first).to eq "curation_mode_toggle"
       end
     end
+
+    describe "GET autocomplete" do
+      it "should have partial matches for title" do
+        get :autocomplete, exhibit_id: exhibit, q: 'ZUYDLA', format: 'json'
+        expect(assigns[:document_list].first.id).to eq 'dx157dh4345'
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['docs'].first['id']).to eq 'dx157dh4345'
+        expect(json['docs'].first['full_title_tesim']).to eq ["KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721 en 1722"]
+      end
+      it "should have partial matches for id" do
+        get :autocomplete, exhibit_id: exhibit, q: 'dx157', format: 'json'
+        expect(assigns[:document_list].first.id).to eq 'dx157dh4345'
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['docs'].first['id']).to eq 'dx157dh4345'
+        expect(json['docs'].first['full_title_tesim']).to eq ["KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721 en 1722"]
+      end
+    end
   end
 
   describe "when the user is not authorized" do
     before do
       sign_in FactoryGirl.create(:exhibit_visitor)
     end
+    let (:exhibit) {Spotlight::Exhibit.default}
 
     describe "GET index" do
       it "should apply gated discovery access controls" do
@@ -73,14 +92,13 @@ describe Spotlight::CatalogController do
 
     describe "GET admin" do
       it "should deny access" do
-        get :admin, exhibit_id: Spotlight::Exhibit.default
+        get :admin, exhibit_id: exhibit
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to be_present
       end
     end
 
     describe "GET edit" do
-      let (:exhibit) {Spotlight::Exhibit.default}
       it "should not be allowed" do
         get :edit, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to redirect_to main_app.root_path
@@ -89,7 +107,6 @@ describe Spotlight::CatalogController do
     end
 
     describe "GET show with private item" do
-      let (:exhibit) {Spotlight::Exhibit.default}
       it "should not be allowed" do
         ::SolrDocument.any_instance.stub(:private?).and_return(true)
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
@@ -99,8 +116,6 @@ describe Spotlight::CatalogController do
     end
 
     describe "PUT make_public" do
-
-      let (:exhibit) {Spotlight::Exhibit.default}
       it "should not be allowed" do
         put :make_public, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
         expect(response).to redirect_to main_app.root_path
@@ -110,8 +125,6 @@ describe Spotlight::CatalogController do
     end
 
     describe "DELETE make_private" do
-
-      let (:exhibit) {Spotlight::Exhibit.default}
       it "should not be allowed" do
         delete :make_private, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
         expect(response).to redirect_to main_app.root_path
