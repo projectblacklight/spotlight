@@ -13,8 +13,8 @@
               </div>
             <% end %>
             <% if block['item-grid-display-caption'] == 'true' %>
-              <div class="title">
-                <%= document_heading(document) %>
+              <div class="caption">
+                <%= multi_up_item_grid_caption(block, document) %>
               </div>
             <% end %>
           </div>

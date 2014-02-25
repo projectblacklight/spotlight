@@ -26,9 +26,10 @@ feature "Item + Image Block" do
     # click the item + image widget
     expect(page).to have_css("a[data-type='item-text']")
     find("a[data-type='item-text']").click
-    # fill in the record ID field
-    expect(page).to have_css("input#item-id")
-    fill_in "item-id", :with => "dq287tq6352"
+    # fill in the hidden record ID field
+    # TODO: Do we need an additional test for the typeahead?
+    item_id_field = find("input#item-id", visible: false)
+    item_id_field.set("dq287tq6352")
     # create the page
     click_button("Save changes")
     # veryify that the page was created
@@ -66,9 +67,11 @@ feature "Item + Image Block" do
     # click the item + image widget
     expect(page).to have_css("a[data-type='item-text']")
     find("a[data-type='item-text']").click
-    # fill in the record ID field
-    expect(page).to have_css("input#item-id")
-    fill_in "item-id", :with => "dq287tq6352"
+
+    # fill in the hidden record ID field
+    # TODO: Do we need an additional test for the typeahead?
+    item_id_field = find("input#item-id", visible: false)
+    item_id_field.set("dq287tq6352")
     # display the title
     check("Display title")
     # create the page
@@ -111,9 +114,12 @@ feature "Item + Image Block" do
     # click the item + image widget
     expect(page).to have_css("a[data-type='item-text']")
     find("a[data-type='item-text']").click
-    # fill in the record ID field
-    expect(page).to have_css("input#item-id")
-    fill_in "item-id", :with => "dq287tq6352"
+
+    # fill in the hidden record ID field
+    # TODO: Do we need an additional test for the typeahead?
+    item_id_field = find("input#item-id", visible: false)
+    item_id_field.set("dq287tq6352")
+
     # fill in the content-editable div
     content_editable = find("#item-text")
     content_editable.set("Some text to annotate this image.")
@@ -152,9 +158,12 @@ feature "Item + Image Block" do
     # click the item + image widget
     expect(page).to have_css("a[data-type='item-text']")
     find("a[data-type='item-text']").click
-    # fill in the record ID field
-    expect(page).to have_css("input#item-id")
-    fill_in "item-id", :with => "dq287tq6352"
+
+    # fill in the hidden record ID field
+    # TODO: Do we need an additional test for the typeahead?
+    item_id_field = find("input#item-id", visible: false)
+    item_id_field.set("dq287tq6352")
+
     # fill in the content editable div
     content_editable = find("#item-text")
     content_editable.set("Some text to annotate this image.")

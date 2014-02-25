@@ -70,4 +70,44 @@ describe "Mutli-Up Item Grid", js: true do
     expect(page).to have_css("[data-id='jp266yb7109']")
     expect(page).not_to have_css("[data-id='zv316zr9542']")
   end
+  it "should optionally show the configured caption" do
+    pending("Passing locally but Travis is thowing intermittent errors") if ENV["CI"]
+    visit '/'
+    click_link exhibit_curator.email
+    within '.dropdown-menu' do
+      click_link 'Dashboard'
+    end
+    click_link "Feature pages"
+
+    within("[data-id='#{feature_page.id}']") do
+      click_link "Edit"
+    end
+
+    find("[data-icon='add']").click
+
+    find("a[data-type='multi-up-item-grid']").click
+
+    # Poltergeist / Capybara doesn't fire the events typeahead.js
+    # is listening for, so we help it out a little:
+    fill_in("item-grid-id_0_title", with: "gk446cj2442")
+    page.execute_script '
+      $("#item-grid-id_0_title").val("gk446cj2442").keydown();
+      $("#item-grid-id_0_title").typeahead("open");
+      $(".tt-suggestion").click();
+    ';
+    find('.tt-suggestion').click
+
+    check("Display caption")
+    select("Language", from: "Caption field")
+
+    click_button "Save changes"
+
+    expect(page).to have_content("Page was successfully updated.")
+
+
+    within("[data-id='#{feature_page.id}']") do
+      click_link "View"
+    end
+    expect(page).to have_css(".caption", text: "Latin")
+  end
 end
