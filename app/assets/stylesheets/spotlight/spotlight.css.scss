@@ -14,3 +14,8 @@
 @import "spotlight/typeahead";
 @import "spotlight/bootstrap_overrides";
 
+
+#main-container {
+  // Keep the footer down the page if there isn't much content
+  min-height: 40%;
+}

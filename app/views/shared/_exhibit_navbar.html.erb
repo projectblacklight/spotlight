@@ -4,8 +4,8 @@
   <div class="container">
     <ul class="nav navbar-nav">
       <li class="<%= "active" if current_page?(root_url) %>"><%= link_to t(:'spotlight.curation.nav.home'), root_url %></li>
-      <% unless published_top_level_feature_pages.empty? %>
-        <% if published_top_level_feature_pages.length > 1 %>
+      <% if published_top_level_feature_pages.present? %>
+        <% if published_top_level_feature_pages.many? %>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t(:'spotlight.feature_pages.nav_link') %> <b class="caret"></b></a>
           <ul class="dropdown-menu">
@@ -24,6 +24,18 @@
       <li class="<%= "active" if on_browse_page? %>"><%= link_to t(:'spotlight.browse.nav_link'), spotlight.exhibit_browse_index_path(current_exhibit) %></li>
       <% end %>
       <li class="<%= "active" if on_about_page? %>"><%= link_to t(:'spotlight.about_pages.nav_link'), [spotlight, current_exhibit, current_exhibit.main_about_page] if current_exhibit.main_about_page %></li>
+      <% if Spotlight::Exhibit.many? %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t(:'.more_exhibits') %> <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <% Spotlight::Exhibit.where.not(id: current_exhibit).each do |exhibit| %>
+              <li>
+              <%= link_to exhibit.title, [spotlight, exhibit] %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
     </ul>
 
     <div class="navbar-right col-sm-4 col-md-4"> 

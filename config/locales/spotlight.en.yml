@@ -255,5 +255,7 @@ en:
       label: "Save this search"
       title: "Saved search title"
   shared:
+    exhibit_navbar:
+      more_exhibits: More Exhibits
     share_follow:
       share_follow: "Share & Follow"
