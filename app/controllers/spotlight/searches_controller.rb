@@ -20,7 +20,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   end
 
   def edit
-    add_breadcrumb @search.title, edit_search_path(@search)
+    add_breadcrumb @search.title, edit_exhibit_search_path(@search.exhibit, @search)
     @exhibit = @search.exhibit
   end
 

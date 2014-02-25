@@ -5,7 +5,7 @@ describe "About page" do
   let!(:about_page2) { FactoryGirl.create(:about_page, title: "Second Page") }
   describe "sidebar" do
     it "should display" do
-      visit spotlight.about_page_path(about_page1)
+      visit spotlight.exhibit_about_page_path(about_page1.exhibit, about_page1)
       # the sidebar should display
       within("#sidebar") do
         # within the sidebar navigation

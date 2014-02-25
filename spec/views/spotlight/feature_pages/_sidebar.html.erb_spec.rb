@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "spotlight/feature_pages/_sidebar.html.erb" do
-  let!(:parent1) { FactoryGirl.create(:feature_page, title: "Parent Page") }
+  let!(:parent1) { FactoryGirl.create(:feature_page, exhibit: Spotlight::Exhibit.default, title: "Parent Page") }
   let!(:parent2) { FactoryGirl.create(:feature_page, exhibit: parent1.exhibit, title: "Two") }
   let!(:child1) { FactoryGirl.create(:feature_page, exhibit: parent1.exhibit, parent_page: parent1, title: "Three", weight: 4) }
   let!(:child2) { FactoryGirl.create(:feature_page, exhibit: parent1.exhibit, parent_page: parent2, title: "Four") }

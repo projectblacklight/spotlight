@@ -1,4 +1,4 @@
-<%= bootstrap_form_for @custom_field.new_record? ? [current_exhibit, @custom_field] : @custom_field, style: :horizontal, html: {class: 'col-md-9', id: 'edit-search'} do |f| %>
+<%= bootstrap_form_for @custom_field.new_record? ? [current_exhibit, @custom_field] : [@custom_field.exhibit, @custom_field], style: :horizontal, html: {class: 'col-md-9', id: 'edit-search'} do |f| %>
 
   <%= f.text_field :label %>
   <%= f.text_area :short_description %>

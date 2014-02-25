@@ -1,9 +1,8 @@
 module Spotlight
   class DashboardsController < Spotlight::ApplicationController
     include Blacklight::Base
-
     before_filter :authenticate_user!
-    load_resource :exhibit, class: Spotlight::Exhibit # TODO need to authorize user?
+    load_resource :exhibit, class: Spotlight::Exhibit
 
     copy_blacklight_config_from Spotlight::CatalogController
 

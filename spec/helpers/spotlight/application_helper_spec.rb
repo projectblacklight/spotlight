@@ -14,7 +14,7 @@ describe Spotlight::ApplicationHelper do
 
     it "should be a url for a search with the given tag facet" do
       Spotlight::SolrDocument.stub(solr_field_for_tagger: :exhibit_tags)
-      expect(helper.url_to_tag_facet "tag_value").to eq spotlight.exhibit_catalog_index_path(exhibit_id: 1, f: { exhibit_tags: ['tag_value']})
+      expect(helper.url_to_tag_facet "tag_value").to eq spotlight.exhibit_catalog_index_path(exhibit_id: helper.current_exhibit, f: { exhibit_tags: ['tag_value']})
     end
   end
 end

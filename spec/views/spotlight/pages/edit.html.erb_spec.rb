@@ -12,7 +12,7 @@ module Spotlight
       render
 
       # Run the generator again with the --webrat flag if you want to use webrat matchers
-      assert_select "form[action=?][method=?]", spotlight.feature_page_path(page), "post" do
+      assert_select "form[action=?][method=?]", spotlight.exhibit_feature_page_path(page.exhibit, page), "post" do
         assert_select "input#feature_page_title[name=?]", "feature_page[title]"
         assert_select "textarea#feature_page_content[name=?]", "feature_page[content]"
       end

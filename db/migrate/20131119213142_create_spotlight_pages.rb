@@ -3,6 +3,7 @@ class CreateSpotlightPages < ActiveRecord::Migration
     create_table :spotlight_pages do |t|
       t.string     :title
       t.string     :type
+      t.string :slug
       t.text       :content
       t.integer    :weight, default: 50
       t.boolean    :published
@@ -15,5 +16,6 @@ class CreateSpotlightPages < ActiveRecord::Migration
     end
     add_index :spotlight_pages, :exhibit_id
     add_index :spotlight_pages, :parent_page_id
+    add_index :spotlight_pages, :slug, unique: true
   end
 end

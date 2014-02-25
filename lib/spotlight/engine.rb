@@ -3,6 +3,7 @@ require 'blacklight'
 require 'blacklight/gallery'
 require 'spotlight/rails/routes'
 require 'spotlight/utils'
+require 'friendly_id'
 
 module Spotlight
   class Engine < ::Rails::Engine

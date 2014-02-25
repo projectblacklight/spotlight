@@ -24,19 +24,19 @@ describe Spotlight::AboutPagesController do
       let(:page2) { FactoryGirl.create(:about_page, weight: 5) }
       describe "on the main about page" do
         it "is successful" do
-          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
-          expect(controller).to receive(:add_breadcrumb).with("About", page)
-          get :show, id: page
+          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+          expect(controller).to receive(:add_breadcrumb).with("About", [exhibit, page])
+          get :show, id: page, exhibit_id: exhibit
           expect(assigns(:page)).to eq page
           expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
         end
       end
       describe "on a different about page" do
         it "is successful" do
-          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
-          expect(controller).to receive(:add_breadcrumb).with('About', page)
-          expect(controller).to receive(:add_breadcrumb).with(page2.title, page2)
-          get :show, id: page2
+          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+          expect(controller).to receive(:add_breadcrumb).with('About', [exhibit, page])
+          expect(controller).to receive(:add_breadcrumb).with(page2.title, [exhibit, page2])
+          get :show, id: page2, exhibit_id: exhibit
           expect(assigns(:page)).to eq page2
           expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
         end
@@ -48,19 +48,19 @@ describe Spotlight::AboutPagesController do
       let(:page2) { FactoryGirl.create(:about_page, weight: 5) }
       describe "on the main about page" do
         it "is successful" do
-          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
-          get :edit, id: page
+          get :edit, id: page, exhibit_id: exhibit
           expect(assigns(:page)).to eq page
           expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
         end
       end
       describe "on a different about page" do
         it "is successful" do
-          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with(page2.title, edit_about_page_path(page2))
-          get :edit, id: page2
+          expect(controller).to receive(:add_breadcrumb).with(page2.title, [:edit, exhibit, page2])
+          get :edit, id: page2, exhibit_id: exhibit
           expect(assigns(:page)).to eq page2
           expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
         end
@@ -70,7 +70,7 @@ describe Spotlight::AboutPagesController do
     describe "GET index" do
       let!(:page) { FactoryGirl.create(:about_page) }
       it "is successful" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
         get :index, exhibit_id: Spotlight::Exhibit.default
@@ -90,7 +90,7 @@ describe Spotlight::AboutPagesController do
       let!(:page) { FactoryGirl.create(:about_page) }
       it "redirects to the about page index action" do
         put :update, id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes
-        response.should redirect_to(exhibit_about_pages_path(page.exhibit.id))
+        response.should redirect_to(exhibit_about_pages_path(page.exhibit))
       end
     end
     describe "POST update_all" do
