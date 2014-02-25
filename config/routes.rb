@@ -1,8 +1,7 @@
 Spotlight::Engine.routes.draw do
 
-  get 'exhibits/:id' => 'home_pages#show'
+  get 'exhibits/:exhibit_id' => 'home_pages#show', as: :exhibit_root
 
-  resources :contacts, only: [:edit, :update, :destroy]
   resources :exhibits, only: [:edit, :update] do
     resources :attachments
     resource :contact_form, only: [:new, :create]
@@ -23,11 +22,11 @@ Spotlight::Engine.routes.draw do
 
     resources :solr_document, only: [:edit], to: 'catalog#edit'
 
-    resources :custom_fields, shallow: true
+    resources :custom_fields
 
     resource :dashboard, only: :show
 
-    resources :searches, shallow: true do
+    resources :searches do
       collection do
         patch :update_all
       end
@@ -35,20 +34,20 @@ Spotlight::Engine.routes.draw do
     resources :browse, only: [:index, :show]
     resources :tags, only: [:index, :destroy]
 
-
-    resources :about, controller: "about_pages", as: "about_pages", shallow: true do
+    resources :contacts, only: [:edit, :update, :destroy]
+    resources :about, controller: "about_pages", as: "about_pages" do
       collection do
         patch 'contacts' => 'about_pages#update_contacts'
         resources :contacts, only: [:new, :create]
         patch :update_all
       end
     end
-    resources :feature, controller: "feature_pages", as: "feature_pages", shallow: true do
+    resources :feature, controller: "feature_pages", as: "feature_pages" do
       collection do
         patch :update_all
       end
     end
-    resources :home_page, controller: "home_pages", as: "home_pages", shallow: true
+    resources :home_page, controller: "home_pages", as: "home_pages"
 
     resources :roles, only: [:index, :create, :destroy] do
       collection do

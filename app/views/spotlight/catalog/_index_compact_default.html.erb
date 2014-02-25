@@ -7,7 +7,7 @@
 
     <div class="page-links">
       <%= view_link document, url_for_document(document), class: 'btn btn-text' %> &middot;
-      <%= exhibit_edit_link document, class: 'btn btn-text' %>
+      <%= exhibit_edit_link document, [:edit, current_exhibit, document], class: 'btn btn-text' %>
     </div>
       </td>
 

@@ -1,4 +1,4 @@
-<%= form_for(@page.new_record? ? [spotlight, @page.exhibit, @page] : [spotlight, @page] , role: 'form', html: {:'data-form-observer' => true, :'data-attachment-endpoint' => spotlight.exhibit_attachments_url(@page.exhibit)}) do |f| %>
+<%= form_for([spotlight, @page.exhibit, @page], role: 'form', html: {:'data-form-observer' => true, :'data-attachment-endpoint' => spotlight.exhibit_attachments_url(@page.exhibit)}) do |f| %>
   <% if @page.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>

@@ -1,5 +1,9 @@
 require 'mail'
 class Spotlight::Exhibit < ActiveRecord::Base
+
+  extend FriendlyId
+  friendly_id :title, use: [:slugged,:finders]
+
   DEFAULT = 'default'.freeze
   has_many :roles
   has_many :searches

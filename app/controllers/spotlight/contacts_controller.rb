@@ -10,7 +10,7 @@ module Spotlight
     end
 
     def edit
-      add_breadcrumb @contact.name, edit_contact_path(@contact)
+      add_breadcrumb @contact.name, edit_exhibit_contact_path(@contact.exhibit, @contact)
     end
 
     def update

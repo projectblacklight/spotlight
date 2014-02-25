@@ -12,14 +12,14 @@ describe "Curation Mode Widget" do
     describe "the feature pages" do
       describe "edit page" do
         it "should not render the widget" do
-          visit spotlight.edit_polymorphic_path(feature_page)
+          visit spotlight.edit_polymorphic_path([feature_page.exhibit, feature_page])
           expect(page).not_to have_content(curation_mode_text)
           expect(page).not_to have_link(curation_mode_link)
         end
       end
       describe "show page" do
         it "should not render the widget" do
-          visit spotlight.polymorphic_path(feature_page)
+          visit spotlight.polymorphic_path([feature_page.exhibit, feature_page])
           expect(page).not_to have_content(curation_mode_text)
           expect(page).not_to have_link(curation_mode_link)
         end
@@ -31,14 +31,14 @@ describe "Curation Mode Widget" do
     describe "the feature pages" do
       describe "edit page" do
         it "should have text indicating that the user is in curation mode and a link to turn it off" do
-          visit spotlight.edit_polymorphic_path(feature_page)
+          visit spotlight.edit_polymorphic_path([feature_page.exhibit, feature_page])
           expect(page).to have_content(curation_mode_text)
           expect(page).to have_link(curation_mode_link)
         end
       end
       describe "show page" do
         it "should have text indicating that the user is in end-user mode and a link to turn go into curation mode" do
-          visit spotlight.polymorphic_path(feature_page)
+          visit spotlight.polymorphic_path([feature_page.exhibit, feature_page])
           expect(page).to have_content(user_mode_text)
           expect(page).to have_link(user_mode_link)
         end

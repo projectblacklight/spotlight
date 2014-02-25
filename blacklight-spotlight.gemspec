@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency "bootstrap_form"
   s.add_dependency "mail_form"
   s.add_dependency "acts-as-taggable-on"
+  s.add_dependency "friendly_id"
   s.add_dependency "breadcrumbs_on_rails", "~> 2.3.0"
   s.add_dependency "social-share-button", "~> 0.1.5"
   s.add_dependency "ruby-oembed"

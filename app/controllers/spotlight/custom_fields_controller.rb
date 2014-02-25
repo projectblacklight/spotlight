@@ -11,7 +11,7 @@ class Spotlight::CustomFieldsController < Spotlight::ApplicationController
   end
 
   def edit
-    add_breadcrumb @custom_field.label, edit_custom_field_path(@custom_field)
+    add_breadcrumb @custom_field.label, edit_exhibit_custom_field_path(@custom_field.exhibit, @custom_field)
   end
 
   def create

@@ -14,6 +14,10 @@ module Spotlight
       route "spotlight_root"
     end
 
+    def friendly_id
+      generate "friendly_id"
+    end
+
     def assets
       copy_file "spotlight.css.scss", "app/assets/stylesheets/spotlight.css.scss"
       copy_file "spotlight.js", "app/assets/javascripts/spotlight.js"

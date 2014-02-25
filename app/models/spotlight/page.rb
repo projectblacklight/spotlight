@@ -2,6 +2,9 @@ module Spotlight
   class Page < ActiveRecord::Base
     MAX_PAGES = 50
 
+    extend FriendlyId
+    friendly_id :title, use: [:slugged,:scoped,:finders], scope: :exhibit
+
     belongs_to :exhibit
     belongs_to :created_by, class_name: "::User"
     belongs_to :last_edited_by, class_name: "::User"
@@ -12,6 +15,10 @@ module Spotlight
     scope :at_top_level, -> { where(parent_page_id: nil) }
     scope :published, -> { where(published: true) }
     scope :recent, -> { order("updated_at DESC").limit(10)}
+
+    before_validation do
+      self.slug = nil
+    end
     
     # explicitly set the partial path so that 
     # we don't have to duplicate view logic.

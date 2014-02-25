@@ -3,7 +3,7 @@ module Spotlight
     before_filter :authenticate_user!, except: [:show]
 
     load_resource :exhibit, class: Spotlight::Exhibit, only: [:index, :new, :create, :update_all]
-    load_and_authorize_resource through: :exhibit, shallow: true,  instance_name: 'page'
+    load_and_authorize_resource through: :exhibit, shallow: true, instance_name: 'page'
 
     before_filter :attach_breadcrumbs
 
@@ -82,11 +82,12 @@ module Spotlight
 
     def attach_breadcrumbs
       load_exhibit
-      add_breadcrumb @exhibit.title, @exhibit
+      add_breadcrumb @exhibit.title, spotlight.exhibit_root_path(@exhibit)
     end
 
     def load_exhibit
-      @exhibit ||= @page.exhibit
+      @exhibit ||= @page.exhibit if @page
+      @exhibit ||= Spotlight::Exhibit.find(params[:exhibit_id])
     end
 
     private

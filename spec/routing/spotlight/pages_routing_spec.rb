@@ -16,13 +16,13 @@ module Spotlight
       end
 
       it "routes to #show" do
-        get("/feature/2").should route_to("spotlight/feature_pages#show", id: "2")
-        get("/about/2").should   route_to("spotlight/about_pages#show",   id: "2")
+        get("/exhibits/1/feature/2").should route_to("spotlight/feature_pages#show", id: "2", exhibit_id: "1")
+        get("/exhibits/1/about/2").should   route_to("spotlight/about_pages#show",   id: "2", exhibit_id: "1")
       end
 
       it "routes to #edit" do
-        get("/feature/2/edit").should route_to("spotlight/feature_pages#edit", id: "2")
-        get("/about/2/edit").should   route_to("spotlight/about_pages#edit",   id: "2")
+        get("/exhibits/1/feature/2/edit").should route_to("spotlight/feature_pages#edit", id: "2", exhibit_id: "1")
+        get("/exhibits/1/about/2/edit").should   route_to("spotlight/about_pages#edit",   id: "2", exhibit_id: "1")
       end
 
       it "routes to #create" do
@@ -31,13 +31,13 @@ module Spotlight
       end
 
       it "routes to #update" do
-        put("/feature/2").should route_to("spotlight/feature_pages#update", id: "2")
-        put("/about/2").should   route_to("spotlight/about_pages#update",   id: "2")
+        put("/exhibits/1/feature/2").should route_to("spotlight/feature_pages#update", id: "2", exhibit_id: "1")
+        put("/exhibits/1/about/2").should   route_to("spotlight/about_pages#update",   id: "2", exhibit_id: "1")
       end
 
       it "routes to #destroy" do
-        delete("/feature/2").should route_to("spotlight/feature_pages#destroy", id: "2")
-        delete("/about/2").should   route_to("spotlight/about_pages#destroy",   id: "2")
+        delete("/exhibits/1/feature/2").should route_to("spotlight/feature_pages#destroy", id: "2", exhibit_id: "1")
+        delete("/exhibits/1/about/2").should   route_to("spotlight/about_pages#destroy",   id: "2", exhibit_id: "1")
       end
 
     end

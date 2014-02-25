@@ -11,19 +11,19 @@
           <ul class="dropdown-menu">
             <% published_top_level_feature_pages.each do |page| %>
               <li>
-              <%= link_to page.title, [spotlight, page] %>
+              <%= link_to page.title, [spotlight, page.exhibit, page] %>
               </li>
             <% end %>
           </ul>
         </li>
         <% else %>
-        <li class="<%= "active" if current_page?(url_for([spotlight, published_top_level_feature_pages.first])) %>"><%= link_to published_top_level_feature_pages.first.title, [spotlight, published_top_level_feature_pages.first] %></li>
+        <li class="<%= "active" if current_page?(url_for([spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first])) %>"><%= link_to published_top_level_feature_pages.first.title, [spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first] %></li>
         <% end %>
       <% end %>
       <% if current_exhibit.has_browse_categories? %>
       <li class="<%= "active" if on_browse_page? %>"><%= link_to t(:'spotlight.browse.nav_link'), spotlight.exhibit_browse_index_path(current_exhibit) %></li>
       <% end %>
-      <li class="<%= "active" if on_about_page? %>"><%= link_to t(:'spotlight.about_pages.nav_link'), [spotlight, current_exhibit.main_about_page] if current_exhibit.main_about_page %></li>
+      <li class="<%= "active" if on_about_page? %>"><%= link_to t(:'spotlight.about_pages.nav_link'), [spotlight, current_exhibit, current_exhibit.main_about_page] if current_exhibit.main_about_page %></li>
     </ul>
 
     <div class="navbar-right col-sm-4 col-md-4"> 

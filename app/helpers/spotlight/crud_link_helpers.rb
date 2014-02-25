@@ -10,6 +10,12 @@ module Spotlight
       link_to action_default_value(model, :view), link, link_to_options
     end
 
+    def exhibit_view_link model, *args
+      link_to_options = args.extract_options!
+      link = args.first || [spotlight, model.exhibit, model]
+      link_to action_default_value(model, :view), link, link_to_options
+    end
+
     def exhibit_create_link model, *args
       link_to_options = args.extract_options!
       link = args.first || polymorphic_path([spotlight, current_exhibit, model], action: :new)
@@ -24,13 +30,20 @@ module Spotlight
 
     def exhibit_edit_link model, *args
       link_to_options = args.extract_options!
-      link = args.first || polymorphic_path([spotlight, current_exhibit, model], action: :edit)
+      link = args.first || polymorphic_path([spotlight, model.exhibit, model], action: :edit)
       link_to action_default_value(model), link, link_to_options
     end
 
     def delete_link model, *args
       link_to_options = args.extract_options!
       link = args.first || [spotlight, model]
+      default_options = { method: :delete, data: { confirm: action_default_value(model, :destroy_are_you_sure) } }
+      link_to action_default_value(model, :destroy), link, default_options.merge(link_to_options)
+    end
+
+    def exhibit_delete_link model, *args
+      link_to_options = args.extract_options!
+      link = args.first || [spotlight, model.exhibit, model]
       default_options = { method: :delete, data: { confirm: action_default_value(model, :destroy_are_you_sure) } }
       link_to action_default_value(model, :destroy), link, default_options.merge(link_to_options)
     end

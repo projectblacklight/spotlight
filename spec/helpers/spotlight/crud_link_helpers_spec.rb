@@ -11,22 +11,22 @@ module Spotlight
       end
     end
 
-    describe "#view_link" do
+    describe "#exhibit_view_link" do
       before do
         helper.stub action_default_value: "View"
       end
 
       it "should be a model-specific view link" do
         helper.should_receive(:action_default_value).with(some_model, :view).and_return "View"
-        expect(helper.view_link(some_model)).to have_link "View", href: spotlight.feature_page_path(some_model)
+        expect(helper.exhibit_view_link(some_model)).to have_link "View", href: spotlight.exhibit_feature_page_path(some_model.exhibit, some_model)
       end
 
       it "should accept an explicit link" do
-        expect(helper.view_link(some_model, '#')).to have_link "View", href: "#"
+        expect(helper.exhibit_view_link(some_model, '#')).to have_link "View", href: "#"
       end
 
       it "should accept link_to options" do
-        expect(helper.view_link(some_model, '#', class: 'btn')).to have_selector 'a.btn'
+        expect(helper.exhibit_view_link(some_model, '#', class: 'btn')).to have_selector 'a.btn'
       end
     end
 
@@ -52,28 +52,9 @@ module Spotlight
       end
     end
 
-    describe "#edit_link" do
-      before do
-        helper.stub action_default_value: "Edit"
-      end
-
-      it "should be a model-specific view link" do
-        helper.should_receive(:action_default_value).with(some_model).and_return "Edit"
-        expect(helper.edit_link(some_model)).to have_link "Edit", href: spotlight.edit_feature_page_path(some_model)
-      end
-
-      it "should accept an explicit link" do
-        expect(helper.edit_link(some_model, '#')).to have_link "Edit", href: "#"
-      end
-
-      it "should accept link_to options" do
-        expect(helper.edit_link(some_model, '#', class: 'btn')).to have_selector 'a.btn'
-      end
-    end
-
     describe "#exhibit_edit_link" do
       let(:current_exhibit) { Spotlight::Exhibit.default }
-      let(:some_model) { ::SolrDocument.new  id: 1 }
+      let(:some_model) { Spotlight::FeaturePage.create! exhibit: current_exhibit }
       before do
         helper.stub(current_exhibit: current_exhibit)
         helper.stub action_default_value: "Edit"
@@ -81,7 +62,7 @@ module Spotlight
 
       it "should be a model-specific edit link" do
         helper.should_receive(:action_default_value).with(some_model).and_return "Edit"
-        expect(helper.exhibit_edit_link(some_model)).to have_link "Edit", href: spotlight.edit_exhibit_solr_document_path(current_exhibit, some_model)
+        expect(helper.exhibit_edit_link(some_model)).to have_link "Edit", href: spotlight.edit_exhibit_feature_page_path(current_exhibit, some_model)
       end
 
       it "should accept an explicit link" do
@@ -93,22 +74,22 @@ module Spotlight
       end
     end
 
-    describe "#delete_link" do
+    describe "#exhibit_delete_link" do
       before do
         helper.stub action_default_value: "Delete"
       end
 
       it "should be a model-specific view link" do
         helper.should_receive(:action_default_value).with(some_model, :destroy).and_return "Delete"
-        expect(helper.delete_link(some_model)).to have_link "Delete", href: spotlight.feature_page_path(some_model)
+        expect(helper.exhibit_delete_link(some_model)).to have_link "Delete", href: spotlight.exhibit_feature_page_path(some_model.exhibit, some_model)
       end
 
       it "should accept an explicit link" do
-        expect(helper.delete_link(some_model, '#')).to have_link "Delete", href: "#"
+        expect(helper.exhibit_delete_link(some_model, '#')).to have_link "Delete", href: "#"
       end
 
       it "should accept link_to options" do
-        expect(helper.delete_link(some_model, '#', class: 'btn')).to have_selector 'a.btn'
+        expect(helper.exhibit_delete_link(some_model, '#', class: 'btn')).to have_selector 'a.btn'
       end
     end
 

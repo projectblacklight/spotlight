@@ -19,11 +19,11 @@ module Spotlight
         if action_name == 'edit'
           add_breadcrumb t(:'spotlight.pages.index.about_pages.header'), exhibit_about_pages_path(@exhibit)
         else
-          add_breadcrumb t(:'spotlight.about_pages.nav_link'), @exhibit.main_about_page
+          add_breadcrumb t(:'spotlight.about_pages.nav_link'), [@exhibit, @exhibit.main_about_page]
         end
 
         unless @page == @exhibit.main_about_page
-          add_breadcrumb @page.title, action_name == 'edit' ? edit_about_page_path(@page) : @page 
+          add_breadcrumb @page.title, action_name == 'edit' ? [:edit, @page.exhibit, @page] : [@page.exhibit, @page] 
         end
       elsif action_name == 'index'
         add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)

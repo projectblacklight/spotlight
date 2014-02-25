@@ -15,7 +15,7 @@ describe "Browse Category Administration" do
   end
   describe "edit" do
     it "should display an edit form" do
-      visit spotlight.edit_search_path(search)
+      visit spotlight.edit_exhibit_search_path(exhibit, search)
       expect(page).to have_css("h1 small", text: "Edit Browse Category")
       expect(find_field("search_title").value).to eq search.title
     end

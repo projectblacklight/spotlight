@@ -5,8 +5,8 @@
       <div class="main">
         <h3 class="panel-title"><%= current_exhibit.home_page.title_or_default %></h3>
         <div class="page-links">
-          <%= view_link @exhibit.home_page, class: 'btn btn-text' %> &middot;
-          <%= edit_link @exhibit.home_page, class: 'btn btn-text' %>
+          <%= exhibit_view_link @exhibit.home_page, class: 'btn btn-text' %> &middot;
+          <%= exhibit_edit_link @exhibit.home_page, class: 'btn btn-text' %>
         </div>
       </div>
     </div>

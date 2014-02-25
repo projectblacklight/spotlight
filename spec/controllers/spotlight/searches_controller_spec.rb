@@ -51,7 +51,7 @@ describe Spotlight::SearchesController do
 
     describe "GET edit" do
       it "should show edit page" do
-        get :edit, id: search
+        get :edit, id: search, exhibit_id: search.exhibit
         expect(response).to be_successful
         expect(assigns[:search]).to eq search
         expect(assigns[:exhibit]).to eq search.exhibit
@@ -60,14 +60,14 @@ describe Spotlight::SearchesController do
 
     describe "PATCH update" do
       it "should show edit page" do
-        patch :update, id: search, search: {title: 'Hey man', short_description: 'short', long_description: 'long', featured_image: 'http://lorempixel.com/64/64/'}
+        patch :update, id: search, exhibit_id: search.exhibit, search: {title: 'Hey man', short_description: 'short', long_description: 'long', featured_image: 'http://lorempixel.com/64/64/'}
         expect(assigns[:search].title).to eq 'Hey man'
         expect(response).to redirect_to exhibit_searches_path(search.exhibit) 
       end
 
       it "should render edit if there's an error" do
         Spotlight::Search.any_instance.should_receive(:update).and_return(false)
-        patch :update, id: search, search: {title: 'Hey man', short_description: 'short', long_description: 'long', featured_image: 'http://lorempixel.com/64/64/'}
+        patch :update, id: search, exhibit_id: search.exhibit, search: {title: 'Hey man', short_description: 'short', long_description: 'long', featured_image: 'http://lorempixel.com/64/64/'}
         expect(response).to be_successful 
         expect(response).to render_template 'edit'
       end
@@ -77,7 +77,7 @@ describe Spotlight::SearchesController do
       let!(:search) { FactoryGirl.create(:search) }
       it "should remove it" do
         expect {
-          delete :destroy, id: search
+          delete :destroy, id: search, exhibit_id: search.exhibit
         }.to change { Spotlight::Search.count }.by(-1)
         expect(response).to redirect_to exhibit_searches_path(search.exhibit) 
         expect(flash[:alert]).to eq "Search was deleted"
