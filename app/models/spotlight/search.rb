@@ -1,4 +1,8 @@
 class Spotlight::Search < ActiveRecord::Base
+
+  extend FriendlyId
+  friendly_id :title, use: [:slugged,:scoped,:finders], scope: :exhibit
+
   self.table_name = 'spotlight_searches'
   belongs_to :exhibit
   serialize :query_params, Hash
@@ -28,6 +32,9 @@ class Spotlight::Search < ActiveRecord::Base
   end
 
   private
+  def should_generate_new_friendly_id?
+    title_changed?
+  end
 
   def blacklight_config
     CatalogController.blacklight_config
