@@ -1,10 +1,10 @@
 Spotlight::Engine.routes.draw do
-  resources :attachments
 
   get 'exhibits/:id' => 'home_pages#show'
 
   resources :contacts, only: [:edit, :update, :destroy]
   resources :exhibits, only: [:edit, :update] do
+    resources :attachments
     resource :contact_form, only: [:new, :create]
     resource :blacklight_configuration, only: [:update]
 

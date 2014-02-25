@@ -1,5 +1,6 @@
 module Spotlight
   class Attachment < ActiveRecord::Base
+    belongs_to :exhibit
     mount_uploader :file, AttachmentUploader
 
     def as_json(options = nil)

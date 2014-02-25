@@ -4,6 +4,7 @@ class CreateSpotlightAttachments < ActiveRecord::Migration
       t.string :name
       t.string :file
       t.string :uid
+      t.references :exhibit
 
       t.timestamps
     end

@@ -24,6 +24,22 @@ Spotlight.onLoad(function() {
     SirTrevor.EventBus.on('block:create:existing', addTitleToSirTrevorBlock);
 });
 
+Spotlight.onLoad(function(){
+  
+  SirTrevor.setDefaults({
+    uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint')
+  });
+  var instances = $('.sir-trevor-area'),
+      l = instances.length, instance;
+
+  while (l--) {
+    instance = $(instances[l]);
+    new SirTrevor.Editor({ el: instance });
+  }
+
+});
+
+
 function addTitleToSirTrevorBlock(block){
   block.$inner.append("<div class='st-title'>" + block.title() + "</div>");
 };

@@ -3,11 +3,9 @@ require_dependency "spotlight/application_controller"
 module Spotlight
   class AttachmentsController < ApplicationController
     before_filter :authenticate_user!
-    before_filter do
-      current_user.roles.include? :curator
-    end
+    load_resource :exhibit, class: "Spotlight::Exhibit", only: [:index, :create, :update_all]
+    load_resource through: :exhibit
 
-    before_action :set_attachment, only: [:show, :edit, :update, :destroy]
 
     # GET /attachments
     def index
@@ -30,7 +28,6 @@ module Spotlight
     # POST /attachments
     def create
       @attachment = Attachment.new(attachment_params)
-
  
       if @attachment.save
         render :json => @attachment
@@ -42,7 +39,7 @@ module Spotlight
     # PATCH/PUT /attachments/1
     def update
       if @attachment.update(attachment_params)
-        redirect_to @attachment, notice: 'Attachment was successfully updated.'
+        redirect_to [@attachment.exhibit, @attachment], notice: 'Attachment was successfully updated.'
       else
         render action: 'edit'
       end
@@ -51,14 +48,10 @@ module Spotlight
     # DELETE /attachments/1
     def destroy
       @attachment.destroy
-      redirect_to attachments_url, notice: 'Attachment was successfully destroyed.'
+      redirect_to root_url, notice: 'Attachment was successfully destroyed.'
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_attachment
-        @attachment = Attachment.find(params[:id])
-      end
 
       # Only allow a trusted parameter "white list" through.
       def attachment_params

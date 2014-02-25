@@ -22,22 +22,6 @@ $(document).ready(function() {
   Spotlight.activate();
 });
 
-SirTrevor.setDefaults({
-  uploadUrl: "/spotlight/attachments"
-});
-
-Spotlight.onLoad(function(){
-  var instances = $('.sir-trevor-area'),
-      l = instances.length, instance;
-
-  while (l--) {
-    instance = $(instances[l]);
-    new SirTrevor.Editor({ el: instance });
-  }
-
-});
-
-
 
 Spotlight.onLoad(function(){
   $.each($('.social-share-button a'), function() {
