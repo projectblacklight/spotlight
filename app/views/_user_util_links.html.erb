@@ -14,5 +14,5 @@
     <% else %>
       <li><%= link_to t('spotlight.header_links.login'), new_user_session_path %></li>
     <% end %>
-    <li><%= link_to t('spotlight.header_links.contact'), spotlight.new_exhibit_contact_form_path(current_exhibit) %></li>
+    <li><%= link_to t('spotlight.header_links.contact'), spotlight.new_exhibit_contact_form_path(current_exhibit), data: {behavior: 'contact-link', target: 'report-problem-form' } %></li>
   </ul>

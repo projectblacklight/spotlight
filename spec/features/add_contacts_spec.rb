@@ -8,12 +8,14 @@ describe "Add a contact to an exhibit" do
   it "should display a newly added contact in the sidebar" do
     visit spotlight.exhibit_about_pages_path(exhibit)
     click_link "Add contact"
-    fill_in "Name", with: "Marcus Aurelius"
-    fill_in "Email", with: "marcus@rome.gov"
-    fill_in "Title", with: "Emperor"
-    fill_in "Location", with: "Rome"
+    within "#new_contact" do
+      fill_in "Name", with: "Marcus Aurelius"
+      fill_in "Email", with: "marcus@rome.gov"
+      fill_in "Title", with: "Emperor"
+      fill_in "Location", with: "Rome"
 
-    click_button "Save"
+      click_button "Save"
+    end
     expect(page).to have_content "Contact created."
 
     within ".contacts_admin" do

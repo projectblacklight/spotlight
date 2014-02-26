@@ -254,6 +254,9 @@ en:
     saved_search:
       label: "Save this search"
       title: "Saved search title"
+    shared:
+      report_a_problem:
+        title: Contact Us
   shared:
     exhibit_navbar:
       more_exhibits: More Exhibits
