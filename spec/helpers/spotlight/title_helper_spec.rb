@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::AdminTitleHelper do
+describe Spotlight::TitleHelper do
   before do
     helper.stub(application_name: "Application")
   end
@@ -9,7 +9,7 @@ describe Spotlight::AdminTitleHelper do
     it "should set the @page_title ivar" do
       helper.page_title("Section", "Title")
       title = helper.instance_variable_get(:@page_title)
-      expect(title).to eq "Section - Title  --  Application"
+      expect(title).to eq "Section - Title | Application"
     end
 
     it "should render the section title and the page title" do
@@ -17,6 +17,15 @@ describe Spotlight::AdminTitleHelper do
       expect(title).to have_selector "h1", text: "Section"
       expect(title).to have_selector "h1 small", text: "Title"
       
+    end
+  end
+
+  describe "#set_html_page_title" do
+    it "should assign the @page_title ivar" do
+      helper.stub(application_name: "B")
+      helper.set_html_page_title "A"
+      title = helper.instance_variable_get(:@page_title)
+      expect(title).to eq "A | B"
     end
   end
 

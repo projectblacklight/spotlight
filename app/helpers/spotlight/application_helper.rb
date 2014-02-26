@@ -1,7 +1,17 @@
 module Spotlight
   module ApplicationHelper
     include CrudLinkHelpers
-    include AdminTitleHelper
+    include TitleHelper
+
+    def application_name
+      name = super
+
+      if current_exhibit
+        t :'spotlight.application_name', exhibit: current_exhibit.title, application_name: name
+      else
+        name
+      end
+    end
 
     # Can search for named routes directly in the main app, omitting
     # the "main_app." prefix

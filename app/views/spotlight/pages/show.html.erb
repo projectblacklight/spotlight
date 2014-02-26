@@ -1,4 +1,5 @@
 <%= render 'sidebar' if @page.display_sidebar? %>
+<% set_html_page_title @page.title if @page.title.present? %>
 
 <div class="<%= 'col-md-9' if @page.display_sidebar? %>">
   <% if @page.title %>
