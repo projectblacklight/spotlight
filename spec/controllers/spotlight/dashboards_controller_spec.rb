@@ -17,7 +17,7 @@ describe Spotlight::DashboardsController do
         get :show, exhibit_id: exhibit.id
         expect(response).to render_template "spotlight/dashboards/show"
         expect(assigns[:exhibit]).to eq exhibit
-        expect(assigns[:pages].length).to be >= 1
+        expect(assigns[:pages].length).to eq exhibit.pages.length
         expect(assigns[:solr_documents]).to have(1).item
       end
     end

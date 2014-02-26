@@ -7,6 +7,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   DEFAULT = 'default'.freeze
   has_many :roles
   has_many :searches
+  has_many :pages
   has_many :about_pages
   has_many :feature_pages
   has_one :home_page

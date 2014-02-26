@@ -9,7 +9,7 @@ module Spotlight
     def show
       authorize! :curate, @exhibit
 
-      @pages = Spotlight::Page.recent.limit(5)
+      @pages = @exhibit.pages.recent.limit(5)
       @solr_documents = load_recent_solr_documents 5
       add_breadcrumb @exhibit.title, @exhibit
       add_breadcrumb t(:'spotlight.curation.sidebar.dashboard'), exhibit_dashboard_path(@exhibit)
