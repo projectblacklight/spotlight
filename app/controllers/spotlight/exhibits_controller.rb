@@ -8,13 +8,14 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
     add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
     add_breadcrumb t(:'spotlight.administration.sidebar.header'), exhibit_dashboard_path(@exhibit)
     add_breadcrumb t(:'spotlight.administration.sidebar.settings'), edit_exhibit_path(@exhibit)
-    @exhibit.contact_emails << "" unless @exhibit.contact_emails.present?
+    @exhibit.contact_emails.build unless @exhibit.contact_emails.present?
   end
 
   def update
     if @exhibit.update(exhibit_params)
       redirect_to main_app.root_path, notice: "The exhibit was saved."
     else
+      puts "ERROR #{@exhibit.errors.full_messages}"
       render action: :edit
     end
   end
@@ -26,7 +27,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
       :title,
       :subtitle,
       :description,
-      contact_emails_attributes: [:email]
+      contact_emails_attributes: [:id, :email]
     )
   end
 end
