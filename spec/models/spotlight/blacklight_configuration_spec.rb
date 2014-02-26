@@ -60,6 +60,20 @@ describe Spotlight::BlacklightConfiguration do
       expect(subject.index_fields.keys).to eq ['title', 'author']
     end
 
+    it "should default to displaying all index fields if no exhibit-specific configuration is set " do
+
+      blacklight_config.add_index_field 'a'
+      blacklight_config.add_index_field 'b'
+      blacklight_config.add_index_field 'c'
+
+      expect(subject.blacklight_config.index_fields['a'].enabled).to be_true
+      expect(subject.blacklight_config.index_fields['a'].list).to be_true
+      expect(subject.blacklight_config.index_fields['b'].enabled).to be_true
+      expect(subject.blacklight_config.index_fields['b'].list).to be_true
+      expect(subject.blacklight_config.index_fields['c'].enabled).to be_true
+      expect(subject.blacklight_config.index_fields['c'].list).to be_true
+    end
+
     it "should filter blank values" do
       subject.index_fields['title'] = { something: "" }
       subject.valid?

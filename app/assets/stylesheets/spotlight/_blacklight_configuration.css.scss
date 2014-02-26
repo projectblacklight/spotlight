@@ -18,4 +18,31 @@
   th:first-child {
     padding-left: 40px;
   }
+
+  th, td {
+    &:first-child {
+      text-align: left;
+    }
+
+    text-align:center;
+  }
+
+  .checkbox-cell  {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    label {
+      margin-left: $padding-base-horizontal;
+      margin-right: $padding-base-horizontal;
+      padding-left: 0px;
+      padding-bottom: $table-cell-padding;
+      padding-top: $padding-base-vertical + 1 + $table-cell-padding;
+      display: block;
+    }
+    input {
+      display: inline-block;
+      float: none;
+      margin: 0;
+    }
+  }
 }
