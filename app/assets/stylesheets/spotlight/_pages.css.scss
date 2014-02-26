@@ -89,6 +89,11 @@
     @extend .icon;
     background-image: image-url('spotlight/blocks/item-carousel.png');
   }
+
+  .st-icon-item-features {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/item-features.png');
+  }
 }
 
 .st-block__inner {
@@ -141,5 +146,35 @@
   img {
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+.item-features {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  .slideshow-indicators {
+
+    li {
+      border-left: 0;
+      border-right: 0;
+
+      &:nth-child(odd) {
+        background-color: $table-bg-accent;
+      }
+
+      &:hover {
+        background-color: $table-bg-hover;
+      }
+
+      &.active {
+        background-color: $panel-info-heading-bg;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+
+      }
+    }
   }
 }

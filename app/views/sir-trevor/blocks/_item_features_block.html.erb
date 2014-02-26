@@ -1,0 +1,29 @@
+<% block_ids = item_grid_block_ids(block) %>
+<% html_id = "carousel-#{block.object_id}" %>
+<div class="item-features">
+<% unless block_ids.blank? %>
+  <% documents = get_solr_response_for_field_values("id", item_grid_block_ids(block)).last.select { |doc| block_ids.include? doc.id  }.sort_by { |doc| block_ids.index doc.id } %>
+
+  <div id="<%= html_id %>" data-interval="false" class="slideshow carousel  row" data-ride="carousel">
+
+  <div class=" col-md-8">
+      <div class="carousel-inner">
+    <% documents.each_with_index do |document, index| %>
+        <div class="item <%= 'active' if index == 0 %>" data-id="<%= document[:id] %>">
+          <% if has_thumbnail? document %>
+              <%= render_thumbnail_tag(document) %>
+          <% end %>
+        </div>
+    <% end %>
+      </div>
+      </div>
+
+    <!-- Indicators -->
+    <ol class="slideshow-indicators col-md-4 list-group list-striped">
+      <% documents.each_with_index do |document, index| %>
+        <li data-target="#<%= html_id %>" data-slide-to="<%= index %>" class="list-group-item <%= 'active' if index == 0 %>"><a href="#"><%= multi_up_item_grid_caption(block, document) %></a></li>
+      <% end %>
+    </ol>
+  </div>
+<% end %>
+</div>
