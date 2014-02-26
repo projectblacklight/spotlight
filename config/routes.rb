@@ -3,7 +3,7 @@ Spotlight::Engine.routes.draw do
   get 'exhibits/:exhibit_id' => 'home_pages#show', as: :exhibit_root
 
   resources :exhibits, only: [:edit, :update] do
-    resources :attachments
+    resources :attachments, only: :create
     resource :contact_form, path: "contact", only: [:new, :create]
     resource :blacklight_configuration, only: [:update]
 
