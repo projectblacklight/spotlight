@@ -57,7 +57,7 @@ describe Spotlight::ExhibitsController do
           expect(saved.title).to eq 'Foo'
           expect(saved.subtitle).to eq 'Bar'
           expect(saved.description).to eq 'Baz'
-          expect(saved.contact_emails).to eq ['bess@stanford.edu', 'naomi@stanford.edu']
+          expect(saved.contact_emails.pluck(:email)).to eq ['bess@stanford.edu', 'naomi@stanford.edu']
         end
       end
     end
