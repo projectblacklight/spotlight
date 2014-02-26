@@ -41,3 +41,44 @@
   font-size: 16px;
   font-weight: 500;
 }
+
+.st-block-controls {
+  border-radius: 12px;
+  border: 3px dotted #999;
+}
+
+.st-block-control {
+  @extend .btn;
+  @extend .btn-text;
+
+  max-width: 100px;
+  word-wrap: break-word;
+  white-space: normal;
+  color: #666;
+  vertical-align: top;
+
+  .icon {
+
+    border: 3px solid #ccc;
+    border-radius: 6px;
+    width: 70px;
+    height: 40px;
+    background-size: cover;
+    @extend .text-hide;
+  }
+
+  .st-icon-multi-up-item-grid {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/multi-up-item-grid.png');
+  }
+
+  .st-icon-text {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/text.png');
+  }
+
+  .st-icon-item-text {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/item-text.png');
+  }
+}
