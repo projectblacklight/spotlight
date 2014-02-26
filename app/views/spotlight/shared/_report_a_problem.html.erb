@@ -1,0 +1,15 @@
+<div id="report-problem-form" class='row'>
+  <% contact_form = Spotlight::ContactForm.new current_url: request.original_url %>
+  <%= bootstrap_form_for contact_form, url: spotlight.exhibit_contact_form_path(current_exhibit, contact_form), style: :horizontal, right: "col-sm-5" do |f| %>
+    
+    <h2 class="col-md-offset-2"><%= t(:'.title') %></h2>
+    <%= f.text_field :name %>
+    <%= f.text_field :email %>
+    <%= f.text_area :message, rows: 7 %>
+    <%= f.hidden_field :current_url %>
+    <%= f.form_group do %>
+      <%= f.submit nil %>
+      <%= link_to t(:'helpers.action.cancel'), '#', class: 'btn btn-text', data: { 'behavior' => 'cancel-link' } %>
+    <% end %>
+  <% end %>
+</div>

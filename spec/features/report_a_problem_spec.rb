@@ -8,7 +8,7 @@ describe "Report a Problem" do
     expect(page).to have_content "Report a problem"
   end
 
-  it "should accept a problem report" do
+  it "should accept a problem report", js: true do
     e = Spotlight::Exhibit.default
     e.contact_emails = ["test@example.com", "test2@example.com"]
     e.save
