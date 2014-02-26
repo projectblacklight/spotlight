@@ -83,10 +83,12 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
       });
     },
 
+    description: "This widget displays one to five thumbnail images of repository items in a single row grid. Optionally, you can a caption below each image..",
+
     template: _.template([
     '<div class="form-inline <%= key %>-admin">',
       '<div class="widget-header">',
-        'This widget displays one to five thumbnail images of repository items in a single row grid. Optionally, you can a caption below each image..',
+        '<%= description %>',
       '</div>',
       '<div class="col-sm-9">',
         '<label for="<%= formId(id_key) %>_0" class="control-label">Selected items to display</label>',
