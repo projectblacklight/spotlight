@@ -70,6 +70,12 @@ module Spotlight
 
     protected
 
+    ##
+    # Browsing an exhibit should start a new search session
+    def start_new_search_session?
+      params[:action] == 'show'
+    end
+
     def update_all_page_params
       params.require(:exhibit).permit("#{page_collection_name}_attributes" => [:id, :published, :title, :weight, :display_sidebar, :parent_page_id ])
     end

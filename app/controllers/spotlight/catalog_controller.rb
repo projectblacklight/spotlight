@@ -30,6 +30,8 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
     if current_browse_category
       add_breadcrumb t(:'spotlight.browse.nav_link'), exhibit_browse_index_path(current_browse_category.exhibit)
       add_breadcrumb current_browse_category.title, exhibit_browse_path(current_browse_category.exhibit, current_browse_category)
+    elsif current_page_context
+      add_breadcrumb current_page_context.title, [current_page_context.exhibit, current_page_context] if current_page_context.title.present? and !current_page_context.is_a?(Spotlight::HomePage)
     else
       add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), search_action_url(current_search_session[:query_params]) if current_search_session
     end
@@ -119,6 +121,8 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
       @search_context_response = response
       @previous_document = documents.first
       @next_document = documents.last
+    elsif current_page_context
+      # TODO: figure out how to construct previous/next documents 
     else
       super
     end
@@ -148,8 +152,14 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   end
 
   def current_browse_category
-    @current_browse_category ||= if current_search_session and current_search_session.query_params[:action] == "show" and current_search_session.query_params[:controller] == "spotlight/browse"
-      Spotlight::Search.find(current_search_session.query_params[:id])
+    @current_browse_category ||= if current_search_session and current_search_session.query_params["action"] == "show" and current_search_session.query_params["controller"] == "spotlight/browse"
+      Spotlight::Search.find(current_search_session.query_params["id"])
+    end
+  end
+
+  def current_page_context
+    @current_page_context ||= if current_search_session and current_search_session.query_params["action"] == "show" and current_search_session.query_params["controller"].ends_with? "_pages"
+      Spotlight::Page.find(current_search_session.query_params["id"])
     end
   end
 end
