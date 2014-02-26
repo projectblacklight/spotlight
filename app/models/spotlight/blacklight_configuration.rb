@@ -56,6 +56,8 @@ module Spotlight
         config.show.merge! show unless show.blank?
         config.index.merge! index unless index.blank?
 
+        config.index.timestamp_field ||= 'timestamp'
+
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
         config.show.partials.insert(2, "spotlight/catalog/tags")

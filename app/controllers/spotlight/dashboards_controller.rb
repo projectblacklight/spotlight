@@ -9,7 +9,7 @@ module Spotlight
     def show
       authorize! :curate, @exhibit
 
-      @pages = Spotlight::Page.recent.limit(5)
+      @pages = @exhibit.pages.recent.limit(5)
       @solr_documents = load_recent_solr_documents 5
       add_breadcrumb @exhibit.title, @exhibit
       add_breadcrumb t(:'spotlight.curation.sidebar.dashboard'), exhibit_dashboard_path(@exhibit)
@@ -25,7 +25,7 @@ module Spotlight
     protected
 
     def load_recent_solr_documents count
-      solr_params = { sort: 'timestamp desc' }
+      solr_params = { sort: "#{blacklight_config.index.timestamp_field} desc" }
       @response = find(solr_params)
       @response.docs.take(count).map do |doc|
         ::SolrDocument.new(doc, @response)
