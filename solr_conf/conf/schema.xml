@@ -15,6 +15,9 @@
     <field name="lng" type="tdouble" stored="true" indexed="true" multiValued="false"/>
     <field name="original_pid_tesim" type="pid_text" stored="true" indexed="true" multiValued="true"/>
 
+    <field name="full_title_ng" type="text_en_ng" stored="false" indexed="true" multiValued="true"/>
+    <field name="id_ng"         type="text_en_ng" stored="false" indexed="true" multiValued="false"/>
+
     <!-- NOTE:  not all possible Solr field types are represented in the dynamic fields -->
 
     <!-- text (_t...) -->
@@ -198,6 +201,8 @@
       destination field is to use the dynamic field syntax.
       copyField also supports a maxChars to copy setting.  -->
 
+  <copyField source="id" dest="id_ng" maxChars="3000"/>
+  <copyField source="full_title_tesim" dest="full_title_ng" maxChars="3000"/>
   <copyField source="*_tesim" dest="all_text_timv" maxChars="3000"/>
 
   <types>
@@ -284,6 +289,28 @@
         <!--
         <filter class="solr.PorterStemFilterFactory"/>
         -->
+        <filter class="solr.TrimFilterFactory"/>
+      </analyzer>
+    </fieldType>
+
+    <!-- A text field with defaults appropriate for English an NGrams -->
+    <fieldType name="text_en_ng" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <tokenizer class="solr.ICUTokenizerFactory"/>
+        <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
+        <filter class="solr.EnglishPossessiveFilterFactory"/>
+        <!-- EnglishMinimalStemFilterFactory is less aggressive than PorterStemFilterFactory: -->
+        <filter class="solr.EnglishMinimalStemFilterFactory"/>
+        <filter class="solr.TrimFilterFactory"/>
+        <filter class="solr.EdgeNGramFilterFactory" minGramSize="3" maxGramSize="15" side="front"/>:
+      </analyzer>
+
+      <analyzer type="index">
+        <tokenizer class="solr.ICUTokenizerFactory"/>
+        <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
+        <filter class="solr.EnglishPossessiveFilterFactory"/>
+        <!-- EnglishMinimalStemFilterFactory is less aggressive than PorterStemFilterFactory: -->
+        <filter class="solr.EnglishMinimalStemFilterFactory"/>
         <filter class="solr.TrimFilterFactory"/>
       </analyzer>
     </fieldType>

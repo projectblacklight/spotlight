@@ -14,6 +14,7 @@ Spotlight::Engine.routes.draw do
     resources :catalog do
       collection do
         get 'admin'
+        get 'autocomplete'
       end
 
       put 'visiblity', to: "catalog#make_public"
