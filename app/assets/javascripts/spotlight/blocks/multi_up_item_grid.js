@@ -8,36 +8,8 @@
 */
 
 SirTrevor.Blocks.MultiUpItemGrid =  (function(){
-  var template = _.template([
-    '<div class="form-inline <%= key %>-admin">',
-      '<div class="widget-header">',
-        'This widget displays one to five thumbnail images of repository items in a single row grid. Optionally, you can a caption below each image..',
-      '</div>',
-      '<div class="col-sm-9">',
-        '<label for="<%= formId(id_key) %>_0" class="control-label">Selected items to display</label>',
-        '<div class="form-group">',
-          buildInputFields(5),
-        '</div>',
-      '</div>',
-      '<div class="col-sm-3">',
-        '<label for="<%= formId(caption_key) %>">',
-          '<input name="<%= caption_key %>" type="hidden" value="false" />',
-          '<input name="<%= caption_key %>" id="<%= formId(caption_key) %>" type="checkbox" value="true" />',
-          'Display caption',
-        '</label>',
-        '<div class="field-select">',
-          '<label for="<%= formId(field_key) %>">Caption field</label>',
-          '<select name="<%= field_key %>" id="<%= formId(field_key) %>">',
-            '<option value="">Select...</option>',
-            '<option value="<%= title_key %>">Title</option>',
-          '</select>',
-        '</div>',
-      '</div>',
-      '<div class="clearFix"></div>',
-    '</div>'
-  ].join("\n"));
-
-  return SirTrevor.Block.extend({
+  
+  return Spotlight.Block.extend({
 
     key: "item-grid",
     id_key: "item-grid-id",
@@ -50,11 +22,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
 
     title: function() { return "Multi-Up Item Grid"; },
 
-    editorHTML: function() {
-      return template(this);
-    },
-
-    icon_name: this.type,
+    icon_name: "multi-up-item-grid",
 
     toData: function() {
       var data = {};
@@ -70,7 +38,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
     },
 
     onBlockRender: function() {
-      addAutocompletetoSirTrevorForm();
+      Spotlight.Block.prototype.onBlockRender.apply();
       this.loadCaptionField();
     },
 
@@ -84,10 +52,6 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
       this.$('#' + this.formId(this.caption_key)).prop('checked', data[this.caption_key])
       // set a data attribute on the select field so the ajax request knows which option to select
       this.$('select#' + this.formId(this.field_key)).data('select-after-ajax', data[this.field_key]);
-    },
-
-    formId: function(id) {
-      return this.blockID + "_" + id;
     },
 
     loadCaptionField: function(){
@@ -117,7 +81,36 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
           serializeFormStatus($('form[data-metadata-url]'));
         }
       });
-    }
+    },
+
+    template: _.template([
+    '<div class="form-inline <%= key %>-admin">',
+      '<div class="widget-header">',
+        'This widget displays one to five thumbnail images of repository items in a single row grid. Optionally, you can a caption below each image..',
+      '</div>',
+      '<div class="col-sm-9">',
+        '<label for="<%= formId(id_key) %>_0" class="control-label">Selected items to display</label>',
+        '<div class="form-group">',
+          buildInputFields(5),
+        '</div>',
+      '</div>',
+      '<div class="col-sm-3">',
+        '<label for="<%= formId(caption_key) %>">',
+          '<input name="<%= caption_key %>" type="hidden" value="false" />',
+          '<input name="<%= caption_key %>" id="<%= formId(caption_key) %>" type="checkbox" value="true" />',
+          'Display caption',
+        '</label>',
+        '<div class="field-select">',
+          '<label for="<%= formId(field_key) %>">Caption field</label>',
+          '<select name="<%= field_key %>" id="<%= formId(field_key) %>">',
+            '<option value="">Select...</option>',
+            '<option value="<%= title_key %>">Title</option>',
+          '</select>',
+        '</div>',
+      '</div>',
+      '<div class="clearFix"></div>',
+    '</div>'
+  ].join("\n"))
   });
 })();
 function buildInputFields(times){

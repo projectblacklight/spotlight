@@ -9,15 +9,11 @@ SirTrevor.Blocks.SearchResults =  (function(){
     ' class="st-input-string st-required search" type="text" />'
   ].join("\n"));
 
-  return SirTrevor.Block.extend({
+  return Spotlight.Block.extend({
 
   type: "search_results",
 
   title: function() { return "Search Results"; },
-
-  editorHTML: function() {
-    return template(this);
-  },
 
   icon_name: 'search_results',
 
