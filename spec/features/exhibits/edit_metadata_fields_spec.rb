@@ -15,15 +15,19 @@ describe "Editing metadata fields", type: :feature do
     expect(page).to have_content "Display and Order Metadata Fields"
 
     check :blacklight_configuration_index_fields_language_ssm_show
-    check :blacklight_configuration_index_fields_language_ssm_list
-
     check :blacklight_configuration_index_fields_abstract_tesim_show
+    uncheck :blacklight_configuration_index_fields_note_mapuse_tesim_show
+
+    uncheck :blacklight_configuration_index_fields_abstract_tesim_list
+    check :blacklight_configuration_index_fields_language_ssm_list
     check :blacklight_configuration_index_fields_note_mapuse_tesim_list
 
     click_on "Save changes"
 
-    expect(Spotlight::Exhibit.default.blacklight_config.index_fields.select { |k, x| x.list }.keys).to eq ['language_ssm', 'note_mapuse_tesim']
-    expect(Spotlight::Exhibit.default.blacklight_config.show_fields.select { |k, x| x.show }.keys).to eq ["language_ssm", "abstract_tesim"]
+    expect(Spotlight::Exhibit.default.blacklight_config.index_fields.select { |k, x| x.list }).to include 'language_ssm', 'note_mapuse_tesim'
+    expect(Spotlight::Exhibit.default.blacklight_config.index_fields.select { |k, x| x.list }).to_not include 'abstract_tesim'
+    expect(Spotlight::Exhibit.default.blacklight_config.show_fields.select { |k, x| x.show }).to include "language_ssm", "abstract_tesim"
+    expect(Spotlight::Exhibit.default.blacklight_config.show_fields.select { |k, x| x.show }).to_not include "note_mapuse_tesim"
   end
 
   it "should have in-place editing of labels", js: true do
