@@ -8,5 +8,5 @@
       <th class="col-sm-3"><%= t(:'spotlight.catalog.fields.visibility') %></th>
     </tr>
   </thead>
-  <%= render documents, as: :document %>
+  <%= render partial: 'document_row', collection: documents, as: :document %>
 </table>
