@@ -6,12 +6,11 @@ describe Spotlight::DashboardsController do
 
   describe "when logged in" do
     let(:curator) { FactoryGirl.create(:exhibit_curator) }
-    before do 
-      controller.stub(find: double(docs: [{id: 1}]))
-    end
     before { sign_in curator }
     describe "GET show" do
       it "should load the exhibit" do
+        controller.blacklight_config.index.timestamp_field = "timestamp_field"
+        expect(controller).to receive(:find).with(hash_including(sort: "timestamp_field desc")).and_return(double(docs: [{id: 1}]))
         expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
         expect(controller).to receive(:add_breadcrumb).with("Dashboard", exhibit_dashboard_path(exhibit))
         get :show, exhibit_id: exhibit.id

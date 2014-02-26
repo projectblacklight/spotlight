@@ -25,7 +25,7 @@ module Spotlight
     protected
 
     def load_recent_solr_documents count
-      solr_params = { sort: 'timestamp desc' }
+      solr_params = { sort: "#{blacklight_config.index.timestamp_field} desc" }
       @response = find(solr_params)
       @response.docs.take(count).map do |doc|
         ::SolrDocument.new(doc, @response)
