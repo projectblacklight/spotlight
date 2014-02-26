@@ -15,6 +15,20 @@ $ rake
 
 ## Installation
 
+To bootstrap a new Rails application:
+
+```
+$ rails new app-name -m https://raw.githubusercontent.com/sul-dlss/spotlight/master/template.rb
+```
+
+or
+
+```
+$ rake rails:template LOCATION=https://raw.githubusercontent.com/sul-dlss/spotlight/master/template.rb
+```
+
+Or do it manually:
+
 Add this line to your application's Gemfile:
 
 ```
