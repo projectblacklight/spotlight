@@ -12,9 +12,9 @@
   top: 0;
   left: 0;
   display: none;
-  background-color: #34e0c2;
+  background-color: $panel-info-heading-bg;
   padding: 3px 8px;
-  color: white;
+  color: $panel-info-text;
   font-weight: bold;
 }
 
@@ -40,4 +40,79 @@
 .contacts_admin .name {
   font-size: 16px;
   font-weight: 500;
+}
+
+.st-block-controls {
+  border-radius: 12px;
+  border: 3px dotted #999;
+}
+
+.st-block-control {
+  @extend .btn;
+  @extend .btn-text;
+
+  max-width: 100px;
+  word-wrap: break-word;
+  white-space: normal;
+  color: #666;
+  vertical-align: top;
+
+  .icon {
+
+    border: 3px solid #ccc;
+    border-radius: 6px;
+    width: 70px;
+    height: 40px;
+    background-size: cover;
+    @extend .text-hide;
+  }
+
+  .st-icon-multi-up-item-grid {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/multi-up-item-grid.png');
+  }
+
+  .st-icon-text {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/text.png');
+  }
+
+  .st-icon-item-text {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/item-text.png');
+  }
+}
+
+.st-block__inner {
+  @extend .panel;
+  @extend .panel-default;
+  &:hover {
+    @extend .panel-info;
+  }
+}
+
+.st-block-ui-btn, .st-block-control-ui-btn {
+  
+  color: $panel-info-text;
+  border-color: $panel-info-heading-bg;
+  
+  &:hover {
+    color: $panel-info-text;
+    border-color: $panel-info-heading-bg;
+    background-color: $panel-info-heading-bg;
+    text-decoration: none;
+  }
+}
+
+.st-block {
+  margin-top: 1.5em;
+}
+
+.st-block-controls__top, .st-block--with-plus {
+
+    &:hover {
+      &:before, &:after {
+      color: #666;
+    }
+  }
 }
