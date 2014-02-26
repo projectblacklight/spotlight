@@ -26,6 +26,12 @@ describe Spotlight::Exhibit do
     expect(subject.errors[:contact_emails]).to eq ['@-foo is not valid']
   end
 
+  it "should have a #to_s" do
+    expect(subject.to_s).to eq "Sample"
+    subject.title = "New Title"
+    expect(subject.to_s).to eq "New Title"
+  end
+
   describe "that is saved" do
     before { subject.save!  }
 
