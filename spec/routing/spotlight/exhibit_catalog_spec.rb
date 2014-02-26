@@ -6,7 +6,7 @@ module Spotlight
       routes { Spotlight::Engine.routes }
 
       it "routes to #edit" do
-        get("/exhibits/1/catalog/dq287tq6352/edit").should route_to("spotlight/catalog#edit", exhibit_id: '1', id: 'dq287tq6352')
+        get("/1/catalog/dq287tq6352/edit").should route_to("spotlight/catalog#edit", exhibit_id: '1', id: 'dq287tq6352')
       end
     end
   end

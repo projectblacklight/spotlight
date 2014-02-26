@@ -118,7 +118,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
     # /exhibits/1?f%5Bgenre_sim%5D%5B%5D=map&q= is not the same as /exhibits/1
     # Otherwise the exhibit breadcrumb won't be a link.
     # see http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-current_page-3F
-    add_breadcrumb @exhibit.title, exhibit_path(@exhibit, q: '')
+    add_breadcrumb @exhibit.title, exhibit_root_path(@exhibit, q: '')
   end
 
   ## 
