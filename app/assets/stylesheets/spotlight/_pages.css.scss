@@ -116,3 +116,10 @@
     }
   }
 }
+
+
+.form-group .st-text-block {
+  @extend .form-control;
+  height: auto;
+  min-height: 6em;
+}
