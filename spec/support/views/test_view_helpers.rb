@@ -5,7 +5,7 @@ module Spotlight
     included do
       before do
         view.send(:extend, Spotlight::CrudLinkHelpers)
-        view.send(:extend, Spotlight::AdminTitleHelper)
+        view.send(:extend, Spotlight::TitleHelper)
       end
     end
   end

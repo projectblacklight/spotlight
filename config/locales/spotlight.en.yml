@@ -55,7 +55,9 @@ en:
       spotlight:
         page: Page
   spotlight:
-    html_admin_title: "%{section} - %{title}  --  %{application_name}"
+    application_name: "%{exhibit} - %{application_name}"
+    html_title: "%{title} | %{application_name}"
+    html_admin_title: "%{section} - %{title}"
     administration:
       sidebar:
         header: Administration

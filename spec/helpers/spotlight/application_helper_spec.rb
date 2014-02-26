@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe Spotlight::ApplicationHelper do
+  describe "#application_name" do
+    it "should include the exhibit" do
+      helper.stub(current_exhibit: double(title: "My Exhibit"))
+      expect(helper.application_name).to eq "My Exhibit - Blacklight"  
+    end
+
+    it "should be just the application name if there isn't an exhibit" do
+      helper.stub(current_exhibit: nil)
+      expect(helper.application_name).to eq "Blacklight"  
+    end
+  end
+
   describe "#url_to_tag_facet" do
     before do
       helper.stub(current_exhibit: Spotlight::Exhibit.default)
