@@ -6,15 +6,61 @@
 .missing-description {
   font-style: italic;
 }
+.expanded-add-button {
+  position: relative;
+  display: inline-block;
+  .input-field {
+    input[type='text'] {
+      @extend .input-sm;
+      width: 247px;
+      color: black;
+      border-color: white;
+    }
+    input[type='submit'] {
+      @extend .btn;
+      @extend .btn-default;
+      @extend .btn-xs;
+    }
+    position: absolute;
+    left: 130px;
+    bottom: 2px;
+    display: none;
+  }
+  [data-expanded-add-button] {
+    text-align: left;
+  }
+}
 
 .panel-heading.page {
+  .panel-title {
+    a {
+      cursor: text;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
   .checkbox {
     width: 3%;
     vertical-align: top;
     display: inline-block;
   }
+  .display-sidebar-control {
+    .checkbox {
+      width: auto;
+    }
+  }
+  .publish-control {
+    display: inline;
+    .checkbox {
+      padding-top: 0;
+    }
+  }
+  .page-links {
+    padding-left: 4px;
+  }
   .main {
-    width: 80%;
+    width: 96%;
     vertical-align: top;
     display: inline-block;
   }

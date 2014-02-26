@@ -19,18 +19,4 @@ describe "Creating a page", :type => :feature do
       expect(page).to have_content "A new one"
     end
   end
-
-  it "should be able to create new About Pages" do
-    login_as exhibit_curator
-
-    visit '/'
-    within '.dropdown-menu' do
-      click_link 'Dashboard'
-    end
-
-    click_link "About pages"
-    click_button "Add new page"
-    expect(page).to have_content "Page was successfully created."
-    expect(page).to have_css("li.dd-item")
-  end
 end

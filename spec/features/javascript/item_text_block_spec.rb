@@ -13,7 +13,10 @@ feature "Item + Image Block" do
       click_link 'Dashboard'
     end
     click_link "Feature pages"
-    click_button "Add new page"
+
+    add_new_page_via_button("My New Feature Page")
+
+    expect(page).to have_css("h3", text: "My New Feature Page")
 
     expect(page).to have_content("Page was successfully created.", visible: true)
     within("li.dd-item") do
@@ -54,7 +57,8 @@ feature "Item + Image Block" do
       click_link 'Dashboard'
     end
     click_link "Feature pages"
-    click_button "Add new page"
+
+    add_new_page_via_button
 
     expect(page).to have_content("Page was successfully created.", visible: true)
     within("li.dd-item") do
@@ -101,7 +105,8 @@ feature "Item + Image Block" do
       click_link 'Dashboard'
     end
     click_link "Feature pages"
-    click_button "Add new page"
+
+    add_new_page_via_button
 
     expect(page).to have_content("Page was successfully created.", visible: true)
     within("li.dd-item") do
@@ -145,7 +150,8 @@ feature "Item + Image Block" do
       click_link 'Dashboard'
     end
     click_link "Feature pages"
-    click_button "Add new page"
+
+    add_new_page_via_button
 
     expect(page).to have_content("Page was successfully created.", visible: true)
     within("li.dd-item") do

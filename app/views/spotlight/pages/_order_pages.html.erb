@@ -19,9 +19,14 @@
     </div>
 <%- end -%>
 <div>
-  <%= form_for @page, url: spotlight.polymorphic_path([@exhibit, page_collection_name]) do |f|%>
-    <%= f.hidden_field(:title) %>
-    <%= f.submit nil, class: "btn btn-primary" %>
+  <%= form_for @page, url: spotlight.polymorphic_path([@exhibit, page_collection_name]), html: {class: "expanded-add-button"} do |f|%>
+    <a href='#add-new' class="btn btn-primary" data-expanded-add-button="true" data-field-target="[data-title-field]">
+      <%= t(:'.new_page') %> <span class="glyphicon glyphicon-chevron-right"></span>
+      <span data-title-field="true" class="input-field">
+        <%= f.text_field(:title) %>
+        <%= f.submit t(:'.save') %>
+      </span>
+    </a>
   <%- end -%>
 </div>
 

@@ -19,6 +19,24 @@ feature "Feature Pages Adminstration", js:  true do
     )
   }
   before { login_as exhibit_curator }
+  it "should be able to create new pages" do
+    login_as exhibit_curator
+
+    visit '/'
+    click_link exhibit_curator.email
+
+    within '.dropdown-menu' do
+      click_link 'Dashboard'
+    end
+
+    click_link "Feature pages"
+
+    add_new_page_via_button("My New Page")
+
+    expect(page).to have_content "Page was successfully created."
+    expect(page).to have_css("li.dd-item")
+    expect(page).to have_css("h3", text: "My New Page")
+  end
   it "should update the page titles" do
     visit '/'
     click_link exhibit_curator.email
@@ -31,9 +49,11 @@ feature "Feature Pages Adminstration", js:  true do
     within("[data-id='#{page1.id}']") do
       within("h3") do
         expect(page).to have_content("FeaturePage1")
+        expect(page).to have_css("input", visible: false)
+        click_link("FeaturePage1")
+        expect(page).to have_css("input", visible: true)
+        find("input").set("NewFeaturePage1")
       end
-      click_link "Options"
-      fill_in("Page title", with: "NewFeaturePage1")
     end
     click_button "Save changes"
     expect(page).to have_content("Feature pages were successfully updated.")
@@ -51,13 +71,11 @@ feature "Feature Pages Adminstration", js:  true do
     end
     click_link "Feature pages"
     within("[data-id='#{page1.id}']") do
-      click_link "Options"
       expect(field_labeled("Show sidebar")).to_not be_checked
       check "Show sidebar"
     end
     click_button "Save changes"
     within("[data-id='#{page1.id}']") do
-      click_link "Options"
       expect(field_labeled("Show sidebar")).to be_checked
     end
   end
@@ -104,8 +122,13 @@ feature "Feature Pages Adminstration", js:  true do
 
     click_link "Feature pages"
     within("[data-id='#{page1.id}']") do
-      click_link "Options"
-      fill_in("Page title", with: "NewFancyTitle")
+      within("h3") do
+        expect(page).to have_content("FeaturePage1")
+        expect(page).to have_css("input", visible: false)
+        click_link("FeaturePage1")
+        expect(page).to have_css("input", visible: true)
+        find("input").set("NewFancyTitle")
+      end
     end
     click_link "Home"
     expect(page).not_to have_content("Feature pages were successfully updated.")
