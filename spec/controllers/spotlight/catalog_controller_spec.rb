@@ -87,7 +87,7 @@ describe Spotlight::CatalogController do
         expect(response).to be_successful
         json = JSON.parse(response.body)
         expect(json['docs'].first['id']).to eq 'dx157dh4345'
-        expect(json['docs'].first['full_title_tesim']).to eq ["KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721 en 1722"]
+        expect(json['docs'].first['title']).to eq "KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721 en 1722"
       end
       it "should have partial matches for id" do
         get :autocomplete, exhibit_id: exhibit, q: 'dx157', format: 'json'
@@ -95,7 +95,7 @@ describe Spotlight::CatalogController do
         expect(response).to be_successful
         json = JSON.parse(response.body)
         expect(json['docs'].first['id']).to eq 'dx157dh4345'
-        expect(json['docs'].first['full_title_tesim']).to eq ["KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721 en 1722"]
+        expect(json['docs'].first['title']).to eq "KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721 en 1722"
       end
     end
   end

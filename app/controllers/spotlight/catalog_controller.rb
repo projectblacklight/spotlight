@@ -43,11 +43,11 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   # setup within their index analyzer. This will ensure that this method returns
   # results when a partial match is passed in the "q" parameter.
   def autocomplete
-    (_, @document_list) = get_search_results(params, :fl => 'id full_title_tesim', :qf => 'id_ng full_title_ng')
+    (_, @document_list) = get_search_results(params, blacklight_config.default_autocomplete_solr_params)
       
     respond_to do |format|
       format.json do
-        render json: {docs: @document_list}
+        render json: {docs: @document_list.map { |doc| { id: doc.id, title: view_context.document_heading(doc) }}}
       end
     end
   end
