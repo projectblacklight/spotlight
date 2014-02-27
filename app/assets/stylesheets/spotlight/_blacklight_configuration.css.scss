@@ -1,8 +1,8 @@
-#nested-fields {
-  margin-bottom: 1em;
-  .dd-item td:first-child {
-    padding-left: 40px;
-    position: relative;
+.dd-item td {
+  text-align:center;
+
+  &:first-child {
+    padding: 0;
     
     a {
       cursor: text;
@@ -13,21 +13,21 @@
       background: #F7F7D0;
       cursor: text;
     }
-  }
 
-  th:first-child {
-    padding-left: 40px;
-  }
-
-  th, td {
-    &:first-child {
-      text-align: left;
+    // the effect of position: relative on table elements is undefined, so put a div in there.
+    // this fix is for Firefox
+    .handle-wrap {
+      position: relative;
+      padding: 8px 8px 8px 40px;
+      margin: 0;
+      margin-top: -1px;
+      
     }
 
-    text-align:center;
+    text-align: left;
   }
 
-  .checkbox-cell  {
+  &.checkbox-cell  {
     padding-top: 0;
     padding-bottom: 0;
 
@@ -45,4 +45,16 @@
       margin: 0;
     }
   }
+}
+
+#nested-fields {
+  margin-bottom: 1em;
+  th {
+    &:first-child {
+      padding-left: 40px;
+      text-align: left;
+    }
+    text-align:center;
+  }
+
 }

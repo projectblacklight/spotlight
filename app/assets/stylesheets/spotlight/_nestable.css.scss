@@ -92,7 +92,10 @@ tr.dd-item {
 
 .dd3-item > button { margin-left: 30px; }
 
-.dd3-handle { position: absolute; margin: 0; left: 0; top: 0; cursor: pointer; width: 30px; text-indent: 100%; white-space: nowrap; overflow: hidden;
+.dd3-handle { 
+    position: absolute; margin: 0; left: 0; top: 0; cursor: pointer; width: 30px;
+    text-indent: 100px;
+    white-space: nowrap; overflow: hidden;
     border: 1px solid #aaa;
     background: #ddd;
     background: -webkit-linear-gradient(top, #ddd 0%, #bbb 100%);
