@@ -134,8 +134,10 @@ function expandAddButton(){
     });
     $.each([input, save, button], function(){
       $(this).on("blur", function(){
-        // Give a little timeout so that the 
-        // button doesn't snap back right away
+        // Give a small timeout so that the 
+        // button doesn't snap back right away.
+        // This is necessary to let certain browsers
+        // (e.g. Firefox) have enough time to submit the form.
         setTimeout(function(){
           // Unless the parent button or the save button is focussed
           if( !input.is(':focus') && !button.is(':focus') && !save.is(':focus') ) {
@@ -143,7 +145,7 @@ function expandAddButton(){
             target.hide();
             button.animate({width: width + 'px'}, speed);
           }
-        }, 25);
+        }, 100);
       });
     });
   });
