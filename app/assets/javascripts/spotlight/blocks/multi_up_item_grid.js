@@ -27,10 +27,10 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
     toData: function() {
       var data = {};
       this.$('.item-grid-input').each(function(){
-        data[$(this).attr("id")] = $(this).val();
+        data[$(this).attr("name")] = $(this).val();
       });
       this.$('.item-grid-checkbox').each(function(){
-        data[$(this).attr("id")] = $("[name='" + $(this).attr('name') + "']:checked").val();
+        data[$(this).attr("name")] = $(this).is(":checked");
       });
       data[this.caption_key] = this.$('[name=' + this.caption_key + ']:checked').val();
       data[this.field_key] = this.$('[name=' + this.field_key + '] option:selected').val();
@@ -44,10 +44,10 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
 
     loadData: function(data){
       this.$('.item-grid-input').each(function(){
-        $(this).val(data[$(this).attr("id")]);
+        $(this).val(data[$(this).attr("name")]);
       });
       this.$('.item-grid-checkbox').each(function(){
-        $(this).prop('checked', data[$(this).attr("id")]);
+        $(this).prop('checked', data[$(this).attr("name")]);
       });
       this.$('#' + this.formId(this.caption_key)).prop('checked', data[this.caption_key])
       // set a data attribute on the select field so the ajax request knows which option to select
