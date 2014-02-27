@@ -3,7 +3,7 @@
   <div class="dd-handle dd3-handle"><%= t :drag %></div>
   <div class="dd3-content panel panel-default">
     <div class="panel-heading page">
-      <!-- <a class="pull-right btn btn-text" data-toggle="collapse" href="#collapse-page-<%= page.id %>"><%= t(:'spotlight.feature_pages.options') %>
+      <!-- <a class="pull-right btn btn-link" data-toggle="collapse" href="#collapse-page-<%= page.id %>"><%= t(:'spotlight.feature_pages.options') %>
         <span class="glyphicon glyphicon-chevron-right"></span>
       </a> -->
       <div class="publish-control">
@@ -18,9 +18,9 @@
         </h3>
         <div class="row">
         <div class="page-links col-sm-9">
-          <%= exhibit_view_link page, :class => 'btn btn-text' %> &middot;
-          <%= exhibit_edit_link page, :class => 'btn btn-text' %> &middot;
-          <%= exhibit_delete_link page, :class => 'btn btn-text' %>
+          <%= exhibit_view_link page, :class => 'btn btn-link' %> &middot;
+          <%= exhibit_edit_link page, :class => 'btn btn-link' %> &middot;
+          <%= exhibit_delete_link page, :class => 'btn btn-link' %>
         </div>
         <%- if page.feature_page? -%>
           <%= f.hidden_field :parent_page_id, data: {property: "parent_page"} %>

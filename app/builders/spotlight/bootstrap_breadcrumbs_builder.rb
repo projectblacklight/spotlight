@@ -9,9 +9,13 @@
 class Spotlight::BootstrapBreadcrumbsBuilder < BreadcrumbsOnRails::Breadcrumbs::Builder
   include ActionView::Helpers::OutputSafetyHelper
   def render
+    if @elements.blank?
+      return ""
+    end
+
     @context.content_tag(:ul, class: 'breadcrumb') do
       safe_join(@elements.uniq.collect {|e| render_element(e)})
-    end
+    end 
   end
 
   def render_element(element)
