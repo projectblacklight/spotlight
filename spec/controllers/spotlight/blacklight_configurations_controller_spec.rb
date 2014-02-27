@@ -57,7 +57,7 @@ describe Spotlight::BlacklightConfigurationsController do
 
     describe "#edit_metadata_fields" do
       it "should be successful" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Metadata", exhibit_edit_metadata_path(exhibit))
         get :edit_metadata_fields, exhibit_id: exhibit
@@ -67,7 +67,7 @@ describe Spotlight::BlacklightConfigurationsController do
 
     describe "#edit_facet_fields" do
       it "should be successful" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Search facets", exhibit_edit_facets_path(exhibit))
         controller.stub_chain(:blacklight_solr, :get).and_return({})

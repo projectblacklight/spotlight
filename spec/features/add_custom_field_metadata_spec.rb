@@ -13,9 +13,9 @@ describe "Adding custom metadata field data" do
   it "should work" do
     visit spotlight.exhibit_catalog_path(Spotlight::Exhibit.default, "dq287tq6352")
 
-    expect(page).to have_link "Enter curation mode."
+    expect(page).to have_link "Edit"
 
-    click_on "Enter curation mode."
+    click_on "Edit"
 
     fill_in "Some Field", with: "My new custom field value"
 

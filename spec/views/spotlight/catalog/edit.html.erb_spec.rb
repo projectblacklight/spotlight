@@ -17,12 +17,6 @@ describe "spotlight/catalog/edit.html.erb" do
     view.stub(:document_show_html_title)
     view.stub(:edit_exhibit_catalog_path)
   end
-  it "renders a link to the edit page" do
-    stub_template "spotlight/catalog/_curation_mode_toggle_default.html.erb" => "curation_mode"
-    blacklight_config.view.edit.partials = ["spotlight/catalog/curation_mode_toggle"]
-    render
-    expect(rendered).to have_content "curation_mode"
-  end
 end
 
 

@@ -20,7 +20,7 @@ describe Spotlight::ContactsController do
 
     describe "GET edit" do
       it "should be successful" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(contact.name, edit_exhibit_contact_path(exhibit, contact))
@@ -51,7 +51,7 @@ describe Spotlight::ContactsController do
     end
     describe "GET new" do
       it "should be successful" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Add contact", new_exhibit_contact_path(exhibit))

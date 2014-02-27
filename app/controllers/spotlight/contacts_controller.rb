@@ -38,7 +38,7 @@ module Spotlight
 
     def attach_breadcrumbs
       load_exhibit
-      add_breadcrumb @exhibit.title, @exhibit
+      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
       add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
       add_breadcrumb t(:'spotlight.pages.index.about_pages.header'), exhibit_about_pages_path(@exhibit)
     end

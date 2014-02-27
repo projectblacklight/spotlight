@@ -70,12 +70,6 @@ en:
         header: "Settings"
       show_sidebar: "Show sidebar"
     curation:
-      mode:
-        curation: "You are in curation mode."
-        end_user: "You are in end-user mode."
-      link:
-        show: "Turn off."
-        edit: "Enter curation mode."
       sidebar:
         header: Curation
         dashboard: Dashboard
@@ -155,6 +149,7 @@ en:
       solr_document_activity:
         header: Recently Updated Items
     exhibits:
+      breadcrumb: Home
       edit:
         header: Settings
         fields:

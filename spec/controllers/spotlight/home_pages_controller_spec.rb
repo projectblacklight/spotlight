@@ -22,7 +22,7 @@ describe Spotlight::HomePagesController do
       describe "when the page title isn't set" do
         let(:page) { FactoryGirl.create(:home_page, title: nil) }
         it "should show breadcrumbs" do
-          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+          expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with("Feature pages", exhibit_feature_pages_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with("Exhibit Home", [:edit, exhibit, page])
           get :edit, id: page, exhibit_id: page.exhibit 
@@ -30,7 +30,7 @@ describe Spotlight::HomePagesController do
         end
       end
       it "should show breadcrumbs" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Feature pages", exhibit_feature_pages_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(page.title, [:edit, exhibit, page])
         get :edit, id: page, exhibit_id: page.exhibit
@@ -53,7 +53,7 @@ describe Spotlight::HomePagesController do
 
   describe "Rendering home page" do
     it "should get search results for display facets" do
-      expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+      expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
       controller.stub(get_search_results: [double, double])
       get :show, exhibit_id: exhibit
       expect(assigns[:response]).to_not be_blank

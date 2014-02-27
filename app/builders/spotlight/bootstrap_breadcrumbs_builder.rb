@@ -18,7 +18,7 @@ class Spotlight::BootstrapBreadcrumbsBuilder < BreadcrumbsOnRails::Breadcrumbs::
     html_class = 'active' if @context.current_page?(compute_path(element))
 
     @context.content_tag(:li, :class => html_class) do
-      @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
+      @context.link_to_unless_current(@context.truncate(compute_name(element), length: 30, separator: ' '), compute_path(element), element.options)
     end
   end
 end

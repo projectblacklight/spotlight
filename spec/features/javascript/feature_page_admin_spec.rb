@@ -90,8 +90,8 @@ feature "Feature Pages Adminstration", js:  true do
       click_link "Edit"
     end
     fill_in("Title", with: "Some Fancy Title")
-    click_link "Turn off."
-    expect(page).to have_content "You are in curation mode."
+    click_link "Cancel"
+    expect(page).not_to have_selector 'a', text: "Edit"
   end
   it "should stay in curation mode if a user has unsaved contenteditable data" do
     visit '/'
@@ -110,8 +110,8 @@ feature "Feature Pages Adminstration", js:  true do
     content_editable = find(".st-text-block")
     content_editable.set("Some Facnty Text.")
 
-    click_link "Turn off."
-    expect(page).to have_content "You are in curation mode."
+    click_link "Cancel"
+    expect(page).not_to have_selector 'a', text: "Edit"
   end
   it "should not update the pages list when the user has unsaved changes" do
     visit '/'
@@ -130,7 +130,9 @@ feature "Feature Pages Adminstration", js:  true do
         find("input").set("NewFancyTitle")
       end
     end
-    click_link "Home"
+    within '#exhibit-navbar' do
+      click_link "Home"
+    end
     expect(page).not_to have_content("Feature pages were successfully updated.")
     expect(page).to have_css("h1 small", text: "Feature Pages")
   end

@@ -2,14 +2,15 @@
 <% set_html_page_title @page.title if @page.title.present? %>
 
 <div class="<%= 'col-md-9' if @page.display_sidebar? %>">
-  <% if @page.title %>
+  <div class="clearfix">
+  <%= exhibit_edit_link @page, class: 'edit-button pull-right btn btn-primary' if can? :edit, @page %>
+  <% if @page.title.present? %>
     <h1 class="page-title">
       <%= @page.title %>
     </h1>
   <% end %>
+  </div>
   <div>
     <%= render_sir_trevor(@page.content) unless @page.content.blank? %>
   </div>
 </div>
-
-<%= render "curation_mode_toggle", object: @page %>

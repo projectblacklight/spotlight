@@ -25,7 +25,7 @@ describe Spotlight::CatalogController do
       let (:document) { SolrDocument.find('dq287tq6352') }
       let(:search) { FactoryGirl.create(:search) }
       it "should show the item" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to be_successful
@@ -34,7 +34,7 @@ describe Spotlight::CatalogController do
       it "should show the item with breadcrumbs to the browse page" do
         controller.stub(current_browse_category: search)
         
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("Browse", exhibit_browse_index_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(search.title, exhibit_browse_path(exhibit, search))
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
@@ -42,12 +42,11 @@ describe Spotlight::CatalogController do
         expect(response).to be_successful
       end
 
-
       it "should show the item with breadcrumbs to the feature page" do
         feature_page = FactoryGirl.create(:feature_page)
         controller.stub(current_page_context: feature_page)
 
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with(feature_page.title, [exhibit, feature_page])
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
@@ -58,25 +57,25 @@ describe Spotlight::CatalogController do
         home_page = FactoryGirl.create(:home_page)
         controller.stub(current_page_context: home_page)
 
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to be_successful
+      end
+
+      it "should add the curation widget" do
+        get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        expect(controller.blacklight_config.show.partials.first).to eq "curation_mode_toggle"
       end
     end
 
 
     describe "GET index" do
       it "should show the index" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("Search Results", exhibit_catalog_index_path(exhibit, q:'map'))
         get :index, exhibit_id: exhibit, q: 'map'
         expect(response).to be_successful
-      end
-
-      it "should add the curation widget" do
-        get :index, exhibit_id: exhibit, q: 'map'
-        expect(controller.blacklight_config.show.partials.first).to eq "curation_mode_toggle"
       end
     end
 
@@ -162,7 +161,7 @@ describe Spotlight::CatalogController do
     let (:exhibit) { Spotlight::Exhibit.default }
 
     it "should show all the items" do
-      expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
+      expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
       expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
       expect(controller).to receive(:add_breadcrumb).with("Items", admin_exhibit_catalog_index_path(exhibit))
       get :admin, exhibit_id: exhibit

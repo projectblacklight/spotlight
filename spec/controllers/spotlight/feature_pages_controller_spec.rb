@@ -14,7 +14,7 @@ describe Spotlight::FeaturePagesController do
     describe "GET index" do
       let!(:page) { FactoryGirl.create(:feature_page) }
       it "assigns all feature pages as @pages" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Feature pages", exhibit_feature_pages_path(exhibit))
         get :index, exhibit_id: Spotlight::Exhibit.default
@@ -27,7 +27,7 @@ describe Spotlight::FeaturePagesController do
       describe "on a top level page" do
         let(:page) { FactoryGirl.create(:feature_page) }
         it "assigns the requested page as @page" do
-          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+          expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with(page.title, [exhibit, page])
           get :show, exhibit_id: page.exhibit.id, id: page
           assigns(:page).should eq(page)
@@ -36,7 +36,7 @@ describe Spotlight::FeaturePagesController do
       describe "on a sub-page" do
         let(:page) { FactoryGirl.create(:feature_subpage) }
         it "assigns the requested page as @page" do
-          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+          expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with(page.parent_page.title, [exhibit, page.parent_page])
           expect(controller).to receive(:add_breadcrumb).with(page.title, [exhibit, page])
           get :show, exhibit_id: page.exhibit.id, id: page
@@ -57,7 +57,7 @@ describe Spotlight::FeaturePagesController do
       let(:page) { FactoryGirl.create(:feature_page) }
       let(:page) { FactoryGirl.create(:feature_subpage) }
       it "assigns the requested page as @page" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Feature pages", exhibit_feature_pages_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(page.parent_page.title, [exhibit, page.parent_page])
         expect(controller).to receive(:add_breadcrumb).with(page.title, [:edit, exhibit, page])

@@ -1,12 +1,1 @@
-<% if current_exhibit and can?(:curate, current_exhibit) %>
-  <% content_for(:curation_mode_widget) do %>
-    <span class="label label-<%= curation_mode_label_class %> curation-widget">
-      <%- if curation_mode? -%>
-        <%= t(:'spotlight.curation.mode.curation') %> <%= link_to t(:'spotlight.curation.link.show'), spotlight.exhibit_catalog_path(current_exhibit.id, document) %>
-      <%- else -%>
-        <%= t(:'spotlight.curation.mode.end_user') %> <%= link_to t(:'spotlight.curation.link.edit'), spotlight.edit_polymorphic_path([current_exhibit, :catalog], id: document.id) %>
-      <%- end -%>
-    </span>
-  </div>
-  <% end %>
-<% end %>
+<%= exhibit_edit_link document, [:edit, current_exhibit, document], class: 'pull-right btn btn-primary' if can?(:curate, current_exhibit) and !current_page? [:edit, current_exhibit, document]  %>

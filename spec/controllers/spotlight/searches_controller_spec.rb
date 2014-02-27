@@ -39,7 +39,7 @@ describe Spotlight::SearchesController do
 
     describe "GET index" do
       it "should show all the items" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Browse", exhibit_searches_path(exhibit))
         get :index, exhibit_id: search.exhibit_id 

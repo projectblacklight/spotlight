@@ -90,9 +90,9 @@ module Spotlight
       load_exhibit
 
       if view_context.current_page? "/"
-        add_breadcrumb @exhibit.title, main_app.root_path
+        add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), main_app.root_path
       else
-        add_breadcrumb @exhibit.title, spotlight.exhibit_root_path(@exhibit)
+        add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), spotlight.exhibit_root_path(@exhibit)
       end
     end
 
