@@ -112,7 +112,7 @@ function expandAddButton(){
     var save =  $("input[type='submit']", target);
     var input = $("input[type='text']", target);
     var width = button.outerWidth();
-    var speed = 800;
+    var speed = 450;
     // Animate button open when the mouse enters or
     // the button is given focus (i.e. clicked/tabbed)
     button.on("mouseenter focus", function(){
