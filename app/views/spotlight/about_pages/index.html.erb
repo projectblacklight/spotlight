@@ -12,9 +12,12 @@
         <% end %>
       </ol>
     </div>
-    <div class="pull-right" style="margin-top: 1em;">
-      <%= f.submit nil %>
+    <div class="form-actions" style="margin-top: 1em;">
+
+      <%= exhibit_create_link Spotlight::Contact.new, class: "btn btn-primary" %>
+      <div class="primary-actions">
+        <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
     </div>
   <% end %>
-  <%= exhibit_create_link Spotlight::Contact.new, class: "btn btn-primary" %>
 </div>

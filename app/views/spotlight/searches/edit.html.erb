@@ -7,9 +7,11 @@
     <%= f.select :featured_image, f.object.images, {}, prepend: "<img id=\"preview\"></img>".html_safe %>
     <%= f.text_area :short_description %>
     <%= f.text_area :long_description %>
-    <div class="col-md-4 col-md-offset-4">
-      <%= cancel_link @search,exhibit_searches_path(@exhibit), class: 'btn btn-default' %>
-      <%= f.submit nil %>
+    <div class="form-actions">
+      <div class="primary-actions">
+        <%= cancel_link @search,exhibit_searches_path(@exhibit), class: 'btn btn-default' %>
+        <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
     </div>
   </div>
 <% end %>

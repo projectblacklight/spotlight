@@ -11,9 +11,11 @@
   <div class="edit-tags">
   <%= f.text_field :exhibit_tag_list, value: f.object.tags_from(current_exhibit).to_s, 'data-autocomplete_url' => exhibit_tags_path(current_exhibit, format: 'json') %>
   </div>
-  <div class="pull-right">
-  <%= cancel_link @document, spotlight.exhibit_catalog_path(current_exhibit, @document), class: 'btn btn-default' %> 
-  <%= f.submit nil, class: 'btn btn-primary' %>
+  <div class="form-actions">
+    <div class="primary-actions">
+      <%= cancel_link @document, spotlight.exhibit_catalog_path(current_exhibit, @document), class: 'btn btn-default' %> 
+      <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
   </div>
 </div>
 <% end %>

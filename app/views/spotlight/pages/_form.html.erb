@@ -26,8 +26,11 @@
     <%= f.label :content, class: 'sr-only' %>
     <%= f.sir_trevor_text_area :content %>
   </div>
-  <div class="actions">
-    <%= link_to(t('cancel'), :back, class: "btn btn-default") %>
-    <%= f.submit class: 'btn btn-default' %>
+
+  <div class="form-actions">
+    <div class="primary-actions">
+      <%= link_to(t('cancel'), :back, class: "btn btn-default") %>
+      <%= f.submit class: 'btn btn-primary' %>
+    </div>
   </div>
 <% end %>

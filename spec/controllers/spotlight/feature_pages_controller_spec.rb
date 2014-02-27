@@ -119,9 +119,10 @@ describe Spotlight::FeaturePagesController do
           assigns(:page).should eq(page)
         end
 
-        it "redirects to the feature page index action" do
+        it "redirects to the feature page" do
           put :update, id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes
-          response.should redirect_to(exhibit_feature_pages_path(page.exhibit))
+          page.reload
+          response.should redirect_to(exhibit_feature_page_path(page.exhibit, page))
         end
       end
 

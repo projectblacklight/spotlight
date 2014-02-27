@@ -7,6 +7,14 @@
   margin-bottom: 2em;
 }
 
+.form-actions {
+  @extend .clearfix;
+}
+
+.primary-actions {
+  @extend .pull-right; 
+}
+
 #nested-pages {
   margin-bottom: 1em;  
 }

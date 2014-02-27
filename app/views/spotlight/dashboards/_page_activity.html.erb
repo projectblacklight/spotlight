@@ -14,15 +14,3 @@
   </tbody>
   </table>
 <% end %>
-
-<div class="btn-toolbar pull-right">
-<%= bootstrap_form_for Spotlight::FeaturePage.new, url: spotlight.polymorphic_path([@exhibit, 'feature_pages']), html: { class: 'btn-group' } do |f|%>
-  <%= f.hidden_field(:title) %>
-  <%= f.submit t('.new_feature_page'), class: "btn btn-default" %>
-<%- end -%>
-
-<%= bootstrap_form_for Spotlight::AboutPage.new, url: spotlight.polymorphic_path([@exhibit, 'about_pages']), html: { class: 'btn-group' } do |f|%>
-  <%= f.hidden_field(:title) %>
-  <%= f.submit t('.new_about_page'), class: "btn btn-default" %>
-<%- end -%>
-</div>

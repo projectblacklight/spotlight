@@ -47,7 +47,7 @@ module Spotlight
     # PATCH/PUT /pages/1
     def update
       if @page.update(page_params.merge(last_edited_by: current_user))
-        redirect_to [@page.exhibit, page_collection_name], notice: 'Page was successfully updated.'
+        redirect_to [@page.exhibit, @page], notice: 'Page was successfully updated.'
       else
         render action: 'edit'
       end
@@ -56,7 +56,7 @@ module Spotlight
     # DELETE /pages/1
     def destroy
       @page.destroy
-      redirect_to [@page.exhibit, @page], notice: 'Page was successfully destroyed.'
+      redirect_to [@page.exhibit, page_collection_name], notice: 'Page was successfully destroyed.'
     end
 
     def update_all

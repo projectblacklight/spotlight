@@ -35,13 +35,9 @@ feature "Item + Image Block" do
     item_id_field.set("dq287tq6352")
     # create the page
     click_button("Save changes")
-    # veryify that the page was created
+    # verify that the page was created
     expect(page).to have_content("Page was successfully updated.", visible: true)
-    # visit the show page for the document we just saved
-    within("li.dd-item") do
-      click_link "View"
-    end
-    # veryify that the item + image widget is displaying an image from the document.
+    # verify that the item + image widget is displaying an image from the document.
     within(:css, ".item-text") do
       expect(page).to have_css(".thumbnail")
       expect(page).to have_css(".thumbnail a img")
@@ -80,15 +76,10 @@ feature "Item + Image Block" do
     check("Display title")
     # create the page
     click_button("Save changes")
-    # veryify that the page was created
+    # verify that the page was created
     expect(page).to have_content("Page was successfully updated.", visible: true)
 
-    # visit the show page for the document we just saved
-    within("li.dd-item") do
-      click_link "View"
-    end
-
-    # veryify that the item + image widget is displaying image and title from the requested document.
+    # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".item-text") do
       expect(page).to have_css(".thumbnail")
       expect(page).to have_css(".thumbnail a img")
@@ -130,13 +121,10 @@ feature "Item + Image Block" do
     content_editable.set("Some text to annotate this image.")
     # create the page
     click_button("Save changes")
-    # veryify that the page was created
+    # verify that the page was created
     expect(page).to have_content("Page was successfully updated.", visible: true)
     # visit the show page for the document we just saved
-    within("li.dd-item") do
-      click_link "View"
-    end
-    # veryify that the item + image widget is displaying image and title from the requested document.
+    # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".item-text") do
       expect(page).to have_content "Some text to annotate this image."
     end
@@ -177,13 +165,9 @@ feature "Item + Image Block" do
     choose "Right"
     # create the page
     click_button("Save changes")
-    # veryify that the page was created
+    # verify that the page was created
     expect(page).to have_content("Page was successfully updated.", visible: true)
-    # visit the show page for the document we just saved
-    within("li.dd-item") do
-      click_link "View"
-    end
-    # veryify that the item + image widget is displaying image and title from the requested document.
+    # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".item-text") do
       expect(page).to have_content "Some text to annotate this image."
       # should pull the image block the opposite direction of the configured text.

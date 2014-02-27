@@ -81,16 +81,17 @@ describe Spotlight::AboutPagesController do
       end
     end
     describe "POST create" do
-      it "redirects to the feature page index" do
+      it "redirects to the about page index" do
         post :create, about_page: {title: "MyString"}, exhibit_id: Spotlight::Exhibit.default
         response.should redirect_to(exhibit_about_pages_path(Spotlight::AboutPage.last.exhibit))
       end
     end
     describe "PUT update" do
       let!(:page) { FactoryGirl.create(:about_page) }
-      it "redirects to the about page index action" do
+      it "redirects to the about page" do
         put :update, id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes
-        response.should redirect_to(exhibit_about_pages_path(page.exhibit))
+        page.reload
+        response.should redirect_to(exhibit_about_page_path(page.exhibit, page))
       end
     end
     describe "POST update_all" do
