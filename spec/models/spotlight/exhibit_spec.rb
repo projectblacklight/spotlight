@@ -18,12 +18,13 @@ describe Spotlight::Exhibit do
     subject.save!
     expect(subject.description).to eq "Test description"
   end
-
-  it "should have contact emails that validate format" do
-    subject.contact_emails = ['chris@example.com', 'jesse@stanford.edu', '@-foo']
-    expect(subject.contact_emails).to eq ['chris@example.com', 'jesse@stanford.edu', '@-foo']
-    expect(subject).to_not be_valid
-    expect(subject.errors[:contact_emails]).to eq ['@-foo is not valid']
+  describe "contact_emails" do
+    before do
+      subject.contact_emails_attributes= [ { "email"=>"chris@example.com"}, {"email"=>"jesse@stanford.edu"}]
+    end
+    it "should accept nested contact_emails" do
+      expect(subject.contact_emails.size).to eq 2
+    end
   end
 
   it "should have a #to_s" do

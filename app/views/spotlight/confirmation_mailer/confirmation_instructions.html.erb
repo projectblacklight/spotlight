@@ -1,0 +1,5 @@
+<p><%= t(:'.welcome', email: @email) %></p>
+
+<p><%= t(:'.instructions') %></p>
+
+<p><%= link_to t(:'.confirm'), spotlight.contact_email_confirmation_url(:confirmation_token => @token) %></p>

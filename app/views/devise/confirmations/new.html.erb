@@ -1,0 +1,11 @@
+<h2>Resend confirmation instructions</h2>
+
+<%= bootstrap_form_for(resource, as: resource_name, url: contact_email_confirmation_path,
+                       html: { method: :post , class: 'col-md-7' }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <%= f.email_field :email, :autofocus => true %>
+
+  <div><%= f.submit "Resend confirmation instructions" %></div>
+<% end %>
+

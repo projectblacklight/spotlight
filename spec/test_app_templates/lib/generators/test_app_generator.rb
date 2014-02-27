@@ -22,4 +22,9 @@ class TestAppGenerator < Rails::Generators::Base
   def add_rake_tasks_to_app
     rakefile 'spotlight_test.rake', File.read(find_in_source_paths('spotlight_test.rake'))
   end
+
+  def add_mailer_defaults
+    mail_config = "    config.action_mailer.default_url_options = { host: \"localhost:3000\", from: \"noreply@example.com\" }\n"
+    insert_into_file 'config/application.rb', mail_config, after: "< Rails::Application\n"
+  end
 end

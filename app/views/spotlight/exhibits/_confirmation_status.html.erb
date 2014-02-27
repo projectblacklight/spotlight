@@ -1,0 +1,10 @@
+            <div class="col-md-4 confirmation-status <%= 'not-validated' unless contact_email.confirmed? or contact_email.recently_sent? %>">
+              <% if contact_email.confirmed? %>
+                <span class="confirmed"><span class="glyphicon glyphicon-ok-sign"></span> <%= t('.confirmed') %></span>
+              <% elsif contact_email.recently_sent? %>
+                <span class="confirmed"><span class="glyphicon glyphicon-ok-sign"></span> <%= t('.confirmation_sent') %></span>
+              <% else %>
+                <span class="unconfirmed"><span class="glyphicon glyphicon-exclamation-sign"></span> <%= t('.not_validated') %></span> <%= link_to t('.resend'), contact_email_confirmation_path(contact_email: {email: contact_email.email}),  method: :post %>
+              <% end %>
+            </div>
+

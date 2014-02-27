@@ -127,6 +127,11 @@ en:
       admin:
         title: Curation - Items
         header: Items
+    confirmation_mailer:
+      confirmation_instructions:
+        welcome: "Welcome %{email}!"
+        instructions: "You can confirm your account email through the link below:"
+        confirm: Confirm my account
     contact_form:
       new:
         header: "Report a Problem"
@@ -155,6 +160,11 @@ en:
         fields:
           contact_emails:
             help_block: Each contact email will receive Report a problem form submissions
+      confirmation_status:
+        confirmed: Confirmed.
+        confirmation_sent: Confirmation sent.
+        not_validated: Not validated.
+        resend: Resend confirmation?
     pages:
       order_pages:
         pages_header: Defined Pages

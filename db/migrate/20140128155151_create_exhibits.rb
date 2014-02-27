@@ -6,7 +6,6 @@ class CreateExhibits < ActiveRecord::Migration
       t.string :subtitle
       t.string :slug
       t.text :description
-      t.text :contact_emails
       t.timestamps
     end
 

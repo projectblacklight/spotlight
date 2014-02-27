@@ -7,17 +7,10 @@
     <%= f.text_field :subtitle %>
     <%= f.text_area :description %>
     <%= f.form_group(:contact_emails, label: { text: nil, class: nil }, help: nil) do %>
-      <%= f.fields_for :contact_emails, @exhibit.contact_emails do |contact| %>
-        <% if contact.index == 0 %>
-          <div class="input-group">
-            <%= text_field_tag "#{contact.object_name}[email]", contact.object, class: 'exhibit-contact form-control' %>
-            <span id='another-email' class="input-group-addon">+</span>
-          </div>
-        <% else %>
-          <%= text_field_tag "#{contact.object_name}[email]", contact.object, class: 'exhibit-contact form-control' %>
-        <% end %>
+      <%= f.fields_for :contact_emails do |contact| %>
+        <%= render partial: 'contact', locals: {contact: contact} %>
       <% end %>
-    <p class="help-block"><%= t(:'.fields.contact_emails.help_block') %></p>
+      <p class="help-block"><%= t(:'.fields.contact_emails.help_block') %></p>
     <% end %>
 
     <div class="pull-right">
