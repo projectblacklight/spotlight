@@ -66,6 +66,10 @@ class Spotlight::Exhibit < ActiveRecord::Base
     searches.published.any?
   end
 
+  def to_s
+    title
+  end
+
   protected
 
   def initialize_config
