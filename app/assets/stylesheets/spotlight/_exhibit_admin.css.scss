@@ -8,4 +8,15 @@
   #another-email {
     cursor: hand;
   }
+  .confirmation-status {
+    margin-top: 10px;
+    margin-left: 0;
+    padding-left: 0;
+    .confirmed {
+      color: green;
+    }
+    .unconfirmed {
+      color: red;
+    }
+  }
 }
