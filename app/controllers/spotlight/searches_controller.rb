@@ -50,7 +50,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
 
   def attach_breadcrumbs
     e = @exhibit || (@search.exhibit if @search)
-    add_breadcrumb e.title, e
+    add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: e.title), e
     add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(e)
     add_breadcrumb t(:'spotlight.curation.sidebar.browse'), exhibit_searches_path(e)
   end

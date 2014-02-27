@@ -7,10 +7,6 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   before_filter :attach_breadcrumbs
 
-  before_filter do
-    blacklight_config.show.partials.unshift "curation_mode_toggle"
-  end
-
   copy_blacklight_config_from ::CatalogController
 
   def index
@@ -20,6 +16,8 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   end
 
   def show
+    blacklight_config.show.partials.unshift "curation_mode_toggle"
+
     super
 
     if @document.private? current_exhibit
@@ -120,7 +118,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
     # /exhibits/1?f%5Bgenre_sim%5D%5B%5D=map&q= is not the same as /exhibits/1
     # Otherwise the exhibit breadcrumb won't be a link.
     # see http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-current_page-3F
-    add_breadcrumb @exhibit.title, exhibit_root_path(@exhibit, q: '')
+    add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), exhibit_root_path(@exhibit, q: '')
   end
 
   ## 

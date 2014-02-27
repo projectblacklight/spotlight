@@ -9,7 +9,7 @@ describe Spotlight::CustomFieldsController do
     describe "GET new" do
       let(:exhibit) { Spotlight::Exhibit.default }
       it "assigns a new custom field" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Metadata", exhibit_edit_metadata_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Add new field", new_exhibit_custom_field_path(exhibit))
@@ -22,7 +22,7 @@ describe Spotlight::CustomFieldsController do
       let(:field) { FactoryGirl.create(:custom_field) }
       let(:exhibit) { field.exhibit }
       it "assigns the requested custom_field" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Metadata", exhibit_edit_metadata_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(field.label, edit_exhibit_custom_field_path(exhibit, field))

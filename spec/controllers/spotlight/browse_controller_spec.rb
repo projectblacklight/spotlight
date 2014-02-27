@@ -8,7 +8,7 @@ describe Spotlight::BrowseController do
 
   describe "#index" do
     it "should show the list of browse categories" do
-      expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+      expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
       expect(controller).to receive(:add_breadcrumb).with("Browse", exhibit_browse_index_path(exhibit))
       get :index, exhibit_id: exhibit
       expect(response).to be_successful
@@ -26,7 +26,7 @@ describe Spotlight::BrowseController do
       controller.stub(get_search_results: [mock_response, document_list])
     end
     it "should show the items in the category" do
-      expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit)
+      expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
       expect(controller).to receive(:add_breadcrumb).with("Browse", exhibit_browse_index_path(exhibit))
       expect(controller).to receive(:add_breadcrumb).with(search.title, exhibit_browse_path(exhibit, search))
       get :show, id: search, exhibit_id: exhibit

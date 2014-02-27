@@ -5,7 +5,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   load_and_authorize_resource
 
   def edit
-    add_breadcrumb @exhibit.title, @exhibit
+    add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
     add_breadcrumb t(:'spotlight.administration.sidebar.header'), exhibit_dashboard_path(@exhibit)
     add_breadcrumb t(:'spotlight.administration.sidebar.settings'), edit_exhibit_path(@exhibit)
     @exhibit.contact_emails << "" unless @exhibit.contact_emails.present?

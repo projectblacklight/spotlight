@@ -24,7 +24,7 @@ describe Spotlight::AboutPagesController do
       let(:page2) { FactoryGirl.create(:about_page, weight: 5) }
       describe "on the main about page" do
         it "is successful" do
-          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+          expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with("About", [exhibit, page])
           get :show, id: page, exhibit_id: exhibit
           expect(assigns(:page)).to eq page
@@ -33,7 +33,7 @@ describe Spotlight::AboutPagesController do
       end
       describe "on a different about page" do
         it "is successful" do
-          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+          expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with('About', [exhibit, page])
           expect(controller).to receive(:add_breadcrumb).with(page2.title, [exhibit, page2])
           get :show, id: page2, exhibit_id: exhibit
@@ -48,7 +48,7 @@ describe Spotlight::AboutPagesController do
       let(:page2) { FactoryGirl.create(:about_page, weight: 5) }
       describe "on the main about page" do
         it "is successful" do
-          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+          expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
           get :edit, id: page, exhibit_id: exhibit
           expect(assigns(:page)).to eq page
@@ -57,7 +57,7 @@ describe Spotlight::AboutPagesController do
       end
       describe "on a different about page" do
         it "is successful" do
-          expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+          expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with(page2.title, [:edit, exhibit, page2])
           get :edit, id: page2, exhibit_id: exhibit
@@ -70,7 +70,7 @@ describe Spotlight::AboutPagesController do
     describe "GET index" do
       let!(:page) { FactoryGirl.create(:about_page) }
       it "is successful" do
-        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_root_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
         get :index, exhibit_id: Spotlight::Exhibit.default

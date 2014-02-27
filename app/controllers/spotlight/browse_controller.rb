@@ -31,7 +31,7 @@ module Spotlight
 
     def attach_breadcrumbs
       load_exhibit
-      add_breadcrumb @exhibit.title, @exhibit
+      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
       add_breadcrumb t(:'spotlight.browse.nav_link'), exhibit_browse_index_path(@exhibit)
     end
 

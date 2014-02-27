@@ -22,7 +22,7 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
   ##
   # Edit the index and show view metadata fields
   def edit_metadata_fields
-    add_breadcrumb @exhibit.title, @exhibit
+    add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
     add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
     add_breadcrumb t(:'spotlight.curation.sidebar.metadata'), exhibit_edit_metadata_path(@exhibit)
   end
@@ -30,7 +30,7 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
   ##
   # Edit the index and show view metadata fields
   def edit_facet_fields
-    add_breadcrumb @exhibit.title, @exhibit
+    add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
     add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
     add_breadcrumb t(:'spotlight.curation.sidebar.search_facets'), exhibit_edit_facets_path(@exhibit)
     @fields = blacklight_solr.get('admin/luke', params: { fl: '*', 'json.nl' => 'map' })['fields']
