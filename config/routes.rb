@@ -12,11 +12,15 @@ Spotlight::Engine.routes.draw do
     get 'edit/facets', to: "blacklight_configurations#edit_facet_fields"
     get 'metadata', to: 'blacklight_configurations#metadata_fields'
 
+    blacklight_for :catalog, only: [:export]
+
     resources :catalog do
       collection do
         get 'admin'
         get 'autocomplete'
       end
+
+      get "facet/:id", :to => "catalog#facet", :as => "catalog_facet"
 
       put 'visiblity', to: "catalog#make_public"
       delete 'visiblity', to: "catalog#make_private"
