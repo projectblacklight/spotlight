@@ -6,7 +6,7 @@ Spotlight.onLoad(function() {
     input.attr('id', input.attr('id').replace('0', container.find('input[type="text"]').length));
     input.attr('name', input.attr('name').replace('0', container.find('input[type="text"]').length));
     container.find('.help-block').before(input);
-    new_container = input.wrap( "<div class=\"row\"><div class=\"col-md-6\"></div></div>" )
+    new_container = input.wrap( "<div class=\"row contact\"><div class=\"col-md-8\"></div></div>" )
   });
 
   $('.btn-with-tooltip').tooltip();

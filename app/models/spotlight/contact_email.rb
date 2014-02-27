@@ -10,6 +10,10 @@ module Spotlight
       email
     end
 
+    def recently_sent?
+      confirmation_sent_at > 3.days.ago
+    end
+
     protected 
 
     def valid_email

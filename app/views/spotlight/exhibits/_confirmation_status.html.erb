@@ -1,7 +1,7 @@
-            <div class="col-md-6 confirmation-status">
+            <div class="col-md-4 confirmation-status <%= 'not-validated' unless contact_email.confirmed? or contact_email.recently_sent? %>">
               <% if contact_email.confirmed? %>
                 <span class="confirmed"><span class="glyphicon glyphicon-ok-sign"></span> Confirmed</span>
-              <% elsif contact_email.confirmation_sent_at > 3.days.ago %>
+              <% elsif contact_email.recently_sent? %>
                 <span class="confirmed"><span class="glyphicon glyphicon-ok-sign"></span> Confirmation sent.</span>
               <% else %>
                 <span class="unconfirmed"><span class="glyphicon glyphicon-exclamation-sign"></span> Not validated</span> <%= link_to "Resend confirmation?", contact_email_confirmation_path(contact_email: {email: contact_email.email}),  method: :post %>
