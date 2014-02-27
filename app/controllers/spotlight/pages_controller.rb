@@ -82,7 +82,12 @@ module Spotlight
 
     def attach_breadcrumbs
       load_exhibit
-      add_breadcrumb @exhibit.title, spotlight.exhibit_root_path(@exhibit)
+
+      if view_context.current_page? "/"
+        add_breadcrumb @exhibit.title, main_app.root_path
+      else
+        add_breadcrumb @exhibit.title, spotlight.exhibit_root_path(@exhibit)
+      end
     end
 
     def load_exhibit
