@@ -30,6 +30,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   serialize :contact_emails, Array
 
   before_create :initialize_config
+  before_create :initialize_browse
   after_create :add_default_home_page
   before_save :sanitize_description
   validate :name, :title, presence: true
@@ -74,6 +75,14 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   def initialize_config
     self.blacklight_configuration ||= Spotlight::BlacklightConfiguration.create!
+  end
+
+  def initialize_browse
+    return unless self.searches.blank?
+
+    self.searches.build title: "Browse All Exhibit Items",
+      short_description: "Search results for all items in this exhibit",
+      long_description: "All items in this exhibit"
   end
 
   def valid_emails
