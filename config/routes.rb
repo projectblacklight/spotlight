@@ -1,5 +1,6 @@
 Spotlight::Engine.routes.draw do
 
+  devise_for :contact_email, class_name: "Spotlight::ContactEmail", only: [:confirmations]
   get '/:exhibit_id' => 'home_pages#show', as: :exhibit_root
 
   resources :exhibits, path: '/', only: [:edit, :update] do
@@ -57,3 +58,4 @@ Spotlight::Engine.routes.draw do
     end
   end
 end
+

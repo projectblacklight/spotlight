@@ -23,8 +23,9 @@ describe "Report a Problem" do
       fill_in "Email", with: "test@example.com"
       fill_in "Message", with: "This is my problem report"
 
-      click_on "Send"
-      expect(ActionMailer::Base.deliveries).to have(1).email
+      expect {
+        click_on "Send"
+      }.to change {ActionMailer::Base.deliveries.count}.by(1)
     end
   end
 end

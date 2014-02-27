@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency "breadcrumbs_on_rails", "~> 2.3.0"
   s.add_dependency "social-share-button", "~> 0.1.5"
   s.add_dependency "ruby-oembed"
+  s.add_dependency "devise", "~> 3.2.3"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec-rails"
