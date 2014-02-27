@@ -164,6 +164,8 @@ en:
       order_pages:
         pages_header: Defined Pages
         instructions: Select the pages you want to be shown. Drag and drop pages to change the order in which they are displayed in the sidebar.
+        new_page: "Add new page"
+        save: "Save"
       index:
         home_pages:
           title: Exhibit Home

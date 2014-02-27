@@ -52,3 +52,16 @@ RSpec.configure do |config|
   config.include Controllers::EngineHelpers, type: :controller
   config.include Capybara::DSL
 end
+
+def add_new_page_via_button(title="New Page")
+  add_link = find("[data-expanded-add-button]")
+  within(add_link) do
+    expect(page).to have_css("input[type='text']", visible: false)
+  end
+  add_link.hover
+  within(add_link) do
+    input = find("input[type='text']", visible: true)
+    input.set(title)
+    find("input[type='submit']").click
+  end
+end
