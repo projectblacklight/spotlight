@@ -35,14 +35,14 @@ describe Spotlight::Exhibit do
   describe "that is saved" do
     before { subject.save!  }
 
-    it "should have searches" do
-      search = Spotlight::Search.create!(exhibit: subject)
-      Search.create! # it shouldn't get one of these
-      expect(subject.searches).to eq [search]
-    end
-
     it "should have a configuration" do
       expect(subject.blacklight_configuration).to be_kind_of Spotlight::BlacklightConfiguration
+    end
+
+    it "should have an unpublished search" do
+      expect(subject.searches).to have(1).search
+      expect(subject.searches.published).to be_empty
+      expect(subject.searches.first.query_params).to be_empty
     end
   end
 
