@@ -10,7 +10,7 @@ function initBloodhound() {
       url: $('form[data-autocomplete-url]').data('autocomplete-url') + '?q=%QUERY',
       filter: function(response) {
         return $.map(response['docs'], function(doc) {
-          return { id: doc['id'], title: doc['full_title_tesim'][0] }
+          return { id: doc['id'], title: doc['title'] }
         })
       }
     }
