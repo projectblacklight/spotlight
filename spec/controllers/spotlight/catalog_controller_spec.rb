@@ -41,6 +41,28 @@ describe Spotlight::CatalogController do
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to be_successful
       end
+
+
+      it "should show the item with breadcrumbs to the feature page" do
+        feature_page = FactoryGirl.create(:feature_page)
+        controller.stub(current_page_context: feature_page)
+
+        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
+        expect(controller).to receive(:add_breadcrumb).with(feature_page.title, [exhibit, feature_page])
+        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
+        get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        expect(response).to be_successful
+      end
+
+      it "should show the item with breadcrumbs from the home page" do
+        home_page = FactoryGirl.create(:home_page)
+        controller.stub(current_page_context: home_page)
+
+        expect(controller).to receive(:add_breadcrumb).with(exhibit.title, exhibit_path(exhibit, q: ''))
+        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
+        get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        expect(response).to be_successful
+      end
     end
 
 

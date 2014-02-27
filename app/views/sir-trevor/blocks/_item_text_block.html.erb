@@ -3,7 +3,7 @@
   <div class="image-block pull-<%= block['text-align'] %>">
     <%- if has_thumbnail? document -%>
       <div class="thumbnail">
-        <%= render_thumbnail_tag(document) %>
+        <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
       </div>
     <%- end -%>
     <%- if should_render_record_thumbnail_title?(document, block) -%>
