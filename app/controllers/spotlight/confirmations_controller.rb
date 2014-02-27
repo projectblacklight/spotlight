@@ -22,5 +22,9 @@ module Spotlight
         main_app.new_user_session_path
       end
     end
+
+    def after_resending_confirmation_instructions_path_for(resource_name)
+      main_app.root_path
+    end
   end
 end

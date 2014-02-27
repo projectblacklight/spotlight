@@ -1,11 +1,30 @@
 .exhibit-admin {
-  input.exhibit-contact {
-    margin-top: 5px;
-    &:first-child {
-      margin-top: 0;
-    }
+  .contact {
+    margin-bottom: 0.5em;
   }
+
   #another-email {
     cursor: hand;
+  }
+  .confirmation-status {
+    margin-top: 10px;
+    margin-left: 0;
+    padding-left: 0;
+    
+    &.not-validated {
+      margin-top: 0;
+    }
+    
+    .confirmed {
+      @extend .text-success;
+      white-space: nowrap;
+    }
+    .unconfirmed {
+      @extend .text-danger;
+    }
+
+    a {
+      white-space: nowrap;
+    }
   }
 }
