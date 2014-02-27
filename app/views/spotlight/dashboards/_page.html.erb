@@ -2,8 +2,8 @@
   <td>
     <h4 class="panel-title"><%= page.title_or_default %></h4>
     <div class="page-links">
-      <%= exhibit_view_link page, :class => 'btn btn-text' %> &middot;
-      <%= exhibit_edit_link page, :class => 'btn btn-text' %>
+      <%= exhibit_view_link page, :class => 'btn btn-link' %> &middot;
+      <%= exhibit_edit_link page, :class => 'btn btn-link' %>
     </div>
   </td>
   <td><%= page.last_edited_by.to_s if page.last_edited_by %></td>
