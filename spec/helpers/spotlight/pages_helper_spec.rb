@@ -33,9 +33,9 @@ module Spotlight
     end
     describe "item grid helpers" do
       describe "block objects" do
-        let(:block1) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "cba"} }
-        let(:block_with_hidden) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "cba", 'item-grid-display_1' => "true"} }
-        let(:block_with_blank) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "", 'item-grid-id_2' => "", 'item-grid-display_0' => "true", 'item-grid-display_1' => "true"} }
+        let(:block1) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "cba", 'item-grid-display_0' => false, 'item-grid-display_1' => false} }
+        let(:block_with_hidden) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "cba", 'item-grid-display_0' => false, 'item-grid-display_1' => true} }
+        let(:block_with_blank) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "", 'item-grid-id_2' => "", 'item-grid-display_0' => true, 'item-grid-display_1' => false} }
         let(:bad_keys) { {'another-key' => "something"} }
         describe "item_grid_block_objects" do
           it "should get the items w/ item-grid-id in the key" do

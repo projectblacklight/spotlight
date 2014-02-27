@@ -23,6 +23,11 @@ Spotlight.onLoad(function() {
 
     SirTrevor.EventBus.on('block:create:new', addTitleToSirTrevorBlock);
     SirTrevor.EventBus.on('block:create:existing', addTitleToSirTrevorBlock);
+
+    $('.slideshow-indicators li').on('click', function() {
+      $(this).closest('.slideshow').find('li.active').removeClass('active');
+      $(this).addClass('active');
+    });
 });
 
 Spotlight.onLoad(function(){

@@ -10,7 +10,7 @@ module Spotlight
       objects = []
       block.each do |key, value|
         if value.present? and key.include?("item-grid-id")
-          objects << {id: value, display: (block[key.gsub("-id", "-display")] == "true")}
+          objects << {id: value, display: (block[key.gsub("-id", "-display")])}
         end
       end
       objects

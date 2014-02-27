@@ -1,0 +1,39 @@
+<% block_ids = item_grid_block_ids(block) %>
+<% html_id = "carousel-#{block.object_id}" %>
+<div class="item-carousel">
+<% unless block_ids.blank? %>
+  <% documents = get_solr_response_for_field_values("id", item_grid_block_ids(block)).last.select { |doc| block_ids.include? doc.id  }.sort_by { |doc| block_ids.index doc.id } %>
+
+  <div id="<%= html_id %>" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <% documents.each_with_index do |document, index| %>
+        <li data-target="#<%= html_id %>" data-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>"></li>
+      <% end %>
+    </ol>
+
+      <div class="carousel-inner">
+    <% documents.each_with_index do |document, index| %>
+        <div class="item <%= 'active' if index == 0 %>" data-id="<%= document[:id] %>">
+          <% if has_thumbnail? document %>
+              <%= render_thumbnail_tag(document) %>
+          <% end %>
+          <% if block['item-grid-display-caption'] == 'true' %>
+            <div class="carousel-caption">
+              <h3><%= multi_up_item_grid_caption(block, document) %></h3>
+            </div>
+          <% end %>
+        </div>
+    <% end %>
+      </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#<%= html_id %>" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#<%= html_id %>" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+  </div>
+<% end %>
+</div>
