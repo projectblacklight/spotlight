@@ -17,12 +17,6 @@ describe "Dashboard" do
     )
   }
 
-  it "should have short-cuts to creating new pages" do
-    visit spotlight.exhibit_dashboard_path(Spotlight::Exhibit.default)
-    expect(page).to have_content "Recently Updated Items"
-    expect(page).to have_button "Add new Feature page"
-    expect(page).to have_button "Add new About page"
-  end
   it "should include a list of recently edited feature pages" do
     visit spotlight.exhibit_dashboard_path(Spotlight::Exhibit.default)
     expect(page).to have_content "Recent Site Building Activity"

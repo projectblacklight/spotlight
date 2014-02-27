@@ -1,12 +1,17 @@
 <div id="content" class="col-md-9">
-<%= bootstrap_form_for @contact_form, url: spotlight.exhibit_contact_form_path(current_exhibit, @contact_form), style: :horizontal, right: "col-sm-5" do |f| %>
-  <%= curation_page_title %>
+<%= bootstrap_form_for @contact_form, url: spotlight.exhibit_contact_form_path(current_exhibit, @contact_form), style: :horizontal do |f| %>
+  <h1 class="page-title"><%= t(:'.header') %></h1>
   <div class="row">
     <%= f.text_field :name %>
     <%= f.text_field :email %>
     <%= f.text_area :message, rows: 7 %>
     <%= f.hidden_field :current_url %>
-    <%= f.submit nil %>
+    <div class="form-actions">
+      <div class="primary-actions">
+      <%= link_to t(:'helpers.action.cancel'), '#', class: 'btn btn-link', data: { 'behavior' => 'cancel-link' } %>
+      <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
+    </div>
   </div>
 <% end %>
 </div>

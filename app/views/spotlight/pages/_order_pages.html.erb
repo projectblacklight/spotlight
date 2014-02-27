@@ -13,9 +13,10 @@
         <% end %>
       </ol>
     </div>
-
-    <div class="col-xs-2 pull-right">
-      <%= button_tag action_label(page_collection_name, :update_all), class: "btn btn-default", disabled: @pages.empty? %>
+    <div class="form-actions pull-right">
+      <div class="primary-actions">
+        <%= button_tag action_label(page_collection_name, :update_all), class: "btn btn-primary", disabled: @pages.empty? %>
+      </div>
     </div>
 <%- end -%>
 <div>

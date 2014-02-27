@@ -22,8 +22,6 @@ describe "Home page" do
     end
     fill_in "home_page_title", with: "New Home Page Title"
     click_button "Save changes"
-    within(".home_page") do
-      expect(page).to have_selector "h3.panel-title", text: "New Home Page Title"
-    end
+    expect(page).to have_selector ".page-title", text: "New Home Page Title"
   end
 end

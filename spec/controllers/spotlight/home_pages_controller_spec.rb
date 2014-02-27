@@ -37,16 +37,11 @@ describe Spotlight::HomePagesController do
         expect(response).to be_successful 
       end
     end
-    describe "POST create" do
-      it "redirects to the feature page index" do
-        post :create, home_page: {title: "MyString"}, exhibit_id: Spotlight::Exhibit.default
-        response.should redirect_to(exhibit_home_pages_path(Spotlight::Exhibit.default))
-      end
-    end
     describe "PUT update" do
       it "redirects to the feature page index action" do
         put :update, id: page, exhibit_id: page.exhibit.id, home_page: valid_attributes
-        response.should redirect_to(exhibit_home_pages_path(page.exhibit))
+        page.reload
+        response.should redirect_to(exhibit_home_page_path(page.exhibit, page))
       end
     end
   end

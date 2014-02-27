@@ -2,8 +2,10 @@
 
   <%= f.text_field :label %>
   <%= f.text_area :short_description %>
-  <div class="form-group pull-right">
+  <div class="form-actions">
+    <div class="primary-actions">
       <%= link_to t(:"cancel"), exhibit_edit_metadata_path(current_exhibit), class: "btn btn-default" %>
       <%= f.submit nil, class: 'btn btn-primary' %>
+    </div>
   </div>
 <% end %>

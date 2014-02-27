@@ -16,9 +16,11 @@
           <tr data-edit-for="new">
             <td></td>
             <td colspan=2>
-              <div class="pull-right">
+              <div class="form-actions">
+                <div class="primary-actions">
                 <%= cancel_link r.object, '#', class: 'btn btn-link', data: {behavior: 'cancel-edit' } %>
                 <%=f.submit nil, class: 'btn btn-primary'%>
+                </div>
               </div>
             </td>
           </tr>
@@ -36,9 +38,11 @@
             <%= r.hidden_field :_destroy, data: {'destroy-for' => r.object.id} %>
             </td>
             <td colspan=2>
-              <div class="pull-right">
+              <div class="form-actions">
+                <div class="primary-actions">
                 <%= cancel_link r.object, '#', class: 'btn btn-link', data: {behavior: 'cancel-edit' } %>
                 <%=f.submit nil, class: 'btn btn-primary'%>
+                </div>
               </div>
             </td>
           </tr>
@@ -47,8 +51,10 @@
       </tbody>
     </table>
 
-    <div class="pull-right">
+    <div class="form-actions">
+      <div class="primary-actions">
       <%= exhibit_create_link Spotlight::Role.new, '#', class: 'btn btn-default', data: {behavior: 'new-user'} %>
+      </div>
     </div>
   <% end %>
 </div>
