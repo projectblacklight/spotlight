@@ -56,8 +56,6 @@ module Spotlight
         config.show.merge! show unless show.blank?
         config.index.merge! index unless index.blank?
 
-        config.index.timestamp_field ||= 'timestamp'
-
         config.default_autocomplete_solr_params[:fl] = "id #{config.index.title_field}"
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
