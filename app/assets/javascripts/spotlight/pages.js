@@ -11,23 +11,13 @@ Spotlight.onLoad(function() {
   updateWeightsAndRelationships($('#nested-pages'));
   updateWeightsAndRelationships($('.contacts_admin'));
 
-   $.each($('.dd-handle'), function(k, el){
-      var height;
-      if ($(el).next('.dd3-content').length > 0) {
-        height = $(el).next('.dd3-content').outerHeight();
-      } else {
-        height = $(el).closest(".dd-item").outerHeight();
-      }
-      $(el).css('height', height);
-    });
+  SirTrevor.EventBus.on('block:create:new', addTitleToSirTrevorBlock);
+  SirTrevor.EventBus.on('block:create:existing', addTitleToSirTrevorBlock);
 
-    SirTrevor.EventBus.on('block:create:new', addTitleToSirTrevorBlock);
-    SirTrevor.EventBus.on('block:create:existing', addTitleToSirTrevorBlock);
-
-    $('.slideshow-indicators li').on('click', function() {
-      $(this).closest('.slideshow').find('li.active').removeClass('active');
-      $(this).addClass('active');
-    });
+  $('.slideshow-indicators li').on('click', function() {
+    $(this).closest('.slideshow').find('li.active').removeClass('active');
+    $(this).addClass('active');
+  });
 });
 
 Spotlight.onLoad(function(){
