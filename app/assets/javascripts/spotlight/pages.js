@@ -40,7 +40,12 @@ Spotlight.onLoad(function(){
 
   while (l--) {
     instance = $(instances[l]);
-    new SirTrevor.Editor({ el: instance });
+    new SirTrevor.Editor({
+      el: instance,
+      onEditorRender: function() {
+        serializeObservedForms(observedForms());
+      }
+    });
   }
 
 });
