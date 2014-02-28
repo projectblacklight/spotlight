@@ -34,15 +34,5 @@ module Spotlight
     def search_action_url *args
       exhibit_catalog_index_url(@page.exhibit, *args)
     end
-
-    def blacklight_config
-      if @page
-        @page.exhibit.blacklight_config
-      elsif current_exhibit
-        current_exhibit.blacklight_config
-      else
-        super
-      end
-    end
   end
 end
