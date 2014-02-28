@@ -32,6 +32,7 @@ module Spotlight
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
     Blacklight::Configuration.default_values[:default_autocomplete_solr_params] = {fl: '*', qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng'}
+    Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
 
   end
 end
