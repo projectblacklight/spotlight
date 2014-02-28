@@ -4,6 +4,10 @@ module Spotlight::User
     has_many :roles, class_name: 'Spotlight::Role'
   end
 
+  def superadmin?
+    admin_roles.where(exhibit_id: nil).any?
+  end
+
   def admin_roles
     roles.where(role: 'admin')
   end
