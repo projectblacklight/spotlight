@@ -23,36 +23,9 @@ SirTrevor.Blocks.ItemText =  (function(){
 
     icon_name: "item-text",
 
-    toData: function() {
-      var data = {};
-      data[this.id_key] = this.$('#' + this.formId(this.id_key)).val();
-      data[this.id_text_key] = this.$('#' + this.formId(this.id_text_key)).val();
-      data[this.title_key] = this.$('#' + this.formId(this.title_key)).is(':checked');
-
-      if (this.hasTextBlock()) {
-        var content = this.getTextBlock().html();
-        if (content.length > 0) {
-          data.text = SirTrevor.toMarkdown(content, this.type);
-        }else{
-          data.text = "";
-        }
-      }
-
-      data[this.align_key] = this.$('[name="' + this.formId(this.align_key) + '"]:checked').val();
-      this.setData(data);
-    },
-
     onBlockRender: function() {
       Spotlight.Block.prototype.onBlockRender.apply();
       $('#' + this.formId(this.id_text_key)).focus();
-    },
-
-    loadData: function(data){
-      this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
-      this.$('#' + this.formId(this.id_text_key)).val(data[this.id_text_key]);
-      this.$('#' + this.formId(this.id_key)).val(data[this.id_key]);
-      this.$('#' + this.formId(this.title_key)).prop('checked', data[this.title_key]);
-      this.$('#' + this.formId(this.align_key + "-" + data[this.align_key])).prop("checked", true);
     },
 
     template: _.template([
@@ -78,15 +51,14 @@ SirTrevor.Blocks.ItemText =  (function(){
       '</div>',
       '<div class="col-sm-3">',
         '<label for="<%= formId(title_key) %>">',
-          '<input name="<%= title_key %>" type="hidden" value="false" />',
           '<input name="<%= title_key %>" id="<%= formId(title_key) %>" type="checkbox" value="true" />',
           'Display title',
         '</label>',
         '<div class="text-align">',
           '<p>Display text on:</p>',
-          '<input type="radio" name="<%= formId(align_key) %>" id="<%= formId(align_key + "-right") %>" value="right" checked="true">',
+          '<input data-key="<%= align_key %>" type="radio" name="<%= formId(align_key) %>" id="<%= formId(align_key + "-right") %>" value="right" checked="true">',
           '<label for="<%= formId(align_key + "-right") %>">Left</label>',
-          '<input type="radio" name="<%= formId(align_key) %>" id="<%= formId(align_key + "-left") %>" value="left">',
+          '<input data-key="<%= align_key %>" type="radio" name="<%= formId(align_key) %>" id="<%= formId(align_key + "-left") %>" value="left">',
           '<label for="<%= formId(align_key + "-left") %>">Right</label>',
         '</div>',
       '</div>',

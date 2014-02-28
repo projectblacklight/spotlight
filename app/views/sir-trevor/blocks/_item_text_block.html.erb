@@ -1,4 +1,4 @@
-<%- document = get_solr_response_for_doc_id(block.values).last -%>
+<%- document = get_solr_response_for_doc_id(block['item-id']).last -%>
 <div class="item-text">
   <div class="image-block pull-<%= block['text-align'] %>">
     <%- if has_thumbnail? document -%>

@@ -21,33 +21,6 @@ SirTrevor.Blocks.Oembed =  (function(){
 
     icon_name: "oembed",
 
-    toData: function() {
-      var data = {};
-      data[this.id_key] = this.$(this.formId(this.id_key)).val();
-
-      if (this.hasTextBlock()) {
-        var content = this.getTextBlock().html();
-        if (content.length > 0) {
-          data.text = SirTrevor.toMarkdown(content, this.type);
-        }else{
-          data.text = "";
-        }
-      }
-
-      data[this.align_key] = this.$('[name=' + this.align_key + ']:checked').val();
-      this.setData(data);
-    },
-
-    onBlockRender: function() {
-      addAutocompletetoSirTrevorForm();
-    },
-
-    loadData: function(data){
-      this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
-      this.$(this.formId(this.id_key)).val(data[this.id_key]);
-      this.$(this.formId(this.align_key + "-" + data[this.align_key])).prop("checked", true);
-    },
-
     template: _.template([
     '<div class="form-horizontal oembed-text-admin clearfix">',
       '<div class="widget-header">',
@@ -70,9 +43,9 @@ SirTrevor.Blocks.Oembed =  (function(){
       '<div class="col-sm-3">',
         '<div class="text-align">',
           '<p>Display text on:</p>',
-          '<input type="radio" name="<%= formId(align_key) %>" id="<%= formId(align_key + "-right") %>" value="right" checked="true">',
+          '<input data-key="<%= align_key %>" type="radio" name="<%= formId(align_key) %>" id="<%= formId(align_key + "-right") %>" value="right" checked="true">',
           '<label for="<%= formId(align_key + "-right") %>">Left</label>',
-          '<input type="radio" name="<%= formId(align_key) %>" id="<%= formId(align_key + "-left") %>" value="left">',
+          '<input data-key="<%= align_key %>" type="radio" name="<%= formId(align_key) %>" id="<%= formId(align_key + "-left") %>" value="left">',
           '<label for="<%= formId(align_key + "-left") %>">Right</label>',
         '</div>',
       '</div>',
