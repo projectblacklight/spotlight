@@ -137,4 +137,32 @@ feature "Feature Pages Adminstration", js:  true do
     expect(page).not_to have_content("Feature pages were successfully updated.")
     expect(page).to have_css("h1 small", text: "Feature Pages")
   end
+  it "should be able to update home page titles" do
+    visit '/'
+    click_link exhibit_curator.email
+    within '.dropdown-menu' do
+      click_link 'Dashboard'
+    end
+
+    click_link "Feature pages"
+
+    within(".home_page") do
+      within("h3.panel-title") do
+        expect(page).to have_content(exhibit.home_page.title)
+        expect(page).to have_css("input", visible: false)
+        click_link(exhibit.home_page.title)
+        expect(page).to have_css("input", visible: true)
+        find("input").set("New Home Page Title")
+      end
+    end
+    click_button "Save changes"
+
+    expect(page).to have_content("Feature pages were successfully updated.")
+
+    within(".home_page") do
+      within("h3.panel-title") do
+        expect(page).to have_content("New Home Page Title")
+      end
+    end
+  end
 end

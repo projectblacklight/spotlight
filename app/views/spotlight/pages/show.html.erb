@@ -4,7 +4,7 @@
 <div class="<%= 'col-md-9' if @page.display_sidebar? %>">
   <div class="clearfix">
   <%= exhibit_edit_link @page, class: 'edit-button pull-right btn btn-primary' if can? :edit, @page %>
-  <% if @page.title.present? %>
+  <% if @page.should_display_title? %>
     <h1 class="page-title">
       <%= @page.title %>
     </h1>

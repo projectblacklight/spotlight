@@ -35,11 +35,13 @@ describe Spotlight::Page do
 
     end
   end
-
-  describe "title_or_default" do
-    subject { FactoryGirl.build(:about_page, title: 'my title') }
-    it "should return the title" do
-      expect(subject.title_or_default).to eq 'my title'
+  describe "should_display_title?" do
+    let(:page) { FactoryGirl.create(:feature_page) }
+    it "should return if the title is present or not" do
+      expect(page.title).not_to be_blank
+      expect(page.should_display_title?).to be_true
+      page.title = ""
+      expect(page.should_display_title?).to be_false
     end
   end
 end

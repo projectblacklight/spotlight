@@ -23,6 +23,7 @@ describe "spotlight/about_pages/index.html.erb" do
     ]}
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   before do
+    view.stub(:disable_save_pages_button?).and_return(false)
     view.stub(:page_collection_name).and_return(:about_pages)
     view.stub(:update_all_exhibit_about_pages_path).and_return("/exhibit/about/update_all")
     view.stub(:exhibit_contacts_path).and_return("/exhibit/1/contacts")
@@ -46,11 +47,19 @@ describe "spotlight/about_pages/index.html.erb" do
     expect(rendered).to have_selector '.contacts_admin ol.dd-list li input#exhibit_contacts_attributes_1_id'
   end
 
-  describe "Without pages" do
-    it "should disable the update button" do
+  describe "Save button" do
+    it "should be disabled the when the pages are blank" do
+      view.stub(:disable_save_pages_button?).and_return(true)
       assign(:pages, [])
       render
       expect(rendered).to have_selector 'button[disabled]', text: "Save changes"
+    end
+    it "should not be disabled the when there are pages" do
+      view.stub(:disable_save_pages_button?).and_return(false)
+      assign(:pages, [{}])
+      render
+      expect(rendered).not_to have_selector 'button[disabled]', text: "Save changes"
+      expect(rendered).to     have_selector 'button',           text: "Save changes"
     end
   end
 

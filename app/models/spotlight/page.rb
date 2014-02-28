@@ -38,14 +38,13 @@ module Spotlight
       parent_page || self
     end
 
-    # Subclasses may override this if they have a default
-    def title_or_default
-      title
-    end
-
     def should_generate_new_friendly_id?
       title_changed?
     end
-  
+
+    def should_display_title?
+      title.present?
+    end
+
   end
 end

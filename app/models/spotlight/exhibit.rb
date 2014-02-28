@@ -23,6 +23,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   accepts_nested_attributes_for :searches
   accepts_nested_attributes_for :about_pages
   accepts_nested_attributes_for :feature_pages
+  accepts_nested_attributes_for :home_pages
   accepts_nested_attributes_for :contacts
   accepts_nested_attributes_for :contact_emails
   accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc {|attr| attr['user_key'].blank?}

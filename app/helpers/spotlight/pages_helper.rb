@@ -29,5 +29,8 @@ module Spotlight
         end
       end
     end
+    def disable_save_pages_button?
+      page_collection_name == "about_pages" && @pages.empty?
+    end
   end
 end

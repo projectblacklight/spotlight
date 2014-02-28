@@ -69,6 +69,7 @@ en:
       settings:
         header: "Settings"
       show_sidebar: "Show sidebar"
+      display_title: "Show title"
     contact_forms:
       new:
         header: "Report a problem"

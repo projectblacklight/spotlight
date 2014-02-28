@@ -31,10 +31,11 @@ describe "spotlight/pages/index.html.erb" do
   end
 
   describe "Without pages" do
-    it "should disable the update button" do
+    it "should not disable the update button" do
       assign(:pages, [])
       render
-      expect(rendered).to have_selector 'button[disabled]', text: "Save changes"
+      expect(rendered).not_to have_selector 'button[disabled]', text: "Save changes"
+      expect(rendered).to     have_selector 'button',           text: "Save changes"
     end
   end
 end

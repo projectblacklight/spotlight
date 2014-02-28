@@ -13,6 +13,7 @@ class CreateSpotlightPages < ActiveRecord::Migration
       t.timestamps
       t.integer :parent_page_id
       t.boolean :display_sidebar
+      t.boolean :display_title
     end
     add_index :spotlight_pages, :exhibit_id
     add_index :spotlight_pages, :parent_page_id
