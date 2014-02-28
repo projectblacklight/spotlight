@@ -31,6 +31,23 @@ module Spotlight
         expect(helper.should_render_record_thumbnail_title?(titled_document, {'show-title' => false})).to be_false
       end
     end
+    describe "disable_save_pages_button?" do
+      it "should return true if there are no pages and we are on the about pages page" do
+        helper.should_receive(:page_collection_name).and_return("about_pages")
+        assign(:pages, [])
+        expect(helper.disable_save_pages_button?).to be_true
+      end
+      it "should return false if there are about pages" do
+        helper.should_receive(:page_collection_name).and_return("about_pages")
+        assign(:pages, [{}])
+        expect(helper.disable_save_pages_button?).to be_false
+      end
+      it "should return false if on the feature pages page" do
+        helper.should_receive(:page_collection_name).and_return("feature_pages")
+        assign(:pages, [])
+        expect(helper.disable_save_pages_button?).to be_false
+      end
+    end
     describe "item grid helpers" do
       describe "block objects" do
         let(:block1) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "cba", 'item-grid-display_0' => false, 'item-grid-display_1' => false} }

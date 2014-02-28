@@ -62,9 +62,8 @@ describe "Mutli-Up Item Grid", js: true do
     click_button "Save changes"
     expect(page).to have_content("Page was successfully updated.")
 
-    within("[data-id='#{feature_page.id}']") do
-      click_link "View"
-    end
+    visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
+
     expect(page).to have_css("[data-id='dq287tq6352']")
     expect(page).to have_css("[data-id='jp266yb7109']")
     expect(page).not_to have_css("[data-id='zv316zr9542']")
@@ -103,10 +102,8 @@ describe "Mutli-Up Item Grid", js: true do
 
     expect(page).to have_content("Page was successfully updated.")
 
+    visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
 
-    within("[data-id='#{feature_page.id}']") do
-      click_link "View"
-    end
     expect(page).to have_css(".caption", text: "Latin")
   end
 end

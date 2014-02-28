@@ -6,7 +6,7 @@ module Spotlight
 
     def edit
       add_breadcrumb t(:'spotlight.curation.sidebar.feature_pages'), exhibit_feature_pages_path(@exhibit)
-      add_breadcrumb @page.title_or_default, [:edit, @exhibit, @page]
+      add_breadcrumb @page.title, [:edit, @exhibit, @page]
       super
     end
 

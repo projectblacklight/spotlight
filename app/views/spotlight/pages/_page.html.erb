@@ -13,8 +13,8 @@
         <%= f.hidden_field :id %>
         <%= f.hidden_field :weight, data: {property: "weight"} %>
         <h3 class="panel-title">
-          <a href="#edit-in-place" class="field-label"><%= page.title_or_default %></a>
-          <%= f.hidden_field :title, value: page.title_or_default , class: 'form-control input-sm' %>
+          <a href="#edit-in-place" class="field-label"><%= page.title %></a>
+          <%= f.hidden_field :title, value: page.title , class: 'form-control input-sm' %>
         </h3>
         <div class="row">
         <div class="page-links col-sm-9">

@@ -6,13 +6,17 @@ module Spotlight
     before_save :publish
     before_create :default_content
 
-    def title_or_default
-      title.present? ? title : I18n.t('spotlight.pages.index.home_pages.title')
+    def should_display_title?
+      display_title
     end
 
     private
     def self.default_content_text
       "This is placeholder content for the exhibit homepage. Curators of this exhibit can edit this page to customize it for the exhibit."
+    end
+
+    def self.default_title_text
+      "Exhibit Home"
     end
 
     def publish
@@ -21,6 +25,7 @@ module Spotlight
     end
 
     def default_content
+      self.title = Spotlight::HomePage.default_title_text
       self.content = {
         "data" => [
           {"type" => "text",
