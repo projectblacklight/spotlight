@@ -16,5 +16,12 @@ module Spotlight
         add_breadcrumb t(:'spotlight.curation.sidebar.feature_pages'), exhibit_feature_pages_path(@exhibit)
       end
     end
+
+    def update_all_page_params
+      params.require(:exhibit).permit(
+        "feature_pages_attributes" => page_attributes,
+        "home_pages_attributes" => [:id, :title, :display_title]
+      )
+    end
   end
 end
