@@ -8,7 +8,7 @@ module Spotlight
     before_filter :attach_breadcrumbs
 
     include Blacklight::Base
-    include Blacklight::Catalog::SearchContext
+    skip_filter :current_search_session
 
     copy_blacklight_config_from(CatalogController)
 
