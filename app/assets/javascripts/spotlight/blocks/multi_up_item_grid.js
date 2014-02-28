@@ -24,32 +24,12 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
 
     icon_name: "multi-up-item-grid",
 
-    toData: function() {
-      var data = {};
-      this.$('.item-grid-input').each(function(){
-        data[$(this).attr("name")] = $(this).val();
-      });
-      this.$('.item-grid-checkbox').each(function(){
-        data[$(this).attr("name")] = $(this).is(":checked");
-      });
-      data[this.caption_key] = this.$('[name=' + this.caption_key + ']:checked').val();
-      data[this.field_key] = this.$('[name=' + this.field_key + '] option:selected').val();
-      this.setData(data);
-    },
-
     onBlockRender: function() {
       Spotlight.Block.prototype.onBlockRender.apply();
       this.loadCaptionField();
     },
 
-    loadData: function(data){
-      this.$('.item-grid-input').each(function(){
-        $(this).val(data[$(this).attr("name")]);
-      });
-      this.$('.item-grid-checkbox').each(function(){
-        $(this).prop('checked', data[$(this).attr("name")]);
-      });
-      this.$('#' + this.formId(this.caption_key)).prop('checked', data[this.caption_key])
+    afterLoadData: function(data){
       // set a data attribute on the select field so the ajax request knows which option to select
       this.$('select#' + this.formId(this.field_key)).data('select-after-ajax', data[this.field_key]);
     },
@@ -66,22 +46,20 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
         if($("option", caption_field).length == 2){
           var options = "";
           $.each(data, function(i, field){
-            var selected = ""
-            if (field.field == caption_selected_value) {
-              selected = " selected"
-            }
-            options += "<option " + selected + " value='" + field.field + "'>" + field.label + "</option>";
+            options += block.caption_field_template(field);
           });
-          if(caption_selected_value == block.title_key){
-            $("option[value='" + block.title_key + "']", caption_field).prop("selected", true);
-          }
+
           caption_field.append(options);
+
+          caption_field.val([caption_selected_value]);
           // re-serialze the form so the form observer
           // knows about the new drop dwon options.
           serializeFormStatus($('form[data-metadata-url]'));
         }
       });
     },
+
+    caption_field_template: _.template(['<option value="<%= field %>"><%= label %></option>'].join("\n")),
 
     description: "This widget displays one to five thumbnail images of repository items in a single row grid. Optionally, you can a caption below each image..",
 
@@ -98,7 +76,6 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
       '</div>',
       '<div class="col-sm-3">',
         '<label for="<%= formId(caption_key) %>">',
-          '<input name="<%= caption_key %>" type="hidden" value="false" />',
           '<input name="<%= caption_key %>" id="<%= formId(caption_key) %>" type="checkbox" value="true" />',
           'Display caption',
         '</label>',
@@ -106,7 +83,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
           '<label for="<%= formId(field_key) %>">Caption field</label>',
           '<select name="<%= field_key %>" id="<%= formId(field_key) %>">',
             '<option value="">Select...</option>',
-            '<option value="<%= title_key %>">Title</option>',
+            '<%= caption_field_template({field: title_key, label: "Title", selected: ""}) %>',
           '</select>',
         '</div>',
       '</div>',
@@ -119,7 +96,6 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
     output = '<input type="hidden" name="<%= id_key %>_count" value="' + times + '"/>';
     for(var i=0; i < times; i++){
       output += '<div class="col-sm-9 field">';
-        output += '<input name="<%= display_checkbox + "_' + i + '" %>" type="hidden" value="false" />';
         output += '<input name="<%= display_checkbox + "_' + i + '" %>" id="<%= formId(display_checkbox + "_' + i + '") %>" type="checkbox" class="item-grid-checkbox" value="true" />';
         output += '<input name="<%= id_key + "_' + i + '" %>" class="item-grid-input" type="hidden" id="<%= formId(id_key + "_' + i + '") %>" />';
         output += '<input data-checkbox_field="#<%= formId(display_checkbox + "_' + i + '") %>" data-id_field="#<%= formId(id_key + "_' + i + '") %>" name="<%= id_key + "_' + i + '_title" %>" class="st-input-string item-grid-input form-control" data-twitter-typeahead="true" type="text" id="<%= formId(id_key + "_' + i + '_title") %>" />';
