@@ -86,14 +86,14 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
     description: "This widget displays one to five thumbnail images of repository items in a single row grid. Optionally, you can a caption below each image..",
 
     template: _.template([
-    '<div class="form-inline <%= key %>-admin">',
+    '<div class="form-inline <%= key %>-admin clearfix">',
       '<div class="widget-header">',
         '<%= description %>',
       '</div>',
       '<div class="col-sm-9">',
         '<label for="<%= formId(id_key) %>_0" class="control-label">Selected items to display</label>',
         '<div class="form-group">',
-          buildInputFields(5),
+          '<%= buildInputFields(inputFieldsCount) %>',
         '</div>',
       '</div>',
       '<div class="col-sm-3">',
@@ -110,20 +110,22 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
           '</select>',
         '</div>',
       '</div>',
-      '<div class="clearFix"></div>',
     '</div>'
-  ].join("\n"))
+  ].join("\n")),
+
+  inputFieldsCount: 5,
+
+  buildInputFields: function(times) {
+    output = '<input type="hidden" name="<%= id_key %>_count" value="' + times + '"/>';
+    for(var i=0; i < times; i++){
+      output += '<div class="col-sm-9 field">';
+        output += '<input name="<%= display_checkbox + "_' + i + '" %>" type="hidden" value="false" />';
+        output += '<input name="<%= display_checkbox + "_' + i + '" %>" id="<%= formId(display_checkbox + "_' + i + '") %>" type="checkbox" class="item-grid-checkbox" value="true" />';
+        output += '<input name="<%= id_key + "_' + i + '" %>" class="item-grid-input" type="hidden" id="<%= formId(id_key + "_' + i + '") %>" />';
+        output += '<input data-checkbox_field="#<%= formId(display_checkbox + "_' + i + '") %>" data-id_field="#<%= formId(id_key + "_' + i + '") %>" name="<%= id_key + "_' + i + '_title" %>" class="st-input-string item-grid-input form-control" data-twitter-typeahead="true" type="text" id="<%= formId(id_key + "_' + i + '_title") %>" />';
+      output += '</div>';
+    }
+    return _.template(output)(this);
+  }
   });
 })();
-function buildInputFields(times){
-  output = ""
-  for(var i=0; i < times; i++){
-    output += '<div class="col-sm-9 field">';
-      output += '<input name="<%= display_checkbox + "_' + i + '" %>" type="hidden" value="false" />';
-      output += '<input name="<%= display_checkbox + "_' + i + '" %>" id="<%= formId(display_checkbox + "_' + i + '") %>" type="checkbox" class="item-grid-checkbox" value="true" />';
-      output += '<input name="<%= id_key + "_' + i + '" %>" class="item-grid-input" type="hidden" id="<%= formId(id_key + "_' + i + '") %>" />';
-      output += '<input data-checkbox_field="#<%= formId(display_checkbox + "_' + i + '") %>" data-id_field="#<%= formId(id_key + "_' + i + '") %>" name="<%= id_key + "_' + i + '_title" %>" class="st-input-string item-grid-input form-control" data-twitter-typeahead="true" type="text" id="<%= formId(id_key + "_' + i + '_title") %>" />';
-    output += '</div>';
-  }
-  return output;
-}
