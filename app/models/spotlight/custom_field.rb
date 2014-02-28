@@ -28,14 +28,13 @@ module Spotlight
     def short_description
       configuration["short_description"]
     end
-    
-    protected 
+
+    protected
     SUFFIX = '_tesim'.freeze
     def self.with_suffix(field)
       field.to_s + SUFFIX
     end
 
-    private
     def field_name
       CustomField.with_suffix("exhibit_#{self.exhibit.to_param}_#{label.parameterize}")
     end

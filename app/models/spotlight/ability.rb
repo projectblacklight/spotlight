@@ -6,7 +6,7 @@ module Spotlight::Ability
 
     alias_action :process_import, to: :import
     alias_action :edit_metadata_fields, :edit_facet_fields, :metadata_fields, to: :update
-    
+
     if user.superadmin?
       can :manage, :all
     end
@@ -20,6 +20,7 @@ module Spotlight::Ability
     can :manage, [
       Spotlight::Attachment,
       Spotlight::Search,
+      Spotlight::Resource,
       Spotlight::Page,
       Spotlight::Contact,
       Spotlight::CustomField], exhibit_id: user.roles.pluck(:exhibit_id)

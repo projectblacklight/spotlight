@@ -25,6 +25,7 @@ Spotlight::Engine.routes.draw do
     resources :catalog do
       collection do
         get 'admin'
+        get 'new'
         get 'autocomplete'
       end
 
@@ -39,6 +40,12 @@ Spotlight::Engine.routes.draw do
     resources :custom_fields
 
     resource :dashboard, only: :show
+
+    resources :resource_csvs, controller: 'resources/csv', path: 'csv_resources' do
+      collection do
+        get :template
+      end
+    end
 
     resources :searches do
       collection do

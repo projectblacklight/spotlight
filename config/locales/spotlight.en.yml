@@ -51,6 +51,8 @@ en:
       solr_document: *spotlight_default
       users: *spotlight_default
       custom_field: *spotlight_default
+      resource_csv:
+        create: "Import"
     label:
       solr_document:
         exhibit_tag_list: "Tags"
@@ -58,6 +60,9 @@ en:
     models:
       spotlight:
         page: Page
+    attributes:
+      "spotlight/resource/csv":
+            url: "File"
   spotlight:
     application_name: "%{exhibit} - %{application_name}"
     html_title: "%{title} | %{application_name}"
@@ -148,6 +153,10 @@ en:
       admin:
         title: Curation - Items
         header: Items
+      admin_header:
+        new: "Add New Items"
+      new:
+        header: Import items
     confirmation_mailer:
       confirmation_instructions:
         welcome: "Welcome %{email}!"
@@ -252,6 +261,11 @@ en:
       nav_link: Curated Features
       page_options:
         published: "Publish"
+    resources:
+      csv:
+        header: 'CSV Import'
+        form:
+          template: "Download Template"
     roles:
       index:
         title: Site Administration - Users
