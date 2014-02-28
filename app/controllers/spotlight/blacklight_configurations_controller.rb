@@ -36,6 +36,21 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
     @fields = blacklight_solr.get('admin/luke', params: { fl: '*', 'json.nl' => 'map' })['fields']
   end
 
+  # the luke request handler can return document counts, but the seem to be incorrect.
+  # They seem to be for the whole index and they decrease after optimizing.
+  # This method finds those counts by doing regular facet queries
+  def alternate_count
+    @alt_count ||= begin
+      facet_query = @blacklight_configuration.blacklight_config.facet_fields.keys.map { |key| "#{key}:[* TO *]" }
+      solr_resp = blacklight_solr.get('select', params: {'facet.query' => facet_query, 'rows' =>0})
+      @alt_count = solr_resp['facet_counts']['facet_queries'].each_with_object({}) do |(key, val), alt_count|
+        alt_count[key.split(/:/).first] = val
+      end
+    end
+  end
+
+  helper_method :alternate_count
+
   protected
 
   def exhibit_params

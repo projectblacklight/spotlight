@@ -84,6 +84,15 @@ describe Spotlight::BlacklightConfigurationsController do
       end
     end
 
+    describe "#alternate_count" do
+      before { controller.instance_variable_set(:@blacklight_configuration, Spotlight::Exhibit.default.blacklight_configuration) }
+      subject { controller.alternate_count }
+      its(:count) { should eq 7 }
+      it "should have correct numbers" do
+        expect(subject['genre_ssim']).to eq 54
+      end
+    end
+
     describe "#update" do
 
       it "should update metadata fields" do
