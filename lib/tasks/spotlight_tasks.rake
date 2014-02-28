@@ -6,6 +6,7 @@ namespace :spotlight do
     email = $stdin.gets.chomp
     password = prompt_password
     u = User.create!(email: email, password: password)
+    Spotlight::Role.create(user: u, exhibit: nil, role: 'admin')
     Spotlight::Role.create(user: u, exhibit: Spotlight::Exhibit.default, role: 'admin')
     puts "User created."
   end

@@ -3,7 +3,7 @@ Spotlight::Engine.routes.draw do
   devise_for :contact_email, class_name: "Spotlight::ContactEmail", only: [:confirmations]
   get '/:exhibit_id' => 'home_pages#show', as: :exhibit_root
 
-  resources :exhibits, path: '/', only: [:edit, :update] do
+  resources :exhibits, path: '/', only: [:edit, :update, :destroy] do
     resources :attachments, only: :create
     resource :contact_form, path: "contact", only: [:new, :create]
     resource :blacklight_configuration, only: [:update]

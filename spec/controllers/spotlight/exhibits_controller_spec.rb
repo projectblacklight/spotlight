@@ -31,6 +31,12 @@ describe Spotlight::ExhibitsController do
       end
     end
 
+    describe "#destroy" do
+      it "should not be allowed" do
+        delete :destroy, id: exhibit 
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
+    end
   end
 
   describe "when signed in" do
@@ -59,6 +65,15 @@ describe Spotlight::ExhibitsController do
           expect(saved.description).to eq 'Baz'
           expect(saved.contact_emails.pluck(:email)).to eq ['bess@stanford.edu', 'naomi@stanford.edu']
         end
+      end
+    end
+
+    describe "#destroy" do
+      it "should be successful" do
+        delete :destroy, id: exhibit
+        expect(Spotlight::Exhibit.exists?(exhibit.id)).to be_false
+        expect(flash[:notice]).to eq "Exhibit was successfully destroyed."
+        expect(response).to redirect_to exhibit_root_path(Spotlight::Exhibit.default)
       end
     end
   end

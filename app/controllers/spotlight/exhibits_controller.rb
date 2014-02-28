@@ -20,6 +20,17 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
     end
   end
 
+  def destroy
+    @exhibit.destroy
+
+    redirect_path = if @exhibit.default?
+      spotlight.exhibit_root_path(exhibit_id: Spotlight::Exhibit.default)
+    else
+      main_app.root_url
+    end
+    redirect_to redirect_path, notice: 'Exhibit was successfully destroyed.'
+  end
+
   protected
 
   def exhibit_params

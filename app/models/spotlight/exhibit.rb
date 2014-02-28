@@ -5,19 +5,19 @@ class Spotlight::Exhibit < ActiveRecord::Base
   friendly_id :title, use: [:slugged,:finders]
 
   DEFAULT = 'default'.freeze
-  has_many :roles
-  has_many :searches
-  has_many :pages
+  has_many :roles, dependent: :delete_all
+  has_many :searches, dependent: :delete_all
+  has_many :pages, dependent: :delete_all
   has_many :about_pages
   has_many :feature_pages
   has_one :home_page
   has_many :home_pages
   has_many :users, through: :roles, class_name: '::User'
-  has_many :custom_fields
-  has_many :contacts       # These are the contacts who appear in the sidebar
-  has_many :contact_emails # These are the contacts who get "Contact us" emails 
-  has_many :attachments
-  has_one :blacklight_configuration, class_name: Spotlight::BlacklightConfiguration
+  has_many :custom_fields, dependent: :delete_all
+  has_many :contacts, dependent: :delete_all       # These are the contacts who appear in the sidebar
+  has_many :contact_emails, dependent: :delete_all # These are the contacts who get "Contact us" emails 
+  has_many :attachments, dependent: :destroy
+  has_one :blacklight_configuration, class_name: Spotlight::BlacklightConfiguration, dependent: :delete
 
   accepts_nested_attributes_for :blacklight_configuration
   accepts_nested_attributes_for :searches
@@ -54,6 +54,10 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   def to_s
     title
+  end
+
+  def default?
+    name == DEFAULT
   end
 
   protected

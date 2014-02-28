@@ -4,6 +4,10 @@ module Spotlight::Ability
   def initialize(user)
     user ||= ::User.new
     
+    if user.superadmin?
+      can :manage, :all
+    end
+
     # This is the "right" way to do it. But it doesn't work in rails 4
     # until this PR is merged: https://github.com/ryanb/cancan/pull/917
     # can :create, Spotlight::Exhibit, admin_roles: { id: user.role_ids } 
