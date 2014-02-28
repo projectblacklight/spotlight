@@ -34,5 +34,9 @@ module Spotlight
     def contact_params
       params.require(:exhibit).permit("contacts_attributes" => [:id, :show_in_sidebar, :weight])
     end
+
+    def update_all_page_params
+      params.require(:exhibit).permit( "about_pages_attributes" => page_attributes)
+    end
   end
 end
