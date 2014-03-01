@@ -1,6 +1,10 @@
 module Spotlight
   class AboutPagesController < PagesController
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit, only: :update_contacts
+    load_and_authorize_resource through: :exhibit, shallow: true, instance_name: 'page'
+
+    before_filter :attach_breadcrumbs
+
 
     def update_contacts
       if @exhibit.update(contact_params)

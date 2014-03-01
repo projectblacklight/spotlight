@@ -1,5 +1,9 @@
 module Spotlight
   class FeaturePagesController < PagesController
+    load_and_authorize_resource through: :exhibit, shallow: true, instance_name: 'page'
+
+    before_filter :attach_breadcrumbs
+
     protected
     def attach_breadcrumbs
       super
@@ -20,7 +24,7 @@ module Spotlight
     def update_all_page_params
       params.require(:exhibit).permit(
         "feature_pages_attributes" => page_attributes,
-        "home_pages_attributes" => [:id, :title, :display_title]
+        "home_page_attributes" => [:id, :title, :display_title]
       )
     end
   end
