@@ -4,7 +4,7 @@ module Spotlight
     load_resource :exhibit, class: Spotlight::Exhibit, only: [:index, :new, :create, :update_all]
 
     include Blacklight::Base
-    skip_filter :current_search_session
+    include Blacklight::Catalog::SearchContext
 
     copy_blacklight_config_from(CatalogController)
 
