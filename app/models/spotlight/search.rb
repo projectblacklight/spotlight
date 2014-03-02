@@ -37,7 +37,7 @@ class Spotlight::Search < ActiveRecord::Base
   end
 
   def blacklight_config
-    CatalogController.blacklight_config
+    exhibit.blacklight_config
   end
 
 end
