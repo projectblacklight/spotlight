@@ -2,15 +2,7 @@ module Spotlight
   class ConfirmationsController < Devise::ConfirmationsController
     # TODO this repeats lines from ApplicationController
     layout 'spotlight/spotlight'
-    include Blacklight::Controller
     include Spotlight::Controller
-    def search_action_url *args
-      if current_exhibit
-        exhibit_catalog_index_url(current_exhibit, *args)
-      else
-        main_app.catalog_index_url *args
-      end
-    end
     # end repetition
 
     protected

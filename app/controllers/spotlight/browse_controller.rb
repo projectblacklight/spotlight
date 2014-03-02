@@ -1,7 +1,6 @@
 module Spotlight
   class BrowseController < Spotlight::ApplicationController
-    include Blacklight::Base
-    copy_blacklight_config_from ::CatalogController
+    include Spotlight::Base
 
     load_resource :exhibit, class: "Spotlight::Exhibit", only: [:index]
     before_filter :load_search, only: :show

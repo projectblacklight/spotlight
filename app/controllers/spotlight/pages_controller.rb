@@ -3,10 +3,8 @@ module Spotlight
     before_filter :authenticate_user!, except: [:show]
     load_resource :exhibit, class: Spotlight::Exhibit, only: [:index, :new, :create, :update_all]
 
-    include Blacklight::Base
+    include Spotlight::Base
     include Blacklight::Catalog::SearchContext
-
-    copy_blacklight_config_from(CatalogController)
 
     helper_method :get_search_results, :get_solr_response_for_doc_id, :get_solr_response_for_field_values, :page_collection_name
 

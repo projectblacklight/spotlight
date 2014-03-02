@@ -1,13 +1,10 @@
 class Spotlight::CatalogController < Spotlight::ApplicationController
-  include Blacklight::Catalog
   include Spotlight::Catalog
   load_resource :exhibit, class: Spotlight::Exhibit
   before_filter :authenticate_user!, only: [:admin, :edit, :make_public, :make_private]
   before_filter :check_authorization, only: [:admin, :edit, :make_public, :make_private]
 
   before_filter :attach_breadcrumbs
-
-  copy_blacklight_config_from ::CatalogController
 
   def index
     super
