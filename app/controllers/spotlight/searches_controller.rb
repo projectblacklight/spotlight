@@ -2,7 +2,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   load_resource :exhibit, class: "Spotlight::Exhibit", only: [:index, :create, :update_all]
   before_filter :authenticate_user!
   before_filter :only_curators!
-  load_and_authorize_resource through: :exhibit, shallow: true
+  load_and_authorize_resource through: :exhibit
   before_filter :attach_breadcrumbs, only: [:index, :edit]
 
 
