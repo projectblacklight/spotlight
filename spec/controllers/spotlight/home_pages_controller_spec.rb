@@ -3,13 +3,15 @@ require 'spec_helper'
 describe Spotlight::HomePagesController do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { "title" => "MyString" } }
-  let(:page) { FactoryGirl.create(:home_page) }
-  let(:exhibit) {page.exhibit}
-    
+  let(:exhibit) {FactoryGirl.create(:exhibit) }
+  let(:page) { exhibit.home_page }
 
   describe "when signed in as a curator" do
     let(:user) { FactoryGirl.create(:exhibit_curator) }
-    before {sign_in user }
+    before do
+      FactoryGirl.create(:role, exhibit: exhibit, user: user)
+      sign_in user
+    end
 
     describe "GET index" do
       it "should redirect to the feature pages" do
@@ -20,7 +22,10 @@ describe Spotlight::HomePagesController do
 
     describe "GET edit" do
       describe "when the page title isn't set" do
-        let(:page) { FactoryGirl.create(:home_page, title: nil) }
+        before do
+          page.title = nil
+        end
+
         it "should show breadcrumbs" do
           expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with("Feature pages", exhibit_feature_pages_path(exhibit))
