@@ -81,18 +81,11 @@ module Spotlight
     alias page_collection_name controller_name 
 
     def attach_breadcrumbs
-      load_exhibit
-
       if view_context.current_page? "/"
-        add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), main_app.root_path
+        add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: current_exhibit.title), main_app.root_path
       else
-        add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), spotlight.exhibit_root_path(@exhibit)
+        add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: current_exhibit.title), spotlight.exhibit_root_path(current_exhibit)
       end
-    end
-
-    def load_exhibit
-      @exhibit ||= @page.exhibit if @page
-      @exhibit ||= Spotlight::Exhibit.find(params[:exhibit_id])
     end
 
     private

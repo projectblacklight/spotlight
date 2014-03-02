@@ -2,7 +2,7 @@ module Spotlight
   class DashboardsController < Spotlight::ApplicationController
     include Spotlight::Base
     before_filter :authenticate_user!
-    load_resource :exhibit, class: Spotlight::Exhibit
+    load_resource :exhibit, class: Spotlight::Exhibit, prepend: true
 
     def show
       authorize! :curate, @exhibit

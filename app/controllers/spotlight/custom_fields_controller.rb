@@ -41,14 +41,9 @@ class Spotlight::CustomFieldsController < Spotlight::ApplicationController
   protected
 
   def attach_breadcrumbs
-    load_exhibit
     add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
     add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
     add_breadcrumb t(:'spotlight.blacklight_configurations.edit_metadata_fields.header'), exhibit_edit_metadata_path(@exhibit)
-  end
-
-  def load_exhibit
-    @exhibit ||= @custom_field.exhibit
   end
 
   def custom_field_params

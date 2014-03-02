@@ -1,5 +1,5 @@
 class Spotlight::SearchesController < Spotlight::ApplicationController
-  load_resource :exhibit, class: "Spotlight::Exhibit", only: [:index, :create, :update_all]
+  load_resource :exhibit, class: "Spotlight::Exhibit", prepend: true
   before_filter :authenticate_user!
   before_filter :only_curators!
   load_and_authorize_resource through: :exhibit
@@ -38,7 +38,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   end
 
   def update_all
-    notice = if @exhibit.update search_params
+    notice = if @exhibit.update batch_search_params
       "Searches were successfully updated."
     else
       "There was an error updating the requested searches."
@@ -55,7 +55,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
     add_breadcrumb t(:'spotlight.curation.sidebar.browse'), exhibit_searches_path(e)
   end
 
-  def search_params
+  def batch_search_params
     params.require(:exhibit).permit("searches_attributes" => [:id, :on_landing_page, :weight])
   end
 

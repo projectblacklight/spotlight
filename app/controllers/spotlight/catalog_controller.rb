@@ -1,6 +1,6 @@
 class Spotlight::CatalogController < Spotlight::ApplicationController
   include Spotlight::Catalog
-  load_resource :exhibit, class: Spotlight::Exhibit
+  load_resource :exhibit, class: Spotlight::Exhibit, prepend: true
   before_filter :authenticate_user!, only: [:admin, :edit, :make_public, :make_private]
   before_filter :check_authorization, only: [:admin, :edit, :make_public, :make_private]
 
@@ -14,7 +14,6 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def show
     blacklight_config.show.partials.unshift "curation_mode_toggle"
-
     super
 
     if @document.private? current_exhibit
