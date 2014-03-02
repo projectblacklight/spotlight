@@ -171,7 +171,11 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def current_page_context
     @current_page_context ||= if current_search_session and current_search_session.query_params["action"] == "show" and current_search_session.query_params["controller"].ends_with? "_pages"
-      Spotlight::Page.find(current_search_session.query_params["id"])
+      if current_search_session.query_params["controller"] == "spotlight/home_pages"
+        current_exhibit.home_page
+      else
+        Spotlight::Page.find(current_search_session.query_params["id"]) if current_search_session.query_params["id"]
+      end
     end
   end
 end
