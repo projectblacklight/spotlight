@@ -6,10 +6,10 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   DEFAULT = 'default'.freeze
   has_many :roles, dependent: :delete_all
-  has_many :searches, dependent: :delete_all
+  has_many :searches, dependent: :delete_all, extend: FriendlyId::FinderMethods
   has_many :pages, dependent: :delete_all
-  has_many :about_pages
-  has_many :feature_pages
+  has_many :about_pages, extend: FriendlyId::FinderMethods
+  has_many :feature_pages, extend: FriendlyId::FinderMethods
   has_one :home_page
   has_many :users, through: :roles, class_name: '::User'
   has_many :custom_fields, dependent: :delete_all
