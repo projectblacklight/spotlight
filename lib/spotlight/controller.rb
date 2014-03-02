@@ -9,7 +9,7 @@ module Spotlight
     end
 
     def current_exhibit
-      @exhibit ||= Spotlight::Exhibit.default
+      @exhibit
     end
 
     def blacklight_config
