@@ -47,6 +47,23 @@
       }
     }
   }
+
+  ol.sidenav {
+    li {
+      margin-top: 30px;
+      h4 > a {
+        color: $gray-dark;
+        font-weight: 400;
+      }
+    }
+    ol.subsection {
+      padding-left: 0;
+      li {
+        list-style: none;
+        margin-top: 15px;
+      }
+    }
+  }
 }
 
 .contacts_admin .name {
