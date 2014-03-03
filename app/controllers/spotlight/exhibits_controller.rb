@@ -15,7 +15,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
     if @exhibit.update(exhibit_params)
       redirect_to main_app.root_path, notice: "The exhibit was saved."
     else
-      puts "ERROR #{@exhibit.errors.full_messages}"
+      flash[:alert] = @exhibit.errors.full_messages.join("<br>".html_safe)
       render action: :edit
     end
   end
