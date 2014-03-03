@@ -31,6 +31,7 @@ module Spotlight
       let(:current_user) { ::User.new }
       before do
         view.stub(:can?).with(:update, current_exhibit).and_return(false)
+        view.stub(:can?).with(:create, Spotlight::Exhibit).and_return(false)
         view.stub(:can?).with(:curate, current_exhibit).and_return(true)
       end
       it "renders the links" do
@@ -44,12 +45,29 @@ module Spotlight
       let(:current_user) { ::User.new }
       before do
         view.stub(:can?).with(:update, current_exhibit).and_return(true)
+        view.stub(:can?).with(:create, Spotlight::Exhibit).and_return(false)
         view.stub(:can?).with(:curate, current_exhibit).and_return(true)
       end
       it "renders the links" do
         render
         expect(rendered).to have_link 'Report a problem'
         expect(rendered).to have_link 'Dashboard'
+        expect(rendered).to have_link 'Sign out'
+      end
+    end
+
+    describe "when user is a site-wide admin" do
+      let(:current_user) { ::User.new }
+      before do
+        view.stub(:can?).with(:update, current_exhibit).and_return(true)
+        view.stub(:can?).with(:create, Spotlight::Exhibit).and_return(true)
+        view.stub(:can?).with(:curate, current_exhibit).and_return(true)
+      end
+      it "renders the links" do
+        render
+        expect(rendered).to have_link 'Report a problem'
+        expect(rendered).to have_link 'Dashboard'
+        expect(rendered).to have_link 'Create Exhibit'
         expect(rendered).to have_link 'Sign out'
       end
     end
