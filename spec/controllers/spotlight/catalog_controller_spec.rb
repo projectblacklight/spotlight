@@ -81,12 +81,13 @@ describe Spotlight::CatalogController do
 
     describe "GET autocomplete" do
       it "should have partial matches for title" do
-        get :autocomplete, exhibit_id: exhibit, q: 'ZUYDLA', format: 'json'
-        expect(assigns[:document_list].first.id).to eq 'dx157dh4345'
+        # Testing with ps921pn8250 because it has html escapable characters in the title (c&#39;estadire)
+        get :autocomplete, exhibit_id: exhibit, q: 'PLANIS', format: 'json'
+        expect(assigns[:document_list].first.id).to eq 'ps921pn8250'
         expect(response).to be_successful
         json = JSON.parse(response.body)
-        expect(json['docs'].first['id']).to eq 'dx157dh4345'
-        expect(json['docs'].first['title']).to eq "KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721 en 1722"
+        expect(json['docs'].first['id']).to eq 'ps921pn8250'
+        expect(json['docs'].first['title']).to eq "PLANISPHERE URANO-GEOGRAPHIQUE c'estadire LES SPHERES CELESTE et TERRESTRE mises en plan."
       end
       it "should have partial matches for id" do
         get :autocomplete, exhibit_id: exhibit, q: 'dx157', format: 'json'
