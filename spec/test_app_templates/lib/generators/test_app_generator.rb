@@ -3,8 +3,18 @@ require 'rails/generators'
 class TestAppGenerator < Rails::Generators::Base
   source_root "../../spec/test_app_templates"
 
+  def add_gems
+    gem 'blacklight', '~> 5.1'     
+    gem "blacklight-gallery", :github => 'projectblacklight/blacklight-gallery'
+    gem 'sir-trevor-rails', :github => 'sul-dlss/sir-trevor-rails'
+    gem "jettywrapper"
+    Bundler.with_clean_env do
+      run "bundle install"
+    end
+  end
+
   def run_blacklight_generator
-    say_status("warning", "GENERATING BL", :yellow)       
+    say_status("warning", "GENERATING BL", :yellow)  
 
     generate 'blacklight:install', '--devise'
     copy_file "catalog_controller.rb", "app/controllers/catalog_controller.rb", force: true

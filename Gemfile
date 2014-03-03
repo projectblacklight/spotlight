@@ -17,12 +17,13 @@ gemspec
 group :test do
   gem 'simplecov', require: false
   gem 'coveralls', require: false
-  gem 'devise'
-  gem 'devise-guests'
-  gem "bootstrap-sass"
-  gem 'turbolinks'
-  gem 'jquery-rails'
 end
-if File.exists?('spec/test_app_templates/Gemfile.extra')
-  eval File.read('spec/test_app_templates/Gemfile.extra'), nil, 'spec/test_app_templates/Gemfile.extra'
+
+gem "blacklight-gallery", :github => 'projectblacklight/blacklight-gallery'
+gem 'sir-trevor-rails', :github => 'sul-dlss/sir-trevor-rails'
+
+file = File.expand_path("Gemfile", ENV['ENGINE_CART_DESTINATION'] || ENV['RAILS_ROOT'] || File.expand_path("../spec/internal", __FILE__))
+if File.exists?(file)
+  puts "Loading #{file} ..." if $DEBUG # `ruby -d` or `bundle -v`
+  instance_eval File.read(file)
 end
