@@ -1,0 +1,12 @@
+<%= bootstrap_form_for [@resource.exhibit, @resource], style: :horizontal, right: 'col-sm-5 col-md-5', :html => {:multipart => true, class: 'clearfix' }  do |f| %>
+
+  <div class="form-group">
+  <%= f.text_field :url %>
+  </div>
+  <div class="form-actions col-md-7 col-sm-7">
+    <div class="primary-actions">
+      <%= cancel_link @resource, :back, class: 'btn btn-default' %>
+      <%= f.submit nil, class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

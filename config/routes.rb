@@ -41,6 +41,8 @@ Spotlight::Engine.routes.draw do
 
     resource :dashboard, only: :show
 
+    resources :resources
+
     resources :resource_csvs, controller: 'resources/csv', path: 'csv_resources' do
       collection do
         get :template
