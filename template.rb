@@ -12,8 +12,4 @@ generate 'spotlight:install'
 rake "spotlight:install:migrations"
 rake "db:migrate"
 
-git :init
-git add: "."
-git commit: "-a -m 'Initial commit'"
-
 rake "spotlight:initialize"

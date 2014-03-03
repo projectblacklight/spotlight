@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "capybara"
   s.add_development_dependency "poltergeist", ">= 1.5.0"
   s.add_development_dependency "factory_girl"
-  s.add_development_dependency "engine_cart", ">= 0.1.3"
+  s.add_development_dependency "engine_cart", "~> 0.3.4"
   s.add_development_dependency "database_cleaner", "< 1.1.0"
   s.add_development_dependency "jettywrapper"
 end

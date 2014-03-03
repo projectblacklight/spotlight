@@ -1,5 +1,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 
+require 'factory_girl'
+require 'database_cleaner'
 require 'devise'
 require 'engine_cart'
 EngineCart.load_application!
