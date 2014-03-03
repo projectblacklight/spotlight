@@ -66,6 +66,17 @@ describe Spotlight::ExhibitsController do
           expect(saved.contact_emails.pluck(:email)).to eq ['bess@stanford.edu', 'naomi@stanford.edu']
         end
       end
+
+      it "should show errors and ignore blank emails" do
+        
+        patch :update, id: exhibit, exhibit: { title: "Foo", subtitle: "Bar",
+                 description: "Baz", contact_emails_attributes: {'0'=>{email: 'bess@stanford.edu'}, '1'=>{email: 'naomi@'}, '2'=>{email: ''}}}
+        expect(response).to be_successful
+        assigns[:exhibit].tap do |obj|
+          expect(obj.contact_emails.last.errors[:email]).to eq ['is not valid']
+          expect(obj.contact_emails.size).to eq 2
+        end
+      end
     end
 
     describe "#destroy" do
