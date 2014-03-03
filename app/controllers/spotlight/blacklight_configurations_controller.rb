@@ -1,6 +1,6 @@
 class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationController
   before_filter :authenticate_user!
-  load_resource :exhibit, class: Spotlight::Exhibit
+  load_resource :exhibit, class: Spotlight::Exhibit, prepend: true
   load_and_authorize_resource through: :exhibit, singleton: true
 
   include Blacklight::SolrHelper

@@ -3,7 +3,7 @@ module Spotlight
     MAX_PAGES = 50
 
     extend FriendlyId
-    friendly_id :title, use: [:slugged,:scoped,:finders], scope: :exhibit
+    friendly_id :title, use: [:slugged,:scoped,:finders,:history], scope: :exhibit
 
     belongs_to :exhibit
     belongs_to :created_by, class_name: "::User"

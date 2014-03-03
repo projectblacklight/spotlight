@@ -8,8 +8,8 @@ describe Spotlight::Controller do
   subject { MockController.new }
 
   describe "#current_exhibit" do
-    it "should be the default exhibit" do
-      subject.current_exhibit.should eq Spotlight::Exhibit.default
+    it "should be nil by default" do
+      subject.current_exhibit.should be_nil
     end
   end
 end

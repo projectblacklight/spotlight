@@ -1,7 +1,7 @@
 module Spotlight
   class TagsController < Spotlight::ApplicationController
     before_filter :authenticate_user!
-    load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
+    load_and_authorize_resource :exhibit, class: Spotlight::Exhibit, prepend: true
 
     def index
       authorize! :tag, @exhibit

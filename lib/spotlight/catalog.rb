@@ -1,17 +1,15 @@
 module Spotlight
   module Catalog
     extend ActiveSupport::Concern
+    include Blacklight::Catalog
+    include Spotlight::Config
 
     require 'spotlight/catalog/access_controls_enforcement'
 
     include Spotlight::Catalog::AccessControlsEnforcement
 
     def blacklight_config
-      if current_exhibit
-        @blacklight_config ||= current_exhibit.blacklight_config
-      else
-        super
-      end
+      exhibit_specific_blacklight_config
     end
   end
 end

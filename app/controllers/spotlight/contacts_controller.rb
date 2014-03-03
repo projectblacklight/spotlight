@@ -1,8 +1,8 @@
 module Spotlight
   class ContactsController < Spotlight::ApplicationController
     before_filter :authenticate_user!
-    load_and_authorize_resource :exhibit, class: "Spotlight::Exhibit",  only: [:new, :create]
-    load_and_authorize_resource through: :exhibit, shallow: true
+    load_and_authorize_resource :exhibit, class: "Spotlight::Exhibit", prepend: true
+    load_and_authorize_resource through: :exhibit
     before_filter :attach_breadcrumbs
 
     def new
@@ -37,14 +37,9 @@ module Spotlight
     protected
 
     def attach_breadcrumbs
-      load_exhibit
       add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
       add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
       add_breadcrumb t(:'spotlight.pages.index.about_pages.header'), exhibit_about_pages_path(@exhibit)
-    end
-
-    def load_exhibit
-      @exhibit ||= @contact.exhibit
     end
 
     def contact_params

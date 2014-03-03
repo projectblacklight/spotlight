@@ -1,7 +1,7 @@
 module Spotlight
   class FeaturePagesController < PagesController
-    load_and_authorize_resource through: :exhibit, shallow: true, instance_name: 'page'
 
+    load_and_authorize_resource through: :exhibit, instance_name: 'page'
     before_filter :attach_breadcrumbs
 
     protected

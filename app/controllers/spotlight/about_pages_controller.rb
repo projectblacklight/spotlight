@@ -1,9 +1,7 @@
 module Spotlight
   class AboutPagesController < PagesController
-    load_and_authorize_resource :exhibit, class: Spotlight::Exhibit, only: :update_contacts
-    load_and_authorize_resource through: :exhibit, shallow: true, instance_name: 'page'
-
-    before_filter :attach_breadcrumbs
+    load_and_authorize_resource through: :exhibit, instance_name: 'page'
+    before_filter :attach_breadcrumbs, except: [:update_contacts]
 
 
     def update_contacts
@@ -17,7 +15,6 @@ module Spotlight
     protected
 
     def attach_breadcrumbs
-      return if action_name == 'update_contacts'
       super
       if @page
         if action_name == 'edit'

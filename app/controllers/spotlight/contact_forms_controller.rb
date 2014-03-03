@@ -1,5 +1,7 @@
 module Spotlight
   class ContactFormsController < Spotlight::ApplicationController
+    load_resource :exhibit, class: Spotlight::Exhibit, prepend: true
+
     def new
       @contact_form = Spotlight::ContactForm.new :current_url => request.referer
     end

@@ -6,16 +6,10 @@ module Spotlight
   class ApplicationController < ::ApplicationController
     layout 'spotlight/spotlight'
 
+    include Spotlight::Controller
+
     rescue_from CanCan::AccessDenied do |exception|
       redirect_to main_app.root_url, :alert => exception.message
-    end
-
-    def search_action_url *args
-      if current_exhibit
-        exhibit_catalog_index_url(current_exhibit, *args)
-      else
-        main_app.catalog_index_url *args
-      end
     end
   end
 end

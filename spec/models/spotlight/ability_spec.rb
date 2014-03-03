@@ -3,7 +3,8 @@ require 'cancan/matchers'
 
 describe Spotlight::Ability do
   let(:exhibit) {Spotlight::Exhibit.default}
-  let(:search) {FactoryGirl.create(:search)}
+  let(:search) {FactoryGirl.create(:published_search)}
+  let(:unpublished_search) {FactoryGirl.create(:search)}
   let(:page) {FactoryGirl.create(:feature_page)}
 
   describe "a user with no roles" do
@@ -13,6 +14,7 @@ describe Spotlight::Ability do
     it { should be_able_to(:read, page) }
     it { should_not be_able_to(:create, Spotlight::Page.new(exhibit: exhibit)) }
     it { should be_able_to(:read, search) }
+    it { should_not be_able_to(:read, unpublished_search) }
     it { should_not be_able_to(:tag, exhibit) }
   end
 

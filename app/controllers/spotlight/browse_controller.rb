@@ -1,14 +1,13 @@
 module Spotlight
   class BrowseController < Spotlight::ApplicationController
-    include Blacklight::Base
-    copy_blacklight_config_from ::CatalogController
+    include Spotlight::Base
 
-    load_resource :exhibit, class: "Spotlight::Exhibit", only: [:index]
-    before_filter :load_search, only: :show
+    load_resource :exhibit, class: "Spotlight::Exhibit", prepend: true
+    load_and_authorize_resource :search, except: :index, through: :exhibit, parent: false
     before_filter :attach_breadcrumbs
     
     def index
-      @searches = @exhibit.searches.published
+      @searches = @exhibit.searches.accessible_by(current_ability)
     end
 
     def show
@@ -30,17 +29,8 @@ module Spotlight
     end
 
     def attach_breadcrumbs
-      load_exhibit
       add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
       add_breadcrumb t(:'spotlight.browse.nav_link'), exhibit_browse_index_path(@exhibit)
-    end
-
-    def load_search
-      @search = Spotlight::Search.published.find(params[:id])
-    end
-
-    def load_exhibit
-      @exhibit ||= @search.exhibit
     end
 
     def _prefixes

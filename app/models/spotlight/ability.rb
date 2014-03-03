@@ -29,7 +29,9 @@ module Spotlight::Ability
     can [:curate, :tag], Spotlight::Exhibit, id: user.roles.map(&:exhibit_id)
 
     # public
-    can [:read, :index], [Spotlight::Exhibit, Spotlight::Page, Spotlight::Search]
+    can :read, [Spotlight::Exhibit,Spotlight::HomePage]
+    can :read, Spotlight::Page, published: true
+    can :read, Spotlight::Search, on_landing_page: true
 
   end
 end

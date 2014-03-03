@@ -1,13 +1,10 @@
 class Spotlight::CatalogController < Spotlight::ApplicationController
-  include Blacklight::Catalog
   include Spotlight::Catalog
-  load_resource :exhibit, class: Spotlight::Exhibit
+  load_resource :exhibit, class: Spotlight::Exhibit, prepend: true
   before_filter :authenticate_user!, only: [:admin, :edit, :make_public, :make_private]
   before_filter :check_authorization, only: [:admin, :edit, :make_public, :make_private]
 
   before_filter :attach_breadcrumbs
-
-  copy_blacklight_config_from ::CatalogController
 
   def index
     super
@@ -17,7 +14,6 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def show
     blacklight_config.show.partials.unshift "curation_mode_toggle"
-
     super
 
     if @document.private? current_exhibit
@@ -171,7 +167,11 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def current_page_context
     @current_page_context ||= if current_search_session and current_search_session.query_params["action"] == "show" and current_search_session.query_params["controller"].ends_with? "_pages"
-      Spotlight::Page.find(current_search_session.query_params["id"])
+      if current_search_session.query_params["controller"] == "spotlight/home_pages"
+        current_exhibit.home_page
+      else
+        Spotlight::Page.find(current_search_session.query_params["id"]) if current_search_session.query_params["id"]
+      end
     end
   end
 end

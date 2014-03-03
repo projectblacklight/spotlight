@@ -4,6 +4,7 @@ describe Spotlight::Search do
 
   before do
     subject.query_params = {"f"=>{"genre_sim"=>["map"]}}
+    subject.exhibit = Spotlight::Exhibit.default
   end
 
   it "should have a default feature image" do
@@ -22,11 +23,11 @@ describe Spotlight::Search do
   end
 
   describe "default_scope" do
-    let!(:page1) { FactoryGirl.create(:search, weight: 5) }
-    let!(:page2) { FactoryGirl.create(:search, weight: 1) }
-    let!(:page3) { FactoryGirl.create(:search, weight: 10) }
+    let!(:page1) { FactoryGirl.create(:search, weight: 5, on_landing_page: true) }
+    let!(:page2) { FactoryGirl.create(:search, weight: 1, on_landing_page: true) }
+    let!(:page3) { FactoryGirl.create(:search, weight: 10, on_landing_page: true) }
     it "should order by weight" do
-      expect(Spotlight::Search.all.map(&:weight)).to eq [1, 5, 10]
+      expect(Spotlight::Search.published.map(&:weight)).to eq [1, 5, 10]
     end
   end
 end

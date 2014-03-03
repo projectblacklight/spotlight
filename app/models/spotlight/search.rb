@@ -1,7 +1,7 @@
 class Spotlight::Search < ActiveRecord::Base
 
   extend FriendlyId
-  friendly_id :title, use: [:slugged,:scoped,:finders], scope: :exhibit
+  friendly_id :title, use: [:slugged,:scoped,:finders,:history], scope: :exhibit
 
   self.table_name = 'spotlight_searches'
   belongs_to :exhibit
@@ -37,7 +37,7 @@ class Spotlight::Search < ActiveRecord::Base
   end
 
   def blacklight_config
-    CatalogController.blacklight_config
+    exhibit.blacklight_config
   end
 
 end
