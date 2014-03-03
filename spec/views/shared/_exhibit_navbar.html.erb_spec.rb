@@ -12,17 +12,18 @@ module Spotlight
       view.stub(current_exhibit: current_exhibit)
       view.stub(on_browse_page?: false, on_about_page?: false)
       view.stub(render_search_bar: "Search Bar")
+      view.stub(exhibit_path: spotlight.exhibit_path(current_exhibit))
     end
 
     it "should link to the search page if no home page is defined" do
       render
-      expect(response).to have_link "Home", href: main_app.root_url
+      expect(response).to have_link "Home", href: spotlight.exhibit_path(current_exhibit)
     end
 
     it "should link to the home page" do
       current_exhibit.stub home_page: feature_page
       render
-      expect(response).to have_link "Home", href: main_app.root_url
+      expect(response).to have_link "Home", href: spotlight.exhibit_path(current_exhibit)
     end
 
     it "should link directly to a single feature page" do
