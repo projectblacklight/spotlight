@@ -65,6 +65,19 @@ module Spotlight
       super && field_enabled?(field, :show)
     end
 
+
+    ##
+    # TODO remove this when we use blacklight 5.2+
+    # Returns a document presenter for the given document
+    def presenter(document)
+      presenter_class.new(document, self)
+    end
+
+    ##
+    # Override Blacklight (5.2+) so we use our own presenter
+    def presenter_class
+      Spotlight::DocumentPresenter
+    end
     private
 
     def field_enabled? field, view = nil

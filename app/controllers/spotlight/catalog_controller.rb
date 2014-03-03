@@ -41,7 +41,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
       
     respond_to do |format|
       format.json do
-        render json: {docs: @document_list.map { |doc| { id: doc.id, title: view_context.document_heading(doc) }}}
+        render json: {docs: @document_list.map { |doc| { id: doc.id, title: view_context.presenter(doc).raw_document_heading }}}
       end
     end
   end

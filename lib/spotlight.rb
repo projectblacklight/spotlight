@@ -5,4 +5,5 @@ module Spotlight
   require 'spotlight/base'
   require 'spotlight/controller'
   require 'spotlight/catalog'
+  require 'spotlight/document_presenter'
 end
