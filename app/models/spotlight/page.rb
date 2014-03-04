@@ -9,7 +9,6 @@ module Spotlight
     belongs_to :created_by, class_name: "::User"
     belongs_to :last_edited_by, class_name: "::User"
     validates :weight, :inclusion => { :in => Proc.new{ 0..Spotlight::Page::MAX_PAGES } }
-    validates :exhibit, presence: true
 
     default_scope { order("weight ASC") }
     scope :at_top_level, -> { where(parent_page_id: nil) }
