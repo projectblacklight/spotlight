@@ -7,7 +7,7 @@ describe Spotlight::SolrDocument::AtomicUpdates do
   end
 
   before do
-    subject.stub(blacklight_solr: blacklight_solr)
+    Spotlight.index_writer.stub(solr: blacklight_solr)
   end
 
   describe "#reindex" do

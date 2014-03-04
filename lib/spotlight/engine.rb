@@ -7,6 +7,14 @@ require 'friendly_id'
 require 'devise'
 
 module Spotlight
+
+  def self.config(&block)
+    @@config ||= Engine::Configuration.new
+    yield @@config if block
+    @@config
+  end
+
+
   class Engine < ::Rails::Engine
     isolate_namespace Spotlight
     # Breadcrumbs on rails must be required outside of an initializer or it doesn't get loaded.
@@ -33,6 +41,9 @@ module Spotlight
     Blacklight::Engine.config.inject_blacklight_helpers = false
     Blacklight::Configuration.default_values[:default_autocomplete_solr_params] = {fl: '*', qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng'}
     Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
+
+    # Configuration defaults
+    config.index_writer = Spotlight::Indexer::LocalWriter
 
   end
 end
