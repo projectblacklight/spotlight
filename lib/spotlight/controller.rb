@@ -9,11 +9,11 @@ module Spotlight
       helper_method :current_exhibit
     end
 
-    # TODO this seems like it needs to be refactored into two classes. One where @exhibit is present, and one where it isn't.
     def current_exhibit
       @exhibit
     end
 
+    # overwrites Blacklight::Controller#blacklight_config
     def blacklight_config
       if current_exhibit
         exhibit_specific_blacklight_config
