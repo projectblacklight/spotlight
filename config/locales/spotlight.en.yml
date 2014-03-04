@@ -24,6 +24,8 @@ en:
         create: "Add new field"
       spotlight/contact:
         create: "Add contact"
+      spotlight/exhibit:
+        create: "Create Exhibit"
     submit:
       spotlight_default: &spotlight_default
         create: "Save"
@@ -161,9 +163,14 @@ en:
       breadcrumb: Home
       edit:
         header: Settings
+        import: Import
         fields:
           contact_emails:
             help_block: Each contact email will receive Report a problem form submissions
+      new:
+        header: Create a new exhibit
+      import:
+        header: Import content into exhibit
       confirmation_status:
         confirmed: Confirmed.
         confirmation_sent: Confirmation sent.

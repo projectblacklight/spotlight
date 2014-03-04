@@ -11,7 +11,7 @@ module Spotlight
     end
 
     def recently_sent?
-      confirmation_sent_at > 3.days.ago
+      confirmation_sent_at > 3.days.ago if confirmation_sent_at?
     end
 
     protected 

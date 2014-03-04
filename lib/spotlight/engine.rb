@@ -5,6 +5,7 @@ require 'spotlight/rails/routes'
 require 'spotlight/utils'
 require 'friendly_id'
 require 'devise'
+require 'active_model_serializers'
 
 module Spotlight
   class Engine < ::Rails::Engine

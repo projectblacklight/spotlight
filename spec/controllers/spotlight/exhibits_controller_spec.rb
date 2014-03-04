@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'rack/test'
 describe Spotlight::ExhibitsController do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { Spotlight::Exhibit.default }
@@ -17,6 +18,14 @@ describe Spotlight::ExhibitsController do
   end
 
   describe "when not logged in" do
+
+    describe "#new" do
+      it "should not be allowed" do
+        get :new, id: exhibit 
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
+    end
+
     describe "#edit" do
       it "should not be allowed" do
         get :edit, id: exhibit 
@@ -31,6 +40,20 @@ describe Spotlight::ExhibitsController do
       end
     end
 
+    describe "#import" do
+      it "should not be allowed" do
+        get :import, id: exhibit 
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
+    end
+
+    describe "#process_import" do
+      it "should not be allowed" do
+        patch :process_import, id: exhibit 
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
+    end
+
     describe "#destroy" do
       it "should not be allowed" do
         delete :destroy, id: exhibit 
@@ -39,9 +62,57 @@ describe Spotlight::ExhibitsController do
     end
   end
 
-  describe "when signed in" do
+  describe "when signed in as a site admin" do
+
+    let(:user) { FactoryGirl.create(:site_admin) }
+    before {sign_in user }
+
+    describe "#new" do
+      it "should be successful" do
+        get :new
+        expect(response).to be_successful
+      end
+    end
+  end
+
+  describe "when signed in as an exhibit admin" do
     let(:user) { FactoryGirl.create(:exhibit_admin) }
     before {sign_in user }
+
+    describe "#new" do
+      it "should not be allowed" do
+        get :new
+        expect(response).to_not be_successful
+      end
+    end
+
+    describe "#import" do
+      it "should be successful" do
+        get :import, id: exhibit
+        expect(response).to be_successful
+      end
+    end
+
+    describe "#process_import" do
+      it "should be successful" do
+        f = Tempfile.new("foo")
+        begin
+          f.write '{ "title": "Foo", "subtitle": "Bar"}'
+          f.rewind
+          file = Rack::Test::UploadedFile.new(f.path, "application/json")
+          patch :process_import, id: exhibit, file: file
+        ensure
+          f.close
+          f.unlink
+        end
+        expect(response).to be_redirect
+        assigns[:exhibit].tap do |saved|
+          expect(saved.title).to eq 'Foo'
+          expect(saved.subtitle).to eq 'Bar'
+        end
+      end
+    end
+
     describe "#edit" do
       it "should be successful" do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)

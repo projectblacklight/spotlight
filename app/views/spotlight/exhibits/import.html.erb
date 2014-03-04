@@ -1,0 +1,15 @@
+<%= render 'spotlight/shared/curation_sidebar' %>
+<div id="content" class="col-md-9 exhibit-admin">
+<%= administration_page_title %>
+<%= bootstrap_form_for [:import, @exhibit], style: :horizontal, html: { multipart: true } do |f| %>
+  <div class="row col-md-9">
+    <%= file_field_tag :file %>
+
+    <div class="form-actions">
+      <div class="primary-actions">
+        <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>

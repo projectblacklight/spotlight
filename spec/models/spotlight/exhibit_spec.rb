@@ -57,4 +57,19 @@ describe Spotlight::Exhibit do
       expect(subject.contacts.size).to eq 2
     end
   end
+
+  describe "import" do
+    it "should remove the default browse category" do
+      subject.save
+      expect { subject.import({}) }.to change {subject.searches.count}.by(-1)
+      expect(subject.searches.map { |x| x.title }).not_to include "Browse All Exhibit Items"
+    end
+
+    it "should import nested attributes from the hash" do
+      subject.save
+      some_value = double
+      subject.should_receive(:update).with(some_value)
+      subject.import some_value
+    end
+  end
 end

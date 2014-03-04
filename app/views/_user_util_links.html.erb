@@ -7,6 +7,10 @@
           <% if current_exhibit and can? :curate, current_exhibit %>
             <li><%= link_to t('spotlight.dashboards.show.header'), spotlight.exhibit_dashboard_path(current_exhibit) %></li>
           <% end %>
+          <% if can? :create, Spotlight::Exhibit %>
+          <li class="divider"></li>
+          <li><%= link_to t(:'helpers.action.spotlight/exhibit.create'), spotlight.new_exhibit_path %></li>
+          <% end %>
           <li class="divider"></li>
           <li><%= link_to t('spotlight.header_links.logout'), main_app.destroy_user_session_path %></li>
         </ul>
