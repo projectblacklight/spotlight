@@ -37,18 +37,6 @@ module Spotlight
       end
     end
 
-    def curation_mode_label_class
-      if curation_mode?
-        "warning"
-      else
-        "primary"
-      end
-    end
-
-    def curation_mode?
-      params[:action] == "edit"
-    end
-
     def url_to_tag_facet tag
       if current_exhibit
         search_action_url(add_facet_params(Spotlight::SolrDocument.solr_field_for_tagger(current_exhibit), tag, {}))
@@ -64,7 +52,6 @@ module Spotlight
     def should_render_show_field? document, field
       super && field_enabled?(field, :show)
     end
-
 
     ##
     # TODO remove this when we use blacklight 5.2+
