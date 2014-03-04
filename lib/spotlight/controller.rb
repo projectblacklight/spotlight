@@ -1,5 +1,4 @@
 module Spotlight
-  # This module should only be included on controller that load @exhibit
   module Controller
     extend ActiveSupport::Concern
     include Blacklight::Controller

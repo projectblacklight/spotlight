@@ -1,9 +1,17 @@
 #exhibit-masthead, #exhibit-navbar {
-  margin-top: -30px;
   z-index: 1;
 }
 
+.navbar + .navbar {
+  margin-top: 0;
+}
+
+#header-navbar {
+  margin-bottom: 0;
+}
+
 #exhibit-masthead {
+  margin-bottom: 0;
   padding: 24px 0;
   .site-title {
     font-size: 30px;
