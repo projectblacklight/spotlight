@@ -1,7 +1,7 @@
 module Spotlight
   class ContactsController < Spotlight::ApplicationController
     before_filter :authenticate_user!
-    load_and_authorize_resource :exhibit, class: "Spotlight::Exhibit", prepend: true
+    load_and_authorize_resource :exhibit, class: "Spotlight::Exhibit"
     load_and_authorize_resource through: :exhibit
     before_filter :attach_breadcrumbs
 
