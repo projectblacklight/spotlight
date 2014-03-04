@@ -1,10 +1,6 @@
 module Spotlight
   class ConfirmationsController < Devise::ConfirmationsController
-    # TODO this repeats lines from ApplicationController
     layout 'spotlight/spotlight'
-    include Spotlight::Controller
-    # end repetition
-
     protected
 
     def after_confirmation_path_for(resource_name, resource)

@@ -1,5 +1,5 @@
 class Spotlight::SearchesController < Spotlight::ApplicationController
-  load_resource :exhibit, class: "Spotlight::Exhibit", prepend: true
+  load_resource :exhibit, class: "Spotlight::Exhibit"
   before_filter :authenticate_user!
   before_filter :only_curators!
   load_and_authorize_resource through: :exhibit

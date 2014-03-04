@@ -5,8 +5,9 @@ module Spotlight
     include Blacklight::Base
     include Spotlight::Config
 
+    # This overwrites Blacklight::Configurable#blacklight_config
     def blacklight_config
-      @blacklight_config ||= exhibit_specific_blacklight_config
+      exhibit_specific_blacklight_config
     end
 
   end

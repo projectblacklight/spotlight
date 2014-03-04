@@ -1,6 +1,6 @@
 class Spotlight::CatalogController < Spotlight::ApplicationController
+  load_resource :exhibit, class: Spotlight::Exhibit
   include Spotlight::Catalog
-  load_resource :exhibit, class: Spotlight::Exhibit, prepend: true
   before_filter :authenticate_user!, only: [:admin, :edit, :make_public, :make_private]
   before_filter :check_authorization, only: [:admin, :edit, :make_public, :make_private]
 

@@ -1,8 +1,8 @@
 module Spotlight
   class BrowseController < Spotlight::ApplicationController
+    load_resource :exhibit, class: "Spotlight::Exhibit"
     include Spotlight::Base
 
-    load_resource :exhibit, class: "Spotlight::Exhibit", prepend: true
     load_and_authorize_resource :search, except: :index, through: :exhibit, parent: false
     before_filter :attach_breadcrumbs
     
