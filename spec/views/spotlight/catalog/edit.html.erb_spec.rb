@@ -13,7 +13,6 @@ describe "spotlight/catalog/edit.html.erb" do
 
   before do
     view.stub(current_page?: true)
-    view.stub(curation_mode?: true)
     view.stub(:document_show_html_title)
     view.stub(:edit_exhibit_catalog_path)
   end
