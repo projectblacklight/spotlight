@@ -5,6 +5,14 @@ describe Spotlight::BlacklightConfiguration do
   let(:blacklight_config) { Blacklight::Configuration.new }
 
   before :each do
+    blacklight_config.configure do |config|
+      config.add_sort_field 'score desc, sort_title_ssi asc', :label => 'Relevance' 
+      config.add_sort_field 'sort_title_ssi asc', :label => 'Title' 
+      config.add_sort_field 'sort_type_ssi asc', :label => 'Type' 
+      config.add_sort_field 'sort_date_dtsi asc', :label => 'Date' 
+      config.add_sort_field 'sort_source_ssi asc', :label => 'Source' 
+      config.add_sort_field 'id asc', :label => 'Identifier' 
+    end
     subject.stub default_blacklight_config: blacklight_config
     subject.exhibit = Spotlight::Exhibit.default
   end
@@ -179,6 +187,24 @@ describe Spotlight::BlacklightConfiguration do
     end
   end
 
+  describe "a newly created instance" do
+    before do
+      subject.save!
+    end
+    describe "should have default values" do
+      its(:sort_fields) { should eq({
+          "id asc" => {:show=>true},
+          "score desc, sort_title_ssi asc" => {:show=>true},
+          "sort_date_dtsi asc" => {:show=>true},
+          "sort_source_ssi asc" => {:show=>true},
+          "sort_title_ssi asc" => {:show=>true},
+          "sort_type_ssi asc" => {:show=>true}
+        })}
+      its(:default_per_page) { should eq 10 }
+      its(:thumbnail_size) { should eq 'small' }
+      its(:document_index_view_types) { should eq ["list", "gallery"] }
+    end
+  end
 
   describe "sort fields" do
     it "should have sort fields" do

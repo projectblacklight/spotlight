@@ -12,6 +12,8 @@ module Spotlight
     serialize :per_page, Array
     serialize :document_index_view_types, Array
 
+    include Spotlight::BlacklightConfigurationDefaults
+
     # get rid of empty values
     before_validation do |model|
 
@@ -131,7 +133,7 @@ module Spotlight
     end
 
     protected
-
+    
     def set_index_field_defaults field
       if index_fields.blank?
         views = default_blacklight_config.view.keys | [:show, :enabled]

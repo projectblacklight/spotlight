@@ -86,6 +86,11 @@ class CatalogController < ApplicationController
     config.add_show_field 'corporate_name_ssm', :label => 'Corporate Names'
 
     config.add_sort_field 'score desc, sort_title_ssi asc', :label => 'Relevance' 
+    config.add_sort_field 'sort_title_ssi asc', :label => 'Title' 
+    config.add_sort_field 'sort_type_ssi asc', :label => 'Type' 
+    config.add_sort_field 'sort_date_dtsi asc', :label => 'Date' 
+    config.add_sort_field 'sort_source_ssi asc', :label => 'Source' 
+    config.add_sort_field 'id asc', :label => 'Identifier' 
   end
 
 

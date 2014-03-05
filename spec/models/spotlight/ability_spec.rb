@@ -28,6 +28,9 @@ describe Spotlight::Ability do
     it { should be_able_to(:destroy, role) }
     it { should be_able_to(:update,  role) }
     it { should be_able_to(:create,  Spotlight::Role) }
+
+    let(:blacklight_config) { role.exhibit.blacklight_configuration }
+    it { should be_able_to(:edit, Spotlight::Appearance.new(blacklight_config)) }
   end
 
   describe "a user with curate role" do
@@ -56,5 +59,9 @@ describe Spotlight::Ability do
     it { should be_able_to(:new, contact) }
     it { should be_able_to(:create, contact) }
     it { should be_able_to(:destroy, contact) }
+
+    let(:role) { FactoryGirl.create(:role, exhibit: user.roles.first.exhibit) }
+    let(:blacklight_config) { role.exhibit.blacklight_configuration }
+    it { should_not be_able_to(:edit, Spotlight::Appearance.new(blacklight_config)) }
   end
 end
