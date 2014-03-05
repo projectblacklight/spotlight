@@ -41,16 +41,22 @@ module Spotlight
     end
 
     def becomes_provider
-      z = self.becomes Spotlight::Resource.class_for_resource(self)
-      z.type = z.class.to_s
-      z
-    end
+      klass = Spotlight::Resource.class_for_resource(self)
 
-    protected
+      if klass
+        z = self.becomes klass
+        z.type = z.class.to_s
+        z
+      else
+        self
+      end
+    end
 
     def needs_provider?
       type.blank?
     end
+
+    protected
 
     def blacklight_solr
       @solr ||=  RSolr.connect(blacklight_solr_config)
