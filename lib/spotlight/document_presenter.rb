@@ -1,4 +1,4 @@
-# WHEN 5.2 comes out this should inherit from Blaclight::DocumentPresenter
+# WHEN Blacklight 5.2 comes out this should inherit from Blacklight::DocumentPresenter
 module Spotlight
   class DocumentPresenter
 
@@ -13,7 +13,12 @@ module Spotlight
     end
 
     def raw_document_heading
-      @document[@configuration.view_config(:show).title_field].join(', ') || @document.id
+      Array(@document[@configuration.view_config(:show).title_field]).join(field_value_separator) || @document.id
+    end
+
+    # TODO remove this method when this class inherits from Blacklight::DocumentPresenter
+    def field_value_separator
+      ', '
     end
 
   end
