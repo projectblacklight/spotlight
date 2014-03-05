@@ -14,9 +14,9 @@ Capybara.default_wait_time = 5
 
 if ENV["COVERAGE"] or ENV["CI"]
   require 'simplecov'
-  require 'coveralls'
+  require 'coveralls' if ENV["CI"]
 
-  SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+  SimpleCov.formatter = Coveralls::SimpleCov::Formatter if ENV["CI"]
   SimpleCov.start do
     add_filter "/spec/"
   end
