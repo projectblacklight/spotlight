@@ -9,8 +9,10 @@ class CreateSpotlightBlacklightConfigurations < ActiveRecord::Migration
       t.text :default_solr_params
       t.text :show
       t.text :index
+      t.integer :default_per_page
       t.text :per_page
       t.text :document_index_view_types
+      t.string :thumbnail_size
 
       t.timestamps
     end

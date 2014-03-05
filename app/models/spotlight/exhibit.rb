@@ -39,13 +39,13 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   serialize :facets, Array
 
-  before_create :initialize_config
+  after_create :initialize_config
   before_create :initialize_browse
   after_create :add_default_home_page
   before_save :sanitize_description
 
   before_validation do
-    self.name ||= self.title.parameterize
+    self.name ||= self.title.parameterize if self.title
   end
 
   validate :name, :title, presence: true

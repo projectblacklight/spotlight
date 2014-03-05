@@ -14,6 +14,8 @@ Spotlight::Engine.routes.draw do
     resource :contact_form, path: "contact", only: [:new, :create]
     resource :blacklight_configuration, only: [:update]
 
+    resource :appearance, only: [:edit, :update]
+
     get 'edit/metadata', to: "blacklight_configurations#edit_metadata_fields"
     get 'edit/facets', to: "blacklight_configurations#edit_facet_fields"
     get 'metadata', to: 'blacklight_configurations#metadata_fields'

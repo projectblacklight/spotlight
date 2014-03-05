@@ -12,6 +12,8 @@ module Spotlight
     serialize :per_page, Array
     serialize :document_index_view_types, Array
 
+    include Spotlight::BlacklightConfigurationDefaults
+
     # get rid of empty values
     before_validation do |model|
 
@@ -107,6 +109,12 @@ module Spotlight
         end
 
         config.per_page = (config.per_page & per_page) unless per_page.blank?
+        
+        if default_per_page
+          config.per_page.delete(default_per_page)
+          config.per_page.unshift(default_per_page)
+        end
+
         config.view.select! { |k, v| document_index_view_types.include? k.to_s } unless document_index_view_types.blank?
 
         config
@@ -131,7 +139,7 @@ module Spotlight
     end
 
     protected
-
+    
     def set_index_field_defaults field
       if index_fields.blank?
         views = default_blacklight_config.view.keys | [:show, :enabled]
