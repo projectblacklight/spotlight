@@ -42,7 +42,7 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
   def alternate_count
     @alt_count ||= begin
       facet_query = @blacklight_configuration.blacklight_config.facet_fields.keys.map { |key| "#{key}:[* TO *]" }
-      solr_resp = blacklight_solr.get('select', params: {'facet.query' => facet_query, 'rows' =>0})
+      solr_resp = blacklight_solr.get('select', params: {'facet.query' => facet_query, 'rows' =>0, 'facet' => true})
       @alt_count = solr_resp['facet_counts']['facet_queries'].each_with_object({}) do |(key, val), alt_count|
         alt_count[key.split(/:/).first] = val
       end
