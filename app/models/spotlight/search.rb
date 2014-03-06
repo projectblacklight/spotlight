@@ -10,11 +10,7 @@ class Spotlight::Search < ActiveRecord::Base
   scope :published, -> { where(on_landing_page: true) }
 
   before_create do
-    begin
     self.featured_image ||= default_featured_image
-    rescue => e
-      logger.error e
-    end
   end
 
   include Blacklight::SolrHelper
