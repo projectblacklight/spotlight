@@ -5,7 +5,7 @@ FactoryGirl.define do
 
   factory :tagging, class: ActsAsTaggableOn::Tagging do
     sequence(:tag) { |n| FactoryGirl.create(:tag, name: "tagging#{n}") }
-    tagger Spotlight::Exhibit.default
+    tagger Spotlight::ExhibitFactory.default
     context :tags
   end
 end

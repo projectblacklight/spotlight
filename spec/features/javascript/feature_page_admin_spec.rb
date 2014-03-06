@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature "Feature Pages Adminstration", js:  true do
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
   let!(:page1) {
     FactoryGirl.create(
       :feature_page,

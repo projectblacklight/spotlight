@@ -5,7 +5,7 @@ module Spotlight
     let(:blacklight_config) { Blacklight::Configuration.new { |config| config.show.title_field = :abc } }
     let(:titled_document)   { ::SolrDocument.new( :abc => "value" ) }
     let(:untitled_document) { ::SolrDocument.new( :id  => "1234"  ) }
-    let!(:current_exhibit) { Spotlight::Exhibit.default }
+    let!(:current_exhibit) { Spotlight::ExhibitFactory.default }
     let!(:home_page) { current_exhibit.home_page }
 
     before(:each) do

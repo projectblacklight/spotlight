@@ -10,7 +10,7 @@ describe "Editing metadata fields", type: :feature do
   end
 
   it "should work" do
-    visit spotlight.exhibit_edit_metadata_path Spotlight::Exhibit.default
+    visit spotlight.exhibit_edit_metadata_path Spotlight::ExhibitFactory.default
 
     expect(page).to have_content "Display and Order Metadata Fields"
 
@@ -24,14 +24,14 @@ describe "Editing metadata fields", type: :feature do
 
     click_on "Save changes"
 
-    expect(Spotlight::Exhibit.default.blacklight_config.index_fields.select { |k, x| x.list }).to include 'language_ssm', 'note_mapuse_tesim'
-    expect(Spotlight::Exhibit.default.blacklight_config.index_fields.select { |k, x| x.list }).to_not include 'abstract_tesim'
-    expect(Spotlight::Exhibit.default.blacklight_config.show_fields.select { |k, x| x.show }).to include "language_ssm", "abstract_tesim"
-    expect(Spotlight::Exhibit.default.blacklight_config.show_fields.select { |k, x| x.show }).to_not include "note_mapuse_tesim"
+    expect(Spotlight::ExhibitFactory.default.blacklight_config.index_fields.select { |k, x| x.list }).to include 'language_ssm', 'note_mapuse_tesim'
+    expect(Spotlight::ExhibitFactory.default.blacklight_config.index_fields.select { |k, x| x.list }).to_not include 'abstract_tesim'
+    expect(Spotlight::ExhibitFactory.default.blacklight_config.show_fields.select { |k, x| x.show }).to include "language_ssm", "abstract_tesim"
+    expect(Spotlight::ExhibitFactory.default.blacklight_config.show_fields.select { |k, x| x.show }).to_not include "note_mapuse_tesim"
   end
 
   it "should have in-place editing of labels", js: true do
-    visit spotlight.exhibit_edit_metadata_path Spotlight::Exhibit.default
+    visit spotlight.exhibit_edit_metadata_path Spotlight::ExhibitFactory.default
     check :blacklight_configuration_index_fields_language_ssm_show
     check :blacklight_configuration_index_fields_language_ssm_list
 
@@ -41,6 +41,6 @@ describe "Editing metadata fields", type: :feature do
     fill_in :blacklight_configuration_index_fields_language_ssm_label, with: "Language of Origin"
 
     click_on "Save changes"
-    expect(Spotlight::Exhibit.default.blacklight_config.index_fields['language_ssm'].label).to eq "Language of Origin"
+    expect(Spotlight::ExhibitFactory.default.blacklight_config.index_fields['language_ssm'].label).to eq "Language of Origin"
   end
 end

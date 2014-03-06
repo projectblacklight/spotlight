@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Spotlight
   describe CrudLinkHelpers do
-    let(:some_model) { Spotlight::FeaturePage.create! exhibit: Spotlight::Exhibit.default }
+    let(:some_model) { Spotlight::FeaturePage.create! exhibit: Spotlight::ExhibitFactory.default }
     describe "#cancel_link" do
 
       it "should be a model-specific cancel link" do
@@ -31,7 +31,7 @@ module Spotlight
     end
 
     describe "#exhibit_create_link" do
-      let(:current_exhibit) { Spotlight::Exhibit.default }
+      let(:current_exhibit) { Spotlight::ExhibitFactory.default }
       let(:some_model) { Spotlight::FeaturePage.new }
       before do
         helper.stub(current_exhibit: current_exhibit)
@@ -53,7 +53,7 @@ module Spotlight
     end
 
     describe "#exhibit_edit_link" do
-      let(:current_exhibit) { Spotlight::Exhibit.default }
+      let(:current_exhibit) { Spotlight::ExhibitFactory.default }
       let(:some_model) { Spotlight::FeaturePage.create! exhibit: current_exhibit }
       before do
         helper.stub(current_exhibit: current_exhibit)

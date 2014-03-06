@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Create a new exhibit" do
   let(:user) { FactoryGirl.create(:site_admin) }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
   before {login_as user}
 
   it "should have a link in the user dropdown" do

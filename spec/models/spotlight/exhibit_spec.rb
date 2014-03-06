@@ -33,19 +33,6 @@ describe Spotlight::Exhibit do
     expect(subject.to_s).to eq "New Title"
   end
 
-  describe "that is saved" do
-    before { subject.save!  }
-
-    it "should have a configuration" do
-      expect(subject.blacklight_configuration).to be_kind_of Spotlight::BlacklightConfiguration
-    end
-
-    it "should have an unpublished search" do
-      expect(subject.searches).to have(1).search
-      expect(subject.searches.published).to be_empty
-      expect(subject.searches.first.query_params).to be_empty
-    end
-  end
 
   describe "contacts" do
     before do
@@ -58,18 +45,4 @@ describe Spotlight::Exhibit do
     end
   end
 
-  describe "import" do
-    it "should remove the default browse category" do
-      subject.save
-      expect { subject.import({}) }.to change {subject.searches.count}.by(-1)
-      expect(subject.searches.map { |x| x.title }).not_to include "Browse All Exhibit Items"
-    end
-
-    it "should import nested attributes from the hash" do
-      subject.save
-      some_value = double
-      subject.should_receive(:update).with(some_value)
-      subject.import some_value
-    end
-  end
 end

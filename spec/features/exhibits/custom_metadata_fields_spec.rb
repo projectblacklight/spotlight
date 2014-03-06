@@ -10,7 +10,7 @@ describe "Adding custom metadata fields", type: :feature do
   it "should work" do
     # Add 
     
-    visit spotlight.exhibit_edit_metadata_path Spotlight::Exhibit.default
+    visit spotlight.exhibit_edit_metadata_path Spotlight::ExhibitFactory.default
     click_on "Add new field"
     fill_in "Label", with: "My new custom field"
     fill_in "Short description", with: "Helps to remind me what this field is for"

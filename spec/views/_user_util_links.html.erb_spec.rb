@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Spotlight
   describe "_user_util_links" do
-    let(:current_exhibit) { Spotlight::Exhibit.default }
+    let(:current_exhibit) { Spotlight::ExhibitFactory.default }
     before do
       view.stub(:current_user).and_return(current_user)
       view.stub(:current_exhibit).and_return(current_exhibit)

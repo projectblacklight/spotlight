@@ -15,7 +15,7 @@ describe Spotlight::ApplicationHelper do
 
   describe "#url_to_tag_facet" do
     before do
-      helper.stub(current_exhibit: Spotlight::Exhibit.default)
+      helper.stub(current_exhibit: Spotlight::ExhibitFactory.default)
       helper.stub(blacklight_config: Blacklight::Configuration.new)
 
       # controller provided helper.

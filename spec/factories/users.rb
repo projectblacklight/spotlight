@@ -11,12 +11,12 @@ FactoryGirl.define do
 
     factory :exhibit_admin do
       after(:create) do |user, evaluator|
-        create_list(:role, 1, user: user, exhibit: Spotlight::Exhibit.default, role: 'admin')
+        create_list(:role, 1, user: user, exhibit: Spotlight::ExhibitFactory.default, role: 'admin')
       end
     end
     factory :exhibit_curator do
       after(:create) do |user, evaluator|
-        create_list(:role, 1, user: user, exhibit: Spotlight::Exhibit.default, role: 'curator')
+        create_list(:role, 1, user: user, exhibit: Spotlight::ExhibitFactory.default, role: 'curator')
       end
     end
 

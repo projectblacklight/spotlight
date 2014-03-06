@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spotlight::SolrDocumentSidecar do
   before do
-    subject.stub exhibit: Spotlight::Exhibit.default
+    subject.stub exhibit: Spotlight::ExhibitFactory.default
     subject.stub solr_document_id: 'doc_id'
   end
 

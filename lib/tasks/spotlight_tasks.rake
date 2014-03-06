@@ -7,7 +7,7 @@ namespace :spotlight do
     password = prompt_password
     u = User.create!(email: email, password: password)
     Spotlight::Role.create(user: u, exhibit: nil, role: 'admin')
-    Spotlight::Role.create(user: u, exhibit: Spotlight::Exhibit.default, role: 'admin')
+    Spotlight::Role.create(user: u, exhibit: Spotlight::ExhibitFactory.default, role: 'admin')
     puts "User created."
   end
 
@@ -18,7 +18,8 @@ namespace :spotlight do
     print "Exhibit title: "
     title = $stdin.gets.chomp
 
-    exhibit = Spotlight::Exhibit.create!(name: name, title: title)
+    exhibit = Spotlight::Exhibit.new(name: name, title: title)
+    Spotlight::ExhibitFactory.create!(exhibit)
 
     puts "Who can admin this exhibit?"
     print "Email: "

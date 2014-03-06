@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Spotlight
   describe "shared/_exhibit_navbar" do
-    let(:current_exhibit) {  Spotlight::Exhibit.default }
+    let(:current_exhibit) {  Spotlight::ExhibitFactory.default }
     let(:feature_page) { FactoryGirl.create(:feature_page) }
     let(:unpublished_feature_page) { FactoryGirl.create(:feature_page, published: false) }
     let(:about_page) { FactoryGirl.create(:about_page) }

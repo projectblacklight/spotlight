@@ -10,13 +10,13 @@ describe Spotlight::SearchesController do
     end
 
     it "should raise an error" do
-      post :create, exhibit_id: Spotlight::Exhibit.default
+      post :create, exhibit_id: Spotlight::ExhibitFactory.default
       expect(response).to redirect_to main_app.root_path
       expect(flash[:alert]).to be_present
     end
 
     it "should raise an error" do
-      get :index, exhibit_id: Spotlight::Exhibit.default
+      get :index, exhibit_id: Spotlight::ExhibitFactory.default
       expect(response).to redirect_to main_app.root_path
       expect(flash[:alert]).to be_present
     end
@@ -30,7 +30,7 @@ describe Spotlight::SearchesController do
     let(:exhibit) { search.exhibit }
 
     it "should create a saved search" do
-      post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_ssim"=>["map"]}, exhibit_id: Spotlight::Exhibit.default
+      post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_ssim"=>["map"]}, exhibit_id: Spotlight::ExhibitFactory.default
       expect(response).to redirect_to main_app.catalog_index_path
       expect(flash[:notice]).to eq "Search has been saved"
       expect(assigns[:search].title).to eq "A bunch of maps"

@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :feature_page, class: Spotlight::FeaturePage do
-    exhibit Spotlight::Exhibit.default
+    exhibit Spotlight::ExhibitFactory.default
     title "Page1"
     published  true
   end
@@ -8,13 +8,13 @@ FactoryGirl.define do
     association :parent_page, factory: :feature_page
   end
   factory :about_page, class: Spotlight::AboutPage do
-    exhibit Spotlight::Exhibit.default
+    exhibit Spotlight::ExhibitFactory.default
     title "Page1"
     published  true
   end
 
   factory :home_page, class: Spotlight::HomePage do
-    exhibit Spotlight::Exhibit.default
+    exhibit Spotlight::ExhibitFactory.default
     title "Page1"
   end
 end

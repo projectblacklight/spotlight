@@ -15,8 +15,8 @@ describe Spotlight::HomePagesController do
 
     describe "GET index" do
       it "should redirect to the feature pages" do
-        get :index, exhibit_id: Spotlight::Exhibit.default
-        expect(response).to redirect_to exhibit_feature_pages_path(Spotlight::Exhibit.default)
+        get :index, exhibit_id: Spotlight::ExhibitFactory.default
+        expect(response).to redirect_to exhibit_feature_pages_path(Spotlight::ExhibitFactory.default)
       end
     end
 

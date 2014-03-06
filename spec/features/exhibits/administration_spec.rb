@@ -10,21 +10,21 @@ describe "Exhibit Administration" do
 
   describe "Contact Emails" do
     it "should have a blank input field when there are no contacts yet" do
-      visit spotlight.edit_exhibit_path( Spotlight::Exhibit.default )
+      visit spotlight.edit_exhibit_path( Spotlight::ExhibitFactory.default )
       expect(page).to have_css("input.exhibit-contact")
       expect(find_field(email_id_0).value).to be_blank
     end
     it "should store and retreive a contact email address" do
-      visit spotlight.edit_exhibit_path( Spotlight::Exhibit.default )
+      visit spotlight.edit_exhibit_path( Spotlight::ExhibitFactory.default )
       fill_in email_id_0, with: email_address_0
       click_button "Save changes"
       expect(page).to have_content("The exhibit was saved.")
-      visit spotlight.edit_exhibit_path( Spotlight::Exhibit.default )
+      visit spotlight.edit_exhibit_path( Spotlight::ExhibitFactory.default )
       expect(find_field(email_id_0).value).to eq email_address_0
     end
     it "should do something", js: true do
       # Exhibit administration edit
-      visit spotlight.edit_exhibit_path( Spotlight::Exhibit.default )
+      visit spotlight.edit_exhibit_path( Spotlight::ExhibitFactory.default )
 
       # fill in first email field
       fill_in email_id_0, with: email_address_0
@@ -42,7 +42,7 @@ describe "Exhibit Administration" do
       click_button "Save changes"
 
       expect(page).to have_content("The exhibit was saved.")
-      visit spotlight.edit_exhibit_path( Spotlight::Exhibit.default )
+      visit spotlight.edit_exhibit_path( Spotlight::ExhibitFactory.default )
 
       expect(find_field(email_id_0).value).to eq email_address_0
       expect(find_field(email_id_1).value).to eq email_address_1

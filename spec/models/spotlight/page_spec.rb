@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spotlight::Page do
 
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
   let!(:parent_page) {  Spotlight::FeaturePage.create! exhibit: exhibit, published: true }
   let!(:child_page) {  Spotlight::FeaturePage.create! exhibit: exhibit, published: false, parent_page: parent_page }
 

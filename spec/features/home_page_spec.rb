@@ -1,7 +1,7 @@
 require "spec_helper"
 describe "Home page" do
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
   before {login_as exhibit_curator}
   it "should exist by default on exhibits" do
     visit '/'

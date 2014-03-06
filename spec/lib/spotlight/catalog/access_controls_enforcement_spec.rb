@@ -10,7 +10,7 @@ describe Spotlight::Catalog::AccessControlsEnforcement do
   let(:solr_request) { Blacklight::Solr::Request.new }
 
   before do
-    subject.stub(current_exhibit: Spotlight::Exhibit.default)
+    subject.stub(current_exhibit: Spotlight::ExhibitFactory.default)
   end
 
   describe "#apply_permissive_visibility_filter" do

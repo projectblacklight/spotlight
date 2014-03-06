@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Metadata Administration" do
   let(:curator) { FactoryGirl.create(:exhibit_curator) }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
   before { login_as curator }
   describe "edit" do
     it "should display the metadata edit page" do

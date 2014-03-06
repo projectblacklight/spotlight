@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'rack/test'
 describe Spotlight::ExhibitsController do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
 
 
   describe "when the user is not authorized" do
@@ -155,7 +155,7 @@ describe Spotlight::ExhibitsController do
         delete :destroy, id: exhibit
         expect(Spotlight::Exhibit.exists?(exhibit.id)).to be_false
         expect(flash[:notice]).to eq "Exhibit was successfully destroyed."
-        expect(response).to redirect_to exhibit_root_path(Spotlight::Exhibit.default)
+        expect(response).to redirect_to exhibit_root_path(Spotlight::ExhibitFactory.default)
       end
     end
   end

@@ -17,9 +17,9 @@ describe Spotlight::FeaturePagesController do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Feature pages", exhibit_feature_pages_path(exhibit))
-        get :index, exhibit_id: Spotlight::Exhibit.default
+        get :index, exhibit_id: Spotlight::ExhibitFactory.default
         expect(assigns(:pages)).to include page
-        expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
+        expect(assigns(:exhibit)).to eq Spotlight::ExhibitFactory.default
       end
     end
 
@@ -47,9 +47,9 @@ describe Spotlight::FeaturePagesController do
 
     describe "GET new" do
       it "assigns a new page as @page" do
-        get :new, exhibit_id: Spotlight::Exhibit.default
+        get :new, exhibit_id: Spotlight::ExhibitFactory.default
         expect(assigns(:page)).to be_a_new(Spotlight::FeaturePage)
-        expect(assigns(:page).exhibit).to eq Spotlight::Exhibit.default
+        expect(assigns(:page).exhibit).to eq Spotlight::ExhibitFactory.default
       end
     end
 
@@ -70,17 +70,17 @@ describe Spotlight::FeaturePagesController do
       describe "with valid params" do
         it "creates a new Page" do
           expect {
-            post :create, feature_page: {title: "MyString"} , exhibit_id: Spotlight::Exhibit.default
+            post :create, feature_page: {title: "MyString"} , exhibit_id: Spotlight::ExhibitFactory.default
           }.to change(Spotlight::FeaturePage, :count).by(1)
         end
 
         it "assigns a newly created page as @page" do
-          post :create, feature_page: {title: "MyString"}, exhibit_id: Spotlight::Exhibit.default
+          post :create, feature_page: {title: "MyString"}, exhibit_id: Spotlight::ExhibitFactory.default
           assigns(:page).should be_a(Spotlight::FeaturePage)
           assigns(:page).should be_persisted
         end
         it "redirects to the feature page index" do
-          post :create, feature_page: {title: "MyString"}, exhibit_id: Spotlight::Exhibit.default
+          post :create, feature_page: {title: "MyString"}, exhibit_id: Spotlight::ExhibitFactory.default
           response.should redirect_to(exhibit_feature_pages_path(Spotlight::FeaturePage.last.exhibit))
         end
       end
@@ -89,14 +89,14 @@ describe Spotlight::FeaturePagesController do
         it "assigns a newly created but unsaved page as @page" do
           # Trigger the behavior that occurs when invalid params are submitted
           Spotlight::FeaturePage.any_instance.stub(:save).and_return(false)
-          post :create, feature_page: { "title" => "invalid value" }, exhibit_id: Spotlight::Exhibit.default
+          post :create, feature_page: { "title" => "invalid value" }, exhibit_id: Spotlight::ExhibitFactory.default
           assigns(:page).should be_a_new(Spotlight::FeaturePage)
         end
 
         it "re-renders the 'new' template" do
           # Trigger the behavior that occurs when invalid params are submitted
           Spotlight::FeaturePage.any_instance.stub(:save).and_return(false)
-          post :create, feature_page: { "title" => "invalid value" }, exhibit_id: Spotlight::Exhibit.default
+          post :create, feature_page: { "title" => "invalid value" }, exhibit_id: Spotlight::ExhibitFactory.default
           response.should render_template("new")
         end
       end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "spotlight/searches/_search.html.erb" do
   
-  let(:search) { stub_model(Spotlight::Search, exhibit: Spotlight::Exhibit.default,
+  let(:search) { stub_model(Spotlight::Search, exhibit: Spotlight::ExhibitFactory.default,
         id: 99, title: "Title1", short_description: "MyText") }
   before do
     view.stub(:edit_search_path).and_return("/edit")

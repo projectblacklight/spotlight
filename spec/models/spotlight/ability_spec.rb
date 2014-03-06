@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'cancan/matchers'
 
 describe Spotlight::Ability do
-  let(:exhibit) {Spotlight::Exhibit.default}
+  let(:exhibit) {Spotlight::ExhibitFactory.default}
   let(:search) {FactoryGirl.create(:published_search, exhibit: exhibit)}
   let(:unpublished_search) {FactoryGirl.create(:search)}
   let(:page) {FactoryGirl.create(:feature_page)}
