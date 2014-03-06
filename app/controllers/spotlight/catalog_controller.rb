@@ -38,10 +38,20 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   # results when a partial match is passed in the "q" parameter.
   def autocomplete
     (_, @document_list) = get_search_results(params, blacklight_config.default_autocomplete_solr_params)
-      
+
     respond_to do |format|
       format.json do
-        render json: {docs: @document_list.map { |doc| { id: doc.id, title: view_context.presenter(doc).raw_document_heading }}}
+        render json: {
+          docs: @document_list.map do |doc|
+            {
+              id: doc.id,
+              title: view_context.presenter(doc).raw_document_heading,
+              thumbnail: doc.first(blacklight_config.index.thumbnail_field),
+              description: doc.id,
+              url: exhibit_catalog_path(current_exhibit, doc)
+            }
+          end
+        }
       end
     end
   end

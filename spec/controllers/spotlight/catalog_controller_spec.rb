@@ -86,8 +86,13 @@ describe Spotlight::CatalogController do
         expect(assigns[:document_list].first.id).to eq 'ps921pn8250'
         expect(response).to be_successful
         json = JSON.parse(response.body)
-        expect(json['docs'].first['id']).to eq 'ps921pn8250'
-        expect(json['docs'].first['title']).to eq "PLANISPHERE URANO-GEOGRAPHIQUE c'estadire LES SPHERES CELESTE et TERRESTRE mises en plan."
+        doc = json['docs'].first
+        expect(doc).to include "id", "title", "description", "thumbnail", "url"
+        expect(doc['id']).to eq 'ps921pn8250'
+        expect(doc['description']).to eq 'ps921pn8250'
+        expect(doc['title']).to eq "PLANISPHERE URANO-GEOGRAPHIQUE c'estadire LES SPHERES CELESTE et TERRESTRE mises en plan."
+        expect(doc['thumbnail']).to eq assigns[:document_list].first.first(:thumbnail_url_ssm)
+        expect(doc['url']).to eq exhibit_catalog_path(exhibit, id: 'ps921pn8250')
       end
       it "should have partial matches for id" do
         get :autocomplete, exhibit_id: exhibit, q: 'dx157', format: 'json'
