@@ -62,7 +62,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def update
     if params[:solr_document]
-      @document = ::SolrDocument.find params[:id] 
+      @response, @document = get_solr_response_for_doc_id
       authenticate_user!
       authorize! :curate, current_exhibit
       @document.update(current_exhibit, solr_document_params)
@@ -74,14 +74,14 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   end
 
   def edit
-    @document = ::SolrDocument.find(params[:id])
+    @response, @document = get_solr_response_for_doc_id
     blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
     blacklight_config.view.edit.partials.delete "spotlight/catalog/tags"
     blacklight_config.view.edit.partials.insert(2, :edit)
   end
 
   def make_private
-    @document = ::SolrDocument.find params[:catalog_id] 
+    @response, @document = get_solr_response_for_doc_id params[:catalog_id]
     @document.make_private!(current_exhibit)
     @document.save
 
@@ -92,7 +92,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   end
 
   def make_public
-    @document = ::SolrDocument.find params[:catalog_id] 
+    @response, @document = get_solr_response_for_doc_id params[:catalog_id]
     @document.make_public!(current_exhibit)
     @document.save
 
