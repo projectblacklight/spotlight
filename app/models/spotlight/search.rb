@@ -11,7 +11,7 @@ class Spotlight::Search < ActiveRecord::Base
 
   before_create do
     begin
-    self.featured_image ||= default_featured_image 
+    self.featured_image ||= default_featured_image
     rescue => e
       logger.error e
     end
@@ -24,7 +24,19 @@ class Spotlight::Search < ActiveRecord::Base
   end
 
   def images
-    query_solr(query_params, rows: 1000, fl: [blacklight_config.index.title_field, blacklight_config.index.thumbnail_field], facet: false)['response']['docs'].map {|result| [result[blacklight_config.index.title_field].first, result[blacklight_config.index.thumbnail_field].first]}
+    response = query_solr(query_params,
+      rows: 1000,
+      fl: [blacklight_config.index.title_field, blacklight_config.index.thumbnail_field],
+      facet: false)
+
+    Blacklight::SolrResponse.new(response, {}).docs.map do |result|
+      doc = ::SolrDocument.new(result)
+
+      [
+        doc.first(blacklight_config.index.title_field),
+        doc.first(blacklight_config.index.thumbnail_field)
+      ]
+    end
   end
 
   def default_featured_image
