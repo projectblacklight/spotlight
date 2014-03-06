@@ -11,7 +11,7 @@ describe Spotlight::DashboardsController do
       it "should load the exhibit" do
         exhibit.blacklight_configuration.index[:timestamp_field] =  "timestamp_field"
         exhibit.save!
-        expect(controller).to receive(:find).with(hash_including(sort: "timestamp_field desc")).and_return(double(docs: [{id: 1}]))
+        expect(controller).to receive(:query_solr).with({}, hash_including(sort: "timestamp_field desc")).and_return(double(docs: [{id: 1}]))
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
         expect(controller).to receive(:add_breadcrumb).with("Dashboard", exhibit_dashboard_path(exhibit))
         get :show, exhibit_id: exhibit.id
@@ -42,4 +42,3 @@ describe Spotlight::DashboardsController do
     end
   end
 end
-
