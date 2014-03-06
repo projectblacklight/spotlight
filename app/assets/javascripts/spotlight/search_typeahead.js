@@ -10,7 +10,7 @@ function initBloodhound() {
       url: $('form[data-autocomplete-url]').data('autocomplete-url') + '?q=%QUERY',
       filter: function(response) {
         return $.map(response['docs'], function(doc) {
-          return { id: doc['id'], title: doc['title'] }
+          return doc;
         })
       }
     }
@@ -26,7 +26,7 @@ function addAutocompletetoSirTrevorForm() {
       source: results.ttAdapter(),
       templates: {
         suggestion: Handlebars.compile(
-          '{{title}}<br/><small>&nbsp;&nbsp;{{id}}</small>'
+          '<div class="document-thumbnail thumbnail"><img src="{{thumbnail}}" /></div>{{title}}<br/><small>&nbsp;&nbsp;{{description}}</small>'
           )
       }
     }).on('click', function() {
