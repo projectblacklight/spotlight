@@ -38,9 +38,9 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   serialize :facets, Array
 
+  before_create :build_home_page
   after_create :initialize_config
   after_create :initialize_browse
-  after_create :add_default_home_page
   before_save :sanitize_description
 
   validate :title, presence: true
@@ -88,10 +88,6 @@ class Spotlight::Exhibit < ActiveRecord::Base
     self.searches.create title: "Browse All Exhibit Items",
       short_description: "Search results for all items in this exhibit",
       long_description: "All items in this exhibit"
-  end
-
-  def add_default_home_page
-    Spotlight::HomePage.create(exhibit: self).save
   end
 
   def sanitize_description
