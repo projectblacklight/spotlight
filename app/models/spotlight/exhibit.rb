@@ -39,13 +39,13 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   serialize :facets, Array
 
-  before_create :initialize_config
-  before_create :initialize_browse
+  after_create :initialize_config
+  after_create :initialize_browse
   after_create :add_default_home_page
   before_save :sanitize_description
 
   before_validation do
-    self.name ||= self.title.parameterize
+    self.name ||= self.title.parameterize if self.title
   end
 
   validate :name, :title, presence: true
@@ -94,7 +94,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   def initialize_browse
     return unless self.searches.blank?
 
-    self.searches.build title: "Browse All Exhibit Items",
+    self.searches.create title: "Browse All Exhibit Items",
       short_description: "Search results for all items in this exhibit",
       long_description: "All items in this exhibit"
   end

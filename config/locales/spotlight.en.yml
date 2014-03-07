@@ -31,6 +31,7 @@ en:
         create: "Save"
         submit: "Save changes"
         update: "Save changes"
+      appearance: *spotlight_default
       contact:
         create: "Save"
         update: "Save"
@@ -65,6 +66,7 @@ en:
         header: Administration
         dashboard: Dashboard
         settings: Settings
+        appearance: Appearance
         users: Users
       header: "Administration"
       page_title: "Page title"
@@ -72,6 +74,17 @@ en:
         header: "Settings"
       show_sidebar: "Show sidebar"
       display_title: "Show title"
+    appearances:
+      edit:
+        header: Appearance
+        document_index_view_types: Result page types
+        default_per_page: Default results per page
+        thumbnail_size: Thumbnail size
+        sort_fields: Sort fields 
+        thumbnail:
+          small: Small
+          medium: Medium
+          large: Large
     contact_forms:
       new:
         header: "Report a problem"

@@ -14,19 +14,21 @@ module Spotlight::Ability
     # Until then, workaround:
 
     # exhibit admin 
-    can :manage, Spotlight::Exhibit, id: user.admin_roles.map(&:exhibit_id)
-    can :manage, [Spotlight::Role], exhibit_id: user.admin_roles.map(&:exhibit_id)
+    can :manage, Spotlight::Exhibit, id: user.admin_roles.pluck(:exhibit_id)
+    can :manage, Spotlight::Role, exhibit_id: user.admin_roles.pluck(:exhibit_id)
+    can :update, Spotlight::Appearance, exhibit_id: user.admin_roles.pluck(:exhibit_id)
 
     # exhibit curator
     can :manage, [
       Spotlight::Attachment,
       Spotlight::Search,
       Spotlight::Page,
-      Spotlight::BlacklightConfiguration,
       Spotlight::Contact,
-      Spotlight::CustomField], exhibit_id: user.roles.map(&:exhibit_id)
+      Spotlight::CustomField], exhibit_id: user.roles.pluck(:exhibit_id)
 
-    can [:curate, :tag], Spotlight::Exhibit, id: user.roles.map(&:exhibit_id)
+    can [:edit_metadata_fields, :edit_facet_fields, :metadata_fields, :update], Spotlight::BlacklightConfiguration, exhibit_id: user.roles.pluck(:exhibit_id)
+
+    can [:curate, :tag], Spotlight::Exhibit, id: user.roles.pluck(:exhibit_id)
 
     # public
     can :read, [Spotlight::Exhibit,Spotlight::HomePage]
