@@ -109,6 +109,12 @@ module Spotlight
         end
 
         config.per_page = (config.per_page & per_page) unless per_page.blank?
+        
+        if default_per_page
+          config.per_page.delete(default_per_page)
+          config.per_page.unshift(default_per_page)
+        end
+
         config.view.select! { |k, v| document_index_view_types.include? k.to_s } unless document_index_view_types.blank?
 
         config

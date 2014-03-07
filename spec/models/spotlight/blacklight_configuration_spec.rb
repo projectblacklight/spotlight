@@ -254,6 +254,12 @@ describe Spotlight::BlacklightConfiguration do
 
       expect(subject.blacklight_config.per_page).to eq [10, 50]
     end
+    
+    it "should prepend the default per page" do
+      blacklight_config.per_page = [1, 10, 50, 100]
+      subject.default_per_page = 50
+      expect(subject.blacklight_config.per_page.first).to eq 50
+    end
   end
 
   describe "document_index_view_types" do
