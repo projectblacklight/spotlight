@@ -1,7 +1,6 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 Spotlight.onLoad(function() {
-  expandAddButton();
   // Initialize Nestable for nested pages
   $('#nested-pages.about_pages_admin').nestable({maxDepth: 1});
   $('#nested-pages.feature_pages_admin').nestable({maxDepth: 2, expandBtnHTML: "", collapseBtnHTML: ""});
@@ -97,51 +96,3 @@ function parent_page_field(node){
 function find_property(node, property) {
   return node.find("input[data-property=" + property + "]");
  }
-function addButtonElement(){
-  return $("[data-expanded-add-button]");
-}
-function expandAddButton(){
-  addButtonElement().each(function(){
-    var button = $(this);
-    var target = $(button.data('field-target'));
-    var save =  $("input[type='submit']", target);
-    var input = $("input[type='text']", target);
-    var width = button.outerWidth();
-    var speed = 450;
-    // Animate button open when the mouse enters or
-    // the button is given focus (i.e. clicked/tabbed)
-    button.on("mouseenter focus", function(){
-      if(button.outerWidth() <= (width + 5)) {
-        $(this).animate(
-          {width: '425px'}, speed, function(){
-            target.show(0, function(){
-              input.focus(); 
-            });
-          }
-        )
-      }
-    });
-    // Don't allow for blank titles
-    save.on('click', function(){
-      if ($.trim(input.val()) == "") {
-        return false;
-      }
-    });
-    $.each([input, save, button], function(){
-      $(this).on("blur", function(){
-        // Give a small timeout so that the 
-        // button doesn't snap back right away.
-        // This is necessary to let certain browsers
-        // (e.g. Firefox) have enough time to submit the form.
-        setTimeout(function(){
-          // Unless the parent button or the save button is focussed
-          if( !input.is(':focus') && !button.is(':focus') && !save.is(':focus') ) {
-            // Hide the input/save button and animate the button closed
-            target.hide();
-            button.animate({width: width + 'px'}, speed);
-          }
-        }, 100);
-      });
-    });
-  });
-}
