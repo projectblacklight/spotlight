@@ -3,12 +3,14 @@ module Spotlight
     
     class << self
       def create(exhibit)
+        before_create(exhibit)
         if exhibit.save
           after_create(exhibit)
         end
       end
 
       def create!(exhibit)
+        before_create(exhibit)
         exhibit.save!
         after_create(exhibit)
       end
@@ -34,14 +36,13 @@ module Spotlight
 
       private 
 
+      def before_create(exhibit)
+        exhibit.build_home_page
+      end
+
       def after_create(exhibit)
         initialize_config(exhibit)
         initialize_browse(exhibit)
-        add_default_home_page(exhibit)
-      end
-
-      def add_default_home_page(exhibit)
-        Spotlight::HomePage.create(exhibit: exhibit)
       end
 
       def initialize_config(exhibit)
