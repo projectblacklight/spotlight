@@ -55,6 +55,14 @@ class Spotlight::Exhibit < ActiveRecord::Base
     title
   end
 
+  class << self
+    ##
+    # config/routes.rb is loaded early, before tests have a chance to create a default exhibit,
+    # so use 'default-exhibit' unless a default route exists
+    def default_route_key
+      Spotlight::Exhibit.table_exists? && FriendlyId::Slug.table_exists? && Spotlight::Exhibit.find_by(default:true).to_param || 'default-exhibit'
+    end
+  end
   protected
 
   def sanitize_description
