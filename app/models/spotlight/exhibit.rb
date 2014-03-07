@@ -40,6 +40,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   serialize :facets, Array
 
   after_create :initialize_config
+  after_create :initialize_browse
   after_create :add_default_home_page
   before_save :sanitize_description
 
@@ -88,7 +89,6 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   def initialize_config
     self.blacklight_configuration ||= Spotlight::BlacklightConfiguration.create!
-    initialize_browse
   end
 
   def initialize_browse
