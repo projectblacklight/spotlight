@@ -38,9 +38,6 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   serialize :facets, Array
 
-  before_create :build_home_page
-  after_create :initialize_config
-  after_create :initialize_browse
   before_save :sanitize_description
 
   validate :title, presence: true
@@ -48,13 +45,6 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   def main_about_page
     @main_about_page ||= about_pages.published.first
-  end
-
-  # Find or create the default exhibit
-  def self.default
-    self.find_or_create_by!(default: true) do |e|
-      e.title = 'Default exhibit'.freeze
-    end
   end
 
   def has_browse_categories?
@@ -65,30 +55,15 @@ class Spotlight::Exhibit < ActiveRecord::Base
     title
   end
 
-  def import hash
-    # remove the default browse category -- it might be in the import
-    # and we don't want to have a conflicting slug
-
-    if persisted?
-      searches.where(title: "Browse All Exhibit Items").destroy_all
-      reload
+  class << self
+    ##
+    # config/routes.rb is loaded early, before tests have a chance to create a default exhibit,
+    # so use 'default-exhibit' unless a default route exists
+    def default_route_key
+      Spotlight::Exhibit.table_exists? && FriendlyId::Slug.table_exists? && Spotlight::Exhibit.find_by(default:true).to_param || 'default-exhibit'
     end
-    update hash
   end
-
   protected
-
-  def initialize_config
-    self.blacklight_configuration ||= Spotlight::BlacklightConfiguration.create!
-  end
-
-  def initialize_browse
-    return unless self.searches.blank?
-
-    self.searches.create title: "Browse All Exhibit Items",
-      short_description: "Search results for all items in this exhibit",
-      long_description: "All items in this exhibit"
-  end
 
   def sanitize_description
     self.description = HTML::FullSanitizer.new.sanitize(description) if description_changed?

@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Spotlight::HomePagesController do
+  before do
+    Spotlight::Search.any_instance.stub(:default_featured_image)
+  end
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { "title" => "MyString" } }
   let(:exhibit) {FactoryGirl.create(:exhibit) }
@@ -15,8 +18,8 @@ describe Spotlight::HomePagesController do
 
     describe "GET index" do
       it "should redirect to the feature pages" do
-        get :index, exhibit_id: Spotlight::Exhibit.default
-        expect(response).to redirect_to exhibit_feature_pages_path(Spotlight::Exhibit.default)
+        get :index, exhibit_id: Spotlight::ExhibitFactory.default
+        expect(response).to redirect_to exhibit_feature_pages_path(Spotlight::ExhibitFactory.default)
       end
     end
 

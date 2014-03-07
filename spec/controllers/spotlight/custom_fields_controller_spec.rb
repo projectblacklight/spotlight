@@ -7,7 +7,7 @@ describe Spotlight::CustomFieldsController do
     before {sign_in user }
 
     describe "GET new" do
-      let(:exhibit) { Spotlight::Exhibit.default }
+      let(:exhibit) { Spotlight::ExhibitFactory.default }
       it "assigns a new custom field" do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
@@ -36,13 +36,13 @@ describe Spotlight::CustomFieldsController do
       describe "with valid params" do
         it "creates a new Page" do
           expect {
-            post :create, custom_field: {label: "MyString"} , exhibit_id: Spotlight::Exhibit.default
+            post :create, custom_field: {label: "MyString"} , exhibit_id: Spotlight::ExhibitFactory.default
           }.to change(Spotlight::CustomField, :count).by(1)
         end
 
         it "redirects to the exhibit metadata page" do
-          post :create, custom_field: {label: "MyString"} , exhibit_id: Spotlight::Exhibit.default
-          response.should redirect_to(exhibit_edit_metadata_path(Spotlight::Exhibit.default))
+          post :create, custom_field: {label: "MyString"} , exhibit_id: Spotlight::ExhibitFactory.default
+          response.should redirect_to(exhibit_edit_metadata_path(Spotlight::ExhibitFactory.default))
         end
       end
 
@@ -50,7 +50,7 @@ describe Spotlight::CustomFieldsController do
         it "re-renders the 'new' template" do
           # Trigger the behavior that occurs when invalid params are submitted
           Spotlight::CustomField.any_instance.stub(:save).and_return(false)
-          post :create, custom_field: {label: "MyString"} , exhibit_id: Spotlight::Exhibit.default
+          post :create, custom_field: {label: "MyString"} , exhibit_id: Spotlight::ExhibitFactory.default
           expect(assigns(:custom_field)).to be_a_new(Spotlight::CustomField)
           response.should render_template("new")
         end

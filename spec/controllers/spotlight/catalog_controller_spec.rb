@@ -5,7 +5,7 @@ describe Spotlight::CatalogController do
 
   describe "when the user is not authenticated" do
 
-    let (:exhibit) {Spotlight::Exhibit.default}
+    let (:exhibit) {Spotlight::ExhibitFactory.default}
 
     describe "GET admin" do
       it "should redirect to the login page" do
@@ -109,7 +109,7 @@ describe Spotlight::CatalogController do
     before do
       sign_in FactoryGirl.create(:exhibit_visitor)
     end
-    let (:exhibit) {Spotlight::Exhibit.default}
+    let (:exhibit) {Spotlight::ExhibitFactory.default}
 
     describe "GET index" do
       it "should apply gated discovery access controls" do
@@ -164,7 +164,7 @@ describe Spotlight::CatalogController do
     before do
       sign_in FactoryGirl.create(:exhibit_curator)
     end
-    let (:exhibit) { Spotlight::Exhibit.default }
+    let (:exhibit) { Spotlight::ExhibitFactory.default }
 
     it "should show all the items" do
       expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))

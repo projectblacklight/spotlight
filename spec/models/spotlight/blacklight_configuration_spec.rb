@@ -14,7 +14,7 @@ describe Spotlight::BlacklightConfiguration do
       config.add_sort_field 'id asc', :label => 'Identifier' 
     end
     subject.stub default_blacklight_config: blacklight_config
-    subject.exhibit = Spotlight::Exhibit.default
+    subject.exhibit = Spotlight::ExhibitFactory.default
   end
 
   describe "facet fields" do

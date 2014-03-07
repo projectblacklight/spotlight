@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Spotlight::ContactsController do
+  before do
+    Spotlight::Search.any_instance.stub(:default_featured_image)
+  end
   routes { Spotlight::Engine.routes }
   describe "when not logged in" do
     describe "GET edit" do

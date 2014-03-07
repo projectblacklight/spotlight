@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Spotlight::CustomField do
+  before do
+    Spotlight::Search.any_instance.stub(:default_featured_image)
+  end
   describe "#label" do
     subject { Spotlight::CustomField.new configuration: { "label" => "the configured label"}, field: 'foo_tesim' }
     describe "when the exhibit doesn't have a config" do
@@ -49,10 +52,10 @@ describe Spotlight::CustomField do
   describe "#field" do
     it "should be auto-generated from the field label" do
       subject.configuration["label"] = "xyz"
-      subject.exhibit = Spotlight::Exhibit.default
+      subject.exhibit = Spotlight::ExhibitFactory.default
       subject.save
 
-      expect(subject.field).to eq "exhibit_#{Spotlight::Exhibit.default.to_param}_xyz_tesim"
+      expect(subject.field).to eq "exhibit_#{Spotlight::ExhibitFactory.default.to_param}_xyz_tesim"
     end
   end
 

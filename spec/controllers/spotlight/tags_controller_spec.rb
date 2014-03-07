@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spotlight::TagsController do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
 
   describe "when not signed in" do
     describe "GET index" do

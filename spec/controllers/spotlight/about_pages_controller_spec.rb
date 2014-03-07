@@ -6,7 +6,7 @@ describe Spotlight::AboutPagesController do
   describe "when not logged in" do
 
     describe "POST update_all" do
-      let(:exhibit) { Spotlight::Exhibit.default }
+      let(:exhibit) { Spotlight::ExhibitFactory.default }
       it "should not be allowed" do
         post :update_all, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
@@ -28,7 +28,7 @@ describe Spotlight::AboutPagesController do
           expect(controller).to receive(:add_breadcrumb).with("About", [exhibit, page])
           get :show, id: page, exhibit_id: exhibit
           expect(assigns(:page)).to eq page
-          expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
+          expect(assigns(:exhibit)).to eq Spotlight::ExhibitFactory.default
         end
       end
       describe "on a different about page" do
@@ -38,7 +38,7 @@ describe Spotlight::AboutPagesController do
           expect(controller).to receive(:add_breadcrumb).with(page2.title, [exhibit, page2])
           get :show, id: page2, exhibit_id: exhibit
           expect(assigns(:page)).to eq page2
-          expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
+          expect(assigns(:exhibit)).to eq Spotlight::ExhibitFactory.default
         end
       end
     end
@@ -52,7 +52,7 @@ describe Spotlight::AboutPagesController do
           expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
           get :edit, id: page, exhibit_id: exhibit
           expect(assigns(:page)).to eq page
-          expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
+          expect(assigns(:exhibit)).to eq Spotlight::ExhibitFactory.default
         end
       end
       describe "on a different about page" do
@@ -62,7 +62,7 @@ describe Spotlight::AboutPagesController do
           expect(controller).to receive(:add_breadcrumb).with(page2.title, [:edit, exhibit, page2])
           get :edit, id: page2, exhibit_id: exhibit
           expect(assigns(:page)).to eq page2
-          expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
+          expect(assigns(:exhibit)).to eq Spotlight::ExhibitFactory.default
         end
       end
     end
@@ -73,16 +73,16 @@ describe Spotlight::AboutPagesController do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
-        get :index, exhibit_id: Spotlight::Exhibit.default
+        get :index, exhibit_id: Spotlight::ExhibitFactory.default
         expect(assigns(:page)).to be_kind_of Spotlight::Page
         expect(assigns(:page)).to be_new_record
         expect(assigns(:pages)).to include page
-        expect(assigns(:exhibit)).to eq Spotlight::Exhibit.default
+        expect(assigns(:exhibit)).to eq Spotlight::ExhibitFactory.default
       end
     end
     describe "POST create" do
       it "redirects to the about page index" do
-        post :create, about_page: {title: "MyString"}, exhibit_id: Spotlight::Exhibit.default
+        post :create, about_page: {title: "MyString"}, exhibit_id: Spotlight::ExhibitFactory.default
         response.should redirect_to(exhibit_about_pages_path(Spotlight::AboutPage.last.exhibit))
       end
     end

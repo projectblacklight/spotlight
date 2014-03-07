@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "spotlight/tags/index.html.erb" do
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
   let!(:tag1) { FactoryGirl.create(:tagging) }
   let!(:tag2) { FactoryGirl.create(:tagging) }
   before do

@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Spotlight::Appearance do
+  before do
+    Spotlight::Search.any_instance.stub(:default_featured_image)
+  end
   let(:config) { FactoryGirl.create(:exhibit).blacklight_configuration }
   subject { Spotlight::Appearance.new config }
 

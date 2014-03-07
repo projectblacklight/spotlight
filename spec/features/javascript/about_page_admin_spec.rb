@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature "About Pages Adminstration", js:  true do
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
   before { login_as exhibit_curator }
   it "should be able to create new pages" do
     pending("Passing locally but Travis is thowing intermittent errors") if ENV["CI"]

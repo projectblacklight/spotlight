@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Feature page" do
   describe "sidebar" do
-    let!(:exhibit) { Spotlight::Exhibit.default }
+    let!(:exhibit) { Spotlight::ExhibitFactory.default }
 
     let!(:parent_feature_page) { 
       FactoryGirl.create(:feature_page, title: "Parent Page")

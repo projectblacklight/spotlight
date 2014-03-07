@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'spotlight/browse/search' do
   let(:search) { FactoryGirl.create(:search) }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
   before :each do
     search.stub(count: 15)
   end

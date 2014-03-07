@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Mutli-Up Item Grid", js: true do
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
-  let!(:exhibit) { Spotlight::Exhibit.default }
+  let!(:exhibit) { Spotlight::ExhibitFactory.default }
   let!(:feature_page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
   before { login_as exhibit_curator }
   it "should display items that are configured to display (and hide items that are not)" do

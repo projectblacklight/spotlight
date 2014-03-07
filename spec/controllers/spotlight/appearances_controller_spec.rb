@@ -1,7 +1,7 @@
 require 'spec_helper'
 describe Spotlight::AppearancesController do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
 
 
   describe "when the user is not authorized" do

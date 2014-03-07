@@ -3,7 +3,7 @@ require 'tempfile'
 
 describe "Allow exhibit admins to import and export content from an exhibit" do
   let(:user) { FactoryGirl.create(:exhibit_admin) }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
   before {login_as user}
 
   it "should allow admins to export content from an exhibit" do

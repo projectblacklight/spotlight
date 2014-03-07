@@ -10,7 +10,7 @@ describe "Editing metadata fields", type: :feature do
   end
 
   it "should allow curators to select and unselect facets for display" do
-    visit spotlight.exhibit_edit_facets_path Spotlight::Exhibit.default
+    visit spotlight.exhibit_edit_facets_path Spotlight::ExhibitFactory.default
 
     expect(page).to have_content "Curation Search Facets"
     expect(page).to have_button "Save"
@@ -21,12 +21,12 @@ describe "Editing metadata fields", type: :feature do
 
     click_on "Save changes"
 
-    expect(Spotlight::Exhibit.default.blacklight_config.facet_fields.select { |k,v| v.show }.keys).to include("subject_temporal_ssim")
-    expect(Spotlight::Exhibit.default.blacklight_config.facet_fields.select { |k,v| v.show }.keys).to_not include("language_ssim", "genre_ssim")
+    expect(Spotlight::ExhibitFactory.default.blacklight_config.facet_fields.select { |k,v| v.show }.keys).to include("subject_temporal_ssim")
+    expect(Spotlight::ExhibitFactory.default.blacklight_config.facet_fields.select { |k,v| v.show }.keys).to_not include("language_ssim", "genre_ssim")
   end
 
   it "should allow curators to set facet labels" do
-    visit spotlight.exhibit_edit_facets_path Spotlight::Exhibit.default
+    visit spotlight.exhibit_edit_facets_path Spotlight::ExhibitFactory.default
 
     within ".facet-config-genre_ssim" do
       click_on "Options"
@@ -35,11 +35,11 @@ describe "Editing metadata fields", type: :feature do
 
     click_on "Save changes"
 
-    expect(Spotlight::Exhibit.default.blacklight_config.facet_fields['genre_ssim'].label).to eq "Some Label"
+    expect(Spotlight::ExhibitFactory.default.blacklight_config.facet_fields['genre_ssim'].label).to eq "Some Label"
   end
 
   it "should display information about the facet" do
-    visit spotlight.exhibit_edit_facets_path Spotlight::Exhibit.default
+    visit spotlight.exhibit_edit_facets_path Spotlight::ExhibitFactory.default
     within  ".facet-config-genre_ssim" do
       expect(page).to have_content /\d+ items/
       expect(page).to have_content  /(\d+) unique values/

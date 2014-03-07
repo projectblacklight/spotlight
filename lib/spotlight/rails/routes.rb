@@ -2,11 +2,7 @@ module ActionDispatch::Routing
   class Mapper
 
     def spotlight_root
-      if Spotlight::Exhibit.table_exists? && FriendlyId::Slug.table_exists?
-        root to: "spotlight/home_pages#show", defaults: {exhibit_id: Spotlight::Exhibit.default.to_param} 
-      else
-        root to: "catalog#index"
-      end
+      root to: "spotlight/home_pages#show", defaults: {exhibit_id: Spotlight::Exhibit.default_route_key} 
     end
   end
 end

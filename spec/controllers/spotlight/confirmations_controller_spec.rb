@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Spotlight::ConfirmationsController do
+  before do
+    Spotlight::Search.any_instance.stub(:default_featured_image)
+  end
   routes { Spotlight::Engine.routes }
   before {
      @request.env["devise.mapping"] = Devise.mappings[:contact_email]

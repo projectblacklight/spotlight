@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Browse Category Administration" do
   let(:curator) { FactoryGirl.create(:exhibit_curator) }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { Spotlight::ExhibitFactory.default }
   let(:search) { exhibit.searches.first }
   before { login_as curator }
   describe "index" do

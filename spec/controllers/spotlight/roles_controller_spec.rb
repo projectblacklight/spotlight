@@ -6,7 +6,7 @@ describe Spotlight::RolesController do
   describe "when user does not have access" do
     before { sign_in FactoryGirl.create(:exhibit_visitor) }
     it "should not allow index" do
-      get :index, exhibit_id: Spotlight::Exhibit.default
+      get :index, exhibit_id: Spotlight::ExhibitFactory.default
       expect(response).to redirect_to main_app.root_path
     end
   end

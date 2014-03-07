@@ -11,7 +11,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   end
 
   def process_import
-    if @exhibit.import(JSON.parse(import_exhibit_params.read))
+    if Spotlight::ExhibitFactory.import(@exhibit, JSON.parse(import_exhibit_params.read))
       redirect_to spotlight.exhibit_dashboard_path(@exhibit), notice: "The exhibit was successfully updated."
     else
       render action: :import
@@ -21,7 +21,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   def create
     @exhibit.attributes = exhibit_params
 
-    if @exhibit.save
+    if Spotlight::ExhibitFactory.create @exhibit
       redirect_to spotlight.exhibit_dashboard_path(@exhibit), notice: "The exhibit was created."
     else
       render action: :new
@@ -54,7 +54,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
     @exhibit.destroy
 
     redirect_path = if @exhibit.default?
-      spotlight.exhibit_root_path(exhibit_id: Spotlight::Exhibit.default)
+      spotlight.exhibit_root_path(exhibit_id: Spotlight::ExhibitFactory.default)
     else
       main_app.root_url
     end
