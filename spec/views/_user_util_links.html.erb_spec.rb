@@ -6,6 +6,7 @@ module Spotlight
     before do
       view.stub(:current_user).and_return(current_user)
       view.stub(:current_exhibit).and_return(current_exhibit)
+      view.stub(show_contact_form?: true)
     end
 
     describe "when user is not logged in" do
@@ -13,7 +14,19 @@ module Spotlight
       it "renders the links" do
         render
         expect(rendered).to have_link 'Sign in'
-        expect(rendered).to have_link 'Report a problem'
+        expect(rendered).to have_link 'Feedback'
+      end
+    end
+
+    describe "when show_contact_form is false" do
+      let(:current_user) { nil }
+      before do
+        view.stub(show_contact_form?: false)
+      end
+  
+      it "should not render the feedback link" do
+        render
+        expect(rendered).to_not have_link 'Feedback'
       end
     end
 
@@ -21,7 +34,7 @@ module Spotlight
       let(:current_user) { ::User.new }
       it "renders the links" do
         render
-        expect(rendered).to have_link 'Report a problem'
+        expect(rendered).to have_link 'Feedback'
         expect(rendered).to_not have_link 'Dashboard'
         expect(rendered).to have_link 'Sign out'
       end
@@ -36,7 +49,7 @@ module Spotlight
       end
       it "renders the links" do
         render
-        expect(rendered).to have_link 'Report a problem'
+        expect(rendered).to have_link 'Feedback'
         expect(rendered).to have_link 'Dashboard'
         expect(rendered).to have_link 'Sign out'
       end
@@ -50,7 +63,7 @@ module Spotlight
       end
       it "renders the links" do
         render
-        expect(rendered).to have_link 'Report a problem'
+        expect(rendered).to have_link 'Feedback'
         expect(rendered).to have_link 'Dashboard'
         expect(rendered).to have_link 'Sign out'
       end
@@ -65,7 +78,7 @@ module Spotlight
       end
       it "renders the links" do
         render
-        expect(rendered).to have_link 'Report a problem'
+        expect(rendered).to have_link 'Feedback'
         expect(rendered).to have_link 'Dashboard'
         expect(rendered).to have_link 'Create Exhibit'
         expect(rendered).to have_link 'Sign out'
@@ -73,4 +86,3 @@ module Spotlight
     end
   end
 end
-

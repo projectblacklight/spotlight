@@ -17,7 +17,7 @@
 </div>
 
 <% if current_exhibit %>
-<%= render 'spotlight/shared/report_a_problem' %>
+<%= render 'spotlight/shared/report_a_problem' if show_contact_form? %>
 <%= render 'shared/exhibit_masthead' %>
 <% end %>
 <%= render 'shared/exhibit_navbar' %>

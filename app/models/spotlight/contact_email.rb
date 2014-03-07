@@ -6,6 +6,8 @@ module Spotlight
     validate :valid_email
     validates :exhibit, presence: true
 
+    scope :confirmed, -> { where.not(confirmed_at: nil) }
+
     def to_s
       email
     end
@@ -34,6 +36,3 @@ module Spotlight
 
   end
 end
-
-
-
