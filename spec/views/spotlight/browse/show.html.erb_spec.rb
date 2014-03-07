@@ -5,9 +5,11 @@ describe 'spotlight/browse/show' do
   let(:exhibit) { Spotlight::Exhibit.default }
 
   before :each do
+    view.stub(blacklight_config: Blacklight::Configuration.new )
     search.stub(count: 15)
     view.stub(render_document_index_with_view: "")
     stub_template("_results_pagination.html.erb" => "")
+    stub_template("_sort_and_per_page.html.erb" => "Sort and Per Page actions")
   end
 
   before :each do
@@ -36,6 +38,12 @@ describe 'spotlight/browse/show' do
     search.stub(long_description: "Long description")
     render
     expect(response).to have_selector "p", text: search.long_description
+  end
+  
+  it "should display search results actions" do
+    render
+    expect(response).to have_content "Sort and Per Page actions"
+    
   end
 
   it "should display the search results" do

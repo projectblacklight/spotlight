@@ -9,6 +9,7 @@
   </div>
 
 <div class="col-md-9 col-md-offset-3">
-  <%= render_document_index_with_view(:gallery, @document_list) %>
+  <%= render 'sort_and_per_page' %>
+  <%= render_document_index(@document_list) %>
   <%= render 'results_pagination' %>
 </div>
