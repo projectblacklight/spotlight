@@ -10,7 +10,12 @@ class Spotlight::Search < ActiveRecord::Base
   scope :published, -> { where(on_landing_page: true) }
 
   before_create do
-    self.featured_image ||= default_featured_image
+    begin
+      self.featured_image ||= default_featured_image
+    rescue Errno::ECONNREFUSED
+      # solr wasn't there when we tried to get the default image
+      # but that's ok.
+    end
   end
 
   include Blacklight::SolrHelper
