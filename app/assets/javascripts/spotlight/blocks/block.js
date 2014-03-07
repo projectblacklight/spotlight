@@ -12,6 +12,7 @@
     toData: function() {
       var data = {};
 
+
       /* Simple to start. Add conditions later */
       if (this.hasTextBlock()) {
         var content = this.getTextBlock().html();
@@ -30,6 +31,15 @@
           add(this.$(':input:checkbox:checked')).
           add(this.$(':input:radio:checked')).
           add(this.$('select'))
+
+      // unchecked checkboxes
+      this.$(':input:checkbox,:input:radio').not(':input:checkbox:checked').not(':input:radio:checked').each(function(index,input) {
+        var key = $(input).data('key') || input.getAttribute('name');
+        if (key) {
+          data[key] = null;
+        }
+      });
+
       if(inputs.length > 0) {
         inputs.each(function(index,input){
           var key = $(input).data('key') || input.getAttribute('name');
@@ -42,6 +52,7 @@
           }
         });
       }
+
       // Set
       if(!_.isEmpty(data)) {
         this.setData(data);
