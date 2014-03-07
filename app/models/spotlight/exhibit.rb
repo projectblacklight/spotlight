@@ -4,7 +4,6 @@ class Spotlight::Exhibit < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: [:slugged,:finders]
 
-  DEFAULT = 'default'.freeze
   # friendly id associations need to be 'destroy'ed to reap the slug history 
   has_many :searches, dependent: :destroy, extend: FriendlyId::FinderMethods
   has_many :pages, dependent: :destroy
@@ -44,11 +43,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   after_create :add_default_home_page
   before_save :sanitize_description
 
-  before_validation do
-    self.name ||= self.title.parameterize if self.title
-  end
-
-  validate :name, :title, presence: true
+  validate :title, presence: true
   acts_as_tagger
 
   def main_about_page
@@ -57,7 +52,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   # Find or create the default exhibit
   def self.default
-    self.find_or_create_by!(name: DEFAULT) do |e|
+    self.find_or_create_by!(default: true) do |e|
       e.title = 'Default exhibit'.freeze
     end
   end
@@ -68,10 +63,6 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   def to_s
     title
-  end
-
-  def default?
-    name == DEFAULT
   end
 
   def import hash
