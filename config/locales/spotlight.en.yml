@@ -68,6 +68,7 @@ en:
         settings: Settings
         appearance: Appearance
         users: Users
+        import: "Import/Export"
       header: "Administration"
       page_title: "Page title"
       settings:
@@ -183,7 +184,14 @@ en:
       new:
         header: Create a new exhibit
       import:
-        header: Import content into exhibit
+        header: Import/Export
+        import:
+          header: Import exhibit data
+          instructions: You can import an exported exhibit data file to use that data to define this exhibit.
+        export:
+          header: Export exhibit data
+          instructions: You can create a backup of this exhibit by exporting the data that defines it to a JSON file. You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.
+          download: Export
       confirmation_status:
         confirmed: Confirmed.
         confirmation_sent: Confirmation sent.

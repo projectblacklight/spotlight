@@ -12,7 +12,7 @@ describe "Allow exhibit admins to import and export content from an exhibit" do
       click_link 'Dashboard'
     end
 
-    click_link "Settings"
+    click_link "Import/Export"
     click_link "Export"
 
     data = JSON.parse(page.body)
@@ -27,8 +27,7 @@ describe "Allow exhibit admins to import and export content from an exhibit" do
       click_link 'Dashboard'
     end
 
-    click_link "Settings"
-    click_link "Import"
+    click_link "Import/Export"
 
     file = Tempfile.new('foo')
     file.write({"title" => "A better title"}.to_json)
