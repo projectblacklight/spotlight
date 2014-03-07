@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Spotlight::ContactEmail do
+  before do
+    Spotlight::Search.any_instance.stub(:default_featured_image)
+  end
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   subject { Spotlight::ContactEmail.new(exhibit: exhibit) }
 

@@ -2,6 +2,9 @@ require 'spec_helper'
 require 'cancan/matchers'
 
 describe Spotlight::Ability do
+  before do
+    Spotlight::Search.any_instance.stub(:default_featured_image)
+  end
   let(:exhibit) {Spotlight::ExhibitFactory.default}
   let(:search) {FactoryGirl.create(:published_search, exhibit: exhibit)}
   let(:unpublished_search) {FactoryGirl.create(:search)}

@@ -1,6 +1,9 @@
 require 'spec_helper'
 require 'rack/test'
 describe Spotlight::ExhibitsController do
+  before do
+    Spotlight::Search.any_instance.stub(:default_featured_image)
+  end
   routes { Spotlight::Engine.routes }
   let(:exhibit) { Spotlight::ExhibitFactory.default }
 

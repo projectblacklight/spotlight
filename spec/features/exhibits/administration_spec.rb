@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe "Exhibit Administration" do
+  let!(:exhibit) { Spotlight::ExhibitFactory.default }
   let(:admin) { FactoryGirl.create(:exhibit_admin) }
   let(:email_id_0) { "exhibit_contact_emails_attributes_0_email" }
   let(:email_address_0) { "admin@example.com" }

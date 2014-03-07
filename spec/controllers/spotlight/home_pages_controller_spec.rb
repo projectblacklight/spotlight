@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Spotlight::HomePagesController do
+  before do
+    Spotlight::Search.any_instance.stub(:default_featured_image)
+  end
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { "title" => "MyString" } }
   let(:exhibit) {FactoryGirl.create(:exhibit) }

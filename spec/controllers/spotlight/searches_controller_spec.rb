@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Spotlight::SearchesController do
+  before do
+    Spotlight::Search.any_instance.stub(:default_featured_image)
+  end
   routes { Spotlight::Engine.routes }
 
   describe "when the user is not authorized" do
