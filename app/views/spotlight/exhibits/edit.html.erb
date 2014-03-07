@@ -16,10 +16,6 @@
     <div class="form-actions">
       <%= delete_link @exhibit, class: 'btn btn-danger' %>
 
-      <div class="btn-group">
-      <%= link_to t(:'.export'), get_exhibit_path(@exhibit, format: 'json'), class: 'btn btn-default' %>
-      <%= link_to t(:'.import'), import_exhibit_path(@exhibit), class: 'btn btn-default' %>
-      </div>
       <div class="primary-actions">
         <%= f.submit nil, class: 'btn btn-primary' %>
       </div>
