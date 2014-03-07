@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spotlight::Exhibit do
-  subject { Spotlight::Exhibit.new(name: 'test', title: "Sample") }
+  subject { Spotlight::Exhibit.new(title: "Sample") }
 
   it "should have a title" do
     subject.title = "Test title"
