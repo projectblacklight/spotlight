@@ -7,12 +7,13 @@
   font-style: italic;
 }
 .expanded-add-button {
-  position: relative;
   display: inline-block;
   .input-field {
     input[type='text'] {
       @extend .input-sm;
-      width: 247px;
+      height: auto;
+      padding: 0 5px;
+      width: 195px;
       color: black;
       border-color: white;
     }
@@ -21,9 +22,6 @@
       @extend .btn-default;
       @extend .btn-xs;
     }
-    position: absolute;
-    left: 130px;
-    bottom: 2px;
     display: none;
   }
   [data-expanded-add-button] {

@@ -25,7 +25,8 @@
       <%= t(:'.new_page') %> <span class="glyphicon glyphicon-chevron-right"></span>
       <span data-title-field="true" class="input-field">
         <%= f.text_field(:title) %>
-        <%= f.submit t(:'.save') %>
+        <%= f.submit t(:'.save'), data: {behavior: "save"} %>
+        <%= f.submit t(:'.cancel'), data: {behavior: "cancel"} %>
       </span>
     </a>
   <%- end -%>

@@ -65,6 +65,6 @@ def add_new_page_via_button(title="New Page")
   within(add_link) do
     input = find("input[type='text']", visible: true)
     input.set(title)
-    find("input[type='submit']").click
+    find("input[data-behavior='save']").click
   end
 end
