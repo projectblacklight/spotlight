@@ -31,7 +31,7 @@ describe Spotlight::SearchesController do
 
     it "should create a saved search" do
       post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_ssim"=>["map"]}, exhibit_id: Spotlight::Exhibit.default
-      expect(response).to redirect_to main_app.catalog_index_path
+      expect(response).to redirect_to exhibit_catalog_index_path(search.exhibit)
       expect(flash[:notice]).to eq "Search has been saved"
       expect(assigns[:search].title).to eq "A bunch of maps"
       expect(assigns[:search].query_params).to eq("f"=>{"genre_ssim"=>["map"]})
@@ -100,4 +100,3 @@ describe Spotlight::SearchesController do
     end
   end
 end
-

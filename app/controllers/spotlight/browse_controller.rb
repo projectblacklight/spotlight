@@ -12,7 +12,7 @@ module Spotlight
 
     def show
       add_breadcrumb @search.title, exhibit_browse_path(@exhibit, @search)
-      (@response, @document_list) = get_search_results @search.query_params
+      (@response, @document_list) = get_search_results @search.query_params.with_indifferent_access.merge(params)
     end
     
     protected
