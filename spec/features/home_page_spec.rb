@@ -68,4 +68,23 @@ describe "Home page" do
     # Verify the home page title is not being displayed
     expect(page).not_to have_css("h1.page-title", text: exhibit.home_page.title)
   end
+
+  describe "page options on edit form" do
+    describe "show title" do
+      let(:new_exhibit) { Spotlight::Exhibit.default }
+      let(:home_page) { FactoryGirl.create(:home_page, display_title: false) }
+      it "should be updatable from the edit page" do
+        expect(home_page.display_title).to be_false
+
+        visit spotlight.edit_exhibit_home_page_path(home_page.exhibit, home_page)
+        expect(find("#home_page_display_title")).not_to be_checked
+
+        check "Show title"
+        click_button "Save changes"
+
+        visit spotlight.edit_exhibit_home_page_path(home_page.exhibit, home_page)
+        expect(find("#home_page_display_title")).to be_checked
+      end
+    end
+  end
 end

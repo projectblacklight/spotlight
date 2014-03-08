@@ -74,6 +74,10 @@ module Spotlight
       [:id, :published, :title, :weight, :display_sidebar, :parent_page_id ]
     end
 
+    def allowed_page_params
+      [:title, :content]
+    end
+
     def human_name
       @human_name ||= page_collection_name.humanize
     end
@@ -89,10 +93,9 @@ module Spotlight
     end
 
     private
-
       # Only allow a trusted parameter "white list" through.
       def page_params
-        params.require(controller_name.singularize).permit(:title, :content)
+        params.require(controller_name.singularize).permit(allowed_page_params)
       end
   end
 end
