@@ -8,4 +8,7 @@ module Spotlight::MainAppHelpers
     params[:controller] == 'spotlight/about_pages'
   end
   
+  def show_contact_form?
+    current_exhibit && current_exhibit.contact_emails.confirmed.any?
+  end
 end

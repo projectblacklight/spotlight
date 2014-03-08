@@ -88,7 +88,7 @@ en:
           large: Large
     contact_forms:
       new:
-        header: "Report a problem"
+        header: "Feedback"
     curation:
       sidebar:
         header: Curation
@@ -154,7 +154,7 @@ en:
         confirm: Confirm my account
     contact_form:
       new:
-        header: "Report a Problem"
+        header: "Feedback"
     custom_fields:
       edit:
         header: Edit Exhibit-Specific Field
@@ -180,7 +180,7 @@ en:
         import: Import
         fields:
           contact_emails:
-            help_block: Each contact email will receive Report a problem form submissions
+            help_block: Each contact email will receive feedback submissions
       new:
         header: Create a new exhibit
       import:
@@ -292,7 +292,7 @@ en:
     header_links:
       login: "Sign in"
       logout: "Sign out"
-      contact: "Report a problem"
+      contact: "Feedback"
     saved_search:
       label: "Save this search"
       title: "Saved search title"
