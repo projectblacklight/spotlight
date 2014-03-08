@@ -32,6 +32,10 @@ module Spotlight
     
     private
 
+    def allowed_page_params
+      super.concat [:display_title]
+    end
+
     def search_action_url *args
       exhibit_catalog_index_url(@page.exhibit, *args)
     end

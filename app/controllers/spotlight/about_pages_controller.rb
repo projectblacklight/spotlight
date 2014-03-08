@@ -39,5 +39,10 @@ module Spotlight
     def update_all_page_params
       params.require(:exhibit).permit( "about_pages_attributes" => page_attributes)
     end
+
+    def allowed_page_params
+      super.concat [:published]
+    end
+
   end
 end

@@ -221,6 +221,7 @@ en:
         header: Edit page
       form:
         title_placeholder: "Title"
+        page_options: "Page options"
     contacts:
       edit:
         header: "Edit Contact"
@@ -242,10 +243,14 @@ en:
           legend: Contact Details
         instructions: Enter details for each librarian, curator or other contact person for this exhibit. Select the contacts you want to be show in the sidebar of the About Pages. Drag and drop contacts to specify the order in which they are shown in the sidebar.
       nav_link: About
+      page_options:
+        published: "Publish"
       sidebar:
         nav_link: About
     feature_pages:
       nav_link: Curated Features
+      page_options:
+        published: "Publish"
     roles:
       index:
         title: Site Administration - Users

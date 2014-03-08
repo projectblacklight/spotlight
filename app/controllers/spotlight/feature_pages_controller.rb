@@ -27,5 +27,9 @@ module Spotlight
         "home_page_attributes" => [:id, :title, :display_title]
       )
     end
+
+    def allowed_page_params
+      super.concat [:display_sidebar, :published]
+    end
   end
 end
