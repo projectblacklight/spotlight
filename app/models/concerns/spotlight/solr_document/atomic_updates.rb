@@ -4,7 +4,7 @@ module Spotlight::SolrDocument::AtomicUpdates
     solr_hash = hash_for_solr_update
     return if solr_hash.length == 1
 
-    blacklight_solr.update params: { commitWithin: 500 }, data: [solr_hash].to_json, headers: { 'Content-Type' => 'application/json'}
+    Spotlight.index_writer.update params: { commitWithin: 500 }, data: [solr_hash].to_json, headers: { 'Content-Type' => 'application/json'}
   end
 
   private
