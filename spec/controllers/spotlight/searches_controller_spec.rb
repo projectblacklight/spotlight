@@ -38,6 +38,7 @@ describe Spotlight::SearchesController do
     end
 
     describe "GET index" do
+      let!(:search) { FactoryGirl.create(:search, exhibit: exhibit) }
       it "should show all the items" do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
@@ -46,6 +47,14 @@ describe Spotlight::SearchesController do
         expect(response).to be_successful
         expect(assigns[:exhibit]).to eq search.exhibit
         expect(assigns[:searches]).to include search
+      end
+
+      it "should have a JSON response" do
+        get :index, exhibit_id: exhibit, format: 'json'
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['searches'].size).to eq 2
+        expect(json['searches'].last).to include({'id' => search.id, "title"=>"Search1"})
       end
     end
 
