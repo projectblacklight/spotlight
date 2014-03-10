@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe "Update the appearance" do
-  let!(:exhibit) { Spotlight::Exhibit.default }
-  let!(:user) { FactoryGirl.create(:exhibit_admin) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+
   before { login_as user }
   it "should update appearance options" do
     visit spotlight.exhibit_dashboard_path(exhibit)

@@ -4,7 +4,7 @@ describe Spotlight::Search do
 
   before do
     subject.query_params = {"f"=>{"genre_sim"=>["map"]}}
-    subject.exhibit = Spotlight::Exhibit.default
+    subject.exhibit = FactoryGirl.create(:exhibit)
   end
 
   it "should have a default feature image" do

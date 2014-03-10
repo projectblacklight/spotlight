@@ -1,9 +1,10 @@
 require "spec_helper"
 
 describe "Search Facets Administration" do
-  let(:curator) { FactoryGirl.create(:exhibit_curator) }
-  let(:exhibit) { Spotlight::Exhibit.default }
-  before { login_as curator }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  before { login_as exhibit_curator }
+
   describe "edit" do
     it "should display the facet edit screen" do
       visit spotlight.exhibit_edit_facets_path(exhibit)

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Spotlight::HomePagesController do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { "title" => "MyString" } }
-  let(:exhibit) {FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:page) { exhibit.home_page }
 
   describe "when signed in as a curator" do
@@ -15,8 +15,8 @@ describe Spotlight::HomePagesController do
 
     describe "GET index" do
       it "should redirect to the feature pages" do
-        get :index, exhibit_id: Spotlight::Exhibit.default
-        expect(response).to redirect_to exhibit_feature_pages_path(Spotlight::Exhibit.default)
+        get :index, exhibit_id: exhibit
+        expect(response).to redirect_to exhibit_feature_pages_path(exhibit)
       end
     end
 

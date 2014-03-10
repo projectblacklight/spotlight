@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 describe "spotlight/feature_pages/_sidebar.html.erb" do
-  let!(:parent1) { FactoryGirl.create(:feature_page, exhibit: Spotlight::Exhibit.default, title: "Parent Page") }
-  let!(:parent2) { FactoryGirl.create(:feature_page, exhibit: parent1.exhibit, title: "Two") }
-  let!(:child1) { FactoryGirl.create(:feature_page, exhibit: parent1.exhibit, parent_page: parent1, title: "Three", weight: 4) }
-  let!(:child2) { FactoryGirl.create(:feature_page, exhibit: parent1.exhibit, parent_page: parent2, title: "Four") }
-  let!(:child3) { FactoryGirl.create(:feature_page, exhibit: parent1.exhibit, parent_page: parent1, title: "Five", weight: 2) }
-  let!(:child4) { FactoryGirl.create(:feature_page, exhibit: parent1.exhibit, parent_page: parent1, title: "Six", published: false) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let!(:parent1) { FactoryGirl.create(:feature_page, exhibit: exhibit, title: "Parent Page") }
+  let!(:parent2) { FactoryGirl.create(:feature_page, exhibit: exhibit, title: "Two") }
+  let!(:child1) { FactoryGirl.create(:feature_page, exhibit: exhibit, parent_page: parent1, title: "Three", weight: 4) }
+  let!(:child2) { FactoryGirl.create(:feature_page, exhibit: exhibit, parent_page: parent2, title: "Four") }
+  let!(:child3) { FactoryGirl.create(:feature_page, exhibit: exhibit, parent_page: parent1, title: "Five", weight: 2) }
+  let!(:child4) { FactoryGirl.create(:feature_page, exhibit: exhibit, parent_page: parent1, title: "Six", published: false) }
   let!(:child5) { FactoryGirl.create(:feature_page, exhibit: FactoryGirl.create(:exhibit), title: "Seven") }
   
   before do

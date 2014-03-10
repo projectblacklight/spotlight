@@ -4,7 +4,7 @@ module Spotlight
   describe "spotlight/roles/index" do
     let(:user) { stub_model(::User, email: 'jane@example.com') } 
 
-    let(:exhibit) { Exhibit.default }
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
     let(:roles) { [FactoryGirl.create(:role, role: 'admin', user: user, exhibit: exhibit)] }
 
     before do

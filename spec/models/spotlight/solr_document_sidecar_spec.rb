@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe Spotlight::SolrDocumentSidecar do
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
   before do
-    subject.stub exhibit: Spotlight::Exhibit.default
+    subject.stub exhibit: exhibit
     subject.stub solr_document_id: 'doc_id'
   end
 
@@ -12,7 +13,7 @@ describe Spotlight::SolrDocumentSidecar do
     end
 
     its(:to_solr) { should include id: 'doc_id' }
-    its(:to_solr) { should include exhibit_1_public_bsi: true }
+    its(:to_solr) { should include "exhibit_#{exhibit.id}_public_bsi".to_sym => true }
     its(:to_solr) { should include 'a_tesim', 'b_tesim', 'c_tesim' }
   end
 

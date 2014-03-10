@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Spotlight::DashboardsController do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
 
   describe "when logged in" do
-    let(:curator) { FactoryGirl.create(:exhibit_curator) }
+    let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
     before { sign_in curator }
     describe "GET show" do
       it "should load the exhibit" do

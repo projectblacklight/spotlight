@@ -1,17 +1,17 @@
 require "spec_helper"
 
 describe "Feature page" do
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
-  let!(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   describe "sidebar" do
     let!(:parent_feature_page) { 
-      FactoryGirl.create(:feature_page, title: "Parent Page")
+      FactoryGirl.create(:feature_page, title: "Parent Page", exhibit: exhibit)
     }
     let!(:child_feature_page) {
       FactoryGirl.create(
         :feature_page,
         title: "Child Page",
-        parent_page: parent_feature_page
+        parent_page: parent_feature_page, exhibit: exhibit
       )
     }
     describe "when configured to display" do
@@ -43,7 +43,7 @@ describe "Feature page" do
   describe "page options" do
     before { login_as exhibit_curator }
     describe "publish" do
-      let!(:unpublished_page) { FactoryGirl.create(:feature_page, published: false) }
+      let!(:unpublished_page) { FactoryGirl.create(:feature_page, published: false, exhibit: exhibit) }
       it "should be updatable from the edit page" do
         expect(unpublished_page).not_to be_published
 
@@ -60,7 +60,7 @@ describe "Feature page" do
       end
     end
     describe "display_sidebar" do
-      let!(:feature_page) { FactoryGirl.create(:feature_page, display_sidebar: false) }
+      let!(:feature_page) { FactoryGirl.create(:feature_page, display_sidebar: false, exhibit: exhibit) }
       it "should be updatable from the edit page" do
         expect(feature_page.display_sidebar).to be_false
 

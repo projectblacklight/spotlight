@@ -1,15 +1,16 @@
 require "spec_helper"
 
 describe "Mutli-Up Item Grid", js: true do
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
-  let!(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   let!(:feature_page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
   before { login_as exhibit_curator }
+
   it "should display items that are configured to display (and hide items that are not)" do
     pending("Passing locally but Travis is thowing intermittent errors") if ENV["CI"]
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
     click_link "Feature pages"
@@ -68,11 +69,12 @@ describe "Mutli-Up Item Grid", js: true do
     expect(page).to have_css("[data-id='jp266yb7109']")
     expect(page).not_to have_css("[data-id='zv316zr9542']")
   end
+
   it "should optionally show the configured caption" do
     pending("Passing locally but Travis is thowing intermittent errors") if ENV["CI"]
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
     click_link "Feature pages"

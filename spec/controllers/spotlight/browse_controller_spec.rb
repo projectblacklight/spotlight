@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spotlight::BrowseController do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:search) { FactoryGirl.create(:published_search, exhibit: exhibit) }
   let!(:unpublished) { FactoryGirl.create(:search, exhibit: exhibit) }
 

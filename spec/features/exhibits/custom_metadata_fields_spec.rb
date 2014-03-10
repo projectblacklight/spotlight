@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe "Adding custom metadata fields", type: :feature do
 
-  let(:admin) { FactoryGirl.create(:exhibit_admin) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+
   before do
     login_as(admin)
   end
@@ -10,7 +12,7 @@ describe "Adding custom metadata fields", type: :feature do
   it "should work" do
     # Add 
     
-    visit spotlight.exhibit_edit_metadata_path Spotlight::Exhibit.default
+    visit spotlight.exhibit_edit_metadata_path exhibit
     click_on "Add new field"
     fill_in "Label", with: "My new custom field"
     fill_in "Short description", with: "Helps to remind me what this field is for"

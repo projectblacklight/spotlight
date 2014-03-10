@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spotlight::TagsController do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
 
   describe "when not signed in" do
     describe "GET index" do
@@ -13,7 +13,7 @@ describe Spotlight::TagsController do
     end
   end
   describe "when signed in as a curator" do
-    before {sign_in FactoryGirl.create(:exhibit_curator)} 
+    before {sign_in FactoryGirl.create(:exhibit_curator, exhibit: exhibit)} 
     describe "GET index" do
       it "should be successful" do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
@@ -32,7 +32,7 @@ describe Spotlight::TagsController do
     end
 
     describe "DELETE destroy" do
-      let!(:tagging) { FactoryGirl.create(:tagging) }
+      let!(:tagging) { FactoryGirl.create(:tagging, tagger: exhibit) }
       it "should be successful" do
         expect {
           delete :destroy, exhibit_id: exhibit, id: tagging.tag
