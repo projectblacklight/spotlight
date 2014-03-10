@@ -26,6 +26,7 @@ en:
         create: "Add contact"
       spotlight/exhibit:
         create: "Create Exhibit"
+        destroy: "Delete this exhibit"
     submit:
       spotlight_default: &spotlight_default
         create: "Save"
