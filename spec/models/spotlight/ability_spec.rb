@@ -9,9 +9,10 @@ describe Spotlight::Ability do
   let(:search) {FactoryGirl.create(:published_search, exhibit: exhibit)}
   let(:unpublished_search) {FactoryGirl.create(:search, exhibit: exhibit)}
   let(:page) {FactoryGirl.create(:feature_page, exhibit: exhibit)}
+  subject { Ability.new(user) }
 
   describe "a user with no roles" do
-    subject { Ability.new(nil) }
+    let(:user) { nil }
     it { should_not be_able_to(:create, exhibit) }
     it { should be_able_to(:read, exhibit) }
     it { should be_able_to(:read, page) }
@@ -21,16 +22,27 @@ describe Spotlight::Ability do
     it { should_not be_able_to(:tag, exhibit) }
   end
 
+  describe "a superadmin" do
+    let(:user) { FactoryGirl.create(:site_admin) }
+
+    it { should be_able_to(:create,  Spotlight::Exhibit) }
+
+  end
+
   describe "a user with admin role" do
     let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
     let(:role) { FactoryGirl.create(:role, exhibit: exhibit) }
-    subject { Ability.new(user) }
+
     it { should be_able_to(:update, exhibit) }
 
     it { should be_able_to(:index,   role) }
     it { should be_able_to(:destroy, role) }
     it { should be_able_to(:update,  role) }
     it { should be_able_to(:create,  Spotlight::Role) }
+    it { should_not be_able_to(:create,  Spotlight::Exhibit) }
+    it { should be_able_to(:import,  exhibit) }
+    it { should be_able_to(:process_import,  exhibit) }
+    it { should be_able_to(:destroy,  exhibit) }
 
     let(:blacklight_config) { role.exhibit.blacklight_configuration }
     it { should be_able_to(:edit, Spotlight::Appearance.new(blacklight_config)) }
@@ -38,7 +50,6 @@ describe Spotlight::Ability do
 
   describe "a user with curate role" do
     let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-    subject { Ability.new(user) }
 
     it { should_not be_able_to(:update, exhibit) }
     it { should be_able_to(:curate, exhibit) }
