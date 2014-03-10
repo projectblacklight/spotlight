@@ -61,7 +61,7 @@ Spotlight::Engine.routes.draw do
         patch :update_all
       end
     end
-    resources :home_page, controller: "home_pages", as: "home_pages"
+    resource :home_page, controller: "home_pages"
 
     resources :roles, only: [:index, :create, :destroy] do
       collection do

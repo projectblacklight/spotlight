@@ -13,12 +13,12 @@ describe Spotlight::HomePagesController do
       sign_in user
     end
 
-    describe "GET index" do
-      it "should redirect to the feature pages" do
-        get :index, exhibit_id: exhibit
-        expect(response).to redirect_to exhibit_feature_pages_path(exhibit)
-      end
-    end
+    # describe "GET index" do
+    #   it "should redirect to the feature pages" do
+    #     get :index, exhibit_id: exhibit
+    #     expect(response).to redirect_to exhibit_feature_pages_path(exhibit)
+    #   end
+    # end
 
     describe "GET edit" do
       describe "when the page title isn't set" do
