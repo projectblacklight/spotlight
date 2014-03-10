@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe "spotlight/tags/index.html.erb" do
-  let(:exhibit) { Spotlight::Exhibit.default }
-  let!(:tag1) { FactoryGirl.create(:tagging) }
-  let!(:tag2) { FactoryGirl.create(:tagging) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let!(:tag1) { FactoryGirl.create(:tagging, tagger: exhibit) }
+  let!(:tag2) { FactoryGirl.create(:tagging, tagger: exhibit) }
   before do
     assign(:exhibit, exhibit)
     assign(:tags, exhibit.owned_tags)

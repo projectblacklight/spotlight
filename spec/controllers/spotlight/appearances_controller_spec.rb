@@ -1,8 +1,7 @@
 require 'spec_helper'
 describe Spotlight::AppearancesController do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { Spotlight::Exhibit.default }
-
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
 
   describe "when the user is not authorized" do
     before do
@@ -26,7 +25,7 @@ describe Spotlight::AppearancesController do
   end
 
   describe "when signed in" do
-    let(:user) { FactoryGirl.create(:exhibit_admin) }
+    let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
     before {sign_in user }
 
     describe "#edit" do

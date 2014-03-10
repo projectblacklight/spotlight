@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'spotlight/browse/show' do
   let(:search) { FactoryGirl.create(:published_search) }
-  let(:exhibit) { Spotlight::Exhibit.default }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
 
   before :each do
     view.stub(blacklight_config: Blacklight::Configuration.new )

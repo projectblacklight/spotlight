@@ -2,10 +2,13 @@ require 'spec_helper'
 require 'cancan/matchers'
 
 describe Spotlight::Ability do
-  let(:exhibit) {Spotlight::Exhibit.default}
+  before do
+    Spotlight::Search.any_instance.stub(:default_featured_image)
+  end
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:search) {FactoryGirl.create(:published_search, exhibit: exhibit)}
-  let(:unpublished_search) {FactoryGirl.create(:search)}
-  let(:page) {FactoryGirl.create(:feature_page)}
+  let(:unpublished_search) {FactoryGirl.create(:search, exhibit: exhibit)}
+  let(:page) {FactoryGirl.create(:feature_page, exhibit: exhibit)}
 
   describe "a user with no roles" do
     subject { Ability.new(nil) }
@@ -19,8 +22,8 @@ describe Spotlight::Ability do
   end
 
   describe "a user with admin role" do
-    let(:user) { FactoryGirl.create(:exhibit_admin) }
-    let(:role) { FactoryGirl.create(:role, exhibit: user.roles.first.exhibit) }
+    let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+    let(:role) { FactoryGirl.create(:role, exhibit: exhibit) }
     subject { Ability.new(user) }
     it { should be_able_to(:update, exhibit) }
 
@@ -34,7 +37,7 @@ describe Spotlight::Ability do
   end
 
   describe "a user with curate role" do
-    let(:user) { FactoryGirl.create(:exhibit_curator) }
+    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
     subject { Ability.new(user) }
 
     it { should_not be_able_to(:update, exhibit) }

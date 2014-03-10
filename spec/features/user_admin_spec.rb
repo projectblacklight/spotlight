@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe "User Administration" do
-  let!(:exhibit) { Spotlight::Exhibit.default }
-  let!(:user) { FactoryGirl.create(:exhibit_admin) }
+  let!(:exhibit) { FactoryGirl.create(:exhibit) }
+  let!(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as user }
   describe "index" do
     it "should show the users for the exhibit" do

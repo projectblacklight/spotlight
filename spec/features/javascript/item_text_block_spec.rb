@@ -1,15 +1,16 @@
 require "spec_helper"
 
 feature "Item + Image Block" do
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
 
   scenario "should allow you to add a thumbnail to a page within an exhibit", :js => true do
     pending("Passing locally but Travis is thowing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
     click_link "Feature pages"
@@ -44,12 +45,13 @@ feature "Item + Image Block" do
       expect(page).not_to have_css(".title")
     end
   end
+
   scenario "should allow you to optionally display the title with the image", :js => true do
     pending("Passing locally but Travis is thowing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
     click_link "Feature pages"
@@ -87,12 +89,13 @@ feature "Item + Image Block" do
       expect(page).to have_content("L'AMERIQUE")
     end
   end
+
   scenario "should allow you to add text to the image", :js => true do
     pending("Passing locally but Travis is thowing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
     click_link "Feature pages"
@@ -129,12 +132,13 @@ feature "Item + Image Block" do
       expect(page).to have_content "Some text to annotate this image."
     end
   end
+
   scenario "should allow you to choose which side the text will be on", :js => true do
     pending("Passing locally but Travis is thowing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
     click_link "Feature pages"

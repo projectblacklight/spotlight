@@ -2,7 +2,8 @@ require 'spec_helper'
 
 module Spotlight
   describe CrudLinkHelpers do
-    let(:some_model) { Spotlight::FeaturePage.create! exhibit: Spotlight::Exhibit.default }
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:some_model) { Spotlight::FeaturePage.create! exhibit: exhibit }
     describe "#cancel_link" do
 
       it "should be a model-specific cancel link" do
@@ -31,16 +32,15 @@ module Spotlight
     end
 
     describe "#exhibit_create_link" do
-      let(:current_exhibit) { Spotlight::Exhibit.default }
       let(:some_model) { Spotlight::FeaturePage.new }
       before do
-        helper.stub(current_exhibit: current_exhibit)
+        helper.stub(current_exhibit: exhibit)
         helper.stub action_default_value: "Create"
       end
 
       it "should be a model-specific view link" do
         helper.should_receive(:action_default_value).with(some_model).and_return "Create"
-        expect(helper.exhibit_create_link(some_model)).to have_link "Create", href: spotlight.new_exhibit_feature_page_path(current_exhibit)
+        expect(helper.exhibit_create_link(some_model)).to have_link "Create", href: spotlight.new_exhibit_feature_page_path(exhibit)
       end
 
       it "should accept an explicit link" do
@@ -53,16 +53,15 @@ module Spotlight
     end
 
     describe "#exhibit_edit_link" do
-      let(:current_exhibit) { Spotlight::Exhibit.default }
-      let(:some_model) { Spotlight::FeaturePage.create! exhibit: current_exhibit }
+      let(:some_model) { Spotlight::FeaturePage.create! exhibit: exhibit }
       before do
-        helper.stub(current_exhibit: current_exhibit)
+        helper.stub(current_exhibit: exhibit)
         helper.stub action_default_value: "Edit"
       end
 
       it "should be a model-specific edit link" do
         helper.should_receive(:action_default_value).with(some_model).and_return "Edit"
-        expect(helper.exhibit_edit_link(some_model)).to have_link "Edit", href: spotlight.edit_exhibit_feature_page_path(current_exhibit, some_model)
+        expect(helper.exhibit_edit_link(some_model)).to have_link "Edit", href: spotlight.edit_exhibit_feature_page_path(exhibit, some_model)
       end
 
       it "should accept an explicit link" do

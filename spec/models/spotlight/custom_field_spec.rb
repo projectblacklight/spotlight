@@ -47,12 +47,13 @@ describe Spotlight::CustomField do
   end
 
   describe "#field" do
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
     it "should be auto-generated from the field label" do
       subject.configuration["label"] = "xyz"
-      subject.exhibit = Spotlight::Exhibit.default
+      subject.exhibit = exhibit
       subject.save
 
-      expect(subject.field).to eq "exhibit_#{Spotlight::Exhibit.default.to_param}_xyz_tesim"
+      expect(subject.field).to eq "exhibit_#{exhibit.to_param}_xyz_tesim"
     end
   end
 
