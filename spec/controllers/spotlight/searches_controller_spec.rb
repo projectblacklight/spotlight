@@ -5,6 +5,7 @@ describe Spotlight::SearchesController do
     Spotlight::Search.any_instance.stub(:default_featured_image)
   end
   routes { Spotlight::Engine.routes }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
 
   describe "when the user is not authorized" do
 
@@ -13,13 +14,13 @@ describe Spotlight::SearchesController do
     end
 
     it "should raise an error" do
-      post :create, exhibit_id: Spotlight::ExhibitFactory.default
+      post :create, exhibit_id: exhibit 
       expect(response).to redirect_to main_app.root_path
       expect(flash[:alert]).to be_present
     end
 
     it "should raise an error" do
-      get :index, exhibit_id: Spotlight::ExhibitFactory.default
+      get :index, exhibit_id: exhibit
       expect(response).to redirect_to main_app.root_path
       expect(flash[:alert]).to be_present
     end
@@ -27,13 +28,12 @@ describe Spotlight::SearchesController do
 
   describe "when the user is a curator" do
     before do
-      sign_in FactoryGirl.create(:exhibit_curator)
+      sign_in FactoryGirl.create(:exhibit_curator, exhibit: exhibit)
     end
-    let(:search) { FactoryGirl.create(:search) }
-    let(:exhibit) { search.exhibit }
+    let(:search) { FactoryGirl.create(:search, exhibit: exhibit) }
 
     it "should create a saved search" do
-      post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_ssim"=>["map"]}, exhibit_id: Spotlight::ExhibitFactory.default
+      post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_ssim"=>["map"]}, exhibit_id: exhibit 
       expect(response).to redirect_to main_app.catalog_index_path
       expect(flash[:notice]).to eq "Search has been saved"
       expect(assigns[:search].title).to eq "A bunch of maps"
@@ -77,7 +77,7 @@ describe Spotlight::SearchesController do
     end
 
     describe "DELETE destroy" do
-      let!(:search) { FactoryGirl.create(:search) }
+      let!(:search) { FactoryGirl.create(:search, exhibit: exhibit) }
       it "should remove it" do
         expect {
           delete :destroy, id: search, exhibit_id: search.exhibit
@@ -88,11 +88,11 @@ describe Spotlight::SearchesController do
     end
 
     describe "POST update_all" do
-      let!(:search2) { FactoryGirl.create(:search, exhibit: search.exhibit, on_landing_page: true ) }
-      let!(:search3) { FactoryGirl.create(:search, exhibit: search.exhibit, on_landing_page: true ) }
+      let!(:search2) { FactoryGirl.create(:search, exhibit: exhibit, on_landing_page: true ) }
+      let!(:search3) { FactoryGirl.create(:search, exhibit: exhibit, on_landing_page: true ) }
       before { request.env["HTTP_REFERER"] = "http://example.com" }
       it "should update whether they are on the landing page" do
-        post :update_all, exhibit_id: search.exhibit, exhibit: {searches_attributes: [{id: search.id, on_landing_page: true, weight: '1' }, {id: search2.id, on_landing_page: false, weight: '0'}]}
+        post :update_all, exhibit_id: exhibit, exhibit: {searches_attributes: [{id: search.id, on_landing_page: true, weight: '1' }, {id: search2.id, on_landing_page: false, weight: '0'}]}
         expect(search.reload.on_landing_page).to be_true
         expect(search.weight).to eq 1
         expect(search2.reload.on_landing_page).to be_false

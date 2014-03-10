@@ -1,7 +1,7 @@
 require 'spec_helper'
 describe Spotlight::BlacklightConfigurationsController do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { Spotlight::ExhibitFactory.default }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
 
 
   describe "when the user is not authorized" do
@@ -52,7 +52,7 @@ describe Spotlight::BlacklightConfigurationsController do
   end
 
   describe "when signed in" do
-    let(:user) { FactoryGirl.create(:exhibit_admin) }
+    let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
     before {sign_in user }
 
     describe "#edit_metadata_fields" do
@@ -85,7 +85,7 @@ describe Spotlight::BlacklightConfigurationsController do
     end
 
     describe "#alternate_count" do
-      before { controller.instance_variable_set(:@blacklight_configuration, Spotlight::ExhibitFactory.default.blacklight_configuration) }
+      before { controller.instance_variable_set(:@blacklight_configuration, exhibit.blacklight_configuration) }
       subject { controller.alternate_count }
       its(:count) { should eq 7 }
       it "should have correct numbers" do

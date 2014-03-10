@@ -1,20 +1,24 @@
 FactoryGirl.define do
   factory :feature_page, class: Spotlight::FeaturePage do
-    exhibit Spotlight::ExhibitFactory.default
+    exhibit
     title "Page1"
     published  true
   end
   factory :feature_subpage, parent: :feature_page do
-    association :parent_page, factory: :feature_page
+    ignore do
+      exhibit
+    end
+    title "SubPage1"
+    after(:build) { |subpage, evaluator| subpage.parent_page = FactoryGirl.create(:feature_page, exhibit: evaluator.exhibit) }
   end
   factory :about_page, class: Spotlight::AboutPage do
-    exhibit Spotlight::ExhibitFactory.default
+    exhibit
     title "Page1"
     published  true
   end
 
   factory :home_page, class: Spotlight::HomePage do
-    exhibit Spotlight::ExhibitFactory.default
+    exhibit
     title "Page1"
   end
 end

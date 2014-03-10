@@ -7,25 +7,25 @@ describe Spotlight::FeaturePagesController do
   # adjust the attributes here as well.
   let(:valid_attributes) { { "title" => "MyString" } }
   describe "when signed in as a curator" do
-    let(:user) { FactoryGirl.create(:exhibit_curator) }
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
     before {sign_in user }
-    let(:exhibit) { page.exhibit }
 
     describe "GET index" do
-      let!(:page) { FactoryGirl.create(:feature_page) }
+      let!(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
       it "assigns all feature pages as @pages" do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Feature pages", exhibit_feature_pages_path(exhibit))
-        get :index, exhibit_id: Spotlight::ExhibitFactory.default
+        get :index, exhibit_id: exhibit
         expect(assigns(:pages)).to include page
-        expect(assigns(:exhibit)).to eq Spotlight::ExhibitFactory.default
+        expect(assigns(:exhibit)).to eq exhibit
       end
     end
 
     describe "GET show" do
       describe "on a top level page" do
-        let(:page) { FactoryGirl.create(:feature_page) }
+        let(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
         it "assigns the requested page as @page" do
           expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with(page.title, [exhibit, page])
@@ -34,12 +34,12 @@ describe Spotlight::FeaturePagesController do
         end
       end
       describe "on a sub-page" do
-        let(:page) { FactoryGirl.create(:feature_subpage) }
+        let(:page) { FactoryGirl.create(:feature_subpage, exhibit: exhibit) }
         it "assigns the requested page as @page" do
           expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with(page.parent_page.title, [exhibit, page.parent_page])
           expect(controller).to receive(:add_breadcrumb).with(page.title, [exhibit, page])
-          get :show, exhibit_id: page.exhibit.id, id: page
+          get :show, exhibit_id: page.exhibit, id: page
           assigns(:page).should eq(page)
         end
       end
@@ -47,15 +47,14 @@ describe Spotlight::FeaturePagesController do
 
     describe "GET new" do
       it "assigns a new page as @page" do
-        get :new, exhibit_id: Spotlight::ExhibitFactory.default
+        get :new, exhibit_id: exhibit
         expect(assigns(:page)).to be_a_new(Spotlight::FeaturePage)
-        expect(assigns(:page).exhibit).to eq Spotlight::ExhibitFactory.default
+        expect(assigns(:page).exhibit).to eq exhibit
       end
     end
 
     describe "GET edit" do
-      let(:page) { FactoryGirl.create(:feature_page) }
-      let(:page) { FactoryGirl.create(:feature_subpage) }
+      let(:page) { FactoryGirl.create(:feature_subpage, exhibit: exhibit) }
       it "assigns the requested page as @page" do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Feature pages", exhibit_feature_pages_path(exhibit))
@@ -70,17 +69,17 @@ describe Spotlight::FeaturePagesController do
       describe "with valid params" do
         it "creates a new Page" do
           expect {
-            post :create, feature_page: {title: "MyString"} , exhibit_id: Spotlight::ExhibitFactory.default
+            post :create, feature_page: {title: "MyString"} , exhibit_id: exhibit
           }.to change(Spotlight::FeaturePage, :count).by(1)
         end
 
         it "assigns a newly created page as @page" do
-          post :create, feature_page: {title: "MyString"}, exhibit_id: Spotlight::ExhibitFactory.default
+          post :create, feature_page: {title: "MyString"}, exhibit_id: exhibit
           assigns(:page).should be_a(Spotlight::FeaturePage)
           assigns(:page).should be_persisted
         end
         it "redirects to the feature page index" do
-          post :create, feature_page: {title: "MyString"}, exhibit_id: Spotlight::ExhibitFactory.default
+          post :create, feature_page: {title: "MyString"}, exhibit_id: exhibit
           response.should redirect_to(exhibit_feature_pages_path(Spotlight::FeaturePage.last.exhibit))
         end
       end
@@ -89,21 +88,21 @@ describe Spotlight::FeaturePagesController do
         it "assigns a newly created but unsaved page as @page" do
           # Trigger the behavior that occurs when invalid params are submitted
           Spotlight::FeaturePage.any_instance.stub(:save).and_return(false)
-          post :create, feature_page: { "title" => "invalid value" }, exhibit_id: Spotlight::ExhibitFactory.default
+          post :create, feature_page: { "title" => "invalid value" }, exhibit_id: exhibit
           assigns(:page).should be_a_new(Spotlight::FeaturePage)
         end
 
         it "re-renders the 'new' template" do
           # Trigger the behavior that occurs when invalid params are submitted
           Spotlight::FeaturePage.any_instance.stub(:save).and_return(false)
-          post :create, feature_page: { "title" => "invalid value" }, exhibit_id: Spotlight::ExhibitFactory.default
+          post :create, feature_page: { "title" => "invalid value" }, exhibit_id: exhibit 
           response.should render_template("new")
         end
       end
     end
 
     describe "PUT update" do
-      let(:page) { FactoryGirl.create(:feature_page) }
+      let(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
       describe "with valid params" do
         it "updates the requested page" do
           # Assuming there are no other pages in the database, this
@@ -144,7 +143,7 @@ describe Spotlight::FeaturePagesController do
     end
 
     describe "POST update_all" do
-      let!(:page1) { FactoryGirl.create(:feature_page) }
+      let!(:page1) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
       let!(:page2) { FactoryGirl.create(:feature_page, exhibit: page1.exhibit) }
       let!(:page3) { FactoryGirl.create(:feature_page, exhibit: page1.exhibit, parent_page_id: page1.id) }
       before { request.env["HTTP_REFERER"] = "http://example.com" }
@@ -159,7 +158,7 @@ describe Spotlight::FeaturePagesController do
     end
 
     describe "DELETE destroy" do
-      let!(:page) { FactoryGirl.create(:feature_page) }
+      let!(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
       it "destroys the requested page" do
         expect {
           delete :destroy, id: page, exhibit_id: page.exhibit.id

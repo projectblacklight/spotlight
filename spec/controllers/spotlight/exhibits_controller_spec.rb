@@ -5,7 +5,7 @@ describe Spotlight::ExhibitsController do
     Spotlight::Search.any_instance.stub(:default_featured_image)
   end
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { Spotlight::ExhibitFactory.default }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
 
 
   describe "when the user is not authorized" do
@@ -79,7 +79,7 @@ describe Spotlight::ExhibitsController do
   end
 
   describe "when signed in as an exhibit admin" do
-    let(:user) { FactoryGirl.create(:exhibit_admin) }
+    let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
     before {sign_in user }
 
     describe "#new" do
@@ -158,7 +158,7 @@ describe Spotlight::ExhibitsController do
         delete :destroy, id: exhibit
         expect(Spotlight::Exhibit.exists?(exhibit.id)).to be_false
         expect(flash[:notice]).to eq "Exhibit was successfully destroyed."
-        expect(response).to redirect_to exhibit_root_path(Spotlight::ExhibitFactory.default)
+        expect(response).to redirect_to main_app.root_path
       end
     end
   end

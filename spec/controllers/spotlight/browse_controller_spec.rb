@@ -5,7 +5,7 @@ describe Spotlight::BrowseController do
     Spotlight::Search.any_instance.stub(:default_featured_image)
   end
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { Spotlight::ExhibitFactory.default }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:search) { FactoryGirl.create(:published_search, exhibit: exhibit) }
   let!(:unpublished) { FactoryGirl.create(:search, exhibit: exhibit) }
 

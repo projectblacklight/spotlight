@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :user do
     ignore do
-      exhibit { Spotlight::ExhibitFactory.default }
+      exhibit { FactoryGirl.create(:exhibit) }
     end
     sequence(:email) { |n| "user#{n}@example.com" }
     password "insecure"

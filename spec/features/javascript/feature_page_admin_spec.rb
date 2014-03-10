@@ -1,8 +1,8 @@
 require "spec_helper"
 
 feature "Feature Pages Adminstration", js:  true do
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
-  let(:exhibit) { Spotlight::ExhibitFactory.default }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   let!(:page1) {
     FactoryGirl.create(
       :feature_page,
@@ -23,10 +23,10 @@ feature "Feature Pages Adminstration", js:  true do
     pending("Passing locally but Travis is thowing intermittent errors") if ENV["CI"]
     login_as exhibit_curator
 
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
 
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
 
@@ -38,11 +38,12 @@ feature "Feature Pages Adminstration", js:  true do
     expect(page).to have_css("li.dd-item")
     expect(page).to have_css("h3", text: "My New Page")
   end
+
   it "should update the page titles" do
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
 
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
 
@@ -64,10 +65,11 @@ feature "Feature Pages Adminstration", js:  true do
       end
     end
   end
+
   it "should store the display_sidebar boolean" do
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
     click_link "Feature pages"
@@ -81,9 +83,9 @@ feature "Feature Pages Adminstration", js:  true do
     end
   end
   it "should stay in curation mode if a user has unsaved data" do
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
     click_link "Feature pages"
@@ -94,10 +96,11 @@ feature "Feature Pages Adminstration", js:  true do
     click_link "Cancel"
     expect(page).not_to have_selector 'a', text: "Edit"
   end
+
   it "should stay in curation mode if a user has unsaved contenteditable data" do
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
 
@@ -114,10 +117,11 @@ feature "Feature Pages Adminstration", js:  true do
     click_link "Cancel"
     expect(page).not_to have_selector 'a', text: "Edit"
   end
+
   it "should not update the pages list when the user has unsaved changes" do
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
 
@@ -137,10 +141,11 @@ feature "Feature Pages Adminstration", js:  true do
     expect(page).not_to have_content("Feature pages were successfully updated.")
     expect(page).to have_css("h1 small", text: "Feature Pages")
   end
+
   it "should be able to update home page titles" do
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
 

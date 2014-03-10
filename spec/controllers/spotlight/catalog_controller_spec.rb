@@ -2,10 +2,9 @@ require 'spec_helper'
 
 describe Spotlight::CatalogController do
   routes { Spotlight::Engine.routes }
+  let (:exhibit) { FactoryGirl.create(:exhibit) }
 
   describe "when the user is not authenticated" do
-
-    let (:exhibit) {Spotlight::ExhibitFactory.default}
 
     describe "GET admin" do
       it "should redirect to the login page" do
@@ -23,7 +22,7 @@ describe Spotlight::CatalogController do
 
     describe "GET show" do
       let (:document) { SolrDocument.find('dq287tq6352') }
-      let(:search) { FactoryGirl.create(:search) }
+      let(:search) { FactoryGirl.create(:search, exhibit: exhibit) }
       it "should show the item" do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
@@ -43,7 +42,7 @@ describe Spotlight::CatalogController do
       end
 
       it "should show the item with breadcrumbs to the feature page" do
-        feature_page = FactoryGirl.create(:feature_page)
+        feature_page = FactoryGirl.create(:feature_page, exhibit: exhibit)
         controller.stub(current_page_context: feature_page)
 
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
@@ -109,7 +108,6 @@ describe Spotlight::CatalogController do
     before do
       sign_in FactoryGirl.create(:exhibit_visitor)
     end
-    let (:exhibit) {Spotlight::ExhibitFactory.default}
 
     describe "GET index" do
       it "should apply gated discovery access controls" do
@@ -161,10 +159,7 @@ describe Spotlight::CatalogController do
   end
 
   describe "when the user is a curator" do
-    before do
-      sign_in FactoryGirl.create(:exhibit_curator)
-    end
-    let (:exhibit) { Spotlight::ExhibitFactory.default }
+    before { sign_in FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
 
     it "should show all the items" do
       expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
@@ -176,8 +171,6 @@ describe Spotlight::CatalogController do
       expect(assigns[:exhibit]).to eq exhibit
       expect(response).to render_template "spotlight/catalog/admin"
     end
-
-    before {sign_in FactoryGirl.create(:exhibit_curator)}
 
     describe "GET edit" do
       it "should be successful" do

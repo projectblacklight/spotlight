@@ -1,17 +1,18 @@
 require "spec_helper"
 
-feature "About Pages Adminstration", js:  true do
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
-  let(:exhibit) { Spotlight::ExhibitFactory.default }
+feature "About Pages Adminstration", js: true do
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
+
   it "should be able to create new pages" do
     pending("Passing locally but Travis is thowing intermittent errors") if ENV["CI"]
     login_as exhibit_curator
 
-    visit '/'
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
 
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
 

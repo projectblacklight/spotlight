@@ -1,15 +1,16 @@
 require 'spec_helper'
 
 describe "Add tags to an item in an exhibit" do
-  let(:curator) { FactoryGirl.create(:exhibit_curator) }
-  let(:custom_field) { FactoryGirl.create(:custom_field) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let(:custom_field) { FactoryGirl.create(:custom_field, exhibit: exhibit) }
 
   before do
     login_as(curator)
   end
 
   it "should change and display the of tags" do
-    visit spotlight.exhibit_catalog_path(Spotlight::ExhibitFactory.default, "dq287tq6352")
+    visit spotlight.exhibit_catalog_path(exhibit, "dq287tq6352")
 
     expect(page).to have_link "Edit"
 
@@ -19,7 +20,7 @@ describe "Add tags to an item in an exhibit" do
 
     click_on "Save changes"
 
-    visit spotlight.exhibit_catalog_path(Spotlight::ExhibitFactory.default, "dq287tq6352")
+    visit spotlight.exhibit_catalog_path(exhibit, "dq287tq6352")
 
     within("ul.tags") do
       expect(page).to have_selector  "li", text: "One"

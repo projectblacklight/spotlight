@@ -6,7 +6,7 @@ describe Spotlight::AboutPagesController do
   describe "when not logged in" do
 
     describe "POST update_all" do
-      let(:exhibit) { Spotlight::ExhibitFactory.default }
+      let(:exhibit) { FactoryGirl.create(:exhibit) }
       it "should not be allowed" do
         post :update_all, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
@@ -15,20 +15,20 @@ describe Spotlight::AboutPagesController do
   end
 
   describe "when signed in as a curator" do
-    let(:user) { FactoryGirl.create(:exhibit_curator) }
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
     before {sign_in user }
-    let(:exhibit) { page.exhibit }
 
     describe "GET show" do
-      let(:page) { FactoryGirl.create(:about_page, weight: 0) }
-      let(:page2) { FactoryGirl.create(:about_page, weight: 5) }
+      let(:page) { FactoryGirl.create(:about_page, weight: 0, exhibit: exhibit) }
+      let(:page2) { FactoryGirl.create(:about_page, weight: 5, exhibit: exhibit) }
       describe "on the main about page" do
         it "is successful" do
           expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with("About", [exhibit, page])
           get :show, id: page, exhibit_id: exhibit
           expect(assigns(:page)).to eq page
-          expect(assigns(:exhibit)).to eq Spotlight::ExhibitFactory.default
+          expect(assigns(:exhibit)).to eq exhibit 
         end
       end
       describe "on a different about page" do
@@ -38,21 +38,21 @@ describe Spotlight::AboutPagesController do
           expect(controller).to receive(:add_breadcrumb).with(page2.title, [exhibit, page2])
           get :show, id: page2, exhibit_id: exhibit
           expect(assigns(:page)).to eq page2
-          expect(assigns(:exhibit)).to eq Spotlight::ExhibitFactory.default
+          expect(assigns(:exhibit)).to eq exhibit
         end
       end
     end
 
     describe "GET edit" do
-      let(:page) { FactoryGirl.create(:about_page, weight: 0) }
-      let(:page2) { FactoryGirl.create(:about_page, weight: 5) }
+      let!(:page) { FactoryGirl.create(:about_page, weight: 0, exhibit: exhibit) }
+      let!(:page2) { FactoryGirl.create(:about_page, weight: 5, exhibit: exhibit) }
       describe "on the main about page" do
         it "is successful" do
           expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
           get :edit, id: page, exhibit_id: exhibit
           expect(assigns(:page)).to eq page
-          expect(assigns(:exhibit)).to eq Spotlight::ExhibitFactory.default
+          expect(assigns(:exhibit)).to eq exhibit
         end
       end
       describe "on a different about page" do
@@ -60,34 +60,34 @@ describe Spotlight::AboutPagesController do
           expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with(page2.title, [:edit, exhibit, page2])
-          get :edit, id: page2, exhibit_id: exhibit
+          get :edit, id: page2, exhibit_id: exhibit 
           expect(assigns(:page)).to eq page2
-          expect(assigns(:exhibit)).to eq Spotlight::ExhibitFactory.default
+          expect(assigns(:exhibit)).to eq exhibit 
         end
       end
     end
 
     describe "GET index" do
-      let!(:page) { FactoryGirl.create(:about_page) }
+      let!(:page) { FactoryGirl.create(:about_page, exhibit: exhibit) }
       it "is successful" do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("About Pages", exhibit_about_pages_path(exhibit))
-        get :index, exhibit_id: Spotlight::ExhibitFactory.default
+        get :index, exhibit_id: exhibit 
         expect(assigns(:page)).to be_kind_of Spotlight::Page
         expect(assigns(:page)).to be_new_record
         expect(assigns(:pages)).to include page
-        expect(assigns(:exhibit)).to eq Spotlight::ExhibitFactory.default
+        expect(assigns(:exhibit)).to eq exhibit
       end
     end
     describe "POST create" do
       it "redirects to the about page index" do
-        post :create, about_page: {title: "MyString"}, exhibit_id: Spotlight::ExhibitFactory.default
-        response.should redirect_to(exhibit_about_pages_path(Spotlight::AboutPage.last.exhibit))
+        post :create, about_page: {title: "MyString"}, exhibit_id: exhibit 
+        response.should redirect_to(exhibit_about_pages_path(exhibit))
       end
     end
     describe "PUT update" do
-      let!(:page) { FactoryGirl.create(:about_page) }
+      let!(:page) { FactoryGirl.create(:about_page, exhibit: exhibit) }
       it "redirects to the about page" do
         put :update, id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes
         page.reload
@@ -95,9 +95,9 @@ describe Spotlight::AboutPagesController do
       end
     end
     describe "POST update_all" do
-      let!(:page1) { FactoryGirl.create(:about_page) }
-      let!(:page2) { FactoryGirl.create(:about_page, exhibit: page1.exhibit, published: true ) }
-      let!(:page3) { FactoryGirl.create(:about_page, exhibit: page1.exhibit, published: true ) }
+      let!(:page1) { FactoryGirl.create(:about_page, exhibit: exhibit) }
+      let!(:page2) { FactoryGirl.create(:about_page, exhibit: exhibit, published: true ) }
+      let!(:page3) { FactoryGirl.create(:about_page, exhibit: exhibit, published: true ) }
       before { request.env["HTTP_REFERER"] = "http://example.com" }
       it "should update whether they are on the landing page" do
         post :update_all, exhibit_id: page1.exhibit, exhibit: {about_pages_attributes: [{id: page1.id, published: true, title: "This is a new title!"}, {id: page2.id, published: false}]}
@@ -113,7 +113,6 @@ describe Spotlight::AboutPagesController do
     describe "PATCH update_contacts" do
       let!(:contact1) { FactoryGirl.create(:contact, name: 'Aphra Behn', exhibit: exhibit) }
       let!(:contact2) { FactoryGirl.create(:contact, exhibit: exhibit) }
-      let(:exhibit) { user.roles.first.exhibit }
       it "should update contacts" do
         patch :update_contacts, exhibit_id: exhibit, exhibit: {contacts_attributes: [
           {"show_in_sidebar"=>"1", "id"=>contact1.id, weight: 1},

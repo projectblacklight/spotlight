@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe "Adding custom metadata field data" do
-  let(:admin) { FactoryGirl.create(:exhibit_admin) }
-  let(:custom_field) { FactoryGirl.create(:custom_field) }
-  let(:config) { Spotlight::ExhibitFactory.default.blacklight_configuration }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  let(:custom_field) { FactoryGirl.create(:custom_field, exhibit: exhibit) }
+  let(:config) { exhibit.blacklight_configuration }
   before do
     login_as(admin)
     config.index_fields[custom_field.field] = { enabled: true, show: true, 'label' => "Some Field" }
@@ -11,7 +12,7 @@ describe "Adding custom metadata field data" do
   end
 
   it "should work" do
-    visit spotlight.exhibit_catalog_path(Spotlight::ExhibitFactory.default, "dq287tq6352")
+    visit spotlight.exhibit_catalog_path(exhibit, "dq287tq6352")
 
     expect(page).to have_link "Edit"
 
@@ -21,10 +22,10 @@ describe "Adding custom metadata field data" do
 
     click_on "Save changes"
 
-    expect(::SolrDocument.find("dq287tq6352").sidecar(Spotlight::ExhibitFactory.default).data).to include "field_name_tesim" => "My new custom field value"
+    expect(::SolrDocument.find("dq287tq6352").sidecar(exhibit).data).to include "field_name_tesim" => "My new custom field value"
     sleep(1) # The data isn't commited to solr immediately.
 
-    visit spotlight.exhibit_catalog_path(Spotlight::ExhibitFactory.default, "dq287tq6352")
+    visit spotlight.exhibit_catalog_path(exhibit, "dq287tq6352")
     expect(page).to have_content "Some Field"
     expect(page).to have_content "My new custom field value"
 

@@ -2,11 +2,11 @@ require 'spec_helper'
 
 module Spotlight
   describe "shared/_exhibit_navbar" do
-    let(:current_exhibit) {  Spotlight::ExhibitFactory.default }
-    let(:feature_page) { FactoryGirl.create(:feature_page) }
-    let(:unpublished_feature_page) { FactoryGirl.create(:feature_page, published: false) }
-    let(:about_page) { FactoryGirl.create(:about_page) }
-    let(:unpublished_about_page) { FactoryGirl.create(:about_page, published: false) }
+    let(:current_exhibit) { FactoryGirl.create(:exhibit) }
+    let(:feature_page) { FactoryGirl.create(:feature_page, exhibit: current_exhibit) }
+    let(:unpublished_feature_page) { FactoryGirl.create(:feature_page, published: false, exhibit: current_exhibit) }
+    let(:about_page) { FactoryGirl.create(:about_page, exhibit: current_exhibit) }
+    let(:unpublished_about_page) { FactoryGirl.create(:about_page, published: false, exhibit: current_exhibit) }
 
     before :each do
       view.stub(current_exhibit: current_exhibit)
@@ -34,7 +34,7 @@ module Spotlight
 
     it "should provide a dropdown of multiple feature pages" do
       feature_page
-      another_page = FactoryGirl.create(:feature_page)
+      another_page = FactoryGirl.create(:feature_page, exhibit: current_exhibit)
       render
       expect(response).to have_selector ".dropdown .dropdown-toggle", text: "Curated Features"
       expect(response).to have_link feature_page.title, visible: false, href: spotlight.exhibit_feature_page_path(current_exhibit, feature_page)
@@ -53,13 +53,13 @@ module Spotlight
     end
 
     it "should link to the browse index if there's a published search" do
-      FactoryGirl.create :published_search
+      FactoryGirl.create :published_search, exhibit: current_exhibit
       render
       expect(response).to have_link "Browse", href: spotlight.exhibit_browse_index_path(current_exhibit)
     end
 
     it "should mark the browse button as active if we're on a browse page" do
-      FactoryGirl.create :published_search
+      FactoryGirl.create :published_search, exhibit: current_exhibit
       view.stub(on_browse_page?: true)
       render
       expect(response).to have_selector "li.active", text: "Browse"
@@ -71,7 +71,7 @@ module Spotlight
     end
 
     it "should not link to the browse index if only private categories are defined" do
-      FactoryGirl.create :search
+      FactoryGirl.create :search, exhibit: current_exhibit
       render
       expect(response).not_to have_link "Browse"
     end

@@ -1,8 +1,9 @@
 require "spec_helper"
 
 describe "About page" do
-  let!(:about_page1) { FactoryGirl.create(:about_page, title: "First Page") }
-  let!(:about_page2) { FactoryGirl.create(:about_page, title: "Second Page") }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let!(:about_page1) { FactoryGirl.create(:about_page, title: "First Page", exhibit: exhibit) }
+  let!(:about_page2) { FactoryGirl.create(:about_page, title: "Second Page", exhibit: exhibit) }
   describe "sidebar" do
     it "should display" do
       visit spotlight.exhibit_about_page_path(about_page1.exhibit, about_page1)

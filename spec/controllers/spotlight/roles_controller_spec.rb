@@ -2,19 +2,19 @@ require 'spec_helper'
 
 describe Spotlight::RolesController do
   routes { Spotlight::Engine.routes }
+  let(:exhibit) {FactoryGirl.create(:exhibit) }
 
   describe "when user does not have access" do
     before { sign_in FactoryGirl.create(:exhibit_visitor) }
     it "should not allow index" do
-      get :index, exhibit_id: Spotlight::ExhibitFactory.default
+      get :index, exhibit_id: exhibit
       expect(response).to redirect_to main_app.root_path
     end
   end
 
   describe "when user is an admin" do
-    let(:admin) { FactoryGirl.create(:exhibit_admin) }
+    let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
     let(:role) { admin.roles.first }
-    let(:exhibit) { role.exhibit }
     before { sign_in admin }
     it "should allow index" do
       expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)

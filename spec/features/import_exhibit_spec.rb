@@ -2,13 +2,13 @@ require 'spec_helper'
 require 'tempfile'
 
 describe "Allow exhibit admins to import and export content from an exhibit" do
-  let(:user) { FactoryGirl.create(:exhibit_admin) }
-  let(:exhibit) { Spotlight::ExhibitFactory.default }
-  before {login_as user}
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  before { login_as user }
 
   it "should allow admins to export content from an exhibit" do
-    visit '/'
-    within '.dropdown-menu' do
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
+    within '#user-util-collapse .dropdown-menu' do
       click_link 'Dashboard'
     end
 
@@ -22,8 +22,8 @@ describe "Allow exhibit admins to import and export content from an exhibit" do
   end
 
   it "should allow admins to import content into an exhibit" do
-    visit '/'
-    within '.dropdown-menu' do
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
+    within '#user-util-collapse .dropdown-menu' do
       click_link 'Dashboard'
     end
 
