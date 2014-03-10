@@ -13,7 +13,7 @@ module Spotlight
 
       if @contact_form.valid?
         @contact_form.deliver
-        render 'show'
+        redirect_to :back, notice: "Thanks. Your feedback has been sent."
       else
         render 'new' 
       end
