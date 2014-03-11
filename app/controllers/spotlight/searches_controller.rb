@@ -3,7 +3,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   before_filter :authenticate_user!
   before_filter :only_curators!
   load_and_authorize_resource through: :exhibit
-  before_filter :attach_breadcrumbs, only: [:index, :edit]
+  before_filter :attach_breadcrumbs, only: [:index, :edit], unless: -> { request.format.json? }
 
 
   def create
@@ -17,6 +17,10 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   end
 
   def index
+    respond_to do |format|
+      format.html
+      format.json { render json: @searches }
+    end
   end
 
   def edit
