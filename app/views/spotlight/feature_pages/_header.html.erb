@@ -11,8 +11,8 @@
             <%= p.hidden_field :title, value: page.title , class: 'form-control input-sm' %>
           </h3>
           <div class="col-sm-9 page-links">
-            <%= exhibit_view_link page, class: 'btn btn-link' %> &middot;
-            <%= exhibit_edit_link page, class: 'btn btn-link' %>
+            <%= exhibit_view_link page, exhibit_root_path(page.exhibit), class: 'btn btn-link' %> &middot;
+            <%= exhibit_edit_link page, edit_exhibit_home_page_path(page.exhibit), class: 'btn btn-link' %>
           </div>
           <div class="col-sm-3 display-sidebar-control">
             <%= p.check_box :display_title, label: t('spotlight.administration.display_title') %>
