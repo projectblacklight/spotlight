@@ -21,15 +21,8 @@
     display: block;
   }
 
-  ul.navbar-nav {
-    float: right;
-    margin-top: -20px;
-    li a {
-      padding-bottom: 0;
-    }
-  }
-  .site-title {
-    clear: both; // Needed for more-exhibits menu on small screens
+  .more-exhibits {
+    @extend .navbar-right;
   }
 }
 
