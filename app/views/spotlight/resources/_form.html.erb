@@ -1,0 +1,23 @@
+<%= form_for [@resource.exhibit, @resource.becomes(Spotlight::Resource)] do |f| %>
+
+  <%= hidden_field_tag :popup, value: from_popup? %>
+  <div class="form-group">
+    <div class="form-group <%= @resource.url and @resource.needs_provider? ?  'has-warning' : 'has-success' %> has-feedback">
+      <%= f.label :url, class: 'control-label' %>
+      <%= f.hidden_field :url, class: 'form-control' %>
+      <%= f.text_field :url, class: 'form-control', disabled: true %>
+      <span class="glyphicon <%= @resource.url and @resource.needs_provider? ? 'glyphicon-warning-sign' : 'glyphicon-ok' %> form-control-feedback"></span>
+      <% if @resource.url and @resource.needs_provider? %>
+        <p class="help-block"><%= t(:'.needs_provider') %></p>
+      <% elsif @resource.url %>
+        <p class="help-block"><%= t(:'.has_provider') %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-actions col-md-7 col-sm-7">
+    <div class="primary-actions">
+      <%= cancel_link @resource, 'javascript:window.close()', class: 'btn btn-default' %>
+      <%= f.submit nil, class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

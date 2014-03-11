@@ -31,7 +31,10 @@ Gem::Specification.new do |s|
   s.add_dependency "ruby-oembed"
   s.add_dependency "devise", "~> 3.2.3"
   s.add_dependency "active_model_serializers", ">= 0.9.0.alpha1"
-
+  s.add_dependency "faraday"
+  s.add_dependency "faraday_middleware"
+  s.add_dependency "nokogiri"
+  
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "capybara"

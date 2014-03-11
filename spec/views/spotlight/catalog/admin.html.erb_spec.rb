@@ -7,6 +7,7 @@ module Spotlight
       view.stub(:blacklight_config).and_return(CatalogController.blacklight_config)
       view.stub(:spotlight_page_path_for).and_return(nil)
       view.stub(:current_exhibit).and_return(exhibit)
+      view.stub(:new_exhibit_catalog_path).and_return('')
       assign(:exhibit, exhibit)
     end
     it "should render the sidebar" do

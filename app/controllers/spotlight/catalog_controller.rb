@@ -6,6 +6,10 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   before_filter :attach_breadcrumbs
 
+  def new
+    @resource = @exhibit.resources.build
+  end
+
   def index
     super
 
@@ -59,6 +63,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   def admin
     self.blacklight_config.view.reject! { |k,v| true }
     self.blacklight_config.view.admin_table.partials = [:index_compact]
+    self.blacklight_config.sort_fields.reject! { |k,v| true }
 
     add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
     add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)
@@ -171,7 +176,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
 
   def current_browse_category
     @current_browse_category ||= if current_search_session and current_search_session.query_params["action"] == "show" and current_search_session.query_params["controller"] == "spotlight/browse"
-      Spotlight::Search.find(current_search_session.query_params["id"])
+      Spotlight::Search.find(current_search_session.query_params["id"]) if current_search_session.query_params["id"]
     end
   end
 

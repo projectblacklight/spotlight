@@ -51,6 +51,8 @@ en:
       solr_document: *spotlight_default
       users: *spotlight_default
       custom_field: *spotlight_default
+      resource_csv:
+        create: "Import"
     label:
       solr_document:
         exhibit_tag_list: "Tags"
@@ -58,6 +60,9 @@ en:
     models:
       spotlight:
         page: Page
+    attributes:
+      "spotlight/resource/csv":
+            url: "File"
   spotlight:
     application_name: "%{exhibit} - %{application_name}"
     html_title: "%{title} | %{application_name}"
@@ -110,7 +115,7 @@ en:
         options: "Options"
         field:
           label: "Display Label"
-        items_count: 
+        items_count:
           one: "%{count} item"
           other:  "%{count} items"
         values_count:
@@ -148,6 +153,10 @@ en:
       admin:
         title: Curation - Items
         header: Items
+      admin_header:
+        new: "Add New Items"
+      new:
+        header: Import items
     confirmation_mailer:
       confirmation_instructions:
         welcome: "Welcome %{email}!"
@@ -252,6 +261,19 @@ en:
       nav_link: Curated Features
       page_options:
         published: "Publish"
+    resources:
+      new:
+        header: "Add Resource"
+      form:
+        needs_provider: "Could not find an appropriate importer"
+        has_provider: "Ready to import"
+      csv:
+        header: 'CSV Import'
+        form:
+          template: "Download Template"
+      bookmarklet:
+        instructions:  "Drag this button to the bookmarks toolbar in your web browser"
+        bookmarklet: "%{application_name} widget"
     roles:
       index:
         title: Site Administration - Users
@@ -263,7 +285,7 @@ en:
       nav_link: "Browse"
       index:
         header: "Browse"
-        title: "Curation - Browse" 
+        title: "Curation - Browse"
         categories_header: "Browse Categories"
         instructions: "Use the Save search button on a search results page to create a new browse category. Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page."
         no_saved_searches: "You can save search results while in curation mode to create browse categories, which will be displayed here."
