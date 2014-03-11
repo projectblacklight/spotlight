@@ -20,6 +20,10 @@
   small {
     display: block;
   }
+
+  .more-exhibits {
+    @extend .navbar-right;
+  }
 }
 
 .col-md-4 {

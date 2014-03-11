@@ -11,14 +11,14 @@ describe "Home page" do
 
     expect(page).to have_selector ".site-title", text: "Default exhibit"
     expect(page).to have_link "More Exhibits"
-    within '#exhibit-navbar .dropdown-menu' do
+    within '#exhibit-masthead .dropdown-menu' do
       expect(page).to have_no_link "Default exhibit"
       click_link "Second exhibit"
     end
 
     expect(page).to have_selector ".site-title", text: "Second exhibit"
     expect(page).to have_link "More Exhibits"
-    within '#exhibit-navbar .dropdown-menu' do
+    within '#exhibit-masthead .dropdown-menu' do
       expect(page).to have_no_link "Second exhibit"
       click_link "Default exhibit"
     end

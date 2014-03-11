@@ -8,6 +8,15 @@
   }
 }
 
+.navbar-sm {
+  li > a {
+    padding-top:$padding-base-vertical !important;
+    padding-bottom:$padding-base-vertical !important;
+  }
+
+  margin-top: -10px;
+}
+
 .sidenav {
 
   margin-bottom: 24px;
@@ -47,4 +56,3 @@ h1,h2,h3,h4,h5,h6 {
 label.radio {
   font-weight: normal;
 }
-

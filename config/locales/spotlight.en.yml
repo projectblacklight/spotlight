@@ -306,7 +306,7 @@ en:
       report_a_problem:
         title: Contact Us
   shared:
-    exhibit_navbar:
+    exhibit_masthead:
       more_exhibits: More Exhibits
     share_follow:
       share_follow: "Share & Follow"
