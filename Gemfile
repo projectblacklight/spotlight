@@ -13,14 +13,13 @@ gemspec
 # To use debugger
 # gem 'debugger'
 
+gem "blacklight-gallery", github: 'projectblacklight/blacklight-gallery'
+gem 'sir-trevor-rails', github: 'sul-dlss/sir-trevor-rails'
 
 group :test do
   gem 'simplecov', require: false
   gem 'coveralls', require: false
 end
-
-gem "blacklight-gallery", :github => 'projectblacklight/blacklight-gallery'
-gem 'sir-trevor-rails', :github => 'sul-dlss/sir-trevor-rails'
 
 file = File.expand_path("Gemfile", ENV['ENGINE_CART_DESTINATION'] || ENV['RAILS_ROOT'] || File.expand_path("../spec/internal", __FILE__))
 if File.exists?(file)

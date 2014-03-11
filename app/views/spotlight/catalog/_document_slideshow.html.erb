@@ -1,0 +1,22 @@
+<% # container for all documents in slideshow view -%>
+<div id="documents" class="row slideshow">
+  <!-- Wrapper for slides -->
+  <h3><%= t(:'.header') %></h3>
+  <div class="grid">
+    <%= render collection: documents, as: :document, partial: 'grid_slideshow' %>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="slideshow-modal" tabindex="-1" role="dialog" aria-labelledby="slideshow-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close <span class="glyphicon glyphicon-remove-circle"></span></button>
+        </div>
+        <div class="modal-body">
+          <%= render partial: 'slideshow', locals: {documents: documents} %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

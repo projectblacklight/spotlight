@@ -1,0 +1,39 @@
+  <div id="slideshow" class="carousel slide">
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <%= render collection: documents, as: :document, partial: 'index_slideshow' %>
+    </div>
+
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <% documents.each_with_index do |_, i| %>
+        <li data-target="#slideshow" data-slide-to="<%= i %>"<%=' class="active"'.html_safe if i == 0 %>></li>
+      <% end %>
+    </ol>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#slideshow" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#slideshow" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+    <div id="slideshow-caption"><%# javascript puts the caption here %></div>
+    <div id="slideshow-counter">
+      <span id="current-slideshow-index"></span> of <%= documents.count %>
+    </div>
+    <div class="controls">
+      <div class="buttons">
+        <a href="#slideshow" data-slide="prev"><span class="glyphicon glyphicon-step-backward"></span></a>
+        <a href="#slideshow" data-state="pause"><span class="glyphicon glyphicon-pause"></span></a>
+        <a href="#slideshow" data-state="play"><span class="glyphicon glyphicon-play"></span></a>
+        <a href="#slideshow" data-slide="next"><span class="glyphicon glyphicon-step-forward"></span></a>
+      </div>
+      <div>
+        <label><input type="radio" name="speed" data-velocity value="6000"> Slow</label>
+        <label><input type="radio" name="speed" data-velocity value="3000" checked> Medium</label>
+        <label><input type="radio" name="speed" data-velocity value="2000"> Fast</label>
+      </div>
+    </div>
+  </div>
+

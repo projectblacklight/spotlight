@@ -26,7 +26,7 @@ class Spotlight::AppearancesController < Spotlight::ApplicationController
 
   def appearance_params
     params.require(:appearance).permit(:default_per_page, :thumbnail_size,
-      document_index_view_types: [:list, :gallery, :map],
+      document_index_view_types: @appearance.view_type_options,
       sort_fields: @appearance.allowed_params)
   end
 
