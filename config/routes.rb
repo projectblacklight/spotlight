@@ -43,7 +43,7 @@ Spotlight::Engine.routes.draw do
 
     resources :resources
 
-    resources :resource_csvs, controller: 'resources/csv', path: 'csv_resources' do
+    resources :resources_csvs, controller: 'resources/csv', path: 'csv_resources' do
       collection do
         get :template
       end
@@ -81,4 +81,3 @@ Spotlight::Engine.routes.draw do
 
   get '/:exhibit_id' => 'home_pages#show', as: :exhibit_root
 end
-

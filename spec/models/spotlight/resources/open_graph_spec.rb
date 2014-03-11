@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Spotlight::Resource::OpenGraph do
+describe Spotlight::Resources::OpenGraph do
   class TestResource < Spotlight::Resource
-    include Spotlight::Resource::Web
-    include Spotlight::Resource::OpenGraph
+    include Spotlight::Resources::Web
+    include Spotlight::Resources::OpenGraph
   end
 
   subject { TestResource.new url: "info:url" }
@@ -27,16 +27,16 @@ describe Spotlight::Resource::OpenGraph do
     end
 
   end
-  
+
   describe "#opengraph_properties" do
     it "should map opengraph properties to solr fields" do
       subject.stub opengraph: { "og_title" => "title", "og_description" => "description"}
       expect(subject.opengraph_properties).to include "og_title_tesim" => "title", "og_description_tesim" => "description"
     end
   end
-  
+
   describe "#opengraph" do
-    let(:body) do 
+    let(:body) do
       Nokogiri::HTML.parse <<-EOF
         <html><head>
         <meta property="og:title" content="The Ground Truth: The Human Cost of War"/>

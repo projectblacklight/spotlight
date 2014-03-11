@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Spotlight::Resource::Web do
+describe Spotlight::Resources::Web do
 
   class TestResource < Spotlight::Resource
-    include Spotlight::Resource::Web
+    include Spotlight::Resources::Web
   end
-  
+
   subject { TestResource.new }
   describe ".fetch" do
 
@@ -13,7 +13,7 @@ describe Spotlight::Resource::Web do
 
   describe "#harvest!" do
     it "should cache the body and headers in the data" do
-      Spotlight::Resource::Web.stub(fetch: double(body: "xyz", headers: {a: 1}))
+      Spotlight::Resources::Web.stub(fetch: double(body: "xyz", headers: {a: 1}))
       subject.harvest!
       expect(subject.data[:body]).to eq "xyz"
       expect(subject.data[:headers]).to eq a: 1
@@ -22,7 +22,7 @@ describe Spotlight::Resource::Web do
 
   describe "#body" do
     it "should return the body DOM" do
-      Spotlight::Resource::Web.stub(fetch: double(body: "<html />", headers: {a: 1}))
+      Spotlight::Resources::Web.stub(fetch: double(body: "<html />", headers: {a: 1}))
       expect(subject.body).to be_a_kind_of(Nokogiri::HTML::Document)
     end
   end

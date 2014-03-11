@@ -4,7 +4,7 @@ module Spotlight::Resources
   class CsvController < Spotlight::ResourcesController
     before_filter :build_resource, only: [:new, :create, :template]
 
-    load_and_authorize_resource class: 'Spotlight::Resource::Csv', instance_name: 'resource'
+    load_and_authorize_resource class: 'Spotlight::Resources::Csv', instance_name: 'resource'
 
     def template
       render text: CSV.generate { |csv| csv << @resource.label_to_field.keys }
@@ -12,7 +12,7 @@ module Spotlight::Resources
 
     protected
     def build_resource
-      @resource ||= Spotlight::Resource::Csv.new exhibit: @exhibit
+      @resource ||= Spotlight::Resources::Csv.new exhibit: @exhibit
     end
 
     def resource_params

@@ -1,7 +1,7 @@
-class Spotlight::Resource
+module Spotlight::Resources
   module OpenGraph
     extend ActiveSupport::Concern
-    include Spotlight::Resource::Web
+    include Spotlight::Resources::Web
 
     def opengraph
       @opengraph ||= begin
@@ -20,7 +20,7 @@ class Spotlight::Resource
         ["#{k.parameterize("_")}_tesim", v]
       end]
     end
-    
+
     def to_solr
       super.merge(opengraph_properties)
     end

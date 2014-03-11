@@ -1,7 +1,7 @@
 require 'csv'
 
 module Spotlight
-  class Resource::Csv < Spotlight::Resource
+  class Resources::Csv < Spotlight::Resource
     mount_uploader :url, CsvUploader
 
     # we want to do this before reindexing

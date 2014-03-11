@@ -1,6 +1,6 @@
 require 'nokogiri'
 
-class Spotlight::Resource
+module Spotlight::Resources
   module Web
     extend ActiveSupport::Concern
 
@@ -11,7 +11,7 @@ class Spotlight::Resource
     end
 
     def harvest!
-      response = Spotlight::Resource::Web.fetch url
+      response = Spotlight::Resources::Web.fetch url
       self.data[:headers] = response.headers
       self.data[:body] = response.body
     end
