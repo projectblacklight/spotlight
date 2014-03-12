@@ -3,8 +3,7 @@ module Spotlight
 
     def index
       default = Spotlight::Exhibit.default
-      redirect_to exhibit_home_page_path(default, default.home_page)
+      redirect_to exhibit_root_path(default)
     end
   end
 end
-
