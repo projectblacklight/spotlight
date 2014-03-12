@@ -1,5 +1,6 @@
-class Spotlight::CatalogController < Spotlight::ApplicationController
-  load_resource :exhibit, class: Spotlight::Exhibit
+class Spotlight::CatalogController < ::CatalogController
+  include Spotlight::Concerns::ApplicationController
+  load_resource :exhibit, class: Spotlight::Exhibit, prepend: true
   include Spotlight::Catalog
   before_filter :authenticate_user!, only: [:admin, :edit, :make_public, :make_private]
   before_filter :check_authorization, only: [:admin, :edit, :make_public, :make_private]
@@ -61,7 +62,7 @@ class Spotlight::CatalogController < Spotlight::ApplicationController
   end
 
   def admin
-    self.blacklight_config.view.reject! { |k,v| true }
+    self.blacklight_config.view.select! { |k,v| k == :admin_table }
     self.blacklight_config.view.admin_table.partials = [:index_compact]
     self.blacklight_config.sort_fields.reject! { |k,v| true }
 
