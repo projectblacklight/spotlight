@@ -23,7 +23,7 @@
                 <div class="text-muted">
                   <%= content_tag :span, t(:'.items_count', count: alternate_count.fetch(key, 0)), class: 'btn btn-link' %> •
 
-                  <%= link_to t(:'.values_count', count: metadata.fetch('distinct', 0)), catalog_facet_path(key), class: 'btn btn-link btn-with-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => render_field_value(metadata.fetch('topTerms', {}).map { |k,v| String.new(k) }, config) %>
+                  <%= link_to t(:'.values_count', count: metadata.fetch('distinct', 0)), catalog_facet_path(key), class: 'btn btn-link btn-with-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => metadata.fetch('topTerms', {}).map { |k,v| String.new(k) }.join(";") %>
                   <% end %>
                 </div>
               </div>
