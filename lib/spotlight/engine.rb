@@ -6,6 +6,7 @@ require 'spotlight/utils'
 require 'friendly_id'
 require 'devise'
 require 'active_model_serializers'
+require 'openseadragon'
 
 module Spotlight
   class Engine < ::Rails::Engine

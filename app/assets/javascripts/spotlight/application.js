@@ -19,4 +19,5 @@
 //= require bootstrap/carousel
 //= require bootstrap-tagsinput
 //= require social-share-button
+//= require openseadragon
 //= require_tree .
