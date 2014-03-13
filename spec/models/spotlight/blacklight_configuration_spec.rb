@@ -202,7 +202,7 @@ describe Spotlight::BlacklightConfiguration do
         })}
       its(:default_per_page) { should eq 10 }
       its(:thumbnail_size) { should eq 'small' }
-      its(:document_index_view_types) { should eq ["list", "gallery"] }
+      its(:document_index_view_types) { should match_array ::CatalogController.blacklight_config.view.keys.map { |x| x.to_s } }
     end
   end
 
@@ -290,7 +290,7 @@ describe Spotlight::BlacklightConfiguration do
       blacklight_config.view.list
       blacklight_config.view.gallery
       blacklight_config.view.something
-      expect(subject.blacklight_config.view.keys).to eq [:list, :gallery, :something]
+      expect(subject.blacklight_config.view.keys).to eq blacklight_config.view.keys
     end
   end
 
