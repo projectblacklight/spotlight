@@ -25,7 +25,7 @@ module Spotlight
         if block['item-grid-caption-field'] == 'spotlight_title_field'
           return document_heading(document)
         else
-          return render_field_value document[block['item-grid-caption-field']]
+          return safe_join(Array(document[block['item-grid-caption-field']]), ", ")
         end
       end
     end
