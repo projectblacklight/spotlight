@@ -42,6 +42,7 @@ en:
         create: "Save"
         created: "The %{model} was created."
         update: "Save"
+        updated: "The %{model} was successfully updated."
         batch_updated: "Contacts were successfully updated."
       page: &spotlight_page
         create: "Add new page"
