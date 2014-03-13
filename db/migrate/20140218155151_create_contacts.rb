@@ -1,6 +1,7 @@
 class CreateContacts < ActiveRecord::Migration
   def change
     create_table :spotlight_contacts do |t|
+      t.string     :slug
       t.string     :name
       t.string     :email
       t.string     :title
