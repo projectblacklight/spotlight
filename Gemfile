@@ -15,7 +15,9 @@ gemspec
 
 
 group :test do
-  gem 'simplecov', require: false
+  # Peg simplecov to < 0.8 until this is resolved:
+  # https://github.com/colszowka/simplecov/issues/281
+  gem 'simplecov', '~> 0.7.1', require: false
   gem 'coveralls', require: false
 end
 
