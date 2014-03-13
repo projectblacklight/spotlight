@@ -19,6 +19,7 @@ Spotlight::Engine.routes.draw do
     get 'edit/metadata', to: "blacklight_configurations#edit_metadata_fields"
     get 'edit/facets', to: "blacklight_configurations#edit_facet_fields"
     get 'metadata', to: 'blacklight_configurations#metadata_fields'
+    get 'available_configurations', to: 'blacklight_configurations#available_configurations'
 
     blacklight_for :catalog, only: [:export]
 

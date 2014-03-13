@@ -7,6 +7,7 @@ module Spotlight
     let(:untitled_document) { ::SolrDocument.new( :id  => "1234"  ) }
     let!(:current_exhibit) { FactoryGirl.create(:exhibit) }
     let!(:home_page) { current_exhibit.home_page }
+    let!(:search) { FactoryGirl.create(:search, exhibit: current_exhibit, query_params: { "q" => "query" }) }
 
     before(:each) do
       helper.stub(:blacklight_config => blacklight_config)
@@ -35,6 +36,18 @@ module Spotlight
         helper.should_receive(:page_collection_name).and_return("feature_pages")
         assign(:pages, [])
         expect(helper.disable_save_pages_button?).to be_false
+      end
+    end
+    describe "get_search_widget_search_results" do
+      let(:good_json) { { 'searches-options' => search.id } }
+      let(:bad_json) { { 'searches-options' => 100 } }
+      let(:search_result) { [double('response'), double('documents')] }
+      it "should return the results for a given search browse category" do
+        helper.should_receive(:get_search_results).with({"q" => "query"}).and_return(search_result)
+        expect(helper.get_search_widget_search_results( good_json )).to eq search_result
+      end
+      it "should return an empty array when requesting a search that doesn't exist" do
+        expect(helper.get_search_widget_search_results( bad_json )).to be_empty
       end
     end
     describe "item grid helpers" do

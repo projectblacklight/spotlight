@@ -65,6 +65,27 @@ module Spotlight
     def presenter_class
       Spotlight::DocumentPresenter
     end
+
+    # Return a copy of the blacklight configuration
+    # that only includes views conifgured by our block
+    def blacklight_view_config_for_search_block sir_tervor_json
+      # Clone the blacklight_config so we can send our
+      # local copy into the the view_type_group parital
+      config = blacklight_config.clone
+      # Reject any views that aren't conifgured to display for this block
+      config.view.select! do |view,_|
+        selected_search_block_views(sir_tervor_json).include? view.to_s
+      end
+      config
+    end
+
+    # Return the list of views that are configured to display for a block
+    def selected_search_block_views sir_tervor_json
+      sir_tervor_json.select do |key, value|
+        value == "on"
+      end.keys
+    end
+
     private
 
     def field_enabled? field, view = nil

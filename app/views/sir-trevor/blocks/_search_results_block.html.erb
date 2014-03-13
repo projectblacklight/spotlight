@@ -1,8 +1,14 @@
 <div class="documents">
-<%- docs = get_search_results(Rack::Utils.parse_query(block['search'])).last %>
-<%- if docs.empty? %>
-  (EMPTY SEARCH RESULTS? )
-<%- else %>
-  <%= render docs , :as => :document %>
-<%- end %>
+  <% response, document_list = get_search_widget_search_results(block) %>
+  <%- unless document_list.present? %>
+    <div class="alert alert-warning">
+      <strong>No items to display.</strong> There are currently no items in this exhibit that match the curator's search criteria.
+    </div>
+  <%- else %>
+      <% @response, @document_list = [response, document_list] %>
+      <%= render 'sort_and_per_page', block: block %>
+      <%= render_document_index %>
+      <%= render 'results_pagination' %>
+    </div>
+  <%- end %>
 </div>
