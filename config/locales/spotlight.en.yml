@@ -150,6 +150,8 @@ en:
         inprogress:
           label: ""
         private: "Private"
+      document_slideshow:
+        header: Click an image to start the slideshow
       admin:
         title: Curation - Items
         header: Items

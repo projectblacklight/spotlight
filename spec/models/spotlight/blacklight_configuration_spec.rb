@@ -286,7 +286,6 @@ describe Spotlight::BlacklightConfiguration do
     end
 
     it "should pass through the blacklight configuration when not set" do
-
       blacklight_config.view.list
       blacklight_config.view.gallery
       blacklight_config.view.something
