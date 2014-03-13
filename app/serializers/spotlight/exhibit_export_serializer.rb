@@ -20,7 +20,7 @@ module Spotlight
 
   class SolrDocumentSerializer < Spotlight::ExportSerializer(Spotlight::SolrDocumentSidecar)
     def filter keys
-      super
+      keys = super
       keys += [:solr_document_id]
     end
   end

@@ -52,6 +52,7 @@ describe Spotlight::ExhibitExportSerializer do
     expect(subject["solr_document_sidecars_attributes"]).to have(source_exhibit.solr_document_sidecars.count).items
   
     expect(subject["solr_document_sidecars_attributes"].first).to include('solr_document_id', 'public')
+    expect(subject["solr_document_sidecars_attributes"].first).to_not include 'id'
   end
 
   it "should have attachments" do
