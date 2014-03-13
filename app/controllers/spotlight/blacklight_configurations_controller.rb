@@ -7,9 +7,15 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
 
   def update
     if @blacklight_configuration.update(exhibit_params)
-      redirect_to main_app.root_path, notice: "The exhibit was saved."
+      flash[:notice] = t(:'helpers.submit.blacklight_configuration.updated', model: @blacklight_configuration.class.model_name.human.downcase)
+    end
+
+    if params[:blacklight_configuration][:index_fields]
+      redirect_to exhibit_edit_metadata_path(@exhibit)
+    elsif params[:blacklight_configuration][:facet_fields]
+      redirect_to exhibit_edit_facets_path(@exhibit)
     else
-      redirect_to [:edit, @exhibit]
+      redirect_to exhibit_dashboard_path(@exhibit)
     end
   end
 

@@ -12,7 +12,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
 
   def process_import
     if @exhibit.import(JSON.parse(import_exhibit_params.read))
-      redirect_to spotlight.exhibit_dashboard_path(@exhibit), notice: "The exhibit was successfully updated."
+      redirect_to spotlight.exhibit_dashboard_path(@exhibit), notice: t(:'helpers.submit.exhibit.updated', model: @exhibit.class.model_name.human.downcase)
     else
       render action: :import
     end
@@ -22,7 +22,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
     @exhibit.attributes = exhibit_params
 
     if @exhibit.save
-      redirect_to spotlight.exhibit_dashboard_path(@exhibit), notice: "The exhibit was created."
+      redirect_to spotlight.exhibit_dashboard_path(@exhibit), notice: t(:'helpers.submit.exhibit.created', model: @exhibit.class.model_name.human.downcase)
     else
       render action: :new
     end
@@ -43,7 +43,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
 
   def update
     if @exhibit.update(exhibit_params)
-      redirect_to main_app.root_path, notice: "The exhibit was saved."
+      redirect_to edit_exhibit_path(@exhibit), notice: t(:'helpers.submit.exhibit.updated', model: @exhibit.class.model_name.human.downcase)
     else
       flash[:alert] = @exhibit.errors.full_messages.join("<br>".html_safe)
       render action: :edit
@@ -53,7 +53,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   def destroy
     @exhibit.destroy
 
-    redirect_to main_app.root_url, notice: 'Exhibit was successfully destroyed.'
+    redirect_to main_app.root_url, notice: t(:'helpers.submit.exhibit.destroyed', model: @exhibit.class.model_name.human.downcase)
   end
 
   protected

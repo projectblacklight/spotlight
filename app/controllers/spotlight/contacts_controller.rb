@@ -15,7 +15,7 @@ module Spotlight
 
     def update
       if @contact.update(contact_params)
-        redirect_to exhibit_about_pages_path(@contact.exhibit), notice: "Contact updated."
+        redirect_to exhibit_about_pages_path(@contact.exhibit), notice: t(:'helpers.submit.contact.updated', model: @contact.class.model_name.human.downcase)
       else
         render 'edit'
       end
@@ -23,7 +23,7 @@ module Spotlight
 
     def create
       if @contact.update(contact_params)
-        redirect_to exhibit_about_pages_path(@contact.exhibit), notice: "Contact created."
+        redirect_to exhibit_about_pages_path(@contact.exhibit), notice: t(:'helpers.submit.contact.created', model: @contact.class.model_name.human.downcase)
       else
         render 'new'
       end
@@ -31,7 +31,7 @@ module Spotlight
 
     def destroy
       @contact.destroy
-      redirect_to exhibit_about_pages_path(@contact.exhibit), notice: "Contact removed."
+      redirect_to exhibit_about_pages_path(@contact.exhibit), notice: t(:'helpers.submit.contact.destroyed', model: @contact.class.model_name.human.downcase)
     end
 
     protected

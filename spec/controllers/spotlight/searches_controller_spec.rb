@@ -32,7 +32,7 @@ describe Spotlight::SearchesController do
     it "should create a saved search" do
       post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_ssim"=>["map"]}, exhibit_id: exhibit 
       expect(response).to redirect_to exhibit_catalog_index_path(exhibit)
-      expect(flash[:notice]).to eq "Search has been saved"
+      expect(flash[:notice]).to eq "The search was created."
       expect(assigns[:search].title).to eq "A bunch of maps"
       expect(assigns[:search].query_params).to eq("f"=>{"genre_ssim"=>["map"]})
     end
@@ -89,7 +89,7 @@ describe Spotlight::SearchesController do
           delete :destroy, id: search, exhibit_id: search.exhibit
         }.to change { Spotlight::Search.count }.by(-1)
         expect(response).to redirect_to exhibit_searches_path(search.exhibit) 
-        expect(flash[:alert]).to eq "Search was deleted"
+        expect(flash[:alert]).to eq "The search was deleted."
       end
     end
 

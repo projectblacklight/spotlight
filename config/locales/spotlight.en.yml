@@ -32,27 +32,49 @@ en:
         create: "Save"
         submit: "Save changes"
         update: "Save changes"
+        created: "The %{model} was created."
+        updated: "The %{model} was successfully updated."
+        batch_updated: "%{model} were successfully updated."
+        batch_error: "There was an error updating the requested %{model}."
+        destroyed: "The %{model} was deleted."
       appearance: *spotlight_default
       contact:
         create: "Save"
+        created: "The %{model} was created."
         update: "Save"
+        updated: "The %{model} was successfully updated."
+        batch_updated: "Contacts were successfully updated."
       page: &spotlight_page
         create: "Add new page"
         submit: "Save changes"
         update: "Save changes"
+        created: "The %{model} was created."
+        updated: "The %{model} was successfully updated."
+        batch_updated: "%{model} were successfully updated."
+        batch_error: "There was an error updating the requested pages."
+        destroyed: "The %{model} was deleted."
       exhibit: *spotlight_default
       search: *spotlight_default
       contact_form:
         create: "Send"
+        created: "Thanks. Your feedback has been sent."
       feature_page: *spotlight_page
       about_page: *spotlight_page
       home_page: *spotlight_page
-      blacklight_configuration: *spotlight_default
+      blacklight_configuration:
+        create: "Save"
+        submit: "Save changes"
+        update: "Save changes"
+        updated: "The exhibit was successfully updated."
       solr_document: *spotlight_default
       users: *spotlight_default
       custom_field: *spotlight_default
       resource_csv:
         create: "Import"
+      role:
+        updated: "User has been updated."
+        destroyed: "User has been removed."
+        batch_error: "There was a problem saving the users."
     label:
       solr_document:
         exhibit_tag_list: "Tags"

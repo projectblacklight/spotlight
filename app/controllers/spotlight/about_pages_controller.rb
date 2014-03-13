@@ -6,7 +6,7 @@ module Spotlight
 
     def update_contacts
       if @exhibit.update(contact_params)
-        redirect_to exhibit_about_pages_path(@exhibit), notice: 'Contacts were successfully updated.'
+        redirect_to exhibit_about_pages_path(@exhibit), notice: t(:'helpers.submit.contact.batch_updated')
       else
         render action: 'index'
       end

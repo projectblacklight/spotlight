@@ -47,8 +47,8 @@ describe Spotlight::AppearancesController do
           thumbnail_size: "medium",
           sort_fields: {"relevance"=>"1", "title"=>"1", "type"=>"1", "date"=>"0", "source"=>"0", "identifier"=>"0"}
         }
-        expect(flash[:notice]).to eq "The exhibit was saved."
-        expect(response).to redirect_to exhibit_dashboard_path(exhibit)
+        expect(flash[:notice]).to eq "The appearance was successfully updated."
+        expect(response).to redirect_to edit_exhibit_appearance_path(exhibit)
         assigns[:exhibit].tap do |saved|
           expect(saved.blacklight_configuration.document_index_view_types).to eq ['list', 'gallery']
           expect(saved.blacklight_configuration.default_per_page).to eq 50

@@ -58,21 +58,21 @@ Spotlight::Engine.routes.draw do
     resources :tags, only: [:index, :destroy]
 
     resources :contacts, only: [:edit, :update, :destroy]
-    resources :about, controller: "about_pages", as: "about_pages" do
+    resources :about_pages, path: 'about' do
       collection do
         patch 'contacts' => 'about_pages#update_contacts'
         resources :contacts, only: [:new, :create]
         patch :update_all
       end
     end
-    resources :feature, controller: "feature_pages", as: "feature_pages" do
+    resources :feature_pages, path: 'feature' do
       collection do
         patch :update_all
       end
     end
-    resource :home_page, controller: "home_pages"
+    resource :home_page, path: 'home', controller: "home_pages"
 
-    resources :roles, only: [:index, :create, :destroy] do
+    resources :roles, path: 'users', only: [:index, :create, :destroy] do
       collection do
         patch :update_all
       end

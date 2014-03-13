@@ -24,7 +24,7 @@ describe "Home page" do
     end
     fill_in "home_page_title", with: "New Home Page Title"
     click_button "Save changes"
-    expect(page).to have_content("Page was successfully updated.")
+    expect(page).to have_content("The home page was successfully updated.")
 
     within '.dropdown-menu' do
       click_link 'Dashboard'

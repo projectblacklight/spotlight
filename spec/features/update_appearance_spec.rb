@@ -23,7 +23,7 @@ describe "Update the appearance" do
 
     click_button "Save changes"
 
-    expect(page).to have_content("The exhibit was saved.")
+    expect(page).to have_content("The appearance was successfully updated.")
 
     within "#sidebar" do
       click_link "Appearance"
