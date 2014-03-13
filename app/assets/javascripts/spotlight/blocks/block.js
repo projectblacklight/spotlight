@@ -108,6 +108,18 @@
           serializeFormStatus($('form[data-metadata-url]'));
         }
       });
+    },
+
+    addCaptionSelectFocus: function(){
+      $("[data-behavior='item-caption-admin']").each(function(){
+        var checkbox = $('input[type="checkbox"]', $(this));
+        var select = $('select', $(this));
+        checkbox.on('change', function(){
+          if ( $(this).is(':checked') ) {
+            select.focus();
+          }
+        });
+      });
     }
 
   });

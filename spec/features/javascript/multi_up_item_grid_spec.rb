@@ -164,10 +164,14 @@ describe "Mutli-Up Item Grid", js: true do
     ';
     find('.tt-suggestion').click
 
-    select("Title", from: "Primary caption")
-    check("show-primary-caption")
-    select("Language", from: "Secondary caption")
-    check("show-secondary-caption")
+    within('.primary-caption') do
+      check("Primary caption")
+      select("Title", from: 'item-grid-primary-caption-field')
+    end
+    within('.secondary-caption') do
+      check("Secondary caption")
+      select("Language", from: 'item-grid-secondary-caption-field')
+    end
 
     click_button "Save changes"
 

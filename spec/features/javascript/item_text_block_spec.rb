@@ -75,11 +75,15 @@ feature "Item + Image Block" do
     item_id_field = find("input[name='item-id']", visible: false)
     item_id_field.set("gk446cj2442")
     # display the title as the primary caption
-    select("Title", from: "Primary caption")
-    check("show-primary-caption")
+    within('.primary-caption') do
+      check("Primary caption")
+      select("Title", from: 'item-grid-primary-caption-field')
+    end
     # display the language as the secondary caption
-    select("Language", from: "Secondary caption")
-    check("show-secondary-caption")
+    within('.secondary-caption') do
+      check("Secondary caption")
+      select("Language", from: 'item-grid-secondary-caption-field')
+    end
     # create the page
     click_button("Save changes")
     # verify that the page was created

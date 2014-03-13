@@ -29,6 +29,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
     onBlockRender: function() {
       Spotlight.Block.prototype.onBlockRender.apply();
       this.loadCaptionField();
+      this.addCaptionSelectFocus();
     },
 
     afterLoadData: function(data){
@@ -51,17 +52,17 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
         '</div>',
       '</div>',
       '<div class="col-sm-4">',
-        '<div class="field-select primary-caption">',
+        '<div class="field-select primary-caption" data-behavior="item-caption-admin">',
           '<input name="<%= show_primary_caption %>" id="<%= formId(show_primary_caption) %>" type="checkbox" value="true" />',
-          '<label for="<%= formId(primary_field_key) %>">Primary caption</label>',
+          '<label for="<%= formId(show_primary_caption) %>">Primary caption</label>',
           '<select name="<%= primary_field_key %>" id="<%= formId(primary_field_key) %>">',
             '<option value="">Select...</option>',
             '<%= caption_field_template({field: title_key, label: "Title", selected: ""}) %>',
           '</select>',
         '</div>',
-        '<div class="field-select secondary-caption">',
+        '<div class="field-select secondary-caption" data-behavior="item-caption-admin">',
           '<input name="<%= show_secondary_caption %>" id="<%= formId(show_secondary_caption) %>" type="checkbox" value="true" />',
-          '<label for="<%= formId(secondary_field_key) %>">Secondary caption</label>',
+          '<label for="<%= formId(show_secondary_caption) %>">Secondary caption</label>',
           '<select name="<%= secondary_field_key %>" id="<%= formId(secondary_field_key) %>">',
             '<option value="">Select...</option>',
             '<%= caption_field_template({field: title_key, label: "Title", selected: ""}) %>',
