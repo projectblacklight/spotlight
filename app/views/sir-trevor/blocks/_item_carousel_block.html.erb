@@ -18,11 +18,14 @@
           <% if has_thumbnail? document %>
               <%= render_thumbnail_tag(document) %>
           <% end %>
-          <% if block['item-grid-display-caption'] %>
-            <div class="carousel-caption">
+          <div class="carousel-caption">
+            <% if block['show-primary-caption'] %>
               <h3><%= multi_up_item_grid_caption(block, document) %></h3>
-            </div>
-          <% end %>
+            <% end %>
+            <% if block['show-secondary-caption'] %>
+              <h4><%= multi_up_item_grid_caption(block, document, 'secondary') %></h4>
+            <% end %>
+          </div>
         </div>
     <% end %>
       </div>

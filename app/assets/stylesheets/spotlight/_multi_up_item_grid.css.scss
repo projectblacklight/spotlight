@@ -12,12 +12,20 @@
   .field-select {
     margin-top: 15px;
     select {
-      display: block;
-      width: 90%;
+      display: inline;
+      width: auto;
     }
   }
 }
-
+// Hide the secondary caption field
+// for the Features block so we can
+// re-use the rest from the generic
+// multi-up item grid.
+[data-type='item-features'] {
+  .secondary-caption {
+    display: none;
+  }
+}
 .spotlight-flexbox {
   display: -webkit-box;
   display: -moz-box;

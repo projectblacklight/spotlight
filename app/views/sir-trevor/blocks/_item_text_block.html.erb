@@ -6,11 +6,16 @@
         <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
       </div>
     <%- end -%>
-    <%- if should_render_record_thumbnail_title?(document, block) -%>
-      <div class="title">
-        <%= document_heading(document) %>
+    <% if block['show-primary-caption'] %>
+      <div class="primary-caption">
+        <%= multi_up_item_grid_caption(block, document) %>
       </div>
-    <%- end -%>
+    <% end %>
+    <% if block['show-secondary-caption'] %>
+      <div class="secondary-caption">
+        <%= multi_up_item_grid_caption(block, document, 'secondary') %>
+      </div>
+    <% end %>
   </div>
   <%= sir_trevor_markdown block["text"] %>
 </div>

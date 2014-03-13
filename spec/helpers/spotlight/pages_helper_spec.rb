@@ -20,17 +20,6 @@ module Spotlight
         expect(helper.has_title? untitled_document).to be_false
       end
     end
-    describe "should_render_record_thumbnail_title?" do
-      it "should return true if there is a title" do
-        expect(helper.should_render_record_thumbnail_title?(titled_document, {'show-title' => true})).to be_true
-      end
-      it "should return false there is no title" do
-        expect(helper.should_render_record_thumbnail_title?(untitled_document, {'show-title' => true})).to be_false
-      end
-      it "should return false if the block configuration is hiding the title" do
-        expect(helper.should_render_record_thumbnail_title?(titled_document, {'show-title' => false})).to be_false
-      end
-    end
     describe "disable_save_pages_button?" do
       it "should return true if there are no pages and we are on the about pages page" do
         helper.should_receive(:page_collection_name).and_return("about_pages")
@@ -86,16 +75,19 @@ module Spotlight
         end
       end
       describe "captions" do
-        let(:solr_document) { ::SolrDocument.new(:id => "123", 'a_field' => "A field value") }
+        let(:solr_document) { ::SolrDocument.new(:id => "123", 'a_field' => "A field value", 'b_field' => "Another field value") }
         it "should return the document_heading when the special title field is selected" do
           helper.should_receive(:document_heading).with(solr_document).and_return("A title")
-          expect(helper.multi_up_item_grid_caption({'item-grid-caption-field' => 'spotlight_title_field'}, solr_document)).to eq "A title"
+          expect(helper.multi_up_item_grid_caption({'item-grid-primary-caption-field' => 'spotlight_title_field'}, solr_document)).to eq "A title"
         end
         it "should render the field value when any other field is selected" do
-          expect(helper.multi_up_item_grid_caption({'item-grid-caption-field' => 'a_field'}, solr_document)).to eq "A field value"
+          expect(helper.multi_up_item_grid_caption({'item-grid-primary-caption-field' => 'a_field'}, solr_document)).to eq "A field value"
+        end
+        it "should handle secondary caption fields" do
+          expect(helper.multi_up_item_grid_caption({'item-grid-secondary-caption-field' => 'b_field'}, solr_document, 'secondary')).to eq "Another field value"
         end
         it "should do nothing if the item-grid-caption-field is blank or nil" do
-          expect(helper.multi_up_item_grid_caption({'item-grid-caption-field' => ''}, solr_document)).to be_blank
+          expect(helper.multi_up_item_grid_caption({'item-grid-primary-caption-field' => ''}, solr_document)).to be_blank
           expect(helper.multi_up_item_grid_caption({}, solr_document)).to be_blank
         end
       end

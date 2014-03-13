@@ -3,9 +3,6 @@ module Spotlight
     def has_title? document
       document_heading(document) != document.id
     end
-    def should_render_record_thumbnail_title? document, block
-      has_title?(document) && block["show-title"]
-    end
     def item_grid_block_objects(block)
       objects = []
       block.each do |key, value|
@@ -20,12 +17,13 @@ module Spotlight
         object[:id] if object[:display]
       end.compact
     end
-    def multi_up_item_grid_caption(block, document)
-      if block['item-grid-caption-field'].present?
-        if block['item-grid-caption-field'] == 'spotlight_title_field'
+    def multi_up_item_grid_caption(block, document, type='primary')
+      key = "item-grid-#{type}-caption-field"
+      if block[key].present?
+        if block[key] == 'spotlight_title_field'
           return document_heading(document)
         else
-          return safe_join(Array(document[block['item-grid-caption-field']]), ", ")
+          return safe_join(Array(document[block[key]]), ", ")
         end
       end
     end
