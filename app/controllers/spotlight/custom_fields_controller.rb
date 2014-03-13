@@ -7,7 +7,6 @@ class Spotlight::CustomFieldsController < Spotlight::ApplicationController
 
   def new
     add_breadcrumb t(:'helpers.action.spotlight/custom_field.create'), new_exhibit_custom_field_path(@exhibit)
-
   end
 
   def edit

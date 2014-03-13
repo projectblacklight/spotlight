@@ -129,7 +129,7 @@ describe Spotlight::ExhibitsController do
         patch :update, id: exhibit, exhibit: { title: "Foo", subtitle: "Bar",
                  description: "Baz", contact_emails_attributes: {'0'=>{email: 'bess@stanford.edu'}, '1'=>{email: 'naomi@stanford.edu'}}}
         expect(flash[:notice]).to eq "The exhibit was saved."
-        expect(response).to redirect_to main_app.root_path 
+        expect(response).to redirect_to edit_exhibit_path(exhibit) 
         assigns[:exhibit].tap do |saved|
           expect(saved.title).to eq 'Foo'
           expect(saved.subtitle).to eq 'Bar'

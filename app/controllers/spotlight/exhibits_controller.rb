@@ -43,7 +43,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
 
   def update
     if @exhibit.update(exhibit_params)
-      redirect_to main_app.root_path, notice: "The exhibit was saved."
+      redirect_to edit_exhibit_path(@exhibit), notice: "The exhibit was saved."
     else
       flash[:alert] = @exhibit.errors.full_messages.join("<br>".html_safe)
       render action: :edit
