@@ -6,7 +6,7 @@ feature "Item + Image Block" do
   before { login_as exhibit_curator }
 
   scenario "should allow you to add a thumbnail to a page within an exhibit", :js => true do
-    pending("Passing locally but Travis is thowing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
@@ -46,8 +46,8 @@ feature "Item + Image Block" do
     end
   end
 
-  scenario "should allow you to optionally display the title with the image", :js => true do
-    pending("Passing locally but Travis is thowing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+  scenario "should allow you to optionally display captions with the image", :js => true do
+    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
@@ -73,9 +73,13 @@ feature "Item + Image Block" do
     # fill in the hidden record ID field
     # TODO: Do we need an additional test for the typeahead?
     item_id_field = find("input[name='item-id']", visible: false)
-    item_id_field.set("dq287tq6352")
-    # display the title
-    check("Display title")
+    item_id_field.set("gk446cj2442")
+    # display the title as the primary caption
+    select("Title", from: "Primary caption")
+    check("show-primary-caption")
+    # display the language as the secondary caption
+    select("Language", from: "Secondary caption")
+    check("show-secondary-caption")
     # create the page
     click_button("Save changes")
     # verify that the page was created
@@ -85,13 +89,13 @@ feature "Item + Image Block" do
     within(:css, ".item-text") do
       expect(page).to have_css(".thumbnail")
       expect(page).to have_css(".thumbnail a img")
-      expect(page).to have_css(".title")
-      expect(page).to have_content("L'AMERIQUE")
+      expect(page).to have_css(".primary-caption", text: "[World map]")
+      expect(page).to have_css(".secondary-caption", text: "Latin")
     end
   end
 
   scenario "should allow you to add text to the image", :js => true do
-    pending("Passing locally but Travis is thowing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
@@ -134,7 +138,7 @@ feature "Item + Image Block" do
   end
 
   scenario "should allow you to choose which side the text will be on", :js => true do
-    pending("Passing locally but Travis is thowing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email

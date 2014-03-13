@@ -12,9 +12,14 @@
                 <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
               </div>
             <% end %>
-            <% if block['item-grid-display-caption'] %>
+            <% if block['show-primary-caption'] %>
               <div class="caption">
                 <%= multi_up_item_grid_caption(block, document) %>
+              </div>
+            <% end %>
+            <% if block['show-secondary-caption'] %>
+              <div class="caption">
+                <%= multi_up_item_grid_caption(block, document, 'secondary') %>
               </div>
             <% end %>
           </div>

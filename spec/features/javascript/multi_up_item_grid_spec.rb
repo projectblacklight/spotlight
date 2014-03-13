@@ -137,7 +137,7 @@ describe "Mutli-Up Item Grid", js: true do
     expect(page).to_not have_css("[data-id='zv316zr9542']")
   end
   
-  it "should optionally show the configured caption" do
+  it "should optionally show the configured captions" do
     pending("Passing locally but Travis is thowing intermittent errors") if ENV["CI"]
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
@@ -164,8 +164,10 @@ describe "Mutli-Up Item Grid", js: true do
     ';
     find('.tt-suggestion').click
 
-    check("Display caption")
-    select("Language", from: "Caption field")
+    select("Title", from: "Primary caption")
+    check("show-primary-caption")
+    select("Language", from: "Secondary caption")
+    check("show-secondary-caption")
 
     click_button "Save changes"
 
@@ -173,6 +175,7 @@ describe "Mutli-Up Item Grid", js: true do
 
     visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
 
+    expect(page).to have_css(".caption", text: "[World map]")
     expect(page).to have_css(".caption", text: "Latin")
   end
 end

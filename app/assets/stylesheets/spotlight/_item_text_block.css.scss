@@ -20,8 +20,9 @@
         margin-left: 15px;
       }
     }
-    .title {
+    .primary-caption, .secondary-caption {
       text-align: center;
+      font-style: italic;
     }
   }
 }
@@ -29,7 +30,11 @@
 .st-block input[type="text"] {
     @extend .form-control;
 }
-
+.primary-caption, .secondary-caption {
+  select {
+    margin-left: 10px;
+  }
+}
 .item-text-admin {
   .text-align {
     margin-top: 15px;
@@ -37,7 +42,6 @@
   .field {
     width: 75%;
   }
-
   #item-text {
     @extend .form-control;
 
