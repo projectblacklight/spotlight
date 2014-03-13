@@ -107,7 +107,7 @@ describe Spotlight::BlacklightConfigurationsController do
           }
         }
 
-        expect(flash[:notice]).to eq "The exhibit was saved."
+        expect(flash[:notice]).to eq "The exhibit was successfully updated."
         expect(response).to redirect_to exhibit_edit_metadata_path(exhibit)
         assigns[:exhibit].tap do |saved|
           expect(saved.blacklight_configuration.index_fields).to include 'c', 'd', 'e', 'f'
@@ -118,7 +118,7 @@ describe Spotlight::BlacklightConfigurationsController do
         patch :update, exhibit_id: exhibit, blacklight_configuration: { 
           facet_fields: { 'genre_ssim' => { enabled: '1', label: "Label"} }  
         }
-        expect(flash[:notice]).to eq "The exhibit was saved."
+        expect(flash[:notice]).to eq "The exhibit was successfully updated."
         expect(response).to redirect_to exhibit_edit_facets_path(exhibit)
         assigns[:exhibit].tap do |saved|
           expect(saved.blacklight_configuration.facet_fields.keys).to eq ['genre_ssim']

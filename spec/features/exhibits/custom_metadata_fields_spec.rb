@@ -19,7 +19,7 @@ describe "Adding custom metadata fields", type: :feature do
 
     click_on "Save"
 
-    expect(page).to have_content "Custom field was created"
+    expect(page).to have_content "The custom field was created."
     within "#exhibit-specific-fields" do
       expect(page).to have_selector ".field-label", text: "My new custom field"
       expect(page).to have_selector ".field-description", text: "Helps to remind me what this field is for"
@@ -34,7 +34,7 @@ describe "Adding custom metadata fields", type: :feature do
 
     click_button "Save changes"
 
-    expect(page).to have_content "Custom field was updated"
+    expect(page).to have_content "The custom field was successfully updated."
 
     within "#exhibit-specific-fields" do
       expect(page).to have_selector ".field-label", text: "My new custom field"
@@ -43,7 +43,7 @@ describe "Adding custom metadata fields", type: :feature do
       click_link "Delete"
     end
 
-    expect(page).to have_content "Custom field was deleted"
+    expect(page).to have_content "The custom field was deleted."
     
   end
 end

@@ -13,7 +13,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
     @search.query_params = params_copy.reject { |k,v| blacklisted_search_session_params.include?(k.to_sym) or v.blank? }
     @search.save!
 
-    redirect_to exhibit_catalog_index_path(@search.exhibit), notice: "Search has been saved"
+    redirect_to exhibit_catalog_index_path(@search.exhibit), notice: t(:'helpers.submit.search.created', model: @search.class.model_name.human.downcase)
   end
 
   def index
@@ -30,7 +30,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
 
   def update
     if @search.update params.require(:search).permit(:title, :short_description, :long_description, :featured_image)
-      redirect_to exhibit_searches_path(@search.exhibit), notice: "Search has been saved"
+      redirect_to exhibit_searches_path(@search.exhibit), notice: t(:'helpers.submit.search.updated', model: @search.class.model_name.human.downcase)
     else
       render action: 'edit'
     end
@@ -38,14 +38,14 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
 
   def destroy
     @search.destroy
-    redirect_to exhibit_searches_path(@search.exhibit), alert: "Search was deleted"
+    redirect_to exhibit_searches_path(@search.exhibit), alert: t(:'helpers.submit.search.destroyed', model: @search.class.model_name.human.downcase)
   end
 
   def update_all
     notice = if @exhibit.update batch_search_params
-      "Searches were successfully updated."
+      t(:'helpers.submit.search.batch_updated', model: Spotlight::Search.model_name.human.pluralize)
     else
-      "There was an error updating the requested searches."
+      t(:'helpers.submit.search.batch_error', model: Spotlight::Search.model_name.human.pluralize.downcase)
     end
     redirect_to :back, notice: notice
   end

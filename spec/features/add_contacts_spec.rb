@@ -16,7 +16,7 @@ describe "Add a contact to an exhibit" do
 
       click_button "Save"
     end
-    expect(page).to have_content "Contact created."
+    expect(page).to have_content "The contact was created."
 
     within ".contacts_admin" do
       check "exhibit_contacts_attributes_0_show_in_sidebar"

@@ -19,7 +19,7 @@ describe "Exhibit Administration" do
       visit spotlight.edit_exhibit_path( exhibit )
       fill_in email_id_0, with: email_address_0
       click_button "Save changes"
-      expect(page).to have_content("The exhibit was saved.")
+      expect(page).to have_content("The exhibit was successfully updated.")
       visit spotlight.edit_exhibit_path( exhibit )
       expect(find_field(email_id_0).value).to eq email_address_0
     end
@@ -42,7 +42,7 @@ describe "Exhibit Administration" do
       fill_in email_id_1, with: email_address_1
       click_button "Save changes"
 
-      expect(page).to have_content("The exhibit was saved.")
+      expect(page).to have_content("The exhibit was successfully updated.")
       visit spotlight.edit_exhibit_path( exhibit )
 
       expect(find_field(email_id_0).value).to eq email_address_0

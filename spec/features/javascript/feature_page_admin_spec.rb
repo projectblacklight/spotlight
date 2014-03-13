@@ -34,7 +34,7 @@ feature "Feature Pages Adminstration", js:  true do
 
     add_new_page_via_button("My New Page")
 
-    expect(page).to have_content "Page was successfully created."
+    expect(page).to have_content "The feature page was created."
     expect(page).to have_css("li.dd-item")
     expect(page).to have_css("h3", text: "My New Page")
   end

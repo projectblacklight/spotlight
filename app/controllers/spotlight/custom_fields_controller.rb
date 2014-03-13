@@ -18,7 +18,7 @@ class Spotlight::CustomFieldsController < Spotlight::ApplicationController
     @custom_field.exhibit = current_exhibit
 
     if @custom_field.save
-      redirect_to exhibit_edit_metadata_path(@custom_field.exhibit), alert: "Custom field was created"
+      redirect_to exhibit_edit_metadata_path(@custom_field.exhibit), notice: t(:'helpers.submit.custom_field.created', model: @custom_field.class.model_name.human.downcase)
     else
       render action: 'new'
     end
@@ -26,7 +26,7 @@ class Spotlight::CustomFieldsController < Spotlight::ApplicationController
 
   def update
     if @custom_field.update custom_field_params
-      redirect_to exhibit_edit_metadata_path(@custom_field.exhibit), alert: "Custom field was updated"
+      redirect_to exhibit_edit_metadata_path(@custom_field.exhibit), notice: t(:'helpers.submit.custom_field.updated', model: @custom_field.class.model_name.human.downcase)
     else
       render action: 'edit'
     end
@@ -34,7 +34,7 @@ class Spotlight::CustomFieldsController < Spotlight::ApplicationController
 
   def destroy
     @custom_field.destroy
-    redirect_to exhibit_edit_metadata_path(@custom_field.exhibit), alert: "Custom field was deleted"
+    redirect_to exhibit_edit_metadata_path(@custom_field.exhibit), notice: t(:'helpers.submit.custom_field.destroyed', model: @custom_field.class.model_name.human.downcase)
   end
 
   protected

@@ -5,7 +5,7 @@ class Spotlight::AppearancesController < Spotlight::ApplicationController
 
   def update
     if @appearance.update(appearance_params)
-      redirect_to edit_exhibit_appearance_path(@exhibit), notice: "The exhibit was saved."
+      redirect_to edit_exhibit_appearance_path(@exhibit), notice: t(:'helpers.submit.spotlight_default.updated', model: @appearance.class.model_name.human.downcase)
     else
       render 'edit'
     end

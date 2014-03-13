@@ -128,7 +128,7 @@ describe Spotlight::ExhibitsController do
       it "should be successful" do
         patch :update, id: exhibit, exhibit: { title: "Foo", subtitle: "Bar",
                  description: "Baz", contact_emails_attributes: {'0'=>{email: 'bess@stanford.edu'}, '1'=>{email: 'naomi@stanford.edu'}}}
-        expect(flash[:notice]).to eq "The exhibit was saved."
+        expect(flash[:notice]).to eq "The exhibit was successfully updated."
         expect(response).to redirect_to edit_exhibit_path(exhibit) 
         assigns[:exhibit].tap do |saved|
           expect(saved.title).to eq 'Foo'
@@ -154,7 +154,7 @@ describe Spotlight::ExhibitsController do
       it "should be successful" do
         delete :destroy, id: exhibit
         expect(Spotlight::Exhibit.exists?(exhibit.id)).to be_false
-        expect(flash[:notice]).to eq "Exhibit was successfully destroyed."
+        expect(flash[:notice]).to eq "The exhibit was deleted."
         expect(response).to redirect_to main_app.root_path
       end
     end

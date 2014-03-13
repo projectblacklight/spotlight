@@ -61,7 +61,7 @@ describe "Mutli-Up Item Grid", js: true do
     ';
 
     click_button "Save changes"
-    expect(page).to have_content("Page was successfully updated.")
+    expect(page).to have_content("The feature page was successfully updated.")
 
     visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
 
@@ -115,7 +115,7 @@ describe "Mutli-Up Item Grid", js: true do
 
 
     click_button "Save changes"
-    expect(page).to have_content("Page was successfully updated.")
+    expect(page).to have_content("The feature page was successfully updated.")
 
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
     
@@ -130,7 +130,7 @@ describe "Mutli-Up Item Grid", js: true do
     ';
     
     click_button "Save changes"
-    expect(page).to have_content("Page was successfully updated.")
+    expect(page).to have_content("The feature page was successfully updated.")
 
     expect(page).to have_css("[data-id='dq287tq6352']")
     expect(page).to have_css("[data-id='jp266yb7109']")
@@ -169,7 +169,7 @@ describe "Mutli-Up Item Grid", js: true do
 
     click_button "Save changes"
 
-    expect(page).to have_content("Page was successfully updated.")
+    expect(page).to have_content("The feature page was successfully updated.")
 
     visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
 

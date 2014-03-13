@@ -13,7 +13,7 @@ module Spotlight
 
       if @contact_form.valid?
         @contact_form.deliver
-        redirect_to :back, notice: "Thanks. Your feedback has been sent."
+        redirect_to :back, notice: t(:'helpers.submit.contact_form.created')
       else
         render 'new' 
       end

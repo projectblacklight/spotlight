@@ -19,10 +19,10 @@ module Spotlight
       any_deleted = authorize_nested_attributes(attrs[:roles_attributes], Role)
 
       if @exhibit.update(attrs)
-        notice = any_deleted > 0 ? "User has been removed." : "User has been updated."
+        notice = any_deleted > 0 ? t(:'helpers.submit.role.destroyed') : t(:'helpers.submit.role.updated')
         redirect_to exhibit_roles_path(@exhibit), notice: notice 
       else
-        flash[:alert] = "There was a problem saving the users."
+        flash[:alert] = t(:'helpers.submit.role.batch_error')
         render action: 'index'
       end
 

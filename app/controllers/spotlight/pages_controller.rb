@@ -32,7 +32,7 @@ module Spotlight
       @page.last_edited_by = @page.created_by = current_user
 
       if @page.save
-        redirect_to [@page.exhibit, page_collection_name], notice: 'Page was successfully created.'
+        redirect_to [@page.exhibit, page_collection_name], notice: t(:'helpers.submit.page.created', model: @page.class.model_name.human.downcase)
       else
         render action: 'new'
       end
@@ -41,7 +41,7 @@ module Spotlight
     # PATCH/PUT /pages/1
     def update
       if @page.update(page_params.merge(last_edited_by: current_user))
-        redirect_to [@page.exhibit, @page], notice: 'Page was successfully updated.'
+        redirect_to [@page.exhibit, @page], notice: t(:'helpers.submit.page.updated', model: @page.class.model_name.human.downcase)
       else
         render action: 'edit'
       end
@@ -50,14 +50,14 @@ module Spotlight
     # DELETE /pages/1
     def destroy
       @page.destroy
-      redirect_to [@page.exhibit, page_collection_name], notice: 'Page was successfully destroyed.'
+      redirect_to [@page.exhibit, page_collection_name], notice: t(:'helpers.submit.page.destroyed', model: @page.class.model_name.human.downcase)
     end
 
     def update_all
       notice = if @exhibit.update update_all_page_params
-        "#{human_name} were successfully updated."
+        t(:'helpers.submit.page.batch_updated', model: human_name)
       else
-        "There was an error updating the requested pages."
+        t(:'helpers.submit.page.batch_error', model: human_name)
       end
       redirect_to :back, notice: notice
     end
