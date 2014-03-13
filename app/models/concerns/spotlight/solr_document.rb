@@ -69,7 +69,7 @@ module Spotlight
     end
 
     def sidecar exhibit
-      sidecars.first_or_initialize(exhibit: exhibit)
+      sidecars.find_or_initialize_by exhibit: exhibit
     end
 
     def to_solr
