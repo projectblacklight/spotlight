@@ -3,6 +3,10 @@ require 'spec_helper'
 describe Spotlight::CatalogController do
   routes { Spotlight::Engine.routes }
   let (:exhibit) { FactoryGirl.create(:exhibit) }
+  
+  it { should be_a_kind_of ::CatalogController }
+  it { should be_a_kind_of Spotlight::Concerns::ApplicationController }
+  its(:view_context) { should be_a_kind_of Spotlight::ApplicationHelper }
 
   describe "when the user is not authenticated" do
 
