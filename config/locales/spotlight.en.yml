@@ -215,6 +215,8 @@ en:
         fields:
           contact_emails:
             help_block: Each contact email will receive feedback submissions
+        delete_exhibit: Delete exhibit
+        delete_exhibit_warning_html: This action is irreversable. Be sure to back up the exhibit settings and content using the %{export_link} feature before proceeding.
       new:
         header: Create a new exhibit
       import:
