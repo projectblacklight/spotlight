@@ -6,11 +6,18 @@ module Spotlight
     include ActiveRecord::Associations
     include ActiveRecord::Reflection
     include ActiveModel::Dirty
-    included do
-      def self.base_class
+
+    module ClassMethods
+      def base_class
         self
       end
+
+      # required for Rails >= 4.0.4
+      def subclass_from_attributes?(_)
+        false
+      end
     end
+
     def initialize (source_doc={}, solr_response=nil)
       @association_cache = {}
       super
