@@ -9,6 +9,7 @@ describe SolrDocument do
   end
 
   let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit_alt) { FactoryGirl.create(:exhibit) }
 
   it "should have tags on the exhibit" do
     expect(subject.tags_from(exhibit)).to be_empty
@@ -29,9 +30,15 @@ describe SolrDocument do
     expect(::SolrDocument.find('dq287tq6352')).to eq ::SolrDocument.find('dq287tq6352')
   end
 
-  describe "#sidebar" do
+  describe "#sidecar" do
     it "should return a sidecar for adding exhibit-specific fields" do
       expect(subject.sidecar(exhibit)).to be_kind_of Spotlight::SolrDocumentSidecar
+      expect(subject.sidecar(exhibit).exhibit).to eq exhibit
+    end
+    
+    it "should keep distinct sidecars for each exhibit" do
+      expect(subject.sidecar(exhibit).exhibit).to eq exhibit
+      expect(subject.sidecar(exhibit_alt).exhibit).to eq exhibit_alt
     end
   end
 
@@ -111,4 +118,3 @@ describe SolrDocument do
     end
   end
 end
-
