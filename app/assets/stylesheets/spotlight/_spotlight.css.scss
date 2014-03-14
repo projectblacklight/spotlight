@@ -5,14 +5,15 @@
 */
 @import "spotlight/variables";
 @import "bootstrap/variables";
+
 @import "spotlight/sir-trevor";
 @import "spotlight/attachments";
 @import "spotlight/pages";
+@import 'blacklight_gallery/default';
 @import "spotlight/browse";
 @import "spotlight/header";
 @import "spotlight/footer";
 @import "spotlight/catalog";
-@import "spotlight/slideshow";
 @import "spotlight/curation";
 @import "spotlight/exhibit_admin";
 @import "spotlight/item_text_block";
