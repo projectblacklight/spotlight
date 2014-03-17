@@ -27,4 +27,21 @@
       white-space: nowrap;
     }
   }
+
+  .callout {
+    margin: 20px 0;
+    padding: 20px;
+    border-left: 3px solid #eee;
+    h4 {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+  }
+  .callout-danger {
+    background-color: #fdf7f7;
+    border-color: #d9534f;
+    h4 {
+      color: #d9534f;
+    }
+  }
 }

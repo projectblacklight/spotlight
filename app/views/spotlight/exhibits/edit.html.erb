@@ -1,25 +1,31 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9 exhibit-admin">
-<%= administration_page_title %>
-<%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal do |f| %>
-  <div class="row col-md-9">
-    <%= f.text_field :title %>
-    <%= f.text_field :subtitle %>
-    <%= f.text_area :description %>
-    <%= f.form_group(:contact_emails, label: { text: nil, class: nil }, help: nil) do %>
-      <%= f.fields_for :contact_emails do |contact| %>
-        <%= render partial: 'contact', locals: {contact: contact} %>
+  <%= administration_page_title %>
+  <%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal, html: {class: "row"} do |f| %>
+    <div class="row col-md-9">
+      <%= f.text_field :title %>
+      <%= f.text_field :subtitle %>
+      <%= f.text_area :description %>
+      <%= f.form_group(:contact_emails, label: { text: nil, class: nil }, help: nil) do %>
+        <%= f.fields_for :contact_emails do |contact| %>
+          <%= render partial: 'contact', locals: {contact: contact} %>
+        <% end %>
+        <p class="help-block"><%= t(:'.fields.contact_emails.help_block') %></p>
       <% end %>
-      <p class="help-block"><%= t(:'.fields.contact_emails.help_block') %></p>
-    <% end %>
 
-    <div class="form-actions">
-      <%= delete_link @exhibit, class: 'btn btn-danger' %>
+      <div class="form-actions">
 
-      <div class="primary-actions">
-        <%= f.submit nil, class: 'btn btn-primary' %>
+        <div class="primary-actions">
+          <%= f.submit nil, class: 'btn btn-primary' %>
+        </div>
       </div>
     </div>
+  <% end %>
+  <div class="callout callout-danger row">
+    <h4><%= t(:".delete_exhibit") %></h4>
+    <p class='col-md-9'><%= t(:".delete_exhibit_warning_html", export_link: link_to(t(:'spotlight.exhibits.import.export.download'), spotlight.import_exhibit_path(@exhibit))) %></p>
+    <div class='col-md-3'>
+      <%= delete_link @exhibit, class: 'btn btn-default' %>
+    </div>
   </div>
-<% end %>
 </div>
