@@ -5,6 +5,7 @@ module Spotlight
 
     load_and_authorize_resource :search, except: :index, through: :exhibit, parent: false
     before_filter :attach_breadcrumbs
+    record_search_parameters only: :show
     
     def index
       @searches = @exhibit.searches.accessible_by(current_ability)
