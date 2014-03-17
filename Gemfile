@@ -24,7 +24,7 @@ gem 'sprockets', '2.11.0'
 # it'll want sass 3.2.0 and we'll have a conflict
 gem 'sass', '~> 3.2.0'
 
-gem "blacklight-gallery", github: 'projectblacklight/blacklight-gallery'
+gem 'blacklight-gallery', github: 'projectblacklight/blacklight-gallery'
 gem 'sir-trevor-rails', github: 'sul-dlss/sir-trevor-rails'
 
 group :test do
