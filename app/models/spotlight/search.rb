@@ -14,6 +14,7 @@ class Spotlight::Search < ActiveRecord::Base
   end
 
   include Blacklight::SolrHelper
+  include Spotlight::Catalog::AccessControlsEnforcement
 
   def count
     query_solr(query_params, rows: 0, facet: false)['response']['numFound']
@@ -47,5 +48,7 @@ class Spotlight::Search < ActiveRecord::Base
   def blacklight_config
     exhibit.blacklight_config
   end
+  
+  alias_method :current_exhibit, :exhibit
 
 end

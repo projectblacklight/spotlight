@@ -5,7 +5,6 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   load_and_authorize_resource through: :exhibit
   before_filter :attach_breadcrumbs, only: [:index, :edit], unless: -> { request.format.json? }
 
-
   def create
     params_copy = params.dup
     params_copy.delete(:exhibit_id)

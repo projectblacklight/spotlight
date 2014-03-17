@@ -5,6 +5,7 @@ module Spotlight
 
     include Spotlight::Base
     include Blacklight::Catalog::SearchContext
+    include Spotlight::Catalog::AccessControlsEnforcement
 
     helper_method :get_search_results, :get_solr_response_for_doc_id, :get_solr_response_for_field_values, :page_collection_name
 

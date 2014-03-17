@@ -2,6 +2,8 @@ require 'spec_helper'
 describe Spotlight::FeaturePagesController do
   routes { Spotlight::Engine.routes }
 
+  it { should be_a Spotlight::Catalog::AccessControlsEnforcement }
+
   # This should return the minimal set of attributes required to create a valid
   # Page. As you add validations to Page, be sure to
   # adjust the attributes here as well.
