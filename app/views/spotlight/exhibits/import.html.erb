@@ -4,7 +4,7 @@
 <%= bootstrap_form_for [:import, @exhibit], html: { class: 'clearfix', multipart: true } do |f| %>
   <div class="row col-md-9">
     <h3><%= t :'.import.header' %></h3>
-    <p><%= t :'.import.instructions' %></p>
+    <p class="instructions"><%= t :'.import.instructions' %></p>
     <div class="form-group">
       <%= file_field_tag :file, class: 'form-control' %>
     </div>
@@ -19,7 +19,7 @@
 
   <div class="row col-md-9">
     <h3><%= t :'.export.header' %></h3>
-    <p><%= t :'.export.instructions' %></p>
+    <p class="instructions"><%= t :'.export.instructions' %></p>
     <%= link_to t(:'.export.download'), get_exhibit_path(@exhibit, format: 'json'), class: 'btn btn-default' %>
   </div>
 </div>

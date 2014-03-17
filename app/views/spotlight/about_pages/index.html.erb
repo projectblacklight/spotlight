@@ -4,7 +4,7 @@
   <%= bootstrap_form_for @exhibit, url: exhibit_contacts_path(@exhibit),
       style: :horizontal, html: {class: 'exhibit-contacts'} do |f| %>
     <h3><%= t :".contacts" %></h3>
-    <p><%= t :'.instructions' %></p>
+    <p class="instructions"><%= t :'.instructions' %></p>
     <div class="panel-group dd contacts_admin">
       <ol class="dd-list">
         <%= f.fields_for :contacts do |c| %>
