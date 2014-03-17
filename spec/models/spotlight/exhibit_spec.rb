@@ -72,4 +72,18 @@ describe Spotlight::Exhibit do
       subject.import some_value
     end
   end
+
+  describe "#blacklight_config" do
+    subject { FactoryGirl.create(:exhibit) }
+    before do
+      subject.blacklight_configuration.index = { timestamp_field:  "timestamp_field" }
+      subject.save!
+      subject.reload
+    end
+
+    it "should create a blacklight_configuration from the database" do
+      expect(subject.blacklight_config.index.timestamp_field).to eq 'timestamp_field'
+    end
+  end
+
 end
