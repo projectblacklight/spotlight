@@ -30,8 +30,9 @@ describe Spotlight::SearchesController do
     let(:search) { FactoryGirl.create(:search, exhibit: exhibit) }
 
     it "should create a saved search" do
+      request.env["HTTP_REFERER"] = "/referring_url"
       post :create, "search"=>{"title"=>"A bunch of maps"}, "f"=>{"genre_ssim"=>["map"]}, exhibit_id: exhibit 
-      expect(response).to redirect_to exhibit_catalog_index_path(exhibit)
+      expect(response).to redirect_to "/referring_url"
       expect(flash[:notice]).to eq "The search was created."
       expect(assigns[:search].title).to eq "A bunch of maps"
       expect(assigns[:search].query_params).to eq("f"=>{"genre_ssim"=>["map"]})
