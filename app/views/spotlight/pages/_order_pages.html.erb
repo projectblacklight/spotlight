@@ -3,7 +3,7 @@
 
     <%= render partial: 'header', locals: {f: f} %>
     <h3><%= t :'.pages_header' %></h3>
-    <p><%= t :'.instructions' %></p>
+    <p class="instructions"><%= t :'.instructions' %></p>
     <div class="panel-group dd <%= page_collection_name %>_admin" id="nested-pages">
       <ol class="dd-list">
         <%= f.fields_for page_collection_name do |p| %>
