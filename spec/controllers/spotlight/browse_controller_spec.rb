@@ -6,6 +6,8 @@ describe Spotlight::BrowseController do
   let!(:search) { FactoryGirl.create(:published_search, exhibit: exhibit) }
   let!(:unpublished) { FactoryGirl.create(:search, exhibit: exhibit) }
 
+  it { should be_a Spotlight::Catalog::AccessControlsEnforcement }
+
   describe "#index" do
     it "should show the list of browse categories" do
       expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)

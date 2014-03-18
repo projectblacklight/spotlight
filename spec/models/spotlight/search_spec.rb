@@ -7,6 +7,8 @@ describe Spotlight::Search do
     subject.exhibit = FactoryGirl.create(:exhibit)
   end
 
+  it { should be_a Spotlight::Catalog::AccessControlsEnforcement }
+
   it "should have a default feature image" do
     subject.stub(images: [['title', 'image_url'], ['title1', 'image2']])
     subject.save

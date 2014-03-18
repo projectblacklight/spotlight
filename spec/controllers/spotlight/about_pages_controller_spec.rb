@@ -3,6 +3,9 @@ require 'spec_helper'
 describe Spotlight::AboutPagesController do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { "title" => "MyString" } }
+
+  it { should be_a Spotlight::Catalog::AccessControlsEnforcement }
+
   describe "when not logged in" do
 
     describe "POST update_all" do
