@@ -77,16 +77,10 @@ class Spotlight::CatalogController < ::CatalogController
   end
 
   def update
-    if params[:solr_document]
-      @response, @document = get_solr_response_for_doc_id
-      authenticate_user!
-      authorize! :curate, current_exhibit
-      @document.update(current_exhibit, solr_document_params)
-      @document.save
-      redirect_to exhibit_catalog_path(current_exhibit, @document)
-    else
-      super
-    end
+    @response, @document = get_solr_response_for_doc_id
+    @document.update(current_exhibit, solr_document_params)
+    @document.save
+    redirect_to exhibit_catalog_path(current_exhibit, @document)
   end
 
   def edit
@@ -138,10 +132,9 @@ class Spotlight::CatalogController < ::CatalogController
   # browse categories too
   def setup_next_and_previous_documents
     if current_browse_category
-      index = search_session[:counter].to_i - 1
-      response, documents = get_previous_and_next_documents_for_search index, current_browse_category.query_params
-
-      search_session[:total] = response.total
+      index = search_session['counter'].to_i - 1
+      response, documents = get_previous_and_next_documents_for_search index, current_browse_category.query_params.with_indifferent_access
+      search_session['total'] = response.total
       @search_context_response = response
       @previous_document = documents.first
       @next_document = documents.last
