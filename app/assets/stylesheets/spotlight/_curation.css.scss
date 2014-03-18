@@ -30,18 +30,11 @@
 }
 
 .panel-heading.page {
-  .panel-title {
-    a {
-      cursor: text;
-      &:hover {
-        text-decoration: none;
-      }
-    }
-  }
   .checkbox {
     width: 3%;
     vertical-align: top;
     display: inline-block;
+    padding-top: 0;
   }
   .display-sidebar-control {
     .checkbox {
