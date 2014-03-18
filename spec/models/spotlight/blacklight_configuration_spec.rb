@@ -104,11 +104,26 @@ describe Spotlight::BlacklightConfiguration do
       expect(subject.blacklight_config.index_fields['d']).to be_nil
     end
 
+    context "custom fields" do
+      it "should include any custom fields" do
+        subject.index_fields['a'] = { enabled: true, list: true }
+        subject.stub(custom_index_fields: { 'a' => double(merge!: true, validate!: true, normalize!: true) })
+        expect(subject.blacklight_config.index_fields).to include('a')
+      end
 
-    it "should include any custom fields" do
-      subject.index_fields['a'] = { enabled: true, list: true }
-      subject.stub(custom_index_fields: { 'a' => double(merge!: true, validate!: true, normalize!: true) })
-      expect(subject.blacklight_config.index_fields).to include('a')
+      it "should default to showing a custom field on the show view" do
+        subject.stub(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
+        expect(subject.blacklight_config.index_fields).to include('a')
+        expect(subject.blacklight_config.index_fields['a'].show).to be_true
+        expect(subject.blacklight_config.index_fields['a'].enabled).to be_true
+      end
+
+      it "should use explicit configuration to override custom field defaults" do
+        subject.index_fields['a'] = { show: false }
+        subject.stub(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
+        expect(subject.blacklight_config.index_fields).to include('a')
+        expect(subject.blacklight_config.index_fields['a'].show).to be_false
+      end
     end
 
     it "should prefer the label stored in index fields" do
