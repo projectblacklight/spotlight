@@ -70,10 +70,13 @@ module Spotlight
 
         # Update with customizations
         config.index_fields.each do |k, v|
-          if index_fields[k].blank?
-            set_index_field_defaults(v)
-          else
+
+          if index_fields[k]
             v.merge! index_fields[k].symbolize_keys
+          elsif custom_index_fields[k]
+            set_custom_field_defaults(v)
+          else
+            set_index_field_defaults(v)
           end
 
           v.normalize! config
@@ -145,6 +148,11 @@ module Spotlight
         views = default_blacklight_config.view.keys | [:show, :enabled]
         field.merge! Hash[views.map { |v| [v, true] }]
       end
+    end
+
+    def set_custom_field_defaults field
+      field.show = true
+      field.enabled = true
     end
 
     # @return [Integer] the weight (sort order) for this field
