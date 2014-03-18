@@ -29,6 +29,12 @@ describe 'spotlight/browse/show' do
     expect(response).to have_selector 'h1', text: search.title
   end
 
+  it "should have an edit button" do
+    view.stub(can?: true)
+    render
+    expect(response).to have_selector '.btn', text: 'Edit'
+  end
+
   it "should display the item count" do
     render
     expect(response).to have_selector ".item-count", text: "#{search.count} items"
