@@ -13,7 +13,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
     @search.query_params = params_copy.reject { |k,v| blacklisted_search_session_params.include?(k.to_sym) or v.blank? }
     @search.save!
 
-    redirect_to exhibit_catalog_index_path(@search.exhibit), notice: t(:'helpers.submit.search.created', model: @search.class.model_name.human.downcase)
+    redirect_to :back, notice: t(:'helpers.submit.search.created', model: @search.class.model_name.human.downcase)
   end
 
   def index
