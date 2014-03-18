@@ -149,7 +149,11 @@ module Spotlight
 
     # @return [Integer] the weight (sort order) for this field
     def field_weight fields, index
-      fields.fetch(index, {})[:weight].to_i || (100 + (fields.keys.index(index) || fields.keys.length))
+      if fields[index] and fields[index][:weight]
+        fields[index][:weight].to_i
+      else
+        100 + (fields.keys.index(index) || fields.keys.length)
+      end
     end
   end
 end
