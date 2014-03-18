@@ -4,6 +4,11 @@ describe "Item Administration" do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as curator }
+
+  before do
+    ::SolrDocument.any_instance.stub(reindex: true)
+  end
+
   describe "admin" do
     it "should have catalog items" do
       visit spotlight.admin_exhibit_catalog_index_path(exhibit)
