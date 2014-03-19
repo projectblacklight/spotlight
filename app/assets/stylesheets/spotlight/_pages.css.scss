@@ -36,12 +36,19 @@
   }
 }
 #sidebar {
+  li {
+    margin-top: 3px;
+  }
+  h4 {
+    margin-bottom: 5px;
+  }
   .contacts-header {
     margin-top: 40px;
   }
   ol.contacts {
     li {
-      margin-top: 10px;
+      margin-bottom: 20px;
+      margin-top: 5px;
       .name {
         font-weight: bold;
       }
@@ -50,7 +57,6 @@
 
   ol.sidenav {
     li {
-      margin-top: 30px;
       h4 > a {
         color: $gray-dark;
         font-weight: 400;
