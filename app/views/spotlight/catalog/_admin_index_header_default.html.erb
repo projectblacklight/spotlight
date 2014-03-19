@@ -1,0 +1,10 @@
+<% # header bar for doc items in index view -%>
+<div class="documentHeader row">
+   <h5 class="index_title col-sm-9 col-lg-10">
+     <% counter = document_counter_with_offset(document_counter) %>
+     <span class="document-counter">
+       <%= t('blacklight.search.documents.counter', :counter => counter) if counter %>
+     </span>
+     <%= link_to_document document, :label=>truncate(presenter(document).document_show_html_title, length: 89), :counter => counter %>
+  </h5>
+</div>
