@@ -29,4 +29,24 @@ describe Spotlight::ApplicationHelper do
       expect(helper.url_to_tag_facet "tag_value").to eq spotlight.exhibit_catalog_index_path(exhibit_id: helper.current_exhibit, f: { exhibit_tags: ['tag_value']})
     end
   end
+  describe "search block helpers" do
+    describe "selected_search_block_views" do
+      it "should return keys with a value of 'on'" do
+        expect(helper.selected_search_block_views({a: "on", b: "off", c: false, d: "on"})).to eq [:a, :d]
+      end
+    end
+    describe "blacklight_view_config_for_search_block" do
+      let(:sir_trevor_json) { { "list" => "on", "gallery" => "on", "slideshow" => "null" } }
+      let(:config) { Blacklight::Configuration.new }
+      before do
+        helper.stub(blacklight_config: config)
+      end
+      it "should return a blacklight configuration object that has reduced the views to those that are configured in the block" do
+        expect(config.view.keys).to eq [:list, :gallery, :slideshow]
+        new_config = helper.blacklight_view_config_for_search_block(sir_trevor_json)
+        expect(new_config).to be_a (Blacklight::Configuration)
+        expect(new_config.view.keys).to eq [:list, :gallery]
+      end
+    end
+  end
 end

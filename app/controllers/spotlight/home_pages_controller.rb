@@ -26,10 +26,6 @@ module Spotlight
       end
     end
 
-    def _prefixes
-      @_prefixes ||= super + ['catalog']
-    end
-    
     private
 
     def allowed_page_params

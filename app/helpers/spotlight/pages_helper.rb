@@ -30,5 +30,13 @@ module Spotlight
     def disable_save_pages_button?
       page_collection_name == "about_pages" && @pages.empty?
     end
+    def get_search_widget_search_results sir_trevor_json
+      begin
+        search = Spotlight::Search.find(sir_trevor_json['searches-options'])
+        get_search_results(search.query_params.with_indifferent_access.merge(params))
+      rescue ActiveRecord::RecordNotFound
+        []
+      end
+    end
   end
 end

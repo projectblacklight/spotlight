@@ -25,6 +25,12 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
     end
   end
 
+  def available_configurations
+    respond_to do |format|
+      format.json { render json: @blacklight_configuration.default_blacklight_config }
+    end
+  end
+
   ##
   # Edit the index and show view metadata fields
   def edit_metadata_fields

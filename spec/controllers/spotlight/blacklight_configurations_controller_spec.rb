@@ -83,6 +83,14 @@ describe Spotlight::BlacklightConfigurationsController do
       end
     end
 
+    describe "#available_configurations" do
+      it "should be successful" do
+        get :available_configurations, exhibit_id: exhibit, format: 'json'
+        expect(response).to be_successful
+        expect(JSON.parse(response.body).keys).to eq exhibit.blacklight_config.keys.map(&:to_s)
+      end
+    end
+
     describe "#alternate_count" do
       before { controller.instance_variable_set(:@blacklight_configuration, exhibit.blacklight_configuration) }
       subject { controller.alternate_count }

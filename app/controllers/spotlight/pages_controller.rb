@@ -63,6 +63,10 @@ module Spotlight
       redirect_to :back, notice: notice
     end
 
+    def _prefixes
+      @_prefixes ||= super + ['catalog']
+    end
+
     protected
 
     ##
