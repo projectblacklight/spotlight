@@ -2,14 +2,14 @@
   <div class="dd-handle dd3-handle"><%= t :drag %></div>
   <div class="dd3-content panel panel-default">
     <div class="panel-heading page">
-      <div class="contact-links pull-right">
-        <%= exhibit_edit_link f.object, :class => 'btn btn-link' %> &middot;
-        <%= exhibit_delete_link f.object, :class => 'btn btn-link' %>
-      </div>
       <%= f.check_box :show_in_sidebar, label: '' %>
       <%= f.hidden_field :id %>
       <%= f.hidden_field :weight, data: {property: "weight"} %>
       <div class="main">
+        <div class="contact-links pull-right">
+          <%= exhibit_edit_link f.object, :class => 'btn btn-link' %> &middot;
+          <%= exhibit_delete_link f.object, :class => 'btn btn-link' %>
+        </div>
         <%= render partial: "contact_properties", locals: {contact: f.object} %>
       </div>
     </div>
