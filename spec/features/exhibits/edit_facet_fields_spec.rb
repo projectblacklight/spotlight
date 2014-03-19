@@ -11,27 +11,14 @@ describe "Editing metadata fields", type: :feature do
     expect(page).to have_content "Curation Search Facets"
     expect(page).to have_button "Save"
 
-    uncheck "Language"
-    uncheck "Genre"
-    check "Era"
+    uncheck "blacklight_configuration_facet_fields_language_ssim_show" # Language
+    uncheck "blacklight_configuration_facet_fields_genre_ssim_show" # Genre
+    check   "blacklight_configuration_facet_fields_subject_temporal_ssim_show" # Era
 
     click_on "Save changes"
 
     expect(exhibit.reload.blacklight_config.facet_fields.select { |k,v| v.show }.keys).to include("subject_temporal_ssim")
     expect(exhibit.blacklight_config.facet_fields.select { |k,v| v.show }.keys).to_not include("language_ssim", "genre_ssim")
-  end
-
-  it "should allow curators to set facet labels" do
-    visit spotlight.exhibit_edit_facets_path exhibit
-
-    within ".facet-config-genre_ssim" do
-      click_on "Options"
-      fill_in "Display Label", with: "Some Label"
-    end
-
-    click_on "Save changes"
-
-    expect(exhibit.reload.blacklight_config.facet_fields['genre_ssim'].label).to eq "Some Label"
   end
 
   it "should display information about the facet" do

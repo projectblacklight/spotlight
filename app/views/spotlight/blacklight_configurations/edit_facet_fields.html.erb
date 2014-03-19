@@ -1,49 +1,41 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
   <%= curation_page_title %>
-<%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_blacklight_configuration_path(@exhibit), style: :horizontal, left: 'col-md-3', right: 'col-sm-5' do |f| %>
+  <%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_blacklight_configuration_path(@exhibit), style: :horizontal, left: 'col-md-3', right: 'col-sm-5' do |f| %>
     <div class="panel-group dd facet_fields" id="nested-fields">
-    <ol class="dd-list">
+      <ol class="dd-list">
+        <%= f.fields_for :facet_fields do |idxf| %>
+          <% @blacklight_configuration.blacklight_config.facet_fields.each do |key, config| %>
+            <li class="dd-item" data-id="<%= key.parameterize %>">
+              <div class="dd-handle dd3-handle"><%= t :drag %></div>
+              <%= idxf.fields_for key do |facet| %>
+                <div class="dd3-content panel panel-default facet-config-<%= key.parameterize %>">
+                  <div class="panel-heading page">
+                    <%= facet.hidden_field :weight, 'data-property' => 'weight' %>
+                    <%= facet.check_box :show, checked: config.show, label: "", title: key %>
+                    <div class="main">
+                      <a href="#edit-in-place" class="field-label edit-in-place"><%= config.label %></a>
+                      <%= facet.hidden_field :label, value: config.label, class: 'form-control input-sm' %>
 
-      <%= f.fields_for :facet_fields do |idxf| %>
-        <% @blacklight_configuration.blacklight_config.facet_fields.each do |key, config| %>
-          <li class="dd-item" data-id="<%= key.parameterize %>">
-  <div class="dd-handle dd3-handle"><%= t :drag %></div>
-          <%= idxf.fields_for key do |facet| %>
-            <div class="dd3-content panel panel-default facet-config-<%= key.parameterize %>">
-              <div class="panel-heading">
-              <a class="pull-right btn btn-link" data-toggle="collapse" href="#collapse-facet-<%= key.parameterize %>"><%= t(:'.options') %>
-      <span class="glyphicon glyphicon-chevron-right"></span>
-    </a>
-
-                <%= facet.hidden_field :weight, 'data-property' => 'weight' %>
-                <%= facet.check_box :show, checked: config.show, label: config.label, title: key %>
-
-                <% if metadata =  @fields.fetch(key.to_s, {}) %>
-                <div class="text-muted">
-                  <%= content_tag :span, t(:'.items_count', count: alternate_count.fetch(key, 0)), class: 'btn btn-link' %> •
-
-                  <%= link_to t(:'.values_count', count: metadata.fetch('distinct', 0)), catalog_facet_path(key), class: 'btn btn-link btn-with-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => metadata.fetch('topTerms', {}).map { |k,v| String.new(k) }.join(";") %>
-                  <% end %>
+                      <% if metadata =  @fields.fetch(key.to_s, {}) %>
+                        <div class="text-muted">
+                          <%= content_tag :span, t(:'.items_count', count: alternate_count.fetch(key, 0)), class: 'btn btn-link' %> •
+                          <%= link_to t(:'.values_count', count: metadata.fetch('distinct', 0)), catalog_facet_path(key), class: 'btn btn-link btn-with-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => metadata.fetch('topTerms', {}).map { |k,v| String.new(k) }.join(";") %>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div id="collapse-facet-<%= key.parameterize %>" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <%= facet.text_field :label, value: config.label, label: t('.field.label'), placeholder: @blacklight_configuration.default_blacklight_config.facet_fields[key].label %>
-                </div>
-              </div>
-            </div>
+              <% end %>
+            </li>
           <% end %>
-          </li>
         <% end %>
-   <% end %>
-   </ol>
-   </div>
-
-  <div class="form-actions">
-    <div class="primary-actions">
-      <%= f.submit nil, class: 'btn btn-primary' %>
+      </ol>
     </div>
-  </div>
-<% end %>
+    <div class="form-actions">
+      <div class="primary-actions">
+        <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
 </div>
