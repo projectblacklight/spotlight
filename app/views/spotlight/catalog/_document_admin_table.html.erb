@@ -5,7 +5,7 @@
       <th class="col-sm-1"></th>
       <th class="col-sm-5"><%= t(:'spotlight.catalog.fields.title') %></th>
       <th class="col-sm-2"><%= t(:'spotlight.catalog.fields.date_added') %></th>
-      <th class="col-sm-1"><%= t(:'spotlight.catalog.fields.visibility') %></th>
+      <th class="col-sm-1 checkbox-toggle"><%= t(:'spotlight.catalog.fields.visibility') %></th>
     </tr>
   </thead>
   <%= render partial: 'document_row', collection: documents, as: :document %>
