@@ -40,7 +40,7 @@
     margin-top: 3px;
   }
   h4 {
-    margin-bottom: 5px;
+    line-height: $line-height-large;
   }
   .contacts-header {
     margin-top: 40px;
@@ -58,14 +58,16 @@
   ol.sidenav {
     li {
       color: $gray-darker;
-      a:hover {
-        @include link-highlighting();
+      a {
+        &:hover, &:focus {
+          @include link-highlighting();
+        }
       }
       > h4 {
         font-size: 15px;
         margin-top: 30px;
         > a {
-          color: $gray-dark;
+          color: $text-color;
           display: block;
           font-weight: 400;
         }
