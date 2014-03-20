@@ -119,6 +119,9 @@
             select.focus();
           }
         });
+        select.on('change', function(){
+          checkbox.prop('checked', !($(this).val() == ""))
+        });
       });
     }
 
