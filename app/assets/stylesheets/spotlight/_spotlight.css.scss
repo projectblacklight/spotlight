@@ -26,7 +26,12 @@
 @import "spotlight/report_a_problem";
 
 
-#main-container {
-  // Keep the footer down the page if there isn't much content
-  min-height: 40%;
+
+// Styles below keep footer at bottom of viewport
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: $footer-height;
 }
