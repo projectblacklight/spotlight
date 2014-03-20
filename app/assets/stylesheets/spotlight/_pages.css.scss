@@ -57,16 +57,28 @@
 
   ol.sidenav {
     li {
-      h4 > a {
-        color: $gray-dark;
-        font-weight: 400;
+      color: $gray-darker;
+      a:hover {
+        @include link-highlighting();
+      }
+      > h4 {
+        font-size: 15px;
+        margin-top: 30px;
+        > a {
+          color: $gray-dark;
+          display: block;
+          font-weight: 400;
+        }
       }
     }
     ol.subsection {
       padding-left: 0;
       li {
-        list-style: none;
-        margin-top: 15px;
+        list-style: square;
+        margin-left: 18px;
+        > a {
+          display: block;
+        }
       }
     }
   }
