@@ -36,12 +36,19 @@
   }
 }
 #sidebar {
+  li {
+    margin-top: $padding-small-vertical;
+  }
+  h4 {
+    line-height: $line-height-large;
+  }
   .contacts-header {
-    margin-top: 40px;
+    margin-top: 4 * $padding-large-vertical;
   }
   ol.contacts {
     li {
-      margin-top: 10px;
+      margin-bottom: 2 * $padding-large-vertical;
+      margin-top: $padding-small-vertical;
       .name {
         font-weight: bold;
       }
@@ -50,17 +57,30 @@
 
   ol.sidenav {
     li {
-      margin-top: 30px;
-      h4 > a {
-        color: $gray-dark;
-        font-weight: 400;
+      color: $gray-darker;
+      a {
+        &:hover, &:focus {
+          @include link-highlighting();
+        }
+      }
+      > h4 {
+        font-size: ceil(($font-size-base * 1.05));
+        margin-top: 3 * $padding-large-vertical;
+        > a {
+          color: $text-color;
+          display: block;
+          font-weight: 400;
+        }
       }
     }
     ol.subsection {
       padding-left: 0;
       li {
-        list-style: none;
-        margin-top: 15px;
+        list-style: square;
+        margin-left: 18px;
+        > a {
+          display: block;
+        }
       }
     }
   }

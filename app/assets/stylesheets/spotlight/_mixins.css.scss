@@ -1,0 +1,4 @@
+@mixin link-highlighting() {
+  background-color: $nav-link-hover-bg;
+  text-decoration: none;
+}
