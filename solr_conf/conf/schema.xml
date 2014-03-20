@@ -18,6 +18,7 @@
     <field name="full_title_ng" type="text_en_ng" stored="false" indexed="true" multiValued="true"/>
     <field name="id_ng"         type="text_en_ng" stored="false" indexed="true" multiValued="false"/>
 
+   <dynamicField name="*_bbox"   type="location_rpt" stored="true" indexed="true"/>
     <!-- NOTE:  not all possible Solr field types are represented in the dynamic fields -->
 
     <!-- text (_t...) -->
