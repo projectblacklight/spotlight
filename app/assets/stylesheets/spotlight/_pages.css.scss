@@ -37,18 +37,18 @@
 }
 #sidebar {
   li {
-    margin-top: 3px;
+    margin-top: $padding-small-vertical;
   }
   h4 {
     line-height: $line-height-large;
   }
   .contacts-header {
-    margin-top: 40px;
+    margin-top: 4 * $padding-large-vertical;
   }
   ol.contacts {
     li {
-      margin-bottom: 20px;
-      margin-top: 5px;
+      margin-bottom: 2 * $padding-large-vertical;
+      margin-top: $padding-small-vertical;
       .name {
         font-weight: bold;
       }
@@ -64,8 +64,8 @@
         }
       }
       > h4 {
-        font-size: 15px;
-        margin-top: 30px;
+        font-size: ceil(($font-size-base * 1.05));
+        margin-top: 3 * $padding-large-vertical;
         > a {
           color: $text-color;
           display: block;
