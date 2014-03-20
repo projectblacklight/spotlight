@@ -10,6 +10,10 @@ describe "Item Administration" do
   end
 
   describe "admin" do
+    it "should not have a 'Save this search' button" do
+      visit spotlight.admin_exhibit_catalog_index_path(exhibit)
+      expect(page).not_to have_css("button", text: "Save this search")
+    end
     it "should have catalog items" do
       visit spotlight.admin_exhibit_catalog_index_path(exhibit)
       expect(page).to have_css("h1 small", text: "Items")
