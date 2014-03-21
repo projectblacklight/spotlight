@@ -95,6 +95,18 @@ module Spotlight
       (params[:controller] != "spotlight_catalog_controller" && params[:action] != "admin")
     end
 
+    def select_deselect_button
+      button_tag(
+        t(:".deselect_all"),
+        class: "btn btn-default btn-xs metadata-select",
+        data: {
+          :behavior        => "metadata-select",
+          :'deselect-text' => t(:".deselect_all"),
+          :'select-text'   => t(:".select_all")
+        }
+      )
+    end
+
     private
 
     def field_enabled? field, view = nil

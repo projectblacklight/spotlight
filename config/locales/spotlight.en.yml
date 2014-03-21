@@ -146,6 +146,8 @@ en:
       edit_metadata_fields:
         field:
           label: "Field name"
+        deselect_all: "Deselect all"
+        select_all: "Select all"
         header: "Metadata"
         order_header: "Display and Order Metadata Fields"
         exhibit_specific:

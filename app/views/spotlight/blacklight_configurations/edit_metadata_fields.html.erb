@@ -10,10 +10,19 @@
       <thead>
         <tr>
           <th><%= t :'.fields.label' %></th>
-          <th><%= t :'.view.show', default: t(:'blacklight.search.view.show') %></th>
+          <th>
+            <div>
+              <%= t :'.view.show', default: t(:'blacklight.search.view.show') %>
+            </div>
+            <%= select_deselect_button %>
+          </th>
           <% @blacklight_configuration.blacklight_config.view.keys.each do |type| %>
-
-          <th><%= t :".view.#{type}", default: t(:".view.#{type}") %></th>
+            <th>
+              <div>
+                <%= t :".view.#{type}", default: t(:".view.#{type}") %>
+              </div>
+              <%= select_deselect_button %>
+            </th>
           <% end %>
         </tr>
       </thead>
