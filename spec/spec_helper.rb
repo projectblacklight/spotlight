@@ -54,6 +54,7 @@ RSpec.configure do |config|
   config.after(:each, type: :feature) { Warden.test_reset! }
   config.include Controllers::EngineHelpers, type: :controller
   config.include Capybara::DSL
+  config.include Spotlight::TestFeaturesHelpers, type: :feature
 end
 
 def add_new_page_via_button(title="New Page")

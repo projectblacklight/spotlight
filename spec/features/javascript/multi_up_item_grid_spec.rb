@@ -23,32 +23,9 @@ describe "Mutli-Up Item Grid", js: true do
 
     find("a[data-type='multi-up-item-grid']").click
 
-    # Poltergeist / Capybara doesn't fire the events typeahead.js
-    # is listening for, so we help it out a little:
-    fill_in("item-grid-id_0_title", with: "dq287tq6352")
-    page.execute_script '
-      $("input[name=\'item-grid-id_0_title\']").val("dq287tq6352").keydown();
-      $("input[name=\'item-grid-id_0_title\']").typeahead("open");
-      $(".tt-suggestion").click();
-    ';
-    find('.tt-suggestion').click
- 
-    fill_in("item-grid-id_1_title", with: "jp266yb7109")
-    page.execute_script '
-      $("input[name=\'item-grid-id_1_title\']").val("jp266yb7109").keydown();
-      $("input[name=\'item-grid-id_1_title\']").typeahead("open");
-      $(".tt-suggestion").click();
-    ';
-    find('.tt-suggestion').click
-
-    fill_in("item-grid-id_2_title", with: "zv316zr9542")
-    page.execute_script '
-      $("input[name=\'item-grid-id_2_title\']").val("zv316zr9542").keydown();
-      $("input[name=\'item-grid-id_2_title\']").typeahead("open");
-      $(".tt-suggestion").click();
-    ';
-    find('.tt-suggestion').click
-
+    fill_in_typeahead_field "item-grid-id_0_title", with: "dq287tq6352"
+    fill_in_typeahead_field "item-grid-id_1_title", with: "jp266yb7109"
+    fill_in_typeahead_field "item-grid-id_2_title", with: "zv316zr9542"
 
     ##
     # Dunno why this isn't working correctly:
@@ -87,31 +64,9 @@ describe "Mutli-Up Item Grid", js: true do
 
     find("a[data-type='multi-up-item-grid']").click
 
-    # Poltergeist / Capybara doesn't fire the events typeahead.js
-    # is listening for, so we help it out a little:
-    fill_in("item-grid-id_0_title", with: "dq287tq6352")
-    page.execute_script '
-      $("input[name=\'item-grid-id_0_title\']").val("dq287tq6352").keydown();
-      $("input[name=\'item-grid-id_0_title\']").typeahead("open");
-      $(".tt-suggestion").click();
-    ';
-    find('.tt-suggestion').click
- 
-    fill_in("item-grid-id_1_title", with: "jp266yb7109")
-    page.execute_script '
-      $("input[name=\'item-grid-id_1_title\']").val("jp266yb7109").keydown();
-      $("input[name=\'item-grid-id_1_title\']").typeahead("open");
-      $(".tt-suggestion").click();
-    ';
-    find('.tt-suggestion').click
-
-    fill_in("item-grid-id_2_title", with: "zv316zr9542")
-    page.execute_script '
-      $("input[name=\'item-grid-id_2_title\']").val("zv316zr9542").keydown();
-      $("input[name=\'item-grid-id_2_title\']").typeahead("open");
-      $(".tt-suggestion").click();
-    ';
-    find('.tt-suggestion').click
+    fill_in_typeahead_field "item-grid-id_0_title", with: "dq287tq6352"
+    fill_in_typeahead_field "item-grid-id_1_title", with: "jp266yb7109"
+    fill_in_typeahead_field "item-grid-id_2_title", with: "zv316zr9542"
 
 
     click_button "Save changes"
@@ -154,15 +109,7 @@ describe "Mutli-Up Item Grid", js: true do
 
     find("a[data-type='multi-up-item-grid']").click
 
-    # Poltergeist / Capybara doesn't fire the events typeahead.js
-    # is listening for, so we help it out a little:
-    fill_in("item-grid-id_0_title", with: "gk446cj2442")
-    page.execute_script '
-      $("input[name=\'item-grid-id_0_title\']").val("gk446cj2442").keydown();
-      $("input[name=\'item-grid-id_0_title\']").typeahead("open");
-      $(".tt-suggestion").click();
-    ';
-    find('.tt-suggestion').click
+    fill_in_typeahead_field "item-grid-id_0_title", with: "gk446cj2442"
 
     within('.primary-caption') do
       check("Primary caption")
