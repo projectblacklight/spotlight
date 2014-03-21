@@ -40,7 +40,9 @@ module Spotlight
 
     def add_model_mixin
       inject_into_file 'app/models/solr_document.rb', after: "include Blacklight::Solr::Document" do
-       "\n  include Spotlight::SolrDocument\n  include Spotlight::SolrDocument::AtomicUpdates\n"
+       "\n  include Spotlight::SolrDocument\n" +
+       "include Spotlight::SolrDocument::AtomicUpdates\n" +
+       "include Spotlight::SolrDocument::Openseadragon\n"
      end
     end
 

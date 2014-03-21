@@ -6,6 +6,8 @@ class Spotlight::CatalogController < ::CatalogController
   before_filter :check_authorization, only: [:admin, :edit, :make_public, :make_private]
 
   before_filter :attach_breadcrumbs
+  helper Openseadragon::OpenseadragonHelper
+  
 
   def new
     @resource = @exhibit.resources.build

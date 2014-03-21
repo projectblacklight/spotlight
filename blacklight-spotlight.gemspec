@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
   s.add_dependency "faraday"
   s.add_dependency "faraday_middleware"
   s.add_dependency "nokogiri"
+  s.add_dependency "openseadragon", ">= 0.0.3"
   
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec-rails"
