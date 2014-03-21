@@ -26,7 +26,10 @@ Spotlight.onLoad(function() {
     }).bind('typeahead:selected', $.proxy(function (obj, datum) {
       $('#solr_document_exhibit_tag_list').tagsinput('add', datum.name);
       $('#solr_document_exhibit_tag_list').tagsinput('input').typeahead('val', '');
-    }));
+    })).bind('blur', function() {
+      $('#solr_document_exhibit_tag_list').tagsinput('add', $('#solr_document_exhibit_tag_list').tagsinput('input').typeahead('val'));
+      $('#solr_document_exhibit_tag_list').tagsinput('input').typeahead('val', '');
+    });
   }
 
       $(".visiblity_toggle").bl_checkbox_submit({
