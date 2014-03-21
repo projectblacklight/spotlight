@@ -12,7 +12,7 @@ Spotlight.onLoad(function() {
         url: $('#solr_document_exhibit_tag_list').data('autocomplete_url'),
         ttl: 1,
         filter: function(list) {
-          return $.map(list, function(tag) { return { name: tag }; });
+          return $.map(list.tags, function(tag) { return { name: tag }; });
         }
       }
     });
