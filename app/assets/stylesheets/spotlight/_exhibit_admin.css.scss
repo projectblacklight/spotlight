@@ -29,19 +29,22 @@
   }
 
   .callout {
-    margin: 20px 0;
-    padding: 20px;
-    border-left: 3px solid #eee;
+    margin: 40px 0;
+    padding: 2 * $padding-large-vertical;
+    border-left: 3px solid $gray-lighter;
+    > p {
+      padding-left: 0;
+    }
     h4 {
       margin-top: 0;
-      margin-bottom: 5px;
+      margin-bottom: $padding-base-vertical;
     }
   }
   .callout-danger {
-    background-color: #fdf7f7;
-    border-color: #d9534f;
+    background-color: lighten($brand-danger, 40%);
+    border-color: $brand-danger;
     h4 {
-      color: #d9534f;
+      color: $brand-danger;
     }
   }
 }
