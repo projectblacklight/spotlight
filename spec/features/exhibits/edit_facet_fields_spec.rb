@@ -26,7 +26,6 @@ describe "Editing metadata fields", type: :feature do
     within  ".facet-config-genre_ssim" do
       expect(page).to have_content /\d+ items/
       expect(page).to have_content  /(\d+) unique values/
-      expect(page).to have_link "#{$1} unique values", href: catalog_facet_path('genre_ssim')
     end
   end
 end
