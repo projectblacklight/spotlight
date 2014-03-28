@@ -13,12 +13,10 @@ namespace :spotlight do
 
   desc "Create a new exhibit"
   task :exhibit => :environment do
-    print "Exhibit name (used internally): "
-    name = $stdin.gets.chomp
     print "Exhibit title: "
     title = $stdin.gets.chomp
 
-    exhibit = Spotlight::Exhibit.create!(name: name, title: title)
+    exhibit = Spotlight::Exhibit.create!(title: title)
 
     puts "Who can admin this exhibit?"
     print "Email: "
