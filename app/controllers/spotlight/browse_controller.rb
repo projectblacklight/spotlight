@@ -9,7 +9,7 @@ module Spotlight
     record_search_parameters only: :show
     
     def index
-      @searches = @exhibit.searches.accessible_by(current_ability)
+      @searches = @exhibit.searches.published
     end
 
     def show
