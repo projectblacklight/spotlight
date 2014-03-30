@@ -1,6 +1,6 @@
 /*override blacklight default*/
 #sortAndPerPage {
-  border-bottom: 0;
+  border-bottom: 1px dashed #ddd;
 }
 
 .missing-description {
@@ -101,7 +101,7 @@ h1,h2,h3,h4,h5,h6 {
     padding-top: 5px;
   }
 }
- 
+
 .label.curation-widget {
   display: inline-block;
   margin-top: 1em;
