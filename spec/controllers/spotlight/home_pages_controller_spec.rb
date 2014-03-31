@@ -48,12 +48,17 @@ describe Spotlight::HomePagesController do
 
   describe "Rendering home page" do
     it "should get search results for display facets" do
-      expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
       controller.stub(get_search_results: [double, double])
       get :show, exhibit_id: exhibit
       expect(assigns[:response]).to_not be_blank
       expect(assigns[:document_list]).to_not be_blank
       expect(assigns[:page]).to eq exhibit.home_page
+    end
+    it "should not render breadcrumbs" do
+      expect(controller).not_to receive(:add_breadcrumb)
+      controller.stub(get_search_results: [double, double])
+      get :show, exhibit_id: exhibit
+      expect(response).to be_successful
     end
   end
 end
