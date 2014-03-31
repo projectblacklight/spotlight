@@ -4,7 +4,7 @@ module Spotlight
 
     load_and_authorize_resource through: :exhibit, singleton: true, instance_name: 'page'
 
-    before_filter :attach_breadcrumbs
+    before_filter :attach_breadcrumbs, except: :show
 
     def edit
       add_breadcrumb t(:'spotlight.curation.sidebar.feature_pages'), exhibit_feature_pages_path(@exhibit)
