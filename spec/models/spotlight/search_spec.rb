@@ -15,6 +15,11 @@ describe Spotlight::Search do
     expect(subject.featured_image).to eq 'image_url'
   end
 
+  it "should #default_featured_iamge should not thrown an error when no images are present" do
+    subject.stub(images: nil)
+    expect(subject.default_featured_image).to be_nil
+  end
+
   it "should have items" do
     expect(subject.count).to eq 55
   end

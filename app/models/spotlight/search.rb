@@ -37,7 +37,7 @@ class Spotlight::Search < ActiveRecord::Base
   end
 
   def default_featured_image
-    images.first.last
+    images.first.last if images.present?
   end
 
   private
