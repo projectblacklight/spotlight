@@ -1,18 +1,20 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
   <%= curation_page_title %>
-  <%= bootstrap_form_for [@search.exhibit, @search], style: :horizontal, right: "col-sm-5", html: {id: 'edit-search'} do |f| %>
-  <div class="row">
-    <%= f.text_field :title %>
-    <%= f.select :featured_image, f.object.images, {}, prepend: "<img id=\"preview\"></img>".html_safe %>
-    <%= f.text_area :short_description %>
-    <%= f.text_area :long_description %>
-    <div class="form-actions">
-      <div class="primary-actions">
-        <%= cancel_link @search,exhibit_searches_path(@exhibit), class: 'btn btn-default' %>
-        <%= f.submit nil, class: 'btn btn-primary' %>
+  <%= bootstrap_form_for [@search.exhibit, @search], style: :horizontal, right: "col-sm-5", data: {:'autocomplete-url'=> spotlight.autocomplete_exhibit_catalog_index_path(@search.exhibit, format: "json")}, html: {id: 'edit-search'} do |f| %>
+    <div class="row">
+      <%= f.text_field :title %>
+      <%= f.text_field :featured_item_id, value: presenter(@search.featured_item).document_heading, data: {:"featured-item-typeahead" => true, :id_field => "[data-featured-item-id]" }, id: "featured-item-title" %>
+      <%= f.hidden_field :featured_item_id, data: {:"featured-item-id" => true} %>
+      <%= f.text_area :short_description %>
+      <%= f.text_area :long_description %>
+      <div class="form-actions">
+        <div class="primary-actions">
+          <%= cancel_link @search,exhibit_searches_path(@exhibit), class: 'btn btn-default' %>
+          <%= f.submit nil, class: 'btn btn-primary' %>
+        </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
 

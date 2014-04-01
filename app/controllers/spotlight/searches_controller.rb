@@ -28,7 +28,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   end
 
   def update
-    if @search.update params.require(:search).permit(:title, :short_description, :long_description, :featured_image)
+    if @search.update params.require(:search).permit(:title, :short_description, :long_description, :featured_item_id)
       redirect_to exhibit_searches_path(@search.exhibit), notice: t(:'helpers.submit.search.updated', model: @search.class.model_name.human.downcase)
     else
       render action: 'edit'

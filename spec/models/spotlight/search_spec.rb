@@ -10,14 +10,15 @@ describe Spotlight::Search do
   it { should be_a Spotlight::Catalog::AccessControlsEnforcement }
 
   it "should have a default feature image" do
-    subject.stub(images: [['title', 'image_url'], ['title1', 'image2']])
+    subject.stub(images: [['dq287tq6352', 'title', 'image_url']])
+    subject.stub(:featured_item_id).and_return("dq287tq6352")
     subject.save
-    expect(subject.featured_image).to eq 'image_url'
+    expect(subject.featured_image).to eq "https://stacks.stanford.edu/image/dq287tq6352/dq287tq6352_05_0001_thumb"
   end
 
   it "should #default_featured_iamge should not thrown an error when no images are present" do
     subject.stub(images: nil)
-    expect(subject.default_featured_image).to be_nil
+    expect(subject.default_featured_item_id).to be_nil
   end
 
   it "should have items" do
