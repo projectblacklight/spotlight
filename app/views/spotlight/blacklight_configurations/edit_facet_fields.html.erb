@@ -22,9 +22,11 @@
                       </div>
                       <% if metadata =  @fields.fetch(key.to_s, {}) %>
                         <div class="facet-metadata col-sm-5">
-                          <%= content_tag :span, t(:'.items_count', count: alternate_count.fetch(key, 0)) %> •
-                          <%= content_tag :span, t(:'.values_count', count: metadata.fetch('distinct', 0)) %>
-                          <%= tag("span", class: 'btn-with-tooltip glyphicon glyphicon-info-sign', data: {container: 'body', toggle: 'tooltip', placement: 'top', title: metadata.fetch('topTerms', {}).map { |k,v| String.new(k) }.join("; ")}) %>
+                          <%= content_tag :span, t(:'.items_count', count: alternate_count.fetch(key, 0)) %>
+                          <% if (values_count = metadata.fetch('distinct', 0)) > 0 %>
+                            • <%= content_tag :span, t(:'.values_count', count: values_count) %>
+                            <%= tag("span", class: 'btn-with-tooltip glyphicon glyphicon-info-sign', data: {container: 'body', toggle: 'tooltip', placement: 'top', title: metadata.fetch('topTerms', {}).map { |k,v| String.new(k) }.join("; ")}) %>
+                          <% end %>
                         </div>
                       <% end %>
                     </div>
