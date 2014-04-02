@@ -30,6 +30,9 @@
 }
 
 .panel-heading.page {
+  .panel-title {
+    font-size: 15px;
+  }
   .checkbox {
     width: 3%;
     vertical-align: top;
@@ -121,4 +124,10 @@ h1,h2,h3,h4,h5,h6 {
     left: 0;
     right: 0;
   }
+}
+
+.facet-metadata {
+  @extend .text-muted;
+  font-size: $font-size-base;
+  text-align: right;
 }
