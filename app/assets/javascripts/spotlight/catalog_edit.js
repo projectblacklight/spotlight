@@ -12,7 +12,7 @@ Spotlight.onLoad(function() {
         url: $('#solr_document_exhibit_tag_list').data('autocomplete_url'),
         ttl: 1,
         filter: function(list) {
-          return $.map(list, function(tag) { return { name: tag }; });
+          return $.map(list.tags, function(tag) { return { name: tag }; });
         }
       }
     });
@@ -26,7 +26,10 @@ Spotlight.onLoad(function() {
     }).bind('typeahead:selected', $.proxy(function (obj, datum) {
       $('#solr_document_exhibit_tag_list').tagsinput('add', datum.name);
       $('#solr_document_exhibit_tag_list').tagsinput('input').typeahead('val', '');
-    }));
+    })).bind('blur', function() {
+      $('#solr_document_exhibit_tag_list').tagsinput('add', $('#solr_document_exhibit_tag_list').tagsinput('input').typeahead('val'));
+      $('#solr_document_exhibit_tag_list').tagsinput('input').typeahead('val', '');
+    });
   }
 
       $(".visiblity_toggle").bl_checkbox_submit({
