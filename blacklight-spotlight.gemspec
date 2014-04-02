@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sir-trevor-rails"
   s.add_dependency "carrierwave"
   s.add_dependency "mini_magick"
-  s.add_dependency "bootstrap_form"
+  s.add_dependency "bootstrap_form", "~> 2.0.1"
   s.add_dependency "mail_form"
   s.add_dependency "acts-as-taggable-on"
   s.add_dependency "friendly_id"
