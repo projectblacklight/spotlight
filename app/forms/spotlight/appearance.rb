@@ -2,7 +2,7 @@ module Spotlight
   class Appearance
     extend ActiveModel::Naming
     include ActiveModel::Conversion
-    
+
     def initialize(configuration)
       @configuration = configuration
     end
@@ -10,6 +10,8 @@ module Spotlight
     attr_reader :configuration
     delegate :persisted?, :exhibit, :exhibit_id, :default_per_page, :thumbnail_size,
       :default_blacklight_config, to: :configuration
+
+    delegate :main_navigations, to: :exhibit
 
     ##
     # This enables us to have a group of checkboxes that is backed by the array
@@ -40,9 +42,8 @@ module Spotlight
     end
 
     def update(params)
-      params[:document_index_view_types] = keep_selected_values(params[:document_index_view_types])
-      params[:sort_fields] = enable_sort_fields(keep_selected_values(params[:sort_fields]))
-      configuration.update(params)
+      configuration.exhibit.update(main_navigations_attributes: exhibit_params(params)) if exhibit_params(params)
+      configuration.update(configuration_params(params))
     end
 
     def view_type_options
@@ -71,6 +72,17 @@ module Spotlight
       default_sort_fields.each_with_object({}) do |(key, sf), new_val|
         new_val[key] = {show: true} if checked_fields.include?(sf.label.underscore)
       end
+    end
+
+    def configuration_params(params)
+      p = params.except(:main_navigations)
+      p[:document_index_view_types] = keep_selected_values(p[:document_index_view_types])
+      p[:sort_fields] = enable_sort_fields(keep_selected_values(p[:sort_fields]))
+      p
+    end
+
+    def exhibit_params(params)
+      params[:main_navigations].try(:values)
     end
 
     ##

@@ -108,8 +108,13 @@ en:
         header: Appearance
         document_index_view_types: Result page types
         default_per_page: Default results per page
+        main_navigation:
+          menu: Main Navigation Menu
+          help: Click a menu item to change its display label. Drag and drop a menu item to change their order in the main navigation menu.
+        restore_default: "Restore default"
+        search_results: Search Results
+        sort_fields: Sort fields
         thumbnail_size: Thumbnail size
-        sort_fields: Sort fields 
         thumbnail:
           small: Small
           medium: Medium
@@ -233,6 +238,13 @@ en:
         confirmation_sent: Confirmation sent.
         not_validated: Not validated.
         resend: Resend confirmation?
+<<<<<<< HEAD
+=======
+    main_navigation:
+      about: "About"
+      browse: "Browse"
+      curated_features: "Curated Features"
+>>>>>>> 71cdc81... fu1
     pages:
       order_pages:
         pages_header: Defined Pages

@@ -45,6 +45,12 @@ describe Spotlight::Exhibit do
       expect(subject.searches.published).to be_empty
       expect(subject.searches.first.query_params).to be_empty
     end
+
+    it "should have main navigations" do
+      expect(subject.main_navigations).to have(3).main_navigations
+      expect(subject.main_navigations.map(&:label).compact).to be_blank
+      expect(subject.main_navigations.map(&:weight)).to eq [0, 1, 2]
+    end
   end
 
   describe "contacts" do

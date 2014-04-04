@@ -15,6 +15,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   has_many :custom_fields, dependent: :delete_all
   has_many :contacts, dependent: :delete_all       # These are the contacts who appear in the sidebar
   has_many :contact_emails, dependent: :delete_all # These are the contacts who get "Contact us" emails 
+  has_many :main_navigations, dependent: :delete_all
   has_many :solr_document_sidecars, dependent: :delete_all
   has_many :roles, dependent: :delete_all
   has_many :attachments, dependent: :destroy
@@ -29,6 +30,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   accepts_nested_attributes_for :about_pages
   accepts_nested_attributes_for :feature_pages
   accepts_nested_attributes_for :home_page, update_only: true
+  accepts_nested_attributes_for :main_navigations
   accepts_nested_attributes_for :contacts
   accepts_nested_attributes_for :contact_emails, reject_if: proc {|attr| attr['email'].blank?}
   accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc {|attr| attr['user_key'].blank?}
@@ -42,6 +44,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   before_create :build_home_page
   after_create :initialize_config
   after_create :initialize_browse
+  after_create :initialize_main_navigation
   before_save :sanitize_description
 
   validate :title, presence: true
@@ -91,7 +94,18 @@ class Spotlight::Exhibit < ActiveRecord::Base
       long_description: "All items in this exhibit"
   end
 
+  def initialize_main_navigation
+    self.default_main_navigations.each_with_index do |nav_type, weight|
+      self.main_navigations.create nav_type: nav_type, weight: weight
+    end
+  end
+
   def sanitize_description
     self.description = HTML::FullSanitizer.new.sanitize(description) if description_changed?
   end
+
+  def default_main_navigations
+    [:curated_features, :browse, :about]
+  end
+
 end
