@@ -24,6 +24,9 @@
     }
 
     text-align: left;
+    .dd3-handle:before {
+      top: 3px;
+    }
   }
 
   &.checkbox-cell  {
