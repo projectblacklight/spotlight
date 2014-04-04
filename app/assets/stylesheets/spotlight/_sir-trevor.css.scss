@@ -5,3 +5,9 @@
   margin-bottom: 10px;
   border-bottom: 1px solid #D4D4D4;
 }
+
+.blacklight-home_pages-edit {
+  [data-type="search_results"] {
+    display: none;
+  }
+}
