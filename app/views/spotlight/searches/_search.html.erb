@@ -7,7 +7,7 @@
       
       <div class="pic thumbnail"><%= image_tag(search.featured_image) if search.featured_image %></div>
       <div class="main">
-        <div class="title"><%= search.title %></div>
+        <div class="title panel-title"><%= search.title %></div>
         <div class="count"><%= t :'.item_count', count: search.count %></div>
         <div class="actions"><%= exhibit_edit_link(search) %> &bull; <%= exhibit_delete_link(search) %></div>
         <%= f.hidden_field :id %>

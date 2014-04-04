@@ -74,6 +74,7 @@
     width: 3%;
     vertical-align: top;
     display: inline-block;
+    padding-top: 0;
   }
   .pic {
     width: 70px;
@@ -84,11 +85,15 @@
     width: 40%;
     vertical-align: top;
     display: inline-block;
+    margin-left: $padding-base-horizontal;
   }
   .description {
     width: 30%;
     vertical-align: top;
     display: inline-block;
+  }
+  .panel-title {
+    font-size: 15px;
   }
 }
 
