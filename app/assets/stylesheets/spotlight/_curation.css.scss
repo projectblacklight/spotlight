@@ -139,3 +139,13 @@ h1,h2,h3,h4,h5,h6 {
   font-size: $font-size-base;
   text-align: right;
 }
+
+table#exhibit-specific-fields {
+  margin-top: 2em;
+  .field-label {
+    min-width: 10em;
+  }
+  .actions a {
+    padding: 0 2px;
+  }
+}
