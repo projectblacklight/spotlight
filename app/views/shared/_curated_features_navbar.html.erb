@@ -1,0 +1,15 @@
+<% published_top_level_feature_pages = current_exhibit.feature_pages.published.at_top_level -%>
+<% if published_top_level_feature_pages.present? %>
+  <% if published_top_level_feature_pages.many? %>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= navigation.label_or_default %> <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <% published_top_level_feature_pages.each do |page| %>
+          <li><%= link_to page.title, [spotlight, page.exhibit, page] %></li>
+        <% end %>
+      </ul>
+    </li>
+  <% else %>
+    <li class="<%= "active" if current_page?(url_for([spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first])) %>"><%= link_to published_top_level_feature_pages.first.title, [spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first] %></li>
+  <% end %>
+<% end %>

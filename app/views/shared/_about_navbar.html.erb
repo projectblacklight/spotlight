@@ -1,0 +1,3 @@
+<% if current_exhibit.main_about_page %>
+  <li class="<%= "active" if on_about_page? %>"><%= link_to navigation.label_or_default, [spotlight, current_exhibit, current_exhibit.main_about_page] %></li>
+<% end %>

@@ -238,13 +238,10 @@ en:
         confirmation_sent: Confirmation sent.
         not_validated: Not validated.
         resend: Resend confirmation?
-<<<<<<< HEAD
-=======
     main_navigation:
       about: "About"
       browse: "Browse"
       curated_features: "Curated Features"
->>>>>>> 71cdc81... fu1
     pages:
       order_pages:
         pages_header: Defined Pages

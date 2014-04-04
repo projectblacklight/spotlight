@@ -2,30 +2,10 @@
   <div class="container">
     <ul class="nav navbar-nav">
       <% if current_exhibit -%>
-      <li class="<%= "active" if current_page?(current_exhibit) %>"><%= link_to t(:'spotlight.curation.nav.home'), current_exhibit %></li>
-      <% published_top_level_feature_pages = current_exhibit.feature_pages.published.at_top_level -%>
-      <% if published_top_level_feature_pages.present? %>
-        <% if published_top_level_feature_pages.many? %>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t(:'spotlight.feature_pages.nav_link') %> <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <% published_top_level_feature_pages.each do |page| %>
-              <li>
-              <%= link_to page.title, [spotlight, page.exhibit, page] %>
-              </li>
-            <% end %>
-          </ul>
-        </li>
-        <% else %>
-        <li class="<%= "active" if current_page?(url_for([spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first])) %>"><%= link_to published_top_level_feature_pages.first.title, [spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first] %></li>
+        <li class="<%= "active" if current_page?(current_exhibit) %>"><%= link_to t(:'spotlight.curation.nav.home'), current_exhibit %></li>
+        <% current_exhibit.main_navigations.each do |navigation| %>
+          <%= render partial: "shared/#{navigation.nav_type}_navbar", locals: {navigation: navigation} %>
         <% end %>
-      <% end %>
-      <% if current_exhibit.has_browse_categories? %>
-      <li class="<%= "active" if on_browse_page? %>"><%= link_to t(:'spotlight.browse.nav_link'), spotlight.exhibit_browse_index_path(current_exhibit) %></li>
-      <% end %>
-      <% if current_exhibit.main_about_page %>
-      <li class="<%= "active" if on_about_page? %>"><%= link_to t(:'spotlight.about_pages.nav_link'), [spotlight, current_exhibit, current_exhibit.main_about_page] %></li>
-      <% end %>
       <% end %>
     </ul>
 
