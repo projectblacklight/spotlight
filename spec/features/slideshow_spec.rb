@@ -14,7 +14,7 @@ describe "Slideshow", js: true do
     within ".view-type" do
       click_link "Slideshow"
     end
-    find('.grid [data-slide-to="1"]').click
+    find('.grid [data-slide-to="1"]').trigger('click')
     expect(page).to have_selector '#slideshow', visible: true
   end
   
