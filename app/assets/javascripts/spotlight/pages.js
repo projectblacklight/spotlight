@@ -33,6 +33,9 @@ Spotlight.onLoad(function(){
       el: instance,
       onEditorRender: function() {
         serializeObservedForms(observedForms());
+      },
+      blockTypeLimits: {
+        "SearchResults": 1
       }
     });
   }
