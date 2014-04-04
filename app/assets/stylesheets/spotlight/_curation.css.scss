@@ -45,25 +45,27 @@
     display: inline-block;
     padding-top: 0;
   }
-  .display-sidebar-control {
-    .checkbox {
-      width: auto;
-    }
-  }
   .publish-control {
     display: inline;
     .checkbox {
       padding-top: 0;
     }
   }
-  .page-links {
-    padding-left: 4px;
+  .page-links, .contact-links {
+    text-align: right;
+    a {
+      padding: 0 2px;
+    }
   }
   .main {
-    width: 96%;
-    vertical-align: top;
+    width: 99%;
+    vertical-align: text-top;
     display: inline-block;
   }
+}
+
+.contacts_admin .panel-heading.page .main {
+  width: 95%;
 }
 
 .panel-heading.search {

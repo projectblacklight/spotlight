@@ -4,18 +4,17 @@
     <h3><%= t('spotlight.pages.index.feature_pages.home_pages_header') %></h3>
     <div class="panel panel-default">
       <div class="panel-heading page">
-        <div class="main">
-          <%= p.hidden_field :id, value: page.id , class: 'form-control input-sm' %>
-          <h3 class="panel-title" data-in-place-edit-target=".edit-in-place">
-            <a href="#edit-in-place" class="field-label edit-in-place"><%= page.title %></a>
-            <%= p.hidden_field :title, value: page.title , class: 'form-control input-sm' %>
-          </h3>
-          <div class="col-sm-9 page-links">
+        <div class="main row">
+          <div class="col-sm-8">
+            <%= p.hidden_field :id, value: page.id , class: 'form-control input-sm' %>
+            <h3 class="panel-title" data-in-place-edit-target=".edit-in-place">
+              <a href="#edit-in-place" class="field-label edit-in-place"><%= page.title %></a>
+              <%= p.hidden_field :title, value: page.title , class: 'form-control input-sm' %>
+            </h3>
+          </div>
+          <div class="col-sm-4 page-links">
             <%= exhibit_view_link page, exhibit_root_path(page.exhibit), class: 'btn btn-link' %> &middot;
             <%= exhibit_edit_link page, edit_exhibit_home_page_path(page.exhibit), class: 'btn btn-link' %>
-          </div>
-          <div class="col-sm-3 display-sidebar-control">
-            <%= p.check_box :display_title, label: t('spotlight.administration.display_title') %>
           </div>
         </div>
       </div>
