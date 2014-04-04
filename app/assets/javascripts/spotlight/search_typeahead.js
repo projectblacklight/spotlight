@@ -46,3 +46,29 @@ function addAutocompletetoSirTrevorForm() {
       }
     });
 }
+
+function addAutocompletetoFeaturedImage() {
+  var typeaheadElement = $('[data-featured-item-typeahead]');
+  results = initBloodhound();
+  typeaheadElement.typeahead({
+      highlight: true,
+      hint: false,
+      autoselect: true },
+      { displayKey: 'title',
+        source: results.ttAdapter(),
+        templates: {
+          suggestion: Handlebars.compile('<div class="document-thumbnail thumbnail"><img src="{{thumbnail}}" /></div>{{title}}<br/><small>&nbsp;&nbsp;{{description}}</small>'
+        )
+      }
+    }).on('click', function() {
+      $(this).select();
+    }).on('change', function() {
+      $($(this).data('id-field')).val("");
+    }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
+      $($(this).data('id-field')).val(data['id']);
+    });
+}
+
+Spotlight.onLoad(function(){
+  addAutocompletetoFeaturedImage();
+});

@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :search, class: Spotlight::Search do
     exhibit
     title "Search1"
-    featured_image 'https://stacks.stanford.edu/image/dq287tq6352/dq287tq6352_05_0001_thumb'
+    featured_item_id 'dq287tq6352'
   end
 
   factory :published_search, class: Spotlight::Search do
