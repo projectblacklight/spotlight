@@ -32,10 +32,9 @@
               <tr data-id="<%= key.parameterize %>" class="dd-item">
                 <%= idxf.fields_for key do |field| %>
                   <td>
-                    <div class="handle-wrap">
-                      <%= field.hidden_field :weight, 'data-property' => 'weight' %>
+                    <%= field.hidden_field :weight, 'data-property' => 'weight' %>
+                    <div class="handle-wrap" data-in-place-edit-target=".edit-in-place">
                       <div class="dd-handle dd3-handle"><%= t :drag %></div>
-
                       <a href="#edit-in-place" class="field-label edit-in-place"><%= config.label %></a>
                       <%= field.hidden_field :label, value: config.label, class: 'form-control input-sm' %>
                      </div>

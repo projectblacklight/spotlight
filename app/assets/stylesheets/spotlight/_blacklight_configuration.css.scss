@@ -10,8 +10,7 @@
       text-decoration: none;
     }
     &:hover {
-      background: #F7F7D0;
-      cursor: text;
+      @include edit-in-place-highlighting;
     }
 
     // the effect of position: relative on table elements is undefined, so put a div in there.

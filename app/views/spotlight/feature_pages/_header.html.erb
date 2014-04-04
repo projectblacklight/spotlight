@@ -6,7 +6,7 @@
       <div class="panel-heading page">
         <div class="main">
           <%= p.hidden_field :id, value: page.id , class: 'form-control input-sm' %>
-          <h3 class="panel-title">
+          <h3 class="panel-title" data-in-place-edit-target=".edit-in-place">
             <a href="#edit-in-place" class="field-label edit-in-place"><%= page.title %></a>
             <%= p.hidden_field :title, value: page.title , class: 'form-control input-sm' %>
           </h3>

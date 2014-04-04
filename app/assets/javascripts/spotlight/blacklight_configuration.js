@@ -10,10 +10,12 @@ Spotlight.onLoad(function() {
   updateWeightsAndRelationships($('#nested-fields .metadata_fields'));
   updateWeightsAndRelationships($('#nested-fields.facet_fields'));
 
-  $('.field-label').on('click.inplaceedit', function() {
-    var $input = $(this).next('input');
-    var $label = $(this);
+  $("[data-in-place-edit-target]").on('click.inplaceedit', function() {
+    var $input = $(this).find('input');
+    var $label = $(this).find($(this).data('in-place-edit-target'));
 
+    // hide the edit-in-place affordance icon while in edit mode
+    $(this).addClass('hide-edit-icon');
     $label.hide();
     $input.val($label.text());
     $input.attr('type', 'text');
@@ -31,6 +33,8 @@ Spotlight.onLoad(function() {
       $label.text($input.val());
       $label.show();
       $input.attr('type', 'hidden');
+      // when leaving edit mode, should no longer hide edit-in-place affordance icon
+      $("[data-in-place-edit-target]").removeClass('hide-edit-icon');
 
       return false;
     });

@@ -27,6 +27,17 @@
 .panel-heading.page {
   .panel-title {
     font-size: 15px;
+    &[data-in-place-edit-target]:hover:after {
+      content: "\270f";
+      font-family: "Glyphicons Halflings";
+      line-height: 1;
+      margin-left: 6px;
+      display: inline-block;
+      color: #777;
+    }
+    &[data-in-place-edit-target].hide-edit-icon:after {
+      display: none;
+    }
   }
   .checkbox {
     width: 3%;
