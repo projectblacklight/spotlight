@@ -45,25 +45,27 @@
     display: inline-block;
     padding-top: 0;
   }
-  .display-sidebar-control {
-    .checkbox {
-      width: auto;
-    }
-  }
   .publish-control {
     display: inline;
     .checkbox {
       padding-top: 0;
     }
   }
-  .page-links {
-    padding-left: 4px;
+  .page-links, .contact-links {
+    text-align: right;
+    a {
+      padding: 0 2px;
+    }
   }
   .main {
-    width: 96%;
-    vertical-align: top;
+    width: 99%;
+    vertical-align: text-top;
     display: inline-block;
   }
+}
+
+.contacts_admin .panel-heading.page .main {
+  width: 95%;
 }
 
 .panel-heading.search {
@@ -72,6 +74,7 @@
     width: 3%;
     vertical-align: top;
     display: inline-block;
+    padding-top: 0;
   }
   .pic {
     width: 70px;
@@ -82,11 +85,15 @@
     width: 40%;
     vertical-align: top;
     display: inline-block;
+    margin-left: $padding-base-horizontal;
   }
   .description {
     width: 30%;
     vertical-align: top;
     display: inline-block;
+  }
+  .panel-title {
+    font-size: 15px;
   }
 }
 
@@ -136,4 +143,14 @@ h1,h2,h3,h4,h5,h6 {
   @extend .text-muted;
   font-size: $font-size-base;
   text-align: right;
+}
+
+table#exhibit-specific-fields {
+  margin-top: 2em;
+  .field-label {
+    min-width: 10em;
+  }
+  .actions a {
+    padding: 0 2px;
+  }
 }

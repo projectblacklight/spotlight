@@ -66,22 +66,6 @@ feature "Feature Pages Adminstration", js:  true do
     end
   end
 
-  it "should store the display_sidebar boolean" do
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    click_link exhibit_curator.email
-    within '#user-util-collapse .dropdown' do
-      click_link 'Dashboard'
-    end
-    click_link "Feature pages"
-    within("[data-id='#{page1.id}']") do
-      expect(field_labeled("Show sidebar")).to_not be_checked
-      check "Show sidebar"
-    end
-    click_button "Save changes"
-    within("[data-id='#{page1.id}']") do
-      expect(field_labeled("Show sidebar")).to be_checked
-    end
-  end
   it "should stay in curation mode if a user has unsaved data" do
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
