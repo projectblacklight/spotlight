@@ -18,6 +18,7 @@ Spotlight.onLoad(function() {
     $(this).addClass('active');
   });
 });
+var x,y;
 
 Spotlight.onLoad(function(){
   
@@ -29,7 +30,7 @@ Spotlight.onLoad(function(){
 
   while (l--) {
     instance = $(instances[l]);
-    new SirTrevor.Editor({
+    var editor = new SirTrevor.Editor({
       el: instance,
       onEditorRender: function() {
         serializeObservedForms(observedForms());
@@ -38,6 +39,28 @@ Spotlight.onLoad(function(){
         "SearchResults": 1
       }
     });
+    
+    function checkBlockTypeLimitOnAdd(block) {
+      var control = editor.$wrapper.find("a[data-type='" + block.blockCSSClass() + "']");
+      
+      control.toggleClass("disabled", !editor._canAddBlockType(block.class()));
+    }
+
+    function checkBlockTypeLimitOnRemove() {
+      // we don't know what type of block was removed.. So, try them all.
+      
+      $.each(editor.blockTypes, function(type) {
+        var control = editor.$wrapper.find("a[data-type='" + _.underscored(type) + "']");
+        control.toggleClass("disabled", !editor._canAddBlockType(type));
+      });
+    }
+    
+    x = editor;
+
+    SirTrevor.EventBus.on('block:create:new', checkBlockTypeLimitOnAdd);
+    SirTrevor.EventBus.on('block:create:existing', checkBlockTypeLimitOnAdd);
+    SirTrevor.EventBus.on('block:remove', checkBlockTypeLimitOnRemove);
+    
   }
 
 });
