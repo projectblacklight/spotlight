@@ -29,7 +29,7 @@ class Spotlight::CatalogController < ::CatalogController
     end
 
     if current_browse_category
-      add_breadcrumb t(:'spotlight.browse.nav_link'), exhibit_browse_index_path(current_browse_category.exhibit)
+      add_breadcrumb current_browse_category.exhibit.main_navigations.browse.label_or_default, exhibit_browse_index_path(current_browse_category.exhibit)
       add_breadcrumb current_browse_category.title, exhibit_browse_path(current_browse_category.exhibit, current_browse_category)
     elsif current_page_context
       add_breadcrumb current_page_context.title, [current_page_context.exhibit, current_page_context] if current_page_context.title.present? and !current_page_context.is_a?(Spotlight::HomePage)
