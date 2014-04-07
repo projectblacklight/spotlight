@@ -16,7 +16,12 @@ describe Spotlight::FeaturePage do
     let(:child) { FactoryGirl.create(:feature_page, parent_page: parent, exhibit: exhibit ) }
     let!(:unpublished_parent)  { FactoryGirl.create(:feature_page, published: false, exhibit: exhibit) }
     let!(:unpublished_child) { FactoryGirl.create(:feature_page, parent_page: unpublished_parent, published: false, exhibit: exhibit ) }
+    before { unpublished_parent.display_sidebar = false }
+    it "should be set to true by default" do
+      expect(parent.display_sidebar).to be_true
+    end
     it "should be set to true on the parent of published child pages" do
+      parent.display_sidebar = false
       expect(parent.display_sidebar).to be_false
       child.save
       expect(parent.display_sidebar).to be_true

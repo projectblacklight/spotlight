@@ -16,6 +16,11 @@ module Spotlight
       display_sidebar_for_page_with_published_children
       display_parent_page_sidebar_when_published
     end
+
+    def display_sidebar?
+      self.display_sidebar
+    end
+
     private
     # Parent pages with published children need
     # to have their show_sidebar forced to true

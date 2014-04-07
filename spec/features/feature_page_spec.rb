@@ -61,6 +61,7 @@ describe "Feature page" do
     end
     describe "display_sidebar" do
       let!(:feature_page) { FactoryGirl.create(:feature_page, display_sidebar: false, exhibit: exhibit) }
+      before { feature_page.display_sidebar = false; feature_page.save }
       it "should be updatable from the edit page" do
         expect(feature_page.display_sidebar).to be_false
 

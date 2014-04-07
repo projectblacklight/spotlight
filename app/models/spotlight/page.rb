@@ -14,7 +14,16 @@ module Spotlight
     scope :at_top_level, -> { where(parent_page_id: nil) }
     scope :published, -> { where(published: true) }
     scope :recent, -> { order("updated_at DESC").limit(10)}
-    
+
+    # display_sidebar should be set to true by default
+    before_create do
+      self.display_sidebar = true
+    end
+
+    def display_sidebar?
+      true
+    end
+
     # explicitly set the partial path so that 
     # we don't have to duplicate view logic.
     def to_partial_path
