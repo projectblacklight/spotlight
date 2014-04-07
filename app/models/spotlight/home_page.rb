@@ -20,7 +20,6 @@ module Spotlight
     end
 
     def publish
-      self.display_sidebar = true
       self.published = true
     end
 
