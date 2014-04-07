@@ -197,28 +197,39 @@
 .item-features {
   margin-top: 2em;
   margin-bottom: 2em;
-  .slideshow-indicators {
-
-    li {
-      border-left: 0;
-      border-right: 0;
-
-      &:nth-child(odd) {
-        background-color: $table-bg-accent;
+  text-align: center;
+  .carousel {
+    display: inline-block;
+    .carousel-inner {
+      padding-right: 30px;
+      .item {
+        float: right;
       }
+    }
 
-      &:hover {
-        background-color: $table-bg-hover;
-      }
+    .slideshow-indicators {
+      text-align: left;
+      li {
+        border-left: 0;
+        border-right: 0;
 
-      &.active {
-        background-color: $panel-info-heading-bg;
-      }
+        &:nth-child(odd) {
+          background-color: $table-bg-accent;
+        }
 
-      a {
-        text-decoration: none;
-        color: inherit;
+        &:hover {
+          background-color: $table-bg-hover;
+        }
 
+        &.active {
+          background-color: $panel-info-heading-bg;
+        }
+
+        a {
+          text-decoration: none;
+          color: inherit;
+
+        }
       }
     }
   }
