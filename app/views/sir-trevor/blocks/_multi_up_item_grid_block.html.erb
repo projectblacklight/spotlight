@@ -1,7 +1,7 @@
 <% block_ids = item_grid_block_ids(block) %>
 <% unless block_ids.blank? %>
   <% documents = get_solr_response_for_field_values("id", item_grid_block_ids(block)).last %>
-  <div class="spotlight-flexbox">
+  <div class="content-block spotlight-flexbox">
     <% block_ids.each do |block_id| %>
       <% document = documents.find{|d| d[:id] == block_id} %>
       <% if document %>

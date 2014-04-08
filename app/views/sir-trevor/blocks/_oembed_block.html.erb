@@ -1,4 +1,4 @@
-<div class="item-text">
+<div class="content-block item-text">
   <div class="oembed-block <%= "pull-#{ block['text-align']}" if block["text"].present? %>">
     <% begin %>
       <%= OEmbed::Providers.get(block["url"]).html.html_safe %>
