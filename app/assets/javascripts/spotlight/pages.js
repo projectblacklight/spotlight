@@ -10,9 +10,6 @@ Spotlight.onLoad(function() {
   updateWeightsAndRelationships($('#nested-pages'));
   updateWeightsAndRelationships($('.contacts_admin'));
 
-  SirTrevor.EventBus.on('block:create:new', addTitleToSirTrevorBlock);
-  SirTrevor.EventBus.on('block:create:existing', addTitleToSirTrevorBlock);
-
   $('.slideshow-indicators li').on('click', function() {
     $(this).closest('.slideshow').find('li.active').removeClass('active');
     $(this).addClass('active');
@@ -24,12 +21,18 @@ Spotlight.onLoad(function(){
   SirTrevor.setDefaults({
     uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint')
   });
-  var instances = $('.sir-trevor-area'),
-      l = instances.length, instance;
+  
+  var instance = $('.sir-trevor-area').first();
 
-  while (l--) {
-    instance = $(instances[l]);
-    new SirTrevor.Editor({
+  if (instance.length) {
+
+    SirTrevor.EventBus.on('block:create:new', addTitleToSirTrevorBlock);
+    SirTrevor.EventBus.on('block:create:existing', addTitleToSirTrevorBlock);
+
+    SirTrevor.EventBus.on('block:create:new', checkBlockTypeLimitOnAdd);
+    SirTrevor.EventBus.on('block:remove', checkGlobalBlockTypeLimit);
+
+    var editor = new SirTrevor.Editor({
       el: instance,
       onEditorRender: function() {
         serializeObservedForms(observedForms());
@@ -38,8 +41,24 @@ Spotlight.onLoad(function(){
         "SearchResults": 1
       }
     });
-  }
+    
+    function checkBlockTypeLimitOnAdd(block) {
+      var control = editor.$outer.find("a[data-type='" + block.blockCSSClass() + "']");
+      
+      control.toggleClass("disabled", !editor._canAddBlockType(block.class()));
+    }
 
+    function checkGlobalBlockTypeLimit() {
+      // we don't know what type of block was created or removed.. So, try them all.
+      
+      $.each(editor.blockTypes, function(type) {
+        var control = editor.$outer.find(".st-block-control[data-type='" + _.underscored(type) + "']");
+        control.toggleClass("disabled", !editor._canAddBlockType(type));
+      });
+    }
+    
+    checkGlobalBlockTypeLimit();
+  }
 });
 
 
