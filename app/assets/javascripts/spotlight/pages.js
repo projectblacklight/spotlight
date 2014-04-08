@@ -10,18 +10,14 @@ Spotlight.onLoad(function() {
   updateWeightsAndRelationships($('#nested-pages'));
   updateWeightsAndRelationships($('.contacts_admin'));
 
-  $('.slideshow-indicators li').on('click', function() {
-    $(this).closest('.slideshow').find('li.active').removeClass('active');
-    $(this).addClass('active');
-  });
 });
 
 Spotlight.onLoad(function(){
-  
+
   SirTrevor.setDefaults({
     uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint')
   });
-  
+
   var instance = $('.sir-trevor-area').first();
 
   if (instance.length) {
@@ -41,22 +37,22 @@ Spotlight.onLoad(function(){
         "SearchResults": 1
       }
     });
-    
+
     function checkBlockTypeLimitOnAdd(block) {
       var control = editor.$outer.find("a[data-type='" + block.blockCSSClass() + "']");
-      
+
       control.toggleClass("disabled", !editor._canAddBlockType(block.class()));
     }
 
     function checkGlobalBlockTypeLimit() {
       // we don't know what type of block was created or removed.. So, try them all.
-      
+
       $.each(editor.blockTypes, function(type) {
         var control = editor.$outer.find(".st-block-control[data-type='" + _.underscored(type) + "']");
         control.toggleClass("disabled", !editor._canAddBlockType(type));
       });
     }
-    
+
     checkGlobalBlockTypeLimit();
   }
 });

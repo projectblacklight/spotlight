@@ -6,7 +6,7 @@ describe 'sir-trevor/blocks/_item_carousel_block.html.erb' do
   end
 
   let(:docs) do
-    [::SolrDocument.new(id: 1), 
+    [::SolrDocument.new(id: 1),
      ::SolrDocument.new(id: 2),
      ::SolrDocument.new(id: 3)]
   end
@@ -19,13 +19,13 @@ describe 'sir-trevor/blocks/_item_carousel_block.html.erb' do
     view.stub(has_thumbnail?: true, render_thumbnail_tag: 'thumb')
   end
 
-  it "should have a bootstrap carousel" do
+  it "should have a slideshow block" do
     render
-    expect(rendered).to have_selector '.carousel'
+    expect(rendered).to have_selector '.slideshow-block'
     expect(rendered).to have_selector '.carousel-control.left'
     expect(rendered).to have_selector '.carousel-control.right'
     expect(rendered).to have_selector '.item', text: 'thumb', count: 3
-    expect(rendered).to have_selector '.carousel-indicators'
-    expect(rendered).to have_selector '.carousel-indicators li', count: 3 
+    expect(rendered).to have_selector '.slideshow-indicators'
+    expect(rendered).to have_selector '.slideshow-indicators li', count: 3
   end
 end
