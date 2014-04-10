@@ -97,7 +97,7 @@
           // resize the image (if larger than config size)
           $(img).height(Math.min(_this.options.size, $(img).height()));
 
-          // vertically align smaller images
+          // vertically align smaller images to bottom
           $(img).css('margin-top', maxHeight - $(img).outerHeight());
 
           $(item).height(maxHeight + $(item).find('.caption').outerHeight());
@@ -144,7 +144,6 @@
         $primary.removeClass('caption-hover').css('bottom', 0);
         $secondary.removeClass('caption-hover');
       });
-
 
       $(document).on('click', '[data-slide], [data-slide-to]', function(e) {
         pos = parseInt($(this).attr('data-slide-to'), 10) || $(this).attr('data-slide');
