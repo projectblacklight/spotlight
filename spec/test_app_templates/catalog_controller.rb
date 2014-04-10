@@ -29,7 +29,7 @@ class CatalogController < ApplicationController
     config.index.display_type_field = 'content_metadata_type_ssm'
     config.index.thumbnail_field = :thumbnail_url_ssm
 
-    config.show.iiif_tile_source_field = :content_metadata_image_iiif_info_ssm
+    config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
     config.show.partials.insert(1, :openseadragon)
     # Alternative view that is just a thumbnail
     #config.show.partials.insert(1, :image)
