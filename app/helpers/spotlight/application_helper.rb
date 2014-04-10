@@ -61,14 +61,20 @@ module Spotlight
     # Return a copy of the blacklight configuration
     # that only includes views conifgured by our block
     def blacklight_view_config_for_search_block sir_tervor_json
-      # Clone the blacklight_config so we can send our
-      # local copy into the the view_type_group parital
-      config = blacklight_config.clone
-      # Reject any views that aren't conifgured to display for this block
-      config.view.select! do |view,_|
+      # Reject any views that aren't configured to display for this block
+      blacklight_config.view.select do |view,_|
         selected_search_block_views(sir_tervor_json).include? view.to_s
       end
-      config
+    end
+    
+    def block_document_index_view_type block
+      views = blacklight_view_config_for_search_block(block)
+      
+      if views.has_key? document_index_view_type
+        document_index_view_type
+      else
+        views.keys.first
+      end
     end
 
     # Return the list of views that are configured to display for a block
