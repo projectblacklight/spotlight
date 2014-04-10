@@ -1,4 +1,4 @@
 <% image = document.to_openseadragon(blacklight_config.view_config(:show)) %>
 <% unless image.nil? %>
-<%= openseadragon_collection_viewer image, crossOriginPolicy: false, html: { class: 'col-md-6 openseadragon-image' } %>
+<%= openseadragon_picture_tag image, class: 'col-md-6 openseadragon-image', data: { openseadragon: { crossOriginPolicy: false, prefixUrl: image_url('openseadragon/') } }  %>
 <% end %>
