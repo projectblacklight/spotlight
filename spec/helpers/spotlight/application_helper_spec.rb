@@ -44,8 +44,7 @@ describe Spotlight::ApplicationHelper do
       it "should return a blacklight configuration object that has reduced the views to those that are configured in the block" do
         expect(config.view.keys).to eq [:list, :gallery, :slideshow]
         new_config = helper.blacklight_view_config_for_search_block(sir_trevor_json)
-        expect(new_config).to be_a (Blacklight::Configuration)
-        expect(new_config.view.keys).to eq [:list, :gallery]
+        expect(new_config.keys).to eq [:list, :gallery]
       end
     end
   end

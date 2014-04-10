@@ -78,6 +78,8 @@ module Spotlight
           else
             set_index_field_defaults(v)
           end
+          
+          v.if = :field_enabled?
 
           v.normalize! config
           v.validate!
@@ -86,11 +88,10 @@ module Spotlight
         config.show_fields = config.index_fields
 
         unless sort_fields.blank?
-          active_sort_fields = sort_fields.select { |k,v| v[:enabled] == true }
-          config.sort_fields.slice! *active_sort_fields.keys
-          config.sort_fields = Hash[config.sort_fields.sort_by { |k,v| field_weight(active_sort_fields, k) }]
+          config.sort_fields = Hash[config.sort_fields.sort_by { |k,v| field_weight(sort_fields, k) }]
 
           config.sort_fields.each do |k, v|
+            v.if = ((sort_fields[k] || {})[:enabled] == true)
             next if sort_fields[k].blank?
 
             v.merge! sort_fields[k].symbolize_keys
@@ -106,6 +107,7 @@ module Spotlight
             next if facet_fields[k].blank?
 
             v.merge! facet_fields[k].symbolize_keys
+            v.if = v.enabled
             v.normalize! config
             v.validate!
           end
@@ -118,7 +120,10 @@ module Spotlight
           config.per_page.unshift(default_per_page)
         end
 
-        config.view.select! { |k, v| document_index_view_types.include? k.to_s } unless document_index_view_types.blank?
+        config.view.each do |k,v|
+          config.view[k].key = k
+          config.view[k].if = :enabled_in_spotlight_view_type_configuration?
+        end unless document_index_view_types.blank?
 
         config
       end

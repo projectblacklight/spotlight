@@ -107,7 +107,7 @@ describe Spotlight::BlacklightConfiguration do
     context "custom fields" do
       it "should include any custom fields" do
         subject.index_fields['a'] = { enabled: true, list: true }
-        subject.stub(custom_index_fields: { 'a' => double(merge!: true, validate!: true, normalize!: true) })
+        subject.stub(custom_index_fields: { 'a' => double(:if= => true, merge!: true, validate!: true, normalize!: true) })
         expect(subject.blacklight_config.index_fields).to include('a')
       end
 
@@ -170,7 +170,7 @@ describe Spotlight::BlacklightConfiguration do
     it "should include any custom fields" do
       subject.index_fields['a'] = { enabled: true, show: true }
 
-      subject.stub(custom_index_fields: { 'a' => double(merge!: true, validate!: true, normalize!: true) })
+      subject.stub(custom_index_fields: { 'a' => double(:if= => true, merge!: true, validate!: true, normalize!: true) })
 
       expect(subject.blacklight_config.show_fields).to include('a')
     end
@@ -244,9 +244,8 @@ describe Spotlight::BlacklightConfiguration do
       blacklight_config.add_sort_field 'b'
       blacklight_config.add_sort_field 'c'
 
-      expect(subject.blacklight_config.sort_fields).to include('a', 'c')
-      expect(subject.blacklight_config.sort_fields).to_not include('b')
-      expect(subject.blacklight_config.sort_fields).to have(2).fields
+      expect(subject.blacklight_config.sort_fields.select { |k,v| v.if == true}).to include('a', 'c')
+      expect(subject.blacklight_config.sort_fields.select { |k,v| v.if == false}).to include('b')
     end
   end
 
@@ -297,7 +296,8 @@ describe Spotlight::BlacklightConfiguration do
       blacklight_config.view.gallery
       blacklight_config.view.something
 
-      expect(subject.blacklight_config.view.keys).to eq [:list, :gallery]
+      expect(subject.blacklight_config.view.keys).to include :list, :gallery, :something
+      expect(subject.blacklight_config.view.all? { |k,v| v.key == k and v.if == :enabled_in_spotlight_view_type_configuration? }).to be_true
     end
 
     it "should pass through the blacklight configuration when not set" do

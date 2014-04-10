@@ -4,7 +4,7 @@ class TestAppGenerator < Rails::Generators::Base
   source_root "../../spec/test_app_templates"
 
   def add_gems
-    gem 'blacklight', '~> 5.1'     
+    gem 'blacklight', ">= 5.4.0.rc1", "<6"
     gem "blacklight-gallery", :github => 'projectblacklight/blacklight-gallery'
     gem 'sir-trevor-rails', :github => 'sul-dlss/sir-trevor-rails'
     gem "jettywrapper"
