@@ -33,10 +33,21 @@ describe "Feature page" do
     end
     describe "when configured to not display" do
       before { parent_feature_page.display_sidebar = false;  parent_feature_page.save }
-      it "should not be present" do
-        visit spotlight.exhibit_feature_page_path(parent_feature_page.exhibit, parent_feature_page)
-        expect(page).not_to have_css("#sidebar")
-        expect(page).not_to have_content(child_feature_page.title)
+      context "with a child page" do
+        it "should be present anyway" do
+          visit spotlight.exhibit_feature_page_path(parent_feature_page.exhibit, parent_feature_page)
+          expect(page).to have_css("#sidebar")
+          expect(page).to have_content(child_feature_page.title)
+        end
+      end
+      
+      context "with an unpublished child page" do
+        before { child_feature_page.published = false; child_feature_page.save }
+        it "should not be present" do
+          visit spotlight.exhibit_feature_page_path(parent_feature_page.exhibit, parent_feature_page)
+          expect(page).not_to have_css("#sidebar")
+          expect(page).not_to have_content(child_feature_page.title)
+        end
       end
     end
   end
@@ -61,8 +72,9 @@ describe "Feature page" do
     end
     describe "display_sidebar" do
       let!(:feature_page) { FactoryGirl.create(:feature_page, display_sidebar: false, exhibit: exhibit) }
+      before { feature_page.display_sidebar = false; feature_page.save }
       it "should be updatable from the edit page" do
-        expect(feature_page.display_sidebar).to be_false
+        expect(feature_page.display_sidebar?).to be_false
 
         visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
         expect(find("#feature_page_display_sidebar")).not_to be_checked
@@ -70,7 +82,7 @@ describe "Feature page" do
         check "Show sidebar"
         click_button "Save changes"
 
-        expect(feature_page.reload.display_sidebar).to be_true
+        expect(feature_page.reload.display_sidebar?).to be_true
 
         visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
         expect(find("#feature_page_display_sidebar")).to be_checked
