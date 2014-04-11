@@ -1,4 +1,4 @@
-<% if current_exhibit %>
+<%= cache [current_exhibit,cache_key_for_spotlight_exhibits] do %>
 <div id="exhibit-masthead" class="jumbotron">
   <div class="container">
     <ul class="more-exhibits nav navbar-nav navbar-sm">
@@ -23,4 +23,4 @@
     </div>
   </div>
 </div>
-<% end %>
+<% end if current_exhibit %>
