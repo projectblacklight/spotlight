@@ -1,5 +1,6 @@
 <% block_ids = item_grid_block_ids(block) %>
 <% html_id = "carousel-#{block.object_id}" %>
+
 <div class="content-block item-features">
   <% unless block_ids.blank? %>
     <% documents = get_solr_response_for_field_values("id", item_grid_block_ids(block)).last.select { |doc| block_ids.include? doc.id  }.sort_by { |doc| block_ids.index doc.id } %>

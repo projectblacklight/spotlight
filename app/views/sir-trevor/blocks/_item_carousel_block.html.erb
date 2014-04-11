@@ -1,42 +1,48 @@
 <% block_ids = item_grid_block_ids(block) %>
 <% html_id = "carousel-#{block.object_id}" %>
-<div class="content-block item-carousel">
+
+<div class="content-block slideshow-block">
 <% unless block_ids.blank? %>
   <% documents = get_solr_response_for_field_values("id", item_grid_block_ids(block)).last.select { |doc| block_ids.include? doc.id  }.sort_by { |doc| block_ids.index doc.id } %>
 
   <div id="<%= html_id %>" class="carousel slide" data-ride="carousel">
+
+    <div class="slideshow-inner">
+    <% documents.each_with_index do |document, index| %>
+      <div class="item <%= 'active' if index == 0 %>" data-id="<%= document[:id] %>">
+        <% if has_thumbnail? document %>
+            <%= render_thumbnail_tag(document) %>
+        <% end %>
+        <div class="caption">
+          <% if block['show-primary-caption'] %>
+            <div class="primary">
+                <%= multi_up_item_grid_caption(block, document) %>
+            </div>
+          <% end %>
+          <% if block['show-secondary-caption'] %>
+            <div class="secondary">
+                <%= multi_up_item_grid_caption(block, document, 'secondary') %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    </div>
+
     <!-- Indicators -->
-    <ol class="carousel-indicators">
+    <ol class="slideshow-indicators">
       <% documents.each_with_index do |document, index| %>
         <li data-target="#<%= html_id %>" data-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>"></li>
       <% end %>
     </ol>
 
-      <div class="carousel-inner">
-    <% documents.each_with_index do |document, index| %>
-        <div class="item <%= 'active' if index == 0 %>" data-id="<%= document[:id] %>">
-          <% if has_thumbnail? document %>
-              <%= render_thumbnail_tag(document) %>
-          <% end %>
-          <div class="carousel-caption">
-            <% if block['show-primary-caption'] %>
-              <h3><%= multi_up_item_grid_caption(block, document) %></h3>
-            <% end %>
-            <% if block['show-secondary-caption'] %>
-              <h4><%= multi_up_item_grid_caption(block, document, 'secondary') %></h4>
-            <% end %>
-          </div>
-        </div>
-    <% end %>
-      </div>
-
-  <!-- Controls -->
-  <a class="left carousel-control" href="#<%= html_id %>" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left"></span>
-  </a>
-  <a class="right carousel-control" href="#<%= html_id %>" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-  </a>
+    <!-- Controls -->
+    <a class="left carousel-control prev" href="#<%= html_id %>" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control next" href="#<%= html_id %>" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
   </div>
 <% end %>
 </div>
