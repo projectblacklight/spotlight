@@ -2,6 +2,6 @@
   <div class="search-widgets pull-right">
     <%= render :partial => 'sort_widget' %>
     <%= render :partial => 'per_page_widget' %>
-    <%= render :partial => 'view_type_group', locals: { blacklight_config: blacklight_view_config_for_search_block(block) } %>
+    <%= render :partial => 'view_type_group', locals: { block: block } %>
   </div>
 </div>

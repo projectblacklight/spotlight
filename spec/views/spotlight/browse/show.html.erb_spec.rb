@@ -6,6 +6,7 @@ describe 'spotlight/browse/show' do
 
   before :each do
     view.stub(blacklight_config: Blacklight::Configuration.new )
+    view.blacklight_config.view.gallery = true
     search.stub(count: 15)
     view.stub(render_document_index_with_view: "")
     stub_template("_results_pagination.html.erb" => "")
@@ -53,7 +54,7 @@ describe 'spotlight/browse/show' do
   end
 
   it "should display the search results" do
-    view.should_receive(:render_document_index_with_view).with(:gallery, []).and_return "Gallery View"
+    view.should_receive(:render_document_index_with_view).with(:gallery, anything, anything).and_return "Gallery View"
     render
     expect(response).to match /Gallery View/
   end

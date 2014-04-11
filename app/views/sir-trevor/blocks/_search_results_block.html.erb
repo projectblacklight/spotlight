@@ -7,7 +7,7 @@
   <%- else %>
       <% @response, @document_list = [response, document_list] %>
       <%= render 'sort_and_per_page', block: block %>
-      <%= render_document_index %>
+      <%= render_document_index_with_view(block_document_index_view_type(block), document_list) %>
       <%= render 'results_pagination' %>
     </div>
   <%- end %>

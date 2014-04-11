@@ -87,7 +87,7 @@ describe Spotlight::BlacklightConfigurationsController do
       it "should be successful" do
         get :available_configurations, exhibit_id: exhibit, format: 'json'
         expect(response).to be_successful
-        expect(JSON.parse(response.body).keys).to eq exhibit.blacklight_config.keys.map(&:to_s)
+        expect(JSON.parse(response.body).keys).to match_array exhibit.blacklight_config.keys.map(&:to_s)
       end
     end
 
