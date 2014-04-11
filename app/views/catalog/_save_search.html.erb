@@ -12,8 +12,8 @@
         <%= render_hash_as_hidden_fields(params_for_search().except(:qt, :page, :utf8)) %>
       </div>
       <div class="modal-footer">
+        <%= f.submit nil, class: 'btn btn-default pull-right' %>
         <button type="button" class="btn btn-default" data-dismiss="modal"><%= t :cancel %></button>
-        <%= f.submit nil %>
       </div>
     </div>
     <% end %>
