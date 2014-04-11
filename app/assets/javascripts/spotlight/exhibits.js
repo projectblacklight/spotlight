@@ -1,12 +1,22 @@
 Spotlight.onLoad(function() {
   $("#another-email").on("click", function() {
-    container = $(this).closest('.form-group').children('div');
-    input = container.find('.input-group input[type="text"]').first().clone();
-    input.val('');
-    input.attr('id', input.attr('id').replace('0', container.find('input[type="text"]').length));
-    input.attr('name', input.attr('name').replace('0', container.find('input[type="text"]').length));
-    container.find('.help-block').before(input);
-    new_container = input.wrap( "<div class=\"row contact\"><div class=\"col-md-8\"></div></div>" )
+    var container = $(this).closest('.form-group');
+    var contacts = container.find('.contact');
+    var input_container = contacts.first().clone();
+
+    // wipe out any values from the inputs
+    input_container.find('input').each(function() {
+      $(this).val('');
+      $(this).attr('id', $(this).attr('id').replace('0', contacts.length));
+      $(this).attr('name', $(this).attr('name').replace('0', contacts.length));
+    });
+
+    input_container.find('.first-row-only').remove();
+
+    // bootstrap does not render input-groups with only one value in them correctly.
+    input_container.find('.input-group input:only-child').closest('.input-group').removeClass('input-group');
+
+    $(input_container).insertAfter(contacts.last());
   });
 
   $('.btn-with-tooltip').tooltip();
