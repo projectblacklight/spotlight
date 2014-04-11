@@ -8,12 +8,12 @@
         <h4 class="modal-title" id="save-modal-label"><%= t(:'spotlight.saved_search.label') %></h4>
       </div>
       <div class="modal-body">
-        <%=f.text_field :title, label: t(:'spotlight.saved_search.title') %>
+        <%=f.text_field :title, label: t(:'spotlight.saved_search.title'), required: true %>
         <%= render_hash_as_hidden_fields(params_for_search().except(:qt, :page, :utf8)) %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t :cancel %></button>
-        <%= f.submit nil %>
+        <%= f.submit nil, class: 'btn btn-primary pull-right' %>
+        <button type="button" class="btn btn-link" data-dismiss="modal"><%= t :cancel %></button>
       </div>
     </div>
     <% end %>

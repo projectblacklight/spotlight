@@ -10,4 +10,9 @@ Spotlight.onLoad(function() {
   });
 
   $('.btn-with-tooltip').tooltip();
+
+  // Put focus in saved search title input when Save this search modal is shown
+  $('#save-modal').on('shown.bs.modal', function () {
+      $('#search_title').focus();
+  })
 });
