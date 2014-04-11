@@ -11,37 +11,25 @@ describe Spotlight::FeaturePage do
     end
   end
 
-  describe "display_sidebar" do
+  describe "display_sidebar?" do
     let(:parent)  { FactoryGirl.create(:feature_page, exhibit: exhibit) }
-    let(:child) { FactoryGirl.create(:feature_page, parent_page: parent, exhibit: exhibit ) }
+    let!(:child) { FactoryGirl.create(:feature_page, parent_page: parent, exhibit: exhibit ) }
     let!(:unpublished_parent)  { FactoryGirl.create(:feature_page, published: false, exhibit: exhibit) }
     let!(:unpublished_child) { FactoryGirl.create(:feature_page, parent_page: unpublished_parent, published: false, exhibit: exhibit ) }
     before { unpublished_parent.display_sidebar = false }
-    it "should be set to true by default" do
-      expect(parent.display_sidebar).to be_true
+    it "should be set to true if the page has a published child" do
+      expect(parent.display_sidebar?).to be_true
     end
     it "should be set to true on the parent of published child pages" do
       parent.display_sidebar = false
-      expect(parent.display_sidebar).to be_false
-      child.save
-      expect(parent.display_sidebar).to be_true
+      expect(parent.display_sidebar?).to be_true
     end
     it "should be set to true when publishing a child page" do
-      expect(unpublished_parent.display_sidebar).to be_false
+      expect(unpublished_parent.display_sidebar?).to be_false
       unpublished_parent.published = true
       unpublished_child.published = true
       unpublished_child.save
-      expect(unpublished_parent.display_sidebar).to be_true
-    end
-    it "should not change the display_sidebar setting when the child page is not published" do
-      unpublished_child.save
-      expect(unpublished_parent.display_sidebar).to be_false
-    end
-    it "should not change the setting when the parent page is not published" do
-      expect(unpublished_parent.display_sidebar).to be_false
-      unpublished_child.published = true
-      unpublished_child.save
-      expect(unpublished_parent.display_sidebar).to be_false
+      expect(unpublished_parent.display_sidebar?).to be_true
     end
   end
 

@@ -37,7 +37,7 @@ describe Spotlight::Page do
   end
   describe ".display_sidebar" do
     it "should be set to true by default" do
-      expect(parent_page.display_sidebar).to be_true
+      expect(parent_page.display_sidebar?).to be_true
     end
   end
   describe "should_display_title?" do

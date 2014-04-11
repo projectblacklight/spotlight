@@ -5,7 +5,7 @@ describe Spotlight::AboutPage do
   it {should_not be_feature_page}
   it {should be_about_page}
   it "should display the sidebar" do
-    expect(page.display_sidebar).to be_true
+    expect(page.display_sidebar?).to be_true
   end
   it "should force the sidebar to display (we do not provide an interface for setting this to false)" do
     expect(page.display_sidebar?).to be_true

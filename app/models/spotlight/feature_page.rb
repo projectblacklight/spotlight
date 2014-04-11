@@ -12,33 +12,8 @@ module Spotlight
       self.exhibit = top_level_page_or_self.exhibit
     end
 
-    after_save do
-      display_sidebar_for_page_with_published_children
-      display_parent_page_sidebar_when_published
-    end
-
     def display_sidebar?
-      self.display_sidebar
-    end
-
-    private
-    # Parent pages with published children need
-    # to have their show_sidebar forced to true
-    def display_sidebar_for_page_with_published_children
-      if child_pages.published.present? and !display_sidebar
-        self.display_sidebar = true
-        self.save
-      end
-    end
-    # Force a parent page's display_sidebar
-    # to true for published child pages.
-    def display_parent_page_sidebar_when_published
-      if parent_page and parent_page.published and !parent_page.display_sidebar
-        if published
-          parent_page.display_sidebar = true
-          parent_page.save
-        end
-      end
+      child_pages.published.present? || self.display_sidebar
     end
   end
 end
