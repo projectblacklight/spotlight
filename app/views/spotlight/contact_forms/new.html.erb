@@ -1,5 +1,5 @@
 <div id="content" class="col-md-9">
-<%= bootstrap_form_for @contact_form, url: spotlight.exhibit_contact_form_path(current_exhibit, @contact_form), style: :horizontal do |f| %>
+<%= bootstrap_form_for @contact_form, url: spotlight.exhibit_contact_form_path(current_exhibit, @contact_form), layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5' do |f| %>
   <h1 class="page-title"><%= t(:'.header') %></h1>
   <div class="row">
     <%= f.text_field :name %>

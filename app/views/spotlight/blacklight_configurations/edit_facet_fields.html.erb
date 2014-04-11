@@ -1,7 +1,7 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
   <%= curation_page_title %>
-  <%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_blacklight_configuration_path(@exhibit), style: :horizontal, left: 'col-md-3', right: 'col-sm-5' do |f| %>
+  <%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_blacklight_configuration_path(@exhibit), layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5' do |f| %>
     <div class="panel-group dd facet_fields" id="nested-fields">
       <ol class="dd-list">
         <%= f.fields_for :facet_fields do |idxf| %>

@@ -1,7 +1,7 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9 exhibit-admin">
   <%= administration_page_title %>
-  <%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal, html: {class: "row"} do |f| %>
+  <%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10', html: {class: "row"} do |f| %>
     <div class="row col-md-12">
       <%= f.text_field :title %>
       <%= f.text_field :subtitle %>

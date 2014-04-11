@@ -1,7 +1,7 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
   <%= curation_page_title %>
-  <%= bootstrap_form_for [@search.exhibit, @search], style: :horizontal, right: "col-sm-5", data: {:'autocomplete-url'=> spotlight.autocomplete_exhibit_search_path(@search.exhibit, @search, format: "json")}, html: {id: 'edit-search'} do |f| %>
+  <%= bootstrap_form_for [@search.exhibit, @search], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-sm-5', data: {:'autocomplete-url'=> spotlight.autocomplete_exhibit_search_path(@search.exhibit, @search, format: "json")}, html: {id: 'edit-search'} do |f| %>
     <div class="row">
       <%= f.text_field :title %>
       <%= f.text_field :featured_item_id, value: (presenter(@search.featured_item).document_heading if @search.featured_item), data: {:"featured-item-typeahead" => true, :id_field => "[data-featured-item-id]" }, id: "featured-item-title" %>

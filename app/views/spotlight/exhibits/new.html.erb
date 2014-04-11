@@ -1,6 +1,6 @@
 <div id="content" class="col-md-9 exhibit-admin">
 <%= administration_page_title %>
-<%= bootstrap_form_for @exhibit, style: :horizontal do |f| %>
+<%= bootstrap_form_for @exhibit, layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5' do |f| %>
   <div class="row col-md-9">
     <%= f.text_field :title %>
     <%= f.text_field :subtitle %>
