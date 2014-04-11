@@ -8,6 +8,7 @@ class Spotlight::Search < ActiveRecord::Base
   serialize :query_params, Hash
   default_scope { order("weight ASC") }
   scope :published, -> { where(on_landing_page: true) }
+  validates :title, presence: true
 
   before_create do
     self.featured_item_id ||= default_featured_item_id

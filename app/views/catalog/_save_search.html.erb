@@ -8,7 +8,7 @@
         <h4 class="modal-title" id="save-modal-label"><%= t(:'spotlight.saved_search.label') %></h4>
       </div>
       <div class="modal-body">
-        <%=f.text_field :title, label: t(:'spotlight.saved_search.title') %>
+        <%=f.text_field :title, label: t(:'spotlight.saved_search.title'), required: true %>
         <%= render_hash_as_hidden_fields(params_for_search().except(:qt, :page, :utf8)) %>
       </div>
       <div class="modal-footer">
