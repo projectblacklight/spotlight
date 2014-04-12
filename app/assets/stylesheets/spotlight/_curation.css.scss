@@ -24,6 +24,21 @@
   }
 }
 
+
+.panel-heading {
+  .pic.thumbnail {
+    width: 70px;
+    display: inline-block;
+    margin-bottom: 0;
+  }
+  .checkbox {
+    width: 3%;
+    vertical-align: top;
+    display: inline-block;
+    padding-top: 0;
+  }
+}
+
 .panel-heading.page {
   .panel-title {
     font-size: 15px;
@@ -39,12 +54,7 @@
       display: none;
     }
   }
-  .checkbox {
-    width: 3%;
-    vertical-align: top;
-    display: inline-block;
-    padding-top: 0;
-  }
+
   .publish-control {
     display: inline;
     .checkbox {
@@ -68,19 +78,23 @@
   width: 95%;
 }
 
-.panel-heading.search {
-  /* widths don't add up to 100% because of padding of the container. */
-  .checkbox {
-    width: 3%;
+.panel-heading.item-grid {
+  .main {
+    width: 65%;
     vertical-align: top;
     display: inline-block;
-    padding-top: 0;
+    margin-left: $padding-base-horizontal;
   }
-  .pic {
-    width: 70px;
+  .remove {
+    width: 10%;
+    vertical-align: top;
     display: inline-block;
-    margin-bottom: 0;
+    margin-left: $padding-base-horizontal;
   }
+}
+
+.panel-heading.search {
+  /* widths don't add up to 100% because of padding of the container. */
   .main {
     width: 40%;
     vertical-align: top;

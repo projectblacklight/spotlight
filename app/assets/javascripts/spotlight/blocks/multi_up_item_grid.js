@@ -14,6 +14,8 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
     key: "item-grid",
     id_key: "item-grid-id",
     display_checkbox: "item-grid-display",
+    panel: 'typeahead-panel',
+    thumbnail_key: 'item-grid-thumbnail',
     primary_field_key: "item-grid-primary-caption-field",
     show_primary_caption: "show-primary-caption",
     secondary_field_key: "item-grid-secondary-caption-field",
@@ -30,12 +32,25 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
       Spotlight.Block.prototype.onBlockRender.apply();
       this.loadCaptionField();
       this.addCaptionSelectFocus();
+      addRemoveAutocompletedPanelBehavior();
     },
 
     afterLoadData: function(data){
       // set a data attribute on the select fields so the ajax request knows which option to select
       this.$('select#' + this.formId(this.primary_field_key)).data('select-after-ajax', data[this.primary_field_key]);
       this.$('select#' + this.formId(this.secondary_field_key)).data('select-after-ajax', data[this.secondary_field_key]);
+      var context = this;
+      var i = 0;
+      context.$('[data-target-panel]').each(function(){
+        if ($(this).prop("value") != "") {
+          swapInputForPanel($(this), context.$($(this).data('target-panel')), {
+            id: data[context.id_key + "_" + i],
+            title: data[context.id_key + "_" + i + "_title"],
+            thumbnail: data[context.thumbnail_key + "_" + i]
+          });
+        }
+        i++;
+      });
     },
 
     description: "This widget displays one to five thumbnail images of repository items in a single row grid. Optionally, you can a caption below each image..",
@@ -47,8 +62,10 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
       '</div>',
       '<div class="col-sm-8">',
         '<label for="<%= formId(id_key) %>_0" class="control-label">Selected items to display</label>',
-        '<div class="form-group">',
-          '<%= buildInputFields(inputFieldsCount) %>',
+        '<div class="form-group panel-group dd nestable-item-grid">',
+          '<ol class="dd-list">',
+            '<%= buildInputFields(inputFieldsCount) %>',
+          '</ol>',
         '</div>',
       '</div>',
       '<div class="col-sm-4">',
@@ -78,9 +95,29 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
     output = '<input type="hidden" name="<%= id_key %>_count" value="' + times + '"/>';
     for(var i=0; i < times; i++){
       output += '<div class="col-sm-9 field">';
-        output += '<input name="<%= display_checkbox + "_' + i + '" %>" id="<%= formId(display_checkbox + "_' + i + '") %>" type="checkbox" class="item-grid-checkbox" value="true" />';
-        output += '<input name="<%= id_key + "_' + i + '" %>" class="item-grid-input" type="hidden" id="<%= formId(id_key + "_' + i + '") %>" />';
-        output += '<input data-checkbox_field="#<%= formId(display_checkbox + "_' + i + '") %>" data-id_field="#<%= formId(id_key + "_' + i + '") %>" name="<%= id_key + "_' + i + '_title" %>" class="st-input-string item-grid-input form-control" data-twitter-typeahead="true" type="text" id="<%= formId(id_key + "_' + i + '_title") %>" />';
+        output += '<li class="dd-item dd3-item" style="display:none" data-id="' + (i+1) + '" id="<%= formId(panel + "_' + i + '") %>">';
+          output += '<div class="dd-handle dd3-handle">Drag</div>';
+          output += '<div class="dd3-content panel panel-default">';
+            output += '<div class="panel-heading item-grid">';
+              output += '<div class="checkbox">';
+                output += '<input name="<%= display_checkbox + "_' + i + '" %>" id="<%= formId(display_checkbox + "_' + i + '") %>" type="checkbox" class="item-grid-checkbox" value="true" data-nestable-observe="true" />';
+              output += '</div>';
+              output += '<div class="pic thumbnail">';
+                output += '<img style="display:none" />';
+                output += '<input type="hidden" name="<%= thumbnail_key + "_' + i + '" %>" id="<%= formId(thumbnail_key + "_' + i + '") %>" data-item-grid-thumbnail="true" data-nestable-observe="true" />';
+              output += '</div>';
+              output += '<div class="main">';
+                output += '<div class="title panel-title" data-panel-title="true"></div>';
+                output += '<div data-panel-id-display="true"></div>';
+              output += '</div>';
+              output += '<div class="remove">';
+                output += '<a data-item-grid-panel-remove="true" href="#">Remove</a>'
+              output += '</div>';
+              output += '<input name="<%= id_key + "_' + i + '" %>" class="item-grid-input" type="hidden" id="<%= formId(id_key + "_' + i + '") %>" data-nestable-observe="true" />';
+            output += '</div>';
+          output += '</div>';
+        output += '</li>';
+        output += '<input data-target-panel="#<%= formId(panel + "_' + i + '") %>" data-checkbox_field="#<%= formId(display_checkbox + "_' + i + '") %>" data-id_field="#<%= formId(id_key + "_' + i + '") %>" name="<%= id_key + "_' + i + '_title" %>" class="st-input-string item-grid-input form-control" data-twitter-typeahead="true" type="text" id="<%= formId(id_key + "_' + i + '_title") %>" data-nestable-observe="true" />';
       output += '</div>';
     }
     return _.template(output)(this);

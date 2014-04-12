@@ -1,7 +1,6 @@
 .item-grid-admin {
   .field {
     input[type='text'] {
-      margin-left: 10px;
       margin-bottom: 10px;
       width: 89%;
     }
@@ -15,6 +14,9 @@
       display: inline;
       width: auto;
     }
+  }
+  .dd3-item {
+    margin-bottom: 2*$padding-base-vertical;
   }
 }
 // Hide the secondary caption field

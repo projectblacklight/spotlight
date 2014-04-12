@@ -50,8 +50,7 @@ function addAutocompletetoSirTrevorForm() {
   }).on('change', function() {
     $($(this).data('id_field')).val("");
   }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
-    $($(this).data('id_field')).val(data['id']);
-    $($(this).data('checkbox_field')).prop('checked', true);
+    swapInputForPanel($(this), $($(this).data('target-panel')) , data);
   }).on('blur', function() {
     if($(this).val() != "" && $($(this).data('id_field')).val() == "") {
       $(this).closest('.field').addClass('has-error');
@@ -71,6 +70,44 @@ function addAutocompletetoFeaturedImage() {
   });
 }
 
+function swapInputForPanel(input, panel, data){
+  $(".pic.thumbnail img", panel).attr("src", data['thumbnail']).show();
+  $("[data-item-grid-thumbnail]", panel).attr('value', data['thumbnail']);
+  $("[data-panel-title]", panel).text(data['title']);
+  $("[data-panel-id-display]", panel).text(data['id']);
+
+  $(input.data('id_field')).val(data['id']);
+  $(input.data('checkbox_field')).prop('checked', true);
+  input.attr('type', 'hidden');
+  panel.show();
+}
+function addRemoveAutocompletedPanelBehavior() {
+  $("[data-item-grid-panel-remove]").on('click', function(e){
+    e.preventDefault();
+    var listItem = $(this).closest('li.dd-item');
+    var textField = $("[data-target-panel='#" + listItem.attr('id') + "']");
+    $("input[type='hidden']", listItem).prop('value', '');
+    textField.attr('value', '');
+    textField.attr('type', 'text');
+    listItem.hide();
+  });
+}
+function replaceName(element, i) {
+  element.prop('name', element.prop('name').replace(/\d/, i));
+}
+
 Spotlight.onLoad(function(){
   addAutocompletetoFeaturedImage();
+  addRemoveAutocompletedPanelBehavior();
+  $('.nestable-item-grid').nestable({maxDepth: 1});
+  $('.nestable-item-grid').on('change', function(){
+    var i = 0;
+    $('li.dd-item', $(this)).each(function(){
+      $("[data-nestable-observe]", $(this)).each(function(){
+        replaceName($(this), i)
+      });
+      replaceName($("[data-target-panel='#" + $(this).attr('id') + "']"), i);
+      i++;
+    });
+  });
 });
