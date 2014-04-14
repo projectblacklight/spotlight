@@ -74,7 +74,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
     # and we don't want to have a conflicting slug
 
     if persisted?
-      searches.where(title: "Browse All Exhibit Items").destroy_all
+      searches.where(title: "All Exhibit Items").destroy_all
       reload
     end
     update hash
@@ -89,9 +89,9 @@ class Spotlight::Exhibit < ActiveRecord::Base
   def initialize_browse
     return unless self.searches.blank?
 
-    self.searches.create title: "Browse All Exhibit Items",
+    self.searches.create title: "All Exhibit Items",
       short_description: "Search results for all items in this exhibit",
-      long_description: "All items in this exhibit"
+      long_description: "All items in this exhibit."
   end
 
   def initialize_main_navigation
