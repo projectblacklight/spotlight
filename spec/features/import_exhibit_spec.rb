@@ -13,7 +13,7 @@ describe "Allow exhibit admins to import and export content from an exhibit" do
     end
 
     click_link "Import/Export"
-    click_link "Export"
+    click_link "Export data"
 
     data = JSON.parse(page.body)
 
@@ -34,7 +34,7 @@ describe "Allow exhibit admins to import and export content from an exhibit" do
     file.rewind
     begin
       attach_file("file", File.expand_path(file.path))
-      click_button "Save"
+      click_button "Import data"
     ensure
       file.close
       file.unlink

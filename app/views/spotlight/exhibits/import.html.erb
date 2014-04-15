@@ -2,7 +2,7 @@
 <div id="content" class="col-md-9 exhibit-admin">
 <%= administration_page_title %>
 <%= bootstrap_form_for [:import, @exhibit], html: { class: 'clearfix', multipart: true } do |f| %>
-  <div class="row col-md-9">
+  <div class="row col-md-12">
     <h3><%= t :'.import.header' %></h3>
     <p class="instructions"><%= t :'.import.instructions' %></p>
     <div class="form-group">
@@ -11,15 +11,17 @@
 
     <div class="form-actions">
       <div class="primary-actions">
-        <%= f.submit nil, class: 'btn btn-primary' %>
+        <%= f.submit t(:'.import.button'), class: 'btn btn-primary' %>
       </div>
     </div>
   </div>
 <% end %>
 
-  <div class="row col-md-9">
+  <div class="row col-md-12">
     <h3><%= t :'.export.header' %></h3>
     <p class="instructions"><%= t :'.export.instructions' %></p>
-    <%= link_to t(:'.export.download'), get_exhibit_path(@exhibit, format: 'json'), class: 'btn btn-default' %>
+    <div class="primary-actions">
+      <%= link_to t(:'.export.download'), get_exhibit_path(@exhibit, format: 'json'), class: 'btn btn-primary' %>
+    </div>
   </div>
 </div>

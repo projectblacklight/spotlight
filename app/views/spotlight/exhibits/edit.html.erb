@@ -2,7 +2,7 @@
 <div id="content" class="col-md-9 exhibit-admin">
   <%= administration_page_title %>
   <%= bootstrap_form_for @exhibit, url: spotlight.exhibit_path(@exhibit), style: :horizontal, html: {class: "row"} do |f| %>
-    <div class="row col-md-9">
+    <div class="row col-md-12">
       <%= f.text_field :title %>
       <%= f.text_field :subtitle %>
       <%= f.text_area :description %>

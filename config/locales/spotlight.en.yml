@@ -229,10 +229,11 @@ en:
         import:
           header: Import exhibit data
           instructions: You can import an exported exhibit data file to use that data to define this exhibit.
+          button: Import data
         export:
           header: Export exhibit data
           instructions: You can create a backup of this exhibit by exporting the data that defines it to a JSON file. You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.
-          download: Export
+          download: Export data
       confirmation_status:
         confirmed: Confirmed.
         confirmation_sent: Confirmation sent.
