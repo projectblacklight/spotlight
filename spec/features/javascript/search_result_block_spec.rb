@@ -26,12 +26,12 @@ describe "Search Results Block", js: true do
 
     # Drop down should exist with all browse categories listed
     within("select[name='searches-options']") do
-      expect(page).to have_css("option", text: "Browse All Exhibit Items", visible: true)
+      expect(page).to have_css("option", text: "All Exhibit Items", visible: true)
       expect(page).to have_css("option", text: "Alt. Search", visible: true)
       expect(page).to have_css("option[value='#{alt_search.id}']", visible: true)
     end
 
-    select("Browse All Exhibit Items", from: "Browse category")
+    select("All Exhibit Items", from: "Browse category")
 
     check "gallery"
     check "slideshow"
