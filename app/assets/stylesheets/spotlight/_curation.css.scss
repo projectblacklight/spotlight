@@ -172,3 +172,9 @@ table#exhibit-specific-fields {
 #nested-navigation {
   margin-bottom: 2 * $padding-large-vertical;
 }
+
+table.users {
+  td:nth-child(3), th:nth-child(3) {
+    text-align: center;
+  }
+}
