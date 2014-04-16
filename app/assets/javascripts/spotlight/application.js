@@ -19,5 +19,5 @@
 //= require bootstrap/carousel
 //= require bootstrap-tagsinput
 //= require social-share-button
-//= require openseadragon/rails
+//= require openseadragon.min.js
 //= require_tree .

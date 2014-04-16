@@ -1,4 +1,56 @@
 <% image = document.to_openseadragon(blacklight_config.view_config(:show)) %>
+
 <% unless image.nil? %>
-<%= openseadragon_picture_tag image, class: 'col-md-6 openseadragon-image', data: { openseadragon: { crossOriginPolicy: false, prefixUrl: (image_url('openseadragon') + "/") } }  %>
+  <% count = Array(image).length %>
+
+  <div class="col-md-6">
+    <div class="osd-toolbar row">
+        <% if count > 1 %>
+        <div class="col-md-6 pagination">
+          <a id="osd-previous"><span class="glyphicon glyphicon-chevron-left"></span></a>
+          <span id="osd-page">1</span>  of <%= count %>
+          <a id="osd-next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+        <% end %>
+        <div class="col-md-6 controls">
+          <a id="osd-zoom-in"><span class="glyphicon glyphicon-plus-sign"></span></a>
+          <a id="osd-zoom-out"><span class="glyphicon glyphicon-minus-sign"></span></a>
+          <a id="osd-home"><span class="glyphicon glyphicon-resize-small"></span></a>
+          <a id="osd-full-page"><span class="glyphicon glyphicon-fullscreen"></span></a>
+        </div>
+    </div>
+    <div id="osd-image" class="osd-image row"></div>
+  </div>
+
+  <script type="text/javascript">
+    var viewer,
+        config = {
+          id: "osd-image",
+          crossOriginPolicy:      false,
+          referenceStripBackgroundColor:   'transparent',
+          prefixUrl:              "<%= (image_url('openseadragon') + "/") %>",
+          referenceStripWidth:    100,
+          tileSources:            <%= raw image %>,
+          zoomInButton:           "osd-zoom-in",
+          zoomOutButton:          "osd-zoom-out",
+          homeButton:             "osd-home",
+          fullPageButton:         "osd-full-page",
+          nextButton:             "osd-next",
+          previousButton:         "osd-previous"
+        };
+
+    <% if count > 1 %>
+      config.showReferenceStrip     = true;
+      config.referenceStripPosition = 'OUTSIDE';
+      config.referenceStripScroll   = 'vertical';
+    <% end %>
+
+    var viewer = OpenSeadragon(config);
+
+    viewer.addHandler('page', function (event) {
+      document.getElementById('osd-page').innerHTML = ( event.page + 1 );
+    });
+
+  </script>
+
 <% end %>
