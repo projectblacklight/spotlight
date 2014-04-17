@@ -345,7 +345,7 @@ en:
       index:
         title: "Curation - Tags"
         header: "Tags"
-        name: "Name"
+        name: "Tag name"
         taggings:
           count: "Items tagged"
         actions: "Actions"

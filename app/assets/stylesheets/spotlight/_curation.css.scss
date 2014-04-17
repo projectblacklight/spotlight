@@ -188,3 +188,12 @@ table.users {
     text-align: center;
   }
 }
+
+table.tags {
+  td:nth-child(2), th:nth-child(2) {
+    text-align: right;
+  }
+  td:nth-child(3), th:nth-child(3) {
+    text-align: center;
+  }
+}
