@@ -14,7 +14,9 @@ SirTrevor.Blocks.ItemText =  (function(){
     id_key:"item-id",
     id_text_key:"item-text-id",
     title_key: "spotlight_title_field",
+    panel: "item-panel",
     primary_field_key: "item-grid-primary-caption-field",
+    thumbnail_key: "item-thumbnail",
     show_primary_field_key: "show-primary-caption",
     secondary_field_key: "item-grid-secondary-caption-field",
     show_secondary_field_key: "show-secondary-caption",
@@ -32,12 +34,23 @@ SirTrevor.Blocks.ItemText =  (function(){
       $('#' + this.formId(this.id_text_key)).focus();
       this.loadCaptionField();
       this.addCaptionSelectFocus();
+      addRemoveAutocompletedPanelBehavior();
     },
 
     afterLoadData: function(data){
       // set a data attribute on the select fields so the ajax request knows which option to select
       this.$('select#' + this.formId(this.primary_field_key)).data('select-after-ajax', data[this.primary_field_key]);
       this.$('select#' + this.formId(this.secondary_field_key)).data('select-after-ajax', data[this.secondary_field_key]);
+      var context = this;
+      context.$('[data-target-panel]').each(function(){
+        if ($(this).prop("value") != "") {
+          swapInputForPanel($(this), context.$($(this).data('target-panel')), {
+            id: data[context.id_key],
+            title: data[context.id_text_key],
+            thumbnail: data[context.thumbnail_key + "_0"]
+          });
+        }
+      });
     },
 
     template: _.template([
@@ -47,17 +60,34 @@ SirTrevor.Blocks.ItemText =  (function(){
       '</div>',
       '<div class="col-sm-8">',
         '<div class="form-group">',
-          '<label for="<%= formId(id_text_key) %>" class="col-sm-2 control-label">Selected item</label>',
-          '<div class="col-sm-6 field">',
+          '<div class="col-sm-11 field">',
+            '<label for="<%= formId(id_text_key) %>" class="control-label">Selected item</label>',
+            '<li class="dd-item dd3-item" style="display:none" id="<%= formId(panel + "_0") %>">',
+              '<div class="dd3-content panel panel-default">',
+                '<div class="panel-heading item-grid">',
+                  '<div class="pic thumbnail">',
+                    '<img style="display:none" />',
+                    '<input type="hidden" name="<%= thumbnail_key + "_0" %>" id="<%= formId(thumbnail_key + "_0") %>" data-item-grid-thumbnail="true" data-nestable-observe="true" />',
+                  '</div>',
+                  '<div class="main">',
+                    '<div class="title panel-title" data-panel-title="true"></div>',
+                    '<div data-panel-id-display="true"></div>',
+                  '</div>',
+                  '<div class="remove pull-right">',
+                    '<a data-item-grid-panel-remove="true" href="#">Remove</a>',
+                  '</div>',
+                '</div>',
+              '</div>',
+              '<input name="<%= id_key %>" type="hidden" id="<%= formId(id_key) %>" />',
+            '</li>',
             '<input data-id_field="#<%= formId(id_key) %>" name="<%= id_text_key %>"',
-            ' class="st-input-string form-control <%= type %>" type="text" id="<%= formId(id_text_key) %>" data-twitter-typeahead="true" />',
-            '<input name="<%= id_key %>" type="hidden" id="<%= formId(id_key) %>" />',
+            ' class="st-input-string form-control <%= type %>" type="text" id="<%= formId(id_text_key) %>" data-twitter-typeahead="true" data-target-panel="#<%= formId(panel + "_0") %>" />',
           '</div>',
         '</div>',
         '<div class="form-group">',
-          '<label for="<%= formId(text_key) %>" class="col-sm-2 control-label">Text</label>',
-          '<div class="col-sm-6 field">',
-          '<div id="<%= formId(text_key) %>" class="st-text-block" contenteditable="true"></div>',
+          '<div class="col-sm-11 field">',
+            '<label for="<%= formId(text_key) %>" class="control-label">Text</label>',
+            '<div id="<%= formId(text_key) %>" class="st-text-block" contenteditable="true"></div>',
           '</div>',
         '</div>',
       '</div>',

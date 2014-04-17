@@ -17,6 +17,10 @@ tbody.dd-dragel {
   display: table;
 }
 
+li.dd-item {
+  list-style: none;
+}
+
 tr.dd-item {
   display: table-row;
   position: relative;
