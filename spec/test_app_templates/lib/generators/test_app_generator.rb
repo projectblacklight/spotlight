@@ -7,6 +7,7 @@ class TestAppGenerator < Rails::Generators::Base
     gem 'blacklight', ">= 5.4.0.rc1", "<6"
     gem "blacklight-gallery", :github => 'projectblacklight/blacklight-gallery'
     gem 'sir-trevor-rails', :github => 'sul-dlss/sir-trevor-rails'
+    gem 'openseadragon', :github => 'sul-dlss/openseadragon-rails'
     gem "jettywrapper"
     Bundler.with_clean_env do
       run "bundle install"
@@ -14,7 +15,7 @@ class TestAppGenerator < Rails::Generators::Base
   end
 
   def run_blacklight_generator
-    say_status("warning", "GENERATING BL", :yellow)  
+    say_status("warning", "GENERATING BL", :yellow)
 
     generate 'blacklight:install', '--devise'
     copy_file "catalog_controller.rb", "app/controllers/catalog_controller.rb", force: true
