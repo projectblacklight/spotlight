@@ -165,9 +165,14 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 table#exhibit-specific-fields {
-  margin-top: 2em;
+  margin-top: 1em;
   .field-label {
     min-width: 10em;
+    font-size: $font-size-h4;
+  }
+  .field-description {
+    font-size: $font-size-base;
+    vertical-align: middle;
   }
   .actions a {
     padding: 0 2px;
