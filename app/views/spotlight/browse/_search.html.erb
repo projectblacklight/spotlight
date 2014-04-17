@@ -1,3 +1,4 @@
+<%= cache [@exhibit, search, search.count] do %>
 <div class="media col-md-6">
 <%= link_to spotlight.exhibit_browse_path(@exhibit, search), class: 'pull-left' do %>
   <%= image_tag(search.featured_image, width: 180) %>
@@ -15,3 +16,4 @@
   <% end %>
   </div>
 </div>
+<% end %>

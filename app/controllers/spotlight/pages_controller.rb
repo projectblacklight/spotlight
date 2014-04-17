@@ -17,6 +17,7 @@ module Spotlight
 
     # GET /pages/1
     def show
+      fresh_when(@page)
     end
 
     # GET /exhibits/1/pages/new

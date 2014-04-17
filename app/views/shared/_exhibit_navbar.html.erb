@@ -1,12 +1,12 @@
 <div id="exhibit-navbar" class="navbar navbar-default" role="navigation">
   <div class="container">
     <ul class="nav navbar-nav">
-      <% if current_exhibit -%>
+      <%= cache current_exhibit do %>
         <li class="<%= "active" if current_page?(current_exhibit) %>"><%= link_to t(:'spotlight.curation.nav.home'), current_exhibit %></li>
         <% current_exhibit.main_navigations.each do |navigation| %>
           <%= render partial: "shared/#{navigation.nav_type}_navbar", locals: {navigation: navigation} %>
         <% end %>
-      <% end %>
+      <% end if current_exhibit %>
     </ul>
 
     <div class="navbar-right col-sm-4 col-md-4"> 

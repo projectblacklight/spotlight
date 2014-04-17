@@ -5,7 +5,7 @@ module Spotlight
     extend FriendlyId
     friendly_id :title, use: [:slugged,:scoped,:finders,:history], scope: :exhibit
 
-    belongs_to :exhibit
+    belongs_to :exhibit, touch: true
     belongs_to :created_by, class_name: "::User"
     belongs_to :last_edited_by, class_name: "::User"
     validates :weight, :inclusion => { :in => Proc.new{ 0..Spotlight::Page::MAX_PAGES } }
