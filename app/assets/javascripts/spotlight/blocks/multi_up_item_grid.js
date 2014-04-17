@@ -94,7 +94,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
   buildInputFields: function(times) {
     output = '<input type="hidden" name="<%= id_key %>_count" value="' + times + '"/>';
     for(var i=0; i < times; i++){
-      output += '<div class="col-sm-9 field">';
+      output += '<div class="col-sm-11 field">';
         output += '<li class="dd-item dd3-item" style="display:none" data-id="' + (i+1) + '" id="<%= formId(panel + "_' + i + '") %>">';
           output += '<div class="dd-handle dd3-handle">Drag</div>';
           output += '<div class="dd3-content panel panel-default">';
@@ -110,7 +110,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
                 output += '<div class="title panel-title" data-panel-title="true"></div>';
                 output += '<div data-panel-id-display="true"></div>';
               output += '</div>';
-              output += '<div class="remove">';
+              output += '<div class="remove pull-right">';
                 output += '<a data-item-grid-panel-remove="true" href="#">Remove</a>'
               output += '</div>';
               output += '<input name="<%= id_key + "_' + i + '" %>" class="item-grid-input" type="hidden" id="<%= formId(id_key + "_' + i + '") %>" data-nestable-observe="true" />';

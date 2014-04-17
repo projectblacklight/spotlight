@@ -39,8 +39,10 @@
   .text-align {
     margin-top: 15px;
   }
-  .field {
-    width: 75%;
+  .dd3-content {
+    &.panel-default {
+      padding-left: 0;
+    }
   }
   #item-text {
     @extend .form-control;
