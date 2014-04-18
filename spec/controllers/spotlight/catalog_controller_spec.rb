@@ -74,11 +74,15 @@ describe Spotlight::CatalogController do
 
 
     describe "GET index" do
-      it "should show the index" do
+      it "should show the index when there are parameters" do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("Search Results", exhibit_catalog_index_path(exhibit, q:'map'))
         get :index, exhibit_id: exhibit, q: 'map'
         expect(response).to be_successful
+      end
+      it "should redirect to the exhibit home page when there are no parameters" do
+        get :index, exhibit_id: exhibit
+        expect(response).to redirect_to(exhibit_root_path(exhibit))
       end
     end
 
