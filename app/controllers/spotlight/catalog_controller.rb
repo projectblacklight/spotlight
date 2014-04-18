@@ -48,17 +48,7 @@ class Spotlight::CatalogController < ::CatalogController
 
     respond_to do |format|
       format.json do
-        render json: {
-          docs: @document_list.map do |doc|
-            {
-              id: doc.id,
-              title: view_context.presenter(doc).raw_document_heading,
-              thumbnail: doc.first(blacklight_config.index.thumbnail_field),
-              description: doc.id,
-              url: exhibit_catalog_path(current_exhibit, doc)
-            }
-          end
-        }
+        render json: { docs: autocomplete_json_response(@document_list) }
       end
     end
   end

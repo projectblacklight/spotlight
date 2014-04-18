@@ -54,6 +54,9 @@ Spotlight::Engine.routes.draw do
       collection do
         patch :update_all
       end
+      member do
+        get :autocomplete
+      end
     end
     resources :browse, only: [:index, :show]
     resources :tags, only: [:index, :destroy]
