@@ -7,3 +7,7 @@
   background: #F7F7D0;
   cursor: text;
 }
+
+@mixin panel-hover-highlighting() {
+  background-color: $gray-lighter;
+}

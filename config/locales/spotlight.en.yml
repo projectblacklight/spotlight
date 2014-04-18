@@ -229,10 +229,11 @@ en:
         import:
           header: Import exhibit data
           instructions: You can import an exported exhibit data file to use that data to define this exhibit.
+          button: Import data
         export:
           header: Export exhibit data
           instructions: You can create a backup of this exhibit by exporting the data that defines it to a JSON file. You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.
-          download: Export
+          download: Export data
       confirmation_status:
         confirmed: Confirmed.
         confirmation_sent: Confirmation sent.
@@ -244,8 +245,8 @@ en:
       curated_features: "Curated Features"
     pages:
       order_pages:
-        pages_header: Defined Pages
-        instructions: Select the pages you want to be shown. Drag and drop pages to change the order in which they are displayed in the sidebar.
+        pages_header: Custom Pages
+        instructions: Add new pages below. Drag and drop pages to change the order in which they are displayed in the sidebar.
         new_page: "Add new page"
         save: "Save"
         cancel: "Cancel"
@@ -344,7 +345,7 @@ en:
       index:
         title: "Curation - Tags"
         header: "Tags"
-        name: "Name"
+        name: "Tag name"
         taggings:
           count: "Items tagged"
         actions: "Actions"

@@ -1,3 +1,8 @@
+.page-links a {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
 .missing-description {
   font-style: italic;
 }
@@ -40,6 +45,9 @@
 }
 
 .panel-heading.page {
+  &:hover {
+    @include panel-hover-highlighting;
+  }
   .panel-title {
     font-size: 15px;
     &[data-in-place-edit-target]:hover:after {
@@ -79,6 +87,9 @@
 }
 
 .panel-heading.item-grid {
+  &:hover {
+    @include panel-hover-highlighting;
+  }
   .main {
     width: 65%;
     vertical-align: top;
@@ -94,6 +105,9 @@
 }
 
 .panel-heading.search {
+  &:hover {
+    @include panel-hover-highlighting;
+  }
   /* widths don't add up to 100% because of padding of the container. */
   .main {
     width: 40%;
@@ -160,11 +174,35 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 table#exhibit-specific-fields {
-  margin-top: 2em;
+  margin-top: 1em;
   .field-label {
     min-width: 10em;
+    font-size: $font-size-h4;
+  }
+  .field-description {
+    font-size: $font-size-base;
+    vertical-align: middle;
   }
   .actions a {
     padding: 0 2px;
+  }
+}
+
+#nested-navigation {
+  margin-bottom: 2 * $padding-large-vertical;
+}
+
+table.users {
+  td:nth-child(3), th:nth-child(3) {
+    text-align: center;
+  }
+}
+
+table.tags {
+  td:nth-child(2), th:nth-child(2) {
+    text-align: right;
+  }
+  td:nth-child(3), th:nth-child(3) {
+    text-align: center;
   }
 }

@@ -1,9 +1,11 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
   <%= administration_page_title %>
+
 <%= bootstrap_form_for @appearance, url: spotlight.exhibit_appearance_path(@exhibit), style: :horizontal, left: 'col-md-3', right: 'col-sm-5' do |f| %>
-  <%= field_set_tag t(:'.main_navigation.menu') do %>
-    <p><%= t(:'.main_navigation.help') %></p>
+  <%= field_set_tag do %>
+    <h3><%= t(:'.main_navigation.menu') %></h3>
+    <p class="instructions"><%= t(:'.main_navigation.help') %></p>
     <div class="panel-group dd main_navigation_admin col-sm-7" id="nested-navigation">
       <ol class="dd-list">
         <%= f.fields_for :main_navigations do |navigation| %>
@@ -36,7 +38,8 @@
     </div>
   <% end %>
 
-  <%= field_set_tag t(:'.search_results') do %>
+  <h3><%= t(:'.search_results') %></h3>
+  <%= field_set_tag do %>
     <%= f.form_group :document_index_view_types, label: {text: t(:'.document_index_view_types')} do %>
       <%= f.fields_for :document_index_view_types, @appearance.document_index_view_types do |vt| %>
         <% @appearance.view_type_options.each do |key| %>
