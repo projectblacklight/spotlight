@@ -45,6 +45,9 @@
 }
 
 .panel-heading.page {
+  &:hover {
+    @include panel-hover-highlighting;
+  }
   .panel-title {
     font-size: 15px;
     &[data-in-place-edit-target]:hover:after {
@@ -84,6 +87,9 @@
 }
 
 .panel-heading.item-grid {
+  &:hover {
+    @include panel-hover-highlighting;
+  }
   .main {
     width: 65%;
     vertical-align: top;
@@ -99,6 +105,9 @@
 }
 
 .panel-heading.search {
+  &:hover {
+    @include panel-hover-highlighting;
+  }
   /* widths don't add up to 100% because of padding of the container. */
   .main {
     width: 40%;
