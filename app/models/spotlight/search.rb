@@ -19,7 +19,7 @@ class Spotlight::Search < ActiveRecord::Base
 
   def featured_item
     if self.featured_item_id
-      @featured_item ||= get_solr_response_for_doc_id(self.featured_item_id, query_params).last
+      @featured_item ||= get_solr_response_for_doc_id(self.featured_item_id).last
     end
   end
 
