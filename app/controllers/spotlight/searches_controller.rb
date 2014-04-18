@@ -5,6 +5,8 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   load_and_authorize_resource through: :exhibit
   before_filter :attach_breadcrumbs, only: [:index, :edit], unless: -> { request.format.json? }
 
+  include Spotlight::Base
+
   def create
     params_copy = params.dup
     params_copy.delete(:exhibit_id)
@@ -19,6 +21,15 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @searches }
+    end
+  end
+
+  def autocomplete
+    (_, document_list) = get_search_results autocomplete_params
+    respond_to do |format|
+      format.json do
+        render json: { docs: autocomplete_json_response(document_list) }
+      end
     end
   end
 
@@ -50,6 +61,12 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   end
 
   protected
+
+  def autocomplete_params
+    query_params = @search.query_params.with_indifferent_access
+    query_params[:q] = [query_params[:q], params[:q]].compact.join(' ')
+    query_params
+  end
 
   def attach_breadcrumbs
     e = @exhibit || (@search.exhibit if @search)

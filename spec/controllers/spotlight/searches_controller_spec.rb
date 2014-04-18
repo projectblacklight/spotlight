@@ -59,6 +59,30 @@ describe Spotlight::SearchesController do
       end
     end
 
+    describe "GET autocomplete" do
+      let!(:search) { FactoryGirl.create(:search, exhibit: exhibit, title: "New Mexico Maps", query_params: {q: "New Mexico"} ) }
+      it "should show all the items returned search's query_params" do
+        get :autocomplete, exhibit_id: exhibit, id: search, format: 'json'
+        expect(response).to be_successful
+        docs = JSON.parse(response.body)['docs']
+        doc_ids = docs.map{|d| d["id"] }
+        expect(docs.length).to eq 2
+        expect(doc_ids).to include "cz507zk0531"
+        expect(doc_ids).to include "rz818vx8201"
+      end
+      it "should search within the items returned in the query_params" do
+        get :autocomplete, exhibit_id: exhibit, id: search, q: "Noorder deel",format: 'json'
+        expect(response).to be_successful
+        docs = JSON.parse(response.body)['docs']
+        expect(docs.length).to eq 1
+        expect(docs.first["id"]).to eq "rz818vx8201"
+        expect(docs.first["description"]).to eq "rz818vx8201"
+        expect(docs.first["title"]).to eq "'t Noorder deel van WEST-INDIEN"
+        expect(docs.first).to have_key("thumbnail")
+        expect(docs.first).to have_key("url")
+      end
+    end
+
     describe "GET edit" do
       it "should show edit page" do
         get :edit, id: search, exhibit_id: search.exhibit
