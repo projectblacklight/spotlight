@@ -4,6 +4,8 @@ class Spotlight::CatalogController < ::CatalogController
   include Spotlight::Catalog
   before_filter :authenticate_user!, only: [:admin, :edit, :make_public, :make_private]
   before_filter :check_authorization, only: [:admin, :edit, :make_public, :make_private]
+  before_filter :redirect_to_exhibit_home_without_search_params, only: :index
+  before_filter :add_breadcrumb_with_search_params, only: :index
 
   before_filter :attach_breadcrumbs
   helper Openseadragon::OpenseadragonHelper
@@ -11,12 +13,6 @@ class Spotlight::CatalogController < ::CatalogController
 
   def new
     @resource = @exhibit.resources.build
-  end
-
-  def index
-    super
-
-    add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), request.fullpath if has_search_parameters?
   end
 
   def show
@@ -163,6 +159,18 @@ class Spotlight::CatalogController < ::CatalogController
   def current_browse_category
     @current_browse_category ||= if current_search_session and current_search_session.query_params["action"] == "show" and current_search_session.query_params["controller"] == "spotlight/browse"
       Spotlight::Search.find(current_search_session.query_params["id"]) if current_search_session.query_params["id"]
+    end
+  end
+
+  def redirect_to_exhibit_home_without_search_params
+    unless has_search_parameters?
+      redirect_to spotlight.exhibit_root_path(@exhibit)
+    end
+  end
+
+  def add_breadcrumb_with_search_params
+    if has_search_parameters?
+      add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), request.fullpath
     end
   end
 
