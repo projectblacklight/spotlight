@@ -18,7 +18,7 @@ class Spotlight::Search < ActiveRecord::Base
   include Spotlight::Catalog::AccessControlsEnforcement
 
   def featured_item
-    if self.featured_item_id
+    if self.featured_item_id.present?
       @featured_item ||= get_solr_response_for_doc_id(self.featured_item_id).last
     end
   end
