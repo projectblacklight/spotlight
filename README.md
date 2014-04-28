@@ -62,3 +62,21 @@ Create an administrator
 ```
 $ rake spotlight:initialize
 ```
+
+## To set up your development environment
+
+**Note:** rake commands MAY need to be prefixed with `bundle exec`, depending on your environment.
+
+ 1. Clone this repo, `cd` in and run `$ bundle install`
+ 2. Get and configure Jetty/Solr:
+     1. `$ rake jetty:download`
+     2. `$ rake jetty:unzip`
+     3. `$ rake spotlight:configure_jetty`
+ 3.  Generate the internal test application (will be in `spec/internal`): `$ rake engine_cart:generate` 
+ 4. Start Jetty `$ rake jetty:start` (may take a moment, use e.g. `$ fuser 8983/tcp` or `$ ps aux | grep jetty` to see when it's actually up)
+ 3. Index fixtures: `TEST_JETTY_PORT=8983 rake spotlight:fixtures`
+ 4. `$ cd spec/internal`
+ 5. Run `$ rake spotlight:initialize` and answer prompts
+ 6. Start the dev server `rails s`
+ 7. Visit [http://localhost:3000](http://localhost:3000) and sign in.
+
