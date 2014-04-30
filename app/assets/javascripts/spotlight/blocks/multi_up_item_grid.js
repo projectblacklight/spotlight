@@ -32,7 +32,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
       Spotlight.Block.prototype.onBlockRender.apply();
       this.loadCaptionField();
       this.addCaptionSelectFocus();
-      addRemoveAutocompletedPanelBehavior();
+      this.makeItemGridNestable();
     },
 
     afterLoadData: function(data){
@@ -88,6 +88,21 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
       '</div>',
     '</div>'
   ].join("\n")),
+
+  makeItemGridNestable: function() {
+    $('.nestable-item-grid').nestable({maxDepth: 1});
+    $('.nestable-item-grid').on('change', function(){
+      var i = 0;
+      $('li.dd-item', $(this)).each(function(){
+        $("[data-nestable-observe]", $(this)).each(function(){
+          replaceName($(this), i)
+        });
+        replaceName($("[data-target-panel='#" + $(this).attr('id') + "']"), i);
+        i++;
+      });
+    });
+    addRemoveAutocompletedPanelBehavior();
+  },
 
   inputFieldsCount: 5,
 

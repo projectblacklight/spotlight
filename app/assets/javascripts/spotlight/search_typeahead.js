@@ -98,16 +98,4 @@ function replaceName(element, i) {
 
 Spotlight.onLoad(function(){
   addAutocompletetoFeaturedImage();
-  addRemoveAutocompletedPanelBehavior();
-  $('.nestable-item-grid').nestable({maxDepth: 1});
-  $('.nestable-item-grid').on('change', function(){
-    var i = 0;
-    $('li.dd-item', $(this)).each(function(){
-      $("[data-nestable-observe]", $(this)).each(function(){
-        replaceName($(this), i)
-      });
-      replaceName($("[data-target-panel='#" + $(this).attr('id') + "']"), i);
-      i++;
-    });
-  });
 });
