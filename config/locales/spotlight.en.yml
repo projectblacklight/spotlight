@@ -228,7 +228,7 @@ en:
         header: Import/Export
         import:
           header: Import exhibit data
-          instructions: You can import an exported exhibit data file to use that data to define this exhibit.
+          instructions: You can import an exhibit JSON file exported from this application to use that data file to define this exhibit.
           button: Import data
         export:
           header: Export exhibit data
