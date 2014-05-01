@@ -29,9 +29,15 @@
 }
 
 #document {
-  ul.tags li {
-    @extend .label;
-    @extend .label-default;
+  ul.tags {
+    text-align: center;
+    li {
+      @extend .label;
+      @extend .label-default;
+      a {
+        color: #fff;
+      }
+    }
   }
 
   .osd-toolbar {
