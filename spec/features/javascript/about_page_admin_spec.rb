@@ -6,7 +6,7 @@ feature "About Pages Adminstration", js: true do
   before { login_as exhibit_curator }
 
   it "should be able to create new pages" do
-    pending("Passing locally but Travis is thowing intermittent errors") if ENV["CI"]
+    pending("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
     login_as exhibit_curator
 
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
