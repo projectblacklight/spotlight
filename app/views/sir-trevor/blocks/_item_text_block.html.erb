@@ -1,21 +1,23 @@
-<%- document = get_solr_response_for_doc_id(block['item-id']).last -%>
-<div class="content-block item-text row">
-  <div class="image-block pull-<%= block['text-align'] %>">
-    <%- if has_thumbnail? document -%>
-      <div class="thumbnail">
-        <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
-      </div>
-    <%- end -%>
-    <% if block['show-primary-caption'] %>
-      <div class="primary-caption">
-        <%= multi_up_item_grid_caption(block, document) %>
-      </div>
-    <% end %>
-    <% if block['show-secondary-caption'] %>
-      <div class="secondary-caption">
-        <%= multi_up_item_grid_caption(block, document, 'secondary') %>
-      </div>
-    <% end %>
+<% if block['item-id'].present? %>
+  <% document = get_solr_response_for_doc_id(block['item-id']).last %>
+  <div class="content-block item-text row">
+    <div class="image-block pull-<%= block['text-align'] %>">
+      <% if has_thumbnail? document %>
+        <div class="thumbnail">
+          <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
+        </div>
+      <% end %>
+      <% if block['show-primary-caption'] %>
+        <div class="primary-caption">
+          <%= multi_up_item_grid_caption(block, document) %>
+        </div>
+      <% end %>
+      <% if block['show-secondary-caption'] %>
+        <div class="secondary-caption">
+          <%= multi_up_item_grid_caption(block, document, 'secondary') %>
+        </div>
+      <% end %>
+    </div>
+    <%= sir_trevor_markdown block["text"] %>
   </div>
-  <%= sir_trevor_markdown block["text"] %>
-</div>
+<% end %>

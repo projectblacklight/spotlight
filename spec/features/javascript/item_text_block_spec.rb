@@ -186,4 +186,38 @@ feature "Item + Image Block" do
       expect(page).to have_css(".image-block.pull-left")
     end
   end
+  it "should not show the block if a blank item was saved", js: true do
+    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+    # create page
+    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
+    click_link exhibit_curator.email
+    within '#user-util-collapse .dropdown' do
+      click_link 'Dashboard'
+    end
+    click_link "Feature pages"
+
+    add_new_page_via_button("My New Feature Page")
+
+    expect(page).to have_css("h3", text: "My New Feature Page")
+
+    expect(page).to have_content("The feature page was created.", visible: true)
+    within("li.dd-item") do
+      click_link "Edit"
+    end
+    # fill in title
+    fill_in "feature_page_title", :with => "Exhibit Title"
+    # click to add widget
+    find("[data-icon='add']").click
+    # click the item + image widget
+    expect(page).to have_css("a[data-type='item-text']")
+    find("a[data-type='item-text']").click
+    # fill in the hidden record ID field
+    # TODO: Do we need an additional test for the typeahead?
+    item_id_field = find("input[name='item-id']", visible: false)
+    item_id_field.set("")
+    # create the page
+    click_button("Save changes")
+    # verify that the page was created and is not throwing an error
+    expect(page).to have_content("The feature page was successfully updated.", visible: true)
+  end
 end
