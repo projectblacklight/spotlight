@@ -23,7 +23,7 @@ describe "Exhibit Administration" do
       visit spotlight.edit_exhibit_path( exhibit )
       expect(find_field(email_id_0).value).to eq email_address_0
     end
-    it "should do something", js: true do
+    it "should have new inputs added when clicking on the 'add contact' button", js: true do
       # Exhibit administration edit
       visit spotlight.edit_exhibit_path( exhibit )
 
