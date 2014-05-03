@@ -17,7 +17,8 @@ describe "Update the appearance" do
 
     choose "Large"
 
-    expect(field_labeled('Relevance')).to be_checked
+    # #feild_labeled doesn't appear to work for disabled inputs
+    expect(page).to have_css("input[name='appearance[sort_fields][relevance]'][disabled='disabled']")
     uncheck "Title"
     uncheck "Identifier"
 
@@ -37,7 +38,8 @@ describe "Update the appearance" do
 
     expect(field_labeled('Large')).to be_checked
 
-    expect(field_labeled('Relevance')).to be_checked
+    # #feild_labeled doesn't appear to work for disabled inputs
+    expect(page).to have_css("input[name='appearance[sort_fields][relevance]'][disabled='disabled']")
     expect(field_labeled('Type')).to be_checked
     expect(field_labeled('Date')).to be_checked
     expect(field_labeled('Title')).to_not be_checked

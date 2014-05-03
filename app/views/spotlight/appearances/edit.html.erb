@@ -62,7 +62,7 @@
 
     <%= f.form_group :sort_fields, label: {text: t(:'.sort_fields')} do %>
       <%= f.fields_for :sort_fields, @appearance.sort_fields do |vt| %>
-        <%= vt.check_box :relevance, {  checked: true, data: { readonly: true }} %>
+        <%= vt.check_box :relevance, {  checked: true, disabled: true, data: { readonly: true }} %>
         <% @appearance.sort_options.each do |k| %>
           <%= vt.check_box k %>
         <% end %>
