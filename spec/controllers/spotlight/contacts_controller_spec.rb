@@ -70,7 +70,7 @@ describe Spotlight::ContactsController do
           post :create, exhibit_id: exhibit, contact: {name: 'Chester'}
         }.to change{ Spotlight::Contact.count}.by(1)
         expect(response).to redirect_to exhibit_about_pages_path(exhibit) 
-        expect(Spotlight::Contact.last.show_in_sidebar).to be_true
+        expect(Spotlight::Contact.last.show_in_sidebar).to be_truthy
       end
     end
   end

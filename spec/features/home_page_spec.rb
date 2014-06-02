@@ -38,7 +38,7 @@ describe "Home page" do
     describe "show title" do
       let(:home_page) { FactoryGirl.create(:home_page, display_title: false, exhibit: exhibit) }
       it "should be updatable from the edit page" do
-        expect(home_page.display_title).to be_false
+        expect(home_page.display_title).to be_falsey
 
         visit spotlight.edit_exhibit_home_page_path(home_page.exhibit, home_page)
         expect(find("#home_page_display_title")).not_to be_checked

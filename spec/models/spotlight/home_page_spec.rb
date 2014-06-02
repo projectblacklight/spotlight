@@ -5,10 +5,10 @@ describe Spotlight::HomePage do
   it {should_not be_feature_page}
   it {should_not be_about_page}
   it "should display the sidebar" do
-    expect(home_page.display_sidebar?).to be_true
+    expect(home_page.display_sidebar?).to be_truthy
   end
   it "should be published" do
-    expect(home_page.published).to be_true
+    expect(home_page.published).to be_truthy
   end
   describe "title" do
     it "should include default text" do
@@ -18,9 +18,9 @@ describe Spotlight::HomePage do
   describe "should_display_title?" do
     it "should return the display_title attribute" do
       home_page.display_title = true
-      expect(home_page.should_display_title?).to be_true
+      expect(home_page.should_display_title?).to be_truthy
       home_page.display_title = false
-      expect(home_page.should_display_title?).to be_false
+      expect(home_page.should_display_title?).to be_falsey
     end
   end
   describe "content" do

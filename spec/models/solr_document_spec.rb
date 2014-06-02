@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SolrDocument do
   subject { ::SolrDocument.new(id: 'abcd123') }
   its(:to_key) {should == ['abcd123']}
-  its(:persisted?) {should be_true}
+  its(:persisted?) {should be_truthy}
   before do
     subject.stub(reindex: nil)
   end

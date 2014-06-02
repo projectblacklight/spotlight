@@ -7,7 +7,7 @@ feature "Editing the Home Page", js: true do
   before { login_as admin }
 
   it "should not have a search results widget" do
-    pending("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
     visit spotlight.edit_exhibit_home_page_path(exhibit)
     find("[data-icon='add']").click
     within("[data-icon='add']") do

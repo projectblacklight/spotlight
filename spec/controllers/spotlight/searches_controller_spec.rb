@@ -124,10 +124,10 @@ describe Spotlight::SearchesController do
       before { request.env["HTTP_REFERER"] = "http://example.com" }
       it "should update whether they are on the landing page" do
         post :update_all, exhibit_id: exhibit, exhibit: {searches_attributes: [{id: search.id, on_landing_page: true, weight: '1' }, {id: search2.id, on_landing_page: false, weight: '0'}]}
-        expect(search.reload.on_landing_page).to be_true
+        expect(search.reload.on_landing_page).to be_truthy
         expect(search.weight).to eq 1
-        expect(search2.reload.on_landing_page).to be_false
-        expect(search3.reload.on_landing_page).to be_true # should remain untouched since it wasn't present
+        expect(search2.reload.on_landing_page).to be_falsey
+        expect(search3.reload.on_landing_page).to be_truthy # should remain untouched since it wasn't present
         expect(response).to redirect_to "http://example.com"
         expect(flash[:notice]).to eq "Searches were successfully updated."
       end

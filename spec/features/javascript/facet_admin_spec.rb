@@ -5,7 +5,7 @@ feature "Facets Administration", js:  true do
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
   it "should allow us to update the label with edit-in-place" do
-    pending("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
 
     input_id = "blacklight_configuration_facet_fields_genre_ssim_label"
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)

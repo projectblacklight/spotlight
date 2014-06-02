@@ -22,7 +22,7 @@ describe "Browse Category Administration" do
   end
   describe "destroy" do
     it "should destroy a tag" do
-      pending("TODO: Allow searches to be destroyed without javascript")
+      skip("TODO: Allow searches to be destroyed without javascript")
       visit spotlight.exhibit_searches_path(exhibit)
       within(".panel .search") do
         click_link("Delete")

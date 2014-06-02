@@ -6,7 +6,7 @@ feature "Item + Image Block" do
   before { login_as exhibit_curator }
 
   scenario "should allow you to add a thumbnail to a page within an exhibit", :js => true do
-    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
@@ -47,7 +47,7 @@ feature "Item + Image Block" do
   end
 
   scenario "should allow you to optionally display captions with the image", :js => true do
-    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
@@ -99,7 +99,7 @@ feature "Item + Image Block" do
   end
 
   scenario "should allow you to add text to the image", :js => true do
-    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
@@ -142,7 +142,7 @@ feature "Item + Image Block" do
   end
 
   scenario "should allow you to choose which side the text will be on", :js => true do
-    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
@@ -187,7 +187,7 @@ feature "Item + Image Block" do
     end
   end
   it "should not show the block if a blank item was saved", js: true do
-    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email

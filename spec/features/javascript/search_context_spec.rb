@@ -6,7 +6,7 @@ feature "Search contexts" do
   before { login_as exhibit_curator }
 
   scenario "should add context breadcrumbs back to the home page when navigating to an item from the home page", :js => true do
-    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
 
@@ -38,7 +38,7 @@ feature "Search contexts" do
   end
 
   scenario "should add context breadcrumb back to the feature page when navigating to an item from a feature page", :js => true do
-    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
@@ -84,7 +84,7 @@ feature "Search contexts" do
   end
 
   scenario "should add context breadcrumbs back to the browse page when navigating to an item from a browse page", :js => true do
-    pending("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
     search = Spotlight::Search.create! exhibit_id: exhibit.id, title: "Some Saved Search", on_landing_page: true
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link "Browse"

@@ -6,7 +6,10 @@ require 'devise'
 require 'engine_cart'
 EngineCart.load_application!
 
+require 'rspec/collection_matchers'
+require 'rspec/its'
 require 'rspec/rails'
+require 'rspec/active_model/mocks'
 require 'rspec/autorun'
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
@@ -32,6 +35,8 @@ FactoryGirl.find_definitions
 
 
 RSpec.configure do |config|
+  config.infer_spec_type_from_file_location!
+
   config.use_transactional_fixtures = false
 
   config.before :each do

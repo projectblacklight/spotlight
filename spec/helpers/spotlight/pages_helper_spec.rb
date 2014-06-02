@@ -15,27 +15,27 @@ module Spotlight
 
     describe "has_title?" do
       it "should return true if the title is not the same as the ID" do
-        expect(helper.has_title? titled_document).to be_true
+        expect(helper.has_title? titled_document).to be_truthy
       end
       it "should return false if the document heading returned is the same as the ID (indicating there is no title)" do
-        expect(helper.has_title? untitled_document).to be_false
+        expect(helper.has_title? untitled_document).to be_falsey
       end
     end
     describe "disable_save_pages_button?" do
       it "should return true if there are no pages and we are on the about pages page" do
         helper.should_receive(:page_collection_name).and_return("about_pages")
         assign(:pages, [])
-        expect(helper.disable_save_pages_button?).to be_true
+        expect(helper.disable_save_pages_button?).to be_truthy
       end
       it "should return false if there are about pages" do
         helper.should_receive(:page_collection_name).and_return("about_pages")
         assign(:pages, [{}])
-        expect(helper.disable_save_pages_button?).to be_false
+        expect(helper.disable_save_pages_button?).to be_falsey
       end
       it "should return false if on the feature pages page" do
         helper.should_receive(:page_collection_name).and_return("feature_pages")
         assign(:pages, [])
-        expect(helper.disable_save_pages_button?).to be_false
+        expect(helper.disable_save_pages_button?).to be_falsey
       end
     end
     describe "get_search_widget_search_results" do

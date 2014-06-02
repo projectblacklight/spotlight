@@ -18,18 +18,18 @@ describe Spotlight::FeaturePage do
     let!(:unpublished_child) { FactoryGirl.create(:feature_page, parent_page: unpublished_parent, published: false, exhibit: exhibit ) }
     before { unpublished_parent.display_sidebar = false }
     it "should be set to true if the page has a published child" do
-      expect(parent.display_sidebar?).to be_true
+      expect(parent.display_sidebar?).to be_truthy
     end
     it "should be set to true on the parent of published child pages" do
       parent.display_sidebar = false
-      expect(parent.display_sidebar?).to be_true
+      expect(parent.display_sidebar?).to be_truthy
     end
     it "should be set to true when publishing a child page" do
-      expect(unpublished_parent.display_sidebar?).to be_false
+      expect(unpublished_parent.display_sidebar?).to be_falsey
       unpublished_parent.published = true
       unpublished_child.published = true
       unpublished_child.save
-      expect(unpublished_parent.display_sidebar?).to be_true
+      expect(unpublished_parent.display_sidebar?).to be_truthy
     end
   end
 
@@ -71,9 +71,9 @@ describe Spotlight::FeaturePage do
       expect(parent.child_pages.map(&:id)).to eq [child1.id, child2.id]
     end
     it "should define top_level_page? properly" do
-      expect(parent.top_level_page?).to be_true
-      expect(child1.top_level_page?).to be_false
-      expect(child2.top_level_page?).to be_false
+      expect(parent.top_level_page?).to be_truthy
+      expect(child1.top_level_page?).to be_falsey
+      expect(child2.top_level_page?).to be_falsey
     end
   end
 end

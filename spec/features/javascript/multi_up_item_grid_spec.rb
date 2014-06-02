@@ -7,7 +7,7 @@ describe "Mutli-Up Item Grid", js: true do
   before { login_as exhibit_curator }
 
   it "should display items that are configured to display (and hide items that are not)" do
-    pending("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
     within '#user-util-collapse .dropdown' do
@@ -48,7 +48,7 @@ describe "Mutli-Up Item Grid", js: true do
   end
 
   it "should serialize the unchecked display checkboxes" do
-    pending("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
     within '#user-util-collapse .dropdown' do
@@ -93,7 +93,7 @@ describe "Mutli-Up Item Grid", js: true do
   end
   
   it "should optionally show the configured captions" do
-    pending("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
     within '#user-util-collapse .dropdown' do

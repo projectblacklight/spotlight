@@ -106,10 +106,10 @@ describe Spotlight::AboutPagesController do
         post :update_all, exhibit_id: page1.exhibit, exhibit: {about_pages_attributes: [{id: page1.id, published: true, title: "This is a new title!"}, {id: page2.id, published: false}]}
         expect(response).to redirect_to 'http://example.com'
         expect(flash[:notice]).to eq "About pages were successfully updated."
-        expect(page1.reload.published).to be_true
+        expect(page1.reload.published).to be_truthy
         expect(page1.title).to eq "This is a new title!" 
-        expect(page2.reload.published).to be_false
-        expect(page3.reload.published).to be_true # should remain untouched since it wasn't in present[]
+        expect(page2.reload.published).to be_falsey
+        expect(page3.reload.published).to be_truthy # should remain untouched since it wasn't in present[]
       end
     end
 
