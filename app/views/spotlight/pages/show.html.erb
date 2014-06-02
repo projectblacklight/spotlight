@@ -1,7 +1,8 @@
-<%= render 'sidebar' if @page.display_sidebar? %>
 <% set_html_page_title @page.title if @page.title.present? %>
 
 <%= cache_unless current_user, @page do %>
+<%= render 'sidebar' if @page.display_sidebar? %>
+
 <div class="<%= 'col-md-9' if @page.display_sidebar? %>">
   <div class="clearfix">
   <%= exhibit_edit_link @page, class: 'edit-button pull-right btn btn-primary' if can? :edit, @page %>
