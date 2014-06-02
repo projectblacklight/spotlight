@@ -19,24 +19,23 @@ describe "Item Administration" do
       expect(page).to have_css("h1 small", text: "Items")
       expect(page).to have_css("table#documents")
       expect(page).to have_css(".pagination")
-      within "tr[itemscope]:first-child" do
-        expect(page).to have_link "View"
-        expect(page).to have_link "Edit"
-      end
+      
+      item = first("tr[itemscope]")
+      expect(item).to have_link "View"
+      expect(item).to have_link "Edit"
     end
 
     it "should have a public/private toggle" do
       visit spotlight.admin_exhibit_catalog_index_path(exhibit)
-      within "tr[itemscope]:first-child" do
-        expect(page).to have_button "Make Private"
-        click_button "Make Private"
-      end
+      item = first("tr[itemscope]")
+      expect(item).to have_button "Make Private"
+      item.click_button "Make Private"
 
-      within "tr[itemscope]:first-child" do
-        expect(page).to have_button "Make Public"
-        click_button "Make Public"
-      end
+      item = first("tr[itemscope]")
+      expect(item).to have_button "Make Public"
+      item.click_button "Make Public"
     end
+
     it "should toggle the 'Private' label", js: true do
       visit spotlight.admin_exhibit_catalog_index_path(exhibit)
       # The label should be toggled when the checkbox is clicked
