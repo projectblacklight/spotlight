@@ -8,7 +8,7 @@ describe "Search Results Block", js: true do
 
   before { login_as exhibit_curator }
   it "should allow a curator to select from existing browse categories" do
-    pending("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
+    skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
     within '#user-util-collapse .dropdown' do

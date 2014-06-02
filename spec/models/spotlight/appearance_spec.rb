@@ -18,9 +18,9 @@ describe Spotlight::Appearance do
       before do
         config.sort_fields = {"score desc, sort_title_ssi asc"=> {show: true}, 'sort_type_ssi asc' => {show: true}}
       end
-      its(:relevance) { should be_true }
-      its(:type) { should be_true }
-      its(:title) { should be_false }
+      its(:relevance) { should be_truthy }
+      its(:type) { should be_truthy }
+      its(:title) { should be_falsey }
     end
   end
 end

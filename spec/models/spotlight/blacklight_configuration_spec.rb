@@ -40,8 +40,8 @@ describe Spotlight::BlacklightConfiguration do
       blacklight_config.add_facet_field 'b'
       blacklight_config.add_facet_field 'c'
 
-      expect(subject.blacklight_config.facet_fields['a'].show).to be_true
-      expect(subject.blacklight_config.facet_fields['b'].show).to be_false
+      expect(subject.blacklight_config.facet_fields['a'].show).to be_truthy
+      expect(subject.blacklight_config.facet_fields['b'].show).to be_falsey
       expect(subject.blacklight_config.facet_fields['d']).to be_nil
     end
 
@@ -74,12 +74,12 @@ describe Spotlight::BlacklightConfiguration do
       blacklight_config.add_index_field 'b'
       blacklight_config.add_index_field 'c'
 
-      expect(subject.blacklight_config.index_fields['a'].enabled).to be_true
-      expect(subject.blacklight_config.index_fields['a'].list).to be_true
-      expect(subject.blacklight_config.index_fields['b'].enabled).to be_true
-      expect(subject.blacklight_config.index_fields['b'].list).to be_true
-      expect(subject.blacklight_config.index_fields['c'].enabled).to be_true
-      expect(subject.blacklight_config.index_fields['c'].list).to be_true
+      expect(subject.blacklight_config.index_fields['a'].enabled).to be_truthy
+      expect(subject.blacklight_config.index_fields['a'].list).to be_truthy
+      expect(subject.blacklight_config.index_fields['b'].enabled).to be_truthy
+      expect(subject.blacklight_config.index_fields['b'].list).to be_truthy
+      expect(subject.blacklight_config.index_fields['c'].enabled).to be_truthy
+      expect(subject.blacklight_config.index_fields['c'].list).to be_truthy
     end
 
     it "should filter blank values" do
@@ -97,10 +97,10 @@ describe Spotlight::BlacklightConfiguration do
       blacklight_config.add_index_field 'b'
       blacklight_config.add_index_field 'c'
 
-      expect(subject.blacklight_config.index_fields['a'].enabled).to be_true
-      expect(subject.blacklight_config.index_fields['a'].list).to be_true
-      expect(subject.blacklight_config.index_fields['b'].enabled).to be_false
-      expect(subject.blacklight_config.index_fields['b'].list).to be_false
+      expect(subject.blacklight_config.index_fields['a'].enabled).to be_truthy
+      expect(subject.blacklight_config.index_fields['a'].list).to be_truthy
+      expect(subject.blacklight_config.index_fields['b'].enabled).to be_falsey
+      expect(subject.blacklight_config.index_fields['b'].list).to be_falsey
       expect(subject.blacklight_config.index_fields['d']).to be_nil
     end
 
@@ -114,15 +114,15 @@ describe Spotlight::BlacklightConfiguration do
       it "should default to showing a custom field on the show view" do
         subject.stub(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
         expect(subject.blacklight_config.index_fields).to include('a')
-        expect(subject.blacklight_config.index_fields['a'].show).to be_true
-        expect(subject.blacklight_config.index_fields['a'].enabled).to be_true
+        expect(subject.blacklight_config.index_fields['a'].show).to be_truthy
+        expect(subject.blacklight_config.index_fields['a'].enabled).to be_truthy
       end
 
       it "should use explicit configuration to override custom field defaults" do
         subject.index_fields['a'] = { show: false }
         subject.stub(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
         expect(subject.blacklight_config.index_fields).to include('a')
-        expect(subject.blacklight_config.index_fields['a'].show).to be_false
+        expect(subject.blacklight_config.index_fields['a'].show).to be_falsey
       end
     end
 
@@ -297,7 +297,7 @@ describe Spotlight::BlacklightConfiguration do
       blacklight_config.view.something
 
       expect(subject.blacklight_config.view.keys).to include :list, :gallery, :something
-      expect(subject.blacklight_config.view.all? { |k,v| v.key == k and v.if == :enabled_in_spotlight_view_type_configuration? }).to be_true
+      expect(subject.blacklight_config.view.all? { |k,v| v.key == k and v.if == :enabled_in_spotlight_view_type_configuration? }).to be_truthy
     end
 
     it "should pass through the blacklight configuration when not set" do

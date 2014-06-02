@@ -74,7 +74,7 @@ describe "Feature page" do
       let!(:feature_page) { FactoryGirl.create(:feature_page, display_sidebar: false, exhibit: exhibit) }
       before { feature_page.display_sidebar = false; feature_page.save }
       it "should be updatable from the edit page" do
-        expect(feature_page.display_sidebar?).to be_false
+        expect(feature_page.display_sidebar?).to be_falsey
 
         visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
         expect(find("#feature_page_display_sidebar")).not_to be_checked
@@ -82,7 +82,7 @@ describe "Feature page" do
         check "Show sidebar"
         click_button "Save changes"
 
-        expect(feature_page.reload.display_sidebar?).to be_true
+        expect(feature_page.reload.display_sidebar?).to be_truthy
 
         visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
         expect(find("#feature_page_display_sidebar")).to be_checked

@@ -37,16 +37,16 @@ describe Spotlight::Page do
   end
   describe ".display_sidebar" do
     it "should be set to true by default" do
-      expect(parent_page.display_sidebar?).to be_true
+      expect(parent_page.display_sidebar?).to be_truthy
     end
   end
   describe "should_display_title?" do
     let(:page) { FactoryGirl.create(:feature_page) }
     it "should return if the title is present or not" do
       expect(page.title).not_to be_blank
-      expect(page.should_display_title?).to be_true
+      expect(page.should_display_title?).to be_truthy
       page.title = ""
-      expect(page.should_display_title?).to be_false
+      expect(page.should_display_title?).to be_falsey
     end
   end
 end

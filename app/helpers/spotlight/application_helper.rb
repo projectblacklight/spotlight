@@ -23,7 +23,7 @@ module Spotlight
       end
     end
 
-    def respond_to?(method)
+    def respond_to?(method, *args)
       main_app_url_helper?(method) or super
     end
 

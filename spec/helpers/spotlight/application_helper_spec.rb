@@ -55,16 +55,16 @@ describe Spotlight::ApplicationHelper do
       it "should return false if we are on the items admin screen" do
         helper.stub(:"can?").with(:curate, current_exhibit).and_return(true)
         helper.stub(:params).and_return({controller: "spotlight_catalog_controller", action: "admin"})
-        expect(helper.render_save_this_search?).to be_false
+        expect(helper.render_save_this_search?).to be_falsey
       end
       it "should return true if we are on the items admin screen" do
         helper.stub(:"can?").with(:curate, current_exhibit).and_return(true)
         helper.stub(:params).and_return({controller: "catalog_controller", action: "index"})
-        expect(helper.render_save_this_search?).to be_true
+        expect(helper.render_save_this_search?).to be_truthy
       end
       it "should return false if a user cannot curate the object" do
         helper.stub(:"can?").with(:curate, current_exhibit).and_return(false)
-        expect(helper.render_save_this_search?).to be_false
+        expect(helper.render_save_this_search?).to be_falsey
       end
     end
     describe "render_save_search" do

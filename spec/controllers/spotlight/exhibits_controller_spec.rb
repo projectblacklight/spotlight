@@ -153,7 +153,7 @@ describe Spotlight::ExhibitsController do
     describe "#destroy" do
       it "should be successful" do
         delete :destroy, id: exhibit
-        expect(Spotlight::Exhibit.exists?(exhibit.id)).to be_false
+        expect(Spotlight::Exhibit.exists?(exhibit.id)).to be_falsey
         expect(flash[:notice]).to eq "The exhibit was deleted."
         expect(response).to redirect_to main_app.root_path
       end
