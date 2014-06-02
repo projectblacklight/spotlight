@@ -1,4 +1,4 @@
-<%= bootstrap_form_for @contact, url: @contact.new_record? ? exhibit_contacts_path(@exhibit) : [@exhibit, @contact], style: :horizontal, html: {class: 'col-md-9' } do |f| %>
+<%= bootstrap_form_for @contact, url: @contact.new_record? ? exhibit_contacts_path(@exhibit) : [@exhibit, @contact], layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10', html: {class: 'col-md-9' } do |f| %>
   <%= f.text_field :name, placeholder: t(:'.name.placeholder') %>
   <%= f.text_field :email, placeholder: t(:'.email.placeholder') %>
   <%= f.text_field :title, placeholder: t(:'.title.placeholder') %>

@@ -1,5 +1,5 @@
 <%= curation_page_title t(:"spotlight.pages.index.#{page_collection_name}.header") %>
-<%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, page_collection_name]), style: :horizontal, right: "col-sm-10", html: {:'data-form-observer' => true} do |f| %>
+<%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, page_collection_name]), layout: :horizontal, control_col: 'col-sm-10', html: {:'data-form-observer' => true} do |f| %>
 
     <%= render partial: 'header', locals: {f: f} %>
     <h3><%= t :'.pages_header' %></h3>
@@ -31,4 +31,3 @@
     </a>
   <%- end -%>
 </div>
-

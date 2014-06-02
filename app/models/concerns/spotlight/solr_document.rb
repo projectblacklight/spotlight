@@ -28,6 +28,20 @@ module Spotlight
       rescue Blacklight::Exceptions::InvalidSolrID
         # no-op
       end
+      
+      # needed for Rails 4.1 + act_as_taggable
+      def dangerous_attribute_method? *args
+        false
+      end
+      
+      # needed for Rails 4.1 + act_as_taggable
+      def generated_association_methods
+        @generated_association_methods ||= begin
+          mod = const_set(:GeneratedAssociationMethods, Module.new)
+          include mod
+          mod
+        end
+      end
     end
 
     def update current_exhibit, new_attributes

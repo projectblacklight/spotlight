@@ -7,7 +7,7 @@
     <%= t :'.no_saved_searches' %>
   <% else %>
       <p class="instructions"><%= t(:'.instructions') %></p>
-  <%= bootstrap_form_for @exhibit, url: update_all_exhibit_searches_path(@exhibit), style: :horizontal, right: "col-sm-10" do |f| %>
+  <%= bootstrap_form_for @exhibit, url: update_all_exhibit_searches_path(@exhibit), layout: :horizontal, control_col: 'col-sm-10' do |f| %>
 
     <div class="panel-group dd search_admin" id="nested-pages">
       <ol class="dd-list">

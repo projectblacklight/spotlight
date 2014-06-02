@@ -15,14 +15,14 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.0.1"
+  s.add_dependency "rails", "~> 4.0", ">= 4.0.1"
   s.add_dependency "blacklight", ">= 5.4.0.rc1", "<6"
   s.add_dependency "blacklight-gallery"
   s.add_dependency "cancancan"
   s.add_dependency "sir-trevor-rails"
   s.add_dependency "carrierwave"
   s.add_dependency "mini_magick"
-  s.add_dependency "bootstrap_form", "~> 2.0.1"
+  s.add_dependency "bootstrap_form", "~> 2.1.0"
   s.add_dependency "mail_form"
   s.add_dependency "acts-as-taggable-on", "3.1.0"
   s.add_dependency "friendly_id"

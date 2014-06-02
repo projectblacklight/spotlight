@@ -2,7 +2,7 @@
 <div id="content" class="col-md-9">
   <%= administration_page_title %>
 
-<%= bootstrap_form_for @appearance, url: spotlight.exhibit_appearance_path(@exhibit), style: :horizontal, left: 'col-md-3', right: 'col-sm-5' do |f| %>
+<%= bootstrap_form_for @appearance, url: spotlight.exhibit_appearance_path(@exhibit), layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5' do |f| %>
   <%= field_set_tag do %>
     <h3><%= t(:'.main_navigation.menu') %></h3>
     <p class="instructions"><%= t(:'.main_navigation.help') %></p>

@@ -1,5 +1,5 @@
 <h3><%= t('spotlight.resources.csv.header') %></h3>
-<%= bootstrap_form_for [@resource.exhibit, @resource.becomes(Spotlight::Resources::Csv)], style: :horizontal, right: 'col-sm-5 col-md-5', :html => {:multipart => true }  do |f| %>
+<%= bootstrap_form_for [@resource.exhibit, @resource.becomes(Spotlight::Resources::Csv)], layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5 col-md-5', :html => {:multipart => true }  do |f| %>
 
   <div class="form-group">
   <%= f.file_field :url, help: link_to(t('.template'), [:template, @resource.exhibit, @resource.becomes(Spotlight::Resources::Csv)]) %>

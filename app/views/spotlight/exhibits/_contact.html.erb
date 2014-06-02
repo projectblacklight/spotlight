@@ -4,7 +4,7 @@
             <% if contact.index == 0 %>
               <div class="input-group">
                 <%= text_field_tag "#{contact.object_name}[email]", contact.object.email, class: 'exhibit-contact form-control' %>
-                <span id='another-email' class="input-group-addon">+</span>
+                <span id='another-email' class="input-group-addon first-row-only">+</span>
               </div>
             <% else %>
               <%= text_field_tag "#{contact.object_name}[email]", contact.object.email, class: 'exhibit-contact form-control' %>
@@ -15,4 +15,3 @@
           </div>
           <%= render partial: 'confirmation_status', locals: {contact_email: contact.object} unless contact.object.new_record? %>
         </div>
-
