@@ -13,6 +13,7 @@ describe "Add a contact to an exhibit" do
       fill_in "Email", with: "marcus@rome.gov"
       fill_in "Title", with: "Emperor"
       fill_in "Location", with: "Rome"
+      fill_in "Telephone", with: "(555) 555-5555 ext. 12345 (mobile)"
 
       click_button "Save"
     end
@@ -34,6 +35,10 @@ describe "Add a contact to an exhibit" do
 
     within "#sidebar .contacts" do
       expect(page).to have_selector ".name", text: "Marcus Aurelius"
+      expect(page).to have_selector "[itemprop=email]", text: "marcus@rome.gov"
+      expect(page).to have_selector "[itemprop=jobTitle]", text: "Emperor"
+      expect(page).to have_selector "[itemprop=workLocation]", text: "Rome"
+      expect(page).to have_selector "[itemprop=telephone]", text: "(555) 555-5555 ext. 12345 (mobile)"
     end
     
   end
