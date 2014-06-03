@@ -15,6 +15,7 @@ module Spotlight
     end
 
     def friendly_id
+      gem "friendly_id"
       generate "friendly_id"
     end
 
@@ -47,6 +48,7 @@ module Spotlight
     end
 
     def generate_social_share_button_initializer
+      gem 'social-share-button'
       directory 'config'
     end
   end
