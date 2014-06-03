@@ -6,6 +6,7 @@ class CreateContacts < ActiveRecord::Migration
       t.string     :email
       t.string     :title
       t.string     :location
+      t.string     :telephone
       t.boolean    :show_in_sidebar
       t.integer    :weight, default: 50
       t.references :exhibit

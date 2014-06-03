@@ -1,5 +1,16 @@
-          <div itemprop="name" class="name"><%= contact.name %></div>
-          <div itemprop="jobTitle"><%= contact.title %></div>
-          <div itemprop="workLocation"><%= contact.location %></div>
-          <div><%= mail_to contact.email, contact.email, itemprop: "email" %></div>
+<div itemprop="name" class="name"><%= contact.name %></div>
+<% if contact.title.present? %>
+  <div itemprop="jobTitle"><%= contact.title %></div>
+<% end %>
 
+<% if contact.location.present? %>
+  <div itemprop="workLocation"><%= contact.location %></div>
+<% end %>
+
+<% if contact.email.present? %>
+  <div><%= mail_to contact.email, contact.email, itemprop: "email" %></div>
+<% end %>
+
+<% if contact.telephone.present? %>
+  <div itemprop="telephone"><%= contact.telephone %></div>
+<% end %>

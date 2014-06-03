@@ -43,7 +43,7 @@ module Spotlight
     end
 
     def contact_params
-      params.require(:contact).permit(:name, :email, :location, :title)
+      params.require(:contact).permit(:name, :email, :location, :title, :telephone)
     end
   end
 end
