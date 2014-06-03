@@ -34,7 +34,8 @@ Spotlight.onLoad(function(){
         serializeObservedForms(observedForms());
       },
       blockTypeLimits: {
-        "SearchResults": 1
+        "SearchResults": 1,
+        "Tweet": -1
       }
     });
 
@@ -49,7 +50,11 @@ Spotlight.onLoad(function(){
 
       $.each(editor.blockTypes, function(type) {
         var control = editor.$outer.find(".st-block-control[data-type='" + _.underscored(type) + "']");
-        control.toggleClass("disabled", !editor._canAddBlockType(type));
+        if (editor._getBlockTypeLimit(type) < 0) {
+          control.remove();
+        } else {
+          control.toggleClass("disabled", !editor._canAddBlockType(type));
+        }
       });
     }
 
