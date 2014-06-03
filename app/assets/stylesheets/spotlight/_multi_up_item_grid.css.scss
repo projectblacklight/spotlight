@@ -1,15 +1,15 @@
 .item-grid-admin {
   .field {
     input[type='text'] {
-      margin-bottom: 10px;
       width: 89%;
     }
-    .twitter-typeahead {
-      display: inline !important;
+
+    .twitter-typeahead {  
+      margin-bottom: 2*$padding-base-vertical;
     }
   }
   .field-select {
-    margin-top: 15px;
+    margin-top: 2*$padding-base-vertical;
     select {
       display: inline;
       width: auto;
