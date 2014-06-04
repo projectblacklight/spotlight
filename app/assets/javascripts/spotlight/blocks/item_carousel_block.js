@@ -9,6 +9,6 @@ SirTrevor.Blocks.ItemCarousel =  (function(){
 
     icon_name: "item-carousel",
 
-    description: "This widget displays one to five thumbnail images of repository items in a carousel. Optionally, you can a caption below each image.."
+    description: "This widget displays one to five thumbnail images of repository items in a carousel. You can configure the captions that appear below each carousel image and how the images are cycled."
   });
 })();;

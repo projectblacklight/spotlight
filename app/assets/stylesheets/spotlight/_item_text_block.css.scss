@@ -6,7 +6,7 @@
 .item-text {
   .image-block {
     max-width: 30%;
-    
+
     .thumbnail {
       margin-bottom: 5;
     }
@@ -30,11 +30,20 @@
 .st-block input[type="text"] {
     @extend .form-control;
 }
-.primary-caption, .secondary-caption {
+.primary-caption, .secondary-caption, .auto-cyle-images {
   select {
     margin-left: 10px;
   }
 }
+
+.max-heights {
+  label.carousel-size {
+    margin-left: 5px;
+    padding-right: 10px;
+    font-weight: normal;
+  }
+}
+
 .item-text-admin {
   .text-align {
     margin-top: 15px;
@@ -53,6 +62,6 @@
       @include record-thubmnail-textarea;
     }
     @include record-thubmnail-textarea;
-    
+
   }
 }
