@@ -1,46 +1,27 @@
 module Spotlight
   module SolrDocument
     extend ActiveSupport::Concern
+    
+    include Spotlight::SolrDocument::ActiveModelConcern
+    include Spotlight::SolrDocument::Finder
+    
     included do
-      include ArLight
       extend ActsAsTaggableOn::Compatibility
       extend ActsAsTaggableOn::Taggable
       include Blacklight::SolrHelper
-      extend Finder
 
       acts_as_taggable
       has_many :sidecars, class_name: 'Spotlight::SolrDocumentSidecar'
+      
+      before_save :save_owned_tags
+      after_save :reindex
     end
-
-    module ClassMethods
-
-      # stub this out for acts_as_taggable_on
-      def after_save *args
-        #nop
-      end
-
-      def primary_key
-        :id
-      end
-
+    
+    module ClassMethods  
       def reindex(id)
         find(id).reindex
       rescue Blacklight::Exceptions::InvalidSolrID
         # no-op
-      end
-      
-      # needed for Rails 4.1 + act_as_taggable
-      def dangerous_attribute_method? *args
-        false
-      end
-      
-      # needed for Rails 4.1 + act_as_taggable
-      def generated_association_methods
-        @generated_association_methods ||= begin
-          mod = const_set(:GeneratedAssociationMethods, Module.new)
-          include mod
-          mod
-        end
       end
     end
 
@@ -59,27 +40,6 @@ module Spotlight
 
     def reindex
       # no-op reindex implementation
-    end
-
-    def save
-      save_owned_tags
-      reindex
-    end
-
-    def to_key
-      [id]
-    end
-
-    def persisted?
-      true
-    end
-
-    def destroyed?
-      false
-    end
-
-    def new_record?
-      !persisted?
     end
 
     def sidecar exhibit
