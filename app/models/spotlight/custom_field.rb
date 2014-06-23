@@ -33,9 +33,8 @@ module Spotlight
     end
 
     protected
-    SUFFIX = '_tesim'.freeze
     def self.with_suffix(field)
-      field.to_s + SUFFIX
+      field.to_s + Spotlight::Engine.config.solr_fields.text_suffix
     end
 
     def field_name
