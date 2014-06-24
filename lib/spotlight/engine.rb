@@ -34,9 +34,19 @@ module Spotlight
     end
 
     Spotlight::Engine.config.resource_providers = []
+    
+    # Suffixes for exhibit-specific solr fields
+    Spotlight::Engine.config.solr_fields = OpenStruct.new
+    Spotlight::Engine.config.solr_fields.boolean_suffix = "_bsi".freeze
+    Spotlight::Engine.config.solr_fields.string_suffix = "_ssim".freeze
+    Spotlight::Engine.config.solr_fields.text_suffix = "_tesim".freeze
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
+    
+    # Query parameters for autocomplete requests
     Blacklight::Configuration.default_values[:default_autocomplete_solr_params] = {fl: '*', qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng'}
+    
+    # Field containing the last modified date for a Solr document
     Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
     
     # make blacklight configuration play nice with bootstrap_form
