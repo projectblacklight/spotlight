@@ -165,6 +165,10 @@ en:
     catalog:
       breadcrumb:
         index: 'Search Results'
+      facets:
+        exhibit_visibility:
+          label: "Item Visibility"
+          private: "Private"
       fields:
         title: "Title"
         date_added: "Date Added"
