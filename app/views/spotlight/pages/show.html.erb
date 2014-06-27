@@ -1,4 +1,4 @@
-<% set_html_page_title @page.title if @page.title.present? %>
+<% set_html_page_title @page.title if @page.should_display_title? %>
 
 <%= cache_unless current_user, @page do %>
 <%= render 'sidebar' if @page.display_sidebar? %>
