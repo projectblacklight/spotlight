@@ -42,4 +42,30 @@ namespace :spotlight do
     end
     password
   end
+
+  namespace :check do
+    desc "Check the Solr connection and controller configuration"
+    task :solr, [:model_name] => ['blacklight:check:solr', :environment] do |_, args|
+      errors = 0
+      verbose = ENV.fetch('VERBOSE', false).present?
+
+      puts "[#{Blacklight.solr.uri}]"
+
+      print " - atomic updates:"
+      begin
+        id = 'test123'
+        field = "test_#{Spotlight::Engine.config.solr_fields.string_suffix}"
+        Blacklight.solr.add id: id, field => 'some-string'
+        Blacklight.solr.update data: [{id: id, field => { set: 'a-new-string' }}].to_json, headers: { 'Content-Type' => 'application/json' }
+        Blacklight.solr.delete_by_id id
+        print " OK\n"
+      rescue Exception => e
+        errors += 1
+        puts e.to_s
+      end
+
+      exit 1 if errors > 0
+    end
+end
+
 end
