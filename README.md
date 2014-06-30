@@ -63,6 +63,22 @@ Create an administrator
 $ rake spotlight:initialize
 ```
 
+## Configuration
+
+### Blacklight configuration
+
+Spotlight uses your application's Blacklight configuration to provide default values for an exhibit. The Blacklight configuration options are documented on the [Blacklight wiki](https://github.com/projectblacklight/blacklight/wiki#blacklight-configuration).
+
+### Default ActionMailer configuration
+
+Spotlight introduces functionality that depends on being able to send emails to exhibit curators and contacts. Be sure to configure your application's environments appropriately (See the Rails Guide for [Action Mailer Configuration](http://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration) ).
+
+### Solr Indexing
+
+Spotlight needs the ability to write exhibit-specific content to your Solr index. The default indexing strategy uses [Atomic Updates](https://cwiki.apache.org/confluence/display/solr/Updating+Parts+of+Documents), introduced in Solr 4.x. Note the [caveats, limitations and required configuration](https://wiki.apache.org/solr/Atomic_Updates#Caveats_and_Limitations) necessary to use this feature. The rake task `spotlight:check:solr` will test if your Solr configuration is suitable for Atomic Updates.
+
+If you are unable to use the Atomic Update strategy, your `SolrDocument` class must implement a `#reindex` method that can update the document in Solr with the exhibit-specific data provided by `#to_solr`.
+
 ## To set up your development environment
 
 **Note:** rake commands MAY need to be prefixed with `bundle exec`, depending on your environment.
@@ -79,4 +95,3 @@ $ rake spotlight:initialize
  5. Run `$ rake spotlight:initialize` and answer prompts
  6. Start the dev server `rails s`
  7. Visit [http://localhost:3000](http://localhost:3000) and sign in.
-
