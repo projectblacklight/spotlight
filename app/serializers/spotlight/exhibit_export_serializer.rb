@@ -30,7 +30,7 @@ module Spotlight
 
     def filter  keys
       keys = super
-      keys = keys - [:slug, :name]
+      keys = keys - [:slug, :name, :default]
     end
 
     def feature_pages
