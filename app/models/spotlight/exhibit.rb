@@ -47,6 +47,12 @@ class Spotlight::Exhibit < ActiveRecord::Base
   after_create :initialize_main_navigation
   before_save :sanitize_description
 
+  after_destroy do
+    # Touch the default exhibit to ensure caching knows that
+    # the exhibits have changed.
+    Spotlight::Exhibit.default.touch
+  end
+
   validate :title, presence: true
   acts_as_tagger
 
