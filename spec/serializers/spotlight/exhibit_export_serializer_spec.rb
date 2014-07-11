@@ -9,6 +9,7 @@ describe Spotlight::ExhibitExportSerializer do
     expect(subject).to_not have_key 'id'
     expect(subject).to_not have_key 'slug'
     expect(subject).to_not have_key 'name'
+    expect(subject).to_not have_key 'default'
   end
 
   it "should have search attributes" do
