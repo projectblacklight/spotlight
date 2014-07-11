@@ -1,3 +1,4 @@
+<% cache_unless current_user, @page do %>
 <div id="sidebar" class="col-md-3" role="complementary">
   <ol class="nav sidenav">
     <% @exhibit.feature_pages.published.at_top_level.each do |feature_section| %>
@@ -12,3 +13,4 @@
     <% end %>
   </ol>
 </div>
+<% end %>

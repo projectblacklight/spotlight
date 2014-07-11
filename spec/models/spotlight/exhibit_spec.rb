@@ -92,4 +92,14 @@ describe Spotlight::Exhibit do
     end
   end
 
+  describe "#destroy" do
+    subject { FactoryGirl.create(:exhibit) }
+    let(:default_exhibit) { double }
+    it "should touch the default exhibit when it is destroyed" do
+      Spotlight::Exhibit.stub(default: default_exhibit)
+      expect(default_exhibit).to receive(:touch)
+      subject.destroy
+    end
+  end
+
 end
