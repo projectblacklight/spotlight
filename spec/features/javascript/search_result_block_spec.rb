@@ -38,7 +38,7 @@ describe "Search Results Block", type: :feature, js: true do
 
     click_button "Save changes"
 
-    expect(page).to have_content("The feature page was successfully updated.", visible: true)
+    expect(page).to have_content("The feature page was successfully updated.")
 
     # The two configured view types should be
     # present and the one not selected should not be

@@ -24,7 +24,7 @@ feature "Search contexts" do
     # create the page
     click_button("Save changes")
     # verify that the page was created
-    expect(page).to have_content("The home page was successfully updated", visible: true)
+    expect(page).to have_content("The home page was successfully updated")
     # verify that the item + image widget is displaying an image from the document.
     within(:css, ".item-text") do
       expect(page).to have_css(".thumbnail")
@@ -51,7 +51,7 @@ feature "Search contexts" do
 
     expect(page).to have_css("h3", text: "My New Feature Page")
 
-    expect(page).to have_content("The feature page was created.", visible: true)
+    expect(page).to have_content("The feature page was created.")
     within("li.dd-item") do
       click_link "Edit"
     end
@@ -69,7 +69,7 @@ feature "Search contexts" do
     # create the page
     click_button("Save changes")
     # verify that the page was created
-    expect(page).to have_content("The feature page was successfully updated.", visible: true)
+    expect(page).to have_content("The feature page was successfully updated.")
     # verify that the item + image widget is displaying an image from the document.
     within(:css, ".item-text") do
       expect(page).to have_css(".thumbnail")
