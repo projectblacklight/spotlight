@@ -5,7 +5,7 @@ FactoryGirl.define do
     published  true
   end
   factory :feature_subpage, parent: :feature_page do
-    ignore do
+    transient do
       exhibit
     end
     title "SubPage1"

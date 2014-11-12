@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    ignore do
+    transient do
       exhibit { FactoryGirl.create(:exhibit) }
     end
     sequence(:email) { |n| "user#{n}@example.com" }
