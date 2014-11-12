@@ -53,6 +53,35 @@ namespace :spotlight do
       abort "Error running fixtures" unless $?.success?
     end
   end
+
+  task :server do
+    if File.exists? 'spec/internal'
+      within_test_app do
+        system "bundle update"
+      end
+    else
+      Rake::Task['engine_cart:generate'].invoke
+    end
+
+    unless File.exists? 'jetty'
+      Rake::Task['jetty:clean'].invoke
+      Rake::Task['spotlight:configure_jetty'].invoke
+    end
+
+    jetty_params = Jettywrapper.load_config
+    jetty_params[:startup_wait]= 60
+
+    Jettywrapper.wrap(jetty_params) do
+      within_test_app do
+        unless File.exists? '.initialized'
+          system "bundle exec rake spotlight:initialize"
+          system "bundle exec rake spotlight_test:solr:seed"
+          File.open('.initialized', "w") {}
+        end
+        system "bundle exec rails s"
+      end
+    end
+  end
 end
 
 task default: :ci
