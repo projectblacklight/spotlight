@@ -16,6 +16,6 @@ describe "Confirming an email" do
 
   it "should confirm email" do
     visit spotlight.contact_email_confirmation_url(:confirmation_token => raw_token)
-    expect(page).to have_content("Your account was successfully confirmed.")
+    expect(page).to have_content("successfully confirmed")
   end
 end
