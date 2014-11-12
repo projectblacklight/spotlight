@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe "spotlight/browse/_sort_and_per_page" do
+describe "spotlight/browse/_sort_and_per_page", :type => :view do
 
   let :blacklight_config do
     Blacklight::Configuration.new
   end
 
   before do
-    view.stub(blacklight_config: blacklight_config)
+    allow(view).to receive_messages(blacklight_config: blacklight_config)
   end
 
   it "should render the pagination, sort, per page and view type controls" do

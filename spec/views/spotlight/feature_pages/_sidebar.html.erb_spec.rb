@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "spotlight/feature_pages/_sidebar.html.erb" do
+describe "spotlight/feature_pages/_sidebar.html.erb", :type => :view do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:parent1) { FactoryGirl.create(:feature_page, exhibit: exhibit, title: "Parent Page") }
   let!(:parent2) { FactoryGirl.create(:feature_page, exhibit: exhibit, title: "Two") }
@@ -11,14 +11,14 @@ describe "spotlight/feature_pages/_sidebar.html.erb" do
   let!(:child5) { FactoryGirl.create(:feature_page, exhibit: FactoryGirl.create(:exhibit), title: "Seven") }
   
   before do
-    view.stub(current_exhibit: parent1.exhibit)
-    view.stub(feature_page_path: '/feature/9')
+    allow(view).to receive_messages(current_exhibit: parent1.exhibit)
+    allow(view).to receive_messages(feature_page_path: '/feature/9')
     assign(:exhibit, parent1.exhibit)
   end
 
   it "renders a list of pages for a parent page" do
     assign(:page, parent1)
-    view.stub(:current_page?).and_return(true, false)
+    allow(view).to receive(:current_page?).and_return(true, false)
     render
     # Checking that they are sorted accoding to weight
     expect(rendered).to have_selector "li.active h4", text: "Parent Page"

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::Appearance do
+describe Spotlight::Appearance, :type => :model do
   let(:config) { FactoryGirl.create(:exhibit).blacklight_configuration }
   subject { Spotlight::Appearance.new config }
 

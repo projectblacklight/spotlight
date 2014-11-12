@@ -9,7 +9,7 @@ describe Spotlight::Controller do
 
   describe "#current_exhibit" do
     it "should be nil by default" do
-      subject.current_exhibit.should be_nil
+      expect(subject.current_exhibit).to be_nil
     end
   end
 end

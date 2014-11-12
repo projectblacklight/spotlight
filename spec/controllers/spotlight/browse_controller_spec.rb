@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe Spotlight::BrowseController do
+describe Spotlight::BrowseController, :type => :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:search) { FactoryGirl.create(:published_search, exhibit: exhibit) }
   let!(:unpublished) { FactoryGirl.create(:search, exhibit: exhibit) }
   let(:admin) { FactoryGirl.create(:site_admin) }
 
-  it { should be_a Spotlight::Catalog::AccessControlsEnforcement }
+  it { is_expected.to be_a Spotlight::Catalog::AccessControlsEnforcement }
 
   describe "when authenticated as an admin" do
     before { sign_in admin }
@@ -43,7 +43,7 @@ describe Spotlight::BrowseController do
       let(:mock_response) { double }
       let(:document_list) { double }
       before do
-        controller.stub(get_search_results: [mock_response, document_list])
+        allow(controller).to receive_messages(get_search_results: [mock_response, document_list])
       end
       it "should show the items in the category" do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)

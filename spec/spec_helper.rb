@@ -10,7 +10,7 @@ require 'rspec/collection_matchers'
 require 'rspec/its'
 require 'rspec/rails'
 require 'rspec/active_model/mocks'
-require 'rspec/autorun'
+
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 Capybara.default_wait_time = 5

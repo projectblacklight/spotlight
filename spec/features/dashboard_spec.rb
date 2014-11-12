@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Dashboard" do
+describe "Dashboard", :type => :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
   before do

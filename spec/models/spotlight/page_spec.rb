@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::Page do
+describe Spotlight::Page, :type => :model do
 
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:parent_page) {  Spotlight::FeaturePage.create! exhibit: exhibit, published: true }

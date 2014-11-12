@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Mutli-Up Item Grid", js: true do
+describe "Mutli-Up Item Grid", type: :feature, js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   let!(:feature_page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }

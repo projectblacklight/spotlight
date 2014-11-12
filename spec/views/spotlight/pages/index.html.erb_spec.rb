@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "spotlight/pages/index.html.erb" do
+describe "spotlight/pages/index.html.erb", :type => :view do
   let(:pages) {[
       stub_model(Spotlight::FeaturePage,
         :title => "Title1",
@@ -15,16 +15,16 @@ describe "spotlight/pages/index.html.erb" do
     ]}
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   before do
-    view.stub(:page_collection_name).and_return(:feature_pages)
-    view.stub(:update_all_exhibit_feature_pages_path).and_return("/exhibit/features/update_all")
+    allow(view).to receive(:page_collection_name).and_return(:feature_pages)
+    allow(view).to receive(:update_all_exhibit_feature_pages_path).and_return("/exhibit/features/update_all")
     assign(:page, Spotlight::FeaturePage.new)
     assign(:exhibit, exhibit)
-    view.stub(:current_exhibit).and_return(exhibit)
+    allow(view).to receive(:current_exhibit).and_return(exhibit)
   end
 
   it "renders a list of pages" do
     assign(:pages, pages)
-    exhibit.stub(:feature_pages).and_return pages
+    allow(exhibit).to receive(:feature_pages).and_return pages
     render
     expect(rendered).to have_selector '.panel-title', text: 'Title1'
     expect(rendered).to have_selector '.panel-title', text: 'Title2'

@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe "spotlight/tags/index.html.erb" do
+describe "spotlight/tags/index.html.erb", :type => :view do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:tag1) { FactoryGirl.create(:tagging, tagger: exhibit) }
   let!(:tag2) { FactoryGirl.create(:tagging, tagger: exhibit) }
   before do
     assign(:exhibit, exhibit)
     assign(:tags, exhibit.owned_tags)
-    view.stub(exhibit_tag_path: "/tags")
-    view.stub(:current_exhibit).and_return(exhibit)
-    view.stub(:url_to_tag_facet) { |*args| args.first }
+    allow(view).to receive_messages(exhibit_tag_path: "/tags")
+    allow(view).to receive(:current_exhibit).and_return(exhibit)
+    allow(view).to receive(:url_to_tag_facet) { |*args| args.first }
   end
   describe "Tags" do
     it "should be displayed" do

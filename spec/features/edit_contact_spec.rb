@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Add a contact to an exhibit" do
+describe "Add a contact to an exhibit", :type => :feature do
   let(:curator) { FactoryGirl.create(:exhibit_curator) }
   let(:exhibit) { curator.roles.first.exhibit }
   let!(:about_page) { FactoryGirl.create(:about_page, exhibit: exhibit) }

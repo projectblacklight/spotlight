@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Spotlight::HomePagesController do
+describe Spotlight::HomePagesController, :type => :controller do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { "title" => "MyString" } }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:page) { exhibit.home_page }
 
-  it { should be_a Spotlight::Catalog::AccessControlsEnforcement }
+  it { is_expected.to be_a Spotlight::Catalog::AccessControlsEnforcement }
 
   describe "when signed in as a curator" do
     let(:user) { FactoryGirl.create(:exhibit_curator) }
@@ -41,14 +41,14 @@ describe Spotlight::HomePagesController do
       it "redirects to the feature page index action" do
         put :update, id: page, exhibit_id: page.exhibit.id, home_page: valid_attributes
         page.reload
-        response.should redirect_to(exhibit_home_page_path(page.exhibit, page))
+        expect(response).to redirect_to(exhibit_home_page_path(page.exhibit, page))
       end
     end
   end
 
   describe "Rendering home page" do
     it "should get search results for display facets" do
-      controller.stub(get_search_results: [double, double])
+      allow(controller).to receive_messages(get_search_results: [double, double])
       get :show, exhibit_id: exhibit
       expect(assigns[:response]).to_not be_blank
       expect(assigns[:document_list]).to_not be_blank
@@ -56,7 +56,7 @@ describe Spotlight::HomePagesController do
     end
     it "should not render breadcrumbs" do
       expect(controller).not_to receive(:add_breadcrumb)
-      controller.stub(get_search_results: [double, double])
+      allow(controller).to receive_messages(get_search_results: [double, double])
       get :show, exhibit_id: exhibit
       expect(response).to be_successful
     end

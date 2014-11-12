@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe "spotlight/searches/_search.html.erb" do
+describe "spotlight/searches/_search.html.erb", :type => :view do
   
   let(:search) { stub_model(Spotlight::Search, exhibit: FactoryGirl.create(:exhibit),
         id: 99, title: "Title1", short_description: "MyText") }
   before do
-    view.stub(:edit_search_path).and_return("/edit")
-    view.stub(:search_path).and_return("/search")
-    search.stub(:featured_item_id).and_return("dq287tq6352")
-    search.stub(:params).and_return({})
+    allow(view).to receive(:edit_search_path).and_return("/edit")
+    allow(view).to receive(:search_path).and_return("/search")
+    allow(search).to receive(:featured_item_id).and_return("dq287tq6352")
+    allow(search).to receive(:params).and_return({})
 
     form_for(search, url: '/update') do |f|
       @f = f

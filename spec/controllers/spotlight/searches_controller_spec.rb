@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::SearchesController do
+describe Spotlight::SearchesController, :type => :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
@@ -100,7 +100,7 @@ describe Spotlight::SearchesController do
       end
 
       it "should render edit if there's an error" do
-        Spotlight::Search.any_instance.should_receive(:update).and_return(false)
+        expect_any_instance_of(Spotlight::Search).to receive(:update).and_return(false)
         patch :update, id: search, exhibit_id: search.exhibit, search: {title: 'Hey man', short_description: 'short', long_description: 'long', featured_image: 'http://lorempixel.com/64/64/'}
         expect(response).to be_successful 
         expect(response).to render_template 'edit'

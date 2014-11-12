@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "adding an item using the provided bookmarklet" do
+describe "adding an item using the provided bookmarklet", :type => :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   let(:search) { exhibit.searches.first }
@@ -19,7 +19,7 @@ describe "adding an item using the provided bookmarklet" do
   end
 
   it "should submit the form to create a new item" do
-    Spotlight::Resource.any_instance.stub(:reindex)
+    allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
     visit spotlight.new_exhibit_resource_path(exhibit, popup: true, resource: { url: "info:url" })
     expect(page).to have_content "Add Resource"
     expect(first('#resource_url', visible: false).value).to eq 'info:url'

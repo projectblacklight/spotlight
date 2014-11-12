@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'tempfile'
 
-describe "Allow exhibit admins to import and export content from an exhibit" do
+describe "Allow exhibit admins to import and export content from an exhibit", :type => :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as user }

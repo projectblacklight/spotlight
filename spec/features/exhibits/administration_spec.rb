@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Exhibit Administration" do
+describe "Exhibit Administration", :type => :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
   let(:email_id_0) { "exhibit_contact_emails_attributes_0_email" }

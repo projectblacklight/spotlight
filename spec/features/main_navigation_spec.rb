@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Main navigation labels are settable" do
+describe "Main navigation labels are settable", :type => :feature do
   let!(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:about) { FactoryGirl.create(:about_page, exhibit: exhibit, published: true) }
   before do

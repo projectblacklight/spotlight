@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Spotlight::SolrDocumentSidecar do
+describe Spotlight::SolrDocumentSidecar, :type => :model do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   before do
-    subject.stub exhibit: exhibit
-    subject.stub solr_document_id: 'doc_id'
+    allow(subject).to receive_messages exhibit: exhibit
+    allow(subject).to receive_messages solr_document_id: 'doc_id'
   end
 
   describe "#to_solr" do

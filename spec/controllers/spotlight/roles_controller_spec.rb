@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::RolesController do
+describe Spotlight::RolesController, :type => :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) {FactoryGirl.create(:exhibit) }
 
@@ -35,7 +35,7 @@ describe Spotlight::RolesController do
       end
 
       it "should authorize records" do
-        controller.stub(:authorize!).and_raise(CanCan::AccessDenied)
+        allow(controller).to receive(:authorize!).and_raise(CanCan::AccessDenied)
         patch :update_all, exhibit_id: exhibit, "exhibit"=>{"roles_attributes"=>{"0"=>{"user_key"=>"cbeer@cbeer.info", "role"=>"curator", "id"=>role.id}}}
         expect(response).to redirect_to main_app.root_path 
         expect(flash[:alert]).to eq 'You are not authorized to access this page.'
@@ -50,7 +50,7 @@ describe Spotlight::RolesController do
       end
 
       it "should handle failure" do
-        Spotlight::Exhibit.any_instance.stub(update: false)
+        allow_any_instance_of(Spotlight::Exhibit).to receive_messages(update: false)
         patch :update_all, exhibit_id: exhibit, "exhibit"=>{"roles_attributes"=>{"0"=>{"user_key"=>"cbeer@cbeer.info", "role"=>"curator", "id"=>role.id}}}
         expect(response).to be_successful
         expect(flash[:alert]).to eq 'There was a problem saving the users.'

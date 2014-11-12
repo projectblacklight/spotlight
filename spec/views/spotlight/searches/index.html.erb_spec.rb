@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe "spotlight/searches/index.html.erb" do
+describe "spotlight/searches/index.html.erb", :type => :view do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
 
   before do
-    view.stub(update_all_exhibit_searches_path: "/")
-    view.stub(:current_exhibit).and_return(exhibit)
+    allow(view).to receive_messages(update_all_exhibit_searches_path: "/")
+    allow(view).to receive(:current_exhibit).and_return(exhibit)
     assign(:exhibit, exhibit)
   end
 

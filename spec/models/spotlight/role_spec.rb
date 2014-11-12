@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::Role do
+describe Spotlight::Role, :type => :model do
   describe "validations" do
     subject { Spotlight::Role.new(args) }
     describe "with nothing" do

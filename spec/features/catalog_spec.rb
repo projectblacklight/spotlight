@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Catalog" do
+describe "Catalog", :type => :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as curator }

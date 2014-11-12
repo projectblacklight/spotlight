@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe SolrDocument do
+describe SolrDocument, :type => :model do
   subject { ::SolrDocument.new(id: 'abcd123') }
   its(:to_key) {should == ['abcd123']}
   its(:persisted?) {should be_truthy}
   before do
-    subject.stub(reindex: nil)
+    allow(subject).to receive_messages(reindex: nil)
   end
 
   let(:exhibit) { FactoryGirl.create(:exhibit) }
@@ -19,7 +19,7 @@ describe SolrDocument do
     expect {
       exhibit.tag(subject, with: "paris, normandy", on: :tags)
     }.to change { ActsAsTaggableOn::Tag.count}.by(2)
-    subject.tags_from(exhibit).should eq ['paris', 'normandy']
+    expect(subject.tags_from(exhibit)).to eq ['paris', 'normandy']
   end
 
   it "should have find" do
@@ -45,13 +45,13 @@ describe SolrDocument do
   describe "#update" do
     it "should store sidecar data on the sidecar object" do
       mock_sidecar = double
-      subject.stub(sidecar: mock_sidecar)
-      mock_sidecar.should_receive(:update).with(data: { 'a' => 1 })
+      allow(subject).to receive_messages(sidecar: mock_sidecar)
+      expect(mock_sidecar).to receive(:update).with(data: { 'a' => 1 })
       subject.update exhibit, sidecar: { data: { 'a' => 1 }}
     end
     it "should store tags" do
       subject.update exhibit, exhibit_tag_list: "paris, normandy"
-      subject.tags_from(exhibit).should eq ['paris', 'normandy']
+      expect(subject.tags_from(exhibit)).to eq ['paris', 'normandy']
     end
   end
 
@@ -96,13 +96,13 @@ describe SolrDocument do
 
   describe "#make_public!" do
     it "should set the object to public" do
-      subject.stub(:reindex)
+      allow(subject).to receive(:reindex)
       subject.make_public! exhibit
       expect(subject).not_to be_private exhibit
     end
 
     it "should augment existing sidecar data" do
-      subject.stub(:reindex)
+      allow(subject).to receive(:reindex)
 
       subject.update exhibit, sidecar: { data: { a: 1}} 
       subject.make_public! exhibit
@@ -112,7 +112,7 @@ describe SolrDocument do
 
   describe "#make_private!" do
     it "should set the object to private" do
-      subject.stub(:reindex)
+      allow(subject).to receive(:reindex)
       subject.make_private! exhibit
       expect(subject).to be_private exhibit
     end

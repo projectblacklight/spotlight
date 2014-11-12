@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe 'spotlight/browse/show' do
+describe 'spotlight/browse/show', :type => :view do
   let(:search) { FactoryGirl.create(:published_search) }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
   before :each do
-    view.stub(blacklight_config: Blacklight::Configuration.new )
+    allow(view).to receive_messages(blacklight_config: Blacklight::Configuration.new )
     view.blacklight_config.view.gallery = true
-    search.stub(count: 15)
-    view.stub(render_document_index_with_view: "")
+    allow(search).to receive_messages(count: 15)
+    allow(view).to receive_messages(render_document_index_with_view: "")
     stub_template("_results_pagination.html.erb" => "")
     stub_template("_sort_and_per_page.html.erb" => "Sort and Per Page actions")
   end
@@ -20,7 +20,7 @@ describe 'spotlight/browse/show' do
   end
 
   it "should display the image" do
-    search.stub(featured_image: "xyz")
+    allow(search).to receive_messages(featured_image: "xyz")
     render
     expect(response).to have_selector '.media img'
   end
@@ -31,7 +31,7 @@ describe 'spotlight/browse/show' do
   end
 
   it "should have an edit button" do
-    view.stub(can?: true)
+    allow(view).to receive_messages(can?: true)
     render
     expect(response).to have_selector '.btn', text: 'Edit'
   end
@@ -42,7 +42,7 @@ describe 'spotlight/browse/show' do
   end
 
   it "should display the long description" do
-    search.stub(long_description: "Long description")
+    allow(search).to receive_messages(long_description: "Long description")
     render
     expect(response).to have_selector "p", text: search.long_description
   end
@@ -54,7 +54,7 @@ describe 'spotlight/browse/show' do
   end
 
   it "should display the search results" do
-    view.should_receive(:render_document_index_with_view).with(:gallery, anything, anything).and_return "Gallery View"
+    expect(view).to receive(:render_document_index_with_view).with(:gallery, anything, anything).and_return "Gallery View"
     render
     expect(response).to match /Gallery View/
   end

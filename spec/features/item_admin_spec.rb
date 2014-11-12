@@ -1,12 +1,12 @@
 require "spec_helper"
 
-describe "Item Administration" do
+describe "Item Administration", :type => :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as curator }
 
   before do
-    ::SolrDocument.any_instance.stub(reindex: true)
+    allow_any_instance_of(::SolrDocument).to receive_messages(reindex: true)
   end
 
   describe "admin" do

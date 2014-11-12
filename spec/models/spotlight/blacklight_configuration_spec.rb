@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::BlacklightConfiguration do
+describe Spotlight::BlacklightConfiguration, :type => :model do
   subject { Spotlight::BlacklightConfiguration.new }
   let(:blacklight_config) { Blacklight::Configuration.new }
 
@@ -13,7 +13,7 @@ describe Spotlight::BlacklightConfiguration do
       config.add_sort_field 'sort_source_ssi asc', :label => 'Source' 
       config.add_sort_field 'id asc', :label => 'Identifier' 
     end
-    subject.stub default_blacklight_config: blacklight_config
+    allow(subject).to receive_messages default_blacklight_config: blacklight_config
     subject.exhibit = FactoryGirl.create(:exhibit)
   end
 
@@ -107,12 +107,12 @@ describe Spotlight::BlacklightConfiguration do
     context "custom fields" do
       it "should include any custom fields" do
         subject.index_fields['a'] = { enabled: true, list: true }
-        subject.stub(custom_index_fields: { 'a' => double(:if= => true, merge!: true, validate!: true, normalize!: true) })
+        allow(subject).to receive_messages(custom_index_fields: { 'a' => double(:if= => true, merge!: true, validate!: true, normalize!: true) })
         expect(subject.blacklight_config.index_fields).to include('a')
       end
 
       it "should default to showing a custom field on the show view" do
-        subject.stub(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
+        allow(subject).to receive_messages(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
         expect(subject.blacklight_config.index_fields).to include('a')
         expect(subject.blacklight_config.index_fields['a'].show).to be_truthy
         expect(subject.blacklight_config.index_fields['a'].enabled).to be_truthy
@@ -120,7 +120,7 @@ describe Spotlight::BlacklightConfiguration do
 
       it "should use explicit configuration to override custom field defaults" do
         subject.index_fields['a'] = { show: false }
-        subject.stub(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
+        allow(subject).to receive_messages(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
         expect(subject.blacklight_config.index_fields).to include('a')
         expect(subject.blacklight_config.index_fields['a'].show).to be_falsey
       end
@@ -128,7 +128,7 @@ describe Spotlight::BlacklightConfiguration do
 
     it "should prefer the label stored in index fields" do
       subject.index_fields['a'] = { enabled: true, list: true, label: 'updated val' }
-      subject.stub(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(:field => 'a', label: "Initial value") })
+      allow(subject).to receive_messages(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(:field => 'a', label: "Initial value") })
       expect(subject.blacklight_config.index_fields['a'].label).to eq 'updated val'
     end
 
@@ -170,7 +170,7 @@ describe Spotlight::BlacklightConfiguration do
     it "should include any custom fields" do
       subject.index_fields['a'] = { enabled: true, show: true }
 
-      subject.stub(custom_index_fields: { 'a' => double(:if= => true, merge!: true, validate!: true, normalize!: true) })
+      allow(subject).to receive_messages(custom_index_fields: { 'a' => double(:if= => true, merge!: true, validate!: true, normalize!: true) })
 
       expect(subject.blacklight_config.show_fields).to include('a')
     end
@@ -358,7 +358,7 @@ describe Spotlight::BlacklightConfiguration do
 
   describe "#custom_index_fields" do
     it "should convert exhibit-specific fields to Blacklight configurations" do
-      subject.stub(exhibit: double(custom_fields: [
+      allow(subject).to receive_messages(exhibit: double(custom_fields: [
         stub_model(Spotlight::CustomField, field: "abc", configuration: { a: 1}),
         stub_model(Spotlight::CustomField, field: "xyz", configuration: { x: 2})
       ]))

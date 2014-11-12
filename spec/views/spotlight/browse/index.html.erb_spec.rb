@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "spotlight/browse/index" do
+describe "spotlight/browse/index", :type => :view do
   let(:search) { FactoryGirl.create(:search) }
   let(:another_search) { FactoryGirl.create(:search) }
 

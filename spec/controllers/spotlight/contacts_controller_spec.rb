@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::ContactsController do
+describe Spotlight::ContactsController, :type => :controller do
   routes { Spotlight::Engine.routes }
   describe "when not logged in" do
     describe "GET edit" do
@@ -35,7 +35,7 @@ describe Spotlight::ContactsController do
         expect(contact.reload.name).to eq 'Chester'
       end
       it "should fail by rendering edit" do
-        Spotlight::Contact.any_instance.should_receive(:update).and_return(false)
+        expect_any_instance_of(Spotlight::Contact).to receive(:update).and_return(false)
         patch :update, id: contact, contact: {name: 'Chester'}, exhibit_id: contact.exhibit
         expect(response).to render_template 'edit'
       end
@@ -61,7 +61,7 @@ describe Spotlight::ContactsController do
     end
     describe "POST create" do
       it "should fail by rendering new" do
-        Spotlight::Contact.any_instance.should_receive(:update).and_return(false)
+        expect_any_instance_of(Spotlight::Contact).to receive(:update).and_return(false)
         post :create, exhibit_id: exhibit, contact: {name: 'Chester'}
         expect(response).to render_template 'new'
       end

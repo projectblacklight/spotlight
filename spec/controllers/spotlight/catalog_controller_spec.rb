@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Spotlight::CatalogController do
+describe Spotlight::CatalogController, :type => :controller do
   routes { Spotlight::Engine.routes }
   let (:exhibit) { FactoryGirl.create(:exhibit) }
   
-  it { should be_a_kind_of ::CatalogController }
-  it { should be_a_kind_of Spotlight::Concerns::ApplicationController }
+  it { is_expected.to be_a_kind_of ::CatalogController }
+  it { is_expected.to be_a_kind_of Spotlight::Concerns::ApplicationController }
   its(:view_context) { should be_a_kind_of Spotlight::ApplicationHelper }
 
   describe "when the user is not authenticated" do
@@ -35,7 +35,7 @@ describe Spotlight::CatalogController do
       end
 
       it "should show the item with breadcrumbs to the browse page" do
-        controller.stub(current_browse_category: search)
+        allow(controller).to receive_messages(current_browse_category: search)
         
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("Browse", exhibit_browse_index_path(exhibit))
@@ -47,7 +47,7 @@ describe Spotlight::CatalogController do
 
       it "should show the item with breadcrumbs to the feature page" do
         feature_page = FactoryGirl.create(:feature_page, exhibit: exhibit)
-        controller.stub(current_page_context: feature_page)
+        allow(controller).to receive_messages(current_page_context: feature_page)
 
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with(feature_page.title, [exhibit, feature_page])
@@ -58,7 +58,7 @@ describe Spotlight::CatalogController do
 
       it "should show the item with breadcrumbs from the home page" do
         home_page = FactoryGirl.create(:home_page)
-        controller.stub(current_page_context: home_page)
+        allow(controller).to receive_messages(current_page_context: home_page)
 
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
@@ -141,7 +141,7 @@ describe Spotlight::CatalogController do
 
     describe "GET show with private item" do
       it "should not be allowed" do
-        ::SolrDocument.any_instance.stub(:private?).and_return(true)
+        allow_any_instance_of(::SolrDocument).to receive(:private?).and_return(true)
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to eq "You are not authorized to access this page."
@@ -199,12 +199,12 @@ describe Spotlight::CatalogController do
     describe "PUT make_public" do
       before do
         request.env["HTTP_REFERER"] = "where_i_came_from"
-        ::SolrDocument.any_instance.stub(:reindex)
+        allow_any_instance_of(::SolrDocument).to receive(:reindex)
       end
 
       it "should be successful" do
-        ::SolrDocument.any_instance.should_receive(:reindex)
-        ::SolrDocument.any_instance.should_receive(:make_public!).with(exhibit)
+        expect_any_instance_of(::SolrDocument).to receive(:reindex)
+        expect_any_instance_of(::SolrDocument).to receive(:make_public!).with(exhibit)
         put :make_public, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
         expect(response).to redirect_to "where_i_came_from"
       end
@@ -215,12 +215,12 @@ describe Spotlight::CatalogController do
 
       before do
         request.env["HTTP_REFERER"] = "where_i_came_from"
-        ::SolrDocument.any_instance.stub(:reindex)
+        allow_any_instance_of(::SolrDocument).to receive(:reindex)
       end
 
       it "should be successful" do
-        ::SolrDocument.any_instance.should_receive(:reindex)
-        ::SolrDocument.any_instance.should_receive(:make_private!).with(exhibit)
+        expect_any_instance_of(::SolrDocument).to receive(:reindex)
+        expect_any_instance_of(::SolrDocument).to receive(:make_private!).with(exhibit)
         delete :make_private, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
         expect(response).to redirect_to "where_i_came_from"
       end

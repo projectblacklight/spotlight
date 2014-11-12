@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::ResourcesController do
+describe Spotlight::ResourcesController, :type => :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
@@ -48,7 +48,7 @@ describe Spotlight::ResourcesController do
 
     describe "POST create" do
       it "create a resource" do
-        Spotlight::Resource.any_instance.stub(:reindex)
+        allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
         post :create, exhibit_id: exhibit, resource: { url: "info:uri" }
         expect(assigns[:resource]).to be_persisted
       end

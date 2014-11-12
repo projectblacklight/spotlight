@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'sir-trevor/blocks/_item_features_block.html.erb' do
+describe 'sir-trevor/blocks/_item_features_block.html.erb', :type => :view do
   let(:block) do
     double()
   end
@@ -12,11 +12,11 @@ describe 'sir-trevor/blocks/_item_features_block.html.erb' do
   end
 
   before do
-    view.stub(block: block)
-    view.stub(item_grid_block_ids: [1,2,3])
-    view.stub(get_solr_response_for_field_values: [nil, docs])
-    view.stub(multi_up_item_grid_caption: 'caption')
-    view.stub(has_thumbnail?: true, render_thumbnail_tag: 'thumb')
+    allow(view).to receive_messages(block: block)
+    allow(view).to receive_messages(item_grid_block_ids: [1,2,3])
+    allow(view).to receive_messages(get_solr_response_for_field_values: [nil, docs])
+    allow(view).to receive_messages(multi_up_item_grid_caption: 'caption')
+    allow(view).to receive_messages(has_thumbnail?: true, render_thumbnail_tag: 'thumb')
   end
 
   it "should have a slideshow" do

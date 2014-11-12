@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Spotlight::AboutPagesController do
+describe Spotlight::AboutPagesController, :type => :controller do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { "title" => "MyString" } }
 
-  it { should be_a Spotlight::Catalog::AccessControlsEnforcement }
+  it { is_expected.to be_a Spotlight::Catalog::AccessControlsEnforcement }
 
   describe "when not logged in" do
 
@@ -86,7 +86,7 @@ describe Spotlight::AboutPagesController do
     describe "POST create" do
       it "redirects to the about page index" do
         post :create, about_page: {title: "MyString"}, exhibit_id: exhibit 
-        response.should redirect_to(exhibit_about_pages_path(exhibit))
+        expect(response).to redirect_to(exhibit_about_pages_path(exhibit))
       end
     end
     describe "PUT update" do
@@ -94,7 +94,7 @@ describe Spotlight::AboutPagesController do
       it "redirects to the about page" do
         put :update, id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes
         page.reload
-        response.should redirect_to(exhibit_about_page_path(page.exhibit, page))
+        expect(response).to redirect_to(exhibit_about_page_path(page.exhibit, page))
       end
     end
     describe "POST update_all" do
@@ -128,12 +128,12 @@ describe Spotlight::AboutPagesController do
         expect(contact2.reload.weight).to eq 2
       end
       it "should show index on failure" do
-        Spotlight::Exhibit.any_instance.should_receive(:update).and_return(false)
+        expect_any_instance_of(Spotlight::Exhibit).to receive(:update).and_return(false)
         patch :update_contacts, exhibit_id: exhibit, exhibit: {contacts_attributes: [
           {"show_in_sidebar"=>"1", "name"=>"Justin Coyne", "email"=>"jcoyne@justincoyne.com", "title"=>"", "location"=>"US"},
           {"show_in_sidebar"=>"0", "name"=>"", "email"=>"", "title"=>"", "location"=>""},
           {"show_in_sidebar"=>"0", "name"=>"", "email"=>"", "title"=>"Librarian", "location"=>""}]}
-        response.should render_template("index")
+        expect(response).to render_template("index")
       end
     end
   end

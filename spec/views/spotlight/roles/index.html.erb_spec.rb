@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spotlight
-  describe "spotlight/roles/index" do
+  describe "spotlight/roles/index", :type => :view do
     let(:user) { stub_model(::User, email: 'jane@example.com') } 
 
     let(:exhibit) { FactoryGirl.create(:exhibit) }
@@ -9,8 +9,8 @@ module Spotlight
 
     before do
       assign(:exhibit, exhibit)
-      view.stub(:current_exhibit).and_return(exhibit)
-      exhibit.stub(:roles).and_return roles
+      allow(view).to receive(:current_exhibit).and_return(exhibit)
+      allow(exhibit).to receive(:roles).and_return roles
     end
 
     it "renders the index page form" do

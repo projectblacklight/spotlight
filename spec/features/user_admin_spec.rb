@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "User Administration" do
+describe "User Administration", :type => :feature do
   let!(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as user }

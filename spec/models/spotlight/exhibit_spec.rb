@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::Exhibit do
+describe Spotlight::Exhibit, :type => :model do
   subject { Spotlight::Exhibit.new(title: "Sample") }
 
   it "should have a title" do
@@ -74,7 +74,7 @@ describe Spotlight::Exhibit do
     it "should import nested attributes from the hash" do
       subject.save
       some_value = double
-      subject.should_receive(:update).with(some_value)
+      expect(subject).to receive(:update).with(some_value)
       subject.import some_value
     end
   end
@@ -96,7 +96,7 @@ describe Spotlight::Exhibit do
     subject { FactoryGirl.create(:exhibit) }
     let(:default_exhibit) { double }
     it "should touch the default exhibit when it is destroyed" do
-      Spotlight::Exhibit.stub(default: default_exhibit)
+      allow(Spotlight::Exhibit).to receive_messages(default: default_exhibit)
       expect(default_exhibit).to receive(:touch)
       subject.destroy
     end

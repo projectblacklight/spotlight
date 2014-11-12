@@ -1,8 +1,8 @@
 require 'spec_helper'
-describe Spotlight::FeaturePagesController do
+describe Spotlight::FeaturePagesController, :type => :controller do
   routes { Spotlight::Engine.routes }
 
-  it { should be_a Spotlight::Catalog::AccessControlsEnforcement }
+  it { is_expected.to be_a Spotlight::Catalog::AccessControlsEnforcement }
 
   # This should return the minimal set of attributes required to create a valid
   # Page. As you add validations to Page, be sure to
@@ -32,7 +32,7 @@ describe Spotlight::FeaturePagesController do
           expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with(page.title, [exhibit, page])
           get :show, exhibit_id: page.exhibit.id, id: page
-          assigns(:page).should eq(page)
+          expect(assigns(:page)).to eq(page)
         end
       end
       describe "on a sub-page" do
@@ -42,7 +42,7 @@ describe Spotlight::FeaturePagesController do
           expect(controller).to receive(:add_breadcrumb).with(page.parent_page.title, [exhibit, page.parent_page])
           expect(controller).to receive(:add_breadcrumb).with(page.title, [exhibit, page])
           get :show, exhibit_id: page.exhibit, id: page
-          assigns(:page).should eq(page)
+          expect(assigns(:page)).to eq(page)
         end
       end
     end
@@ -77,28 +77,28 @@ describe Spotlight::FeaturePagesController do
 
         it "assigns a newly created page as @page" do
           post :create, feature_page: {title: "MyString"}, exhibit_id: exhibit
-          assigns(:page).should be_a(Spotlight::FeaturePage)
-          assigns(:page).should be_persisted
+          expect(assigns(:page)).to be_a(Spotlight::FeaturePage)
+          expect(assigns(:page)).to be_persisted
         end
         it "redirects to the feature page index" do
           post :create, feature_page: {title: "MyString"}, exhibit_id: exhibit
-          response.should redirect_to(exhibit_feature_pages_path(Spotlight::FeaturePage.last.exhibit))
+          expect(response).to redirect_to(exhibit_feature_pages_path(Spotlight::FeaturePage.last.exhibit))
         end
       end
 
       describe "with invalid params" do
         it "assigns a newly created but unsaved page as @page" do
           # Trigger the behavior that occurs when invalid params are submitted
-          Spotlight::FeaturePage.any_instance.stub(:save).and_return(false)
+          allow_any_instance_of(Spotlight::FeaturePage).to receive(:save).and_return(false)
           post :create, feature_page: { "title" => "invalid value" }, exhibit_id: exhibit
-          assigns(:page).should be_a_new(Spotlight::FeaturePage)
+          expect(assigns(:page)).to be_a_new(Spotlight::FeaturePage)
         end
 
         it "re-renders the 'new' template" do
           # Trigger the behavior that occurs when invalid params are submitted
-          Spotlight::FeaturePage.any_instance.stub(:save).and_return(false)
+          allow_any_instance_of(Spotlight::FeaturePage).to receive(:save).and_return(false)
           post :create, feature_page: { "title" => "invalid value" }, exhibit_id: exhibit 
-          response.should render_template("new")
+          expect(response).to render_template("new")
         end
       end
     end
@@ -111,35 +111,35 @@ describe Spotlight::FeaturePagesController do
           # specifies that the Page created on the previous line
           # receives the :update_attributes message with whatever params are
           # submitted in the request.
-          Spotlight::FeaturePage.any_instance.should_receive(:update).with(hash_including(valid_attributes))
+          expect_any_instance_of(Spotlight::FeaturePage).to receive(:update).with(hash_including(valid_attributes))
           put :update, id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes
         end
 
         it "assigns the requested page as @page" do
           put :update, id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes
-          assigns(:page).should eq(page)
+          expect(assigns(:page)).to eq(page)
         end
 
         it "redirects to the feature page" do
           put :update, id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes
           page.reload
-          response.should redirect_to(exhibit_feature_page_path(page.exhibit, page))
+          expect(response).to redirect_to(exhibit_feature_page_path(page.exhibit, page))
         end
       end
 
       describe "with invalid params" do
         it "assigns the page as @page" do
           # Trigger the behavior that occurs when invalid params are submitted
-          Spotlight::FeaturePage.any_instance.stub(:save).and_return(false)
+          allow_any_instance_of(Spotlight::FeaturePage).to receive(:save).and_return(false)
           put :update, id: page, exhibit_id: page.exhibit.id, feature_page: { "title" => "invalid value" }
-          assigns(:page).should eq(page)
+          expect(assigns(:page)).to eq(page)
         end
 
         it "re-renders the 'edit' template" do
           # Trigger the behavior that occurs when invalid params are submitted
-          Spotlight::FeaturePage.any_instance.stub(:save).and_return(false)
+          allow_any_instance_of(Spotlight::FeaturePage).to receive(:save).and_return(false)
           put :update, id: page, exhibit_id: page.exhibit.id, feature_page: { "title" => "invalid value" }
-          response.should render_template("edit")
+          expect(response).to render_template("edit")
         end
       end
     end
@@ -169,7 +169,7 @@ describe Spotlight::FeaturePagesController do
 
       it "redirects to the pages list" do
         delete :destroy, id: page, exhibit_id: page.exhibit.id
-        response.should redirect_to(exhibit_feature_pages_path(page.exhibit))
+        expect(response).to redirect_to(exhibit_feature_pages_path(page.exhibit))
       end
     end
   end

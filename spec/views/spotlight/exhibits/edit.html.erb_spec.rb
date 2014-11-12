@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 module Spotlight
-  describe "spotlight/exhibits/edit" do
+  describe "spotlight/exhibits/edit", :type => :view do
     let(:exhibit) { FactoryGirl.create(:exhibit) } 
     before do
       assign(:exhibit, exhibit)
-      view.stub(current_exhibit: exhibit)
+      allow(view).to receive_messages(current_exhibit: exhibit)
     end
 
     it "renders the edit page form" do

@@ -10,7 +10,7 @@ describe Spotlight::Catalog::AccessControlsEnforcement do
   let(:solr_request) { Blacklight::Solr::Request.new }
 
   before do
-    subject.stub(current_exhibit: FactoryGirl.create(:exhibit))
+    allow(subject).to receive_messages(current_exhibit: FactoryGirl.create(:exhibit))
   end
 
   describe "#apply_permissive_visibility_filter" do
@@ -19,13 +19,13 @@ describe Spotlight::Catalog::AccessControlsEnforcement do
     end
 
     it "should allow curators to view everything" do
-      subject.stub(:can?).and_return(true)
+      allow(subject).to receive(:can?).and_return(true)
       subject.send(:apply_permissive_visibility_filter, solr_request, {})
       expect(solr_request.to_hash).to be_empty
     end
 
     it "should restrict searches to public items" do
-      subject.stub(:can?).and_return(false)
+      allow(subject).to receive(:can?).and_return(false)
 
       subject.send(:apply_permissive_visibility_filter, solr_request, {})
       expect(solr_request).to include :fq

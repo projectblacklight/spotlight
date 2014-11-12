@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Spotlight::Resources::Csv do
+describe Spotlight::Resources::Csv, :type => :model do
   let(:exhibit) { FactoryGirl.create :exhibit }
   before do
-    Spotlight::SolrDocument.stub(visibility_field: 'public_bsi')
+    allow(Spotlight::SolrDocument).to receive_messages(visibility_field: 'public_bsi')
   end
 
   describe "#to_solr" do
@@ -19,8 +19,8 @@ describe Spotlight::Resources::Csv do
     end
 
     before do
-      subject.stub(csv: csv)
-      subject.stub(label_to_field: label_to_field)
+      allow(subject).to receive_messages(csv: csv)
+      allow(subject).to receive_messages(label_to_field: label_to_field)
     end
 
     it "should map csv headers to solr fields" do
@@ -45,7 +45,7 @@ describe Spotlight::Resources::Csv do
     end
 
     before do
-      subject.stub(exhibit: double(blacklight_config: blacklight_config))
+      allow(subject).to receive_messages(exhibit: double(blacklight_config: blacklight_config))
     end
     it "should include an id and title" do
       expect(subject.label_to_field).to include "id" => "id", "Title" => "my_title_field", "Public" => 'public_bsi'
@@ -62,8 +62,8 @@ describe Spotlight::Resources::Csv do
 
   describe "#csv" do
     it "should load the uploaded file as CSV" do
-      subject.stub(url: double(path: "/abc"))
-      File.should_receive(:open).with("/abc", "r").and_return(StringIO.new "a,b\n1,2")
+      allow(subject).to receive_messages(url: double(path: "/abc"))
+      expect(File).to receive(:open).with("/abc", "r").and_return(StringIO.new "a,b\n1,2")
       csv = subject.csv
       expect(csv).to be_a_kind_of CSV
       expect(csv).to have(1).row
@@ -84,7 +84,7 @@ describe Spotlight::Resources::Csv do
     end
 
     before do
-      subject.stub(reindex: true)
+      allow(subject).to receive_messages(reindex: true)
       subject.exhibit = exhibit
       subject.url = csv_data
     end

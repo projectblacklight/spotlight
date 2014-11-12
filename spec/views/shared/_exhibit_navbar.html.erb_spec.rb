@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spotlight
-  describe "shared/_exhibit_navbar" do
+  describe "shared/_exhibit_navbar", :type => :view do
     let(:current_exhibit) { FactoryGirl.create(:exhibit) }
     let(:feature_page) { FactoryGirl.create(:feature_page, exhibit: current_exhibit) }
     let(:unpublished_feature_page) { FactoryGirl.create(:feature_page, published: false, exhibit: current_exhibit) }
@@ -9,10 +9,10 @@ module Spotlight
     let(:unpublished_about_page) { FactoryGirl.create(:about_page, published: false, exhibit: current_exhibit) }
 
     before :each do
-      view.stub(current_exhibit: current_exhibit)
-      view.stub(on_browse_page?: false, on_about_page?: false)
-      view.stub(render_search_bar: "Search Bar")
-      view.stub(exhibit_path: spotlight.exhibit_path(current_exhibit))
+      allow(view).to receive_messages(current_exhibit: current_exhibit)
+      allow(view).to receive_messages(on_browse_page?: false, on_about_page?: false)
+      allow(view).to receive_messages(render_search_bar: "Search Bar")
+      allow(view).to receive_messages(exhibit_path: spotlight.exhibit_path(current_exhibit))
     end
 
     it "should link to the search page if no home page is defined" do
@@ -21,7 +21,7 @@ module Spotlight
     end
 
     it "should link to the home page" do
-      current_exhibit.stub home_page: feature_page
+      allow(current_exhibit).to receive_messages home_page: feature_page
       render
       expect(response).to have_link "Home", href: spotlight.exhibit_path(current_exhibit)
     end
@@ -60,7 +60,7 @@ module Spotlight
 
     it "should mark the browse button as active if we're on a browse page" do
       FactoryGirl.create :published_search, exhibit: current_exhibit
-      view.stub(on_browse_page?: true)
+      allow(view).to receive_messages(on_browse_page?: true)
       render
       expect(response).to have_selector "li.active", text: "Browse"
     end
@@ -77,7 +77,7 @@ module Spotlight
     end
 
     it "should link to the about page" do
-      current_exhibit.stub main_about_page: about_page
+      allow(current_exhibit).to receive_messages main_about_page: about_page
       render
       expect(response).to have_link "About", href: spotlight.exhibit_about_page_path(current_exhibit, about_page)
     end
@@ -94,8 +94,8 @@ module Spotlight
     end
 
     it "should  mark the about button as active if we're on an about page" do
-      current_exhibit.stub main_about_page: about_page
-      view.stub(on_about_page?: true)
+      allow(current_exhibit).to receive_messages main_about_page: about_page
+      allow(view).to receive_messages(on_about_page?: true)
       render
       expect(response).to have_selector "li.active", text: "About"
     end

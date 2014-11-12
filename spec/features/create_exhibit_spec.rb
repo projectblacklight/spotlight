@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Create a new exhibit" do
+describe "Create a new exhibit", :type => :feature do
   let(:user) { FactoryGirl.create(:site_admin) }
   before {login_as user}
 

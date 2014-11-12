@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Feature page" do
+describe "Feature page", :type => :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   describe "sidebar" do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spotlight
-  describe "spotlight/pages/new" do
+  describe "spotlight/pages/new", :type => :view do
     let(:exhibit) { stub_model(Exhibit) } 
     before do
       assign(:page, stub_model(FeaturePage, exhibit: exhibit).as_new_record)

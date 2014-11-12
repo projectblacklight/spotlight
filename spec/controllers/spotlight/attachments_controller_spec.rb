@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::AttachmentsController do
+describe Spotlight::AttachmentsController, :type => :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   describe "when not logged in" do

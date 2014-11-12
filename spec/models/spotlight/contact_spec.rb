@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::Contact do
+describe Spotlight::Contact, :type => :model do
   
   context "#show_in_sidebar" do
     it "should be an attribute" do

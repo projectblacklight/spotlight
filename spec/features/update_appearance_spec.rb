@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Update the appearance" do
+describe "Update the appearance", :type => :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
 

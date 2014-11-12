@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Spotlight::TitleHelper do
+describe Spotlight::TitleHelper, :type => :helper do
   before do
-    helper.stub(application_name: "Application")
+    allow(helper).to receive_messages(application_name: "Application")
   end
 
   describe "#page_title" do
@@ -22,7 +22,7 @@ describe Spotlight::TitleHelper do
 
   describe "#set_html_page_title" do
     it "should assign the @page_title ivar" do
-      helper.stub(application_name: "B")
+      allow(helper).to receive_messages(application_name: "B")
       helper.set_html_page_title "A"
       title = helper.instance_variable_get(:@page_title)
       expect(title).to eq "A | B"

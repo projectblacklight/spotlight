@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Report a Problem" do
+describe "Report a Problem", :type => :feature do
   let!(:exhibit) { FactoryGirl.create(:exhibit) }
   it "should not have a header link" do
     visit root_path

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::CustomField do
+describe Spotlight::CustomField, :type => :model do
   describe "#label" do
     subject { Spotlight::CustomField.new configuration: { "label" => "the configured label"}, field: 'foo_tesim' }
     describe "when the exhibit doesn't have a config" do

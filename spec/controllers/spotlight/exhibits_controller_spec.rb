@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'rack/test'
-describe Spotlight::ExhibitsController do
+describe Spotlight::ExhibitsController, :type => :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 

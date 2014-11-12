@@ -1,5 +1,5 @@
 require "spec_helper"
-describe "Home page" do
+describe "Home page", :type => :feature do
   let(:exhibit_visitor) { FactoryGirl.create(:exhibit_visitor) }
   let!(:default_exhibit) { Spotlight::Exhibit.default }
   let!(:second_exhibit) { FactoryGirl.create(:exhibit, title: "Second exhibit") }

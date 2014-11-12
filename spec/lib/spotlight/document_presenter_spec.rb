@@ -15,14 +15,14 @@ describe Spotlight::DocumentPresenter do
     describe "with an array" do
       let(:document_attributes) { { 'full_title_tesim' => ['Main title & stuff'] } }
       it "should not escape html" do
-        subject.raw_document_heading.should == "Main title & stuff"
+        expect(subject.raw_document_heading).to eq("Main title & stuff")
       end
     end
 
     describe "with a single value " do
       let(:document_attributes) { { 'full_title_tesim' => 'Main title & stuff' } }
       it "should not escape html" do
-        subject.raw_document_heading.should == "Main title & stuff"
+        expect(subject.raw_document_heading).to eq("Main title & stuff")
       end
     end
   end

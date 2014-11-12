@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::DashboardsController do
+describe Spotlight::DashboardsController, :type => :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 

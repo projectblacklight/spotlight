@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe "spotlight/about_pages/_sidebar.html.erb" do
+describe "spotlight/about_pages/_sidebar.html.erb", :type => :view do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:page1) { FactoryGirl.create(:about_page, title: "One", weight: 4, exhibit: exhibit) }
   let!(:page2) { FactoryGirl.create(:about_page, exhibit: exhibit, title: "Two", published: false) }
   let!(:page3) { FactoryGirl.create(:about_page, exhibit: exhibit, title: "Three", weight: 3) }
   
   before do
-    view.stub(current_exhibit: exhibit)
-    view.stub(exhibit_about_page_path: '/about/9')
+    allow(view).to receive_messages(current_exhibit: exhibit)
+    allow(view).to receive_messages(exhibit_about_page_path: '/about/9')
   end
 
   it "renders a list of pages" do

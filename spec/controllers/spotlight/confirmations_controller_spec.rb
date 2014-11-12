@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::ConfirmationsController do
+describe Spotlight::ConfirmationsController, :type => :controller do
   routes { Spotlight::Engine.routes }
   before {
      @request.env["devise.mapping"] = Devise.mappings[:contact_email]

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Slideshow", js: true do
+describe "Slideshow", type: :feature, js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
 

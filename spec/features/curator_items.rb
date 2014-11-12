@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "A curator can see the items page" do
+describe "A curator can see the items page", :type => :feature do
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
 
   it "should work" do

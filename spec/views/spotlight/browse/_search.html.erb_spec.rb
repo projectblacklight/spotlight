@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe 'spotlight/browse/search' do
+describe 'spotlight/browse/search', :type => :view do
   let(:search) { FactoryGirl.create(:search) }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   before :each do
-    search.stub(count: 15)
+    allow(search).to receive_messages(count: 15)
   end
 
   before :each do
@@ -12,7 +12,7 @@ describe 'spotlight/browse/search' do
   end
 
   it "should display the image" do
-    search.stub(featured_image: "xyz")
+    allow(search).to receive_messages(featured_image: "xyz")
     render partial: 'spotlight/browse/search', locals: { search: search }
     expect(response).to have_selector 'a img'
   end
@@ -28,7 +28,7 @@ describe 'spotlight/browse/search' do
   end
 
   it "should display the short description" do
-    search.stub(short_description: "Short description")
+    allow(search).to receive_messages(short_description: "Short description")
     render partial: 'spotlight/browse/search', locals: { search: search }
     expect(response).to have_selector "p", text: search.short_description
   end

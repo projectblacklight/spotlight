@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Spotlight::ContactFormsController do
+describe Spotlight::ContactFormsController, :type => :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   before do

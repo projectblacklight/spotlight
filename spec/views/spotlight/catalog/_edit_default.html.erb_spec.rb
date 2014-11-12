@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe "spotlight/catalog/_edit_default.html.erb" do
+describe "spotlight/catalog/_edit_default.html.erb", :type => :view do
   let(:blacklight_config) { Blacklight::Configuration.new }
 
   let(:document) { stub_model(::SolrDocument) }
 
   before do
-    view.stub(exhibit_tags_path: "autocomplete-path.json")
-    view.stub(blacklight_config: blacklight_config)
-    view.stub(current_exhibit: stub_model(Spotlight::Exhibit))
+    allow(view).to receive_messages(exhibit_tags_path: "autocomplete-path.json")
+    allow(view).to receive_messages(blacklight_config: blacklight_config)
+    allow(view).to receive_messages(current_exhibit: stub_model(Spotlight::Exhibit))
     assign(:document, document)
   end
 

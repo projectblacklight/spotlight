@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::FeaturePage do
+describe Spotlight::FeaturePage, :type => :model do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   describe "default_scope" do
     let!(:page1) { FactoryGirl.create(:feature_page, weight: 5, exhibit: exhibit) }
@@ -54,8 +54,8 @@ describe Spotlight::FeaturePage do
     end
   end
 
-  it {should be_feature_page}
-  it {should_not be_about_page}
+  it {is_expected.to be_feature_page}
+  it {is_expected.not_to be_about_page}
 
   describe "relationships" do
     let(:parent)  { FactoryGirl.create(:feature_page, exhibit: exhibit) }

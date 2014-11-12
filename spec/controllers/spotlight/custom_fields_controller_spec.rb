@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe Spotlight::CustomFieldsController do
+describe Spotlight::CustomFieldsController, :type => :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
@@ -41,17 +41,17 @@ describe Spotlight::CustomFieldsController do
 
         it "redirects to the exhibit metadata page" do
           post :create, custom_field: {label: "MyString"} , exhibit_id: exhibit 
-          response.should redirect_to(exhibit_edit_metadata_path(exhibit))
+          expect(response).to redirect_to(exhibit_edit_metadata_path(exhibit))
         end
       end
 
       describe "with invalid params" do
         it "re-renders the 'new' template" do
           # Trigger the behavior that occurs when invalid params are submitted
-          Spotlight::CustomField.any_instance.stub(:save).and_return(false)
+          allow_any_instance_of(Spotlight::CustomField).to receive(:save).and_return(false)
           post :create, custom_field: {label: "MyString"} , exhibit_id: exhibit
           expect(assigns(:custom_field)).to be_a_new(Spotlight::CustomField)
-          response.should render_template("new")
+          expect(response).to render_template("new")
         end
       end
     end

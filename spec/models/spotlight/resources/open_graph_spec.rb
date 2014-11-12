@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::Resources::OpenGraph do
+describe Spotlight::Resources::OpenGraph, :type => :model do
   class TestResource < Spotlight::Resource
     include Spotlight::Resources::Web
     include Spotlight::Resources::OpenGraph
@@ -11,7 +11,7 @@ describe Spotlight::Resources::OpenGraph do
   describe "#to_solr" do
 
     before do
-      subject.stub id: 15, opengraph_properties: {}
+      allow(subject).to receive_messages id: 15, opengraph_properties: {}
     end
 
     let(:solr_doc) { subject.to_solr }
@@ -21,7 +21,7 @@ describe Spotlight::Resources::OpenGraph do
     end
 
     it "should include opengraph properties" do
-      subject.stub opengraph_properties: { a: 1, b: 2}
+      allow(subject).to receive_messages opengraph_properties: { a: 1, b: 2}
 
       expect(solr_doc).to include a: 1, b: 2
     end
@@ -30,7 +30,7 @@ describe Spotlight::Resources::OpenGraph do
 
   describe "#opengraph_properties" do
     it "should map opengraph properties to solr fields" do
-      subject.stub opengraph: { "og_title" => "title", "og_description" => "description"}
+      allow(subject).to receive_messages opengraph: { "og_title" => "title", "og_description" => "description"}
       expect(subject.opengraph_properties).to include "og_title_tesim" => "title", "og_description_tesim" => "description"
     end
   end
@@ -50,7 +50,7 @@ describe Spotlight::Resources::OpenGraph do
       EOF
     end
     it "should extract opengraph <meta> tags" do
-      subject.stub(body: body)
+      allow(subject).to receive_messages(body: body)
       expect(subject.opengraph).to include "og:title", "og:description", "og:type", "og:type", "og:site_name", "og:video", "og:video:width", "og:video:height"
       expect(subject.opengraph["og:title"]).to eq "The Ground Truth: The Human Cost of War"
     end
