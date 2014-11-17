@@ -46,6 +46,9 @@ RSpec.configure do |config|
       DatabaseCleaner.strategy = :truncation
     end
     DatabaseCleaner.start
+
+    # The first user is automatically granted admin privileges; we don't want that behavior for many of our tests
+    User.create email: 'initial+admin@example.com', password: 'password', password_confirmation: 'password'
   end
 
   config.after do
