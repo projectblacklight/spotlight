@@ -5,7 +5,8 @@ module Spotlight
     let(:user) { stub_model(::User, email: 'jane@example.com') } 
 
     let(:exhibit) { FactoryGirl.create(:exhibit) }
-    let(:roles) { [FactoryGirl.create(:role, role: 'admin', user: user, exhibit: exhibit)] }
+    let(:admin_role) { FactoryGirl.create(:role, role: 'admin', user: user, exhibit: exhibit) }
+    let(:roles) { [admin_role] }
 
     before do
       assign(:exhibit, exhibit)
@@ -17,10 +18,10 @@ module Spotlight
       render
 
       assert_select "form[action=?][method=?]", spotlight.update_all_exhibit_roles_path(exhibit), "post" do
-        assert_select "tr[data-show-for=?]", exhibit.id
-        assert_select "tr[data-edit-for=?]", exhibit.id, 2
-        assert_select "input[type='submit'][data-behavior='destroy-user'][data-target=?]", exhibit.id
-        assert_select "input[type='hidden'][data-destroy-for=?]", exhibit.id
+        assert_select "tr[data-show-for=?]", admin_role.id
+        assert_select "tr[data-edit-for=?]", admin_role.id, 2
+        assert_select "input[type='submit'][data-behavior='destroy-user'][data-target=?]", admin_role.id
+        assert_select "input[type='hidden'][data-destroy-for=?]", admin_role.id
         assert_select "a[data-behavior='cancel-edit']"
         assert_select "input[type='submit'][value='Save changes']"
       end
