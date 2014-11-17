@@ -1,13 +1,11 @@
 #Load blacklight which will give spotlight views a higher preference than those in blacklight
 require 'blacklight'
-require 'blacklight/gallery'
 require 'autoprefixer-rails'
 require 'spotlight/rails/routes'
 require 'spotlight/utils'
 require 'friendly_id'
 require 'devise'
 require 'active_model_serializers'
-require 'openseadragon'
 
 module Spotlight
   class Engine < ::Rails::Engine

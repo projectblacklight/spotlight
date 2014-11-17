@@ -37,7 +37,12 @@ describe Spotlight::ApplicationHelper, :type => :helper do
     end
     describe "blacklight_view_config_for_search_block" do
       let(:sir_trevor_json) { { "list" => "on", "gallery" => "on", "slideshow" => "null" } }
-      let(:config) { Blacklight::Configuration.new }
+      let(:config) { Blacklight::Configuration.new do |config|
+        config.view.list = {}
+        config.view.gallery = {}
+        config.view.slideshow = {}
+      end
+      }
       before do
         allow(helper).to receive_messages(blacklight_config: config)
       end

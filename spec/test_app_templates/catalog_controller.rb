@@ -4,6 +4,7 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController  
 
   include Blacklight::Catalog
+  helper Openseadragon::OpenseadragonHelper
 
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
@@ -28,6 +29,9 @@ class CatalogController < ApplicationController
     config.index.title_field = 'full_title_tesim'
     config.index.display_type_field = 'content_metadata_type_ssm'
     config.index.thumbnail_field = :thumbnail_url_ssm
+
+    config.view.gallery.partials = [:index_header, :index]
+    config.view.slideshow.partials = [:index]
 
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
     config.show.partials.insert(1, :openseadragon)
