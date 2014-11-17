@@ -75,6 +75,7 @@ Spotlight::Engine.routes.draw do
       end
     end
     resource :home_page, path: 'home', controller: "home_pages"
+    post '/pages/preview' => 'pages#preview', as: :preview_block
 
     resources :roles, path: 'users', only: [:index, :create, :destroy] do
       collection do

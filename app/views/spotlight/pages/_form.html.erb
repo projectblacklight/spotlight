@@ -5,7 +5,8 @@
                 :'metadata-url' => spotlight.exhibit_metadata_path(@page.exhibit, format: "json"),
                 :'autocomplete-url'=> spotlight.autocomplete_exhibit_catalog_index_path(@page.exhibit, format: "json"),
                 :'searches-endpoint' => spotlight.exhibit_searches_path(@page.exhibit, format: "json"),
-                :'available-configurations-endpoint' => spotlight.exhibit_available_configurations_path(@page.exhibit, format: "json")
+                :'available-configurations-endpoint' => spotlight.exhibit_available_configurations_path(@page.exhibit, format: "json"),
+                :'preview-url' => spotlight.exhibit_preview_block_url(@page.exhibit)
               }
             }) do |f| %>
   <% if @page.errors.any? %>
