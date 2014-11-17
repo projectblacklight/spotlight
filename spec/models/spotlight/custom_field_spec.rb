@@ -55,6 +55,15 @@ describe Spotlight::CustomField, :type => :model do
 
       expect(subject.field).to eq "exhibit_#{exhibit.to_param}_xyz_tesim"
     end
+
+    it "should use the solr field prefix" do
+      allow(Spotlight::Engine.config.solr_fields).to receive(:prefix).and_return "prefix_"
+      subject.configuration["label"] = "xyz"
+      subject.exhibit = exhibit
+      subject.save
+
+      expect(subject.field).to eq "prefix_exhibit_#{exhibit.to_param}_xyz_tesim"
+    end
   end
 
 end

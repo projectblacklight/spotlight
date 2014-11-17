@@ -37,6 +37,7 @@ module Spotlight
     
     # Suffixes for exhibit-specific solr fields
     Spotlight::Engine.config.solr_fields = OpenStruct.new
+    Spotlight::Engine.config.solr_fields.prefix = "".freeze
     Spotlight::Engine.config.solr_fields.boolean_suffix = "_bsi".freeze
     Spotlight::Engine.config.solr_fields.string_suffix = "_ssim".freeze
     Spotlight::Engine.config.solr_fields.text_suffix = "_tesim".freeze

@@ -33,12 +33,8 @@ module Spotlight
     end
 
     protected
-    def self.with_suffix(field)
-      field.to_s + Spotlight::Engine.config.solr_fields.text_suffix
-    end
-
     def field_name
-      CustomField.with_suffix("exhibit_#{self.exhibit.to_param}_#{label.parameterize}")
+      "#{Spotlight::Engine.config.solr_fields.prefix}exhibit_#{self.exhibit.to_param}_#{label.parameterize}#{Spotlight::Engine.config.solr_fields.text_suffix}"
     end
 
     def should_generate_new_friendly_id?
