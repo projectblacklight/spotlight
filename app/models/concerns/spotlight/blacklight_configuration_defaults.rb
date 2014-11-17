@@ -11,7 +11,6 @@ module Spotlight::BlacklightConfigurationDefaults
       default_sort_fields
       default_view_types
       set_default_per_page
-      default_thumbnail_size
     end
 
     def default_sort_fields
@@ -38,10 +37,5 @@ module Spotlight::BlacklightConfigurationDefaults
       # is created or we run into a circular dependency.
       self.default_per_page ||= ::CatalogController.blacklight_config.per_page.first
     end
-
-    def default_thumbnail_size
-      self.thumbnail_size ||= 'small'
-    end
-
 
 end
