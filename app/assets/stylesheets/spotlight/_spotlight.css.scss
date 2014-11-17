@@ -35,5 +35,5 @@ html {
   min-height: 100%;
 }
 body {
-  margin-bottom: $footer-height;
+  margin-bottom: $footer-height + $footer-top-margin;
 }
