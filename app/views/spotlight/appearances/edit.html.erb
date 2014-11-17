@@ -54,12 +54,6 @@
       <% end %>
     <% end %>
 
-    <%= f.form_group :thumbnail_size, label: { text: t(:'.thumbnail_size')} do %>
-      <%= f.radio_button :thumbnail_size, 'small', label: t(:'.thumbnail.small') %>
-      <%= f.radio_button :thumbnail_size, 'medium', label: t(:'.thumbnail.medium') %>
-      <%= f.radio_button :thumbnail_size, 'large', label: t(:'.thumbnail.large') %>
-    <% end %>
-
     <%= f.form_group :sort_fields, label: {text: t(:'.sort_fields')} do %>
       <%= f.fields_for :sort_fields, @appearance.sort_fields do |vt| %>
         <%= vt.check_box :relevance, {  checked: true, disabled: true, data: { readonly: true }} %>

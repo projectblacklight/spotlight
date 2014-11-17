@@ -44,7 +44,6 @@ describe Spotlight::AppearancesController, :type => :controller do
         patch :update, exhibit_id: exhibit, appearance: { 
           document_index_view_types: {"list"=>"1", "gallery"=>"1", "map"=>"0"},
           default_per_page: "50",
-          thumbnail_size: "medium",
           sort_fields: {"relevance"=>"1", "title"=>"1", "type"=>"1", "date"=>"0", "source"=>"0", "identifier"=>"0"}
         }
         expect(flash[:notice]).to eq "The appearance was successfully updated."
@@ -52,7 +51,6 @@ describe Spotlight::AppearancesController, :type => :controller do
         assigns[:exhibit].tap do |saved|
           expect(saved.blacklight_configuration.document_index_view_types).to eq ['list', 'gallery']
           expect(saved.blacklight_configuration.default_per_page).to eq 50
-          expect(saved.blacklight_configuration.thumbnail_size).to eq 'medium' 
           expect(saved.blacklight_configuration.sort_fields).to eq(
             {"score desc, sort_title_ssi asc" => {"show"=>true, "enabled"=>true},
              "sort_title_ssi asc" => {"show"=>true, "enabled"=>true},

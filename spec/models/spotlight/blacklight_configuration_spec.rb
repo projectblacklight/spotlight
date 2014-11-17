@@ -216,7 +216,6 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
           "sort_type_ssi asc" => {:show=>true}
         })}
       its(:default_per_page) { should eq 10 }
-      its(:thumbnail_size) { should eq 'small' }
       its(:document_index_view_types) { should match_array ::CatalogController.blacklight_config.view.keys.map { |x| x.to_s } }
     end
   end

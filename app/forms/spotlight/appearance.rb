@@ -8,7 +8,7 @@ module Spotlight
     end
 
     attr_reader :configuration
-    delegate :persisted?, :exhibit, :exhibit_id, :default_per_page, :thumbnail_size,
+    delegate :persisted?, :exhibit, :exhibit_id, :default_per_page,
       :default_blacklight_config, to: :configuration
 
     delegate :main_navigations, to: :exhibit

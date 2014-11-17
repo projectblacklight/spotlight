@@ -15,8 +15,6 @@ describe "Update the appearance", :type => :feature do
 
     choose "20"
 
-    choose "Large"
-
     # #feild_labeled doesn't appear to work for disabled inputs
     expect(page).to have_css("input[name='appearance[sort_fields][relevance]'][disabled='disabled']")
     uncheck "Title"
@@ -35,8 +33,6 @@ describe "Update the appearance", :type => :feature do
 
     expect(field_labeled('20')).to be_checked
     expect(field_labeled('10')).to_not be_checked
-
-    expect(field_labeled('Large')).to be_checked
 
     # #feild_labeled doesn't appear to work for disabled inputs
     expect(page).to have_css("input[name='appearance[sort_fields][relevance]'][disabled='disabled']")

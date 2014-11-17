@@ -114,7 +114,6 @@ en:
         restore_default: "Restore default"
         search_results: Search Results
         sort_fields: Sort fields
-        thumbnail_size: Thumbnail size
         thumbnail:
           small: Small
           medium: Medium
