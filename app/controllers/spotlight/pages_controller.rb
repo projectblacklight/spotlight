@@ -20,6 +20,14 @@ module Spotlight
       fresh_when(@page)
     end
 
+    def preview
+      @block = JSON.parse(params[:block])
+
+      respond_to do |format|
+        format.html { render 'preview', layout: false }
+      end
+    end
+
     # GET /exhibits/1/pages/new
     def new
     end
