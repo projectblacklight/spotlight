@@ -51,11 +51,11 @@ module Spotlight
     end
 
     def self.solr_field_for_tagger tagger
-      ("#{tagger.class.model_name.param_key}_#{tagger.id}_tags" + Spotlight::Engine.config.solr_fields.string_suffix).to_sym
+      ("#{Spotlight::Engine.config.solr_fields.prefix}#{tagger.class.model_name.param_key}_#{tagger.id}_tags" + Spotlight::Engine.config.solr_fields.string_suffix).to_sym
     end
 
     def self.visibility_field exhibit
-      ("#{exhibit.class.model_name.param_key}_#{exhibit.id}_public" + Spotlight::Engine.config.solr_fields.boolean_suffix).to_sym
+      ("#{Spotlight::Engine.config.solr_fields.prefix}#{exhibit.class.model_name.param_key}_#{exhibit.id}_public" + Spotlight::Engine.config.solr_fields.boolean_suffix).to_sym
     end
 
     def make_public! exhibit
