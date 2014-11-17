@@ -1,0 +1,4 @@
+<p class="alert alert-warning alert-lock">
+  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  <%= t :'spotlight.pages.edit.locked', user: lock.by, created_at: time_ago_in_words(lock.created_at) + " ago"%>
+</p>

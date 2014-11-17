@@ -8,6 +8,8 @@
                 :'available-configurations-endpoint' => spotlight.exhibit_available_configurations_path(@page.exhibit, format: "json")
               }
             }) do |f| %>
+
+  <%= render @lock if @lock and not @lock.stale? %>
   <% if @page.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>

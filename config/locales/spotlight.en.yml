@@ -269,6 +269,7 @@ en:
         header: New page
       edit:
         header: Edit page
+        locked: "This page is currently being edited by %{user} (%{created_at})"
       form:
         title_placeholder: "Title"
         page_options: "Page options"

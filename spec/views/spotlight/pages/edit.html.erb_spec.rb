@@ -17,5 +17,28 @@ module Spotlight
         assert_select "textarea#feature_page_content[name=?]", "feature_page[content]"
       end
     end
+
+    describe "locks" do
+      let(:lock) { Lock.create! on: page }
+
+      before do
+        assign(:lock, lock)
+      end
+
+      it "renders a lock" do
+        render
+
+        expect(rendered).to have_css '.alert-lock'
+      end
+
+
+      it "should not render an old lock" do
+        lock.created_at -= 1.day
+
+        render
+
+        expect(rendered).not_to have_css '.alert-lock'
+      end
+    end
   end
 end
