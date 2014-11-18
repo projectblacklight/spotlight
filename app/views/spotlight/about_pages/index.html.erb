@@ -5,7 +5,7 @@
       style: :horizontal, html: {class: 'exhibit-contacts'} do |f| %>
     <h3><%= t :".contacts" %></h3>
     <p class="instructions"><%= t :'.instructions' %></p>
-    <div class="panel-group dd contacts_admin">
+    <div class="panel-group dd contacts_admin" data-behavior="nestable" data-max-depth="1">
       <ol class="dd-list">
         <%= f.fields_for :contacts do |c| %>
           <%= render partial: 'contact', locals: {f: c} %>

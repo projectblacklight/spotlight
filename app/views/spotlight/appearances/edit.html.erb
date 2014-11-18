@@ -6,7 +6,7 @@
   <%= field_set_tag do %>
     <h3><%= t(:'.main_navigation.menu') %></h3>
     <p class="instructions"><%= t(:'.main_navigation.help') %></p>
-    <div class="panel-group dd main_navigation_admin col-sm-7" id="nested-navigation">
+    <div class="panel-group dd main_navigation_admin col-sm-7" id="nested-navigation" data-behavior="nestable" data-max-depth="1">
       <ol class="dd-list">
         <%= f.fields_for :main_navigations do |navigation| %>
           <%  @appearance.main_navigations.each do |nav| %>

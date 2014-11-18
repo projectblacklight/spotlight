@@ -77,7 +77,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
         '</div>',
         '<div class="col-sm-8">',
           '<label for="<%= formId(id_key) %>_0" class="control-label">Selected items to display</label>',
-          '<div class="form-group panel-group dd nestable-item-grid">',
+          '<div class="form-group panel-group dd nestable-item-grid" data-behavior="nestable" data-max-depth="1">',
             '<ol class="dd-list">',
               '<%= buildInputFields(inputFieldsCount) %>',
             '</ol>',
@@ -106,7 +106,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
     ].join("\n")),
 
     makeItemGridNestable: function() {
-      $('.nestable-item-grid').nestable({maxDepth: 1});
+      SpotlightNestable.init();
       $('.nestable-item-grid').on('change', function(){
         var i = 0;
         $('li.dd-item', $(this)).each(function(){

@@ -38,5 +38,22 @@ module Spotlight
         []
       end
     end
+    def nestable_data_attributes(type)
+      nestable_data_attributes_hash(type).map do |attr, val|
+        "#{attr}='#{val}'"
+      end.join(' ')
+    end
+    def nestable_data_attributes_hash(type)
+      case type
+      when "feature_pages"
+        {:"data-max-depth" => '2',
+         :"data-expand-btn-HTML" => '',
+         :"data-collapse-btn-HTML" => ''}
+      when "about_pages"
+        {:"data-max-depth" => '1'}
+      else
+        {}
+      end
+    end
   end
 end

@@ -24,6 +24,7 @@ $(document).ready(function() {
 
 
 Spotlight.onLoad(function(){
+  SpotlightNestable.init();
   $.each($('.social-share-button a'), function() {
     $(this).append($(this).attr('title'));
   });
