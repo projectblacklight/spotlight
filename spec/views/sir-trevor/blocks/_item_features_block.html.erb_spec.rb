@@ -26,4 +26,11 @@ describe 'sir-trevor/blocks/_item_features_block.html.erb', :type => :view do
     expect(rendered).to have_selector '.slideshow-indicators'
     expect(rendered).to have_selector '.slideshow-indicators .list-group-item', count: 3 
   end
+  it 'should truncated long titles (and keep the full title as the title attribute)' do
+    caption = 'abcdef ' * 20
+    allow(view).to receive_messages(multi_up_item_grid_caption: caption)
+    render
+    expect(rendered).to have_selector '.slideshow-indicators .list-group-item', count: 3, text: /a\.\.\.$/
+    expect(rendered).to have_selector ".slideshow-indicators .list-group-item a[title='#{caption}']"
+  end
 end
