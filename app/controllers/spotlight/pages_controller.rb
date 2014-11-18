@@ -34,6 +34,7 @@ module Spotlight
 
     # GET /pages/1/edit
     def edit
+      try_lock
     end
 
     # POST /exhibits/1/pages
@@ -50,6 +51,7 @@ module Spotlight
 
     # PATCH/PUT /pages/1
     def update
+      release_lock
       if @page.update(page_params.merge(last_edited_by: current_user))
         redirect_to [@page.exhibit, @page], notice: t(:'helpers.submit.page.updated', model: @page.class.model_name.human.downcase)
       else
@@ -77,6 +79,19 @@ module Spotlight
     end
 
     protected
+
+    def try_lock
+      @lock = if @page.lock
+        @page.lock
+      else
+        @page.create_lock by: current_user
+        nil
+      end
+    end
+
+    def release_lock
+      @page.lock.delete if @page.lock
+    end
 
     ##
     # Browsing an exhibit should start a new search session

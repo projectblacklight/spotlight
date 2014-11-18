@@ -15,6 +15,8 @@ module Spotlight
     scope :published, -> { where(published: true) }
     scope :recent, -> { order("updated_at DESC").limit(10)}
 
+    has_one :lock, as: :on
+
     # display_sidebar should be set to true by default
     before_create do
       self.display_sidebar = true

@@ -89,4 +89,22 @@ describe "Feature page", :type => :feature do
       end
     end
   end
+
+  describe "page locking" do
+    before { login_as exhibit_curator }
+    let!(:feature_page) { FactoryGirl.create(:feature_page, display_sidebar: false, exhibit: exhibit) }
+
+    it "should show a lock message if someone is currently editing the page" do
+      # open the edit page
+      visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
+
+      # and then open the edit page again
+      visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
+
+      expect(page).to have_css '.alert'
+      within ".alert" do
+        expect(page).to have_content "This page is currently being edited by " + exhibit_curator.to_s
+      end
+    end
+  end
 end
