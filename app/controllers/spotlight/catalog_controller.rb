@@ -8,7 +8,6 @@ class Spotlight::CatalogController < ::CatalogController
   before_filter :add_breadcrumb_with_search_params, only: :index
 
   before_filter :attach_breadcrumbs
-  helper Openseadragon::OpenseadragonHelper
   
 
   def new

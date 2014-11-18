@@ -39,37 +39,6 @@
       }
     }
   }
-
-  .osd-toolbar {
-    padding: 5px 0;
-
-    a {
-      cursor: pointer;
-      margin: 0 5px;
-    }
-
-    .pagination {
-      margin: 0;
-      padding: 0;
-      text-align: left;
-    }
-
-    .controls {
-      float: right;
-      padding: 0;
-      text-align: right;
-    }
-  }
-
-  .osd-image {
-    // background-color: whitesmoke;
-    border: 1px solid #ccc;
-    height: 400px;
-
-    .openseadragon-canvas {
-      // border: 1px solid #ccc;
-    }
-  }
 }
 
 form.edit_solr_document {

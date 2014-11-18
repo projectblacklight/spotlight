@@ -6,7 +6,6 @@ module Spotlight
     source_root File.expand_path('../templates', __FILE__)
     class_option :solr_update_class, type: :string , default: "Spotlight::SolrDocument::AtomicUpdates"
     class_option :mailer_default_url_host, type: :string, default: '' # e.g. localhost:3000
-    class_option :openseadragon, type: :boolean, default: true, desc: "Generate OpenSeaDragon support"
 
     def inject_spotlight_routes
       route "mount Spotlight::Engine, at: 'spotlight'"
@@ -54,19 +53,8 @@ module Spotlight
       end
     end
 
-    def add_solr_osd_mixin
-      if options[:openseadragon]
-        inject_into_file 'app/models/solr_document.rb', after: "include Spotlight::SolrDocument\n" do
-         "\n  include Spotlight::SolrDocument::Openseadragon\n"
-        end
-
-        inject_into_file 'app/controllers/catalog_controller.rb', after: "# solr field configuration for search results/index views\n" do <<-EOF
-          ## Field containing URIs to openseadragon tilesources
-          config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
-          config.show.partials.insert(1, :openseadragon)
-        EOF
-        end
-      end
+    def add_osd_viewer
+      generate 'blacklight_gallery:install'
     end
 
     def add_mailer_defaults

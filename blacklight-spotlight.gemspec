@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 4.0", ">= 4.0.1"
   s.add_dependency "blacklight", ">= 5.4.0.rc1", "<6"
   s.add_dependency "autoprefixer-rails"
-  s.add_dependency "blacklight-gallery"
   s.add_dependency "cancancan"
   s.add_dependency "sir-trevor-rails"
   s.add_dependency "carrierwave"
@@ -35,7 +34,6 @@ Gem::Specification.new do |s|
   s.add_dependency "faraday"
   s.add_dependency "faraday_middleware"
   s.add_dependency "nokogiri"
-  s.add_dependency "openseadragon", ">= 0.0.5"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec-rails", "~> 3.1"

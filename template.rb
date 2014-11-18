@@ -13,6 +13,7 @@ generate 'blacklight:install', blacklight_options
 
 blacklight_gallery_options = ENV.fetch("BLACKLIGHT_GALLERY_INSTALL_OPTIONS", '')
 if blacklight_gallery_options != false
+  gem 'blacklight-gallery'
   generate 'blacklight_gallery:install', blacklight_gallery_options
 end
 
