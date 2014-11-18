@@ -210,6 +210,7 @@
       li {
         border-left: 0;
         border-right: 0;
+        color: $text-color;
 
         &:nth-child(odd) {
           background-color: $table-bg-accent;
