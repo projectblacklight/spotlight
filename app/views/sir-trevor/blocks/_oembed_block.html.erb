@@ -1,10 +1,6 @@
 <div class="content-block item-text">
   <div class="oembed-block <%= "pull-#{ block['text-align']}" if block["text"].present? %>">
-    <% begin %>
-      <%= OEmbed::Providers.get(block["url"]).html.html_safe %>
-    <% rescue OEmbed::NotFound %>
-      <%= link_to block["url"], block["url"] %>
-    <% end %>
+    <%= render_oembed_tag block["url"] %>
   </div>
   <%= sir_trevor_markdown block["text"] if block["text"].present?  %>
 </div>

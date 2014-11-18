@@ -57,6 +57,10 @@ module Spotlight
       generate 'blacklight_gallery:install'
     end
 
+    def add_oembed
+      generate 'blacklight_oembed:install'
+    end
+
     def add_mailer_defaults
       if options[:mailer_default_url_host].present?
         say "Injecting a placeholder config.action_mailer.default_url_options; be sure to update it for your environment", :yellow
