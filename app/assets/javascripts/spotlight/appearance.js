@@ -1,6 +1,4 @@
 Spotlight.onLoad(function(){
-  $('#nested-navigation').nestable({maxDepth: 1});
-  updateWeightsAndRelationships($('#nested-navigation'));
   addRestoreDefaultBehavior();
 });
 

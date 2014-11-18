@@ -2,14 +2,6 @@ Spotlight.onLoad(function() {
   // Add Select/Deselect all button behavior
   addCheckboxToggleBehavior();
 
-  // Initialize Nestable for nested pages
-  $('#nested-fields .metadata_fields').nestable({maxDepth: 1, listNodeName: "tbody", itemNodeName: "tr", expandBtnHTML: "", collapseBtnHTML: "" });
-  $('#nested-fields.facet_fields').nestable({maxDepth: 1});
-
-  // Handle weighting the pages and their children.
-  updateWeightsAndRelationships($('#nested-fields .metadata_fields'));
-  updateWeightsAndRelationships($('#nested-fields.facet_fields'));
-
   $("[data-in-place-edit-target]").on('click.inplaceedit', function() {
     var $input = $(this).find('input');
     var $label = $(this).find($(this).data('in-place-edit-target'));
