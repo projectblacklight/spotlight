@@ -35,10 +35,10 @@ describe "Add a contact to an exhibit", :type => :feature do
 
     within "#sidebar .contacts" do
       expect(page).to have_selector ".name", text: "Marcus Aurelius"
-      expect(page).to have_selector "[itemprop=email]", text: "marcus@rome.gov"
-      expect(page).to have_selector "[itemprop=jobTitle]", text: "Emperor"
-      expect(page).to have_selector "[itemprop=workLocation]", text: "Rome"
-      expect(page).to have_selector "[itemprop=telephone]", text: "(555) 555-5555 ext. 12345 (mobile)"
+      expect(page).to have_selector "div", text: "marcus@rome.gov"
+      expect(page).to have_selector "div", text: "Emperor"
+      expect(page).to have_selector "div", text: "Rome"
+      expect(page).to have_selector "div", text: "(555) 555-5555 ext. 12345 (mobile)"
     end
     
   end

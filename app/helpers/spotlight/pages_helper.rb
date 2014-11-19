@@ -55,5 +55,8 @@ module Spotlight
         {}
       end
     end
+    def render_contact_email_address(address)
+      mail_to address, address
+    end
   end
 end

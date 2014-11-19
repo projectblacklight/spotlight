@@ -56,8 +56,8 @@ describe Spotlight::Exhibit, :type => :model do
   describe "contacts" do
     before do
       subject.contacts_attributes= [
-        {"show_in_sidebar"=>"0", "name"=>"Justin Coyne", "email"=>"jcoyne@justincoyne.com", "title"=>"", "location"=>"US"},
-        {"show_in_sidebar"=>"0", "name"=>"", "email"=>"", "title"=>"Librarian", "location"=>""}]
+        {"show_in_sidebar"=>"0", "name"=>"Justin Coyne", "contact_info" => {"email"=>"jcoyne@justincoyne.com", "title"=>"", "location"=>"US"}},
+        {"show_in_sidebar"=>"0", "name"=>"", "contact_info" => {"email"=>"", "title"=>"Librarian", "location"=>""}}]
     end
     it "should accept nested contacts" do
       expect(subject.contacts.size).to eq 2

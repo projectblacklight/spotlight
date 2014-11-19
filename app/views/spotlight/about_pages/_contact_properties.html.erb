@@ -1,16 +1,12 @@
 <div itemprop="name" class="name"><%= contact.name %></div>
-<% if contact.title.present? %>
-  <div itemprop="jobTitle"><%= contact.title %></div>
-<% end %>
-
-<% if contact.location.present? %>
-  <div itemprop="workLocation"><%= contact.location %></div>
-<% end %>
-
-<% if contact.email.present? %>
-  <div><%= mail_to contact.email, contact.email, itemprop: "email" %></div>
-<% end %>
-
-<% if contact.telephone.present? %>
-  <div itemprop="telephone"><%= contact.telephone %></div>
+<% Spotlight::Contact.fields.each do |field, options| %>
+  <% if (value = contact.contact_info[field]).present? %>
+    <div itemprop="<%= options[:itemprop] || field %>">
+      <% if options[:helper] %>
+        <%= send(options[:helper], value) %>
+      <% else %>
+        <%= value %>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>
