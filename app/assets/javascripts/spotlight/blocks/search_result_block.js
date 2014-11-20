@@ -10,6 +10,8 @@ SirTrevor.Blocks.SearchResults =  (function(){
 
   view_types_key: '[data-behavior="result-view-types"]',
 
+  blockGroup: 'Exhibit item widgets',
+
   description: "This widget displays a set of search results on a page. Specify a search result set by selecting an existing browse category. You can also select the view types that are available to the user when viewing the result set.",
 
   template: _.template([

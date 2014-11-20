@@ -29,6 +29,8 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
 
     title: function() { return "Multi-Up Item Grid"; },
 
+    blockGroup: 'Exhibit item widgets',
+
     icon_name: "multi-up-item-grid",
 
     inputFieldsCount: 5,
