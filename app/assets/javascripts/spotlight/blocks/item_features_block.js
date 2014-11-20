@@ -12,3 +12,13 @@ SirTrevor.Blocks.ItemFeatures =  (function(){
     description: "This widget displays one to five thumbnail images of repository items in a slideshow."
   });
 })();;
+
+Spotlight.onLoad(function(){
+  var indicators = $('.item-features .slideshow-indicators li');
+  indicators.each(function(){
+    $(this).on('click', function(){
+      indicators.removeClass("active");
+      $(this).addClass("active");
+    });
+  });
+});
