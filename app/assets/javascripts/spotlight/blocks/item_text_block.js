@@ -25,6 +25,8 @@ SirTrevor.Blocks.ItemText =  (function(){
 
     type: "item-text",
 
+    blockGroup: 'Exhibit item widgets',
+
     title: function() { return "Item + Text"; },
 
     icon_name: "item-text",
