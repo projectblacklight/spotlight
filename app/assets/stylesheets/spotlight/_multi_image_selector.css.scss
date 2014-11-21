@@ -1,0 +1,23 @@
+.thumbs-list {
+  overflow-y: hidden;
+  overflow-x: scroll;
+  height: 110px;
+  padding-bottom: 10px;
+  position: relative;
+  ul {
+    padding-left: 0;
+    position: absolute;
+    li {
+      float: left;
+      min-width: 60px;
+      &.active {
+        background-color: #999999;
+      }
+      img {
+        margin: 2px 5px;
+        max-height: 100px;
+        max-width: 100px;
+      }
+    }
+  }
+}

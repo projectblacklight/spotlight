@@ -16,6 +16,7 @@ module Spotlight
           id: doc.id,
           title: view_context.presenter(doc).raw_document_heading,
           thumbnail: doc.first(blacklight_config.index.thumbnail_field),
+          thumbnails: doc[blacklight_config.index.thumbnail_field],
           description: doc.id,
           url: exhibit_catalog_path(current_exhibit, doc)
         }

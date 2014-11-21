@@ -53,23 +53,20 @@ module Spotlight
     describe "item grid helpers" do
       describe "block objects" do
         let(:block1) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "cba", 'item-grid-display_0' => false, 'item-grid-display_1' => false} }
-        let(:block_with_hidden) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "cba", 'item-grid-display_0' => false, 'item-grid-display_1' => true} }
+        let(:block_with_hidden) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "cba", 'item-grid-display_0' => false, 'item-grid-display_1' => true, 'item-grid-thumbnail_1' => 'image-url'} }
         let(:block_with_blank) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "", 'item-grid-id_2' => "", 'item-grid-display_0' => true, 'item-grid-display_1' => false} }
         let(:bad_keys) { {'another-key' => "something"} }
         describe "item_grid_block_objects" do
-          it "should get the items w/ item-grid-id in the key" do
-            objects = helper.item_grid_block_objects(block1)
-            expect(objects).to include({:id => "abc", :display => false})
-            expect(objects).to include({:id => "cba", :display => false})
+          it "should not return items that have display set to false" do
+            expect(helper.item_grid_block_objects(block1)).to be_blank
           end
           it "should get set the display attribute to true if a corresponding display field is set to 'true'" do
             objects = helper.item_grid_block_objects(block_with_hidden)
-            expect(objects).to include({:id => "abc", :display => false})
-            expect(objects).to include({:id => "cba", :display => true})
+            expect(objects).to include({:id => "cba", :display => true, thumbnail: 'image-url'})
           end
           it "should omit any blank values" do
             objects = helper.item_grid_block_objects(block_with_blank)
-            expect(objects).to eq([{:id => "abc", :display => true}])
+            expect(objects).to eq([{id: "abc", display: true, thumbnail: nil}])
           end
           it "should omit any unnecessary keys" do
             expect(helper.item_grid_block_objects(bad_keys)).to be_blank
@@ -84,6 +81,16 @@ module Spotlight
           end
           it "should omit any unnecessary keys" do
             expect(helper.item_grid_block_ids(bad_keys)).to be_blank
+          end
+        end
+        describe 'item_grid_block_with_documents' do
+          it 'should return hashes representing documents to display from the block, including the solr_document object itself' do
+            allow(helper).to receive_messages(get_solr_response_for_field_values: [nil, [{id: 'cba'}]])
+            objects = helper.item_grid_block_with_documents(block_with_hidden)
+            expect(objects.length).to eq 1
+            expect(objects.first[:id]).to eq 'cba'
+            expect(objects.first[:thumbnail]).to eq 'image-url'
+            expect(objects.first[:solr_document][:id]).to eq 'cba'
           end
         end
       end
