@@ -37,23 +37,6 @@ Spotlight.onLoad(function(){
 
   if (instance.length) {
 
-    SirTrevor.EventBus.on('block:create:new', injectElementsIntoSirTrevorBlock);
-    SirTrevor.EventBus.on('block:create:existing', injectElementsIntoSirTrevorBlock);
-
-    SirTrevor.EventBus.on('block:create:new', checkBlockTypeLimitOnAdd);
-    SirTrevor.EventBus.on('block:remove', checkGlobalBlockTypeLimit);
-
-    var editor = new SirTrevor.Editor({
-      el: instance,
-      onEditorRender: function() {
-        serializeObservedForms(observedForms());
-      },
-      blockTypeLimits: {
-        "SearchResults": 1,
-        "Tweet": -1
-      }
-    });
-
     function checkBlockTypeLimitOnAdd(block) {
       var control = editor.$outer.find("a[data-type='" + block.blockCSSClass() + "']");
 
@@ -72,6 +55,23 @@ Spotlight.onLoad(function(){
         }
       });
     }
+
+    SirTrevor.EventBus.on('block:create:new', injectElementsIntoSirTrevorBlock);
+    SirTrevor.EventBus.on('block:create:existing', injectElementsIntoSirTrevorBlock);
+
+    SirTrevor.EventBus.on('block:create:new', checkBlockTypeLimitOnAdd);
+    SirTrevor.EventBus.on('block:remove', checkGlobalBlockTypeLimit);
+
+    var editor = new SirTrevor.Editor({
+      el: instance,
+      onEditorRender: function() {
+        serializeObservedForms(observedForms());
+      },
+      blockTypeLimits: {
+        "SearchResults": 1,
+        "Tweet": -1
+      }
+    });
 
     checkGlobalBlockTypeLimit();
   }
