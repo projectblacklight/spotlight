@@ -25,6 +25,8 @@ module Spotlight::Ability
       Spotlight::Contact,
       Spotlight::CustomField], exhibit_id: user.roles.pluck(:exhibit_id)
 
+    can :manage, Spotlight::Lock, by: user
+
     can :update, Spotlight::BlacklightConfiguration, exhibit_id: user.roles.pluck(:exhibit_id)
 
     can [:curate, :tag], Spotlight::Exhibit, id: user.roles.pluck(:exhibit_id)

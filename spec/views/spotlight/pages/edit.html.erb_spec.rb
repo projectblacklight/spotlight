@@ -22,7 +22,7 @@ module Spotlight
       let(:lock) { Lock.create! on: page }
 
       before do
-        assign(:lock, lock)
+        page.lock = lock
       end
 
       it "renders a lock" do
@@ -31,13 +31,36 @@ module Spotlight
         expect(rendered).to have_css '.alert-lock'
       end
 
-
       it "should not render an old lock" do
         lock.created_at -= 1.day
 
         render
 
         expect(rendered).not_to have_css '.alert-lock'
+      end
+
+      it "should not render a lock held by the current session" do
+        lock.current_session!
+
+        render
+
+        expect(rendered).not_to have_css '.alert-lock'
+      end
+
+      it "should attach a data-lock attribute to the cancel button" do
+        lock.current_session!
+
+        render
+
+        expect(rendered).to have_link "Cancel"
+        expect(rendered).to have_css "a[data-lock=\"#{url_for([spotlight, page.exhibit, lock])}\"]", text: "Cancel"
+      end
+
+      it "should not have data-lock attribute if the lock doesn't belong to this session" do
+        render
+
+        expect(rendered).to have_link "Cancel"
+        expect(rendered).not_to have_css "a[data-lock]", text: "Cancel"
       end
     end
   end
