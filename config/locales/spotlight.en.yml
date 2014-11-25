@@ -336,6 +336,7 @@ en:
       edit:
         header: "Edit Browse Category"
         title: "Curation - Browse"
+        query_params: "Active search constraints"
       search:
         item_count:
           one: "%{count} item"
