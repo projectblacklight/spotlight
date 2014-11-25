@@ -12,7 +12,7 @@
       </td>
 
       <td>
-        <%= Date.parse document['timestamp'] %>
+        <%= l Date.parse(document[blacklight_config.index.timestamp_field]) if document[blacklight_config.index.timestamp_field] %>
       </td>
       
       <td class="checkbox-toggle">
