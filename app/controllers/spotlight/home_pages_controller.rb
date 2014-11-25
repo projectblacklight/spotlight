@@ -36,5 +36,9 @@ module Spotlight
     def search_action_url *args
       exhibit_catalog_index_url(@page.exhibit, *args)
     end
+
+    def search_facet_url *args
+      exhibit_catalog_facet_url(@page.exhibit, *args)
+    end
   end
 end
