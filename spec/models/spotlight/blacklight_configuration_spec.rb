@@ -322,6 +322,17 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
     end
   end
 
+  describe "default_autocomplete_solr_params" do
+    it "should include all the fields we need to render the autocomplete widget" do
+      blacklight_config.show.title_field = "some_field"
+      blacklight_config.show.thumbnail_field = "some_thumbnail"
+      expect(subject.blacklight_config.default_autocomplete_solr_params).to have_key :fl
+      expect(subject.blacklight_config.default_autocomplete_solr_params[:fl]).to include "id"
+      expect(subject.blacklight_config.default_autocomplete_solr_params[:fl]).to include "some_field"
+      expect(subject.blacklight_config.default_autocomplete_solr_params[:fl]).to include "some_thumbnail"
+    end
+  end
+
   describe "show" do
     it "should have show view configuration" do
       expect(subject.show).to be_empty
