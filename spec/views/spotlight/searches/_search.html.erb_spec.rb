@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "spotlight/searches/_search.html.erb", :type => :view do
   
   let(:search) { stub_model(Spotlight::Search, exhibit: FactoryGirl.create(:exhibit),
-        id: 99, title: "Title1", short_description: "MyText") }
+        id: 99, title: "Title1", short_description: "MyText", query_params: { f: { genre_ssim: ["xyz"]}}) }
   before do
     allow(view).to receive(:edit_search_path).and_return("/edit")
     allow(view).to receive(:search_path).and_return("/search")

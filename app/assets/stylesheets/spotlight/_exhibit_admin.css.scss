@@ -53,3 +53,15 @@
     }
   }
 }
+
+#edit-search {
+  .remove {
+    display: none;
+  }
+
+  .constraint-value {
+     @include border-right-radius($border-radius-small);
+  }
+
+  .form-control-static { display: none; }
+}
