@@ -77,6 +77,8 @@ Spotlight::Engine.routes.draw do
     resource :home_page, path: 'home', controller: "home_pages"
     post '/pages/preview' => 'pages#preview', as: :preview_block
 
+    resources :lock, only: [:destroy]
+
     resources :roles, path: 'users', only: [:index, :create, :destroy] do
       collection do
         patch :update_all

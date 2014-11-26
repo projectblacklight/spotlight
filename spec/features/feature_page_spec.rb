@@ -106,5 +106,18 @@ describe "Feature page", :type => :feature do
         expect(page).to have_content "This page is currently being edited by " + exhibit_curator.to_s
       end
     end
+
+    it "should release the lock when the lock holder cancels edits", js: true do
+      # open the edit page
+      visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
+
+      click_on "Cancel"
+      sleep 2
+
+      # and then open the edit page again
+      visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
+
+      expect(page).not_to have_css '.alert'
+    end
   end
 end

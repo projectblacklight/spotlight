@@ -15,7 +15,7 @@ module Spotlight
     scope :published, -> { where(published: true) }
     scope :recent, -> { order("updated_at DESC").limit(10)}
 
-    has_one :lock, as: :on
+    has_one :lock, as: :on, dependent: :destroy
 
     # display_sidebar should be set to true by default
     before_create do
@@ -54,6 +54,13 @@ module Spotlight
 
     def should_display_title?
       title.present?
+    end
+
+    def lock! user
+      unless lock.present?
+        create_lock(by: user)
+        lock.current_session!
+      end
     end
 
   end

@@ -9,8 +9,7 @@
                 :'preview-url' => spotlight.exhibit_preview_block_url(@page.exhibit)
               }
             }) do |f| %>
-
-  <%= render @lock if @lock and not @lock.stale? %>
+  <%= render @page.lock if @page.lock and not @page.lock.stale? and not @page.lock.current_session? %>
   <% if @page.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
@@ -43,7 +42,7 @@
 
   <div class="form-actions">
     <div class="primary-actions">
-      <%= link_to(t('cancel'), :back, class: "btn btn-link") %>
+      <%= link_to(t('cancel'), :back, class: "btn btn-link", data: (@page.lock && @page.lock.current_session? ? { lock: url_for([spotlight, @page.exhibit, @page.lock]) } : {})) %>
       <%= f.submit class: 'btn btn-primary' %>
     </div>
   </div>
