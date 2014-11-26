@@ -32,9 +32,25 @@ module Spotlight
       configuration["short_description"]
     end
 
+    def configured_to_display?
+      if index_fields_config["enabled"]
+        view_types.any? do |view|
+          index_fields_config[view.to_s]
+        end
+      end
+    end
+
     protected
     def field_name
       "#{Spotlight::Engine.config.solr_fields.prefix}exhibit_#{self.exhibit.to_param}_#{label.parameterize}#{Spotlight::Engine.config.solr_fields.text_suffix}"
+    end
+
+    def view_types
+      [:show] + exhibit.blacklight_configuration.blacklight_config.view.keys
+    end
+
+    def index_fields_config
+      exhibit.blacklight_configuration[:index_fields][field]
     end
 
     def should_generate_new_friendly_id?

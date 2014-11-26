@@ -66,4 +66,42 @@ describe Spotlight::CustomField, :type => :model do
     end
   end
 
+  describe '#configured_to_display?' do
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    before do
+      exhibit.blacklight_configuration.blacklight_config.view = {view_name: {}}
+      subject.exhibit = exhibit
+      subject.label = "Label"
+      subject.field = 'foo_tesim'
+    end
+    it 'should be truthy when a view has been configured true' do
+      exhibit.blacklight_configuration.index_fields['foo_tesim'] =
+        Blacklight::Configuration::IndexField.new(label: "Label", enabled: true, view_name: true)
+      subject.save
+
+      expect(subject).to be_configured_to_display
+    end
+    it 'should be truthey for show views when enabled' do
+      exhibit.blacklight_configuration.index_fields['foo_tesim'] =
+        Blacklight::Configuration::IndexField.new(label: "Label", enabled: true, show: true)
+      subject.save
+
+      expect(subject).to be_configured_to_display
+    end
+    it 'should be falsey when a few has not been configured true' do
+      exhibit.blacklight_configuration.index_fields['foo_tesim'] =
+        Blacklight::Configuration::IndexField.new(label: "Label", enabled: true, view_name: false)
+      subject.save
+
+      expect(subject).to_not be_configured_to_display
+    end
+    it 'should be falsey when the field is not enabled' do
+      exhibit.blacklight_configuration.index_fields['foo_tesim'] =
+        Blacklight::Configuration::IndexField.new(label: "Label", enabled: false, view_name: false)
+      subject.save
+
+      expect(subject).to_not be_configured_to_display
+    end
+  end
+
 end
