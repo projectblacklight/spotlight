@@ -5,16 +5,15 @@ describe 'sir-trevor/blocks/_item_carousel_block.html.erb', :type => :view do
     { 'item-grid-display-caption' => false }
   end
 
-  let(:docs) do
-    [::SolrDocument.new(id: 1),
-     ::SolrDocument.new(id: 2),
-     ::SolrDocument.new(id: 3)]
+  let(:block_docs) do
+    [{id: 1, solr_document: ::SolrDocument.new(id: 1)},
+     {id: 2, solr_document: ::SolrDocument.new(id: 2)},
+     {id: 3, solr_document: ::SolrDocument.new(id: 3)}]
   end
 
   before do
     allow(view).to receive_messages(block: block)
-    allow(view).to receive_messages(item_grid_block_ids: [1,2,3])
-    allow(view).to receive_messages(get_solr_response_for_field_values: [nil, docs])
+    allow(view).to receive_messages(item_grid_block_with_documents: block_docs)
     allow(view).to receive_messages(multi_up_item_grid_caption: 'caption')
     allow(view).to receive_messages(has_thumbnail?: true, render_thumbnail_tag: 'thumb')
   end

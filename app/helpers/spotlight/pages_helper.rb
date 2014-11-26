@@ -3,11 +3,25 @@ module Spotlight
     def has_title? document
       document_heading(document) != document.id
     end
+    def item_grid_block_with_documents(block)
+      block_objects = item_grid_block_objects(block)
+      ids = item_grid_block_ids(block)
+      documents = get_solr_response_for_field_values("id", ids).last
+      block_objects.each do |object|
+        if (doc = documents.find{ |d| d[:id] == object[:id] }).present?
+          object[:solr_document] = doc
+        end
+      end
+    end
     def item_grid_block_objects(block)
       objects = []
       block.each do |key, value|
         if value.present? and key.include?("item-grid-id")
-          objects << {id: value, display: (block[key.gsub("-id", "-display")])}
+          if (display = block[key.gsub("-id", "-display")])
+            objects << {id: value,
+                        display: display,
+                        thumbnail: block[key.gsub("-id", "-thumbnail")]}
+          end
         end
       end
       objects

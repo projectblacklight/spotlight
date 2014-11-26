@@ -57,16 +57,22 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
       this.$('select#' + this.formId(this.primary_field_key)).data('select-after-ajax', data[this.primary_field_key]);
       this.$('select#' + this.formId(this.secondary_field_key)).data('select-after-ajax', data[this.secondary_field_key]);
       var context = this;
-      var i = 0;
-      context.$('[data-target-panel]').each(function(){
+      context.$('[data-target-panel]').each(function(i){
         if ($(this).prop("value") != "") {
-          swapInputForPanel($(this), context.$($(this).data('target-panel')), {
-            id: data[context.id_key + "_" + i],
-            title: data[context.id_key + "_" + i + "_title"],
-            thumbnail: data[context.thumbnail_key + "_" + i]
+          var target_panel = $(this),
+              object_id = data[context.id_key + "_" + i],
+              object_title = data[context.id_key + "_" + i + "_title"],
+              object_thumbnail = data[context.thumbnail_key + "_" + i];
+          $.ajax($('form[data-autocomplete-url]').data('autocomplete-url') + '?q=id:' + object_id).success(function(ajaxData){
+            var thumbnails = ajaxData['docs'][0]['thumbnails'];
+            swapInputForPanel(target_panel, context.$(target_panel.data('target-panel')), {
+              id: object_id,
+              title: object_title,
+              thumbnail: object_thumbnail,
+              thumbnails: thumbnails
+            });
           });
         }
-        i++;
       });
     },
 
@@ -142,6 +148,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
                 output += '<div class="main">';
                   output += '<div class="title panel-title" data-panel-title="true"></div>';
                   output += '<div data-panel-id-display="true"></div>';
+                  output += '<div data-panel-image-pagination="true"></div>';
                 output += '</div>';
                 output += '<div class="remove pull-right">';
                   output += '<a data-item-grid-panel-remove="true" href="#">Remove</a>'

@@ -2,10 +2,10 @@
   <% document = get_solr_response_for_doc_id(block['item-id']).last %>
   <div class="content-block item-text row">
     <div class="image-block pull-<%= block['text-align'] %>">
-      <% if has_thumbnail? document %>
-        <div class="thumbnail">
-          <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
-        </div>
+      <% if (block_thumb = block['item-thumbnail_0']).present? %>
+        <div class="thumbnail"><%= link_to_document(document, label: image_tag(block_thumb), counter: -1) %></div>
+      <% elsif has_thumbnail? document %>
+        <div class="thumbnail"><%= render_thumbnail_tag(document, {}, document_counter: -1) %></div>
       <% end %>
       <% if block['show-primary-caption'] %>
         <div class="primary-caption">

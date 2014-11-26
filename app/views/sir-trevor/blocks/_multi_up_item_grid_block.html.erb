@@ -1,30 +1,28 @@
-<% block_ids = item_grid_block_ids(block) %>
-<% unless block_ids.blank? %>
-  <% documents = get_solr_response_for_field_values("id", item_grid_block_ids(block)).last %>
+<% block_objects = item_grid_block_with_documents(block) %>
+
+<% if block_objects.present? %>
   <div class="content-block spotlight-flexbox">
-    <% block_ids.each do |block_id| %>
-      <% document = documents.find{|d| d[:id] == block_id} %>
-      <% if document %>
-        <div class="box" data-id="<%= document[:id] %>">
-          <div class="contents">
-            <% if has_thumbnail? document %>
-              <div>
-                <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
-              </div>
-            <% end %>
-            <% if block['show-primary-caption'] %>
-              <div class="caption">
-                <%= multi_up_item_grid_caption(block, document) %>
-              </div>
-            <% end %>
-            <% if block['show-secondary-caption'] %>
-              <div class="caption">
-                <%= multi_up_item_grid_caption(block, document, 'secondary') %>
-              </div>
-            <% end %>
-          </div>
+    <% block_objects.each do |block_object| %>
+      <% document = block_object[:solr_document] %>
+      <div class="box" data-id="<%= block_object[:id] %>">
+        <div class="contents">
+          <% if (block_thumb = block_object[:thumbnail]).present? %>
+            <div class="thumbnail"><%= link_to_document(document, label: image_tag(block_thumb), counter: -1) %></div>
+          <% elsif has_thumbnail? document %>
+            <div class="thumbnail"><%= render_thumbnail_tag(document, {}, document_counter: -1) %></div>
+          <% end %>
+          <% if block['show-primary-caption'] %>
+            <div class="caption">
+              <%= multi_up_item_grid_caption(block, document) %>
+            </div>
+          <% end %>
+          <% if block['show-secondary-caption'] %>
+            <div class="caption">
+              <%= multi_up_item_grid_caption(block, document, 'secondary') %>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     <% end %>
   </div>
 <% end %>

@@ -44,15 +44,20 @@ SirTrevor.Blocks.ItemText =  (function(){
       this.$('select#' + this.formId(this.primary_field_key)).data('select-after-ajax', data[this.primary_field_key]);
       this.$('select#' + this.formId(this.secondary_field_key)).data('select-after-ajax', data[this.secondary_field_key]);
       var context = this;
-      context.$('[data-target-panel]').each(function(){
-        if ($(this).prop("value") != "") {
-          swapInputForPanel($(this), context.$($(this).data('target-panel')), {
-            id: data[context.id_key],
-            title: data[context.id_text_key],
-            thumbnail: data[context.thumbnail_key + "_0"]
+      $.ajax($('form[data-autocomplete-url]').data('autocomplete-url') + '?q=id:' + data[context.id_key])
+        .success(function(ajaxData){
+          var thumbnails = ajaxData['docs'][0]['thumbnails'];
+          context.$('[data-target-panel]').each(function(){
+            if ($(this).prop("value") != "") {
+              swapInputForPanel($(this), context.$($(this).data('target-panel')), {
+                id: data[context.id_key],
+                title: data[context.id_text_key],
+                thumbnail: data[context.thumbnail_key + "_0"],
+                thumbnails: thumbnails
+              });
+            }
           });
-        }
-      });
+        });
     },
 
     template: _.template([
@@ -74,6 +79,7 @@ SirTrevor.Blocks.ItemText =  (function(){
                   '<div class="main">',
                     '<div class="title panel-title" data-panel-title="true"></div>',
                     '<div data-panel-id-display="true"></div>',
+                    '<div data-panel-image-pagination="true"></div>',
                   '</div>',
                   '<div class="remove pull-right">',
                     '<a data-item-grid-panel-remove="true" href="#">Remove</a>',
