@@ -43,7 +43,7 @@ module Spotlight
     end
 
     def contact_params
-      params.require(:contact).permit(:name, contact_info: Spotlight::Contact.fields.keys)
+      params.require(:contact).permit(:name, :avatar, :avatar_crop_x, :avatar_crop_y, :avatar_crop_w, :avatar_crop_h, contact_info: Spotlight::Contact.fields.keys)
     end
   end
 end

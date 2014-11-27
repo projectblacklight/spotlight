@@ -14,6 +14,7 @@ module Spotlight
     # Breadcrumbs on rails must be required outside of an initializer or it doesn't get loaded.
     require 'breadcrumbs_on_rails'
     require 'carrierwave'
+    require 'carrierwave/crop'
     require 'social-share-button'
 
     config.autoload_paths += %W(

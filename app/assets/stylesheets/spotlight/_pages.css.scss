@@ -91,6 +91,12 @@
   font-weight: 500;
 }
 
+.contact-photo {
+    border: 1px solid #CCC;
+    float: left;
+    margin-right: 15px;
+}
+
 .st-block-controls {
   border-radius: 12px;
   border: 3px dotted #999;
@@ -237,4 +243,8 @@
 .preview-btn, .preview-exit-btn {
   float: left;
   width: 100px;
+}
+
+.avatar-missing {
+  display: none;
 }

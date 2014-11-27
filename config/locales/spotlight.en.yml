@@ -85,6 +85,8 @@ en:
     attributes:
       "spotlight/resource/csv":
             url: "File"
+      "spotlight/contact":
+          avatar: "Photo"
   spotlight:
     application_name: "%{exhibit} - %{application_name}"
     html_title: "%{title} | %{application_name}"

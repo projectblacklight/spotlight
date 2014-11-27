@@ -7,6 +7,14 @@ class Spotlight::Contact < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: [:slugged,:scoped,:finders], scope: :exhibit
 
+  mount_uploader :avatar, AvatarUploader
+
+  ## carrierwave-crop doesn't want to store the crop points. we do.
+  # so instead of this:
+  #crop_uploaded :avatar  ## Add this
+  # we do this:
+  after_save :recreate_avatar_versions
+
   before_save on: :create do
     self.show_in_sidebar = true if show_in_sidebar.nil?
   end

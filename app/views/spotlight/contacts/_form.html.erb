@@ -6,6 +6,16 @@
     <% end %>
   <% end %>
 
+  <%= f.file_field :avatar %>
+
+  <div class="form-group <%= "avatar-missing" unless @contact.avatar.present? %>">
+    <div class="col-sm-5 col-sm-offset-2">
+      <%= hidden_field_tag :contact_avatar_crop, ([@contact.avatar_crop_x.to_i, @contact.avatar_crop_y.to_i, @contact.avatar_crop_x.to_i + @contact.avatar_crop_w.to_i, @contact.avatar_crop_y.to_i + @contact.avatar_crop_h.to_i].to_json if @contact.avatar_crop_x) %>
+      <%= f.previewbox :avatar %>
+      <%= f.cropbox :avatar %>
+    </div>
+  </div>
+
   <div class="form-group primary-actions">
     <%= cancel_link @contact, exhibit_about_pages_path(@contact.exhibit), class: "btn btn-link" %>
     <%= f.submit nil, class: 'btn btn-primary' %>

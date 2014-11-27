@@ -33,6 +33,8 @@ Dir["./spec/support/**/*.rb"].sort.each {|f| require f}
 FactoryGirl.definition_file_paths = [File.expand_path("../factories", __FILE__)]
 FactoryGirl.find_definitions
 
+FIXTURES_PATH = File.expand_path("../fixtures", __FILE__);
+
 
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!

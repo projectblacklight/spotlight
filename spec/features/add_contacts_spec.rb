@@ -26,7 +26,6 @@ describe "Add a contact to an exhibit", :type => :feature do
       click_button "Save changes"
     end
 
-
     expect(page).to have_content "Contacts were successfully updated."
 
     within "#nested-pages" do
@@ -40,6 +39,22 @@ describe "Add a contact to an exhibit", :type => :feature do
       expect(page).to have_selector "div", text: "Rome"
       expect(page).to have_selector "div", text: "(555) 555-5555 ext. 12345 (mobile)"
     end
-    
+  end
+
+  it "should allow the curator to crop the contact's avatar", js: true do
+    skip "Capyabara and jcrop don't play well together.."
+
+    visit spotlight.exhibit_about_pages_path(exhibit)
+    click_link "Add contact"
+    page.document.synchronize do
+      find(".jcrop-holder");
+    end
+    within "#new_contact" do
+      fill_in "Name", with: "Pictured User"
+      fill_in "Email", with: "marcus@rome.gov"
+      attach_file('contact_avatar', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')));
+    end
+    expect(page).to have_content "The contact was created."
+
   end
 end
