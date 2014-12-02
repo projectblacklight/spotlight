@@ -53,7 +53,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
     Spotlight::Exhibit.default.touch
   end
 
-  validate :title, presence: true
+  validates :title, presence: true
   acts_as_tagger
 
   def main_about_page
