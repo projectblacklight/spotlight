@@ -108,8 +108,19 @@ function addPreviewToSirTrevorBlock(block){
         var widget_bar = $('<div class="st-block__ui" />').append(btn);
 
         $('<div class="preview clearfix st-block__inner">').append(preview).append(widget_bar).insertAfter(block.$inner);
-          block.$inner.hide();
+        block.$inner.hide();
+
+        // trigger js behaviors we know blocks can provide
+        $('[data-ride="carousel"]').each(function () {
+          var $carousel = $(this)
+          $carousel.carousel($carousel.data())
+        });
+
+        $('.slideshow-block').slideshowBlock();
+        $('.item-features').featuredItemsCarousel();
+        $('[data-embed-url]').oEmbed();
         }
+
       );
   });
 
