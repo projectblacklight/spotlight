@@ -41,6 +41,7 @@ en:
       contact:
         create: "Save"
         created: "The %{model} was created."
+        destroyed: "The %{model} was destroyed."
         update: "Save"
         updated: "The %{model} was successfully updated."
         batch_updated: "Contacts were successfully updated."
