@@ -11,9 +11,11 @@ class Spotlight::Contact < ActiveRecord::Base
 
   ## carrierwave-crop doesn't want to store the crop points. we do.
   # so instead of this:
-  #crop_uploaded :avatar  ## Add this
+  #crop_uploaded :avatar
   # we do this:
+  #recreate_avatar_versions if avatar.present?
   after_save do
+    touch_about_pages
     recreate_avatar_versions if avatar.present?
   end
 
@@ -31,5 +33,9 @@ class Spotlight::Contact < ActiveRecord::Base
   protected
   def should_generate_new_friendly_id?
     name_changed?
+  end
+
+  def touch_about_pages
+    exhibit.about_pages.map(&:touch)
   end
 end
