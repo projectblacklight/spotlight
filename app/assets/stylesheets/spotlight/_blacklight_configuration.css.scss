@@ -38,7 +38,7 @@
       margin-right: $padding-base-horizontal;
       padding-left: 0px;
       padding-bottom: $table-cell-padding;
-      padding-top: $padding-base-vertical + 1 + $table-cell-padding;
+      padding-top: 1 + $table-cell-padding;
       display: block;
     }
     input {
