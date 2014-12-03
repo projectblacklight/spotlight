@@ -55,8 +55,8 @@ namespace :spotlight do
       begin
         id = 'test123'
         field = "test_#{Spotlight::Engine.config.solr_fields.string_suffix}"
-        Blacklight.solr.add id: id, field => 'some-string'
-        Blacklight.solr.update data: [{id: id, field => { set: 'a-new-string' }}].to_json, headers: { 'Content-Type' => 'application/json' }
+        Blacklight.solr.add blacklight_config.solr_document_model.unique_key.to_sym => id, field => 'some-string'
+        Blacklight.solr.update data: [{blacklight_config.solr_document_model.unique_key => id, field => { set: 'a-new-string' }}].to_json, headers: { 'Content-Type' => 'application/json' }
         Blacklight.solr.delete_by_id id
         print " OK\n"
       rescue Exception => e
