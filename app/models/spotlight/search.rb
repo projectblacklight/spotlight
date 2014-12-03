@@ -36,14 +36,14 @@ class Spotlight::Search < ActiveRecord::Base
   def images
     response = query_solr(query_params,
       rows: 1000,
-      fl: ['id', blacklight_config.index.title_field, blacklight_config.index.thumbnail_field],
+      fl: [blacklight_config.solr_document_model.unique_key, blacklight_config.index.title_field, blacklight_config.index.thumbnail_field],
       facet: false)
 
     Blacklight::SolrResponse.new(response, {}).docs.map do |result|
       doc = ::SolrDocument.new(result)
 
       [
-        doc.first('id'),
+        doc.first(blacklight_config.solr_document_model.unique_key),
         doc.first(blacklight_config.index.title_field),
         doc.first(blacklight_config.index.thumbnail_field)
       ]

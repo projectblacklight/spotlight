@@ -58,7 +58,7 @@ module Spotlight
         config.show.merge! show unless show.blank?
         config.index.merge! index unless index.blank?
 
-        config.default_autocomplete_solr_params[:fl] = "id #{config.view_config(:show).title_field} #{config.view_config(:show).thumbnail_field}"
+        config.default_autocomplete_solr_params[:fl] ||= "#{config.solr_document_model.unique_key} #{config.view_config(:show).title_field} #{config.view_config(:show).thumbnail_field}"
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
