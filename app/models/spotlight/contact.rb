@@ -13,7 +13,9 @@ class Spotlight::Contact < ActiveRecord::Base
   # so instead of this:
   #crop_uploaded :avatar  ## Add this
   # we do this:
-  after_save :recreate_avatar_versions
+  after_save do
+    recreate_avatar_versions if avatar.present?
+  end
 
   before_save on: :create do
     self.show_in_sidebar = true if show_in_sidebar.nil?

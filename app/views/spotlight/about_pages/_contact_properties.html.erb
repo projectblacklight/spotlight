@@ -1,4 +1,4 @@
-<%= image_tag contact.avatar.thumb.url, class: 'contact-photo' if contact.avatar %>
+<%= image_tag contact.avatar.thumb.url, class: 'contact-photo' if contact.avatar.present? %>
 <div itemprop="name" class="name"><%= contact.name %></div>
 <% Spotlight::Contact.fields.each do |field, options| %>
   <% if (value = contact.contact_info[field]).present? %>
