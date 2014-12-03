@@ -38,6 +38,7 @@ describe "Add a contact to an exhibit", :type => :feature do
       expect(page).to have_selector "div", text: "Emperor"
       expect(page).to have_selector "div", text: "Rome"
       expect(page).to have_selector "div", text: "(555) 555-5555 ext. 12345 (mobile)"
+      expect(page).to_not have_selector "img.contact-photo"
     end
   end
 
@@ -55,6 +56,6 @@ describe "Add a contact to an exhibit", :type => :feature do
       attach_file('contact_avatar', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')));
     end
     expect(page).to have_content "The contact was created."
-
+    expect(page).to have_selector 'img.contact-photo'
   end
 end
