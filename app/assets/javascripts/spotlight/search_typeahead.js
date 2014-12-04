@@ -51,6 +51,9 @@ function addAutocompletetoSirTrevorForm() {
     $($(this).data('id_field')).val("");
   }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
     swapInputForPanel($(this), $($(this).data('target-panel')) , data);
+    if(nextTextField = $('input[type="text"]', $(this).closest('.field').next('.field'))) {
+      nextTextField.focus();
+    }
   }).on('blur', function() {
     if($(this).val() != "" && $($(this).data('id_field')).val() == "") {
       $(this).closest('.field').addClass('has-error');
