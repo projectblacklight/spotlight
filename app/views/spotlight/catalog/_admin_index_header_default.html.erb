@@ -1,5 +1,5 @@
 <% # header bar for doc items in index view -%>
-<div class="documentHeader row">
+<div class="documentHeader row" data-label-toggle="<%= document.id %>">
    <h5 class="index_title col-sm-9 col-lg-10">
      <% counter = document_counter_with_offset(document_counter) %>
      <span class="document-counter">

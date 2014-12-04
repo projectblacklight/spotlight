@@ -18,7 +18,8 @@ module Spotlight
           thumbnail: doc.first(blacklight_config.index.thumbnail_field),
           thumbnails: doc[blacklight_config.index.thumbnail_field],
           description: doc.id,
-          url: exhibit_catalog_path(current_exhibit, doc)
+          url: exhibit_catalog_path(current_exhibit, doc),
+          private: doc.private?(current_exhibit)
         }
       end
     end

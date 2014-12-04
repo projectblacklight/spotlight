@@ -46,14 +46,16 @@ SirTrevor.Blocks.ItemText =  (function(){
       var context = this;
       $.ajax($('form[data-autocomplete-url]').data('autocomplete-url') + '?q=id:' + data[context.id_key])
         .success(function(ajaxData){
-          var thumbnails = ajaxData['docs'][0]['thumbnails'];
+          var thumbnails   = ajaxData['docs'][0]['thumbnails'],
+              privateLabel = ajaxData['docs'][0]['private'];
           context.$('[data-target-panel]').each(function(){
             if ($(this).prop("value") != "") {
               swapInputForPanel($(this), context.$($(this).data('target-panel')), {
                 id: data[context.id_key],
                 title: data[context.id_text_key],
                 thumbnail: data[context.thumbnail_key + "_0"],
-                thumbnails: thumbnails
+                thumbnails: thumbnails,
+                private: privateLabel
               });
             }
           });
