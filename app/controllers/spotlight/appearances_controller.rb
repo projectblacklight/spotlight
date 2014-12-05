@@ -25,7 +25,7 @@ class Spotlight::AppearancesController < Spotlight::ApplicationController
   end
 
   def appearance_params
-    params.require(:appearance).permit(:default_per_page,
+    params.require(:appearance).permit(:default_per_page, :searchable,
       document_index_view_types: @appearance.view_type_options,
       sort_fields: @appearance.allowed_params,
       main_navigations: [:id, :label, :weight])

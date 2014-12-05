@@ -4,6 +4,10 @@
 
 <%= bootstrap_form_for @appearance, url: spotlight.exhibit_appearance_path(@exhibit), layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5' do |f| %>
   <%= field_set_tag do %>
+    <h3><%= t(:'.exhibit_style.heading') %></h3>
+    <%= f.check_box(:searchable, label: t(:'.exhibit_style.searchable.label')) %>
+  <% end %>
+  <%= field_set_tag do %>
     <h3><%= t(:'.main_navigation.menu') %></h3>
     <p class="instructions"><%= t(:'.main_navigation.help') %></p>
     <div class="panel-group dd main_navigation_admin col-sm-7" id="nested-navigation" data-behavior="nestable" data-max-depth="1">

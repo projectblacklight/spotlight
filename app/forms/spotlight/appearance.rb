@@ -1,6 +1,7 @@
 module Spotlight
   class Appearance
     extend ActiveModel::Naming
+    extend ActiveModel::Translation
     include ActiveModel::Conversion
 
     def initialize(configuration)
@@ -11,7 +12,7 @@ module Spotlight
     delegate :persisted?, :exhibit, :exhibit_id, :default_per_page,
       :default_blacklight_config, to: :configuration
 
-    delegate :main_navigations, to: :exhibit
+    delegate :main_navigations, :searchable, to: :exhibit
 
     ##
     # This enables us to have a group of checkboxes that is backed by the array
@@ -42,7 +43,7 @@ module Spotlight
     end
 
     def update(params)
-      configuration.exhibit.update(main_navigations_attributes: exhibit_params(params)) if exhibit_params(params)
+      configuration.exhibit.update(exhibit_params(params))
       configuration.update(configuration_params(params))
     end
 
@@ -75,14 +76,18 @@ module Spotlight
     end
 
     def configuration_params(params)
-      p = params.except(:main_navigations)
+      p = params.except(:main_navigations, :searchable)
       p[:document_index_view_types] = keep_selected_values(p[:document_index_view_types])
       p[:sort_fields] = enable_sort_fields(keep_selected_values(p[:sort_fields]))
       p
     end
 
     def exhibit_params(params)
-      params[:main_navigations].try(:values)
+      p = {searchable: params[:searchable]}
+      if main_nav_attributes = params[:main_navigations].try(:values)
+        p[:main_navigations_attributes] = main_nav_attributes
+      end
+      p
     end
 
     ##

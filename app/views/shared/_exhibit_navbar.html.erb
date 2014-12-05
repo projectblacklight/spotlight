@@ -8,10 +8,11 @@
         <% end %>
       <% end %>
     </ul>
-
-    <div class="navbar-right col-sm-4 col-md-4"> 
-      <%= render_search_bar  %>
-    </div>
+    <% if !current_exhibit || current_exhibit.searchable? %>
+      <div class="navbar-right col-sm-4 col-md-4">
+        <%= render_search_bar  %>
+      </div>
+    <% end %>
   </div>
 </div>
 <div class="container">

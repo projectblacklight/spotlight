@@ -10,6 +10,10 @@ module Spotlight
       display_title
     end
 
+    def display_sidebar?
+      exhibit.searchable?
+    end
+
     private
     def self.default_content_text
       "This is placeholder content for the exhibit homepage. Curators of this exhibit can edit this page to customize it for the exhibit."
