@@ -8,7 +8,7 @@
       <%= f.hidden_field :featured_item_id, data: {:"featured-item-id" => true} %>
       <%= f.text_area :short_description %>
       <%= f.text_area :long_description, rows: 5 %>
-      <%= f.static_control nil, label: t(:".query_params") do %>
+      <%= f.static_control label: t(:".query_params") do %>
         <div class="well well-sm">
           <%= render_constraints(@search.query_params) %>
         </div>

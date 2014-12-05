@@ -3,13 +3,16 @@
   <%= f.fields_for :sidecar do |c| %>
     <%= c.fields_for :data do |d| %>
       <% current_exhibit.custom_fields.each do |field| %>
-        <%= d.text_field field.field, value: document.sidecar(current_exhibit).data[field.field], label: field.label %>
-        <% unless field.configured_to_display? %>
-          <p class="bg-warning help-block">
-            <%= t(:'.blank_field_warning_html',
-                  link: link_to(t(:'spotlight.curation.sidebar.metadata'), spotlight.exhibit_edit_metadata_path(current_exhibit))) %>
-          </p>
-        <% end %>
+        <div class="form-group">
+          <%= d.label field.field, field.label %>
+          <%= d.text_field_without_bootstrap field.field, value: document.sidecar(current_exhibit).data[field.field], class: 'form-control' %>
+          <% unless field.configured_to_display? %>
+            <p class="bg-warning help-block">
+              <%= t(:'.blank_field_warning_html',
+                    link: link_to(t(:'spotlight.curation.sidebar.metadata'), spotlight.exhibit_edit_metadata_path(current_exhibit))) %>
+            </p>
+          <% end %>
+        </div>
       <% end %>
     <% end %>
   <% end %>

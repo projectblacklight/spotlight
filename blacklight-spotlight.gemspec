@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency "carrierwave"
   s.add_dependency "carrierwave-crop"
   s.add_dependency "mini_magick"
-  s.add_dependency "bootstrap_form", "~> 2.1.0"
+  s.add_dependency "bootstrap_form", "~> 2.2.0"
   s.add_dependency "mail_form"
   s.add_dependency "acts-as-taggable-on", "3.1.0"
   s.add_dependency "friendly_id"
