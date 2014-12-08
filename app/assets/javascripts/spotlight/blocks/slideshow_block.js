@@ -145,7 +145,7 @@
         $secondary.removeClass('caption-hover');
       });
 
-      $(document).on('click', '[data-slide], [data-slide-to]', function(e) {
+      this.$element.on('click', '[data-slide], [data-slide-to]', function(e) {
         pos = parseInt($(this).attr('data-slide-to'), 10) || $(this).attr('data-slide');
 
         _this.pause();
