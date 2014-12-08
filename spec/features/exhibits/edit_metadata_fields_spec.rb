@@ -39,4 +39,10 @@ describe "Editing metadata fields", type: :feature do
     click_on "Save changes"
     expect(exhibit.reload.blacklight_config.index_fields['language_ssm'].label).to eq "Language of Origin"
   end
+
+  it "should have breadcrumbs" do
+    visit spotlight.exhibit_edit_metadata_path exhibit
+
+    expect(page).to have_breadcrumbs "Home", "Curation", "Metadata"
+  end
 end

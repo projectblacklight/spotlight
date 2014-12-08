@@ -28,4 +28,10 @@ describe "Editing metadata fields", type: :feature do
       expect(page).to have_content  /(\d+) unique values/
     end
   end
+
+  it "should have breadcrumbs" do
+    visit spotlight.exhibit_edit_facets_path exhibit
+
+    expect(page).to have_breadcrumbs "Home", "Curation", "Search facets"
+  end
 end
