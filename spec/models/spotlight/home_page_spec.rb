@@ -23,6 +23,16 @@ describe Spotlight::HomePage, :type => :model do
       expect(home_page.should_display_title?).to be_falsey
     end
   end
+  describe 'display_sidebar?' do
+    it 'should be true when the exhibit is searchable' do
+      home_page.exhibit.searchable = true
+      expect(home_page.display_sidebar?).to be_truthy
+    end
+    it 'should be false when the exhibit is not searchable' do
+      home_page.exhibit.searchable = false
+      expect(home_page.display_sidebar?).to be_falsey
+    end
+  end
   describe "content" do
     it "should include default text" do
       expect(home_page.content).to match /#{Spotlight::HomePage.default_content_text}/

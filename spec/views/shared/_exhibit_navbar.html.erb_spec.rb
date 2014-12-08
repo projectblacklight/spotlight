@@ -100,5 +100,16 @@ module Spotlight
       expect(response).to have_selector "li.active", text: "About"
     end
 
+    it 'should include the search bar when the exhibit is searchable' do
+      expect(current_exhibit).to receive(:searchable?).and_return(true)
+      render
+      expect(response).to have_content "Search Bar"
+    end
+
+    it 'should not include the search bar when the exhibit is searchable' do
+      expect(current_exhibit).to receive(:searchable?).and_return(false)
+      render
+      expect(response).to_not have_content "Search Bar"
+    end
   end
 end

@@ -12,6 +12,22 @@ describe Spotlight::Appearance, :type => :model do
     expect(subject.send(:enable_sort_fields, ['title', 'type'])).to eq( { 'sort_title_ssi asc' => {show: true}, 'sort_type_ssi asc' => {show: true}})
   end
 
+  describe '#searchable' do
+    it 'should be delegated to the exhibit' do
+      expect(config.exhibit).to receive(:searchable)
+      subject.searchable
+    end
+  end
+
+  describe '#exhibit_params' do
+    it 'should include the searchable parameter' do
+      expect(subject.send(:exhibit_params, searchable: true)).to eq({searchable: true})
+    end
+    it 'should include the main_navigations_attribute parameter when main_navigations is present' do
+      expect(subject.send(:exhibit_params, searchable: false, main_navigations: {a: :a})[:main_navigations_attributes]).to eq([:a])
+    end
+  end
+
   describe "#sort_fields" do
     subject { Spotlight::Appearance.new(config).sort_fields }
     describe "when fields are set" do
