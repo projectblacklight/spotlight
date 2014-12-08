@@ -25,9 +25,8 @@ gem 'sprockets', '2.11.0'
 gem 'sass', '~> 3.2.0'
 gem 'bootstrap-sass', ">= 3.1.1.1"
 
-gem 'blacklight-gallery', github: 'projectblacklight/blacklight-gallery'
+gem 'blacklight-gallery', '>= 0.1.1'
 gem 'sir-trevor-rails', github: 'sul-dlss/sir-trevor-rails'
-gem 'openseadragon', github: 'sul-dlss/openseadragon-rails'
 
 group :test do
   # Peg simplecov to < 0.8 until this is resolved:
