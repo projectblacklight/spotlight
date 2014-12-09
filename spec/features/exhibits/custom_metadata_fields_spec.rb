@@ -46,4 +46,10 @@ describe "Adding custom metadata fields", type: :feature do
     expect(page).to have_content "The custom field was deleted."
     
   end
+
+  it "should have breadcrumbs" do
+    visit spotlight.exhibit_edit_metadata_path exhibit
+    click_on "Add new field"
+    expect(page).to have_breadcrumbs "Home", "Curation", "Metadata", "Add new field"
+  end
 end

@@ -10,6 +10,11 @@ describe "Exhibit Administration", :type => :feature do
   before { login_as admin }
 
   describe "Contact Emails" do
+    it "should have breadcrumbs" do
+      visit spotlight.edit_exhibit_path( exhibit )
+      expect(page).to have_breadcrumbs "Home", "Administration", "Settings"
+    end
+
     it "should have a blank input field when there are no contacts yet" do
       visit spotlight.edit_exhibit_path( exhibit )
       expect(page).to have_css("input.exhibit-contact")

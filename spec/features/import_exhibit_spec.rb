@@ -42,4 +42,10 @@ describe "Allow exhibit admins to import and export content from an exhibit", :t
     expect(page).to have_content "The exhibit was successfully updated."
     expect(page).to have_content "A better title"
   end
+
+  it "should have breadcrumbs" do
+    visit spotlight.import_exhibit_path exhibit
+
+    expect(page).to have_breadcrumbs "Home", "Administration", "Import/Export"
+  end
 end

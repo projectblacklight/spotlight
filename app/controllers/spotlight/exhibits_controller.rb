@@ -8,6 +8,9 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   end
 
   def import
+    add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
+    add_breadcrumb t(:'spotlight.administration.sidebar.header'), exhibit_dashboard_path(@exhibit)
+    add_breadcrumb t(:'spotlight.administration.sidebar.import'), import_exhibit_path(@exhibit)
   end
 
   def process_import
