@@ -4,6 +4,7 @@ module Spotlight
   describe "_user_util_links", :type => :view do
     let(:current_exhibit) { FactoryGirl.create(:exhibit) }
     before do
+      allow(view).to receive(:blacklight_config).and_return(Blacklight::Configuration.new)
       allow(view).to receive(:current_user).and_return(current_user)
       allow(view).to receive(:current_exhibit).and_return(current_exhibit)
       allow(view).to receive_messages(show_contact_form?: true)

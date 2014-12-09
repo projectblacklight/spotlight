@@ -1,4 +1,12 @@
-  <ul class="nav navbar-nav pull-right">
+<div class="navbar-right">
+
+  <ul class="nav navbar-nav">
+    <%= render_nav_actions do |config, action|%>
+      <li><%= action %></li>
+    <% end %>
+  </ul>
+
+  <ul class="nav navbar-nav">
     <% if current_user %>
       <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=current_user%> <b class="caret"></b></a>
@@ -22,3 +30,4 @@
     <li><%= link_to t('spotlight.header_links.contact'), spotlight.new_exhibit_contact_form_path(current_exhibit), data: {behavior: 'contact-link', target: 'report-problem-form' } %></li>
     <% end %>
   </ul>
+</div>

@@ -64,14 +64,14 @@ class Spotlight::CatalogController < ::CatalogController
   end
 
   def update
-    @response, @document = get_solr_response_for_doc_id
+    @response, @document = get_solr_response_for_doc_id params[:id]
     @document.update(current_exhibit, solr_document_params)
     @document.save
     redirect_to exhibit_catalog_path(current_exhibit, @document)
   end
 
   def edit
-    @response, @document = get_solr_response_for_doc_id
+    @response, @document = get_solr_response_for_doc_id params[:id]
     blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
     blacklight_config.view.edit.partials.delete "spotlight/catalog/tags"
     blacklight_config.view.edit.partials.insert(2, :edit)

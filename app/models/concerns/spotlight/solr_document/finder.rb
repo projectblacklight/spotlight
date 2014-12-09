@@ -11,6 +11,10 @@ module Spotlight::SolrDocument
         new(solr_response.docs.first, solr_response)
       end
 
+      def blacklight_solr
+        @solr ||=  RSolr.connect(blacklight_solr_config)
+      end
+
       protected 
 
       def get_solr_response(params)
@@ -25,13 +29,13 @@ module Spotlight::SolrDocument
         @conf ||= CatalogController.blacklight_config
       end
 
-      def blacklight_solr
-        @solr ||=  RSolr.connect(blacklight_solr_config)
-      end
-
       def blacklight_solr_config
         Blacklight.solr_config
       end
+    end
+
+    def blacklight_solr
+      self.class.blacklight_solr
     end
   end
 end

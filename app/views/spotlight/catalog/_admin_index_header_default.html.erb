@@ -5,6 +5,6 @@
      <span class="document-counter">
        <%= t('blacklight.search.documents.counter', :counter => counter) if counter %>
      </span>
-     <%= link_to_document document, :label=>truncate(presenter(document).document_show_html_title, length: 89), :counter => counter %>
+     <%= link_to_document document, truncate(presenter(document).document_show_html_title, length: 89), :counter => counter %>
   </h5>
 </div>

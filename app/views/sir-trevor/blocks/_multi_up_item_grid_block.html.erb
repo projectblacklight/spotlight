@@ -7,7 +7,7 @@
       <div class="box" data-id="<%= block_object[:id] %>">
         <div class="contents">
           <% if (block_thumb = block_object[:thumbnail]).present? %>
-            <div class="thumbnail"><%= link_to_document(document, label: image_tag(block_thumb), counter: -1) %></div>
+            <div class="thumbnail"><%= link_to_document(document, image_tag(block_thumb), counter: -1) %></div>
           <% elsif has_thumbnail? document %>
             <div class="thumbnail"><%= render_thumbnail_tag(document, {}, document_counter: -1) %></div>
           <% end %>

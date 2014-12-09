@@ -45,7 +45,7 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
     add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
     add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
     add_breadcrumb t(:'spotlight.curation.sidebar.search_facets'), exhibit_edit_facets_path(@exhibit)
-    @fields = blacklight_solr.get('admin/luke', params: { fl: '*', 'json.nl' => 'map' })['fields']
+    @fields = solr_repository.send_and_receive('admin/luke', fl: '*', 'json.nl' => 'map')['fields']
   end
 
   # the luke request handler can return document counts, but the seem to be incorrect.
@@ -54,7 +54,7 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
   def alternate_count
     @alt_count ||= begin
       facet_query = @blacklight_configuration.blacklight_config.facet_fields.keys.map { |key| "#{key}:[* TO *]" }
-      solr_resp = blacklight_solr.get('select', params: {'facet.query' => facet_query, 'rows' =>0, 'facet' => true})
+      solr_resp = solr_repository.search('facet.query' => facet_query, 'rows' =>0, 'facet' => true)
       @alt_count = solr_resp['facet_counts']['facet_queries'].each_with_object({}) do |(key, val), alt_count|
         alt_count[key.split(/:/).first] = val
       end
