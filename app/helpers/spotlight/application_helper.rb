@@ -46,6 +46,18 @@ module Spotlight
     end
 
     ##
+    # Overridden from Blacklight to inject a private class
+    def render_document_class(document = @document)
+      types = super || ""
+      types << " #{document_class_prefix}private" if document.private?(current_exhibit)
+      types
+    end
+
+    # remove this line when we're on Blacklight > 5.7.2
+    def document_class_prefix
+      'blacklight-'
+    end
+    ##
     # TODO remove this when we use blacklight 5.2+
     # Returns a document presenter for the given document
     def presenter(document)

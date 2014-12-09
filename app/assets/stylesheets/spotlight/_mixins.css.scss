@@ -11,3 +11,12 @@
 @mixin panel-hover-highlighting() {
   background-color: $gray-lighter;
 }
+
+@mixin private-label() {
+  &:after {
+    @extend .label;
+    @extend .label-warning;
+    content: 'Private';
+    margin-left: 3px;
+  }
+}

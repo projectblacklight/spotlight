@@ -84,4 +84,22 @@ describe Spotlight::ApplicationHelper, :type => :helper do
       end
     end
   end
+  describe 'render_document_class' do
+    let(:current_exhibit) { FactoryGirl.create(:exhibit) }
+    let(:document) { SolrDocument.new(some_field: "Some data") }
+    before do
+      allow(helper).to receive_messages(current_exhibit: current_exhibit)
+      allow(helper).to receive_messages(blacklight_config: Blacklight::Configuration.new do |config|
+        config.index.display_type_field = :some_field
+      end)
+    end
+    it 'should return blacklight-private when the document is private' do
+      allow(document).to receive(:private?).with(current_exhibit).and_return(true)
+      expect(helper.render_document_class(document)).to match /blacklight-private/
+    end
+    it 'should prefix "blacklight-" to the configured type' do
+      pending("This should begin to pass after upgrading to > blacklight-5.7.2")
+      expect(helper.render_document_class(document)).to match /blacklight-some-data/
+    end
+  end
 end

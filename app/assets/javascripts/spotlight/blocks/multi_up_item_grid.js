@@ -64,12 +64,14 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
               object_title = data[context.id_key + "_" + i + "_title"],
               object_thumbnail = data[context.thumbnail_key + "_" + i];
           $.ajax($('form[data-autocomplete-url]').data('autocomplete-url') + '?q=id:' + object_id).success(function(ajaxData){
-            var thumbnails = ajaxData['docs'][0]['thumbnails'];
+            var thumbnails   = ajaxData['docs'][0]['thumbnails'],
+                privateLabel = ajaxData['docs'][0]['private'];
             swapInputForPanel(target_panel, context.$(target_panel.data('target-panel')), {
               id: object_id,
               title: object_title,
               thumbnail: object_thumbnail,
-              thumbnails: thumbnails
+              thumbnails: thumbnails,
+              private: privateLabel
             });
           });
         }

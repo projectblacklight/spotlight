@@ -17,7 +17,7 @@
         displayKey: 'title',
         source: results.ttAdapter(),
         templates: {
-          suggestion: Handlebars.compile('<div class="document-thumbnail thumbnail"><img src="{{thumbnail}}" /></div>{{title}}<br/><small>&nbsp;&nbsp;{{description}}</small>')
+          suggestion: Handlebars.compile('<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}"><div class="document-thumbnail thumbnail"><img src="{{thumbnail}}" /></div><span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>')
         }
       })
     }
@@ -77,6 +77,11 @@ function swapInputForPanel(input, panel, data){
   $(".pic.thumbnail img", panel).attr("src", data['thumbnail']).show();
   $("[data-item-grid-thumbnail]", panel).attr('value', data['thumbnail']);
   $("[data-panel-title]", panel).text(data['title']);
+
+  if(data['private']) {
+    panel.addClass("blacklight-private");
+  }
+
   $("[data-panel-id-display]", panel).text(data['id']);
   $(input.data('id_field')).val(data['id']);
 
