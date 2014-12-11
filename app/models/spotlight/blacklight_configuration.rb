@@ -38,6 +38,7 @@ module Spotlight
       model.sort_fields.each do |k,v|
         v[:enabled] &&= ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v[:enabled])
         v[:enabled] ||= true if v[:enabled].nil?
+        v[:label] = default_blacklight_config.sort_fields[k][:label] unless v[:label].present?
         v.reject! { |k, v1| v1.blank? and !v1 === false }
       end if model.sort_fields
 

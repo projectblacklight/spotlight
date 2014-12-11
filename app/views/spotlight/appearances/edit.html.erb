@@ -18,7 +18,7 @@
               <li class="dd-item dd3-item" data-id="<%= nav.id %>">
                 <div class="dd3-content panel panel-default">
                   <div class="dd-handle dd3-handle"><%= t :drag %></div>
-                  <div class="panel-heading page" data-behavior="restore-default">
+                  <div class="panel-heading" data-behavior="restore-default">
                     <%= label.hidden_field :id %>
                     <div class="row">
                       <div class="col-sm-8">
@@ -57,18 +57,61 @@
         <%= f.radio_button :default_per_page, key, label: key.to_s %>
       <% end %>
     <% end %>
-
-    <%= f.form_group :sort_fields, label: {text: t(:'.sort_fields')} do %>
-      <%= f.fields_for :sort_fields, @appearance.sort_fields do |vt| %>
-        <%= vt.check_box :relevance, {  checked: true, disabled: true, data: { readonly: true }} %>
-        <% @appearance.sort_options.each do |k| %>
-          <%= vt.check_box k %>
-        <% end %>
-      <% end %>
-    <% end %>
-
   <% end %>
+  <h3><%= t(:'.sort_fields.heading')%></h3>
+  <%= field_set_tag do %>
+    <p class="instructions"><%= t(:'.sort_fields.help') %></p>
 
+    <%= f.fields_for :sort_fields, @appearance.sort_fields do |vt| %>
+      <ol class="dd-list col-md-7 disabled-sort-option sort_fields_admin">
+        <li>
+          <div class="panel panel-default">
+            <div class="panel-content">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <% default_field = @appearance.default_sort_field %>
+                  <%= vt.fields_for default_field, @appearance.sort_fields[default_field] do |sort| %>
+                    <%= sort.check_box_without_bootstrap :enable, { checked: true, disabled: true, data: { readonly: true } } %>
+                    <%= sort.hidden_field :enabled, value: '1', data: { readonly: true } %>
+                    <%= sort.hidden_field :label, {value: @appearance.sort_fields[default_field][:label], readonly: true } %>
+                    <%= sort.hidden_field :weight, {value: "-1", readonly: true } %>
+                    <%= @appearance.sort_fields[default_field][:label] %>
+                  <% end %>
+                </h3>
+                (<%= translate_sort_fields(@appearance.configuration.blacklight_config.sort_fields[default_field]) %>)
+              </div>
+            </div>
+          </div>
+        </li>
+      </ol>
+      <div class="panel-group dd sort_fields_admin col-sm-7" id="nested-sort-fields" data-behavior="nestable" data-max-depth="1">
+        <ol class="dd-list">
+          <% @appearance.configuration.blacklight_config.sort_fields.except(default_field).each_with_index do |(k, config), index| %>
+              <li class="dd-item dd3-item" data-id="<%= k %>-id">
+                <div class="dd3-content panel panel-default">
+                  <div class="dd-handle dd3-handle"><%= t(:drag) %></div>
+                  <div class="panel-heading" data-behavior="restore-default">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <%= vt.fields_for k, @appearance.sort_fields[k] do |sort| %>
+                          <%= sort.check_box_without_bootstrap :enabled  %>
+                          <h3 class="panel-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+                            <a href="#edit-in-place" class="field-label edit-in-place"><%= @appearance.sort_fields[k][:label] %></a>
+                            <%= sort.hidden_field :label, {data: {:"edit-field-target" => "true"}} %>
+                          </h3>
+                          (<%= translate_sort_fields(config) %>)
+                          <%= sort.hidden_field :weight, {value: index, data: {property: "weight"}} %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+        </ol>
+      </div>
+    <% end %>
+  <% end %>
   <div class="form-actions">
     <div class="primary-actions">
       <%= f.submit nil, class: 'btn btn-primary' %>

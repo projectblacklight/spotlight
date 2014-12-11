@@ -6,12 +6,12 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
 
   before :each do
     blacklight_config.configure do |config|
-      config.add_sort_field 'score desc, sort_title_ssi asc', :label => 'Relevance' 
-      config.add_sort_field 'sort_title_ssi asc', :label => 'Title' 
-      config.add_sort_field 'sort_type_ssi asc', :label => 'Type' 
-      config.add_sort_field 'sort_date_dtsi asc', :label => 'Date' 
-      config.add_sort_field 'sort_source_ssi asc', :label => 'Source' 
-      config.add_sort_field 'id asc', :label => 'Identifier' 
+      config.add_sort_field 'relevance', sort: 'score desc, sort_title_ssi asc', :label => 'Relevance'
+      config.add_sort_field 'title', sort: 'sort_title_ssi asc', :label => 'Title'
+      config.add_sort_field 'type', sort: 'sort_type_ssi asc', :label => 'Type'
+      config.add_sort_field 'date', sort: 'sort_date_dtsi asc', :label => 'Date'
+      config.add_sort_field 'source', sort: 'sort_source_ssi asc', :label => 'Source'
+      config.add_sort_field 'identifier', sort: 'id asc', :label => 'Identifier'
     end
     allow(subject).to receive_messages default_blacklight_config: blacklight_config
     subject.exhibit = FactoryGirl.create(:exhibit)
@@ -208,12 +208,12 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
     end
     describe "should have default values" do
       its(:sort_fields) { should eq({
-          "id asc" => {:show=>true},
-          "score desc, sort_title_ssi asc" => {:show=>true},
-          "sort_date_dtsi asc" => {:show=>true},
-          "sort_source_ssi asc" => {:show=>true},
-          "sort_title_ssi asc" => {:show=>true},
-          "sort_type_ssi asc" => {:show=>true}
+          "identifier" => {:show=>true},
+          "relevance" => {:show=>true},
+          "date" => {:show=>true},
+          "source" => {:show=>true},
+          "title" => {:show=>true},
+          "type" => {:show=>true}
         })}
       its(:default_per_page) { should eq 10 }
       its(:document_index_view_types) { should match_array ::CatalogController.blacklight_config.view.keys.map { |x| x.to_s } }

@@ -13,7 +13,7 @@ module Spotlight
     it "should have a disabled relevance sort option" do
       render
 
-      expect(rendered).to have_selector "input[name='appearance[sort_fields][relevance]'][disabled='disabled']"
+      expect(rendered).to have_selector "input[name='appearance[sort_fields][relevance][enable]'][disabled='disabled']"
     end
   end
 end

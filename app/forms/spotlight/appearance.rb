@@ -32,14 +32,20 @@ module Spotlight
     def sort_fields 
       fields = configuration.sort_fields
       Blacklight::OpenStructWithHashAccess.new.tap do |s|
-        default_sort_fields.each do |k, field|
-          s[field.label.underscore] = fields[k] && fields[k][:show]
+        default_sort_fields.each_with_index do |(k, field), index|
+          s[field.label.underscore] = Blacklight::OpenStructWithHashAccess.new.tap do |c|
+            c.enabled = fields[k] && fields[k][:enabled]
+            c.label = fields[k][:label] if fields[k]
+            c.weight = index + 1
+          end
         end
       end
     end
 
     def allowed_params
-      default_sort_field_labels.map(&:to_sym)
+      sort_fields.keys.each_with_object({}) do |field, hsh|
+        hsh[field] = [:enabled, :label, :weight]
+      end
     end
 
     def update(params)
@@ -55,8 +61,8 @@ module Spotlight
       default_blacklight_config.per_page
     end
 
-    def sort_options
-      default_sort_field_labels - ['relevance']
+    def default_sort_field
+      configuration.blacklight_config.default_sort_field.field
     end
 
     protected
@@ -69,16 +75,9 @@ module Spotlight
       default_sort_fields.map { |k, v| v.label.underscore }
     end
 
-    def enable_sort_fields(checked_fields)
-      default_sort_fields.each_with_object({}) do |(key, sf), new_val|
-        new_val[key] = {show: true} if checked_fields.include?(sf.label.underscore)
-      end
-    end
-
     def configuration_params(params)
       p = params.except(:main_navigations, :searchable)
       p[:document_index_view_types] = keep_selected_values(p[:document_index_view_types])
-      p[:sort_fields] = enable_sort_fields(keep_selected_values(p[:sort_fields]))
       p
     end
 
