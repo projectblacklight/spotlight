@@ -10,9 +10,9 @@
         <div class="col-sm-8">
           <%= f.hidden_field :id %>
           <%= f.hidden_field :weight, data: {property: "weight"} %>
-          <h3 class="panel-title" data-in-place-edit-target=".edit-in-place">
+          <h3 class="panel-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
             <a href="#edit-in-place" class="field-label edit-in-place"><%= page.title %></a>
-            <%= f.hidden_field :title, value: page.title , class: 'form-control input-sm' %>
+            <%= f.hidden_field :title, value: page.title , class: 'form-control input-sm', data: {:"edit-feild-target" => 'true'} %>
           </h3>
         </div>
 
