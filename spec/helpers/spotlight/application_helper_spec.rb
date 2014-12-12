@@ -98,7 +98,6 @@ describe Spotlight::ApplicationHelper, :type => :helper do
       expect(helper.render_document_class(document)).to match /blacklight-private/
     end
     it 'should prefix "blacklight-" to the configured type' do
-      pending("This should begin to pass after upgrading to > blacklight-5.7.2")
       expect(helper.render_document_class(document)).to match /blacklight-some-data/
     end
   end

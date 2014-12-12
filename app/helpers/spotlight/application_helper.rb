@@ -37,6 +37,14 @@ module Spotlight
       end
     end
 
+    def document_action_path action_opts, url_opts = nil
+      if current_exhibit
+        spotlight.send(action_opts.path || "exhibit_#{action_opts.key}_#{controller_name}_path", url_opts)
+      else
+        super
+      end
+    end
+
     def url_to_tag_facet tag
       if current_exhibit
         search_action_url(add_facet_params(Spotlight::SolrDocument.solr_field_for_tagger(current_exhibit), tag, {}))
@@ -51,17 +59,6 @@ module Spotlight
       types = super || ""
       types << " #{document_class_prefix}private" if document.private?(current_exhibit)
       types
-    end
-
-    # remove this line when we're on Blacklight > 5.7.2
-    def document_class_prefix
-      'blacklight-'
-    end
-    ##
-    # TODO remove this when we use blacklight 5.2+
-    # Returns a document presenter for the given document
-    def presenter(document)
-      presenter_class.new(document, self)
     end
 
     ##

@@ -85,7 +85,7 @@ module Spotlight
         end
         describe 'item_grid_block_with_documents' do
           it 'should return hashes representing documents to display from the block, including the solr_document object itself' do
-            allow(helper).to receive_messages(get_solr_response_for_field_values: [nil, [{id: 'cba'}]])
+            allow(helper).to receive_messages(get_solr_response_for_document_ids: [nil, [{id: 'cba'}]])
             objects = helper.item_grid_block_with_documents(block_with_hidden)
             expect(objects.length).to eq 1
             expect(objects.first[:id]).to eq 'cba'
