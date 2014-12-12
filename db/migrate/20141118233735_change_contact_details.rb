@@ -14,7 +14,7 @@ class ChangeContactDetails < ActiveRecord::Migration
     end
 
     attributes.each do |col|
-      remove_column :spotlight_contacts, col, :string
+      remove_column :spotlight_contacts, col, :string if Spotlight::Contact.column_names.include? col
     end
   end
   def down
