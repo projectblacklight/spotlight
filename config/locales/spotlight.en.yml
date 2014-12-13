@@ -120,7 +120,18 @@ en:
           help: Click a menu item to change its display label. Drag and drop a menu item to change their order in the main navigation menu.
         restore_default: "Restore default"
         search_results: Search Results
-        sort_fields: Sort fields
+        sort_fields:
+          heading: Sort fields
+          help: "Select the fields you want to be available to users for sorting results. Click a field title to change its display label. Drag and drop fields to change their order in the sort dropdown menu. The field listed first is the default sort field."
+          sort_keys:
+            asc: ascending
+            desc: descending
+            score: relevancy score
+            sort_date_dtsi: date
+            sort_title_ssi: title
+            sort_type_ssi: type
+            sort_source_ssi: source
+            id: id
         thumbnail:
           small: Small
           medium: Medium

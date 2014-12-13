@@ -3,8 +3,8 @@ Spotlight.onLoad(function() {
   addCheckboxToggleBehavior();
 
   $("[data-in-place-edit-target]").on('click.inplaceedit', function() {
-    var $input = $(this).find('input');
     var $label = $(this).find($(this).data('in-place-edit-target'));
+    var $input = $(this).find($(this).data('in-place-edit-field-target'));
 
     // hide the edit-in-place affordance icon while in edit mode
     $(this).addClass('hide-edit-icon');
