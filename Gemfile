@@ -51,7 +51,7 @@ else
     gem 'sass-rails', ">= 5.0.0.beta1"
     gem 'responders', "~> 2.0"
   else
-    gem 'sass-rails'
+    gem 'sass-rails', "< 5.0"
     gem 'coffee-rails', "~> 4.0.0"
   end
 end
