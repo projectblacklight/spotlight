@@ -31,6 +31,13 @@ namespace :spotlight do
     puts "Exhibit created."
   end
 
+  desc "Import an exhibit"
+  task import: :environment do
+    exhibit = Spotlight::Exhibit.create title: "Imported Exhibit"
+    exhibit.import(JSON.parse(STDIN.read))
+    puts Spotlight::ExhibitExportSerializer.new(exhibit).to_json
+  end
+
   def prompt_password
     begin
       system "stty -echo"
