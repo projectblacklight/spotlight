@@ -60,4 +60,8 @@ describe Spotlight::ExhibitExportSerializer do
     expect(subject["attachments_attributes"]).to have(source_exhibit.attachments.count).items
   end
 
+  it "should have resources" do
+    expect(subject["resources_attributes"]).to have(source_exhibit.resources.count).items
+  end
+
 end

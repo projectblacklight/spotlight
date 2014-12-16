@@ -35,7 +35,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   accepts_nested_attributes_for :contact_emails, reject_if: proc {|attr| attr['email'].blank?}
   accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc {|attr| attr['user_key'].blank?}
   accepts_nested_attributes_for :custom_fields
-  accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :resources
 
   delegate :blacklight_config, to: :blacklight_configuration
 

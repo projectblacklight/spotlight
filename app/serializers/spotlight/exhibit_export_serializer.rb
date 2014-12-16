@@ -50,6 +50,8 @@ module Spotlight
     
     # todo: include attachment binary paylod??
     has_many :attachments, root: 'attachments_attributes', serializer: Spotlight.ExportSerializer(Spotlight::Attachment)
+
+    has_many :resources, root: 'resources_attributes', serializer: Spotlight.ExportSerializer(Spotlight::Resource)
   end
 
 end
