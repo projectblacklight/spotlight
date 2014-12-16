@@ -2,13 +2,13 @@ module Spotlight
   module SolrDocument
     extend ActiveSupport::Concern
     
+    include Blacklight::SolrHelper
     include Spotlight::SolrDocument::ActiveModelConcern
     include Spotlight::SolrDocument::Finder
     
     included do
       extend ActsAsTaggableOn::Compatibility
       extend ActsAsTaggableOn::Taggable
-      include Blacklight::SolrHelper
 
       acts_as_taggable
       has_many :sidecars, class_name: 'Spotlight::SolrDocumentSidecar'
