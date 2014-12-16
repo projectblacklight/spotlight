@@ -34,7 +34,12 @@ namespace :spotlight do
   desc "Import an exhibit"
   task import: :environment do
     exhibit = Spotlight::Exhibit.create title: "Imported Exhibit"
-    exhibit.import(JSON.parse(STDIN.read))
+    data = if ENV['FILE']
+        File.read(ENV['FILE'])
+      else
+        STDIN.read
+      end
+    exhibit.import(JSON.parse(data))
     puts Spotlight::ExhibitExportSerializer.new(exhibit).to_json
   end
 
