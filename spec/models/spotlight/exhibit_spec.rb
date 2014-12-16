@@ -67,13 +67,13 @@ describe Spotlight::Exhibit, :type => :model do
   describe "import" do
     it "should remove the default browse category" do
       subject.save
-      expect { subject.import({}) }.to change {subject.searches.count}.by(-1)
-      expect(subject.searches.map { |x| x.title }).not_to include "Browse All Exhibit Items"
+      expect { subject.import({}) }.to change {subject.searches.count}.by(0)
+      expect { subject.import({"searches_attributes" => [{"title" => "All Exhibit Items","slug" => "all-exhibit-items"}]}) }.to change {subject.searches.count}.by(0)
     end
 
     it "should import nested attributes from the hash" do
       subject.save
-      some_value = double
+      some_value = {}
       expect(subject).to receive(:update).with(some_value)
       subject.import some_value
     end

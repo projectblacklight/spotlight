@@ -78,9 +78,8 @@ class Spotlight::Exhibit < ActiveRecord::Base
   def import hash
     # remove the default browse category -- it might be in the import
     # and we don't want to have a conflicting slug
-
-    if persisted?
-      searches.where(title: "All Exhibit Items").destroy_all
+    if persisted? and hash.fetch("searches_attributes", []).any? { |x| x["slug"] == "all-exhibit-items"}
+      searches.where(slug: "all-exhibit-items").destroy_all
       reload
     end
     update hash
