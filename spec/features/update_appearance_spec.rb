@@ -52,4 +52,22 @@ describe "Update the appearance", :type => :feature do
     # Type is now sorted last
     expect(page).to have_css("#nested-sort-fields .dd-item:nth-child(5) h3", text: "Type")
   end
+
+  it "should hide search features when the exhibit is not searchable" do
+    visit spotlight.exhibit_dashboard_path(exhibit)
+    within "#sidebar" do
+      click_link "Appearance"
+    end
+
+    uncheck "Searchable (offer searchbox and facet sidebar)"
+
+    click_button "Save changes"
+
+    visit spotlight.exhibit_root_path(exhibit)
+
+    expect(page).to_not have_link "Saved Searches"
+    expect(page).to_not have_link "History"
+    expect(page).to_not have_content "Limit your search"
+    expect(page).to_not have_css ".search-query-form"
+  end
 end

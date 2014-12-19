@@ -59,6 +59,11 @@ module Spotlight
         config.show.merge! show unless show.blank?
         config.index.merge! index unless index.blank?
 
+        unless exhibit.searchable?
+          config.navbar.partials[:saved_searches].if = false
+          config.navbar.partials[:search_history].if = false
+        end
+
         config.default_autocomplete_solr_params[:fl] ||= "#{config.solr_document_model.unique_key} #{config.view_config(:show).title_field} #{config.view_config(:show).thumbnail_field}"
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
