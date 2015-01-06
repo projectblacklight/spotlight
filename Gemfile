@@ -35,7 +35,7 @@ else
   gem 'rails', ENV['RAILS_VERSION']
 
   # explicitly include sass-rails to get compatible sprocket dependencies
-  if ENV['RAILS_VERSION'] and ENV['RAILS_VERSION'] =~ /^4.2/
+  if ENV['RAILS_VERSION'].nil? || ENV['RAILS_VERSION'] =~ /^4.2/
     gem 'coffee-rails', '~> 4.1.0'
     gem 'sass-rails', '~> 5.0'
     gem 'responders', "~> 2.0"
