@@ -21,22 +21,22 @@ module Spotlight
         v[:enabled] ||= v.any? { |k1, v1| !v1.blank? }
 
         default_blacklight_config.view.keys.each do |view|
-          v[view] &&= ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v[view])
+          v[view] &&= value_to_boolean(v[view])
         end
 
-        v[:show] &&= ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v[:show])
+        v[:show] &&= value_to_boolean(v[:show])
 
         v.reject! { |k, v1| v1.blank? and !v1 === false }
       end if model.index_fields
 
       model.facet_fields.each do |k,v|
-        v[:show] &&= ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v[:show])
+        v[:show] &&= value_to_boolean(v[:show])
         v[:show] ||= true if v[:show].nil?
         v.reject! { |k, v1| v1.blank? and !v1 === false }
       end if model.facet_fields
 
       model.sort_fields.each do |k,v|
-        v[:enabled] &&= ActiveRecord::ConnectionAdapters::Column.value_to_boolean(v[:enabled])
+        v[:enabled] &&= value_to_boolean(v[:enabled])
         v[:enabled] ||= true if v[:enabled].nil?
         v[:label] = default_blacklight_config.sort_fields[k][:label] unless v[:label].present?
         v.reject! { |k, v1| v1.blank? and !v1 === false }
@@ -167,6 +167,15 @@ module Spotlight
         fields[index][:weight].to_i
       else
         100 + (fields.keys.index(index) || fields.keys.length)
+      end
+    end
+
+    def value_to_boolean v
+      if defined? ActiveRecord::Type
+        # Rails 4.2+
+        ActiveRecord::Type::Boolean.new.type_cast_from_database v
+      else
+        ActiveRecord::ConnectionAdapters::Column.value_to_boolean v
       end
     end
   end
