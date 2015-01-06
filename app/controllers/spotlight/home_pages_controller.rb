@@ -34,11 +34,11 @@ module Spotlight
     end
 
     def search_action_url *args
-      exhibit_catalog_index_url(@page.exhibit, *args)
+      exhibit_catalog_index_url(*args)
     end
 
     def search_facet_url *args
-      exhibit_catalog_facet_url(@page.exhibit, *args)
+      exhibit_catalog_facet_url(*args)
     end
   end
 end
