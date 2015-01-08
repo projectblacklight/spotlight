@@ -1,7 +1,7 @@
 module Spotlight
   class HomePagesController < Spotlight::PagesController
     include Blacklight::SolrHelper
-    include Spotlight::Catalog
+    prepend Spotlight::Catalog
 
     load_and_authorize_resource through: :exhibit, singleton: true, instance_name: 'page'
 
@@ -31,14 +31,6 @@ module Spotlight
 
     def allowed_page_params
       super.concat [:display_title]
-    end
-
-    def search_action_url *args
-      exhibit_catalog_index_url(*args)
-    end
-
-    def search_facet_url *args
-      exhibit_catalog_facet_url(*args)
     end
   end
 end
