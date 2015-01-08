@@ -34,6 +34,23 @@ describe "Home page", :type => :feature do
     expect(page).to have_selector ".panel-title a", text: "New Home Page Title"
   end
 
+  it "should have working facet links" do
+    visit spotlight.exhibit_home_page_path(exhibit.home_page)
+    click_link "Genre"
+    click_link "map"
+    expect(page).to have_content exhibit.title
+    expect(page).to have_content "You searched for: Genre map"
+  end
+
+  it "should have a search box" do
+    visit spotlight.exhibit_home_page_path(exhibit.home_page)
+    fill_in "q", with: "query"
+    click_button "Search"
+
+    expect(page).to have_content exhibit.title
+    expect(page).to have_content "You searched for: query"
+  end
+
   describe "page options on edit form" do
     describe "show title" do
       let(:home_page) { FactoryGirl.create(:home_page, display_title: false, exhibit: exhibit) }
