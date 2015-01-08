@@ -74,6 +74,10 @@ module Spotlight
       sidecar(exhibit).public?
     end
 
+    def attribute_present? *args
+      false
+    end
+
     protected
     def tags_to_solr
       h = {}

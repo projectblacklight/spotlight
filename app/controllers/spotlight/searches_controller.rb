@@ -20,7 +20,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { render json: @searches }
+      format.json { render json: @searches, root: false }
     end
   end
 

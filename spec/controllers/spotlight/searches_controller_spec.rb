@@ -54,8 +54,8 @@ describe Spotlight::SearchesController, :type => :controller do
         get :index, exhibit_id: exhibit, format: 'json'
         expect(response).to be_successful
         json = JSON.parse(response.body)
-        expect(json['searches'].size).to eq 2
-        expect(json['searches'].last).to include({'id' => search.id, "title"=>"Search1"})
+        expect(json.size).to eq 2
+        expect(json.last).to include({'id' => search.id, "title"=>"Search1"})
       end
     end
 

@@ -56,7 +56,7 @@ SirTrevor.Blocks.SearchResults =  (function(){
     }).success(function(data){
       if($("option", searches_field).length == 1){
         var options = "";
-        $.each(data.searches, function(i, search){
+        $.each(data, function(i, search){
           options += "<option value='" + search.id + "'>" + search.title + "</option>";
         });
 

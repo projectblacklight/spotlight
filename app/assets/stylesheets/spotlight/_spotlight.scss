@@ -1,14 +1,8 @@
-/*
-*= require sir-trevor
-*= require social-share-button
-*= require bootstrap-tagsinput
-*= require jquery.jcrop
-*/
 @import "spotlight/variables";
 @import "spotlight/mixins";
 @import "bootstrap/variables";
 
-@import "spotlight/sir-trevor";
+@import "spotlight/sir-trevor_overrides";
 @import "spotlight/attachments";
 @import "spotlight/pages";
 @import 'blacklight_gallery/default';

@@ -22,7 +22,7 @@ module Spotlight
     end
 
     def assets
-      copy_file "spotlight.css.scss", "app/assets/stylesheets/spotlight.css.scss"
+      copy_file "spotlight.scss", "app/assets/stylesheets/spotlight.scss"
       copy_file "spotlight.js", "app/assets/javascripts/spotlight.js"
     end
 

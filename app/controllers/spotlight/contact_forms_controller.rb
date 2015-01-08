@@ -12,7 +12,12 @@ module Spotlight
       @contact_form.request = request
 
       if @contact_form.valid?
-        @contact_form.deliver
+        if @contact_form.respond_to? :deliver_now
+          @contact_form.deliver_now
+        else
+          @contact_form.deliver
+        end
+
         redirect_to :back, notice: t(:'helpers.submit.contact_form.created')
       else
         render 'new' 

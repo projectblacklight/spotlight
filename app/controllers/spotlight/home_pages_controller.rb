@@ -28,17 +28,11 @@ module Spotlight
     end
 
     private
+    alias_method :search_action_url, :exhibit_search_action_url
+    alias_method :search_facet_url, :exhibit_search_facet_url
 
     def allowed_page_params
       super.concat [:display_title]
-    end
-
-    def search_action_url *args
-      exhibit_catalog_index_url(@page.exhibit, *args)
-    end
-
-    def search_facet_url *args
-      exhibit_catalog_facet_url(@page.exhibit, *args)
     end
   end
 end

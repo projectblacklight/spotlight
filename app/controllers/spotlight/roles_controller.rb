@@ -40,7 +40,7 @@ module Spotlight
       delete_count = 0
       attrs.each do |item|
         if item[:id]
-          if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(item['_destroy'])
+          if item['_destroy'].present?
             authorize! :destroy, klass.find(item[:id])
             delete_count += 1
           else

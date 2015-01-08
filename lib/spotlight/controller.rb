@@ -20,14 +20,45 @@ module Spotlight
         default_catalog_controller.blacklight_config
       end
     end
-    
+
     def search_action_url *args
       if current_exhibit
-        spotlight.exhibit_catalog_index_url(current_exhibit, *args)
+        exhibit_search_action_url *args
       else
         main_app.catalog_index_url *args
       end
     end
 
+    def search_facet_url *args
+      if current_exhibit
+        exhibit_search_facet_url *args
+      else
+        main_app.catalog_facet_url *args
+      end
+    end
+
+    def exhibit_search_action_url *args
+      options = args.extract_options!
+      only_path = options[:only_path]
+      options.except! :exhibit_id, :only_path
+
+      if only_path
+        spotlight.exhibit_catalog_index_path(current_exhibit, *args, options)
+      else
+        spotlight.exhibit_catalog_index_url(current_exhibit, *args, options)
+      end
+    end
+
+    def exhibit_search_facet_url *args
+      options = args.extract_options!
+      only_path = options[:only_path]
+      options.except! :exhibit_id, :only_path
+
+      if only_path
+        spotlight.exhibit_catalog_facet_url(current_exhibit, *args, options)
+      else
+        spotlight.exhibit_catalog_facet_url(current_exhibit, *args, options)
+      end
+    end
   end
 end

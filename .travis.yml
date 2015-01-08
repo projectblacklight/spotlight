@@ -13,6 +13,9 @@ env:
   global:
     - JRUBY_OPTS="-J-Xms512m -J-Xmx1024m"
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+  matrix:
+    - "RAILS_VERSION=4.1.8"
+    - "RAILS_VERSION=4.2.0"
 
 sudo: false
 language: ruby

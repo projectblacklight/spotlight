@@ -27,7 +27,12 @@ module Spotlight
     end
 
     def send_devise_notification(notification, *args)
-      notification_mailer.send(notification, self, *args).deliver
+      notice = notification_mailer.send(notification, self, *args)
+      if notice.respond_to? :deliver_now
+        notice.deliver_now
+      else
+        notice.deliver
+      end
     end
 
     def notification_mailer
