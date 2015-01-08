@@ -38,6 +38,9 @@ class CatalogController < ApplicationController
     # Alternative view that is just a thumbnail
     #config.show.partials.insert(1, :image)
 
+    # The allowed file extensions for uploading non-repository items.
+    config.allowed_upload_extensions = %w(jpg jpeg png)
+
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
     #

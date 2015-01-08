@@ -1,1 +1,6 @@
-<%= link_to t('.new'), new_exhibit_catalog_path(@exhibit), class: 'btn btn-info' %>
+<div class="add-items-nav clearfix">
+  <div class="pull-right">
+    <%= link_to t('.new.repo_item'), new_exhibit_catalog_path(current_exhibit), class: 'btn btn-default' %>
+    <%= link_to t('.new.non_repo_item'), new_exhibit_resources_upload_path(current_exhibit), class: 'btn btn-default' %>
+  </div>
+</div>

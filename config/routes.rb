@@ -26,7 +26,6 @@ Spotlight::Engine.routes.draw do
     resources :catalog do
       collection do
         get 'admin'
-        get 'new'
         get 'autocomplete'
       end
 
@@ -43,6 +42,8 @@ Spotlight::Engine.routes.draw do
     resource :dashboard, only: :show
 
     resources :resources
+
+    resources :resources_uploads, controller: 'resources/upload', path: 'upload_resources'
 
     resources :resources_csvs, controller: 'resources/csv', path: 'csv_resources' do
       collection do

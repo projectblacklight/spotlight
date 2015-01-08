@@ -49,6 +49,12 @@
   }
 }
 
+.blacklight-catalog-admin {
+  .add-items-nav {
+    margin-bottom: $padding-large-vertical;
+  }
+}
+
 form.edit_solr_document {
   .bootstrap-tagsinput {
     display: block;
