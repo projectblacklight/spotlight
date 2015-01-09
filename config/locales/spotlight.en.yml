@@ -206,7 +206,9 @@ en:
         title: Curation - Items
         header: Items
       admin_header:
-        new: "Add New Items"
+        new:
+          repo_item: "Add repository item"
+          non_repo_item: "Add non-repository item"
       new:
         header: Import items
     confirmation_mailer:
@@ -335,6 +337,18 @@ en:
         header: 'CSV Import'
         form:
           template: "Download Template"
+      upload:
+        new:
+          header: "Add non-repository items"
+          single: "Single item"
+          multiple: "Multiple items using CSV file"
+        error: "There was a problem uploading your object."
+        success: "Object uploaded successfully."
+        single_item_form:
+          add_item: "Add item"
+          add_item_and_continue: "Add item and continue adding"
+          url-field:
+            help: "Valid file types: %{extensions}"
       bookmarklet:
         instructions:  "Drag this button to the bookmarks toolbar in your web browser"
         bookmarklet: "%{application_name} widget"

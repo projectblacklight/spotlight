@@ -8,7 +8,7 @@ describe "adding an item using the provided bookmarklet", :type => :feature do
 
   it "should have an exhibit-specific bookmarklet" do
     visit spotlight.admin_exhibit_catalog_index_path(exhibit)
-    click_link "Add New Items"
+    click_link "Add repository item"
 
     expect(page).to have_content "Drag this button to the bookmarks toolbar in your web browser"
     expect(page).to have_link "#{exhibit.title} - Blacklight widget"

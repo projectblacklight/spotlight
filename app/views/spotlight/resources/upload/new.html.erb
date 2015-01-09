@@ -1,0 +1,22 @@
+<%= render 'spotlight/shared/curation_sidebar' %>
+<div id="content" class="col-md-9">
+  <%= curation_page_title %>
+  <div role="tabpanel" class="item-upload-tabs">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#single" aria-controls="single" role="tab" data-toggle="tab"><%= t('.single') %></a>
+      </li>
+      <li role="presentation" class="disabled">
+        <a href="#multi" aria-controls="multi" role="tab" data-toggle="tab"><%= t('.multiple') %></a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="single">
+        <%= render "single_item_form" %>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="multi">
+        <%= render "multi_item_form" %>
+      </div>
+    </div>
+  </div>
+</div>
