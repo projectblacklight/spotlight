@@ -9,12 +9,13 @@ describe Spotlight::Resources::Upload, :type => :model do
     before do
       subject.id = "1"
       subject.data = {title: "Title Data"}
-      allow(subject).to receive(:url).and_return(stub_model(Spotlight::Resources::Upload))
-      allow(subject.url).to receive(:url).and_return('url-data')
+      allow(subject).to receive(:url).and_return(stub_model(Spotlight::ItemUploader))
       allow(subject.exhibit).to receive(:blacklight_config).and_return(
         Blacklight::Configuration.new do |config|
           config.index.title_field = :configured_title_field
+          config.index.full_image_field = :configured_full_image_field
           config.index.thumbnail_field = :configured_thumbnail_field
+          config.index.square_image_field = :configured_square_field
         end
       )
     end
@@ -24,8 +25,10 @@ describe Spotlight::Resources::Upload, :type => :model do
     it 'should have a title field using the exhibit specific blacklight_config' do
       expect(subject.to_solr[:configured_title_field]).to eq 'Title Data'
     end
-    it 'should have a thumbnail field using the exhibit specific blacklight_config' do
-      expect(subject.to_solr[:configured_thumbnail_field]).to eq 'url-data'
+    it 'should have the various image fields' do
+      expect(subject.to_solr).to have_key :configured_full_image_field
+      expect(subject.to_solr).to have_key :configured_thumbnail_field
+      expect(subject.to_solr).to have_key :configured_square_field
     end
   end
 end

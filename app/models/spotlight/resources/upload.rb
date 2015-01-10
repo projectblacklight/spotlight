@@ -1,6 +1,6 @@
 module Spotlight
   class Resources::Upload < Spotlight::Resource
-    mount_uploader :url, ItemUploader
+    mount_uploader :url, Spotlight::ItemUploader
 
     def to_solr
       store_url! # so that #url doesn't return the tmp directory
@@ -21,8 +21,11 @@ module Spotlight
     def to_solr_hash
       solr_hash = {
         ::SolrDocument.unique_key.to_sym => compound_id,
-        exhibit.blacklight_config.index.thumbnail_field => url.url
+        exhibit.blacklight_config.index.full_image_field => url.url
       }
+      Spotlight::ItemUploader.configured_versions.each do |config|
+        solr_hash[exhibit.blacklight_config.index.send(config[:blacklight_config_field])] = url.send(config[:version]).url
+      end
       configured_fields.each do |key, config|
         solr_hash[config[:solr_field]] = data[key]
       end
