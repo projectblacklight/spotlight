@@ -7,7 +7,7 @@ class Spotlight::Contact < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: [:slugged,:scoped,:finders], scope: :exhibit
 
-  mount_uploader :avatar, AvatarUploader
+  mount_uploader :avatar, Spotlight::AvatarUploader
 
   ## carrierwave-crop doesn't want to store the crop points. we do.
   # so instead of this:

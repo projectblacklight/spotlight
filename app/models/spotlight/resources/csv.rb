@@ -2,7 +2,7 @@ require 'csv'
 
 module Spotlight
   class Resources::Csv < Spotlight::Resource
-    mount_uploader :url, CsvUploader
+    mount_uploader :url, Spotlight::CsvUploader
 
     # we want to do this before reindexing
     after_save :update_exhibit_specific_fields, if: :url_changed?, prepend: true
