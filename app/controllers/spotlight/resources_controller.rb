@@ -1,5 +1,5 @@
 module Spotlight
-  class ResourcesController < ApplicationController
+  class ResourcesController < Spotlight::ApplicationController
     before_filter :authenticate_user!, except: [:show]
 
     load_resource :exhibit, class: Spotlight::Exhibit
@@ -11,6 +11,7 @@ module Spotlight
     def new
 
       @resource.attributes = resource_params if params[:resource]
+      @resource = @resource.becomes_provider
 
       ## TODO: in Rails 4.1, replace this with a variant
       if from_popup?
