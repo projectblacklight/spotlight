@@ -28,7 +28,9 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     config.index.title_field = 'full_title_tesim'
     config.index.display_type_field = 'content_metadata_type_ssm'
+    config.index.full_image_field = :full_image_url_ssm
     config.index.thumbnail_field = :thumbnail_url_ssm
+    config.index.square_image_field = :thumbnail_square_url_ssm
 
     config.view.gallery.partials = [:index_header, :index]
     config.view.slideshow.partials = [:index]
