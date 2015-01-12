@@ -23,6 +23,7 @@ module Spotlight
 
     def create
       @resource.attributes = resource_params
+      @resource = @resource.becomes_provider
 
       if @resource.save
         if from_popup?
