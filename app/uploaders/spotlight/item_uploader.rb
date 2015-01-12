@@ -8,7 +8,7 @@ module Spotlight
     apply_spotlight_versions
 
     def extension_white_list
-      model.exhibit.blacklight_config.allowed_upload_extensions
+      Spotlight::Engine.config.allowed_upload_extensions
     end
 
     def store_dir

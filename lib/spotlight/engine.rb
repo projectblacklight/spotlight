@@ -35,6 +35,9 @@ module Spotlight
     end
 
     Spotlight::Engine.config.resource_providers = []
+
+    # The allowed file extensions for uploading non-repository items.
+    Spotlight::Engine.config.allowed_upload_extensions = %w(jpg jpeg png)
     
     # Suffixes for exhibit-specific solr fields
     Spotlight::Engine.config.solr_fields = OpenStruct.new
@@ -50,7 +53,7 @@ module Spotlight
     
     # Field containing the last modified date for a Solr document
     Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
-    
+
     # make blacklight configuration play nice with bootstrap_form
     Blacklight::OpenStructWithHashAccess.send(:extend, ActiveModel::Translation)
   end
