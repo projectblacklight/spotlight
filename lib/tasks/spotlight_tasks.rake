@@ -10,6 +10,14 @@ namespace :spotlight do
     puts "User created."
   end
 
+  desc "Add application-wide admin privileges to an existing user" 
+  task :admin => :environment do
+    print "Email: "
+    email = $stdin.gets.chomp
+    u = User.find_by email: email
+    Spotlight::Role.create(user: u, exhibit: nil, role: 'admin')
+  end
+
   desc "Create a new exhibit"
   task :exhibit => :environment do
     print "Exhibit title: "
