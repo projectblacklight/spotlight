@@ -33,7 +33,7 @@ module Spotlight
       fields = configuration.sort_fields
       Blacklight::OpenStructWithHashAccess.new.tap do |s|
         default_sort_fields.each_with_index do |(k, field), index|
-          s[field.label.underscore] = Blacklight::OpenStructWithHashAccess.new.tap do |c|
+          s[k] = Blacklight::OpenStructWithHashAccess.new.tap do |c|
             c.enabled = fields[k] && fields[k][:enabled]
             c.label = fields[k][:label] if fields[k]
             c.weight = index + 1
@@ -62,17 +62,13 @@ module Spotlight
     end
 
     def default_sort_field
-      configuration.blacklight_config.default_sort_field.field
+      configuration.blacklight_config.default_sort_field.key
     end
 
     protected
 
     def default_sort_fields
       default_blacklight_config.sort_fields
-    end
-
-    def default_sort_field_labels
-      default_sort_fields.map { |k, v| v.label.underscore }
     end
 
     def configuration_params(params)
