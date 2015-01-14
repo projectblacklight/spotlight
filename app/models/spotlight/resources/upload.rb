@@ -21,8 +21,12 @@ module Spotlight
     def to_solr_hash
       solr_hash = {
         ::SolrDocument.unique_key.to_sym => compound_id,
-        exhibit.blacklight_config.index.full_image_field => url.url
+        exhibit.blacklight_config.index.full_image_field => url.url,
+        spotlight_resource_type_ssm: self.class.to_s.tableize
       }
+
+      add_image_dimensions(solr_hash)
+
       Spotlight::ItemUploader.configured_versions.each do |config|
         solr_hash[exhibit.blacklight_config.index.send(config[:blacklight_config_field])] = url.send(config[:version]).url
       end
@@ -30,6 +34,12 @@ module Spotlight
         solr_hash[config[:solr_field]] = data[key]
       end
       solr_hash
+    end
+
+    def add_image_dimensions(solr_hash)
+      dimensions = ::MiniMagick::Image.open(url.file.file)[:dimensions]
+      solr_hash[:spotlight_full_image_width_ssm] = dimensions.first
+      solr_hash[:spotlight_full_image_height_ssm] = dimensions.last
     end
 
     def compound_id

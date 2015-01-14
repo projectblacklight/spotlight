@@ -15,6 +15,12 @@ module Spotlight
       
       before_save :save_owned_tags
       after_save :reindex
+
+      ::SolrDocument.use_extension(Spotlight::SolrDocument::UploadedResource) do |document|
+        document[Spotlight::Engine.config.full_image_field].present? &&
+        document[:spotlight_resource_type_ssm].present? &&
+        document[:spotlight_resource_type_ssm].include?("spotlight/resources/uploads")
+      end
     end
     
     module ClassMethods  

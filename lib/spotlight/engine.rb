@@ -46,6 +46,9 @@ module Spotlight
     Spotlight::Engine.config.solr_fields.string_suffix = "_ssim".freeze
     Spotlight::Engine.config.solr_fields.text_suffix = "_tesim".freeze
 
+    # The solr field that original (largest) images will be stored.
+    Spotlight::Engine.config.full_image_field = :full_image_url_ssm
+
     Blacklight::Engine.config.inject_blacklight_helpers = false
     
     # Query parameters for autocomplete requests
