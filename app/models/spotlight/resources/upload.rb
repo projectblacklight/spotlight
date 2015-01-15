@@ -8,16 +8,20 @@ module Spotlight
     end
 
     def self.fields(exhibit)
-      @fields ||= self.new(exhibit: exhibit).configured_fields.keys
+      @fields ||= self.new(exhibit: exhibit).configured_fields
     end
 
     def configured_fields
-      @configured_fields ||= {
-        title: {solr_field: exhibit.blacklight_config.index.title_field}
-      }
+      @configured_fields ||= configured_title_field.merge(Spotlight::Engine.config.upload_fields)
     end
 
     private
+
+    # this is in the upload class because it has exhibit context
+    def configured_title_field
+      {title: OpenStruct.new(solr_field: exhibit.blacklight_config.index.title_field)}
+    end
+
     def to_solr_hash
       solr_hash = {
         ::SolrDocument.unique_key.to_sym => compound_id,
@@ -31,7 +35,9 @@ module Spotlight
         solr_hash[exhibit.blacklight_config.index.send(config[:blacklight_config_field])] = url.send(config[:version]).url
       end
       configured_fields.each do |key, config|
-        solr_hash[config[:solr_field]] = data[key]
+        if data[key].present?
+          solr_hash[config.solr_field] = data[key]
+        end
       end
       solr_hash
     end

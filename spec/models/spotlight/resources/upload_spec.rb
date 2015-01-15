@@ -8,7 +8,12 @@ describe Spotlight::Resources::Upload, :type => :model do
   describe '#to_solr' do
     before do
       subject.id = "1"
-      subject.data = {title: "Title Data"}
+      subject.data = {
+        title: "Title Data",
+        description: "Description Data",
+        attribution: "Attribution Data",
+        date: "Date Data"
+      }
       allow(subject).to receive(:url).and_return(stub_model(Spotlight::ItemUploader))
       allow(subject.url.file).to receive(:file).and_return(File.expand_path(File.join('..', 'fixtures', '800x600.png'), Rails.root))
       allow(subject.exhibit).to receive(:blacklight_config).and_return(
@@ -25,6 +30,11 @@ describe Spotlight::Resources::Upload, :type => :model do
     end
     it 'should have a title field using the exhibit specific blacklight_config' do
       expect(subject.to_solr[:configured_title_field]).to eq 'Title Data'
+    end
+    it 'should have the other additional configured fields' do
+      expect(subject.to_solr[Spotlight::Engine.config.uploaded_description_field]).to eq "Description Data"
+      expect(subject.to_solr[Spotlight::Engine.config.uploaded_attribution_field]).to eq "Attribution Data"
+      expect(subject.to_solr[Spotlight::Engine.config.uploaded_date_field]).to eq "Date Data"
     end
     it 'should have a spotlight_resource_type field' do
       expect(subject.to_solr[:spotlight_resource_type_ssm]).to eq 'spotlight/resources/uploads'

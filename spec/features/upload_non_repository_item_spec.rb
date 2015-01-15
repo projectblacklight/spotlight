@@ -14,6 +14,9 @@ describe "Uploading a non-repository item", :type => :feature do
         expect(page).to have_css('#resources_upload_url[type="file"]')
         expect(page).to have_css('.help-block', text: 'Valid file types: jpg jpeg png')
         expect(page).to have_css('#resources_upload_data_title[type="text"]')
+        expect(page).to have_css('textarea#resources_upload_data_description')
+        expect(page).to have_css('#resources_upload_data_attribution[type="text"]')
+        expect(page).to have_css('#resources_upload_data_date[type="text"]')
       end
     end
   end

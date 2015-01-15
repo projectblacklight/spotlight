@@ -31,7 +31,7 @@ module Spotlight::Resources
     end
 
     def resource_params
-      params.require(:resources_upload).permit(:url, data: Spotlight::Resources::Upload.fields(current_exhibit))
+      params.require(:resources_upload).permit(:url, data: Spotlight::Resources::Upload.fields(current_exhibit).keys)
     end
 
   end
