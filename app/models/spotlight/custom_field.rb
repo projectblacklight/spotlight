@@ -33,7 +33,7 @@ module Spotlight
     end
 
     def configured_to_display?
-      if index_fields_config["enabled"]
+      if index_fields_config && index_fields_config["enabled"]
         view_types.any? do |view|
           index_fields_config[view.to_s]
         end
@@ -50,7 +50,7 @@ module Spotlight
     end
 
     def index_fields_config
-      exhibit.blacklight_configuration[:index_fields][field]
+      exhibit.blacklight_configuration.blacklight_config[:index_fields][field]
     end
 
     def should_generate_new_friendly_id?
