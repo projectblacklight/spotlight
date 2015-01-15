@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require lodash
 //= require sir-trevor
 //= require nestable
 //= require spotlight/spotlight

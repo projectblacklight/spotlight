@@ -7,24 +7,19 @@ feature "Search contexts" do
 
   scenario "should add context breadcrumbs back to the home page when navigating to an item from the home page", :js => true do
     skip("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
-    # create page
+    exhibit.home_page.content = "[]"
+    exhibit.home_page.save
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
 
     click_link "Edit"
 
     # click to add widget
-    find("[data-icon='add']").click
-    # click the item + image widget
-    expect(page).to have_css("a[data-type='item-text']")
-    find("a[data-type='item-text']").click
-    # fill in the hidden record ID field
-    # TODO: Do we need an additional test for the typeahead?
-    item_id_field = find("input[name='item-id']", visible: false)
-    item_id_field.set("dq287tq6352")
-    # create the page
-    click_button("Save changes")
-    # verify that the page was created
-    expect(page).to have_content("The home page was successfully updated")
+    add_widget 'item-text'
+
+    
+    fill_in_typeahead_field "item-text-id", with: "dq287tq6352"
+
+    save_page
     # verify that the item + image widget is displaying an image from the document.
     within(:css, ".item-text") do
       expect(page).to have_css(".thumbnail")
@@ -42,15 +37,13 @@ feature "Search contexts" do
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
-    within '.dropdown-menu' do
+    within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
     click_link "Feature pages"
-
-    add_new_page_via_button("My New Feature Page")
-
-    expect(page).to have_css("h3", text: "My New Feature Page")
-
+    
+    add_new_page_via_button
+    
     expect(page).to have_content("The feature page was created.")
     within("li.dd-item") do
       click_link "Edit"
@@ -58,18 +51,12 @@ feature "Search contexts" do
     # fill in title
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
-    find("[data-icon='add']").click
-    # click the item + image widget
-    expect(page).to have_css("a[data-type='item-text']")
-    find("a[data-type='item-text']").click
-    # fill in the hidden record ID field
-    # TODO: Do we need an additional test for the typeahead?
-    item_id_field = find("input[name='item-id']", visible: false)
-    item_id_field.set("dq287tq6352")
-    # create the page
-    click_button("Save changes")
-    # verify that the page was created
-    expect(page).to have_content("The feature page was successfully updated.")
+    add_widget 'item-text'
+    
+    fill_in_typeahead_field "item-text-id", with: "dq287tq6352"
+
+    save_page
+
     # verify that the item + image widget is displaying an image from the document.
     within(:css, ".item-text") do
       expect(page).to have_css(".thumbnail")

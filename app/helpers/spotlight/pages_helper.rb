@@ -1,5 +1,8 @@
 module Spotlight
   module PagesHelper
+    def sir_trevor_markdown text
+      GitHub::Markup.render(".md", text.gsub("<br>", "\n").gsub("<p>", "").gsub("</p>", "\n\n")).html_safe
+    end
     def has_title? document
       document_heading(document) != document.id
     end
@@ -35,18 +38,18 @@ module Spotlight
       key = "item-grid-#{type}-caption-field"
       if block[key].present?
         if block[key] == 'spotlight_title_field'
-          return document_heading(document)
+          document_heading(document)
         else
-          return safe_join(Array(document[block[key]]), ", ")
+          render_index_field_value document, block[key]
         end
       end
     end
     def disable_save_pages_button?
       page_collection_name == "about_pages" && @pages.empty?
     end
-    def get_search_widget_search_results sir_trevor_json
+    def get_search_widget_search_results block
       begin
-        search = Spotlight::Search.find(sir_trevor_json['searches-options'])
+        search = Spotlight::Search.find(block.send(:'searches-options'))
         get_search_results(search.query_params.with_indifferent_access.merge(params))
       rescue ActiveRecord::RecordNotFound
         []

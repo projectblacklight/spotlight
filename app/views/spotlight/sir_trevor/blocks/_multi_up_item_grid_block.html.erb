@@ -1,24 +1,25 @@
-<% block_objects = item_grid_block_with_documents(block) %>
+<% multi_up_item_grid_block.with_solr_helper(self) %>
+<% block_objects = multi_up_item_grid_block.block_objects %>
 
 <% if block_objects.present? %>
   <div class="content-block spotlight-flexbox">
     <% block_objects.each do |block_object| %>
-      <% document = block_object[:solr_document] %>
-      <div class="box" data-id="<%= block_object[:id] %>">
+      <% document = block_object.solr_document %>
+      <div class="box" data-id="<%= block_object.id %>">
         <div class="contents">
-          <% if (block_thumb = block_object[:thumbnail]).present? %>
+          <% if (block_thumb = block_object.thumbnail).present? %>
             <div class="thumbnail"><%= link_to_document(document, image_tag(block_thumb), counter: -1) %></div>
           <% elsif has_thumbnail? document %>
             <div class="thumbnail"><%= render_thumbnail_tag(document, {}, document_counter: -1) %></div>
           <% end %>
-          <% if block['show-primary-caption'] %>
+          <% if multi_up_item_grid_block.primary_caption? %>
             <div class="caption">
-              <%= multi_up_item_grid_caption(block, document) %>
+              <%= multi_up_item_grid_caption(multi_up_item_grid_block, document) %>
             </div>
           <% end %>
-          <% if block['show-secondary-caption'] %>
+          <% if multi_up_item_grid_block.secondary_caption? %>
             <div class="caption">
-              <%= multi_up_item_grid_caption(block, document, 'secondary') %>
+              <%= multi_up_item_grid_caption(multi_up_item_grid_block, document, 'secondary') %>
             </div>
           <% end %>
         </div>

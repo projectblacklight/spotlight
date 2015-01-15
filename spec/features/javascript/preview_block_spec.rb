@@ -26,10 +26,7 @@ feature "Block preview" do
     # fill in title
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
-    find("[data-icon='add']").click
-    # click the item + image widget
-    expect(page).to have_css("a[data-type='item-text']")
-    find("a[data-type='item-text']").click
+    add_widget 'item-text'
     # fill in the hidden record ID field
     # TODO: Do we need an additional test for the typeahead?
     item_id_field = find("input[name='item-id']", visible: false)

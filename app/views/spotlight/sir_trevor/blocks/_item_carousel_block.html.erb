@@ -1,27 +1,27 @@
-<% block_objects = item_grid_block_with_documents(block) %>
-<% html_id = "carousel-#{block.object_id}" %>
-
-<div class="content-block slideshow-block" data-auto-play="<%= block['auto-play-images'] %>" data-interval="<%= block['auto-play-images-interval'] %>" data-size="<%= block['max-height'] %>">
+<% item_carousel_block.with_solr_helper(self) %>
+<% block_objects = item_carousel_block.block_objects %>
+<% html_id = "carousel-#{item_carousel_block.object_id}" %>
+<div class="content-block slideshow-block" data-auto-play="<%= item_carousel_block.send(:'auto-play-images') %>" data-interval="<%= item_carousel_block.send(:'auto-play-images-interval') %>" data-size="<%= item_carousel_block.max_height %>">
 <% if block_objects.present? %>
   <div id="<%= html_id %>" class="carousel slide" data-ride="carousel">
     <div class="slideshow-inner">
     <% block_objects.each_with_index do |block_object, index| %>
-      <% document = block_object[:solr_document] %>
-      <div class="item <%= 'active' if index == 0 %>" data-id="<%= block_object[:id] %>">
-            <% if (block_thumb = block_object[:thumbnail]).present? %>
+      <% document = block_object.solr_document %>
+      <div class="item <%= 'active' if index == 0 %>" data-id="<%= block_object.id %>">
+            <% if (block_thumb = block_object.thumbnail).present? %>
               <div class="thumbnail"><%= link_to_document(document, image_tag(block_thumb), counter: -1) %></div>
             <% elsif has_thumbnail? document %>
               <div class="thumbnail"><%= render_thumbnail_tag(document, {}, document_counter: -1) %></div>
             <% end %>
         <div class="caption">
-          <% if block['show-primary-caption'] %>
+          <% if item_carousel_block.primary_caption? %>
             <div class="primary">
-                <%= multi_up_item_grid_caption(block, document) %>
+                <%= multi_up_item_grid_caption(item_carousel_block, document) %>
             </div>
           <% end %>
-          <% if block['show-secondary-caption'] %>
+          <% if item_carousel_block.secondary_caption? %>
             <div class="secondary">
-                <%= multi_up_item_grid_caption(block, document, 'secondary') %>
+                <%= multi_up_item_grid_caption(item_carousel_block, document, 'secondary') %>
             </div>
           <% end %>
         </div>

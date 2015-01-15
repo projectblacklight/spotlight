@@ -7,7 +7,7 @@ module Spotlight
       stub_model(FeaturePage,
         :exhibit => exhibit,
         :title => "Title",
-        :content => "{}"
+        :content => "[]"
       )
     }
     before(:each) do

@@ -26,18 +26,11 @@ feature "Item + Image Block" do
     # fill in title
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
-    find("[data-icon='add']").click
-    # click the item + image widget
-    expect(page).to have_css("a[data-type='item-text']")
-    find("a[data-type='item-text']").click
-    # fill in the hidden record ID field
-    # TODO: Do we need an additional test for the typeahead?
-    item_id_field = find("input[name='item-id']", visible: false)
-    item_id_field.set("dq287tq6352")
+    add_widget 'item-text'
+    fill_in_typeahead_field "item-text-id", with: "dq287tq6352"
     # create the page
-    click_button("Save changes")
-    # verify that the page was created
-    expect(page).to have_content("The feature page was successfully updated.")
+    save_page
+    
     # verify that the item + image widget is displaying an image from the document.
     within(:css, ".item-text") do
       expect(page).to have_css(".thumbnail")
@@ -65,15 +58,9 @@ feature "Item + Image Block" do
     # fill in title
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
-    find("[data-icon='add']").click
-    # click the item + image widget
-    expect(page).to have_css("a[data-type='item-text']")
-    find("a[data-type='item-text']").click
-
-    # fill in the hidden record ID field
-    # TODO: Do we need an additional test for the typeahead?
-    item_id_field = find("input[name='item-id']", visible: false)
-    item_id_field.set("gk446cj2442")
+    add_widget 'item-text'
+    
+    fill_in_typeahead_field "item-text-id", with: "gk446cj2442"
     # display the title as the primary caption
     within('.primary-caption') do
       check("Primary caption")
@@ -85,10 +72,8 @@ feature "Item + Image Block" do
       select("Language", from: 'item-grid-secondary-caption-field')
     end
     # create the page
-    click_button("Save changes")
-    # verify that the page was created
-    expect(page).to have_content("The feature page was successfully updated.")
-
+    save_page
+    
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".item-text") do
       expect(page).to have_css(".thumbnail")
@@ -117,27 +102,20 @@ feature "Item + Image Block" do
     # fill in title
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
-    find("[data-icon='add']").click
-    # click the item + image widget
-    expect(page).to have_css("a[data-type='item-text']")
-    find("a[data-type='item-text']").click
+    add_widget 'item-text'
 
-    # fill in the hidden record ID field
-    # TODO: Do we need an additional test for the typeahead?
-    item_id_field = find("input[name='item-id']", visible: false)
-    item_id_field.set("dq287tq6352")
+    fill_in_typeahead_field "item-text-id", with: "dq287tq6352"
 
     # fill in the content-editable div
     content_editable = find(".st-text-block")
-    content_editable.set("Some text to annotate this image.")
+    content_editable.set("zzz")
     # create the page
-    click_button("Save changes")
-    # verify that the page was created
-    expect(page).to have_content("The feature page was successfully updated.")
+    save_page
+    
     # visit the show page for the document we just saved
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".item-text") do
-      expect(page).to have_content "Some text to annotate this image."
+      expect(page).to have_content "zzz"
     end
   end
 
@@ -160,28 +138,21 @@ feature "Item + Image Block" do
     # fill in title
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
-    find("[data-icon='add']").click
-    # click the item + image widget
-    expect(page).to have_css("a[data-type='item-text']")
-    find("a[data-type='item-text']").click
-
-    # fill in the hidden record ID field
-    # TODO: Do we need an additional test for the typeahead?
-    item_id_field = find("input[name='item-id']", visible: false)
-    item_id_field.set("dq287tq6352")
+    add_widget 'item-text'
+    
+    fill_in_typeahead_field "item-text-id", with: "dq287tq6352"
 
     # fill in the content editable div
     content_editable = find(".st-text-block")
-    content_editable.set("Some text to annotate this image.")
+    content_editable.set("zzz")
     # Select to align the text right
     choose "Right"
     # create the page
-    click_button("Save changes")
-    # verify that the page was created
-    expect(page).to have_content("The feature page was successfully updated.")
+    save_page
+    
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".item-text") do
-      expect(page).to have_content "Some text to annotate this image."
+      expect(page).to have_content "zzz"
       # should pull the image block the opposite direction of the configured text.
       expect(page).to have_css(".image-block.pull-left")
     end
@@ -207,17 +178,13 @@ feature "Item + Image Block" do
     # fill in title
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
-    find("[data-icon='add']").click
-    # click the item + image widget
-    expect(page).to have_css("a[data-type='item-text']")
-    find("a[data-type='item-text']").click
+    add_widget 'item-text'
     # fill in the hidden record ID field
     # TODO: Do we need an additional test for the typeahead?
     item_id_field = find("input[name='item-id']", visible: false)
     item_id_field.set("")
     # create the page
-    click_button("Save changes")
-    # verify that the page was created and is not throwing an error
-    expect(page).to have_content("The feature page was successfully updated.")
+    save_page
+    
   end
 end

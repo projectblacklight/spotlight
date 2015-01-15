@@ -1,13 +1,13 @@
 <div class="content-block documents">
-  <% response, document_list = get_search_widget_search_results(block) %>
+  <% response, document_list = get_search_widget_search_results(search_results_block) %>
   <%- unless document_list.present? %>
     <div class="alert alert-warning">
       <strong>No items to display.</strong> There are currently no items in this exhibit that match the curator's search criteria.
     </div>
   <%- else %>
       <% @response, @document_list = [response, document_list] %>
-      <%= render 'sort_and_per_page', block: block %>
-      <%= render_document_index_with_view(block_document_index_view_type(block), document_list) %>
+      <%= render 'sort_and_per_page', block: search_results_block %>
+      <%= render_document_index_with_view(block_document_index_view_type(search_results_block), document_list) %>
       <%= render 'results_pagination' %>
     </div>
   <%- end %>

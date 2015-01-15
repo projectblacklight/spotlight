@@ -1,7 +1,7 @@
 (function ($){
   Spotlight.Block = SirTrevor.Block.extend({
     editorHTML: function() {
-      return this.template(this);
+      return _.template(this.template)(this);
     },
     formId: function(id) {
       return this.blockID + "_" + id;
@@ -9,17 +9,14 @@
     onBlockRender: function() {
       addAutocompletetoSirTrevorForm();
     },
-    toData: function() {
+    _serializeData: function() {
       var data = {};
-
-
+      
       /* Simple to start. Add conditions later */
       if (this.hasTextBlock()) {
-        var content = this.getTextBlock().html();
-        if (content.length > 0) {
-          data.text = SirTrevor.toMarkdown(content, this.type);
-        } else {
-          data.text = "";
+        data.text = this.getTextBlockHTML();
+        if (data.text.length > 0 && this.options.convertToMarkdown) {
+          data.text = stToMarkdown(data.text, this.type);
         }
       }
 
@@ -53,10 +50,7 @@
         });
       }
 
-      // Set
-      if(!_.isEmpty(data)) {
-        this.setData(data);
-      }
+      return data;
     },
 
     loadFormDataByKey: function(data) {
@@ -77,7 +71,7 @@
 
     afterLoadData: function(data) { },
 
-    caption_field_template: _.template(['<option value="<%= field %>"><%= label %></option>'].join("\n")),
+    caption_field_template: ['<option value="<%= field %>"><%= label %></option>'].join("\n"),
 
     loadCaptionField: function(){
       var block = this;
@@ -95,7 +89,7 @@
         if($("option", primary_caption_field).length == 2){
           var options = "";
           $.each(data, function(i, field){
-            options += block.caption_field_template(field);
+            options += _.template(block.caption_field_template)(field);
           });
 
           primary_caption_field.append(options);

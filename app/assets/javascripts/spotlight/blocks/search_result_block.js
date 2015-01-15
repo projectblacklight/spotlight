@@ -14,15 +14,15 @@ SirTrevor.Blocks.SearchResults =  (function(){
 
   description: "This widget displays a set of search results on a page. Specify a search result set by selecting an existing browse category. You can also select the view types that are available to the user when viewing the result set.",
 
-  template: _.template([
+  template: [
     '<div class="search-block-admin clearFix">',
       '<div class="widget-header">',
         '<%= description %>',
       '</div>',
       '<div class="col-sm-8">',
-        '<label for="<%= this.formId(this.searches_key) %>">Browse category</label>',
+        '<label for="<%= formId(searches_key) %>">Browse category</label>',
         '<div>',
-          '<select name="<%= this.searches_key %>" id="<%= this.formId(this.searches_key) %>">',
+          '<select name="<%= searches_key %>" id="<%= formId(searches_key) %>">',
             '<option value="">Select...</option>',
           '</select>',
         '</div>',
@@ -31,7 +31,7 @@ SirTrevor.Blocks.SearchResults =  (function(){
         '<h4>Result view types</h4>',
       '</div>',
     '</div>'
-  ].join("\n")),
+  ].join("\n"),
 
   onBlockRender: function(data){
     Spotlight.Block.prototype.onBlockRender.apply();
@@ -115,6 +115,8 @@ SirTrevor.Blocks.SearchResults =  (function(){
   checkViewType: function(type){
     if (this.viewTypeSelected(type)) {
       return " checked='checked'";
+    } else {
+      return "";
     }
   },
 

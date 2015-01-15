@@ -21,7 +21,7 @@ module Spotlight
     end
 
     def preview
-      @block = JSON.parse(params[:block])
+      @block = SirTrevorRails::Block.from_hash(JSON.parse(params[:block], symbolize_names: true), "block")
 
       respond_to do |format|
         format.html { render 'preview', layout: false }

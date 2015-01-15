@@ -14,7 +14,7 @@ gemspec
 # gem 'debugger'
 #
 gem 'blacklight-gallery', '>= 0.1.1'
-gem 'sir-trevor-rails', github: 'sul-dlss/sir-trevor-rails', branch: 'v0.3'
+gem "sir_trevor_rails", github: "sul-dlss/sir-trevor-rails"
 
 group :test do
   # Peg simplecov to < 0.8 until this is resolved:

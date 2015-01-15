@@ -1,0 +1,9 @@
+<div class="st__content-block st__content-block--tweet">
+  <%= link_to image_tag(tweet_block.profile_image_url, class: 'img'), tweet_block.screen_name %>
+  <p>
+    <%= tweet_block.render_tweet_body %>
+  </p>
+  <cite>From <%= link_to tweet_block.at_name, tweet_block.screen_name %> on Twitter:</cite>
+  <time datetime="<%= tweet_block.created_at %>">(<%= link_to Time.parse(tweet_block.created_at), tweet_block.status_url %>)</time>
+</div>
+

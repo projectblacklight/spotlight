@@ -20,9 +20,7 @@ describe "Search Results Block", type: :feature, js: true do
       click_link "Edit"
     end
 
-    find("[data-icon='add']").click
-
-    find("a[data-type='search_results']").click
+    add_widget 'search_results'
 
     # Drop down should exist with all browse categories listed
     within("select[name='searches-options']") do
@@ -36,10 +34,8 @@ describe "Search Results Block", type: :feature, js: true do
     check "gallery"
     check "slideshow"
 
-    click_button "Save changes"
-
-    expect(page).to have_content("The feature page was successfully updated.")
-
+    save_page
+    
     # The two configured view types should be
     # present and the one not selected should not be
     within(".view-type-group") do

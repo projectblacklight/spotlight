@@ -16,10 +16,16 @@ module Spotlight
     scope :recent, -> { order("updated_at DESC").limit(10)}
 
     has_one :lock, as: :on, dependent: :destroy
+    sir_trevor_content :content
 
     # display_sidebar should be set to true by default
     before_create do
+      self.content ||= [].to_json
       self.display_sidebar = true
+    end
+
+    def has_content?
+      read_attribute(:content).present?
     end
 
     def display_sidebar?

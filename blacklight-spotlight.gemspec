@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "blacklight", "~> 5.8.0"
   s.add_dependency "autoprefixer-rails", "< 5.0.0"
   s.add_dependency "cancancan"
-  s.add_dependency "sir-trevor-rails"
+  s.add_dependency "sir_trevor_rails", ">= 0.5.0.pre.beta1"
   s.add_dependency "carrierwave"
   s.add_dependency "carrierwave-crop"
   s.add_dependency "mini_magick"
@@ -36,6 +36,8 @@ Gem::Specification.new do |s|
   s.add_dependency "faraday_middleware"
   s.add_dependency "nokogiri"
   s.add_dependency "underscore-rails", "~> 1.6.0"
+  s.add_dependency "github-markup"
+  s.add_dependency "lodash-rails"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec-rails", "~> 3.1"

@@ -33,7 +33,7 @@ Spotlight.onLoad(function(){
     uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint')
   });
 
-  var instance = $('.sir-trevor-area').first();
+  var instance = $('.js-st-instance').first();
 
   if (instance.length) {
 
@@ -46,21 +46,17 @@ Spotlight.onLoad(function(){
     function checkGlobalBlockTypeLimit() {
       // we don't know what type of block was created or removed.. So, try them all.
 
-      $.each(editor.blockTypes, function(type) {
-        var control = editor.$outer.find(".st-block-control[data-type='" + _.underscored(type) + "']");
-        if (editor._getBlockTypeLimit(type) < 0) {
+      $.each(editor.block_manager.blockTypes, function(type) {
+        var block_type = SirTrevor.Blocks[type].prototype;
+
+        var control = editor.$outer.find(".st-block-control[data-type='" + block_type.type + "']");
+        if (editor.block_manager._getBlockTypeLimit(type) < 0) {
           control.remove();
         } else {
-          control.toggleClass("disabled", !editor._canAddBlockType(type));
+          control.toggleClass("disabled", !editor.block_manager.canAddBlockType(type));
         }
       });
     }
-
-    SirTrevor.EventBus.on('block:create:new', injectElementsIntoSirTrevorBlock);
-    SirTrevor.EventBus.on('block:create:existing', injectElementsIntoSirTrevorBlock);
-
-    SirTrevor.EventBus.on('block:create:new', checkBlockTypeLimitOnAdd);
-    SirTrevor.EventBus.on('block:remove', checkGlobalBlockTypeLimit);
 
     var editor = new SirTrevor.Editor({
       el: instance,
@@ -72,6 +68,13 @@ Spotlight.onLoad(function(){
         "Tweet": -1
       }
     });
+
+    editor.block_manager.blocks.forEach(injectElementsIntoSirTrevorBlock);
+
+    editor.mediator.on('block:render', injectElementsIntoSirTrevorBlock);
+
+    editor.mediator.on('block:create:new', checkBlockTypeLimitOnAdd);
+    editor.mediator.on('block:remove', checkGlobalBlockTypeLimit);
 
     checkGlobalBlockTypeLimit();
   }
@@ -94,9 +97,7 @@ function addPreviewToSirTrevorBlock(block){
     var preview_btn = $(this);
     preview_btn.attr('disabled', 'disabled');
 
-    block.saveAndGetData();
-
-    $.post($(this).closest('form').data('preview-url'), {block: JSON.stringify(block.blockStorage) },
+    $.post($(this).closest('form').data('preview-url'), {block: JSON.stringify(block.getData()) },
       function(preview) {
         var btn = $('<button class="st-block-ui-btn preview-exit-btn">Edit</button>').click(function(event) {
           event.stopPropagation();

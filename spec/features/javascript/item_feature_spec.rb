@@ -26,10 +26,7 @@ feature "Featured items" do
     # fill in title
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
-    find("[data-icon='add']").click
-    # click the "Featured items" widget
-    expect(page).to have_css("a[data-type='item-features']")
-    find("a[data-type='item-features']").click
+    add_widget 'item-features'
     # fill in the hidden record ID field
 
     fill_in_typeahead_field "item-grid-id_0_title", with: "dq287tq6352"
@@ -41,9 +38,7 @@ feature "Featured items" do
       select("Title", from: 'item-grid-primary-caption-field')
     end
 
-    click_button "Save changes"
-
-    expect(page).to have_content("The feature page was successfully updated.")
+    save_page
 
     within('.content-block.item-features') do
       expect(page).to have_css('.slideshow-indicators li', count: 2)

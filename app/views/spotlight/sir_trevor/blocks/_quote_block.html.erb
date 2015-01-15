@@ -1,0 +1,13 @@
+<div class="st__content-block st__content-block--quote">
+  <div class="quote">
+    <div class="quote__content">
+    	<%= sir_trevor_markdown quote_block.text %>
+    </div>
+
+    <% if quote_block.cite.present? %>
+      <div class="quote__cite">
+        <cite class="quote__cite-text">&ndash; <%= quote_block.cite %></cite>
+      </div>
+    <% end %>
+  </div>
+</div>
