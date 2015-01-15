@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Spotlight::Resources::Upload, :type => :model do
-  let(:exhibit) { FactoryGirl.create :exhibit }
+  let!(:exhibit) { FactoryGirl.create :exhibit }
+  let!(:custom_field) { FactoryGirl.create :custom_field, exhibit: exhibit }
   before do
     subject.exhibit = exhibit
   end
@@ -12,7 +13,8 @@ describe Spotlight::Resources::Upload, :type => :model do
         title: "Title Data",
         description: "Description Data",
         attribution: "Attribution Data",
-        date: "Date Data"
+        date: "Date Data",
+        custom_field.field => "Custom Field Data"
       }
       allow(subject).to receive(:url).and_return(stub_model(Spotlight::ItemUploader))
       allow(subject.url.file).to receive(:file).and_return(File.expand_path(File.join('..', 'fixtures', '800x600.png'), Rails.root))
@@ -47,6 +49,9 @@ describe Spotlight::Resources::Upload, :type => :model do
     it 'should have the full image dimensions fields' do
       expect(subject.to_solr[:spotlight_full_image_height_ssm]).to eq 600
       expect(subject.to_solr[:spotlight_full_image_width_ssm]).to eq 800
+    end
+    it 'should have fields representing exhibit specific custom fields' do
+      expect(subject.to_solr[custom_field.field]).to eq "Custom Field Data"
     end
   end
 end

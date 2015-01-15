@@ -4,6 +4,9 @@
     <% Spotlight::Resources::Upload.fields(current_exhibit).each do |field, config| %>
       <%= d.send((config.form_field_type || :text_field), field) %>
     <% end %>
+    <% current_exhibit.custom_fields.each do |custom_field| %>
+      <%= d.text_field custom_field.field, label: custom_field.label %>
+    <% end %>
   <% end %>
   <div class="form-actions">
     <div class="primary-actions">
