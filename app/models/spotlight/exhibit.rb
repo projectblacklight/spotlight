@@ -55,6 +55,8 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   validates :title, presence: true
   acts_as_tagger
+  has_many :owned_taggings, class_name: "ActsAsTaggableOn::Tagging", as: :tagger
+  accepts_nested_attributes_for :owned_taggings
 
   def main_about_page
     @main_about_page ||= about_pages.published.first
@@ -82,6 +84,15 @@ class Spotlight::Exhibit < ActiveRecord::Base
       searches.where(slug: "all-exhibit-items").destroy_all
       reload
     end
+
+    if hash["owned_taggings_attributes"]
+      hash["owned_taggings_attributes"].each do |tagging|
+        tag = tagging.delete "tag_attributes"
+        tagging["context"] = "tags"
+        tagging["tag"] = ActsAsTaggableOn::Tag.find_or_create_by name: tag["name"]
+      end
+    end
+
     update hash
   end
 
