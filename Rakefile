@@ -4,7 +4,7 @@ rescue LoadError
   puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
 end
 
-ZIP_URL = "https://github.com/projectblacklight/blacklight-jetty/archive/v4.6.0.zip"
+ZIP_URL = "https://github.com/projectblacklight/blacklight-jetty/archive/v4.10.2.zip"
 
 require 'rdoc/task'
 

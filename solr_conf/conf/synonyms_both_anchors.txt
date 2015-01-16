@@ -1,0 +1,47 @@
+# Include in analysis with both left anchor of 'aaaaaa' and right anchor of 'zzzzzz'
+#  for query or field comprised solely of token meant to be a synonym
+#
+# http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.SynonymFilterFactory
+# A synonym file for Solr SynonymFilterFactory.
+# Needs to be included at both index and query time 
+#  AFTER the case folding
+#  BEFORE the WordDelimiterFilterFactory that removes punctuation
+# e.g. 
+# <analyzer>
+#   <!-- put beginning and ending anchors on field value, removing trailing chars -->
+#   <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="^\s*(.*[^\s\.\:\;\/\[\]])[\s\.\:\;\/\[\]]*$" replacement="aaaaaa$1zzzzzz"/>
+#   <tokenizer class="solr.WhitespaceTokenizerFactory" />
+#   <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
+#   <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="false"/>
+#   <filter class="solr.SynonymFilterFactory" synonyms="synonyms_both_anchors.txt" ignoreCase="true" expand="false"/>
+#   <filter class="solr.SynonymFilterFactory" synonyms="synonyms_left_anchor.txt" ignoreCase="true" expand="false"/>
+#   <filter class="solr.SynonymFilterFactory" synonyms="synonyms_right_anchor.txt" ignoreCase="true" expand="false"/>
+#   <filter class="solr.WordDelimiterFilterFactory" ...
+#   ...
+#
+
+aaaaaadepartmentzzzzzz => aaaaaadeptzzzzzz
+aaaaaaqurʼanzzzzzz, aaaaaaqur'anzzzzzz, aaaaaaquranzzzzzz, aaaaaaqorʼanzzzzzz, aaaaaaqor'anzzzzzz, aaaaaaqoranzzzzzz => aaaaaakoranzzzzzz
+aaaaaavioloncellozzzzzz, aaaaaaviolincellozzzzzz => aaaaaacellozzzzzz
+
+# computer languages
+aaaaaac++zzzzzz => aaaaaacpluspluszzzzzz
+aaaaaaj#zzzzzz, aaaaaaj♯zzzzzz => aaaaaajsssharpzzzzzz
+
+# musical keys
+# We map from number-sign (#), musical sharp (♯)
+aaaaaaa#zzzzzz, aaaaaaa♯zzzzzz, aaaaaaa-sharpzzzzzz => aaaaaaa sharpzzzzzz
+aaaaaab#zzzzzz, aaaaaab♯zzzzzz, aaaaaab-sharpzzzzzz => aaaaaab sharpzzzzzz
+aaaaaac#zzzzzz, aaaaaac♯zzzzzz, aaaaaac-sharpzzzzzz => aaaaaac sharpzzzzzz
+aaaaaad#zzzzzz, aaaaaad♯zzzzzz, aaaaaad-sharpzzzzzz => aaaaaad sharpzzzzzz
+aaaaaae#zzzzzz, aaaaaae♯zzzzzz, aaaaaae-sharpzzzzzz => aaaaaae sharpzzzzzz
+aaaaaaf#zzzzzz, aaaaaaf♯zzzzzz, aaaaaaf-sharpzzzzzz => aaaaaaf sharpzzzzzz
+aaaaaag#zzzzzz, aaaaaag♯zzzzzz, aaaaaag-sharpzzzzzz => aaaaaag sharpzzzzzz
+# We map both from lowercase b and musical flat (♭)
+aaaaaaabzzzzzz, aaaaaaa♭zzzzzz, aaaaaaa-flatzzzzzz => aaaaaaa flatzzzzzz
+aaaaaabbzzzzzz, aaaaaab♭zzzzzz, aaaaaab-flatzzzzzz => aaaaaab flatzzzzzz
+aaaaaacbzzzzzz, aaaaaac♭zzzzzz, aaaaaac-flatzzzzzz => aaaaaac flatzzzzzz
+aaaaaadbzzzzzz, aaaaaad♭zzzzzz, aaaaaad-flatzzzzzz => aaaaaad flatzzzzzz
+aaaaaaebzzzzzz, aaaaaae♭zzzzzz, aaaaaae-flatzzzzzz => aaaaaae flatzzzzzz
+aaaaaafbzzzzzz, aaaaaaf♭zzzzzz, aaaaaaf-flatzzzzzz => aaaaaaf flatzzzzzz
+aaaaaagbzzzzzz, aaaaaag♭zzzzzz, aaaaaag-flatzzzzzz => aaaaaag flatzzzzzz

@@ -1,0 +1,73 @@
+# http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.SynonymFilterFactory
+# A synonym file for Solr SynonymFilterFactory.
+# Needs to be included at both index and query time 
+#  AFTER the case folding
+#  BEFORE the WordDelimiterFilterFactory that removes punctuation
+# e.g. 
+# <analyzer>
+#   <tokenizer class="solr.WhitespaceTokenizerFactory" />
+#   <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
+#   <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="false"/>
+#   <filter class="solr.WordDelimiterFilterFactory" ...
+#   ...
+#
+# !!!
+# !!! IMPORTANT:   see also   synonyms_both_anchors.txt, synonyms_left_anchor.txt  and  synonyms_right_anchor.txt
+# !!!
+
+# Explicit mappings match any token sequence on the LHS of "=>"
+#   and replace with all alternatives on the RHS.  These types of mappings
+#   ignore the expand parameter in the schema.
+# Equivalent synonyms may be separated with commas and give
+#   no explicit mapping.  In this case the mapping behavior will
+#   be taken from the expand parameter in the schema.
+#  If expand==true, "ipod, i-pod, i pod" is equivalent to the explicit mapping:
+#   ipod, i-pod, i pod => ipod, i-pod, i pod
+#  If expand==false, "ipod, i-pod, i pod" is equivalent to the explicit mapping:
+#   ipod, i-pod, i pod => ipod
+# set expand to true for index time and false for query time
+
+# See SW-845
+#  "Dept." will change to "Department"
+#  "Koran" will change to "Qur'an"
+#  "violoncello" will change to "cello"
+#  "O.T." and "N.T." will change to "Old Testament" and "New Testament"
+# note that mapping TO the abbreviation improves recall but reduces precision:
+#  O.T. can mean Old Testament or overtime;   dept could be a word in some
+#  language.
+department => dept
+qurʼan, qur'an, quran, qorʼan, qor'an, qoran => koran
+violoncello, violincello => cello
+# multi-token synonyms, and synonyms with punctuation, can be problematic
+#old testament => o.t.
+#new testament => n.t.
+
+# The below is inspired by Jonathan Rochkind at Johns Hopkins University, 2013-04-15
+
+# punctuation-including terms we want to whitelist protect and make searchable.
+# We do this by mapping them to unique tokens that do not include punctuation
+
+# computer languages
+#  these are explicit mappings so when WDF drops the non-letter chars, c++ is not equivalent to c
+c++  => cplusplus
+j#, j♯ => jsssharp
+# c# and f# are music keys as well as computer languages
+
+# musical keys
+#  these are explicit mappings so when WDF drops the non-letter chars, c# is not equivalent to c
+# We map from number-sign (#), musical sharp (♯)
+a#, a♯, a-sharp => a sharp
+b#, b♯, b-sharp => b sharp
+c#, c♯, c-sharp => c sharp
+d#, d♯, d-sharp => d sharp
+e#, e♯, e-sharp => e sharp
+f#, f♯, f-sharp => f sharp
+g#, g♯, g-sharp => g sharp
+# We map both from lowercase b and musical flat (♭)
+ab, a♭, a-flat => a flat
+bb, b♭, b-flat => b flat
+cb, c♭, c-flat => c flat
+db, d♭, d-flat => d flat
+eb, e♭, e-flat => e flat
+fb, f♭, f-flat => f flat
+gb, g♭, g-flat => g flat

@@ -1,0 +1,47 @@
+# Include in analysis with right anchor of 'zzzzzz'
+#  for query or field ending with token meant to be a synonym
+#
+# http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.SynonymFilterFactory
+# A synonym file for Solr SynonymFilterFactory.
+# Needs to be included at both index and query time 
+#  AFTER the case folding
+#  BEFORE the WordDelimiterFilterFactory that removes punctuation
+# e.g. 
+# <analyzer>
+#   <!-- put beginning and ending anchors on field value, removing trailing chars -->
+#   <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="^\s*(.*[^\s\.\:\;\/\[\]])[\s\.\:\;\/\[\]]*$" replacement="aaaaaa$1zzzzzz"/>
+#   <tokenizer class="solr.WhitespaceTokenizerFactory" />
+#   <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
+#   <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="false"/>
+#   <filter class="solr.SynonymFilterFactory" synonyms="synonyms_both_anchors.txt" ignoreCase="true" expand="false"/>
+#   <filter class="solr.SynonymFilterFactory" synonyms="synonyms_left_anchor.txt" ignoreCase="true" expand="false"/>
+#   <filter class="solr.SynonymFilterFactory" synonyms="synonyms_right_anchor.txt" ignoreCase="true" expand="false"/>
+#   <filter class="solr.WordDelimiterFilterFactory" ...
+#   ...
+#
+
+departmentzzzzzz => deptzzzzzz
+qurʼanzzzzzz, qur'anzzzzzz, quranzzzzzz, qorʼanzzzzzz, qor'anzzzzzz, qoranzzzzzz => koranzzzzzz
+violoncellozzzzzz, violincellozzzzzz => cellozzzzzz
+
+# computer languages
+c++zzzzzz => cpluspluszzzzzz
+j#zzzzzz, j♯zzzzzz => jsssharpzzzzzz
+
+# musical keys
+# We map from number-sign (#), musical sharp (♯)
+a#zzzzzz, a♯zzzzzz, a-sharpzzzzzz => a sharpzzzzzz
+b#zzzzzz, b♯zzzzzz, b-sharpzzzzzz => b sharpzzzzzz
+c#zzzzzz, c♯zzzzzz, c-sharpzzzzzz => c sharpzzzzzz
+d#zzzzzz, d♯zzzzzz, d-sharpzzzzzz => d sharpzzzzzz
+e#zzzzzz, e♯zzzzzz, e-sharpzzzzzz => e sharpzzzzzz
+f#zzzzzz, f♯zzzzzz, f-sharpzzzzzz => f sharpzzzzzz
+g#zzzzzz, g♯zzzzzz, g-sharpzzzzzz => g sharpzzzzzz
+# We map both from lowercase b and musical flat (♭)
+abzzzzzz, a♭zzzzzz, a-flatzzzzzz => a flatzzzzzz
+bbzzzzzz, b♭zzzzzz, b-flatzzzzzz => b flatzzzzzz
+cbzzzzzz, c♭zzzzzz, c-flatzzzzzz => c flatzzzzzz
+dbzzzzzz, d♭zzzzzz, d-flatzzzzzz => d flatzzzzzz
+ebzzzzzz, e♭zzzzzz, e-flatzzzzzz => e flatzzzzzz
+fbzzzzzz, f♭zzzzzz, f-flatzzzzzz => f flatzzzzzz
+gbzzzzzz, g♭zzzzzz, g-flatzzzzzz => g flatzzzzzz
