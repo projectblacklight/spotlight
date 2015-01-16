@@ -49,6 +49,16 @@ module Spotlight
     # The solr field that original (largest) images will be stored.
     Spotlight::Engine.config.full_image_field = :full_image_url_ssm
 
+    Spotlight::Engine.config.uploaded_description_field = :spotlight_upload_description_tesim
+    Spotlight::Engine.config.uploaded_attribution_field = :spotlight_upload_attribution_tesim
+    Spotlight::Engine.config.uploaded_date_field = :spotlight_upload_date_tesim
+
+    Spotlight::Engine.config.upload_fields = {
+      description: OpenStruct.new(solr_field: Spotlight::Engine.config.uploaded_description_field, form_field_type: :text_area),
+      attribution: OpenStruct.new(solr_field: Spotlight::Engine.config.uploaded_attribution_field),
+      date:        OpenStruct.new(solr_field: Spotlight::Engine.config.uploaded_date_field)
+    }
+
     Blacklight::Engine.config.inject_blacklight_helpers = false
     
     # Query parameters for autocomplete requests

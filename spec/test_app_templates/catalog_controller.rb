@@ -65,7 +65,9 @@ class CatalogController < ApplicationController
     config.add_facet_field 'subject_geographic_ssim', :label => 'Geographic' 
     config.add_facet_field 'subject_temporal_ssim', :label => 'Era'  
     config.add_facet_field 'language_ssim', :label => 'Language'  
-
+    config.add_index_field Spotlight::Engine.config.uploaded_description_field, :label => 'Description'
+    config.add_index_field Spotlight::Engine.config.uploaded_attribution_field, :label => 'Attribution'
+    config.add_index_field Spotlight::Engine.config.uploaded_date_field, :label => 'Date'
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
