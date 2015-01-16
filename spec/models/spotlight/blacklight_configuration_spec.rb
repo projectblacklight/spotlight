@@ -17,6 +17,11 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
     subject.exhibit = FactoryGirl.create(:exhibit)
   end
 
+  it "should touch the exhibit" do
+    expect(subject.exhibit).to receive :touch
+    subject.save!
+  end
+
   describe "facet fields" do
     it "should have facet fields" do
       expect(subject.facet_fields).to be_empty

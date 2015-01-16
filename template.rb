@@ -1,7 +1,7 @@
 gem "blacklight"
 gem "blacklight-gallery", ">= 0.1.1"
 gem "blacklight-spotlight", :github => 'sul-dlss/spotlight'
-gem 'sir-trevor-rails', :github => 'sul-dlss/sir-trevor-rails'
+gem 'sir-trevor-rails', :github => 'sul-dlss/sir-trevor-rails', branch: 'v0.3'
 
 run "bundle install"
 
