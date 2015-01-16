@@ -6,7 +6,7 @@ class TestAppGenerator < Rails::Generators::Base
   def add_gems
     gem 'blacklight', ">= 5.4.0.rc1", "<6"
     gem "blacklight-gallery", ">= 0.1.1"
-    gem 'sir-trevor-rails', :github => 'sul-dlss/sir-trevor-rails'
+    gem 'sir-trevor-rails', :github => 'sul-dlss/sir-trevor-rails', branch: 'v0.3'
     gem "jettywrapper"
     Bundler.with_clean_env do
       run "bundle install"
