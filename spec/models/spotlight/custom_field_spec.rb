@@ -75,21 +75,21 @@ describe Spotlight::CustomField, :type => :model do
       subject.field = 'foo_tesim'
     end
     it 'should be truthy when a view has been configured true' do
-      exhibit.blacklight_configuration.index_fields['foo_tesim'] =
+      exhibit.blacklight_configuration.blacklight_config.index_fields['foo_tesim'] =
         Blacklight::Configuration::IndexField.new(label: "Label", enabled: true, view_name: true)
       subject.save
 
       expect(subject).to be_configured_to_display
     end
     it 'should be truthey for show views when enabled' do
-      exhibit.blacklight_configuration.index_fields['foo_tesim'] =
+      exhibit.blacklight_configuration.blacklight_config.index_fields['foo_tesim'] =
         Blacklight::Configuration::IndexField.new(label: "Label", enabled: true, show: true)
       subject.save
 
       expect(subject).to be_configured_to_display
     end
     it 'should be falsey when a few has not been configured true' do
-      exhibit.blacklight_configuration.index_fields['foo_tesim'] =
+      exhibit.blacklight_configuration.blacklight_config.index_fields['foo_tesim'] =
         Blacklight::Configuration::IndexField.new(label: "Label", enabled: true, view_name: false)
       subject.save
 

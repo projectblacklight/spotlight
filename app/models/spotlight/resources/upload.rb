@@ -31,9 +31,12 @@ module Spotlight
 
       add_image_dimensions(solr_hash)
 
+      add_custom_fields(solr_hash)
+
       Spotlight::ItemUploader.configured_versions.each do |config|
         solr_hash[exhibit.blacklight_config.index.send(config[:blacklight_config_field])] = url.send(config[:version]).url
       end
+
       configured_fields.each do |key, config|
         if data[key].present?
           solr_hash[config.solr_field] = data[key]
@@ -46,6 +49,14 @@ module Spotlight
       dimensions = ::MiniMagick::Image.open(url.file.file)[:dimensions]
       solr_hash[:spotlight_full_image_width_ssm] = dimensions.first
       solr_hash[:spotlight_full_image_height_ssm] = dimensions.last
+    end
+
+    def add_custom_fields(solr_hash)
+      exhibit.custom_fields.each do |custom_field|
+        if data[custom_field.field].present?
+          solr_hash[custom_field.field] = data[custom_field.field]
+        end
+      end
     end
 
     def compound_id

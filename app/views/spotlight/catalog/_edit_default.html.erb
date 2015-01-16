@@ -5,7 +5,7 @@
       <% current_exhibit.custom_fields.each do |field| %>
         <div class="form-group">
           <%= d.label field.field, field.label %>
-          <%= d.text_field_without_bootstrap field.field, value: document.sidecar(current_exhibit).data[field.field], class: 'form-control' %>
+          <%= d.text_field_without_bootstrap field.field, value: document[field.field], class: 'form-control' %>
           <% unless field.configured_to_display? %>
             <p class="bg-warning help-block">
               <%= t(:'.blank_field_warning_html',

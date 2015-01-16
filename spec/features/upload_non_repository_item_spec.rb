@@ -1,8 +1,9 @@
 require "spec_helper"
 
 describe "Uploading a non-repository item", :type => :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let!(:exhibit) { FactoryGirl.create(:exhibit) }
+  let!(:custom_field) { FactoryGirl.create(:custom_field, exhibit: exhibit) }
+  let!(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
 
   describe "upload" do
@@ -17,6 +18,7 @@ describe "Uploading a non-repository item", :type => :feature do
         expect(page).to have_css('textarea#resources_upload_data_description')
         expect(page).to have_css('#resources_upload_data_attribution[type="text"]')
         expect(page).to have_css('#resources_upload_data_date[type="text"]')
+        expect(page).to have_css("#resources_upload_data_#{custom_field.field}[type='text']")
       end
     end
   end
