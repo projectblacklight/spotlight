@@ -14,7 +14,7 @@ module Spotlight
     end
 
     def set_html_page_title title = nil
-      @page_title = t(:'spotlight.html_title', title: title || t(:'.title', default: :'.header'), application_name: application_name)
+      @page_title = strip_tags(t(:'spotlight.html_title', title: title || t(:'.title', default: :'.header'), application_name: application_name))
     end
 
     def header_with_count *args
