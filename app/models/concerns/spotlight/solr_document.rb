@@ -17,9 +17,7 @@ module Spotlight
       after_save :reindex
 
       ::SolrDocument.use_extension(Spotlight::SolrDocument::UploadedResource) do |document|
-        document[Spotlight::Engine.config.full_image_field].present? &&
-        document[:spotlight_resource_type_ssm].present? &&
-        document[:spotlight_resource_type_ssm].include?("spotlight/resources/uploads")
+        document.uploaded_resource?
       end
     end
     
@@ -78,6 +76,12 @@ module Spotlight
 
     def public? exhibit
       sidecar(exhibit).public?
+    end
+
+    def uploaded_resource?
+      self[Spotlight::Engine.config.full_image_field].present? &&
+      self[:spotlight_resource_type_ssm].present? &&
+      self[:spotlight_resource_type_ssm].include?("spotlight/resources/uploads")
     end
 
     def attribute_present? *args

@@ -117,4 +117,28 @@ describe SolrDocument, :type => :model do
       expect(subject).to be_private exhibit
     end
   end
+
+  describe 'uploaded resources' do
+    let(:uploaded_resource) {
+      SolrDocument.new(
+        Spotlight::Engine.config.full_image_field => "ImageData",
+        spotlight_resource_type_ssm: "spotlight/resources/uploads"
+      )
+    }
+    it 'should not include Spotlight::SolrDocument::UploadedResource when the correct fields are present' do
+      expect(subject).to_not be_kind_of Spotlight::SolrDocument::UploadedResource
+    end
+    it 'should include Spotlight::SolrDocument::UploadedResource when the correct fields are present' do
+      expect(uploaded_resource).to be_kind_of Spotlight::SolrDocument::UploadedResource
+    end
+    describe '#uploaded_resource?' do
+      it 'should return false if the correct fields are not present' do
+        expect(subject).to_not be_uploaded_resource
+      end
+      it 'should return true when the correct fields are present' do
+        expect(uploaded_resource).to be_uploaded_resource
+      end
+    end
+  end
+
 end

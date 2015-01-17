@@ -144,7 +144,20 @@ class Spotlight::CatalogController < ::CatalogController
   end
 
   def solr_document_params
-    params.require(:solr_document).permit(:exhibit_tag_list, sidecar: { data: [custom_field_params] })
+    params.require(:solr_document).permit(:exhibit_tag_list, sidecar: { data: [editable_solr_document_params] })
+  end
+
+  def editable_solr_document_params
+    custom_field_params + uploaded_resource_params
+  end
+
+  def uploaded_resource_params
+    if @document.uploaded_resource?
+      return Spotlight::Resources::Upload.fields(current_exhibit).collect do |_, config|
+        config.solr_field
+      end
+    end
+    []
   end
 
   def custom_field_params

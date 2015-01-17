@@ -65,9 +65,6 @@ class CatalogController < ApplicationController
     config.add_facet_field 'subject_geographic_ssim', :label => 'Geographic' 
     config.add_facet_field 'subject_temporal_ssim', :label => 'Era'  
     config.add_facet_field 'language_ssim', :label => 'Language'  
-    config.add_index_field Spotlight::Engine.config.uploaded_description_field, :label => 'Description'
-    config.add_index_field Spotlight::Engine.config.uploaded_attribution_field, :label => 'Attribution'
-    config.add_index_field Spotlight::Engine.config.uploaded_date_field, :label => 'Date'
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -82,6 +79,9 @@ class CatalogController < ApplicationController
     config.add_index_field 'note_source_tesim', :label => 'Source'
     config.add_index_field 'subject_geographic_tesim', :label => 'Geographic Subject'
     config.add_index_field 'subject_temporal_tesim', :label => 'Temporal Subject'
+    config.add_index_field Spotlight::Engine.config.uploaded_description_field, :label => 'Description'
+    config.add_index_field Spotlight::Engine.config.uploaded_attribution_field, :label => 'Attribution'
+    config.add_index_field Spotlight::Engine.config.uploaded_date_field, :label => 'Date'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display 
