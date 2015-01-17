@@ -62,7 +62,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   protected
 
   def current_exhibit
-    @exhibit if @exhibit.persisted?
+    @exhibit if @exhibit and @exhibit.persisted?
   end
 
   def exhibit_params
@@ -70,6 +70,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
       :title,
       :subtitle,
       :description,
+      :published,
       contact_emails_attributes: [:id, :email]
     )
   end

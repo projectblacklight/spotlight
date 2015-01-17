@@ -4,7 +4,7 @@ module Spotlight::Resources
 
     before_filter :authenticate_user!
 
-    load_resource :exhibit, class: Spotlight::Exhibit
+    load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
     before_filter :build_resource, only: [:new, :create]
 
     load_and_authorize_resource class: 'Spotlight::Resources::Upload', through_association: "exhibit.resources", instance_name: 'resource'

@@ -13,7 +13,15 @@ module Spotlight::Concerns
       helper Spotlight::ApplicationHelper
 
       rescue_from CanCan::AccessDenied do |exception|
-        redirect_to main_app.root_url, :alert => exception.message
+        if current_exhibit and !can? :read, current_exhibit
+          # Try to authenticate the user
+          authenticate_user!
+  
+          # If that fails (and we end up back here), offer a 404 error instead
+          raise ActionController::RoutingError.new('Not Found')
+        else
+          redirect_to main_app.root_url, :alert => exception.message
+        end
       end
     end
   end
