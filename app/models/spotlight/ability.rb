@@ -30,9 +30,11 @@ module Spotlight::Ability
     can :update, Spotlight::BlacklightConfiguration, exhibit_id: user.roles.pluck(:exhibit_id)
 
     can [:curate, :tag], Spotlight::Exhibit, id: user.roles.pluck(:exhibit_id)
+    can [:read, :curate, :tag], Spotlight::Exhibit, id: user.roles.pluck(:exhibit_id)
 
     # public
-    can :read, [Spotlight::Exhibit, Spotlight::HomePage]
+    can :read, Spotlight::HomePage
+    can :read, Spotlight::Exhibit, published: true
     can :read, Spotlight::Page, published: true
     can :read, Spotlight::Search, on_landing_page: true
 

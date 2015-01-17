@@ -6,7 +6,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t(:'.more_exhibits') %> <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <% Spotlight::Exhibit.where.not(id: current_exhibit).each do |exhibit| %>
+            <% Spotlight::Exhibit.accessible_by(current_ability).where.not(id: current_exhibit).each do |exhibit| %>
               <li>
               <%= link_to exhibit.title, [spotlight, exhibit] %>
               </li>

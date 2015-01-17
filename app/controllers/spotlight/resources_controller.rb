@@ -2,7 +2,7 @@ module Spotlight
   class ResourcesController < Spotlight::ApplicationController
     before_filter :authenticate_user!, except: [:show]
 
-    load_resource :exhibit, class: Spotlight::Exhibit
+    load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
     before_filter :build_resource, only: [:create]
 
     load_and_authorize_resource through: :exhibit

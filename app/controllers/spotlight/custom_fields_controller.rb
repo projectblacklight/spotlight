@@ -1,7 +1,7 @@
 class Spotlight::CustomFieldsController < Spotlight::ApplicationController
   before_filter :authenticate_user!
   
-  load_resource :exhibit, class: Spotlight::Exhibit
+  load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
   load_and_authorize_resource through: :exhibit
   before_filter :attach_breadcrumbs, only: [:new, :edit]
 

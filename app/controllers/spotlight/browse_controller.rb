@@ -1,6 +1,6 @@
 module Spotlight
   class BrowseController < Spotlight::ApplicationController
-    load_resource :exhibit, class: "Spotlight::Exhibit"
+    load_and_authorize_resource :exhibit, class: "Spotlight::Exhibit"
     include Spotlight::Base
     include Spotlight::Catalog::AccessControlsEnforcement
 

@@ -1,7 +1,7 @@
 module Spotlight
   class PagesController < Spotlight::ApplicationController
     before_filter :authenticate_user!, except: [:show]
-    load_resource :exhibit, class: Spotlight::Exhibit
+    load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
     include Spotlight::Base
     include Blacklight::Catalog::SearchContext

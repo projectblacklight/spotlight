@@ -62,4 +62,32 @@ describe Spotlight::HomePagesController, :type => :controller do
     end
   end
 
+  describe "when the exhibit is not published" do
+    before do
+      exhibit.published = false
+      exhibit.save!
+    end
+
+    it "should redirect an anonymous user to the signin path" do
+      get :show, exhibit_id: exhibit
+      expect(response).to redirect_to(main_app.new_user_session_path)
+    end
+
+    it "should redirect an unauthorized user to the signin path" do
+      user = FactoryGirl.create(:exhibit_curator)
+      sign_in user
+      expect do
+        get :show, exhibit_id: exhibit
+      end.to raise_error ActionController::RoutingError
+    end
+
+    it "should redirect an authorized user to the signin path" do
+      user = FactoryGirl.create(:exhibit_curator)
+      FactoryGirl.create(:role, exhibit: exhibit, user: user)
+      sign_in user
+      get :show, exhibit_id: exhibit
+      expect(response).to be_successful
+    end
+  end
+
 end

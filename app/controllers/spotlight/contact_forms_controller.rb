@@ -1,6 +1,6 @@
 module Spotlight
   class ContactFormsController < Spotlight::ApplicationController
-    load_resource :exhibit, class: Spotlight::Exhibit
+    load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
     def new
       @contact_form = Spotlight::ContactForm.new :current_url => request.referer
