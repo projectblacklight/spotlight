@@ -1,0 +1,22 @@
+# Punctuation characters we want to ignore as terms (i.e., when surrounded 
+# by whitespace in a query, like 'fred : the puppy') in queries
+# ONLY FOR SINGLE TOKEN ANALYZED FIELDS
+#   see https://issues.apache.org/jira/browse/SOLR-3085
+# Note that hyphens, plusses, and double hyphens are not treated as terms
+#   per debugQuery
+:
+;
+&
+/
+=
+>
+<
+,
+.
+(
+)
+…
+»
+§
+•
+·

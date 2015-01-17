@@ -7,7 +7,8 @@
   <abortOnConfigurationError>${solr.abortOnConfigurationError:true}</abortOnConfigurationError>
   
   <luceneMatchVersion>LUCENE_40</luceneMatchVersion>
-
+  <lib dir="../lib/contrib/analysis-extras/lib" />
+  <lib dir="../lib/contrib/analysis-extras/lucene-libs" />
   <directoryFactory name="DirectoryFactory" class="${solr.directoryFactory:solr.StandardDirectoryFactory}"/>
 
   <updateHandler class="solr.DirectUpdateHandler2">
@@ -15,109 +16,794 @@
       <str name="dir">${solr.core0.data.dir:}</str>
     </updateLog>
   </updateHandler>
-
-  <!-- solr lib dirs -->
-  <lib dir="../lib/contrib/analysis-extras/lib" />
-  <lib dir="../lib/contrib/analysis-extras/lucene-libs" />
   
   <dataDir>${solr.data.dir:}</dataDir>
 
+  <!-- for most searches, including Blacklight's pulldown menu for the single search box
+       Pulldown usage:
+         q=terms anywhere
+         q={!qf=$qf_title pf=$pf_title pf3=$pf3_title pf2=$pf2_title}a book title
+         q={!qf=$qf_author pf=$pf_author pf3=$pf3_author pf2=$pf2_author}author name
+         q=yer_callnum&df=callnum_search&defType=lucene&q.op=AND
+       Advanced search requests use:
+         defType=lucene&q=_query_:"{!dismax qf=$qf_a pf=$pf_a pf3=$pf3_a pf2=$pf2_a}qa" [AND|OR] _query_:"{!dismax qf=$qf_b pf=$pf_b pf3=$pf3_b pf2=$pf2_b}qb" -->
   <requestHandler name="search" class="solr.SearchHandler" default="true">
-    <!-- default values for query parameters can be specified, these
-         will be overridden by parameters in the request
-      -->
-     <lst name="defaults">
-       <str name="defType">edismax</str>
-       <str name="echoParams">explicit</str>
-       <str name="q.alt">*:*</str>
-       <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
-       <int name="qs">1</int>
-       <int name="ps">2</int>
-       <float name="tie">0.01</float>
-       <!-- this qf and pf are used by default, if not otherwise specified by
-            client. The default blacklight_config will use these for the
-            "keywords" search. See the author_qf/author_pf, title_qf, etc 
-            below, which the default blacklight_config will specify for
-            those searches. You may also be interested in:
-            http://wiki.apache.org/solr/LocalParams
-       -->
-        <str name="qf">
-          id
-          full_title_tesim
-          short_title_tesim
-          alternative_title_tesim
-          active_fedora_model_ssi
-          title_tesim
-          author_tesim
-          subject_tesim
-          all_text_timv
-        </str>
-        <str name="pf">
-          all_text_timv^10
-        </str>
-
-       <str name="author_qf">
-          author_tesim
-       </str>
-       <str name="author_pf">
-       </str>
-       <str name="title_qf">
-          title_tesim
-          full_title_tesim
-          short_title_tesim
-          alternative_title_tesim
-       </str>
-       <str name="title_pf">
-       </str>
-       <str name="subject_qf">
-          subject_tesim
-       </str>
-       <str name="subject_pf">
-       </str>
-       
-       <str name="fl">
-         *, 
-         score
-       </str>
-
-       <str name="facet">true</str>
-       <str name="facet.mincount">1</str>
-       <str name="facet.limit">10</str>
-       <str name="facet.field">active_fedora_model_ssi</str>
-       <str name="facet.field">subject_ssim</str>
-       
-       <str name="spellcheck">true</str>
-       <str name="spellcheck.dictionary">default</str>
-       <str name="spellcheck.onlyMorePopular">true</str>
-       <str name="spellcheck.extendedResults">true</str>
-       <str name="spellcheck.collate">false</str>
-       <str name="spellcheck.count">5</str>
-
-     </lst>
-    <arr name="last-components">
-      <str>spellcheck</str>
-    </arr>
-  </requestHandler>
-
-  <requestHandler name="permissions" class="solr.SearchHandler" >
     <lst name="defaults">
-      <str name="facet">off</str>
-      <str name="echoParams">all</str>
-      <str name="rows">1</str>
-      <str name="q">{!raw f=id v=$id}</str> <!-- use id=666 instead of q=id:666 -->
+      <str name="defType">edismax</str>
+      <str name="echoParams">explicit</str>
+      <str name="sort">score desc, pub_date_sort desc, title_sort asc</str>
+      <int name="rows">20</int>
+      <str name="q.alt">*:*</str>
+      <str name="mm">6&lt;-1 6&lt;90%</str>
+      <int name="qs">1</int>
+      <int name="ps">0</int>
+      <float name="tie">0.01</float>
+      <bool name="lowercaseOperators">false</bool>
+      <!-- in case lucene query parser -->
+      <str name="df">all_search</str>
+      <str name="q.op">AND</str>
+
+      <str name="qf">
+        title_245a_exact_search^1000
+        title_245a_unstem_search^500
+        title_245a_search^75           vern_title_245a_search^75
+        title_245_unstem_search^75
+        title_245_search^50            vern_title_245_search^50
+        title_uniform_unstem_search^50
+        title_uniform_search^20        vern_title_uniform_search^20
+        title_variant_unstem_search^20
+        title_variant_search^15        vern_title_variant_search^15
+        title_related_unstem_search^15
+        title_related_search^10        vern_title_related_search^10
+        series_exact_search^10
+        series_unstem_search^5
+        series_search^2                vern_series_search^2
+
+        author_1xx_unstem_search^25
+        author_1xx_search^20           vern_author_1xx_search^20
+        author_7xx_unstem_search^20
+        author_7xx_search^10           vern_author_7xx_search^10
+        author_8xx_unstem_search^10
+        author_8xx_search^5            vern_author_8xx_search^5
+
+        topic_unstem_search^50
+        topic_search^20                vern_topic_search^20
+        geographic_unstem_search^20
+        geographic_search^10           vern_geographic_search^10
+        subject_other_unstem_search^10
+        subject_other_search^5         vern_subject_other_search^5
+        db_az_subject_search^5
+        topic_subx_unstem_search^5
+        topic_subx_search^2            vern_topic_subx_search^2
+        geographic_subz_unstem_search^5
+        geographic_subz_search^2       vern_geographic_subz_search^2
+        subject_other_subvy_unstem_search^5
+        subject_other_subvy_search^2   vern_subject_other_subvy_search^2
+        subject_all_unstem_search^5
+        subject_all_search^2           vern_subject_all_search^2
+
+        toc_unstem_search^5
+        toc_search^2                   vern_toc_search^2
+        context_unstem_search^5
+        context_search^2               vern_context_search^2
+        summary_unstem_search^5
+        summary_search^2               vern_summary_search^2
+
+        pub_date_search^2
+        isbn_search^1.5
+        issn_search^1.5
+        id
+        druid
+        oclc
+        barcode_search
+        physical                       vern_physical
+        award_search
+        collection_search
+        all_unstem_search^5
+        all_search                     vern_all_search
+      </str>
+      <str name="pf"> <!-- (phrase boost within result set) -->
+        title_245a_exact_search^5000
+        title_245a_unstem_search^2500
+        title_245a_search^375          vern_title_245a_search^375
+        title_245_unstem_search^375
+        title_245_search^250           vern_title_245_search^250
+        title_uniform_unstem_search^250
+        title_uniform_search^100       vern_title_uniform_search^100
+        title_variant_unstem_search^100
+        title_variant_search^75        vern_title_variant_search^75
+        title_related_unstem_search^75
+        title_related_search^50        vern_title_related_search^50
+        series_exact_search^50
+        series_unstem_search^25
+        series_search^10               vern_series_search^10
+
+        author_1xx_unstem_search^125
+        author_1xx_search^100          vern_author_1xx_search^100
+        author_7xx_unstem_search^100
+        author_7xx_search^50           vern_author_7xx_search^50
+        author_8xx_unstem_search^50
+        author_8xx_search^25           vern_author_8xx_search^25
+
+        topic_unstem_search^250
+        topic_search^100               vern_topic_search^100
+        geographic_unstem_search^100
+        geographic_search^50           vern_geographic_search^50
+        subject_other_unstem_search^50
+        subject_other_search^25        vern_subject_other_search^25
+        db_az_subject_search^25
+        topic_subx_unstem_search^25
+        topic_subx_search^10           vern_topic_subx_search^10
+        geographic_subz_unstem_search^25
+        geographic_subz_search^10      vern_geographic_subz_search^10
+        subject_other_subvy_unstem_search^25
+        subject_other_subvy_search^10  vern_subject_other_subvy_search^10
+        subject_all_unstem_search^25
+        subject_all_search^10          vern_subject_all_search^10
+
+        toc_unstem_search^25
+        toc_search^10                  vern_toc_search^10
+        context_unstem_search^25
+        context_search^10              vern_context_search^10
+        summary_unstem_search^25
+        summary_search^10              vern_summary_search^10
+
+        pub_date_search^10
+        issn_search^7.5
+        physical^5                     vern_physical^5
+        award_search^5
+        collection_search^5
+        all_unstem_search^25
+        all_search^5                   vern_all_search^5
+      </str>
+      <str name="pf3">  <!-- (token trigrams boost within result set) -->
+        title_245a_search^1500         vern_title_245a_search^1500
+        title_245_search^225           vern_title_245_search^225
+        title_uniform_search^150       vern_title_uniform_search^150
+        title_variant_search^60        vern_title_variant_search^60
+        title_related_search^45        vern_title_related_search^45
+        series_search^30               vern_series_search^30
+
+        author_1xx_search^75           vern_author_1xx_search^75
+        author_7xx_search^60           vern_author_7xx_search^60
+        author_8xx_search^30           vern_author_8xx_search^30
+
+        topic_search^150               vern_topic_search^150
+        geographic_search^60           vern_geographic_search^60
+        subject_other_search^30        vern_subject_other_search^30
+        db_az_subject_search^15
+        topic_subx_search^15           vern_topic_subx_search^15
+        geographic_subz_search^15      vern_geographic_subz_search^15
+        subject_other_subvy_search^15  vern_subject_other_subvy_search^15
+        subject_all_search^15          vern_subject_all_search^15
+
+        toc_search^7.5                 vern_toc_search^7.5
+        context_search^7.5             vern_context_search^7.5
+        summary_search^7.5             vern_summary_search^7.5
+        physical^3                     vern_physical^3
+        award_search^3
+        collection_search^3
+        all_search^3                   vern_all_search^3
+      </str>
+      <str name="pf2"> <!--(token bigrams boost within result set) -->
+        title_245a_search^1000         vern_title_245a_search^1000
+        title_245_search^150           vern_title_245_search^150
+        title_uniform_search^100       vern_title_uniform_search^100
+        title_variant_search^40        vern_title_variant_search^40
+        title_related_search^30        vern_title_related_search^30
+        series_search^20               vern_series_search^20
+
+        author_1xx_search^50           vern_author_1xx_search^50
+        author_7xx_search^40           vern_author_7xx_search^40
+        author_8xx_search^20           vern_author_8xx_search^20
+
+        topic_search^100               vern_topic_search^100
+        geographic_search^40           vern_geographic_search^40
+        subject_other_search^20        vern_subject_other_search^20
+        db_az_subject_search^10
+        topic_subx_search^10           vern_topic_subx_search^10
+        geographic_subz_search^10      vern_geographic_subz_search^10
+        subject_other_subvy_search^10  vern_subject_other_subvy_search^10
+        subject_all_search^10          vern_subject_all_search^10
+
+        toc_search^5                   vern_toc_search^5
+        context_search^5               vern_context_search^5
+        summary_search^5               vern_summary_search^5
+        physical^2                     vern_physical^2
+        award_search^2
+        collection_search^2
+        all_search^2                   vern_all_search^2
+      </str>
+
+      <str name="qf_cjk">
+        title_245a_exact_search^1000
+        title_245a_unstem_search^500
+        title_245a_search^75           vern_title_245a_search^75           cjk_title_245a_search^75
+        title_245_unstem_search^75
+        title_245_search^50            vern_title_245_search^50            cjk_title_245_search^50
+        title_uniform_unstem_search^50
+        title_uniform_search^20        vern_title_uniform_search^20        cjk_title_uniform_search^20
+        title_variant_unstem_search^20
+        title_variant_search^15        vern_title_variant_search^15        cjk_title_variant_search^15
+        title_related_unstem_search^15
+        title_related_search^10        vern_title_related_search^10        cjk_title_related_search^10
+        series_exact_search^10
+        series_unstem_search^5
+        series_search^2                vern_series_search^2                cjk_series_search^2
+
+        author_1xx_unstem_search^25
+        author_1xx_search^20           vern_author_1xx_search^20           cjk_author_1xx_search^20
+        author_7xx_unstem_search^20
+        author_7xx_search^10           vern_author_7xx_search^10           cjk_author_7xx_search^10
+        author_8xx_unstem_search^10
+        author_8xx_search^5            vern_author_8xx_search^5            cjk_author_8xx_search^5
+
+        topic_unstem_search^50
+        topic_search^20                vern_topic_search^20                cjk_topic_search^20
+        geographic_unstem_search^20
+        geographic_search^10           vern_geographic_search^10           cjk_geographic_search^10
+        subject_other_unstem_search^10
+        subject_other_search^5         vern_subject_other_search^5         cjk_subject_other_search^5
+        db_az_subject_search^5
+        topic_subx_unstem_search^5
+        topic_subx_search^2            vern_topic_subx_search^2            cjk_topic_subx_search^2
+        geographic_subz_unstem_search^5
+        geographic_subz_search^2       vern_geographic_subz_search^2       cjk_geographic_subz_search^2
+        subject_other_subvy_unstem_search^5
+        subject_other_subvy_search^2   vern_subject_other_subvy_search^2   cjk_subject_other_subvy_search^2
+        subject_all_unstem_search^5
+        subject_all_search^2           vern_subject_all_search^2           cjk_subject_all_search^2
+
+        toc_unstem_search^5
+        toc_search^2                   vern_toc_search^2                   cjk_toc_search^2
+        context_unstem_search^5
+        context_search^2               vern_context_search^2               cjk_context_search^2
+        summary_unstem_search^5
+        summary_search^2               vern_summary_search^2               cjk_summary_search^2
+
+        pub_date_search^2
+        isbn_search^1.5
+        issn_search^1.5
+        id
+        oclc
+        barcode_search
+        physical                       vern_physical                       cjk_physical_search
+        award_search
+        collection_search
+        all_unstem_search^5
+        all_search                     vern_all_search                     cjk_all_search
+      </str>
+      <str name="pf_cjk"> <!-- (phrase boost within result set) -->
+        title_245a_exact_search^5000
+        title_245a_unstem_search^2500
+        title_245a_search^375          vern_title_245a_search^375          cjk_title_245a_search^375
+        title_245_unstem_search^375
+        title_245_search^250           vern_title_245_search^250           cjk_title_245_search^250
+        title_uniform_unstem_search^250
+        title_uniform_search^100       vern_title_uniform_search^100       cjk_title_uniform_search^100
+        title_variant_unstem_search^100
+        title_variant_search^75        vern_title_variant_search^75        cjk_title_variant_search^75
+        title_related_unstem_search^75
+        title_related_search^50        vern_title_related_search^50        cjk_title_related_search^50
+        series_exact_search^50
+        series_unstem_search^25
+        series_search^10               vern_series_search^10               cjk_series_search^10
+
+        author_1xx_unstem_search^125
+        author_1xx_search^100          vern_author_1xx_search^100          cjk_author_1xx_search^100
+        author_7xx_unstem_search^100
+        author_7xx_search^50           vern_author_7xx_search^50           cjk_author_7xx_search^50
+        author_8xx_unstem_search^50
+        author_8xx_search^25           vern_author_8xx_search^25           cjk_author_8xx_search^25
+
+        topic_unstem_search^250
+        topic_search^100               vern_topic_search^100               cjk_topic_search^100
+        geographic_unstem_search^100
+        geographic_search^50           vern_geographic_search^50           cjk_geographic_search^50
+        subject_other_unstem_search^50
+        subject_other_search^25        vern_subject_other_search^25        cjk_subject_other_search^25
+        db_az_subject_search^25
+        topic_subx_unstem_search^25
+        topic_subx_search^10           vern_topic_subx_search^10           cjk_topic_subx_search^10
+        geographic_subz_unstem_search^25
+        geographic_subz_search^10      vern_geographic_subz_search^10      cjk_geographic_subz_search^10
+        subject_other_subvy_unstem_search^25
+        subject_other_subvy_search^10  vern_subject_other_subvy_search^10  cjk_subject_other_subvy_search^10
+        subject_all_unstem_search^25
+        subject_all_search^10          vern_subject_all_search^10          cjk_subject_all_search^10
+
+        toc_unstem_search^25
+        toc_search^10                  vern_toc_search^10                  cjk_toc_search^10
+        context_unstem_search^25
+        context_search^10              vern_context_search^10              cjk_context_search^10
+        summary_unstem_search^25
+        summary_search^10              vern_summary_search^10              cjk_summary_search^10
+
+        pub_date_search^10
+        issn_search^7.5
+        physical^5                     vern_physical^5                     cjk_physical_search^5
+        award_search^5
+        collection_search^5
+        all_unstem_search^25
+        all_search^5                   vern_all_search^5                   cjk_all_search^5
+      </str>
+      <str name="pf3_cjk">  <!-- (token trigrams boost within result set) -->
+        title_245a_search^1500         vern_title_245a_search^1500         cjk_title_245a_search^1500
+        title_245_search^225           vern_title_245_search^225           cjk_title_245_search^225
+        title_uniform_search^150       vern_title_uniform_search^150       cjk_title_uniform_search^150
+        title_variant_search^60        vern_title_variant_search^60        cjk_title_variant_search^60
+        title_related_search^45        vern_title_related_search^45        cjk_title_related_search^45
+        series_search^30               vern_series_search^30               cjk_series_search^30
+
+        author_1xx_search^75           vern_author_1xx_search^75           cjk_author_1xx_search^75
+        author_7xx_search^60           vern_author_7xx_search^60           cjk_author_7xx_search^60
+        author_8xx_search^30           vern_author_8xx_search^30           cjk_author_8xx_search^30
+
+        topic_search^150               vern_topic_search^150               cjk_topic_search^150
+        geographic_search^60           vern_geographic_search^60           cjk_geographic_search^60
+        subject_other_search^30        vern_subject_other_search^30        cjk_subject_other_search^30
+        db_az_subject_search^15
+        topic_subx_search^15           vern_topic_subx_search^15           cjk_topic_subx_search^15
+        geographic_subz_search^15      vern_geographic_subz_search^15      cjk_geographic_subz_search^15
+        subject_other_subvy_search^15  vern_subject_other_subvy_search^15  cjk_subject_other_subvy_search^15
+        subject_all_search^15          vern_subject_all_search^15          cjk_subject_all_search^15
+
+        toc_search^7.5                 vern_toc_search^7.5                 cjk_toc_search^7.5
+        context_search^7.5             vern_context_search^7.5             cjk_context_search^7.5
+        summary_search^7.5             vern_summary_search^7.5             cjk_summary_search^7.5
+        physical^3                     vern_physical^3                     cjk_physical_search^3
+        award_search^3
+        collection_search^3
+        all_search^3                   vern_all_search^3                   cjk_all_search^3
+      </str>
+      <str name="pf2_cjk"> <!--(token bigrams boost within result set) -->
+        title_245a_search^1000         vern_title_245a_search^1000         cjk_title_245a_search^1000
+        title_245_search^150           vern_title_245_search^150           cjk_title_245_search^150
+        title_uniform_search^100       vern_title_uniform_search^100       cjk_title_uniform_search^100
+        title_variant_search^40        vern_title_variant_search^40        cjk_title_variant_search^40
+        title_related_search^30        vern_title_related_search^30        cjk_title_related_search^30
+        series_search^20               vern_series_search^20               cjk_series_search^20
+
+        author_1xx_search^50           vern_author_1xx_search^50           cjk_author_1xx_search^50
+        author_7xx_search^40           vern_author_7xx_search^40           cjk_author_7xx_search^40
+        author_8xx_search^20           vern_author_8xx_search^20           cjk_author_8xx_search^20
+
+        topic_search^100               vern_topic_search^100               cjk_topic_search^100
+        geographic_search^40           vern_geographic_search^40           cjk_geographic_search^40
+        subject_other_search^20        vern_subject_other_search^20        cjk_subject_other_search^20
+        db_az_subject_search^10
+        topic_subx_search^10           vern_topic_subx_search^10           cjk_topic_subx_search^10
+        geographic_subz_search^10      vern_geographic_subz_search^10      cjk_geographic_subz_search^10
+        subject_other_subvy_search^10  vern_subject_other_subvy_search^10  cjk_subject_other_subvy_search^10
+        subject_all_search^10          vern_subject_all_search^10          cjk_subject_all_search^10
+
+        toc_search^5                   vern_toc_search^5                   cjk_toc_search^5
+        context_search^5               vern_context_search^5               cjk_context_search^5
+        summary_search^5               vern_summary_search^5               cjk_summary_search^5
+        physical^2                     vern_physical^2                     cjk_physical_search^2
+        award_search^2
+        collection_search^2
+        all_search^2                   vern_all_search^2                   cjk_all_search^2
+      </str>
+
+
+      <str name="qf_title">
+        title_245a_exact_search^350
+        title_245a_unstem_search^100
+        title_245a_search^75           vern_title_245a_search^75
+        title_245_unstem_search^75
+        title_245_search^50            vern_title_245_search^50
+        title_uniform_unstem_search^50
+        title_uniform_search^20        vern_title_uniform_search^20
+        title_variant_unstem_search^20
+        title_variant_search^10        vern_title_variant_search^10
+        title_related_unstem_search^10
+        title_related_search^5         vern_title_related_search^5
+        series_exact_search^5
+        series_unstem_search^2
+        series_search                  vern_series_search
+      </str>
+      <str name="pf_title"> <!-- (phrase) -->
+        title_245a_exact_search^1750
+        title_245a_unstem_search^500
+        title_245a_search^375          vern_title_245a_search^375
+        title_245_unstem_search^375
+        title_245_search^250           vern_title_245_search^250
+        title_uniform_unstem_search^250
+        title_uniform_search^100       vern_title_uniform_search^100
+        title_variant_unstem_search^100
+        title_variant_search^50        vern_title_variant_search^50
+        title_related_unstem_search^50
+        title_related_search^25        vern_title_related_search^25
+        series_exact_search^25
+        series_unstem_search^10
+        series_search^5                vern_series_search^5
+      </str>
+      <str name="pf3_title"> <!-- (token trigrams) -->
+        title_245a_search^300          vern_title_245a_search^300
+        title_245_search^225           vern_title_245_search^225
+        title_uniform_search^150       vern_title_uniform_search^150
+        title_variant_search^60        vern_title_variant_search^60
+        title_related_search^15        vern_title_related_search^15
+        series_search^3                vern_series_search^3
+      </str>
+      <str name="pf2_title"> <!-- (token bigrams) -->
+        title_245a_search^200          vern_title_245a_search^200
+        title_245_search^150           vern_title_245_search^150
+        title_uniform_search^100       vern_title_uniform_search^100
+        title_variant_search^40        vern_title_variant_search^40
+        title_related_search^10        vern_title_related_search^10
+        series_search^2                vern_series_search^2
+      </str>
+
+      <str name="qf_title_cjk">
+        title_245a_exact_search^350
+        title_245a_unstem_search^100
+        title_245a_search^75           vern_title_245a_search^75           cjk_title_245a_search^75
+        title_245_unstem_search^75
+        title_245_search^50            vern_title_245_search^50            cjk_title_245_search^50
+        title_uniform_unstem_search^50
+        title_uniform_search^20        vern_title_uniform_search^20        cjk_title_uniform_search^20
+        title_variant_unstem_search^20
+        title_variant_search^10        vern_title_variant_search^10        cjk_title_variant_search^10
+        title_related_unstem_search^10
+        title_related_search^5         vern_title_related_search^5         cjk_title_related_search^5
+        series_exact_search^5
+        series_unstem_search^2
+        series_search                  vern_series_search                  cjk_series_search
+      </str>
+      <str name="pf_title_cjk"> <!-- (phrase) -->
+        title_245a_exact_search^1750
+        title_245a_unstem_search^500
+        title_245a_search^375          vern_title_245a_search^375          cjk_title_245a_search^375
+        title_245_unstem_search^375
+        title_245_search^250           vern_title_245_search^250           cjk_title_245_search^250
+        title_uniform_unstem_search^250
+        title_uniform_search^100       vern_title_uniform_search^100       cjk_title_uniform_search^100
+        title_variant_unstem_search^100
+        title_variant_search^50        vern_title_variant_search^50        cjk_title_variant_search^50
+        title_related_unstem_search^50
+        title_related_search^25        vern_title_related_search^25        cjk_title_related_search^25
+        series_exact_search^25
+        series_unstem_search^10
+        series_search^5                vern_series_search^5                cjk_series_search^5
+      </str>
+      <str name="pf3_title_cjk"> <!-- (token trigrams) -->
+        title_245a_search^300          vern_title_245a_search^300          cjk_title_245a_search^300
+        title_245_search^225           vern_title_245_search^225           cjk_title_245_search^225
+        title_uniform_search^150       vern_title_uniform_search^150       cjk_title_uniform_search^150
+        title_variant_search^60        vern_title_variant_search^60        cjk_title_variant_search^60
+        title_related_search^15        vern_title_related_search^15        cjk_title_related_search^15
+        series_search^3                vern_series_search^3                cjk_series_search^3
+      </str>
+      <str name="pf2_title_cjk"> <!-- (token bigrams) -->
+        title_245a_search^200          vern_title_245a_search^200          cjk_title_245a_search^200
+        title_245_search^150           vern_title_245_search^150           cjk_title_245_search^150
+        title_uniform_search^100       vern_title_uniform_search^100       cjk_title_uniform_search^100
+        title_variant_search^40        vern_title_variant_search^40        cjk_title_variant_search^40
+        title_related_search^10        vern_title_related_search^10        cjk_title_related_search^10
+        series_search^2                vern_series_search^2                cjk_series_search^2
+      </str>
+
+
+      <str name="qf_author">
+        author_1xx_unstem_search^20
+        author_1xx_search^5            vern_author_1xx_search^5
+        author_7xx_unstem_search^10
+        author_7xx_search^2            vern_author_7xx_search^2
+        author_8xx_unstem_search^2
+        author_8xx_search              vern_author_8xx_search
+      </str>
+      <str name="pf_author"> <!-- (phrase) -->
+        author_1xx_search^100          vern_author_1xx_search^100
+        author_7xx_search^50           vern_author_7xx_search^50
+        author_8xx_search^10           vern_author_8xx_search^10
+      </str>
+      <str name="pf3_author"> <!-- (token trigrams) -->
+        author_1xx_search^60           vern_author_1xx_search^60
+        author_7xx_search^30           vern_author_7xx_search^30
+        author_8xx_search^5            vern_author_8xx_search^5
+      </str>
+      <str name="pf2_author"> <!-- (token bigrams) -->
+        author_1xx_search^40           vern_author_1xx_search^40
+        author_7xx_search^20           vern_author_7xx_search^20
+        author_8xx_search^2            vern_author_8xx_search^2
+      </str>
+
+      <str name="qf_author_cjk">
+        author_1xx_unstem_search^20
+        author_1xx_search^5            vern_author_1xx_search^5            cjk_author_1xx_search^5
+        author_7xx_unstem_search^10
+        author_7xx_search^2            vern_author_7xx_search^2            cjk_author_7xx_search^2
+        author_8xx_unstem_search^2
+        author_8xx_search              vern_author_8xx_search              cjk_author_8xx_search
+      </str>
+      <str name="pf_author_cjk"> <!-- (phrase) -->
+        author_1xx_search^100          vern_author_1xx_search^100          cjk_author_1xx_search^100
+        author_7xx_search^50           vern_author_7xx_search^50           cjk_author_7xx_search^50
+        author_8xx_search^10           vern_author_8xx_search^10           cjk_author_8xx_search^10
+      </str>
+      <str name="pf3_author_cjk"> <!-- (token trigrams) -->
+        author_1xx_search^60           vern_author_1xx_search^60           cjk_author_1xx_search^60
+        author_7xx_search^30           vern_author_7xx_search^30           cjk_author_7xx_search^30
+        author_8xx_search^5            vern_author_8xx_search^5            cjk_author_8xx_search^5
+      </str>
+      <str name="pf2_author_cjk"> <!-- (token bigrams) -->
+        author_1xx_search^40           vern_author_1xx_search^40           cjk_author_1xx_search^40
+        author_7xx_search^20           vern_author_7xx_search^20           cjk_author_7xx_search^20
+        author_8xx_search^2            vern_author_8xx_search^2            cjk_author_8xx_search^2
+      </str>
+
+
+      <str name="qf_subject">
+        topic_unstem_search^50
+        topic_search^20                vern_topic_search^20
+        geographic_unstem_search^20
+        geographic_search^10           vern_geographic_search^10
+        subject_other_unstem_search^10
+        subject_other_search^5         vern_subject_other_search^5
+        topic_subx_unstem_search^2
+        topic_subx_search              vern_topic_subx_search
+        geographic_subz_unstem_search^2
+        geographic_subz_search         vern_geographic_subz_search
+        subject_other_subvy_unstem_search^2
+        subject_other_subvy_search     vern_subject_other_subvy_search
+        subject_all_unstem_search^2
+        subject_all_search             vern_subject_all_search
+        db_az_subject_search
+      </str>
+      <str name="pf_subject"> <!-- (phrase) -->
+        topic_unstem_search^250
+        topic_search^100               vern_topic_search^100
+        geographic_unstem_search^100
+        geographic_search^50           vern_geographic_search^50
+        subject_other_unstem_search^25
+        subject_other_search^25        vern_subject_other_search^25
+        topic_subx_unstem_search^10
+        topic_subx_search^5            vern_topic_subx_search^5
+        geographic_subz_unstem_search^10
+        geographic_subz_search^5       vern_geographic_subz_search^5
+        subject_other_subvy_unstem_search^10
+        subject_other_subvy_search^5   vern_subject_other_subvy_search^5
+        subject_all_unstem_search^10
+        subject_all_search^5           vern_subject_all_search^5
+        db_az_subject_search^5
+      </str>
+      <str name="pf3_subject"> <!-- (token trigrams) -->
+        topic_search^150               vern_topic_search^150
+        subject_all_search^75          vern_subject_all_search^75
+        db_az_subject_search^3
+      </str>
+      <str name="pf2_subject"> <!-- (token bigrams) -->
+        topic_search^100               vern_topic_search^100
+        subject_all_search^50          vern_subject_all_search^50
+        db_az_subject_search^2
+      </str>
+
+      <str name="qf_subject_cjk">
+        topic_unstem_search^50
+        topic_search^20                vern_topic_search^20                cjk_topic_search^20
+        geographic_unstem_search^20
+        geographic_search^10           vern_geographic_search^10           cjk_geographic_search^10
+        subject_other_unstem_search^10
+        subject_other_search^5         vern_subject_other_search^5         cjk_subject_other_search^5
+        topic_subx_unstem_search^2
+        topic_subx_search              vern_topic_subx_search              cjk_topic_subx_search
+        geographic_subz_unstem_search^2
+        geographic_subz_search         vern_geographic_subz_search         cjk_geographic_subz_search
+        subject_other_subvy_unstem_search^2
+        subject_other_subvy_search     vern_subject_other_subvy_search     cjk_subject_other_subvy_search
+        subject_all_unstem_search^2
+        subject_all_search             vern_subject_all_search             cjk_subject_all_search
+        db_az_subject_search
+      </str>
+      <str name="pf_subject_cjk"> <!-- (phrase) -->
+        topic_unstem_search^250
+        topic_search^100               vern_topic_search^100               cjk_topic_search^100
+        geographic_unstem_search^100
+        geographic_search^50           vern_geographic_search^50           cjk_geographic_search^50
+        subject_other_unstem_search^25
+        subject_other_search^25        vern_subject_other_search^25        cjk_subject_other_search^25
+        topic_subx_unstem_search^10
+        topic_subx_search^5            vern_topic_subx_search^5            cjk_topic_subx_search^5
+        geographic_subz_unstem_search^10
+        geographic_subz_search^5       vern_geographic_subz_search^5       cjk_geographic_subz_search^5
+        subject_other_subvy_unstem_search^10
+        subject_other_subvy_search^5   vern_subject_other_subvy_search^5   cjk_subject_other_subvy_search^5
+        subject_all_unstem_search^10
+        subject_all_search^5           vern_subject_all_search^5           cjk_subject_all_search^5
+        db_az_subject_search^5
+      </str>
+      <str name="pf3_subject_cjk"> <!-- (token trigrams) -->
+        topic_search^150               vern_topic_search^150               cjk_topic_search^150
+        subject_all_search^75          vern_subject_all_search^75          cjk_subject_all_search^75
+        db_az_subject_search^3
+      </str>
+      <str name="pf2_subject_cjk"> <!-- (token bigrams) -->
+        topic_search^100               vern_topic_search^100               cjk_topic_search^100
+        subject_all_search^50          vern_subject_all_search^50          cjk_subject_all_search^50
+        db_az_subject_search^2
+      </str>
+
+
+      <str name="qf_series">
+        series_exact_search^5
+        series_unstem_search^2
+        series_search                  vern_series_search
+      </str>
+      <str name="pf_series"> <!-- (phrase) -->
+        series_exact_search^25
+        series_search^10               vern_series_search^10
+      </str>
+      <str name="pf3_series"> <!-- (token trigrams) -->
+        series_search^5                vern_series_search^5
+      </str>
+      <str name="pf2_series"> <!-- (token bigrams) -->
+        series_search^2                vern_series_search^2
+      </str>
+
+      <str name="qf_series_cjk">
+        series_exact_search^5
+        series_unstem_search^2
+        series_search                  vern_series_search                  cjk_series_search
+      </str>
+      <str name="pf_series_cjk"> <!-- (phrase) -->
+        series_exact_search^25
+        series_search^10               vern_series_search^10               cjk_series_search^10
+      </str>
+      <str name="pf3_series_cjk"> <!-- (token trigrams) -->
+        series_search^5                vern_series_search^5                cjk_series_search^5
+      </str>
+      <str name="pf2_series_cjk"> <!-- (token bigrams) -->
+        series_search^2                vern_series_search^2                cjk_series_search^2
+      </str>
+
+
+      <!-- for course reserves searches -->
+      <str name="qf_crez">
+        crez_instructor_search
+        crez_course_name_search
+        crez_course_id_search
+      </str>
+      <str name="pf_crez">
+        crez_instructor_search^2
+        crez_course_name_search^2
+      </str>
+      <str name="sort_crez">score desc, title_sort asc, pub_date_sort desc</str>
+
+
+      <!-- for advanced search publisher text box -->
+      <str name="qf_pub_info">
+        pub_search                     vern_pub_search
+        pub_country
+        pub_date_search
+      </str>
+      <str name="pf_pub_info">
+        pub_search^5                   vern_pub_search^5
+        pub_country^5
+        pub_date_search^5
+      </str>
+      <str name="pf3_pub_info">pub_search^3 vern_pub_search^3</str>
+      <str name="pf2_pub_info">pub_search^2 vern_pub_search^2</str>
+
+      <str name="qf_pub_info_cjk">
+        pub_search                     vern_pub_search                     cjk_pub_search
+        pub_country
+        pub_date_search
+      </str>
+      <str name="pf_pub_info_cjk">
+        pub_search^5                   vern_pub_search^5                   cjk_pub_search^5
+        pub_country^5
+        pub_date_search^5
+      </str>
+      <str name="pf3_pub_info_cjk">pub_search^3 vern_pub_search^3 cjk_pub_search^3</str>
+      <str name="pf2_pub_info_cjk">pub_search^2 vern_pub_search^2 cjk_pub_search^2</str>
+
+      <!-- for advanced search number text box -->
+      <str name="qf_number">
+        id
+        isbn_search
+        issn_search
+        oclc
+        barcode_search
+        callnum_search
+      </str>
+      <str name="pf_number">issn_search^5 callnum_search^5</str>
+      <str name="pf3_number">callnum_search^3</str>
+      <str name="pf2_number">callnum_search^2</str>
+
+      <bool name="facet">true</bool>
+      <int name="facet.mincount">1</int>
+      <int name="facet.limit">21</int>
+      <str name="facet.field">access_facet</str>
+        <str name="f.access_facet.facet.method">enum</str>
+      <str name="facet.field">author_person_facet</str>
+      <str name="facet.field">author_other_facet</str>
+      <str name="facet.field">building_facet</str>
+        <str name="f.building_facet.facet.method">enum</str>
+        <str name="f.building_facet.facet.limit">-1</str>
+      <str name="facet.field">callnum_facet_hsim</str>
+        <str name="f.callnum_facet_hsim.facet.sort">index</str>
+        <int name="f.callnum_facet_hsim.facet.limit">-1</int>
+        <str name="f.callnum_facet_hsim.facet.method">enum</str>
+      <str name="facet.field">collection</str>
+        <str name="f.collection.facet.method">enum</str>
+      <str name="facet.field">db_az_subject</str>
+        <str name="f.db_az_subject.facet.method">enum</str>
+        <str name="f.db_az_subject.facet.sort">index</str>
+      <str name="facet.field">display_type</str>
+        <str name="f.display_type.facet.method">enum</str>
+      <str name="facet.field">era_facet</str>
+      <str name="facet.field">format_main_ssim</str>
+        <int name="f.format_main_ssim.facet.limit">-1</int>
+        <str name="f.format_main_ssim.facet.method">enum</str>
+      <str name="facet.field">format_physical_ssim</str>
+        <int name="f.format_physical_ssim.facet.limit">20</int>
+        <str name="f.format_physical_ssim.facet.method">enum</str>
+      <str name="facet.field">genre_ssim</str>
+        <str name="f.genre_ssim.facet.method">enum</str>
+      <str name="facet.field">format</str>
+        <str name="f.format.facet.method">enum</str>
+      <str name="facet.field">geographic_facet</str>
+      <str name="facet.field">language</str>
+      <str name="facet.field">pub_date</str>
+      <str name="facet.field">pub_year_tisim</str>
+      <str name="facet.field">topic_facet</str>
+
+      <!-- Highlighting defaults -->
+      <str name="hl.fl">all_search</str>
+
       <str name="fl">
+        score,
         id,
-        access_ssim,
-        discover_access_group_ssim,discover_access_person_ssim,
-        read_access_group_ssim,read_access_person_ssim,
-        edit_access_group_ssim,edit_access_person_ssim,
-        depositor_ti,
-        embargo_release_date_dtsi
-        inheritable_access_ssim,
-        inheritable_discover_access_group_ssim,inheritable_discover_access_person_ssim,
-        inheritable_read_access_group_ssim,inheritable_read_access_person_ssim,
-        inheritable_edit_access_group_ssim,inheritable_edit_access_person_ssim,
-        inheritable_embargo_release_date_dtsi
+        author_corp_display,          vern_author_corp_display,
+        author_meeting_display,       vern_author_meeting_display,
+        author_person_display,        vern_author_person_display,
+        author_person_full_display,   vern_author_person_full_display,
+        collection,
+        collection_type,
+        collection_with_title,
+        crez_course_info,
+        db_az_subject,
+        display_type,
+        file_id,
+        format,
+        format_main_ssim,
+        format_physical_ssim,
+        genre_ssim,
+        imprint_display,
+        isbn_display,
+        item_display,
+        lccn,
+        marcbib_xml,
+        mhld_display,
+        modsxml,
+        oclc,
+        physical,                     vern_physical,
+        pub_date,
+        publication_year_isi,
+        beginning_year_isi,
+        earliest_year_isi,
+        earliest_poss_year_isi,
+        release_year_isi,
+        reprint_year_isi,
+        ending_year_isi,
+        latest_year_isi,
+        latest_poss_year_isi,
+        production_year_isi,
+        original_year_isi,
+        copyright_year_isi,
+        pub_date_display,
+        summary_display,
+        title_245a_display,           vern_title_245a_display,
+        title_245c_display,           vern_title_245c_display,
+        title_display,                vern_title_display,
+        title_full_display,           vern_title_full_display,
+        title_uniform_display,        vern_title_uniform_display
+        url_fulltext,
+        url_restricted,
+        url_suppl,
+        url_sfx
       </str>
     </lst>
   </requestHandler>
@@ -158,6 +844,15 @@
   <requestDispatcher handleSelect="true" >
     <requestParsers enableRemoteStreaming="true" multipartUploadLimitInKB="2048" />
   </requestDispatcher>
+
+  <!-- realtime get handler, guaranteed to return the latest stored fields 
+    of any document, without the need to commit or open a new searcher. The current 
+    implementation relies on the updateLog feature being enabled. -->
+  <requestHandler name="/get" class="solr.RealTimeGetHandler">
+    <lst name="defaults">
+      <str name="omitHeader">true</str>
+    </lst>
+  </requestHandler>  
   
   <requestHandler name="/analysis/field" startup="lazy" class="solr.FieldAnalysisRequestHandler" />
   <requestHandler name="/update" class="solr.UpdateRequestHandler"  />

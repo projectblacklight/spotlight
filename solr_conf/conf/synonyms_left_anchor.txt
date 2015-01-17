@@ -1,0 +1,45 @@
+# Include in analysis with left anchor of 'aaaaaa'
+#  for query or field beginning with token meant to be a synonym
+#
+# http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.SynonymFilterFactory
+# A synonym file for Solr SynonymFilterFactory.
+# Needs to be included at both index and query time 
+#  AFTER the case folding
+#  BEFORE the WordDelimiterFilterFactory that removes punctuation
+# e.g. 
+# <analyzer>
+#   <!-- put beginning anchor on field value, assume first non-whitespace char is unicode letter or number or symbol -->
+#   <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="^\s*([\p{L}\p{N}\p{S}]{1})" replacement="aaaaaa$1"/>
+#   <tokenizer class="solr.WhitespaceTokenizerFactory" />
+#   <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
+#   <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="false"/>
+#   <filter class="solr.SynonymFilterFactory" synonyms="synonyms_left_anchor.txt" ignoreCase="true" expand="false"/>
+#   <filter class="solr.WordDelimiterFilterFactory" ...
+#   ...
+#
+
+aaaaaadepartment => aaaaaadept
+aaaaaaqurʼan, aaaaaaqur'an, aaaaaaquran, aaaaaaqorʼan, aaaaaaqor'an, aaaaaaqoran => aaaaaakoran
+aaaaaavioloncello, aaaaaaviolincello => aaaaaacello
+
+# computer languages
+aaaaaac++ => aaaaaacplusplus
+aaaaaaj#, aaaaaaj♯ => aaaaaajsssharp
+
+# musical keys
+# We map from number-sign (#), musical sharp (♯)
+aaaaaaa#, aaaaaaa♯, aaaaaaa-sharp => aaaaaaa sharp
+aaaaaab#, aaaaaab♯, aaaaaab-sharp => aaaaaab sharp
+aaaaaac#, aaaaaac♯, aaaaaac-sharp => aaaaaac sharp
+aaaaaad#, aaaaaad♯, aaaaaad-sharp => aaaaaad sharp
+aaaaaae#, aaaaaae♯, aaaaaae-sharp => aaaaaae sharp
+aaaaaaf#, aaaaaaf♯, aaaaaaf-sharp => aaaaaaf sharp
+aaaaaag#, aaaaaag♯, aaaaaag-sharp => aaaaaag sharp
+# We map both from lowercase b and musical flat (♭)
+aaaaaaab, aaaaaaa♭, aaaaaaa-flat => aaaaaaa flat
+aaaaaabb, aaaaaab♭, aaaaaab-flat => aaaaaab flat
+aaaaaacb, aaaaaac♭, aaaaaac-flat => aaaaaac flat
+aaaaaadb, aaaaaad♭, aaaaaad-flat => aaaaaad flat
+aaaaaaeb, aaaaaae♭, aaaaaae-flat => aaaaaae flat
+aaaaaafb, aaaaaaf♭, aaaaaaf-flat => aaaaaaf flat
+aaaaaagb, aaaaaag♭, aaaaaag-flat => aaaaaag flat
