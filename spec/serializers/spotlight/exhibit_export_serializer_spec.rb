@@ -64,4 +64,9 @@ describe Spotlight::ExhibitExportSerializer do
     expect(subject["resources_attributes"]).to have(source_exhibit.resources.count).items
   end
 
+  it "should have tags" do
+    source_exhibit.tag(SolrDocument.new(id: 1), with: "xyz", on: :tags)
+    expect(subject["owned_taggings_attributes"]).to have(source_exhibit.owned_taggings.count).items
+  end
+
 end

@@ -25,6 +25,16 @@ module Spotlight
     end
   end
 
+  class TaggingSerializer < Spotlight::ExportSerializer(ActsAsTaggableOn::Tagging)
+    has_one :tag, root: 'tag_attributes', serializer: Spotlight.ExportSerializer(ActsAsTaggableOn::Tag)
+    def filter keys
+      keys = super
+      keys -= [:tagger_type]
+      keys -= [:context] # context conflicts with ActiveRecord methods; fortunately, we only have the default context
+      keys += [:taggable_id]
+    end
+  end
+
   class ExhibitExportSerializer < Spotlight::ExportSerializer(Spotlight::Exhibit)
     self.root = false
 
@@ -47,7 +57,7 @@ module Spotlight
     has_one :blacklight_configuration, root: 'blacklight_configuration_attributes', serializer: Spotlight.ExportSerializer(Spotlight::BlacklightConfiguration)
     
     has_many :solr_document_sidecars, root: 'solr_document_sidecars_attributes', serializer: Spotlight::SolrDocumentSerializer
-    
+    has_many :owned_taggings, root: 'owned_taggings_attributes', serializer: Spotlight::TaggingSerializer
     # todo: include attachment binary paylod??
     has_many :attachments, root: 'attachments_attributes', serializer: Spotlight.ExportSerializer(Spotlight::Attachment)
 
