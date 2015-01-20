@@ -1,10 +1,7 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
   <%= curation_page_title %>
-
-  <div class="clearfix">
-    <%= render 'spotlight/resources/bookmarklet' %>
-  </div>
-
-  <%= render 'spotlight/resources/csv/form' %>
+  <% Spotlight::Engine.config.new_resource_partials.each do |p| %>
+    <%= render p %>
+  <% end %>
 </div>

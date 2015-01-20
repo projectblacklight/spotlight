@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div>
 <p><%= t(:'.instructions') %></p>
 
 <%= link_to t(:'.bookmarklet', application_name: application_name), "javascript:var q=document.location; void(open('#{new_exhibit_resource_url(current_exhibit) }?popup=true&resource[url]='+encodeURIComponent(q),'#{ application_name }','toolbar=no,width=700,height=350'));", class: 'btn btn-default', onclick: "return false;" %>

@@ -6,6 +6,10 @@ describe "adding an item using the provided bookmarklet", :type => :feature do
   let(:search) { exhibit.searches.first }
   before { login_as curator }
 
+  before do
+    Spotlight::Engine.config.new_resource_partials += ["spotlight/resources/bookmarklet"]
+  end
+
   it "should have an exhibit-specific bookmarklet" do
     visit spotlight.admin_exhibit_catalog_index_path(exhibit)
     click_link "Add repository item"
