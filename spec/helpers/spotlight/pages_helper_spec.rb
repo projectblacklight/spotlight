@@ -39,15 +39,15 @@ module Spotlight
       end
     end
     describe "get_search_widget_search_results" do
-      let(:good_json) { { 'searches-options' => search.id } }
-      let(:bad_json) { { 'searches-options' => 100 } }
+      let(:good) { SirTrevorRails::Block.new({type: 'xyz', data: {'searches-options' => search.id}}, 'parent') }
+      let(:bad) { SirTrevorRails::Block.new({type: 'xyz', data: { 'searches-options' => 100}}, 'parent') }
       let(:search_result) { [double('response'), double('documents')] }
       it "should return the results for a given search browse category" do
         expect(helper).to receive(:get_search_results).with({"q" => "query"}).and_return(search_result)
-        expect(helper.get_search_widget_search_results( good_json )).to eq search_result
+        expect(helper.get_search_widget_search_results( good )).to eq search_result
       end
       it "should return an empty array when requesting a search that doesn't exist" do
-        expect(helper.get_search_widget_search_results( bad_json )).to be_empty
+        expect(helper.get_search_widget_search_results( bad )).to be_empty
       end
     end
     describe "item grid helpers" do

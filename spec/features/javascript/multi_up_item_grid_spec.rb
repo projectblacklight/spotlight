@@ -19,9 +19,7 @@ describe "Mutli-Up Item Grid", type: :feature, js: true do
       click_link "Edit"
     end
 
-    find("[data-icon='add']").click
-
-    find("a[data-type='multi-up-item-grid']").click
+    add_widget 'multi-up-item-grid'
 
     fill_in_typeahead_field "item-grid-id_0_title", with: "dq287tq6352"
     fill_in_typeahead_field "item-grid-id_1_title", with: "jp266yb7109"
@@ -36,10 +34,9 @@ describe "Mutli-Up Item Grid", type: :feature, js: true do
       $("[name=\'item-grid-display_2\']").prop("checked", false);
 
     ';
-
-    click_button "Save changes"
-    expect(page).to have_content("The feature page was successfully updated.")
-
+    
+    save_page
+    
     visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
 
     expect(page).to have_css("[data-id='dq287tq6352']")
@@ -60,18 +57,15 @@ describe "Mutli-Up Item Grid", type: :feature, js: true do
       click_link "Edit"
     end
 
-    find("[data-icon='add']").click
-
-    find("a[data-type='multi-up-item-grid']").click
+    add_widget 'multi-up-item-grid'
 
     fill_in_typeahead_field "item-grid-id_0_title", with: "dq287tq6352"
     fill_in_typeahead_field "item-grid-id_1_title", with: "jp266yb7109"
     fill_in_typeahead_field "item-grid-id_2_title", with: "zv316zr9542"
 
-
-    click_button "Save changes"
-    expect(page).to have_content("The feature page was successfully updated.")
-
+    
+    save_page
+    
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
     
     ##
@@ -83,10 +77,8 @@ describe "Mutli-Up Item Grid", type: :feature, js: true do
       $("[name=\'item-grid-display_2\']").prop("checked", false);
 
     ';
+    save_page
     
-    click_button "Save changes"
-    expect(page).to have_content("The feature page was successfully updated.")
-
     expect(page).to have_css("[data-id='dq287tq6352']")
     expect(page).to have_css("[data-id='jp266yb7109']")
     expect(page).to_not have_css("[data-id='zv316zr9542']")
@@ -105,9 +97,7 @@ describe "Mutli-Up Item Grid", type: :feature, js: true do
       click_link "Edit"
     end
 
-    find("[data-icon='add']").click
-
-    find("a[data-type='multi-up-item-grid']").click
+    add_widget 'multi-up-item-grid'
 
     fill_in_typeahead_field "item-grid-id_0_title", with: "gk446cj2442"
 
@@ -120,10 +110,8 @@ describe "Mutli-Up Item Grid", type: :feature, js: true do
       select("Language", from: 'item-grid-secondary-caption-field')
     end
 
-    click_button "Save changes"
-
-    expect(page).to have_content("The feature page was successfully updated.")
-
+    save_page
+    
     visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
 
     expect(page).to have_css(".caption", text: "[World map]")

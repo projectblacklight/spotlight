@@ -35,12 +35,8 @@ describe Spotlight::HomePage, :type => :model do
   end
   describe "content" do
     it "should include default text" do
-      expect(home_page.content).to match /#{Spotlight::HomePage.default_content_text}/
-    end
-    it "should be parsible JSON that includes the default text" do
-      json = JSON.parse(home_page.content)
-      expect(json).to be_a Hash
-      expect(json["data"].first["data"]["text"]).to eq Spotlight::HomePage.default_content_text
+      expect(home_page.content.first).to be_a SirTrevorRails::Blocks::TextBlock
+      expect(home_page.content.first.text).to eq Spotlight::HomePage.default_content_text
     end
   end
 end

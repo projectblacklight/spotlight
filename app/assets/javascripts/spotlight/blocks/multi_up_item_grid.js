@@ -80,7 +80,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
 
     description: "This widget displays one to five thumbnail images of repository items in a single row grid. Optionally, you can a caption below each image..",
 
-    template: _.template([
+    template: [
       '<div class="form-inline <%= key %>-admin clearfix">',
         '<div class="widget-header">',
           '<%= description %>',
@@ -99,7 +99,7 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
             '<label for="<%= formId(show_primary_caption) %>">Primary caption</label>',
             '<select name="<%= primary_field_key %>" id="<%= formId(primary_field_key) %>">',
               '<option value="">Select...</option>',
-              '<%= caption_field_template({field: title_key, label: "Title", selected: ""}) %>',
+              '<%= _.template(caption_field_template)({field: title_key, label: "Title", selected: ""}) %>',
             '</select>',
           '</div>',
           '<div class="field-select secondary-caption" data-behavior="item-caption-admin">',
@@ -107,13 +107,13 @@ SirTrevor.Blocks.MultiUpItemGrid =  (function(){
             '<label for="<%= formId(show_secondary_caption) %>">Secondary caption</label>',
             '<select name="<%= secondary_field_key %>" id="<%= formId(secondary_field_key) %>">',
               '<option value="">Select...</option>',
-              '<%= caption_field_template({field: title_key, label: "Title", selected: ""}) %>',
+              '<%= _.template(caption_field_template)({field: title_key, label: "Title", selected: ""}) %>',
             '</select>',
           '</div>',
           '<%= addCarouselFields() %>',
         '</div>',
       '</div>'
-    ].join("\n")),
+    ].join("\n"),
 
     makeItemGridNestable: function() {
       SpotlightNestable.init();

@@ -11,6 +11,24 @@ module Spotlight::TestFeaturesHelpers
     find('.tt-suggestion').click
   end
 
+  def add_widget type = nil
+    # click to add widget
+    find('[data-icon="add"]').click
+
+    if type
+      # click the item + image widget
+      expect(page).to have_css("a[data-type='#{type}']")
+      find("a[data-type='#{type}']").click
+    end
+  end
+
+  def save_page
+    sleep 1
+    click_button("Save changes")
+    # verify that the page was created
+    expect(page).to have_content("page was successfully updated")
+  end
+
   RSpec::Matchers.define :have_breadcrumbs do |*expected|
     match do |actual|
       errors = []

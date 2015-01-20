@@ -21,7 +21,7 @@ SirTrevor.Blocks.Oembed =  (function(){
 
     icon_name: "oembed",
 
-    template: _.template([
+    template: [
     '<div class="form-horizontal oembed-text-admin clearfix">',
       '<div class="widget-header">',
         'This widget embeds a web resource and a text block to the left or right of it.',
@@ -51,6 +51,6 @@ SirTrevor.Blocks.Oembed =  (function(){
       '</div>',
       '<div class="clearFix"></div>',
     '</div>'
-  ].join("\n"))
+  ].join("\n")
   });
 })();

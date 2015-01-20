@@ -69,10 +69,10 @@ module Spotlight
 
     # Return a copy of the blacklight configuration
     # that only includes views conifgured by our block
-    def blacklight_view_config_for_search_block sir_tervor_json
+    def blacklight_view_config_for_search_block block
       # Reject any views that aren't configured to display for this block
       blacklight_config.view.select do |view,_|
-        selected_search_block_views(sir_tervor_json).include? view.to_s
+        selected_search_block_views(block).include? view.to_s
       end
     end
     
@@ -87,10 +87,10 @@ module Spotlight
     end
 
     # Return the list of views that are configured to display for a block
-    def selected_search_block_views sir_tervor_json
-      sir_tervor_json.select do |key, value|
+    def selected_search_block_views block
+      block.as_json[:data].select do |key, value|
         value == "on"
-      end.keys
+      end.keys.map { |x| x.to_s }
     end
 
     def render_save_search

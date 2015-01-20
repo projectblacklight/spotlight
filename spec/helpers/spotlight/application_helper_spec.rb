@@ -32,11 +32,14 @@ describe Spotlight::ApplicationHelper, :type => :helper do
   describe "search block helpers" do
     describe "selected_search_block_views" do
       it "should return keys with a value of 'on'" do
-        expect(helper.selected_search_block_views({a: "on", b: "off", c: false, d: "on"})).to eq [:a, :d]
+        expect(helper.selected_search_block_views(SirTrevorRails::Block.new({type: 'xyz', data: {a: "on", b: "off", c: false, d: "on"}}, 'parent'))).to eq ["a", "d"]
       end
     end
     describe "blacklight_view_config_for_search_block" do
-      let(:sir_trevor_json) { { "list" => "on", "gallery" => "on", "slideshow" => "null" } }
+      let(:sir_trevor_block) { 
+        SirTrevorRails::Block.new({type: 'xyz', data: {"list" => "on", "gallery" => "on", "slideshow" => "null"}}, 'parent')
+      }
+
       let(:config) { Blacklight::Configuration.new do |config|
         config.view.list = {}
         config.view.gallery = {}
@@ -48,7 +51,7 @@ describe Spotlight::ApplicationHelper, :type => :helper do
       end
       it "should return a blacklight configuration object that has reduced the views to those that are configured in the block" do
         expect(config.view.keys).to eq [:list, :gallery, :slideshow]
-        new_config = helper.blacklight_view_config_for_search_block(sir_trevor_json)
+        new_config = helper.blacklight_view_config_for_search_block(sir_trevor_block)
         expect(new_config.keys).to eq [:list, :gallery]
       end
     end

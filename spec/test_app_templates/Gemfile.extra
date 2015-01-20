@@ -1,0 +1,1 @@
+gem "sir_trevor_rails", github: "sul-dlss/sir-trevor-rails"

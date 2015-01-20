@@ -1,6 +1,0 @@
-<div class="content-block item-text">
-  <div class="oembed-block <%= "pull-#{ block['text-align']}" if block["text"].present? %>">
-    <%= render_oembed_tag block["url"] %>
-  </div>
-  <%= sir_trevor_markdown block["text"] if block["text"].present?  %>
-</div>

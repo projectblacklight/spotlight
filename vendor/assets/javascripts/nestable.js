@@ -384,7 +384,7 @@
 
             var i;
             var isRejected = false;
-            for (i in this.options.reject)
+            for (i = 0; i < this.options.reject.length; i++)
             {
                 var reject = this.options.reject[i];
                 if (reject.rule.apply(this.dragRootEl))

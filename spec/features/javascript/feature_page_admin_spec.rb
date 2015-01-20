@@ -57,8 +57,7 @@ feature "Feature Pages Adminstration", js:  true do
         find("input").set("NewFeaturePage1")
       end
     end
-    click_button "Save changes"
-    expect(page).to have_content("Feature pages were successfully updated.")
+    click_button("Save changes")
     within("[data-id='#{page1.id}']") do
       within("h3") do
         expect(page).to have_content("NewFeaturePage1")
@@ -93,8 +92,7 @@ feature "Feature Pages Adminstration", js:  true do
       click_link "Edit"
     end
 
-    find("[data-icon='add']").click
-    find("a[data-type='text']").click
+    add_widget 'item-text'
     content_editable = find(".st-text-block")
     content_editable.set("Some Facnty Text.")
 
@@ -144,10 +142,9 @@ feature "Feature Pages Adminstration", js:  true do
         find("input").set("New Home Page Title")
       end
     end
-    click_button "Save changes"
-
-    expect(page).to have_content("Feature pages were successfully updated.")
-
+    
+    click_button("Save changes")
+    
     within(".home_page") do
       within("h3.panel-title") do
         expect(page).to have_content("New Home Page Title")

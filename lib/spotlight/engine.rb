@@ -16,6 +16,8 @@ module Spotlight
     require 'carrierwave'
     require 'carrierwave/crop'
     require 'social-share-button'
+    require 'lodash-rails'
+    require 'github/markup'
 
     config.autoload_paths += %W(
       #{config.root}/app/builders
@@ -23,7 +25,7 @@ module Spotlight
     )
 
     initializer "spotlight.initialize" do
-      require 'sir-trevor-rails'
+      require 'sir_trevor_rails'
       require 'cancan'
       require 'bootstrap_form'
       require 'acts-as-taggable-on'

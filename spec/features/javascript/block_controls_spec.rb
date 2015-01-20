@@ -26,7 +26,7 @@ feature "Block controls" do
     # fill in title
     fill_in "feature_page_title", :with => "Exhibit Title"
     # click to add widget
-    find("[data-icon='add']").click
+    add_widget
 
     within('.st-block-controls') do
       expect(page).to have_css(".st-controls-group", count: 2)

@@ -3,13 +3,13 @@ require 'spec_helper'
 describe "spotlight/about_pages/index.html.erb", :type => :view do
   let(:pages) {[
       stub_model(Spotlight::AboutPage,
-        :title => "Title1",
-        :content => "MyText",
+        title: "Title1",
+        content: "[]",
         exhibit: exhibit
       ),
       stub_model(Spotlight::AboutPage,
-        :title => "Title2",
-        :content => "MyText",
+        title: "Title2",
+        content: "[]",
         exhibit: exhibit
       )
     ]}
