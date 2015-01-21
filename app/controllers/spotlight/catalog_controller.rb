@@ -153,9 +153,7 @@ class Spotlight::CatalogController < ::CatalogController
 
   def uploaded_resource_params
     if @document.uploaded_resource?
-      return Spotlight::Resources::Upload.fields(current_exhibit).collect do |_, config|
-        config.solr_field
-      end
+      return Spotlight::Resources::Upload.fields(current_exhibit).collect(&:solr_field)
     end
     []
   end

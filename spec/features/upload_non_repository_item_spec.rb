@@ -11,14 +11,23 @@ describe "Uploading a non-repository item", :type => :feature do
       visit spotlight.new_exhibit_resources_upload_path(exhibit)
       expect(page).to have_css("h1", text: /Curation/)
       expect(page).to have_css "h1 small", text: "Add non-repository items"
-      within("form.item-upload-form") do
+      within("form#new_resources_upload") do
         expect(page).to have_css('#resources_upload_url[type="file"]')
         expect(page).to have_css('.help-block', text: 'Valid file types: jpg jpeg png')
-        expect(page).to have_css('#resources_upload_data_title[type="text"]')
-        expect(page).to have_css('textarea#resources_upload_data_description')
-        expect(page).to have_css('#resources_upload_data_attribution[type="text"]')
-        expect(page).to have_css('#resources_upload_data_date[type="text"]')
+        expect(page).to have_css('#resources_upload_data_full_title_tesim[type="text"]')
+        expect(page).to have_css('textarea#resources_upload_data_spotlight_upload_description_tesim')
+        expect(page).to have_css('#resources_upload_data_spotlight_upload_attribution_tesim[type="text"]')
+        expect(page).to have_css('#resources_upload_data_spotlight_upload_date_tesim[type="text"]')
         expect(page).to have_css("#resources_upload_data_#{custom_field.field}[type='text']")
+      end
+    end
+    it "should display the multi-item CSV upload form" do
+      visit spotlight.new_exhibit_resources_upload_path(exhibit)
+      expect(page).to have_css("h1", text: /Curation/)
+      expect(page).to have_css "h1 small", text: "Add non-repository items"
+      within("form#new_resources_csv_upload") do
+        expect(page).to have_css('#resources_csv_upload_url[type="file"]')
+        expect(page).to have_css('.help-block a', text: 'Download template')
       end
     end
   end

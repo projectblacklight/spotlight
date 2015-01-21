@@ -10,10 +10,10 @@ describe Spotlight::Resources::Upload, :type => :model do
     before do
       subject.id = "1"
       subject.data = {
-        title: "Title Data",
-        description: "Description Data",
-        attribution: "Attribution Data",
-        date: "Date Data",
+        configured_title_field: "Title Data",
+        spotlight_upload_description_tesim: "Description Data",
+        spotlight_upload_attribution_tesim: "Attribution Data",
+        spotlight_upload_date_tesim: "Date Data",
         custom_field.field => "Custom Field Data"
       }
       allow(subject).to receive(:url).and_return(stub_model(Spotlight::ItemUploader))

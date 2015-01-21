@@ -19,6 +19,32 @@ describe Spotlight::Resources::UploadController, :type => :controller do
     let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
     before {sign_in user }
 
+    describe 'POST csv_upload' do
+      let(:csv) { fixture_file_upload(File.expand_path(File.join('..', 'fixtures', 'csv-upload-fixture.csv'), Rails.root), 'text/csv') }
+      let(:serialized_csv) {[
+        {"url"=>"http://lorempixel.com/800/500/", "full_title_tesim"=>"A random image", "spotlight_upload_description_tesim"=>"A random 800 by 500 image from lorempixel", "spotlight_upload_attribution_tesim"=>"lorempixel.com", "spotlight_upload_date_tesim"=>"2015"},
+        {"url"=>"http://lorempixel.com/900/600/", "full_title_tesim"=>"Another random image", "spotlight_upload_description_tesim"=>"A random 900 by 600 image from lorempixel", "spotlight_upload_attribution_tesim"=>"lorempixel.com", "spotlight_upload_date_tesim"=>"2014"}
+      ]}
+      before do
+        request.env["HTTP_REFERER"] = 'http://test.host/'
+      end
+      it 'should start an AddUploadsFromCSV job with the serialized CSV' do
+        expect(Spotlight::AddUploadsFromCSV).to receive(:perform_later).with(serialized_csv, exhibit, user).and_return(nil)
+        post :csv_upload, exhibit_id: exhibit, resources_csv_upload: { url: csv }
+      end
+      it 'should set the flash message' do
+        expect(Spotlight::AddUploadsFromCSV).to receive(:perform_later).and_return(nil)
+        post :csv_upload, exhibit_id: exhibit, resources_csv_upload: { url: csv }
+        expect(flash[:notice]).to eq "'csv-upload-fixture.csv' has been uploaded.  An email will be sent to you once indexing is complete."
+      end
+      it 'should redirect back' do
+        expect(Spotlight::AddUploadsFromCSV).to receive(:perform_later).and_return(nil)
+        post :csv_upload, exhibit_id: exhibit, resources_csv_upload: { url: csv }
+        expect(response).to redirect_to :back
+      end
+
+    end
+
     describe "POST create" do
 
       before do

@@ -56,11 +56,11 @@ module Spotlight
     Spotlight::Engine.config.uploaded_attribution_field = :spotlight_upload_attribution_tesim
     Spotlight::Engine.config.uploaded_date_field = :spotlight_upload_date_tesim
 
-    Spotlight::Engine.config.upload_fields = {
-      description: OpenStruct.new(solr_field: Spotlight::Engine.config.uploaded_description_field, form_field_type: :text_area),
-      attribution: OpenStruct.new(solr_field: Spotlight::Engine.config.uploaded_attribution_field),
-      date:        OpenStruct.new(solr_field: Spotlight::Engine.config.uploaded_date_field)
-    }
+    Spotlight::Engine.config.upload_fields = [
+      OpenStruct.new(solr_field: Spotlight::Engine.config.uploaded_description_field, form_field_type: :text_area),
+      OpenStruct.new(solr_field: Spotlight::Engine.config.uploaded_attribution_field),
+      OpenStruct.new(solr_field: Spotlight::Engine.config.uploaded_date_field)
+    ]
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
     
