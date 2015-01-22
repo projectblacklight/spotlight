@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency "bootstrap_form", "~> 2.2.0"
   s.add_dependency "mail_form"
   s.add_dependency "acts-as-taggable-on", "3.1.0"
-  s.add_dependency "friendly_id", "5.1.0.beta.1"
+  s.add_dependency "friendly_id", "5.1.0"
   s.add_dependency "breadcrumbs_on_rails", "~> 2.3.0"
   s.add_dependency "social-share-button", "~> 0.1.5"
   s.add_dependency "blacklight-oembed", ">= 0.0.3"
