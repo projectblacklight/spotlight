@@ -93,6 +93,22 @@ namespace :spotlight do
 
       exit 1 if errors > 0
     end
-end
+  end
+
+  task :reindex, [:exhibit_slug] => :environment do |_, args|
+    exhibits = if args[:exhibit_slug]
+      Spotlight::Exhibit.where(slug: args[:exhibit_slug])
+    else
+      Spotlight::Exhibit.all
+    end
+
+    exhibits.find_each do |e|
+      puts " == Reindexing #{e.title} =="
+      e.resources.find_each do |r| 
+        puts "#{r.url} (#{r.id})"
+        r.reindex
+      end
+    end
+  end
 
 end

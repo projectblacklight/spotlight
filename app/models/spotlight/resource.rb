@@ -8,14 +8,7 @@ module Spotlight
     serialize :data, Hash
     attr_accessor :performing_reindex
 
-    after_save if: :data_changed? do
-      unless performing_reindex
-        performing_reindex = true
-        reindex
-        performing_reindex = false
-        update_index_time!
-      end
-    end
+    after_save :reindex, if: :data_changed?
 
     def self.providers
       Spotlight::Engine.config.resource_providers
@@ -34,6 +27,15 @@ module Spotlight
         spotlight_resource_id_ssim: "#{(type.tableize if type) || self.class.to_s.tableize }:#{id}",
         spotlight_resource_url_ssim: url
       }
+    end
+
+    def reindex
+      unless performing_reindex
+        performing_reindex = true
+        super
+        update_index_time!
+        performing_reindex = false
+      end
     end
 
     def update_index_time!
