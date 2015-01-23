@@ -39,7 +39,7 @@ describe Spotlight::Resources::Upload, :type => :model do
       expect(subject.to_solr[Spotlight::Engine.config.uploaded_date_field]).to eq "Date Data"
     end
     it 'should have a spotlight_resource_type field' do
-      expect(subject.to_solr[:spotlight_resource_type_ssm]).to eq 'spotlight/resources/uploads'
+      expect(subject.to_solr[:spotlight_resource_type_ssim]).to eq 'spotlight/resources/uploads'
     end
     it 'should have the various image fields' do
       expect(subject.to_solr).to have_key :configured_full_image_field

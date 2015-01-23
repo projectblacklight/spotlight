@@ -5,13 +5,15 @@ describe Spotlight::Resources::OpenGraph, :type => :model do
     include Spotlight::Resources::Web
     include Spotlight::Resources::OpenGraph
   end
+  
+  let(:exhibit) { double(solr_data: { }) }
 
   subject { TestResource.new url: "info:url" }
 
   describe "#to_solr" do
 
     before do
-      allow(subject).to receive_messages id: 15, opengraph_properties: {}
+      allow(subject).to receive_messages id: 15, opengraph_properties: {}, exhibit: exhibit
     end
 
     let(:solr_doc) { subject.to_solr }

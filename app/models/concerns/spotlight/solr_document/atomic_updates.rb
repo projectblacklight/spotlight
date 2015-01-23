@@ -1,14 +1,13 @@
 module Spotlight::SolrDocument::AtomicUpdates
 
   def reindex
-    data = hash_for_solr_update
+    data = hash_for_solr_update(to_solr)
 
     blacklight_solr.update params: { commitWithin: 500 }, data: data.to_json, headers: { 'Content-Type' => 'application/json'} unless data.empty?
   end
 
   private
-  def hash_for_solr_update
-    data = to_solr
+  def hash_for_solr_update data
     data = [data] unless data.is_a? Array
 
     data.map do |doc|

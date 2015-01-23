@@ -40,7 +40,7 @@ class Spotlight::Search < ActiveRecord::Base
       facet: false)
 
     Blacklight::SolrResponse.new(response, {}).docs.map do |result|
-      doc = ::SolrDocument.new(result)
+      doc = blacklight_config.solr_document_model.new(result)
 
       [
         doc.first(blacklight_config.solr_document_model.unique_key),

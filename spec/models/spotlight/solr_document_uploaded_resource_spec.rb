@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe Spotlight::SolrDocument::UploadedResource, :type => :model do
-  let(:valid_resource) { ::SolrDocument.new(id: '123', full_image_url_ssm: ["http://example.com/png.png"], spotlight_full_image_height_ssm: ["1400"], spotlight_full_image_width_ssm: ["1000"], spotlight_resource_type_ssm: ["spotlight/resources/uploads"]) }
+  let(:valid_resource) { ::SolrDocument.new(id: '123', full_image_url_ssm: ["http://example.com/png.png"], spotlight_full_image_height_ssm: ["1400"], spotlight_full_image_width_ssm: ["1000"], spotlight_resource_type_ssim: ["spotlight/resources/uploads"]) }
   describe 'SolrDocument.use_extension' do
     it 'should not include the uploaded resource extension when there is no full image field' do
-      expect(::SolrDocument.new(id: '123', spotlight_resource_type_ssm: ["spotlight/resources/uploads"])).to_not be_a_kind_of(Spotlight::SolrDocument::UploadedResource)
+      expect(::SolrDocument.new(id: '123', spotlight_resource_type_ssim: ["spotlight/resources/uploads"])).to_not be_a_kind_of(Spotlight::SolrDocument::UploadedResource)
     end
     it 'should not include the uploaded resource extension when the spotlight resource type is not correct' do
-      expect(::SolrDocument.new(id: '123', full_image_url_ssm: ["http://example.com/png.png"], spotlight_resource_type_ssm: ["not-correct"])).to_not be_a_kind_of(Spotlight::SolrDocument::UploadedResource)
+      expect(::SolrDocument.new(id: '123', full_image_url_ssm: ["http://example.com/png.png"], spotlight_resource_type_ssim: ["not-correct"])).to_not be_a_kind_of(Spotlight::SolrDocument::UploadedResource)
     end
     it 'should include the uploaded resource extension when the correct fields are present with the correct data' do
       expect(valid_resource).to be_a_kind_of(Spotlight::SolrDocument::UploadedResource)

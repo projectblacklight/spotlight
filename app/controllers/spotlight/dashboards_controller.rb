@@ -26,7 +26,7 @@ module Spotlight
       solr_params = { sort: "#{blacklight_config.index.timestamp_field} desc" }
       @response = query_solr({}, solr_params)
       @response.docs.take(count).map do |doc|
-        ::SolrDocument.new(doc, @response)
+        blacklight_config.solr_document_model.new(doc, @response)
       end
     end
   end
