@@ -1,0 +1,9 @@
+<%= bootstrap_form_for([current_exhibit, @resource.becomes(Spotlight::Resources::CsvUpload)], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-sm-6 col-md-6', html: { class: 'item-upload-form', multipart: true } ) do |f| %>
+  <%= f.url_field :url, type: "file", help: t('.help_html', link: link_to(t('.template'), template_exhibit_resources_uploads_path)), label: t('.file_label') %>
+  <div class="form-actions">
+    <div class="primary-actions">
+      <%= cancel_link @resource, :back, class: 'btn btn-default' %>
+      <%= f.submit t('.add_item'), class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

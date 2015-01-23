@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.0", ">= 4.0.1"
+  s.add_dependency "rails", "~> 4.0", ">= 4.2.0"
   s.add_dependency "blacklight", "~> 5.8.0"
   s.add_dependency "autoprefixer-rails", "< 5.0.0"
   s.add_dependency "cancancan"

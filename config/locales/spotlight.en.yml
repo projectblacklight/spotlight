@@ -184,6 +184,7 @@ en:
         index: 'Search Results'
       edit_default:
         blank_field_warning_html: "This field is currently hidden on all pages. You can make it visible on the Curation &gt; %{link} page."
+        full_title_tesim: "Title"
       facets:
         exhibit_visibility:
           label: "Item Visibility"
@@ -341,15 +342,23 @@ en:
         form:
           template: "Download Template"
       upload:
+        csv:
+          success: "'%{file_name}' has been uploaded.  An email will be sent to you once indexing is complete."
         new:
           header: "Add non-repository items"
           single: "Single item"
           multiple: "Multiple items using CSV file"
         error: "There was a problem uploading your object."
+        multi_item_form:
+          add_item: "Add item"
+          help_html: "%{link}"
+          template: "Download template"
+          file_label: "CSV File"
         success: "Object uploaded successfully."
         single_item_form:
           add_item: "Add item"
           add_item_and_continue: "Add item and continue adding"
+          full_title_tesim: "Title"
           url-field:
             help: "Valid file types: %{extensions}"
       bookmarklet:
@@ -410,6 +419,12 @@ en:
     shared:
       report_a_problem:
         title: Contact Us
+    indexing_complete_mailer:
+      documents_indexed:
+        title: "Your CSV file has just finished being processed."
+        body:
+          one: "%{count} document has been indexed from the CSV file and added to the exhibit %{title}."
+          other: "%{count} documents have been indexed from the CSV file and added to the exhibit %{title}."
   shared:
     exhibit_masthead:
       more_exhibits: More Exhibits
