@@ -51,6 +51,8 @@ module Spotlight
 
     # The solr field that original (largest) images will be stored.
     Spotlight::Engine.config.full_image_field = :full_image_url_ssm
+    Spotlight::Engine.config.thumbnail_field = :thumbnail_url_ssm
+    Spotlight::Engine.config.square_image_field = :thumbnail_square_url_ssm
 
     Spotlight::Engine.config.uploaded_description_field = :spotlight_upload_description_tesim
     Spotlight::Engine.config.uploaded_attribution_field = :spotlight_upload_attribution_tesim

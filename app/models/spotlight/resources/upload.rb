@@ -39,7 +39,7 @@ module Spotlight
     
     def add_default_solr_fields solr_hash
       solr_hash[exhibit.blacklight_config.solr_document_model.unique_key.to_sym] = compound_id
-      solr_hash[exhibit.blacklight_config.index.full_image_field] = url.url
+      solr_hash[Spotlight::Engine.config.full_image_field] = url.url
     end
 
     def add_image_dimensions solr_hash
@@ -66,8 +66,7 @@ module Spotlight
 
     def add_file_versions solr_hash
       Spotlight::ItemUploader.configured_versions.each do |config|
-        field = exhibit.blacklight_config.index.send(config[:blacklight_config_field])
-        solr_hash[field] = url.send(config[:version]).url if field
+        solr_hash[config[:field]] = url.send(config[:version]).url
       end
     end
 
