@@ -419,6 +419,12 @@ en:
     shared:
       report_a_problem:
         title: Contact Us
+    indexing_complete_mailer:
+      documents_indexed:
+        title: "Your CSV file has just finished being processed."
+        body:
+          one: "%{count} document has been indexed from the CSV file and added to the exhibit %{title}."
+          other: "%{count} documents have been indexed from the CSV file and added to the exhibit %{title}."
   shared:
     exhibit_masthead:
       more_exhibits: More Exhibits
