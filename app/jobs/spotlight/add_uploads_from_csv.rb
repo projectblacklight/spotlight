@@ -3,7 +3,8 @@ module Spotlight
     queue_as :default
 
     after_perform do |job|
-      Spotlight::IndexingCompleteMailer.documents_indexed(job.arguments[0], job.arguments[1], job.arguments[2]).deliver_now
+      csv_data, exhibit, user = job.arguments
+      Spotlight::IndexingCompleteMailer.documents_indexed(csv_data, exhibit, user).deliver_now
     end
 
     def perform(csv_data, exhibit, user)
