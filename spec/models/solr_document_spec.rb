@@ -122,7 +122,7 @@ describe SolrDocument, :type => :model do
     let(:uploaded_resource) {
       SolrDocument.new(
         Spotlight::Engine.config.full_image_field => "ImageData",
-        spotlight_resource_type_ssm: "spotlight/resources/uploads"
+        spotlight_resource_type_ssim: "spotlight/resources/uploads"
       )
     }
     it 'should not include Spotlight::SolrDocument::UploadedResource when the correct fields are present' do

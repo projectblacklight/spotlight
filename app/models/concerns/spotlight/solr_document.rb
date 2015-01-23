@@ -16,7 +16,7 @@ module Spotlight
       before_save :save_owned_tags
       after_save :reindex
 
-      ::SolrDocument.use_extension(Spotlight::SolrDocument::UploadedResource) do |document|
+      use_extension(Spotlight::SolrDocument::UploadedResource) do |document|
         document.uploaded_resource?
       end
     end
@@ -51,7 +51,7 @@ module Spotlight
     end
 
     def to_solr
-      { id: id }.reverse_merge(sidecars.inject({}) { |result, sidecar| result.merge(sidecar.to_solr) }).merge(tags_to_solr)
+      { self.class.unique_key.to_sym => id }.reverse_merge(sidecars.inject({}) { |result, sidecar| result.merge(sidecar.to_solr) }).merge(tags_to_solr)
     end
 
     def self.solr_field_for_tagger tagger
@@ -60,6 +60,10 @@ module Spotlight
 
     def self.visibility_field exhibit
       ("#{Spotlight::Engine.config.solr_fields.prefix}#{exhibit.class.model_name.param_key}_#{exhibit.id}_public" + Spotlight::Engine.config.solr_fields.boolean_suffix).to_sym
+    end
+    
+    def self.resource_type_field
+      :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_resource_type#{Spotlight::Engine.config.solr_fields.string_suffix}"
     end
 
     def make_public! exhibit
@@ -80,8 +84,8 @@ module Spotlight
 
     def uploaded_resource?
       self[Spotlight::Engine.config.full_image_field].present? &&
-      self[:spotlight_resource_type_ssm].present? &&
-      self[:spotlight_resource_type_ssm].include?("spotlight/resources/uploads")
+      self[Spotlight::SolrDocument.resource_type_field].present? &&
+      self[Spotlight::SolrDocument.resource_type_field].include?("spotlight/resources/uploads")
     end
 
     def attribute_present? *args
@@ -110,5 +114,7 @@ module Spotlight
 end
 
 ActsAsTaggableOn::Tagging.after_destroy do |obj|
-  ::SolrDocument.reindex(obj.taggable_id)
+  if obj.tagger.is_a? Spotlight::Exhibit
+    obj.tagger.blacklight_config.solr_document_model.reindex(obj.taggable_id)
+  end
 end

@@ -19,8 +19,7 @@ describe Spotlight::Resources::Csv, :type => :model do
     end
 
     before do
-      allow(subject).to receive_messages(csv: csv)
-      allow(subject).to receive_messages(label_to_field: label_to_field)
+      allow(subject).to receive_messages(csv: csv, label_to_field: label_to_field, exhibit: exhibit)
     end
 
     it "should map csv headers to solr fields" do

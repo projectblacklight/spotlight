@@ -8,8 +8,16 @@ module Spotlight
     after_save :update_exhibit_specific_fields, if: :url_changed?, prepend: true
 
     def to_solr
+      store_url! # so that #url doesn't return the tmp directory
+      
+      base_doc = super
+      
+      base_doc.merge!(
+        :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_resource_url#{Spotlight::Engine.config.solr_fields.string_suffix}" => url.url
+      )
+      
       csv.map do |row|
-        h = {}
+        h = base_doc.merge(solr_document_model.new(base_doc).to_solr)
         row.each do |k,v|
           if label_to_field[k]
             h[label_to_field[k]] ||= []
@@ -23,7 +31,7 @@ module Spotlight
     def label_to_field
       @label_to_field ||= begin
         label_to_field = {}
-        label_to_field['id'] ||= ::SolrDocument.unique_key
+        label_to_field['id'] ||= solr_document_model.unique_key
         label_to_field[title_field_name] ||= exhibit.blacklight_config.index.title_field
         label_to_field[public_field_name] ||= Spotlight::SolrDocument.visibility_field(exhibit)
         label_to_field.merge! Hash[exhibit.blacklight_config.index_fields.map { |k,v| [v.label, v.field]}]
@@ -48,7 +56,7 @@ module Spotlight
         end
 
         unless row[public_field_name].blank? and sidecar_updates.empty?
-          sidecar = ::SolrDocument.new(id: row['id']).sidecar(exhibit)
+          sidecar = solr_document_model.new(id: row['id']).sidecar(exhibit)
           sidecar.update(
             public: row[public_field_name],
             data: sidecar.data.merge(sidecar_updates)

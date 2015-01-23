@@ -1,21 +1,20 @@
 module Spotlight
   class Resource < ActiveRecord::Base
     include Spotlight::SolrDocument::AtomicUpdates
+    extend ActiveModel::Callbacks
+    define_model_callbacks :index
+
     class_attribute :providers
     class_attribute :weight
 
     belongs_to :exhibit
     serialize :data, Hash
-    attr_accessor :performing_reindex
 
-    after_save if: :data_changed? do
-      unless performing_reindex
-        performing_reindex = true
-        reindex
-        performing_reindex = false
-        update_index_time!
-      end
-    end
+    after_save :reindex
+
+    around_index :reindex_with_lock
+
+    after_index :update_index_time!
 
     def self.providers
       Spotlight::Engine.config.resource_providers
@@ -30,10 +29,25 @@ module Spotlight
     end
 
     def to_solr
-      {
-        spotlight_resource_id_ssim: "#{(type.tableize if type) || self.class.to_s.tableize }:#{id}",
-        spotlight_resource_url_ssim: url
-      }
+      exhibit.solr_data.merge({
+        :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_resource_id#{Spotlight::Engine.config.solr_fields.string_suffix}" => "#{(type.tableize if type) || self.class.to_s.tableize }:#{id}",
+        :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_resource_url#{Spotlight::Engine.config.solr_fields.string_suffix}" => url,
+        Spotlight::SolrDocument.resource_type_field => self.class.to_s.tableize
+      })
+    end
+    
+    def reindex_with_lock
+      with_lock do
+        yield
+      end
+    end
+    
+    def reindex
+      run_callbacks :index do
+        data = to_solr
+        data = [data] unless data.is_a? Array
+        blacklight_solr.update params: { commitWithin: 500 }, data: data.to_json, headers: { 'Content-Type' => 'application/json'} unless data.empty?
+      end
     end
 
     def update_index_time!
@@ -64,6 +78,10 @@ module Spotlight
 
     def blacklight_solr_config
       Blacklight.solr_config
+    end
+    
+    def solr_document_model
+      exhibit.blacklight_config.solr_document_model
     end
   end
 end

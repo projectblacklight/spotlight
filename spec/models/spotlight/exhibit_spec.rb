@@ -112,4 +112,12 @@ describe Spotlight::Exhibit, :type => :model do
     end
   end
 
+  describe "#solr_data" do
+    subject { FactoryGirl.create(:exhibit) }
+
+    it "should provide a solr field with the exhibit slug" do
+      expect(subject.solr_data).to include(:"spotlight_exhibit_slug_#{subject.slug}_bsi" => true)
+    end
+  end
+
 end

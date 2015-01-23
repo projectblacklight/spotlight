@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe Spotlight::Resource, :type => :model do
   before do
-    allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
+    allow_any_instance_of(Spotlight::Resource).to receive(:update_index)
   end
-
+  let(:exhibit) { double(solr_data: { }) }
+  
   describe ".class_for_resource" do
     let(:thing) { double }
     let(:type_a) { double("TypeA", weight: 10) }
@@ -30,14 +31,22 @@ describe Spotlight::Resource, :type => :model do
   end
 
   describe "#to_solr" do
-    it "should include a reference to the resource" do
+    before do
+      allow(subject).to receive(:exhibit).and_return(exhibit)
       allow(subject).to receive_messages(type: "Spotlight::Resource::Something", id: 15)
+    end
+    it "should include a reference to the resource" do
       expect(subject.to_solr).to include spotlight_resource_id_ssim: "spotlight/resource/somethings:15"
     end
 
     it "should include a reference to the url" do
-      allow(subject).to receive_messages(type: "Spotlight::Resource::Something", id: 15, url: "info:something")
+      allow(subject).to receive(:url).and_return("info:something")
       expect(subject.to_solr).to include spotlight_resource_url_ssim: "info:something"
+    end
+
+    it "should include exhibit-specific data" do
+      allow(exhibit).to receive(:solr_data).and_return(exhibit_data: true)
+      expect(subject.to_solr).to include exhibit_data: true
     end
   end
 
@@ -52,8 +61,7 @@ describe Spotlight::Resource, :type => :model do
 
   it "should reindex after save" do
     expect(subject).to receive(:reindex)
-    expect(subject).to receive(:update_index_time!)
-    subject.data = {a: 1}
+    subject.data_will_change!
     subject.save!
   end
 
