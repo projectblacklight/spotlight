@@ -66,7 +66,8 @@ module Spotlight
 
     def add_file_versions solr_hash
       Spotlight::ItemUploader.configured_versions.each do |config|
-        solr_hash[exhibit.blacklight_config.index.send(config[:blacklight_config_field])] = url.send(config[:version]).url
+        field = exhibit.blacklight_config.index.send(config[:blacklight_config_field])
+        solr_hash[field] = url.send(config[:version]).url if field
       end
     end
 
