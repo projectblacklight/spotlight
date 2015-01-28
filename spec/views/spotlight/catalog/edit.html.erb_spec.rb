@@ -9,12 +9,13 @@ describe "spotlight/catalog/edit.html.erb", :type => :view do
     allow(view).to receive_messages(blacklight_config: blacklight_config)
     allow(view).to receive_messages(current_exhibit: stub_model(Spotlight::Exhibit))
     assign(:document, document)
+    allow(view).to receive(:document_counter)
+    allow(view).to receive(:render_document_partials)
+    render
   end
 
-  before do
-    allow(view).to receive_messages(current_page?: true)
-    allow(view).to receive(:document_show_html_title)
-    allow(view).to receive(:edit_exhibit_catalog_path)
+  it 'should render a document div' do
+    expect(rendered).to have_css "#document.document"
   end
 end
 
