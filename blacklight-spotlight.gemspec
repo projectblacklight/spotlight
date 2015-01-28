@@ -38,6 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency "underscore-rails", "~> 1.6.0"
   s.add_dependency "github-markup"
   s.add_dependency "lodash-rails"
+  s.add_dependency "tophat"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec-rails", "~> 3.1"

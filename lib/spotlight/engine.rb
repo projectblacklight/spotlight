@@ -7,6 +7,7 @@ require 'spotlight/utils'
 require 'friendly_id'
 require 'devise'
 require 'active_model_serializers'
+require 'tophat'
 
 module Spotlight
   class Engine < ::Rails::Engine
