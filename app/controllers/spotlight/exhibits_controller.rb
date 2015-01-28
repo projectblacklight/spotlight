@@ -71,6 +71,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
       :subtitle,
       :description,
       :published,
+      :featured_image,
       contact_emails_attributes: [:id, :email]
     )
   end

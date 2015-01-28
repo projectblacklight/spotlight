@@ -1,0 +1,28 @@
+<%= bootstrap_form_for @exhibit, url: ((spotlight.exhibit_path(@exhibit) if @exhibit.persisted?) || spotlight.exhibits_path), layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10', html: {class: "row"} do |f| %>
+<div class="row col-md-12">
+  <%= f.text_field :title %>
+  <%= f.text_field :subtitle %>
+  <%= f.text_area :description %>
+  <%= f.form_group(:contact_emails, label: { text: nil, class: nil }, help: nil) do %>
+  <%= f.fields_for :contact_emails do |contact| %>
+  <%= render partial: 'contact', locals: {contact: contact} %>
+  <% end %>
+  <p class="help-block"><%= t(:'.fields.contact_emails.help_block') %></p>
+  <% end %>
+  <%= f.file_field :featured_image %>
+  <%= f.form_group :featured_image_preview do %>
+    <%= image_tag @exhibit.featured_image.url %>
+  <% end %>
+  <%= f.form_group :published, label: { text: nil, class: nil }, help: nil do %>
+  <%= f.check_box :published, label: "" %>
+  <p class="help-block"><%= t(:'.fields.published.help_block') %></p>
+  <% end %>
+  
+  <div class="form-actions">
+    
+    <div class="primary-actions">
+      <%= f.submit nil, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
+<% end %>

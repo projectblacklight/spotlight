@@ -47,6 +47,8 @@ class Spotlight::Exhibit < ActiveRecord::Base
   after_create :initialize_main_navigation
   before_save :sanitize_description
 
+  mount_uploader :featured_image, Spotlight::FeaturedImageUploader
+
   after_destroy do
     # Touch the default exhibit to ensure caching knows that
     # the exhibits have changed.

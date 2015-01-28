@@ -51,6 +51,14 @@ describe "Home page", :type => :feature do
     expect(page).to have_content "You searched for: query"
   end
 
+  it "should have <meta> tags" do
+    TopHat.current['twitter_card'] = nil
+    visit spotlight.exhibit_home_page_path(exhibit.home_page)
+
+    expect(page).to have_css "meta[name='twitter:card'][value='summary']", visible: false
+    expect(page).to have_css "meta[name='twitter:url'][value='#{spotlight.exhibit_root_url(exhibit)}']", visible: false
+  end
+
   describe "page options on edit form" do
     describe "show title" do
       let(:home_page) { FactoryGirl.create(:home_page, display_title: false, exhibit: exhibit) }

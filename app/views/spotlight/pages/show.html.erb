@@ -1,5 +1,5 @@
 <% set_html_page_title @page.title if @page.should_display_title? %>
-
+<% render 'tophat' %>
 <%= render 'sidebar' if @page.display_sidebar? %>
 
 <%= cache_unless current_user, @page do %>

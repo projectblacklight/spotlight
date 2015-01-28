@@ -114,6 +114,27 @@ module Spotlight
       )
     end
 
+    def add_exhibit_twitter_card_content
+      twitter_card('summary') do |card|
+        card.url exhibit_root_url(current_exhibit)
+        card.title current_exhibit.title
+        card.description current_exhibit.subtitle
+        card.image carrierwave_url(current_exhibit.featured_image) if current_exhibit.featured_image
+      end
+    end
+
+    def carrierwave_url upload
+      # Carrierwave's #url returns either a full url (if asset path was configured)
+      # or just the path to the image. We'll try to normalize it to a url.
+      url = upload.url
+
+      if url.nil? or url.starts_with? "http"
+        url
+      else
+        (Rails.application.config.asset_host || root_url).sub(/\/$/, "") + url
+      end
+    end
+
     private
 
     def main_app_url_helper?(method)
