@@ -24,7 +24,7 @@ module Spotlight::MainAppHelpers
   end
   
   def field_enabled? field, *args
-    field.enabled && field.send((:show if controller.is_a? Blacklight::Catalog and action_name == "show") || document_index_view_type)
+    field.enabled && field.send((:show if controller.is_a? Blacklight::Catalog and ["edit", "show"].include?(action_name)) || document_index_view_type)
   end
 
 end

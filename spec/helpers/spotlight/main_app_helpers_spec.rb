@@ -29,4 +29,24 @@ describe Spotlight::MainAppHelpers, :type => :helper do
       its(:show_contact_form?) { should be_falsey }
     end
   end
+
+  describe '#field_enabled?' do
+    let(:field) { FactoryGirl.create(:custom_field) }
+    let(:controller) { OpenStruct.new }
+    before do
+      controller.extend(Blacklight::Catalog)
+      allow(helper).to receive(:controller).and_return(controller)
+      allow(helper).to receive(:document_index_view_type).and_return(nil)
+      allow(field).to receive(:enabled).and_return(true)
+      allow(field).to receive(:show).and_return(:value)
+    end
+    it 'should return the value of field#show if the action_name is "show"' do
+      allow(helper).to receive(:action_name).and_return("show")
+      expect(helper.field_enabled?(field)).to eq :value
+    end
+    it 'should return the value of field#show if the action_name is "edit"' do
+      allow(helper).to receive(:action_name).and_return("edit")
+      expect(helper.field_enabled?(field)).to eq :value
+    end
+  end
 end
