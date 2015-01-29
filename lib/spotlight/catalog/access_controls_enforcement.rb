@@ -2,7 +2,7 @@ module Spotlight::Catalog::AccessControlsEnforcement
   extend ActiveSupport::Concern
 
   included do
-    self.solr_search_params_logic << :apply_permissive_visibility_filter
+    self.solr_search_params_logic += [:apply_permissive_visibility_filter]
   end
 
   protected

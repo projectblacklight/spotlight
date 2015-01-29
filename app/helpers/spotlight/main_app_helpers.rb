@@ -27,4 +27,18 @@ module Spotlight::MainAppHelpers
     field.enabled && field.send((:show if controller.is_a? Blacklight::Catalog and ["edit", "show"].include?(action_name)) || document_index_view_type)
   end
 
+  def link_back_to_catalog(opts={:label=>nil})
+    opts[:route_set] ||= spotlight if current_exhibit
+    super
+  end
+
+  def render_save_search
+    render('save_search') if render_save_this_search?
+  end
+
+  def render_save_this_search?
+    (current_exhibit and can?( :curate, current_exhibit)) &&
+    (params[:controller] != "spotlight_catalog_controller" && params[:action] != "admin")
+  end
+
 end

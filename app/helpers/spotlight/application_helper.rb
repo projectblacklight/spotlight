@@ -93,15 +93,6 @@ module Spotlight
       end.keys.map { |x| x.to_s }
     end
 
-    def render_save_search
-      render('save_search') if render_save_this_search?
-    end
-
-    def render_save_this_search?
-      (current_exhibit and can?( :curate, current_exhibit)) &&
-      (params[:controller] != "spotlight_catalog_controller" && params[:action] != "admin")
-    end
-
     def select_deselect_button
       button_tag(
         t(:".deselect_all"),
