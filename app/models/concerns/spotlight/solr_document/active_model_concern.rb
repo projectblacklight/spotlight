@@ -10,7 +10,7 @@ module Spotlight::SolrDocument::ActiveModelConcern
   module ClassMethods
 
     def primary_key
-      :id
+      self.unique_key
     end
     
     # needed for Rails 4.1 + act_as_taggable
