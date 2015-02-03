@@ -190,8 +190,9 @@ describe Spotlight::CatalogController, :type => :controller do
     end
     describe "PATCH update" do
       it "should be successful" do
-        patch :update, exhibit_id: exhibit, id: 'dq287tq6352', solr_document: {tag_list: 'one, two'}
+        patch :update, exhibit_id: exhibit, id: 'dq287tq6352', solr_document: {exhibit_tag_list: 'one, two'}
         expect(response).to be_redirect
+        expect(exhibit.owned_taggings.last.tag_id).to eq 2
       end
     end
 
