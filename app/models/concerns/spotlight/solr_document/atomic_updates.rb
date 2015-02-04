@@ -24,10 +24,10 @@ module Spotlight::SolrDocument::AtomicUpdates
   end
 
   def unique_key_field
-    if respond_to?(:blacklight_config)
-      blacklight_config.solr_document_model.unique_key
-    else
-      'id'
+    begin
+      return self.class.unique_key
+    rescue
+      return 'id'
     end
   end
 end
