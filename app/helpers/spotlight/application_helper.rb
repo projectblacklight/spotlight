@@ -126,6 +126,11 @@ module Spotlight
       end
     end
 
+    def render_save_this_search?
+      (current_exhibit and can?( :curate, current_exhibit)) &&
+      !(params[:controller] == "spotlight/catalog" && params[:action] == "admin")
+    end
+
     private
 
     def main_app_url_helper?(method)

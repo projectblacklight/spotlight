@@ -28,17 +28,9 @@ module Spotlight::MainAppHelpers
   end
 
   def link_back_to_catalog(opts={:label=>nil})
-    opts[:route_set] ||= spotlight if current_exhibit
+    if (current_search_session.try(:query_params) || {}).fetch(:controller, "").starts_with? "spotlight"
+      opts[:route_set] ||= spotlight
+    end
     super
   end
-
-  def render_save_search
-    render('save_search') if render_save_this_search?
-  end
-
-  def render_save_this_search?
-    (current_exhibit and can?( :curate, current_exhibit)) &&
-    (params[:controller] != "spotlight_catalog_controller" && params[:action] != "admin")
-  end
-
 end

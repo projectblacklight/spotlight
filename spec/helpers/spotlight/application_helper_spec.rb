@@ -109,4 +109,25 @@ describe Spotlight::ApplicationHelper, :type => :helper do
       expect(helper.carrierwave_url(upload)).to eq "http://some.host/x/y/z"
     end
   end
+  
+  describe "save_search rendering" do
+    let(:current_exhibit) { FactoryGirl.create(:exhibit) }
+    before { allow(helper).to receive_messages(current_exhibit: current_exhibit) }
+    describe "render_save_this_search?" do
+      it "should return false if we are on the items admin screen" do
+        allow(helper).to receive(:"can?").with(:curate, current_exhibit).and_return(true)
+        allow(helper).to receive(:params).and_return({controller: "spotlight/catalog", action: "admin"})
+        expect(helper.render_save_this_search?).to be_falsey
+      end
+      it "should return true if we are not on the items admin screen" do
+        allow(helper).to receive(:"can?").with(:curate, current_exhibit).and_return(true)
+        allow(helper).to receive(:params).and_return({controller: "spotlight/catalog", action: "index"})
+        expect(helper.render_save_this_search?).to be_truthy
+      end
+      it "should return false if a user cannot curate the object" do
+        allow(helper).to receive(:"can?").with(:curate, current_exhibit).and_return(false)
+        expect(helper.render_save_this_search?).to be_falsey
+      end
+    end
+  end
 end
