@@ -1,0 +1,90 @@
+$featured-browse-category-border-color: $legend-border-color;
+$featured-browse-category-caption-color: $gray-lighter;
+$smallest-featured-browse-category-width: 220px;
+$smallest-featured-browse-category-height: $smallest-featured-browse-category-width;
+$largest-featured-browse-category-height: 255px;
+$no-sidebar-medium-image-width: 300px;
+$no-sidebar-large-image-width: 360px;
+$with-sidebar-medium-image-width: 340px;
+$with-sidebar-large-image-width: $no-sidebar-large-image-width;
+
+.browse-category {
+  background-size: cover;
+  background-position: center;
+  border: 2px solid $featured-browse-category-border-color;
+  border-radius: $border-radius-large;
+  position: relative;
+  float: left;
+  background-repeat: no-repeat;
+  .category-caption {
+    color: $featured-browse-category-caption-color;
+    position: absolute;
+    bottom: $line-height-computed;
+    text-align: center;
+    text-shadow: 0 1px 0 #000000;
+    width: 100%;
+  }
+  .category-title {
+    font-size: $font-size-large;
+    line-height: 1.2;
+    margin: 0;
+    padding: $table-condensed-cell-padding;
+  }
+  .item-count {
+    font-size: $font-size-base;
+    text-transform: uppercase;
+  }
+}
+
+[data-sidebar="false"] {
+  &.categories-1, &.categories-2, &.categories-3 {
+    .browse-category {
+      height: $largest-featured-browse-category-height;
+      @media (max-width: $screen-md-max) {
+        width: $no-sidebar-medium-image-width;
+      }
+      @media (min-width: $screen-lg-min) {
+        width: $no-sidebar-large-image-width;
+      }
+    }
+  }
+  &.categories-4, &.categories-5 {
+    .browse-category {
+      width: $smallest-featured-browse-category-width;
+      height: $smallest-featured-browse-category-height;
+    }
+    .category-4 {
+      @extend .hidden-sm;
+    }
+    .category-5 {
+      @extend .hidden-md;
+      @extend .hidden-sm;
+    }
+  }
+}
+
+[data-sidebar="true"] {
+  &.categories-1, &.categories-2 {
+    .browse-category {
+      height: $largest-featured-browse-category-height;
+      @media (max-width: $screen-md-max) {
+        width: $with-sidebar-medium-image-width;
+      }
+      @media (min-width: $screen-lg-min) {
+        width: $with-sidebar-large-image-width;
+      }
+    }
+  }
+  &.categories-3, &.categories-4, &.categories-5 {
+   .browse-category {
+      width: $smallest-featured-browse-category-width;
+      height: $smallest-featured-browse-category-height;
+    }
+  }
+  .category-3 {
+    @extend .hidden-sm;
+  }
+  .category-4, .category-5 {
+    display: none;
+  }
+}

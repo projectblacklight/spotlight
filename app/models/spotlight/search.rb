@@ -50,6 +50,10 @@ class Spotlight::Search < ActiveRecord::Base
     end
   end
 
+  def as_json(*args)
+    super.merge(featured_image: featured_image, count: count)
+  end
+
   def default_featured_item_id
     images.first.first if images.present?
   end
