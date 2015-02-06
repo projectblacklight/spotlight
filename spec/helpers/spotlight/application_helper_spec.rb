@@ -50,7 +50,6 @@ describe Spotlight::ApplicationHelper, :type => :helper do
         allow(helper).to receive_messages(blacklight_config: config)
       end
       it "should return a blacklight configuration object that has reduced the views to those that are configured in the block" do
-        expect(config.view.keys).to eq [:list, :gallery, :slideshow]
         new_config = helper.blacklight_view_config_for_search_block(sir_trevor_block)
         expect(new_config.keys).to eq [:list, :gallery]
       end
