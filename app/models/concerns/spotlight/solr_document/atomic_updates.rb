@@ -12,7 +12,7 @@ module Spotlight::SolrDocument::AtomicUpdates
 
     data.map do |doc|
       Hash[doc.map do |k,v|
-        val = if k.to_sym == unique_key_field.to_sym
+        val = if k.to_sym == self.class.unique_key.to_sym
           v
         else
           { set: v }
@@ -21,13 +21,5 @@ module Spotlight::SolrDocument::AtomicUpdates
         [k,val]
       end]
     end.reject { |x| x.length <= 1 }
-  end
-
-  def unique_key_field
-    if respond_to?(:blacklight_config)
-      blacklight_config.solr_document_model.unique_key
-    else
-      'id'
-    end
   end
 end
