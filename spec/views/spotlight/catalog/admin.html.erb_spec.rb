@@ -14,6 +14,7 @@ module Spotlight
       stub_template '_search_header.html.erb' => 'header'
       stub_template '_zero_results.html.erb' => 'nuffin'
       stub_template '_results_pagination.html.erb' => '0'
+      allow(view).to receive(:can?).and_return(true)
     end
     it "should render the sidebar" do
       render

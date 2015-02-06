@@ -33,7 +33,10 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
 
   def show
     respond_to do |format|
-      format.json { send_data Spotlight::ExhibitExportSerializer.new(@exhibit).to_json, type: 'application/json', disposition: 'attachment', filename: "#{@exhibit.friendly_id}-export.json" }
+      format.json do
+        authorize! :export, @exhibit
+        send_data Spotlight::ExhibitExportSerializer.new(@exhibit).to_json, type: 'application/json', disposition: 'attachment', filename: "#{@exhibit.friendly_id}-export.json"
+      end
     end
   end
 

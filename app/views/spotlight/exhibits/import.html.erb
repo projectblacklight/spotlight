@@ -1,6 +1,7 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9 exhibit-admin">
 <%= administration_page_title %>
+
 <%= bootstrap_form_for [:import, @exhibit], html: { class: 'clearfix', multipart: true } do |f| %>
   <div class="row col-md-12">
     <h3><%= t :'.import.header' %></h3>
@@ -15,8 +16,9 @@
       </div>
     </div>
   </div>
-<% end %>
+<% end if can? :import, current_exhibit %>
 
+<% if can? :export, current_exhibit %>
   <div class="row col-md-12">
     <h3><%= t :'.export.header' %></h3>
     <p class="instructions"><%= t :'.export.instructions' %></p>
@@ -24,4 +26,5 @@
       <%= link_to t(:'.export.download'), get_exhibit_path(@exhibit, format: 'json'), class: 'btn btn-primary' %>
     </div>
   </div>
+<% end %>
 </div>

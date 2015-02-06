@@ -102,6 +102,10 @@ class Spotlight::Exhibit < ActiveRecord::Base
     { :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_exhibit_slug_#{slug}#{Spotlight::Engine.config.solr_fields.boolean_suffix}" => true }
   end
 
+  def appearance
+    Spotlight::Appearance.new(blacklight_configuration)
+  end
+
   protected
 
   def initialize_config

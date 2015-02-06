@@ -1,0 +1,19 @@
+<%= bootstrap_form_for @exhibit, url: exhibit_contacts_path(@exhibit),
+    style: :horizontal, html: {class: 'exhibit-contacts'} do |f| %>
+  <h3><%= t :".header" %></h3>
+  <p class="instructions"><%= t :'.instructions' %></p>
+  <div class="panel-group dd contacts_admin" data-behavior="nestable" data-max-depth="1">
+    <ol class="dd-list">
+      <%= f.fields_for :contacts do |c| %>
+        <%= render partial: 'contact', locals: {f: c} %>
+      <% end %>
+    </ol>
+  </div>
+  <div class="form-actions" style="margin-top: 1em;">
+
+    <%= exhibit_create_link Spotlight::Contact.new, class: "btn btn-primary" %>
+    <div class="primary-actions">
+      <%= f.submit nil, class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

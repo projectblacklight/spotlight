@@ -33,6 +33,7 @@ describe "spotlight/about_pages/index.html.erb", :type => :view do
     assign(:exhibit, exhibit)
     allow(view).to receive(:current_exhibit).and_return(exhibit)
     view.lookup_context.prefixes << 'spotlight/pages'
+    allow(view).to receive(:can?).and_return(true)
   end
 
   it "renders a list of pages and contacts" do
