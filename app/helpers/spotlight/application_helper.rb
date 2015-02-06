@@ -31,7 +31,7 @@ module Spotlight
       return nil if document.nil?
 
       if current_exhibit
-        spotlight.exhibit_catalog_path(current_exhibit, document)
+        [spotlight, current_exhibit, document]
       else
         document
       end
