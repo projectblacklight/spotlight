@@ -20,7 +20,7 @@ class Spotlight::AppearancesController < Spotlight::ApplicationController
   protected
 
   def load_and_authorize_appearance
-    @appearance = Spotlight::Appearance.new(@exhibit.blacklight_configuration)
+    @appearance = @exhibit.appearance
     authorize! action_name.to_sym, @appearance
   end
 

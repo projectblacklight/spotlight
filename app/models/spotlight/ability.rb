@@ -12,7 +12,7 @@ module Spotlight::Ability
     end
 
     # exhibit admin 
-    can [:update, :import, :destroy], Spotlight::Exhibit, id: user.admin_roles.pluck(:exhibit_id)
+    can [:update, :import, :export, :destroy], Spotlight::Exhibit, id: user.admin_roles.pluck(:exhibit_id)
     can :manage, Spotlight::Role, exhibit_id: user.admin_roles.pluck(:exhibit_id)
     can :update, Spotlight::Appearance, exhibit_id: user.admin_roles.pluck(:exhibit_id)
 

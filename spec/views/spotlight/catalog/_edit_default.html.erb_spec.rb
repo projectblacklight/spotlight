@@ -18,6 +18,7 @@ describe "spotlight/catalog/_edit_default.html.erb", :type => :view do
     allow(view).to receive_messages(blacklight_config: blacklight_config)
     allow(view).to receive_messages(current_exhibit: exhibit)
     allow(view).to receive_messages(document: document)
+    allow(view).to receive(:can?).and_return(true)
   end
 
   it "should have a edit tag form" do

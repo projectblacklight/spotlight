@@ -316,8 +316,8 @@ en:
         telephone:
           placeholder: Telephone number (optional)
     about_pages:
-      index:
-        contacts: Contacts
+      contacts_form:
+        header: Contacts
         contact:
           legend: Contact Details
         instructions: Enter details for each librarian, curator or other contact person for this exhibit. Select the contacts you want to be show in the sidebar of the About Pages. Drag and drop contacts to specify the order in which they are shown in the sidebar.
