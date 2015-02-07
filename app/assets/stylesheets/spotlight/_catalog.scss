@@ -101,3 +101,8 @@ form.edit_solr_document {
 .edit_solr_document {
   @extend .clearfix;
 }
+
+#save-this-search {
+  float:left;
+  margin-right: $padding-xs-horizontal;
+}

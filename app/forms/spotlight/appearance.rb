@@ -54,7 +54,7 @@ module Spotlight
     end
 
     def view_type_options
-      default_blacklight_config.view.keys
+      default_blacklight_config.view.select { |k,v| v.if != false }.keys
     end
 
     def per_page_options

@@ -112,7 +112,7 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
     context "custom fields" do
       it "should include any custom fields" do
         subject.index_fields['a'] = { enabled: true, list: true }
-        allow(subject).to receive_messages(custom_index_fields: { 'a' => double(:if= => true, merge!: true, validate!: true, normalize!: true) })
+        allow(subject).to receive_messages(custom_index_fields: { 'a' => double(if: nil, :if= => true, merge!: true, validate!: true, normalize!: true) })
         expect(subject.blacklight_config.index_fields).to include('a')
       end
 
@@ -175,7 +175,7 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
     it "should include any custom fields" do
       subject.index_fields['a'] = { enabled: true, show: true }
 
-      allow(subject).to receive_messages(custom_index_fields: { 'a' => double(:if= => true, merge!: true, validate!: true, normalize!: true) })
+      allow(subject).to receive_messages(custom_index_fields: { 'a' => double(if: nil, :if= => true, merge!: true, validate!: true, normalize!: true) })
 
       expect(subject.blacklight_config.show_fields).to include('a')
     end
@@ -248,8 +248,8 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
       blacklight_config.add_sort_field 'b'
       blacklight_config.add_sort_field 'c'
 
-      expect(subject.blacklight_config.sort_fields.select { |k,v| v.if == true}).to include('a', 'c')
-      expect(subject.blacklight_config.sort_fields.select { |k,v| v.if == false}).to include('b')
+      expect(subject.blacklight_config.sort_fields.select { |k,v| v.enabled == true}).to include('a', 'c')
+      expect(subject.blacklight_config.sort_fields.select { |k,v| v.enabled == true}).not_to include('b', 'd')
     end
   end
 

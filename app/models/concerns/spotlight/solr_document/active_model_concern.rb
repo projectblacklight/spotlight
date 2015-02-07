@@ -9,10 +9,6 @@ module Spotlight::SolrDocument::ActiveModelConcern
   
   module ClassMethods
 
-    def primary_key
-      :id
-    end
-    
     # needed for Rails 4.1 + act_as_taggable
     def dangerous_attribute_method? *args
       false

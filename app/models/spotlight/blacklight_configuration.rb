@@ -64,6 +64,8 @@ module Spotlight
           config.navbar.partials[:search_history].if = false
         end
 
+        config.add_results_collection_tool 'save_search', if: :render_save_this_search?
+
         config.default_autocomplete_solr_params[:fl] ||= "#{config.solr_document_model.unique_key} #{config.view_config(:show).title_field} #{config.view_config(:show).thumbnail_field}"
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
@@ -84,7 +86,7 @@ module Spotlight
           else
             set_index_field_defaults(v)
           end
-          
+          v.upstream_if = v.if unless v.if.nil?
           v.if = :field_enabled?
 
           v.normalize! config
@@ -97,7 +99,8 @@ module Spotlight
           config.sort_fields = Hash[config.sort_fields.sort_by { |k,v| field_weight(sort_fields, k) }]
 
           config.sort_fields.each do |k, v|
-            v.if = ((sort_fields[k] || {})[:enabled] == true)
+            v.upstream_if = v.if unless v.if.nil?
+            v.if = :field_enabled?
             next if sort_fields[k].blank?
 
             v.merge! sort_fields[k].symbolize_keys
@@ -113,7 +116,8 @@ module Spotlight
             next if facet_fields[k].blank?
 
             v.merge! facet_fields[k].symbolize_keys
-            v.if = v.enabled
+            v.upstream_if = v.if unless v.if.nil?
+            v.if = :field_enabled?
             v.normalize! config
             v.validate!
           end
@@ -127,8 +131,9 @@ module Spotlight
         end
 
         config.view.each do |k,v|
-          config.view[k].key = k
-          config.view[k].if = :enabled_in_spotlight_view_type_configuration?
+          v.key = k
+          v.upstream_if = v.if unless v.if.nil?
+          v.if = :enabled_in_spotlight_view_type_configuration?
         end unless document_index_view_types.blank?
 
         config

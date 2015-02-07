@@ -41,4 +41,15 @@ describe Spotlight::Appearance, :type => :model do
       end
     end
   end
+
+  describe "#view_type_options" do
+    subject { Spotlight::Appearance.new(config).view_type_options }
+    it "should include the available view types" do
+      expect(subject).to include :list, :gallery, :slideshow
+    end
+
+    it "should not include rss or atom" do
+      expect(subject).not_to include :rss, :atom
+    end
+  end
 end

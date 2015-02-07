@@ -48,5 +48,35 @@ describe Spotlight::MainAppHelpers, :type => :helper do
       allow(helper).to receive(:action_name).and_return("edit")
       expect(helper.field_enabled?(field)).to eq :value
     end
+    it "should return the value of the original if condition" do
+      allow(field).to receive(:upstream_if).and_return false
+      expect(helper.field_enabled?(field)).to eq false 
+    end
   end
+
+  describe "#enabled_in_spotlight_view_type_configuration?" do
+    let(:controller) { OpenStruct.new }
+    let(:view) { OpenStruct.new }
+    before do
+      controller.extend(Blacklight::Catalog)
+      allow(helper).to receive(:controller).and_return(controller)
+    end
+
+    it "should respect the original if condition" do
+      view.upstream_if = false
+      expect(helper.enabled_in_spotlight_view_type_configuration?(view)).to eq false
+    end
+
+    it "should be true if there is no exhibit context" do
+      allow(helper).to receive(:current_exhibit).and_return(nil)
+      expect(helper.enabled_in_spotlight_view_type_configuration?(view)).to eq true
+    end
+    
+    it "should be true if we're in a page context" do
+      allow(helper).to receive(:current_exhibit).and_return(nil)
+      allow(controller).to receive(:is_a?).with(Spotlight::PagesController).and_return(true)
+      expect(helper.enabled_in_spotlight_view_type_configuration?(view)).to eq true
+    end
+  end
+
 end

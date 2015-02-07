@@ -31,7 +31,7 @@ module Spotlight
       return nil if document.nil?
 
       if current_exhibit
-        spotlight.exhibit_catalog_path(current_exhibit, document)
+        [spotlight, current_exhibit, document]
       else
         document
       end
@@ -93,15 +93,6 @@ module Spotlight
       end.keys.map { |x| x.to_s }
     end
 
-    def render_save_search
-      render('save_search') if render_save_this_search?
-    end
-
-    def render_save_this_search?
-      (current_exhibit and can?( :curate, current_exhibit)) &&
-      (params[:controller] != "spotlight_catalog_controller" && params[:action] != "admin")
-    end
-
     def select_deselect_button
       button_tag(
         t(:".deselect_all"),
@@ -133,6 +124,11 @@ module Spotlight
       else
         (Rails.application.config.asset_host || root_url).sub(/\/$/, "") + url
       end
+    end
+
+    def render_save_this_search?
+      (current_exhibit and can?( :curate, current_exhibit)) &&
+      !(params[:controller] == "spotlight/catalog" && params[:action] == "admin")
     end
 
     private

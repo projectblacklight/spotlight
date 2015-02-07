@@ -35,6 +35,8 @@ Spotlight::Engine.routes.draw do
       delete 'visiblity', to: "catalog#make_private"
     end
 
+    get "catalog/:id", to: "catalog#show", as: "solr_document"
+
     resources :solr_document, only: [:edit], to: 'catalog#edit'
 
     resources :custom_fields
