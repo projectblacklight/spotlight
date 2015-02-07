@@ -46,7 +46,9 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
       blacklight_config.add_facet_field 'c'
 
       expect(subject.blacklight_config.facet_fields['a'].show).to be_truthy
+      expect(subject.blacklight_config.facet_fields['a'].enabled).to be_truthy
       expect(subject.blacklight_config.facet_fields['b'].show).to be_falsey
+      expect(subject.blacklight_config.facet_fields['b'].enabled).to be_falsey
       expect(subject.blacklight_config.facet_fields['d']).to be_nil
     end
 

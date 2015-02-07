@@ -117,6 +117,7 @@ module Spotlight
 
             v.merge! facet_fields[k].symbolize_keys
             v.upstream_if = v.if unless v.if.nil?
+            v.enabled = v.show
             v.if = :field_enabled?
             v.normalize! config
             v.validate!

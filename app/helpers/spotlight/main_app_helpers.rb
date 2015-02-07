@@ -34,7 +34,11 @@ module Spotlight::MainAppHelpers
       return false unless evaluate_configuration_conditional(field.upstream_if, field, *args)
     end
 
-    return field.send((:show if controller.is_a? Blacklight::Catalog and ["edit", "show"].include?(action_name)) || document_index_view_type)
+    if field.is_a?(Blacklight::Configuration::FacetField) or (controller.is_a?(Blacklight::Catalog) and ["edit", "show"].include?(action_name))
+      field.show
+    else
+      field.send(document_index_view_type)
+    end
   end
 
   def link_back_to_catalog(opts={:label=>nil})
