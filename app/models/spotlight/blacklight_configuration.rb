@@ -92,6 +92,17 @@ module Spotlight
           v.normalize! config
           v.validate!
         end
+
+        config.show_fields.reject { |k,v| config.index_fields[k] }.each do |k,v|
+          config.index_fields[k] = v
+          set_show_field_defaults(v)
+
+          v.upstream_if = v.if unless v.if.nil?
+          v.if = :field_enabled?
+
+          v.normalize! config
+          v.validate!
+        end
         
         config.show_fields = config.index_fields
 
@@ -164,6 +175,15 @@ module Spotlight
       if index_fields.blank?
         views = default_blacklight_config.view.keys | [:show, :enabled]
         field.merge! Hash[views.map { |v| [v, true] }]
+      end
+    end
+
+    def set_show_field_defaults field
+      if index_fields.blank?
+        views = default_blacklight_config.view.keys
+        field.merge! Hash[views.map { |v| [v, false] }]
+        field.enabled = true
+        field.show = true
       end
     end
 
