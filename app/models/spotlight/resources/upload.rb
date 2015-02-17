@@ -3,7 +3,8 @@ module Spotlight
     mount_uploader :url, Spotlight::ItemUploader
 
     def self.fields(exhibit)
-      @fields ||= self.new(exhibit: exhibit).configured_fields
+      @fields ||= {}
+      @fields[exhibit] ||= self.new(exhibit: exhibit).configured_fields
     end
 
     def configured_fields
@@ -34,7 +35,7 @@ module Spotlight
 
     # this is in the upload class because it has exhibit context
     def configured_title_field
-      OpenStruct.new(solr_field: exhibit.blacklight_config.index.title_field)
+      OpenStruct.new(field_name: exhibit.blacklight_config.index.title_field)
     end
     
     def add_default_solr_fields solr_hash
@@ -57,9 +58,12 @@ module Spotlight
     end
 
     def add_configured_fields solr_hash
-      configured_fields.collect(&:solr_field).each do |solr_field|
-        if data[solr_field].present?
-          solr_hash[solr_field] = data[solr_field]
+      configured_fields.each do |field|
+        solr_fields = Array(field.solr_field || field.field_name)
+        if data[field.field_name].present?
+          solr_fields.each do |solr_field|
+            solr_hash[solr_field] = data[field.field_name]
+          end
         end
       end
     end

@@ -131,6 +131,11 @@ module Spotlight
       !(params[:controller] == "spotlight/catalog" && params[:action] == "admin")
     end
 
+    def uploaded_field_label config
+      solr_field = Array(config.solr_field || config.field_name).first.to_s
+      config.label || blacklight_config.index_fields[solr_field].try(:label) || t(".#{solr_field}")
+    end
+
     private
 
     def main_app_url_helper?(method)

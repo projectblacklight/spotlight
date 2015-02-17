@@ -53,7 +53,7 @@ module Spotlight::Resources
     end
 
     def data_param_keys
-      Spotlight::Resources::Upload.fields(current_exhibit).collect(&:solr_field) + current_exhibit.custom_fields.collect(&:field)
+      Spotlight::Resources::Upload.fields(current_exhibit).collect(&:field_name) + current_exhibit.custom_fields.collect(&:field)
     end
 
   end

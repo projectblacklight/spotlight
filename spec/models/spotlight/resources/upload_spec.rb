@@ -35,6 +35,27 @@ describe Spotlight::Resources::Upload, :type => :model do
       expect(subject.to_solr[Spotlight::Engine.config.uploaded_attribution_field]).to eq "Attribution Data"
       expect(subject.to_solr[Spotlight::Engine.config.uploaded_date_field]).to eq "Date Data"
     end
+
+    context "multiple solr field mappings" do
+
+      let :configured_fields do
+        [
+          OpenStruct.new(field_name: 'some_field', solr_field: ['a', 'b'])
+        ]
+      end
+
+      before do
+        allow(subject).to receive(:configured_fields).and_return configured_fields
+
+        subject.data = { 'some_field' => 'value'}
+      end
+
+      it "should map a single uploaded field to multiple solr fields" do
+        expect(subject.to_solr['a']).to eq 'value'
+        expect(subject.to_solr['b']).to eq 'value'
+      end
+    end
+
     it 'should have a spotlight_resource_type field' do
       expect(subject.to_solr[:spotlight_resource_type_ssim]).to eq 'spotlight/resources/uploads'
     end
