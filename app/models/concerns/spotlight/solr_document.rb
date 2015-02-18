@@ -11,7 +11,7 @@ module Spotlight
       extend ActsAsTaggableOn::Taggable
 
       acts_as_taggable
-      has_many :sidecars, class_name: 'Spotlight::SolrDocumentSidecar'
+      has_many :sidecars, class_name: 'Spotlight::SolrDocumentSidecar', as: :document
       
       before_save :save_owned_tags
       after_save :reindex

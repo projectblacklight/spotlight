@@ -1,13 +1,13 @@
 module Spotlight
   class SolrDocumentSidecar < ActiveRecord::Base
     belongs_to :exhibit
-    belongs_to :solr_document
+    belongs_to :document, polymorphic: true
     serialize :data, Hash
 
     delegate :has_key?, to: :data
 
     def to_solr
-      { blacklight_config.solr_document_model.unique_key.to_sym => solr_document_id, visibility_field => public? }.merge(data_to_solr)
+      { document.class.unique_key.to_sym => document.id, visibility_field => public? }.merge(data_to_solr)
     end
 
     def private!
@@ -16,6 +16,19 @@ module Spotlight
 
     def public!
       update public: true
+    end
+
+    # Roll our own polymorphism because our documents are not AREL-able
+    def document
+      document_type.new document_type.unique_key => document_id
+    end
+
+    def document_type
+      (super.constantize if defined?(super)) || default_document_type
+    end
+
+    def default_document_type
+      blacklight_config.solr_document_model
     end
 
     protected

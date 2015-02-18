@@ -49,8 +49,18 @@ module Spotlight
     end
 
     collection :solr_document_sidecars, class: Spotlight::SolrDocumentSidecar do
-      (Spotlight::SolrDocumentSidecar.attribute_names - ['id', 'exhibit_id']).each do |prop|
+      (Spotlight::SolrDocumentSidecar.attribute_names - ['id',  'document_type', 'exhibit_id']).each do |prop|
         property prop
+      end
+
+      property :document_type, exec_context: :decorator
+
+      def document_type
+        represented.document_type.to_s
+      end
+      
+      def document_type= klass
+        represented.document_type = klass
       end
     end
 
