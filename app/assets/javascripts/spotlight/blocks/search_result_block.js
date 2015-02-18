@@ -6,7 +6,7 @@ SirTrevor.Blocks.SearchResults =  (function(){
 
   return Spotlight.Block.extend({
 
-  searches_key: "searches-options",
+  searches_key: "slug",
 
   view_types_key: '[data-behavior="result-view-types"]',
 
@@ -57,7 +57,7 @@ SirTrevor.Blocks.SearchResults =  (function(){
       if($("option", searches_field).length == 1){
         var options = "";
         $.each(data, function(i, search){
-          options += "<option value='" + search.id + "'>" + search.title + "</option>";
+          options += "<option value='" + search.slug + "'>" + search.title + "</option>";
         });
 
         searches_field.append(options);

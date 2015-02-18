@@ -115,4 +115,47 @@ describe Spotlight::ExhibitExportSerializer do
     end
   end
 
+  describe "should export saved searches with query parameters that can be re-generated" do
+    before do
+      source_exhibit.feature_pages.create content: [{:type=>"search_results", :data=>{:"slug"=>search.slug, :atom=>nil, :rss=>nil, :gallery=>nil, :slideshow=>nil, :list=>"on"}}].to_json
+    end
+
+    subject do
+      e = FactoryGirl.create(:exhibit)
+      e.import(export).tap { |e| e.save }
+    end
+
+    let :export do
+      Spotlight::ExhibitExportSerializer.new(source_exhibit).as_json
+    end
+
+    context "with a search object with matching query params" do  
+      let :search do
+        source_exhibit.searches.first
+      end
+
+      it "should use a search within the exhibit" do
+        expect(subject.feature_pages.first.content.first.search.exhibit).to eq subject
+      end
+
+      it "should use the existing search object with the same query params" do
+        expect(subject.searches).to have(1).item
+      end
+    end
+
+    context "with a search object that needs to be created" do
+       let :search do
+         source_exhibit.searches.create title: "custom query", slug: 'xyz'
+       end
+
+       it "should create a search within the exhibit" do
+         expect(subject.feature_pages.first.content.first.search.exhibit).to eq subject
+       end
+
+       it "should use the existing search object with the same query params" do
+         expect(subject.searches).to have(2).items
+       end
+    end
+  end
+
 end

@@ -49,8 +49,7 @@ module Spotlight
     end
     def get_search_widget_search_results block
       begin
-        search = Spotlight::Search.find(block.send(:'searches-options'))
-        get_search_results(search.query_params.with_indifferent_access.merge(params))
+        get_search_results(block.query_params.with_indifferent_access.merge(params))
       rescue ActiveRecord::RecordNotFound
         []
       end

@@ -23,10 +23,10 @@ describe "Search Results Block", type: :feature, js: true do
     add_widget 'search_results'
 
     # Drop down should exist with all browse categories listed
-    within("select[name='searches-options']") do
+    within("select[name='slug']") do
       expect(page).to have_css("option", text: "All Exhibit Items", visible: true)
       expect(page).to have_css("option", text: "Alt. Search", visible: true)
-      expect(page).to have_css("option[value='#{alt_search.id}']", visible: true)
+      expect(page).to have_css("option[value='#{alt_search.slug}']", visible: true)
     end
 
     select("All Exhibit Items", from: "Browse category")
