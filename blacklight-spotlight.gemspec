@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   s.add_dependency "social-share-button", "~> 0.1.5"
   s.add_dependency "blacklight-oembed", ">= 0.0.3"
   s.add_dependency "devise", "~> 3.0"
-  s.add_dependency "active_model_serializers", "0.9.0"
+  s.add_dependency "roar-rails"
   s.add_dependency "faraday"
   s.add_dependency "faraday_middleware"
   s.add_dependency "nokogiri"

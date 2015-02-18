@@ -1,67 +1,105 @@
+require 'roar/decorator'
+require 'roar/json'
 module Spotlight
-
-  def self.ExportSerializer klass
-    return Class.new(ExportSerializer) do
-      attributes *(klass.attribute_names.map { |x| x.to_sym })
+  class PageRepresenter < Roar::Decorator
+    include Roar::JSON
+    (Spotlight::Page.attribute_names - ['id', 'slug', 'scope', 'exhibit_id', 'parent_page_id', 'content']).each do |prop|
+      property prop
     end
 
-  end
+    property :content, exec_context: :decorator
 
-  class ExportSerializer < ActiveModel::Serializer
-    def filter keys
-      keys = keys.reject { |k| k.to_s =~ /id$/ }
-      keys = keys - [:scope]
+    def content
+      represented.content.as_json.to_json
     end
-  end
 
-  class PageExportSerializer  < Spotlight::ExportSerializer(Spotlight::Page)
-    has_many :child_pages, root: 'child_pages_attributes', serializer: PageExportSerializer
-  end
-
-  class SolrDocumentSerializer < Spotlight::ExportSerializer(Spotlight::SolrDocumentSidecar)
-    def filter keys
-      keys = super
-      keys += [:solr_document_id]
+    def content= content
+      represented.content = content
     end
   end
 
-  class TaggingSerializer < Spotlight::ExportSerializer(ActsAsTaggableOn::Tagging)
-    has_one :tag, root: 'tag_attributes', serializer: Spotlight.ExportSerializer(ActsAsTaggableOn::Tag)
-    def filter keys
-      keys = super
-      keys -= [:tagger_type]
-      keys -= [:context] # context conflicts with ActiveRecord methods; fortunately, we only have the default context
-      keys += [:taggable_id]
+  class NestedPageRepresenter < PageRepresenter
+    collection :child_pages, extend: NestedPageRepresenter
+  end
+
+  class ConfigurationRepresenter < Roar::Decorator
+    include Roar::JSON
+
+    (Spotlight::BlacklightConfiguration.attribute_names - ['id', 'exhibit_id']).each do |prop|
+      property prop
     end
   end
 
-  class ExhibitExportSerializer < Spotlight::ExportSerializer(Spotlight::Exhibit)
-    self.root = false
+  class ExhibitExportSerializer < Roar::Decorator
+    include Roar::JSON
 
-    def filter  keys
-      keys = super
-      keys = keys - [:slug, :name, :default]
+    (Spotlight::Exhibit.attribute_names - ['id', 'default', 'slug']).each do |prop|
+      property prop
     end
 
-    def feature_pages
-      object.feature_pages.at_top_level
+    collection :searches, class: Spotlight::Search do
+      (Spotlight::Search.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+        property prop
+      end
     end
 
-    has_many :searches, root: 'searches_attributes', serializer: Spotlight.ExportSerializer(Spotlight::Search)
-    has_one :home_page, root: 'home_page_attributes', serializer:  Spotlight.ExportSerializer(Spotlight::Page)
-    has_many :about_pages, root: 'about_pages_attributes', serializer:  Spotlight.ExportSerializer(Spotlight::Page)
-    has_many :feature_pages, root: 'feature_pages_attributes', serializer:  Spotlight::PageExportSerializer
-    has_many :custom_fields, root: 'custom_fields_attributes', serializer: Spotlight.ExportSerializer(Spotlight::CustomField)
-    has_many :contacts, root: 'contacts_attributes', serializer: Spotlight.ExportSerializer(Spotlight::Contact)
-    has_many :contact_emails, root: 'contact_emails_attributes', serializer: Spotlight.ExportSerializer(Spotlight::ContactEmail)
-    has_one :blacklight_configuration, root: 'blacklight_configuration_attributes', serializer: Spotlight.ExportSerializer(Spotlight::BlacklightConfiguration)
-    
-    has_many :solr_document_sidecars, root: 'solr_document_sidecars_attributes', serializer: Spotlight::SolrDocumentSerializer
-    has_many :owned_taggings, root: 'owned_taggings_attributes', serializer: Spotlight::TaggingSerializer
-    # todo: include attachment binary paylod??
-    has_many :attachments, root: 'attachments_attributes', serializer: Spotlight.ExportSerializer(Spotlight::Attachment)
+    collection :about_pages, class: Spotlight::AboutPage, decorator: PageRepresenter
 
-    has_many :resources, root: 'resources_attributes', serializer: Spotlight.ExportSerializer(Spotlight::Resource)
+    collection :feature_pages, class: Spotlight::FeaturePage, decorator: NestedPageRepresenter
+
+    property :home_page, class: Spotlight::HomePage, decorator: PageRepresenter
+
+    property :blacklight_configuration, class: Spotlight::BlacklightConfiguration, decorator: ConfigurationRepresenter
+
+    collection :custom_fields, class: Spotlight::CustomField do
+      (Spotlight::CustomField.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+        property prop
+      end
+    end
+
+    collection :contacts, class: Spotlight::Contact do
+      (Spotlight::Contact.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+        property prop
+      end
+    end
+
+    collection :contact_emails, class: Spotlight::ContactEmail do
+      (Spotlight::ContactEmail.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+        property prop
+      end
+    end
+
+    collection :solr_document_sidecars, class: Spotlight::SolrDocumentSidecar do
+      (Spotlight::SolrDocumentSidecar.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+        property prop
+      end
+    end
+
+    collection :owned_taggings, class: ActsAsTaggableOn::Tagging do
+      property :taggable_id
+      property :taggable_type
+      property :context
+      property :tag, exec_context: :decorator
+
+      def tag
+        represented.tag.name
+      end
+
+      def tag= tag
+        represented.tag = ActsAsTaggableOn::Tag.find_or_create_by name: tag
+      end
+    end
+
+    collection :attachments, class: Spotlight::Attachment do
+      (Spotlight::Attachment.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+        property prop
+      end
+    end
+
+    collection :resources, class: Spotlight::Resource do
+      (Spotlight::Resource.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+        property prop
+      end
+    end
   end
-
 end
