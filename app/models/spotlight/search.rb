@@ -54,14 +54,15 @@ class Spotlight::Search < ActiveRecord::Base
     images.first.first if images.present?
   end
 
+  def blacklight_config
+    exhibit.blacklight_config
+  end
+
   private
   def should_generate_new_friendly_id?
     title_changed?
   end
 
-  def blacklight_config
-    exhibit.blacklight_config
-  end
   
   alias_method :current_exhibit, :exhibit
 
