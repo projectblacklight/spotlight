@@ -5,7 +5,7 @@ module Spotlight::Ability
     user ||= ::User.new
 
     alias_action :process_import, to: :import
-    alias_action :edit_metadata_fields, :edit_facet_fields, :metadata_fields, :available_configurations, to: :update
+    alias_action :edit_metadata_fields, :edit_facet_fields, :metadata_fields, :available_search_views, to: :update
 
     if user.superadmin?
       can :manage, :all

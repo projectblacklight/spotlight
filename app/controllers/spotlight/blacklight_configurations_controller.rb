@@ -25,9 +25,9 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
     end
   end
 
-  def available_configurations
+  def available_search_views
     respond_to do |format|
-      format.json { render json: @blacklight_configuration.default_blacklight_config }
+      format.json { render json: @blacklight_configuration.default_blacklight_config.view.to_h.reject { |k,v| v.if === false}.keys }
     end
   end
 
