@@ -70,6 +70,10 @@ module Spotlight
       type.blank?
     end
 
+    def save_and_commit
+      save.tap { blacklight_solr.commit rescue nil }
+    end
+
     protected
 
     def blacklight_solr

@@ -51,7 +51,10 @@ class Spotlight::CatalogController < ::CatalogController
   def admin
     self.blacklight_config.view.select! { |k,v| k == :admin_table }
     self.blacklight_config.view.admin_table.partials = [:index_compact]
-    self.blacklight_config.sort_fields.reject! { |k,v| true }
+
+    unless self.blacklight_config.sort_fields.has_key? :timestamp
+      self.blacklight_config.add_sort_field :timestamp, sort: "#{blacklight_config.index.timestamp_field} desc"
+    end
 
     add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
     add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)

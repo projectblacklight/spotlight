@@ -79,4 +79,12 @@ describe Spotlight::Resource, :type => :model do
       subject.update_index_time!
     end
   end
+
+  describe "#save_and_commit" do
+    it "should save the object and commit to solr" do
+      expect(subject).to receive(:save)
+      expect(subject.send(:blacklight_solr)).to receive(:commit)
+      subject.save_and_commit
+    end
+  end
 end
