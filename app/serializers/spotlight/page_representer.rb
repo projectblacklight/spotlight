@@ -20,6 +20,6 @@ module Spotlight
   end
 
   class NestedPageRepresenter < PageRepresenter
-    collection :child_pages, extend: NestedPageRepresenter
+    collection :child_pages, class: Spotlight::FeaturePage, extend: NestedPageRepresenter
   end
 end

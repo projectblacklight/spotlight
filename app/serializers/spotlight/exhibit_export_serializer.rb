@@ -24,7 +24,7 @@ module Spotlight
 
     collection :about_pages, class: Spotlight::AboutPage, decorator: PageRepresenter
 
-    collection :feature_pages, class: Spotlight::FeaturePage, decorator: NestedPageRepresenter
+    collection :feature_pages, getter: lambda { |opts| feature_pages.at_top_level }, class: Spotlight::FeaturePage, decorator: NestedPageRepresenter
 
     property :home_page, class: Spotlight::HomePage, decorator: PageRepresenter
 

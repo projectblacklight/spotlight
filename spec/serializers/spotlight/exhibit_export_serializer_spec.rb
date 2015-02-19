@@ -113,6 +113,12 @@ describe Spotlight::ExhibitExportSerializer do
       expect(subject.owned_taggings.first).to be_persisted
       expect(subject.owned_taggings.first.tag.name).to eq "xyz"
     end
+
+    it "should deal with nested feature pages" do
+      FactoryGirl.create :feature_subpage, exhibit: source_exhibit
+      expect(subject.feature_pages.at_top_level.length).to eq 1
+      expect(subject.feature_pages.first.child_pages.length).to eq 1
+    end
   end
 
   describe "should export saved searches with query parameters that can be re-generated" do
