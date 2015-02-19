@@ -35,7 +35,7 @@ module Spotlight
 
     # this is in the upload class because it has exhibit context
     def configured_title_field
-      OpenStruct.new(field_name: exhibit.blacklight_config.index.title_field)
+      Spotlight::Engine.config.upload_title_field || OpenStruct.new(field_name: exhibit.blacklight_config.index.title_field)
     end
     
     def add_default_solr_fields solr_hash
