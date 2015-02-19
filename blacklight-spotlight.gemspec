@@ -39,6 +39,9 @@ Gem::Specification.new do |s|
   s.add_dependency "github-markup"
   s.add_dependency "lodash-rails"
   s.add_dependency "tophat"
+  s.add_dependency "legato"
+  s.add_dependency "google-api-client"
+  s.add_dependency "oauth2"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec-rails", "~> 3.1"
