@@ -60,6 +60,14 @@ describe Spotlight::HomePagesController, :type => :controller do
       get :show, exhibit_id: exhibit
       expect(response).to be_successful
     end
+    it "should not do the search when the sidebar is hidden" do
+      page.display_sidebar = false
+      page.save
+      allow(controller).to receive_messages(get_search_results: [double, double])
+      get :show, exhibit_id: exhibit
+      expect(assigns).not_to have_key :response
+      expect(assigns).not_to have_key :document_list
+    end
   end
 
   describe "when the exhibit is not published" do

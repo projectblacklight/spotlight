@@ -76,4 +76,15 @@ describe "Home page", :type => :feature do
       end
     end
   end
+
+  describe "when configured to not display sidebar" do
+    before do
+      exhibit.home_page.display_sidebar =false
+      exhibit.home_page.save
+    end
+    it "should not display the facet sidebar" do
+      visit spotlight.exhibit_home_page_path(exhibit.home_page)
+      expect(page).not_to have_css("#sidebar")
+    end
+  end
 end

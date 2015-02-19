@@ -24,6 +24,11 @@ describe Spotlight::HomePage, :type => :model do
     end
   end
   describe 'display_sidebar?' do
+
+    it 'should be false when the page disabled the display_sidebar' do
+      home_page.display_sidebar = false
+      expect(home_page.display_sidebar?).to be_falsey
+    end
     it 'should be true when the exhibit is searchable' do
       home_page.exhibit.searchable = true
       expect(home_page.display_sidebar?).to be_truthy
