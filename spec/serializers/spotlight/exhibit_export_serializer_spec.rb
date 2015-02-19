@@ -121,6 +121,14 @@ describe Spotlight::ExhibitExportSerializer do
     end
   end
 
+  it "should be idempotent-ish" do
+    FactoryGirl.create :feature_subpage, exhibit: source_exhibit
+    export = Spotlight::ExhibitExportSerializer.new(source_exhibit).as_json
+    e = FactoryGirl.create(:exhibit)
+    e.import(export).tap { |e| e.save }
+    e.import(export).tap { |e| e.save }
+  end
+
   describe "should export saved searches with query parameters that can be re-generated" do
     before do
       source_exhibit.feature_pages.create content: [{:type=>"search_results", :data=>{:"slug"=>search.slug, :atom=>nil, :rss=>nil, :gallery=>nil, :slideshow=>nil, :list=>"on"}}].to_json

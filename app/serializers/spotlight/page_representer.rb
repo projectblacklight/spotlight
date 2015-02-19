@@ -3,7 +3,7 @@ require 'roar/json'
 module Spotlight
   class PageRepresenter < Roar::Decorator
     include Roar::JSON
-    (Spotlight::Page.attribute_names - ['id', 'slug', 'scope', 'exhibit_id', 'parent_page_id', 'content']).each do |prop|
+    (Spotlight::Page.attribute_names - ['id', 'scope', 'exhibit_id', 'parent_page_id', 'content']).each do |prop|
       property prop
     end
 
@@ -20,6 +20,6 @@ module Spotlight
   end
 
   class NestedPageRepresenter < PageRepresenter
-    collection :child_pages, class: Spotlight::FeaturePage, extend: NestedPageRepresenter
+    collection :child_pages, parse_strategy: lambda { |fragment, i, options| options.represented.child_pages.find_or_initialize_by(slug: fragment['slug']) }, class: Spotlight::FeaturePage, extend: NestedPageRepresenter
   end
 end
