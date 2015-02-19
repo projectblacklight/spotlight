@@ -196,4 +196,12 @@ class Spotlight::CatalogController < ::CatalogController
       end
     end
   end
+
+  # calls setup_previous_document then setup_next_document.
+  # used in the show action for single view pagination.
+  def setup_next_and_previous_documents
+    super
+  rescue RSolr::Error::Http => e
+    Rails.logger.warn "Unable to setup next and previous documents: #{e}"
+  end
 end
