@@ -16,7 +16,7 @@
       <% end %>
       <% if document.uploaded_resource? %>
         <% Spotlight::Resources::Upload.fields(current_exhibit).each do |config| %>
-          <%= d.send((config.form_field_type || :text_field), config.solr_field, value: document.first(config.solr_field), label: current_exhibit.blacklight_config.index_fields[config.solr_field.to_s].try(:label) || t(".#{config.solr_field}")) %>
+          <%= d.send((config.form_field_type || :text_field), config.field_name, value: document.first(config.solr_field), label: uploaded_field_label(config)) %>
         <% end %>
       <% end %>
     <% end %>

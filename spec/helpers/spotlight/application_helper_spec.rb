@@ -129,4 +129,28 @@ describe Spotlight::ApplicationHelper, :type => :helper do
       end
     end
   end
+
+  describe "#uploaded_field_label" do
+    let :field do
+      OpenStruct.new field_name: 'x'
+    end
+
+    let :blacklight_config do
+      Blacklight::Configuration.new
+    end
+
+    before do
+      allow(helper).to receive_messages(blacklight_config: blacklight_config)
+    end
+
+    it "should use the configuration-provided label" do
+      field.label = 'label x'
+      expect(helper.uploaded_field_label(field)).to eq 'label x'
+    end
+
+    it "should pull the label from the solr field" do
+      blacklight_config.add_index_field 'x', label: 'solr x'
+      expect(helper.uploaded_field_label(field)).to eq 'solr x'
+    end
+  end
 end

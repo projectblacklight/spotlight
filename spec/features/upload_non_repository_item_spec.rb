@@ -11,6 +11,7 @@ describe "Uploading a non-repository item", :type => :feature do
       visit spotlight.new_exhibit_resources_upload_path(exhibit)
       expect(page).to have_css("h1", text: /Curation/)
       expect(page).to have_css "h1 small", text: "Add non-repository items"
+
       within("form#new_resources_upload") do
         expect(page).to have_css('#resources_upload_url[type="file"]')
         expect(page).to have_css('.help-block', text: 'Valid file types: jpg jpeg png')

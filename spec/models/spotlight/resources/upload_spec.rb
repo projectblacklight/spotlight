@@ -24,17 +24,52 @@ describe Spotlight::Resources::Upload, :type => :model do
         end
       )
     end
+
     it 'should have the exhibit id and the upload id as the solr id' do
       expect(subject.to_solr[:id]).to eq "#{subject.exhibit.id}-#{subject.id}"
     end
     it 'should have a title field using the exhibit specific blacklight_config' do
       expect(subject.to_solr[:configured_title_field]).to eq 'Title Data'
     end
+
+    context "with a custom upload title field" do
+      let(:custom_title_field) { OpenStruct.new(field_name: :configured_title_field, solr_field: :some_other_field) }
+
+      before do
+        allow(Spotlight::Engine.config).to receive(:upload_title_field).and_return(custom_title_field)
+      end
+
+      it "should store the title field in the provided solr field" do
+        expect(subject.to_solr[:some_other_field]).to eq "Title Data"
+      end
+    end
+
     it 'should have the other additional configured fields' do
       expect(subject.to_solr[Spotlight::Engine.config.uploaded_description_field]).to eq "Description Data"
       expect(subject.to_solr[Spotlight::Engine.config.uploaded_attribution_field]).to eq "Attribution Data"
       expect(subject.to_solr[Spotlight::Engine.config.uploaded_date_field]).to eq "Date Data"
     end
+
+    context "multiple solr field mappings" do
+
+      let :configured_fields do
+        [
+          OpenStruct.new(field_name: 'some_field', solr_field: ['a', 'b'])
+        ]
+      end
+
+      before do
+        allow(subject).to receive(:configured_fields).and_return configured_fields
+
+        subject.data = { 'some_field' => 'value'}
+      end
+
+      it "should map a single uploaded field to multiple solr fields" do
+        expect(subject.to_solr['a']).to eq 'value'
+        expect(subject.to_solr['b']).to eq 'value'
+      end
+    end
+
     it 'should have a spotlight_resource_type field' do
       expect(subject.to_solr[:spotlight_resource_type_ssim]).to eq 'spotlight/resources/uploads'
     end
