@@ -18,7 +18,9 @@ module Spotlight
     end
 
     def show
-      (@response, @document_list) = get_search_results
+      if @page.display_sidebar?
+        @response, @document_list = get_search_results
+      end
 
       if @page.nil? or !@page.published?
         render '/catalog/index'
@@ -32,7 +34,7 @@ module Spotlight
     alias_method :search_facet_url, :exhibit_search_facet_url
 
     def allowed_page_params
-      super.concat [:display_title]
+      super.concat [:display_title, :display_sidebar]
     end
   end
 end
