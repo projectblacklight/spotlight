@@ -80,22 +80,8 @@ class Spotlight::Exhibit < ActiveRecord::Base
   end
 
   def import hash
-    # remove the default browse category -- it might be in the import
-    # and we don't want to have a conflicting slug
-    if persisted? and hash.fetch("searches_attributes", []).any? { |x| x["slug"] == "all-exhibit-items"}
-      searches.where(slug: "all-exhibit-items").destroy_all
-      reload
-    end
-
-    if hash["owned_taggings_attributes"]
-      hash["owned_taggings_attributes"].each do |tagging|
-        tag = tagging.delete "tag_attributes"
-        tagging["context"] = "tags"
-        tagging["tag"] = ActsAsTaggableOn::Tag.find_or_create_by name: tag["name"]
-      end
-    end
-
-    update hash
+    Spotlight::ExhibitExportSerializer.prepare(self).from_hash(hash)
+    self
   end
 
   def solr_data

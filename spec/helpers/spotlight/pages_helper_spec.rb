@@ -39,8 +39,8 @@ module Spotlight
       end
     end
     describe "get_search_widget_search_results" do
-      let(:good) { SirTrevorRails::Block.new({type: 'xyz', data: {'searches-options' => search.id}}, 'parent') }
-      let(:bad) { SirTrevorRails::Block.new({type: 'xyz', data: { 'searches-options' => 100}}, 'parent') }
+      let(:good) { SirTrevorRails::Blocks::SearchResultsBlock.new({type: 'xyz', data: {'slug' => search.slug}}, home_page) }
+      let(:bad) { SirTrevorRails::Blocks::SearchResultsBlock.new({type: 'xyz', data: { 'slug' => 'missing'}}, home_page) }
       let(:search_result) { [double('response'), double('documents')] }
       it "should return the results for a given search browse category" do
         expect(helper).to receive(:get_search_results).with({"q" => "query"}).and_return(search_result)

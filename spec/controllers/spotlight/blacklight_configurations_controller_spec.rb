@@ -83,11 +83,12 @@ describe Spotlight::BlacklightConfigurationsController, :type => :controller do
       end
     end
 
-    describe "#available_configurations" do
+    describe "#available_search_views" do
       it "should be successful" do
-        get :available_configurations, exhibit_id: exhibit, format: 'json'
+        get :available_search_views, exhibit_id: exhibit, format: 'json'
         expect(response).to be_successful
-        expect(JSON.parse(response.body).keys).to match_array exhibit.blacklight_config.keys.map(&:to_s)
+        available = JSON.parse(response.body)
+        expect(available).to match_array ['list', 'gallery', 'slideshow']
       end
     end
 

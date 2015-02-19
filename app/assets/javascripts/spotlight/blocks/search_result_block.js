@@ -6,7 +6,7 @@ SirTrevor.Blocks.SearchResults =  (function(){
 
   return Spotlight.Block.extend({
 
-  searches_key: "searches-options",
+  searches_key: "slug",
 
   view_types_key: '[data-behavior="result-view-types"]',
 
@@ -57,7 +57,7 @@ SirTrevor.Blocks.SearchResults =  (function(){
       if($("option", searches_field).length == 1){
         var options = "";
         $.each(data, function(i, search){
-          options += "<option value='" + search.id + "'>" + search.title + "</option>";
+          options += "<option value='" + search.slug + "'>" + search.title + "</option>";
         });
 
         searches_field.append(options);
@@ -71,7 +71,7 @@ SirTrevor.Blocks.SearchResults =  (function(){
   },
 
   loadViewTypes: function(){
-    var view_types_url = $('form[data-available-configurations-endpoint]').data('available-configurations-endpoint');
+    var view_types_url = $('form[data-available-search-views-endpoint]').data('available-search-views-endpoint');
     var selected_view_types = this.processSelectedViewTypes(this.viewTypesArea().data("select-after-ajax"));
     var block = this;
     $.ajax({
@@ -79,7 +79,7 @@ SirTrevor.Blocks.SearchResults =  (function(){
       url: view_types_url
     }).success(function(data){
       var checkboxes = "";
-      $.each(data.view, function(view_type, opts){
+      $.each(data, function(i, view_type){
         checkboxes += "<div>";
           checkboxes += "<label for='" + block.formId(view_type) + "'>";
             checkboxes += "<input id='" + block.formId(view_type) + "' name='" + view_type + "' type='checkbox' " + block.checkViewType(view_type) + " /> ";

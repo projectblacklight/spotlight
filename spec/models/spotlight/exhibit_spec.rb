@@ -68,20 +68,19 @@ describe Spotlight::Exhibit, :type => :model do
     it "should remove the default browse category" do
       subject.save
       expect { subject.import({}) }.to change {subject.searches.count}.by(0)
-      expect { subject.import({"searches_attributes" => [{"title" => "All Exhibit Items","slug" => "all-exhibit-items"}]}) }.to change {subject.searches.count}.by(0)
+      expect { subject.import({"searches" => [{"title" => "All Exhibit Items","slug" => "all-exhibit-items"}]}) }.to change {subject.searches.count}.by(0)
     end
 
     it "should import nested attributes from the hash" do
       subject.save
-      some_value = {}
-      expect(subject).to receive(:update).with(some_value)
-      subject.import some_value
+      subject.import 'title' => 'xyz'
+      expect(subject.title).to eq 'xyz'
     end
 
     it "should munge taggings so they can be imported easily" do
-      subject.save
       expect do
-        subject.import("owned_taggings_attributes"=>[{"taggable_type"=>"SolrDocument", "context"=>'tags', "created_at"=>"2015-01-16T18:23:27.340Z", "taggable_id"=>"1", "tag_attributes"=>{"name"=>"xyz"}}])
+        subject.import("owned_taggings"=>[{"taggable_id"=>"1", "taggable_type"=>"SolrDocument", "context"=>"tags", "tag"=>"xyz"}])
+        subject.save
       end.to change { subject.owned_taggings.count }.by(1)
       tag = subject.owned_taggings.last
       expect(tag.taggable_id).to eq "1"

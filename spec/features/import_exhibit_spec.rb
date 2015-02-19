@@ -17,7 +17,7 @@ describe "Allow exhibit admins to import and export content from an exhibit", :t
 
     data = JSON.parse(page.body)
 
-    expect(data).to include "title", "subtitle", "description", "searches_attributes", "home_page_attributes"
+    expect(data).to include "title", "searches", "home_page"
 
   end
 
