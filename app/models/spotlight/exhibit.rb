@@ -113,7 +113,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   end
 
   def sanitize_description
-    self.description = HTML::FullSanitizer.new.sanitize(description) if description_changed?
+    self.description = ::Rails::Html::FullSanitizer.new.sanitize(description) if description_changed?
   end
 
   def default_main_navigations
