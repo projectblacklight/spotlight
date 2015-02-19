@@ -16,40 +16,40 @@ module Spotlight
       property prop
     end
 
-    collection :searches, class: Spotlight::Search do
-      (Spotlight::Search.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+    collection :searches, parse_strategy: lambda { |fragment, i, options| options.represented.searches.find_or_initialize_by(slug: fragment['slug']) }, class: Spotlight::Search do
+      (Spotlight::Search.attribute_names - ['id', 'exhibit_id']).each do |prop|
         property prop
       end
     end
 
-    collection :about_pages, class: Spotlight::AboutPage, decorator: PageRepresenter
+    collection :about_pages, parse_strategy: lambda { |fragment, i, options| options.represented.about_pages.find_or_initialize_by(slug: fragment['slug']) }, class: Spotlight::AboutPage, decorator: PageRepresenter
 
-    collection :feature_pages, class: Spotlight::FeaturePage, decorator: NestedPageRepresenter
+    collection :feature_pages, parse_strategy: lambda { |fragment, i, options| options.represented.feature_pages.find_or_initialize_by(slug: fragment['slug']) }, getter: lambda { |opts| feature_pages.at_top_level }, class: Spotlight::FeaturePage, decorator: NestedPageRepresenter
 
-    property :home_page, class: Spotlight::HomePage, decorator: PageRepresenter
+    property :home_page, parse_strategy: lambda { |fragment, options| options.represented.home_page }, class: Spotlight::HomePage, decorator: PageRepresenter
 
     property :blacklight_configuration, class: Spotlight::BlacklightConfiguration, decorator: ConfigurationRepresenter
 
-    collection :custom_fields, class: Spotlight::CustomField do
-      (Spotlight::CustomField.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+    collection :custom_fields, parse_strategy: lambda { |fragment, i, options| options.represented.custom_fields.find_or_initialize_by(slug: fragment['slug']) }, class: Spotlight::CustomField do
+      (Spotlight::CustomField.attribute_names - ['id', 'exhibit_id']).each do |prop|
         property prop
       end
     end
 
-    collection :contacts, class: Spotlight::Contact do
-      (Spotlight::Contact.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+    collection :contacts, parse_strategy: lambda { |fragment, i, options| options.represented.contacts.find_or_initialize_by(slug: fragment['slug']) }, class: Spotlight::Contact do
+      (Spotlight::Contact.attribute_names - ['id', 'exhibit_id']).each do |prop|
         property prop
       end
     end
 
     collection :contact_emails, class: Spotlight::ContactEmail do
-      (Spotlight::ContactEmail.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+      (Spotlight::ContactEmail.attribute_names - ['id', 'exhibit_id']).each do |prop|
         property prop
       end
     end
 
     collection :solr_document_sidecars, class: Spotlight::SolrDocumentSidecar do
-      (Spotlight::SolrDocumentSidecar.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+      (Spotlight::SolrDocumentSidecar.attribute_names - ['id', 'exhibit_id']).each do |prop|
         property prop
       end
     end
@@ -70,13 +70,13 @@ module Spotlight
     end
 
     collection :attachments, class: Spotlight::Attachment do
-      (Spotlight::Attachment.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+      (Spotlight::Attachment.attribute_names - ['id', 'exhibit_id']).each do |prop|
         property prop
       end
     end
 
     collection :resources, class: Spotlight::Resource do
-      (Spotlight::Resource.attribute_names - ['id', 'slug', 'exhibit_id']).each do |prop|
+      (Spotlight::Resource.attribute_names - ['id', 'exhibit_id']).each do |prop|
         property prop
       end
     end
