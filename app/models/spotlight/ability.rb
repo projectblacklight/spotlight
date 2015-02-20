@@ -29,7 +29,6 @@ module Spotlight::Ability
 
     can :update, Spotlight::BlacklightConfiguration, exhibit_id: user.roles.pluck(:exhibit_id)
 
-    can [:curate, :tag], Spotlight::Exhibit, id: user.roles.pluck(:exhibit_id)
     can [:read, :curate, :tag], Spotlight::Exhibit, id: user.roles.pluck(:exhibit_id)
 
     # public

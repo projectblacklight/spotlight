@@ -9,5 +9,3 @@ FactoryGirl.define do
     url { Rack::Test::UploadedFile.new(File.join(FIXTURES_PATH, "avatar.png")) }
   end
 end
-  
-

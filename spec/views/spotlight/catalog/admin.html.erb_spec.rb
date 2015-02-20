@@ -9,6 +9,7 @@ module Spotlight
       allow(view).to receive(:current_exhibit).and_return(exhibit)
       allow(view).to receive(:new_exhibit_catalog_path).and_return('')
       allow(view).to receive(:new_exhibit_resources_upload_path).and_return('')
+      allow(view).to receive(:reindex_all_exhibit_resources_path).and_return('')
       assign(:exhibit, exhibit)
       assign(:response, [])
       stub_template '_search_header.html.erb' => 'header'

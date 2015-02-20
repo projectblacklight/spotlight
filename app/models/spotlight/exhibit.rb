@@ -108,6 +108,10 @@ class Spotlight::Exhibit < ActiveRecord::Base
     end
   end
 
+  def reindex_later
+    Spotlight::ReindexJob.perform_later(self)
+  end
+
   protected
 
   def initialize_config

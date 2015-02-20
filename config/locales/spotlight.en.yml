@@ -207,6 +207,7 @@ en:
         title: Curation - Items
         header: Items
       admin_header:
+        reindex: "Reindex items"
         new:
           repo_item: "Add repository item"
           non_repo_item: "Add non-repository item"
@@ -373,6 +374,7 @@ en:
       bookmarklet:
         instructions:  "Drag this button to the bookmarks toolbar in your web browser"
         bookmarklet: "%{application_name} widget"
+      reindexing_in_progress: "Reindexing all resources"
     roles:
       index:
         title: Site Administration - Users

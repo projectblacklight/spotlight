@@ -19,6 +19,13 @@ describe Spotlight::ResourcesController, :type => :controller do
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
+
+    describe "POST reindex_all" do
+      it "should not be allowed" do
+        post :reindex_all, exhibit_id: exhibit
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
+    end
   end
 
 
@@ -54,6 +61,15 @@ describe Spotlight::ResourcesController, :type => :controller do
         allow_any_instance_of(Spotlight::Resource).to receive(:blacklight_solr).and_return blacklight_solr
         post :create, exhibit_id: exhibit, resource: { url: "info:uri" }
         expect(assigns[:resource]).to be_persisted
+      end
+    end
+
+    describe "POST reindex_all" do
+      it "should trigger a reindex" do
+        expect_any_instance_of(Spotlight::Exhibit).to receive(:reindex_later)
+        post :reindex_all, exhibit_id: exhibit
+        expect(response).to redirect_to admin_exhibit_catalog_index_path(exhibit)
+        expect(flash[:notice]).to match /Reindexing/
       end
     end
   end
