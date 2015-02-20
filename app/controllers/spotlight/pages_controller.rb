@@ -54,7 +54,7 @@ module Spotlight
       @page.lock.delete if @page.lock
 
       if @page.update(page_params.merge(last_edited_by: current_user))
-        redirect_to [@page.exhibit, @page], notice: t(:'helpers.submit.page.updated', model: @page.class.model_name.human.downcase)
+        redirect_to [@page.exhibit, @page], flash: { html_safe: true }, notice: view_context.safe_join([t(:'helpers.submit.page.updated', model: @page.class.model_name.human.downcase), undo_link], " ")
       else
         render action: 'edit'
       end
@@ -64,7 +64,7 @@ module Spotlight
     def destroy
       @page.destroy
 
-      redirect_to [@page.exhibit, page_collection_name], notice: t(:'helpers.submit.page.destroyed', model: @page.class.model_name.human.downcase)
+      redirect_to [@page.exhibit, page_collection_name], flash: { html_safe: true }, notice: view_context.safe_join([t(:'helpers.submit.page.destroyed', model: @page.class.model_name.human.downcase), undo_link], " ")
     end
 
     def update_all
@@ -78,6 +78,11 @@ module Spotlight
 
     def _prefixes
       @_prefixes ||= super + ['catalog']
+    end
+
+    def undo_link
+      return unless can? :manage, @page
+      view_context.link_to(t(:'spotlight.versions.undo'), revert_version_path(@page.versions.last), :method => :post)
     end
 
     protected

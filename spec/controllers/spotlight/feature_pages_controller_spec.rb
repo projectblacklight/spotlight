@@ -124,6 +124,7 @@ describe Spotlight::FeaturePagesController, :type => :controller do
           put :update, id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes
           page.reload
           expect(response).to redirect_to(exhibit_feature_page_path(page.exhibit, page))
+          expect(flash[:notice]).to have_link "Undo changes"
         end
       end
 

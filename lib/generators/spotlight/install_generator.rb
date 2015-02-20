@@ -21,6 +21,10 @@ module Spotlight
       generate "friendly_id"
     end
 
+    def paper_trail
+      generate 'paper_trail:install'
+    end
+
     def assets
       copy_file "spotlight.scss", "app/assets/stylesheets/spotlight.scss"
       copy_file "spotlight.js", "app/assets/javascripts/spotlight.js"

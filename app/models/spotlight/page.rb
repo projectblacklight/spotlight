@@ -17,6 +17,7 @@ module Spotlight
 
     has_one :lock, as: :on, dependent: :destroy
     sir_trevor_content :content
+    has_paper_trail
 
     # display_sidebar should be set to true by default
     before_create do

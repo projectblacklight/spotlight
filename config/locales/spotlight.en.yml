@@ -434,6 +434,10 @@ en:
         body:
           one: "%{count} document has been indexed from the CSV file and added to the exhibit %{title}."
           other: "%{count} documents have been indexed from the CSV file and added to the exhibit %{title}."
+    versions:
+      undo: Undo changes
+      redo: Redo changes
+      undo_error: Unable to undo changes
   shared:
     exhibit_masthead:
       more_exhibits: More Exhibits

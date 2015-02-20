@@ -5,5 +5,9 @@ module Spotlight
   # This will configure e.g. the layout used by the host
   class ApplicationController < ::ApplicationController
     include Spotlight::Concerns::ApplicationController
+
+    before_filter do
+      flash.now[:notice] = flash[:notice].html_safe if flash[:html_safe] && flash[:notice]
+    end
   end
 end
