@@ -1,5 +1,8 @@
 require 'roar/decorator'
 require 'roar/json'
+require 'base64'
+require 'tempfile'
+
 module Spotlight
   class ConfigurationRepresenter < Roar::Decorator
     include Roar::JSON
@@ -37,8 +40,20 @@ module Spotlight
     end
 
     collection :contacts, parse_strategy: lambda { |fragment, i, options| options.represented.contacts.find_or_initialize_by(slug: fragment['slug']) }, class: Spotlight::Contact do
-      (Spotlight::Contact.attribute_names - ['id', 'exhibit_id']).each do |prop|
+      (Spotlight::Contact.attribute_names - ['id', 'exhibit_id', 'avatar']).each do |prop|
         property prop
+      end
+
+      property :avatar, exec_context: :decorator
+
+      def avatar
+        file = represented.avatar.file
+
+        { filename: file.filename, content_type: file.content_type, content: Base64.encode64(file.read) }
+      end
+
+      def avatar= file
+        represented.avatar = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file['content'])), filename: file['filename'], content_type: file['content_type']
       end
     end
 
@@ -80,15 +95,41 @@ module Spotlight
     end
 
     collection :attachments, class: Spotlight::Attachment do
-      (Spotlight::Attachment.attribute_names - ['id', 'exhibit_id']).each do |prop|
+      (Spotlight::Attachment.attribute_names - ['id', 'exhibit_id', 'file']).each do |prop|
         property prop
       end
+
+      property :file, exec_context: :decorator
+
+      def file
+        file = represented.file.file
+
+        { filename: file.filename, content_type: file.content_type, content: Base64.encode64(file.read) }
+      end
+
+      def file= file
+        represented.file = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file['content'])), filename: file['filename'], content_type: file['content_type']
+      end
+
     end
 
-    collection :resources, class: Spotlight::Resource do
-      (Spotlight::Resource.attribute_names - ['id', 'exhibit_id']).each do |prop|
+    collection :resources, class: lambda { |fragment,*| fragment.has_key?('type') ? fragment['type'].constantize : Spotlight::Resource } do
+      (Spotlight::Resource.attribute_names - ['id', 'exhibit_id', 'url']).each do |prop|
         property prop
       end
+
+      property :file, exec_context: :decorator
+
+      def file
+        file = represented.url.file
+
+        { filename: file.filename, content_type: file.content_type, content: Base64.encode64(file.read) }
+      end
+
+      def file= file
+        represented.url = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file['content'])), filename: file['filename'], content_type: file['content_type']
+      end
+
     end
   end
 end

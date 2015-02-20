@@ -119,6 +119,19 @@ describe Spotlight::ExhibitExportSerializer do
       expect(subject.feature_pages.at_top_level.length).to eq 1
       expect(subject.feature_pages.first.child_pages.length).to eq 1
     end
+
+    it "should assign STI resources the correct class" do
+      resource = FactoryGirl.create :uploaded_resource, exhibit: source_exhibit
+      expect(subject.resources.length).to eq 1
+      expect(subject.resources.first.class).to eq Spotlight::Resources::Upload
+      expect(subject.resources.first.url.file.path).not_to eq resource.url.file.path
+    end
+
+    it "should copy contact avatars" do
+      contact = FactoryGirl.create :contact, exhibit: source_exhibit
+      expect(subject.contacts.length).to eq 1
+      expect(subject.contacts.first.avatar.file.path).not_to eq contact.avatar.file.path
+    end
   end
 
   it "should be idempotent-ish" do
