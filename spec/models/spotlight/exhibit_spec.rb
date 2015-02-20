@@ -124,6 +124,7 @@ describe Spotlight::Exhibit, :type => :model do
     let(:ga_data) { OpenStruct.new(pageviews: 123)}
 
     before do
+      allow(Spotlight::Analytics::Ga).to receive(:enabled?).and_return(true)
       allow(Spotlight::Analytics::Ga).to receive(:exhibit_data).with(subject, hash_including(:start_date)).and_return(ga_data)
     end
 
@@ -137,6 +138,7 @@ describe Spotlight::Exhibit, :type => :model do
     let(:ga_data) { [OpenStruct.new(pageviews: 123)]}
 
     before do
+      allow(Spotlight::Analytics::Ga).to receive(:enabled?).and_return(true)
       allow(Spotlight::Analytics::Ga).to receive(:page_data).with(subject, hash_including(:start_date)).and_return(ga_data)
     end
 

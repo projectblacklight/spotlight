@@ -93,14 +93,18 @@ class Spotlight::Exhibit < ActiveRecord::Base
   end
 
   def analytics start_date = 1.month
+    return OpenStruct.new unless analytics_provider and analytics_provider.enabled?
+
     @analytics ||= begin
-      Spotlight::Analytics::Ga.exhibit_data(self, start_date: start_date.ago)
+      analytics_provider.exhibit_data(self, start_date: start_date.ago)
     end
   end
   
   def page_analytics start_date = 1.month
+    return [] unless analytics_provider and analytics_provider.enabled?
+
     @page_analytics ||= begin
-      Spotlight::Analytics::Ga.page_data(self, start_date: start_date.ago)
+      analytics_provider.page_data(self, start_date: start_date.ago)
     end
   end
 
@@ -130,6 +134,10 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   def default_main_navigations
     [:curated_features, :browse, :about]
+  end
+
+  def analytics_provider
+    Spotlight::Engine.config.analytics_provider
   end
 
 end

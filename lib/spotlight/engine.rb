@@ -67,6 +67,28 @@ module Spotlight
       OpenStruct.new(field_name: Spotlight::Engine.config.uploaded_date_field)
     ]
 
+    # To present curators with analytics reports on the exhibit dashboard, you need to configure
+    # an Analytics provider. Google Analytics support is provided out-of-the-box.
+    Spotlight::Engine.config.analytics_provider = nil
+
+    initializer "analytics.initialize" do
+      Spotlight::Engine.config.analytics_provider = Spotlight::Analytics::Ga
+    end
+
+    # If you use Google Analytics, you need to wire your site to report to a Google Analytics property.
+    # Adding Google Analytics to your site is left as an excersize for the implementor (you could
+    # consider overriding the layout to inject GA code..)
+    #
+    # After getting your site to report to Google Analytics, you need to:
+    # a) register an OAuth service account with access to your analytics property:
+    #     (https://github.com/tpitale/legato/wiki/OAuth2-and-Google#registering-for-api-access)
+    # b) download the pkcs12 key and make it accessible to your application
+    # c) in e.g. an initializer, set these configuration values as appropriate
+    #    to your OAuth2 service account and analytics property:
+    Spotlight::Engine.config.ga_pkcs12_key_path = nil
+    Spotlight::Engine.config.ga_web_property_id = nil
+    Spotlight::Engine.config.ga_email = nil
+
     Blacklight::Engine.config.inject_blacklight_helpers = false
     
     # Query parameters for autocomplete requests

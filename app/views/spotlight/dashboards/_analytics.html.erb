@@ -1,15 +1,15 @@
 <%= cache current_exhibit, expires_in: 1.hour do %>
-<% if Spotlight::Analytics::Ga.enabled? %>
+<% if Spotlight::Engine.config.analytics_provider and Spotlight::Engine.config.analytics_provider.enabled? %>
   <h3><%= t :'.header' %></h3>
   <table class="table analytics">
     <tr>
-    <% Spotlight::Analytics::Ga.metrics.elements.each do |e| %>
+    <% Spotlight::Engine.config.analytics_provider.metrics.elements.each do |e| %>
         <td class="value col-md-3 <%= e %>"><%= current_exhibit.analytics.send(e) %></td>
     <% end %>
     </tr>
     <tfoot>
       <tr>
-      <% Spotlight::Analytics::Ga.metrics.elements.each do |e| %>
+      <% Spotlight::Engine.config.analytics_provider.metrics.elements.each do |e| %>
         <th><%= t(:".#{e}") %></th>
       <% end %>
       </tr>

@@ -5,7 +5,6 @@ module Spotlight
 
       extend Legato::Model
 
-      cattr_accessor :pkcs12_key_path, :email, :web_property_id
       cattr_writer :user, :site
 
       metrics :sessions, :users, :pageviews
@@ -29,8 +28,8 @@ module Spotlight
             application_name: "spotlight",
             application_version: Spotlight::VERSION
           )
-          key = Google::APIClient::PKCS12.load_key(pkcs12_key_path, "notasecret")
-          service_account = Google::APIClient::JWTAsserter.new(email, scope, key)
+          key = Google::APIClient::PKCS12.load_key(Spotlight::Engine.config.ga_pkcs12_key_path, "notasecret")
+          service_account = Google::APIClient::JWTAsserter.new(Spotlight::Engine.config.ga_email, scope, key)
           client.authorization = service_account.authorize
           oauth_client = OAuth2::Client.new("", "", {
             authorize_url: 'https://accounts.google.com/o/oauth2/auth',
@@ -45,7 +44,7 @@ module Spotlight
       end
 
       def self.site
-        @site ||= user.accounts.first.profiles.first { |x| x.web_property_id = web_property_id }
+        @site ||= user.accounts.first.profiles.first { |x| x.web_property_id = Spotlight::Engine.config.ga_web_property_id }
       end
 
       def self.exhibit_data exhibit, options
