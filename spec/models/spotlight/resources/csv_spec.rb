@@ -90,10 +90,10 @@ describe Spotlight::Resources::Csv, :type => :model do
 
     it "should create sidecar files for custom fields" do
       expect { subject.save! }.to change { Spotlight::SolrDocumentSidecar.count }.by(2)
-      row = subject.exhibit.solr_document_sidecars.where(solr_document_id: "1").first
+      row = subject.exhibit.solr_document_sidecars.where(document_id: "1").first
       expect(row.public).to be_truthy
       expect(row.data[custom_field.field]).to eq "x"
-      row = subject.exhibit.solr_document_sidecars.where(solr_document_id: "2").first
+      row = subject.exhibit.solr_document_sidecars.where(document_id: "2").first
       expect(row.public).to be_falsey
       expect(row.data[custom_field.field]).to eq "w"
     end

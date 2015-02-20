@@ -42,22 +42,32 @@ module Spotlight
     end
 
     def add_model_mixin
-      inject_into_file 'app/models/solr_document.rb', after: "include Blacklight::Solr::Document" do
-       "\n  include Spotlight::SolrDocument\n"
+      if File.exists? 'app/models/solr_document.rb'
+        inject_into_file 'app/models/solr_document.rb', after: "include Blacklight::Solr::Document" do
+         "\n  include Spotlight::SolrDocument\n"
+        end
+      else
+        say "Unable to find SolrDocument class; add `include Spotlight::SolrDocument` to the class manually"
       end
     end
 
     def add_solr_indexing_mixin
-      inject_into_file 'app/models/solr_document.rb', after: "include Spotlight::SolrDocument\n" do
-       "\n  include #{options[:solr_update_class]}\n"
+      if File.exists? 'app/models/solr_document.rb'
+        inject_into_file 'app/models/solr_document.rb', after: "include Spotlight::SolrDocument\n" do
+         "\n  include #{options[:solr_update_class]}\n"
+        end
+      else
+        say "Unable to find SolrDocument class; add `include #{options[:solr_update_class]}` to the class manually"
       end
     end
 
     def add_osd_viewer
+      gem 'blacklight-gallery'
       generate 'blacklight_gallery:install'
     end
 
     def add_oembed
+      gem 'blacklight-oembed'
       generate 'blacklight_oembed:install'
     end
 

@@ -48,11 +48,11 @@ describe Spotlight::ExhibitExportSerializer do
   end
 
   it "should have solr document sidecars" do
-    source_exhibit.solr_document_sidecars.create! solr_document_id: 1, public: false
+    source_exhibit.solr_document_sidecars.create! document: SolrDocument.new(id: 1), public: false
     expect(subject["solr_document_sidecars"]).to have_at_least(1).item
     expect(subject["solr_document_sidecars"]).to have(source_exhibit.solr_document_sidecars.count).items
   
-    expect(subject["solr_document_sidecars"].first).to include('solr_document_id', 'public')
+    expect(subject["solr_document_sidecars"].first).to include('document_id', 'public')
     expect(subject["solr_document_sidecars"].first).to_not include 'id'
   end
 
@@ -71,7 +71,7 @@ describe Spotlight::ExhibitExportSerializer do
 
   describe "should round-trip data" do
     before do
-      source_exhibit.solr_document_sidecars.create! solr_document_id: 1, public: false
+      source_exhibit.solr_document_sidecars.create! document: SolrDocument.new(id: 1), public: false
       source_exhibit.tag(SolrDocument.new(id: 1), with: "xyz", on: :tags)
     end
 

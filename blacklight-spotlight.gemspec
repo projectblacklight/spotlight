@@ -17,9 +17,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.0", ">= 4.2.0"
   s.add_dependency "blacklight", "~> 5.8"
-  s.add_dependency "autoprefixer-rails", "< 5.0.0"
+  s.add_dependency "autoprefixer-rails"
   s.add_dependency "cancancan"
-  s.add_dependency "sir_trevor_rails", ">= 0.5.0.pre.beta1"
+  s.add_dependency "sir_trevor_rails", ">= 0.5.0a"
   s.add_dependency "carrierwave"
   s.add_dependency "carrierwave-crop"
   s.add_dependency "mini_magick"
