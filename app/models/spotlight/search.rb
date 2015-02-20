@@ -9,6 +9,7 @@ class Spotlight::Search < ActiveRecord::Base
   default_scope { order("weight ASC") }
   scope :published, -> { where(on_landing_page: true) }
   validates :title, presence: true
+  has_paper_trail
 
   before_create do
     self.featured_item_id ||= default_featured_item_id

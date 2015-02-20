@@ -42,6 +42,7 @@ describe Spotlight::HomePagesController, :type => :controller do
         put :update, id: page, exhibit_id: page.exhibit.id, home_page: valid_attributes
         page.reload
         expect(response).to redirect_to(exhibit_home_page_path(page.exhibit, page))
+        expect(flash[:notice]).to have_link "Undo changes"
       end
     end
   end

@@ -16,6 +16,10 @@ module Spotlight::Ability
     can :manage, Spotlight::Role, exhibit_id: user.admin_roles.pluck(:exhibit_id)
     can :update, Spotlight::Appearance, exhibit_id: user.admin_roles.pluck(:exhibit_id)
 
+    if user.roles.any?
+      can :manage, PaperTrail::Version
+    end
+
     # exhibit curator
     can :manage, [
       Spotlight::Attachment,

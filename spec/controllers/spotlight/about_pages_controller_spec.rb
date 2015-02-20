@@ -95,6 +95,7 @@ describe Spotlight::AboutPagesController, :type => :controller do
         put :update, id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes
         page.reload
         expect(response).to redirect_to(exhibit_about_page_path(page.exhibit, page))
+        expect(flash[:notice]).to have_link "Undo changes"
       end
     end
     describe "POST update_all" do

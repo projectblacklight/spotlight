@@ -7,6 +7,7 @@ require 'spotlight/utils'
 require 'friendly_id'
 require 'devise'
 require 'tophat'
+require 'paper_trail'
 
 module Spotlight
   class Engine < ::Rails::Engine

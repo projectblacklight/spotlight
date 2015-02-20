@@ -93,7 +93,9 @@ Spotlight::Engine.routes.draw do
         patch :update_all
       end
     end
+
   end
 
+  post 'versions/:id/revert' => 'versions#revert', as: :revert_version
   get '/:exhibit_id' => 'home_pages#show', as: :exhibit_root
 end
