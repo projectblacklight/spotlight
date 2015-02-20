@@ -10,8 +10,8 @@ module Spotlight
     property :content, exec_context: :decorator
 
     def content
-      # get the sir-trevor objects as JSON, and then turn it into a string
-      represented.content.as_json.to_json
+      # get the sir-trevor objects as JSON.
+      represented.content.as_json
     end
 
     def content= content
