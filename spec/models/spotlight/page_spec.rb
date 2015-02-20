@@ -49,4 +49,17 @@ describe Spotlight::Page, :type => :model do
       expect(page.should_display_title?).to be_falsey
     end
   end
+
+  describe "#content=" do
+    let(:page) { FactoryGirl.create(:feature_page) }
+
+    it "should work with a serialized JSON array" do
+      page.content = [].to_json
+      expect(page.content).to be_a_kind_of SirTrevorRails::BlockArray
+    end
+    it "should work with an array" do
+      page.content = []
+      expect(page.content).to be_a_kind_of SirTrevorRails::BlockArray
+    end
+  end
 end
