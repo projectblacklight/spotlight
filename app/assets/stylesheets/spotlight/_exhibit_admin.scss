@@ -65,3 +65,23 @@
 
   .form-control-static { display: none; }
 }
+
+.analytics {
+  text-align: center;
+
+  & > tfoot > tr > th {
+    padding-top: 0;
+    border-top: 0;
+    text-align: center;
+  }
+
+  th, td {
+    &:first-child {
+      border-left: 0;
+    }
+
+    border-left: 1px solid $table-border-color;
+  }
+
+  border-bottom: 1px solid $table-border-color;
+}

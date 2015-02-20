@@ -1,0 +1,36 @@
+<%= cache current_exhibit, expires_in: 1.hour do %>
+<% if Spotlight::Analytics::Ga.enabled? %>
+  <h3><%= t :'.header' %></h3>
+  <table class="table analytics">
+    <tr>
+    <% Spotlight::Analytics::Ga.metrics.elements.each do |e| %>
+        <td class="value col-md-3 <%= e %>"><%= current_exhibit.analytics.send(e) %></td>
+    <% end %>
+    </tr>
+    <tfoot>
+      <tr>
+      <% Spotlight::Analytics::Ga.metrics.elements.each do |e| %>
+        <th><%= t(:".#{e}") %></th>
+      <% end %>
+      </tr>
+    </tfoot>
+  </table>
+  <% unless current_exhibit.page_analytics.empty? %>
+  <h4><%= t :'.pages.header' %></h4>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= t(:".pagetitle") %></th>
+        <th><%= t(:".pageviews") %></th>
+      </tr>
+    </thead>
+    <% current_exhibit.page_analytics.each do |p| %>
+      <tr>
+        <td><%= link_to p.pageTitle, p.pagePath %></td>
+        <td><%= p.pageviews %></td>
+      </tr>
+    <% end %>
+  </table>
+  <% end %>
+<% end %>
+<% end %>

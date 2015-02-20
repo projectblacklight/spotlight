@@ -92,6 +92,18 @@ class Spotlight::Exhibit < ActiveRecord::Base
     Spotlight::Appearance.new(blacklight_configuration)
   end
 
+  def analytics start_date = 1.month
+    @analytics ||= begin
+      Spotlight::Analytics::Ga.exhibit_data(self, start_date: start_date.ago)
+    end
+  end
+  
+  def page_analytics start_date = 1.month
+    @page_analytics ||= begin
+      Spotlight::Analytics::Ga.page_data(self, start_date: start_date.ago)
+    end
+  end
+
   protected
 
   def initialize_config

@@ -238,6 +238,14 @@ en:
           updated_at: Last Edited
       solr_document_activity:
         header: Recently Updated Items
+      analytics:
+        header: "User Activity Over the Past Month"
+        pageviews: "page views"
+        users: "unique visits"
+        sessions: "visitors"
+        pagetitle: "page title"
+        pages:
+          header: "Most popular pages"
     exhibits:
       breadcrumb: Home
       edit:

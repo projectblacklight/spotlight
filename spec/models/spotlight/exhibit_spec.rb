@@ -119,4 +119,31 @@ describe Spotlight::Exhibit, :type => :model do
     end
   end
 
+  describe "#analytics" do
+    subject { FactoryGirl.create(:exhibit) }
+    let(:ga_data) { OpenStruct.new(pageviews: 123)}
+
+    before do
+      allow(Spotlight::Analytics::Ga).to receive(:exhibit_data).with(subject, hash_including(:start_date)).and_return(ga_data)
+    end
+
+    it "should request analytics data" do
+      expect(subject.analytics.pageviews).to eq 123
+    end
+  end
+
+  describe "#page_analytics" do
+    subject { FactoryGirl.create(:exhibit) }
+    let(:ga_data) { [OpenStruct.new(pageviews: 123)]}
+
+    before do
+      allow(Spotlight::Analytics::Ga).to receive(:page_data).with(subject, hash_including(:start_date)).and_return(ga_data)
+    end
+
+    it "should request analytics data" do
+      expect(subject.page_analytics.length).to eq 1
+      expect(subject.page_analytics.first.pageviews).to eq 123
+    end
+  end
+
 end
