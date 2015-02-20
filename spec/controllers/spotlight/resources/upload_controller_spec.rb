@@ -47,10 +47,15 @@ describe Spotlight::Resources::UploadController, :type => :controller do
 
     describe "POST create" do
 
+      let(:blacklight_solr) { double }
+
       before do
+        allow(blacklight_solr).to receive(:commit)
         allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
+        allow_any_instance_of(Spotlight::Resource).to receive(:blacklight_solr).and_return blacklight_solr
       end
       it "create a Spotlight::Resources::Upload resource" do
+        expect(blacklight_solr).to receive(:commit)
         post :create, exhibit_id: exhibit, resources_upload: { url: "url-data" }
         expect(assigns[:resource]).to be_persisted
         expect(assigns[:resource]).to be_a(Spotlight::Resources::Upload)
@@ -58,7 +63,7 @@ describe Spotlight::Resources::UploadController, :type => :controller do
       it 'should redirect to the item admin page' do
         post :create, exhibit_id: exhibit, resources_upload: { url: "url-data" }
         expect(flash[:notice]).to eq 'Object uploaded successfully.'
-        expect(response).to redirect_to admin_exhibit_catalog_index_path(exhibit)
+        expect(response).to redirect_to admin_exhibit_catalog_index_path(exhibit, sort: :timestamp)
       end
       it 'should redirect to the upload form when the add-and-continue parameter is present' do
         post :create, exhibit_id: exhibit, "add-and-continue" => "true", resources_upload: { url: "url-data" }

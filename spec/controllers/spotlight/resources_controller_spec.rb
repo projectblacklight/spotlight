@@ -47,8 +47,11 @@ describe Spotlight::ResourcesController, :type => :controller do
     end
 
     describe "POST create" do
+      let(:blacklight_solr) { double }
       it "create a resource" do
         allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
+        expect(blacklight_solr).to receive(:commit)
+        allow_any_instance_of(Spotlight::Resource).to receive(:blacklight_solr).and_return blacklight_solr
         post :create, exhibit_id: exhibit, resource: { url: "info:uri" }
         expect(assigns[:resource]).to be_persisted
       end

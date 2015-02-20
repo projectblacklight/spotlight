@@ -25,11 +25,11 @@ module Spotlight
       @resource.attributes = resource_params
       @resource = @resource.becomes_provider
 
-      if @resource.save
+      if @resource.save_and_commit
         if from_popup?
           render layout: false, text: "<html><script>window.close();</script></html>"
         else
-          redirect_to admin_exhibit_catalog_index_path(@resource.exhibit)
+          redirect_to admin_exhibit_catalog_index_path(@resource.exhibit, sort: :timestamp)
         end
       else
         render action: 'new'

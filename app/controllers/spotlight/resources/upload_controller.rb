@@ -14,16 +14,16 @@ module Spotlight::Resources
     def create
       @resource.attributes = resource_params
 
-      if @resource.save
+      if @resource.save_and_commit
         flash[:notice] = t('spotlight.resources.upload.success')
         if params["add-and-continue"]
           redirect_to new_exhibit_resources_upload_path(@resource.exhibit)
         else
-          redirect_to admin_exhibit_catalog_index_path(@resource.exhibit)
+          redirect_to admin_exhibit_catalog_index_path(@resource.exhibit, sort: :timestamp)
         end
       else
         flash[:error] = t('spotlight.resources.upload.error')
-        redirect_to admin_exhibit_catalog_index_path(@resorce.exhibit)
+        redirect_to admin_exhibit_catalog_index_path(@resource.exhibit, sort: :timestamp)
       end
     end
 
