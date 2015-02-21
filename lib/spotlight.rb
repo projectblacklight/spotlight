@@ -1,3 +1,4 @@
+require "spotlight/version"
 require "spotlight/engine"
 
 module Spotlight
