@@ -36,6 +36,12 @@ module Spotlight
       end
     end
 
+    def reindex_all
+      @exhibit.reindex_later
+
+      redirect_to admin_exhibit_catalog_index_path(@exhibit), notice: t(:'spotlight.resources.reindexing_in_progress')
+    end
+
     protected
     def resource_params
       params.require(:resource).permit(:url)

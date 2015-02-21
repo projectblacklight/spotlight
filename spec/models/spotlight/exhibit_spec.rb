@@ -148,4 +148,14 @@ describe Spotlight::Exhibit, :type => :model do
     end
   end
 
+  describe "#reindex_later" do
+    subject { FactoryGirl.create(:exhibit) }
+
+    it "should queue a reindex job for the exhibit" do
+      expect(Spotlight::ReindexJob).to receive(:perform_later).with(subject)
+      subject.reindex_later
+    end
+
+  end
+
 end

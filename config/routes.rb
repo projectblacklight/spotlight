@@ -8,6 +8,7 @@ Spotlight::Engine.routes.draw do
       get 'import', to: 'exhibits#import'
       post 'import', to: 'exhibits#process_import'
       patch 'import', to: 'exhibits#process_import'
+      post 'reindex', to: 'exhibits#reindex'
     end
 
     resources :attachments, only: :create
@@ -43,7 +44,11 @@ Spotlight::Engine.routes.draw do
 
     resource :dashboard, only: :show
 
-    resources :resources
+    resources :resources do
+      collection do
+        post :reindex_all
+      end
+    end
 
     post :csv_uploads, to: "resources/upload#csv_upload", path: 'upload_resources/csv_upload', as: :resources_csv_uploads
 

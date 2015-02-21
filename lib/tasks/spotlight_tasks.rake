@@ -104,10 +104,7 @@ namespace :spotlight do
 
     exhibits.find_each do |e|
       puts " == Reindexing #{e.title} =="
-      e.resources.find_each do |r| 
-        puts "#{r.url} (#{r.id})"
-        r.reindex
-      end
+      e.reindex_later
     end
   end
 
