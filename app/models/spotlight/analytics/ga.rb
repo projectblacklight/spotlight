@@ -48,12 +48,12 @@ module Spotlight
       end
 
       def self.exhibit_data exhibit, options
-        context(exhibit).results(site, options).to_a.first || OpenStruct.new(pageviews: 0, users: 0, sessions: 0)
+        context(exhibit).results(site, Spotlight::Engine.config.ga_analytics_options.merge(options)).to_a.first || OpenStruct.new(pageviews: 0, users: 0, sessions: 0)
       end
 
       def self.page_data exhibit, options
         options[:sort] ||= '-pageviews'
-        query = context(exhibit).results(site, options)
+        query = context(exhibit).results(site, Spotlight::Engine.config.ga_page_analytics_options.merge(options))
         query.dimensions << :page_path
         query.dimensions << :page_title
 

@@ -105,7 +105,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
     
     @page_analytics ||= {}
     @page_analytics[start_date] ||= begin
-      analytics_provider.page_data(path || self, start_date: start_date.ago, limit: 5)
+      analytics_provider.page_data(path || self, start_date: start_date.ago)
     end
   end
 
