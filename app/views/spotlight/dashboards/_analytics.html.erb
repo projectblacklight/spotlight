@@ -4,7 +4,7 @@
   <table class="table analytics">
     <tr>
     <% Spotlight::Engine.config.analytics_provider.metrics.elements.each do |e| %>
-        <td class="value col-md-3 <%= e %>"><%= current_exhibit.analytics.send(e) %></td>
+        <td class="value col-md-3 <%= e %>"><%= current_exhibit.analytics(1.month, exhibit_root_path(current_exhibit)).send(e) %></td>
     <% end %>
     </tr>
     <tfoot>
@@ -15,7 +15,8 @@
       </tr>
     </tfoot>
   </table>
-  <% unless current_exhibit.page_analytics.empty? %>
+  <% page_analytics = current_exhibit.page_analytics(1.month, exhibit_root_path(current_exhibit)) %>
+  <% unless page_analytics.empty? %>
   <h4><%= t :'.pages.header' %></h4>
   <table class="table table-striped">
     <thead>
@@ -24,7 +25,7 @@
         <th><%= t(:".pageviews") %></th>
       </tr>
     </thead>
-    <% current_exhibit.page_analytics.each do |p| %>
+    <% page_analytics.each do |p| %>
       <tr>
         <td><%= link_to p.pageTitle, p.pagePath %></td>
         <td><%= p.pageviews %></td>

@@ -5,10 +5,16 @@ describe 'spotlight/dashboards/_analytics.html.erb', type: :view do
   let(:ga_data) { OpenStruct.new(pageviews: 1, users: 2, sessions: 3)}
   let(:page_data) { [ OpenStruct.new(pageTitle: "title", pagePath: "/path", pageviews: '123') ]}
   before do
-    allow(view).to receive_messages(current_exhibit: current_exhibit)
+    allow(view).to receive_messages(current_exhibit: current_exhibit, exhibit_root_path: "/some/path")
     allow(Spotlight::Analytics::Ga).to receive(:enabled?).and_return(true)
     allow(current_exhibit).to receive(:analytics).and_return(ga_data)
     allow(current_exhibit).to receive(:page_analytics).and_return(page_data)
+  end
+
+  it "should use the exhibit_root_path for analytics" do
+    expect(current_exhibit).to receive(:analytics).with(1.month, "/some/path").and_return(ga_data)
+    expect(current_exhibit).to receive(:page_analytics).with(1.month, "/some/path").and_return(page_data)
+    render
   end
   
   it "should have header" do

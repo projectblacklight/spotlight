@@ -92,20 +92,20 @@ class Spotlight::Exhibit < ActiveRecord::Base
     Spotlight::Appearance.new(blacklight_configuration)
   end
 
-  def analytics start_date = 1.month
+  def analytics start_date = 1.month, path = nil
     return OpenStruct.new unless analytics_provider and analytics_provider.enabled?
     @analytics ||= {}
     @analytics[start_date] ||= begin
-      analytics_provider.exhibit_data(self, start_date: start_date.ago)
+      analytics_provider.exhibit_data(path || self, start_date: start_date.ago)
     end
   end
   
-  def page_analytics start_date = 1.month
+  def page_analytics start_date = 1.month, path = nil
     return [] unless analytics_provider and analytics_provider.enabled?
     
     @page_analytics ||= {}
     @page_analytics[start_date] ||= begin
-      analytics_provider.page_data(self, start_date: start_date.ago, limit: 5)
+      analytics_provider.page_data(path || self, start_date: start_date.ago, limit: 5)
     end
   end
 

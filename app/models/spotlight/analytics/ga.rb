@@ -48,16 +48,24 @@ module Spotlight
       end
 
       def self.exhibit_data exhibit, options
-        self.for_exhibit(exhibit).results(site, options).to_a.first || OpenStruct.new(pageviews: 0, users: 0, sessions: 0)
+        context(exhibit).results(site, options).to_a.first || OpenStruct.new(pageviews: 0, users: 0, sessions: 0)
       end
 
       def self.page_data exhibit, options
         options[:sort] ||= '-pageviews'
-        query = self.for_exhibit(exhibit).results(site, options)
+        query = context(exhibit).results(site, options)
         query.dimensions << :page_path
         query.dimensions << :page_title
 
         query.to_a
+      end
+
+      def self.context exhibit
+        if exhibit.is_a? Spotlight::Exhibit
+          self.for_exhibit(exhibit)
+        else
+          self.path(exhibit)
+        end
       end
     end
   end
