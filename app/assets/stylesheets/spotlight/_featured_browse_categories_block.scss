@@ -1,12 +1,35 @@
 $featured-browse-category-border-color: $legend-border-color;
 $featured-browse-category-caption-color: $gray-lighter;
-$smallest-featured-browse-category-width: 220px;
-$smallest-featured-browse-category-height: $smallest-featured-browse-category-width;
-$largest-featured-browse-category-height: 255px;
-$no-sidebar-medium-image-width: 300px;
-$no-sidebar-large-image-width: 360px;
-$with-sidebar-medium-image-width: 340px;
-$with-sidebar-large-image-width: $no-sidebar-large-image-width;
+
+// Large desktop
+$featured-browse-category-margin-large-desktop: 15px;
+$no-sidebar-large-desktop-large-image-width: floor(($container-large-desktop)/ 3) - $featured-browse-category-margin-large-desktop;
+$no-sidebar-large-desktop-medium-image-width: floor(($container-large-desktop)/ 5) - $featured-browse-category-margin-large-desktop;
+
+$with-sidebar-large-desktop-width: floor($container-large-desktop - ($container-large-desktop)/ 4);  // sidebar space to remove
+$with-sidebar-large-desktop-large-image-width: floor(($with-sidebar-large-desktop-width)/ 2) - ($featured-browse-category-margin-large-desktop * 2);
+$with-sidebar-large-desktop-medium-image-width: 265px;
+
+// Desktop
+$featured-browse-category-margin-desktop: 20px;
+$no-sidebar-desktop-large-image-width: floor(($container-desktop)/ 3) - $featured-browse-category-margin-desktop;
+
+$with-sidebar-desktop-width: floor($container-desktop - ($container-desktop)/ 4);  // sidebar space to remove
+$with-sidebar-desktop-large-image-width: floor(($with-sidebar-desktop-width)/ 2) - ($featured-browse-category-margin-desktop * 2);
+$with-sidebar-desktop-medium-image-width: 220px;
+
+// Tablet
+$featured-browse-category-margin-tablet: 20px;
+$no-sidebar-tablet-large-image-width: floor(($container-tablet)/ 3) - $featured-browse-category-margin-tablet;
+$with-sidebar-tablet-large-image-width: floor(($container-tablet)/ 2) - ($featured-browse-category-margin-tablet * 2);
+
+// Extra small
+$no-sidebar-xs-image-width: 190px;
+$with-sidebar-xs-image-width: $no-sidebar-xs-image-width;
+
+// Height adjustments
+$aspect-ratio-factor-large-image: 0.75; // 4:3 width:height
+$aspect-ratio-factor-medium-image: 1; // 1:1 width: height
 
 .browse-category {
   background-size: cover;
@@ -39,19 +62,30 @@ $with-sidebar-large-image-width: $no-sidebar-large-image-width;
 [data-sidebar="false"] {
   &.categories-1, &.categories-2, &.categories-3 {
     .browse-category {
-      height: $largest-featured-browse-category-height;
-      @media (max-width: $screen-md-max) {
-        width: $no-sidebar-medium-image-width;
+      width: $no-sidebar-xs-image-width;
+      height: $no-sidebar-xs-image-width * $aspect-ratio-factor-large-image;
+      @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+        width: $no-sidebar-tablet-large-image-width;
+        height: $no-sidebar-tablet-large-image-width * $aspect-ratio-factor-large-image;
+      }
+      @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+        width: $no-sidebar-desktop-large-image-width;
+        height: $no-sidebar-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
       @media (min-width: $screen-lg-min) {
-        width: $no-sidebar-large-image-width;
+        width: $no-sidebar-large-desktop-large-image-width;
+        height: $no-sidebar-large-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
     }
   }
   &.categories-4, &.categories-5 {
     .browse-category {
-      width: $smallest-featured-browse-category-width;
-      height: $smallest-featured-browse-category-height;
+      width: $no-sidebar-large-desktop-medium-image-width;
+      height: $no-sidebar-large-desktop-medium-image-width * $aspect-ratio-factor-medium-image;
+      @media (max-width: $screen-xs-max) {
+        width: $no-sidebar-xs-image-width;
+        height: $no-sidebar-xs-image-width * $aspect-ratio-factor-medium-image;
+      }
     }
     .category-4 {
       @extend .hidden-sm;
@@ -66,23 +100,35 @@ $with-sidebar-large-image-width: $no-sidebar-large-image-width;
 [data-sidebar="true"] {
   &.categories-1, &.categories-2 {
     .browse-category {
-      height: $largest-featured-browse-category-height;
-      @media (max-width: $screen-md-max) {
-        width: $with-sidebar-medium-image-width;
+      width: $with-sidebar-xs-image-width;
+      height: $with-sidebar-xs-image-width * $aspect-ratio-factor-large-image;
+      @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+        width: $with-sidebar-tablet-large-image-width;
+        height: $with-sidebar-tablet-large-image-width * $aspect-ratio-factor-large-image;
+      }
+      @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+        width: $with-sidebar-desktop-large-image-width;
+        height: $with-sidebar-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
       @media (min-width: $screen-lg-min) {
-        width: $with-sidebar-large-image-width;
+        width: $with-sidebar-large-desktop-large-image-width;
+        height: $with-sidebar-large-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
     }
   }
   &.categories-3, &.categories-4, &.categories-5 {
    .browse-category {
-      width: $smallest-featured-browse-category-width;
-      height: $smallest-featured-browse-category-height;
+    width: $with-sidebar-desktop-medium-image-width;
+    height: $with-sidebar-desktop-medium-image-width * $aspect-ratio-factor-medium-image;
+      @media (max-width: $screen-xs-max) {
+        width: $with-sidebar-xs-image-width;
+        height: $with-sidebar-xs-image-width * $aspect-ratio-factor-medium-image;
+      }
+      @media (min-width: $screen-lg-min) {
+        width: $with-sidebar-large-desktop-medium-image-width;
+        height: $with-sidebar-large-desktop-medium-image-width * $aspect-ratio-factor-medium-image;
+      }
     }
-  }
-  .category-3 {
-    @extend .hidden-sm;
   }
   .category-4, .category-5 {
     display: none;
