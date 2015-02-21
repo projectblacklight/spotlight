@@ -94,17 +94,18 @@ class Spotlight::Exhibit < ActiveRecord::Base
 
   def analytics start_date = 1.month
     return OpenStruct.new unless analytics_provider and analytics_provider.enabled?
-
-    @analytics ||= begin
+    @analytics ||= {}
+    @analytics[start_date] ||= begin
       analytics_provider.exhibit_data(self, start_date: start_date.ago)
     end
   end
   
   def page_analytics start_date = 1.month
     return [] unless analytics_provider and analytics_provider.enabled?
-
-    @page_analytics ||= begin
-      analytics_provider.page_data(self, start_date: start_date.ago)
+    
+    @page_analytics ||= {}
+    @page_analytics[start_date] ||= begin
+      analytics_provider.page_data(self, start_date: start_date.ago, limit: 5)
     end
   end
 
