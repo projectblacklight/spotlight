@@ -26,28 +26,6 @@ module Spotlight
       end
     end
 
-    ##
-    # This enables us to have a group of checkboxes that is backed by the array
-    # stored in Spotlight::BlacklightConfiguration#default_sort_fields
-    def sort_fields 
-      fields = configuration.sort_fields
-      Blacklight::OpenStructWithHashAccess.new.tap do |s|
-        default_sort_fields.each_with_index do |(k, field), index|
-          s[k] = Blacklight::OpenStructWithHashAccess.new.tap do |c|
-            c.enabled = fields[k] && fields[k][:enabled]
-            c.label = fields[k][:label] if fields[k]
-            c.weight = index + 1
-          end
-        end
-      end
-    end
-
-    def allowed_params
-      sort_fields.keys.each_with_object({}) do |field, hsh|
-        hsh[field] = [:enabled, :label, :weight]
-      end
-    end
-
     def update(params)
       configuration.exhibit.update(exhibit_params(params))
       configuration.update(configuration_params(params))
@@ -61,15 +39,7 @@ module Spotlight
       default_blacklight_config.per_page
     end
 
-    def default_sort_field
-      configuration.blacklight_config.default_sort_field.key
-    end
-
     protected
-
-    def default_sort_fields
-      default_blacklight_config.sort_fields
-    end
 
     def configuration_params(params)
       p = params.except(:main_navigations, :searchable)

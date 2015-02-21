@@ -75,6 +75,16 @@ describe Spotlight::BlacklightConfigurationsController, :type => :controller do
       end
     end
 
+    describe "#edit_sort_fields" do
+      it "should be successful" do
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
+        expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with("Sort fields", exhibit_edit_sort_fields_path(exhibit))
+        get :edit_sort_fields, exhibit_id: exhibit
+        expect(response).to be_successful
+      end
+    end
+
     describe "#metadata_fields" do
       it "should be successful" do
         get :metadata_fields, exhibit_id: exhibit, format: 'json'
@@ -131,6 +141,25 @@ describe Spotlight::BlacklightConfigurationsController, :type => :controller do
         expect(response).to redirect_to exhibit_edit_facets_path(exhibit)
         assigns[:exhibit].tap do |saved|
           expect(saved.blacklight_configuration.facet_fields.keys).to eq ['genre_ssim']
+        end
+      end
+
+      it "should update sort fields" do
+        patch :update, exhibit_id: exhibit, blacklight_configuration: { 
+          sort_fields: {"relevance"=>{"enabled" => "1", "label" => "Relevance"}, "title"=>{"enabled" => "1", "label" => "Title"}, "type"=>{"enabled" => "1", "label" => "Type"}, "date"=>{"enabled" => "0", "label" => "Date"}, "source"=>{"enabled" => "0", "label" => "Source"}, "identifier"=>{"enabled" => "0", "label" => "Identifier"}}
+        }
+        expect(flash[:notice]).to eq "The exhibit was successfully updated."
+        expect(response).to redirect_to exhibit_edit_sort_fields_path(exhibit)
+        assigns[:exhibit].tap do |saved|
+          expect(saved.blacklight_configuration.sort_fields).to eq(
+            {"relevance" => {"label"=>"Relevance", "enabled"=>true},
+             "title" => {"label" => "Title", "enabled"=>true},
+             "type" => {"label" => "Type", "enabled"=>true},
+             "date" => {"label" => "Date", "enabled"=>false},
+             "source" => {"label" => "Source", "enabled"=>false},
+             "identifier" => {"label" => "Identifier", "enabled"=>false}
+            }
+          )
         end
       end
     end

@@ -14,6 +14,8 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
       redirect_to exhibit_edit_metadata_path(@exhibit)
     elsif params[:blacklight_configuration][:facet_fields]
       redirect_to exhibit_edit_facets_path(@exhibit)
+    elsif params[:blacklight_configuration][:sort_fields]
+      redirect_to exhibit_edit_sort_fields_path(@exhibit)
     else
       redirect_to exhibit_dashboard_path(@exhibit)
     end
@@ -48,6 +50,15 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
     @fields = solr_repository.send_and_receive('admin/luke', fl: '*', 'json.nl' => 'map')['fields']
   end
 
+  ##
+  # Edit the index and show view metadata fields
+  def edit_sort_fields
+    add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
+    add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
+    add_breadcrumb t(:'spotlight.curation.sidebar.sort_fields'), exhibit_edit_sort_fields_path(@exhibit)
+  end
+
+
   # the luke request handler can return document counts, but the seem to be incorrect.
   # They seem to be for the whole index and they decrease after optimizing.
   # This method finds those counts by doing regular facet queries
@@ -68,7 +79,8 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
   def exhibit_params
     params.require(:blacklight_configuration).permit(
       facet_fields: [exhibit_configuration_facet_params],
-      index_fields: [exhibit_configuration_index_params]
+      index_fields: [exhibit_configuration_index_params],
+      sort_fields: [exhibit_configuration_sort_params]
     )
   end
 
@@ -80,6 +92,10 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
 
   def exhibit_configuration_facet_params
     @blacklight_configuration.blacklight_config.facet_fields.keys.inject({}) { |result, element| result[element] = [:show, :label, :weight]; result }
+  end
+
+  def exhibit_configuration_sort_params
+    @blacklight_configuration.blacklight_config.sort_fields.keys.inject({}) { |result, element| result[element] = [:enabled, :label, :weight]; result }
   end
 
 end
