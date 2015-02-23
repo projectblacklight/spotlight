@@ -89,6 +89,8 @@ module Spotlight
     Spotlight::Engine.config.ga_pkcs12_key_path = nil
     Spotlight::Engine.config.ga_web_property_id = nil
     Spotlight::Engine.config.ga_email = nil
+    Spotlight::Engine.config.ga_analytics_options = { }
+    Spotlight::Engine.config.ga_page_analytics_options = Spotlight::Engine.config.ga_analytics_options.merge(limit: 5)
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
     
