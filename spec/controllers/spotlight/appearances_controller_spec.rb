@@ -44,22 +44,12 @@ describe Spotlight::AppearancesController, :type => :controller do
         patch :update, exhibit_id: exhibit, appearance: { 
           document_index_view_types: {"list"=>"1", "gallery"=>"1", "map"=>"0"},
           default_per_page: "50",
-          sort_fields: {"relevance"=>{"enabled" => "1", "label" => "Relevance"}, "title"=>{"enabled" => "1", "label" => "Title"}, "type"=>{"enabled" => "1", "label" => "Type"}, "date"=>{"enabled" => "0", "label" => "Date"}, "source"=>{"enabled" => "0", "label" => "Source"}, "identifier"=>{"enabled" => "0", "label" => "Identifier"}}
         }
         expect(flash[:notice]).to eq "The appearance was successfully updated."
         expect(response).to redirect_to edit_exhibit_appearance_path(exhibit)
         assigns[:exhibit].tap do |saved|
           expect(saved.blacklight_configuration.document_index_view_types).to eq ['list', 'gallery']
           expect(saved.blacklight_configuration.default_per_page).to eq 50
-          expect(saved.blacklight_configuration.sort_fields).to eq(
-            {"relevance" => {"label"=>"Relevance", "enabled"=>true},
-             "title" => {"label" => "Title", "enabled"=>true},
-             "type" => {"label" => "Type", "enabled"=>true},
-             "date" => {"label" => "Date", "enabled"=>false},
-             "source" => {"label" => "Source", "enabled"=>false},
-             "identifier" => {"label" => "Identifier", "enabled"=>false}
-            }
-          )
         end
       end
     end

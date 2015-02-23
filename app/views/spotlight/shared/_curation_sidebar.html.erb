@@ -1,28 +1,27 @@
 <div id="sidebar" class="col-md-3" role="complementary">
   <ul class="nav sidenav">
-    <li class="dashboard"><%= link_to t(:'spotlight.curation.sidebar.dashboard'), spotlight.exhibit_dashboard_path(@exhibit) %></li>
+    <li class="dashboard"><%= link_to t(:'spotlight.curation.sidebar.dashboard'), spotlight.exhibit_dashboard_path(current_exhibit) %></li>
   </ul>
   <%= render 'spotlight/shared/admin_sidebar' if can? :update, current_exhibit %>
   <h4><%=t(:'spotlight.curation.sidebar.header') %></h4>
   <ul class="nav sidenav">
-    <li><%= link_to t(:'spotlight.curation.sidebar.items'), spotlight.admin_exhibit_catalog_index_path(@exhibit) %></li>
-    <% if can? :update, @exhibit.blacklight_configuration %>
-    <li><%= link_to t(:'spotlight.curation.sidebar.metadata'), spotlight.exhibit_edit_metadata_path(@exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.items'), spotlight.admin_exhibit_catalog_index_path(current_exhibit) %></li>
+    <% if can? :tag, current_exhibit %>
+    <li><%= link_to t(:'spotlight.curation.sidebar.tags'), spotlight.exhibit_tags_path(current_exhibit) %></li>
     <% end %>
-    <% if can? :tag, @exhibit %>
-    <li><%= link_to t(:'spotlight.curation.sidebar.tags'), spotlight.exhibit_tags_path(@exhibit) %></li>
+    <% if can? :update, current_exhibit.blacklight_configuration %>
+    <li><%= link_to t(:'spotlight.curation.sidebar.metadata'), spotlight.exhibit_edit_metadata_path(current_exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.search_facets'), spotlight.exhibit_edit_facets_path(current_exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.sort_fields'), spotlight.exhibit_edit_sort_fields_path(current_exhibit) %></li>
     <% end %>
-    <% if can? :update, @exhibit.blacklight_configuration %>
-    <li><%= link_to t(:'spotlight.curation.sidebar.search_facets'), spotlight.exhibit_edit_facets_path(@exhibit) %></li>
+    <% if can? :manage, Spotlight::Search.new(exhibit: current_exhibit) %>
+    <li><%= link_to t(:'spotlight.curation.sidebar.browse'), spotlight.exhibit_searches_path(current_exhibit) %></li>
     <% end %>
-    <% if can? :manage, Spotlight::Search.new(exhibit: @exhibit) %>
-    <li><%= link_to t(:'spotlight.curation.sidebar.browse'), spotlight.exhibit_searches_path(@exhibit) %></li>
+    <% if can? :manage, Spotlight::FeaturePage.new(exhibit: current_exhibit) or can? :manage, current_exhibit.home_page %>
+    <li><%= link_to t(:'spotlight.curation.sidebar.feature_pages'), spotlight.exhibit_feature_pages_path(current_exhibit), 'data-no-turbolink' => true %></li>
     <% end %>
-    <% if can? :manage, Spotlight::FeaturePage.new(exhibit: @exhibit) or can? :manage, @exhibit.home_page %>
-    <li><%= link_to t(:'spotlight.curation.sidebar.feature_pages'), spotlight.exhibit_feature_pages_path(@exhibit), 'data-no-turbolink' => true %></li>
-    <% end %>
-    <% if can? :manage, Spotlight::AboutPage.new(exhibit: @exhibit) %>
-    <li><%= link_to t(:'spotlight.curation.sidebar.about_pages'), spotlight.exhibit_about_pages_path(@exhibit), 'data-no-turbolink' => true %></li>
+    <% if can? :manage, Spotlight::AboutPage.new(exhibit: current_exhibit) %>
+    <li><%= link_to t(:'spotlight.curation.sidebar.about_pages'), spotlight.exhibit_about_pages_path(current_exhibit), 'data-no-turbolink' => true %></li>
     <% end %>
   </ul>
 </div>
