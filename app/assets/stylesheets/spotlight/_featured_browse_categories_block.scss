@@ -16,7 +16,7 @@ $no-sidebar-desktop-large-image-width: floor(($container-desktop)/ 3) - $feature
 
 $with-sidebar-desktop-width: floor($container-desktop - ($container-desktop)/ 4);  // sidebar space to remove
 $with-sidebar-desktop-large-image-width: floor(($with-sidebar-desktop-width)/ 2) - ($featured-browse-category-margin-desktop * 2);
-$with-sidebar-desktop-medium-image-width: 220px;
+$with-sidebar-desktop-medium-image-width: floor(($with-sidebar-desktop-width)/ 3) - ($featured-browse-category-margin-desktop);
 
 // Tablet
 $featured-browse-category-margin-tablet: 20px;
