@@ -138,7 +138,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   end
 
   def default_main_navigations
-    [:curated_features, :browse, :about]
+    Spotlight::Engine.config.exhibit_main_navigation.dup
   end
 
   def analytics_provider

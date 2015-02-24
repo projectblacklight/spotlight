@@ -37,6 +37,8 @@ module Spotlight
       OEmbed::Providers.register_all
     end
 
+    Spotlight::Engine.config.exhibit_main_navigation = [:curated_features, :browse, :about]
+
     Spotlight::Engine.config.resource_providers = []
     Spotlight::Engine.config.new_resource_partials = [] # e.g. "spotlight/resources/bookmarklet"
     Spotlight::Engine.config.filter_resources_by_exhibit = false
