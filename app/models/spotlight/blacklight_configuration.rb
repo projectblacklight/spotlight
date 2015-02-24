@@ -163,7 +163,7 @@ module Spotlight
     # Get the "upstream" blacklight configuration to use
     def default_blacklight_config
       @default_blacklight_config ||= begin
-        config = ::CatalogController.blacklight_config.deep_copy
+        config = Spotlight::Engine.blacklight_config.deep_copy
         add_exhibit_specific_fields(config)
         config
       end

@@ -26,7 +26,7 @@ module Spotlight::SolrDocument
       end
 
       def blacklight_config
-        @conf ||= CatalogController.blacklight_config
+        @conf ||= Spotlight::Engine.blacklight_config
       end
 
       def blacklight_solr_config

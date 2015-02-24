@@ -18,7 +18,7 @@ module Spotlight::BlacklightConfigurationDefaults
 
       # can't use default_blacklight_config until after the BlacklightConfiguration
       # is created or we run into a circular dependency.
-      default_fields = ::CatalogController.blacklight_config.sort_fields
+      default_fields = Spotlight::Engine.blacklight_config.sort_fields
       self.sort_fields = default_fields.each_with_object({}) do |(k, v), obj|
         obj[k] = { show: true }
       end
@@ -29,13 +29,13 @@ module Spotlight::BlacklightConfigurationDefaults
 
       # can't use default_blacklight_config until after the BlacklightConfiguration
       # is created or we run into a circular dependency.
-      self.document_index_view_types = ::CatalogController.blacklight_config.view.keys.map(&:to_s)
+      self.document_index_view_types = Spotlight::Engine.blacklight_config.view.keys.map(&:to_s)
     end
 
     def set_default_per_page
       # can't use default_blacklight_config until after the BlacklightConfiguration
       # is created or we run into a circular dependency.
-      self.default_per_page ||= ::CatalogController.blacklight_config.per_page.first
+      self.default_per_page ||= Spotlight::Engine.blacklight_config.per_page.first
     end
 
 end

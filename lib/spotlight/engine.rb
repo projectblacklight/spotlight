@@ -36,6 +36,17 @@ module Spotlight
       OEmbed::Providers.register_all
     end
 
+    def self.catalog_controller
+      @catalog_controller ||= Spotlight::Engine.config.catalog_controller_class.constantize
+    end
+
+    def self.blacklight_config
+      Spotlight::Engine.config.default_blacklight_config || catalog_controller.blacklight_config
+    end
+
+    Spotlight::Engine.config.catalog_controller_class = "::CatalogController"
+    Spotlight::Engine.config.default_blacklight_config = nil
+
     Spotlight::Engine.config.exhibit_main_navigation = [:curated_features, :browse, :about]
 
     Spotlight::Engine.config.resource_providers = []
