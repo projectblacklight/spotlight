@@ -6,9 +6,9 @@
     <% end %>
   <% end %>
 
-  <%= f.file_field :avatar %>
+  <%= f.file_field :avatar, data: { croppable: true, aspect_ratio: 1, box_width: 600 } %>
 
-  <div class="form-group <%= "avatar-missing" unless @contact.avatar.present? %>">
+  <div class="form-group <%= "missing-croppable" unless @contact.avatar.present? %>">
     <div class="col-sm-5 col-sm-offset-2">
       <%= hidden_field_tag :contact_avatar_crop, ([@contact.avatar_crop_x.to_i, @contact.avatar_crop_y.to_i, @contact.avatar_crop_x.to_i + @contact.avatar_crop_w.to_i, @contact.avatar_crop_y.to_i + @contact.avatar_crop_h.to_i].to_json if @contact.avatar_crop_x) %>
       <%= f.previewbox :avatar %>
