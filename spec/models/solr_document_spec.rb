@@ -30,6 +30,18 @@ describe SolrDocument, :type => :model do
     expect(::SolrDocument.find('dq287tq6352')).to eq ::SolrDocument.find('dq287tq6352')
   end
 
+  describe 'GlobalID' do
+    let(:doc_id) { 'dq287tq6352' }
+    it 'should respond to #to_global_id' do
+      expect(::SolrDocument.find(doc_id).to_global_id.to_s).to eq "gid://internal/SolrDocument/#{doc_id}"
+    end
+    it 'should be able to locate SolrDocuments by their GlobalID' do
+      expect(GlobalID::Locator.locate(
+        ::SolrDocument.find(doc_id).to_global_id
+      )['id']).to eq doc_id
+    end
+  end
+
   describe "#sidecar" do
     it "should return a sidecar for adding exhibit-specific fields" do
       expect(subject.sidecar(exhibit)).to be_kind_of Spotlight::SolrDocumentSidecar

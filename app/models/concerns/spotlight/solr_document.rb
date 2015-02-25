@@ -5,7 +5,8 @@ module Spotlight
     include Blacklight::SolrHelper
     include Spotlight::SolrDocument::ActiveModelConcern
     include Spotlight::SolrDocument::Finder
-    
+    include GlobalID::Identification
+
     included do
       extend ActsAsTaggableOn::Compatibility
       extend ActsAsTaggableOn::Taggable
