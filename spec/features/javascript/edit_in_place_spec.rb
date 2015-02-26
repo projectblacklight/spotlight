@@ -13,7 +13,7 @@ describe 'Edit in place', type: :feature, js: true do
         click_link "Appearance"
       end
 
-      click_link "Main Navigation Menu"
+      click_link "Main menu"
 
       within("#nested-navigation") do
         expect(page).to     have_css("#appearance_main_navigations_1_label[type='hidden']", visible: false)
@@ -28,7 +28,7 @@ describe 'Edit in place', type: :feature, js: true do
 
       expect(page).to have_content("The appearance was successfully updated.")
 
-      click_link "Main Navigation Menu"
+      click_link "Main menu"
 
       within("#nested-navigation") do
         expect(page).to have_css('h3', text: "My Page Label")

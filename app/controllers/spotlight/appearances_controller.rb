@@ -27,6 +27,7 @@ class Spotlight::AppearancesController < Spotlight::ApplicationController
   def appearance_params
     params.require(:appearance).permit(:default_per_page, :searchable,
       document_index_view_types: @appearance.view_type_options,
-      main_navigations: [:id, :label, :weight])
+      main_navigations: [:id, :label, :weight],
+      masthead: [:display, :source, :image, :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h])
   end
 end
