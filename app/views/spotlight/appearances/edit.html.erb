@@ -34,13 +34,14 @@
             <div>
               <%= m.radio_button(:source, :exhibit, disabled: 'disabled', label: t(:'.site_masthead.source.exhibit.label')) %>
               <div>
-                <%= m.text_field_without_bootstrap(:document_global_id, class: "form-control", disabled: 'disabled') %>
+                <%= m.text_field_without_bootstrap(:document_global_id, class: "form-control", disabled: 'disabled', data: {input_select_target: '#appearance_masthead_source_exhibit'}) %>
                 <p class="help-block"><%= t(:'.site_masthead.source.exhibit.help') %></p>
               </div>
             </div>
             <div>
               <%= m.radio_button(:source, :remote, label: t(:'.site_masthead.source.remote.label')) %>
               <%= m.file_field_without_bootstrap(:image, data: {
+                input_select_target: '#appearance_masthead_source_remote',
                 croppable: true,
                 selector:  'masthead_image',
                 bg_color:   'black',
