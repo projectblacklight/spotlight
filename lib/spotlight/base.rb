@@ -14,7 +14,7 @@ module Spotlight
       document_list.map do |doc|
         {
           id: doc.id,
-          title: view_context.presenter(doc).raw_document_heading,
+          title: CGI.unescapeHTML(view_context.presenter(doc).document_heading.to_str),
           thumbnail: doc.first(blacklight_config.index.thumbnail_field),
           thumbnails: doc[blacklight_config.index.thumbnail_field],
           description: doc.id,

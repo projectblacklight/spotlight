@@ -61,12 +61,6 @@ module Spotlight
       types
     end
 
-    ##
-    # Override Blacklight (5.2+) so we use our own presenter
-    def presenter_class
-      Spotlight::DocumentPresenter
-    end
-
     # Return a copy of the blacklight configuration
     # that only includes views conifgured by our block
     def blacklight_view_config_for_search_block block
