@@ -13,6 +13,11 @@ module Spotlight
     def index
       # set up a model the inline "add a new page" form
       @page = CanCan::ControllerResource.new(self).send(:build_resource)
+
+      respond_to do |format|
+        format.html
+        format.json { render json: @pages }
+      end
     end
 
     # GET /pages/1
