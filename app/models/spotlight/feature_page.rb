@@ -18,5 +18,9 @@ module Spotlight
     def display_sidebar?
       child_pages.published.present? || self.display_sidebar
     end
+
+    def thumbnail_image_url
+      thumbnail.image.cropped.url if thumbnail and thumbnail.image
+    end
   end
 end
