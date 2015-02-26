@@ -59,13 +59,7 @@ namespace :spotlight do
   end
 
   task :server do
-    if File.exists? 'spec/internal'
-      within_test_app do
-        system "bundle update"
-      end
-    else
-      Rake::Task['engine_cart:generate'].invoke
-    end
+    Rake::Task['engine_cart:generate'].invoke
 
     unless File.exists? 'jetty'
       Rake::Task['jetty:clean'].invoke
