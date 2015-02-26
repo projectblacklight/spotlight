@@ -46,10 +46,19 @@ describe Spotlight::Exhibit, :type => :model do
       expect(subject.searches.first.query_params).to be_empty
     end
 
+  end
+
+  describe "#main_navigations" do
+    subject { Spotlight::Exhibit.new(title: "Sample").tap(&:save!)  }
     it "should have main navigations" do
       expect(subject.main_navigations).to have(3).main_navigations
       expect(subject.main_navigations.map(&:label).compact).to be_blank
       expect(subject.main_navigations.map(&:weight)).to eq [0, 1, 2]
+    end
+    it "should use the engine's configuration for default navigations" do
+      expect(Spotlight::Engine.config).to receive(:exhibit_main_navigation).and_return([:a,:b])
+      expect(subject.main_navigations).to have(2).main_navigations
+      expect(subject.main_navigations.map(&:nav_type).compact).to match_array ["a", "b"]
     end
   end
 
