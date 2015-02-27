@@ -1,3 +1,11 @@
+###
+ # Simple concern mixed into SolrDocument to create
+ # a mapping of configured Spotlight::ImageDerivatives
+ # to their configured fields in the SolrDocument.
+ # Any derivatives configured (descibed in Spotlight::ImageDerivatives)
+ # will be available under #spotlight_image_versions and an array of available versions
+ # (regardless of their is related data in the document) in the #spotlight_image_versions#versions array.
+###
 module Spotlight::SolrDocument::SpotlightImages
 
   def spotlight_image_versions

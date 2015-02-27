@@ -28,6 +28,6 @@ class Spotlight::AppearancesController < Spotlight::ApplicationController
     params.require(:appearance).permit(:default_per_page, :searchable,
       document_index_view_types: @appearance.view_type_options,
       main_navigations: [:id, :label, :weight],
-      masthead: [:display, :source, :image, :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h])
+      masthead: [:display, :source, :image, :remote_image_url, :document_global_id, :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h])
   end
 end
