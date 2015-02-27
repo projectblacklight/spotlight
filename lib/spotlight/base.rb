@@ -20,7 +20,8 @@ module Spotlight
           full_images: doc.spotlight_image_versions.try(:full),
           description: doc.id,
           url: exhibit_catalog_path(current_exhibit, doc),
-          private: doc.private?(current_exhibit)
+          private: doc.private?(current_exhibit),
+          global_id: doc.to_global_id.to_s
         }
       end
     end

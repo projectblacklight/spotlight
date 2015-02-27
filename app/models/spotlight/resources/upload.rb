@@ -69,7 +69,7 @@ module Spotlight
     end
 
     def add_file_versions solr_hash
-      @@spotlight_image_derivatives.each do |config|
+      spotlight_image_derivatives.each do |config|
         if config[:version]
           solr_hash[config[:field]] = url.send(config[:version]).url
         else
