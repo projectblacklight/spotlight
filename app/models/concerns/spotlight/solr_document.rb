@@ -5,6 +5,7 @@ module Spotlight
     include Blacklight::SolrHelper
     include Spotlight::SolrDocument::ActiveModelConcern
     include Spotlight::SolrDocument::Finder
+    include Spotlight::SolrDocument::SpotlightImages
     include GlobalID::Identification
 
     included do
