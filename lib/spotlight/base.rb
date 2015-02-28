@@ -16,10 +16,12 @@ module Spotlight
           id: doc.id,
           title: CGI.unescapeHTML(view_context.presenter(doc).document_heading.to_str),
           thumbnail: doc.first(blacklight_config.index.thumbnail_field),
-          thumbnails: doc[blacklight_config.index.thumbnail_field],
+          thumbnails: doc.spotlight_image_versions.try(:thumb) || doc[blacklight_config.index.thumbnail_field],
+          full_images: doc.spotlight_image_versions.try(:full),
           description: doc.id,
           url: exhibit_catalog_path(current_exhibit, doc),
-          private: doc.private?(current_exhibit)
+          private: doc.private?(current_exhibit),
+          global_id: doc.to_global_id.to_s
         }
       end
     end

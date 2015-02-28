@@ -1,8 +1,9 @@
+<% jcrop_options = {croppable: true, selector: 'masthead_image', bg_color: 'black', bg_opacity: '.4', max_size: '[1800,131]', min_size: '[1200,120]'} %>
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
   <%= administration_page_title %>
 
-<%= bootstrap_form_for @appearance, url: spotlight.exhibit_appearance_path(@exhibit), layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5' do |f| %>
+<%= bootstrap_form_for @appearance, url: spotlight.exhibit_appearance_path(@exhibit), layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5', html: {data: { autocomplete_url: spotlight.autocomplete_exhibit_catalog_index_path(current_exhibit, format: "json") } } do |f| %>
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active">
@@ -32,22 +33,23 @@
           <% end %>
           <%= field_set_tag(t(:'.site_masthead.source.header')) do %>
             <div>
-              <%= m.radio_button(:source, :exhibit, disabled: 'disabled', label: t(:'.site_masthead.source.exhibit.label')) %>
+              <%= m.radio_button(:source, :exhibit, label: t(:'.site_masthead.source.exhibit.label')) %>
               <div>
-                <%= m.text_field_without_bootstrap(:document_global_id, class: "form-control", disabled: 'disabled') %>
+                <%= m.hidden_field(:document_global_id) %>
+                <%= m.hidden_field(:remote_image_url, data: jcrop_options) %>
+                <%= text_field_tag(:document_title, presenter(m.object.document || SolrDocument.new).document_show_html_title, class: "form-control", data: {input_select_target: '#appearance_masthead_source_exhibit', masthead_typeahead: true, target_panel: '#masthead-target-panel', :'id-field' => '#appearance_masthead_document_global_id', remote_url_field: '#appearance_masthead_remote_image_url' }) %>
+                <div id="masthead-target-panel" style="display:none">
+                  <div class="panel-heading">
+                    <div data-item-title="true"></div>
+                    <div data-panel-image-pagination="true"></div>
+                  </div>
+                </div>
                 <p class="help-block"><%= t(:'.site_masthead.source.exhibit.help') %></p>
               </div>
             </div>
             <div>
               <%= m.radio_button(:source, :remote, label: t(:'.site_masthead.source.remote.label')) %>
-              <%= m.file_field_without_bootstrap(:image, data: {
-                croppable: true,
-                selector:  'masthead_image',
-                bg_color:   'black',
-                bg_opacity: '.4',
-                max_size:   '[1800,131]',
-                min_size:   '[1200,120]'
-              }) %>
+              <%= m.file_field_without_bootstrap(:image, data: jcrop_options.merge!(input_select_target: '#appearance_masthead_source_remote')) %>
             </div>
           <% end %>
           <%= field_set_tag(t(:'.site_masthead.source.remote.header')) do %>

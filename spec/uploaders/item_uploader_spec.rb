@@ -36,7 +36,7 @@ describe Spotlight::ItemUploader do
   end
   describe 'with added configurations' do
     before do
-      Spotlight::ItemUploader.configured_versions << {
+      Spotlight::ImageDerivatives.spotlight_image_derivatives << {
         version: :super_tiny,
         blacklight_config_field: :super_tiny_field,
         lambda: lambda {

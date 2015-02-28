@@ -66,4 +66,24 @@ describe "Add and update the site masthead", :type => :feature do
 
     expect(page).to_not have_css('#exhibit-masthead.with-image .background-container')
   end
+  it 'should display a masthead image when one is uploaded from an exhibit item', js: true do
+    skip "Capyabara and jcrop don't play well together.."
+    visit spotlight.exhibit_dashboard_path(exhibit)
+    expect(page).to_not have_css('#exhibit-masthead.with-image')
+    within "#sidebar" do
+      click_link "Appearance"
+    end
+
+    click_link "Site masthead"
+
+    check "Show background image in masthead"
+
+    fill_in_typeahead_field 'document_title', with: "Armenia"
+
+    click_button "Save changes"
+
+    expect(page).to have_content("The appearance was successfully updated.")
+
+    expect(page).to have_css('#exhibit-masthead.with-image .background-container')
+  end
 end

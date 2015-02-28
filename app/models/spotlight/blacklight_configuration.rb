@@ -13,6 +13,7 @@ module Spotlight
     serialize :document_index_view_types, Array
 
     include Spotlight::BlacklightConfigurationDefaults
+    include Spotlight::ImageDerivatives
 
     # get rid of empty values
     before_validation do |model|
@@ -66,7 +67,7 @@ module Spotlight
 
         config.add_results_collection_tool 'save_search', if: :render_save_this_search?
 
-        config.default_autocomplete_solr_params[:fl] ||= "#{config.solr_document_model.unique_key} #{config.view_config(:show).title_field} #{config.view_config(:show).thumbnail_field}"
+        config.default_autocomplete_solr_params[:fl] ||= "#{config.solr_document_model.unique_key} #{config.view_config(:show).title_field} #{spotlight_image_version_fields.join(' ')}"
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
@@ -170,7 +171,13 @@ module Spotlight
     end
 
     protected
-    
+
+    def spotlight_image_version_fields
+      @@spotlight_image_derivatives.map do |version|
+        version[:field]
+      end
+    end
+
     def set_index_field_defaults field
       if index_fields.blank?
         views = default_blacklight_config.view.keys | [:show, :enabled]
