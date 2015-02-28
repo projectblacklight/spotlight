@@ -21,5 +21,5 @@
 //= require bootstrap/carousel
 //= require bootstrap-tagsinput
 //= require social-share-button
-//= require jquery.jcrop
+
 //= require_tree .
