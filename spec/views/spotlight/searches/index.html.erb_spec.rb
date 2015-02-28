@@ -22,7 +22,7 @@ describe "spotlight/searches/index.html.erb", :type => :view do
       assign(:searches, [])
       expect(exhibit).to receive(:searchable?).and_return(false)
       render
-      expect(rendered).to have_css('.alert-warning', text: "This exhibit is not currently searchable. To perform searches that can be saved as additional browse categories, an Administrator must temporarily turn on the Searchable option in the Exhibit Style section of the Administration > Appearance page.")
+      expect(rendered).to have_css('.alert-warning', text: "This exhibit is not currently searchable. To perform searches that can be saved as additional browse categories, an Administrator must temporarily turn on the Searchable option in the exhibit style section of the Administration > Appearance page.")
     end
   end
 end

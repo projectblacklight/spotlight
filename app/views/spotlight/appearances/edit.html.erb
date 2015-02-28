@@ -9,16 +9,54 @@
         <a href="#style" area-controls="style" role="tab" data-toggle="tab"><%= t(:'.exhibit_style.heading') %></a>
       </li>
       <li role="presentation">
-        <a href="#main-menu" area-controls="style" role="tab" data-toggle="tab"><%= t(:'.main_navigation.menu') %></a>
+        <a href="#site-masthead" area-controls="site-masthead" role="tab" data-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
       </li>
       <li role="presentation">
-        <a href="#search-results" area-controls="style" role="tab" data-toggle="tab"><%= t(:'.search_results') %></a>
+        <a href="#main-menu" area-controls="main-menu" role="tab" data-toggle="tab"><%= t(:'.main_navigation.menu') %></a>
+      </li>
+      <li role="presentation">
+        <a href="#search-results" area-controls="search-results" role="tab" data-toggle="tab"><%= t(:'.search_results') %></a>
       </li>
     </ul>
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="style">
         <%= field_set_tag do %>
           <%= f.check_box(:searchable, label: t(:'.exhibit_style.searchable.label')) %>
+        <% end %>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="site-masthead">
+        <p class="instructions"><%= t(:'.site_masthead.help') %></p>
+        <%= f.fields_for(current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
+          <%= field_set_tag do %>
+            <%= m.check_box(:display, checked: current_exhibit.masthead.try(:display), label: t(:'.site_masthead.display.label')) %>
+          <% end %>
+          <%= field_set_tag(t(:'.site_masthead.source.header')) do %>
+            <div>
+              <%= m.radio_button(:source, :exhibit, disabled: 'disabled', label: t(:'.site_masthead.source.exhibit.label')) %>
+              <div>
+                <%= m.text_field_without_bootstrap(:document_global_id, class: "form-control", disabled: 'disabled') %>
+                <p class="help-block"><%= t(:'.site_masthead.source.exhibit.help') %></p>
+              </div>
+            </div>
+            <div>
+              <%= m.radio_button(:source, :remote, label: t(:'.site_masthead.source.remote.label')) %>
+              <%= m.file_field_without_bootstrap(:image, data: {
+                croppable: true,
+                selector:  'masthead_image',
+                bg_color:   'black',
+                bg_opacity: '.4',
+                max_size:   '[1800,131]',
+                min_size:   '[1200,120]'
+              }) %>
+            </div>
+          <% end %>
+          <%= field_set_tag(t(:'.site_masthead.source.remote.header')) do %>
+            <p class="instructions"><%= t(:'.site_masthead.source.remote.help') %></p>
+            <div class="form-group  <%= "missing-croppable" unless current_exhibit.masthead.try(:image).present? %>">
+              <%= hidden_field_tag :masthead_image_crop, ([current_exhibit.masthead.image_crop_x.to_i, current_exhibit.masthead.image_crop_y.to_i, current_exhibit.masthead.image_crop_x.to_i + current_exhibit.masthead.image_crop_w.to_i, current_exhibit.masthead.image_crop_y.to_i + current_exhibit.masthead.image_crop_h.to_i].to_json if current_exhibit.masthead.try(:image_crop_x)) %>
+              <%= m.cropbox :image %>
+            </div>
+          <% end %>
         <% end %>
       </div>
       <div role="tabpanel" class="tab-pane" id="main-menu">

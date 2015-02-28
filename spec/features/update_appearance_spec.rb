@@ -11,10 +11,10 @@ describe "Update the appearance", :type => :feature do
       click_link "Appearance"
     end
 
-    click_link "Exhibit Style"
+    click_link "Exhibit style"
     uncheck "Searchable (offer searchbox and facet sidebar)"
 
-    click_link "Search Results"
+    click_link "Search results"
     uncheck "List"
 
     choose "20"
@@ -27,10 +27,10 @@ describe "Update the appearance", :type => :feature do
       click_link "Appearance"
     end
 
-    click_link "Exhibit Style"
+    click_link "Exhibit style"
     expect(field_labeled('Searchable (offer searchbox and facet sidebar)')).to_not be_checked
 
-    click_link "Search Results"
+    click_link "Search results"
     expect(field_labeled('List')).to_not be_checked
     expect(field_labeled('Gallery')).to be_checked
 

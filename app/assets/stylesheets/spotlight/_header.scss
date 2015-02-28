@@ -1,3 +1,17 @@
+$masthead-height: 131px;
+$masthead-image-blur: 1px;
+$black: #000000;
+$white: #FFFFFF;
+
+@mixin masthead-background-containers() {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: block;
+  width: auto;
+  height: inherit;
+}
+
 #exhibit-masthead, #exhibit-navbar {
   z-index: 1;
 }
@@ -12,17 +26,66 @@
 
 #exhibit-masthead {
   margin-bottom: 0;
-  padding: 24px 0;
+  padding: 0 0 24px 0;
+  position: static;
+  height: 120px; // will be overriden in style tag when image is present
+  & > .container {
+    // Maintains the site title and subtitle at slightly below
+    // vertically-centered, even if height of masthead is changed.
+    position: relative;
+    top: 60%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
   .site-title {
     font-size: 30px;
   }
-
   small {
     display: block;
+    padding-top: $padding-base-vertical;
+    @extend .hidden-xs;
+  }
+
+  &.with-image {
+    .site-title {
+      color: $white;
+      text-shadow: 0 1px 0 $black;
+    }
+    small {
+      color: $white;
+    }
   }
 
   .more-exhibits {
     @extend .navbar-right;
+  }
+
+  // This is to add a background image to the masthead, in a way that
+  // enables the site title and subtitle text to be visible above it.
+  .background-container {
+    @include masthead-background-containers();
+    background-repeat: no-repeat;
+    // Add small amount of blur to help text stand out
+    //filter: url(masthead/blur.svg#blur); // for older versions of FF
+    -webkit-filter: blur($masthead-image-blur);
+    filter: blur($masthead-image-blur);
+    // Shift image slightly to hide blurred edge of image
+    margin-left: -$masthead-image-blur;
+    margin-top: -$masthead-image-blur;
+    overflow: hidden;
+    // Add right border to image to hide lighter blurred edge
+    border-right: 1px solid $black;
+  }
+  // Include gradient to improve text legibility,
+  // especially on light background images.
+  .background-container-gradient {
+    @include masthead-background-containers();
+    background:
+     linear-gradient(
+       rgba(0, 0, 0, 0.0),
+       rgba(0, 0, 0, 0.4),
+       rgba(0, 0, 0, 0.5)
+     );
   }
 }
 

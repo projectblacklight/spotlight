@@ -112,14 +112,28 @@ en:
         document_index_view_types: Result page types
         default_per_page: Default results per page
         exhibit_style:
-          heading: "Exhibit Style"
+          heading: "Exhibit style"
           searchable:
             label: "Searchable (offer searchbox and facet sidebar)"
         main_navigation:
-          menu: Main Navigation Menu
+          menu: Main menu
           help: Click a menu item to change its display label. Drag and drop a menu item to change their order in the main navigation menu.
         restore_default: "Restore default"
-        search_results: Search Results
+        search_results: Search results
+        site_masthead:
+          heading: Site masthead
+          help: "You can select and crop an image to use as a background in your exhibit site's masthead. To use an image as a masthead background, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below."
+          display:
+            label: "Show background image in masthead"
+          source:
+            header: "Image source"
+            exhibit:
+              label: "From this exhibit"
+              help: "To find an image to use as a background, start typing the title of an exhibit item."
+            remote:
+              label: "Upload an image"
+              header: "Cropped image"
+              help: 'Adjust the cropping box to cover the area of the image you want as the masthead background. Click "Save Changes" to save the copped area.'
         thumbnail:
           small: Small
           medium: Medium
@@ -391,7 +405,7 @@ en:
         categories_header: "Browse Categories"
         instructions: "Use the Save search button on a search results page to create a new browse category. Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page."
         no_saved_searches: "You can save search results while in curation mode to create browse categories, which will be displayed here."
-        not_searchable_html: "This exhibit is not currently searchable. To perform searches that can be saved as additional browse categories, an Administrator must temporarily turn on the Searchable option in the Exhibit Style section of the Administration > %{href} page."
+        not_searchable_html: "This exhibit is not currently searchable. To perform searches that can be saved as additional browse categories, an Administrator must temporarily turn on the Searchable option in the exhibit style section of the Administration > %{href} page."
       edit:
         header: "Edit Browse Category"
         title: "Curation - Browse"

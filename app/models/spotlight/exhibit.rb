@@ -10,6 +10,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   has_many :about_pages, extend: FriendlyId::FinderMethods
   has_many :feature_pages, extend: FriendlyId::FinderMethods
   has_one :home_page
+  has_one :masthead
 
   has_many :users, through: :roles, class_name: '::User'
   has_many :custom_fields, dependent: :delete_all
@@ -30,6 +31,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   accepts_nested_attributes_for :about_pages
   accepts_nested_attributes_for :feature_pages
   accepts_nested_attributes_for :home_page, update_only: true
+  accepts_nested_attributes_for :masthead, update_only: true
   accepts_nested_attributes_for :main_navigations
   accepts_nested_attributes_for :contacts
   accepts_nested_attributes_for :contact_emails, reject_if: proc {|attr| attr['email'].blank?}
