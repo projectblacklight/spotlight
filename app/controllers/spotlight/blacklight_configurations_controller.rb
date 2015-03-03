@@ -64,7 +64,7 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
   # This method finds those counts by doing regular facet queries
   def alternate_count
     @alt_count ||= begin
-      facet_query = @blacklight_configuration.blacklight_config.facet_fields.keys.map { |key| "#{key}:[* TO *]" }
+      facet_query = @blacklight_configuration.blacklight_config.facet_fields.reject { |k, v| v.pivot || v.query }.map { |key, fields| "#{fields.field}:[* TO *]" }
       solr_resp = solr_repository.search('facet.query' => facet_query, 'rows' =>0, 'facet' => true)
       @alt_count = solr_resp['facet_counts']['facet_queries'].each_with_object({}) do |(key, val), alt_count|
         alt_count[key.split(/:/).first] = val

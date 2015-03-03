@@ -88,6 +88,11 @@ en:
             url: "File"
       "spotlight/contact":
           avatar: "Photo"
+  blacklight:
+    search:
+      fields:
+        facet:
+          exhibit_tag: Exhibit Tags
   spotlight:
     application_name: "%{exhibit} - %{application_name}"
     html_title: "%{title} | %{application_name}"

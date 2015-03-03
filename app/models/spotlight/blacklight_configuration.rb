@@ -163,13 +163,16 @@ module Spotlight
     # Get the "upstream" blacklight configuration to use
     def default_blacklight_config
       @default_blacklight_config ||= begin
-        config = ::CatalogController.blacklight_config.deep_copy
-        config.add_facet_field Spotlight::SolrDocument.solr_field_for_tagger(exhibit), label: "Exhibit Tags", show: false
+        config = Spotlight::Engine.blacklight_config.deep_copy
+        add_exhibit_specific_fields(config)
         config
       end
     end
 
     protected
+    def add_exhibit_specific_fields config
+      config.add_facet_field Spotlight::SolrDocument.solr_field_for_tagger(exhibit), label: :'blacklight.search.fields.facet.exhibit_tag', show: false unless config.facet_fields.include? :exhibit_tag
+    end
     
     def set_index_field_defaults field
       if index_fields.blank?
