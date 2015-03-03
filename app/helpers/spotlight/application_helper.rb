@@ -2,6 +2,7 @@ module Spotlight
   module ApplicationHelper
     include CrudLinkHelpers
     include TitleHelper
+    include JcropHelper
 
     def application_name
       name = super

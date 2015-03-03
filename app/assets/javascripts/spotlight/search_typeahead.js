@@ -63,6 +63,23 @@ function addAutocompletetoSirTrevorForm() {
   });
 }
 
+function addAutocompletetoMastheadUpload(){
+  $('[data-masthead-typeahead]').spotlightSearchTypeAhead().on('click', function() {
+    $(this).select();
+  }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
+    var remoteUrlField = $($(this).data('remoteUrlField'));
+    var panel = $($(this).data('target-panel'));
+    swapInputForPanel($(this), panel, data);
+    $($(this).data('id-field')).val(data['global_id']);
+    remoteUrlField.val(data['full_images'][0]).trigger('change');
+    $(this).attr('type', 'text');
+    $('.thumbs-list li', panel).on('click.masthead', function(){
+      var index = $('.thumbs-list li').index($(this));
+      remoteUrlField.val(data['full_images'][index]).trigger('change');
+    });
+  });
+}
+
 function addAutocompletetoFeaturedImage() {
   $('[data-featured-item-typeahead]').spotlightSearchTypeAhead().on('click', function() {
     $(this).select();
@@ -108,4 +125,5 @@ function replaceName(element, i) {
 
 Spotlight.onLoad(function(){
   addAutocompletetoFeaturedImage();
+  addAutocompletetoMastheadUpload();
 });

@@ -1,6 +1,7 @@
 module Spotlight
   class Resources::Upload < Spotlight::Resource
     mount_uploader :url, Spotlight::ItemUploader
+    include Spotlight::ImageDerivatives
 
     def self.fields(exhibit)
       @fields ||= {}
@@ -40,7 +41,6 @@ module Spotlight
     
     def add_default_solr_fields solr_hash
       solr_hash[exhibit.blacklight_config.solr_document_model.unique_key.to_sym] = compound_id
-      solr_hash[Spotlight::Engine.config.full_image_field] = url.url
     end
 
     def add_image_dimensions solr_hash
@@ -69,8 +69,12 @@ module Spotlight
     end
 
     def add_file_versions solr_hash
-      Spotlight::ItemUploader.configured_versions.each do |config|
-        solr_hash[config[:field]] = url.send(config[:version]).url
+      spotlight_image_derivatives.each do |config|
+        if config[:version]
+          solr_hash[config[:field]] = url.send(config[:version]).url
+        else
+          solr_hash[config[:field]] = url.url
+        end
       end
     end
 

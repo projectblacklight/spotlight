@@ -1,4 +1,4 @@
-$masthead-height: 131px;
+$masthead-height: 120px;
 $masthead-image-blur: 1px;
 $black: #000000;
 $white: #FFFFFF;
@@ -28,7 +28,7 @@ $white: #FFFFFF;
   margin-bottom: 0;
   padding: 0 0 24px 0;
   position: static;
-  height: 120px; // will be overriden in style tag when image is present
+  height: $masthead-height;
   & > .container {
     // Maintains the site title and subtitle at slightly below
     // vertically-centered, even if height of masthead is changed.
