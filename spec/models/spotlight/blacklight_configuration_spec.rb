@@ -89,6 +89,11 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
       expect(subject.blacklight_config.index_fields['c'].list).to be_truthy
     end
 
+    it "should filter upstream fields that are always disabled" do
+      blacklight_config.add_index_field 'a', if: false
+      expect(subject.blacklight_config.index_fields).not_to have_key 'a'
+    end
+
     it "should filter blank values" do
       subject.index_fields['title'] = { something: "" }
       subject.valid?
@@ -118,6 +123,12 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
       expect(subject.blacklight_config.index_fields['a'].show).to be_truthy
       expect(subject.blacklight_config.index_fields['a'].list).to be_falsey
     end
+    
+    it "should filter show fields that are always disabled" do
+      blacklight_config.add_show_field 'a', if: false
+      expect(subject.blacklight_config.index_fields).not_to have_key 'a'
+    end
+
 
     context "custom fields" do
       it "should include any custom fields" do
