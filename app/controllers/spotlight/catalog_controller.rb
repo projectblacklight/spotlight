@@ -1,4 +1,4 @@
-class Spotlight::CatalogController < Spotlight::Engine.catalog_controller
+class Spotlight::CatalogController < ::CatalogController
   include Spotlight::Concerns::ApplicationController
   load_and_authorize_resource :exhibit, class: Spotlight::Exhibit, prepend: true
   include Spotlight::Catalog
