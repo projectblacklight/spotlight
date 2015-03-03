@@ -1,6 +1,6 @@
 module Spotlight
   class SolrDocumentSidecar < ActiveRecord::Base
-    belongs_to :exhibit
+    belongs_to :exhibit, class_name: 'Spotlight::Exhibit'
     belongs_to :document, polymorphic: true
     serialize :data, Hash
 
