@@ -2,6 +2,9 @@ module Spotlight
   class Resources::Upload < Spotlight::Resource
     mount_uploader :url, Spotlight::ItemUploader
     include Spotlight::ImageDerivatives
+    
+    # we want to do this before reindexing
+    after_create :update_document_sidecar
 
     def self.fields(exhibit)
       @fields ||= {}
@@ -22,12 +25,10 @@ module Spotlight
       add_default_solr_fields solr_hash
 
       add_image_dimensions solr_hash
-      
-      add_custom_fields solr_hash
-      
-      add_configured_fields solr_hash
-      
+
       add_file_versions solr_hash
+
+      add_sidecar_fields solr_hash
 
       solr_hash
     end
@@ -49,25 +50,6 @@ module Spotlight
       solr_hash[:spotlight_full_image_height_ssm] = dimensions.last
     end
 
-    def add_custom_fields solr_hash
-      exhibit.custom_fields.collect(&:field).each do |solr_field|
-        if data[solr_field].present?
-          solr_hash[solr_field] = data[solr_field]
-        end
-      end
-    end
-
-    def add_configured_fields solr_hash
-      configured_fields.each do |field|
-        solr_fields = Array(field.solr_field || field.field_name)
-        if data[field.field_name].present?
-          solr_fields.each do |solr_field|
-            solr_hash[solr_field] = data[field.field_name]
-          end
-        end
-      end
-    end
-
     def add_file_versions solr_hash
       spotlight_image_derivatives.each do |config|
         if config[:version]
@@ -78,8 +60,27 @@ module Spotlight
       end
     end
 
+    def add_sidecar_fields solr_hash
+      solr_hash.merge! sidecar.to_solr
+    end
+
     def compound_id
       "#{exhibit_id}-#{id}"
     end
+    
+    def update_document_sidecar
+      sidecar_updates = data.slice(*exhibit.custom_fields.map(&:field).map(&:to_s)).select { |k,v| v.present? }
+
+      sidecar_updates["configured_fields"] = data.slice(*configured_fields.map(&:field_name).map(&:to_s)).select { |k,v| v.present? }
+
+      sidecar.update(data: sidecar.data.merge(sidecar_updates))
+
+      sidecar.save
+    end
+
+    def sidecar
+      @sidecar ||= solr_document_model.new(id: compound_id).sidecar(exhibit)
+    end
+
   end
 end

@@ -42,7 +42,26 @@ module Spotlight
     end
 
     def data_to_solr
-      Hash[data.map { |k,v| [k,v] }]
+      data.except("configured_fields").merge(configured_fields_data_to_solr)
     end
+
+    def configured_fields_data_to_solr
+      solr_hash = {}
+      if data["configured_fields"]
+        configured_fields = Spotlight::Resources::Upload.fields(exhibit)
+
+        configured_fields.each do |field|
+          solr_fields = Array(field.solr_field || field.field_name)
+          if data["configured_fields"][field.field_name.to_s].present?
+            solr_fields.each do |solr_field|
+              solr_hash[solr_field] = data["configured_fields"][field.field_name.to_s]
+            end
+          end
+        end
+      end
+
+      solr_hash.select { |k,v| v.present? }
+    end
+
   end
 end

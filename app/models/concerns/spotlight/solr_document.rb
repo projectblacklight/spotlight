@@ -85,7 +85,6 @@ module Spotlight
     end
 
     def uploaded_resource?
-      self[Spotlight::Engine.config.full_image_field].present? &&
       self[Spotlight::SolrDocument.resource_type_field].present? &&
       self[Spotlight::SolrDocument.resource_type_field].include?("spotlight/resources/uploads")
     end
