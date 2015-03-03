@@ -90,7 +90,7 @@ Spotlight::Engine.routes.draw do
       end
     end
     resource :home_page, path: 'home', controller: "home_pages"
-    post '/pages/preview' => 'pages#preview', as: :preview_block
+    post '/pages/:id/preview' => 'pages#preview', as: :preview_block
 
     resources :lock, only: [:destroy]
 
