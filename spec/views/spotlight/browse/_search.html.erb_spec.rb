@@ -24,12 +24,6 @@ describe 'spotlight/browse/search', :type => :view do
 
   it "should display the item count" do
     render partial: 'spotlight/browse/search', locals: { search: search }
-    expect(response).to have_selector ".item-count", text: "#{search.count} items"
-  end
-
-  it "should display the short description" do
-    allow(search).to receive_messages(short_description: "Short description")
-    render partial: 'spotlight/browse/search', locals: { search: search }
-    expect(response).to have_selector "p", text: search.short_description
+    expect(response).to have_selector "small", text: /#{search.count} items/i
   end
 end

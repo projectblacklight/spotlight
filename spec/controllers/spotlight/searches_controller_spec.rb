@@ -94,14 +94,14 @@ describe Spotlight::SearchesController, :type => :controller do
 
     describe "PATCH update" do
       it "should show edit page" do
-        patch :update, id: search, exhibit_id: search.exhibit, search: {title: 'Hey man', short_description: 'short', long_description: 'long', featured_image: 'http://lorempixel.com/64/64/'}
+        patch :update, id: search, exhibit_id: search.exhibit, search: {title: 'Hey man', long_description: 'long', featured_image: 'http://lorempixel.com/64/64/'}
         expect(assigns[:search].title).to eq 'Hey man'
         expect(response).to redirect_to exhibit_searches_path(search.exhibit) 
       end
 
       it "should render edit if there's an error" do
         expect_any_instance_of(Spotlight::Search).to receive(:update).and_return(false)
-        patch :update, id: search, exhibit_id: search.exhibit, search: {title: 'Hey man', short_description: 'short', long_description: 'long', featured_image: 'http://lorempixel.com/64/64/'}
+        patch :update, id: search, exhibit_id: search.exhibit, search: {title: 'Hey man', long_description: 'long', featured_image: 'http://lorempixel.com/64/64/'}
         expect(response).to be_successful 
         expect(response).to render_template 'edit'
       end

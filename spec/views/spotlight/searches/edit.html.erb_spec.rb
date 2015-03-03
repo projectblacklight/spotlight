@@ -9,7 +9,7 @@ describe "spotlight/searches/edit.html.erb", :type => :view do
   end
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:search) { stub_model(Spotlight::Search, exhibit: exhibit,
-        id: 99, title: "Title1", short_description: "MyText", query_params: { f: { "some_field" => ["xyz"]}}) }
+        id: 99, title: "Title1", query_params: { f: { "some_field" => ["xyz"]}}) }
   before do
     allow(view).to receive(:search_action_path).and_return("/search")
     allow(view).to receive(:exhibit_search_path).and_return("/search")

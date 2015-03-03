@@ -1,19 +1,15 @@
 <%= cache [@exhibit, search, search.count] do %>
-<div class="media col-md-6">
-<%= link_to spotlight.exhibit_browse_path(@exhibit, search), class: 'pull-left' do %>
-  <%= image_tag(search.featured_image, width: 180) %>
-<% end if search.featured_image%>
-
-  <div class="media-body">
-  <h4 class="media-heading"><%= link_to search.title, spotlight.exhibit_browse_path(@exhibit, search) %>
-    <small class="item-count"><%= t :'.item_count', count: search.count %></small>
-  </h4>
-
-  <% if search.short_description %>
-  <p>
-    <%= search.short_description %>
-  </p>
-  <% end %>
+  <div class="col-sm-4 col-xs-12 category">
+    <%= link_to spotlight.exhibit_browse_path(@exhibit, search) do %>
+      <div class="image-overlay">
+        <%= image_tag(search.featured_image, class: 'img-responsive') %>
+        <div class="text-overlay">
+           <h2 class="browse-category-title">
+             <%= search.title%>
+             <small><%= pluralize(search.count, 'items') %></small>
+           </h2>
+         </div>
+      </div>
+    <% end %>
   </div>
-</div>
 <% end %>
