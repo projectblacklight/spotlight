@@ -1,3 +1,7 @@
+<%
+  # TODO: the "if @page.persisted?" business below could possibly be done w/ some clever polymorphic routing.
+  # Leaving as-is for now since technically you can't get to the new page form anyway.
+%>
 <%= form_for([spotlight, @page.exhibit, @page], role: 'form', html: {
               data: {
                 :'form-observer' => true,
@@ -6,7 +10,7 @@
                 :'autocomplete-url'=> spotlight.autocomplete_exhibit_catalog_index_path(@page.exhibit, format: "json"),
                 :'searches-endpoint' => spotlight.exhibit_searches_path(@page.exhibit, format: "json"),
                 :'available-search-views-endpoint' => spotlight.exhibit_available_search_views_path(@page.exhibit, format: "json"),
-                :'preview-url' => spotlight.exhibit_preview_block_url(@page.exhibit)
+                :'preview-url' => (spotlight.exhibit_preview_block_url(@page.exhibit, @page) if @page.persisted?)
               }
             }) do |f| %>
   <%= render @page.lock if @page.lock and not @page.lock.stale? and not @page.lock.current_session? %>
