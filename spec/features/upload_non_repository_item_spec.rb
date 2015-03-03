@@ -6,7 +6,7 @@ describe "Uploading a non-repository item", :type => :feature do
   let!(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
 
-  describe "upload" do
+  describe "forms" do
     it "should display the single item upload form" do
       visit spotlight.new_exhibit_resources_upload_path(exhibit)
       expect(page).to have_css("h1", text: /Curation/)
@@ -30,6 +30,42 @@ describe "Uploading a non-repository item", :type => :feature do
         expect(page).to have_css('#resources_csv_upload_url[type="file"]')
         expect(page).to have_css('.help-block a', text: 'Download template')
       end
+    end
+  end
+
+  describe "upload" do
+    it "should create a new non-repository item" do
+      visit spotlight.new_exhibit_resources_upload_path(exhibit)
+      attach_file("resources_upload_url", File.join(FIXTURES_PATH, "800x600.png"))
+      fill_in "Title", with: "800x600"
+
+      within "#new_resources_upload" do
+        click_button "Add item"
+      end
+      expect(page).to have_content "Object uploaded successfully."
+
+      expect(Spotlight::Resource.last.url.file.path).to end_with "800x600.png"
+    end
+
+    it "should be editable" do
+      visit spotlight.new_exhibit_resources_upload_path(exhibit)
+      attach_file("resources_upload_url", File.join(FIXTURES_PATH, "800x600.png"))
+      fill_in "Title", with: "800x600"
+
+      within "#new_resources_upload" do
+        click_button "Add item"
+      end
+
+      click_link "800x600"
+      click_link "Edit"
+      fill_in "Title", with: "This is a now an avatar"
+
+      attach_file("File", File.join(FIXTURES_PATH, "avatar.png"))
+
+      click_button "Save"
+
+      expect(page).to have_content "This is a now an avatar"
+      expect(Spotlight::Resource.last.url.file.path).to end_with "avatar.png"
     end
   end
 end

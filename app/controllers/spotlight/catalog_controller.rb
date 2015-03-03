@@ -148,7 +148,7 @@ class Spotlight::CatalogController < ::CatalogController
   end
 
   def solr_document_params
-    params.require(:solr_document).permit(:exhibit_tag_list, sidecar: { data: [editable_solr_document_params] })
+    params.require(:solr_document).permit(:exhibit_tag_list, uploaded_resource: [:url], sidecar: [:public, data: [editable_solr_document_params] ])
   end
 
   def editable_solr_document_params
@@ -157,7 +157,7 @@ class Spotlight::CatalogController < ::CatalogController
 
   def uploaded_resource_params
     if @document.uploaded_resource?
-      [configured_fields: Spotlight::Resources::Upload.fields(current_exhibit).collect(&:field_name)]
+      [{configured_fields: Spotlight::Resources::Upload.fields(current_exhibit).collect(&:field_name)}]
     else
       []
     end

@@ -8,19 +8,17 @@ module Spotlight
 
     def self.fields(exhibit)
       @fields ||= {}
-      @fields[exhibit] ||= self.new(exhibit: exhibit).configured_fields
+      @fields[exhibit] ||= [Spotlight::Engine.config.upload_title_field || OpenStruct.new(field_name: exhibit.blacklight_config.index.title_field)] + Spotlight::Engine.config.upload_fields
     end
 
     def configured_fields
-      @configured_fields ||= [configured_title_field] + Spotlight::Engine.config.upload_fields
+      self.class.fields(exhibit)
     end
 
     def to_solr
       store_url! # so that #url doesn't return the tmp directory
 
       solr_hash = super
-      
-      solr_hash[:"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_resource_url#{Spotlight::Engine.config.solr_fields.string_suffix}"] = url.url
       
       add_default_solr_fields solr_hash
 
@@ -35,10 +33,6 @@ module Spotlight
 
     private
 
-    # this is in the upload class because it has exhibit context
-    def configured_title_field
-      Spotlight::Engine.config.upload_title_field || OpenStruct.new(field_name: exhibit.blacklight_config.index.title_field)
-    end
     
     def add_default_solr_fields solr_hash
       solr_hash[exhibit.blacklight_config.solr_document_model.unique_key.to_sym] = compound_id

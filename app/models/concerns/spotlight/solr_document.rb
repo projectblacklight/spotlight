@@ -42,6 +42,11 @@ module Spotlight
         # Note: this causes a save
         current_exhibit.tag(self, with: tags, on: :tags)
       end
+
+      if uploaded_resource? and resource_attributes = attributes.delete("uploaded_resource")
+        uploaded_resource.url = resource_attributes["url"] if resource_attributes["url"]
+        uploaded_resource.save
+      end
     end
 
     def reindex

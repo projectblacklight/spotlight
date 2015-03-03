@@ -19,7 +19,7 @@ describe Spotlight::Resources::OpenGraph, :type => :model do
     let(:solr_doc) { subject.to_solr }
 
     it "should include this record id" do
-      expect(solr_doc).to include spotlight_resource_id_ssim: "test_resources:15"
+      expect(solr_doc).to include spotlight_resource_id_ssim: subject.to_global_id.to_s
     end
 
     it "should include opengraph properties" do
