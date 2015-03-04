@@ -36,9 +36,7 @@ module SirTrevorRails::Blocks
     end
 
     def browse_categories
-      @browse_categories ||= parent.exhibit.searches.select do |search|
-        category_slugs.include?(search.slug)
-      end
+      @browse_categories ||= parent.exhibit.searches.published.where(slug: category_slugs)
     end
 
     def item_counts_for_category(category)
