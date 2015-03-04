@@ -299,7 +299,7 @@
 
   }
   @media (max-width: $screen-sm-max) {
-    .items-col {margin-bottom: 20px;}
+    .items-col {margin-bottom: $line-height-computed;}
   }
 }
 
