@@ -1,0 +1,61 @@
+<%= bootstrap_form_for [@search.exhibit, @search], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-sm-7', data: {:'autocomplete-url'=> spotlight.autocomplete_exhibit_search_path(@search.exhibit, @search, format: "json")}, html: {id: 'edit-search'} do |f| %>
+  <% if @search.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@search.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @search.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#search-description" aria-controls="search-description" role="tab" data-toggle="tab"><%= t(:'.search_description') %></a>
+      </li>
+      
+      <li role="presentation">
+        <a href="#search-masthead" aria-controls="search-masthead" role="tab" data-toggle="tab"><%= t(:'.search_masthead') %></a>
+      </li>
+
+      <li role="presentation">
+        <a href="#search-thumbnail" aria-controls="search-thumbnail" role="tab" data-toggle="tab"><%= t(:'.search_thumbnail') %></a>
+      </li>
+    </ul>
+
+    
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="search-description">
+        <%= f.text_field :title, control_col: "col-sm-5" %>
+        <%= f.text_area :long_description, rows: 5 %>
+        <%= f.static_control label: t(:".query_params") do %>
+          <div class="well well-sm">
+            <%= render_constraints(@search.query_params) %>
+          </div>
+        <% end unless @search.query_params.blank? %>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="search-masthead">  
+        <%= f.fields_for :masthead, (@search.masthead || @search.build_masthead) do |m| %>
+          <p class="instructions"><%= t(:'.masthead.help') %></p>
+          <%= render '/spotlight/featured_images/form', f: m, jcrop_options: default_masthead_jcrop_options %>
+        <% end %>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="search-thumbnail">  
+        <%= f.fields_for :thumbnail, (@search.thumbnail || @search.build_thumbnail) do |m| %>
+          <p class="instructions"><%= t(:'.thumbnail.help') %></p>
+          <%= render '/spotlight/featured_images/form', f: m, jcrop_options: default_thumbnail_jcrop_options %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <div class="primary-actions">
+      <%= cancel_link @search,exhibit_searches_path(@exhibit), class: 'btn btn-link' %>
+      <%= f.submit nil, class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

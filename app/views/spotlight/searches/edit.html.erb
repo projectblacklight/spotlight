@@ -1,23 +1,5 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9">
   <%= curation_page_title %>
-  <%= bootstrap_form_for [@search.exhibit, @search], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-sm-7', data: {:'autocomplete-url'=> spotlight.autocomplete_exhibit_search_path(@search.exhibit, @search, format: "json")}, html: {id: 'edit-search'} do |f| %>
-    <div class="row">
-      <%= f.text_field :title, control_col: "col-sm-5" %>
-      <%= f.text_field :featured_item_id, control_col: "col-sm-5", value: (presenter(@search.featured_item).document_heading if @search.featured_item), data: {:"featured-item-typeahead" => true, :id_field => "[data-featured-item-id]" }, id: "featured-item-title" %>
-      <%= f.hidden_field :featured_item_id, data: {:"featured-item-id" => true} %>
-      <%= f.text_area :long_description, rows: 5 %>
-      <%= f.static_control label: t(:".query_params") do %>
-        <div class="well well-sm">
-          <%= render_constraints(@search.query_params) %>
-        </div>
-      <% end unless @search.query_params.blank? %>
-      <div class="form-actions">
-        <div class="primary-actions">
-          <%= cancel_link @search,exhibit_searches_path(@exhibit), class: 'btn btn-link' %>
-          <%= f.submit nil, class: 'btn btn-primary' %>
-        </div>
-      </div>
-    </div>
-  <% end %>
+  <%= render 'form' %>
 </div>

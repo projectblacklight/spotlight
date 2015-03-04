@@ -11,6 +11,11 @@
       <li role="presentation">
         <a href="#site-masthead" area-controls="site-masthead" role="tab" data-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
       </li>
+      
+      <li role="presentation">
+        <a href="#site-thumbnail" area-controls="site-thumbnail" role="tab" data-toggle="tab"><%= t(:'.site_thumbnail.heading') %></a>
+      </li>
+
       <li role="presentation">
         <a href="#main-menu" area-controls="main-menu" role="tab" data-toggle="tab"><%= t(:'.main_navigation.menu') %></a>
       </li>
@@ -26,40 +31,18 @@
       </div>
       <div role="tabpanel" class="tab-pane" id="site-masthead">
         <p class="instructions"><%= t(:'.site_masthead.help') %></p>
-        <%= f.fields_for(current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
-          <%= field_set_tag do %>
-            <%= m.check_box(:display, checked: current_exhibit.masthead.try(:display), label: t(:'.site_masthead.display.label')) %>
-          <% end %>
-          <%= field_set_tag(t(:'.site_masthead.source.header')) do %>
-            <div>
-              <%= m.radio_button(:source, :exhibit, label: t(:'.site_masthead.source.exhibit.label')) %>
-              <div>
-                <%= m.hidden_field(:document_global_id) %>
-                <%= m.hidden_field(:remote_image_url, data: default_masthead_jcrop_options) %>
-                <%= text_field_tag(:document_title, presenter(m.object.document || current_exhibit.blacklight_configuration.blacklight_config.solr_document_model.new).document_show_html_title, class: "form-control", data: {input_select_target: '#appearance_masthead_source_exhibit', masthead_typeahead: true, target_panel: '#masthead-target-panel', :'id-field' => '#appearance_masthead_document_global_id', remote_url_field: '#appearance_masthead_remote_image_url' }) %>
-                <div id="masthead-target-panel" style="display:none">
-                  <div class="panel-heading">
-                    <div data-item-title="true"></div>
-                    <div data-panel-image-pagination="true"></div>
-                  </div>
-                </div>
-                <p class="help-block"><%= t(:'.site_masthead.source.exhibit.help') %></p>
-              </div>
-            </div>
-            <div>
-              <%= m.radio_button(:source, :remote, label: t(:'.site_masthead.source.remote.label')) %>
-              <%= m.file_field_without_bootstrap(:image, data: default_masthead_jcrop_options.merge(input_select_target: '#appearance_masthead_source_remote')) %>
-            </div>
-          <% end %>
-          <%= field_set_tag(t(:'.site_masthead.source.remote.header')) do %>
-            <p class="instructions"><%= t(:'.site_masthead.source.remote.help') %></p>
-            <div class="form-group  <%= "missing-croppable" unless current_exhibit.masthead.try(:image).present? %>">
-              <%= hidden_field_tag :masthead_image_crop, ([current_exhibit.masthead.image_crop_x.to_i, current_exhibit.masthead.image_crop_y.to_i, current_exhibit.masthead.image_crop_x.to_i + current_exhibit.masthead.image_crop_w.to_i, current_exhibit.masthead.image_crop_y.to_i + current_exhibit.masthead.image_crop_h.to_i].to_json if current_exhibit.masthead.try(:image_crop_x)) %>
-              <%= m.cropbox :image %>
-            </div>
-          <% end %>
+        <%= f.fields_for(:masthead, current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
+          <%= render '/spotlight/featured_images/form', f: m, jcrop_options: default_masthead_jcrop_options %>
         <% end %>
       </div>
+      
+      <div role="tabpanel" class="tab-pane" id="site-thumbnail">
+        <p class="instructions"><%= t(:'.site_thumbnail.help') %></p>
+        <%= f.fields_for(:thumbnail, current_exhibit.thumbnail || current_exhibit.build_thumbnail) do |m| %>
+          <%= render '/spotlight/featured_images/form', f: m, jcrop_options: default_thumbnail_jcrop_options %>
+        <% end %>
+      </div>
+
       <div role="tabpanel" class="tab-pane" id="main-menu">
         <%= field_set_tag do %>
           <p class="instructions"><%= t(:'.main_navigation.help') %></p>

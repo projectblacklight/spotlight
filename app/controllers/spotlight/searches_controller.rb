@@ -20,7 +20,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { render json: @searches, root: false }
+      format.json { render json: @searches.as_json(methods: [:count, :thumbnail_image_url]), root: false }
     end
   end
 
@@ -39,7 +39,7 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   end
 
   def update
-    if @search.update params.require(:search).permit(:title, :long_description, :featured_item_id)
+    if @search.update search_params
       redirect_to exhibit_searches_path(@search.exhibit), notice: t(:'helpers.submit.search.updated', model: @search.class.model_name.human.downcase)
     else
       render action: 'edit'
@@ -81,6 +81,14 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
 
   def batch_search_params
     params.require(:exhibit).permit("searches_attributes" => [:id, :on_landing_page, :weight])
+  end
+
+  def search_params
+    params.require(:search).permit(:title, :long_description, masthead_attributes: featured_image_attributes, thumbnail_attributes: featured_image_attributes)
+  end
+  
+  def featured_image_attributes
+    [:display, :source, :image, :remote_image_url, :document_global_id, :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h]
   end
 
   def only_curators!

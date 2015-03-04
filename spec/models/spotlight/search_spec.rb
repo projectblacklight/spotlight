@@ -3,31 +3,20 @@ require 'spec_helper'
 describe Spotlight::Search, :type => :model do
 
   before do
+    subject.title = "xyz"
     subject.query_params = {"f"=>{"genre_sim"=>["map"]}}
     subject.exhibit = FactoryGirl.create(:exhibit)
   end
 
+  let(:blacklight_config) { ::CatalogController.blacklight_config }
+
   it { is_expected.to be_a Spotlight::Catalog::AccessControlsEnforcement }
 
   it "should have a default feature image" do
-    allow(subject).to receive_messages(images: [['dq287tq6352', 'title', 'image_url']])
-    allow(subject).to receive(:featured_item_id).and_return("dq287tq6352")
-    subject.save
-    expect(subject.featured_image).to eq "https://stacks.stanford.edu/image/dq287tq6352/dq287tq6352_05_0001_thumb"
-  end
-
-  it "should handle blank and nil featured_image_ids" do
-    allow(subject).to receive(:featured_item_id).and_return("")
-    subject.save
-    expect(subject.featured_item).to be_nil
-    allow(subject).to receive(:featured_item_id).and_return(nil)
-    subject.save
-    expect(subject.featured_item).to be_nil
-  end
-
-  it "should #default_featured_iamge should not thrown an error when no images are present" do
-    allow(subject).to receive_messages(images: nil)
-    expect(subject.default_featured_item_id).to be_nil
+    allow(subject).to receive_messages(documents: [SolrDocument.new(id: 'dq287tq6352', blacklight_config.index.title_field => 'title', Spotlight::Engine.config.full_image_field => "https://stacks.stanford.edu/image/dq287tq6352/dq287tq6352_05_0001_thumb")])
+    subject.save!
+    expect(subject.thumbnail).not_to be_nil
+    expect(subject.thumbnail.image.path).to end_with "dq287tq6352_05_0001_thumb.jpeg"
   end
 
   it "should have items" do

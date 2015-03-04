@@ -88,6 +88,11 @@ en:
             url: "File"
       "spotlight/contact":
           avatar: "Photo"
+      "spotlight/page":
+        display_sidebar?: "Show sidebar"
+        display_title: "Show title"
+      "spotlight/masthead":
+        display: "Show background image in masthead"
   blacklight:
     search:
       fields:
@@ -109,8 +114,6 @@ en:
       page_title: "Page title"
       settings:
         header: "Settings"
-      show_sidebar: "Show sidebar"
-      display_title: "Show title"
     appearances:
       edit:
         header: Appearance
@@ -128,17 +131,9 @@ en:
         site_masthead:
           heading: Site masthead
           help: "You can select and crop an image to use as a background in your exhibit site's masthead. To use an image as a masthead background, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below."
-          display:
-            label: "Show background image in masthead"
-          source:
-            header: "Image source"
-            exhibit:
-              label: "From this exhibit"
-              help: "To find an image to use as a background, start typing the title of an exhibit item."
-            remote:
-              label: "Upload an image"
-              header: "Cropped image"
-              help: 'Adjust the cropping box to cover the area of the image you want as the masthead background. Click "Save Changes" to save the copped area.'
+        site_thumbnail:
+          heading: Site thumbnail
+          help: "You can select and crop an image to visually represent this exhibit."
         thumbnail:
           small: Small
           medium: Medium
@@ -329,6 +324,9 @@ en:
         title_placeholder: "Title"
         page_content: "Content"
         page_options: "Options"
+        page_thumbnail: "Thumbnail"
+        thumbnail:
+          help: "You can select and crop an image to visually represent this page. It will be used as the thumbnail image if you include this page using the 'Highlight Featured Pages' widget."
     contacts:
       edit:
         header: "Edit Contact"
@@ -362,6 +360,18 @@ en:
       nav_link: Curated Features
       page_options:
         published: "Publish"
+    featured_images:
+      form:
+        source:
+          header: "Image source"
+          exhibit:
+            label: "From this exhibit"
+            help: "To find an image, start typing the title of an exhibit item."
+          remote:
+            label: "Upload an image"
+            header: "Cropped image"
+            help: 'Adjust the cropping box to cover the area of the image you want to use as the thumbnail image. Click "Save Changes" to save the cropped area.'
+
     resources:
       new:
         header: "Add Resource"
@@ -421,6 +431,14 @@ en:
           one: "%{count} item"
           other: "%{count} items"
         missing_description_html: "%{link} to add a description."
+      form:
+        search_description: "Description"
+        search_masthead: "Masthead"
+        search_thumbnail: "Thumbnail"
+        masthead:
+          help: "You can select and crop an image to use as a background in your exhibit site's masthead. To use an image as a masthead background, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below."
+        thumbnail:
+          help: "You can select and crop an image to visually represent this search."
     browse:
       nav_link: "Browse"
       index:

@@ -5,7 +5,7 @@
     <div class="panel-heading search">
       <%= f.check_box :on_landing_page, label: '' %>
       
-      <div class="pic thumbnail"><%= image_tag(search.featured_image) if search.featured_image %></div>
+      <div class="pic thumbnail"><%= image_tag(search.thumbnail.image.cropped) if search.thumbnail %></div>
       <div class="main">
         <div class="title panel-title"><%= search.title %></div>
         <div class="count"><%= t :'.item_count', count: search.count %></div>

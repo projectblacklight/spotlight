@@ -105,7 +105,7 @@ module Spotlight
         card.url exhibit_root_url(current_exhibit)
         card.title current_exhibit.title
         card.description current_exhibit.subtitle
-        card.image carrierwave_url(current_exhibit.featured_image) if current_exhibit.featured_image
+        card.image carrierwave_url(current_exhibit.thumbnail.image.cropped) if current_exhibit.thumbnail
       end
     end
 

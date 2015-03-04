@@ -1,7 +1,7 @@
 <%= cache [current_exhibit,cache_key_for_spotlight_exhibits] do %>
 <div id="exhibit-masthead" class="jumbotron <%= 'with-image' if current_exhibit.masthead.try(:display?) %>">
   <% if current_exhibit.masthead.try(:display?) %>
-    <span class='background-container' style="background-image: url('<%= current_exhibit.masthead.image.cropped_masthead %>')"></span>
+    <span class='background-container' style="background-image: url('<%= current_exhibit.masthead.image.cropped %>')"></span>
     <span class='background-container-gradient'></span>
   <% end %>
   <div class="container">

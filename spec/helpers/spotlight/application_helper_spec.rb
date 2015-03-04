@@ -84,7 +84,8 @@ describe Spotlight::ApplicationHelper, :type => :helper do
 
     it "should generate a twitter card for the exhibit" do
       allow(helper).to receive(:exhibit_root_url).and_return("some/url")
-      allow(current_exhibit).to receive(:featured_image).and_return(double(url: "http://some.host/image"))
+      allow(current_exhibit).to receive(:thumbnail).and_return(double)
+      allow(current_exhibit).to receive_message_chain(:thumbnail, :image, :cropped, url: "/image")
 
       helper.add_exhibit_twitter_card_content
 
@@ -93,7 +94,7 @@ describe Spotlight::ApplicationHelper, :type => :helper do
       expect(card).to have_css "meta[name='twitter:url'][value='some/url']", visible: false
       expect(card).to have_css "meta[name='twitter:title'][value='#{current_exhibit.title}']", visible: false
       expect(card).to have_css "meta[name='twitter:description'][value='#{current_exhibit.subtitle}']", visible: false
-      expect(card).to have_css "meta[name='twitter:image'][value='http://some.host/image']", visible: false
+      expect(card).to have_css "meta[name='twitter:image'][value='http://test.host/image']", visible: false
     end
   end
   

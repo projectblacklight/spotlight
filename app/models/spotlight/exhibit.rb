@@ -10,7 +10,8 @@ class Spotlight::Exhibit < ActiveRecord::Base
   has_many :about_pages, extend: FriendlyId::FinderMethods
   has_many :feature_pages, extend: FriendlyId::FinderMethods
   has_one :home_page
-  has_one :masthead
+  belongs_to :masthead, dependent: :destroy
+  belongs_to :thumbnail, class_name: "Spotlight::FeaturedImage", dependent: :destroy
 
   has_many :users, through: :roles, class_name: '::User'
   has_many :custom_fields, dependent: :delete_all
@@ -21,7 +22,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   has_many :roles, dependent: :delete_all
   has_many :attachments, dependent: :destroy
 
-  has_one :blacklight_configuration, class_name: Spotlight::BlacklightConfiguration, dependent: :delete
+  has_one :blacklight_configuration, class_name: "Spotlight::BlacklightConfiguration", dependent: :delete
   has_many :resources
 
   accepts_nested_attributes_for :solr_document_sidecars
@@ -32,6 +33,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   accepts_nested_attributes_for :feature_pages
   accepts_nested_attributes_for :home_page, update_only: true
   accepts_nested_attributes_for :masthead, update_only: true
+  accepts_nested_attributes_for :thumbnail, update_only: true
   accepts_nested_attributes_for :main_navigations
   accepts_nested_attributes_for :contacts
   accepts_nested_attributes_for :contact_emails, reject_if: proc {|attr| attr['email'].blank?}
@@ -48,8 +50,6 @@ class Spotlight::Exhibit < ActiveRecord::Base
   after_create :initialize_browse
   after_create :initialize_main_navigation
   before_save :sanitize_description
-
-  mount_uploader :featured_image, Spotlight::FeaturedImageUploader
 
   after_destroy do
     # Touch the default exhibit to ensure caching knows that
