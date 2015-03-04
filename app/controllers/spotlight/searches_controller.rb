@@ -60,6 +60,10 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
     redirect_to :back, notice: notice
   end
 
+  def show
+    redirect_to exhibit_browse_url(@search.exhibit, @search)
+  end
+
   protected
 
   def autocomplete_params
