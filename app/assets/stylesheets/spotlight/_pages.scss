@@ -12,11 +12,11 @@
 }
 
 .primary-actions {
-  @extend .pull-right; 
+  @extend .pull-right;
 }
 
 #nested-pages {
-  margin-bottom: 1em;  
+  margin-bottom: 1em;
 }
 
 .st-title {
@@ -156,10 +156,10 @@
 }
 
 .st-block-ui-btn, .st-block-control-ui-btn {
-  
+
   color: $panel-info-text;
   border-color: $panel-info-heading-bg;
-  
+
   &:hover {
     color: $panel-info-text;
     border-color: $panel-info-heading-bg;
@@ -241,6 +241,7 @@
 }
 
 .item-grid-block {
+  h3 {margin-top: 0;}
   .items-col {
     display: flex;
     flex-flow: row wrap;
@@ -261,6 +262,7 @@
 
         a {
           & > img {
+            border: 1px solid $gray-light;
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -295,6 +297,9 @@
       }
     }
 
+  }
+  @media (max-width: $screen-sm-max) {
+    .items-col {margin-bottom: 20px;}
   }
 }
 
