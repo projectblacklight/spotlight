@@ -70,12 +70,22 @@ SirTrevor.Blocks.FeaturedBrowseCategories =  (function(){
     var output = '';
     output += '<div class="col-sm-7 form-group form-inline panel-group dd nestable-featured-browse" data-behavior="nestable" data-max-depth="1">';
       output += '<ol class="dd-list">';
-      $.each(block.sortedSearches(searches), function(i, search){
+      $.each(block.sortedAndPublishedSearches(searches), function(i, search){
         output += block.searchTemplate(i, search);
       });
       output += '</ol>';
     output += '</div>';
     return output;
+  },
+
+  sortedAndPublishedSearches: function(searches){
+    var sortedAndPublishedSearches = [];
+    $.each(this.sortedSearches(searches), function(){
+      if($(this)[0].on_landing_page){
+        sortedAndPublishedSearches.push($(this)[0]);
+      }
+    });
+    return sortedAndPublishedSearches;
   },
 
   sortedSearches: function(searches){
