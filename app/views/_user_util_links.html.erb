@@ -11,23 +11,36 @@
       <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=current_user%> <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><%= link_to "Change Password", main_app.edit_user_registration_path %></li>
           <% if current_exhibit and can? :curate, current_exhibit %>
-            <li><%= link_to t('spotlight.dashboards.show.header'), spotlight.exhibit_dashboard_path(current_exhibit) %></li>
+            <li>
+              <%= link_to t('spotlight.dashboards.show.header'), spotlight.exhibit_dashboard_path(current_exhibit) %>
+            </li>
+            <li class="divider"></li>
           <% end %>
           <% if can? :create, Spotlight::Exhibit %>
-          <li class="divider"></li>
-          <li><%= link_to t(:'helpers.action.spotlight/exhibit.create'), spotlight.new_exhibit_path %></li>
+            <li>
+              <%= link_to t(:'helpers.action.spotlight/exhibit.create'), spotlight.new_exhibit_path %>
+            </li>
+            <li class="divider"></li>
           <% end %>
-          <li class="divider"></li>
-          <li><%= link_to t('spotlight.header_links.logout'), main_app.destroy_user_session_path %></li>
+
+          <li>
+            <%= link_to "Change Password", main_app.edit_user_registration_path %>
+          </li>
+          <li>
+            <%= link_to t('spotlight.header_links.logout'), main_app.destroy_user_session_path %>
+          </li>
         </ul>
       </li>
     <% else %>
-      <li><%= link_to t('spotlight.header_links.login'), main_app.new_user_session_path %></li>
+      <li>
+        <%= link_to t('spotlight.header_links.login'), main_app.new_user_session_path %>
+      </li>
     <% end %>
     <% if current_exhibit and show_contact_form? %>
-    <li><%= link_to t('spotlight.header_links.contact'), spotlight.new_exhibit_contact_form_path(current_exhibit), data: {behavior: 'contact-link', target: 'report-problem-form' } %></li>
+      <li>
+        <%= link_to t('spotlight.header_links.contact'), spotlight.new_exhibit_contact_form_path(current_exhibit), data: {behavior: 'contact-link', target: 'report-problem-form' } %>
+      </li>
     <% end %>
   </ul>
 </div>
