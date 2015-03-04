@@ -12,8 +12,16 @@ module Spotlight::TestFeaturesHelpers
   end
 
   def add_widget type = nil
-    # click to add widget
-    find('[data-icon="add"]').click
+    # Lame hack to get the sir-trevor Add widget link to work.
+    # Not sure if it's the font-icon delayed loading, or something weird w/ the
+    # test under javascript where the click handler hasn't been applied when the click happens,
+    # but clicking on it an additional time seems to do the trick. 5 times is totally arbitrary,
+    # it seems to work after the first attempt.
+    5.times do
+      break if all("a[data-type]").present?
+      find('[data-icon="add"]').click
+      sleep(0.1)
+    end
 
     if type
       # click the item + image widget
