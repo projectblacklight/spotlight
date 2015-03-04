@@ -59,3 +59,7 @@ h1,h2,h3,h4,h5,h6 {
 label.radio {
   font-weight: normal;
 }
+
+#main-container .nav {
+  margin-bottom: $line-height-computed;
+}
