@@ -21,7 +21,7 @@ class Spotlight::Exhibit < ActiveRecord::Base
   has_many :roles, dependent: :delete_all
   has_many :attachments, dependent: :destroy
 
-  has_one :blacklight_configuration, class_name: Spotlight::BlacklightConfiguration, dependent: :delete
+  has_one :blacklight_configuration, class_name: "Spotlight::BlacklightConfiguration", dependent: :delete
   has_many :resources
 
   accepts_nested_attributes_for :solr_document_sidecars

@@ -77,6 +77,5 @@ module Spotlight
         lock.current_session!
       end
     end
-
   end
 end

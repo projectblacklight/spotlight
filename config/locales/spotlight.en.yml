@@ -88,6 +88,9 @@ en:
             url: "File"
       "spotlight/contact":
           avatar: "Photo"
+      "spotlight/page":
+        display_sidebar?: "Show sidebar"
+        display_title: "Show title"
   blacklight:
     search:
       fields:
@@ -109,8 +112,6 @@ en:
       page_title: "Page title"
       settings:
         header: "Settings"
-      show_sidebar: "Show sidebar"
-      display_title: "Show title"
     appearances:
       edit:
         header: Appearance
@@ -138,7 +139,7 @@ en:
             remote:
               label: "Upload an image"
               header: "Cropped image"
-              help: 'Adjust the cropping box to cover the area of the image you want as the masthead background. Click "Save Changes" to save the copped area.'
+              help: 'Adjust the cropping box to cover the area of the image you want as the masthead background. Click "Save Changes" to save the cropped area.'
         thumbnail:
           small: Small
           medium: Medium
@@ -329,6 +330,9 @@ en:
         title_placeholder: "Title"
         page_content: "Content"
         page_options: "Options"
+        page_thumbnail: "Thumbnail"
+        thumbnail:
+          help: "You can select and crop an image to visually represent this page. It will be used as the thumbnail image if you include this page using the 'Highlight Featured Pages' widget."
     contacts:
       edit:
         header: "Edit Contact"
@@ -362,6 +366,18 @@ en:
       nav_link: Curated Features
       page_options:
         published: "Publish"
+    featured_images:
+      form:
+        source:
+          header: "Image source"
+          exhibit:
+            label: "From this exhibit"
+            help: "To find an image, start typing the title of an exhibit item."
+          remote:
+            label: "Upload an image"
+            header: "Cropped image"
+            help: 'Adjust the cropping box to cover the area of the image you want to use as the thumbnai image. Click "Save Changes" to save the cropped area.'
+
     resources:
       new:
         header: "Add Resource"
