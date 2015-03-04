@@ -1,11 +1,28 @@
-<%= bootstrap_form_for document, url: spotlight.exhibit_catalog_path(current_exhibit, document), html: {:'data-form-observer' => true} do |f| %>
+<%= bootstrap_form_for document, url: spotlight.exhibit_catalog_path(current_exhibit, document), html: {:'data-form-observer' => true, multipart: true} do |f| %>
 <div class="edit-fields">
-  <%= f.fields_for :sidecar do |c| %>
+  
+  <%= f.fields_for :sidecar, document.sidecar(current_exhibit) do |c| %>
+    <%= c.check_box :public %>
+  <% end %>
+
+  <%= f.fields_for :uploaded_resource do |r| %>
+    <%= r.url_field :url, type: "file", help: t('.url-field.help', extensions: Spotlight::Engine.config.allowed_upload_extensions.join(' ')), label: "File" %>
+  <% end if document.uploaded_resource? %>
+
+  <%= f.fields_for :sidecar, document.sidecar(current_exhibit) do |c| %>
     <%= c.fields_for :data do |d| %>
+      <% if document.uploaded_resource? %>
+        <%= d.fields_for :configured_fields do |e| %>
+          <% Spotlight::Resources::Upload.fields(current_exhibit).each do |config| %>
+            <%= e.send((config.form_field_type || :text_field), config.field_name, value: (document.sidecar(current_exhibit).data["configured_fields"] || {})[config.field_name.to_s], label: uploaded_field_label(config)) %>
+          <% end %>
+        <% end %>
+      <% end %>
+
       <% current_exhibit.custom_fields.each do |field| %>
         <div class="form-group">
           <%= d.label field.field, field.label %>
-          <%= d.text_field_without_bootstrap field.field, value: document[field.field], class: 'form-control' %>
+          <%= d.text_field_without_bootstrap field.field, value: document.sidecar(current_exhibit).data[field.field.to_s], class: 'form-control' %>
           <% unless field.configured_to_display? %>
             <p class="bg-warning help-block">
               <%= t(:'.blank_field_warning_html',
@@ -13,11 +30,6 @@
             </p>
           <% end %>
         </div>
-      <% end %>
-      <% if document.uploaded_resource? %>
-        <% Spotlight::Resources::Upload.fields(current_exhibit).each do |config| %>
-          <%= d.send((config.form_field_type || :text_field), config.field_name, value: document.first(config.solr_field), label: uploaded_field_label(config)) %>
-        <% end %>
       <% end %>
     <% end %>
   <% end %>

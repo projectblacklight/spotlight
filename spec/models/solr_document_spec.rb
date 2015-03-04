@@ -133,7 +133,6 @@ describe SolrDocument, :type => :model do
   describe 'uploaded resources' do
     let(:uploaded_resource) {
       SolrDocument.new(
-        Spotlight::Engine.config.full_image_field => "ImageData",
         spotlight_resource_type_ssim: "spotlight/resources/uploads"
       )
     }

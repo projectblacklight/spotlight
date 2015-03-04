@@ -36,12 +36,7 @@ describe Spotlight::Resource, :type => :model do
       allow(subject).to receive_messages(type: "Spotlight::Resource::Something", id: 15)
     end
     it "should include a reference to the resource" do
-      expect(subject.to_solr).to include spotlight_resource_id_ssim: "spotlight/resource/somethings:15"
-    end
-
-    it "should include a reference to the url" do
-      allow(subject).to receive(:url).and_return("info:something")
-      expect(subject.to_solr).to include spotlight_resource_url_ssim: "info:something"
+      expect(subject.to_solr).to include spotlight_resource_id_ssim: subject.to_global_id.to_s
     end
 
     it "should include exhibit-specific data" do

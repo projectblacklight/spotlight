@@ -30,12 +30,15 @@ module Spotlight
 
     def to_solr
       exhibit.solr_data.merge({
-        :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_resource_id#{Spotlight::Engine.config.solr_fields.string_suffix}" => "#{(type.tableize if type) || self.class.to_s.tableize }:#{id}",
-        :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_resource_url#{Spotlight::Engine.config.solr_fields.string_suffix}" => url,
+        Spotlight::Resource.resource_global_id_field => self.to_global_id.to_s,
         Spotlight::SolrDocument.resource_type_field => self.class.to_s.tableize
       })
     end
     
+    def self.resource_global_id_field
+      :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_resource_id#{Spotlight::Engine.config.solr_fields.string_suffix}"
+    end
+
     def reindex_with_lock
       with_lock do
         yield

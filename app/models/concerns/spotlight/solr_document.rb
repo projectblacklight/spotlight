@@ -42,6 +42,11 @@ module Spotlight
         # Note: this causes a save
         current_exhibit.tag(self, with: tags, on: :tags)
       end
+
+      if uploaded_resource? and resource_attributes = attributes.delete("uploaded_resource")
+        uploaded_resource.url = resource_attributes["url"] if resource_attributes["url"]
+        uploaded_resource.save
+      end
     end
 
     def reindex
@@ -85,7 +90,6 @@ module Spotlight
     end
 
     def uploaded_resource?
-      self[Spotlight::Engine.config.full_image_field].present? &&
       self[Spotlight::SolrDocument.resource_type_field].present? &&
       self[Spotlight::SolrDocument.resource_type_field].include?("spotlight/resources/uploads")
     end

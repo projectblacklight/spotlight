@@ -30,4 +30,27 @@ describe "Adding custom metadata field data", :type => :feature do
     expect(page).to have_content "My new custom field value"
 
   end
+
+  it "should have a public toggle" do
+    visit spotlight.exhibit_catalog_path(exhibit, "dq287tq6352")
+
+    expect(page).not_to have_selector ".blacklight-private"
+
+    click_on "Edit"
+
+    uncheck "Public"
+
+    click_on "Save changes"
+
+    expect(page).to have_selector ".blacklight-private"
+
+    click_on "Edit"
+
+    check "Public"
+
+    click_on "Save changes"
+
+    expect(page).not_to have_selector ".blacklight-private"
+
+  end
 end
