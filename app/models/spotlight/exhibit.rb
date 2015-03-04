@@ -125,7 +125,6 @@ class Spotlight::Exhibit < ActiveRecord::Base
     return unless self.searches.blank?
 
     self.searches.create title: "All Exhibit Items",
-      short_description: "Search results for all items in this exhibit",
       long_description: "All items in this exhibit."
   end
 
