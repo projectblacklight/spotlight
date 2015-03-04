@@ -38,7 +38,7 @@ describe "Multi image selector", type: :feature, js: true do
 
     within('.item-grid-admin') do
       expect(page).to have_content(/Image \d of \d/)
-      click_link("Change")
+      find('a', text: "Change").trigger('click')
     end
 
     expect(page).to have_css(".thumbs-list ul", visible: true)
