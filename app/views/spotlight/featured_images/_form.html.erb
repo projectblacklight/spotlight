@@ -25,7 +25,7 @@
 <% end %>
 <%= field_set_tag(t(:'.source.remote.header')) do %>
   <p class="instructions"><%= t(:'.source.remote.help') %></p>
-  <div class="form-group  <%= "missing-croppable" unless f.object.try(:image).present? %>">
+  <div class="form-group croppable-loading-area <%= "missing-croppable" unless f.object.try(:image).present? %>">
     <%= hidden_field_tag :"#{jcrop_options.fetch(:selector, "image")}_crop", ([f.object.image_crop_x.to_i, f.object.image_crop_y.to_i, f.object.image_crop_x.to_i + f.object.image_crop_w.to_i, f.object.image_crop_y.to_i + f.object.image_crop_h.to_i].to_json if f.object.try(:image_crop_x)) %>
     <%= f.cropbox :image %>
   </div>

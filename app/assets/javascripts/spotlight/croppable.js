@@ -23,6 +23,7 @@ Spotlight.onLoad(function() {
       var cropinfo = $("#" + cropid + "_crop").val();
       var cropbox = $("#" + cropid + "_cropbox");
       var previewbox = $("#" + cropid + "_previewbox");
+      var jcropLoadingArea = cropbox.closest('.croppable-loading-area');
 
       var defaults = {
         setSelect: $.parseJSON(cropinfo || pluginDefults['setSelect']),
@@ -63,7 +64,12 @@ Spotlight.onLoad(function() {
       }
       cropbox.data('jcropProcessed', 'true');
 
+      cropbox.on('load', function(){
+        jcropLoadingArea.removeClass("loading-jcrop");
+      });
+
       fileUpload.on('change', function() {
+        jcropLoadingArea.addClass("loading-jcrop");
         var jcrop_api = cropbox.data('Jcrop');
         if(this.files){
           var file = this.files[0];
