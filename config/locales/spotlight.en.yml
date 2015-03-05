@@ -327,7 +327,8 @@ en:
         locked: "This page is currently being edited by %{user} (%{created_at})"
       form:
         title_placeholder: "Title"
-        page_options: "Page options"
+        page_content: "Content"
+        page_options: "Options"
     contacts:
       edit:
         header: "Edit Contact"
