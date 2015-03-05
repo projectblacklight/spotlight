@@ -11,6 +11,12 @@ $image-overlay-bottom-margin: $padding-large-vertical * 3;
   }
 }
 
+.long-description-text {
+  column-width: 20em;
+  column-gap: 1em;
+  margin: ($padding-base-vertical * 2) 0;
+}
+
 .browse-landing {
   text-align: center;
   // Placeholder for vertically alignment - might already be available from use in another feature
