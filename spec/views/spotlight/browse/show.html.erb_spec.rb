@@ -19,12 +19,6 @@ describe 'spotlight/browse/show', :type => :view do
     assign :document_list, []
   end
 
-  it "should display the image" do
-    allow(search).to receive_messages(featured_image: "xyz")
-    render
-    expect(response).to have_selector '.media img'
-  end
-
   it "should have a heading" do
     render
     expect(response).to have_selector 'h1', text: search.title

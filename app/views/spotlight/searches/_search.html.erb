@@ -16,7 +16,7 @@
 
       <div class="description">
         <% if search.long_description.present? %>
-          <%= search.long_description %>
+          <%= truncate(search.long_description, length: 89) %>
         <% else %>
           <span class="missing-description"><%= t(:'.missing_description_html', link: (link_to action_label(search, :edit_long), [spotlight, :edit, search.exhibit, search])) %></span>
         <% end %>
