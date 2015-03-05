@@ -105,7 +105,7 @@ SirTrevor.Blocks.FeaturedBrowseCategories =  (function(){
               '<input data-nestable-limit-categories="true" id="' + this.formId(search.slug) + '" name="' +  search.slug + '" type="checkbox" value="true" /> ',
             '</div>',
             '<div class="pic thumbnail">',
-              '<img  src="' + search.featured_image + '" />',
+              '<img src="' + (search.thumbnail_image_url) + '" />',
             '</div>',
             '<div class="main">',
               '<div class="title panel-title" data-panel-title="true">' + search.title + '</div>',

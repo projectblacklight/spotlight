@@ -13,6 +13,11 @@ module Spotlight
     def index
       # set up a model the inline "add a new page" form
       @page = CanCan::ControllerResource.new(self).send(:build_resource)
+
+      respond_to do |format|
+        format.html
+        format.json { render json: @pages.published.to_json(methods: :thumbnail_image_url) }
+      end
     end
 
     # GET /pages/1
@@ -99,7 +104,11 @@ module Spotlight
     end
 
     def allowed_page_params
-      [:title, :content]
+      [:title, :content, thumbnail_attributes: featured_image_attributes]
+    end
+
+    def featured_image_attributes
+      [:source, :image, :remote_image_url, :document_global_id, :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h]
     end
 
     def human_name

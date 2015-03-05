@@ -4,7 +4,7 @@ module Spotlight
     include CarrierWave::MiniMagick
     storage :file
 
-    version :cropped_masthead do
+    version :cropped do
       process crop: :image  ## Crops this version based on original image
       process resize_to_fill: [1800, 120]
     end

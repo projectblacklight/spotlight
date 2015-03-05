@@ -10,24 +10,20 @@ class Spotlight::Search < ActiveRecord::Base
   scope :published, -> { where(on_landing_page: true) }
   validates :title, presence: true
   has_paper_trail
+  
+  belongs_to :masthead, dependent: :destroy
+  belongs_to :thumbnail, class_name: "Spotlight::FeaturedImage", dependent: :destroy
+  accepts_nested_attributes_for :thumbnail, update_only: true
+  accepts_nested_attributes_for :masthead, update_only: true
 
-  before_create do
-    self.featured_item_id ||= default_featured_item_id
-  end
+
+  before_create :set_default_featured_image
 
   include Blacklight::SolrHelper
   include Spotlight::Catalog::AccessControlsEnforcement
 
-  def featured_item
-    if self.featured_item_id.present?
-      @featured_item ||= get_solr_response_for_doc_id(self.featured_item_id).last
-    end
-  end
-
-  def featured_image
-    if featured_item
-      Array[featured_item[blacklight_config.index.thumbnail_field]].flatten.first
-    end
+  def thumbnail_image_url
+    thumbnail.image.cropped.url if thumbnail and thumbnail.image
   end
 
   def count
@@ -35,13 +31,7 @@ class Spotlight::Search < ActiveRecord::Base
   end
 
   def images
-    response = query_solr(query_params,
-      rows: 1000,
-      fl: [blacklight_config.solr_document_model.unique_key, blacklight_config.index.title_field, blacklight_config.index.thumbnail_field],
-      facet: false)
-
-    Blacklight::SolrResponse.new(response, {}).docs.map do |result|
-      doc = blacklight_config.solr_document_model.new(result)
+    documents.map do |doc|
 
       [
         doc.first(blacklight_config.solr_document_model.unique_key),
@@ -51,21 +41,39 @@ class Spotlight::Search < ActiveRecord::Base
     end
   end
 
-  def as_json(*args)
-    super.merge(featured_image: featured_image, count: count)
-  end
+  def documents
+    return enum_for(:documents) unless block_given?
 
-  def default_featured_item_id
-    images.first.first if images.present?
+    Blacklight::SolrResponse.new(solr_response, {}).docs.each do |result|
+      yield blacklight_config.solr_document_model.new(result)
+    end
   end
 
   def blacklight_config
     exhibit.blacklight_config
   end
 
+  def display_masthead?
+    masthead && masthead.display?
+  end
+
   private
+  def solr_response
+    @solr_response ||= query_solr(query_params,
+      rows: 1000,
+      fl: [blacklight_config.solr_document_model.unique_key, blacklight_config.index.title_field, blacklight_config.index.thumbnail_field, Spotlight::Engine.config.full_image_field],
+      facet: false)
+  end
   def should_generate_new_friendly_id?
     title_changed?
+  end
+
+  def set_default_featured_image
+    self.thumbnail ||= begin
+      if doc = documents.first
+        self.create_thumbnail source: 'exhibit', document_global_id: doc.to_global_id.to_s, remote_image_url: doc.first(Spotlight::Engine.config.full_image_field)
+      end
+    end
   end
 
   

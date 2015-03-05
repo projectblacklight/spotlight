@@ -41,6 +41,10 @@ module Spotlight
       true
     end
 
+    def featured_image
+      nil
+    end
+
     # explicitly set the partial path so that 
     # we don't have to duplicate view logic.
     def to_partial_path
@@ -77,6 +81,5 @@ module Spotlight
         lock.current_session!
       end
     end
-
   end
 end

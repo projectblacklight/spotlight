@@ -9,10 +9,6 @@
   <% end %>
   <p class="help-block"><%= t(:'.fields.contact_emails.help_block') %></p>
   <% end %>
-  <%= f.file_field :featured_image %>
-  <%= f.form_group :featured_image_preview do %>
-    <%= image_tag @exhibit.featured_image.url %>
-  <% end %>
   <%= f.form_group :published, label: { text: nil, class: nil }, help: nil do %>
   <%= f.check_box :published, label: "" %>
   <p class="help-block"><%= t(:'.fields.published.help_block') %></p>

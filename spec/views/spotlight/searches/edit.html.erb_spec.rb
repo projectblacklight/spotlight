@@ -18,6 +18,7 @@ describe "spotlight/searches/edit.html.erb", :type => :view do
     assign(:exhibit, exhibit)
     assign(:search, search)
     allow(view).to receive(:current_exhibit).and_return(exhibit)
+    allow(view).to receive_messages(default_masthead_jcrop_options: {}, default_thumbnail_jcrop_options: {})
   end
 
   it "renders active search constraints" do

@@ -7,7 +7,10 @@
       return this.blockID + "_" + id;
     },
     onBlockRender: function() {
-      addAutocompletetoSirTrevorForm();
+      addAutocompletetoSirTrevorForm({ bloodhound: this.bloodhound});
+    },
+    bloodhound: function() {
+      return undefined;
     },
     _serializeData: function() {
       var data = {};

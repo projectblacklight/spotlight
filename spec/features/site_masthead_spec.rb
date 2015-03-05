@@ -14,8 +14,10 @@ describe "Add and update the site masthead", :type => :feature do
 
     click_link "Site masthead"
 
-    check "Show background image in masthead"
-    choose "Upload an image"
+    within "#site-masthead" do
+      check "Show background image in masthead"
+      choose "Upload an image"
+    end
 
     click_button "Save changes"
 
@@ -26,9 +28,11 @@ describe "Add and update the site masthead", :type => :feature do
     end
 
     click_link "Site masthead"
-
-    expect(field_labeled('Show background image in masthead')).to be_checked
-    expect(field_labeled('Upload an image')).to be_checked
+    
+    within "#site-masthead" do
+      expect(field_labeled('Show background image in masthead')).to be_checked
+      expect(field_labeled('Upload an image')).to be_checked
+    end
   end
   it 'should display a masthead image when one is uploaded and configured' do
     visit spotlight.exhibit_dashboard_path(exhibit)
@@ -38,10 +42,12 @@ describe "Add and update the site masthead", :type => :feature do
     end
 
     click_link "Site masthead"
+    
+    within "#site-masthead" do
+      check "Show background image in masthead"
 
-    check "Show background image in masthead"
-
-    attach_file('appearance_masthead_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')));
+      attach_file('appearance_masthead_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')));
+    end
 
     click_button "Save changes"
 
@@ -57,8 +63,10 @@ describe "Add and update the site masthead", :type => :feature do
     end
 
     click_link "Site masthead"
-
-    attach_file('appearance_masthead_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')));
+    
+    within "#site-masthead" do
+      attach_file('appearance_masthead_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')));
+    end
 
     click_button "Save changes"
 
@@ -75,10 +83,12 @@ describe "Add and update the site masthead", :type => :feature do
     end
 
     click_link "Site masthead"
+    
+    within "#site-masthead" do
+      check "Show background image in masthead"
 
-    check "Show background image in masthead"
-
-    fill_in_typeahead_field 'document_title', with: "Armenia"
+      fill_in_typeahead_field 'document_title', with: "Armenia"
+    end
 
     click_button "Save changes"
 

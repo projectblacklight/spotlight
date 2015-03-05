@@ -21,6 +21,48 @@ describe "Browse Category Administration", :type => :feature do
         expect(page).to have_content "Value"
       end
     end
+    
+    it 'should attach a masthead image' do
+      visit spotlight.edit_exhibit_search_path exhibit, search
+
+      click_link "Masthead"
+      
+      within "#search-masthead" do
+        choose "Upload an image"
+        attach_file('search_masthead_attributes_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')));
+      end
+
+      click_button "Save changes"
+
+      expect(page).to have_content("The search was successfully updated.")
+
+      search.reload
+
+      expect(search.masthead).not_to be nil
+      expect(search.masthead.image.cropped).not_to be_nil
+      expect(search.masthead.image.path).to end_with "avatar.png"
+    end
+
+    it 'should attach a thumbnail image' do
+      visit spotlight.edit_exhibit_search_path exhibit, search
+
+      click_link "Thumbnail"
+      
+      within "#search-thumbnail" do
+        choose "Upload an image"
+        attach_file('search_thumbnail_attributes_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')));
+      end
+
+      click_button "Save changes"
+
+      expect(page).to have_content("The search was successfully updated.")
+
+      search.reload
+
+      expect(search.thumbnail).not_to be nil
+      expect(search.thumbnail.image.cropped).not_to be_nil
+      expect(search.thumbnail.image.path).to end_with "avatar.png"
+    end
   end
   describe "destroy" do
     it "should destroy a tag" do

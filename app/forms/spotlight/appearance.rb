@@ -42,7 +42,7 @@ module Spotlight
     protected
 
     def configuration_params(params)
-      p = params.except(:main_navigations, :searchable, :masthead)
+      p = params.except(:main_navigations, :searchable, :masthead, :thumbnail)
       p[:document_index_view_types] = keep_selected_values(p[:document_index_view_types])
       p
     end
@@ -54,6 +54,10 @@ module Spotlight
       end
       if masthead_attributes = params.slice(:masthead).try(:values).try(:first)
         p[:masthead_attributes] = masthead_attributes
+      end
+      
+      if thumbnail_attributes = params.slice(:thumbnail).try(:values).try(:first)
+        p[:thumbnail_attributes] = thumbnail_attributes
       end
       p
     end

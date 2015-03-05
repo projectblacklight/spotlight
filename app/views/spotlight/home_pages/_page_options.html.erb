@@ -1,7 +1,2 @@
-<div>
-  <%= f.check_box :display_title %> <%= f.label :display_title, t(:'spotlight.administration.display_title') %>
-</div>
-
-<div>
-  <%= f.check_box :display_sidebar?, disabled: !current_exhibit.searchable? %> <%= f.label :display_sidebar?, t(:'spotlight.administration.show_sidebar') %>
-</div>
+  <%= f.check_box :display_title %>
+  <%= f.check_box :display_sidebar?, disabled: !current_exhibit.searchable? %>
