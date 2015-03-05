@@ -1,7 +1,7 @@
 <% item_text_block.with_solr_helper(self) %>
 
 <% if item_text_block.solr_document.present? %>
-  <div class="content-block item-text row">
+  <div class="content-block item-text clearfix">
     <div class="image-block pull-<%= item_text_block.text_align %>">
       <% if (block_thumb = item_text_block.send(:'item-thumbnail_0')).present? %>
         <div class="thumbnail"><%= link_to_document(item_text_block.solr_document, image_tag(block_thumb), counter: -1) %></div>
