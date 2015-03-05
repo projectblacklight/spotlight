@@ -69,8 +69,10 @@ class Spotlight::Search < ActiveRecord::Base
   end
 
   def set_default_featured_image
-    if doc = documents.first
-      self.thumbnail = self.create_thumbnail source: 'exhibit', document_global_id: doc.to_global_id.to_s, remote_image_url: doc.first(Spotlight::Engine.config.full_image_field)
+    self.thumbnail ||= begin
+      if doc = documents.first
+        self.create_thumbnail source: 'exhibit', document_global_id: doc.to_global_id.to_s, remote_image_url: doc.first(Spotlight::Engine.config.full_image_field)
+      end
     end
   end
 

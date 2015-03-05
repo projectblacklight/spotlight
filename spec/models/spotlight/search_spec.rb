@@ -1,12 +1,8 @@
 require 'spec_helper'
 
 describe Spotlight::Search, :type => :model do
-
-  before do
-    subject.title = "xyz"
-    subject.query_params = {"f"=>{"genre_sim"=>["map"]}}
-    subject.exhibit = FactoryGirl.create(:exhibit)
-  end
+  let(:query_params) { {"f"=>{"genre_sim"=>["map"]}} }
+  subject { FactoryGirl.build(:search, query_params: query_params )}
 
   let(:blacklight_config) { ::CatalogController.blacklight_config }
 
