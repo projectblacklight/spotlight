@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'csv'
 
 module Spotlight::Resources
@@ -29,7 +30,7 @@ module Spotlight::Resources
 
     def csv_upload
       file = csv_params[:url]
-      csv = CSV.parse(file.read, {headers:true, return_headers: false}).map(&:to_hash)
+      csv = CSV.parse(file.read, {headers:true, return_headers: false, encoding: 'utf-8'}).map(&:to_hash)
       Spotlight::AddUploadsFromCSV.perform_later(csv, current_exhibit, current_user)
       flash[:notice] = t('spotlight.resources.upload.csv.success', file_name: file.original_filename)
       redirect_to :back

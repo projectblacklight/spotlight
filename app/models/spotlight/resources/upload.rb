@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Spotlight
   class Resources::Upload < Spotlight::Resource
     mount_uploader :url, Spotlight::ItemUploader
