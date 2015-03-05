@@ -6,44 +6,48 @@
     $.each(this, function(){
       addAutocompleteBehavior($(this));
     });
-    function addAutocompleteBehavior( typeAheadInput ) {
-      results = initBloodhound();
+
+    function addAutocompleteBehavior( typeAheadInput, settings ) {
       var settings = $.extend({
         highlight: (typeAheadInput.data('autocomplete-highlight') || true),
         hint: (typeAheadInput.data('autocomplete-hint') || false),
         autoselect: (typeAheadInput.data('autocomplete-autoselect') || true)
       }, options);
+      
+      var results = settings.bloodhound();
+
       typeAheadInput.typeahead(settings, {
         displayKey: 'title',
         source: results.ttAdapter(),
         templates: {
-          suggestion: Handlebars.compile('<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}"><div class="document-thumbnail thumbnail"><img src="{{thumbnail}}" /></div><span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>')
+          suggestion: Handlebars.compile('<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail thumbnail"><img src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>')
         }
       })
     }
     return this;
   }
-  function initBloodhound() {
-    results = new Bloodhound({
-      datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.title); },
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit: 10,
-      remote: {
-        url: $('form[data-autocomplete-url]').data('autocomplete-url') + '?q=%QUERY',
-        filter: function(response) {
-          return $.map(response['docs'], function(doc) {
-            return doc;
-          })
-        }
-      }
-    });
-    results.initialize();
-    return results;
-  }
 })( jQuery );
 
-function addAutocompletetoSirTrevorForm() {
-  $('[data-twitter-typeahead]').spotlightSearchTypeAhead().on('click', function() {
+function initBloodhound() {
+  var results = new Bloodhound({
+    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.title); },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    limit: 10,
+    remote: {
+      url: $('form[data-autocomplete-url]').data('autocomplete-url') + '?q=%QUERY',
+      filter: function(response) {
+        return $.map(response['docs'], function(doc) {
+          return doc;
+        })
+      }
+    }
+  });
+  results.initialize();
+  return results;
+}
+
+function addAutocompletetoSirTrevorForm(options) {
+  $('[data-twitter-typeahead]').spotlightSearchTypeAhead(options).on('click', function() {
     $(this).select();
     $(this).closest('.field').removeClass('has-error');
     $($(this).data('checkbox_field')).prop('disabled', false);

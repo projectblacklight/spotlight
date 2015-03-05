@@ -8,6 +8,7 @@
                 :'attachment-endpoint' => spotlight.exhibit_attachments_url(@page.exhibit),
                 :'metadata-url' => spotlight.exhibit_metadata_path(@page.exhibit, format: "json"),
                 :'autocomplete-url'=> spotlight.autocomplete_exhibit_catalog_index_path(@page.exhibit, format: "json"),
+                :'pages-url' => spotlight.exhibit_feature_pages_path(@page.exhibit, format: "json"),
                 :'searches-endpoint' => spotlight.exhibit_searches_path(@page.exhibit, format: "json"),
                 :'available-search-views-endpoint' => spotlight.exhibit_available_search_views_path(@page.exhibit, format: "json"),
                 :'preview-url' => (spotlight.exhibit_preview_block_url(@page.exhibit, @page) if @page.persisted?)
