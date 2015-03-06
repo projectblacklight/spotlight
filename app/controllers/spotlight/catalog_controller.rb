@@ -67,22 +67,22 @@ class Spotlight::CatalogController < ::CatalogController
   end
 
   def update
-    @response, @document = get_solr_response_for_doc_id params[:id]
+    @response, @document = fetch params[:id]
     @document.update(current_exhibit, solr_document_params)
     @document.save
-    blacklight_solr.commit rescue nil
+    repository.connection.commit rescue nil
     redirect_to exhibit_catalog_path(current_exhibit, @document)
   end
 
   def edit
-    @response, @document = get_solr_response_for_doc_id params[:id]
+    @response, @document = fetch params[:id]
     blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
     blacklight_config.view.edit.partials.delete "spotlight/catalog/tags"
     blacklight_config.view.edit.partials.insert(2, :edit)
   end
 
   def make_private
-    @response, @document = get_solr_response_for_doc_id params[:catalog_id]
+    @response, @document = fetch params[:catalog_id]
     @document.make_private!(current_exhibit)
     @document.save
 
@@ -93,7 +93,7 @@ class Spotlight::CatalogController < ::CatalogController
   end
 
   def make_public
-    @response, @document = get_solr_response_for_doc_id params[:catalog_id]
+    @response, @document = fetch params[:catalog_id]
     @document.make_public!(current_exhibit)
     @document.save
 
@@ -197,13 +197,5 @@ class Spotlight::CatalogController < ::CatalogController
         Spotlight::Page.find(current_search_session.query_params["id"]) if current_search_session.query_params["id"]
       end
     end
-  end
-
-  # calls setup_previous_document then setup_next_document.
-  # used in the show action for single view pagination.
-  def setup_next_and_previous_documents
-    super
-  rescue RSolr::Error::Http => e
-    Rails.logger.warn "Unable to setup next and previous documents: #{e}"
   end
 end

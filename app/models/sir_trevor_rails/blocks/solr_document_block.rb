@@ -29,7 +29,7 @@ module SirTrevorRails::Blocks
 
       @documents ||= begin
         doc_ids = ids.map { |id| data["item-grid-id_#{id}"] }
-        _, documents = solr_helper.get_solr_response_for_document_ids(doc_ids)
+        _, documents = solr_helper.fetch(doc_ids)
         documents
       end
 

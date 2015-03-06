@@ -80,15 +80,15 @@ module Spotlight
     protected
 
     def blacklight_solr
-      @solr ||=  RSolr.connect(blacklight_solr_config)
+      @solr ||=  RSolr.connect(connection_config)
     end
 
-    def blacklight_solr_config
-      Blacklight.solr_config
+    def connection_config
+      Blacklight.connection_config
     end
     
-    def solr_document_model
-      exhibit.blacklight_config.solr_document_model
+    def document_model
+      exhibit.blacklight_config.document_model
     end
   end
 end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spotlight::Catalog::AccessControlsEnforcement do
   class MockCatalogController
-    include Blacklight::SolrHelper
+    include Blacklight::SearchHelper
     include Spotlight::Catalog::AccessControlsEnforcement
 
     def blacklight_config
@@ -20,7 +20,7 @@ describe Spotlight::Catalog::AccessControlsEnforcement do
 
   describe "#apply_permissive_visibility_filter" do
     it "should add the filter to the params logic" do
-      expect(subject.solr_search_params_logic).to include :apply_permissive_visibility_filter 
+      expect(subject.search_params_logic).to include :apply_permissive_visibility_filter 
     end
 
     it "should allow curators to view everything" do

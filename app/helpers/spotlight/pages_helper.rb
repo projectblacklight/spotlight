@@ -9,7 +9,7 @@ module Spotlight
     def item_grid_block_with_documents(block)
       block_objects = item_grid_block_objects(block)
       ids = item_grid_block_ids(block)
-      documents = get_solr_response_for_document_ids(ids).last
+      documents = fetch(ids).last
       block_objects.each do |object|
         if (doc = documents.find{ |d| d[:id] == object[:id] }).present?
           object[:solr_document] = doc

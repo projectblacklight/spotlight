@@ -36,7 +36,7 @@ module Spotlight
 
     
     def add_default_solr_fields solr_hash
-      solr_hash[exhibit.blacklight_config.solr_document_model.unique_key.to_sym] = compound_id
+      solr_hash[exhibit.blacklight_config.document_model.unique_key.to_sym] = compound_id
     end
 
     def add_image_dimensions solr_hash
@@ -74,7 +74,7 @@ module Spotlight
     end
 
     def sidecar
-      @sidecar ||= solr_document_model.new(id: compound_id).sidecar(exhibit)
+      @sidecar ||= document_model.new(id: compound_id).sidecar(exhibit)
     end
 
   end

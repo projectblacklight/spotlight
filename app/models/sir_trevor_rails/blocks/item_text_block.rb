@@ -7,7 +7,7 @@ module SirTrevorRails::Blocks
     end
 
     def solr_document
-      @solr_document ||= solr_helper.get_solr_response_for_doc_id(doc_id).last if doc_id.present?
+      @solr_document ||= solr_helper.fetch(doc_id).last if doc_id.present?
     end
     
     def text_align

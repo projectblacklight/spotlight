@@ -45,8 +45,8 @@ describe "Uploading a non-repository item", :type => :feature do
       expect(page).to have_content "Object uploaded successfully."
 
       expect(Spotlight::Resource.last.url.file.path).to end_with "800x600.png"
-      Blacklight.solr.delete_by_id Spotlight::Resource.last.send(:compound_id)
-      Blacklight.solr.commit
+      Blacklight.default_index.connection.delete_by_id Spotlight::Resource.last.send(:compound_id)
+      Blacklight.default_index.connection.commit
     end
 
     it "should be editable" do
@@ -68,8 +68,8 @@ describe "Uploading a non-repository item", :type => :feature do
 
       expect(page).to have_content "This is a now an avatar"
       expect(Spotlight::Resource.last.url.file.path).to end_with "avatar.png"
-      Blacklight.solr.delete_by_id Spotlight::Resource.last.send(:compound_id)
-      Blacklight.solr.commit
+      Blacklight.default_index.connection.delete_by_id Spotlight::Resource.last.send(:compound_id)
+      Blacklight.default_index.connection.commit
     end
   end
 end

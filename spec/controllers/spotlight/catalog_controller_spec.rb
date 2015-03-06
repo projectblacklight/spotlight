@@ -119,7 +119,7 @@ describe Spotlight::CatalogController, :type => :controller do
 
     describe "GET index" do
       it "should apply gated discovery access controls" do
-        expect(controller.solr_search_params_logic).to include :apply_permissive_visibility_filter
+        expect(controller.search_params_logic).to include :apply_permissive_visibility_filter
       end
     end
 

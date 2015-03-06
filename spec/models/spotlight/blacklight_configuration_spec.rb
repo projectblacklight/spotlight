@@ -401,7 +401,7 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
       ]))
 
       expect(subject.custom_index_fields).to include 'abc', 'xyz'
-      expect(subject.custom_index_fields['abc']).to be_a_kind_of Blacklight::Configuration::SolrField
+      expect(subject.custom_index_fields['abc']).to be_a_kind_of Blacklight::Configuration::Field
       expect(subject.custom_index_fields['abc'].a).to eq 1
     end
   end

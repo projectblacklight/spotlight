@@ -3,7 +3,7 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
   load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
   load_and_authorize_resource through: :exhibit, singleton: true
 
-  include Blacklight::SolrHelper
+  include Blacklight::SearchHelper
 
   def update
     if @blacklight_configuration.update(exhibit_params)
@@ -47,7 +47,7 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
     add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
     add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
     add_breadcrumb t(:'spotlight.curation.sidebar.search_facets'), exhibit_edit_facets_path(@exhibit)
-    @fields = solr_repository.send_and_receive('admin/luke', fl: '*', 'json.nl' => 'map')['fields']
+    @fields = repository.send_and_receive('admin/luke', fl: '*', 'json.nl' => 'map')['fields']
   end
 
   ##
@@ -65,7 +65,7 @@ class Spotlight::BlacklightConfigurationsController < Spotlight::ApplicationCont
   def alternate_count
     @alt_count ||= begin
       facet_query = @blacklight_configuration.blacklight_config.facet_fields.reject { |k, v| v.pivot || v.query }.map { |key, fields| "#{fields.field}:[* TO *]" }
-      solr_resp = solr_repository.search('facet.query' => facet_query, 'rows' =>0, 'facet' => true)
+      solr_resp = repository.search('facet.query' => facet_query, 'rows' =>0, 'facet' => true)
       @alt_count = solr_resp['facet_counts']['facet_queries'].each_with_object({}) do |(key, val), alt_count|
         alt_count[key.split(/:/).first] = val
       end
