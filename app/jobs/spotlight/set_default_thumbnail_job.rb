@@ -1,3 +1,5 @@
+# This is not currently used.
+# Leaving around as a proof-of-concept for future improvement.
 module Spotlight
   class SetDefaultThumbnailJob < ActiveJob::Base
     queue_as :default
