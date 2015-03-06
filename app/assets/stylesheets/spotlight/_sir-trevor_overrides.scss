@@ -16,3 +16,11 @@
   margin-top: 3*$padding-large-vertical;
   margin-bottom: 3*$padding-large-vertical;
 }
+
+.st-block-ui-btn--preview {
+  width: 8ch;
+}
+
+.st-block-ui-btn--preview, .st-block-ui-btn--edit {
+  font-family: $font-family-base;
+}
