@@ -1,4 +1,5 @@
 module Spotlight::MainAppHelpers
+  include Spotlight::NavbarHelper
   def cache_key_for_spotlight_exhibits
     Spotlight::Exhibit.maximum(:updated_at).try(:utc).try(:to_s, :number)
   end

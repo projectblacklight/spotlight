@@ -16,9 +16,12 @@
   </div>
 </div>
 
+<%= render 'shared/exhibit_navbar' if current_search_masthead? %>
 <% if current_exhibit %>
-<%= render 'spotlight/shared/report_a_problem' if show_contact_form? %>
-<%= render 'shared/exhibit_masthead' %>
+  <%= render 'spotlight/shared/report_a_problem' if show_contact_form? %>
+  <%= render 'shared/exhibit_masthead' %>
 <% end %>
-<%= render 'shared/exhibit_navbar' %>
-<%= render 'shared/breadcrumbs' %>
+<% unless current_search_masthead? %>
+  <%= render 'shared/exhibit_navbar' %>
+  <%= render 'shared/breadcrumbs' %>
+<% end %>
