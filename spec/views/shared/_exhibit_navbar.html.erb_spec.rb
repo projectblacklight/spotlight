@@ -111,5 +111,12 @@ module Spotlight
       render
       expect(response).to_not have_content "Search Bar"
     end
+
+    it 'should not include any navigation menu items that are not configured' do
+      expect(current_exhibit.main_navigations).to receive_messages(displayable: [])
+      render
+      expect(response).to have_css('.navbar-nav li', count: 1)
+      expect(response).to have_css('.navbar-nav li', text: "Home")
+    end
   end
 end

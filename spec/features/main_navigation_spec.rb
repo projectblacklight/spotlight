@@ -39,4 +39,14 @@ describe "Main navigation labels are settable", :type => :feature do
     expect(page).to have_content("New Browse Label")
     expect(page).to have_css(".breadcrumb li", text: "New Browse Label")
   end
+  it 'should not display any main navigation menu items that are configured to not display' do
+    about_nav = exhibit.main_navigations.about
+    about_nav.display = false
+    about_nav.save
+    visit spotlight.exhibit_path(exhibit)
+    expect(page).to_not have_css(".navbar-nav li", text: "New About Label")
+    about_nav = exhibit.main_navigations.about
+    about_nav.display = true
+    about_nav.save
+  end
 end
