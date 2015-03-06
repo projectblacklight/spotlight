@@ -7,7 +7,7 @@ module Spotlight
     include Blacklight::Catalog::SearchContext
     include Spotlight::Catalog::AccessControlsEnforcement
 
-    helper_method :get_search_results, :get_solr_response_for_doc_id, :get_solr_response_for_document_ids, :page_collection_name
+    helper_method :get_search_results, :search_results, :fetch, :page_collection_name
 
     # GET /exhibits/1/pages
     def index

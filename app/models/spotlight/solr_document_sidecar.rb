@@ -28,7 +28,7 @@ module Spotlight
     end
 
     def default_document_type
-      blacklight_config.solr_document_model
+      blacklight_config.document_model
     end
 
     protected

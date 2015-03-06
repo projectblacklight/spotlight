@@ -1,6 +1,6 @@
 class Spotlight::ExhibitsController < Spotlight::ApplicationController
   before_filter :authenticate_user!
-  include Blacklight::SolrHelper
+  include Blacklight::SearchHelper
 
   load_and_authorize_resource
 

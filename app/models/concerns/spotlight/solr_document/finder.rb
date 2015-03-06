@@ -12,7 +12,7 @@ module Spotlight::SolrDocument
       end
 
       def blacklight_solr
-        @solr ||=  RSolr.connect(blacklight_solr_config)
+        @solr ||=  RSolr.connect(connection_config)
       end
 
       protected 
@@ -29,8 +29,8 @@ module Spotlight::SolrDocument
         @conf ||= Spotlight::Engine.blacklight_config
       end
 
-      def blacklight_solr_config
-        Blacklight.solr_config
+      def connection_config
+        Blacklight.connection_config
       end
     end
 

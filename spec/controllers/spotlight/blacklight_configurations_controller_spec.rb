@@ -69,7 +69,7 @@ describe Spotlight::BlacklightConfigurationsController, :type => :controller do
         expect(controller).to receive(:add_breadcrumb).with("Home", exhibit)
         expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with("Search facets", exhibit_edit_facets_path(exhibit))
-        allow(controller).to receive_message_chain(:blacklight_solr, :get).and_return({})
+        allow(controller).to receive_message_chain(:repository, :send_and_receive).and_return({})
         get :edit_facet_fields, exhibit_id: exhibit
         expect(response).to be_successful
       end

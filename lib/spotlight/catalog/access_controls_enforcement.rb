@@ -2,7 +2,7 @@ module Spotlight::Catalog::AccessControlsEnforcement
   extend ActiveSupport::Concern
 
   included do
-    self.solr_search_params_logic += [:apply_permissive_visibility_filter]
+    self.search_params_logic += [:apply_permissive_visibility_filter]
   end
 
   protected
@@ -15,7 +15,11 @@ module Spotlight::Catalog::AccessControlsEnforcement
     end
 
     if Spotlight::Engine.config.filter_resources_by_exhibit
-      add_facet_fq_to_solr solr_params, f: current_exhibit.solr_data
+      current_exhibit.solr_data.each do |facet_field, values|
+        Array(values).each do |value|
+          solr_params.append_filter_query search_builder.send(:facet_value_to_fq_string, facet_field, value)
+        end
+      end
     end
   end
 end

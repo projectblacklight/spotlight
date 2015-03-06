@@ -11,14 +11,14 @@ describe "Catalog", :type => :feature do
       d = SolrDocument.new(id: 'dq287tq6352')
       d.make_private! exhibit
       d.reindex
-      Blacklight.solr.commit
+      Blacklight.default_index.connection.commit
     end
     
     after do
       d = SolrDocument.new(id: 'dq287tq6352')
       d.make_public! exhibit
       d.reindex
-      Blacklight.solr.commit
+      Blacklight.default_index.connection.commit
     end
 
     it "should have a 'Item Visiblity' facet" do

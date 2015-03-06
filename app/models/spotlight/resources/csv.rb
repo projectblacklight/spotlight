@@ -17,7 +17,7 @@ module Spotlight
       )
       
       csv.map do |row|
-        h = base_doc.merge(solr_document_model.new(base_doc).to_solr)
+        h = base_doc.merge(document_model.new(base_doc).to_solr)
         row.each do |k,v|
           if label_to_field[k]
             h[label_to_field[k]] ||= []
@@ -31,7 +31,7 @@ module Spotlight
     def label_to_field
       @label_to_field ||= begin
         label_to_field = {}
-        label_to_field['id'] ||= solr_document_model.unique_key
+        label_to_field['id'] ||= document_model.unique_key
         label_to_field[title_field_name] ||= exhibit.blacklight_config.index.title_field
         label_to_field[public_field_name] ||= Spotlight::SolrDocument.visibility_field(exhibit)
         label_to_field.merge! Hash[exhibit.blacklight_config.index_fields.map { |k,v| [v.label, v.field]}]
@@ -56,7 +56,7 @@ module Spotlight
         end
 
         unless row[public_field_name].blank? and sidecar_updates.empty?
-          sidecar = solr_document_model.new(id: row['id']).sidecar(exhibit)
+          sidecar = document_model.new(id: row['id']).sidecar(exhibit)
           sidecar.update(
             public: row[public_field_name],
             data: sidecar.data.merge(sidecar_updates)

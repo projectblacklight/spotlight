@@ -2,7 +2,7 @@ module Spotlight
   module SolrDocument
     extend ActiveSupport::Concern
     
-    include Blacklight::SolrHelper
+    include Blacklight::SearchHelper
     include Spotlight::SolrDocument::ActiveModelConcern
     include Spotlight::SolrDocument::Finder
     include Spotlight::SolrDocument::SpotlightImages
@@ -121,6 +121,6 @@ end
 
 ActsAsTaggableOn::Tagging.after_destroy do |obj|
   if obj.tagger.is_a? Spotlight::Exhibit
-    obj.tagger.blacklight_config.solr_document_model.reindex(obj.taggable_id)
+    obj.tagger.blacklight_config.document_model.reindex(obj.taggable_id)
   end
 end

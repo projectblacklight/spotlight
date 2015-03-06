@@ -76,15 +76,15 @@ namespace :spotlight do
       errors = 0
       verbose = ENV.fetch('VERBOSE', false).present?
 
-      puts "[#{Blacklight.solr.uri}]"
+      puts "[#{Blacklight.default_index.connection.uri}]"
 
       print " - atomic updates:"
       begin
         id = 'test123'
         field = "test_#{Spotlight::Engine.config.solr_fields.string_suffix}"
-        Blacklight.solr.add blacklight_config.solr_document_model.unique_key.to_sym => id, field => 'some-string'
-        Blacklight.solr.update data: [{blacklight_config.solr_document_model.unique_key => id, field => { set: 'a-new-string' }}].to_json, headers: { 'Content-Type' => 'application/json' }
-        Blacklight.solr.delete_by_id id
+        Blacklight.default_index.connection.add blacklight_config.document_model.unique_key.to_sym => id, field => 'some-string'
+        Blacklight.default_index.connection.update data: [{blacklight_config.document_model.unique_key => id, field => { set: 'a-new-string' }}].to_json, headers: { 'Content-Type' => 'application/json' }
+        Blacklight.default_index.connection.delete_by_id id
         print " OK\n"
       rescue Exception => e
         errors += 1

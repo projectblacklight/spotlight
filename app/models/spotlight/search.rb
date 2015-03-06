@@ -19,7 +19,7 @@ class Spotlight::Search < ActiveRecord::Base
 
   before_create :set_default_featured_image
 
-  include Blacklight::SolrHelper
+  include Blacklight::SearchHelper
   include Spotlight::Catalog::AccessControlsEnforcement
 
   def thumbnail_image_url
@@ -34,7 +34,7 @@ class Spotlight::Search < ActiveRecord::Base
     documents.map do |doc|
 
       [
-        doc.first(blacklight_config.solr_document_model.unique_key),
+        doc.first(blacklight_config.document_model.unique_key),
         doc.first(blacklight_config.index.title_field),
         doc.first(blacklight_config.index.thumbnail_field)
       ]
@@ -45,7 +45,7 @@ class Spotlight::Search < ActiveRecord::Base
     return enum_for(:documents) unless block_given?
 
     Blacklight::SolrResponse.new(solr_response, {}).docs.each do |result|
-      yield blacklight_config.solr_document_model.new(result)
+      yield blacklight_config.document_model.new(result)
     end
   end
 
@@ -61,7 +61,7 @@ class Spotlight::Search < ActiveRecord::Base
   def solr_response
     @solr_response ||= query_solr(query_params,
       rows: 1000,
-      fl: [blacklight_config.solr_document_model.unique_key, blacklight_config.index.title_field, blacklight_config.index.thumbnail_field, Spotlight::Engine.config.full_image_field],
+      fl: [blacklight_config.document_model.unique_key, blacklight_config.index.title_field, blacklight_config.index.thumbnail_field, Spotlight::Engine.config.full_image_field],
       facet: false)
   end
   def should_generate_new_friendly_id?

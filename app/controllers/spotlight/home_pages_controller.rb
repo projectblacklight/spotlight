@@ -1,6 +1,6 @@
 module Spotlight
   class HomePagesController < Spotlight::PagesController
-    include Blacklight::SolrHelper
+    include Blacklight::SearchHelper
     include Spotlight::Catalog
 
     load_and_authorize_resource through: :exhibit, singleton: true, instance_name: 'page'
