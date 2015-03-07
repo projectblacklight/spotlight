@@ -125,7 +125,7 @@ en:
             label: "Searchable (offer searchbox and facet sidebar)"
         main_navigation:
           menu: Main menu
-          help: Click a menu item to change its display label. Drag and drop a menu item to change their order in the main navigation menu.
+          help: Select the menu items you want to be displayed in the main navigation menu (menu items are only displayed when published pages exist for that item). Click a menu item to change its display label. Drag and drop a menu item to change their order in the menu.
         restore_default: "Restore default"
         search_results: Search results
         site_masthead:

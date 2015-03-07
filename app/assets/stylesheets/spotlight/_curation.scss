@@ -44,6 +44,19 @@
   }
 }
 
+.panel-heading {
+  .publish-control {
+    display: inline;
+    .checkbox {
+      padding-top: 0;
+    }
+  }
+  .main {
+    display: inline-block;
+    vertical-align: text-bottom;
+  }
+}
+
 .panel-heading.page {
   &:hover {
     @include panel-hover-highlighting;
@@ -63,12 +76,6 @@
     }
   }
 
-  .publish-control {
-    display: inline;
-    .checkbox {
-      padding-top: 0;
-    }
-  }
   .page-links, .contact-links {
     text-align: right;
     a {
@@ -78,7 +85,6 @@
   .main {
     width: 99%;
     vertical-align: text-top;
-    display: inline-block;
   }
 }
 

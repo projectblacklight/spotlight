@@ -4,6 +4,7 @@ module Spotlight
     default_scope  -> { order("weight ASC") }
     scope :browse, -> { where(nav_type: "browse").take }
     scope :about,  -> { where(nav_type: "about").take  }
+    scope :displayable, -> { where(display: true) }
 
     def label_or_default
       if label.present?
