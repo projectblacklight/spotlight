@@ -1,0 +1,15 @@
+@mixin jcrop-loading-background {
+  background-image: url('/assets/Jcrop.gif');
+  background-color: transparent !important;
+}
+.croppable-loading-area {
+  min-height: 100px;
+}
+
+.loading-jcrop {
+  @include jcrop-loading-background;
+  .jcrop-tracker {
+    @include jcrop-loading-background;
+  }
+}
+

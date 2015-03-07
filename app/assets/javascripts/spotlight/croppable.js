@@ -23,6 +23,7 @@ Spotlight.onLoad(function() {
       var cropinfo = $("#" + cropid + "_crop").val();
       var cropbox = $("#" + cropid + "_cropbox");
       var previewbox = $("#" + cropid + "_previewbox");
+      var jcropLoadingArea = cropbox.closest('.croppable-loading-area');
 
       var defaults = {
         setSelect: $.parseJSON(cropinfo || pluginDefults['setSelect']),
@@ -49,6 +50,11 @@ Spotlight.onLoad(function() {
       };
 
       if(!cropbox.data('jcropProcessed')){
+        // Hack to get cropbox image element to be loaded under turbolinks
+        if (cropbox[0].complete === false && cropbox[0].src == window.location.href) {
+           // add 1x1 gif to to img tag so it's loaded
+          cropbox[0].src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+        }
         cropbox.Jcrop(
           $.extend(options, {
             onSelect: update,
@@ -58,7 +64,12 @@ Spotlight.onLoad(function() {
       }
       cropbox.data('jcropProcessed', 'true');
 
+      cropbox.on('load', function(){
+        jcropLoadingArea.removeClass("loading-jcrop");
+      });
+
       fileUpload.on('change', function() {
+        jcropLoadingArea.addClass("loading-jcrop");
         var jcrop_api = cropbox.data('Jcrop');
         if(this.files){
           var file = this.files[0];
