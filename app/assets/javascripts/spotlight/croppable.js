@@ -49,6 +49,11 @@ Spotlight.onLoad(function() {
       };
 
       if(!cropbox.data('jcropProcessed')){
+        // Hack to get cropbox image element to be loaded under turbolinks
+        if (cropbox[0].complete === false && cropbox[0].src == window.location.href) {
+           // add 1x1 gif to to img tag so it's loaded
+          cropbox[0].src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+        }
         cropbox.Jcrop(
           $.extend(options, {
             onSelect: update,
