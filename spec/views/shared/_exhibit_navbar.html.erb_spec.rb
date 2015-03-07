@@ -9,10 +9,17 @@ module Spotlight
     let(:unpublished_about_page) { FactoryGirl.create(:about_page, published: false, exhibit: current_exhibit) }
 
     before :each do
+      allow(view).to receive_messages(current_search_masthead?: nil)
       allow(view).to receive_messages(current_exhibit: current_exhibit)
       allow(view).to receive_messages(on_browse_page?: false, on_about_page?: false)
       allow(view).to receive_messages(render_search_bar: "Search Bar")
       allow(view).to receive_messages(exhibit_path: spotlight.exhibit_path(current_exhibit))
+    end
+
+    it 'should link to the exhibit home page (as branding) when there is a current search masthead' do
+      allow(view).to receive_messages(current_search_masthead?: true)
+      render
+      expect(response).to have_selector("a.navbar-brand", text: current_exhibit.title)
     end
 
     it "should link to the search page if no home page is defined" do
@@ -108,6 +115,12 @@ module Spotlight
 
     it 'should not include the search bar when the exhibit is searchable' do
       expect(current_exhibit).to receive(:searchable?).and_return(false)
+      render
+      expect(response).to_not have_content "Search Bar"
+    end
+
+    it 'should not include the search bar when there is a current search masthead' do
+      allow(view).to receive_messages(current_search_masthead?: true)
       render
       expect(response).to_not have_content "Search Bar"
     end

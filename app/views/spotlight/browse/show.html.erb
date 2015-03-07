@@ -1,8 +1,9 @@
 <% set_html_page_title @search.title %>
 <div>
   <%= exhibit_edit_link @search, class: 'edit-button pull-right btn btn-primary' if can? :edit, @search %>
-  <h1><%= @search.title %></h1>
-  <small class="item-count"><%= t :'spotlight.browse.search.item_count', count: @search.count %></small>
+  <% unless current_search_masthead? %>
+    <%= render 'search_title' %>
+  <% end %>
   <% if @search.long_description.present? %>
     <p class="long-description-text"><%= @search.long_description %></p>
   <% end %>

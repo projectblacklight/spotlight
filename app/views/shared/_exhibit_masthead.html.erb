@@ -1,7 +1,7 @@
 <%= cache [current_exhibit,cache_key_for_spotlight_exhibits] do %>
-<div id="exhibit-masthead" class="jumbotron <%= 'with-image' if current_exhibit.masthead.try(:display?) %>">
-  <% if current_exhibit.masthead.try(:display?) %>
-    <span class='background-container' style="background-image: url('<%= current_exhibit.masthead.image.cropped %>')"></span>
+<div id="exhibit-masthead" class="<%= 'jumbotron' unless current_search_masthead? %><%= ' with-image' if current_masthead %><%= ' with-search-masthead' if current_search_masthead? %>">
+  <% if current_masthead %>
+    <span class='background-container' style="background-image: url('<%= image_path(current_masthead.image.cropped) %>')"></span>
     <span class='background-container-gradient'></span>
   <% end %>
   <div class="container">
@@ -20,9 +20,15 @@
       <% end %>
     </ul>
     <div class="site-title h1">
-      <%= current_exhibit.title %>
-      <% if current_exhibit.subtitle %>
-        <small><%= current_exhibit.subtitle %></small>
+      <% if current_search_masthead? %>
+        <div class='search-title'>
+          <%= render 'spotlight/browse/search_title' %>
+        </div>
+      <% else %>
+        <%= current_exhibit.title %>
+        <% if current_exhibit.subtitle %>
+          <small><%= current_exhibit.subtitle %></small>
+        <% end %>
       <% end %>
     </div>
   </div>

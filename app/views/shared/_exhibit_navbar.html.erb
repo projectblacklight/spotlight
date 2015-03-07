@@ -1,5 +1,8 @@
-<div id="exhibit-navbar" class="navbar navbar-default" role="navigation">
+<div id="exhibit-navbar" class="navbar navbar-default<%= ' search-masthead' if current_search_masthead? %>" role="navigation">
   <div class="container">
+    <% if current_search_masthead? %>
+      <%= link_to(current_exhibit.title, spotlight.exhibit_path(current_exhibit), class: 'navbar-brand') %>
+    <% end %>
     <ul class="nav navbar-nav">
       <% if current_exhibit %>
         <li class="<%= "active" if current_page?(current_exhibit) %>"><%= link_to t(:'spotlight.curation.nav.home'), current_exhibit %></li>
@@ -8,7 +11,7 @@
         <% end %>
       <% end %>
     </ul>
-    <% if !current_exhibit || current_exhibit.searchable? %>
+    <% if should_render_spotlight_search_bar? %>
       <div class="navbar-right col-sm-4 col-md-4">
         <%= render_search_bar  %>
       </div>

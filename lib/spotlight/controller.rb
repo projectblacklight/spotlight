@@ -5,11 +5,19 @@ module Spotlight
     include Spotlight::Config
 
     included do
-      helper_method :current_exhibit
+      helper_method :current_exhibit, :current_masthead, :current_search_masthead?
     end
 
     def current_exhibit
       @exhibit
+    end
+
+    def current_masthead
+      [@search.try(:masthead), current_exhibit.try(:masthead)].compact.select(&:display?).first
+    end
+
+    def current_search_masthead?
+      @search && @search.masthead.try(:display?)
     end
 
     # overwrites Blacklight::Controller#blacklight_config

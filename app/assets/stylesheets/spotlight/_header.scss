@@ -14,6 +14,23 @@ $masthead-image-blur: 1px;
   z-index: 1;
 }
 
+#exhibit-navbar {
+  &.search-masthead {
+    background-color: $gray;
+    margin-bottom: 0;
+    border: 0;
+    border-radius: 0;
+    .navbar-nav {
+      float: right;
+    }
+    .navbar-brand, .navbar-nav li {
+      color: $gray-lighter;
+      &.active a {color: $gray;}
+      a {color: $gray-lighter;}
+    }
+  }
+}
+
 .navbar + .navbar {
   margin-top: 0;
 }
@@ -35,6 +52,15 @@ $masthead-image-blur: 1px;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
   }
+  &.with-search-masthead {
+    margin-bottom: $padding-base-vertical;
+    .search-title {
+      text-align: center;
+      small {
+        text-transform: uppercase ;
+      }
+    }
+  }
   .site-title {
     font-size: 30px;
   }
@@ -45,7 +71,7 @@ $masthead-image-blur: 1px;
   }
 
   &.with-image {
-    .site-title {
+    .site-title, .search-title {
       color: $white;
       text-shadow: 0 1px 0 $black;
     }
