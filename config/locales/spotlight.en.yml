@@ -351,7 +351,7 @@ en:
         instructions: Enter details for each librarian, curator or other contact person for this exhibit. Select the contacts you want to be show in the sidebar of the About Pages. Drag and drop contacts to specify the order in which they are shown in the sidebar.
       nav_link: About
       page_options:
-        published: "Publish"
+        published: "Publish" # Possibly no longer used
       sidebar:
         nav_link: About
       contacts:
