@@ -1,6 +1,6 @@
 <div>
-  <%= f.check_box :published %> <%= f.label :published, t(:'.published') %>
+  <%= f.check_box :published %>
 </div>
 <div>
-  <%= f.check_box :display_sidebar?, disabled: @page.child_pages.published.present? %> <%= f.label :display_sidebar?, t(:'spotlight.administration.show_sidebar') %>
+  <%= f.check_box :display_sidebar?, disabled: @page.child_pages.published.present? %>
 </div>
