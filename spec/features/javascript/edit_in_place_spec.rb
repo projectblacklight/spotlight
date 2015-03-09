@@ -4,6 +4,32 @@ describe 'Edit in place', type: :feature, js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:admin)   { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as admin }
+  describe 'Feature Pages' do
+    it 'should update the label' do
+      skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
+      visit spotlight.exhibit_dashboard_path(exhibit)
+
+      click_link "Feature pages"
+
+      add_new_page_via_button("My New Feature Page")
+
+      expect(page).to have_css('h3', text: "My New Feature Page")
+
+      within('.feature_pages_admin') do
+        expect(page).to     have_css('#exhibit_feature_pages_attributes_0_title[type="hidden"]', visible: false)
+        expect(page).not_to have_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
+        click_link("My New Feature Page")
+        expect(page).not_to have_css('#exhibit_feature_pages_attributes_0_title[type="hidden"]')
+        expect(page).to     have_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
+        fill_in 'exhibit_feature_pages_attributes_0_title', with: "My Newer Feature Page"
+      end
+      click_button "Save changes"
+
+      expect(page).to have_content("Feature pages were successfully updated.")
+      expect(page).to have_css('h3', text: "My Newer Feature Page")
+      expect(page).to_not have_css('h3', text: "My New Feature Page")
+    end
+  end
   describe 'Main navigation' do
     it 'should update the label' do
       skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
