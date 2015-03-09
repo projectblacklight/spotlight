@@ -3,7 +3,7 @@ module Spotlight
   class ItemUploader < CarrierWave::Uploader::Base
     include CarrierWave::MiniMagick
     extend Spotlight::ImageDerivatives
-    storage :file
+    storage Spotlight::Engine.config.uploader_storage
 
     apply_spotlight_image_derivative_versions
 

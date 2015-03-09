@@ -2,7 +2,7 @@ module Spotlight
   class AvatarUploader < CarrierWave::Uploader::Base
     include CarrierWave::MiniMagick
 
-    storage :file
+    storage Spotlight::Engine.config.uploader_storage
 
     version :thumb do
       process crop: :avatar  ## Crops this version based on original image

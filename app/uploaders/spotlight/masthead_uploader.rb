@@ -2,7 +2,7 @@
 module Spotlight
   class MastheadUploader < CarrierWave::Uploader::Base
     include CarrierWave::MiniMagick
-    storage :file
+    storage Spotlight::Engine.config.uploader_storage
 
     version :cropped do
       process crop: :image  ## Crops this version based on original image
