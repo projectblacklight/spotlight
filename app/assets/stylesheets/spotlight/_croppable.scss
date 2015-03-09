@@ -2,8 +2,9 @@
   background-image: url('/assets/Jcrop.gif');
   background-color: transparent !important;
 }
-.croppable-loading-area {
+.form-group.croppable-loading-area {
   min-height: 100px;
+  margin: ($padding-large-vertical * 2) $padding-large-vertical;
 }
 
 .loading-jcrop {

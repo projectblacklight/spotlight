@@ -63,3 +63,19 @@ label.radio {
 #main-container .nav {
   margin-bottom: $line-height-computed;
 }
+
+.tab-pane {
+  > p.instructions:first-child, > fieldset:first-child {
+    margin-top: -$padding-base-vertical;
+  }
+  fieldset {
+    margin-bottom: $padding-large-vertical * 3;
+    margin-top: $padding-large-vertical * 2;
+  }
+  legend {
+    margin-bottom: $padding-large-vertical;
+  }
+  div.radio + div input, div.radio + input[type="file"] {
+    margin-top: $padding-large-vertical;
+  }
+}

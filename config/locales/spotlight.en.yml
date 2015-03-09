@@ -436,7 +436,8 @@ en:
         search_masthead: "Masthead"
         search_thumbnail: "Thumbnail"
         masthead:
-          help: "You can select and crop an image to use as a background in your exhibit site's masthead. To use an image as a masthead background, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below."
+          help: "You can select and crop an image to use as a browse category-specific masthead, instead of the default site masthead, for this browse category's detail page."
+          help_secondary: "To create a browse category-specific masthead, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below."
         thumbnail:
           help: "You can select and crop an image to visually represent this search."
     browse:
