@@ -1,10 +1,11 @@
-<%= cache [current_exhibit,cache_key_for_spotlight_exhibits] do %>
+<% if current_exhibit %>
 <div id="exhibit-masthead" class="<%= 'jumbotron' unless current_search_masthead? %><%= ' with-image' if current_masthead %><%= ' with-search-masthead' if current_search_masthead? %>">
   <% if current_masthead %>
     <span class='background-container' style="background-image: url('<%= image_path(current_masthead.image.cropped) %>')"></span>
     <span class='background-container-gradient'></span>
   <% end %>
   <div class="container">
+    <%= cache [current_exhibit,cache_key_for_spotlight_exhibits] do %>
     <ul class="more-exhibits nav navbar-nav navbar-sm">
       <% if Spotlight::Exhibit.many? %>
         <li class="dropdown">
@@ -19,6 +20,8 @@
         </li>
       <% end %>
     </ul>
+    <% end if current_exhibit %>
+
     <div class="site-title h1">
       <% if current_search_masthead? %>
         <div class='search-title'>
@@ -33,4 +36,4 @@
     </div>
   </div>
 </div>
-<% end if current_exhibit %>
+<% end %>
