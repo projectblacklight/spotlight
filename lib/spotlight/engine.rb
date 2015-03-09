@@ -80,6 +80,9 @@ module Spotlight
       OpenStruct.new(field_name: Spotlight::Engine.config.uploaded_date_field)
     ]
 
+    # Configure the CarrierWave file storage mechanism
+    Spotlight::Engine.config.uploader_storage = :file
+
     # To present curators with analytics reports on the exhibit dashboard, you need to configure
     # an Analytics provider. Google Analytics support is provided out-of-the-box.
     Spotlight::Engine.config.analytics_provider = nil
