@@ -20,7 +20,7 @@
     },
     
     autocomplete_control: function() {
-      return '<input type="text" class="st-input-string form-control" data-twitter-typeahead="true"/>';
+      return '<input type="text" class="st-input-string form-control item-input-field" data-twitter-typeahead="true"/>';
     },
 
     addAutocompletetoSirTrevorForm: function() {

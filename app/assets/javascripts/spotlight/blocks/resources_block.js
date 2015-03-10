@@ -59,8 +59,14 @@ Spotlight.Block.Resources = (function(){
       ].join("\n");
 
       var panel = $(markup);
+      var context = this;
 
-      $('.remove a', panel).on('click', function(e) { e.preventDefault(); $(this).closest('.field').remove(); });
+      $('.remove a', panel).on('click', function(e) { 
+        e.preventDefault(); 
+        $(this).closest('.field').remove();
+        context.afterPanelDelete();
+        
+      });
 
       this.afterPanelRender(data, panel);
 
@@ -68,6 +74,10 @@ Spotlight.Block.Resources = (function(){
     },
 
     afterPanelRender: function(data, panel) {
+
+    },
+    
+    afterPanelDelete: function() {
 
     },
 

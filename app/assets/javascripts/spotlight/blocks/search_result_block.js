@@ -35,6 +35,14 @@ SirTrevor.Blocks.SearchResults =  (function(){
         return checkbox;
       }).join("\n");
     },
+    
+    afterPanelRender: function(data, panel) {
+      this.$el.find('.item-input-field').attr("disabled", "disabled");
+    },
+    
+    afterPanelDelete: function() {
+      this.$el.find('.item-input-field').removeAttr("disabled");
+    },
 
   });
 })();
