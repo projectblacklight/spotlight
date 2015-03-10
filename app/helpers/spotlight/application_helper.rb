@@ -131,6 +131,10 @@ module Spotlight
       config.label || blacklight_config.index_fields[solr_field].try(:label) || t(".#{solr_field}")
     end
 
+    def view_label view
+      t(:"blacklight.search.view.#{view}", default: blacklight_config.view[view].title || view.to_s)
+    end
+
     private
 
     def main_app_url_helper?(method)
