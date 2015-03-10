@@ -5,6 +5,8 @@
 <%= bootstrap_form_for([spotlight, @page.exhibit, @page], role: 'form', html: {
               data: {
                 :'form-observer' => true,
+                :'blacklight-configuration-index-fields' => available_index_fields,
+                :'blacklight-configuration-search-views' => available_view_fields,
                 :'attachment-endpoint' => spotlight.exhibit_attachments_url(@page.exhibit),
                 :'metadata-url' => spotlight.exhibit_metadata_path(@page.exhibit, format: "json"),
                 :'autocomplete-url'=> spotlight.autocomplete_exhibit_catalog_index_path(@page.exhibit, format: "json"),

@@ -3,6 +3,15 @@ module Spotlight
     def sir_trevor_markdown text
       GitHub::Markup.render(".md", text.gsub("<br>", "\n").gsub("<p>", "").gsub("</p>", "\n\n")).html_safe
     end
+
+    def available_index_fields
+      [{key: document_show_link_field, label: t(:'.title_placeholder')}] + (@page.exhibit.blacklight_configuration.default_blacklight_config.index_fields.map { |k,v| { key: k, label: index_field_label(nil, k) }})
+    end
+
+    def available_view_fields
+      current_exhibit.blacklight_configuration.default_blacklight_config.view.to_h.reject { |k,v| v.if === false}.map { |k,v| { key: k, label: view_label(k) }}
+    end
+
     def has_title? document
       document_heading(document) != document.id
     end
