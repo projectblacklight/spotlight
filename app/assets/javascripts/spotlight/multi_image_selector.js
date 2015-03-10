@@ -1,24 +1,26 @@
 // Module to add multi-image selector to widget panels
 
 (function(){
-  $.fn.multiImageSelector = function(thumbnails) {
+  $.fn.multiImageSelector = function(image_versions) {
     var changeLink          = $(" <a href='javascript:;'>Change</a>"),
         thumbsListContainer = $("<div class='thumbs-list' style='display:none'></div>"),
         thumbList           = $("<ul></ul>"),
         panel;
 
+    var thumbnails = $.map(image_versions, function(e) { return e['thumb']; });
+
     return init(this);
 
     function init(el) {
       panel = el;
-      if(thumbnails && thumbnails.length > 1) {
+      if(image_versions && image_versions.length > 1) {
         addChangeLink();
         addThumbsList();
       }
     }
     function addChangeLink() {
       $('[data-panel-image-pagination]', panel)
-        .html("Image <span data-current-image='true'>" + currentThumbIndex() + "</span> of " + thumbnails.length)
+        .html("Image <span data-current-image='true'>" + indexOf(currentThumb()) + "</span> of " + image_versions.length)
         .show()
         .append(changeLink);
       addChangeLinkBehavior();
@@ -26,8 +28,8 @@
     function currentThumb(){
       return $("[data-item-grid-thumbnail]", panel).attr('value');
     }
-    function currentThumbIndex(){
-      if( (index = thumbnails.indexOf(currentThumb())) > -1 ){
+    function indexOf(thumb){
+      if( (index = thumbnails.indexOf(thumb)) > -1 ){
         return index + 1;
       } else {
         return 1;
@@ -100,15 +102,16 @@
       )
     }
     function addThumbsToList(){
-      $.each(thumbnails, function(i){
-        var listItem = $('<li><a href="javascript:;"><img data-src="' + thumbnails[i] +'" /></a></li>');
+      $.each(image_versions, function(i){
+        var listItem = $('<li><a href="javascript:;"><img data-full-image="' + image_versions[i]['full'] +'" data-src="' + image_versions[i]['thumb'] +'" /></a></li>');
         listItem.on('click', function(){
           var src = $('img', $(this)).attr('src');
           $('li', thumbList).removeClass('active');
           $(this).addClass('active');
           $(".pic.thumbnail img", panel).attr("src", src);
           $("[data-item-grid-thumbnail]", panel).attr('value', src);
-          $('[data-panel-image-pagination] [data-current-image]', panel).text(currentThumbIndex());
+          $("[data-item-grid-full-image]", panel).attr('value', $('img', $(this)).data('full-image'));
+          $('[data-panel-image-pagination] [data-current-image]', panel).text(indexOf(currentThumb()));
           scrollToActiveThumb()
         });
         $("img", listItem).on('load', function() {

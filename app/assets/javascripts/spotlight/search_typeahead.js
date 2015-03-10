@@ -111,7 +111,7 @@ function swapInputForPanel(input, panel, data){
   $("[data-panel-id-display]", panel).text(data['id']);
   $(input.data('id_field')).val(data['id']);
 
-  panel.multiImageSelector(data['thumbnails']);
+  panel.multiImageSelector(data['image_versions']);
 
   $(input.data('checkbox_field')).prop('checked', true);
   input.attr('type', 'hidden');
