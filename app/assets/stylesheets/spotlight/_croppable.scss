@@ -1,5 +1,5 @@
 @mixin jcrop-loading-background {
-  background-image: url('/assets/Jcrop.gif');
+  background-image: image-url('Jcrop.gif');
   background-color: transparent !important;
 }
 .croppable-loading-area {
