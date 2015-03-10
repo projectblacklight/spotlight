@@ -7,7 +7,8 @@ module Spotlight
         bg_color: 'black',
         bg_opacity: '.4',
         aspect_ratio: 15,
-        box_width: '600'
+        box_width: '600',
+        initial_set_select: '[0, 0, 1800, 120]'
       }
     end
 
@@ -18,7 +19,8 @@ module Spotlight
         bg_color: 'black',
         bg_opacity: '.4',
         box_width: '600',
-        aspect_ratio: 4.0 / 3.0
+        aspect_ratio: 4.0 / 3.0,
+        initial_set_select: '[0, 0, 400, 300]'
       }
     end
   end
