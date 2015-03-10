@@ -48,3 +48,37 @@
     }
   }
 }
+
+.item-features {
+  .carousel-indicators {
+    bottom: initial;
+    left: initial;
+    margin-left: 0;
+    text-align: left;
+
+    &.col-sm-6 {
+      @extend .col-sm-6;
+    }
+
+    li {
+      display: relative; 
+      width: 100%;
+      height: auto;
+      text-indent: 0;
+      margin: 0;
+      border: none;
+      border-radius: 0;
+
+      @extend .list-group-item;
+    }
+
+    .active, .active:hover {
+      @extend .list-group-item;
+
+      width: 100%;
+      height: auto;
+
+      a { color: #fff; }
+    }
+  }
+}

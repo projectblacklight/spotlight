@@ -4,23 +4,26 @@
 
 <div class="content-block item-features">
   <% if solr_documents_features_block.documents? %>
-    <div id="<%= html_id %>" data-interval="false" class="slideshow  center-block carousel" data-ride="carousel">
+  <div id="<%= html_id %>" class="row carousel" data-ride="carousel"  data-interval="false">
       <div class="col-sm-6">
         <div class="carousel-inner">
           <% solr_documents_features_block.documents.each_with_index do |document, index| %>
             <div class="item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
-              <% if block_thumb = solr_documents_features_block.document_options(document.id)[:thumbnail_image_url] %>
-                <div class="thumbnail"><%= link_to_document(document, image_tag(block_thumb), counter: -1) %></div>
+              <% if block_thumb = solr_documents_features_block.document_options(document.id)[:full_image_url] %>
+                <%= link_to_document(document, image_tag(block_thumb), counter: -1) %>
               <% elsif has_thumbnail? document %>
-                <div class="thumbnail"><%= render_thumbnail_tag(document, {}, document_counter: -1) %></div>
+                <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
               <% end %>
             </div>
 
             <% indicators << capture do %>
               <li data-target="#<%= html_id %>" data-slide-to="<%= index %>" class="list-group-item <%= 'active' if index == 0 %>">
-                <a href="#" title="<%= (caption_text = render_index_field_value(document, solr_documents_features_block.primary_caption_field || document_show_link_field)) %>">
+                <a href="#" title="<%= (caption_text = render_index_field_value(document, (solr_documents_features_block.primary_caption_field if solr_documents_features_block.primary_caption?) || document_show_link_field)) %>">
                   <%= truncate(caption_text, length: 95) %>
                 </a>
+                <% if solr_documents_features_block.secondary_caption? %>
+                  <p><%= render_index_field_value(document, solr_documents_features_block.secondary_caption_field) %></p>
+                <% end %>
               </li>
             <% end %>
 
@@ -29,7 +32,7 @@
       </div>
 
       <!-- Indicators -->
-      <ol class="slideshow-indicators col-sm-6 list-group list-striped">
+      <ol class="carousel-indicators col-sm-6 list-group list-striped">
         <%= safe_join(indicators, "\n") %>
       </ol>
     </div>
