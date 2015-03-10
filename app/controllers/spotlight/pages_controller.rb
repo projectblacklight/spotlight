@@ -16,7 +16,7 @@ module Spotlight
 
       respond_to do |format|
         format.html
-        format.json { render json: @pages.published.to_json(methods: :thumbnail_image_url) }
+        format.json { render json: @pages.published.to_json(methods: [:thumbnail_image_url]) }
       end
     end
 

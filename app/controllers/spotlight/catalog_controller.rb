@@ -39,7 +39,7 @@ class Spotlight::CatalogController < ::CatalogController
   # setup within their index analyzer. This will ensure that this method returns
   # results when a partial match is passed in the "q" parameter.
   def autocomplete
-    (_, @document_list) = get_search_results(params, blacklight_config.default_autocomplete_solr_params)
+    (_, @document_list) = get_search_results(params, blacklight_config.default_autocomplete_solr_params.merge(fq: ["-#{Spotlight::SolrDocument.visibility_field(current_exhibit)}:false"]))
 
     respond_to do |format|
       format.json do
