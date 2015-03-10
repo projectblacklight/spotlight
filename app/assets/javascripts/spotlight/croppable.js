@@ -7,6 +7,7 @@ Spotlight.onLoad(function() {
   Croppable plugin
   Implements http://deepliquid.com/content/Jcrop.html
   Add jcrop data-attributes to file input (with data-croppable='true') to instantiate.
+  Adds initialSetSelect option to set a select box on the intial upload of an object.
 */
 
 (function($) {
@@ -25,8 +26,12 @@ Spotlight.onLoad(function() {
       var previewbox = $("#" + cropid + "_previewbox");
       var jcropLoadingArea = cropbox.closest('.croppable-loading-area');
 
+      if(cropinfo == '[0,0,0,0]'){
+        cropinfo = null;
+      }
+
       var defaults = {
-        setSelect: $.parseJSON(cropinfo || pluginDefults['setSelect']),
+        setSelect: $.parseJSON(cropinfo || JSON.stringify(fileUpload.data('initialSetSelect')) || pluginDefults['setSelect']),
         selector: cropid
       }
 
@@ -55,6 +60,7 @@ Spotlight.onLoad(function() {
            // add 1x1 gif to to img tag so it's loaded
           cropbox[0].src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
         }
+
         cropbox.Jcrop(
           $.extend(options, {
             onSelect: update,
@@ -63,14 +69,17 @@ Spotlight.onLoad(function() {
         );
       }
       cropbox.data('jcropProcessed', 'true');
+      var jcrop_api = cropbox.data('Jcrop');
 
       cropbox.on('load', function(){
         jcropLoadingArea.removeClass("loading-jcrop");
+        if(jcrop_api) {
+          jcrop_api.setSelect(options['setSelect']);
+        }
       });
 
       fileUpload.on('change', function() {
         jcropLoadingArea.addClass("loading-jcrop");
-        var jcrop_api = cropbox.data('Jcrop');
         if(this.files){
           var file = this.files[0];
           var img = cropbox[0];
