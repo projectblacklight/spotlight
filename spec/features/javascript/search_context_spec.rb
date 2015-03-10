@@ -27,7 +27,7 @@ feature "Search contexts" do
       expect(page).not_to have_css(".title")
     end
 
-    find('.thumbnail a').click
+    find('.thumbnail a').trigger("click")
 
     expect(page).to have_selector '.breadcrumb a', text: "Home"
   end
@@ -63,8 +63,8 @@ feature "Search contexts" do
       expect(page).to have_css(".thumbnail a img")
       expect(page).not_to have_css(".title")
     end
-
-    find('.thumbnail a').click
+    
+    find('.thumbnail a').trigger("click")
 
     expect(page).to have_selector '.breadcrumb a', text: "Home"
     expect(page).to have_link "Exhibit Title", href: spotlight.exhibit_feature_page_path(exhibit, Spotlight::FeaturePage.last)
