@@ -9,12 +9,18 @@
 
 SirTrevor.Blocks.Rule = (function(){
 
-  return Spotlight.Block.extend({
+  return SirTrevor.Block.extend({
     type: "rule",
 
     title: function() { return "Horizontal Rule"; },
 
     icon_name: "rule",
+
+    previewable: false,
+    
+    editorHTML: function() {
+      return _.template(this.template, this)(this);
+    },
 
     template: '<hr />'
   });
