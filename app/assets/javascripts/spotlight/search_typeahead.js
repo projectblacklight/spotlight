@@ -9,6 +9,8 @@
 
     function addAutocompleteBehavior( typeAheadInput, settings ) {
       var settings = $.extend({
+        displayKey: 'title',
+        minLength: 0,
         highlight: (typeAheadInput.data('autocomplete-highlight') || true),
         hint: (typeAheadInput.data('autocomplete-hint') || false),
         autoselect: (typeAheadInput.data('autocomplete-autoselect') || true)
@@ -22,7 +24,7 @@
       }
 
       typeAheadInput.typeahead(settings, {
-        displayKey: 'title',
+        displayKey: settings.displayKey,
         source: results.ttAdapter(),
         templates: {
           suggestion: Handlebars.compile('<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail thumbnail"><img src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>')
