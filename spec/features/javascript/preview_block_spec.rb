@@ -17,7 +17,6 @@ feature "Block preview" do
   end
 
   scenario "should allow you to preview a widget", js: true do
-    skip("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
 
     add_widget 'solr_documents'
     fill_in_typeahead_field with: "dq287tq6352"

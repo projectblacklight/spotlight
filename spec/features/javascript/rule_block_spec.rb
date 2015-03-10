@@ -7,7 +7,6 @@ describe "Horizontal rule block", type: :feature, js: true do
   before { login_as exhibit_curator }
 
   it "should allow the user to select which image in a multi image object to display" do
-    skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
     exhibit.home_page.content = "[]"
     exhibit.home_page.save
 

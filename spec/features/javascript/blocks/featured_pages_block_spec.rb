@@ -17,7 +17,6 @@ describe "Featured Pages Blocks", type: :feature do
   end
 
   it 'should save the selected exhibits', js: true do
-    skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
 
     click_link("Edit")

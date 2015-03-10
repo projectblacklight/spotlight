@@ -69,6 +69,10 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  if ENV['CI']
+    config.filter_run_excluding js: true
+  end
+
   config.include Devise::TestHelpers, type: :controller
   config.include Devise::TestHelpers, type: :view
   config.include Spotlight::TestViewHelpers, type: :view

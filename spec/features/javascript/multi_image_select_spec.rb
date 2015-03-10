@@ -7,7 +7,6 @@ describe "Multi image selector", type: :feature, js: true do
   before { login_as exhibit_curator }
 
   it "should allow the user to select which image in a multi image object to display" do
-    skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
 
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
     
