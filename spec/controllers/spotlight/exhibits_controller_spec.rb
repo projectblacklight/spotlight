@@ -40,13 +40,6 @@ describe Spotlight::ExhibitsController, :type => :controller do
       end
     end
 
-    describe "#import" do
-      it "should not be allowed" do
-        get :import, id: exhibit 
-        expect(response).to redirect_to main_app.new_user_session_path
-      end
-    end
-
     describe "#process_import" do
       it "should not be allowed" do
         patch :process_import, id: exhibit 
@@ -83,13 +76,6 @@ describe Spotlight::ExhibitsController, :type => :controller do
       it "should not be allowed" do
         get :new
         expect(response).to_not be_successful
-      end
-    end
-
-    describe "#import" do
-      it "should be successful" do
-        get :import, id: exhibit
-        expect(response).to be_successful
       end
     end
 

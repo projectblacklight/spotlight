@@ -264,11 +264,13 @@ en:
           header: "Most popular pages"
     exhibits:
       breadcrumb: Home
+      delete:
+        heading: Delete exhibit
+        warning_html: This action is irreversible. Be sure to back up the exhibit settings and content using the %{export_link} feature before proceeding.
       edit:
         header: Settings
-        import: Import
-        delete_exhibit: Delete exhibit
-        delete_exhibit_warning_html: This action is irreversible. Be sure to back up the exhibit settings and content using the %{export_link} feature before proceeding.
+        basic_settings:
+          heading: Basic settings
       form:
         fields:
           contact_emails:
@@ -279,15 +281,13 @@ en:
       new:
         header: Create a new exhibit
       import:
-        header: Import/Export
-        import:
-          header: Import exhibit data
-          instructions: You can import an exhibit JSON file exported from this application to use that data file to define this exhibit.
-          button: Import data
-        export:
-          header: Export exhibit data
-          instructions: You can create a backup of this exhibit by exporting the data that defines it to a JSON file. You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.
-          download: Export data
+        heading: Import data
+        instructions: You can import an exhibit JSON file exported from this application to use that data file to define this exhibit.
+        button: Import data
+      export:
+        heading: Export data
+        instructions: You can create a backup of this exhibit by exporting the data that defines it to a JSON file. You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.
+        download: Export data
       confirmation_status:
         confirmed: Confirmed.
         confirmation_sent: Confirmation sent.

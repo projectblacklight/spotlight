@@ -5,7 +5,6 @@ Spotlight::Engine.routes.draw do
   resources :exhibits, path: '/', except: [:index, :show] do
     member do
       get 'exhibit', to: 'exhibits#show', as: 'get'
-      get 'import', to: 'exhibits#import'
       post 'import', to: 'exhibits#process_import'
       patch 'import', to: 'exhibits#process_import'
       post 'reindex', to: 'exhibits#reindex'

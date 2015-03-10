@@ -1,0 +1,8 @@
+<div role="tabpanel" class="tab-pane" id="export">        
+  <div class="row col-md-12">
+    <p class="instructions"><%= t :'.instructions' %></p>
+    <div class="primary-actions">
+      <%= link_to t(:'.download'), get_exhibit_path(current_exhibit, format: 'json'), class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
