@@ -5,7 +5,7 @@ describe 'spotlight/browse/search', :type => :view do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   before :each do
     allow(search).to receive_messages(count: 15)
-    allow(search).to receive_message_chain(:thumbnail, :image, cropped: "/some/image")
+    allow(search).to receive_message_chain(:thumbnail, :image, thumb: "/some/image")
   end
 
   before :each do

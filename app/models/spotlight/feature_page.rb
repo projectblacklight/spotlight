@@ -20,7 +20,7 @@ module Spotlight
     end
 
     def thumbnail_image_url
-      thumbnail.image.cropped.url if thumbnail and thumbnail.image
+      thumbnail.image.thumb.url if thumbnail and thumbnail.image
     end
   end
 end

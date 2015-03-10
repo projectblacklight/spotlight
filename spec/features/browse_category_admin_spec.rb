@@ -60,7 +60,7 @@ describe "Browse Category Administration", :type => :feature do
       search.reload
 
       expect(search.thumbnail).not_to be nil
-      expect(search.thumbnail.image.cropped).not_to be_nil
+      expect(search.thumbnail.image.thumb).not_to be_nil
       expect(search.thumbnail.image.path).to end_with "avatar.png"
     end
   end

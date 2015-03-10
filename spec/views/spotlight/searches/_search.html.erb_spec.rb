@@ -7,7 +7,7 @@ describe "spotlight/searches/_search.html.erb", :type => :view do
   before do
     allow(view).to receive(:edit_search_path).and_return("/edit")
     allow(view).to receive(:search_path).and_return("/search")
-    allow(search).to receive_message_chain(:thumbnail, :image, cropped: "/some/image")
+    allow(search).to receive_message_chain(:thumbnail, :image, thumb: "/some/image")
     allow(search).to receive(:params).and_return({})
 
     form_for(search, url: '/update') do |f|

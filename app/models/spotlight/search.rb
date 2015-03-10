@@ -23,7 +23,7 @@ class Spotlight::Search < ActiveRecord::Base
   include Spotlight::Catalog::AccessControlsEnforcement
 
   def thumbnail_image_url
-    thumbnail.image.cropped.url if thumbnail and thumbnail.image
+    thumbnail.image.thumb.url if thumbnail and thumbnail.image
   end
 
   def count
