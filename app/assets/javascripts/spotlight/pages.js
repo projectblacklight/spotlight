@@ -23,4 +23,6 @@ Spotlight.onLoad(function(){
 
     new Spotlight.BlockLimits(editor).enforceLimits();
   }
+
+  $('.carousel').carousel();
 });
