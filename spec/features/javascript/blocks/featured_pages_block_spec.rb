@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe "Featured Pages Blocks", type: :feature, js: true do
+describe "Featured Pages Blocks", type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let!(:page1) {
+  let!(:feature_page) {
     FactoryGirl.create(
       :feature_page,
       title: "xyz",
@@ -16,7 +16,7 @@ describe "Featured Pages Blocks", type: :feature, js: true do
     login_as exhibit_curator
   end
 
-  it 'should save the selected exhibits' do
+  it 'should save the selected exhibits', js: true do
     skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
 
@@ -24,11 +24,9 @@ describe "Featured Pages Blocks", type: :feature, js: true do
 
     add_widget 'featured_pages'
     
-    fill_in_typeahead_field "page-grid-id_0_title", with: "xyz"
+    fill_in_typeahead_field with: "xyz"
     
     save_page
-    
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
 
     expect(page).to have_content "xyz"
   end

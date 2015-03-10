@@ -37,7 +37,7 @@ describe Spotlight::ApplicationHelper, :type => :helper do
     end
     describe "blacklight_view_config_for_search_block" do
       let(:sir_trevor_block) { 
-        SirTrevorRails::Block.new({type: 'xyz', data: {"list" => "on", "gallery" => "on", "slideshow" => "null"}}, 'parent')
+        SirTrevorRails::Block.new({type: 'xyz', data: {view: ["list", "gallery"]}}, 'parent')
       }
 
       let(:config) { Blacklight::Configuration.new do |config|

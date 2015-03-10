@@ -48,8 +48,21 @@
     loadFormDataByKey: function(data) {
       this.$(':input').not('button,:input[type=hidden]').each(function(index, input) {
         var key = $(input).data('key') || input.getAttribute('name');
-        // by wrapping it in an array, it'll "just work" for radio and checkbox fields too
-        $(this).val([data[key]]);
+
+        if (key) {
+        
+          if (key.match("\\[\\]$")) {
+            key = key.replace("[]", "");
+          }
+          
+          // by wrapping it in an array, this'll "just work" for radio and checkbox fields too
+          var input_data = data[key];
+
+          if (!(input_data instanceof Array)) {
+            input_data = [input_data];
+          }
+          $(this).val(input_data);
+        }
       });
     },
   },

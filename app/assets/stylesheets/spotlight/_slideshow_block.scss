@@ -1,86 +1,50 @@
-$gray-light: lightgray !default;
-$gray-dark: darkgray !default;
+.carousel-block {
+  
+  .carousel-inner > .item > a > img {
+    // center the image
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-.slideshow-block {
-  background-color: whitesmoke;
-  border: 1px solid #ddd;
+  .carousel-caption {
 
-  .slideshow-inner {
-    overflow: hidden;
+    // replace bottom margin with padding
+    bottom: 0;
+    padding-bottom: 40px;
 
-    .item {
-      width: 100%;
-      padding: 20px 0 0 0;
-      position: relative;
-      text-align: center;
-      vertical-align: middle;
+    // fill left + right
+    left: 0;
+    right: 0;
+    
+    // and add a nice background gradient to the captions
+    @include gradient-vertical($start-color: rgba(0,0,0,.0001), $end-color: rgba(0,0,0,.5));
+  }
 
-      img {
-        margin: 0 auto;
-        padding: 10px 0;
-        display: inline-block;
-        vertical-align: middle;
-      }
+  // Scale up controls for tablets and up
+  @media screen and (min-width: $screen-sm-min) {
+    // Show and left align the captions
+    .carousel-caption {
+      left: 0;
+      right: 0;
+      padding-bottom: 50px;
     }
   }
 
-  .slideshow-indicators {
-    list-style: none;
-    padding: 10px 0;
-    position: relative;
-    text-align: center;
-    z-index: 15;
-  }
-
-  .slideshow-indicators li {
-    background-color: transparent;
-    border-radius: 10px;
-    cursor: pointer;
-    border: 1px solid $gray-light;
-    display: inline-block;
-    height: 12px;
-    padding: 0;
-    width: 12px;
-  }
-
-  .slideshow-indicators .active {
-    background-color: $gray-light;
-  }
-
-  .carousel-control {
-    background-image: none;
-    height: 80%;
-    width: 50px;
-
-    .glyphicon {
-      color: $gray-dark;
+  &.carousel-height-small {
+    .carousel-inner > .item > a > img {
+      height: 350px;
     }
   }
 
-  .caption {
-
-    .primary, .secondary {
-      font-size: 1em;
-      opacity: 0.75;
-      line-height: 1.6em;
-      height: 1.8em;
-      min-width: 200px;
-      overflow: hidden;
-      padding: 0 10%;
-      width: 100%;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .caption-hover {
-      background-color: $gray-dark;
-      color: white;
-      bottom: 0;
-      overflow: visible;
-      max-height: none;
-      position: absolute;
+  &.carousel-height-medium {
+    .carousel-inner > .item > a > img {
+      height: 500px;
     }
   }
 
+  &.carousel-height-large {
+    .carousel-inner > .item > a > img {
+      height: 800px;
+    }
+  }
 }
-

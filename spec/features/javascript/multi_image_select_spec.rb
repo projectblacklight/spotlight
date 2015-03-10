@@ -3,28 +3,24 @@ require "spec_helper"
 describe "Multi image selector", type: :feature, js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-  let!(:feature_page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+  let(:feature_page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
   before { login_as exhibit_curator }
 
   it "should allow the user to select which image in a multi image object to display" do
     skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
-    exhibit.home_page.content = "[]"
-    exhibit.home_page.save
 
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    click_link exhibit_curator.email
-    within '#user-util-collapse .dropdown' do
-      click_link 'Dashboard'
+    visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
+    
+    add_widget 'solr_documents'
+    
+    fill_in_typeahead_field with: "xd327cm9378"
+    
+    expect(page).to have_selector ".panel"
+
+    within('.panel') do
+      expect(page).to have_content(/Image \d of \d/)
+      expect(page).to have_link "Change"
     end
-    click_link "Feature pages"
-
-    within("[data-id='#{feature_page.id}']") do
-      click_link "Edit"
-    end
-
-    add_widget 'multi-up-item-grid'
-
-    fill_in_typeahead_field "item-grid-id_0_title", with: "xd327cm9378"
 
     save_page
     
@@ -36,7 +32,7 @@ describe "Multi image selector", type: :feature, js: true do
 
     click_link("Edit")
 
-    within('.item-grid-admin') do
+    within('.panel') do
       expect(page).to have_content(/Image \d of \d/)
       find('a', text: "Change").trigger('click')
     end

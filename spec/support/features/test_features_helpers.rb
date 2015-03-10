@@ -1,14 +1,14 @@
 module Spotlight::TestFeaturesHelpers
-  def fill_in_typeahead_field selector, opts = {}
+  def fill_in_typeahead_field opts = {}
     # Poltergeist / Capybara doesn't fire the events typeahead.js
     # is listening for, so we help it out a little:
     page.execute_script <<-EOF
-      $("input[name='#{selector}']").val("#{opts[:with]}").trigger("input");
-      $("input[name='#{selector}']").typeahead("open");
+      $("[data-twitter-typeahead]").val("#{opts[:with]}").trigger("input");
+      $("[data-twitter-typeahead]").typeahead("open");
       $(".tt-suggestion").click();
     EOF
 
-    find('.tt-suggestion').click
+    find('.tt-suggestion', text: opts[:with], match: :first).click
   end
 
   def add_widget type = nil

@@ -144,7 +144,7 @@ describe Spotlight::ExhibitExportSerializer do
 
   describe "should export saved searches with query parameters that can be re-generated" do
     before do
-      source_exhibit.feature_pages.create content: [{:type=>"search_results", :data=>{:"slug"=>search.slug, :atom=>nil, :rss=>nil, :gallery=>nil, :slideshow=>nil, :list=>"on"}}].to_json
+      source_exhibit.feature_pages.create content: [{:type=>"search_results", :data=>{"item"=> { search.slug => { id: search.slug, display: "true"}}, view: ["list"]}}].to_json
     end
 
     subject do

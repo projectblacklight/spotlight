@@ -38,7 +38,7 @@
         $(this).typeahead("val", "");
         $(this).val("");
 
-        context.createItemPanel($.extend(data, {display: true}));
+        context.createItemPanel($.extend(data, {display: "true"}));
       }
     },
 

@@ -67,7 +67,7 @@ module Spotlight
     def blacklight_view_config_for_search_block block
       # Reject any views that aren't configured to display for this block
       blacklight_config.view.select do |view,_|
-        selected_search_block_views(block).include? view.to_s
+        block.view.include? view.to_s
       end
     end
     
