@@ -85,7 +85,7 @@ describe Spotlight::ApplicationHelper, :type => :helper do
     it "should generate a twitter card for the exhibit" do
       allow(helper).to receive(:exhibit_root_url).and_return("some/url")
       allow(current_exhibit).to receive(:thumbnail).and_return(double)
-      allow(current_exhibit).to receive_message_chain(:thumbnail, :image, :cropped, url: "/image")
+      allow(current_exhibit).to receive_message_chain(:thumbnail, :image, :thumb, url: "/image")
 
       helper.add_exhibit_twitter_card_content
 
