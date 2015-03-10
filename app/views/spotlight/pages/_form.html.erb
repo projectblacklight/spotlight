@@ -8,11 +8,9 @@
                 :'blacklight-configuration-index-fields' => available_index_fields,
                 :'blacklight-configuration-search-views' => available_view_fields,
                 :'attachment-endpoint' => spotlight.exhibit_attachments_url(@page.exhibit),
-                :'metadata-url' => spotlight.exhibit_metadata_path(@page.exhibit, format: "json"),
-                :'autocomplete-url'=> spotlight.autocomplete_exhibit_catalog_index_path(@page.exhibit, format: "json"),
-                :'pages-url' => spotlight.exhibit_feature_pages_path(@page.exhibit, format: "json"),
-                :'searches-endpoint' => spotlight.exhibit_searches_path(@page.exhibit, format: "json"),
-                :'available-search-views-endpoint' => spotlight.exhibit_available_search_views_path(@page.exhibit, format: "json"),
+                :'autocomplete-exhibit-catalog-index-path'=> spotlight.autocomplete_exhibit_catalog_index_path(@page.exhibit, q: "%QUERY", format: "json"),
+                :'autocomplete-exhibit-feature-pages-path' => spotlight.exhibit_feature_pages_path(@page.exhibit, format: "json"),
+                :'autocomplete-exhibit-searches-path' => spotlight.exhibit_searches_path(@page.exhibit, format: "json"),
                 :'preview-url' => (spotlight.exhibit_preview_block_url(@page.exhibit, @page) if @page.persisted?)
               }
             }) do |f| %>
