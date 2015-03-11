@@ -18,7 +18,7 @@ feature "Solr Document Block", feature: true do
   end
 
   scenario "it should allow you to add the solr document block widget", js: true do
-    expect(page).to have_content "This widget displays one to five thumbnail images of repository items in a single row grid."
+    expect(page).to have_content "This widget displays thumbnail images of repository items in a single row grid."
     expect(page).to have_content "Primary caption"
     expect(page).to have_content "Secondary caption"
     expect(page).to have_content "Display text on"
