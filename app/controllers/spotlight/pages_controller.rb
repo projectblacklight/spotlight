@@ -3,6 +3,7 @@ module Spotlight
     before_filter :authenticate_user!, except: [:show]
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
+    helper Openseadragon::OpenseadragonHelper
     include Spotlight::Base
     include Blacklight::Catalog::SearchContext
     include Spotlight::Catalog::AccessControlsEnforcement

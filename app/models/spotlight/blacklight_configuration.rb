@@ -73,6 +73,11 @@ module Spotlight
 
         config.show.partials.insert(2, "spotlight/catalog/tags")
 
+        config.view.embed.partials ||= ['openseadragon']
+        config.view.embed.if = false
+        config.view.embed.locals ||= { osd_container_class: "" }
+
+
         # Add any custom fields
         config.index_fields.merge! custom_index_fields
         config.index_fields = Hash[config.index_fields.sort_by { |k,v| field_weight(index_fields, k) }]
