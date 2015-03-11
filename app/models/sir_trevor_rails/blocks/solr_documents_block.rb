@@ -20,11 +20,20 @@ module SirTrevorRails::Blocks
     end
 
     def documents?
-      !documents.blank?
+      documents.present?
     end
 
     def text?
-      !text.blank?
+      text.present?
+    end
+
+    def text
+      val = super
+
+      # empty, in sir-trevor speak
+      unless val == "<p><br></p>"
+        val
+      end
     end
 
     def items
