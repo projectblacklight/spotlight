@@ -13,11 +13,15 @@ module Spotlight
     end
 
     def current_masthead
-      [@search.try(:masthead), current_exhibit.try(:masthead)].compact.select(&:display?).first
+      [current_search.try(:masthead), current_exhibit.try(:masthead)].compact.select(&:display?).first
     end
 
     def current_search_masthead?
-      @search && @search.masthead.try(:display?)
+      current_search && current_search.masthead.try(:display?)
+    end
+
+    def current_search
+      @search if @search.present? && params[:action] == 'show'
     end
 
     # overwrites Blacklight::Controller#blacklight_config

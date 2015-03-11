@@ -7,6 +7,10 @@ describe Spotlight::Controller do
 
   subject { MockController.new }
 
+  before do
+    allow(subject).to receive_messages(params: {action: 'show'})
+  end
+
   describe "#current_exhibit" do
     it "should be nil by default" do
       expect(subject.current_exhibit).to be_nil
@@ -62,6 +66,12 @@ describe Spotlight::Controller do
       allow(exhibit).to receive_messages(masthead: exhibit_masthead)
       subject.instance_variable_set(:@exhibit, exhibit)
       expect(subject.current_masthead).to eq exhibit_masthead
+    end
+    it 'should not return the search masthead on the edit page' do
+      allow(search).to receive_messages(masthead: search_masthead)
+      subject.instance_variable_set(:@search, search)
+      allow(subject).to receive_messages(params: {action: 'edit'})
+      expect(subject.current_masthead).to be_nil
     end
   end
 end
