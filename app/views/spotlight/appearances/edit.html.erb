@@ -2,7 +2,7 @@
 <div id="content" class="col-md-9">
   <%= administration_page_title %>
 
-<%= bootstrap_form_for @appearance, url: spotlight.exhibit_appearance_path(@exhibit), layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5', html: {data: { autocomplete_exhibit_catalog_index_path: spotlight.autocomplete_exhibit_catalog_index_path(current_exhibit, format: "json") } } do |f| %>
+<%= bootstrap_form_for @appearance, url: spotlight.exhibit_appearance_path(@exhibit), layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5', html: {data: { autocomplete_exhibit_catalog_index_path: spotlight.autocomplete_exhibit_catalog_index_path(current_exhibit, q: "%QUERY", format: "json") } } do |f| %>
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active">
