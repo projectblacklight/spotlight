@@ -37,7 +37,7 @@ module Spotlight
     end
 
     def self.catalog_controller
-      @catalog_controller ||= Spotlight::Engine.config.catalog_controller_class.constantize
+      Spotlight::Engine.config.catalog_controller_class.constantize
     end
 
     def self.blacklight_config
