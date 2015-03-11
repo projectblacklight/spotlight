@@ -127,7 +127,7 @@ Spotlight.Block.Resources = (function(){
     
     afterLoadData: function(data) {
       var context = this;
-      $.each(Object.keys(data.item).map(function(k) { return data.item[k]}).sort(function(a,b) { return a.weight - b.weight; }), function(index, item) {
+      $.each(Object.keys(data.item || {}).map(function(k) { return data.item[k]}).sort(function(a,b) { return a.weight - b.weight; }), function(index, item) {
         context.createItemPanel(item);
       });
     },
