@@ -84,6 +84,40 @@ $masthead-image-blur: 1px;
     @extend .navbar-right;
   }
 
+  &.with-image .more-exhibits {
+    a {
+      color: $gray-lighter;
+      background: rgba(0, 0, 0, 0.4);
+      border-top-left-radius: $border-radius-base;
+      border-top-right-radius: $border-radius-base;
+    }
+    a:hover, a:focus, a:active {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .dropdown-menu a {
+      background: none;
+      color: $gray;
+      &:hover, &:focus, &:active {
+        background-color: $gray-lighter;
+      }
+    }
+  }
+
+  &.with-search-masthead {
+    .site-title {margin-top: $padding-large-vertical * 3;}
+
+    .more-exhibits {
+      @extend .navbar-left;
+      padding-top: $padding-base-vertical;
+
+      .dropdown-menu {
+        right: auto;
+        left: 0;
+      }
+    }
+  }
+
   // This is to add a background image to the masthead, in a way that
   // enables the site title and subtitle text to be visible above it.
   .background-container {
@@ -115,9 +149,9 @@ $masthead-image-blur: 1px;
 
 .col-md-4 {
   .submit-search-text {
-    // hide 'search' label 
+    // hide 'search' label
       // copied from .sr-only, sadly can't seem to use @extend in a media
-      // query like this, have to copy. 
+      // query like this, have to copy.
       position: absolute;
       width: 1px;
       height: 1px;
