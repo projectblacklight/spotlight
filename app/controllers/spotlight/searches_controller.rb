@@ -25,7 +25,8 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   end
 
   def autocomplete
-    (_, document_list) = get_search_results autocomplete_params
+    (_, document_list) = get_search_results(autocomplete_params, blacklight_config.default_autocomplete_solr_params)
+
     respond_to do |format|
       format.json do
         render json: { docs: autocomplete_json_response(document_list) }
@@ -67,9 +68,12 @@ class Spotlight::SearchesController < Spotlight::ApplicationController
   protected
 
   def autocomplete_params
+    ##
+    # Ideally, we would be able to search within results for all queries, but in practice
+    # searching within saved searches with a `q` parameter is.. hard.
+
     query_params = @search.query_params.with_indifferent_access
-    query_params[:q] = [query_params[:q], params[:q]].compact.join(' ')
-    query_params
+    query_params.merge(q: params[:q])
   end
 
   def attach_breadcrumbs

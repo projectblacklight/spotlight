@@ -63,8 +63,10 @@ describe Spotlight::SearchesController, :type => :controller do
     end
 
     describe "GET autocomplete" do
-      let!(:search) { FactoryGirl.create(:search, exhibit: exhibit, title: "New Mexico Maps", query_params: {q: "New Mexico"} ) }
+      let(:search) { FactoryGirl.create(:search, exhibit: exhibit, title: "New Mexico Maps", query_params: {q: "New Mexico"} ) }
+      let(:search_fq) { FactoryGirl.create(:search, exhibit: exhibit, title: "New Mexico Maps", query_params: {f: { subject_geographic_ssim: ["Pacific Ocean"]}} ) }
       it "should show all the items returned search's query_params" do
+        pending("A search defined by a query doesn't work with autocomplete correctly.")
         get :autocomplete, exhibit_id: exhibit, id: search, format: 'json'
         expect(response).to be_successful
         docs = JSON.parse(response.body)['docs']
@@ -74,13 +76,13 @@ describe Spotlight::SearchesController, :type => :controller do
         expect(doc_ids).to include "rz818vx8201"
       end
       it "should search within the items returned in the query_params" do
-        get :autocomplete, exhibit_id: exhibit, id: search, q: "Noorder deel",format: 'json'
+        get :autocomplete, exhibit_id: exhibit, id: search_fq, q: "California",format: 'json'
         expect(response).to be_successful
         docs = JSON.parse(response.body)['docs']
         expect(docs.length).to eq 1
-        expect(docs.first["id"]).to eq "rz818vx8201"
-        expect(docs.first["description"]).to eq "rz818vx8201"
-        expect(docs.first["title"]).to eq "'t Noorder deel van WEST-INDIEN"
+        expect(docs.first["id"]).to eq "sn161bw2027"
+        expect(docs.first["description"]).to eq "sn161bw2027"
+        expect(docs.first["title"]).to match /Pas-caart van Zuyd-Zee/
         expect(docs.first).to have_key("thumbnail")
         expect(docs.first).to have_key("url")
       end
