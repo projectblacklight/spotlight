@@ -11,8 +11,21 @@ Spotlight.onLoad(function() {
 
     $(clickElements).each(function() {
       var target = $($(this).data('input-select-target'));
-      $(this).on('click', function(){
-        target.prop('checked', true);
+
+      var event;
+
+      if ($(this).is("select")) {
+        event = 'change';
+      } else {
+        event = 'click';
+      }
+
+      $(this).on(event, function() {
+        if (target.is(":checkbox") || target.is(":radio")) {
+          target.prop('checked', true);
+        } else {
+          target.focus();
+        }
       });
     });
 
