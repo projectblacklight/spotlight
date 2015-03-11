@@ -14,15 +14,26 @@ module Spotlight::SolrDocument::SpotlightImages
 
   class Versions
     include Spotlight::ImageDerivatives
-    attr_reader :versions
+    attr_reader :versions, :document
 
     def initialize(document)
+      @document = document
       @versions = spotlight_image_derivatives.map do |derivative|
         version = version_name(derivative)
         self.class.send(:define_method, version) do
           document[derivative[:field]]
         end
         version
+      end
+    end
+
+    def image_versions *args
+
+      self.send(args.first).each_with_index.map do |img, i|
+        args.inject({}) do |hash, version|
+          hash[version] = self.send(version)[i]
+          hash
+        end
       end
     end
 

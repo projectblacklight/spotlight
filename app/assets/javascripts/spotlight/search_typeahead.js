@@ -9,23 +9,18 @@
 
     function addAutocompleteBehavior( typeAheadInput, settings ) {
       var settings = $.extend({
+        displayKey: 'title',
+        minLength: 0,
         highlight: (typeAheadInput.data('autocomplete-highlight') || true),
         hint: (typeAheadInput.data('autocomplete-hint') || false),
         autoselect: (typeAheadInput.data('autocomplete-autoselect') || true)
       }, options);
-      
-      var results;
-      if (settings.bloodhound) {
-        results = settings.bloodhound();
-      } else {
-        results = initBloodhound();
-      }
 
       typeAheadInput.typeahead(settings, {
-        displayKey: 'title',
-        source: results.ttAdapter(),
+        displayKey: settings.displayKey,
+        source: settings.bloodhound.ttAdapter(),
         templates: {
-          suggestion: Handlebars.compile('<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail thumbnail"><img src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>')
+          suggestion: Handlebars.compile(settings.template)
         }
       })
     }
@@ -33,13 +28,15 @@
   }
 })( jQuery );
 
-function initBloodhound() {
+function itemsBloodhound() {
   var results = new Bloodhound({
-    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.title); },
+    datumTokenizer: function(d) {
+      return Bloodhound.tokenizers.whitespace(d.title); 
+    },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     limit: 10,
     remote: {
-      url: $('form[data-autocomplete-url]').data('autocomplete-url') + '?q=%QUERY',
+      url: $('form[data-autocomplete-exhibit-catalog-index-path]').data('autocomplete-exhibit-catalog-index-path').replace("%25QUERY", "%QUERY"),
       filter: function(response) {
         return $.map(response['docs'], function(doc) {
           return doc;
@@ -49,54 +46,41 @@ function initBloodhound() {
   });
   results.initialize();
   return results;
-}
+};
 
-function addAutocompletetoSirTrevorForm(options) {
-  $('[data-twitter-typeahead]').spotlightSearchTypeAhead(options).on('click', function() {
-    $(this).select();
-    $(this).closest('.field').removeClass('has-error');
-    $($(this).data('checkbox_field')).prop('disabled', false);
-  }).on('change', function() {
-    $($(this).data('id_field')).val("");
-  }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
-    swapInputForPanel($(this), $($(this).data('target-panel')) , data);
-    if(nextTextField = $('input[type="text"]', $(this).closest('.field').next('.field'))) {
-      nextTextField.focus();
-    }
-  }).on('blur', function() {
-    if($(this).val() != "" && $($(this).data('id_field')).val() == "") {
-      $(this).closest('.field').addClass('has-error');
-      $($(this).data('checkbox_field')).prop('checked', false);
-      $($(this).data('checkbox_field')).prop('disabled', true);
-    }
-  });
+function itemsTemplate() {
+  return '<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail thumbnail"><img src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>';
 }
 
 function addAutocompletetoMastheadUpload(){
-  $('[data-masthead-typeahead]').spotlightSearchTypeAhead().on('click', function() {
-    $(this).select();
-  }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
-    var remoteUrlField = $($(this).data('remoteUrlField'));
-    var panel = $($(this).data('target-panel'));
-    swapInputForPanel($(this), panel, data);
-    $($(this).data('id-field')).val(data['global_id']);
-    remoteUrlField.val(data['full_images'][0]).trigger('change');
-    $(this).attr('type', 'text');
-    $('.thumbs-list li', panel).on('click.masthead', function(){
-      var index = $('.thumbs-list li').index($(this));
-      remoteUrlField.val(data['full_images'][index]).trigger('change');
+  if($('[data-masthead-typeahead]').length > 0) {
+    $('[data-masthead-typeahead]').spotlightSearchTypeAhead({bloodhound: itemsBloodhound(), template: itemsTemplate()}).on('click', function() {
+      $(this).select();
+    }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
+      var remoteUrlField = $($(this).data('remoteUrlField'));
+      var panel = $($(this).data('target-panel'));
+      swapInputForPanel($(this), panel, data);
+      $($(this).data('id-field')).val(data['global_id']);
+      remoteUrlField.val(data['full_images'][0]).trigger('change');
+      $(this).attr('type', 'text');
+      $('.thumbs-list li', panel).on('click.masthead', function(){
+        var index = $('.thumbs-list li').index($(this));
+        remoteUrlField.val(data['full_images'][index]).trigger('change');
+      });
     });
-  });
+  }
 }
 
 function addAutocompletetoFeaturedImage() {
-  $('[data-featured-item-typeahead]').spotlightSearchTypeAhead().on('click', function() {
-    $(this).select();
-  }).on('change', function() {
-    $($(this).data('id-field')).val("");
-  }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
-    $($(this).data('id-field')).val(data['id']);
-  });
+  if($('[data-featured-item-typeahead]').length > 0) {
+    $('[data-featured-item-typeahead]').spotlightSearchTypeAhead({bloodhound: itemsBloodhound(), template: itemsTemplate()}).on('click', function() {
+      $(this).select();
+    }).on('change', function() {
+      $($(this).data('id-field')).val("");
+    }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
+      $($(this).data('id-field')).val(data['id']);
+    });
+  }
 }
 
 function swapInputForPanel(input, panel, data){
@@ -111,7 +95,7 @@ function swapInputForPanel(input, panel, data){
   $("[data-panel-id-display]", panel).text(data['id']);
   $(input.data('id_field')).val(data['id']);
 
-  panel.multiImageSelector(data['thumbnails']);
+  panel.multiImageSelector(data['image_versions']);
 
   $(input.data('checkbox_field')).prop('checked', true);
   input.attr('type', 'hidden');

@@ -21,5 +21,6 @@
 //= require bootstrap/carousel
 //= require bootstrap-tagsinput
 //= require social-share-button
+//= require jquery.serializejson
 
 //= require_tree .

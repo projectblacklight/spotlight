@@ -5,8 +5,7 @@ feature "Block controls" do
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
 
-  scenario "should be split into separate sections", :js => true do
-    skip("Passing locally but Travis is throwing intermittent error because it doesn't seem to wait for form to be submitted.") if ENV["CI"]
+  scenario "should be split into separate sections", js: true do
     # create page
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email

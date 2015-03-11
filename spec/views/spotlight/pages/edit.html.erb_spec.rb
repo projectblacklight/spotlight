@@ -6,7 +6,7 @@ module Spotlight
     let(:page) { stub_model(FeaturePage, exhibit: exhibit) }
     before do
       assign(:page, page)
-      allow(view).to receive_messages(default_thumbnail_jcrop_options: {})
+      allow(view).to receive_messages(default_thumbnail_jcrop_options: {}, available_index_fields: [], available_view_fields: [])
     end
 
     it "renders the edit page form" do

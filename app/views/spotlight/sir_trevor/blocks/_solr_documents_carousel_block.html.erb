@@ -1,0 +1,48 @@
+<% solr_documents_carousel_block.with_solr_helper(self) %>
+<% indicators = [] %>
+<% html_id = "carousel-#{solr_documents_carousel_block.object_id}" %>
+<div class="content-block carousel-block carousel-height-<%= solr_documents_carousel_block.max_height %>">
+<% if solr_documents_carousel_block.documents? %>
+  <div id="<%= html_id %>" class="carousel slide" data-ride="carousel"  data-interval="<%= solr_documents_carousel_block.interval %>">
+    <div class="carousel-inner">
+    <% solr_documents_carousel_block.documents.each_with_index do |document, index| %>
+      <div class="item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
+        <% if block_thumb = solr_documents_carousel_block.document_options(document.id)[:full_image_url] %>
+          <%= link_to_document(document, image_tag(block_thumb), counter: -1) %>
+        <% elsif has_thumbnail? document %>
+          <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
+        <% end %>
+        <div class="carousel-caption">
+          <% if solr_documents_carousel_block.primary_caption? %>
+            <h3 class="primary">
+              <%= render_index_field_value document, solr_documents_carousel_block.primary_caption_field %>
+            </h3>
+          <% end %>
+          <% if solr_documents_carousel_block.secondary_caption? %>
+            <div class="secondary">
+              <%= render_index_field_value document, solr_documents_carousel_block.secondary_caption_field %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <% indicators << capture do %>
+        <li data-target="#<%= html_id %>" data-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>"></li>
+      <% end %>
+    <% end %>
+    </div>
+
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <%= safe_join(indicators, "\n") %>
+    </ol>
+
+    <!-- Controls -->
+    <a class="left carousel-control prev" href="#<%= html_id %>" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control next" href="#<%= html_id %>" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+  </div>
+<% end %>
+</div>

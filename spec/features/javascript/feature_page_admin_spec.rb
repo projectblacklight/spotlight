@@ -20,7 +20,6 @@ feature "Feature Pages Adminstration", js:  true do
   }
   before { login_as exhibit_curator }
   it "should be able to create new pages" do
-    skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
     login_as exhibit_curator
 
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
@@ -66,35 +65,19 @@ feature "Feature Pages Adminstration", js:  true do
   end
 
   it "should stay in curation mode if a user has unsaved data" do
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    click_link exhibit_curator.email
-    within '#user-util-collapse .dropdown' do
-      click_link 'Dashboard'
-    end
-    click_link "Feature pages"
-    within("[data-id='#{page1.id}']") do
-      click_link "Edit"
-    end
+    visit spotlight.edit_exhibit_feature_page_path(page1.exhibit, page1)
+
     fill_in("Title", with: "Some Fancy Title")
     click_link "Cancel"
     expect(page).not_to have_selector 'a', text: "Edit"
   end
 
   it "should stay in curation mode if a user has unsaved contenteditable data" do
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    click_link exhibit_curator.email
-    within '#user-util-collapse .dropdown' do
-      click_link 'Dashboard'
-    end
+    visit spotlight.edit_exhibit_feature_page_path(page1.exhibit, page1)
 
-    click_link "Feature pages"
-    within("[data-id='#{page1.id}']") do
-      click_link "Edit"
-    end
-
-    add_widget 'item-text'
+    add_widget 'solr_documents'
     content_editable = find(".st-text-block")
-    content_editable.set("Some Facnty Text.")
+    content_editable.set("Some Fancy Text.")
 
     click_link "Cancel"
     expect(page).not_to have_selector 'a', text: "Edit"

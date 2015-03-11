@@ -6,7 +6,6 @@ describe 'Edit in place', type: :feature, js: true do
   before { login_as admin }
   describe 'Feature Pages' do
     it 'should update the label' do
-      skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
       visit spotlight.exhibit_dashboard_path(exhibit)
 
       click_link "Feature pages"
@@ -32,7 +31,6 @@ describe 'Edit in place', type: :feature, js: true do
   end
   describe 'Main navigation' do
     it 'should update the label' do
-      skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
       visit spotlight.exhibit_dashboard_path(exhibit)
 
       within "#sidebar" do
@@ -63,7 +61,6 @@ describe 'Edit in place', type: :feature, js: true do
   end
   describe 'Sort fields' do
     it 'should update the label' do
-      skip("Passing locally but Travis is throwing intermittent errors") if ENV["CI"]
       visit spotlight.exhibit_edit_sort_fields_path(exhibit)
 
       within "#sidebar" do

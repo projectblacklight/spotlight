@@ -7,7 +7,7 @@ module Spotlight
     let(:untitled_document) { ::SolrDocument.new( :id  => "1234"  ) }
     let!(:current_exhibit) { FactoryGirl.create(:exhibit) }
     let!(:home_page) { current_exhibit.home_page }
-    let!(:search) { FactoryGirl.create(:search, exhibit: current_exhibit, query_params: { "q" => "query" }) }
+    let!(:search) { FactoryGirl.create(:search, exhibit: current_exhibit, query_params: { "q" => "query" }, on_landing_page: true ) }
 
     before(:each) do
       allow(helper).to receive_messages(:blacklight_config => blacklight_config)
@@ -39,8 +39,8 @@ module Spotlight
       end
     end
     describe "get_search_widget_search_results" do
-      let(:good) { SirTrevorRails::Blocks::SearchResultsBlock.new({type: 'xyz', data: {'slug' => search.slug}}, home_page) }
-      let(:bad) { SirTrevorRails::Blocks::SearchResultsBlock.new({type: 'xyz', data: { 'slug' => 'missing'}}, home_page) }
+      let(:good) { SirTrevorRails::Blocks::SearchResultsBlock.new({type: 'xyz', data: {'item' => { search.slug => { id: search.slug, display: "true" }}}}, home_page) }
+      let(:bad) { SirTrevorRails::Blocks::SearchResultsBlock.new({type: 'xyz', data: { 'item' => { 'garbage' => { id: 'missing', display: "true" }}}}, home_page) }
       let(:search_result) { [double('response'), double('documents')] }
       it "should return the results for a given search browse category" do
         expect(helper).to receive(:get_search_results).with({"q" => "query"}).and_return(search_result)
@@ -50,68 +50,7 @@ module Spotlight
         expect(helper.get_search_widget_search_results( bad )).to be_empty
       end
     end
-    describe "item grid helpers" do
-      describe "block objects" do
-        let(:block1) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "cba", 'item-grid-display_0' => false, 'item-grid-display_1' => false} }
-        let(:block_with_hidden) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "cba", 'item-grid-display_0' => false, 'item-grid-display_1' => true, 'item-grid-thumbnail_1' => 'image-url'} }
-        let(:block_with_blank) { {'item-grid-id_0' => "abc", 'item-grid-id_1' => "", 'item-grid-id_2' => "", 'item-grid-display_0' => true, 'item-grid-display_1' => false} }
-        let(:bad_keys) { {'another-key' => "something"} }
-        describe "item_grid_block_objects" do
-          it "should not return items that have display set to false" do
-            expect(helper.item_grid_block_objects(block1)).to be_blank
-          end
-          it "should get set the display attribute to true if a corresponding display field is set to 'true'" do
-            objects = helper.item_grid_block_objects(block_with_hidden)
-            expect(objects).to include({:id => "cba", :display => true, thumbnail: 'image-url'})
-          end
-          it "should omit any blank values" do
-            objects = helper.item_grid_block_objects(block_with_blank)
-            expect(objects).to eq([{id: "abc", display: true, thumbnail: nil}])
-          end
-          it "should omit any unnecessary keys" do
-            expect(helper.item_grid_block_objects(bad_keys)).to be_blank
-          end
-        end
-        describe "item_grid_block_ids" do
-          it "should get all of the displayable document IDs from the block" do
-            expect(helper.item_grid_block_ids(block_with_hidden)).to eq ["cba"]
-          end
-          it "should omit blank keys" do
-            expect(helper.item_grid_block_ids(block_with_blank)).to eq ["abc"]
-          end
-          it "should omit any unnecessary keys" do
-            expect(helper.item_grid_block_ids(bad_keys)).to be_blank
-          end
-        end
-        describe 'item_grid_block_with_documents' do
-          it 'should return hashes representing documents to display from the block, including the solr_document object itself' do
-            allow(helper).to receive_messages(fetch: [nil, [{id: 'cba'}]])
-            objects = helper.item_grid_block_with_documents(block_with_hidden)
-            expect(objects.length).to eq 1
-            expect(objects.first[:id]).to eq 'cba'
-            expect(objects.first[:thumbnail]).to eq 'image-url'
-            expect(objects.first[:solr_document][:id]).to eq 'cba'
-          end
-        end
-      end
-      describe "captions" do
-        let(:solr_document) { ::SolrDocument.new(:id => "123", 'a_field' => "A field value", 'b_field' => "Another field value") }
-        it "should return the document_heading when the special title field is selected" do
-          expect(helper).to receive(:document_heading).with(solr_document).and_return("A title")
-          expect(helper.multi_up_item_grid_caption({'item-grid-primary-caption-field' => 'spotlight_title_field'}, solr_document)).to eq "A title"
-        end
-        it "should render the field value when any other field is selected" do
-          expect(helper.multi_up_item_grid_caption({'item-grid-primary-caption-field' => 'a_field'}, solr_document)).to eq "A field value"
-        end
-        it "should handle secondary caption fields" do
-          expect(helper.multi_up_item_grid_caption({'item-grid-secondary-caption-field' => 'b_field'}, solr_document, 'secondary')).to eq "Another field value"
-        end
-        it "should do nothing if the item-grid-caption-field is blank or nil" do
-          expect(helper.multi_up_item_grid_caption({'item-grid-primary-caption-field' => ''}, solr_document)).to be_blank
-          expect(helper.multi_up_item_grid_caption({}, solr_document)).to be_blank
-        end
-      end
-    end
+
     describe 'nestable helpers' do
       describe 'nestable data attributes' do
         it 'should return the appropriate attributes for feature pages' do

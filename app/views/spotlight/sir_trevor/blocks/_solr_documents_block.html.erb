@@ -1,0 +1,38 @@
+<% solr_documents_block.with_solr_helper(self) %>
+
+<div class="content-block items-block row">
+  
+  <% if solr_documents_block.text? %>
+    <div class="text-col col-md-6 pull-<%= solr_documents_block.text_align %>">
+      <h3><%= solr_documents_block.title %></h3>
+      <%= sir_trevor_markdown solr_documents_block.text %>
+    </div>
+  <% end %>
+
+  <% if solr_documents_block.documents? %>
+
+    <div class="content-block spotlight-flexbox <%= solr_documents_block.text? ? "col-md-6" : "col-md-12" %> ">
+      <% solr_documents_block.documents.each do |document| %>
+        <div class="box" data-id="<%= document.id %>">
+          <div class="contents">
+            <% if block_thumb = solr_documents_block.document_options(document.id)[:thumbnail_image_url] %>
+              <div class="thumbnail"><%= link_to_document(document, image_tag(block_thumb), counter: -1) %></div>
+            <% elsif has_thumbnail? document %>
+              <div class="thumbnail"><%= render_thumbnail_tag(document, {}, document_counter: -1) %></div>
+            <% end %>
+            <% if solr_documents_block.primary_caption? %>
+              <div class="caption primary-caption">
+                <%= render_index_field_value document, solr_documents_block.primary_caption_field %>
+              </div>
+            <% end %>
+            <% if solr_documents_block.secondary_caption? %>
+              <div class="caption secondary-caption">
+                <%= render_index_field_value document, solr_documents_block.secondary_caption_field %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

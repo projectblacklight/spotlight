@@ -3,8 +3,9 @@
   var Module = (function() {
     var nestableSelector = '[data-behavior="nestable"]';
     return {
-      init: function(){
-        $(nestableSelector).each(function(){
+      init: function(selector){
+
+        $(selector || nestableSelector).each(function(){
           $(this).nestable($(this).data());
           updateWeightsAndRelationships($(this));
         });

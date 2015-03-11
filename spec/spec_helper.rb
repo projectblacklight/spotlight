@@ -15,10 +15,13 @@ require 'capybara/poltergeist'
 
 if ENV["POLTERGEIST_DEBUG"]
   Capybara.register_driver :poltergeist_debug do |app|
-    Capybara::Poltergeist::Driver.new(app, :inspector => true)
+    Capybara::Poltergeist::Driver.new(app, inspector: true, phantomjs_options: ['--load-images=no'])
   end
   Capybara.javascript_driver = :poltergeist_debug
 else
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, phantomjs_options: ['--load-images=no'])
+  end
   Capybara.javascript_driver = :poltergeist
 end
 Capybara.default_wait_time = 10
@@ -64,6 +67,10 @@ RSpec.configure do |config|
 
   config.after do
     DatabaseCleaner.clean
+  end
+
+  if ENV['CI']
+    config.filter_run_excluding js: true
   end
 
   config.include Devise::TestHelpers, type: :controller

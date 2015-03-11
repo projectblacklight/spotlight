@@ -34,6 +34,10 @@
 
     initializePreviewable: function() {
       this.on("onRender", this.addPreviewButton);
+      
+      if (_.isUndefined(this['afterPreviewLoad'])) {
+        this.afterPreviewLoad = function() { };
+      }
     },
 
     addPreviewButton: function() {
@@ -91,8 +95,6 @@
         $btn.removeAttr('disabled');
       }
     },
-
-    afterPreviewLoad: function() { }
   },
   
 

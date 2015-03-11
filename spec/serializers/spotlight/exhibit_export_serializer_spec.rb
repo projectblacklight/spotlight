@@ -144,7 +144,7 @@ describe Spotlight::ExhibitExportSerializer do
 
   describe "should export saved searches with query parameters that can be re-generated" do
     before do
-      source_exhibit.feature_pages.create content: [{:type=>"search_results", :data=>{:"slug"=>search.slug, :atom=>nil, :rss=>nil, :gallery=>nil, :slideshow=>nil, :list=>"on"}}].to_json
+      source_exhibit.feature_pages.create content: [{:type=>"search_results", :data=>{"item"=> { search.slug => { id: search.slug, display: "true"}}, view: ["list"]}}].to_json
     end
 
     subject do
@@ -162,6 +162,9 @@ describe Spotlight::ExhibitExportSerializer do
       end
 
       it "should use a search within the exhibit" do
+        # searches need to be published.
+        subject.searches.each { |x| x.on_landing_page = true; x.save }
+
         expect(subject.feature_pages.first.content.first.search.exhibit).to eq subject
       end
 
@@ -172,7 +175,7 @@ describe Spotlight::ExhibitExportSerializer do
 
     context "with a search object that needs to be created" do
        let :search do
-         source_exhibit.searches.create title: "custom query", slug: 'xyz'
+         source_exhibit.searches.create title: "custom query", slug: 'xyz', on_landing_page: true
        end
 
        it "should create a search within the exhibit" do

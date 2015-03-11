@@ -50,11 +50,14 @@ describe Spotlight::SearchesController, :type => :controller do
         expect(assigns[:searches]).to include search
       end
 
-      it "should have a JSON response" do
+      it "should have a JSON response with published resources" do
+        search.on_landing_page = true
+        search.save!
+
         get :index, exhibit_id: exhibit, format: 'json'
         expect(response).to be_successful
         json = JSON.parse(response.body)
-        expect(json.size).to eq 2
+        expect(json.size).to eq 1
         expect(json.last).to include({'id' => search.id, "title"=>"Search1"})
       end
     end
