@@ -21,6 +21,11 @@ describe "spotlight/searches/edit.html.erb", :type => :view do
     allow(view).to receive_messages(default_masthead_jcrop_options: {}, default_thumbnail_jcrop_options: {})
   end
 
+  it 'renders a form w/ the appropriate autocomplete data attribute' do
+    render
+    expect(rendered).to have_selector 'form[data-autocomplete-exhibit-catalog-index-path]'
+  end
+
   it "renders active search constraints" do
     render
     expect(rendered).to have_selector '.appliedFilter .constraint-value'
