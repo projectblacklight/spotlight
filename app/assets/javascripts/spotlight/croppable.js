@@ -69,16 +69,17 @@ Spotlight.onLoad(function() {
         );
       }
       cropbox.data('jcropProcessed', 'true');
-      var jcrop_api = cropbox.data('Jcrop');
 
       cropbox.on('load', function(){
         jcropLoadingArea.removeClass("loading-jcrop");
+        var jcrop_api = cropbox.data('Jcrop');
         if(jcrop_api) {
           jcrop_api.setSelect(options['setSelect']);
         }
       });
 
       fileUpload.on('change', function() {
+        var jcrop_api = cropbox.data('Jcrop');
         jcropLoadingArea.addClass("loading-jcrop");
         if(this.files){
           var file = this.files[0];

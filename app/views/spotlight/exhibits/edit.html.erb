@@ -1,12 +1,34 @@
 <%= render 'spotlight/shared/curation_sidebar' %>
 <div id="content" class="col-md-9 exhibit-admin">
   <%= administration_page_title %>
-  <%= render 'form' %>
-  <div class="callout callout-danger row">
-    <h4><%= t(:".delete_exhibit") %></h4>
-    <p class='col-md-9'><%= t(:".delete_exhibit_warning_html", export_link: link_to(t(:'spotlight.exhibits.import.export.download'), spotlight.import_exhibit_path(@exhibit))) %></p>
-    <div class='col-md-3'>
-      <%= delete_link @exhibit, class: 'btn btn-default' %>
+  <div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#basic" area-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
+      </li>
+      <% if can? :import, current_exhibit %>
+        <li role="presentation">
+          <a href="#import" area-controls="import" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.import.heading') %></a>
+        </li>
+      <% end %>
+      <% if can? :export, current_exhibit %>
+        <li role="presentation">
+          <a href="#export" area-controls="export" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.export.heading') %></a>
+        </li>
+      <% end %>
+      <% if can? :destroy, current_exhibit %>
+        <li role="presentation">
+          <a href="#delete" area-controls="delete" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.delete.heading') %></a>
+        </li>
+      <% end %>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="basic">
+        <%= render 'form' %>
+      </div>
+      <%= render 'import' if can? :import, current_exhibit %>
+      <%= render 'export' if can? :export, current_exhibit %>
+      <%= render 'delete' if can? :destroy, current_exhibit %>
     </div>
   </div>
 </div>

@@ -1,15 +1,12 @@
-  <h4><%=t(:'spotlight.administration.sidebar.header') %></h4>
-  <ul class="nav sidenav">
-    <% if can? :update, current_exhibit %>
-    <li><%= link_to t(:'spotlight.administration.sidebar.settings'), spotlight.edit_exhibit_path(@exhibit) %></li>
-    <% end %>
-    <% if can? :update, current_exhibit.appearance %>
-    <li><%= link_to t(:'spotlight.administration.sidebar.appearance'), spotlight.edit_exhibit_appearance_path(@exhibit) %></li>
-    <% end %>
-    <% if can? :manage, Spotlight::Role.new(exhibit: current_exhibit) %>
-    <li><%= link_to t(:'spotlight.administration.sidebar.users'), spotlight.exhibit_roles_path(@exhibit) %></li>
-    <% end %>
-    <% if can? :import, current_exhibit %>
-    <li><%= link_to t(:'spotlight.administration.sidebar.import'), spotlight.import_exhibit_path(@exhibit) %></li>
-    <% end %>
-  </ul>
+<h4><%=t(:'spotlight.administration.sidebar.header') %></h4>
+<ul class="nav sidenav">
+  <% if can? :update, current_exhibit %>
+    <li><%= link_to t(:'spotlight.administration.sidebar.settings'), spotlight.edit_exhibit_path(current_exhibit) %></li>
+  <% end %>
+  <% if can? :update, current_exhibit.appearance %>
+    <li><%= link_to t(:'spotlight.administration.sidebar.appearance'), spotlight.edit_exhibit_appearance_path(current_exhibit) %></li>
+  <% end %>
+  <% if can? :manage, Spotlight::Role.new(exhibit: current_exhibit) %>
+    <li><%= link_to t(:'spotlight.administration.sidebar.users'), spotlight.exhibit_roles_path(current_exhibit) %></li>
+  <% end %>
+</ul>

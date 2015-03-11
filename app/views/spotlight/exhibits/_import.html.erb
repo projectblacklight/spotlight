@@ -1,0 +1,15 @@
+<div role="tabpanel" class="tab-pane" id="import">
+  <%= bootstrap_form_for [:import, current_exhibit], html: { class: 'clearfix', multipart: true } do |f| %>
+    <div class="row col-md-12">
+      <p class="instructions"><%= t :'.instructions' %></p>
+      <div class="form-group">
+        <%= file_field_tag :file, class: 'form-control' %>
+      </div>
+      <div class="form-actions">
+        <div class="primary-actions">
+          <%= f.submit t(:'.button'), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

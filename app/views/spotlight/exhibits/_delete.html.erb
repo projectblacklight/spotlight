@@ -1,0 +1,9 @@
+<div role="tabpanel" class="tab-pane" id="delete">
+  <div class="callout callout-danger row">
+    <h4><%= t(:".heading") %></h4>
+    <p class='col-md-9'><%= t(:".warning_html", export_link: link_to(t(:'spotlight.exhibits.export.download'), spotlight.import_exhibit_path(current_exhibit))) %></p>
+    <div class='col-md-3'>
+      <%= delete_link current_exhibit, class: 'btn btn-default' %>
+    </div>
+  </div>
+</div>

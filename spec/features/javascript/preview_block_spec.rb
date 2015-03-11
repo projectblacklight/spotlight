@@ -38,9 +38,9 @@ feature "Block preview" do
       select("Title", from: 'item-grid-primary-caption-field')
     end
 
-    # create the page
-    click_button("Preview")
-    # verify that the page was created
+    # Preview page
+    find('a[data-icon="preview"]').trigger('click')
+    # verify that the page was previewed
     expect(page).to have_css('.preview')
     # verify that the item + image widget is displaying an image from the document.
     within(:css, ".preview") do
