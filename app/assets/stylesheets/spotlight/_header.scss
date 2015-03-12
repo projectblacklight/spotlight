@@ -15,7 +15,7 @@ $masthead-image-blur: 1px;
 }
 
 #exhibit-navbar {
-  &.search-masthead {
+  &.page-masthead {
     background-color: $gray;
     margin-bottom: 0;
     border: 0;
@@ -52,7 +52,7 @@ $masthead-image-blur: 1px;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
   }
-  &.with-search-masthead {
+  &.with-page-masthead {
     margin-bottom: $padding-base-vertical;
     .search-title {
       text-align: center;
@@ -104,7 +104,7 @@ $masthead-image-blur: 1px;
     }
   }
 
-  &.with-search-masthead {
+  &.with-page-masthead {
     .site-title {margin-top: $padding-large-vertical * 3;}
 
     .more-exhibits {

@@ -1,6 +1,6 @@
-<div id="exhibit-navbar" class="navbar navbar-default<%= ' search-masthead' if current_search_masthead? %>" role="navigation">
+<div id="exhibit-navbar" class="navbar navbar-default<%= ' page-masthead' unless exhibit_masthead? %>" role="navigation">
   <div class="container">
-    <% if current_search_masthead? %>
+    <% unless exhibit_masthead? %>
       <%= link_to(current_exhibit.title, spotlight.exhibit_path(current_exhibit), class: 'navbar-brand') %>
     <% end %>
     <ul class="nav navbar-nav">

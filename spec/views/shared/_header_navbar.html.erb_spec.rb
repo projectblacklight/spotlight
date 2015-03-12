@@ -11,7 +11,7 @@ module Spotlight
       stub_template 'shared/_exhibit_masthead.html.erb' => masthead
       stub_template 'shared/_exhibit_navbar.html.erb' => navbar
       stub_template 'shared/_breadcrumbs.html.erb' => breadcrumbs
-      allow(view).to receive_messages(current_search_masthead?: nil)
+      allow(view).to receive_messages(exhibit_masthead?: true)
       allow(view).to receive_messages(current_exhibit: current_exhibit)
     end
     it 'should render the masthead above the navbar' do
@@ -19,7 +19,7 @@ module Spotlight
       expect(rendered.index(masthead)).to be < rendered.index(navbar)
     end
     it 'should render the navbar above the search masthead' do
-      allow(view).to receive_messages(current_search_masthead?: true)
+      allow(view).to receive_messages(exhibit_masthead?: false)
       render
       expect(rendered.index(navbar)).to be < rendered.index(masthead)
     end
@@ -28,7 +28,7 @@ module Spotlight
       expect(rendered).to have_content(breadcrumbs)
     end
     it 'should not render breadcrumbs when there is a search masthead' do
-      allow(view).to receive_messages(current_search_masthead?: true)
+      allow(view).to receive_messages(exhibit_masthead?: false)
       render
       expect(rendered).to_not have_content(breadcrumbs)
     end

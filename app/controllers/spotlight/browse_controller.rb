@@ -7,6 +7,8 @@ module Spotlight
     load_and_authorize_resource :search, except: :index, through: :exhibit, parent: false
     before_filter :attach_breadcrumbs
     record_search_parameters only: :show
+
+    before_filter :set_masthead, only: :show
     
     def index
       @searches = @exhibit.searches.published
@@ -37,6 +39,10 @@ module Spotlight
 
     def _prefixes
       @_prefixes ||= super + ['catalog']
+    end
+
+    def set_masthead
+      self.current_masthead = @search.masthead if @search.masthead and @search.masthead.display?
     end
   end
 end
