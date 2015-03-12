@@ -21,9 +21,5 @@ module SirTrevorRails::Blocks
     def order
       items.sort_by { |x| x[:weight] }.map { |x| x[:id] }
     end
-
-    def text_align
-      send(:'text-align')
-    end
   end
 end

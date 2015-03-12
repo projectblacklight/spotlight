@@ -28,10 +28,6 @@ module SirTrevorRails::Blocks
       items.sort_by { |x| x[:weight] }.map { |x| x[:id] }
     end
 
-    def text_align
-      send(:'text-align')
-    end
-
     def display_item_counts?
       send(:'display-item-counts') == "true"
     end

@@ -1,6 +1,6 @@
 module SirTrevorRails::Blocks
   class SolrDocumentsBlock < SirTrevorRails::Block
-
+    include Textable
     attr_reader :solr_helper
   
     def with_solr_helper solr_helper
@@ -23,29 +23,12 @@ module SirTrevorRails::Blocks
       documents.present?
     end
 
-    def text?
-      text.present?
-    end
-
-    def text
-      val = super
-
-      # empty, in sir-trevor speak
-      unless val == "<p><br></p>"
-        val
-      end
-    end
-
     def items
       (item || {}).values.select { |x| x[:display] == "true" }
     end
 
     def document_order
       items.sort_by { |x| x[:weight] }.map { |x| x[:id] }
-    end
-
-    def text_align
-      send(:'text-align')
     end
 
     def primary_caption?
