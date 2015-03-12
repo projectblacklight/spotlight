@@ -3,7 +3,7 @@
 SirTrevor.Blocks.SearchResults =  (function(){
 
   return SirTrevor.Blocks.Browse.extend({
-      
+
     type: "search_results",
 
     title: function() { return "Search Results"; },
@@ -13,17 +13,17 @@ SirTrevor.Blocks.SearchResults =  (function(){
     searches_key: "slug",
     view_key: "view",
     textable: false,
-    
+
     content: function() {
       return _.template([this.items_selector()].join("<hr />\n"))(this);
     },
-    
+
     description: "This widget displays a set of search results on a page. Specify a search result set by selecting an existing browse category. You can also select the view types that are available to the user when viewing the result set.",
-    
+
     item_options: function() {
       var block = this;
       var fields = $('[data-blacklight-configuration-search-views]').data('blacklight-configuration-search-views');
-    
+
       return $.map(fields, function(field) {
         checkbox = ""
         checkbox += "<div>";
@@ -35,11 +35,11 @@ SirTrevor.Blocks.SearchResults =  (function(){
         return checkbox;
       }).join("\n");
     },
-    
+
     afterPanelRender: function(data, panel) {
       this.$el.find('.item-input-field').attr("disabled", "disabled");
     },
-    
+
     afterPanelDelete: function() {
       this.$el.find('.item-input-field').removeAttr("disabled");
     },

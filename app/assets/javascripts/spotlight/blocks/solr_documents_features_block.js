@@ -5,12 +5,12 @@ SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
   return SirTrevor.Blocks.SolrDocuments.extend({
     textable: false,
     type: "solr_documents_features",
-    title: function() { return "Item Features"; },
+    title: function() { return "Item Slideshow"; },
 
     icon_name: "item_features",
     blockGroup: 'Exhibit item widgets',
-    description: "This widget displays items in features",
-    
+    description: "This widget displays exhibit items in a static slideshow. The user will move between items in the slideshow using the field you select as the primary caption.",
+
     afterPreviewLoad: function(options) {
       this.$el.find('.carousel').carousel();
 
