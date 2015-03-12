@@ -9,17 +9,17 @@ Spotlight.BlockLimits.prototype.enforceLimits = function() {
 }
 
 Spotlight.BlockLimits.prototype.addEditorCallbacks = function() {
-  this.editor.mediator.on('block:create:new', this.checkBlockTypeLimitOnAdd());
-  this.editor.mediator.on('block:remove', this.checkGlobalBlockTypeLimit());
+  SirTrevor.EventBus.on('block:create:new', this.checkBlockTypeLimitOnAdd());
+  SirTrevor.EventBus.on('block:remove', this.checkGlobalBlockTypeLimit());
 }
 
 Spotlight.BlockLimits.prototype.checkBlockTypeLimitOnAdd = function() {
   var editor = this.editor;
 
   return function(block) {
-    var control = this.editor.$outer.find("a[data-type='" + block.blockCSSClass() + "']");
+    var control = editor.$outer.find("a[data-type='" + block.blockCSSClass() + "']");
 
-    control.toggleClass("disabled", !this.editor._canAddBlockType(block.class()));
+    control.toggleClass("disabled", !editor.block_manager.canAddBlockType(block.class()));
   }
 }
 
