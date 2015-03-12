@@ -5,7 +5,7 @@ describe 'spotlight/browse/show', :type => :view do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
   before :each do
-    allow(view).to receive_messages(current_search_masthead?: nil)
+    allow(view).to receive_messages(exhibit_masthead?: true)
     allow(view).to receive_messages(blacklight_config: Blacklight::Configuration.new )
     view.blacklight_config.view.gallery = true
     allow(search).to receive_messages(count: 15)
@@ -27,7 +27,7 @@ describe 'spotlight/browse/show', :type => :view do
   end
 
   it 'should not have the heading and item count when there is a current search masthead' do
-    allow(view).to receive_messages(current_search_masthead?: true)
+    allow(view).to receive_messages(exhibit_masthead?: false)
     render
     expect(response).to_not have_selector 'h1', text: search.title
     expect(response).to_not have_selector ".item-count", text: "#{search.count} items"

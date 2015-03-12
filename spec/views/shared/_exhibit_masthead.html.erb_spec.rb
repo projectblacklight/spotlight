@@ -8,7 +8,7 @@ module Spotlight
     let(:current_masthead) { double() }
     let(:current_exhibit_without_subtitle) { double(title: "Some title", subtitle: nil, masthead: masthead) }
     before do
-      allow(view).to receive_messages(current_search_masthead?: nil)
+      allow(view).to receive_messages(exhibit_masthead?: true)
       allow(view).to receive_messages(current_masthead: nil)
       allow(current_masthead).to receive_message_chain(:image, :cropped).and_return('/uploads/image.jpg')
     end
@@ -45,11 +45,13 @@ module Spotlight
     end
 
     describe 'masthead from search' do
+      let(:search_masthead) { "CUSTOM MASTHEAD" }
       before do
         allow(view).to receive_messages(current_exhibit: current_exhibit)
         allow(view).to receive_messages(current_masthead: current_masthead)
-        allow(view).to receive_messages(current_search_masthead?: true)
-        assign(:search, search)
+        allow(view).to receive_messages(exhibit_masthead?: false)
+        allow(view).to receive(:content_for?).with(:masthead).and_return(true)
+        allow(view).to receive(:content_for).with(:masthead).and_return(search_masthead)
         render
       end
       it 'should include the background image from the current search' do
@@ -61,8 +63,7 @@ module Spotlight
         expect(rendered).to_not have_selector('.site-title small', text: "Subtitle")
       end
       it 'should include the search title and count when there is a current search masthead' do
-        expect(rendered).to have_selector('.site-title', text: "Search Title")
-        expect(rendered).to have_selector('.site-title small', text: "12 items")
+        expect(rendered).to have_content search_masthead
       end
     end
 

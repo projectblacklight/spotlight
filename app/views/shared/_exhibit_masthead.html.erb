@@ -1,5 +1,5 @@
 <% if current_exhibit %>
-<div id="exhibit-masthead" class="<%= 'jumbotron' unless current_search_masthead? %><%= ' with-image' if current_masthead %><%= ' with-search-masthead' if current_search_masthead? %>">
+<div id="exhibit-masthead" class="<%= exhibit_masthead? ? 'jumbotron with-exhibit-masthead' : 'with-page-masthead' %><%= ' with-image' if current_masthead %>">
   <% if current_masthead %>
     <span class='background-container' style="background-image: url('<%= image_path(current_masthead.image.cropped) %>')"></span>
     <span class='background-container-gradient'></span>
@@ -23,10 +23,8 @@
     <% end if current_exhibit %>
 
     <div class="site-title h1">
-      <% if current_search_masthead? %>
-        <div class='search-title'>
-          <%= render 'spotlight/browse/search_title' %>
-        </div>
+      <% if content_for? :masthead %>
+        <%= content_for :masthead %>
       <% else %>
         <%= current_exhibit.title %>
         <% if current_exhibit.subtitle %>

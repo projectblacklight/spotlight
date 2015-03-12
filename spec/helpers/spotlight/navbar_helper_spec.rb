@@ -5,7 +5,7 @@ module Spotlight
     describe '#should_render_search_bar?' do
       before do
         allow(helper).to receive_messages(current_exhibit: nil)
-        allow(helper).to receive_messages(current_search_masthead?: nil)
+        allow(helper).to receive_messages(exhibit_masthead?: true)
       end
       it 'should return true when there is no exhibit context' do
         expect(helper.should_render_spotlight_search_bar?).to be_truthy
@@ -15,7 +15,7 @@ module Spotlight
         expect(helper.should_render_spotlight_search_bar?).to be_truthy
       end
       it 'should return false if currently under an "Exhibity" browse category' do
-        allow(helper).to receive_messages(current_search_masthead?: true)
+        allow(helper).to receive_messages(exhibit_masthead?: false)
         expect(helper.should_render_spotlight_search_bar?).to be_falsey
       end
     end

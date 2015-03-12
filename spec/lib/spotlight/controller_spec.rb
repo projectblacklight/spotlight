@@ -16,22 +16,26 @@ describe Spotlight::Controller do
       expect(subject.current_exhibit).to be_nil
     end
   end
-  describe '#current_search_masthead?' do
+
+  describe '#exhibit_masthead?' do
     let(:masthead) { double('masthead', display?: true) }
-    let(:no_display_masthead) { double('no-display-masthead', display?: false) }
-    let(:search) { FactoryGirl.create(:search) }
-    it 'should be false by default' do
-      expect(subject.current_search_masthead?).to be_falsey
+
+    before do
+      allow(subject).to receive_messages(current_exhibit: nil, current_masthead: nil)
     end
-    it "should return false if the current search's masthead is not set to display" do
-      allow(search).to receive_messages(masthead: no_display_masthead)
-      subject.instance_variable_set(:@search, search)
-      expect(subject.current_search_masthead?).to be_falsey
+
+    it "should be true if there is no exhibit" do
+      expect(subject.exhibit_masthead?).to eq true
     end
-    it "should return true if the current search's masthead is set to display" do
-      allow(search).to receive_messages(masthead: masthead)
-      subject.instance_variable_set(:@search, search)
-      expect(subject.current_search_masthead?).to be_truthy
+
+    it "should be true if there is no custom exhibit masthead" do
+      allow(subject).to receive_messages(current_exhibit: double, current_masthead: nil)
+      expect(subject.exhibit_masthead?).to eq true
+    end
+
+    it "should be false if the current masthead is not the exhibit masthead" do
+      allow(subject).to receive_messages(current_exhibit: double(masthead: double), current_masthead: masthead)
+      expect(subject.exhibit_masthead?).to eq false
     end
   end
   describe '#current_masthead' do
@@ -43,35 +47,14 @@ describe Spotlight::Controller do
     it 'should be nil by default' do
       expect(subject.current_masthead).to be_nil
     end
-    it 'should return the search masthead if available' do
-      allow(search).to receive_messages(masthead: search_masthead)
-      subject.instance_variable_set(:@search, search)
-      expect(subject.current_masthead).to eq search_masthead
-    end
     it 'should return the exhibit masthead if available' do
       allow(exhibit).to receive_messages(masthead: exhibit_masthead)
       subject.instance_variable_set(:@exhibit, exhibit)
       expect(subject.current_masthead).to eq exhibit_masthead
     end
-    it 'should return the search masthead if both the exhibit and search masthead are available' do
-      allow(search).to receive_messages(masthead: search_masthead)
-      subject.instance_variable_set(:@search, search)
-      allow(exhibit).to receive_messages(masthead: exhibit_masthead)
-      subject.instance_variable_set(:@exhibit, exhibit)
+    it 'should allow the masthead to be set' do
+      subject.current_masthead = search_masthead
       expect(subject.current_masthead).to eq search_masthead
-    end
-    it 'should return the exhibit masthead if the search masthead is set to not display' do
-      allow(search).to receive_messages(masthead: no_display_search_masthead)
-      subject.instance_variable_set(:@search, search)
-      allow(exhibit).to receive_messages(masthead: exhibit_masthead)
-      subject.instance_variable_set(:@exhibit, exhibit)
-      expect(subject.current_masthead).to eq exhibit_masthead
-    end
-    it 'should not return the search masthead on the edit page' do
-      allow(search).to receive_messages(masthead: search_masthead)
-      subject.instance_variable_set(:@search, search)
-      allow(subject).to receive_messages(params: {action: 'edit'})
-      expect(subject.current_masthead).to be_nil
     end
   end
 end

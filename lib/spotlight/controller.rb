@@ -5,7 +5,7 @@ module Spotlight
     include Spotlight::Config
 
     included do
-      helper_method :current_exhibit, :current_masthead, :current_search_masthead?
+      helper_method :current_exhibit, :current_masthead, :exhibit_masthead?
     end
 
     def current_exhibit
@@ -13,16 +13,23 @@ module Spotlight
     end
 
     def current_masthead
-      [current_search.try(:masthead), current_exhibit.try(:masthead)].compact.select(&:display?).first
+      @masthead ||= begin
+        current_exhibit.masthead if current_exhibit and current_exhibit.masthead and current_exhibit.masthead.display?
+      end
     end
 
-    def current_search_masthead?
-      current_search && current_search.masthead.try(:display?)
+    def current_masthead= masthead
+      @masthead = masthead
     end
 
-    def current_search
-      @search if @search.present? && params[:action] == 'show'
+    def default_masthead?
+      current_exhibit.nil? || current_masthead.nil?
     end
+
+    def exhibit_masthead?
+      default_masthead? || current_masthead == current_exhibit.masthead
+    end
+
 
     # overwrites Blacklight::Controller#blacklight_config
     def blacklight_config
