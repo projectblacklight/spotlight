@@ -11,14 +11,14 @@ feature "Solr Document Block", feature: true do
     )
   end
 
-  before do 
+  before do
     login_as exhibit_curator
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
     add_widget 'solr_documents'
   end
 
   scenario "it should allow you to add the solr document block widget", js: true do
-    expect(page).to have_content "This widget displays thumbnail images of repository items in a single row grid."
+    expect(page).to have_content "This widget displays exhibit items in a horizontal row. Optionally, you can add a heading and/or text to be displayed adjacent to the items."
     expect(page).to have_content "Primary caption"
     expect(page).to have_content "Secondary caption"
     expect(page).to have_content "Display text on"
@@ -41,7 +41,7 @@ feature "Solr Document Block", feature: true do
       expect(page).not_to have_css(".title")
     end
   end
-  
+
   scenario "it should allow you to add multiple solr documents to the widget", js: true do
     fill_in_typeahead_field with: "dq287tq6352"
     fill_in_typeahead_field with: "gk446cj2442"
@@ -50,16 +50,16 @@ feature "Solr Document Block", feature: true do
 
     expect(page).to have_selector ".items-block .box", count: 2
   end
-  
+
   scenario "it should allow you toggle visibility of solr documents", js: true do
     fill_in_typeahead_field with: "dq287tq6352"
-  
+
     within(:css, '.panel') do
       uncheck "Display?"
     end
 
     fill_in_typeahead_field with: "gk446cj2442"
-    
+
     # display the title as the primary caption
     within('.primary-caption') do
       check("Primary caption")
@@ -73,7 +73,7 @@ feature "Solr Document Block", feature: true do
     expect(page).not_to have_content "L'AMERIQUE"
   end
 
-  scenario "should allow you to optionally display captions with the image", js: true do    
+  scenario "should allow you to optionally display captions with the image", js: true do
     fill_in_typeahead_field with: "gk446cj2442"
 
     # display the title as the primary caption
@@ -88,7 +88,7 @@ feature "Solr Document Block", feature: true do
     end
     # create the page
     save_page
-    
+
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".items-block") do
       expect(page).to have_css(".thumbnail")
@@ -105,7 +105,7 @@ feature "Solr Document Block", feature: true do
     content_editable.set("zzz")
     # create the page
     save_page
-    
+
     # visit the show page for the document we just saved
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".items-block") do
@@ -122,7 +122,7 @@ feature "Solr Document Block", feature: true do
     choose "Right"
     # create the page
     save_page
-    
+
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".items-block") do
       expect(page).to have_content "zzz"
@@ -132,19 +132,19 @@ feature "Solr Document Block", feature: true do
 
   scenario "round-trip data", js: true do
     fill_in_typeahead_field with: "dq287tq6352"
-  
+
     within(:css, '.panel') do
       uncheck "Display?"
     end
 
     fill_in_typeahead_field with: "gk446cj2442"
-    
+
     # display the title as the primary caption
     within('.primary-caption') do
       check("Primary caption")
       select("Title", from: 'primary-caption-field')
     end
-    
+
     # fill in the content editable div
     content_editable = find(".st-text-block")
     content_editable.set("zzz")
@@ -156,7 +156,7 @@ feature "Solr Document Block", feature: true do
     click_on "Edit"
 
     expect(page).to have_selector ".panel", count: 2
-    
+
     # for some reason, the text area above isn't getting filled in
     # expect(page).to have_selector ".st-text-block", text: "zzz"
     expect(find_field("primary-caption-field").value).to eq "full_title_tesim"
