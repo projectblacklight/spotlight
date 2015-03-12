@@ -14,7 +14,11 @@ class Spotlight::Contact < ActiveRecord::Base
   #crop_uploaded :avatar  ## Add this
   # we do this:
   after_save do
-    recreate_avatar_versions if avatar.present?
+    if avatar.present?
+      avatar.cache! if !avatar.cached?
+      avatar.store!
+      recreate_avatar_versions
+    end
   end
 
   before_save on: :create do

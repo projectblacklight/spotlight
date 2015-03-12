@@ -3,7 +3,11 @@ module Spotlight
     mount_uploader :image, Spotlight::FeaturedImageUploader
     
     after_save do
-      recreate_image_versions if image.present?
+      if image.present?
+        image.cache! if !image.cached?
+        image.store!
+        recreate_image_versions
+      end
     end
     
     def document
