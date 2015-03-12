@@ -329,7 +329,7 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
       blacklight_config.view.list
       blacklight_config.view.gallery
       blacklight_config.view.something
-      expect(subject.blacklight_config.view.keys).to eq blacklight_config.view.keys
+      expect(subject.blacklight_config.view.keys).to include *blacklight_config.view.keys
     end
   end
 
