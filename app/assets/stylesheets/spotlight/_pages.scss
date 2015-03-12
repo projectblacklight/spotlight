@@ -172,3 +172,9 @@
 .item-input-field[disabled="disabled"] {
   visibility: hidden;
 }
+
+.oembed-block {
+  @media (max-width: $screen-sm-max) {
+    margin-bottom: $padding-base-horizontal;
+  }
+}

@@ -1,13 +1,6 @@
 <% solr_documents_grid_block.with_solr_helper(self) %>
 <div class="content-block item-grid-block row">
-  
-
-  <div class="text-col col-md-3  pull-<%= solr_documents_grid_block.text_align %>">
-    <h3><%= solr_documents_grid_block.title %></h3>
-    <%= sir_trevor_markdown solr_documents_grid_block.text %>
-  </div>
-  
-  <div class="items-col col-md-9">
+  <div class="items-col col-md-9 pull-<%= solr_documents_grid_block.content_align %>">
     <% if solr_documents_grid_block.documents? %>
         <% solr_documents_grid_block.documents.each_with_index do |document, index| %>
           <div class="box item-<%= index %>" data-id="<%= document.id %>">
@@ -19,5 +12,10 @@
           </div>
         <% end %>
     <% end %>
+  </div>
+
+  <div class="text-col col-md-3 pull-<%= solr_documents_grid_block.text_align %>">
+    <h3><%= solr_documents_grid_block.title %></h3>
+    <%= sir_trevor_markdown solr_documents_grid_block.text %>
   </div>
 </div>
