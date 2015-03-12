@@ -123,6 +123,7 @@ $masthead-image-blur: 1px;
   .background-container {
     @include masthead-background-containers();
     background-repeat: no-repeat;
+    background-size: cover;
     // Add small amount of blur to help text stand out
     //filter: url(masthead/blur.svg#blur); // for older versions of FF
     -webkit-filter: blur($masthead-image-blur);
