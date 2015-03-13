@@ -23,6 +23,9 @@ describe "Search Result Block", type: :feature, js: true do
     check "Slideshow"
 
     save_page
+
+    expect(page).not_to have_content "per page"
+    expect(page).not_to have_content "Sort by"
     
     # The two configured view types should be
     # present and the one not selected should not be
