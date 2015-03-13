@@ -27,7 +27,7 @@ require 'engine_cart/rake_task'
 EngineCart.fingerprint_proc = EngineCart.rails_fingerprint_proc
 
 require 'spotlight/version'
-EngineCart.fingerprint = Spotlight::VERSION
+
 task :ci => ['engine_cart:generate', 'jetty:clean', 'spotlight:configure_jetty'] do
   ENV['environment'] = "test"
   jetty_params = Jettywrapper.load_config
