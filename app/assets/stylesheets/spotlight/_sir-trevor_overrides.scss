@@ -2,7 +2,7 @@
 
 .widget-header {
   padding: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border-bottom: 1px solid #D4D4D4;
 }
 
@@ -78,9 +78,11 @@
 .st-block__inner {
   @extend .panel;
   @extend .panel-default;
-  
+
   border-color: $gray-lighter;
   box-shadow: 3px 3px 15px $gray-lighter;
+
+  padding-top: 2.5em;
 
   &:hover {
     @extend .panel-info;
@@ -121,4 +123,12 @@
 
 .st-icon--add:after {
   cursor: pointer;
+}
+
+.st-title {
+  display: block;
+}
+
+.st-block-positioner {
+  left: -6.5em;
 }

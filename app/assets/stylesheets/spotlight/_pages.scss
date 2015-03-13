@@ -23,18 +23,29 @@
   position: absolute;
   top: 0;
   left: 0;
-  display: none;
   background-color: $panel-info-heading-bg;
   padding: 3px 8px;
   color: $panel-info-text;
   font-weight: bold;
 }
 
-.st-block__inner:hover {
-  .st-title {
-    display: block;
+.st-block__inner {
+  div.field + div.field {
+    margin-top: 2 * $padding-large-vertical;
+  }
+
+  .field-select {
+    margin-bottom: $padding-large-vertical;
+    @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+      margin-bottom: 2 * $padding-large-vertical;
+
+      > select {
+        margin-left: 2 * $padding-small-horizontal;
+      }
+    }
   }
 }
+
 #sidebar {
   li {
     margin-top: $padding-small-vertical;

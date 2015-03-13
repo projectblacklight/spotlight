@@ -8,7 +8,7 @@ SirTrevor.Blocks.SolrDocumentsGrid = (function(){
 
     icon_name: "item_grid",
     blockGroup: 'Exhibit item widgets',
-    description: "This widget displays items in grids",
+    description: "This widget displays exhibit items in a multi-row grid. Optionally, you can add a heading and/or text to be displayed adjacent to the items.",
 
     item_options: function() { return "" }
   });

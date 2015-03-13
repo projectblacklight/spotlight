@@ -9,14 +9,14 @@ SirTrevor.Blocks.SolrDocumentsCarousel = (function(){
 
     icon_name: "item_carousel",
     blockGroup: 'Exhibit item widgets',
-    description: "This widget displays thumbnail images of repository items in a carousel. You can configure the captions that appear below each carousel image and how the images are cycled.",
-    
+    description: "This widget displays exhibit items in a carousel. You can configure the item captions, how the images are cycled, and the size of the carousel.",
+
     auto_play_images_key: "auto-play-images",
     auto_play_images_interval_key: "auto-play-images-interval",
     max_height_key: "max-height",
 
     item_options: function() { return "" },
-    
+
     carouselCycleTimesInSeconds: {
       values: [ 3, 5, 8, 12, 20 ],
       selected: 5
@@ -44,7 +44,7 @@ SirTrevor.Blocks.SolrDocumentsCarousel = (function(){
         '</div>',
       ].join("\n");
     },
-    
+
     addCarouselCycleOptions: function(options) {
       var html = '';
 

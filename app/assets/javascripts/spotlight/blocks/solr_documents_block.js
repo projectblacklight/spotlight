@@ -4,12 +4,12 @@ SirTrevor.Blocks.SolrDocuments = (function(){
 
   return Spotlight.Block.Resources.extend({
     type: "solr_documents",
-    title: function() { return "Items"; },
+    title: function() { return "Item Row"; },
     textable: true,
 
     icon_name: "items",
     blockGroup: 'Exhibit item widgets',
-    description: "This widget displays thumbnail images of repository items in a single row grid. Optionally, you can a caption below each image..",
+    description: "This widget displays exhibit items in a horizontal row. Optionally, you can add a heading and/or text to be displayed adjacent to the items.",
 
     autocomplete_url: function() { return this.$instance().closest('form[data-autocomplete-exhibit-catalog-index-path]').data('autocomplete-exhibit-catalog-index-path').replace("%25QUERY", "%QUERY"); },
     autocomplete_template: function() { return '<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail thumbnail"><img src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>' },
@@ -29,8 +29,8 @@ SirTrevor.Blocks.SolrDocuments = (function(){
     },
 
     item_options: function() { return this.caption_options(); },
-    
-    caption_options: function() { return [  
+
+    caption_options: function() { return [
       '<div class="field-select primary-caption" data-behavior="item-caption-admin">',
         '<input name="<%= show_primary_field_key %>" type="hidden" value="false" />',
         '<input data-input-select-target="#<%= formId(primary_field_key) %>" name="<%= show_primary_field_key %>" id="<%= formId(show_primary_field_key) %>" type="checkbox" value="true" />',
@@ -49,7 +49,7 @@ SirTrevor.Blocks.SolrDocuments = (function(){
           '<%= caption_option_values() %>',
         '</select>',
       '</div>',
-    ].join("\n") }, 
+    ].join("\n") },
 
     afterPanelRender: function(data, panel) {
       var context = this;
