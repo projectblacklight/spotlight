@@ -20,7 +20,7 @@ module Spotlight
         bg_opacity: '.4',
         box_width: '600',
         aspect_ratio: 4.0 / 3.0,
-        initial_set_select: '[0, 0, 400, 300]'
+        initial_set_select: '[0, 0, 100000, 100000]'
       }
     end
   end
