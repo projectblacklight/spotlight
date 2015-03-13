@@ -17,6 +17,7 @@ describe "Add and update the site masthead", :type => :feature do
     within "#site-masthead" do
       check "Show background image in masthead"
       choose "Upload an image"
+      attach_file('appearance_masthead_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')));
     end
 
     click_button "Save changes"
