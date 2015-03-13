@@ -20,7 +20,7 @@
     },
 
     autocomplete_control: function() {
-      return '<input type="text" class="st-input-string form-control item-input-field" data-twitter-typeahead="true" placeholder="Enter a title..."/>';
+      return '<input type="text" class="st-input-string form-control item-input-field" data-twitter-typeahead="true" placeholder="<%= i18n.t("blocks:autocompleteable:placeholder")%>"/>';
     },
 
     addAutocompletetoSirTrevorForm: function() {

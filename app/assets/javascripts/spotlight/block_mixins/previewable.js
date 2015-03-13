@@ -51,7 +51,7 @@
       }
     },
     
-    previewButton: '<button class="st-block-ui-btn preview-btn">Preview</button>',
+    previewButton: '<button class="st-block-ui-btn preview-btn"><%= i18n.t("blocks:previewable:title") %></button>',
 
     previewUrl: function(context) { return context.$el.closest('[data-preview-url]').data('preview-url'); },
 

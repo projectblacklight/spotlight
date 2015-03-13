@@ -4,7 +4,14 @@ SirTrevor.BlockControls.prototype.initialize = function() {
     if (SirTrevor.Blocks.hasOwnProperty(block_type)) {
       var block_control = new SirTrevor.BlockControl(block_type, this.instance_scope);
       if (block_control.can_be_rendered) {
-        var blockGroup = SirTrevor.Blocks[block_type].prototype.blockGroup;
+        var blockGroup;
+
+        if ($.isFunction(SirTrevor.Blocks[block_type].prototype.blockGroup)) {
+          blockGroup = SirTrevor.Blocks[block_type].prototype.blockGroup();
+        } else {
+          blockGroup = SirTrevor.Blocks[block_type].prototype.blockGroup;
+        }
+        
         groups[blockGroup] = groups[blockGroup] || [];
         groups[blockGroup].push(block_control.render().$el);
       }
@@ -13,7 +20,7 @@ SirTrevor.BlockControls.prototype.initialize = function() {
   for(groupKey in groups) {
     var group   = groups[groupKey];
     if(groupKey == 'undefined' || groupKey === undefined) {
-      groupKey = "Standard widgets";
+      groupKey = i18n.t("blocks:group:undefined");
     }
     var groupEl = $("<div class='st-controls-group'><div class='st-group-control-label'>" + groupKey + "</div></div>");
     $.each(group, function(){
