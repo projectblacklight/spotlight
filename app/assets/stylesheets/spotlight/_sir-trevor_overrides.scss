@@ -30,6 +30,17 @@
   border: 3px dotted #999;
 }
 
+.st-group-control-label {
+  margin-bottom: $padding-large-vertical;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: $padding-small-vertical;
+  margin: 0 (2 * $padding-large-horizontal) $padding-large-vertical;
+}
+
+.st-controls-group + .st-controls-group {
+  margin-top: 2 * $padding-large-vertical;;
+}
+
 .st-block-control {
   @extend .btn;
 
@@ -38,40 +49,94 @@
   white-space: normal;
   color: #666;
   vertical-align: top;
+  line-height: 1.2;
 
   .icon {
-
-    border: 3px solid #ccc;
-    border-radius: 6px;
     width: 70px;
-    height: 40px;
-    background-size: cover;
+    height: 38px;
+    background-repeat: no-repeat;
+    background-position: 50% 40%;
     @extend .text-hide;
   }
 
-  .st-icon-multi-up-item-grid {
+  .st-icon-rule {
     @extend .icon;
-    background-image: image-url('spotlight/blocks/multi-up-item-grid.png');
+    background-image: image-url('spotlight/blocks/rule.png');
+    &:hover {
+      background-image: image-url('spotlight/blocks/rule-on.png');
+    }
   }
 
   .st-icon-text {
     @extend .icon;
     background-image: image-url('spotlight/blocks/text.png');
+    &:hover {
+      background-image: image-url('spotlight/blocks/text-on.png');
+    }
   }
 
-  .st-icon-item-text {
+  .st-icon-browse {
     @extend .icon;
-    background-image: image-url('spotlight/blocks/item-text.png');
+    background-image: image-url('spotlight/blocks/browse.png');
+    &:hover {
+      background-image: image-url('spotlight/blocks/browse-on.png');
+    }
   }
 
-  .st-icon-item-carousel {
+  .st-icon-featured_pages {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/features.png');
+    &:hover {
+      background-image: image-url('spotlight/blocks/features-on.png');
+    }
+  }
+
+  .st-icon-search_results {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/results.png');
+    &:hover {
+      background-image: image-url('spotlight/blocks/results-on.png');
+    }
+  }
+
+  .st-icon-solr_documents {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/item-row.png');
+    &:hover {
+      background-image: image-url('spotlight/blocks/item-row-on.png');
+    }
+  }
+
+  .st-icon-solr_documents_carousel {
     @extend .icon;
     background-image: image-url('spotlight/blocks/item-carousel.png');
+    &:hover {
+      background-image: image-url('spotlight/blocks/item-carousel-on.png');
+    }
   }
 
-  .st-icon-item-features {
+  .st-icon-solr_documents_features {
     @extend .icon;
-    background-image: image-url('spotlight/blocks/item-features.png');
+    background-image: image-url('spotlight/blocks/item-slideshow.png');
+    &:hover {
+      background-image: image-url('spotlight/blocks/item-slideshow-on.png');
+    }
+  }
+
+  .st-icon-solr_documents_grid {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/item-grid.png');
+    &:hover {
+      background-image: image-url('spotlight/blocks/item-grid-on.png');
+    }
+  }
+
+  .st-icon-solr_documents_embed {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/item-embed.png');
+    &:hover {
+      background-image: image-url('spotlight/blocks/item-embed-on.png');
+    }
   }
 }
 
