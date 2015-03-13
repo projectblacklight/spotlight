@@ -75,6 +75,7 @@ Spotlight.onLoad(function() {
         var jcrop_api = cropbox.data('Jcrop');
         if(jcrop_api) {
           jcrop_api.setSelect(options['setSelect']);
+          serializeObservedForms(observedForms());
         }
       });
 
