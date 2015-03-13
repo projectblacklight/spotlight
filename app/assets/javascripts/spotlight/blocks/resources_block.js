@@ -5,12 +5,12 @@ Spotlight.Block.Resources = (function(){
     formable: true,
     autocompleteable: true,
     show_heading: true,
-
-    title: function() { return "Resources"; },
+    
+    title: function() { return i18n.t("blocks:" + this.type + ":title"); },
+    description: function() { return i18n.t("blocks:" + this.type + ":description"); },
 
     icon_name: "resources",
-    blockGroup: 'Exhibit item widgets',
-    description: "This widget displays stuff",
+    blockGroup: function() { return i18n.t("blocks:group:items") },
     
     primary_field_key: "primary-caption-field",
     show_primary_field_key: "show-primary-caption",
@@ -34,13 +34,13 @@ Spotlight.Block.Resources = (function(){
             '<input type="hidden" name="item[' + index + '][full_image_url]" data-item-grid-full-image="true"  value="' + (data.full_image_url || data.thumbnail_image_url || data.thumbnail) + '"/>',
             '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" data-item-grid-thumbnail="true"  value="' + (data.thumbnail_image_url || data.thumbnail) + '"/>',
             '<input data-property="weight" type="hidden" name="item[' + index + '][weight]" value="' + data.weight + '" />',
-            '<div class="dd-handle dd3-handle">Drag</div>',
+            '<div class="dd-handle dd3-handle"><%= i18n.t("blocks:resources:panel:drag") %></div>',
               '<div class="dd3-content panel panel-default">',
                 '<div class="panel-heading item-grid">',
                   '<div class="checkbox">',
                     '<input name="item[' + index + '][display]" type="hidden" value="false" />',
                     '<input name="item[' + index + '][display]" id="'+ this.formId(this.display_checkbox + '_' + data.id) + '" type="checkbox" ' + checked + ' class="item-grid-checkbox" value="true"  />',
-                    '<label class="sr-only" for="'+ this.formId(this.display_checkbox + '_' + data.id) +'">Display?</label>',
+                    '<label class="sr-only" for="'+ this.formId(this.display_checkbox + '_' + data.id) +'"><%= i18n.t("blocks:resources:panel:display") %></label>',
                   '</div>',
                   '<div class="pic thumbnail">',
                     '<img src="' + (data.thumbnail_image_url || data.thumbnail) + '" />',
@@ -51,14 +51,14 @@ Spotlight.Block.Resources = (function(){
                     '<div data-panel-image-pagination="true"></div>',
                   '</div>',
                   '<div class="remove pull-right">',
-                    '<a data-item-grid-panel-remove="true" href="#">Remove</a>',
+                    '<a data-item-grid-panel-remove="true" href="#"><%= i18n.t("blocks:resources:panel:remove") %></a>',
                   '</div>',
                 '</div>',
               '</div>',
             '</li>'
       ].join("\n");
 
-      var panel = $(markup);
+      var panel = $(_.template(markup)(this));
       var context = this;
 
       $('.remove a', panel).on('click', function(e) { 
@@ -113,7 +113,7 @@ Spotlight.Block.Resources = (function(){
     template: [
       '<div class="form resources-admin clearfix">',
         '<div class="widget-header">',
-          '<%= description %>',
+          '<%= description() %>',
         '</div>',
         '<%= content() %>',
       '</div>'

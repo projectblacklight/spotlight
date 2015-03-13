@@ -15,8 +15,9 @@ SirTrevor.Blocks.Oembed =  (function(){
     id_key:"url",
 
     type: "oembed",
-
-    title: function() { return "Embed + Text"; },
+    
+    title: function() { return i18n.t('blocks:oembed:title'); },
+    description: function() { return i18n.t('blocks:oembed:description'); },
 
     icon_name: "oembed",
     show_heading: false,
@@ -24,11 +25,11 @@ SirTrevor.Blocks.Oembed =  (function(){
     template: [
     '<div class="form oembed-text-admin clearfix">',
       '<div class="widget-header">',
-        'This widget embeds a web resource and a text block to the left or right of it.',
+        '<%= description() %>',
       '</div>',
       '<div class="row">',
         '<div class="form-group col-md-8">',
-          '<label for="<%= formId(id_key) %>">URL</label>',
+          '<label for="<%= formId(id_key) %>"><%= i18n.t("blocks:oembed:url") %></label>',
           '<input name="<%= id_key %>" class="form-control col-md-6" type="text" id="<%= formId(id_key) %>" />',
         '</div>',
       '</div>',

@@ -6,8 +6,6 @@ SirTrevor.Blocks.SearchResults =  (function(){
 
     type: "search_results",
 
-    title: function() { return "Search Results"; },
-
     icon_name: 'search_results',
 
     searches_key: "slug",
@@ -17,9 +15,7 @@ SirTrevor.Blocks.SearchResults =  (function(){
     content: function() {
       return _.template([this.items_selector()].join("<hr />\n"))(this);
     },
-
-    description: "This widget displays a set of search results on a page. Specify a search result set by selecting an existing browse category. You can also select the view types that are available to the user when viewing the result set.",
-
+    
     item_options: function() {
       var block = this;
       var fields = $('[data-blacklight-configuration-search-views]').data('blacklight-configuration-search-views');

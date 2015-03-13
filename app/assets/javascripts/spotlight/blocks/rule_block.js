@@ -11,8 +11,8 @@ SirTrevor.Blocks.Rule = (function(){
 
   return SirTrevor.Block.extend({
     type: "rule",
-
-    title: function() { return "Horizontal Rule"; },
+    
+    title: function() { return i18n.t('blocks:rule:title'); },
 
     icon_name: "rule",
 
