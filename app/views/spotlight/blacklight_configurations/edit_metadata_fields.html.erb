@@ -29,22 +29,7 @@
       <tbody class="metadata_fields dd dd-list" data-behavior="nestable" data-max-depth="1" data-list-node-name="tbody" data-item-node-name="tr" data-expand-btn-HTML=" " data-collapse-btn-HTML=" ">
         <%= f.fields_for :index_fields do |idxf| %>
           <% @blacklight_configuration.blacklight_config.index_fields.each do |key, config| %>
-              <tr data-id="<%= key.parameterize %>" class="dd-item">
-                <%= idxf.fields_for key do |field| %>
-                  <td>
-                    <%= field.hidden_field :weight, 'data-property' => 'weight' %>
-                    <div class="handle-wrap" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
-                      <div class="dd-handle dd3-handle"><%= t :drag %></div>
-                      <a href="#edit-in-place" class="field-label edit-in-place"><%= index_field_label(nil, key) %></a>
-                      <%= field.hidden_field :label, value: index_field_label(nil, key), class: 'form-control input-sm', data: {:"edit-field-target" => 'true'} %>
-                     </div>
-                  </td>
-                  <td class="checkbox-cell"><%= field.check_box :show, inline: true, checked: config.show, label: "" %></td>
-                  <% available_view_fields.keys.each do |type| %>
-                  <td class="checkbox-cell"><%= field.check_box type, inline: true, checked: config.send(type), label: "" %></td>
-                  <% end %>
-                <% end %>
-              </tr>
+            <%= render partial: 'metadata_field', locals: { key: key, config: config, f: idxf } %>
           <% end %>
         <% end %>
      </tbody>

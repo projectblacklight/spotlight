@@ -64,6 +64,20 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
 
       expect(subject.blacklight_config.facet_fields.keys).to eq ['c', 'a', 'b']
     end
+    
+    context "custom fields" do
+      it "should include any custom fields" do
+        allow(subject).to receive_messages(custom_facet_fields: { 'a' => double(if: nil, :if= => true, merge!: true, validate!: true, normalize!: true) })
+        expect(subject.blacklight_config.facet_fields).to include('a')
+      end
+
+      it "should default to not showing a custom field in the facets" do
+        allow(subject).to receive_messages(custom_facet_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
+        expect(subject.blacklight_config.facet_fields).to include('a')
+        expect(subject.blacklight_config.facet_fields['a'].show).to be_falsey
+      end
+    end
+    
   end
 
   describe "index fields" do
@@ -128,7 +142,6 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
       blacklight_config.add_show_field 'a', if: false
       expect(subject.blacklight_config.index_fields).not_to have_key 'a'
     end
-
 
     context "custom fields" do
       it "should include any custom fields" do

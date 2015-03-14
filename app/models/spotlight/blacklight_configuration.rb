@@ -129,7 +129,8 @@ module Spotlight
             v.validate!
           end
         end
-
+        
+        config.facet_fields.merge! custom_facet_fields
         unless facet_fields.blank?
           config.facet_fields = Hash[config.facet_fields.sort_by { |k,v| field_weight(facet_fields, k) }]
 
@@ -165,6 +166,13 @@ module Spotlight
     def custom_index_fields
       Hash[exhibit.custom_fields.map do |x| 
         field = Blacklight::Configuration::IndexField.new x.configuration.merge(field: x.field)
+        [x.field, field] 
+      end]
+    end
+
+    def custom_facet_fields
+      Hash[exhibit.custom_fields.vocab.map do |x| 
+        field = Blacklight::Configuration::FacetField.new x.configuration.merge(field: x.field, show: false)
         [x.field, field] 
       end]
     end
