@@ -154,4 +154,22 @@ describe Spotlight::ApplicationHelper, :type => :helper do
       expect(helper.uploaded_field_label(field)).to eq 'solr x'
     end
   end
+
+  describe "#available_view_fields" do    
+    let :blacklight_config do
+      Blacklight::Configuration.new
+    end
+
+    before do
+      allow(helper).to receive_message_chain(:current_exhibit, :blacklight_configuration, default_blacklight_config: blacklight_config)
+    end
+
+    it "should exclude view fields that are never visible (e.g. atom, rss)" do
+      blacklight_config.view.a.if = true
+      blacklight_config.view.b.if = false
+
+      expect(helper.available_view_fields).to include :a
+      expect(helper.available_view_fields).to_not include :b
+    end
+  end
 end

@@ -8,10 +8,6 @@ module Spotlight
       [{key: document_show_link_field, label: t(:'.title_placeholder')}] + (@page.exhibit.blacklight_configuration.default_blacklight_config.index_fields.map { |k,v| { key: k, label: index_field_label(nil, k) }})
     end
 
-    def available_view_fields
-      current_exhibit.blacklight_configuration.default_blacklight_config.view.to_h.reject { |k,v| v.if === false}.map { |k,v| { key: k, label: view_label(k) }}
-    end
-
     def has_title? document
       document_heading(document) != document.id
     end

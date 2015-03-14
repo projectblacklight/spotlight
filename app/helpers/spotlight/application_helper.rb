@@ -134,6 +134,10 @@ module Spotlight
     def view_label view
       t(:"blacklight.search.view.#{view}", default: blacklight_config.view[view].title || view.to_s)
     end
+    
+    def available_view_fields
+      current_exhibit.blacklight_configuration.default_blacklight_config.view.to_h.reject { |k,v| v.if === false}
+    end
 
     private
 

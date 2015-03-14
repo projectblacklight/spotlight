@@ -16,7 +16,7 @@
             </div>
             <%= select_deselect_button %>
           </th>
-          <% @blacklight_configuration.blacklight_config.view.keys.each do |type| %>
+          <% available_view_fields.keys.each do |type| %>
             <th>
               <div>
                 <%= t :".view.#{type}", default: t(:".view.#{type}") %>
@@ -40,7 +40,7 @@
                      </div>
                   </td>
                   <td class="checkbox-cell"><%= field.check_box :show, inline: true, checked: config.show, label: "" %></td>
-                  <% @blacklight_configuration.blacklight_config.view.keys.each do |type| %>
+                  <% available_view_fields.keys.each do |type| %>
                   <td class="checkbox-cell"><%= field.check_box type, inline: true, checked: config.send(type), label: "" %></td>
                   <% end %>
                 <% end %>
