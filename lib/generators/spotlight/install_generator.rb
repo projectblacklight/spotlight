@@ -65,6 +65,10 @@ module Spotlight
       end
     end
 
+    def add_example_catalog_controller
+      copy_file "catalog_controller.rb", "app/controllers/catalog_controller.rb", force: !!ENV['CI']
+    end
+
     def add_osd_viewer
       gem 'blacklight-gallery'
       generate 'blacklight_gallery:install'
@@ -90,6 +94,11 @@ module Spotlight
     def generate_social_share_button_initializer
       gem 'social-share-button'
       directory 'config'
+    end
+
+    def add_solr_config_resources
+      copy_file "jetty.rake", "lib/tasks/jetty.rake"
+      directory "solr_conf"
     end
   end
 end

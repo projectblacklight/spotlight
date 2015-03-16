@@ -4,7 +4,6 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController  
 
   include Blacklight::Catalog
-  helper Openseadragon::OpenseadragonHelper
 
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
@@ -28,13 +27,6 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     config.index.title_field = 'full_title_tesim'
     config.index.display_type_field = 'content_metadata_type_ssm'
-    config.index.thumbnail_field = Spotlight::Engine.config.thumbnail_field
-
-    config.view.gallery.partials = [:index_header, :index]
-    config.view.slideshow.partials = [:index]
-
-    config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
-    config.show.partials.insert(1, :openseadragon)
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
@@ -99,7 +91,5 @@ class CatalogController < ApplicationController
     config.add_sort_field 'source', sort: 'sort_source_ssi asc', label: 'Source'
     config.add_sort_field 'identifier', sort: 'id asc', label: 'Identifier'
   end
-
-
 
 end 
