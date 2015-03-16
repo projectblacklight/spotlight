@@ -189,3 +189,21 @@
     margin-bottom: $padding-base-horizontal;
   }
 }
+
+.items-block .content-block {
+  @media (max-width: $screen-sm-max) {
+    margin-bottom: 0;
+  }
+}
+
+.item-features .carousel-indicators {
+  @media (max-width: $screen-xs-max) {
+    width: 100%;
+    margin-top: 2 * $padding-large-vertical;
+  }
+}
+
+.carousel-block .carousel-caption h3 {
+  padding-left: 2 * $padding-large-horizontal;
+  padding-right: 2 * $padding-large-horizontal;
+}
