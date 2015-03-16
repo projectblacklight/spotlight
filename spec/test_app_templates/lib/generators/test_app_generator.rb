@@ -35,4 +35,8 @@ class TestAppGenerator < Rails::Generators::Base
   def add_rake_tasks_to_app
     rakefile 'spotlight_test.rake', File.read(find_in_source_paths('spotlight_test.rake'))
   end
+
+  def disable_carrierwave_processing
+    copy_file "carrierwave.rb", "config/initializers/carrierwave.rb"
+  end
 end
