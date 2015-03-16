@@ -72,9 +72,9 @@ describe Spotlight::Resources::Upload, :type => :model do
     end
 
     it 'should have the other additional configured fields' do
-      expect(subject.to_solr[Spotlight::Engine.config.uploaded_description_field]).to eq "Description Data"
-      expect(subject.to_solr[Spotlight::Engine.config.uploaded_attribution_field]).to eq "Attribution Data"
-      expect(subject.to_solr[Spotlight::Engine.config.uploaded_date_field]).to eq "Date Data"
+      expect(subject.to_solr[:spotlight_upload_description_tesim]).to eq "Description Data"
+      expect(subject.to_solr[:spotlight_upload_attribution_tesim]).to eq "Attribution Data"
+      expect(subject.to_solr[:spotlight_upload_date_tesim]).to eq "Date Data"
     end
 
     it 'should have a spotlight_resource_type field' do

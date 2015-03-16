@@ -77,9 +77,6 @@ class CatalogController < ApplicationController
     config.add_index_field 'note_source_tesim', :label => 'Source'
     config.add_index_field 'subject_geographic_tesim', :label => 'Geographic Subject'
     config.add_index_field 'subject_temporal_tesim', :label => 'Temporal Subject'
-    config.add_index_field Spotlight::Engine.config.uploaded_description_field, :label => 'Description'
-    config.add_index_field Spotlight::Engine.config.uploaded_attribution_field, :label => 'Attribution'
-    config.add_index_field Spotlight::Engine.config.uploaded_date_field, :label => 'Date'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display 

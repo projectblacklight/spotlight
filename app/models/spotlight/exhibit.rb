@@ -115,6 +115,10 @@ class Spotlight::Exhibit < ActiveRecord::Base
     Spotlight::ReindexJob.perform_later(self)
   end
 
+  def uploaded_resource_fields
+    Spotlight::Engine.config.upload_fields
+  end
+
   protected
 
   def initialize_config
