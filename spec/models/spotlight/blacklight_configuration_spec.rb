@@ -68,7 +68,7 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
 
       expect(subject.blacklight_config.facet_fields.keys).to eq ['c', 'a', 'b']
     end
-    
+
     context "custom fields" do
       it "should include any custom fields" do
         allow(subject).to receive_messages(custom_facet_fields: { 'a' => double(if: nil, :if= => true, merge!: true, validate!: true, normalize!: true) })
@@ -81,7 +81,17 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
         expect(subject.blacklight_config.facet_fields['a'].show).to be_falsey
       end
     end
-    
+
+    context "exhibit fields" do
+      before do
+        # undo the stubbing we've used elsewhere..
+        allow(subject).to receive(:default_blacklight_config).and_call_original
+        allow(Spotlight::Engine).to receive_messages blacklight_config: blacklight_config
+      end
+      it "should inject a tags facet" do
+        expect(subject.blacklight_config.facet_fields).to include "exhibit_tags"
+      end
+    end
   end
 
   describe "index fields" do
@@ -376,11 +386,6 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
       blacklight_config.show.title_field = 'xyz'
       subject.show[:title_field] = 'abc'
       expect(subject.blacklight_config.show.title_field).to eq 'abc'
-    end
-
-    it "should inject partials" do
-      partials = subject.blacklight_config.show.partials
-      expect(partials).to include "spotlight/catalog/tags"
     end
   end
 

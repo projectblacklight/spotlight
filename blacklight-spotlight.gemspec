@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", "~> 4.0", ">= 4.2.0"
-  s.add_dependency "blacklight", "~> 5.11"
+  s.add_dependency "blacklight", "~> 5.12"
   s.add_dependency "autoprefixer-rails"
   s.add_dependency "cancancan"
   s.add_dependency "sir_trevor_rails", ">= 0.5.0a"

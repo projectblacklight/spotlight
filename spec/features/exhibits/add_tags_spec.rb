@@ -22,10 +22,10 @@ describe "Add tags to an item in an exhibit", :type => :feature do
 
     visit spotlight.exhibit_catalog_path(exhibit, "dq287tq6352")
 
-    within("ul.tags") do
-      expect(page).to have_selector  "li", text: "One"
-      expect(page).to have_selector  "li", text: "Two and a half"
-      expect(page).to have_selector  "li", text: "Three"
+    within("dd.blacklight-exhibit_tags") do
+      expect(page).to have_selector  "a", text: "One"
+      expect(page).to have_selector  "a", text: "Two and a half"
+      expect(page).to have_selector  "a", text: "Three"
     end
 
     click_on "Two and a half"

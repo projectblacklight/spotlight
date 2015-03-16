@@ -71,8 +71,6 @@ module Spotlight
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
-        config.show.partials.insert(2, "spotlight/catalog/tags")
-
         config.view.embed.partials ||= ['openseadragon']
         config.view.embed.if = false
         config.view.embed.locals ||= { osd_container_class: "" }
@@ -189,7 +187,8 @@ module Spotlight
 
     protected
     def add_exhibit_specific_fields config
-      config.add_facet_field Spotlight::SolrDocument.solr_field_for_tagger(exhibit), label: :'blacklight.search.fields.facet.exhibit_tag', show: false unless config.facet_fields.include? :exhibit_tag
+      config.add_show_field :exhibit_tags, field: Spotlight::SolrDocument.solr_field_for_tagger(exhibit), link_to_search: true unless config.show_fields.include? :exhibit_tags
+      config.add_facet_field :exhibit_tags, field: Spotlight::SolrDocument.solr_field_for_tagger(exhibit) unless config.facet_fields.include? :exhibit_tags
 
       exhibit.uploaded_resource_fields.each do |f|
         key = Array(f.solr_field || f.field_name).first.to_s

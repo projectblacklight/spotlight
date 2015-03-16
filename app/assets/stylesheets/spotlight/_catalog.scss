@@ -104,3 +104,15 @@ form.edit_solr_document {
   float:left;
   margin-right: $padding-xs-horizontal;
 }
+
+#document {
+  dd.blacklight-exhibit_tags {
+    color: $body-bg;
+    line-height: 2em;
+  }
+
+  .blacklight-exhibit_tags a {
+    @extend .label;
+    @extend .label-default;
+  }
+}
