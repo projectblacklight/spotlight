@@ -79,19 +79,8 @@ Spotlight needs the ability to write exhibit-specific content to your Solr index
 
 If you are unable to use the Atomic Update strategy, your `SolrDocument` class must implement a `#reindex` method that can update the document in Solr with the exhibit-specific data provided by `#to_solr`.
 
-## To set up your development environment
-
-**Note:** rake commands MAY need to be prefixed with `bundle exec`, depending on your environment.
+## To start the development/test application
 
  1. Clone this repo, `cd` in and run `$ bundle install`
- 2. Get and configure Jetty/Solr:
-     1. `$ rake jetty:download`
-     2. `$ rake jetty:unzip`
-     3. `$ rake spotlight:configure_jetty`
- 3.  Generate the internal test application (will be in `spec/internal`): `$ rake engine_cart:generate` 
- 4. Start Jetty `$ rake jetty:start` (may take a moment, use e.g. `$ fuser 8983/tcp` or `$ ps aux | grep jetty` to see when it's actually up)
- 3. Index fixtures: `TEST_JETTY_PORT=8983 rake spotlight:fixtures`
- 4. `$ cd spec/internal`
- 5. Run `$ rake spotlight:initialize` and answer prompts
- 6. Start the dev server `rails s`
- 7. Visit [http://localhost:3000](http://localhost:3000) and sign in.
+ 2. Start jetty and the dev server: `$ bundle exec rake spotlight:server` (this task will build a Spotlight-based application, start Solr, and run the built-in rails server)
+ 3. Visit [http://localhost:3000](http://localhost:3000)
