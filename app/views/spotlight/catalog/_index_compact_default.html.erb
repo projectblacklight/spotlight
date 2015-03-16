@@ -1,21 +1,21 @@
-      <% # header bar for doc items in index view -%>
-      <td>
-        <%= render_document_partial document, 'spotlight/catalog/admin_thumbnail', document_counter: document_counter %>
-      </td>
-      <td>
-        <%= render_document_partial document, 'admin_index_header', document_counter: document_counter %>
+<% # header bar for doc items in index view -%>
+<td>
+  <%= render_document_partial document, 'spotlight/catalog/admin_thumbnail', document_counter: document_counter %>
+</td>
+<td>
+  <%= render_document_partial document, 'admin_index_header', document_counter: document_counter %>
 
-    <div class="page-links">
-      <%= view_link document, url_for_document(document), class: 'btn btn-link' %> &middot;
-      <%= exhibit_edit_link document, [:edit, current_exhibit, document], class: 'btn btn-link' %>
-    </div>
-      </td>
+  <div class="page-links">
+  <%= view_link document, url_for_document(document), class: 'btn btn-link' %> &middot;
+  <%= exhibit_edit_link document, [:edit, current_exhibit, document], class: 'btn btn-link' %>
+  </div>
+</td>
 
-      <td>
-        <%= l Date.parse(document[blacklight_config.index.timestamp_field]) if document[blacklight_config.index.timestamp_field] %>
-      </td>
-      
-      <td class="checkbox-toggle">
-        <%= render partial: 'document_visibility_control', locals: { document: document} %>
-      </td>
+<td>
+  <%= l Date.parse(document[blacklight_config.index.timestamp_field]) if document[blacklight_config.index.timestamp_field] %>
+</td>
+
+<td class="checkbox-toggle">
+  <%= render partial: 'document_visibility_control', locals: { document: document} %>
+</td>
 

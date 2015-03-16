@@ -14,6 +14,7 @@ module Spotlight
 
       self.blacklight_config.view.reject! { |k,v| true }
       self.blacklight_config.view.admin_table.partials = ['index_compact']
+      self.blacklight_config.view.admin_table.document_actions = []
     end
 
     def _prefixes

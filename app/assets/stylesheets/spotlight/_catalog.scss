@@ -1,31 +1,29 @@
 #documents.table {
-  .documentHeader {
-
-  }
-
-  .checkbox-toggle {
-    text-align: center;
-    form {
-      display: inline-block;
-    }
-  }
-
-  .row {
-    margin: 0;
-  }
-
-  .index-document-functions {
-    display: none;
-  }
+  font-size: $font-size-base;
 
   .document-thumbnail {
-    @extend .thumbnail;
-
-    img {
-      max-width: 60px !important;
-    }
+    border: none;
+    margin-bottom: 0;
+    padding: 0;
   }
 
+  .document-thumbnail a > img {
+    border: 1px solid $gray-light;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+  }
+
+  .document-counter {display: none;}
+
+  .index_title {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .checkbox.toggle_visibility {
+    padding-top: 0;
+  }
 }
 
 #document {
