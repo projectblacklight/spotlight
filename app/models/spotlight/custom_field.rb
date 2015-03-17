@@ -5,9 +5,12 @@ module Spotlight
     
     extend FriendlyId
     friendly_id :slug_candidates, use: [:slugged,:scoped,:finders], scope: :exhibit
+    
+    scope :vocab, -> { where(field_type: "vocab") }
 
     before_save do
       self.field ||= field_name
+      self.field_type ||= "text"
     end
 
     def label=(label)
@@ -42,7 +45,16 @@ module Spotlight
 
     protected
     def field_name
-      "#{Spotlight::Engine.config.solr_fields.prefix}exhibit_#{self.exhibit.to_param}_#{label.parameterize}#{Spotlight::Engine.config.solr_fields.text_suffix}"
+      "#{Spotlight::Engine.config.solr_fields.prefix}exhibit_#{self.exhibit.to_param}_#{label.parameterize}#{field_suffix}"
+    end
+
+    def field_suffix
+      case field_type
+      when 'vocab'
+        Spotlight::Engine.config.solr_fields.string_suffix
+      else
+        Spotlight::Engine.config.solr_fields.text_suffix    
+      end
     end
 
     def view_types

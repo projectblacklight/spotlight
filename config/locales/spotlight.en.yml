@@ -241,6 +241,11 @@ en:
         header: Edit Exhibit-Specific Field
       new:
         header: Add Exhibit-Specific Field
+      form:
+        field_type:
+          label: "Type"
+          vocab: "Controlled vocabulary"
+          text: "Free text"
     dashboards:
       show:
         header: Dashboard

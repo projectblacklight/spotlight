@@ -104,4 +104,22 @@ describe Spotlight::CustomField, :type => :model do
     end
   end
 
+  describe "#field_name" do
+    let(:exhibit) { double(to_param: "a") }
+
+    before do
+      subject.label = "xyz"
+    end
+
+    it "should end in the text suffix if it is a text field" do
+      subject.field_type = "text"
+      expect(subject.send(:field_name)).to end_with Spotlight::Engine.config.solr_fields.text_suffix
+    end
+
+    it "should end in a string suffix if it is a vocab field" do
+      subject.field_type = "vocab"
+      expect(subject.send(:field_name)).to end_with Spotlight::Engine.config.solr_fields.string_suffix
+    end
+  end
+
 end
