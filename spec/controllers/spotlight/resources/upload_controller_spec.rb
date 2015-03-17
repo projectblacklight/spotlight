@@ -18,6 +18,17 @@ describe Spotlight::Resources::UploadController, :type => :controller do
   describe "when signed in as a curator" do
     let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
     before {sign_in user }
+    
+    describe "GET new" do
+      it "should be successful" do
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with("Items", admin_exhibit_catalog_index_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with("Add non-repository items", new_exhibit_resources_upload_path(exhibit))
+        get :new, exhibit_id: exhibit
+        expect(response).to be_successful
+      end
+    end
 
     describe 'POST csv_upload' do
       let(:csv) { fixture_file_upload(File.expand_path(File.join('..', 'fixtures', 'csv-upload-fixture.csv'), Rails.root), 'text/csv') }
