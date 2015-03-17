@@ -11,6 +11,9 @@ class Spotlight::CatalogController < ::CatalogController
   
 
   def new
+    add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
+    add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)
+    add_breadcrumb t(:'spotlight.catalog.new.header'), new_exhibit_catalog_path(@exhibit)
     @resource = @exhibit.resources.build
   end
 

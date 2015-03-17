@@ -11,6 +11,12 @@ module Spotlight::Resources
     before_filter :build_resource, only: [:new, :create, :template]
 
     load_and_authorize_resource class: 'Spotlight::Resources::Upload', through_association: "exhibit.resources", instance_name: 'resource'
+    def new
+      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), exhibit_root_path(@exhibit)
+      add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
+      add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)
+      add_breadcrumb t(:'spotlight.resources.upload.new.header'), new_exhibit_resources_upload_path(@exhibit)
+    end
 
     def create
       @resource.attributes = resource_params

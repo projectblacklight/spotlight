@@ -179,6 +179,17 @@ describe Spotlight::CatalogController, :type => :controller do
       expect(assigns[:exhibit]).to eq exhibit
       expect(response).to render_template "spotlight/catalog/admin"
     end
+    
+    describe "GET new" do
+      it "should be successful" do
+        expect(controller).to receive(:add_breadcrumb).with("Home", exhibit_path(exhibit, q: ''))
+        expect(controller).to receive(:add_breadcrumb).with("Curation", exhibit_dashboard_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with("Items", admin_exhibit_catalog_index_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with("Import items", new_exhibit_catalog_path(exhibit))
+        get :new, exhibit_id: exhibit
+        expect(response).to be_successful
+      end
+    end
 
     describe "GET edit" do
       it "should be successful" do
