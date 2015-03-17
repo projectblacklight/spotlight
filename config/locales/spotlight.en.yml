@@ -392,8 +392,8 @@ en:
           success: "'%{file_name}' has been uploaded.  An email will be sent to you once indexing is complete."
         new:
           header: "Add non-repository items"
-          single: "Single item"
-          multiple: "Multiple items using CSV file"
+          single_item_form: "Single item"
+          multi_item_form: "Multiple items using CSV file"
         error: "There was a problem uploading your object."
         multi_item_form:
           add_item: "Add item"

@@ -51,6 +51,7 @@ module Spotlight
 
     Spotlight::Engine.config.resource_providers = []
     Spotlight::Engine.config.new_resource_partials = [] # e.g. "spotlight/resources/bookmarklet"
+    Spotlight::Engine.config.uploaded_resource_partials = ['spotlight/resources/upload/single_item_form', 'spotlight/resources/upload/multi_item_form']
     Spotlight::Engine.config.filter_resources_by_exhibit = false
     # The allowed file extensions for uploading non-repository items.
     Spotlight::Engine.config.allowed_upload_extensions = %w(jpg jpeg png)
