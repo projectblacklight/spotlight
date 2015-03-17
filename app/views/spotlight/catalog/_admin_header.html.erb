@@ -7,7 +7,10 @@
     <% if Spotlight::Engine.config.new_resource_partials.any? %>
       <%= link_to t('.new.repo_item'), new_exhibit_catalog_path(current_exhibit), class: 'btn btn-default' %>
     <% end %>
-    <%= link_to t('.new.non_repo_item'), new_exhibit_resources_upload_path(current_exhibit), class: 'btn btn-default' %>
+    
+    <% if Spotlight::Engine.config.uploaded_resource_partials.any? %>
+      <%= link_to t('.new.non_repo_item'), new_exhibit_resources_upload_path(current_exhibit), class: 'btn btn-default' %>
+    <% end %>
   </div>
 </div>
 <% end %>

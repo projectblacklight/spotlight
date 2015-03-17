@@ -3,20 +3,20 @@
   <%= curation_page_title %>
   <div role="tabpanel" class="item-upload-tabs">
     <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active">
-        <a href="#single" aria-controls="single" role="tab" data-toggle="tab"><%= t('.single') %></a>
-      </li>
-      <li role="presentation">
-        <a href="#multi" aria-controls="multi" role="tab" data-toggle="tab"><%= t('.multiple') %></a>
-      </li>
+      <% Spotlight::Engine.config.uploaded_resource_partials.each_with_index do |p, i| %>
+        <% name = p.split("/").last %>
+        <li role="presentation" class="<%= "active" if i ==0 %>">
+          <%= link_to t(".#{name}"), "##{name}", role: 'tab', 'data-toggle' => 'tab', 'aria-controls' => 'single' %>
+        </li>
+      <% end %>
     </ul>
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="single">
-        <%= render "single_item_form" %>
-      </div>
-      <div role="tabpanel" class="tab-pane" id="multi">
-        <%= render "multi_item_form" %>
-      </div>
+      <% Spotlight::Engine.config.uploaded_resource_partials.each_with_index do |p, i| %>
+        <% name = p.split("/").last %>
+        <%= content_tag :div, id: name, role: 'tabpanel', class: "tab-pane #{"active" if i == 0}" do %>
+          <%= render p %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>
