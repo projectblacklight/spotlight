@@ -3,18 +3,9 @@ spotlight
 
 [![Build Status](https://travis-ci.org/sul-dlss/spotlight.png?branch=master)](https://travis-ci.org/sul-dlss/spotlight) | [![Coverage Status](https://coveralls.io/repos/sul-dlss/spotlight/badge.png?branch=master)](https://coveralls.io/r/sul-dlss/spotlight) | [![Gem Version](https://badge.fury.io/rb/blacklight-spotlight.png)](http://badge.fury.io/rb/blacklight-spotlight) | [Release Notes](https://github.com/sul-dlss/spotlight/releases) | [Design Documents](https://github.com/sul-dlss/spotlight/releases/tag/v0.0.0)
 
-Spotlight is intended to enable librarians, curators, and others who are responsible for digital collections to create attractive, feature-rich websites that feature these collections. The curator should be able to use Spotlight to produce a website that highlights a digital collection, drawn from a digital library repository, entirely on his or her own, without programming. The development and ongoing management of the website should be relatively simple and follow familiar conventions for producing online content (e.g., similar to writing and managing a blog or working with a content management system).
+Spotlight is open source software that sits on top of a digital repository and enables librarians, curators, and other content experts to easily build feature-rich websites that showcase collections and objects from that repository. Spotlight is a plug-in for [Blacklight](https://github.com/projectblacklight/blacklight), an open source, Ruby on Rails Engine that provides a basic discovery interface for searching an Apache Solr index.
 
-### Demo Videos
-* [Sprint 9](https://www.youtube.com/watch?v=ALVwecIw5Rw)
-* [Sprint 8](https://www.youtube.com/watch?v=l25_TWTV1uE)
-* [Sprint 7](https://www.youtube.com/watch?v=qTv33JqUoH8)
-* [Sprint 6](https://www.youtube.com/watch?v=HxQ6khYqezU)
-* [Sprint 5](https://www.youtube.com/watch?v=pnpqiIDXHHw)
-* [Sprint 4](https://www.youtube.com/watch?v=4S0iRzvdk5M)
-* [Sprint 3](https://www.youtube.com/watch?v=XEOsMRY_3mY)
-* [Sprint 2](https://www.youtube.com/watch?v=8BqWSEmOK3g)
-* [Sprint 1](https://www.youtube.com/watch?v=LAoTIdP2Gsk)
+Read more about what Spotlight is, our motivations for creating it, and how to install and configure it in the [wiki pages](https://github.com/sul-dlss/spotlight/wiki). You might also want to take a look at our demo videos, especially the [tour of a completed Spotlight exhibit](https://www.youtube.com/watch?v=_A7vTbbiF4g) and the walkthrough of [building an exhibit with Spotlight](https://www.youtube.com/watch?v=qPJtgajJ4ic).
 
 ## Tests
 
