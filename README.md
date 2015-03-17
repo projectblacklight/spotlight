@@ -40,27 +40,43 @@ $ rake rails:template LOCATION=https://raw.githubusercontent.com/sul-dlss/spotli
 
 Or do it manually:
 
-Add this line to your application's Gemfile:
+Add these lines to your application's Gemfile:
 
 ```
+gem 'blacklight'
 gem 'blacklight-spotlight'
 ```
 
 And then execute:
 
 ```
-$ bundle
+$ bundle install
 ```
 
-Then run:
+Then install Blacklight:
 
 ```
-$ rails g spotlight:install
+$ rails generate blacklight:install
 ```
 
-Create an administrator
+Then install Spotlight:
+
+```
+$ rails generate spotlight:install
+$ rake spotlight:install:migrations
+$ rake db:migrate
+```
+
+Create an initial administrator:
+
 ```
 $ rake spotlight:initialize
+```
+
+If you installed jettywrapper with Blacklight (above), install Spotlight's demo solr configuration and catalog controller configuration:
+
+```
+$ rake jetty:configure_solr
 ```
 
 ## Configuration
