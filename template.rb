@@ -1,5 +1,5 @@
 gem "blacklight", '>= 5.10'
-gem "blacklight-spotlight", path: "/Users/cabeer/Projects/sul/spotlight" #github: 'sul-dlss/spotlight'
+gem "blacklight-spotlight", github: 'sul-dlss/spotlight'
 gem "sir_trevor_rails", github: 'madebymany/sir-trevor-rails'
 
 run "bundle install"
