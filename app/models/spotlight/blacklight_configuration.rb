@@ -190,6 +190,18 @@ module Spotlight
     protected
     def add_exhibit_specific_fields config
       config.add_facet_field Spotlight::SolrDocument.solr_field_for_tagger(exhibit), label: :'blacklight.search.fields.facet.exhibit_tag', show: false unless config.facet_fields.include? :exhibit_tag
+
+      exhibit.uploaded_resource_fields.each do |f|
+        key = Array(f.solr_field || f.field_name).first.to_s
+
+        unless config.index_fields.any? { |k,v| v.field == key }
+          options = {}
+          options.merge! f.blacklight_options if f.blacklight_options
+          options[:label] = f.label if f.label
+
+          config.add_index_field key, options
+        end
+      end
     end
 
     def spotlight_image_version_fields

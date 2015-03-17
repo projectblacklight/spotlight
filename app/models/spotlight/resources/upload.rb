@@ -9,7 +9,7 @@ module Spotlight
 
     def self.fields(exhibit)
       @fields ||= {}
-      @fields[exhibit] ||= [Spotlight::Engine.config.upload_title_field || OpenStruct.new(field_name: exhibit.blacklight_config.index.title_field)] + Spotlight::Engine.config.upload_fields
+      @fields[exhibit] ||= [Spotlight::Engine.config.upload_title_field || OpenStruct.new(field_name: exhibit.blacklight_config.index.title_field)] + exhibit.uploaded_resource_fields
     end
 
     def configured_fields
