@@ -66,7 +66,7 @@ module Spotlight
     end
 
     def add_example_catalog_controller
-      copy_file "catalog_controller.rb", "app/controllers/catalog_controller.rb", force: !!ENV['CI']
+      copy_file "catalog_controller.rb", "app/controllers/catalog_controller.rb"
     end
 
     def add_osd_viewer
