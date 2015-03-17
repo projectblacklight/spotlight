@@ -51,6 +51,7 @@ class Spotlight::CatalogController < ::CatalogController
   def admin
     self.blacklight_config.view.select! { |k,v| k == :admin_table }
     self.blacklight_config.view.admin_table.partials = [:index_compact]
+    self.blacklight_config.view.admin_table.document_actions = []
 
     unless self.blacklight_config.sort_fields.has_key? :timestamp
       self.blacklight_config.add_sort_field :timestamp, sort: "#{blacklight_config.index.timestamp_field} desc"

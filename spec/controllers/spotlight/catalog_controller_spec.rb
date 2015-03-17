@@ -178,6 +178,14 @@ describe Spotlight::CatalogController, :type => :controller do
       expect(assigns[:document_list]).to be_a Array
       expect(assigns[:exhibit]).to eq exhibit
       expect(response).to render_template "spotlight/catalog/admin"
+      expect(controller.blacklight_config.view.admin_table.document_actions).to be_empty
+    end
+
+    it "should use the admin table view and hide the document actions" do
+      get :admin, exhibit_id: exhibit
+
+      expect(controller.blacklight_config.view.to_h.keys).to match_array [:admin_table]
+      expect(controller.blacklight_config.view.admin_table.document_actions).to be_empty
     end
 
     describe "GET edit" do
