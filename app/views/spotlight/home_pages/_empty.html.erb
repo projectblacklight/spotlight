@@ -1,29 +1,33 @@
 <h2>Welcome to your new exhibit!</h2>
 
 <% unless current_user %>
-<p>In order to curate exhibit content, you need to <%= link_to t('spotlight.header_links.login'), main_app.new_user_session_path %></p>
+  <p>In order to curate exhibit content, you need to <%= link_to t('spotlight.header_links.login'), main_app.new_user_session_path %></p>
 <% end %>
 
 <% if can? :edit, @page %>
-<p>When you're ready to begin building your exhibit, here's how to get started:</p>
+  <p>When you're ready to begin building your exhibit, here's how to get started:</p>
 
-<ol>
-  <% if can? :update, current_exhibit %>
-  <li>Visit the <%= link_to "Administrative Dashboard Settings", edit_exhibit_path(current_exhibit) %> page to configure the exhibit title and subtitle.</li>
-  <% end %>
+  <ol>
+    <% if can? :update, current_exhibit %>
+      <li>Visit the <%= link_to "Administrative Dashboard Settings", edit_exhibit_path(current_exhibit) %> page to configure the exhibit title and subtitle.</li>
+    <% end %>
 
-  <% if can? :update, current_exhibit.appearance %>
-  <li>Next, go to the <%= link_to "Administration > Appearance", edit_exhibit_appearance_path(current_exhibit) %> page to add a site masthead image and configure other appearance options.</li>
-  <% end %>
+    <% if can? :update, current_exhibit.appearance %>
+      <li>Next, go to the <%= link_to "Administration > Appearance", edit_exhibit_appearance_path(current_exhibit) %> page to add a site masthead image and configure other appearance options.</li>
+    <% end %>
 
-  <% if can? :manage, Spotlight::Role.new(exhibit: current_exhibit) %>
-  <li>If you want help building the exhibit, use the <%= link_to "Administration > Users", exhibit_roles_path(current_exhibit) %> page to add other user accounts.</li>
-  <% end %>
-  
-  <% if can? :update, current_exhibit.blacklight_configuration %>
-  <li>Use the Curation pages, such as <%= link_to "Curation > Metadata", exhibit_edit_metadata_path(current_exhibit) %> and <%= link_to "Curation > Search Facets", exhibit_edit_facets_path(current_exhibit) %>, to customize the way various features are presented to exhibit visitors.</li>
-  <% end %>
+    <% if can? :manage, Spotlight::Role.new(exhibit: current_exhibit) %>
+      <li>If you want help building the exhibit, use the <%= link_to "Administration > Users", exhibit_roles_path(current_exhibit) %> page to add other user accounts.</li>
+    <% end %>
 
-  <li>Visit the Spotlight <%= link_to "documentation pages", "https://github.com/sul-dlss/spotlight/wiki" %> to learn how to add and edit feature pages, about pages, custom browse categories, and more.</li>
-</ol>
+    <% unless Spotlight::Engine.config.resource_providers.any? %>
+      <li>Add items to the exhibit. Go to the <%= link_to "Curation > Items", admin_exhibit_catalog_index_path(current_exhibit) %> page and click <strong>Add non-repository item</strong>. You can add items individually or in bulk via a CSV file.</li>
+    <% end %>
+
+    <% if can? :update, current_exhibit.blacklight_configuration %>
+      <li>Use the other Curation pages, such as <%= link_to "Curation > Metadata", exhibit_edit_metadata_path(current_exhibit) %> and <%= link_to "Curation > Search Facets", exhibit_edit_facets_path(current_exhibit) %>, to customize the way various features are presented to exhibit visitors.</li>
+    <% end %>
+
+    <li>Visit the Spotlight <%= link_to "documentation pages", "https://github.com/sul-dlss/spotlight/wiki" %> to learn how to add and edit feature pages, about pages, custom browse categories, and more.</li>
+  </ol>
 <% end %>
