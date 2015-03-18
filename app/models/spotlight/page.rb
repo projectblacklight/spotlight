@@ -25,16 +25,21 @@ module Spotlight
       self.display_sidebar = true
     end
 
+    def content_changed!
+      @content = nil
+    end
+
     def content= content
       if content.is_a? Array
         super content.to_json
       else
         super
       end
+      content_changed!
     end
 
     def has_content?
-      read_attribute(:content).present?
+      read_attribute(:content).present? and content.present?
     end
 
     def display_sidebar?

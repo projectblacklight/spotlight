@@ -38,10 +38,4 @@ describe Spotlight::HomePage, :type => :model do
       expect(home_page.display_sidebar?).to be_falsey
     end
   end
-  describe "content" do
-    it "should include default text" do
-      expect(home_page.content.first).to be_a SirTrevorRails::Blocks::TextBlock
-      expect(home_page.content.first.text).to eq Spotlight::HomePage.default_content_text
-    end
-  end
 end

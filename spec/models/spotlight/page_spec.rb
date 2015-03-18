@@ -62,4 +62,19 @@ describe Spotlight::Page, :type => :model do
       expect(page.content).to be_a_kind_of SirTrevorRails::BlockArray
     end
   end
+
+  describe "#has_content?" do
+    let(:page) { FactoryGirl.create(:feature_page) }
+
+    it "should not have content when the page is empty" do
+      page.content = []
+      expect(page).not_to have_content
+    end
+
+    it "should have content when the page has a widget" do
+      page.content = [{type: 'rule'}]
+      expect(page).to have_content
+    end
+
+  end
 end

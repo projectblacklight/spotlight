@@ -13,7 +13,11 @@
     <% end %>
   </div>
   <div>
-    <%= render @page.content if @page.has_content? %>
+    <% if @page.has_content? %>
+      <%= render @page.content %>
+    <% else %>
+      <%= render 'empty' %>
+    <% end %>
   </div>
 </div>
 <% end %>
