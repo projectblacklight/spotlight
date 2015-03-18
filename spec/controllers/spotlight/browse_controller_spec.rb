@@ -57,6 +57,22 @@ describe Spotlight::BrowseController, :type => :controller do
         expect(response).to render_template "spotlight/browse/show"
       end
 
+      it "should remove all the document actions" do
+        get :show, id: search, exhibit_id: exhibit
+        expect(controller.blacklight_config.index.document_actions).to be_blank
+      end
+
+      it "should use the blacklight.browse configuration for the document actions" do
+        config = Blacklight::Configuration.new do |config|
+          config.browse.document_actions = [:a, :b, :c]
+        end
+
+        allow(controller). to receive(:blacklight_config).and_return(config)
+
+        get :show, id: search, exhibit_id: exhibit
+        expect(controller.blacklight_config.index.document_actions).to match_array [:a, :b, :c]
+      end
+
     end
   end
 

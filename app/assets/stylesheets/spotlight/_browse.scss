@@ -5,12 +5,6 @@ $image-overlay-bottom-margin: $padding-large-vertical * 3;
   @return $overlay-max-height + $image-overlay-bottom-margin;
 }
 
-.blacklight-browse {
-  .index-document-functions {
-    display: none;
-  }
-}
-
 .long-description-text {
   column-width: 20em;
   column-gap: 3em;
