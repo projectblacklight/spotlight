@@ -116,6 +116,9 @@ module Spotlight
     # Field containing the last modified date for a Solr document
     Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
 
+    # Field containing the last modified date for a Solr document
+    Blacklight::Configuration.default_values[:browse] ||= Blacklight::OpenStructWithHashAccess.new(document_actions: [])
+
     # make blacklight configuration play nice with bootstrap_form
     Blacklight::OpenStructWithHashAccess.send(:extend, ActiveModel::Translation)
   end
