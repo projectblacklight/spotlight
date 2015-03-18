@@ -1,5 +1,5 @@
 gem "blacklight", '>= 5.10'
-gem "blacklight-spotlight", github: 'sul-dlss/spotlight'
+gem "blacklight-spotlight", ENV['SPOTLIGHT_GEM'] ? { path: ENV['SPOTLIGHT_GEM'] } : { github: 'sul-dlss/spotlight' }
 gem "sir_trevor_rails", github: 'madebymany/sir-trevor-rails'
 
 run "bundle install"
@@ -8,7 +8,7 @@ run "bundle install"
 blacklight_options = ENV.fetch("BLACKLIGHT_INSTALL_OPTIONS", '--devise --jettywrapper')
 generate 'blacklight:install', blacklight_options
 
-spotlight_options = ENV.fetch("SPOTLIGHT_INSTALL_OPTIONS", '--openseadragon --mailer_default_url_host=localhost:3000')
+spotlight_options = ENV.fetch("SPOTLIGHT_INSTALL_OPTIONS", '-f --openseadragon --mailer_default_url_host=localhost:3000')
 generate 'spotlight:install', spotlight_options
 rake "spotlight:install:migrations"
 rake "db:migrate"

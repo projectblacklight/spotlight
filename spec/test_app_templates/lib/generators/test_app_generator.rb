@@ -25,7 +25,7 @@ class TestAppGenerator < Rails::Generators::Base
   end
 
   def add_spotlight_routes_and_assets
-    generate 'spotlight:install', '--mailer_default_url_host=localhost:3000'
+    generate 'spotlight:install', '-f --mailer_default_url_host=localhost:3000'
   end
 
   def install_test_catalog_controller

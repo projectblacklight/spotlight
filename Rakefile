@@ -80,6 +80,47 @@ namespace :spotlight do
       end
     end
   end
+  
+  namespace :template do
+    task :server do
+      require 'tmpdir'
+      require 'fileutils'
+      template_path = File.expand_path(File.join(File.dirname(__FILE__), "template.rb"))
+
+      Dir.mktmpdir do |dir|
+
+        Dir.chdir(dir) do
+          Bundler.with_clean_env do
+            version = if Gem.loaded_specs["rails"]
+              "_#{Gem.loaded_specs["rails"].version}_"
+            end
+
+            Bundler.with_clean_env do
+              IO.popen({"SPOTLIGHT_GEM" => File.dirname(__FILE__)}, ["rails", version, "new", "internal", "--skip-spring", "-m", template_path] + [err: [:child, :out]]) do |io|
+                IO.copy_stream(io,$stderr)
+                
+                _, exit_status = Process.wait2(io.pid)
+
+                if exit_status != 0
+                  raise "Failed to generate spotlight"
+                end
+              end
+            end
+            
+            Bundler.with_clean_env do
+              Dir.chdir("internal") do
+                APP_ROOT = Dir.pwd
+                jetty_params = Jettywrapper.load_config   
+                Jettywrapper.wrap(jetty_params) do
+                  system "bundle exec rails s"
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
 end
 
 task default: :ci
