@@ -54,5 +54,12 @@ module Spotlight
       render
       expect(rendered).to_not match("Sidebar")
     end
+
+    it "should render an empty partial if the page has no content" do
+      allow(page).to receive_messages(has_content?: false)
+      stub_template "spotlight/pages/_empty.html.erb" => "Empty message"
+      render
+      expect(rendered).to have_content("Empty message")
+    end
   end
 end
