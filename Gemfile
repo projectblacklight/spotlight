@@ -13,7 +13,7 @@ gemspec
 # To use debugger
 # gem 'debugger'
 #
-gem 'blacklight-gallery', '>= 0.1.1'
+gem 'blacklight-gallery', '>= 0.3.0'
 gem "sir_trevor_rails", github: "sul-dlss/sir-trevor-rails"
 
 group :test do
