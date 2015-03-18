@@ -9,6 +9,12 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
     item_counts: "Include item counts?"
   },
 
+  iframe: {
+    title:  "IFrame",
+    description: "This widget embeds iframe-based embed code into pages",
+    placeholder: "Enter embed code here. It should begin with e.g. '<iframe'"
+  },
+
   oembed: {
     title: "Embed + Text",
     description: 'This widget embeds a web resource and a text block to the left or right of it.',
