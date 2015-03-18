@@ -7,7 +7,11 @@ SirTrevor.Blocks.SolrDocumentsEmbed = (function(){
 
     icon_name: "item_embed",
 
-    item_options: function() { return "" }
+    item_options: function() { return "" },
+
+    afterPreviewLoad: function(options) {
+      this.$el.find('picture[data-openseadragon]').openseadragon();
+    }
   });
 
 })();
