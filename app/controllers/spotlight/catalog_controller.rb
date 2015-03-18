@@ -177,7 +177,7 @@ class Spotlight::CatalogController < ::CatalogController
 
   def current_browse_category
     @current_browse_category ||= if current_search_session and current_search_session.query_params["action"] == "show" and current_search_session.query_params["controller"] == "spotlight/browse"
-      Spotlight::Search.find(current_search_session.query_params["id"]) if current_search_session.query_params["id"]
+      current_exhibit.searches.accessible_by(current_ability).find(current_search_session.query_params["id"]) if current_search_session.query_params["id"]
     end
   end
 
@@ -196,9 +196,9 @@ class Spotlight::CatalogController < ::CatalogController
   def current_page_context
     @current_page_context ||= if current_search_session and current_search_session.query_params["action"] == "show" and current_search_session.query_params["controller"].ends_with? "_pages"
       if current_search_session.query_params["controller"] == "spotlight/home_pages"
-        current_exhibit.home_page
+        current_exhibit.home_page if can? :read, current_exhibit.home_page
       else
-        Spotlight::Page.find(current_search_session.query_params["id"]) if current_search_session.query_params["id"]
+        current_exhibit.pages.accessible_by(current_ability).find(current_search_session.query_params["id"]) if current_search_session.query_params["id"]
       end
     end
   end

@@ -27,7 +27,8 @@ module Spotlight
     end
 
     def preview
-      @page = Spotlight::Page.find(params['id'])
+      @page = current_exhibit.pages.find(params['id'])
+      authorize! :read, @page
       @block = SirTrevorRails::Block.from_hash(JSON.parse(params[:block], symbolize_names: true), @page)
 
       respond_to do |format|
