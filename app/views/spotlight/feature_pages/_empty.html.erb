@@ -1,0 +1,24 @@
+<h2>Building this feature page</h2>
+
+<% if can? :edit, @page %>
+  <ol>
+    <li>
+      To add content to this page, click the Edit button above to enter Edit mode.
+    </li>
+    <li>
+      In Edit mode, click the plus sign icon to display the widget selection panel. This panel displays a range of widgets, each of which adds a different type of content to the page.
+    </li>
+    <li>
+      Select a widget to configure. Click <strong>Save changes</strong> when you're ready to add it to the page.
+    </li>
+    <li>
+      Repeat the steps above to continue adding widgets to build out the page. To work more efficiently, you can configure multiple widgets before saving the page. Use the icons in the lower right of the widget configuration panel to preview, reorder, or delete widgets.
+    </li>
+    <li>
+      Note the <strong>Options</strong> and <strong>Thumbnail</strong> tabs at the top of the page in Edit mode. Options in these tabs enable you to publish or unpublish the page, turn on or off the page sidebar, and create a thumbnail image to represent the page.
+    </li>
+    <li>
+      Visit the Spotlight <%= link_to 'documentation pages', 'https://github.com/sul-dlss/spotlight/wiki' %> to learn more about creating exhibit pages.
+    </li>
+  </ol>
+<% end %>
