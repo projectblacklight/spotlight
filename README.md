@@ -29,62 +29,38 @@ or
 $ rake rails:template LOCATION=https://raw.githubusercontent.com/sul-dlss/spotlight/master/template.rb
 ```
 
-Or do it manually:
+*During this process you will be prompted to enter an initial administrator email and password (this is a super-admin that can administer any exhibit in the installation).*
 
-Add these lines to your application's Gemfile:
-
-```
-gem 'blacklight'
-gem 'blacklight-spotlight'
-```
-
-And then execute:
+Change directories to your new application
 
 ```
-$ bundle install
+$ cd app-name
 ```
 
-Then install Blacklight:
+Start solr
 
 ```
-$ rails generate blacklight:install
+$ rake jetty:start
 ```
 
-Then install Spotlight:
+Start rails
 
 ```
-$ rails generate spotlight:install
-$ rake spotlight:install:migrations
-$ rake db:migrate
+$ rails s
 ```
 
-Create an initial administrator:
+Go to http://localhost:3000 in your browser.
 
-```
-$ rake spotlight:initialize
-```
-
-If you installed jettywrapper with Blacklight (above), install Spotlight's demo solr configuration and catalog controller configuration:
-
-```
-$ rake jetty:configure_solr
-```
 
 ## Configuration
-
-### Blacklight configuration
-
-Spotlight uses your application's Blacklight configuration to provide default values for an exhibit. The Blacklight configuration options are documented on the [Blacklight wiki](https://github.com/projectblacklight/blacklight/wiki#blacklight-configuration).
 
 ### Default ActionMailer configuration
 
 Spotlight introduces functionality that depends on being able to send emails to exhibit curators and contacts. Be sure to configure your application's environments appropriately (See the Rails Guide for [Action Mailer Configuration](http://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration) ).
 
-### Solr Indexing
+### More
 
-Spotlight needs the ability to write exhibit-specific content to your Solr index. The default indexing strategy uses [Atomic Updates](https://cwiki.apache.org/confluence/display/solr/Updating+Parts+of+Documents), introduced in Solr 4.x. Note the [caveats, limitations and required configuration](https://wiki.apache.org/solr/Atomic_Updates#Caveats_and_Limitations) necessary to use this feature. The rake task `spotlight:check:solr` will test if your Solr configuration is suitable for Atomic Updates.
-
-If you are unable to use the Atomic Update strategy, your `SolrDocument` class must implement a `#reindex` method that can update the document in Solr with the exhibit-specific data provided by `#to_solr`.
+See the [Spotlight wiki](https://github.com/sul-dlss/spotlight/wiki) for more detailed information on configuring Spotlight.
 
 ## To start the development/test application
 
