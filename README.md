@@ -7,13 +7,12 @@ Spotlight is open source software that sits on top of a digital repository and e
 
 Read more about what Spotlight is, our motivations for creating it, and how to install and configure it in the [wiki pages](https://github.com/sul-dlss/spotlight/wiki). You might also want to take a look at our demo videos, especially the [tour of a completed Spotlight exhibit](https://www.youtube.com/watch?v=_A7vTbbiF4g) and the walkthrough of [building an exhibit with Spotlight](https://www.youtube.com/watch?v=qPJtgajJ4ic).
 
-## Tests
+## Requirements
 
-Run tests:
-
-```
-$ rake
-```
+1. Ruby (2.0.0 or greater)
+2. Rails (4.2.0 or greater)
+3. Java (7 or greater) *for solr*
+4. ImageMagick
 
 ## Installation
 
@@ -67,3 +66,11 @@ See the [Spotlight wiki](https://github.com/sul-dlss/spotlight/wiki) for more de
  1. Clone this repo, `cd` in and run `$ bundle install`
  2. Start jetty and the dev server: `$ bundle exec rake spotlight:server` (this task will build a Spotlight-based application, start Solr, and run the built-in rails server)
  3. Visit [http://localhost:3000](http://localhost:3000)
+
+## Tests
+
+Run tests:
+
+```
+$ rake
+```
