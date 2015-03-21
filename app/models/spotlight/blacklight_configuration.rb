@@ -67,8 +67,6 @@ module Spotlight
 
         config.add_results_collection_tool 'save_search', if: :render_save_this_search?
 
-        config.default_autocomplete_solr_params[:fl] ||= "#{config.document_model.unique_key} #{config.view_config(:show).title_field} #{spotlight_image_version_fields.join(' ')}"
-
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
         config.show.partials.insert(2, "spotlight/catalog/tags")
@@ -200,6 +198,15 @@ module Spotlight
           options[:label] = f.label if f.label
 
           config.add_index_field key, options
+        end
+      end
+
+      if Spotlight::Engine.config.autocomplete_search_field and !config.search_fields[Spotlight::Engine.config.autocomplete_search_field]
+        config.add_search_field(Spotlight::Engine.config.autocomplete_search_field) do |field|
+          field.include_in_simple_select = false
+          field.solr_parameters = Spotlight::Engine.config.default_autocomplete_params.deep_dup
+          field.solr_parameters[:fl] ||= ""
+          field.solr_parameters[:fl] += " #{config.document_model.unique_key} #{config.view_config(:show).title_field} #{spotlight_image_version_fields.join(' ')}"
         end
       end
     end
