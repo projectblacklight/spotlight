@@ -1,4 +1,4 @@
-gem "blacklight", '>= 5.10'
+gem "blacklight", '>= 5.11.2'
 gem "blacklight-spotlight", ENV['SPOTLIGHT_GEM'] ? { path: ENV['SPOTLIGHT_GEM'] } : { github: 'sul-dlss/spotlight' }
 gem "sir_trevor_rails", github: 'madebymany/sir-trevor-rails'
 
@@ -13,7 +13,9 @@ generate 'spotlight:install', spotlight_options
 rake "spotlight:install:migrations"
 rake "db:migrate"
 
-rake "spotlight:initialize"
+if !self.options["quiet"] and yes? "Would you like to create an initial administrator?"
+  rake "spotlight:initialize"
+end
 
 # index some data
 if blacklight_options =~ /jettywrapper/
