@@ -184,6 +184,21 @@
   visibility: hidden;
 }
 
+.empty-page-block {
+  @extend .alert;
+  @extend .alert-info;
+  margin-top: $padding-large-vertical;
+  h2 {
+    margin-top: 0;
+  }
+  p, ol > li {
+    padding: $padding-small-vertical;
+  }
+  ol > li:last-child {
+    padding-bottom: 0;
+  }
+}
+
 .oembed-block {
   @media (max-width: $screen-sm-max) {
     margin-bottom: $padding-base-horizontal;
