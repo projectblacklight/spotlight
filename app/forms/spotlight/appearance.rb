@@ -27,8 +27,9 @@ module Spotlight
     end
 
     def update(params)
-      configuration.exhibit.update(exhibit_params(params))
-      configuration.update(configuration_params(params))
+      exhibit_status = configuration.exhibit.update(exhibit_params(params))
+      configuration_status = configuration.update(configuration_params(params))
+      exhibit_status && configuration_status
     end
 
     def view_type_options
@@ -37,6 +38,14 @@ module Spotlight
 
     def per_page_options
       default_blacklight_config.per_page
+    end
+
+    def errors
+      errors = ActiveModel::Errors.new(self)
+      (configuration.exhibit.errors.to_a + configuration.errors.to_a).each do |e|
+        errors.add :base, e
+      end
+      errors
     end
 
     protected
