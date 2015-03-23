@@ -142,7 +142,7 @@
         <!-- EnglishMinimalStemFilterFactory is less aggressive than PorterStemFilterFactory: -->
         <filter class="solr.EnglishMinimalStemFilterFactory"/>
         <filter class="solr.TrimFilterFactory"/>
-        <filter class="solr.EdgeNGramFilterFactory" minGramSize="3" maxGramSize="15" side="front"/>:
+        <filter class="solr.EdgeNGramFilterFactory" minGramSize="3" maxGramSize="15" />
       </analyzer>
 
       <analyzer type="index">
