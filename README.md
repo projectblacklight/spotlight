@@ -22,27 +22,33 @@ To bootstrap a new Rails application:
 $ rails new app-name -m https://raw.githubusercontent.com/sul-dlss/spotlight/master/template.rb
 ```
 
-or
+or from an existing Rails application:
 
 ```
 $ rake rails:template LOCATION=https://raw.githubusercontent.com/sul-dlss/spotlight/master/template.rb
 ```
 
-*During this process you will be prompted to enter an initial administrator email and password (this is a super-admin that can administer any exhibit in the installation).*
+*During this process you will be prompted to enter an initial administrator email and password (this is a super-admin that can administer any exhibit in the installation).* If you choose not to create one, the first user will be given administrative privileges.
 
-Change directories to your new application
+Change directories to your new application:
 
 ```
 $ cd app-name
 ```
 
-Start solr
+Run the database migrations:
+
+```
+$ rake db:migrate
+```
+
+Start solr:
 
 ```
 $ rake jetty:start
 ```
 
-Start rails
+Start the rails development server:
 
 ```
 $ rails s
