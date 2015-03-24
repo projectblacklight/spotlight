@@ -22,6 +22,10 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
     subject.save!
   end
 
+  it "should add a default thumbnail field" do
+    expect(subject.blacklight_config.index.thumbnail_field).to eq Spotlight::Engine.config.thumbnail_field
+  end
+
   describe "facet fields" do
     it "should have facet fields" do
       expect(subject.facet_fields).to be_empty
