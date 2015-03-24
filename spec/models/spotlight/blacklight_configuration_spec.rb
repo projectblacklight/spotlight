@@ -365,18 +365,6 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
     end
   end
 
-  describe "default_autocomplete_solr_params" do
-    it "should include all the fields we need to render the autocomplete widget" do
-      blacklight_config.show.title_field = "some_field"
-      expect(subject.blacklight_config.default_autocomplete_solr_params).to have_key :fl
-      expect(subject.blacklight_config.default_autocomplete_solr_params[:fl]).to include "id"
-      expect(subject.blacklight_config.default_autocomplete_solr_params[:fl]).to include "some_field"
-      expect(subject.blacklight_config.default_autocomplete_solr_params[:fl]).to include "full_image_url_ssm"
-      expect(subject.blacklight_config.default_autocomplete_solr_params[:fl]).to include "thumbnail_url_ssm"
-      expect(subject.blacklight_config.default_autocomplete_solr_params[:fl]).to include "thumbnail_square_url_ssm"
-    end
-  end
-
   describe "show" do
     it "should have show view configuration" do
       expect(subject.show).to be_empty
@@ -420,6 +408,39 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
       expect(subject.custom_index_fields).to include 'abc', 'xyz'
       expect(subject.custom_index_fields['abc']).to be_a_kind_of Blacklight::Configuration::Field
       expect(subject.custom_index_fields['abc'].a).to eq 1
+    end
+  end
+
+  describe "autocomplete configuration" do
+    before do
+      # undo the stubbing we've used elsewhere..
+      allow(subject).to receive(:default_blacklight_config).and_call_original
+      blacklight_config.show.title_field = "x"
+      allow(Spotlight::Engine).to receive_messages blacklight_config: blacklight_config.deep_copy
+    end
+
+    context "with the default search field" do
+      let(:search_field) do
+        subject.blacklight_config.search_fields[Spotlight::Engine.config.autocomplete_search_field]
+      end
+
+      it "should be hidden from the search field selector" do
+        expect(search_field.if).to eq false
+      end
+
+      it "should use the engine's autocomplete parameters" do
+        expect(search_field.solr_parameters).to include Spotlight::Engine.config.default_autocomplete_params
+      end
+
+      it "should include the relevant fields" do
+        Spotlight::Engine.blacklight_config.show.title_field = "some_field"
+        expect(search_field.solr_parameters).to have_key :fl
+        expect(search_field.solr_parameters[:fl]).to include "id"
+        expect(search_field.solr_parameters[:fl]).to include "some_field"
+        expect(search_field.solr_parameters[:fl]).to include "full_image_url_ssm"
+        expect(search_field.solr_parameters[:fl]).to include "thumbnail_url_ssm"
+        expect(search_field.solr_parameters[:fl]).to include "thumbnail_square_url_ssm"
+      end
     end
   end
 end

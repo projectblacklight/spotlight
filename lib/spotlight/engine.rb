@@ -111,7 +111,8 @@ module Spotlight
     Blacklight::Engine.config.inject_blacklight_helpers = false
     
     # Query parameters for autocomplete requests
-    Blacklight::Configuration.default_values[:default_autocomplete_solr_params] = {qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng'}
+    Spotlight::Engine.config.autocomplete_search_field = "autocomplete"
+    Spotlight::Engine.config.default_autocomplete_params = {qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng'}
     
     # Field containing the last modified date for a Solr document
     Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
