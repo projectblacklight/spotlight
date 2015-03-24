@@ -1,8 +1,7 @@
 module Spotlight
   module SolrDocument
     extend ActiveSupport::Concern
-    
-    include Blacklight::SearchHelper
+
     include Spotlight::SolrDocument::ActiveModelConcern
     include Spotlight::SolrDocument::Finder
     include Spotlight::SolrDocument::SpotlightImages
