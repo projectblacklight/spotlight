@@ -60,6 +60,8 @@ module Spotlight
         config.show.merge! show unless show.blank?
         config.index.merge! index unless index.blank?
 
+        config.index.thumbnail_field ||= Spotlight::Engine.config.thumbnail_field
+
         unless exhibit.searchable?
           config.navbar.partials[:saved_searches].if = false
           config.navbar.partials[:search_history].if = false
