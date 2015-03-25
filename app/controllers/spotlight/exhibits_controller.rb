@@ -5,6 +5,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
   load_and_authorize_resource
 
   def new
+    build_initial_exhibit_contact_emails
   end
 
   def process_import
@@ -39,7 +40,7 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
     add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
     add_breadcrumb t(:'spotlight.administration.sidebar.header'), exhibit_dashboard_path(@exhibit)
     add_breadcrumb t(:'spotlight.administration.sidebar.settings'), edit_exhibit_path(@exhibit)
-    @exhibit.contact_emails.build unless @exhibit.contact_emails.present?
+    build_initial_exhibit_contact_emails
   end
 
   def update
@@ -75,5 +76,9 @@ class Spotlight::ExhibitsController < Spotlight::ApplicationController
 
   def import_exhibit_params
     params.require(:file)
+  end
+
+  def build_initial_exhibit_contact_emails
+    @exhibit.contact_emails.build unless @exhibit.contact_emails.present?
   end
 end
