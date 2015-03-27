@@ -1,3 +1,7 @@
 <h3><%= t :'.header' %></h3>
 
-<%= render partial: 'spotlight/catalog/document_admin_table', locals: { documents: @solr_documents } unless @solr_documents.empty? %>
+<% unless @solr_documents.empty? %>
+  <%= render partial: 'spotlight/catalog/document_admin_table', locals: { documents: @solr_documents } %>
+<% else %>
+  <%= t(:'.no_documents') %>
+<% end %>

@@ -259,6 +259,7 @@ en:
           updated_at: Last Edited
       solr_document_activity:
         header: Recently Updated Items
+        no_documents: There are no documents in this exhibit
       analytics:
         header: "User Activity Over the Past Month"
         pageviews: "page views"

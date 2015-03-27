@@ -1,8 +1,10 @@
 module Spotlight
   class DashboardsController < Spotlight::ApplicationController
-    include Spotlight::Base
     before_filter :authenticate_user!
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
+
+    include Spotlight::Base
+    include Spotlight::Catalog::AccessControlsEnforcement
 
     def show
       authorize! :curate, @exhibit
@@ -25,10 +27,8 @@ module Spotlight
 
     def load_recent_solr_documents count
       solr_params = { sort: "#{blacklight_config.index.timestamp_field} desc" }
-      @response = repository.search(solr_params)
-      @response.docs.take(count).map do |doc|
-        blacklight_config.document_model.new(doc, @response)
-      end
+      @response, docs = get_search_results(solr_params)
+      docs.take(count)
     end
   end
 end
