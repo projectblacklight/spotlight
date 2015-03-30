@@ -201,4 +201,13 @@ class Spotlight::CatalogController < ::CatalogController
       end
     end
   end
+
+  def additional_export_formats document, format
+    super
+
+    format.solr_json do
+      authorize! :update_solr, @exhibit
+      render json: document.to_solr.merge(@exhibit.solr_data)
+    end
+  end
 end

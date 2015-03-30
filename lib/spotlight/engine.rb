@@ -30,6 +30,8 @@ module Spotlight
       require 'bootstrap_form'
       require 'acts-as-taggable-on'
       require 'oembed'
+
+      Mime::Type.register "application/solr+json", :solr_json
     end
 
     initializer "oembed.initialize" do
