@@ -13,18 +13,41 @@ module Spotlight
       self.field_type ||= "text"
     end
 
+    before_save do
+      if persisted? and field_type_changed?
+        old_field = self.field
+        self.field = field_name
+
+        if exhibit.blacklight_configuration.index_fields.has_key? old_field
+          exhibit.blacklight_configuration.index_fields_will_change!
+          f = exhibit.blacklight_configuration.index_fields.delete(old_field)
+          exhibit.blacklight_configuration.index_fields[field] = f
+          exhibit.blacklight_configuration.save
+        end
+
+        Spotlight::RenameSidecarFieldJob.perform_later(exhibit, old_field, self.field)
+      end
+    end
+
     def label=(label)
       configuration["label"] = label
       if (field && exhibit)
         conf = exhibit.blacklight_configuration
-        conf.index_fields.fetch(field, configuration)['label'] = label
-        conf.save!
+        if conf.index_fields.has_key? field
+          conf.index_fields[field]['label'] = label
+          conf.save!
+        end
       end
     end
 
     def label
-      return configuration["label"] unless (field && exhibit)
-      exhibit.blacklight_configuration.index_fields.fetch(field, configuration)['label']
+      conf = if field && exhibit && exhibit.blacklight_configuration.index_fields.has_key?(field)
+        exhibit.blacklight_configuration.index_fields[field].reverse_merge(configuration)
+      else
+        configuration
+      end
+
+      conf['label']
     end
 
     def short_description=(short_description)
@@ -45,7 +68,7 @@ module Spotlight
 
     protected
     def field_name
-      "#{Spotlight::Engine.config.solr_fields.prefix}exhibit_#{self.exhibit.to_param}_#{label.parameterize}#{field_suffix}"
+      "#{Spotlight::Engine.config.solr_fields.prefix}exhibit_#{self.exhibit.to_param}_#{configuration["label"].parameterize}#{field_suffix}"
     end
 
     def field_suffix
