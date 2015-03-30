@@ -157,6 +157,14 @@ describe Spotlight::BlacklightConfiguration, :type => :model do
       expect(subject.blacklight_config.index_fields).not_to have_key 'a'
     end
 
+    it "should include persisted configurations for show fields" do
+      subject.index_fields['a'] = { enabled: true, list: true }
+      blacklight_config.add_show_field 'a'
+      expect(subject.blacklight_config.index_fields).to have_key 'a'
+      expect(subject.blacklight_config.index_fields['a'].enabled).to be_truthy
+      expect(subject.blacklight_config.index_fields['a'].list).to be_truthy
+    end
+
     context "custom fields" do
       it "should include any custom fields" do
         subject.index_fields['a'] = { enabled: true, list: true }

@@ -103,7 +103,12 @@ module Spotlight
 
         config.show_fields.reject { |k,v| config.index_fields[k] }.each do |k,v|
           config.index_fields[k] = v
-          set_show_field_defaults(v)
+
+          if index_fields[k]
+            v.merge! index_fields[k].symbolize_keys
+          else
+            set_show_field_defaults(v)
+          end
 
           v.upstream_if = v.if unless v.if.nil?
           v.if = :field_enabled?
