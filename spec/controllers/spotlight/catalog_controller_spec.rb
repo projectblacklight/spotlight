@@ -16,7 +16,7 @@ describe Spotlight::CatalogController, :type => :controller do
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
-    
+
     describe "GET edit" do
       it "should not be allowed" do
         get :edit, exhibit_id: exhibit, id: 'dq287tq6352'
@@ -70,8 +70,12 @@ describe Spotlight::CatalogController, :type => :controller do
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(controller.blacklight_config.show.partials.first).to eq "curation_mode_toggle"
       end
-    end
 
+      it "should not have a solr_json serialization" do
+        get :show, exhibit_id: exhibit, id: 'dq287tq6352', format: :solr_json
+        expect(response).not_to be_successful
+      end
+    end
 
     describe "GET index" do
       it "should show the index when there are parameters" do
@@ -243,6 +247,21 @@ describe Spotlight::CatalogController, :type => :controller do
         expect_any_instance_of(::SolrDocument).to receive(:make_private!).with(exhibit)
         delete :make_private, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
         expect(response).to redirect_to "where_i_came_from"
+      end
+    end
+  end
+
+  describe "when the user is a site admin" do
+    before { sign_in FactoryGirl.create(:site_admin, exhibit: exhibit) }
+
+    describe "show" do
+      it "should have a solr_json serialization" do
+        get :show, exhibit_id: exhibit, id: 'dq287tq6352', format: :solr_json
+        expect(response).to be_successful
+        data = JSON.parse(response.body).with_indifferent_access
+        expect(data).to include id: 'dq287tq6352'
+        expect(data).to include exhibit.solr_data
+        expect(data).to include Spotlight::SolrDocument.solr_field_for_tagger(exhibit)
       end
     end
   end

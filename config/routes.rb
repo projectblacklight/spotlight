@@ -98,7 +98,7 @@ Spotlight::Engine.routes.draw do
         patch :update_all
       end
     end
-
+    post 'solr/update' => 'solr#update'
   end
 
   post 'versions/:id/revert' => 'versions#revert', as: :revert_version
