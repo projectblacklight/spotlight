@@ -12,8 +12,7 @@ describe Spotlight::CustomField, :type => :model do
       before { subject.exhibit = exhibit }
       describe "that overrides the label" do
         before do
-          exhibit.blacklight_configuration.index_fields['foo_tesim'] = 
-            Blacklight::Configuration::IndexField.new(label: "overridden")
+          exhibit.blacklight_configuration.index_fields['foo_tesim'] = { 'label' => "overridden" }
         end
         its(:label) { should eq "overridden"}
       end
@@ -35,8 +34,7 @@ describe Spotlight::CustomField, :type => :model do
       before { subject.exhibit = exhibit }
       describe "that overrides the label" do
         before do
-          exhibit.blacklight_configuration.index_fields['foo_tesim'] = 
-            Blacklight::Configuration::IndexField.new(label: "overridden")
+          exhibit.blacklight_configuration.index_fields['foo_tesim'] = { 'label' => "overridden" }
           subject.label = 'edited'
         end
         it "should have updated the exhibit" do
@@ -96,8 +94,7 @@ describe Spotlight::CustomField, :type => :model do
       expect(subject).to_not be_configured_to_display
     end
     it 'should be falsey when the field is not enabled' do
-      exhibit.blacklight_configuration.index_fields['foo_tesim'] =
-        Blacklight::Configuration::IndexField.new(label: "Label", enabled: false, view_name: false)
+      exhibit.blacklight_configuration.index_fields['foo_tesim'] = { 'label' => "overridden", enabled: false, view_name: false } 
       subject.save
 
       expect(subject).to_not be_configured_to_display
@@ -119,6 +116,40 @@ describe Spotlight::CustomField, :type => :model do
     it "should end in a string suffix if it is a vocab field" do
       subject.field_type = "vocab"
       expect(subject.send(:field_name)).to end_with Spotlight::Engine.config.solr_fields.string_suffix
+    end
+  end
+
+  describe "changing the field type" do
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    before do
+      subject.label = "xyz"
+      subject.exhibit = exhibit
+      subject.save!
+    end
+
+    it "should change the field name for the field" do
+      expect(subject.field).to end_with "tesim"
+      subject.field_type = "vocab"
+      subject.save
+      expect(subject.field).to end_with "ssim"
+    end
+
+    it "should copy index field configuration to the new field name" do
+      subject.exhibit.blacklight_configuration.index_fields_will_change!
+      subject.exhibit.blacklight_configuration.index_fields[subject.field] = { value: true }
+      subject.exhibit.blacklight_configuration.save
+      expect(subject.exhibit.blacklight_configuration.index_fields).to have_key subject.field
+
+      subject.field_type = "vocab"
+      subject.save
+      expect(subject.exhibit.blacklight_configuration.index_fields).to have_key subject.field
+      expect(subject.exhibit.blacklight_configuration.index_fields[subject.field]).to include value: true
+    end
+    
+    it "should queue a job to reindex any documents with data in the old field" do
+      expect(Spotlight::RenameSidecarFieldJob).to receive(:perform_later).with(exhibit, subject.field, subject.field.sub("tesim", "ssim"))
+      subject.field_type = "vocab"
+      subject.save
     end
   end
 
