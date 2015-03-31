@@ -200,6 +200,8 @@ en:
       edit_default:
         blank_field_warning_html: "This field is currently hidden on all pages. You can make it visible on the Curation &gt; %{link} page."
         full_title_tesim: "Title"
+        url-field:
+          help: "Valid file types: %{extensions}"
       facets:
         exhibit_visibility:
           label: "Item Visibility"
