@@ -1,19 +1,17 @@
-<div class="header-container">
-      <header class="wrapper clearfix">
-        <a class="title" title="Blacklight" href="/">Home</a>
-        <nav>
-          <ul>
-          {% for item in site.data.navigation %}
-            {% if page.url == item.url or page.url contains item.url %}
-              {% assign class = 'is-selected' %}
-            {% else %}
-              {% assign class = '' %}
-            {% endif %}
-            <li>
-              <a href="{{ item.url }}" class="{{ class }}">{{ item.name }}</a>
-            </li>
-          {% endfor %}
-          </ul>
-        </nav>
-      </header>
-    </div>
+<header id="header" class="alt">
+  <a class="title" title="Blacklight project page" href="http://projectblacklight.org/">Project Blacklight</a>
+  <nav>
+    <ul>
+    {% for item in site.data.navigation %}
+      {% if page.url == item.url or page.url contains item.url %}
+        {% assign class = 'current' %}
+      {% else %}
+        {% assign class = '' %}
+      {% endif %}
+      <li class="{{ class }}">
+        <a href="{{ item.url }}">{{ item.name }}</a>
+      </li>
+    {% endfor %}
+    </ul>
+  </nav>
+</header>

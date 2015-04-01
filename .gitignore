@@ -1,2 +1,5 @@
 _site
 *~
+spec/internal
+Gemfile.lock
+jetty

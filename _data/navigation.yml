@@ -1,12 +1,12 @@
 -
-  name: GitHub
+  name: Code
   url: https://github.com/sul-dlss/spotlight
+-
+  name: Demos
+  url: https://github.com/sul-dlss/spotlight/wiki/Examples-and-demos
 -
   name: Wiki
   url: https://github.com/sul-dlss/spotlight/wiki
 -
-  name: Release Notes
-  url: https://github.com/sul-dlss/spotlight/releases
--
-  name: Blacklight
-  url: http://projectblacklight.org
+  name: Mailing List
+  url: http://groups.google.com/group/blacklight-development
