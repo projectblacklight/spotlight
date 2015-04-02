@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "Enable librarians, curators,   and others who are responsible for digital collections to create   attractive, feature-rich websites that feature these collections."
 
   s.files = Dir["{app,config,db,lib,vendor}/**/*", "Rakefile", "README.md", "LICENSE"]
-  s.test_files = Dir["spec/**/*"]
+  s.test_files = Dir["spec/**/*"] - Dir["spec/internal/**/*"]
 
   s.add_dependency "rails", "~> 4.0", ">= 4.2.0"
   s.add_dependency "blacklight", "~> 5.12"
