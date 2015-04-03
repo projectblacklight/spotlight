@@ -6,7 +6,7 @@ module Spotlight
 
     version :cropped do
       process crop: :image  ## Crops this version based on original image
-      process resize_to_fill: [1800, 120]
+      process resize_to_fill: [1800, 180]
     end
 
     def store_dir

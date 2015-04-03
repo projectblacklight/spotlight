@@ -6,9 +6,9 @@ module Spotlight
         selector: 'masthead_image',
         bg_color: 'black',
         bg_opacity: '.4',
-        aspect_ratio: 15,
+        aspect_ratio: 10,
         box_width: '600',
-        initial_set_select: '[0, 0, 1800, 120]'
+        initial_set_select: '[0, 0, 1800, 180]'
       }
     end
 

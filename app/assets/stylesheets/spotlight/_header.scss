@@ -1,4 +1,4 @@
-$masthead-height: 120px;
+$masthead-height: 180px;
 $masthead-image-blur: 1px;
 
 @mixin masthead-background-containers() {
@@ -10,16 +10,38 @@ $masthead-image-blur: 1px;
   height: inherit;
 }
 
+@mixin masthead-navigation-menu() {
+  border: none;
+  border-radius: 0;
+  ul.nav.navbar-nav {
+    > li {
+      text-transform: uppercase;
+      a {
+        color: $gray-lighter;
+        letter-spacing: 1.2px;
+      }
+    }
+    a:hover {
+      background-color: rgba(255,255,255,0.15);
+    }
+    > .active > a {
+      background-color: rgba(255,255,255,0.3);
+      color: $white;
+    }
+  }
+}
+
 #exhibit-masthead, #exhibit-navbar {
   z-index: 1;
 }
 
 #exhibit-navbar {
   &.page-masthead {
-    background-color: $gray;
+    @include masthead-navigation-menu();
+    border-bottom: 1px solid $gray;
+    margin-top: 0;
     margin-bottom: 0;
-    border: 0;
-    border-radius: 0;
+    background-color: rgba(0,0,0,0.5);
     .navbar-nav {
       float: right;
     }
@@ -29,6 +51,15 @@ $masthead-image-blur: 1px;
       a {color: $gray-lighter;}
     }
   }
+  .navbar-form {
+    text-align: right;
+  }
+}
+
+#exhibit-masthead.with-image + #exhibit-navbar.navbar-default {
+  @include masthead-navigation-menu();
+  border-top: 1px solid $gray;
+  background-color: rgba(0,0,0,0.2);
 }
 
 .navbar + .navbar {
@@ -40,20 +71,26 @@ $masthead-image-blur: 1px;
 }
 
 #exhibit-masthead {
-  margin-bottom: 0;
-  padding: 0 0 24px 0;
+  margin-bottom: -50px;
+  padding: 0;
   position: static;
   height: $masthead-height;
   & > .container {
-    // Maintains the site title and subtitle at slightly below
-    // vertically-centered, even if height of masthead is changed.
     position: relative;
-    top: 60%;
+    top: 33%;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
   }
   &.with-page-masthead {
     margin-bottom: $padding-base-vertical;
+    margin-top: -51px;
+    > .container {
+      top: 60%;
+    }
+    .navbar-brand {
+      font-size: $font-size-large;
+      text-shadow: 1px 1px 0 $black;
+    }
     .search-title {
       text-align: center;
       small {
@@ -73,7 +110,7 @@ $masthead-image-blur: 1px;
   &.with-image {
     .site-title, .search-title {
       color: $white;
-      text-shadow: 0 1px 0 $black;
+      text-shadow: 2px 1px 0 $black;
     }
     small {
       color: $white;
@@ -146,6 +183,13 @@ $masthead-image-blur: 1px;
        rgba(0, 0, 0, 0.5)
      );
   }
+}
+
+// Margin between bottom of masthead and start of page content.
+// Need to apply bottom margin to different element, depending on
+// whether it is a regular masthead or a browse category masthead
+#exhibit-masthead + #exhibit-navbar, #exhibit-navbar + #exhibit-masthead {
+  margin-bottom: $padding-large-vertical * 2.5;
 }
 
 .col-md-4 {
