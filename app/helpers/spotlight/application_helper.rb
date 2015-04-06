@@ -117,7 +117,7 @@ module Spotlight
       if url.nil? or url.starts_with? "http"
         url
       else
-        (Rails.application.config.asset_host || root_url).sub(/\/$/, "") + url
+        (URI.parse(Rails.application.config.asset_host || root_url) + url).to_s
       end
     end
 
