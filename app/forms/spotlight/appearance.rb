@@ -62,12 +62,12 @@ module Spotlight
         p[:main_navigations_attributes] = main_nav_attributes
       end
 
-      if masthead_attributes = params.slice(:masthead).try(:values).try(:first)
-        p[:masthead_attributes] = masthead_attributes if masthead_attributes["image"].present? or masthead_attributes["remote_image_url"].present?
+      if masthead_attributes = params[:masthead]
+        p[:masthead_attributes] = masthead_attributes if configuration.exhibit.masthead.present? or masthead_attributes["image"].present? or masthead_attributes["remote_image_url"].present?
       end
       
-      if thumbnail_attributes = params.slice(:thumbnail).try(:values).try(:first)
-        p[:thumbnail_attributes] = thumbnail_attributes if thumbnail_attributes["image"].present? or thumbnail_attributes["remote_image_url"].present?
+      if thumbnail_attributes = params[:thumbnail]
+        p[:thumbnail_attributes] = thumbnail_attributes if configuration.exhibit.thumbnail.present? or thumbnail_attributes["image"].present? or thumbnail_attributes["remote_image_url"].present?
       end
       p
     end
