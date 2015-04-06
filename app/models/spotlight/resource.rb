@@ -61,9 +61,7 @@ module Spotlight
       klass = Spotlight::Resource.class_for_resource(self)
 
       if klass
-        z = self.becomes klass
-        z.type = z.class.to_s
-        z
+        self.becomes! klass
       else
         self
       end
