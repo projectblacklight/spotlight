@@ -1,5 +1,7 @@
 $masthead-height: 180px;
 $masthead-image-blur: 1px;
+$menu-link-background-color-active: rgba(255,255,255,0.3);
+$menu-link-background-color-hover: rgba(255,255,255,0.15);
 
 @mixin masthead-background-containers() {
   position: absolute;
@@ -22,12 +24,27 @@ $masthead-image-blur: 1px;
       }
     }
     a:hover {
-      background-color: rgba(255,255,255,0.15);
+      background-color: $menu-link-background-color-hover;
     }
     > .active > a {
-      background-color: rgba(255,255,255,0.3);
+      background-color: $menu-link-background-color-active;
       color: $white;
     }
+    .dropdown-menu {
+      text-transform: none;
+      > li a {
+        color: $black;
+        &:hover {
+          background-color: $gray-lighter;
+        }
+      }
+    }
+  }
+  // Curated Features menu link when it has dropdown menu
+  .navbar-nav > .open > a,
+  .navbar-nav > .open > a:hover,
+  .navbar-nav > .open > a:focus {
+    background-color: $menu-link-background-color-hover;
   }
 }
 
@@ -110,7 +127,7 @@ $masthead-image-blur: 1px;
   &.with-image {
     .site-title, .search-title {
       color: $white;
-      text-shadow: 2px 1px 0 $black;
+      text-shadow: 1px 1px 0 $black;
     }
     small {
       color: $white;
