@@ -111,6 +111,8 @@
 .item-grid-block {
   h3 {margin-top: 0;}
   .items-col {
+    margin-bottom: 1em;
+    z-index: 1;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
@@ -206,7 +208,14 @@
 }
 
 .items-block {
+
+  .text-col {
+    float: none;
+    width: auto;
+  }
   .content-block {
+    z-index: 1;
+
     @media (max-width: $screen-sm-max) {
       margin-bottom: 0;
     }
