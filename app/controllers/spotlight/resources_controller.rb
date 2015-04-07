@@ -44,7 +44,7 @@ module Spotlight
 
     protected
     def resource_params
-      params.require(:resource).permit(:url)
+      params.require(:resource).permit(:url, data: params[:resource][:data].try(:keys))
     end
 
     def build_resource
