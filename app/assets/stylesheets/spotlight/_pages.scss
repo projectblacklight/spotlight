@@ -205,9 +205,22 @@
   }
 }
 
-.items-block .content-block {
-  @media (max-width: $screen-sm-max) {
-    margin-bottom: 0;
+.items-block {
+  .content-block {
+    @media (max-width: $screen-sm-max) {
+      margin-bottom: 0;
+    }
+
+    .box {
+      min-width: 150px;
+    }
+
+    /* two items */
+    .box:first-child:nth-last-child(2),
+    .box:first-child:nth-last-child(2) ~ .box {
+        min-width: 250px;
+    }
+
   }
 }
 
