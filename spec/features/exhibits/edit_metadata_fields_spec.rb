@@ -6,7 +6,7 @@ describe 'Editing metadata fields', type: :feature do
   before { login_as(admin) }
 
   it 'works' do
-    visit spotlight.exhibit_edit_metadata_path exhibit
+    visit spotlight.edit_exhibit_metadata_configuration_path exhibit
 
     expect(page).to have_content 'Display and Order Metadata Fields'
 
@@ -27,7 +27,7 @@ describe 'Editing metadata fields', type: :feature do
   end
 
   it 'has in-place editing of labels', js: true do
-    visit spotlight.exhibit_edit_metadata_path exhibit
+    visit spotlight.edit_exhibit_metadata_configuration_path exhibit
     check :blacklight_configuration_index_fields_language_ssm_show
     check :blacklight_configuration_index_fields_language_ssm_list
 
@@ -41,7 +41,7 @@ describe 'Editing metadata fields', type: :feature do
   end
 
   it 'has breadcrumbs' do
-    visit spotlight.exhibit_edit_metadata_path exhibit
+    visit spotlight.edit_exhibit_metadata_configuration_path exhibit
 
     expect(page).to have_breadcrumbs 'Home', 'Curation', 'Metadata'
   end

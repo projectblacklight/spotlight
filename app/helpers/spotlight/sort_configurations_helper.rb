@@ -1,0 +1,20 @@
+module Spotlight
+  ##
+  # Sort configurations helpers
+  module SortConfigurationsHelper
+    ##
+    # Translate a sort field configuration into
+    # a complete description of the sort
+    def translate_sort_fields(sort_config)
+      return unless sort_config[:sort]
+
+      sort_config[:sort].split(',').map do |sort|
+        sort_field, sort_order = sort.split(' ')
+        safe_join([
+          t(:"spotlight.sort_configurations.edit.sort_keys.#{sort_field.strip}"),
+          t(:"spotlight.sort_configurations.edit.sort_keys.#{sort_order.strip}")
+        ], ' ')
+      end.to_sentence
+    end
+  end
+end

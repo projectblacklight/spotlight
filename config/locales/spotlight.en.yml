@@ -156,8 +156,8 @@ en:
       nav:
         home: "Home"
       header: "Curation"
-    blacklight_configurations:
-      edit_facet_fields:
+    facet_configurations:
+      edit:
         header: "Search Facets"
         options: "Options"
         field:
@@ -168,7 +168,8 @@ en:
         values_count:
           one: "%{count} unique value"
           other: "%{count} unique values"
-      edit_metadata_fields:
+    metadata_configurations:
+      edit:
         field:
           label: "Field name"
         deselect_all: "Deselect all"
@@ -182,7 +183,8 @@ en:
         view:
           show: "Item Details"
         instructions: Select metadata fields to display on each type of page. Click a field name to edit its display label. Drag and drop fields to specify the order they are displayed on the Item Details page.
-      edit_sort_fields:
+    sort_configurations:
+      edit:
         header: Sort fields
         help: "Select the fields you want to be available to users for sorting results. Click a field title to change its display label. Drag and drop fields to change their order in the sort dropdown menu. The field listed first is the default sort field."
         sort_keys:

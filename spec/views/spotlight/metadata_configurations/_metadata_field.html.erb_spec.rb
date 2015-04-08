@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 module Spotlight
-  describe 'spotlight/blacklight_configurations/_metadata_field', type: :view do
+  describe 'spotlight/metadata_configurations/_metadata_field', type: :view do
     let(:exhibit) { FactoryGirl.create(:exhibit) }
-    let(:p) { 'spotlight/blacklight_configurations/metadata_field.html.erb' }
+    let(:p) { 'spotlight/metadata_configurations/metadata_field.html.erb' }
     before do
       assign(:exhibit, exhibit)
       assign(:blacklight_configuration, exhibit.blacklight_configuration)

@@ -6,7 +6,7 @@ feature 'Metadata Administration', js: true do
   before { login_as admin }
   describe 'Select/Deselect all button' do
     it 'deselects all checkboxes when all are selected' do
-      visit spotlight.exhibit_edit_metadata_path exhibit
+      visit spotlight.edit_exhibit_metadata_configuration_path exhibit
       # No checkboxes should be unchecked
       expect(page).not_to have_css("tr td:nth-child(2) input[type='checkbox']:not(:checked)")
       within('tr th:nth-child(2)') do
@@ -17,7 +17,7 @@ feature 'Metadata Administration', js: true do
       expect(page).not_to have_css("tr td:nth-child(2) input[type='checkbox']:checked")
     end
     it 'selects all checkboxes when any are unselected' do
-      visit spotlight.exhibit_edit_metadata_path exhibit
+      visit spotlight.edit_exhibit_metadata_configuration_path exhibit
       # No checkboxes should be unchecked
       expect(page).not_to have_css("tr td:nth-child(2) input[type='checkbox']:not(:checked)")
       first_button_area = find('tr th:nth-child(2)')

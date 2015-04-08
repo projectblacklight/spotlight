@@ -11,7 +11,7 @@ describe 'Adding custom metadata fields', type: :feature do
   it 'works' do
     # Add
 
-    visit spotlight.exhibit_edit_metadata_path exhibit
+    visit spotlight.edit_exhibit_metadata_configuration_path exhibit
     click_on 'Add new field'
     fill_in 'Label', with: 'My new custom field'
     fill_in 'Short description', with: 'Helps to remind me what this field is for'
@@ -46,13 +46,13 @@ describe 'Adding custom metadata fields', type: :feature do
   end
 
   it 'has breadcrumbs' do
-    visit spotlight.exhibit_edit_metadata_path exhibit
+    visit spotlight.edit_exhibit_metadata_configuration_path exhibit
     click_on 'Add new field'
     expect(page).to have_breadcrumbs 'Home', 'Curation', 'Metadata', 'Add new field'
   end
 
   it 'lets the curator choose the type of field on create' do
-    visit spotlight.exhibit_edit_metadata_path exhibit
+    visit spotlight.edit_exhibit_metadata_configuration_path exhibit
     click_on 'Add new field'
     fill_in 'Label', with: 'My new custom field'
 
@@ -68,7 +68,7 @@ describe 'Adding custom metadata fields', type: :feature do
     expect(page).to have_checked_field 'Controlled vocabulary'
     expect(page).to have_unchecked_field 'Free text'
 
-    visit spotlight.exhibit_edit_facets_path exhibit
+    visit spotlight.edit_exhibit_facet_configuration_path exhibit
     expect(page).to have_content 'My new custom field'
   end
 end

@@ -61,7 +61,7 @@ describe 'Edit in place', type: :feature, js: true do
   end
   describe 'Sort fields' do
     it 'updates the label' do
-      visit spotlight.exhibit_edit_sort_fields_path(exhibit)
+      visit spotlight.edit_exhibit_sort_configuration_path(exhibit)
 
       within '#sidebar' do
         click_link 'Sort fields'

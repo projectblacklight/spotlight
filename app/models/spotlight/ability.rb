@@ -9,7 +9,6 @@ module Spotlight
       user ||= ::User.new
 
       alias_action :process_import, to: :import
-      alias_action :edit_metadata_fields, :edit_facet_fields, :edit_sort_fields, :metadata_fields, :available_search_views, to: :update
 
       can :manage, :all if user.superadmin?
 
@@ -31,7 +30,7 @@ module Spotlight
 
       can :manage, Spotlight::Lock, by: user
 
-      can :update, Spotlight::BlacklightConfiguration, exhibit_id: user.roles.pluck(:exhibit_id)
+      can [:read, :update], Spotlight::BlacklightConfiguration, exhibit_id: user.roles.pluck(:exhibit_id)
 
       can [:read, :curate, :tag], Spotlight::Exhibit, id: user.roles.pluck(:exhibit_id)
 

@@ -11,7 +11,7 @@ describe Spotlight::CustomFieldsController, type: :controller do
       it 'assigns a new custom field' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Metadata', exhibit_edit_metadata_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with('Metadata', edit_exhibit_metadata_configuration_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Add new field', new_exhibit_custom_field_path(exhibit))
         get :new, exhibit_id: exhibit
         expect(assigns(:custom_field)).to be_a_new(Spotlight::CustomField)
@@ -23,7 +23,7 @@ describe Spotlight::CustomFieldsController, type: :controller do
       it 'assigns the requested custom_field' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Metadata', exhibit_edit_metadata_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with('Metadata', edit_exhibit_metadata_configuration_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(field.label, edit_exhibit_custom_field_path(exhibit, field))
         get :edit, exhibit_id: exhibit, id: field
         expect(assigns(:custom_field)).to eq field
@@ -41,7 +41,7 @@ describe Spotlight::CustomFieldsController, type: :controller do
 
         it 'redirects to the exhibit metadata page' do
           post :create, custom_field: { label: 'MyString' }, exhibit_id: exhibit
-          expect(response).to redirect_to(exhibit_edit_metadata_path(exhibit))
+          expect(response).to redirect_to(edit_exhibit_metadata_configuration_path(exhibit))
         end
       end
 

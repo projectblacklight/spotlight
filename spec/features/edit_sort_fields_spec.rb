@@ -7,12 +7,12 @@ describe 'Sort Fields Administration', type: :feature do
 
   describe 'edit' do
     it 'displays the sort fields edit screen' do
-      visit spotlight.exhibit_edit_sort_fields_path(exhibit)
+      visit spotlight.edit_exhibit_sort_configuration_path(exhibit)
       expect(page).to have_css('h1 small', text: 'Sort fields')
     end
 
     it 'updates options' do
-      visit spotlight.exhibit_edit_sort_fields_path(exhibit)
+      visit spotlight.edit_exhibit_sort_configuration_path(exhibit)
 
       # #field_labeled doesn't appear to work for disabled inputs
       expect(page).to have_css("input[name='blacklight_configuration[sort_fields][relevance][enable]'][disabled='disabled']")

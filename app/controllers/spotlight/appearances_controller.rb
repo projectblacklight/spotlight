@@ -8,7 +8,8 @@ module Spotlight
 
     def update
       if @appearance.update(appearance_params)
-        redirect_to edit_exhibit_appearance_path(@exhibit), notice: t(:'helpers.submit.spotlight_default.updated', model: @appearance.class.model_name.human.downcase)
+        notice = t(:'helpers.submit.spotlight_default.updated', model: @appearance.class.model_name.human.downcase)
+        redirect_to edit_exhibit_appearance_path(@exhibit), notice: notice
       else
         render 'edit'
       end

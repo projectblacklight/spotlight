@@ -1,14 +1,15 @@
-# The BootstrapBreadcrumbsBuilder is a Bootstrap compatible breadcrumb builder.
-# It provides basic functionalities to render a breadcrumb navigation according to Bootstrap's conventions.
-#
-# BootstrapBreadcrumbsBuilder accepts a limited set of options:
-#
-# You can use it with the :builder option on render_breadcrumbs:
-#     <%= render_breadcrumbs :builder => Spotlight::BootstrapBreadcrumbsBuilder %>
-#
 module Spotlight
+  # The BootstrapBreadcrumbsBuilder is a Bootstrap compatible breadcrumb builder.
+  # It provides basic functionalities to render a breadcrumb navigation according to Bootstrap's conventions.
+  #
+  # BootstrapBreadcrumbsBuilder accepts a limited set of options:
+  #
+  # You can use it with the :builder option on render_breadcrumbs:
+  #     <%= render_breadcrumbs :builder => Spotlight::BootstrapBreadcrumbsBuilder %>
+  #
   class BootstrapBreadcrumbsBuilder < BreadcrumbsOnRails::Breadcrumbs::Builder
     include ActionView::Helpers::OutputSafetyHelper
+
     def render
       return '' if @elements.blank?
 

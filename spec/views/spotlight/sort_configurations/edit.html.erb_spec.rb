@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spotlight
-  describe 'spotlight/blacklight_configurations/edit_sort_fields', type: :view do
+  describe 'spotlight/sort_configurations/edit', type: :view do
     let(:exhibit) { FactoryGirl.create(:exhibit) }
     before do
       assign(:exhibit, exhibit)

@@ -7,7 +7,7 @@ describe 'Search Facets Administration', type: :feature do
 
   describe 'edit' do
     it 'displays the facet edit screen' do
-      visit spotlight.exhibit_edit_facets_path(exhibit)
+      visit spotlight.edit_exhibit_facet_configuration_path(exhibit)
       expect(page).to have_css('h1 small', text: 'Search Facets')
       within("[data-id='genre_ssim']") do
         expect(page).to have_content('Genre')

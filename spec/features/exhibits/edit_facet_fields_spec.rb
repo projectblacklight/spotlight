@@ -6,7 +6,7 @@ describe 'Editing metadata fields', type: :feature do
   before { login_as(admin) }
 
   it 'allows curators to select and unselect facets for display' do
-    visit spotlight.exhibit_edit_facets_path exhibit
+    visit spotlight.edit_exhibit_facet_configuration_path exhibit
 
     expect(page).to have_content 'Curation Search Facets'
     expect(page).to have_button 'Save'
@@ -22,7 +22,7 @@ describe 'Editing metadata fields', type: :feature do
   end
 
   it 'displays information about the facet' do
-    visit spotlight.exhibit_edit_facets_path exhibit
+    visit spotlight.edit_exhibit_facet_configuration_path exhibit
     within '.facet-config-genre_ssim' do
       expect(page).to have_content(/\d+ items/)
       expect(page).to have_content(/(\d+) unique values/)
@@ -30,7 +30,7 @@ describe 'Editing metadata fields', type: :feature do
   end
 
   it 'has breadcrumbs' do
-    visit spotlight.exhibit_edit_facets_path exhibit
+    visit spotlight.edit_exhibit_facet_configuration_path exhibit
 
     expect(page).to have_breadcrumbs 'Home', 'Curation', 'Search facets'
   end
