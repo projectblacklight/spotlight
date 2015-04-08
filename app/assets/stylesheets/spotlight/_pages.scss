@@ -230,6 +230,16 @@
         min-width: 250px;
     }
 
+    /* only images, no text */
+    &:last-child {
+      .box {
+        padding: 0.25em;
+        img {
+          height: 250px;
+          object-fit: cover;
+        }
+      }
+    }
   }
 }
 
