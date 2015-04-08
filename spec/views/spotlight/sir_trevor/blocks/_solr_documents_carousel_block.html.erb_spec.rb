@@ -1,10 +1,9 @@
 require 'spec_helper'
 
-describe 'spotlight/sir_trevor/blocks/_solr_documents_carousel_block.html.erb', :type => :view do
-
-  let(:p) { "spotlight/sir_trevor/blocks/solr_documents_carousel_block.html.erb" }
+describe 'spotlight/sir_trevor/blocks/_solr_documents_carousel_block.html.erb', type: :view do
+  let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_carousel_block.html.erb' }
   let(:block) do
-    SirTrevorRails::Blocks::SolrDocumentsCarouselBlock.new({type: "block", data: {  }}, page)
+    SirTrevorRails::Blocks::SolrDocumentsCarouselBlock.new({ type: 'block', data: {} }, page)
   end
 
   before do
@@ -14,8 +13,8 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_carousel_block.html.erb', 
     allow(view).to receive_messages(has_thumbnail?: true, render_thumbnail_tag: 'thumb')
   end
 
-  it "should have a slideshow block" do
-    render partial: p, locals: { item_carousel_block: block}
+  it 'has a slideshow block' do
+    render partial: p, locals: { item_carousel_block: block }
     expect(rendered).to have_selector '.carousel-block'
     expect(rendered).to have_selector '.carousel-control.left'
     expect(rendered).to have_selector '.carousel-control.right'

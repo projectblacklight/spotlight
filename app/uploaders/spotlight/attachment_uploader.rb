@@ -1,7 +1,8 @@
 # encoding: utf-8
 module Spotlight
+  ##
+  # Sir-trevor image widget uploads
   class AttachmentUploader < CarrierWave::Uploader::Base
-
     # Include RMagick or MiniMagick support:
     # include CarrierWave::RMagick
     include CarrierWave::MiniMagick
@@ -14,19 +15,17 @@ module Spotlight
       "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
 
-
     version :large do
       process resize_to_limit: [850, nil]
     end
- 
+
     version :medium do
       process resize_to_limit: [640, nil]
     end
- 
+
     version :small do
       process resize_to_limit: [320, nil]
     end
- 
 
     # Provide a default URL as a default if there hasn't been a file uploaded:
     # def default_url
@@ -59,6 +58,5 @@ module Spotlight
     # def filename
     #   "something.jpg" if original_filename
     # end
-
   end
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "spotlight/catalog/edit.html.erb", :type => :view do
+describe 'spotlight/catalog/edit.html.erb', type: :view do
   let(:blacklight_config) { Blacklight::Configuration.new }
 
   let(:document) { stub_model(::SolrDocument) }
@@ -14,10 +14,7 @@ describe "spotlight/catalog/edit.html.erb", :type => :view do
     render
   end
 
-  it 'should render a document div' do
-    expect(rendered).to have_css "#document.document"
+  it 'renders a document div' do
+    expect(rendered).to have_css '#document.document'
   end
 end
-
-
-

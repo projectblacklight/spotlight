@@ -1,6 +1,8 @@
 module Spotlight
+  ##
+  # Base CRUD controller for pages
   class PagesController < Spotlight::ApplicationController
-    before_filter :authenticate_user!, except: [:show]
+    before_action :authenticate_user!, except: [:show]
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
     helper Openseadragon::OpenseadragonHelper
@@ -62,7 +64,7 @@ module Spotlight
       @page.lock.delete if @page.lock
 
       if @page.update(page_params.merge(last_edited_by: current_user))
-        redirect_to [@page.exhibit, @page], flash: { html_safe: true }, notice: view_context.safe_join([t(:'helpers.submit.page.updated', model: @page.class.model_name.human.downcase), undo_link], " ")
+        redirect_to [@page.exhibit, @page], flash: { html_safe: true }, notice: undo_notice(:updated)
       else
         render action: 'edit'
       end
@@ -72,17 +74,19 @@ module Spotlight
     def destroy
       @page.destroy
 
-      redirect_to [@page.exhibit, page_collection_name], flash: { html_safe: true }, notice: view_context.safe_join([t(:'helpers.submit.page.destroyed', model: @page.class.model_name.human.downcase), undo_link], " ")
+      redirect_to [@page.exhibit, page_collection_name], flash: { html_safe: true }, notice: undo_notice(:destroyed)
     end
 
     def update_all
       notice = if @exhibit.update update_all_page_params
-        t(:'helpers.submit.page.batch_updated', model: human_name)
-      else
-        t(:'helpers.submit.page.batch_error', model: human_name)
-      end
+                 t(:'helpers.submit.page.batch_updated', model: human_name)
+               else
+                 t(:'helpers.submit.page.batch_error', model: human_name)
+               end
       redirect_to :back, notice: notice
     end
+
+    protected
 
     def _prefixes
       @_prefixes ||= super + ['catalog']
@@ -90,10 +94,12 @@ module Spotlight
 
     def undo_link
       return unless can? :manage, @page
-      view_context.link_to(t(:'spotlight.versions.undo'), revert_version_path(@page.versions.last), :method => :post)
+      view_context.link_to(t(:'spotlight.versions.undo'), revert_version_path(@page.versions.last), method: :post)
     end
 
-    protected
+    def undo_notice(key)
+      view_context.safe_join([t(:"helpers.submit.page.#{key}", model: @page.class.model_name.human.downcase), undo_link], ' ')
+    end
 
     ##
     # Browsing an exhibit should start a new search session
@@ -102,7 +108,7 @@ module Spotlight
     end
 
     def page_attributes
-      [:id, :published, :title, :weight, :display_sidebar, :parent_page_id ]
+      [:id, :published, :title, :weight, :display_sidebar, :parent_page_id]
     end
 
     def allowed_page_params
@@ -110,17 +116,20 @@ module Spotlight
     end
 
     def featured_image_attributes
-      [:source, :image, :remote_image_url, :document_global_id, :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h]
+      [
+        :source, :image, :remote_image_url, :document_global_id,
+        :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h
+      ]
     end
 
     def human_name
       @human_name ||= page_collection_name.humanize
     end
 
-    alias page_collection_name controller_name 
+    alias_method :page_collection_name, :controller_name
 
     def attach_breadcrumbs
-      if view_context.current_page? "/"
+      if view_context.current_page? '/'
         add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: current_exhibit.title), main_app.root_path
       else
         add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: current_exhibit.title), spotlight.exhibit_root_path(current_exhibit)
@@ -128,9 +137,10 @@ module Spotlight
     end
 
     private
-      # Only allow a trusted parameter "white list" through.
-      def page_params
-        params.require(controller_name.singularize).permit(allowed_page_params)
-      end
+
+    # Only allow a trusted parameter "white list" through.
+    def page_params
+      params.require(controller_name.singularize).permit(allowed_page_params)
+    end
   end
 end

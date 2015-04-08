@@ -1,5 +1,7 @@
 # encoding: utf-8
 module Spotlight
+  ##
+  # Process a CSV upload into new Spotlight::Resource::Upload objects
   class AddUploadsFromCSV < ActiveJob::Base
     queue_as :default
 
@@ -8,19 +10,21 @@ module Spotlight
       Spotlight::IndexingCompleteMailer.documents_indexed(csv_data, exhibit, user).deliver_now
     end
 
-    def perform(csv_data, exhibit, user)
+    def perform(csv_data, exhibit, _user)
       encoded_csv(csv_data).each do |row|
-        if (url = row.delete("url")).present?
-          Spotlight::Resources::Upload.create(
-            remote_url_url: url,
-            data: row,
-            exhibit: exhibit
-          )
-        end
-      end
+        url = row.delete('url')
+        next unless url.present?
 
+        Spotlight::Resources::Upload.create(
+          remote_url_url: url,
+          data: row,
+          exhibit: exhibit
+        )
+      end
     end
+
     private
+
     def encoded_csv(csv)
       csv.map do |row|
         row.map do |label, column|

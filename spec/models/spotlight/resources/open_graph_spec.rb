@@ -1,43 +1,41 @@
 require 'spec_helper'
 
-describe Spotlight::Resources::OpenGraph, :type => :model do
+describe Spotlight::Resources::OpenGraph, type: :model do
   class TestResource < Spotlight::Resource
     include Spotlight::Resources::Web
     include Spotlight::Resources::OpenGraph
   end
-  
-  let(:exhibit) { double(solr_data: { }) }
 
-  subject { TestResource.new url: "info:url" }
+  let(:exhibit) { double(solr_data: {}) }
 
-  describe "#to_solr" do
+  subject { TestResource.new url: 'info:url' }
 
+  describe '#to_solr' do
     before do
       allow(subject).to receive_messages id: 15, opengraph_properties: {}, exhibit: exhibit
     end
 
     let(:solr_doc) { subject.to_solr }
 
-    it "should include this record id" do
+    it 'includes this record id' do
       expect(solr_doc).to include spotlight_resource_id_ssim: subject.to_global_id.to_s
     end
 
-    it "should include opengraph properties" do
-      allow(subject).to receive_messages opengraph_properties: { a: 1, b: 2}
+    it 'includes opengraph properties' do
+      allow(subject).to receive_messages opengraph_properties: { a: 1, b: 2 }
 
       expect(solr_doc).to include a: 1, b: 2
     end
-
   end
 
-  describe "#opengraph_properties" do
-    it "should map opengraph properties to solr fields" do
-      allow(subject).to receive_messages opengraph: { "og_title" => "title", "og_description" => "description"}
-      expect(subject.opengraph_properties).to include "og_title_tesim" => "title", "og_description_tesim" => "description"
+  describe '#opengraph_properties' do
+    it 'maps opengraph properties to solr fields' do
+      allow(subject).to receive_messages opengraph: { 'og_title' => 'title', 'og_description' => 'description' }
+      expect(subject.opengraph_properties).to include 'og_title_tesim' => 'title', 'og_description_tesim' => 'description'
     end
   end
 
-  describe "#opengraph" do
+  describe '#opengraph' do
     let(:body) do
       Nokogiri::HTML.parse <<-EOF
         <html><head>
@@ -51,10 +49,10 @@ describe Spotlight::Resources::OpenGraph, :type => :model do
         </head></html>
       EOF
     end
-    it "should extract opengraph <meta> tags" do
+    it 'extracts opengraph <meta> tags' do
       allow(subject).to receive_messages(body: body)
-      expect(subject.opengraph).to include "og:title", "og:description", "og:type", "og:type", "og:site_name", "og:video", "og:video:width", "og:video:height"
-      expect(subject.opengraph["og:title"]).to eq "The Ground Truth: The Human Cost of War"
+      expect(subject.opengraph).to include 'og:title', 'og:description', 'og:type', 'og:type', 'og:site_name', 'og:video', 'og:video:width', 'og:video:height'
+      expect(subject.opengraph['og:title']).to eq 'The Ground Truth: The Human Cost of War'
     end
   end
 end

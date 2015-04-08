@@ -1,213 +1,233 @@
-class Spotlight::CatalogController < ::CatalogController
-  include Spotlight::Concerns::ApplicationController
-  load_and_authorize_resource :exhibit, class: Spotlight::Exhibit, prepend: true
-  include Spotlight::Catalog
-  before_filter :authenticate_user!, only: [:admin, :edit, :make_public, :make_private]
-  before_filter :check_authorization, only: [:admin, :edit, :make_public, :make_private]
-  before_filter :redirect_to_exhibit_home_without_search_params, only: :index
-  before_filter :add_breadcrumb_with_search_params, only: :index
+module Spotlight
+  ##
+  # Spotlight's catalog controller. Note that this subclasses
+  # the host application's CatalogController to get its configuration,
+  # partial overrides, etc
+  # rubocop:disable Metrics/ClassLength
+  class CatalogController < ::CatalogController
+    include Spotlight::Concerns::ApplicationController
+    load_and_authorize_resource :exhibit, class: Spotlight::Exhibit, prepend: true
+    include Spotlight::Catalog
+    include Spotlight::Concerns::CatalogSearchContext
 
-  before_filter :attach_breadcrumbs
-  
+    before_action :authenticate_user!, only: [:admin, :edit, :make_public, :make_private]
+    before_action :check_authorization, only: [:admin, :edit, :make_public, :make_private]
+    before_action :redirect_to_exhibit_home_without_search_params!, only: :index
+    before_action :add_breadcrumb_with_search_params, only: :index
 
-  def new
-    add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
-    add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)
-    add_breadcrumb t(:'spotlight.catalog.new.header'), new_exhibit_catalog_path(@exhibit)
-    @resource = @exhibit.resources.build
-  end
+    before_action :attach_breadcrumbs
 
-  def show
-    blacklight_config.show.partials.unshift "curation_mode_toggle"
-    super
-
-    if @document.private? current_exhibit
-      authenticate_user!
-      authorize! :curate, current_exhibit
+    before_action only: :show do
+      blacklight_config.show.partials.unshift 'curation_mode_toggle'
     end
 
-    if current_browse_category
-      add_breadcrumb current_browse_category.exhibit.main_navigations.browse.label_or_default, exhibit_browse_index_path(current_browse_category.exhibit)
-      add_breadcrumb current_browse_category.title, exhibit_browse_path(current_browse_category.exhibit, current_browse_category)
-    elsif current_page_context
-      add_breadcrumb current_page_context.title, [current_page_context.exhibit, current_page_context] if current_page_context.title.present? and !current_page_context.is_a?(Spotlight::HomePage)
-    else
-      add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), search_action_url(current_search_session[:query_params]) if current_search_session
+    before_action only: :admin do
+      blacklight_config.view.select! { |k, _v| k == :admin_table }
+      blacklight_config.view.admin_table.partials = [:index_compact]
+      blacklight_config.view.admin_table.document_actions = []
+
+      # rubocop:disable Style/DeprecatedHashMethods
+      unless blacklight_config.sort_fields.has_key? :timestamp
+        blacklight_config.add_sort_field :timestamp, sort: "#{blacklight_config.index.timestamp_field} desc"
+      end
+      # rubocop:enable Style/DeprecatedHashMethods
     end
-    add_breadcrumb Array(@document[blacklight_config.view_config(:show).title_field]).join(', '), exhibit_catalog_path(@exhibit, @document)
-  end
 
-  # "id_ng" and "full_title_ng" should be defined in the Solr core's schema.xml.
-  # It's expected that these fields will be set up to have  EdgeNGram filter
-  # setup within their index analyzer. This will ensure that this method returns
-  # results when a partial match is passed in the "q" parameter.
-  def autocomplete
-    (_, @document_list) = get_search_results(params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field), facet: false, "facet.field" => [], fq: ["-#{Spotlight::SolrDocument.visibility_field(current_exhibit)}:false"])
+    before_action only: :edit do
+      blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
+      blacklight_config.view.edit.partials.insert(2, :edit)
+    end
 
-    respond_to do |format|
-      format.json do
-        render json: { docs: autocomplete_json_response(@document_list) }
+    def new
+      add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
+      add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)
+      add_breadcrumb t(:'spotlight.catalog.new.header'), new_exhibit_catalog_path(@exhibit)
+      @resource = @exhibit.resources.build
+    end
+
+    def show
+      super
+
+      if @document.private? current_exhibit
+        authenticate_user! && authorize!(:curate, current_exhibit)
+      end
+
+      add_document_breadcrumbs(@document)
+    end
+
+    # "id_ng" and "full_title_ng" should be defined in the Solr core's schema.xml.
+    # It's expected that these fields will be set up to have  EdgeNGram filter
+    # setup within their index analyzer. This will ensure that this method returns
+    # results when a partial match is passed in the "q" parameter.
+    def autocomplete
+      search_params = params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field)
+      (_, @document_list) = get_search_results(search_params, fq: ["-#{Spotlight::SolrDocument.visibility_field(current_exhibit)}:false"])
+
+      respond_to do |format|
+        format.json do
+          render json: { docs: autocomplete_json_response(@document_list) }
+        end
       end
     end
-  end
 
-  def admin
-    self.blacklight_config.view.select! { |k,v| k == :admin_table }
-    self.blacklight_config.view.admin_table.partials = [:index_compact]
-    self.blacklight_config.view.admin_table.document_actions = []
+    def admin
+      add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
+      add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)
+      (@response, @document_list) = get_search_results
+      @filters = params[:f] || []
 
-    unless self.blacklight_config.sort_fields.has_key? :timestamp
-      self.blacklight_config.add_sort_field :timestamp, sort: "#{blacklight_config.index.timestamp_field} desc"
+      respond_to do |format|
+        format.html
+      end
     end
 
-    add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
-    add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)
-    (@response, @document_list) = get_search_results
-    @filters = params[:f] || []
-      
-    respond_to do |format|
-      format.html
+    def update
+      @response, @document = fetch params[:id]
+      @document.update(current_exhibit, solr_document_params)
+      @document.save
+
+      try_solr_commit!
+
+      redirect_to exhibit_catalog_path(current_exhibit, @document)
     end
-  end
 
-  def update
-    @response, @document = fetch params[:id]
-    @document.update(current_exhibit, solr_document_params)
-    @document.save
-    repository.connection.commit rescue nil
-    redirect_to exhibit_catalog_path(current_exhibit, @document)
-  end
-
-  def edit
-    @response, @document = fetch params[:id]
-    blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
-    blacklight_config.view.edit.partials.insert(2, :edit)
-  end
-
-  def make_private
-    @response, @document = fetch params[:catalog_id]
-    @document.make_private!(current_exhibit)
-    @document.save
-
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.json { render json: true }
+    def edit
+      @response, @document = fetch params[:id]
     end
-  end
 
-  def make_public
-    @response, @document = fetch params[:catalog_id]
-    @document.make_public!(current_exhibit)
-    @document.save
+    def make_private
+      @response, @document = fetch params[:catalog_id]
+      @document.make_private!(current_exhibit)
+      @document.save
 
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.json { render json: true }
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.json { render json: true }
+      end
     end
-  end
 
-  protected
+    def make_public
+      @response, @document = fetch params[:catalog_id]
+      @document.make_public!(current_exhibit)
+      @document.save
 
-  # TODO move this out of app/helpers/blacklight/catalog_helper_behavior.rb and into blacklight/catalog.rb
-  def has_search_parameters?
-    !params[:q].blank? or !params[:f].blank? or !params[:search_field].blank?
-  end
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.json { render json: true }
+      end
+    end
 
-  def attach_breadcrumbs
-    # The "q: ''" is necessary so that the breadcrumb builder recognizes that a path like this:
-    # /exhibits/1?f%5Bgenre_sim%5D%5B%5D=map&q= is not the same as /exhibits/1
-    # Otherwise the exhibit breadcrumb won't be a link.
-    # see http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-current_page-3F
-    add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), exhibit_root_path(@exhibit, q: '')
-  end
+    protected
 
-  ## 
-  # Override Blacklight's #setup_next_and_previous_documents to handle
-  # browse categories too
-  def setup_next_and_previous_documents
-    if current_browse_category
+    # TODO: move this out of app/helpers/blacklight/catalog_helper_behavior.rb and into blacklight/catalog.rb
+    # rubocop:disable Style/PredicateName
+    def has_search_parameters?
+      !params[:q].blank? || !params[:f].blank? || !params[:search_field].blank?
+    end
+    # rubocop:enable Style/PredicateName
+
+    def attach_breadcrumbs
+      # The "q: ''" is necessary so that the breadcrumb builder recognizes that a path like this:
+      # /exhibits/1?f%5Bgenre_sim%5D%5B%5D=map&q= is not the same as /exhibits/1
+      # Otherwise the exhibit breadcrumb won't be a link.
+      # see http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-current_page-3F
+      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), exhibit_root_path(@exhibit, q: '')
+    end
+
+    ##
+    # Override Blacklight's #setup_next_and_previous_documents to handle
+    # browse categories too
+    def setup_next_and_previous_documents
+      if current_browse_category
+        setup_next_and_previous_documents_from_browse_category
+      elsif current_page_context
+        # TODO: figure out how to construct previous/next documents
+      else
+        super
+      end
+    end
+
+    def setup_next_and_previous_documents_from_browse_category
       index = search_session['counter'].to_i - 1
       response, documents = get_previous_and_next_documents_for_search index, current_browse_category.query_params.with_indifferent_access
       search_session['total'] = response.total
-      @search_context_response = response
       @previous_document = documents.first
       @next_document = documents.last
-    elsif current_page_context
-      # TODO: figure out how to construct previous/next documents 
-    else
-      super
     end
-  end
 
-  def _prefixes
-    @_prefixes ||= super + ['catalog']
-  end
-
-  ##
-  # Admin catalog controller should not create a new search
-  # session in the blacklight context
-  def start_new_search_session?
-    super || params[:action] == 'admin'
-  end
-
-  def solr_document_params
-    params.require(:solr_document).permit(:exhibit_tag_list, uploaded_resource: [:url], sidecar: [:public, data: [editable_solr_document_params] ])
-  end
-
-  def editable_solr_document_params
-    custom_field_params + uploaded_resource_params
-  end
-
-  def uploaded_resource_params
-    if @document.uploaded_resource?
-      [{configured_fields: Spotlight::Resources::Upload.fields(current_exhibit).collect(&:field_name)}]
-    else
-      []
+    def _prefixes
+      @_prefixes ||= super + ['catalog']
     end
-  end
 
-  def custom_field_params
-    current_exhibit.custom_fields.pluck(:field)
-  end
-
-  def check_authorization
-    authorize! :curate, @exhibit
-  end
-
-  def current_browse_category
-    @current_browse_category ||= if current_search_session and current_search_session.query_params["action"] == "show" and current_search_session.query_params["controller"] == "spotlight/browse"
-      current_exhibit.searches.accessible_by(current_ability).find(current_search_session.query_params["id"]) if current_search_session.query_params["id"]
+    ##
+    # Admin catalog controller should not create a new search
+    # session in the blacklight context
+    def start_new_search_session?
+      super || params[:action] == 'admin'
     end
-  end
 
-  def redirect_to_exhibit_home_without_search_params
-    unless has_search_parameters?
-      redirect_to spotlight.exhibit_root_path(@exhibit)
+    def solr_document_params
+      params.require(:solr_document).permit(:exhibit_tag_list,
+                                            uploaded_resource: [:url],
+                                            sidecar: [:public, data: [editable_solr_document_params]])
     end
-  end
 
-  def add_breadcrumb_with_search_params
-    if has_search_parameters?
-      add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), request.fullpath
+    def editable_solr_document_params
+      custom_field_params + uploaded_resource_params
     end
-  end
 
-  def current_page_context
-    @current_page_context ||= if current_search_session and current_search_session.query_params["action"] == "show" and current_search_session.query_params["controller"].ends_with? "_pages"
-      if current_search_session.query_params["controller"] == "spotlight/home_pages"
-        current_exhibit.home_page if can? :read, current_exhibit.home_page
+    def uploaded_resource_params
+      if @document.uploaded_resource?
+        [{ configured_fields: Spotlight::Resources::Upload.fields(current_exhibit).map(&:field_name) }]
       else
-        current_exhibit.pages.accessible_by(current_ability).find(current_search_session.query_params["id"]) if current_search_session.query_params["id"]
+        []
       end
     end
-  end
 
-  def additional_export_formats document, format
-    super
+    def custom_field_params
+      current_exhibit.custom_fields.pluck(:field)
+    end
 
-    format.solr_json do
-      authorize! :update_solr, @exhibit
-      render json: document.to_solr.merge(@exhibit.solr_data)
+    def check_authorization
+      authorize! :curate, @exhibit
+    end
+
+    def redirect_to_exhibit_home_without_search_params!
+      redirect_to spotlight.exhibit_root_path(@exhibit) unless has_search_parameters?
+    end
+
+    def add_breadcrumb_with_search_params
+      add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), request.fullpath if has_search_parameters?
+    end
+
+    # rubocop:disable Metrics/AbcSize
+    def add_document_breadcrumbs(document)
+      if current_browse_category
+        add_breadcrumb current_browse_category.exhibit.main_navigations.browse.label_or_default, exhibit_browse_index_path(current_browse_category.exhibit)
+        add_breadcrumb current_browse_category.title, exhibit_browse_path(current_browse_category.exhibit, current_browse_category)
+      elsif current_page_context && current_page_context.title.present? && !current_page_context.is_a?(Spotlight::HomePage)
+        add_breadcrumb current_page_context.title, [current_page_context.exhibit, current_page_context]
+      elsif current_search_session
+        add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), search_action_url(current_search_session[:query_params])
+      end
+
+      add_breadcrumb Array(document[blacklight_config.view_config(:show).title_field]).join(', '), exhibit_catalog_path(current_exhibit, document)
+    end
+    # rubocop:enable Metrics/AbcSize
+
+    def additional_export_formats(document, format)
+      super
+
+      format.solr_json do
+        authorize! :update_solr, @exhibit
+        render json: document.to_solr.merge(@exhibit.solr_data)
+      end
+    end
+
+    def try_solr_commit!
+      repository.connection.commit
+    rescue => e
+      Rails.logger.info "Failed to commit document updates: #{e}"
     end
   end
 end

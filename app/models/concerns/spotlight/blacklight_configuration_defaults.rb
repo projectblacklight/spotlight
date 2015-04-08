@@ -1,12 +1,15 @@
-module Spotlight::BlacklightConfigurationDefaults
-  extend ActiveSupport::Concern
+module Spotlight
+  ##
+  # Helpers to provide default blacklight configuration values
+  module BlacklightConfigurationDefaults
+    extend ActiveSupport::Concern
 
-  included do
-    before_create :setup_defaults
-  end
+    included do
+      before_create :setup_defaults
+    end
 
+    protected
 
-  protected
     def setup_defaults
       default_sort_fields
       default_view_types
@@ -19,7 +22,7 @@ module Spotlight::BlacklightConfigurationDefaults
       # can't use default_blacklight_config until after the BlacklightConfiguration
       # is created or we run into a circular dependency.
       default_fields = Spotlight::Engine.blacklight_config.sort_fields
-      self.sort_fields = default_fields.each_with_object({}) do |(k, v), obj|
+      self.sort_fields = default_fields.each_with_object({}) do |(k, _v), obj|
         obj[k] = { show: true }
       end
     end
@@ -37,5 +40,5 @@ module Spotlight::BlacklightConfigurationDefaults
       # is created or we run into a circular dependency.
       self.default_per_page ||= Spotlight::Engine.blacklight_config.per_page.first
     end
-
+  end
 end

@@ -1,6 +1,8 @@
-require "spotlight/version"
-require "spotlight/engine"
+require 'spotlight/version'
+require 'spotlight/engine'
 
+##
+# Spotlight
 module Spotlight
   require 'spotlight/config'
   require 'spotlight/base'

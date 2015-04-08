@@ -1,6 +1,5 @@
 Spotlight::Engine.routes.draw do
-
-  devise_for :contact_email, class_name: "Spotlight::ContactEmail", only: [:confirmations]
+  devise_for :contact_email, class_name: 'Spotlight::ContactEmail', only: [:confirmations]
 
   resources :exhibits, path: '/', except: [:index, :show] do
     member do
@@ -11,7 +10,7 @@ Spotlight::Engine.routes.draw do
     end
 
     resources :attachments, only: :create
-    resource :contact_form, path: "contact", only: [:new, :create]
+    resource :contact_form, path: 'contact', only: [:new, :create]
     resource :blacklight_configuration, only: [:update]
 
     resource :appearance, only: [:edit, :update]
@@ -30,13 +29,13 @@ Spotlight::Engine.routes.draw do
         get 'autocomplete'
       end
 
-      get "facet/:id", :to => "catalog#facet", :as => "catalog_facet"
+      get 'facet/:id', to: 'catalog#facet', as: 'catalog_facet'
 
-      put 'visiblity', to: "catalog#make_public"
-      delete 'visiblity', to: "catalog#make_private"
+      put 'visiblity', to: 'catalog#make_public'
+      delete 'visiblity', to: 'catalog#make_private'
     end
 
-    get "catalog/:id", to: "catalog#show", as: "solr_document"
+    get 'catalog/:id', to: 'catalog#show', as: 'solr_document'
 
     resources :solr_document, only: [:edit], to: 'catalog#edit'
 
@@ -50,7 +49,7 @@ Spotlight::Engine.routes.draw do
       end
     end
 
-    post :csv_uploads, to: "resources/upload#csv_upload", path: 'upload_resources/csv_upload', as: :resources_csv_uploads
+    post :csv_uploads, to: 'resources/upload#csv_upload', path: 'upload_resources/csv_upload', as: :resources_csv_uploads
 
     resources :resources_uploads, controller: 'resources/upload', path: 'upload_resources' do
       collection do
@@ -88,7 +87,7 @@ Spotlight::Engine.routes.draw do
         patch :update_all
       end
     end
-    resource :home_page, path: 'home', controller: "home_pages"
+    resource :home_page, path: 'home', controller: 'home_pages'
     post '/pages/:id/preview' => 'pages#preview', as: :preview_block
 
     resources :lock, only: [:destroy]

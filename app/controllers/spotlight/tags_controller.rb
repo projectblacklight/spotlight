@@ -1,6 +1,8 @@
 module Spotlight
+  ##
+  # CRUD actions for document tags
   class TagsController < Spotlight::ApplicationController
-    before_filter :authenticate_user!
+    before_action :authenticate_user!
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
     def index
@@ -12,12 +14,12 @@ module Spotlight
 
       respond_to do |format|
         format.html
-        format.json { render json: @exhibit.owned_tags.map { |x| x.name } }
+        format.json { render json: @exhibit.owned_tags.map(&:name) }
       end
     end
 
     def destroy
-      authorize! :tag, @exhibit 
+      authorize! :tag, @exhibit
       # warning: this causes every solr document with this tag to reindex.  That could be slow.
       @exhibit.owned_taggings.where(tag_id: params[:id]).destroy_all
 

@@ -1,4 +1,7 @@
 module Spotlight
+  ##
+  # Stub ActiveRecord methods to allow non-ActiveRecord::Base objects to
+  # participate in e.g. associations
   module ArLight
     extend ActiveSupport::Concern
     include ActiveRecord::ModelSchema
@@ -7,6 +10,8 @@ module Spotlight
     include ActiveRecord::Reflection
     include ActiveModel::Dirty
 
+    ##
+    # Mock activerecord class-level methods
     module ClassMethods
       def base_class
         self
@@ -16,9 +21,41 @@ module Spotlight
       def subclass_from_attributes?(_)
         false
       end
+
+      def generated_feature_methods
+        @generated_feature_methods ||= begin
+          mod = const_set(:GeneratedFeatureMethods, Module.new)
+          include mod
+          mod
+        end
+      end
+
+      def before_destroy(*_args)
+      end
+
+      def pluralize_table_names
+        true
+      end
+
+      def add_autosave_association_callbacks(_arg)
+      end
+
+      # needed for Rails 4.1 + act_as_taggable
+      def dangerous_attribute_method?(*_args)
+        false
+      end
+
+      # needed for Rails 4.1 + act_as_taggable
+      def generated_association_methods
+        @generated_association_methods ||= begin
+          mod = const_set(:GeneratedAssociationMethods, Module.new)
+          include mod
+          mod
+        end
+      end
     end
 
-    def initialize (source_doc={}, solr_response=nil)
+    def initialize(source_doc = {}, solr_response = nil)
       @association_cache = {}
       super
     end
@@ -32,32 +69,11 @@ module Spotlight
     #
     # Note also that destroying a record preserves its ID in the model instance, so deleted
     # models are still comparable.
-    def ==(comparison_object)
+    def ==(other)
       super ||
-        comparison_object.instance_of?(self.class) &&
-        id &&
-        comparison_object.id == id
-    end
-      
-    module ClassMethods
-      def generated_feature_methods
-        @generated_feature_methods ||= begin
-          mod = const_set(:GeneratedFeatureMethods, Module.new)
-          include mod
-          mod
-        end
-      end
-
-      def before_destroy *args
-      end
-
-      def pluralize_table_names
-        true
-      end
-
-      def add_autosave_association_callbacks arg
-      end
-
+        (other.instance_of?(self.class) &&
+          id &&
+          other.id == id)
     end
   end
 end

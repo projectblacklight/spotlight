@@ -1,9 +1,11 @@
 require 'roar/decorator'
 require 'roar/json'
 module Spotlight
+  ##
+  # Serialize an exhibit page
   class PageRepresenter < Roar::Decorator
     include Roar::JSON
-    (Spotlight::Page.attribute_names - ['id', 'scope', 'exhibit_id', 'parent_page_id', 'content']).each do |prop|
+    (Spotlight::Page.attribute_names - %w(id scope exhibit_id parent_page_id content)).each do |prop|
       property prop
     end
 
@@ -14,12 +16,14 @@ module Spotlight
       represented.content.as_json
     end
 
-    def content= content
-      represented.content = content
-    end
+    delegate :content=, to: :represented
   end
 
+  ##
+  # Serialize the page hierarchy (e.g. for Feature pages)
   class NestedPageRepresenter < PageRepresenter
-    collection :child_pages, parse_strategy: lambda { |fragment, i, options| options.represented.child_pages.find_or_initialize_by(slug: fragment['slug']) }, class: Spotlight::FeaturePage, extend: NestedPageRepresenter
+    collection :child_pages, parse_strategy: ->(fragment, _i, options) { options.represented.child_pages.find_or_initialize_by(slug: fragment['slug']) },
+                             class: Spotlight::FeaturePage,
+                             extend: NestedPageRepresenter
   end
 end

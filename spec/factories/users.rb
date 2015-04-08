@@ -4,10 +4,10 @@ FactoryGirl.define do
       exhibit { FactoryGirl.create(:exhibit) }
     end
     sequence(:email) { |n| "user#{n}@example.com" }
-    password "insecure"
+    password 'insecure'
 
     factory :site_admin do
-      after(:create) do |user, evaluator|
+      after(:create) do |user, _evaluator|
         create_list(:role, 1, user: user, exhibit_id: nil, role: 'admin')
       end
     end
@@ -24,8 +24,6 @@ FactoryGirl.define do
     end
 
     factory :exhibit_visitor do
-      
     end
   end
 end
-  

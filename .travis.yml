@@ -16,3 +16,8 @@ env:
 
 sudo: false
 language: ruby
+
+
+script:
+  - bundle exec rake
+  - bundle exec rake rubocop

@@ -1,4 +1,8 @@
-module SirTrevorRails::Blocks
-  class SolrDocumentsFeaturesBlock < SirTrevorRails::Blocks::SolrDocumentsBlock
+module SirTrevorRails
+  module Blocks
+    ##
+    # Documents with a side navigation block
+    class SolrDocumentsFeaturesBlock < SirTrevorRails::Blocks::SolrDocumentsBlock
+    end
   end
 end

@@ -1,57 +1,61 @@
 module Spotlight
+  ##
+  # CRUD actions for assigning exhibit roles to
+  # existing users
   class RolesController < Spotlight::ApplicationController
-    before_filter :authenticate_user!
+    before_action :authenticate_user!
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
     load_and_authorize_resource through: :exhibit, except: [:update_all]
 
     def index
       role = @exhibit.roles.build
       authorize! :edit, role
-      
+
       add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
       add_breadcrumb t(:'spotlight.administration.sidebar.header'), exhibit_dashboard_path(@exhibit)
       add_breadcrumb t(:'spotlight.administration.sidebar.users'), exhibit_roles_path(@exhibit)
     end
 
     def update_all
-      attrs = params.require(:exhibit).permit(:roles_attributes => [:id, :user_key, :role, :_destroy])
+      authorize_nested_attributes! exhibit_params[:roles_attributes], Role
 
-      any_deleted = authorize_nested_attributes(attrs[:roles_attributes], Role)
+      any_deleted = exhibit_params[:roles_attributes].values.any? { |item| item['_destroy'].present? }
 
-      if @exhibit.update(attrs)
-        notice = any_deleted > 0 ? t(:'helpers.submit.role.destroyed') : t(:'helpers.submit.role.updated')
-        redirect_to exhibit_roles_path(@exhibit), notice: notice 
+      if @exhibit.update(exhibit_params)
+        notice = any_deleted ? t(:'helpers.submit.role.destroyed') : t(:'helpers.submit.role.updated')
+        redirect_to exhibit_roles_path(@exhibit), notice: notice
       else
         flash[:alert] = t(:'helpers.submit.role.batch_error')
         render action: 'index'
       end
-
     end
 
     protected
 
+    def exhibit_params
+      params.require(:exhibit).permit(roles_attributes: [:id, :user_key, :role, :_destroy])
+    end
 
     # When nested attributes are passed in, ensure we have authorization to update each row.
     # @param attr [Hash,Array] the nested attributes
     # @param klass [Class] the class that is getting created
     # @return [Integer] a count of the number of deleted records
-    def authorize_nested_attributes(attrs, klass)
-      attrs = attrs.values if attrs.is_a? Hash
-      delete_count = 0
-      attrs.each do |item|
-        if item[:id]
-          if item['_destroy'].present?
-            authorize! :destroy, klass.find(item[:id])
-            delete_count += 1
-          else
-            authorize! :update, klass.find(item[:id])
-          end
-        else
-          authorize! :create, klass
-        end
+    def authorize_nested_attributes!(attrs, klass)
+      attrs.each do |_, item|
+        authorize_item item, klass
       end
-      delete_count
     end
 
+    def authorize_item(item, klass)
+      if item[:id]
+        if item['_destroy'].present?
+          authorize! :destroy, klass.find(item[:id])
+        else
+          authorize! :update, klass.find(item[:id])
+        end
+      else
+        authorize! :create, klass
+      end
+    end
   end
 end

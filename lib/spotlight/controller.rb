@@ -1,4 +1,6 @@
 module Spotlight
+  ##
+  # Spotlight controller helpers
   module Controller
     extend ActiveSupport::Concern
     include Blacklight::Controller
@@ -14,11 +16,11 @@ module Spotlight
 
     def current_masthead
       @masthead ||= begin
-        current_exhibit.masthead if current_exhibit and current_exhibit.masthead and current_exhibit.masthead.display?
+        current_exhibit.masthead if current_exhibit && current_exhibit.masthead && current_exhibit.masthead.display?
       end
     end
 
-    def current_masthead= masthead
+    def current_masthead=(masthead)
       @masthead = masthead
     end
 
@@ -30,7 +32,6 @@ module Spotlight
       default_masthead? || current_masthead == current_exhibit.masthead
     end
 
-
     # overwrites Blacklight::Controller#blacklight_config
     def blacklight_config
       if current_exhibit
@@ -40,23 +41,23 @@ module Spotlight
       end
     end
 
-    def search_action_url *args
+    def search_action_url(*args)
       if current_exhibit
-        exhibit_search_action_url *args
+        exhibit_search_action_url(*args)
       else
-        main_app.catalog_index_url *args
+        main_app.catalog_index_url(*args)
       end
     end
 
-    def search_facet_url *args
+    def search_facet_url(*args)
       if current_exhibit
-        exhibit_search_facet_url *args
+        exhibit_search_facet_url(*args)
       else
-        main_app.catalog_facet_url *args
+        main_app.catalog_facet_url(*args)
       end
     end
 
-    def exhibit_search_action_url *args
+    def exhibit_search_action_url(*args)
       options = args.extract_options!
       only_path = options[:only_path]
       options.except! :exhibit_id, :only_path
@@ -68,7 +69,7 @@ module Spotlight
       end
     end
 
-    def exhibit_search_facet_url *args
+    def exhibit_search_facet_url(*args)
       options = args.extract_options!
       only_path = options[:only_path]
       options.except! :exhibit_id, :only_path

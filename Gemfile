@@ -1,4 +1,4 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 # Declare your gem's dependencies in spotlight.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -14,7 +14,7 @@ gemspec
 # gem 'debugger'
 #
 gem 'blacklight-gallery', '>= 0.3.0'
-gem "sir_trevor_rails", github: "sul-dlss/sir-trevor-rails"
+gem 'sir_trevor_rails', github: 'sul-dlss/sir-trevor-rails'
 
 group :test do
   # Peg simplecov to < 0.8 until this is resolved:
@@ -27,8 +27,8 @@ group :development, :test do
   gem 'byebug'
 end
 
-file = File.expand_path("Gemfile", ENV['ENGINE_CART_DESTINATION'] || ENV['RAILS_ROOT'] || File.expand_path("../spec/internal", __FILE__))
-if File.exists?(file)
+file = File.expand_path('Gemfile', ENV['ENGINE_CART_DESTINATION'] || ENV['RAILS_ROOT'] || File.expand_path('../spec/internal', __FILE__))
+if File.exist? file
   puts "Loading #{file} ..." if $DEBUG # `ruby -d` or `bundle -v`
   instance_eval File.read(file)
 else
@@ -38,9 +38,9 @@ else
   if ENV['RAILS_VERSION'].nil? || ENV['RAILS_VERSION'] =~ /^4.2/
     gem 'coffee-rails', '~> 4.1.0'
     gem 'sass-rails', '~> 5.0'
-    gem 'responders', "~> 2.0"
+    gem 'responders', '~> 2.0'
   else
-    gem 'sass-rails', "< 5.0"
-    gem 'coffee-rails', "~> 4.0.0"
+    gem 'sass-rails', '< 5.0'
+    gem 'coffee-rails', '~> 4.0.0'
   end
 end

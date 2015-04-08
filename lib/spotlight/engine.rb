@@ -1,4 +1,4 @@
-#Load blacklight which will give spotlight views a higher preference than those in blacklight
+# Load blacklight which will give spotlight views a higher preference than those in blacklight
 require 'blacklight'
 require 'blacklight/oembed'
 require 'autoprefixer-rails'
@@ -9,6 +9,8 @@ require 'tophat'
 require 'paper_trail'
 
 module Spotlight
+  ##
+  # Spotlight::Engine
   class Engine < ::Rails::Engine
     isolate_namespace Spotlight
     # Breadcrumbs on rails must be required outside of an initializer or it doesn't get loaded.
@@ -24,17 +26,17 @@ module Spotlight
       #{config.root}/app/forms
     )
 
-    initializer "spotlight.initialize" do
+    initializer 'spotlight.initialize' do
       require 'sir_trevor_rails'
       require 'cancan'
       require 'bootstrap_form'
       require 'acts-as-taggable-on'
       require 'oembed'
 
-      Mime::Type.register "application/solr+json", :solr_json
+      Mime::Type.register 'application/solr+json', :solr_json
     end
 
-    initializer "oembed.initialize" do
+    initializer 'oembed.initialize' do
       OEmbed::Providers.register_all
     end
 
@@ -46,7 +48,7 @@ module Spotlight
       Spotlight::Engine.config.default_blacklight_config || catalog_controller.blacklight_config
     end
 
-    Spotlight::Engine.config.catalog_controller_class = "::CatalogController"
+    Spotlight::Engine.config.catalog_controller_class = '::CatalogController'
     Spotlight::Engine.config.default_blacklight_config = nil
 
     Spotlight::Engine.config.exhibit_main_navigation = [:curated_features, :browse, :about]
@@ -58,13 +60,13 @@ module Spotlight
     Spotlight::Engine.config.filter_resources_by_exhibit = true
     # The allowed file extensions for uploading non-repository items.
     Spotlight::Engine.config.allowed_upload_extensions = %w(jpg jpeg png)
-    
+
     # Suffixes for exhibit-specific solr fields
     Spotlight::Engine.config.solr_fields = OpenStruct.new
-    Spotlight::Engine.config.solr_fields.prefix = "".freeze
-    Spotlight::Engine.config.solr_fields.boolean_suffix = "_bsi".freeze
-    Spotlight::Engine.config.solr_fields.string_suffix = "_ssim".freeze
-    Spotlight::Engine.config.solr_fields.text_suffix = "_tesim".freeze
+    Spotlight::Engine.config.solr_fields.prefix = ''.freeze
+    Spotlight::Engine.config.solr_fields.boolean_suffix = '_bsi'.freeze
+    Spotlight::Engine.config.solr_fields.string_suffix = '_ssim'.freeze
+    Spotlight::Engine.config.solr_fields.text_suffix = '_tesim'.freeze
 
     # The solr field that original (largest) images will be stored.
     Spotlight::Engine.config.full_image_field = :full_image_url_ssm
@@ -75,15 +77,15 @@ module Spotlight
     Spotlight::Engine.config.upload_title_field = nil # OpenStruct.new(...)
 
     Spotlight::Engine.config.upload_fields = [
-      OpenStruct.new(field_name: :spotlight_upload_description_tesim, label: "Description", form_field_type: :text_area),
-      OpenStruct.new(field_name: :spotlight_upload_attribution_tesim, label: "Attribution"),
-      OpenStruct.new(field_name: :spotlight_upload_date_tesim, label: "Date")
+      OpenStruct.new(field_name: :spotlight_upload_description_tesim, label: 'Description', form_field_type: :text_area),
+      OpenStruct.new(field_name: :spotlight_upload_attribution_tesim, label: 'Attribution'),
+      OpenStruct.new(field_name: :spotlight_upload_date_tesim, label: 'Date')
     ]
 
     # Configure the CarrierWave file storage mechanism
     Spotlight::Engine.config.uploader_storage = :file
 
-    initializer "spotlight-assets.initialize" do
+    initializer 'spotlight-assets.initialize' do
       Rails.application.config.assets.precompile += %w( Jcrop.gif )
     end
 
@@ -91,7 +93,7 @@ module Spotlight
     # an Analytics provider. Google Analytics support is provided out-of-the-box.
     Spotlight::Engine.config.analytics_provider = nil
 
-    initializer "analytics.initialize" do
+    initializer 'analytics.initialize' do
       Spotlight::Engine.config.analytics_provider = Spotlight::Analytics::Ga
     end
 
@@ -108,15 +110,17 @@ module Spotlight
     Spotlight::Engine.config.ga_pkcs12_key_path = nil
     Spotlight::Engine.config.ga_web_property_id = nil
     Spotlight::Engine.config.ga_email = nil
-    Spotlight::Engine.config.ga_analytics_options = { }
+    Spotlight::Engine.config.ga_analytics_options = {}
     Spotlight::Engine.config.ga_page_analytics_options = Spotlight::Engine.config.ga_analytics_options.merge(limit: 5)
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
-    
+
     # Query parameters for autocomplete requests
-    Spotlight::Engine.config.autocomplete_search_field = "autocomplete"
-    Spotlight::Engine.config.default_autocomplete_params = {qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng'}
-    
+    Spotlight::Engine.config.autocomplete_search_field = 'autocomplete'
+    Spotlight::Engine.config.default_autocomplete_params = { qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng',
+                                                             facet: false,
+                                                             'facet.field' => [] }
+
     # Field containing the last modified date for a Solr document
     Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
 

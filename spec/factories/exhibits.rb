@@ -4,5 +4,3 @@ FactoryGirl.define do
     after(:build) { |exhibit| exhibit.searches << FactoryGirl.build(:default_search) }
   end
 end
-  
-

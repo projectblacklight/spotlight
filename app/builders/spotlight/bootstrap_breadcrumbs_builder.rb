@@ -6,23 +6,29 @@
 # You can use it with the :builder option on render_breadcrumbs:
 #     <%= render_breadcrumbs :builder => Spotlight::BootstrapBreadcrumbsBuilder %>
 #
-class Spotlight::BootstrapBreadcrumbsBuilder < BreadcrumbsOnRails::Breadcrumbs::Builder
-  include ActionView::Helpers::OutputSafetyHelper
-  def render
-    if @elements.blank?
-      return ""
+module Spotlight
+  class BootstrapBreadcrumbsBuilder < BreadcrumbsOnRails::Breadcrumbs::Builder
+    include ActionView::Helpers::OutputSafetyHelper
+    def render
+      return '' if @elements.blank?
+
+      @context.content_tag(:ul, class: 'breadcrumb') do
+        safe_join(@elements.uniq.map { |e| render_element(e) })
+      end
     end
 
-    @context.content_tag(:ul, class: 'breadcrumb') do
-      safe_join(@elements.uniq.collect {|e| render_element(e)})
-    end 
-  end
+    def render_element(element)
+      html_class = 'active' if @context.current_page?(compute_path(element))
 
-  def render_element(element)
-    html_class = 'active' if @context.current_page?(compute_path(element))
+      @context.content_tag(:li, class: html_class) do
+        @context.link_to_unless_current(element_label(element), compute_path(element), element.options)
+      end
+    end
 
-    @context.content_tag(:li, :class => html_class) do
-      @context.link_to_unless_current(@context.truncate(compute_name(element), length: 30, separator: ' '), compute_path(element), element.options)
+    private
+
+    def element_label(element)
+      @context.truncate(compute_name(element), length: 30, separator: ' ')
     end
   end
 end

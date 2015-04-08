@@ -1,6 +1,8 @@
 require 'mail_form'
 
 module Spotlight
+  ##
+  # Exhibit feedback form
   class ContactForm < MailForm::Base
     attribute :current_exhibit
     attribute :name, validate: false
@@ -15,9 +17,8 @@ module Spotlight
         subject: "#{I18n.t(:'blacklight.application_name')} Contact Form",
         to: current_exhibit.contact_emails.first,
         from: %("#{name}" <#{email}>),
-        cc: current_exhibit.contact_emails.join(", ")
+        cc: current_exhibit.contact_emails.join(', ')
       }
     end
-
   end
 end

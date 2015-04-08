@@ -1,0 +1,33 @@
+require: rubocop-rspec
+
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  RunRailsCops: true
+  Exclude:
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'spec/internal/**/*'
+    - 'vendor/**/*'
+
+# Metrics/LineLength:
+#   Max: 120
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: single_quotes
+
+Style/Documentation:
+  Exclude:
+  - 'spec/**/*'
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/SpecialGlobalVars:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/features/**/*'
+    - 'spec/views/**/*'

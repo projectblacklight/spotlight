@@ -1,11 +1,13 @@
 module Spotlight
+  ##
+  # CRUD actions for the exhibit home page
   class HomePagesController < Spotlight::PagesController
     include Blacklight::SearchHelper
     include Spotlight::Catalog
 
     load_and_authorize_resource through: :exhibit, singleton: true, instance_name: 'page'
 
-    before_filter :attach_breadcrumbs, except: :show
+    before_action :attach_breadcrumbs, except: :show
 
     def edit
       add_breadcrumb t(:'spotlight.curation.sidebar.feature_pages'), exhibit_feature_pages_path(@exhibit)
@@ -18,11 +20,9 @@ module Spotlight
     end
 
     def show
-      if @page.display_sidebar?
-        @response, @document_list = get_search_results
-      end
+      @response, @document_list = get_search_results if @page.display_sidebar?
 
-      if @page.nil? or !@page.published?
+      if @page.nil? || !@page.published?
         render '/catalog/index'
       else
         render 'show'
@@ -30,6 +30,7 @@ module Spotlight
     end
 
     private
+
     alias_method :search_action_url, :exhibit_search_action_url
     alias_method :search_facet_url, :exhibit_search_facet_url
 

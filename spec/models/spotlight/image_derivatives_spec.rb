@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 class TestSpotlightImageDerivatives
   include Spotlight::ImageDerivatives
@@ -7,7 +7,7 @@ end
 describe Spotlight::ImageDerivatives do
   let(:subject) { TestSpotlightImageDerivatives.new }
   describe '#spotlight_image_derivatives' do
-    it 'should include default derivatives' do
+    it 'includes default derivatives' do
       expect(subject.spotlight_image_derivatives.length).to eq 3
       expect(subject.spotlight_image_derivatives.map do |d|
         d[:field]
