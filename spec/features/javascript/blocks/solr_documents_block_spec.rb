@@ -127,7 +127,7 @@ feature "Solr Document Block", feature: true do
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".items-block") do
       expect(page).to have_content "zzz"
-      expect(page).to have_css(".content-block.pull-left")
+      expect(page).to have_css(".items-col.pull-left")
       expect(page).to have_css(".text-col")
     end
   end
