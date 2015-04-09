@@ -26,6 +26,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
     expect(rendered).to have_selector 'h3', text: 'Some title'
     expect(rendered).to have_content "Some text"
     expect(rendered).to have_selector '.box', text: 'OSD'
-    expect(rendered).to have_selector '.text-col.pull-right'
+    expect(rendered).to have_selector '.items-col.pull-left'
+    expect(rendered).to have_selector '.text-col'
   end
 end

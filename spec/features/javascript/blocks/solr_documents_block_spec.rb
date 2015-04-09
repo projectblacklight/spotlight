@@ -114,6 +114,7 @@ feature "Solr Document Block", feature: true do
   end
 
   scenario "should allow you to choose which side the text will be on", js: true do
+    fill_in_typeahead_field with: "dq287tq6352"
 
     # fill in the content editable div
     content_editable = find(".st-text-block")
@@ -126,7 +127,8 @@ feature "Solr Document Block", feature: true do
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, ".items-block") do
       expect(page).to have_content "zzz"
-      expect(page).to have_css(".text-col.pull-right")
+      expect(page).to have_css(".items-col.pull-left")
+      expect(page).to have_css(".text-col")
     end
   end
 
