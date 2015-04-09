@@ -8,5 +8,10 @@ describe Spotlight::SortConfigurationsHelper, type: :helper do
     it 'translates sort fields' do
       expect(translate_sort_fields(sort_config)).to eq 'relevancy score ascending and title descending'
     end
+
+    it 'supports explicit sort descriptions' do
+      sort_config.sort_description = 'xyz'
+      expect(translate_sort_fields(sort_config)).to eq 'xyz'
+    end
   end
 end
