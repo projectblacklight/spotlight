@@ -28,7 +28,7 @@ module Spotlight
       end
     end
 
-    def respond_to?(method, *args)
+    def respond_to_missing?(method, *args)
       main_app_url_helper?(method) || super
     end
 
