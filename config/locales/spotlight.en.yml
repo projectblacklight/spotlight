@@ -70,8 +70,6 @@ en:
       solr_document: *spotlight_default
       users: *spotlight_default
       custom_field: *spotlight_default
-      resource_csv:
-        create: "Import"
       role:
         updated: "User has been updated."
         destroyed: "User has been removed."
@@ -84,8 +82,6 @@ en:
       spotlight:
         page: Page
     attributes:
-      "spotlight/resource/csv":
-            url: "File"
       "spotlight/contact":
           avatar: "Photo"
       "spotlight/page":
@@ -388,10 +384,6 @@ en:
       form:
         needs_provider: "Could not find an appropriate importer"
         has_provider: "Ready to import"
-      csv:
-        header: 'CSV Import'
-        form:
-          template: "Download Template"
       upload:
         csv:
           success: "'%{file_name}' has been uploaded.  An email will be sent to you once indexing is complete."

@@ -56,12 +56,6 @@ Spotlight::Engine.routes.draw do
       end
     end
 
-    resources :resources_csvs, controller: 'resources/csv', path: 'csv_resources' do
-      collection do
-        get :template
-      end
-    end
-
     resources :searches do
       collection do
         patch :update_all
