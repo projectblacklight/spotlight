@@ -9,8 +9,14 @@ module Spotlight
     # use a different default view when presenting browse categories
     def default_document_index_view_type
       # rubocop:disable Style/DeprecatedHashMethods
-      (:gallery if blacklight_config.view.has_key? :gallery) || super
+      (default_browse_index_view_type if blacklight_config.view.has_key? default_browse_index_view_type) || super
       # rubocop:enable Style/DeprecatedHashMethods
+    end
+
+    private
+
+    def default_browse_index_view_type
+      Spotlight::Engine.config.default_browse_index_view_type
     end
   end
 end

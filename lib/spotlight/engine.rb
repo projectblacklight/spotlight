@@ -121,6 +121,8 @@ module Spotlight
                                                              facet: false,
                                                              'facet.field' => [] }
 
+    Spotlight::Engine.config.default_browse_index_view_type = :gallery
+
     # Field containing the last modified date for a Solr document
     Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
 
