@@ -26,11 +26,9 @@ module Spotlight
       blacklight_config.view.admin_table.partials = [:index_compact]
       blacklight_config.view.admin_table.document_actions = []
 
-      # rubocop:disable Style/DeprecatedHashMethods
-      unless blacklight_config.sort_fields.has_key? :timestamp
+      unless blacklight_config.sort_fields.key? :timestamp
         blacklight_config.add_sort_field :timestamp, sort: "#{blacklight_config.index.timestamp_field} desc"
       end
-      # rubocop:enable Style/DeprecatedHashMethods
     end
 
     before_action only: :edit do

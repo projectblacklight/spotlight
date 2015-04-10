@@ -8,9 +8,7 @@ module Spotlight
     # Override Blacklight's #default_document_index_view_type helper to
     # use a different default view when presenting browse categories
     def default_document_index_view_type
-      # rubocop:disable Style/DeprecatedHashMethods
-      (default_browse_index_view_type if blacklight_config.view.has_key? default_browse_index_view_type) || super
-      # rubocop:enable Style/DeprecatedHashMethods
+      (default_browse_index_view_type if blacklight_config.view.key? default_browse_index_view_type) || super
     end
 
     private

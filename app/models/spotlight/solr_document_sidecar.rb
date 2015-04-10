@@ -6,7 +6,7 @@ module Spotlight
     belongs_to :document, polymorphic: true
     serialize :data, Hash
 
-    delegate :has_key?, to: :data
+    delegate :has_key?, :key?, to: :data
 
     def to_solr
       { document.class.unique_key.to_sym => document.id, visibility_field => public? }.merge(data_to_solr)

@@ -86,13 +86,11 @@ module Spotlight
     def block_document_index_view_type(block)
       views = blacklight_view_config_for_search_block(block)
 
-      # rubocop:disable Style/DeprecatedHashMethods
-      if views.has_key? document_index_view_type
+      if views.key? document_index_view_type
         document_index_view_type
       else
         views.keys.first
       end
-      # rubocop:enable Style/DeprecatedHashMethods
     end
 
     # Return the list of views that are configured to display for a block

@@ -20,14 +20,12 @@ module Spotlight
         old_field = self.field
         self.field = field_name
 
-        # rubocop:disable Style/DeprecatedHashMethods
-        if blacklight_configuration && blacklight_configuration.index_fields.has_key?(old_field)
+        if blacklight_configuration && blacklight_configuration.index_fields.key?(old_field)
           blacklight_configuration.index_fields_will_change!
           f = blacklight_configuration.index_fields.delete(old_field)
           blacklight_configuration.index_fields[field] = f
           blacklight_configuration.save
         end
-        # rubocop:enable Style/DeprecatedHashMethods
 
         Spotlight::RenameSidecarFieldJob.perform_later(exhibit, old_field, self.field)
       end
@@ -40,13 +38,11 @@ module Spotlight
     end
 
     def label
-      # rubocop:disable Style/DeprecatedHashMethods
-      conf = if field && blacklight_configuration && blacklight_configuration.index_fields.has_key?(field)
+      conf = if field && blacklight_configuration && blacklight_configuration.index_fields.key?(field)
                blacklight_configuration.index_fields[field].reverse_merge(configuration)
              else
                configuration
              end
-      # rubocop:enable Style/DeprecatedHashMethods
       conf['label']
     end
 
@@ -73,12 +69,10 @@ module Spotlight
     end
 
     def update_blacklight_configuration_label(label)
-      # rubocop:disable Style/DeprecatedHashMethods, Style/GuardClause
-      if field && blacklight_configuration && blacklight_configuration.index_fields.has_key?(field)
-        blacklight_configuration.index_fields[field]['label'] = label
-        blacklight_configuration.save
-      end
-      # rubocop:enable Style/DeprecatedHashMethods, Style/GuardClause
+      return unless field && blacklight_configuration && blacklight_configuration.index_fields.key?(field)
+
+      blacklight_configuration.index_fields[field]['label'] = label
+      blacklight_configuration.save
     end
 
     def field_name
