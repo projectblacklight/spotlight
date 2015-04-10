@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spotlight
-  describe "shared/_header_navbar", :type => :view do
+  describe 'shared/_header_navbar', type: :view do
     let(:current_exhibit) { FactoryGirl.create(:exhibit) }
     let(:masthead) { 'exhibit-masthead' }
     let(:navbar) { 'exhibit-navbar' }
@@ -14,20 +14,20 @@ module Spotlight
       allow(view).to receive_messages(exhibit_masthead?: true)
       allow(view).to receive_messages(current_exhibit: current_exhibit)
     end
-    it 'should render the masthead above the navbar' do
+    it 'renders the masthead above the navbar' do
       render
       expect(rendered.index(masthead)).to be < rendered.index(navbar)
     end
-    it 'should render the navbar above the search masthead' do
+    it 'renders the navbar above the search masthead' do
       allow(view).to receive_messages(exhibit_masthead?: false)
       render
       expect(rendered.index(navbar)).to be < rendered.index(masthead)
     end
-    it 'should render the breadcrumbs' do
+    it 'renders the breadcrumbs' do
       render
       expect(rendered).to have_content(breadcrumbs)
     end
-    it 'should not render breadcrumbs when there is a search masthead' do
+    it 'does not render breadcrumbs when there is a search masthead' do
       allow(view).to receive_messages(exhibit_masthead?: false)
       render
       expect(rendered).to_not have_content(breadcrumbs)

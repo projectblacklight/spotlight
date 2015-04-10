@@ -1,9 +1,11 @@
 module Spotlight
+  ##
+  # Exhibit navbar links
   class MainNavigation < ActiveRecord::Base
     belongs_to :exhibit, touch: true
-    default_scope  -> { order("weight ASC") }
-    scope :browse, -> { where(nav_type: "browse").take }
-    scope :about,  -> { where(nav_type: "about").take  }
+    default_scope { order('weight ASC') }
+    scope :browse, -> { find_by(nav_type: 'browse') }
+    scope :about, -> { find_by(nav_type: 'about') }
     scope :displayable, -> { where(display: true) }
 
     def label_or_default

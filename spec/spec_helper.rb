@@ -1,4 +1,4 @@
-ENV["RAILS_ENV"] ||= 'test'
+ENV['RAILS_ENV'] ||= 'test'
 
 require 'factory_girl'
 require 'database_cleaner'
@@ -13,7 +13,7 @@ require 'rspec/active_model/mocks'
 
 require 'capybara/poltergeist'
 
-if ENV["POLTERGEIST_DEBUG"]
+if ENV['POLTERGEIST_DEBUG']
   Capybara.register_driver :poltergeist_debug do |app|
     Capybara::Poltergeist::Driver.new(app, inspector: true, phantomjs_options: ['--load-images=no'])
   end
@@ -26,27 +26,24 @@ else
 end
 Capybara.default_wait_time = 10
 
-
-if ENV["COVERAGE"] or ENV["CI"]
+if ENV['COVERAGE'] || ENV['CI']
   require 'simplecov'
-  require 'coveralls' if ENV["CI"]
+  require 'coveralls' if ENV['CI']
 
-  SimpleCov.formatter = Coveralls::SimpleCov::Formatter if ENV["CI"]
+  SimpleCov.formatter = Coveralls::SimpleCov::Formatter if ENV['CI']
   SimpleCov.start do
-    add_filter "/spec/"
+    add_filter '/spec/'
   end
 end
 
 require 'spotlight'
 
+Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 
-Dir["./spec/support/**/*.rb"].sort.each {|f| require f}
-
-FactoryGirl.definition_file_paths = [File.expand_path("../factories", __FILE__)]
+FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
 FactoryGirl.find_definitions
 
-FIXTURES_PATH = File.expand_path("../fixtures", __FILE__);
-
+FIXTURES_PATH = File.expand_path('../fixtures', __FILE__)
 
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
@@ -69,9 +66,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  if ENV['CI']
-    config.filter_run_excluding js: true
-  end
+  config.filter_run_excluding js: true if ENV['CI']
 
   config.include Devise::TestHelpers, type: :controller
   config.include Devise::TestHelpers, type: :view
@@ -83,8 +78,8 @@ RSpec.configure do |config|
   config.include Spotlight::TestFeaturesHelpers, type: :feature
 end
 
-def add_new_page_via_button(title="New Page")
-  add_link = find("[data-expanded-add-button]")
+def add_new_page_via_button(title = 'New Page')
+  add_link = find('[data-expanded-add-button]')
   within(add_link) do
     expect(page).to have_css("input[type='text']", visible: false)
   end

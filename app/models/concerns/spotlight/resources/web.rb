@@ -1,35 +1,36 @@
 require 'nokogiri'
 
-module Spotlight::Resources
-  module Web
-    extend ActiveSupport::Concern
+module Spotlight
+  module Resources
+    ##
+    # Generic web resource harvester base module
+    module Web
+      extend ActiveSupport::Concern
 
-    included do
-      before_create do
-        harvest!
-      end
-    end
-
-    def harvest!
-      response = Spotlight::Resources::Web.fetch url
-      self.data[:headers] = response.headers
-      self.data[:body] = response.body
-    end
-
-    def body
-      if data[:body].blank?
-        harvest!
+      included do
+        before_create do
+          harvest!
+        end
       end
 
-      @body ||= Nokogiri::HTML.parse data[:body]
-    end
+      def harvest!
+        response = Spotlight::Resources::Web.fetch url
+        data[:headers] = response.headers
+        data[:body] = response.body
+      end
 
-    def self.fetch url
-      Faraday.new(url) do |b|
-        b.use FaradayMiddleware::FollowRedirects
-        b.adapter :net_http
-      end.get
-    end
+      def body
+        harvest! if data[:body].blank?
 
+        @body ||= Nokogiri::HTML.parse data[:body]
+      end
+
+      def self.fetch(url)
+        Faraday.new(url) do |b|
+          b.use FaradayMiddleware::FollowRedirects
+          b.adapter :net_http
+        end.get
+      end
+    end
   end
 end

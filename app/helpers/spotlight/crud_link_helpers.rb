@@ -1,70 +1,77 @@
 module Spotlight
+  ##
+  # Helpers for building polymorphic links within the exhibit context
   module CrudLinkHelpers
-    def cancel_link model, link, link_to_options = {}
+    def cancel_link(model, link, link_to_options = {})
       link_to action_default_value(model, :cancel), link, link_to_options
     end
 
-    def view_link model, *args
+    def view_link(model, *args)
       link_to_options = args.extract_options!
       link = args.first || [spotlight, model]
       link_to action_default_value(model, :view), link, link_to_options
     end
 
-    def exhibit_view_link model, *args
+    def exhibit_view_link(model, *args)
       link_to_options = args.extract_options!
       link = args.first || [spotlight, model.exhibit, model]
       link_to action_default_value(model, :view), link, link_to_options
     end
 
-    def create_link model, *args
+    def create_link(model, *args)
       link_to_options = args.extract_options!
       link = args.first || polymorphic_path([spotlight, model], action: :new)
       link_to action_default_value(model), link, link_to_options
     end
 
-    def exhibit_create_link model, *args
+    def exhibit_create_link(model, *args)
       link_to_options = args.extract_options!
       link = args.first || polymorphic_path([spotlight, current_exhibit, model], action: :new)
       link_to action_default_value(model), link, link_to_options
     end
 
-    def edit_link model, *args
+    def edit_link(model, *args)
       link_to_options = args.extract_options!
       link = args.first || polymorphic_path([spotlight, model], action: :edit)
       link_to action_default_value(model), link, link_to_options
     end
 
-    def exhibit_edit_link model, *args
+    def exhibit_edit_link(model, *args)
       link_to_options = args.extract_options!
       link = args.first || polymorphic_path([spotlight, model.exhibit, model], action: :edit)
       link_to action_default_value(model), link, link_to_options
     end
 
-    def delete_link model, *args
+    def delete_link(model, *args)
       link_to_options = args.extract_options!
       link = args.first || [spotlight, model]
       default_options = { method: :delete, data: { confirm: action_default_value(model, :destroy_are_you_sure) } }
       link_to action_default_value(model, :destroy), link, default_options.merge(link_to_options)
     end
 
-    def exhibit_delete_link model, *args
+    def exhibit_delete_link(model, *args)
       link_to_options = args.extract_options!
       link = args.first || [spotlight, model.exhibit, model]
       default_options = { method: :delete, data: { confirm: action_default_value(model, :destroy_are_you_sure) } }
       link_to action_default_value(model, :destroy), link, default_options.merge(link_to_options)
     end
 
-    def action_label model, action
+    def action_label(model, action)
       action_default_value model, action
     end
 
     private
 
-    def action_default_value object, key = nil
+    # rubocop:disable Metrics/MethodLength
+    def action_default_value(object, key = nil)
       object_model = convert_to_model(object)
 
-      key ||= object_model ? (object_model.persisted? ? :edit : :create) : :view
-      
+      key ||= if object_model
+                object_model.persisted? ? :edit : :create
+              else
+                :view
+              end
+
       case object_model
       when ActsAsTaggableOn::Tag
         model = :tag
@@ -83,5 +90,6 @@ module Spotlight
       defaults << "#{key.to_s.humanize} #{model}"
       I18n.t(defaults.shift, model: model, default: defaults)
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

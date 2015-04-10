@@ -1,4 +1,7 @@
 module Spotlight
+  ##
+  # After renaming an exhibit-specific field, we also
+  # need to update the sidecars that may contain that field
   class RenameSidecarFieldJob < ActiveJob::Base
     queue_as :default
 

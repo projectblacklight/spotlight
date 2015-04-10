@@ -1,15 +1,16 @@
 module Spotlight
+  ##
+  # CRUD actions for exhibit resources
   class ResourcesController < Spotlight::ApplicationController
-    before_filter :authenticate_user!, except: [:show]
+    before_action :authenticate_user!, except: [:show]
 
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
-    before_filter :build_resource, only: [:create]
+    before_action :build_resource, only: [:create]
 
     load_and_authorize_resource through: :exhibit
     helper_method :from_popup?
 
     def new
-
       @resource.attributes = resource_params if params[:resource]
       @resource = @resource.becomes_provider
 
@@ -21,13 +22,14 @@ module Spotlight
       end
     end
 
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def create
       @resource.attributes = resource_params
       @resource = @resource.becomes_provider
 
       if @resource.save_and_commit
         if from_popup?
-          render layout: false, text: "<html><script>window.close();</script></html>"
+          render layout: false, text: '<html><script>window.close();</script></html>'
         else
           redirect_to admin_exhibit_catalog_index_path(@resource.exhibit, sort: :timestamp)
         end
@@ -35,6 +37,7 @@ module Spotlight
         render action: 'new'
       end
     end
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
     def reindex_all
       @exhibit.reindex_later
@@ -43,6 +46,7 @@ module Spotlight
     end
 
     protected
+
     def resource_params
       params.require(:resource).permit(:url, data: params[:resource][:data].try(:keys))
     end

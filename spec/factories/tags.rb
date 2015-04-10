@@ -9,6 +9,3 @@ FactoryGirl.define do
     context :tags
   end
 end
-  
-
-

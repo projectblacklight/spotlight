@@ -1,9 +1,12 @@
 module Spotlight
+  ##
+  # CRUD actions for exhibit curator contacts (not to be confused with
+  # email addresses for receiving feedback messages, see {Spotlight::ExhibitsController})
   class ContactsController < Spotlight::ApplicationController
-    before_filter :authenticate_user!
-    load_and_authorize_resource :exhibit, class: "Spotlight::Exhibit"
+    before_action :authenticate_user!
+    load_and_authorize_resource :exhibit, class: 'Spotlight::Exhibit'
     load_and_authorize_resource through: :exhibit
-    before_filter :attach_breadcrumbs
+    before_action :attach_breadcrumbs
 
     def new
       add_breadcrumb t(:'helpers.action.spotlight/contact.create'), new_exhibit_contact_path(@exhibit)
@@ -43,7 +46,13 @@ module Spotlight
     end
 
     def contact_params
-      params.require(:contact).permit(:name, :avatar, :avatar_crop_x, :avatar_crop_y, :avatar_crop_w, :avatar_crop_h, contact_info: Spotlight::Contact.fields.keys)
+      params.require(:contact).permit(:name,
+                                      :avatar,
+                                      :avatar_crop_x,
+                                      :avatar_crop_y,
+                                      :avatar_crop_w,
+                                      :avatar_crop_h,
+                                      contact_info: Spotlight::Contact.fields.keys)
     end
   end
 end

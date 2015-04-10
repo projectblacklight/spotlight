@@ -1,4 +1,6 @@
 module Spotlight
+  ##
+  # Exhibit feedback contacts
   class ContactEmail < ActiveRecord::Base
     extend Devise::Models
     devise :confirmable
@@ -16,14 +18,16 @@ module Spotlight
       confirmation_sent_at > 3.days.ago if confirmation_sent_at?
     end
 
-    protected 
+    protected
 
     def valid_email
       begin
         parsed = Mail::Address.new(email)
       rescue Mail::Field::ParseError => e
+        Rails.logger.debug "Failed to parse email #{email}: #{e}"
       end
-      errors.add :email, "is not valid" unless !parsed.nil? && parsed.address == email && parsed.local != email #cannot be a local address
+
+      errors.add :email, 'is not valid' if parsed.nil? || parsed.address != email || parsed.local == email
     end
 
     def send_devise_notification(notification, *args)
@@ -38,6 +42,5 @@ module Spotlight
     def notification_mailer
       Spotlight::ConfirmationMailer
     end
-
   end
 end

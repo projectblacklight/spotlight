@@ -1,25 +1,29 @@
-module Spotlight::SolrDocument::AtomicUpdates
+module Spotlight
+  module SolrDocument
+    ##
+    # Solr indexing strategy using Solr's Atomic Updates
+    module AtomicUpdates
+      def reindex
+        data = hash_for_solr_update(to_solr)
 
-  def reindex
-    data = hash_for_solr_update(to_solr)
+        blacklight_solr.update params: { commitWithin: 500 }, data: data.to_json, headers: { 'Content-Type' => 'application/json' } unless data.empty?
+      end
 
-    blacklight_solr.update params: { commitWithin: 500 }, data: data.to_json, headers: { 'Content-Type' => 'application/json'} unless data.empty?
-  end
+      private
 
-  private
-  def hash_for_solr_update data
-    data = [data] unless data.is_a? Array
+      def hash_for_solr_update(data)
+        Array.wrap(data).map { |doc| convert_document_to_atomic_update_hash(doc) }.reject { |x| x.length <= 1 }
+      end
 
-    data.map do |doc|
-      Hash[doc.map do |k,v|
-        val = if k.to_sym == self.class.unique_key.to_sym
-          v
-        else
-          { set: v }
+      def convert_document_to_atomic_update_hash(doc)
+        doc.each_with_object({}) do |(k, v), hash|
+          hash[k] = if k.to_sym == self.class.unique_key.to_sym
+                      v
+                    else
+                      { set: v }
+                    end
         end
-
-        [k,val]
-      end]
-    end.reject { |x| x.length <= 1 }
+      end
+    end
   end
 end

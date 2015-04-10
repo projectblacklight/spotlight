@@ -1,17 +1,17 @@
 require 'spec_helper'
 require 'cancan/matchers'
 
-describe Spotlight::Ability, :type => :model do
+describe Spotlight::Ability, type: :model do
   before do
     allow_any_instance_of(Spotlight::Search).to receive(:default_featured_image)
   end
   let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:search) {FactoryGirl.create(:published_search, exhibit: exhibit)}
-  let(:unpublished_search) {FactoryGirl.create(:search, exhibit: exhibit)}
-  let(:page) {FactoryGirl.create(:feature_page, exhibit: exhibit)}
+  let(:search) { FactoryGirl.create(:published_search, exhibit: exhibit) }
+  let(:unpublished_search) { FactoryGirl.create(:search, exhibit: exhibit) }
+  let(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
   subject { Ability.new(user) }
 
-  describe "a user with no roles" do
+  describe 'a user with no roles' do
     let(:user) { nil }
     it { is_expected.not_to be_able_to(:create, exhibit) }
     it { is_expected.to be_able_to(:read, exhibit) }
@@ -22,33 +22,32 @@ describe Spotlight::Ability, :type => :model do
     it { is_expected.not_to be_able_to(:tag, exhibit) }
   end
 
-  describe "a superadmin" do
+  describe 'a superadmin' do
     let(:user) { FactoryGirl.create(:site_admin) }
 
-    it { is_expected.to be_able_to(:create,  Spotlight::Exhibit) }
-
+    it { is_expected.to be_able_to(:create, Spotlight::Exhibit) }
   end
 
-  describe "a user with admin role" do
+  describe 'a user with admin role' do
     let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
     let(:role) { FactoryGirl.create(:role, exhibit: exhibit) }
 
     it { is_expected.to be_able_to(:update, exhibit) }
 
-    it { is_expected.to be_able_to(:index,   role) }
+    it { is_expected.to be_able_to(:index, role) }
     it { is_expected.to be_able_to(:destroy, role) }
-    it { is_expected.to be_able_to(:update,  role) }
-    it { is_expected.to be_able_to(:create,  Spotlight::Role) }
-    it { is_expected.not_to be_able_to(:create,  Spotlight::Exhibit) }
-    it { is_expected.to be_able_to(:import,  exhibit) }
-    it { is_expected.to be_able_to(:process_import,  exhibit) }
-    it { is_expected.to be_able_to(:destroy,  exhibit) }
+    it { is_expected.to be_able_to(:update, role) }
+    it { is_expected.to be_able_to(:create, Spotlight::Role) }
+    it { is_expected.not_to be_able_to(:create, Spotlight::Exhibit) }
+    it { is_expected.to be_able_to(:import, exhibit) }
+    it { is_expected.to be_able_to(:process_import, exhibit) }
+    it { is_expected.to be_able_to(:destroy, exhibit) }
 
     let(:blacklight_config) { role.exhibit.blacklight_configuration }
     it { is_expected.to be_able_to(:edit, Spotlight::Appearance.new(blacklight_config)) }
   end
 
-  describe "a user with curate role" do
+  describe 'a user with curate role' do
     let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
 
     it { is_expected.not_to be_able_to(:update, exhibit) }

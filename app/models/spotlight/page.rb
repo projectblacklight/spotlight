@@ -1,19 +1,21 @@
 module Spotlight
+  ##
+  # Base page class. See {Spotlight::AboutPage}, {Spotlight::FeaturePage}, {Spotlight::HomePage}
   class Page < ActiveRecord::Base
     MAX_PAGES = 50
 
     extend FriendlyId
-    friendly_id :title, use: [:slugged,:scoped,:finders,:history], scope: :exhibit
+    friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: :exhibit
 
     belongs_to :exhibit, touch: true
-    belongs_to :created_by, class_name: "::User"
-    belongs_to :last_edited_by, class_name: "::User"
-    validates :weight, :inclusion => { :in => Proc.new{ 0..Spotlight::Page::MAX_PAGES } }
+    belongs_to :created_by, class_name: '::User'
+    belongs_to :last_edited_by, class_name: '::User'
+    validates :weight, inclusion: { in: proc { 0..Spotlight::Page::MAX_PAGES } }
 
-    default_scope { order("weight ASC") }
+    default_scope { order('weight ASC') }
     scope :at_top_level, -> { where(parent_page_id: nil) }
     scope :published, -> { where(published: true) }
-    scope :recent, -> { order("updated_at DESC").limit(10)}
+    scope :recent, -> { order('updated_at DESC').limit(10) }
 
     has_one :lock, as: :on, dependent: :destroy
     sir_trevor_content :content
@@ -29,7 +31,7 @@ module Spotlight
       @content = nil
     end
 
-    def content= content
+    def content=(content)
       if content.is_a? Array
         super content.to_json
       else
@@ -38,9 +40,10 @@ module Spotlight
       content_changed!
     end
 
-    def has_content?
-      read_attribute(:content).present? and content.present?
+    def content?
+      self[:content].present? && content.present?
     end
+    alias_method :has_content?, :content?
 
     def display_sidebar?
       true
@@ -50,10 +53,10 @@ module Spotlight
       nil
     end
 
-    # explicitly set the partial path so that 
+    # explicitly set the partial path so that
     # we don't have to duplicate view logic.
     def to_partial_path
-      "spotlight/pages/page"
+      'spotlight/pages/page'
     end
 
     def feature_page?
@@ -80,11 +83,8 @@ module Spotlight
       title.present?
     end
 
-    def lock! user
-      unless lock.present?
-        create_lock(by: user)
-        lock.current_session!
-      end
+    def lock!(user)
+      create_lock(by: user).tap(&:current_session!) unless lock.present?
     end
   end
 end

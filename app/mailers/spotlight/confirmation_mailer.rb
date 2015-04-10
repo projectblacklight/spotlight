@@ -1,4 +1,6 @@
 module Spotlight
+  ##
+  # Confirm new devise users
   class ConfirmationMailer < ActionMailer::Base
     include Devise::Mailers::Helpers
 

@@ -1,4 +1,6 @@
 module Spotlight
+  ##
+  # JCrop options helpers
   module JcropHelper
     def default_masthead_jcrop_options
       {

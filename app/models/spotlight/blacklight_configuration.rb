@@ -1,6 +1,9 @@
 require 'blacklight/utils'
 
 module Spotlight
+  ##
+  # Exhibit-specific blacklight configuration model
+  # rubocop:disable Metrics/ClassLength
   class BlacklightConfiguration < ActiveRecord::Base
     belongs_to :exhibit, touch: true
     serialize :facet_fields, Hash
@@ -17,30 +20,28 @@ module Spotlight
 
     # get rid of empty values
     before_validation do |model|
-
-      model.index_fields.each do |k,v|
-        v[:enabled] ||= v.any? { |k1, v1| !v1.blank? }
+      model.index_fields.each do |_k, v|
+        v[:enabled] ||= v.any? { |_k1, v1| !v1.blank? }
 
         default_blacklight_config.view.keys.each do |view|
           v[view] &&= value_to_boolean(v[view])
         end
 
         v[:show] &&= value_to_boolean(v[:show])
-
-        v.reject! { |k, v1| v1.blank? and !v1 === false }
+        v.reject! { |_k, v1| v1.blank? && v1 != false }
       end if model.index_fields
 
-      model.facet_fields.each do |k,v|
+      model.facet_fields.each do |_k, v|
         v[:show] &&= value_to_boolean(v[:show])
         v[:show] ||= true if v[:show].nil?
-        v.reject! { |k, v1| v1.blank? and !v1 === false }
+        v.reject! { |_k, v1| v1.blank? && v1 != false }
       end if model.facet_fields
 
-      model.sort_fields.each do |k,v|
+      model.sort_fields.each do |k, v|
         v[:enabled] &&= value_to_boolean(v[:enabled])
         v[:enabled] ||= true if v[:enabled].nil?
-        v[:label] = default_blacklight_config.sort_fields[k][:label] unless v[:label].present?
-        v.reject! { |k, v1| v1.blank? and !v1 === false }
+        v[:label] = default_blacklight_config.sort_fields[k][:label] if default_blacklight_config.sort_fields[k] && !v[:label].present?
+        v.reject! { |_k, v1| v1.blank? && v1 != false }
       end if model.sort_fields
 
       model.per_page.reject!(&:blank?) if model.per_page
@@ -48,10 +49,11 @@ module Spotlight
     end
 
     ##
-    # Serialize this configuration to a Blacklight::Configuration object 
+    # Serialize this configuration to a Blacklight::Configuration object
     # appropriate to the current view. If a value isn't set in this record,
     # it will use the configuration set upstream (in default_blacklight_config)
     # @param [String] view the configuration may be different depending on the index view selected
+    # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def blacklight_config
       @blacklight_config ||= begin
         # Create a new config based on the defaults
@@ -73,17 +75,15 @@ module Spotlight
 
         config.view.embed.partials ||= ['openseadragon']
         config.view.embed.if = false
-        config.view.embed.locals ||= { osd_container_class: "" }
-
+        config.view.embed.locals ||= { osd_container_class: '' }
 
         # Add any custom fields
         config.index_fields.merge! custom_index_fields
-        config.index_fields = Hash[config.index_fields.sort_by { |k,v| field_weight(index_fields, k) }]
-        config.index_fields.reject! { |k,v| v.if == false }
+        config.index_fields = Hash[config.index_fields.sort_by { |k, _v| field_weight(index_fields, k) }]
+        config.index_fields.reject! { |_k, v| v.if == false }
 
         # Update with customizations
         config.index_fields.each do |k, v|
-
           if index_fields[k]
             v.merge! index_fields[k].symbolize_keys
           elsif custom_index_fields[k]
@@ -98,10 +98,9 @@ module Spotlight
           v.validate!
         end
 
-        
-        config.show_fields.reject! { |k,v| v.if == false }
+        config.show_fields.reject! { |_k, v| v.if == false }
 
-        config.show_fields.reject { |k,v| config.index_fields[k] }.each do |k,v|
+        config.show_fields.reject { |k, _v| config.index_fields[k] }.each do |k, v|
           config.index_fields[k] = v
 
           if index_fields[k]
@@ -116,11 +115,11 @@ module Spotlight
           v.normalize! config
           v.validate!
         end
-        
+
         config.show_fields = config.index_fields
 
         unless sort_fields.blank?
-          config.sort_fields = Hash[config.sort_fields.sort_by { |k,v| field_weight(sort_fields, k) }]
+          config.sort_fields = Hash[config.sort_fields.sort_by { |k, _v| field_weight(sort_fields, k) }]
 
           config.sort_fields.each do |k, v|
             v.upstream_if = v.if unless v.if.nil?
@@ -132,10 +131,10 @@ module Spotlight
             v.validate!
           end
         end
-        
+
         config.facet_fields.merge! custom_facet_fields
         unless facet_fields.blank?
-          config.facet_fields = Hash[config.facet_fields.sort_by { |k,v| field_weight(facet_fields, k) }]
+          config.facet_fields = Hash[config.facet_fields.sort_by { |k, _v| field_weight(facet_fields, k) }]
 
           config.facet_fields.each do |k, v|
             next if facet_fields[k].blank?
@@ -150,13 +149,13 @@ module Spotlight
         end
 
         config.per_page = (config.per_page & per_page) unless per_page.blank?
-        
+
         if default_per_page
           config.per_page.delete(default_per_page)
           config.per_page.unshift(default_per_page)
         end
 
-        config.view.each do |k,v|
+        config.view.each do |k, v|
           v.key = k
           v.upstream_if = v.if unless v.if.nil?
           v.if = :enabled_in_spotlight_view_type_configuration?
@@ -165,18 +164,19 @@ module Spotlight
         config
       end
     end
+    # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize
 
     def custom_index_fields
-      Hash[exhibit.custom_fields.map do |x| 
+      Hash[exhibit.custom_fields.map do |x|
         field = Blacklight::Configuration::IndexField.new x.configuration.merge(field: x.field)
-        [x.field, field] 
+        [x.field, field]
       end]
     end
 
     def custom_facet_fields
-      Hash[exhibit.custom_fields.vocab.map do |x| 
+      Hash[exhibit.custom_fields.vocab.map do |x|
         field = Blacklight::Configuration::FacetField.new x.configuration.merge(field: x.field, show: false)
-        [x.field, field] 
+        [x.field, field]
       end]
     end
 
@@ -191,30 +191,56 @@ module Spotlight
     end
 
     protected
-    def add_exhibit_specific_fields config
-      config.add_show_field :exhibit_tags, field: Spotlight::SolrDocument.solr_field_for_tagger(exhibit), link_to_search: true unless config.show_fields.include? :exhibit_tags
-      config.add_facet_field :exhibit_tags, field: Spotlight::SolrDocument.solr_field_for_tagger(exhibit) unless config.facet_fields.include? :exhibit_tags
 
+    def add_exhibit_specific_fields(config)
+      add_exhibit_tags_fields(config)
+      add_uploaded_resource_fields(config)
+      add_autocomplete_field(config)
+    end
+
+    def add_exhibit_tags_fields(config)
+      # rubocop:disable Style/GuardClause
+      unless config.show_fields.include? :exhibit_tags
+        config.add_show_field :exhibit_tags, field: Spotlight::SolrDocument.solr_field_for_tagger(exhibit), link_to_search: true
+      end
+
+      unless config.facet_fields.include? :exhibit_tags
+        config.add_facet_field :exhibit_tags, field: Spotlight::SolrDocument.solr_field_for_tagger(exhibit)
+      end
+      # rubocop:enable Style/GuardClause
+    end
+
+    def add_uploaded_resource_fields(config)
       exhibit.uploaded_resource_fields.each do |f|
-        key = Array(f.solr_field || f.field_name).first.to_s
-
-        unless config.index_fields.any? { |k,v| v.field == key }
-          options = {}
-          options.merge! f.blacklight_options if f.blacklight_options
-          options[:label] = f.label if f.label
-
-          config.add_index_field key, options
-        end
+        add_uploaded_resource_field(config, f)
       end
+    end
 
-      if Spotlight::Engine.config.autocomplete_search_field and !config.search_fields[Spotlight::Engine.config.autocomplete_search_field]
-        config.add_search_field(Spotlight::Engine.config.autocomplete_search_field) do |field|
-          field.include_in_simple_select = false
-          field.solr_parameters = Spotlight::Engine.config.default_autocomplete_params.deep_dup
-          field.solr_parameters[:fl] ||= ""
-          field.solr_parameters[:fl] += " #{config.document_model.unique_key} #{config.view_config(:show).title_field} #{spotlight_image_version_fields.join(' ')}"
-        end
+    def add_uploaded_resource_field(config, f)
+      key = Array(f.solr_field || f.field_name).first.to_s
+
+      return if config.index_fields.any? { |_k, v| v.field == key }
+
+      options = f.blacklight_options || {}
+      options[:label] = f.label if f.label
+
+      config.add_index_field key, options
+    end
+
+    # rubocop:disable Metrics/AbcSize
+    def add_autocomplete_field(config)
+      return unless Spotlight::Engine.config.autocomplete_search_field && !config.search_fields[Spotlight::Engine.config.autocomplete_search_field]
+
+      config.add_search_field(Spotlight::Engine.config.autocomplete_search_field) do |field|
+        field.include_in_simple_select = false
+        field.solr_parameters = Spotlight::Engine.config.default_autocomplete_params.deep_dup
+        field.solr_parameters[:fl] ||= default_autocomplete_field_list(config)
       end
+    end
+    # rubocop:enable Metrics/AbcSize
+
+    def default_autocomplete_field_list(config)
+      "#{config.document_model.unique_key} #{config.view_config(:show).title_field} #{spotlight_image_version_fields.join(' ')}"
     end
 
     def spotlight_image_version_fields
@@ -223,37 +249,38 @@ module Spotlight
       end
     end
 
-    def set_index_field_defaults field
-      if index_fields.blank?
-        views = default_blacklight_config.view.keys | [:show, :enabled]
-        field.merge! Hash[views.map { |v| [v, true] }]
-      end
+    # rubocop:disable Style/AccessorMethodName
+    def set_index_field_defaults(field)
+      return unless index_fields.blank?
+
+      views = default_blacklight_config.view.keys | [:show, :enabled]
+      field.merge! Hash[views.map { |v| [v, true] }]
     end
 
-    def set_show_field_defaults field
-      if index_fields.blank?
-        views = default_blacklight_config.view.keys
-        field.merge! Hash[views.map { |v| [v, false] }]
-        field.enabled = true
-        field.show = true
-      end
+    def set_show_field_defaults(field)
+      return unless index_fields.blank?
+      views = default_blacklight_config.view.keys
+      field.merge! Hash[views.map { |v| [v, false] }]
+      field.enabled = true
+      field.show = true
     end
 
-    def set_custom_field_defaults field
+    def set_custom_field_defaults(field)
       field.show = true
       field.enabled = true
     end
+    # rubocop:enable Style/AccessorMethodName
 
     # @return [Integer] the weight (sort order) for this field
-    def field_weight fields, index
-      if fields[index] and fields[index][:weight]
+    def field_weight(fields, index)
+      if fields[index] && fields[index][:weight]
         fields[index][:weight].to_i
       else
         100 + (fields.keys.index(index) || fields.keys.length)
       end
     end
 
-    def value_to_boolean v
+    def value_to_boolean(v)
       if defined? ActiveRecord::Type
         # Rails 4.2+
         ActiveRecord::Type::Boolean.new.type_cast_from_database v

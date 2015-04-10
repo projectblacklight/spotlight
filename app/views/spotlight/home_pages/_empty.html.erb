@@ -26,7 +26,7 @@
       <% end %>
 
       <% if can? :update, current_exhibit.blacklight_configuration %>
-        <li>Use the other Curation pages, such as <%= link_to "Curation > Metadata", exhibit_edit_metadata_path(current_exhibit) %> and <%= link_to "Curation > Search Facets", exhibit_edit_facets_path(current_exhibit) %>, to customize the way various features are presented to exhibit visitors.</li>
+        <li>Use the other Curation pages, such as <%= link_to "Curation > Metadata", edit_exhibit_metadata_configuration_path(current_exhibit) %> and <%= link_to "Curation > Search Facets", edit_exhibit_facet_configuration_path(current_exhibit) %>, to customize the way various features are presented to exhibit visitors.</li>
       <% end %>
 
       <li>Visit the Spotlight <%= link_to "documentation pages", "https://github.com/sul-dlss/spotlight/wiki" %> to learn how to add and edit feature pages, about pages, custom browse categories, and more.</li>

@@ -1,4 +1,6 @@
 module Spotlight
+  ##
+  # Exhibit-specific metadata for indexed documents
   class SolrDocumentSidecar < ActiveRecord::Base
     belongs_to :exhibit
     belongs_to :document, polymorphic: true
@@ -42,26 +44,26 @@ module Spotlight
     end
 
     def data_to_solr
-      data.except("configured_fields").merge(configured_fields_data_to_solr)
+      data.except('configured_fields').merge(configured_fields_data_to_solr)
     end
 
     def configured_fields_data_to_solr
-      solr_hash = {}
-      if data["configured_fields"]
-        configured_fields = Spotlight::Resources::Upload.fields(exhibit)
+      configured_fields = data.fetch('configured_fields', {})
 
-        configured_fields.each do |field|
-          solr_fields = Array(field.solr_field || field.field_name)
-          if data["configured_fields"][field.field_name.to_s].present?
-            solr_fields.each do |solr_field|
-              solr_hash[solr_field] = data["configured_fields"][field.field_name.to_s]
-            end
-          end
+      upload_fields.each_with_object({}) do |field, solr_hash|
+        field_name = field.field_name.to_s
+        next unless configured_fields && configured_fields[field_name].present?
+
+        solr_fields = Array(field.solr_field || field.field_name)
+
+        solr_fields.each do |solr_field|
+          solr_hash[solr_field] = configured_fields[field_name]
         end
       end
-
-      solr_hash.select { |k,v| v.present? }
     end
 
+    def upload_fields
+      Spotlight::Resources::Upload.fields(exhibit)
+    end
   end
 end

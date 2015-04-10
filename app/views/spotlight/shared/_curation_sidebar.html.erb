@@ -10,9 +10,9 @@
     <li><%= link_to t(:'spotlight.curation.sidebar.tags'), spotlight.exhibit_tags_path(current_exhibit) %></li>
     <% end %>
     <% if can? :update, current_exhibit.blacklight_configuration %>
-    <li><%= link_to t(:'spotlight.curation.sidebar.metadata'), spotlight.exhibit_edit_metadata_path(current_exhibit) %></li>
-    <li><%= link_to t(:'spotlight.curation.sidebar.search_facets'), spotlight.exhibit_edit_facets_path(current_exhibit) %></li>
-    <li><%= link_to t(:'spotlight.curation.sidebar.sort_fields'), spotlight.exhibit_edit_sort_fields_path(current_exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.metadata'), spotlight.edit_exhibit_metadata_configuration_path(current_exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.search_facets'), spotlight.edit_exhibit_facet_configuration_path(current_exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.sort_fields'), spotlight.edit_exhibit_sort_configuration_path(current_exhibit) %></li>
     <% end %>
     <% if can? :manage, Spotlight::Search.new(exhibit: current_exhibit) %>
     <li><%= link_to t(:'spotlight.curation.sidebar.browse'), spotlight.exhibit_searches_path(current_exhibit) %></li>

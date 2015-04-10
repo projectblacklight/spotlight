@@ -1,27 +1,27 @@
 require 'rails/generators'
 
 class TestAppGenerator < Rails::Generators::Base
-  source_root "../../spec/test_app_templates"
+  source_root '../../spec/test_app_templates'
 
   def add_gems
-    gem 'blacklight', ">= 5.4.0.rc1", "<6"
-    gem "blacklight-gallery", ">= 0.3.0"
-    gem "sir_trevor_rails", github: "sul-dlss/sir-trevor-rails"
-    gem "jettywrapper"
+    gem 'blacklight', '>= 5.4.0.rc1', '<6'
+    gem 'blacklight-gallery', '>= 0.3.0'
+    gem 'sir_trevor_rails', github: 'sul-dlss/sir-trevor-rails'
+    gem 'jettywrapper'
     Bundler.with_clean_env do
-      run "bundle install"
+      run 'bundle install'
     end
   end
 
   def run_blacklight_generator
-    say_status("warning", "GENERATING BL", :yellow)
+    say_status('warning', 'GENERATING BL', :yellow)
 
     generate 'blacklight:install', '--devise'
   end
 
   def run_spotlight_migrations
-    rake "spotlight:install:migrations"
-    rake "db:migrate"
+    rake 'spotlight:install:migrations'
+    rake 'db:migrate'
   end
 
   def add_spotlight_routes_and_assets
@@ -29,7 +29,7 @@ class TestAppGenerator < Rails::Generators::Base
   end
 
   def install_test_catalog_controller
-    copy_file "catalog_controller.rb", "app/controllers/catalog_controller.rb", force: true
+    copy_file 'catalog_controller.rb', 'app/controllers/catalog_controller.rb', force: true
   end
 
   def add_rake_tasks_to_app
@@ -37,12 +37,12 @@ class TestAppGenerator < Rails::Generators::Base
   end
 
   def disable_carrierwave_processing
-    copy_file "carrierwave.rb", "config/initializers/carrierwave.rb"
+    copy_file 'carrierwave.rb', 'config/initializers/carrierwave.rb'
   end
 
   def disable_filter_resources_by_exhibit
-    initializer "disable_filter_resources_by_exhibit.rb" do
-      <<-EOF    
+    initializer 'disable_filter_resources_by_exhibit.rb' do
+      <<-EOF
       # Setting this to false when running tests so that we don't have to set up
       # exhibit specific solr documents for tests that don't use the default exhibit.
       Spotlight::Engine.config.filter_resources_by_exhibit = false

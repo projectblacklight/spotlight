@@ -1,25 +1,25 @@
-require "spec_helper"
+require 'spec_helper'
 
-feature "Feature Pages Adminstration", js:  true do
+feature 'Feature Pages Adminstration', js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-  let!(:page1) {
+  let!(:page1) do
     FactoryGirl.create(
       :feature_page,
-      title: "FeaturePage1",
+      title: 'FeaturePage1',
       exhibit: exhibit
     )
-  }
-  let!(:page2) {
+  end
+  let!(:page2) do
     FactoryGirl.create(
       :feature_page,
-      title: "FeaturePage2",
+      title: 'FeaturePage2',
       exhibit: exhibit,
       display_sidebar: true
     )
-  }
+  end
   before { login_as exhibit_curator }
-  it "should be able to create new pages" do
+  it 'is able to create new pages' do
     login_as exhibit_curator
 
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
@@ -29,16 +29,16 @@ feature "Feature Pages Adminstration", js:  true do
       click_link 'Dashboard'
     end
 
-    click_link "Feature pages"
+    click_link 'Feature pages'
 
-    add_new_page_via_button("My New Page")
+    add_new_page_via_button('My New Page')
 
-    expect(page).to have_content "The feature page was created."
-    expect(page).to have_css("li.dd-item")
-    expect(page).to have_css("h3", text: "My New Page")
+    expect(page).to have_content 'The feature page was created.'
+    expect(page).to have_css('li.dd-item')
+    expect(page).to have_css('h3', text: 'My New Page')
   end
 
-  it "should update the page titles" do
+  it 'updates the page titles' do
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
 
@@ -46,91 +46,91 @@ feature "Feature Pages Adminstration", js:  true do
       click_link 'Dashboard'
     end
 
-    click_link "Feature pages"
+    click_link 'Feature pages'
     within("[data-id='#{page1.id}']") do
-      within("h3") do
-        expect(page).to have_content("FeaturePage1")
-        expect(page).to have_css("input", visible: false)
-        click_link("FeaturePage1")
-        expect(page).to have_css("input", visible: true)
-        find("input").set("NewFeaturePage1")
+      within('h3') do
+        expect(page).to have_content('FeaturePage1')
+        expect(page).to have_css('input', visible: false)
+        click_link('FeaturePage1')
+        expect(page).to have_css('input', visible: true)
+        find('input').set('NewFeaturePage1')
       end
     end
-    click_button("Save changes")
+    click_button('Save changes')
     within("[data-id='#{page1.id}']") do
-      within("h3") do
-        expect(page).to have_content("NewFeaturePage1")
+      within('h3') do
+        expect(page).to have_content('NewFeaturePage1')
       end
     end
   end
 
-  it "should stay in curation mode if a user has unsaved data" do
+  it 'stays in curation mode if a user has unsaved data' do
     visit spotlight.edit_exhibit_feature_page_path(page1.exhibit, page1)
 
-    fill_in("Title", with: "Some Fancy Title")
-    click_link "Cancel"
-    expect(page).not_to have_selector 'a', text: "Edit"
+    fill_in('Title', with: 'Some Fancy Title')
+    click_link 'Cancel'
+    expect(page).not_to have_selector 'a', text: 'Edit'
   end
 
-  it "should stay in curation mode if a user has unsaved contenteditable data" do
+  it 'stays in curation mode if a user has unsaved contenteditable data' do
     visit spotlight.edit_exhibit_feature_page_path(page1.exhibit, page1)
 
     add_widget 'solr_documents'
-    content_editable = find(".st-text-block")
-    content_editable.set("Some Fancy Text.")
+    content_editable = find('.st-text-block')
+    content_editable.set('Some Fancy Text.')
 
-    click_link "Cancel"
-    expect(page).not_to have_selector 'a', text: "Edit"
+    click_link 'Cancel'
+    expect(page).not_to have_selector 'a', text: 'Edit'
   end
 
-  it "should not update the pages list when the user has unsaved changes" do
+  it 'does not update the pages list when the user has unsaved changes' do
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
     within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
 
-    click_link "Feature pages"
+    click_link 'Feature pages'
     within("[data-id='#{page1.id}']") do
-      within("h3") do
-        expect(page).to have_content("FeaturePage1")
-        expect(page).to have_css("input", visible: false)
-        click_link("FeaturePage1")
-        expect(page).to have_css("input", visible: true)
-        find("input").set("NewFancyTitle")
+      within('h3') do
+        expect(page).to have_content('FeaturePage1')
+        expect(page).to have_css('input', visible: false)
+        click_link('FeaturePage1')
+        expect(page).to have_css('input', visible: true)
+        find('input').set('NewFancyTitle')
       end
     end
     within '#exhibit-navbar' do
-      click_link "Home"
+      click_link 'Home'
     end
-    expect(page).not_to have_content("Feature pages were successfully updated.")
-    expect(page).to have_css("h1 small", text: "Feature Pages")
+    expect(page).not_to have_content('Feature pages were successfully updated.')
+    expect(page).to have_css('h1 small', text: 'Feature Pages')
   end
 
-  it "should be able to update home page titles" do
+  it 'is able to update home page titles' do
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link exhibit_curator.email
     within '#user-util-collapse .dropdown' do
       click_link 'Dashboard'
     end
 
-    click_link "Feature pages"
+    click_link 'Feature pages'
 
-    within(".home_page") do
-      within("h3.panel-title") do
+    within('.home_page') do
+      within('h3.panel-title') do
         expect(page).to have_content(exhibit.home_page.title)
-        expect(page).to have_css("input", visible: false)
+        expect(page).to have_css('input', visible: false)
         click_link(exhibit.home_page.title)
-        expect(page).to have_css("input", visible: true)
-        find("input").set("New Home Page Title")
+        expect(page).to have_css('input', visible: true)
+        find('input').set('New Home Page Title')
       end
     end
-    
-    click_button("Save changes")
-    
-    within(".home_page") do
-      within("h3.panel-title") do
-        expect(page).to have_content("New Home Page Title")
+
+    click_button('Save changes')
+
+    within('.home_page') do
+      within('h3.panel-title') do
+        expect(page).to have_content('New Home Page Title')
       end
     end
   end

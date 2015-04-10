@@ -1,4 +1,6 @@
 module Spotlight
+  ##
+  # Exhibit appearance form presenter
   class Appearance
     extend ActiveModel::Naming
     extend ActiveModel::Translation
@@ -10,7 +12,7 @@ module Spotlight
 
     attr_reader :configuration
     delegate :persisted?, :exhibit, :exhibit_id, :default_per_page,
-      :default_blacklight_config, to: :configuration
+             :default_blacklight_config, to: :configuration
 
     delegate :main_navigations, :searchable, to: :exhibit
 
@@ -33,7 +35,7 @@ module Spotlight
     end
 
     def view_type_options
-      default_blacklight_config.view.select { |k,v| v.if != false }.keys
+      default_blacklight_config.view.select { |_k, v| v.if != false }.keys
     end
 
     def per_page_options
@@ -57,18 +59,18 @@ module Spotlight
     end
 
     def exhibit_params(params)
-      p = {searchable: params[:searchable]}
-      if main_nav_attributes = params[:main_navigations].try(:values)
-        p[:main_navigations_attributes] = main_nav_attributes
-      end
+      p = { searchable: params[:searchable] }
 
-      if masthead_attributes = params[:masthead]
-        p[:masthead_attributes] = masthead_attributes if configuration.exhibit.masthead.present? or masthead_attributes["image"].present? or masthead_attributes["remote_image_url"].present?
-      end
-      
-      if thumbnail_attributes = params[:thumbnail]
-        p[:thumbnail_attributes] = thumbnail_attributes if configuration.exhibit.thumbnail.present? or thumbnail_attributes["image"].present? or thumbnail_attributes["remote_image_url"].present?
-      end
+      main_nav_attributes = params[:main_navigations].try(:values)
+      masthead_attributes = params[:masthead]
+      thumbnail_attributes = params[:thumbnail]
+
+      p[:main_navigations_attributes] = main_nav_attributes if main_nav_attributes
+
+      p[:masthead_attributes] = masthead_attributes if masthead_attributes && masthead_changed?(masthead_attributes)
+
+      p[:thumbnail_attributes] = thumbnail_attributes if thumbnail_attributes && thumbnail_changed?(thumbnail_attributes)
+
       p
     end
 
@@ -78,9 +80,19 @@ module Spotlight
     # where, "list" and "gallery" are selected and "map" is not. This function
     # digests that hash into a list of selected values. e.g.:
     #   ["list", "gallery"]
-    def keep_selected_values h
+    def keep_selected_values(h)
       return if h.nil?
-      h.each_with_object([]) { |(k, v), o| o << k if v.include?("1")}
+      h.each_with_object([]) { |(k, v), o| o << k if v.include?('1') }
+    end
+
+    private
+
+    def masthead_changed?(masthead_attributes)
+      configuration.exhibit.masthead.present? || masthead_attributes['image'].present? || masthead_attributes['remote_image_url'].present?
+    end
+
+    def thumbnail_changed?(thumbnail_attributes)
+      configuration.exhibit.thumbnail.present? || thumbnail_attributes['image'].present? || thumbnail_attributes['remote_image_url'].present?
     end
   end
 end

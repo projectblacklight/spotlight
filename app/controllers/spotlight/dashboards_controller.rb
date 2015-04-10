@@ -1,22 +1,26 @@
 module Spotlight
+  ##
+  # Exhibit dashboard controller
   class DashboardsController < Spotlight::ApplicationController
-    before_filter :authenticate_user!
+    before_action :authenticate_user!
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
     include Spotlight::Base
     include Spotlight::Catalog::AccessControlsEnforcement
+
+    before_action only: [:show] do
+      blacklight_config.view.reject! { |_k, _v| true }
+      blacklight_config.view.admin_table.partials = ['index_compact']
+      blacklight_config.view.admin_table.document_actions = []
+    end
 
     def show
       authorize! :curate, @exhibit
 
       @pages = @exhibit.pages.recent.limit(5)
       @solr_documents = load_recent_solr_documents 5
-      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.curation.sidebar.dashboard'), exhibit_dashboard_path(@exhibit)
 
-      self.blacklight_config.view.reject! { |k,v| true }
-      self.blacklight_config.view.admin_table.partials = ['index_compact']
-      self.blacklight_config.view.admin_table.document_actions = []
+      attach_dashboard_breadcrumbs
     end
 
     def _prefixes
@@ -25,7 +29,12 @@ module Spotlight
 
     protected
 
-    def load_recent_solr_documents count
+    def attach_dashboard_breadcrumbs
+      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
+      add_breadcrumb t(:'spotlight.curation.sidebar.dashboard'), exhibit_dashboard_path(@exhibit)
+    end
+
+    def load_recent_solr_documents(count)
       solr_params = { sort: "#{blacklight_config.index.timestamp_field} desc" }
       @response, docs = get_search_results(solr_params)
       docs.take(count)
