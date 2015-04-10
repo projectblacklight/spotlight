@@ -21,7 +21,7 @@ module Spotlight
       blacklight_config.index.document_actions = blacklight_config.browse.document_actions
 
       add_breadcrumb @search.title, exhibit_browse_path(@exhibit, @search)
-      (@response, @document_list) = get_search_results @search.query_params.with_indifferent_access.merge(params)
+      (@response, @document_list) = search_results(@search.query_params.with_indifferent_access.merge(params), search_params_logic)
     end
 
     protected

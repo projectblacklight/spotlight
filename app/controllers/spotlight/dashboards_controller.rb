@@ -36,7 +36,7 @@ module Spotlight
 
     def load_recent_solr_documents(count)
       solr_params = { sort: "#{blacklight_config.index.timestamp_field} desc" }
-      @response, docs = get_search_results(solr_params)
+      @response, docs = search_results(solr_params, search_params_logic)
       docs.take(count)
     end
   end

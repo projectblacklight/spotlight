@@ -16,7 +16,7 @@ describe Spotlight::DashboardsController, type: :controller do
       it 'loads the exhibit' do
         exhibit.blacklight_configuration.index = { timestamp_field: 'timestamp_field' }
         exhibit.save!
-        expect(controller).to receive(:get_search_results).with(sort: 'timestamp_field desc').and_return([double(:response), [{ id: 1 }]])
+        expect(controller).to receive(:search_results).with({ sort: 'timestamp_field desc' }, kind_of(Array)).and_return([double(:response), [{ id: 1 }]])
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Dashboard', exhibit_dashboard_path(exhibit))
         get :show, exhibit_id: exhibit.id

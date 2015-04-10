@@ -59,6 +59,8 @@ module Spotlight
         # Create a new config based on the defaults
         config = default_blacklight_config.inheritable_copy
 
+        config.search_builder_class.send(:include, Spotlight::Catalog::AccessControlsEnforcement::SearchBuilder)
+
         config.show.merge! show unless show.blank?
         config.index.merge! index unless index.blank?
 

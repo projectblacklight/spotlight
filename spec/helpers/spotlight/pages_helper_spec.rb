@@ -44,7 +44,8 @@ module Spotlight
       let(:search_result) { [double('response'), double('documents')] }
 
       it 'returns the results for a given search browse category' do
-        expect(helper).to receive(:get_search_results).with('q' => 'query').and_return(search_result)
+        allow(helper).to receive(:search_params_logic).and_return([])
+        expect(helper).to receive(:search_results).with({ 'q' => 'query' }, []).and_return(search_result)
         expect(helper.get_search_widget_search_results(good)).to eq search_result
       end
       it "returns an empty array when requesting a search that doesn't exist" do
