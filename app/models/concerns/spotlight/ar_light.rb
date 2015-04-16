@@ -53,6 +53,10 @@ module Spotlight
           mod
         end
       end
+
+      def validators_on(*_)
+        []
+      end
     end
 
     def initialize(source_doc = {}, solr_response = nil)

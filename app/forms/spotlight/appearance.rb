@@ -16,6 +16,10 @@ module Spotlight
 
     delegate :main_navigations, :searchable, to: :exhibit
 
+    def self.validators_on(*args)
+      Spotlight::Exhibit.validators_on(*args)
+    end
+
     ##
     # This enables us to have a group of checkboxes that is backed by the array
     # stored in Spotlight::BlacklightConfiguration#document_index_view_types

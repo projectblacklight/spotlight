@@ -28,7 +28,7 @@ module Spotlight
     end
 
     def count
-      query_solr(query_params, rows: 0, facet: false)['response']['numFound']
+      repository.search(search_builder.with(query_params).rows(0).merge(facet: false))['response']['numFound']
     end
 
     def images
@@ -58,15 +58,21 @@ module Spotlight
     private
 
     def solr_response
-      @solr_response ||= query_solr(query_params,
-                                    rows: 1000,
-                                    fl: [
-                                      blacklight_config.document_model.unique_key,
-                                      blacklight_config.index.title_field,
-                                      blacklight_config.index.thumbnail_field,
-                                      Spotlight::Engine.config.full_image_field
-                                    ],
-                                    facet: false)
+      @solr_response ||= repository.search(
+        search_builder.with(query_params).rows(1000).merge(
+          facet: false,
+          fl: default_search_fields
+        )
+      )
+    end
+
+    def default_search_fields
+      [
+        blacklight_config.document_model.unique_key,
+        blacklight_config.index.title_field,
+        blacklight_config.index.thumbnail_field,
+        Spotlight::Engine.config.full_image_field
+      ]
     end
 
     def should_generate_new_friendly_id?

@@ -43,7 +43,7 @@ describe Spotlight::BrowseController, type: :controller do
       let(:mock_response) { double }
       let(:document_list) { double }
       before do
-        allow(controller).to receive_messages(get_search_results: [mock_response, document_list])
+        allow(controller).to receive_messages(search_results: [mock_response, document_list])
       end
       it 'shows the items in the category' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)

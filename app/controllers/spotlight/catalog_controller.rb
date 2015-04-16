@@ -26,11 +26,9 @@ module Spotlight
       blacklight_config.view.admin_table.partials = [:index_compact]
       blacklight_config.view.admin_table.document_actions = []
 
-      # rubocop:disable Style/DeprecatedHashMethods
-      unless blacklight_config.sort_fields.has_key? :timestamp
+      unless blacklight_config.sort_fields.key? :timestamp
         blacklight_config.add_sort_field :timestamp, sort: "#{blacklight_config.index.timestamp_field} desc"
       end
-      # rubocop:enable Style/DeprecatedHashMethods
     end
 
     before_action only: :edit do
@@ -61,7 +59,7 @@ module Spotlight
     # results when a partial match is passed in the "q" parameter.
     def autocomplete
       search_params = params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field)
-      (_, @document_list) = get_search_results(search_params, fq: ["-#{Spotlight::SolrDocument.visibility_field(current_exhibit)}:false"])
+      (_, @document_list) = search_results(search_params.merge(public: true), search_params_logic)
 
       respond_to do |format|
         format.json do
@@ -73,7 +71,7 @@ module Spotlight
     def admin
       add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
       add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)
-      (@response, @document_list) = get_search_results
+      (@response, @document_list) = search_results(params, search_params_logic)
       @filters = params[:f] || []
 
       respond_to do |format|

@@ -38,7 +38,7 @@ module SirTrevorRails
       end
 
       def item_count(category)
-        solr_helper.get_search_results(category.query_params).first['response']['numFound']
+        solr_helper.search_results(category.query_params, solr_helper.search_params_logic).first['response']['numFound']
       end
     end
   end

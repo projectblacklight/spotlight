@@ -49,7 +49,7 @@ describe Spotlight::HomePagesController, type: :controller do
 
   describe 'Rendering home page' do
     it 'gets search results for display facets' do
-      allow(controller).to receive_messages(get_search_results: [double, double])
+      allow(controller).to receive_messages(search_results: [double, double])
       get :show, exhibit_id: exhibit
       expect(assigns[:response]).to_not be_blank
       expect(assigns[:document_list]).to_not be_blank
@@ -57,14 +57,14 @@ describe Spotlight::HomePagesController, type: :controller do
     end
     it 'does not render breadcrumbs' do
       expect(controller).not_to receive(:add_breadcrumb)
-      allow(controller).to receive_messages(get_search_results: [double, double])
+      allow(controller).to receive_messages(search_results: [double, double])
       get :show, exhibit_id: exhibit
       expect(response).to be_successful
     end
     it 'does not do the search when the sidebar is hidden' do
       page.display_sidebar = false
       page.save
-      allow(controller).to receive_messages(get_search_results: [double, double])
+      allow(controller).to receive_messages(search_results: [double, double])
       get :show, exhibit_id: exhibit
       expect(assigns).not_to have_key :response
       expect(assigns).not_to have_key :document_list

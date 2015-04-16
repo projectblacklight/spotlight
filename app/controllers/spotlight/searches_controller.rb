@@ -32,7 +32,8 @@ module Spotlight
     end
 
     def autocomplete
-      (_, document_list) = get_search_results(autocomplete_params, blacklight_config.default_autocomplete_solr_params)
+      search_params = autocomplete_params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field)
+      (_, document_list) = search_results(search_params, search_params_logic)
 
       respond_to do |format|
         format.json do
