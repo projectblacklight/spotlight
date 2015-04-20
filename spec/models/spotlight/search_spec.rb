@@ -10,11 +10,22 @@ describe Spotlight::Search, type: :model do
                      blacklight_config.index.title_field => 'title',
                      Spotlight::Engine.config.full_image_field => 'https://stacks.stanford.edu/image/dq287tq6352/dq287tq6352_05_0001_thumb')
   end
+  let(:document_without_an_image) do
+    SolrDocument.new(id: 'ab123fd9876',
+                     blacklight_config.index.title_field => 'title')
+  end
 
   it { is_expected.to be_a Spotlight::Catalog::AccessControlsEnforcement }
 
   it 'has a default feature image' do
     allow(subject).to receive_messages(documents: [document])
+    subject.save!
+    expect(subject.thumbnail).not_to be_nil
+    expect(subject.thumbnail.image.path).to end_with 'dq287tq6352_05_0001_thumb.jpeg'
+  end
+
+  it 'uses a document with an image for the default feature image' do
+    allow(subject).to receive_messages(documents: [document_without_an_image, document])
     subject.save!
     expect(subject.thumbnail).not_to be_nil
     expect(subject.thumbnail.image.path).to end_with 'dq287tq6352_05_0001_thumb.jpeg'
