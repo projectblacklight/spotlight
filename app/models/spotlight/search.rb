@@ -81,7 +81,7 @@ module Spotlight
 
     def set_default_featured_image
       self.thumbnail ||= begin
-        doc = documents.first
+        doc = documents.detect { |x| x.first(Spotlight::Engine.config.full_image_field) }
         if doc
           create_thumbnail source: 'exhibit', document_global_id: doc.to_global_id.to_s, remote_image_url: doc.first(Spotlight::Engine.config.full_image_field)
         end
