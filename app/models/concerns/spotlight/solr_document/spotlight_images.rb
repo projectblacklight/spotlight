@@ -26,7 +26,7 @@ module Spotlight
           @versions = spotlight_image_derivatives.map do |derivative|
             version = version_name(derivative)
             self.class.send(:define_method, version) do
-              document[derivative[:field]]
+              Array.wrap(document.fetch(derivative[:field], []))
             end
             version
           end
