@@ -166,10 +166,12 @@
         height: 240px;
       }
     }
-
   }
   @media (max-width: $screen-sm-max) {
-    .items-col {margin-bottom: $line-height-computed;}
+    &.items-block .items-col {margin-bottom: $line-height-computed;}
+  }
+  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+    &.items-block .items-col .box {min-width: 128px;}
   }
 }
 
