@@ -145,7 +145,11 @@
       min-width: 25%;
       height: 120px;
       @media (min-width: $screen-lg-min) {
-        height: 135px;
+        height: 170px; // default: no sidebar, no text column
+        // reduce height if on a page with a sidebar or text column, because will be less wide
+        .col-md-9 & {
+          height: 135px;
+        }
       }
       padding: 5px;
     }
@@ -161,15 +165,20 @@
     .item-0, .item-1, .item-2 {
       height: 220px;
       order: 0;
-
       @media (min-width: $screen-lg-min) {
-        height: 240px;
+        height: 280px; // default: no sidebar, no text column
+        // reduce height if on a page with a sidebar or text column, because will be less wide
+        .col-md-9 & {
+          height: 240px;
+        }
       }
     }
-
   }
   @media (max-width: $screen-sm-max) {
-    .items-col {margin-bottom: $line-height-computed;}
+    &.items-block .items-col {margin-bottom: $line-height-computed;}
+  }
+  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+    &.items-block .items-col .box {min-width: 128px;}
   }
 }
 
@@ -237,6 +246,9 @@
         img {
           height: 250px;
           object-fit: cover;
+          @media (max-width: $screen-sm-max) {
+            height: 175px;
+          }
         }
       }
     }
