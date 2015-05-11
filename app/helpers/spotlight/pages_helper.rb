@@ -10,9 +10,8 @@ module Spotlight
     end
 
     def available_index_fields
-      index_fields = @page.exhibit.blacklight_configuration.default_blacklight_config.index_fields
-      fields = index_fields.map { |k, _v| { key: k, label: index_field_label(nil, k) } }
-      fields.unshift(key: document_show_link_field, label: t(:'.title_placeholder')) unless index_fields.include? document_show_link_field
+      fields = blacklight_config.index_fields.map { |k, _v| { key: k, label: index_field_label(nil, k) } }
+      fields.unshift(key: document_show_link_field, label: t(:'spotlight.pages.form.title_placeholder')) unless index_fields.include? document_show_link_field
 
       fields
     end
