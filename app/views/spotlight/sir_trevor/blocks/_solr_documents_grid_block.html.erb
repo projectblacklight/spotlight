@@ -2,9 +2,9 @@
 <div class="content-block items-block item-grid-block row">
   <div class="items-col <%= solr_documents_grid_block.text? ? 'col-md-9' : 'col-md-12' %> pull-<%= solr_documents_grid_block.content_align %>">
     <% if solr_documents_grid_block.documents? %>
-        <% solr_documents_grid_block.documents.each_with_index do |document, index| %>
+        <% solr_documents_grid_block.each_document.each_with_index do |(block_options, document), index| %>
           <div class="box item-<%= index %>" data-id="<%= document.id %>">
-            <% if block_thumb = solr_documents_grid_block.document_options(document.id)[:thumbnail_image_url] %>
+            <% if block_thumb = block_options[:thumbnail_image_url] %>
               <div class="thumbnail"><%= link_to_document(document, image_tag(block_thumb), counter: -1) %></div>
             <% elsif has_thumbnail? document %>
               <div class="thumbnail"><%= render_thumbnail_tag(document, {}, document_counter: -1) %></div>

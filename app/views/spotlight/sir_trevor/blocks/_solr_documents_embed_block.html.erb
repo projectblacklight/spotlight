@@ -1,11 +1,11 @@
 <% solr_documents_embed_block.with_solr_helper(self) %>
 
 <div class="content-block items-block row">
-  
+
   <% if solr_documents_embed_block.documents? %>
 
     <div class="items-col spotlight-flexbox pull-<%= solr_documents_embed_block.content_align %> <%= solr_documents_embed_block.text? ? "col-md-6" : "col-md-12" %> ">
-      <% solr_documents_embed_block.documents.each do |document| %>
+      <% solr_documents_embed_block.each_document do |block_options, document| %>
         <div class="box" data-id="<%= document.id %>">
           <%= render_document_partials document, blacklight_config.view.embed.partials, (blacklight_config.view.embed.locals || {}).reverse_merge(block: solr_documents_embed_block) %>
         </div>
