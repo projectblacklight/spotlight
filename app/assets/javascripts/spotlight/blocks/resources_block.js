@@ -19,8 +19,10 @@ Spotlight.Block.Resources = (function(){
 
     display_checkbox: "display-checkbox",
 
+    globalIndex: 0,
+
     _itemPanel: function(data) {
-      var index = data.id || this.$('.field').length;
+      var index = "item_" + this.globalIndex++;
       var checked;
       if (data.display == "true") {
         checked = "checked='checked'"

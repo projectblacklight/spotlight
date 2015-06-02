@@ -15,8 +15,8 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
   end
 
   before do
-    allow(block).to receive(:documents).and_return([doc])
-    allow(block).to receive(:document_options).and_return({})
+    allow(block).to receive(:each_document).and_yield({}, doc)
+    allow(block).to receive(:documents?).and_return(true)
   end
 
   before do

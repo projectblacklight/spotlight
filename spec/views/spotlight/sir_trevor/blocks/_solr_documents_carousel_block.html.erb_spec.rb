@@ -7,7 +7,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_carousel_block.html.erb', 
   end
 
   before do
-    allow(block).to receive(:documents).and_return([::SolrDocument.new(id: 1), ::SolrDocument.new(id: 2), ::SolrDocument.new(id: 3)])
+    allow(block).to receive(:each_document).and_return([[{}, ::SolrDocument.new(id: 1)], [{}, ::SolrDocument.new(id: 2)], [{}, ::SolrDocument.new(id: 3)]])
     allow(block).to receive_messages(documents?: true)
     allow(view).to receive_messages(solr_documents_carousel_block: block)
     allow(view).to receive_messages(has_thumbnail?: true, render_thumbnail_tag: 'thumb')

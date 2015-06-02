@@ -5,9 +5,9 @@
 <% if solr_documents_carousel_block.documents? %>
   <div id="<%= html_id %>" class="carousel slide" data-ride="carousel"  data-interval="<%= solr_documents_carousel_block.interval %>">
     <div class="carousel-inner">
-    <% solr_documents_carousel_block.documents.each_with_index do |document, index| %>
+    <% solr_documents_carousel_block.each_document.each_with_index do |(block_options, document), index| %>
       <div class="item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
-        <% if block_thumb = solr_documents_carousel_block.document_options(document.id)[:full_image_url] %>
+        <% if block_thumb = block_options[:full_image_url] %>
           <%= link_to_document(document, image_tag(block_thumb), counter: -1) %>
         <% elsif has_thumbnail? document %>
           <%= render_thumbnail_tag(document, {}, document_counter: -1) %>

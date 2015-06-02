@@ -10,28 +10,29 @@ module SirTrevorRails
         @solr_helper = solr_helper
       end
 
-      def document_options(id)
-        (items.detect { |x| x[:id] == id }) || {}
+      def each_document
+        return to_enum(:each_document) unless block_given?
+
+        items.each do |i|
+          document = documents.detect { |doc| doc.id == i[:id] }
+          yield i, document if document
+        end
       end
 
       def documents
         @documents ||= begin
           doc_ids = items.map { |v| v[:id] }
           _, documents = solr_helper.fetch(doc_ids)
-          documents.sort { |a, b| document_order.index(a.id) <=> document_order.index(b.id) }
+          documents
         end
       end
 
       def documents?
-        documents.present?
+        each_document.any?
       end
 
       def items
         (item || {}).values.select { |x| x[:display] == 'true' }
-      end
-
-      def document_order
-        items.sort_by { |x| x[:weight] }.map { |x| x[:id] }
       end
 
       def primary_caption?
