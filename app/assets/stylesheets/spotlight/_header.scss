@@ -53,6 +53,8 @@ $menu-link-background-color-hover: rgba(255,255,255,0.15);
 }
 
 #exhibit-navbar {
+  z-index: 100;
+
   &.page-masthead {
     @include masthead-navigation-menu();
     border-bottom: 1px solid $gray;
