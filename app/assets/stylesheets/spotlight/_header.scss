@@ -1,7 +1,7 @@
 $masthead-height: 180px;
 $masthead-image-blur: 1px;
-$menu-link-background-color-active: rgba(255,255,255,0.3);
-$menu-link-background-color-hover: rgba(255,255,255,0.15);
+$menu-link-background-color-active: rgba(255, 255, 255, 0.3);
+$menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
 
 @mixin masthead-background-containers() {
   position: absolute;
@@ -13,33 +13,41 @@ $menu-link-background-color-hover: rgba(255,255,255,0.15);
 }
 
 @mixin masthead-navigation-menu() {
-  border: none;
+  border: 0;
   border-radius: 0;
+
   ul.nav.navbar-nav {
     > li {
       text-transform: uppercase;
+
       a {
         color: $gray-lighter;
         letter-spacing: 1.2px;
       }
     }
+
     a:hover {
       background-color: $menu-link-background-color-hover;
     }
+
     > .active > a {
       background-color: $menu-link-background-color-active;
       color: $white;
     }
+
     .dropdown-menu {
       text-transform: none;
+
       > li a {
         color: $black;
+
         &:hover {
           background-color: $gray-lighter;
         }
       }
     }
   }
+
   // Curated Features menu link when it has dropdown menu
   .navbar-nav > .open > a,
   .navbar-nav > .open > a:hover,
@@ -48,26 +56,39 @@ $menu-link-background-color-hover: rgba(255,255,255,0.15);
   }
 }
 
-#exhibit-masthead, #exhibit-navbar {
+#exhibit-masthead,
+#exhibit-navbar {
   z-index: 1;
 }
 
 #exhibit-navbar {
+  z-index: 100;
+
   &.page-masthead {
     @include masthead-navigation-menu();
+    background-color: rgba(0, 0, 0, 0.5);
     border-bottom: 1px solid $gray;
-    margin-top: 0;
     margin-bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    margin-top: 0;
+
     .navbar-nav {
       float: right;
     }
-    .navbar-brand, .navbar-nav li {
+
+    .navbar-brand,
+    .navbar-nav li {
       color: $gray-lighter;
-      &.active a {color: $gray;}
-      a {color: $gray-lighter;}
+
+      &.active a {
+        color: $gray;
+      }
+
+      a {
+        color: $gray-lighter;
+      }
     }
   }
+
   .navbar-form {
     text-align: right;
   }
@@ -75,8 +96,8 @@ $menu-link-background-color-hover: rgba(255,255,255,0.15);
 
 #exhibit-masthead.with-image + #exhibit-navbar.navbar-default {
   @include masthead-navigation-menu();
+  background-color: rgba(0, 0, 0, 0.2);
   border-top: 1px solid $gray;
-  background-color: rgba(0,0,0,0.2);
 }
 
 .navbar + .navbar {
@@ -88,36 +109,44 @@ $menu-link-background-color-hover: rgba(255,255,255,0.15);
 }
 
 #exhibit-masthead {
+  height: $masthead-height;
   margin-bottom: -50px;
   padding: 0;
   position: static;
-  height: $masthead-height;
+
   & > .container {
     position: relative;
     top: 33%;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
   }
+
   &.with-page-masthead {
     margin-bottom: $padding-base-vertical;
     margin-top: -51px;
+
     > .container {
       top: 60%;
     }
+
     .navbar-brand {
       font-size: $font-size-large;
       text-shadow: 1px 1px 0 $black;
     }
+
     .search-title {
       text-align: center;
+
       small {
-        text-transform: uppercase ;
+        text-transform: uppercase;
       }
     }
   }
+
   .site-title {
     font-size: 30px;
   }
+
   small {
     display: block;
     padding-top: $padding-base-vertical;
@@ -125,12 +154,40 @@ $menu-link-background-color-hover: rgba(255,255,255,0.15);
   }
 
   &.with-image {
-    .site-title, .search-title {
+    .site-title,
+    .search-title {
       color: $white;
       text-shadow: 1px 1px 0 $black;
     }
+
     small {
       color: $white;
+    }
+
+    .more-exhibits {
+      a {
+        color: $gray-lighter;
+        background: rgba(0, 0, 0, 0.4);
+        border-top-left-radius: $border-radius-base;
+        border-top-right-radius: $border-radius-base;
+      }
+
+      a:hover,
+      a:focus,
+      a:active {
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      .dropdown-menu a {
+        background: none;
+        color: $gray;
+
+        &:hover,
+        &:focus,
+        &:active {
+          background-color: $gray-lighter;
+        }
+      }
     }
   }
 
@@ -138,36 +195,18 @@ $menu-link-background-color-hover: rgba(255,255,255,0.15);
     @extend .navbar-right;
   }
 
-  &.with-image .more-exhibits {
-    a {
-      color: $gray-lighter;
-      background: rgba(0, 0, 0, 0.4);
-      border-top-left-radius: $border-radius-base;
-      border-top-right-radius: $border-radius-base;
-    }
-    a:hover, a:focus, a:active {
-      background: rgba(0, 0, 0, 0.6);
-    }
-
-    .dropdown-menu a {
-      background: none;
-      color: $gray;
-      &:hover, &:focus, &:active {
-        background-color: $gray-lighter;
-      }
-    }
-  }
-
   &.with-page-masthead {
-    .site-title {margin-top: $padding-large-vertical * 3;}
+    .site-title {
+      margin-top: $padding-large-vertical * 3;
+    }
 
     .more-exhibits {
       @extend .navbar-left;
       padding-top: $padding-base-vertical;
 
       .dropdown-menu {
-        right: auto;
         left: 0;
+        right: auto;
       }
     }
   }
@@ -189,6 +228,7 @@ $menu-link-background-color-hover: rgba(255,255,255,0.15);
     // Add right border to image to hide lighter blurred edge
     border-right: 1px solid $black;
   }
+
   // Include gradient to improve text legibility,
   // especially on light background images.
   .background-container-gradient {
@@ -205,23 +245,25 @@ $menu-link-background-color-hover: rgba(255,255,255,0.15);
 // Margin between bottom of masthead and start of page content.
 // Need to apply bottom margin to different element, depending on
 // whether it is a regular masthead or a browse category masthead
-#exhibit-masthead + #exhibit-navbar, #exhibit-navbar + #exhibit-masthead {
+#exhibit-masthead + #exhibit-navbar,
+#exhibit-navbar + #exhibit-masthead {
   margin-bottom: $padding-large-vertical * 2.5;
 }
 
 .col-md-4 {
   .submit-search-text {
     // hide 'search' label
-      // copied from .sr-only, sadly can't seem to use @extend in a media
-      // query like this, have to copy.
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0,0,0,0);
-      border: 0;
+    // copied from .sr-only, sadly can't seem to use @extend in a media
+    // query like this, have to copy.
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
   }
+
   .glyphicon-search {
     line-height: $line-height-computed;
   }
