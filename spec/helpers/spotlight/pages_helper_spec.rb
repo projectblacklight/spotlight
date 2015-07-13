@@ -7,7 +7,7 @@ module Spotlight
     let(:untitled_document) { ::SolrDocument.new(id: '1234') }
     let!(:current_exhibit) { FactoryGirl.create(:exhibit) }
     let!(:home_page) { current_exhibit.home_page }
-    let!(:search) { FactoryGirl.create(:search, exhibit: current_exhibit, query_params: { 'q' => 'query' }, on_landing_page: true) }
+    let!(:search) { FactoryGirl.create(:search, exhibit: current_exhibit, query_params: { 'q' => 'query' }, published: true) }
 
     before(:each) do
       allow(helper).to receive_messages(blacklight_config: blacklight_config)

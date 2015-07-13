@@ -72,7 +72,7 @@ feature 'Search contexts' do
   end
 
   scenario 'should add context breadcrumbs back to the browse page when navigating to an item from a browse page', js: true do
-    search = Spotlight::Search.create! exhibit_id: exhibit.id, title: 'Some Saved Search', on_landing_page: true
+    search = Spotlight::Search.create! exhibit_id: exhibit.id, title: 'Some Saved Search', published: true
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
     click_link 'Browse'
     click_link 'Some Saved Search'

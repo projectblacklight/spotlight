@@ -5,8 +5,8 @@ describe 'Featured Browse Category Block', type: :feature, js: true do
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
 
   let!(:feature_page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
-  let!(:search1) { FactoryGirl.create(:published_search, exhibit: exhibit, title: 'Title1', on_landing_page: true) }
-  let!(:search2) { FactoryGirl.create(:published_search, exhibit: exhibit, title: 'Title2', on_landing_page: true) }
+  let!(:search1) { FactoryGirl.create(:published_search, exhibit: exhibit, title: 'Title1', published: true) }
+  let!(:search2) { FactoryGirl.create(:published_search, exhibit: exhibit, title: 'Title2', published: true) }
 
   before do
     login_as exhibit_curator

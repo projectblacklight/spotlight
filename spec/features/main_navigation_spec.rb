@@ -11,7 +11,7 @@ describe 'Main navigation labels are settable', type: :feature do
     browse_nav.label = 'New Browse Label'
     browse_nav.save
     search = exhibit.searches.first
-    search.on_landing_page = true
+    search.published = true
     search.save
     exhibit.reload
   end

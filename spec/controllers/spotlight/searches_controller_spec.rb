@@ -50,7 +50,7 @@ describe Spotlight::SearchesController, type: :controller do
       end
 
       it 'has a JSON response with published resources' do
-        search.on_landing_page = true
+        search.published = true
         search.save!
 
         get :index, exhibit_id: exhibit, format: 'json'
@@ -139,21 +139,21 @@ describe Spotlight::SearchesController, type: :controller do
     end
 
     describe 'POST update_all' do
-      let!(:search2) { FactoryGirl.create(:search, exhibit: exhibit, on_landing_page: true) }
-      let!(:search3) { FactoryGirl.create(:search, exhibit: exhibit, on_landing_page: true) }
+      let!(:search2) { FactoryGirl.create(:search, exhibit: exhibit, published: true) }
+      let!(:search3) { FactoryGirl.create(:search, exhibit: exhibit, published: true) }
       before { request.env['HTTP_REFERER'] = 'http://example.com' }
       it 'updates whether they are on the landing page' do
         post :update_all, exhibit_id: exhibit, exhibit: {
           searches_attributes: [
-            { id: search.id, on_landing_page: true, weight: '1' },
-            { id: search2.id, on_landing_page: false, weight: '0' }
+            { id: search.id, published: true, weight: '1' },
+            { id: search2.id, published: false, weight: '0' }
           ]
         }
 
-        expect(search.reload.on_landing_page).to be_truthy
+        expect(search.reload.published).to be_truthy
         expect(search.weight).to eq 1
-        expect(search2.reload.on_landing_page).to be_falsey
-        expect(search3.reload.on_landing_page).to be_truthy # should remain untouched since it wasn't present
+        expect(search2.reload.published).to be_falsey
+        expect(search3.reload.published).to be_truthy # should remain untouched since it wasn't present
         expect(response).to redirect_to 'http://example.com'
         expect(flash[:notice]).to eq 'Searches were successfully updated.'
       end

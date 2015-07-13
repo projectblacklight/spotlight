@@ -10,7 +10,7 @@ describe 'Search Result Block', type: :feature, js: true do
   before do
     login_as exhibit_curator
 
-    exhibit.searches.each { |x| x.update on_landing_page: true }
+    exhibit.searches.each { |x| x.update published: true }
 
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
     add_widget 'search_results'

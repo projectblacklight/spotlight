@@ -42,9 +42,9 @@ describe Spotlight::Search, type: :model do
   end
 
   describe 'default_scope' do
-    let!(:page1) { FactoryGirl.create(:search, weight: 5, on_landing_page: true) }
-    let!(:page2) { FactoryGirl.create(:search, weight: 1, on_landing_page: true) }
-    let!(:page3) { FactoryGirl.create(:search, weight: 10, on_landing_page: true) }
+    let!(:page1) { FactoryGirl.create(:search, weight: 5, published: true) }
+    let!(:page2) { FactoryGirl.create(:search, weight: 1, published: true) }
+    let!(:page3) { FactoryGirl.create(:search, weight: 10, published: true) }
     it 'orders by weight' do
       expect(described_class.published.map(&:weight)).to eq [1, 5, 10]
     end
