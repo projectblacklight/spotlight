@@ -92,7 +92,7 @@ module Spotlight
     end
 
     def batch_search_params
-      params.require(:exhibit).permit('searches_attributes' => [:id, :on_landing_page, :weight])
+      params.require(:exhibit).permit('searches_attributes' => [:id, :published, :weight])
     end
 
     def search_params

@@ -7,7 +7,7 @@ FactoryGirl.define do
   factory :published_search, class: Spotlight::Search do
     exhibit
     title 'Search1'
-    on_landing_page true
+    published true
   end
 
   factory :default_search, class: Spotlight::Search do

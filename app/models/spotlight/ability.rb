@@ -38,7 +38,7 @@ module Spotlight
       can :read, Spotlight::HomePage
       can :read, Spotlight::Exhibit, published: true
       can :read, Spotlight::Page, published: true
-      can :read, Spotlight::Search, on_landing_page: true
+      can :read, Spotlight::Search, published: true
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end

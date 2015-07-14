@@ -171,7 +171,7 @@ describe Spotlight::ExhibitExportSerializer do
 
       it 'uses a search within the exhibit' do
         # searches need to be published.
-        subject.searches.each { |x| x.update on_landing_page: true }
+        subject.searches.each { |x| x.update published: true }
 
         expect(subject.feature_pages.first.content.first.search.exhibit).to eq subject
       end
@@ -183,7 +183,7 @@ describe Spotlight::ExhibitExportSerializer do
 
     context 'with a search object that needs to be created' do
       let :search do
-        source_exhibit.searches.create title: 'custom query', slug: 'xyz', on_landing_page: true
+        source_exhibit.searches.create title: 'custom query', slug: 'xyz', published: true
       end
 
       it 'creates a search within the exhibit' do

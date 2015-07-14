@@ -9,7 +9,7 @@ module Spotlight
     belongs_to :exhibit
     serialize :query_params, Hash
     default_scope { order('weight ASC') }
-    scope :published, -> { where(on_landing_page: true) }
+    scope :published, -> { where(published: true) }
     validates :title, presence: true
     has_paper_trail
 
