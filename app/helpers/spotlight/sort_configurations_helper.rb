@@ -11,8 +11,8 @@ module Spotlight
       sort_description ||= sort_config[:sort].split(',').map do |sort|
         sort_field, sort_order = sort.split(' ')
         safe_join([
-          t(:"spotlight.sort_configurations.edit.sort_keys.#{sort_field.strip}"),
-          t(:"spotlight.sort_configurations.edit.sort_keys.#{sort_order.strip}")
+          t(:"spotlight.sort_configurations.edit.sort_keys.#{sort_field.strip}", default: sort_field.humanize.downcase),
+          t(:"spotlight.sort_configurations.edit.sort_keys.#{sort_order.strip}", default: '')
         ], ' ')
       end.to_sentence if sort_config[:sort]
 
