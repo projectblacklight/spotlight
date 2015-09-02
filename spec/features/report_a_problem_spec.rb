@@ -11,7 +11,13 @@ describe 'Report a Problem', type: :feature do
     before do
       exhibit.contact_emails_attributes = [{ 'email' => 'test@example.com' }, { 'email' => 'test2@example.com' }]
       exhibit.save!
-      exhibit.contact_emails.first.confirm!
+      exhibit.contact_emails.first.tap do |e|
+        if e.respond_to? :confirm
+          e.confirm
+        else
+          e.confirm!
+        end
+      end
     end
 
     it 'accepts a problem report', js: true do

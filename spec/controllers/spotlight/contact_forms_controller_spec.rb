@@ -7,7 +7,13 @@ describe Spotlight::ContactFormsController, type: :controller do
     request.env['HTTP_REFERER'] = 'http://example.com'
     exhibit.contact_emails_attributes = [{ 'email' => 'test@example.com' }, { 'email' => 'test2@example.com' }]
     exhibit.save!
-    exhibit.contact_emails.first.confirm!
+    exhibit.contact_emails.first.tap do |e|
+      if e.respond_to? :confirm
+        e.confirm
+      else
+        e.confirm!
+      end
+    end
   end
   describe '#create' do
     it 'redirects back' do

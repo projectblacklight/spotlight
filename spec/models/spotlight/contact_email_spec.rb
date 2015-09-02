@@ -36,7 +36,12 @@ describe Spotlight::ContactEmail, type: :model do
   describe '.confirmed' do
     it 'scopes contacts to only confirmed contacts' do
       a = exhibit.contact_emails.create(email: 'a@example.com')
-      a.confirm!
+      if a.respond_to? :confirm
+        a.confirm
+      else
+        a.confirm!
+      end
+
       b = exhibit.contact_emails.create(email: 'b@example.com')
 
       expect(described_class.confirmed.to_a).to include a
