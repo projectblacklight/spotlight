@@ -52,7 +52,7 @@ these collections.)
   s.add_development_dependency 'rspec-its'
   s.add_development_dependency 'rspec-activemodel-mocks'
   s.add_development_dependency 'rspec-collection_matchers'
-  s.add_development_dependency 'capybara'
+  s.add_development_dependency 'capybara', '>= 2.5.0'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'rubocop-rspec'
   s.add_development_dependency 'poltergeist', '>= 1.5.0'

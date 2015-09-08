@@ -6,7 +6,15 @@ describe Spotlight::MainAppHelpers, type: :helper do
     let(:exhibit) { FactoryGirl.create :exhibit }
     let(:exhibit_with_contacts) { FactoryGirl.create :exhibit }
     context 'with an exhibit with confirmed contacts' do
-      before { exhibit_with_contacts.contact_emails.create(email: 'cabeer@stanford.edu').confirm! }
+      before do
+        exhibit_with_contacts.contact_emails.create(email: 'cabeer@stanford.edu').tap do |e|
+          if e.respond_to? :confirm
+            e.confirm
+          else
+            e.confirm!
+          end
+        end
+      end
       before { allow(helper).to receive_messages current_exhibit: exhibit_with_contacts }
       its(:show_contact_form?) { should be_truthy }
     end
