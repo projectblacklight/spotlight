@@ -31,3 +31,9 @@ RSpec/DescribeClass:
   Exclude:
     - 'spec/features/**/*'
     - 'spec/views/**/*'
+
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/ModuleLength:
+  Max: 120

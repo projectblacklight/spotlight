@@ -22,7 +22,7 @@ module Spotlight
       end
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength
     def create
       @resource.attributes = resource_params
       @resource = @resource.becomes_provider
@@ -37,7 +37,7 @@ module Spotlight
         render action: 'new'
       end
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength
 
     def reindex_all
       @exhibit.reindex_later

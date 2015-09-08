@@ -19,7 +19,7 @@ module Spotlight
         path(Spotlight::Engine.routes.url_helpers.exhibit_path(exhibit))
       end
 
-      filter :path, &lambda { |path| contains(:pagePath, "^#{path}") }
+      filter :path, &->(path) { contains(:pagePath, "^#{path}") }
 
       def self.user(scope = 'https://www.googleapis.com/auth/analytics.readonly')
         @user ||= begin

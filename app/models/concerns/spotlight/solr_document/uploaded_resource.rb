@@ -10,7 +10,10 @@ module Spotlight
       end
 
       def uploaded_resource
-        @uploaded_resource ||= GlobalID::Locator.locate first(Spotlight::Resource.resource_global_id_field) rescue nil
+        @uploaded_resource ||= GlobalID::Locator.locate first(Spotlight::Resource.resource_global_id_field)
+      rescue => e
+        Rails.logger.info("Unable to locate uploaded resource: #{e}")
+        nil
       end
 
       def to_openseadragon(*_args)

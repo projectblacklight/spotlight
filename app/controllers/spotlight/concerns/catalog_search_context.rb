@@ -5,7 +5,6 @@ module Spotlight
     module CatalogSearchContext
       protected
 
-      # rubocop:disable Metrics/AbcSize
       def current_page_context
         @current_page_context ||= if current_search_session_from_home_page?
                                     current_exhibit.home_page if can? :read, current_exhibit.home_page
@@ -14,7 +13,6 @@ module Spotlight
                                     current_exhibit.pages.accessible_by(current_ability).find(page_id) if page_id
                                   end
       end
-      # rubocop:enable Metrics/AbcSize
 
       def current_browse_category
         @current_browse_category ||= if current_search_session_from_browse_category?

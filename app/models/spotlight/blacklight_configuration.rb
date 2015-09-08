@@ -166,7 +166,7 @@ module Spotlight
         config
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
     def custom_index_fields
       Hash[exhibit.custom_fields.map do |x|
@@ -229,7 +229,6 @@ module Spotlight
       config.add_index_field key, options
     end
 
-    # rubocop:disable Metrics/AbcSize
     def add_autocomplete_field(config)
       return unless Spotlight::Engine.config.autocomplete_search_field && !config.search_fields[Spotlight::Engine.config.autocomplete_search_field]
 
@@ -239,7 +238,6 @@ module Spotlight
         field.solr_parameters[:fl] ||= default_autocomplete_field_list(config)
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def default_autocomplete_field_list(config)
       "#{config.document_model.unique_key} #{config.view_config(:show).title_field} #{spotlight_image_version_fields.join(' ')}"
