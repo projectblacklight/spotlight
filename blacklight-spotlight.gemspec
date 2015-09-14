@@ -57,7 +57,7 @@ these collections.)
   s.add_development_dependency 'rubocop-rspec'
   s.add_development_dependency 'poltergeist', '>= 1.5.0'
   s.add_development_dependency 'factory_girl', '~> 4.5'
-  s.add_development_dependency 'engine_cart', '~> 0.6.0'
+  s.add_development_dependency 'engine_cart', '~> 0.7'
   s.add_development_dependency 'database_cleaner', '~> 1.3'
   s.add_development_dependency 'jettywrapper'
 end
