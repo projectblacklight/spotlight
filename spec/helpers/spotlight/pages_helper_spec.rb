@@ -82,12 +82,12 @@ module Spotlight
       end
       describe 'nestable data attributes hash' do
         it 'returns the appropriate hash for feature pages' do
-          expect(helper.nestable_data_attributes_hash('feature_pages')).to eq :"data-max-depth" => '2',
-                                                                              :"data-expand-btn-HTML" => '',
-                                                                              :"data-collapse-btn-HTML" => ''
+          expect(helper.nestable_data_attributes_hash('feature_pages')).to eq "data-max-depth": '2',
+                                                                              "data-expand-btn-HTML": '',
+                                                                              "data-collapse-btn-HTML": ''
         end
         it 'returns the appropriate hash for about pages' do
-          expect(helper.nestable_data_attributes_hash('about_pages')).to eq :"data-max-depth" => '1'
+          expect(helper.nestable_data_attributes_hash('about_pages')).to eq "data-max-depth": '1'
         end
         it 'returns an empty hash if the type is not valid' do
           expect(helper.nestable_data_attributes_hash('something_else')).to eq({})

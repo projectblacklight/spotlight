@@ -19,9 +19,7 @@ module Spotlight
       before_save :save_owned_tags
       after_save :reindex
 
-      use_extension(Spotlight::SolrDocument::UploadedResource) do |document|
-        document.uploaded_resource?
-      end
+      use_extension(Spotlight::SolrDocument::UploadedResource, &:uploaded_resource?)
     end
 
     ##

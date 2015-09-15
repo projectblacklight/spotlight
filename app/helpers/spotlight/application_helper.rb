@@ -105,9 +105,9 @@ module Spotlight
         t(:".deselect_all"),
         class: 'btn btn-default btn-xs metadata-select',
         data: {
-          :behavior => 'metadata-select',
-          :'deselect-text' => t(:".deselect_all"),
-          :'select-text' => t(:".select_all")
+          behavior: 'metadata-select',
+          'deselect-text': t(:".deselect_all"),
+          'select-text': t(:".select_all")
         }
       )
     end

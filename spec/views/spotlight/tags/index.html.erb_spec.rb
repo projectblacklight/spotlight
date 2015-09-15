@@ -9,7 +9,7 @@ describe 'spotlight/tags/index.html.erb', type: :view do
     assign(:tags, exhibit.owned_tags)
     allow(view).to receive_messages(exhibit_tag_path: '/tags')
     allow(view).to receive(:current_exhibit).and_return(exhibit)
-    allow(view).to receive(:url_to_tag_facet) { |*args| args.first }
+    allow(view).to receive(:url_to_tag_facet, &:first)
   end
   describe 'Tags' do
     it 'is displayed' do
