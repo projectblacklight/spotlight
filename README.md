@@ -9,7 +9,7 @@ Read more about what Spotlight is, our motivations for creating it, and how to i
 
 ## Requirements
 
-1. Ruby (2.0.0 or greater)
+1. Ruby (2.2.0 or greater)
 2. Rails (4.2.0 or greater)
 3. Java (7 or greater) *for solr*
 4. ImageMagick
