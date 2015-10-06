@@ -22,9 +22,7 @@ require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
 require 'rubocop/rake_task'
-RuboCop::RakeTask.new(:rubocop) do |task|
-  task.options = ['--fail-level=W']
-end
+RuboCop::RakeTask.new(:rubocop)
 
 require 'jettywrapper'
 
@@ -124,4 +122,4 @@ namespace :spotlight do
   end
 end
 
-task default: :ci
+task default: [:ci, :rubocop]
