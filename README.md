@@ -11,8 +11,8 @@ Read more about what Spotlight is, our motivations for creating it, and how to i
 
 1. Ruby (2.2.0 or greater)
 2. Rails (4.2.0 or greater)
-3. Java (7 or greater) *for solr*
-4. ImageMagick
+3. Java (7 or greater) *for Solr*
+4. ImageMagick (http://www.imagemagick.org/script/index.php) due to [carrierwave](https://github.com/carrierwaveuploader/carrierwave#adding-versions)
 
 ## Installation
 
@@ -67,16 +67,30 @@ Spotlight introduces functionality that depends on being able to send emails to 
 
 See the [Spotlight wiki](https://github.com/sul-dlss/spotlight/wiki) for more detailed information on configuring Spotlight.
 
-## To start the development/test application
+# Developing Spotlight
 
- 1. Clone this repo, `cd` in and run `$ bundle install`
- 2. Start jetty and the dev server: `$ bundle exec rake spotlight:server` (this task will build a Spotlight-based application, start Solr, and run the built-in rails server)
- 3. Visit [http://localhost:3000](http://localhost:3000)
+Spotlight:
+
+* is a Rails engine and needs to be used in the context of a Rails application. We use [engine_cart](https://github.com/cbeer/engine_cart) to create an internal test application at spec/internal.
+* uses Solr as part of its integration tests. We use [jettywrapper](https://github.com/projecthydra/jettywrapper) to manage the Solr instance used for development and test.
+
+Our `$ rake ci` and `$ rake spotlight:server` tasks utilize Solr and the testing rails app automatically.
+
+##  More Information for Developers
+
+* [Contributing to Spotlight](https://github.com/sul-dlss/spotlight/wiki/Contributing-to-Spotlight)
+* [Testing](https://github.com/sul-dlss/spotlight/wiki/Testing)
 
 ## Tests
 
-Run tests:
+### Prerequisites
+
+PhantomJS (https://github.com/teampoltergeist/poltergeist#installing-phantomjs) is an addition requirement for testing javascript.
+
+### Run all the tests:
 
 ```
 $ rake
 ```
+
+This utilizes Solr and the testing rails app automatically.
