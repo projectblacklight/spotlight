@@ -100,11 +100,25 @@ feature 'Feature Pages Adminstration', js: true do
         find('input').set('NewFancyTitle')
       end
     end
+
     within '#exhibit-navbar' do
       click_link 'Home'
     end
     expect(page).not_to have_content('Feature pages were successfully updated.')
-    expect(page).to have_css('h1 small', text: 'Feature Pages')
+    # NOTE: get flash message about unsaved changes
+    expect(page).to have_content('Welcome to your new exhibit')
+
+    # ensure page title not changed
+    click_link exhibit_curator.email
+    within '#user-util-collapse .dropdown' do
+      click_link 'Dashboard'
+    end
+    click_link 'Feature pages'
+    within("[data-id='#{page1.id}']") do
+      within('h3') do
+        expect(page).to have_content('FeaturePage1') # old title
+      end
+    end
   end
 
   it 'is able to update home page titles' do
