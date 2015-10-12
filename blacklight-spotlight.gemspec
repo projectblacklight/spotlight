@@ -21,7 +21,7 @@ these collections.)
   s.add_dependency 'blacklight', '~> 5.13'
   s.add_dependency 'autoprefixer-rails'
   s.add_dependency 'cancancan'
-  s.add_dependency 'sir_trevor_rails', '>= 0.5.0a'
+  s.add_dependency 'sir_trevor_rails', '~> 0.5.0b1'
   s.add_dependency 'carrierwave'
   s.add_dependency 'carrierwave-crop'
   s.add_dependency 'mini_magick'
