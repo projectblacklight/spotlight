@@ -21,6 +21,7 @@ module Spotlight
     require 'lodash-rails'
     require 'github/markup'
     require 'sir_trevor_rails'
+    require 'openseadragon'
 
     config.autoload_paths += %W(
       #{config.root}/app/builders
