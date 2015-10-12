@@ -11,18 +11,7 @@ gemspec
 # your gem to rubygems.org.
 
 # To use debugger
-# gem 'debugger'
-
-group :test do
-  # Peg simplecov to < 0.8 until this is resolved:
-  # https://github.com/colszowka/simplecov/issues/281
-  gem 'simplecov', '~> 0.7.1', require: false
-  gem 'coveralls', require: false
-end
-
-group :development, :test do
-  gem 'byebug'
-end
+# gem 'byebug'
 
 file = File.expand_path('Gemfile', ENV['ENGINE_CART_DESTINATION'] || ENV['RAILS_ROOT'] || File.expand_path('../spec/internal', __FILE__))
 if File.exist? file
