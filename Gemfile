@@ -12,8 +12,6 @@ gemspec
 
 # To use debugger
 # gem 'debugger'
-#
-gem 'blacklight-gallery', '>= 0.3.0'
 
 group :test do
   # Peg simplecov to < 0.8 until this is resolved:
