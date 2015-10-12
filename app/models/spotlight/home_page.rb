@@ -9,7 +9,7 @@ module Spotlight
     before_create :default_content
 
     def should_display_title?
-      display_title
+      display_title?
     end
 
     def display_sidebar?
@@ -19,7 +19,7 @@ module Spotlight
     private
 
     def self.default_title_text
-      'Exhibit Home'
+      I18n.t('spotlight.pages.index.home_pages.title')
     end
 
     def publish
@@ -27,7 +27,7 @@ module Spotlight
     end
 
     def default_content
-      self.title = Spotlight::HomePage.default_title_text
+      self.title ||= Spotlight::HomePage.default_title_text
     end
   end
 end
