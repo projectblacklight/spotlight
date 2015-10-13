@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spotlight::Search, type: :model do
   let(:query_params) { { 'f' => { 'genre_sim' => ['map'] } } }
-  subject { FactoryGirl.build(:search, query_params: query_params) }
+  subject { FactoryGirl.create(:exhibit).searches.build(title: 'Search', query_params: query_params) }
 
   let(:blacklight_config) { ::CatalogController.blacklight_config }
   let(:document) do

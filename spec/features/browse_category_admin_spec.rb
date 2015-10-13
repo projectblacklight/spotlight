@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Browse Category Administration', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
   let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   let!(:search) { FactoryGirl.create(:search, exhibit: exhibit, query_params: { f: { 'genre_ssim' => ['Value'] } }) }
   before { login_as curator }

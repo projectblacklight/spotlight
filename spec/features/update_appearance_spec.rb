@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Update the appearance', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
   let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
 
   before { login_as user }

@@ -2,11 +2,11 @@ FactoryGirl.define do
   factory :search, class: Spotlight::Search do
     exhibit
     title 'Search1'
+
+    after(:build) { |search| search.thumbnail = FactoryGirl.create(:featured_image) }
   end
 
-  factory :published_search, class: Spotlight::Search do
-    exhibit
-    title 'Search1'
+  factory :published_search, parent: :search do
     published true
   end
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spotlight::Exhibit, type: :model do
-  subject { described_class.new(title: 'Sample') }
+  subject { FactoryGirl.build(:exhibit, title: 'Sample') }
 
   it 'has a title' do
     subject.title = 'Test title'
@@ -48,7 +48,7 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#main_navigations' do
-    subject { described_class.new(title: 'Sample').tap(&:save!) }
+    subject { FactoryGirl.create(:exhibit, title: 'Sample') }
     it 'has main navigations' do
       expect(subject.main_navigations).to have(3).main_navigations
       expect(subject.main_navigations.map(&:label).compact).to be_blank

@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe 'Home page', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
   it 'exists by default on exhibits' do

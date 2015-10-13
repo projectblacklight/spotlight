@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'adding an item using the provided bookmarklet', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
   let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   let(:search) { exhibit.searches.first }
   before { login_as curator }

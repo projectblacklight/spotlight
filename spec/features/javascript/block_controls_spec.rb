@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Block controls' do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
 
