@@ -3,6 +3,12 @@ require 'spec_helper'
 describe Spotlight::ExhibitExportSerializer do
   let!(:source_exhibit) { FactoryGirl.create(:exhibit) }
 
+  before do
+    allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
+    allow_any_instance_of(SolrDocument).to receive(:reindex)
+    allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
+  end
+
   subject { JSON.parse(described_class.new(source_exhibit).to_json) }
 
   it 'does not include unique identifiers' do

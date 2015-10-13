@@ -3,7 +3,7 @@ require 'cancan/matchers'
 
 describe Spotlight::Ability, type: :model do
   before do
-    allow_any_instance_of(Spotlight::Search).to receive(:default_featured_image)
+    allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
   end
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:search) { FactoryGirl.create(:published_search, exhibit: exhibit) }
