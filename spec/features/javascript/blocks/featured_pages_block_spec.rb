@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Featured Pages Blocks', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
   let!(:feature_page) do
     FactoryGirl.create(
       :feature_page,

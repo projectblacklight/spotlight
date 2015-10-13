@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Editing the Home Page', js: true do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
   let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
 
   before { login_as admin }

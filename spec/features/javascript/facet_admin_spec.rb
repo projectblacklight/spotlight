@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Facets Administration', js: true do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
   it 'allows us to update the label with edit-in-place' do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Adding custom metadata field data', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
   let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
   let(:custom_field) { FactoryGirl.create(:custom_field, exhibit: exhibit) }
   let(:config) { exhibit.blacklight_configuration }

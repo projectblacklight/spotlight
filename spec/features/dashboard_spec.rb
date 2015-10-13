@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Dashboard', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
   let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
   before do
     login_as(admin)

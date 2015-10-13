@@ -2,7 +2,10 @@ require 'spec_helper'
 
 describe 'Create a new exhibit', type: :feature do
   let(:user) { FactoryGirl.create(:site_admin) }
-  before { login_as user }
+  before do
+    allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
+    login_as user
+  end
 
   it 'has a link in the user dropdown' do
     visit '/'

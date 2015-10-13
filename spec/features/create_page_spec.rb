@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Creating a page', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
 
   describe 'when a bunch of about pages exist' do
