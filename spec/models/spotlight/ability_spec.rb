@@ -44,7 +44,6 @@ describe Spotlight::Ability, type: :model do
     it { is_expected.to be_able_to(:destroy, exhibit) }
 
     let(:blacklight_config) { role.exhibit.blacklight_configuration }
-    it { is_expected.to be_able_to(:edit, Spotlight::Appearance.new(blacklight_config)) }
   end
 
   describe 'a user with curate role' do
@@ -75,6 +74,5 @@ describe Spotlight::Ability, type: :model do
 
     let(:role) { FactoryGirl.create(:role, exhibit: user.roles.first.exhibit) }
     let(:blacklight_config) { role.exhibit.blacklight_configuration }
-    it { is_expected.not_to be_able_to(:edit, Spotlight::Appearance.new(blacklight_config)) }
   end
 end

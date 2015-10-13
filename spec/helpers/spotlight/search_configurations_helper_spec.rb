@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spotlight::SortConfigurationsHelper, type: :helper do
+describe Spotlight::SearchConfigurationsHelper, type: :helper do
   describe '#translate_sort_fields' do
     let(:sort_config) do
       Blacklight::OpenStructWithHashAccess.new(sort: 'score asc, sort_title_ssi desc')

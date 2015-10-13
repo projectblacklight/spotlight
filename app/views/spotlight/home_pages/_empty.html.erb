@@ -11,9 +11,7 @@
     <ol>
       <% if can? :update, current_exhibit %>
         <li>Visit the <%= link_to "Administrative Dashboard Settings", edit_exhibit_path(current_exhibit) %> page to configure the exhibit title and subtitle.</li>
-      <% end %>
 
-      <% if can? :update, current_exhibit.appearance %>
         <li>Next, go to the <%= link_to "Administration > Appearance", edit_exhibit_appearance_path(current_exhibit) %> page to add a site masthead image and configure other appearance options.</li>
       <% end %>
 
@@ -26,7 +24,7 @@
       <% end %>
 
       <% if can? :update, current_exhibit.blacklight_configuration %>
-        <li>Use the other Curation pages, such as <%= link_to "Curation > Metadata", edit_exhibit_metadata_configuration_path(current_exhibit) %> and <%= link_to "Curation > Search Facets", edit_exhibit_facet_configuration_path(current_exhibit) %>, to customize the way various features are presented to exhibit visitors.</li>
+        <li>Use the other Curation pages, such as <%= link_to "Curation > Metadata", edit_exhibit_metadata_configuration_path(current_exhibit) %> and <%= link_to "Curation > Search", edit_exhibit_search_configuration_path(current_exhibit) %>, to customize the way various features are presented to exhibit visitors.</li>
       <% end %>
 
       <li>Visit the Spotlight <%= link_to "documentation pages", "https://github.com/sul-dlss/spotlight/wiki" %> to learn how to add and edit feature pages, about pages, custom browse categories, and more.</li>

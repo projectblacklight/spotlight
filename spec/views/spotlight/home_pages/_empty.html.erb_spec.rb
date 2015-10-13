@@ -10,7 +10,7 @@ describe 'spotlight/home_pages/_empty.html.erb', type: :view do
                                       exhibit_roles_path: '/',
                                       admin_exhibit_catalog_index_path: '/',
                                       edit_exhibit_metadata_configuration_path: '/',
-                                      edit_exhibit_facet_configuration_path: '/')
+                                      edit_exhibit_search_configuration_path: '/')
     end
     it 'has a list item with a link to add items when there are no resource providers configured' do
       render

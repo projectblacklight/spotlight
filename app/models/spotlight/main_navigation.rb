@@ -8,6 +8,10 @@ module Spotlight
     scope :about, -> { find_by(nav_type: 'about') }
     scope :displayable, -> { where(display: true) }
 
+    def displayable?
+      display?
+    end
+
     def label_or_default
       if label.present?
         label

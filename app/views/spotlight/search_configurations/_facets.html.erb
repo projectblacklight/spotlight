@@ -1,0 +1,38 @@
+<p class="instructions"><%=t(:'.help') %></p>
+<div class="panel-group dd facet_fields" id="nested-fields" data-behavior="nestable" data-max-depth="1">
+  <ol class="dd-list">
+    <%= f.fields_for :facet_fields do |idxf| %>
+      <% @blacklight_configuration.blacklight_config.facet_fields.each do |key, config| %>
+        <% metadata = @field_metadata.field(key) %>
+        <li class="dd-item" data-id="<%= key.parameterize %>">
+          <div class="dd-handle dd3-handle"><%= t :drag %></div>
+          <%= idxf.fields_for key do |facet| %>
+            <div class="dd3-content panel panel-default facet-config-<%= key.parameterize %>">
+              <div class="panel-heading page">
+                <%= facet.hidden_field :weight, 'data-property' => 'weight' %>
+                <%= facet.check_box :show, checked: config.show, label: "", title: key %>
+                <div class="main row">
+                  <div class="col-sm-7">
+                    <h3 class="panel-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+                      <a href="#edit-in-place" class="field-label edit-in-place"><%= facet_field_label(key) %></a>
+                      <%= facet.hidden_field :label, value: facet_field_label(key), class: 'form-control input-sm', data: {:"edit-field-target" => 'true'} %>
+                    </h3>
+                  </div>
+                  <div class="facet-metadata col-sm-5">
+                    <%= content_tag :span, t(:'.document_count', count: metadata[:document_count]) %>
+                    <% if metadata[:document_count] > 0 %>
+                      • <%= content_tag :span, t(:'.value_count', count: metadata[:value_count]) %>
+                      <% if metadata[:terms].any? %>
+                        <%= tag("span", class: 'btn-with-tooltip glyphicon glyphicon-info-sign', data: {container: 'body', toggle: 'tooltip', placement: 'top', title: metadata[:terms].keys.map(&:to_s).join(" • ")}) %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    <% end %>
+  </ol>
+</div>

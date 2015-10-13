@@ -2,13 +2,13 @@
 <div id="content" class="col-md-9">
   <%= administration_page_title %>
 
-<%= bootstrap_form_for @appearance, url: spotlight.exhibit_appearance_path(@exhibit), layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5', html: {data: { autocomplete_exhibit_catalog_index_path: spotlight.autocomplete_exhibit_catalog_index_path(current_exhibit, q: "%QUERY", format: "json") } } do |f| %>
-  <% if @appearance.errors.any? %>
+<%= bootstrap_form_for @exhibit, url: spotlight.exhibit_appearance_path(@exhibit), layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5', html: {data: { autocomplete_exhibit_catalog_index_path: spotlight.autocomplete_exhibit_catalog_index_path(current_exhibit, q: "%QUERY", format: "json") } } do |f| %>
+  <% if @exhibit.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@appearance.errors.count, "error") %> prohibited this page from being saved:</h2>
+      <h2><%= pluralize(@exhibit.errors.count, "error") %> prohibited this page from being saved:</h2>
 
       <ul>
-      <% @appearance.errors.full_messages.each do |msg| %>
+      <% @exhibit.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -29,9 +29,6 @@
 
       <li role="presentation">
         <a href="#main-menu" aria-controls="main-menu" role="tab" data-toggle="tab"><%= t(:'.main_navigation.menu') %></a>
-      </li>
-      <li role="presentation">
-        <a href="#search-results" aria-controls="search-results" role="tab" data-toggle="tab"><%= t(:'.search_results') %></a>
       </li>
     </ul>
     <div class="tab-content">
@@ -59,10 +56,8 @@
           <p class="instructions"><%= t(:'.main_navigation.help') %></p>
           <div class="panel-group dd main_navigation_admin col-sm-7" id="nested-navigation" data-behavior="nestable" data-max-depth="1">
             <ol class="dd-list">
-              <%= f.fields_for :main_navigations do |navigation| %>
-                <%  @appearance.main_navigations.each do |nav| %>
-                  <%= navigation.fields_for nav.id.to_s, nav do |label| %>
-                    <li class="dd-item dd3-item" data-id="<%= nav.id %>">
+              <%= f.fields_for :main_navigations do |label| %>
+                    <li class="dd-item dd3-item" data-id="<%= label.object.id %>">
                       <div class="dd3-content panel panel-default">
                         <div class="dd-handle dd3-handle"><%= t :drag %></div>
                         <div class="panel-heading" data-behavior="restore-default">
@@ -74,41 +69,22 @@
                               </div>
                               <div class="main">
                                 <h3 class="panel-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
-                                  <a href="#edit-in-place" class="field-label edit-in-place"><%= nav.label_or_default %></a>
-                                  <%= label.hidden_field :label, data: {:"default-value" => nav.default_label, :"edit-field-target" => 'true'} %>
+                                  <a href="#edit-in-place" class="field-label edit-in-place"><%= label.object.label_or_default %></a>
+                                  <%= label.hidden_field :label, data: {:"default-value" => label.object.default_label, :"edit-field-target" => 'true'} %>
                                 </h3>
                               </div>
                             </div>
                             <div class="col-sm-4">
-                              <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn restore-default btn-default btn-sm pull-right #{'hidden' if nav.label.blank? || nav.label == nav.default_label}" %>
+                              <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn restore-default btn-default btn-sm pull-right #{'hidden' if label.object.label.blank? || label.object.label == label.object.default_label}" %>
                             </div>
                           </div>
                           <%= label.hidden_field :weight, data: {property: "weight"} %>
                         </div>
                       </div>
                     </li>
-                  <% end %>
-                <% end %>
               <% end %>
             </ol>
           </div>
-        <% end %>
-      </div>
-      <div role="tabpanel" class="tab-pane" id="search-results">
-        <%= field_set_tag do %>
-          <%= f.form_group :document_index_view_types, label: {text: t(:'.document_index_view_types')} do %>
-            <%= f.fields_for :document_index_view_types, @appearance.document_index_view_types do |vt| %>
-              <% @appearance.view_type_options.each do |key| %>
-                <%= vt.check_box key %>
-              <% end %>
-            <% end %>
-          <% end %>
-
-          <%= f.form_group :default_per_page, label: { text: t(:'.default_per_page')} do %>
-            <% @appearance.per_page_options.each do |key| %>
-              <%= f.radio_button :default_per_page, key, label: key.to_s %>
-            <% end %>
-          <% end %>
         <% end %>
       </div>
     </div>

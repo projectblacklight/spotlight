@@ -35,21 +35,47 @@ describe Spotlight::AppearancesController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Appearance', edit_exhibit_appearance_path(exhibit))
         get :edit, exhibit_id: exhibit
         expect(response).to be_successful
-        expect(assigns[:appearance]).to be_kind_of Spotlight::Appearance
+        expect(assigns[:exhibit]).to be_kind_of Spotlight::Exhibit
       end
     end
 
     describe '#update' do
-      it 'updates appearance fields' do
-        patch :update, exhibit_id: exhibit, appearance: {
-          document_index_view_types: { 'list' => '1', 'gallery' => '1', 'map' => '0' },
-          default_per_page: '50'
+      it 'makes the exhibit searchable' do
+        patch :update, exhibit_id: exhibit, exhibit: {
+          searchable: '1'
         }
-        expect(flash[:notice]).to eq 'The appearance was successfully updated.'
+        expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
         expect(response).to redirect_to edit_exhibit_appearance_path(exhibit)
         assigns[:exhibit].tap do |saved|
-          expect(saved.blacklight_configuration.document_index_view_types).to eq %w(list gallery)
-          expect(saved.blacklight_configuration.default_per_page).to eq 50
+          expect(saved).to be_searchable
+        end
+      end
+
+      it 'makes the exhibit unsearchable' do
+        patch :update, exhibit_id: exhibit, exhibit: {
+          searchable: '0'
+        }
+        expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
+        expect(response).to redirect_to edit_exhibit_appearance_path(exhibit)
+        assigns[:exhibit].tap do |saved|
+          expect(saved).not_to be_searchable
+        end
+      end
+      it 'updates the navigation' do
+        first_nav = exhibit.main_navigations.first
+        last_nav = exhibit.main_navigations.last
+        patch :update, exhibit_id: exhibit, exhibit: {
+          main_navigations_attributes: [
+            { id: first_nav.id, label: 'Some Label', weight: 500 },
+            { id: last_nav.id, display: false }
+          ]
+        }
+        expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
+        expect(response).to redirect_to edit_exhibit_appearance_path(exhibit)
+        assigns[:exhibit].tap do |saved|
+          expect(saved.main_navigations.find(first_nav.id).label).to eq 'Some Label'
+          expect(saved.main_navigations.find(first_nav.id).weight).to eq 500
+          expect(saved.main_navigations.find(last_nav.id)).not_to be_displayable
         end
       end
     end

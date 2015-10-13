@@ -68,7 +68,7 @@ describe 'Adding custom metadata fields', type: :feature do
     expect(page).to have_checked_field 'Controlled vocabulary'
     expect(page).to have_unchecked_field 'Free text'
 
-    visit spotlight.edit_exhibit_facet_configuration_path exhibit
+    visit spotlight.edit_exhibit_search_configuration_path exhibit
     expect(page).to have_content 'My new custom field'
   end
 end
