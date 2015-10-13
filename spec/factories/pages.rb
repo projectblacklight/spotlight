@@ -22,6 +22,5 @@ FactoryGirl.define do
 
   factory :home_page, class: Spotlight::HomePage do
     exhibit
-    title 'Page1'
   end
 end
