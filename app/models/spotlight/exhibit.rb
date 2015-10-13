@@ -60,6 +60,10 @@ module Spotlight
       end
     end
 
+    def self.default?
+      where(default: true).any?
+    end
+
     def main_about_page
       @main_about_page ||= about_pages.published.first
     end

@@ -94,6 +94,29 @@ describe Spotlight::Exhibit, type: :model do
       expect(tag.taggable_id).to eq '1'
       expect(tag.tag.name).to eq 'xyz'
     end
+
+    describe 'importing with the default attribute' do
+      before do
+        described_class.where(default: true).delete_all
+      end
+
+      it 'imports and sets the exhibit as the default exhibit' do
+        subject.import 'default' => true
+        subject.save
+
+        expect(described_class.default).to eq subject
+      end
+
+      it 'ignores the default flag if a default exhibit exists' do
+        FactoryGirl.create(:exhibit, default: true)
+        expect(described_class.default).to be_persisted
+
+        subject.import 'default' => true
+        subject.save
+
+        expect(described_class.default).not_to eq subject
+      end
+    end
   end
 
   describe '#blacklight_config' do
@@ -162,6 +185,28 @@ describe Spotlight::Exhibit, type: :model do
     it 'queues a reindex job for the exhibit' do
       expect(Spotlight::ReindexJob).to receive(:perform_later).with(subject)
       subject.reindex_later
+    end
+  end
+
+  describe '.default?' do
+    context 'without a default exhibit' do
+      before do
+        described_class.where(default: true).delete_all
+      end
+
+      it 'is false' do
+        expect(described_class.default?).to eq false
+      end
+    end
+
+    context 'with a default exhibit' do
+      before do
+        described_class.default
+      end
+
+      it 'is true' do
+        expect(described_class.default?).to eq true
+      end
     end
   end
 end

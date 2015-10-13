@@ -17,12 +17,15 @@ module Spotlight
   ##
   # Serialize an exhibit with all the data needed to reconstruct it
   # in a different environment
+  # rubocop:disable Metrics/ClassLength
   class ExhibitExportSerializer < Roar::Decorator
     include Roar::JSON
 
-    (Spotlight::Exhibit.attribute_names - %w(id default slug)).each do |prop|
+    (Spotlight::Exhibit.attribute_names - %w(id slug)).each do |prop|
       property prop
     end
+
+    property :default, setter: ->(val, _args) { self.default = val if val && !Spotlight::Exhibit.default? }
 
     collection :searches, parse_strategy: ->(fragment, _i, options) { options.represented.searches.find_or_initialize_by(slug: fragment['slug']) },
                           class: Spotlight::Search do
@@ -149,4 +152,5 @@ module Spotlight
       end
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
