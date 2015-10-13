@@ -60,6 +60,7 @@ namespace :spotlight do
     end
   end
 
+  desc 'Start the test application for Spotlight'
   task :server do
     Rake::Task['engine_cart:generate'].invoke
 
@@ -84,6 +85,7 @@ namespace :spotlight do
   end
 
   namespace :template do
+    desc 'Start a brand new Spotlight application using the Rails template'
     task :server do
       require 'tmpdir'
       require 'fileutils'
