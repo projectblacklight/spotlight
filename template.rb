@@ -4,9 +4,8 @@ blacklight_options = ENV.fetch('BLACKLIGHT_INSTALL_OPTIONS', DEFAULT_BLACKLIGHT_
 spotlight_options = ENV.fetch('SPOTLIGHT_INSTALL_OPTIONS', DEFAULT_SPOTLIGHT_OPTIONS)
 
 # Add gem dependencies to the application
-gem 'blacklight', '>= 5.11.2'
+gem 'blacklight', '~> 5.13'
 gem 'blacklight-spotlight', ENV['SPOTLIGHT_GEM'] ? { path: ENV['SPOTLIGHT_GEM'] } : { github: 'sul-dlss/spotlight' }
-gem 'sir_trevor_rails', github: 'madebymany/sir-trevor-rails'
 run 'bundle install'
 
 # run the blacklight install generator

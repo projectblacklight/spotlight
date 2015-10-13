@@ -20,6 +20,8 @@ module Spotlight
     require 'social-share-button'
     require 'lodash-rails'
     require 'github/markup'
+    require 'sir_trevor_rails'
+    require 'openseadragon'
 
     config.autoload_paths += %W(
       #{config.root}/app/builders
@@ -27,7 +29,6 @@ module Spotlight
     )
 
     initializer 'spotlight.initialize' do
-      require 'sir_trevor_rails'
       require 'cancan'
       require 'bootstrap_form'
       require 'acts-as-taggable-on'

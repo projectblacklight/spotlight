@@ -21,7 +21,7 @@ these collections.)
   s.add_dependency 'blacklight', '~> 5.13'
   s.add_dependency 'autoprefixer-rails'
   s.add_dependency 'cancancan'
-  s.add_dependency 'sir_trevor_rails', '>= 0.5.0a'
+  s.add_dependency 'sir_trevor_rails', '~> 0.5.0b1'
   s.add_dependency 'carrierwave'
   s.add_dependency 'carrierwave-crop'
   s.add_dependency 'mini_magick'
@@ -31,7 +31,7 @@ these collections.)
   s.add_dependency 'friendly_id', '~> 5.1.0'
   s.add_dependency 'breadcrumbs_on_rails', '~> 2.3.0'
   s.add_dependency 'social-share-button', '~> 0.1.5'
-  s.add_dependency 'blacklight-gallery'
+  s.add_dependency 'blacklight-gallery', '>= 0.3.0'
   s.add_dependency 'blacklight-oembed', '>= 0.0.3'
   s.add_dependency 'devise', '~> 3.0'
   s.add_dependency 'roar-rails'
@@ -46,6 +46,7 @@ these collections.)
   s.add_dependency 'google-api-client'
   s.add_dependency 'oauth2'
   s.add_dependency 'paper_trail', '~> 4.0.0.beta'
+  s.add_dependency 'openseadragon'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.1'
@@ -60,4 +61,6 @@ these collections.)
   s.add_development_dependency 'engine_cart', '~> 0.7'
   s.add_development_dependency 'database_cleaner', '~> 1.3'
   s.add_development_dependency 'jettywrapper'
+  s.add_development_dependency 'simplecov', '~> 0.10.0'
+  s.add_development_dependency 'coveralls'
 end
