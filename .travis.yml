@@ -6,8 +6,6 @@ rvm:
 
 notifications:
   irc: "irc.freenode.org#blacklight"
-  email:
-      - exhibits-team@lists.stanford.edu
 
 env:
   global:
