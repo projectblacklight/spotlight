@@ -2,19 +2,15 @@ namespace :spotlight do
   desc 'Create an initial admin user and default exhibit'
   task initialize: :environment do
     puts 'Creating an initial admin user.'
-    print 'Email: '
-    email = $stdin.gets.chomp
-    password = prompt_password
-    u = User.create!(email: email, password: password)
+    u = prompt_to_create_user
+
     Spotlight::Role.create(user: u, exhibit: nil, role: 'admin')
     puts 'User created.'
   end
 
-  desc 'Add application-wide admin privileges to an existing user'
+  desc 'Add application-wide admin privileges to a user'
   task admin: :environment do
-    print 'Email: '
-    email = $stdin.gets.chomp
-    u = User.find_by email: email
+    u = prompt_to_create_user
     Spotlight::Role.create(user: u, exhibit: nil, role: 'admin')
   end
 
@@ -26,15 +22,9 @@ namespace :spotlight do
     exhibit = Spotlight::Exhibit.create!(title: title)
 
     puts 'Who can admin this exhibit?'
-    print 'Email: '
-    email = $stdin.gets.chomp
 
-    u = User.find_by(email: email)
-    unless u
-      puts 'User not found.'
-      password = prompt_password
-      u = User.create!(email: email, password: password)
-    end
+    u = prompt_to_create_user
+
     Spotlight::Role.create(user: u, exhibit: exhibit, role: 'admin')
     puts 'Exhibit created.'
   end
@@ -58,10 +48,25 @@ namespace :spotlight do
     puts Spotlight::ExhibitExportSerializer.new(exhibit).to_json
   end
 
-  def prompt_password
+  def prompt_to_create_user
+    User.find_or_create_by!(email: prompt_for_email) do |u|
+      puts 'User not found. Enter a password to create the user.'
+      u.password = prompt_for_password
+    end
+  rescue => e
+    puts e
+    retry
+  end
+
+  def prompt_for_email
+    print 'Email: '
+    $stdin.gets.chomp
+  end
+
+  def prompt_for_password
     begin
       system 'stty -echo'
-      print 'Password: '
+      print 'Password (must be 8+ characters): '
       password = $stdin.gets.chomp
       puts "\n"
     ensure
