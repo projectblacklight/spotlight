@@ -39,13 +39,15 @@ namespace :spotlight do
 
     data = JSON.parse(contents)
 
-    exhibit = Spotlight::Exhibit.find_or_create_by slug: data['slug'] do |e|
+    exhibit = Spotlight::Exhibit.find_or_create_by! slug: data['slug'] do |e|
       e.title = data['title']
     end
 
     exhibit.import data
 
-    puts Spotlight::ExhibitExportSerializer.new(exhibit).to_json
+    exhibit.save!
+
+    puts Spotlight::ExhibitExportSerializer.new(exhibit.reload).to_json
   end
 
   def prompt_to_create_user
