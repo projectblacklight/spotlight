@@ -4,21 +4,21 @@
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active">
-        <a href="#basic" area-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
+        <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
       </li>
       <% if can? :import, current_exhibit %>
         <li role="presentation">
-          <a href="#import" area-controls="import" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.import.heading') %></a>
+          <a href="#import" aria-controls="import" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.import.heading') %></a>
         </li>
       <% end %>
       <% if can? :export, current_exhibit %>
         <li role="presentation">
-          <a href="#export" area-controls="export" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.export.heading') %></a>
+          <a href="#export" aria-controls="export" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.export.heading') %></a>
         </li>
       <% end %>
       <% if can? :destroy, current_exhibit %>
         <li role="presentation">
-          <a href="#delete" area-controls="delete" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.delete.heading') %></a>
+          <a href="#delete" aria-controls="delete" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.delete.heading') %></a>
         </li>
       <% end %>
     </ul>
