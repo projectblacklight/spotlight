@@ -3,12 +3,11 @@ module Spotlight
   # Edit and update an exhibit's appearance
   class AppearancesController < Spotlight::ApplicationController
     before_action :authenticate_user!
-    load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
-    before_action :load_and_authorize_appearance
+    load_and_authorize_resource id_param: :exhibit_id, instance_name: 'exhibit', class: 'Spotlight::Exhibit', parent: false
 
     def update
-      if @appearance.update(appearance_params)
-        notice = t(:'helpers.submit.spotlight_default.updated', model: @appearance.class.model_name.human.downcase)
+      if @exhibit.update(exhibit_params)
+        notice = t(:'helpers.submit.spotlight_default.updated', model: @exhibit.class.model_name.human.downcase)
         redirect_to edit_exhibit_appearance_path(@exhibit), notice: notice
       else
         render 'edit'
@@ -23,17 +22,11 @@ module Spotlight
 
     protected
 
-    def load_and_authorize_appearance
-      @appearance = @exhibit.appearance
-      authorize! action_name.to_sym, @appearance
-    end
-
-    def appearance_params
-      params.require(:appearance).permit(:default_per_page, :searchable,
-                                         document_index_view_types: @appearance.view_type_options,
-                                         main_navigations: [:id, :display, :label, :weight],
-                                         masthead: featured_image_params,
-                                         thumbnail: featured_image_params)
+    def exhibit_params
+      params.require(:exhibit).permit(:searchable,
+                                      main_navigations_attributes: [:id, :display, :label, :weight],
+                                      masthead_attributes: featured_image_params,
+                                      thumbnail_attributes: featured_image_params)
     end
 
     def featured_image_params

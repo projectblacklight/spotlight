@@ -1,7 +1,7 @@
 module Spotlight
   ##
-  # Sort configurations helpers
-  module SortConfigurationsHelper
+  # Search configurations helpers
+  module SearchConfigurationsHelper
     ##
     # Translate a sort field configuration into
     # a complete description of the sort
@@ -11,8 +11,8 @@ module Spotlight
       sort_description ||= sort_config[:sort].split(',').map do |sort|
         sort_field, sort_order = sort.split(' ')
         safe_join([
-          t(:"spotlight.sort_configurations.edit.sort_keys.#{sort_field.strip}", default: sort_field.humanize.downcase),
-          t(:"spotlight.sort_configurations.edit.sort_keys.#{sort_order.strip}", default: '')
+          t(:"spotlight.search_configurations.sort.keys.#{sort_field.strip}", default: sort_field.humanize.downcase),
+          t(:"spotlight.search_configurations.sort.keys.#{sort_order.strip}", default: '')
         ], ' ')
       end.to_sentence if sort_config[:sort]
 

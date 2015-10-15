@@ -37,7 +37,6 @@ en:
         batch_updated: "%{model} were successfully updated."
         batch_error: "There was an error updating the requested %{model}."
         destroyed: "The %{model} was deleted."
-      appearance: *spotlight_default
       contact:
         create: "Save"
         created: "The %{model} was created."
@@ -113,20 +112,25 @@ en:
     appearances:
       edit:
         header: Appearance
-        document_index_view_types: Result page types
-        default_per_page: Default results per page
         exhibit_style:
           heading: "Exhibit style"
           searchable:
             label: "Searchable (offer searchbox and facet sidebar)"
         main_navigation:
           menu: Main menu
-          help: Select the menu items you want to be displayed in the main navigation menu (menu items are only displayed when published pages exist for that item). Click a menu item to change its display label. Drag and drop a menu item to change their order in the menu.
+          help: >
+            Select the menu items you want to be displayed in the main navigation menu
+            (menu items are only displayed when published pages exist for that item).
+            Click a menu item to change its display label. Drag and drop a menu item
+            to change their order in the menu.
         restore_default: "Restore default"
-        search_results: Search results
         site_masthead:
           heading: Site masthead
-          help: "You can select and crop an image to use as a background in your exhibit site's masthead. To use an image as a masthead background, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below."
+          help: >
+            You can select and crop an image to use as a background in your exhibit site's
+            masthead. To use an image as a masthead background, you should use an image that
+            is at least 120 pixels tall and 1200 pixels wide. For best results use an image at
+            least 1800 pixels wide. You can crop larger images using the cropping tool below.
         site_thumbnail:
           heading: Site thumbnail
           help: "You can select and crop an image to visually represent this exhibit."
@@ -149,21 +153,45 @@ en:
         browse: Browse
         feature_pages: Feature pages
         about_pages: About pages
+        search_configuration: Search
       nav:
         home: "Home"
       header: "Curation"
-    facet_configurations:
+    search_configurations:
       edit:
-        header: "Search Facets"
-        options: "Options"
-        field:
-          label: "Display Label"
-        items_count:
+        header: "Search"
+        tab:
+          options: "Options"
+          facets: "Facets"
+          results: "Results"
+      facets:
+        help: >
+          If this exhibit is searchable and the sidebar is visible, users can use
+          the facets shown in the sidebar to limit a search.  You can select the facets
+          that are available for searching below. Click a facet field name to edit its display label.
+          Drag and drop facets to specify the order they are displayed in the sidebar.
+        document_count:
           one: "%{count} item"
           other:  "%{count} items"
-        values_count:
+        value_count:
           one: "%{count} unique value"
           other: "%{count} unique values"
+      sort:
+        header: "Sort fields"
+        help: >
+          Select the fields you want to be available to users for sorting results.
+          Click a field title to change its display label. Drag and drop fields to
+          change their order in the sort dropdown menu. The field listed first is
+          the default sort field.
+        keys:
+          asc: ascending
+          desc: descending
+          score: relevancy score
+          sort_date_dtsi: date
+          sort_title_ssi: title
+          sort_type_ssi: type
+          sort_source_ssi: source
+          id: id
     metadata_configurations:
       edit:
         field:
@@ -178,25 +206,16 @@ en:
             "You can add metadata fields to supplement the metadata fields that are part of the repository item record."
         view:
           show: "Item Details"
-        instructions: Select metadata fields to display on each type of page. Click a field name to edit its display label. Drag and drop fields to specify the order they are displayed on the Item Details page.
-    sort_configurations:
-      edit:
-        header: Sort fields
-        help: "Select the fields you want to be available to users for sorting results. Click a field title to change its display label. Drag and drop fields to change their order in the sort dropdown menu. The field listed first is the default sort field."
-        sort_keys:
-          asc: ascending
-          desc: descending
-          score: relevancy score
-          sort_date_dtsi: date
-          sort_title_ssi: title
-          sort_type_ssi: type
-          sort_source_ssi: source
-          id: id
+        instructions: >
+          Select metadata fields to display on each type of page. Click a field name
+          to edit its display label. Drag and drop fields to specify the order they
+          are displayed on the Item Details page.
     catalog:
       breadcrumb:
         index: 'Search Results'
       edit_default:
-        blank_field_warning_html: "This field is currently hidden on all pages. You can make it visible on the Curation &gt; %{link} page."
+        blank_field_warning_html: >
+          This field is currently hidden on all pages. You can make it visible on the Curation &gt; %{link} page.
         full_title_tesim: "Title"
         url-field:
           help: "Valid file types: %{extensions}"
@@ -272,7 +291,9 @@ en:
       breadcrumb: Home
       delete:
         heading: Delete exhibit
-        warning_html: This action is irreversible. Be sure to back up the exhibit settings and content using the %{export_link} feature before proceeding.
+        warning_html: >
+          This action is irreversible. Be sure to back up the exhibit settings and content using
+          the %{export_link} feature before proceeding.
       edit:
         header: Settings
         basic_settings:
@@ -292,7 +313,9 @@ en:
         button: Import data
       export:
         heading: Export data
-        instructions: You can create a backup of this exhibit by exporting the data that defines it to a JSON file. You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.
+        instructions: >
+          You can create a backup of this exhibit by exporting the data that defines it to a JSON file.
+          You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.
         download: Export data
       confirmation_status:
         confirmed: Confirmed.
@@ -332,7 +355,9 @@ en:
         page_options: "Options"
         page_thumbnail: "Thumbnail"
         thumbnail:
-          help: "You can select and crop an image to visually represent this page. It will be used as the thumbnail image if you include this page using the 'Highlight Featured Pages' widget."
+          help: >
+            You can select and crop an image to visually represent this page. It will be
+            used as the thumbnail image if you include this page using the 'Highlight Featured Pages' widget.
     contacts:
       edit:
         header: "Edit Contact"
@@ -354,7 +379,10 @@ en:
         header: Contacts
         contact:
           legend: Contact Details
-        instructions: Enter details for each librarian, curator or other contact person for this exhibit. Select the contacts you want to be show in the sidebar of the About Pages. Drag and drop contacts to specify the order in which they are shown in the sidebar.
+        instructions: >
+          Enter details for each librarian, curator or other contact person for this exhibit.
+          Select the contacts you want to be show in the sidebar of the About Pages. Drag and
+          drop contacts to specify the order in which they are shown in the sidebar.
       nav_link: About
       page_options:
         published: "Publish" # Possibly no longer used
@@ -376,7 +404,9 @@ en:
           remote:
             label: "Upload an image"
             header: "Cropped image"
-            help: 'Adjust the cropping box to cover the area of the image you want to use as the thumbnail image. Click "Save Changes" to save the cropped area.'
+            help: >
+              Adjust the cropping box to cover the area of the image you want to use
+              as the thumbnail image. Click "Save Changes" to save the cropped area.
 
     resources:
       new:
@@ -421,9 +451,17 @@ en:
         header: "Browse"
         title: "Curation - Browse"
         categories_header: "Browse Categories"
-        instructions: "Use the Save search button on a search results page to create a new browse category. Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page."
-        no_saved_searches: "You can save search results while in curation mode to create browse categories, which will be displayed here."
-        not_searchable_html: "This exhibit is not currently searchable. To perform searches that can be saved as additional browse categories, an Administrator must temporarily turn on the Searchable option in the exhibit style section of the Administration > %{href} page."
+        instructions: >
+          Use the Save search button on a search results page to create a new browse category.
+          Select the categories you want to be displayed on the browse landing page. Drag and
+          drop categories to change the order in which they appear on that page."
+        no_saved_searches: >
+          You can save search results while in curation mode to create browse categories,
+          which will be displayed here.
+        not_searchable_html: >
+          This exhibit is not currently searchable. To perform searches that can be saved as
+          additional browse categories, an Administrator must temporarily turn on the Searchable
+          option in the exhibit style section of the Administration > %{href} page.
       edit:
         header: "Edit Browse Category"
         title: "Curation - Browse"
@@ -438,8 +476,13 @@ en:
         search_masthead: "Masthead"
         search_thumbnail: "Thumbnail"
         masthead:
-          help: "You can select and crop an image to use as a browse category-specific masthead, instead of the default site masthead, for this browse category's detail page."
-          help_secondary: "To create a browse category-specific masthead, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below."
+          help: >
+            You can select and crop an image to use as a browse category-specific masthead, instead
+            of the default site masthead, for this browse category's detail page.
+          help_secondary: >
+            To create a browse category-specific masthead, you should use an image that is at least
+            120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide.
+            You can crop larger images using the cropping tool below.
         thumbnail:
           help: "You can select and crop an image to visually represent this search."
     browse:

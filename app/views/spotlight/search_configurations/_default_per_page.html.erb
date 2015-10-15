@@ -1,0 +1,5 @@
+<%= f.form_group :default_per_page, label: { text: t(:'.default_per_page')} do %>
+  <% @blacklight_configuration.default_blacklight_config.per_page.each do |key| %>
+    <%= f.radio_button :default_per_page, key, label: key.to_s %>
+  <% end %>
+<% end %>

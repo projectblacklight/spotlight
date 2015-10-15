@@ -450,4 +450,40 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       end
     end
   end
+
+  describe '#document_index_view_types' do
+    it 'passes arrays through' do
+      array = [1, 2, 3]
+      subject.document_index_view_types = array
+      expect(subject.document_index_view_types).to match_array array
+    end
+
+    it 'is simplified from a hash to an array' do
+      checkboxes_from_form = { 'list' => '1', 'gallery' => '1', 'map' => '0' }
+      subject.document_index_view_types = checkboxes_from_form
+      expect(subject.document_index_view_types).to match_array %w(list gallery)
+    end
+  end
+
+  describe '#document_index_view_types_selected_hash' do
+    before do
+      subject.default_blacklight_config.view.list
+      subject.default_blacklight_config.view.gallery
+      subject.default_blacklight_config.view.map
+      subject.default_blacklight_config.view.rss.if = false
+      subject.document_index_view_types = %w(list gallery rss)
+    end
+
+    it 'includes selected view types as the value true' do
+      expect(subject.document_index_view_types_selected_hash.to_h).to include list: true, gallery: true
+    end
+
+    it 'disabled view types are not included' do
+      expect(subject.document_index_view_types_selected_hash.to_h).not_to include :map
+    end
+
+    it 'excludes view types disabled by configuration (not by curator settings)' do
+      expect(subject.document_index_view_types_selected_hash.to_h).not_to include :rss
+    end
+  end
 end

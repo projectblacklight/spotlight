@@ -17,12 +17,12 @@ describe 'Add and update the site masthead', type: :feature do
     within '#site-masthead' do
       check 'Show background image in masthead'
       choose 'Upload an image'
-      attach_file('appearance_masthead_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
+      attach_file('exhibit_masthead_attributes_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
     end
 
     click_button 'Save changes'
 
-    expect(page).to have_content('The appearance was successfully updated.')
+    expect(page).to have_content('The exhibit was successfully updated.')
 
     within '#sidebar' do
       click_link 'Appearance'
@@ -47,12 +47,12 @@ describe 'Add and update the site masthead', type: :feature do
     within '#site-masthead' do
       check 'Show background image in masthead'
 
-      attach_file('appearance_masthead_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
+      attach_file('exhibit_masthead_attributes_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
     end
 
     click_button 'Save changes'
 
-    expect(page).to have_content('The appearance was successfully updated.')
+    expect(page).to have_content('The exhibit was successfully updated.')
 
     expect(page).to have_css('#exhibit-masthead.with-image .background-container')
   end
@@ -66,12 +66,12 @@ describe 'Add and update the site masthead', type: :feature do
     click_link 'Site masthead'
 
     within '#site-masthead' do
-      attach_file('appearance_masthead_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
+      attach_file('exhibit_masthead_attributes_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
     end
 
     click_button 'Save changes'
 
-    expect(page).to have_content('The appearance was successfully updated.')
+    expect(page).to have_content('The exhibit was successfully updated.')
 
     expect(page).to_not have_css('#exhibit-masthead.with-image .background-container')
   end

@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe Spotlight::SortConfigurationsController, type: :controller do
+describe Spotlight::SearchConfigurationsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
@@ -39,13 +39,31 @@ describe Spotlight::SortConfigurationsController, type: :controller do
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Sort fields', edit_exhibit_sort_configuration_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with('Search', edit_exhibit_search_configuration_path(exhibit))
         get :edit, exhibit_id: exhibit
         expect(response).to be_successful
+      end
+
+      it 'assigns the field metadata' do
+        get :edit, exhibit_id: exhibit
+        expect(assigns(:field_metadata)).to be_an_instance_of(Spotlight::FieldMetadata)
+        expect(assigns(:field_metadata).repository).to eq controller.repository
+        expect(assigns(:field_metadata).blacklight_config).to eq controller.blacklight_config
       end
     end
 
     describe '#update' do
+      it 'updates facet fields' do
+        patch :update, exhibit_id: exhibit, blacklight_configuration: {
+          facet_fields: { 'genre_ssim' => { enabled: '1', label: 'Label' } }
+        }
+        expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
+        expect(response).to redirect_to edit_exhibit_search_configuration_path(exhibit)
+        assigns[:exhibit].tap do |saved|
+          expect(saved.blacklight_configuration.facet_fields.keys).to eq ['genre_ssim']
+        end
+      end
+
       it 'updates sort fields' do
         patch :update, exhibit_id: exhibit, blacklight_configuration: {
           sort_fields: {
@@ -58,7 +76,7 @@ describe Spotlight::SortConfigurationsController, type: :controller do
           }
         }
         expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
-        expect(response).to redirect_to edit_exhibit_sort_configuration_path(exhibit)
+        expect(response).to redirect_to edit_exhibit_search_configuration_path(exhibit)
         assigns[:exhibit].tap do |saved|
           expect(saved.blacklight_configuration.sort_fields).to eq(
             'relevance' => { 'label' => 'Relevance', 'enabled' => true },
@@ -68,6 +86,19 @@ describe Spotlight::SortConfigurationsController, type: :controller do
             'source' => { 'label' => 'Source', 'enabled' => false },
             'identifier' => { 'label' => 'Identifier', 'enabled' => false }
           )
+        end
+      end
+
+      it 'updates appearance fields' do
+        patch :update, exhibit_id: exhibit, blacklight_configuration: {
+          document_index_view_types: { 'list' => '1', 'gallery' => '1', 'map' => '0' },
+          default_per_page: '50'
+        }
+        expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
+        expect(response).to redirect_to edit_exhibit_search_configuration_path(exhibit)
+        assigns[:exhibit].tap do |saved|
+          expect(saved.blacklight_configuration.document_index_view_types).to eq %w(list gallery)
+          expect(saved.blacklight_configuration.default_per_page).to eq 50
         end
       end
     end

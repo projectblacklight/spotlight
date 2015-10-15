@@ -16,8 +16,7 @@ Spotlight::Engine.routes.draw do
     resource :appearance, only: [:edit, :update]
 
     resource :metadata_configuration, only: [:show, :edit, :update]
-    resource :facet_configuration, only: [:edit, :update]
-    resource :sort_configuration, only: [:edit, :update]
+    resource :search_configuration, only: [:show, :edit, :update]
     resource :view_configuration, only: [:show]
 
     blacklight_for :catalog, only: [:export]

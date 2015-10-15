@@ -192,6 +192,35 @@ module Spotlight
       end
     end
 
+    # Parse params checkbox arrays into simple arrays.
+    # A group of checkboxes on a form returns values like this:
+    #   {"list"=>"1", "gallery"=>"1", "map"=>"0"}
+    # where, "list" and "gallery" are selected and "map" is not. This function
+    # digests that hash into a list of selected values. e.g.:
+    #   ["list", "gallery"]
+    def document_index_view_types=(hash_or_array)
+      if hash_or_array.is_a? Hash
+        super(hash_or_array.select { |_, checked| checked == '1' }.keys)
+      else
+        super(hash_or_array)
+      end
+    end
+
+    # @return [OpenStructWithHashAccess] keys are view types; value is 1 if enabled
+    # A group of checkboxes on a form needs values like this:
+    #   {"list"=>"1", "gallery"=>"1", "map"=>"0"}
+    # where, "list" and "gallery" are selected and "map" is not. This function
+    # takes ["list", "gallery"] and turns it into the above.
+    def document_index_view_types_selected_hash
+      selected_view_types = document_index_view_types
+      avail_view_types = default_blacklight_config.view.select { |_k, v| v.if != false }.keys
+      Blacklight::OpenStructWithHashAccess.new.tap do |s|
+        avail_view_types.each do |k|
+          s[k] = selected_view_types.include?(k.to_s)
+        end
+      end
+    end
+
     protected
 
     def add_exhibit_specific_fields(config)

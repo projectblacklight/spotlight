@@ -25,7 +25,6 @@ module Spotlight
 
     config.autoload_paths += %W(
       #{config.root}/app/builders
-      #{config.root}/app/forms
     )
 
     initializer 'spotlight.initialize' do
