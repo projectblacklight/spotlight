@@ -40,27 +40,6 @@ describe Spotlight::AppearancesController, type: :controller do
     end
 
     describe '#update' do
-      it 'makes the exhibit searchable' do
-        patch :update, exhibit_id: exhibit, exhibit: {
-          searchable: '1'
-        }
-        expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
-        expect(response).to redirect_to edit_exhibit_appearance_path(exhibit)
-        assigns[:exhibit].tap do |saved|
-          expect(saved).to be_searchable
-        end
-      end
-
-      it 'makes the exhibit unsearchable' do
-        patch :update, exhibit_id: exhibit, exhibit: {
-          searchable: '0'
-        }
-        expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
-        expect(response).to redirect_to edit_exhibit_appearance_path(exhibit)
-        assigns[:exhibit].tap do |saved|
-          expect(saved).not_to be_searchable
-        end
-      end
       it 'updates the navigation' do
         first_nav = exhibit.main_navigations.first
         last_nav = exhibit.main_navigations.last

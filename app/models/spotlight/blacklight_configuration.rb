@@ -66,11 +66,6 @@ module Spotlight
 
         config.index.thumbnail_field ||= Spotlight::Engine.config.thumbnail_field
 
-        unless exhibit.searchable?
-          config.navbar.partials[:saved_searches].if = false
-          config.navbar.partials[:search_history].if = false
-        end
-
         config.add_results_collection_tool 'save_search', if: :render_save_this_search?
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
@@ -162,6 +157,11 @@ module Spotlight
           v.upstream_if = v.if unless v.if.nil?
           v.if = :enabled_in_spotlight_view_type_configuration?
         end unless document_index_view_types.blank?
+
+        if config.search_fields.blank?
+          config.navbar.partials[:saved_searches].if = false if config.navbar.partials.key? :saved_searches
+          config.navbar.partials[:search_history].if = false if config.navbar.partials.key? :search_history
+        end
 
         config
       end

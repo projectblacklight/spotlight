@@ -17,9 +17,6 @@
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active">
-        <a href="#style" aria-controls="style" role="tab" data-toggle="tab"><%= t(:'.exhibit_style.heading') %></a>
-      </li>
-      <li role="presentation">
         <a href="#site-masthead" aria-controls="site-masthead" role="tab" data-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
       </li>
       
@@ -32,12 +29,7 @@
       </li>
     </ul>
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="style">
-        <%= field_set_tag do %>
-          <%= f.check_box(:searchable, label: t(:'.exhibit_style.searchable.label')) %>
-        <% end %>
-      </div>
-      <div role="tabpanel" class="tab-pane" id="site-masthead">
+      <div role="tabpanel" class="tab-pane active" id="site-masthead">
         <p class="instructions"><%= t(:'.site_masthead.help') %></p>
         <%= f.fields_for(:masthead, current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
           <%= render '/spotlight/featured_images/form', f: m, jcrop_options: default_masthead_jcrop_options %>
