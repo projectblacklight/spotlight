@@ -4,6 +4,13 @@ class RemoveSearchableFromExhibit < ActiveRecord::Migration
       e.home_page.update(display_sidebar: false)
     end
 
+    Spotlight::Exhibit.where(searchable: false).find_each do |e|
+      key = e.blacklight_configuration.default_blacklight_config.default_search_field.key
+
+      e.blacklight_configuration.search_fields[key] ||= {}
+      e.blacklight_configuration.search_fields[key][:enabled] = true
+    end
+
     remove_column :spotlight_exhibits, :searchable
   end
 
