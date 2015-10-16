@@ -23,7 +23,7 @@ module Spotlight
       # is created or we run into a circular dependency.
       default_fields = Spotlight::Engine.blacklight_config.sort_fields
       self.sort_fields = default_fields.each_with_object({}) do |(k, _v), obj|
-        obj[k] = { show: true }
+        obj[k] = { enabled: true }
       end
     end
 

@@ -264,12 +264,12 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     end
     describe 'should have default values' do
       its(:sort_fields) do
-        should eq('identifier' => { show: true },
-                  'relevance' => { show: true },
-                  'date' => { show: true },
-                  'source' => { show: true },
-                  'title' => { show: true },
-                  'type' => { show: true })
+        should eq('identifier' => { enabled: true },
+                  'relevance' => { enabled: true },
+                  'date' => { enabled: true },
+                  'source' => { enabled: true },
+                  'title' => { enabled: true },
+                  'type' => { enabled: true })
       end
       its(:default_per_page) { should eq 10 }
       its(:document_index_view_types) { should match_array ::CatalogController.blacklight_config.view.keys.map(&:to_s) }
