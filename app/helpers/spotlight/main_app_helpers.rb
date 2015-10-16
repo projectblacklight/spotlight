@@ -37,7 +37,7 @@ module Spotlight
         false
       when (field.respond_to?(:upstream_if) && !field.upstream_if.nil? && !evaluate_configuration_conditional(field.upstream_if, field, *args))
         false
-      when field.is_a?(Blacklight::Configuration::SortField)
+      when field.is_a?(Blacklight::Configuration::SortField) || field.is_a?(Blacklight::Configuration::SearchField)
         field.enabled
       when field.is_a?(Blacklight::Configuration::FacetField) || (controller.is_a?(Blacklight::Catalog) && %w(edit show).include?(action_name))
         field.show

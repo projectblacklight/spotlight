@@ -1,6 +1,7 @@
 Spotlight.onLoad(function() {
   // Add Select/Deselect all button behavior
   addCheckboxToggleBehavior();
+  addEnableToggleBehavior();
 });
 
 // Add Select/Deselect all button behavior
@@ -44,4 +45,19 @@ function addCheckboxToggleBehavior() {
       button.text(button.data('select-text'));
     }
   }
+}
+
+function addEnableToggleBehavior() {
+  $("[data-behavior='enable-feature']").each(function(){
+    var checkbox = $(this);
+    var target = $($(this).data('target'));
+
+    checkbox.on('change', function() {
+      if ($(this).is(':checked')) {
+        target.find('input:checkbox').not("[data-behavior='enable-feature']").prop('checked', true).attr('disabled', false);
+      } else {
+        target.find('input:checkbox').not("[data-behavior='enable-feature']").prop('checked', false).attr('disabled', true);
+      }
+    });
+  });
 }

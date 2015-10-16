@@ -8,6 +8,7 @@ module Spotlight
     belongs_to :exhibit, touch: true
     serialize :facet_fields, Hash
     serialize :index_fields, Hash
+    serialize :search_fields, Hash
     serialize :sort_fields, Hash
     serialize :default_solr_params, Hash
     serialize :show, Hash
@@ -36,6 +37,13 @@ module Spotlight
         v[:show] ||= true if v[:show].nil?
         v.reject! { |_k, v1| v1.blank? && v1 != false }
       end if model.facet_fields
+
+      model.search_fields.each do |k, v|
+        v[:enabled] &&= value_to_boolean(v[:enabled])
+        v[:enabled] ||= true if v[:enabled].nil?
+        v[:label] = default_blacklight_config.search_fields[k][:label] if default_blacklight_config.search_fields[k] && !v[:label].present?
+        v.reject! { |_k, v1| v1.blank? && v1 != false }
+      end if model.search_fields
 
       model.sort_fields.each do |k, v|
         v[:enabled] &&= value_to_boolean(v[:enabled])
@@ -114,6 +122,20 @@ module Spotlight
         end
 
         config.show_fields = config.index_fields
+
+        unless search_fields.blank?
+          config.search_fields = Hash[config.search_fields.sort_by { |k, _v| field_weight(search_fields, k) }]
+
+          config.search_fields.each do |k, v|
+            v.upstream_if = v.if unless v.if.nil?
+            v.if = :field_enabled?
+            next if search_fields[k].blank?
+
+            v.merge! search_fields[k].symbolize_keys
+            v.normalize! config
+            v.validate!
+          end
+        end
 
         unless sort_fields.blank?
           config.sort_fields = Hash[config.sort_fields.sort_by { |k, _v| field_weight(sort_fields, k) }]

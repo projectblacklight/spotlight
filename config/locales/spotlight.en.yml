@@ -162,6 +162,16 @@ en:
           options: "Options"
           facets: "Facets"
           results: "Results"
+      search_fields:
+        header: "Field-based search"
+        help: >
+          Enable field-based search to add a dropdown menu to your exhibit sites search box that
+          provides the user with an option to restrict a search query to a single metadata field.
+        instructions: >
+          If enabled, you can select the metadata fields that are available for searching. Click
+          a field name to edit its display label.  Drag and drop fields to specify the order they
+          are displayed in the search box dropdown menu.
+        enable_feature: Enable field-based search
       facets:
         help: >
           If the sidebar is visible, users can use

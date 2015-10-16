@@ -271,6 +271,11 @@ describe Spotlight::BlacklightConfiguration, type: :model do
                   'title' => { enabled: true },
                   'type' => { enabled: true })
       end
+      its(:search_fields) do
+        should eq('all_fields' => { enabled: true },
+                  'title' => { enabled: true },
+                  'author' => { enabled: true })
+      end
       its(:default_per_page) { should eq 10 }
       its(:document_index_view_types) { should match_array ::CatalogController.blacklight_config.view.keys.map(&:to_s) }
     end
@@ -301,6 +306,34 @@ describe Spotlight::BlacklightConfiguration, type: :model do
 
       expect(subject.blacklight_config.sort_fields.select { |_k, v| v.enabled == true }).to include('a', 'c')
       expect(subject.blacklight_config.sort_fields.select { |_k, v| v.enabled == true }).not_to include('b', 'd')
+    end
+  end
+
+  describe 'search fields' do
+    it 'has search fields' do
+      expect(subject.search_fields).to be_empty
+      subject.search_fields['title'] = {}
+      subject.search_fields['author'] = {}
+      expect(subject.search_fields.keys).to eq %w(title author)
+    end
+
+    it 'filters blank values' do
+      subject.search_fields['title'] = { something: '' }
+      subject.valid?
+      expect(subject.search_fields['title'].keys).to_not include :something
+    end
+
+    it 'filters the upstream blacklight config' do
+      subject.search_fields['a'] = { enabled: true }
+      subject.search_fields['c'] = { enabled: true }
+      subject.search_fields['d'] = { enabled: true }
+
+      blacklight_config.add_search_field 'a'
+      blacklight_config.add_search_field 'b'
+      blacklight_config.add_search_field 'c'
+
+      expect(subject.blacklight_config.search_fields.select { |_k, v| v.enabled == true }).to include('a', 'c')
+      expect(subject.blacklight_config.search_fields.select { |_k, v| v.enabled == true }).not_to include('b', 'd')
     end
   end
 

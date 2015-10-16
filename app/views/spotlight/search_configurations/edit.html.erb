@@ -17,10 +17,7 @@
       </ul>
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="options">
-          <%= field_set_tag do %>
-          <%# TODO: figure out how we should do this:  via blacklight_config or @presenter %>
-            <%#= f.check_box(:searchable, label: t(:'.options.searchable')) %>
-          <% end %>
+          <%= render 'search_fields', f: f %>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="facets">
