@@ -133,6 +133,13 @@ describe Spotlight::ExhibitExportSerializer do
       expect(subject.resources.first.url.file.path).not_to eq resource.url.file.path
     end
 
+    it 'assigns normal resources the correct class' do
+      resource = FactoryGirl.create :resource, exhibit: source_exhibit
+      expect(subject.resources.length).to eq 1
+      expect(subject.resources.first.class).to eq Spotlight::Resource
+      expect(subject.resources.first.url).to eq resource.url
+    end
+
     it 'copies contact avatars' do
       contact = FactoryGirl.create :contact, exhibit: source_exhibit
       expect(subject.contacts.length).to eq 1

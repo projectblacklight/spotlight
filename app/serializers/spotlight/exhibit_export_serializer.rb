@@ -133,19 +133,34 @@ module Spotlight
     end
 
     collection :resources, class: ->(fragment, *) { fragment.key?('type') ? fragment['type'].constantize : Spotlight::Resource } do
-      (Spotlight::Resource.attribute_names - %w(id exhibit_id url)).each do |prop|
+      (Spotlight::Resource.attribute_names - %w(id url exhibit_id)).each do |prop|
         property prop
       end
 
+      property :url, exec_context: :decorator
       property :file, exec_context: :decorator
 
+      def url
+        return if represented.is_a? Spotlight::Resources::Upload
+
+        represented.url
+      end
+
+      def url=(url)
+        return if represented.is_a? Spotlight::Resources::Upload
+
+        represented.url = url
+      end
+
       def file
+        return unless represented.is_a? Spotlight::Resources::Upload
         file = represented.url.file
 
         { filename: file.filename, content_type: file.content_type, content: Base64.encode64(file.read) }
       end
 
       def file=(file)
+        return unless represented.is_a? Spotlight::Resources::Upload
         represented.url = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file['content'])),
                                                          filename: file['filename'],
                                                          content_type: file['content_type']
