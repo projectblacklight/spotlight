@@ -89,6 +89,25 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
         end
       end
 
+      it 'updates search fields' do
+        patch :update, exhibit_id: exhibit, blacklight_configuration: {
+          search_fields: {
+            'all_fields' => { 'enabled' => '1' },
+            'title' => { 'enabled' => '0', 'label' => 'Title' },
+            'author' => { 'enabled' => '1', 'label' => 'Primary Author' }
+          }
+        }
+        expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
+        expect(response).to redirect_to edit_exhibit_search_configuration_path(exhibit)
+        assigns[:exhibit].tap do |saved|
+          expect(saved.blacklight_configuration.search_fields).to eq(
+            'all_fields' => { 'label' => 'All fields', 'enabled' => true },
+            'title' => { 'label' => 'Title', 'enabled' => false },
+            'author' => { 'label' => 'Primary Author', 'enabled' => true }
+          )
+        end
+      end
+
       it 'updates appearance fields' do
         patch :update, exhibit_id: exhibit, blacklight_configuration: {
           document_index_view_types: { 'list' => '1', 'gallery' => '1', 'map' => '0' },

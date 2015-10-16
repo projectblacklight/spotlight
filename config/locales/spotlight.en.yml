@@ -114,8 +114,6 @@ en:
         header: Appearance
         exhibit_style:
           heading: "Exhibit style"
-          searchable:
-            label: "Searchable (offer searchbox and facet sidebar)"
         main_navigation:
           menu: Main menu
           help: >
@@ -164,9 +162,19 @@ en:
           options: "Options"
           facets: "Facets"
           results: "Results"
+      search_fields:
+        header: "Field-based search"
+        help: >
+          Enable field-based search to add a dropdown menu to your exhibit sites search box that
+          provides the user with an option to restrict a search query to a single metadata field.
+        instructions: >
+          If enabled, you can select the metadata fields that are available for searching. Click
+          a field name to edit its display label.  Drag and drop fields to specify the order they
+          are displayed in the search box dropdown menu.
+        enable_feature: Enable field-based search
       facets:
         help: >
-          If this exhibit is searchable and the sidebar is visible, users can use
+          If the sidebar is visible, users can use
           the facets shown in the sidebar to limit a search.  You can select the facets
           that are available for searching below. Click a facet field name to edit its display label.
           Drag and drop facets to specify the order they are displayed in the sidebar.
@@ -461,7 +469,7 @@ en:
         not_searchable_html: >
           This exhibit is not currently searchable. To perform searches that can be saved as
           additional browse categories, an Administrator must temporarily turn on the Searchable
-          option in the exhibit style section of the Administration > %{href} page.
+          option in the search configuration section of the Administration > %{href} page.
       edit:
         header: "Edit Browse Category"
         title: "Curation - Browse"

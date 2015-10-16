@@ -5,6 +5,53 @@ feature 'Search Configuration Administration', js: true do
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
 
+  describe 'search fields' do
+    it 'allows the curator to disable all search fields' do
+      visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
+      expect(page).to have_css 'select#search_field'
+
+      click_link exhibit_curator.email
+      within '#user-util-collapse .dropdown' do
+        click_link 'Dashboard'
+      end
+      click_link 'Search'
+      click_link 'Options'
+
+      uncheck 'Enable field-based search'
+
+      click_button 'Save changes'
+
+      expect(page).to have_content('The exhibit was successfully updated.')
+
+      expect(page).not_to have_css 'select#search_field'
+    end
+
+    it 'allows the curator to update search field options' do
+      visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
+      click_link exhibit_curator.email
+      within '#user-util-collapse .dropdown' do
+        click_link 'Dashboard'
+      end
+      click_link 'Search'
+
+      click_link 'Options'
+
+      within('#nested-search-fields') do
+        expect(page).to have_css("#blacklight_configuration_search_fields_title_label[type='hidden']", visible: false)
+        expect(page).not_to have_css("#blacklight_configuration_search_fields_title_label[type='text']")
+        click_link('Title')
+        expect(page).not_to have_css("#blacklight_configuration_search_fields_title_label[type='hidden']")
+        expect(page).to have_css("#blacklight_configuration_search_fields_title_label[type='text']")
+        fill_in 'blacklight_configuration_search_fields_title_label', with: 'My Title Label'
+      end
+
+      click_button 'Save changes'
+
+      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_select 'Search in', with_options: ['My Title Label']
+    end
+  end
+
   describe 'facets' do
     it 'allows us to update the label with edit-in-place' do
       input_id = 'blacklight_configuration_facet_fields_genre_ssim_label'

@@ -1,0 +1,24 @@
+.submit-search-text {
+  @extend .sr-only;
+}
+
+.search-query-form {
+  z-index: 1;
+
+  .input-group {
+    width: 100%;
+  }
+
+  .input-group-addon {
+    &.for-search-field {
+      background-color: $input-bg;
+      border-radius: $border-radius-base 0 0 $border-radius-base;
+      width: 15ch;
+    }
+  }
+
+  .search_field {
+    background: transparent;
+    border: none;
+  }
+}

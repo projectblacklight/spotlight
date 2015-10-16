@@ -44,13 +44,28 @@ describe Spotlight::MainAppHelpers, type: :helper do
       allow(helper).to receive(:controller).and_return(controller)
       allow(helper).to receive(:document_index_view_type).and_return(nil)
       allow(field).to receive(:enabled).and_return(true)
-      allow(field).to receive(:show).and_return(:value)
     end
+    context 'for sort fields' do
+      let(:field) { Blacklight::Configuration::SortField.new enabled: true }
+      it 'uses the enabled property for sort fields' do
+        expect(helper.field_enabled?(field)).to eq true
+      end
+    end
+
+    context 'for search fields' do
+      let(:field) { Blacklight::Configuration::SearchField.new enabled: true }
+      it 'uses the enabled property for search fields' do
+        expect(helper.field_enabled?(field)).to eq true
+      end
+    end
+
     it 'returns the value of field#show if the action_name is "show"' do
+      allow(field).to receive(:show).and_return(:value)
       allow(helper).to receive(:action_name).and_return('show')
       expect(helper.field_enabled?(field)).to eq :value
     end
     it 'returns the value of field#show if the action_name is "edit"' do
+      allow(field).to receive(:show).and_return(:value)
       allow(helper).to receive(:action_name).and_return('edit')
       expect(helper.field_enabled?(field)).to eq :value
     end

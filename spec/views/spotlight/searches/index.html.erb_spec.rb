@@ -12,6 +12,7 @@ describe 'spotlight/searches/index.html.erb', type: :view do
   describe 'Without searches' do
     it 'disables the update button' do
       assign(:searches, [])
+      expect(exhibit).to receive(:searchable?).and_return(true)
       render
       expect(rendered).to have_content 'You can save search results'
     end
@@ -25,7 +26,7 @@ describe 'spotlight/searches/index.html.erb', type: :view do
       expect(rendered).to have_css '.alert-warning', text: %(\
 This exhibit is not currently searchable. To perform searches that can \
 be saved as additional browse categories, an Administrator must \
-temporarily turn on the Searchable option in the exhibit style section \
+temporarily turn on the Searchable option in the search configuration section \
 of the Administration > Appearance page.)
     end
   end

@@ -28,13 +28,5 @@ describe Spotlight::HomePage, type: :model do
       home_page.display_sidebar = false
       expect(home_page.display_sidebar?).to be_falsey
     end
-    it 'is true when the exhibit is searchable' do
-      home_page.exhibit.searchable = true
-      expect(home_page.display_sidebar?).to be_truthy
-    end
-    it 'is false when the exhibit is not searchable' do
-      home_page.exhibit.searchable = false
-      expect(home_page.display_sidebar?).to be_falsey
-    end
   end
 end

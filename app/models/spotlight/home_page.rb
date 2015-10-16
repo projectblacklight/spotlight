@@ -13,7 +13,7 @@ module Spotlight
     end
 
     def display_sidebar?
-      exhibit.searchable? && display_sidebar
+      display_sidebar
     end
 
     private

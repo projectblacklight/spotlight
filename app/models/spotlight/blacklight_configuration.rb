@@ -8,6 +8,7 @@ module Spotlight
     belongs_to :exhibit, touch: true
     serialize :facet_fields, Hash
     serialize :index_fields, Hash
+    serialize :search_fields, Hash
     serialize :sort_fields, Hash
     serialize :default_solr_params, Hash
     serialize :show, Hash
@@ -37,6 +38,13 @@ module Spotlight
         v.reject! { |_k, v1| v1.blank? && v1 != false }
       end if model.facet_fields
 
+      model.search_fields.each do |k, v|
+        v[:enabled] &&= value_to_boolean(v[:enabled])
+        v[:enabled] ||= true if v[:enabled].nil?
+        v[:label] = default_blacklight_config.search_fields[k][:label] if default_blacklight_config.search_fields[k] && !v[:label].present?
+        v.reject! { |_k, v1| v1.blank? && v1 != false }
+      end if model.search_fields
+
       model.sort_fields.each do |k, v|
         v[:enabled] &&= value_to_boolean(v[:enabled])
         v[:enabled] ||= true if v[:enabled].nil?
@@ -65,11 +73,6 @@ module Spotlight
         config.index.merge! index unless index.blank?
 
         config.index.thumbnail_field ||= Spotlight::Engine.config.thumbnail_field
-
-        unless exhibit.searchable?
-          config.navbar.partials[:saved_searches].if = false
-          config.navbar.partials[:search_history].if = false
-        end
 
         config.add_results_collection_tool 'save_search', if: :render_save_this_search?
 
@@ -120,6 +123,20 @@ module Spotlight
 
         config.show_fields = config.index_fields
 
+        unless search_fields.blank?
+          config.search_fields = Hash[config.search_fields.sort_by { |k, _v| field_weight(search_fields, k) }]
+
+          config.search_fields.each do |k, v|
+            v.upstream_if = v.if unless v.if.nil?
+            v.if = :field_enabled?
+            next if search_fields[k].blank?
+
+            v.merge! search_fields[k].symbolize_keys
+            v.normalize! config
+            v.validate!
+          end
+        end
+
         unless sort_fields.blank?
           config.sort_fields = Hash[config.sort_fields.sort_by { |k, _v| field_weight(sort_fields, k) }]
 
@@ -162,6 +179,11 @@ module Spotlight
           v.upstream_if = v.if unless v.if.nil?
           v.if = :enabled_in_spotlight_view_type_configuration?
         end unless document_index_view_types.blank?
+
+        if config.search_fields.blank?
+          config.navbar.partials[:saved_searches].if = false if config.navbar.partials.key? :saved_searches
+          config.navbar.partials[:search_history].if = false if config.navbar.partials.key? :search_history
+        end
 
         config
       end

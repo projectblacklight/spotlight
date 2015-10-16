@@ -64,11 +64,11 @@
   }
 }
 
-.disabled-sort-option {
+.disabled-sort-option, .disabled-search-option {
   .panel {margin-bottom: 0;}
 }
 
-.sort_fields_admin {
+.sort_fields_admin, .search_fields_admin {
   .panel-title {
     display: inline;
   }

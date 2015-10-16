@@ -93,6 +93,10 @@ module Spotlight
       Spotlight::Engine.config.upload_fields
     end
 
+    def searchable?
+      blacklight_config.search_fields.any? { |_k, v| v.enabled && v.include_in_simple_select != false }
+    end
+
     protected
 
     def initialize_config
