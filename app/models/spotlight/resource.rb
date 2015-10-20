@@ -28,10 +28,15 @@ module Spotlight
 
     ##
     # @abstract
-    # Convert the resource into a new solr document.
+    # Convert this resource into zero-to-many new solr documents. The data here
+    # should be merged into the resource-specific {#to_solr} data.
+    #
+    # @return [Hash] a single solr document hash
+    # @return [Enumerator<Hash>] multiple solr document hashes. This can be a
+    #   simple array, or an lazy enumerator
     def to_solr
-      exhibit.solr_data.merge(Spotlight::Resource.resource_global_id_field => to_global_id.to_s,
-                              Spotlight::SolrDocument.resource_type_field => self.class.to_s.tableize)
+      (exhibit_specific_solr_data || {})
+        .merge(spotlight_resource_metadata_for_solr || {})
     end
 
     def self.resource_global_id_field
@@ -44,11 +49,20 @@ module Spotlight
       end
     end
 
+    ##
+    # Index the result of {#to_solr} into the index in batches of {#batch_size}
     def reindex
       run_callbacks :index do
         data = to_solr
-        data = [data] unless data.is_a? Array
-        blacklight_solr.update params: { commitWithin: 500 }, data: data.to_json, headers: { 'Content-Type' => 'application/json' } unless data.empty?
+        return if data.blank?
+
+        data &&= [data] if data.is_a? Hash
+
+        data.each_slice(batch_size) do |batch|
+          blacklight_solr.update params: { commitWithin: 500 },
+                                 data: batch.reject(&:blank?).map { |doc| doc.reverse_merge(existing_solr_doc_hash(doc[unique_key]) || {}) }.to_json,
+                                 headers: { 'Content-Type' => 'application/json' }
+        end
       end
     end
 
@@ -91,7 +105,37 @@ module Spotlight
     end
 
     def document_model
-      exhibit.blacklight_config.document_model
+      exhibit.blacklight_config.document_model if exhibit
+    end
+
+    def batch_size
+      Spotlight::Engine.config.solr_batch_size
+    end
+
+    def exhibit_specific_solr_data
+      exhibit.solr_data if exhibit
+    end
+
+    def spotlight_resource_metadata_for_solr
+      {
+        Spotlight::Resource.resource_global_id_field => (to_global_id.to_s if persisted?),
+        Spotlight::SolrDocument.resource_type_field => self.class.to_s.tableize
+      }
+    end
+
+    ##
+    # Get any exhibit-specific metadata stored in e.g. sidecars, tags, etc
+    # This needs the generated solr document
+    def existing_solr_doc_hash(id)
+      document_model.new(unique_key => id).to_solr if document_model && id.present?
+    end
+
+    def unique_key
+      if document_model
+        document_model.unique_key.to_sym
+      else
+        :id
+      end
     end
   end
 end

@@ -12,7 +12,7 @@ describe Spotlight::Resources::OpenGraph, type: :model do
 
   describe '#to_solr' do
     before do
-      allow(subject).to receive_messages id: 15, opengraph_properties: {}, exhibit: exhibit
+      allow(subject).to receive_messages id: 15, opengraph_properties: {}, exhibit: exhibit, persisted?: true
     end
 
     let(:solr_doc) { subject.to_solr }

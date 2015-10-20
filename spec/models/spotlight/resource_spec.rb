@@ -4,7 +4,7 @@ describe Spotlight::Resource, type: :model do
   before do
     allow_any_instance_of(described_class).to receive(:update_index)
   end
-  let(:exhibit) { double(solr_data: {}) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
 
   describe '.class_for_resource' do
     let(:thing) { double }
@@ -33,7 +33,7 @@ describe Spotlight::Resource, type: :model do
   describe '#to_solr' do
     before do
       allow(subject).to receive(:exhibit).and_return(exhibit)
-      allow(subject).to receive_messages(type: 'Spotlight::Resource::Something', id: 15)
+      allow(subject).to receive_messages(type: 'Spotlight::Resource::Something', id: 15, persisted?: true)
     end
     it 'includes a reference to the resource' do
       expect(subject.to_solr).to include spotlight_resource_id_ssim: subject.to_global_id.to_s
@@ -42,6 +42,36 @@ describe Spotlight::Resource, type: :model do
     it 'includes exhibit-specific data' do
       allow(exhibit).to receive(:solr_data).and_return(exhibit_data: true)
       expect(subject.to_solr).to include exhibit_data: true
+    end
+  end
+
+  describe '#reindex' do
+    context 'with a provider that generates ids' do
+      subject do
+        Class.new(described_class) do
+          def to_solr
+            super.merge(id: 123)
+          end
+        end.new(exhibit: exhibit)
+      end
+
+      before do
+        SolrDocument.new(id: 123).sidecars.create!(exhibit: exhibit, data: { document_data: true })
+        allow(subject).to receive_messages(to_global_id: '', update_index_time!: nil)
+      end
+
+      it 'includes exhibit document-specific data' do
+        expect(subject.send(:blacklight_solr)).to receive(:update) do |options|
+          data = JSON.parse(options[:data], symbolize_names: true)
+
+          expect(data.length).to eq 1
+          doc = data.first
+
+          expect(doc).to include document_data: true
+        end
+
+        subject.reindex
+      end
     end
   end
 
