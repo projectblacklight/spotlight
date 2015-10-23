@@ -17,6 +17,8 @@ these collections.)
   s.files = Dir['{app,config,db,lib,vendor}/**/*', 'Rakefile', 'README.md', 'LICENSE']
   s.test_files = Dir['spec/**/*'] - Dir['spec/internal/**/*']
 
+  s.required_ruby_version = '~> 2.2'
+
   s.add_dependency 'rails', '~> 4.0', '>= 4.2.0'
   s.add_dependency 'blacklight', '~> 5.13'
   s.add_dependency 'autoprefixer-rails'
