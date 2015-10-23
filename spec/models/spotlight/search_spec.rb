@@ -8,7 +8,7 @@ describe Spotlight::Search, type: :model do
   let(:document) do
     SolrDocument.new(id: 'dq287tq6352',
                      blacklight_config.index.title_field => 'title',
-                     Spotlight::Engine.config.full_image_field => 'https://stacks.stanford.edu/image/dq287tq6352/dq287tq6352_05_0001_thumb')
+                     Spotlight::Engine.config.full_image_field => 'https://stacks.stanford.edu/image/iiif/dq287tq6352%2Fdq287tq6352_05_0001/full/!400,400/0/default.jpg')
   end
   let(:document_without_an_image) do
     SolrDocument.new(id: 'ab123fd9876',
@@ -21,14 +21,14 @@ describe Spotlight::Search, type: :model do
     allow(subject).to receive_messages(documents: [document])
     subject.save!
     expect(subject.thumbnail).not_to be_nil
-    expect(subject.thumbnail.image.path).to end_with 'dq287tq6352_05_0001_thumb.jpeg'
+    expect(subject.thumbnail.image.path).to end_with 'default.jpg'
   end
 
   it 'uses a document with an image for the default feature image' do
     allow(subject).to receive_messages(documents: [document_without_an_image, document])
     subject.save!
     expect(subject.thumbnail).not_to be_nil
-    expect(subject.thumbnail.image.path).to end_with 'dq287tq6352_05_0001_thumb.jpeg'
+    expect(subject.thumbnail.image.path).to end_with 'default.jpg'
   end
 
   it 'has items' do
