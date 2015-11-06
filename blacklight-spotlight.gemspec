@@ -15,7 +15,7 @@ for digital collections to create attractive, feature-rich websites that feature
 these collections.)
 
   s.files = Dir['{app,config,db,lib,vendor}/**/*', 'Rakefile', 'README.md', 'LICENSE']
-  s.test_files = Dir['spec/**/*'] - Dir['spec/internal/**/*']
+  s.test_files = Dir['spec/**/*']
 
   s.required_ruby_version = '~> 2.2'
 
