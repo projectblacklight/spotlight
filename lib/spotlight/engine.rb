@@ -125,11 +125,13 @@ module Spotlight
 
     Spotlight::Engine.config.default_browse_index_view_type = :gallery
 
-    # Field containing the last modified date for a Solr document
-    Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
+    initializer 'blacklight.configuration' do
+      # Field containing the last modified date for a Solr document
+      Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
 
-    # Field containing the last modified date for a Solr document
-    Blacklight::Configuration.default_values[:browse] ||= Blacklight::OpenStructWithHashAccess.new(document_actions: [])
+      # Field containing the last modified date for a Solr document
+      Blacklight::Configuration.default_values[:browse] ||= Blacklight::OpenStructWithHashAccess.new(document_actions: [])
+    end
 
     # make blacklight configuration play nice with bootstrap_form
     Blacklight::OpenStructWithHashAccess.send(:extend, ActiveModel::Translation)

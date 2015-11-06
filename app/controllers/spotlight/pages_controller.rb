@@ -7,7 +7,7 @@ module Spotlight
 
     helper Openseadragon::OpenseadragonHelper
     include Spotlight::Base
-    include Blacklight::Catalog::SearchContext
+    include Blacklight::SearchContext
     include Spotlight::Catalog::AccessControlsEnforcement
 
     helper_method :get_search_results, :search_results, :search_params_logic, :fetch, :page_collection_name
