@@ -72,6 +72,13 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :view
   config.include Spotlight::TestViewHelpers, type: :view
   config.include Warden::Test::Helpers, type: :feature
+
+  config.include(ControllerLevelHelpers, type: :helper)
+  config.before(:each, type: :helper) { initialize_controller_helpers(helper) }
+
+  config.include(ControllerLevelHelpers, type: :view)
+  config.before(:each, type: :view) { initialize_controller_helpers(view) }
+
   config.after(:each, type: :feature) { Warden.test_reset! }
   config.include Controllers::EngineHelpers, type: :controller
   config.include Capybara::DSL
