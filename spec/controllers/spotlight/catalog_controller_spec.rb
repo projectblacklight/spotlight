@@ -28,7 +28,7 @@ describe Spotlight::CatalogController, type: :controller do
       let(:search) { FactoryGirl.create(:search, exhibit: exhibit) }
       it 'shows the item' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
-        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
+        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to be_successful
       end
@@ -39,7 +39,7 @@ describe Spotlight::CatalogController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(search.title, exhibit_browse_path(exhibit, search))
-        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
+        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to be_successful
       end
@@ -50,7 +50,7 @@ describe Spotlight::CatalogController, type: :controller do
 
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with(feature_page.title, [exhibit, feature_page])
-        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
+        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to be_successful
       end
@@ -60,7 +60,7 @@ describe Spotlight::CatalogController, type: :controller do
         allow(controller).to receive_messages(current_page_context: home_page)
 
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
-        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_catalog_path(exhibit, document))
+        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to be_successful
       end
@@ -79,7 +79,7 @@ describe Spotlight::CatalogController, type: :controller do
     describe 'GET index' do
       it 'shows the index when there are parameters' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
-        expect(controller).to receive(:add_breadcrumb).with('Search Results', exhibit_catalog_index_path(exhibit, q: 'map'))
+        expect(controller).to receive(:add_breadcrumb).with('Search Results', search_exhibit_catalog_path(exhibit, q: 'map'))
         get :index, exhibit_id: exhibit, q: 'map'
         expect(response).to be_successful
       end
@@ -102,7 +102,7 @@ describe Spotlight::CatalogController, type: :controller do
         expect(doc['description']).to eq 'ps921pn8250'
         expect(doc['title']).to eq "PLANISPHERE URANO-GEOGRAPHIQUE c'estadire LES SPHERES CELESTE et TERRESTRE mises en plan."
         expect(doc['thumbnail']).to eq assigns[:document_list].first.first(:thumbnail_url_ssm)
-        expect(doc['url']).to eq exhibit_catalog_path(exhibit, id: 'ps921pn8250')
+        expect(doc['url']).to eq exhibit_solr_document_path(exhibit, id: 'ps921pn8250')
       end
       it 'has partial matches for id' do
         get :autocomplete, exhibit_id: exhibit, q: 'dx157', format: 'json'
@@ -118,12 +118,6 @@ describe Spotlight::CatalogController, type: :controller do
   describe 'when the user is not authorized' do
     before do
       sign_in FactoryGirl.create(:exhibit_visitor)
-    end
-
-    describe 'GET index' do
-      it 'applies gated discovery access controls' do
-        expect(controller.search_params_logic).to include :apply_permissive_visibility_filter
-      end
     end
 
     describe 'GET admin' do
@@ -153,7 +147,8 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'PUT make_public' do
       it 'is not allowed' do
-        put :make_public, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
+        put :make_public, exhibit_id: exhibit, id: 'dq287tq6352'
+
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to eq 'You are not authorized to access this page.'
       end
@@ -161,7 +156,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'DELETE make_private' do
       it 'is not allowed' do
-        delete :make_private, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
+        delete :make_private, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to eq 'You are not authorized to access this page.'
       end
@@ -174,7 +169,7 @@ describe Spotlight::CatalogController, type: :controller do
     it 'shows all the items' do
       expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
       expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-      expect(controller).to receive(:add_breadcrumb).with('Items', admin_exhibit_catalog_index_path(exhibit))
+      expect(controller).to receive(:add_breadcrumb).with('Items', admin_exhibit_catalog_path(exhibit))
       get :admin, exhibit_id: exhibit
       expect(response).to be_successful
       expect(assigns[:document_list]).to be_a Array
@@ -215,7 +210,7 @@ describe Spotlight::CatalogController, type: :controller do
       it 'is successful' do
         expect_any_instance_of(::SolrDocument).to receive(:reindex)
         expect_any_instance_of(::SolrDocument).to receive(:make_public!).with(exhibit)
-        put :make_public, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
+        put :make_public, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to redirect_to 'where_i_came_from'
       end
     end
@@ -229,7 +224,7 @@ describe Spotlight::CatalogController, type: :controller do
       it 'is successful' do
         expect_any_instance_of(::SolrDocument).to receive(:reindex)
         expect_any_instance_of(::SolrDocument).to receive(:make_private!).with(exhibit)
-        delete :make_private, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
+        delete :make_private, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to redirect_to 'where_i_came_from'
       end
     end
@@ -359,6 +354,87 @@ describe Spotlight::CatalogController, type: :controller do
           expect(assigns(:previous_document)).to be_nil
           expect(assigns(:next_document)).to be_nil
         end
+      end
+    end
+  end
+
+  describe '#field_enabled?' do
+    let(:field) { FactoryGirl.create(:custom_field) }
+    before do
+      controller.extend(Blacklight::Catalog)
+      allow(controller).to receive(:document_index_view_type).and_return(nil)
+      allow(field).to receive(:enabled).and_return(true)
+    end
+    context 'for sort fields' do
+      let(:field) { Blacklight::Configuration::SortField.new enabled: true }
+      it 'uses the enabled property for sort fields' do
+        expect(controller.field_enabled?(field)).to eq true
+      end
+    end
+
+    context 'for search fields' do
+      let(:field) { Blacklight::Configuration::SearchField.new enabled: true }
+      it 'uses the enabled property for search fields' do
+        expect(controller.field_enabled?(field)).to eq true
+      end
+    end
+
+    it 'returns the value of field#show if the action_name is "show"' do
+      allow(field).to receive(:show).and_return(:value)
+      allow(controller).to receive(:action_name).and_return('show')
+      expect(controller.field_enabled?(field)).to eq :value
+    end
+    it 'returns the value of field#show if the action_name is "edit"' do
+      allow(field).to receive(:show).and_return(:value)
+      allow(controller).to receive(:action_name).and_return('edit')
+      expect(controller.field_enabled?(field)).to eq :value
+    end
+    it 'returns the value of the original if condition' do
+      allow(field).to receive(:upstream_if).and_return false
+      expect(controller.field_enabled?(field)).to eq false
+    end
+  end
+
+  describe '#enabled_in_spotlight_view_type_configuration?' do
+    let(:view) { OpenStruct.new }
+    before do
+      controller.extend(Blacklight::Catalog)
+    end
+
+    it 'respects the original if condition' do
+      view.upstream_if = false
+      expect(controller.enabled_in_spotlight_view_type_configuration?(view)).to eq false
+    end
+
+    it 'is true if there is no exhibit context' do
+      allow(controller).to receive(:current_exhibit).and_return(nil)
+      expect(controller.enabled_in_spotlight_view_type_configuration?(view)).to eq true
+    end
+
+    it "is true if we're in a page context" do
+      allow(controller).to receive(:current_exhibit).and_return(nil)
+      allow(controller).to receive(:is_a?).with(Spotlight::PagesController).and_return(true)
+      expect(controller.enabled_in_spotlight_view_type_configuration?(view)).to eq true
+    end
+  end
+
+  describe 'save_search rendering' do
+    let(:current_exhibit) { FactoryGirl.create(:exhibit) }
+    before { allow(controller).to receive_messages(current_exhibit: current_exhibit) }
+    describe 'render_save_this_search?' do
+      it 'returns false if we are on the items admin screen' do
+        allow(controller).to receive(:can?).with(:curate, current_exhibit).and_return(true)
+        allow(controller).to receive(:params).and_return(controller: 'spotlight/catalog', action: 'admin')
+        expect(controller.render_save_this_search?).to be_falsey
+      end
+      it 'returns true if we are not on the items admin screen' do
+        allow(controller).to receive(:can?).with(:curate, current_exhibit).and_return(true)
+        allow(controller).to receive(:params).and_return(controller: 'spotlight/catalog', action: 'index')
+        expect(controller.render_save_this_search?).to be_truthy
+      end
+      it 'returns false if a user cannot curate the object' do
+        allow(controller).to receive(:can?).with(:curate, current_exhibit).and_return(false)
+        expect(controller.render_save_this_search?).to be_falsey
       end
     end
   end

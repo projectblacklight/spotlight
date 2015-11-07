@@ -11,11 +11,11 @@ describe 'Item Administration', type: :feature do
 
   describe 'admin' do
     it "does not have a 'Save this search' button" do
-      visit spotlight.admin_exhibit_catalog_index_path(exhibit)
+      visit spotlight.admin_exhibit_catalog_path(exhibit)
       expect(page).not_to have_css('button', text: 'Save this search')
     end
     it 'has catalog items' do
-      visit spotlight.admin_exhibit_catalog_index_path(exhibit)
+      visit spotlight.admin_exhibit_catalog_path(exhibit)
       expect(page).to have_css('h1 small', text: 'Items')
       expect(page).to have_css('table#documents')
       expect(page).to have_css('.pagination')
@@ -26,7 +26,7 @@ describe 'Item Administration', type: :feature do
     end
 
     it 'has a public/private toggle' do
-      visit spotlight.admin_exhibit_catalog_index_path(exhibit)
+      visit spotlight.admin_exhibit_catalog_path(exhibit)
       item = first('tr[itemscope]')
       expect(item).to have_button 'Make Private'
       item.click_button 'Make Private'
@@ -37,7 +37,7 @@ describe 'Item Administration', type: :feature do
     end
 
     it "toggles the 'blacklight-private' label", js: true do
-      visit spotlight.admin_exhibit_catalog_index_path(exhibit)
+      visit spotlight.admin_exhibit_catalog_path(exhibit)
       # The label should be toggled when the checkbox is clicked
       expect(page).to_not have_css('tr.blacklight-private')
       within 'tr[itemscope]:first-child' do
@@ -47,7 +47,7 @@ describe 'Item Administration', type: :feature do
 
       # The label should show up on page load
       expect(page).to have_css('tr.blacklight-private')
-      visit spotlight.admin_exhibit_catalog_index_path(exhibit)
+      visit spotlight.admin_exhibit_catalog_path(exhibit)
       within 'tr[itemscope]:first-child' do
         find("input.toggle_visibility[type='checkbox']").click
       end

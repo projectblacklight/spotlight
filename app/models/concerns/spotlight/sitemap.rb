@@ -75,7 +75,7 @@ module Spotlight
     # Add all catalog resources to the sitemap
     def add_resources
       exhibit.solr_documents.each do |d|
-        sitemap.add sitemap.exhibit_catalog_path(exhibit, d), priority: 0.25, lastmod: document_last_modified(d)
+        sitemap.add sitemap.exhibit_solr_document_path(exhibit, d), priority: 0.25, lastmod: document_last_modified(d)
       end
     end
 

@@ -22,7 +22,7 @@ module Spotlight
 
     def get_search_widget_search_results(block)
       if block.searches?
-        search_results(block.query_params.with_indifferent_access.merge(params), search_params_logic)
+        search_results(block.query_params.with_indifferent_access.merge(params))
       else
         []
       end

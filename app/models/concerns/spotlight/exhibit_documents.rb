@@ -24,7 +24,7 @@ module Spotlight
     private
 
     def exhibit_search_builder
-      blacklight_config.search_builder_class.new(true, exhibit_search_builder_context).except(:apply_permissive_visibility_filter)
+      blacklight_config.search_builder_class.new(exhibit_search_builder_context).except(:apply_permissive_visibility_filter)
     end
 
     def exhibit_search_builder_context
@@ -32,8 +32,7 @@ module Spotlight
     end
 
     def repository
-      @repository ||= Blacklight.repository_class.new(blacklight_config) if Blacklight.respond_to? :repository_class
-      @repository ||= Blacklight::Solr::Repository.new(blacklight_config)
+      @repository ||= Blacklight.repository_class.new(blacklight_config)
     end
   end
 end

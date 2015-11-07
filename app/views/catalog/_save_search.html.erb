@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body">
         <%=f.text_field :title, label: t(:'spotlight.saved_search.title'), required: true %>
-        <%= render_hash_as_hidden_fields(params_for_search().except(:qt, :page, :utf8)) %>
+        <%= render_hash_as_hidden_fields(search_state.params_for_search.except(:qt, :page, :utf8)) %>
       </div>
       <div class="modal-footer">
         <%= f.submit nil, class: 'btn btn-primary pull-right' %>

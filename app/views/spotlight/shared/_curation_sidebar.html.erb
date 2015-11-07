@@ -1,6 +1,6 @@
 <h4 class="nav-heading"><%=t(:'spotlight.curation.sidebar.header') %></h4>
 <ul class="nav sidenav">
-  <li><%= link_to t(:'spotlight.curation.sidebar.items'), spotlight.admin_exhibit_catalog_index_path(current_exhibit) %></li>
+  <li><%= link_to t(:'spotlight.curation.sidebar.items'), spotlight.admin_exhibit_catalog_path(current_exhibit) %></li>
   <% if can? :tag, current_exhibit %>
   <li><%= link_to t(:'spotlight.curation.sidebar.tags'), spotlight.exhibit_tags_path(current_exhibit) %></li>
   <% end %>

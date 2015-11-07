@@ -28,6 +28,8 @@ module Spotlight
 
     config.autoload_paths += %W(
       #{config.root}/app/builders
+      #{config.root}/app/controllers/concerns
+      #{config.root}/app/models/concerns
     )
 
     initializer 'spotlight.initialize' do

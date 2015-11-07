@@ -36,13 +36,13 @@ describe Spotlight::ApplicationHelper, type: :helper do
 
       # controller provided helper.
       allow(helper).to receive(:search_action_url) do |*args|
-        spotlight.exhibit_catalog_index_path(helper.current_exhibit, *args)
+        spotlight.search_exhibit_catalog_path(helper.current_exhibit, *args)
       end
     end
 
     it 'is a url for a search with the given tag facet' do
       allow(SolrDocument).to receive_messages(solr_field_for_tagger: :exhibit_tags)
-      expected = spotlight.exhibit_catalog_index_path(exhibit_id: helper.current_exhibit, f: { exhibit_tags: ['tag_value'] })
+      expected = spotlight.search_exhibit_catalog_path(exhibit_id: helper.current_exhibit, f: { exhibit_tags: ['tag_value'] })
       expect(helper.url_to_tag_facet('tag_value')).to eq expected
     end
   end
@@ -130,27 +130,6 @@ describe Spotlight::ApplicationHelper, type: :helper do
     it 'passes a full URI through' do
       upload = double(url: 'http://some.host/x/y/z')
       expect(helper.carrierwave_url(upload)).to eq 'http://some.host/x/y/z'
-    end
-  end
-
-  describe 'save_search rendering' do
-    let(:current_exhibit) { FactoryGirl.create(:exhibit) }
-    before { allow(helper).to receive_messages(current_exhibit: current_exhibit) }
-    describe 'render_save_this_search?' do
-      it 'returns false if we are on the items admin screen' do
-        allow(helper).to receive(:"can?").with(:curate, current_exhibit).and_return(true)
-        allow(helper).to receive(:params).and_return(controller: 'spotlight/catalog', action: 'admin')
-        expect(helper.render_save_this_search?).to be_falsey
-      end
-      it 'returns true if we are not on the items admin screen' do
-        allow(helper).to receive(:"can?").with(:curate, current_exhibit).and_return(true)
-        allow(helper).to receive(:params).and_return(controller: 'spotlight/catalog', action: 'index')
-        expect(helper.render_save_this_search?).to be_truthy
-      end
-      it 'returns false if a user cannot curate the object' do
-        allow(helper).to receive(:"can?").with(:curate, current_exhibit).and_return(false)
-        expect(helper.render_save_this_search?).to be_falsey
-      end
     end
   end
 

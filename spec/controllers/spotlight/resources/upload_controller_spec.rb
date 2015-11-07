@@ -33,7 +33,7 @@ describe Spotlight::Resources::UploadController, type: :controller do
       it 'redirects to the item admin page' do
         post :create, exhibit_id: exhibit, resources_upload: { url: 'url-data' }
         expect(flash[:notice]).to eq 'Object uploaded successfully.'
-        expect(response).to redirect_to admin_exhibit_catalog_index_path(exhibit, sort: :timestamp)
+        expect(response).to redirect_to admin_exhibit_catalog_path(exhibit, sort: :timestamp)
       end
       it 'redirects to the upload form when the add-and-continue parameter is present' do
         post :create, exhibit_id: exhibit, 'add-and-continue' => 'true', resources_upload: { url: 'url-data' }

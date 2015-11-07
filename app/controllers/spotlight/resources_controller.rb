@@ -12,7 +12,7 @@ module Spotlight
     def new
       add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), exhibit_root_path(@exhibit)
       add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
-      add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)
+      add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_path(@exhibit)
       add_breadcrumb t(:'spotlight.resources.new.header'), new_exhibit_resource_path(@exhibit)
 
       render
@@ -20,7 +20,7 @@ module Spotlight
 
     def create
       if @resource.save_and_index
-        redirect_to admin_exhibit_catalog_index_path(@resource.exhibit, sort: :timestamp)
+        redirect_to admin_exhibit_catalog_path(@resource.exhibit, sort: :timestamp)
       else
         render action: 'new'
       end
@@ -33,7 +33,7 @@ module Spotlight
     def reindex_all
       @exhibit.reindex_later
 
-      redirect_to admin_exhibit_catalog_index_path(@exhibit), notice: t(:'spotlight.resources.reindexing_in_progress')
+      redirect_to admin_exhibit_catalog_path(@exhibit), notice: t(:'spotlight.resources.reindexing_in_progress')
     end
 
     protected

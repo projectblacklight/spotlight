@@ -9,7 +9,7 @@ describe 'Slideshow', type: :feature, js: true do
     exhibit.blacklight_configuration.update(document_index_view_types: %w(list gallery slideshow))
   end
   it 'has slideshow' do
-    visit spotlight.exhibit_catalog_index_path(exhibit, f: { genre_ssim: ['map'] })
+    visit spotlight.search_exhibit_catalog_path(exhibit, f: { genre_ssim: ['map'] })
     expect(page).to have_content 'You searched for:'
     within '.view-type' do
       click_link 'Slideshow'
