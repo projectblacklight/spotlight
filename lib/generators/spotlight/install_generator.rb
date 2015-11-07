@@ -11,7 +11,7 @@ module Spotlight
     def inject_spotlight_routes
       route "mount Spotlight::Engine, at: 'spotlight'"
       gsub_file 'config/routes.rb', /^\s*root.*/ do |match|
-        '#' + match + ' # replaced by spotlight root path'
+        '#  ' + match.strip + ' # replaced by spotlight root path'
       end
       route "root to: 'spotlight/exhibits#index'"
     end
@@ -78,10 +78,10 @@ module Spotlight
     def add_search_builder_mixin
       if File.exist? 'app/models/search_builder.rb'
         inject_into_file 'app/models/search_builder.rb', after: "include Blacklight::Solr::SearchBuilderBehavior\n" do
-          "\n  include Spotlight::Catalog::AccessControlsEnforcement::SearchBuilder\n"
+          "\n  include Spotlight::AccessControlsEnforcementSearchBuilder\n"
         end
       else
-        say 'Unable to find SearchBuilder class; add `include Spotlight::Catalog::AccessControlsEnforcement::SearchBuilder` to the class manually.'
+        say 'Unable to find SearchBuilder class; add `include Spotlight::AccessControlsEnforcementSearchBuilder` to the class manually.'
       end
     end
 
@@ -95,7 +95,7 @@ module Spotlight
     end
 
     def add_oembed
-      gem 'blacklight-oembed'
+      gem 'blacklight-oembed', '>= 0.1.0'
       generate 'blacklight_oembed:install'
     end
 
