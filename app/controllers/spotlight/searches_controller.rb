@@ -11,7 +11,6 @@ module Spotlight
 
     include Spotlight::Base
 
-    # rubocop:disable Metrics/AbcSize
     def create
       @search.attributes = search_params
       @search.query_params = params.except(:exhibit_id, :search, *blacklisted_search_session_params).reject { |_k, v| v.blank? }
@@ -22,7 +21,6 @@ module Spotlight
         redirect_to :back, alert: @search.errors.full_messages.join('<br>'.html_safe)
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def index
       respond_to do |format|

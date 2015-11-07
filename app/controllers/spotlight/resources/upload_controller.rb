@@ -22,7 +22,7 @@ module Spotlight
         add_breadcrumb t(:'spotlight.resources.upload.new.header'), new_exhibit_resources_upload_path(@exhibit)
       end
 
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:disable Metrics/MethodLength
       def create
         @resource.attributes = resource_params
 
@@ -38,7 +38,7 @@ module Spotlight
           redirect_to admin_exhibit_catalog_index_path(@resource.exhibit, sort: :timestamp)
         end
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:enable Metrics/MethodLength
 
       def csv_upload
         file = csv_params[:url]
