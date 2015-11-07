@@ -44,7 +44,7 @@ module Spotlight
     def documents
       return enum_for(:documents) unless block_given?
 
-      Blacklight::SolrResponse.new(solr_response, {}).docs.each do |result|
+      Blacklight::Solr::Response.new(solr_response, {}).docs.each do |result|
         yield blacklight_config.document_model.new(result)
       end
     end

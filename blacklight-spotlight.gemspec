@@ -15,12 +15,12 @@ for digital collections to create attractive, feature-rich websites that feature
 these collections.)
 
   s.files = Dir['{app,config,db,lib,vendor}/**/*', 'Rakefile', 'README.md', 'LICENSE']
-  s.test_files = Dir['spec/**/*'] - Dir['spec/internal/**/*']
+  s.test_files = Dir['spec/**/*']
 
   s.required_ruby_version = '~> 2.2'
 
   s.add_dependency 'rails', '~> 4.0', '>= 4.2.0'
-  s.add_dependency 'blacklight', '~> 5.13'
+  s.add_dependency 'blacklight', '~> 5.16'
   s.add_dependency 'autoprefixer-rails'
   s.add_dependency 'cancancan'
   s.add_dependency 'sir_trevor_rails', '~> 0.5.0b1'
@@ -56,7 +56,7 @@ these collections.)
   s.add_development_dependency 'rspec-activemodel-mocks'
   s.add_development_dependency 'rspec-collection_matchers'
   s.add_development_dependency 'capybara', '>= 2.5.0'
-  s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'rubocop', '~> 0.35'
   s.add_development_dependency 'rubocop-rspec'
   s.add_development_dependency 'poltergeist', '>= 1.5.0'
   s.add_development_dependency 'factory_girl', '~> 4.5'

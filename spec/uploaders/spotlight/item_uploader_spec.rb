@@ -18,7 +18,7 @@ describe Spotlight::ItemUploader do
     end
 
     before do
-      subject.store!(File.open(File.expand_path(File.join('..', 'fixtures', '800x600.png'), Rails.root)))
+      subject.store!(File.open(File.expand_path(File.join('..', 'spec', 'fixtures', '800x600.png'), Rails.root)))
     end
 
     after do
@@ -52,7 +52,7 @@ describe Spotlight::ItemUploader do
           end
         end
       }
-      subject.store!(File.open(File.expand_path(File.join('..', 'fixtures', '800x600.png'), Rails.root)))
+      subject.store!(File.open(File.expand_path(File.join('..', 'spec', 'fixtures', '800x600.png'), Rails.root)))
     end
 
     after do

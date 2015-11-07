@@ -5,6 +5,7 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   RunRailsCops: true
   Exclude:
+    - '.internal_test_app/**/*'
     - 'bin/**/*'
     - 'db/**/*'
     - 'spec/internal/**/*'

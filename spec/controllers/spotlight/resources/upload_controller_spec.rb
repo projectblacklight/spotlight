@@ -29,7 +29,7 @@ describe Spotlight::Resources::UploadController, type: :controller do
     end
 
     describe 'POST csv_upload' do
-      let(:csv) { fixture_file_upload(File.expand_path(File.join('..', 'fixtures', 'csv-upload-fixture.csv'), Rails.root), 'text/csv') }
+      let(:csv) { fixture_file_upload(File.expand_path(File.join('..', 'spec', 'fixtures', 'csv-upload-fixture.csv'), Rails.root), 'text/csv') }
       let(:serialized_csv) do
         [
           {

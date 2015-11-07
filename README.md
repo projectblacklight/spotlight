@@ -71,7 +71,7 @@ See the [Spotlight wiki](https://github.com/sul-dlss/spotlight/wiki) for more de
 
 Spotlight:
 
-* is a Rails engine and needs to be used in the context of a Rails application. We use [engine_cart](https://github.com/cbeer/engine_cart) to create an internal test application at spec/internal.
+* is a Rails engine and needs to be used in the context of a Rails application. We use [engine_cart](https://github.com/cbeer/engine_cart) to create an internal test application at .internal_test_app/
 * uses Solr as part of its integration tests. We use [jettywrapper](https://github.com/projecthydra/jettywrapper) to manage the Solr instance used for development and test.
 
 Our `$ rake ci` and `$ rake spotlight:server` tasks utilize Solr and the testing rails app automatically.

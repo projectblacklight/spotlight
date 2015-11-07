@@ -1,10 +1,10 @@
 require 'rails/generators'
 
 class TestAppGenerator < Rails::Generators::Base
-  source_root '../../spec/test_app_templates'
+  source_root '../spec/test_app_templates'
 
   def add_gems
-    gem 'blacklight', '~> 5.13'
+    gem 'blacklight', '~> 5.16'
     gem 'blacklight-gallery', '>= 0.3.0'
     gem 'jettywrapper'
     Bundler.with_clean_env do
