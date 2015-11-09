@@ -3,6 +3,8 @@ module Spotlight
   # Exhibit resources
   class Resource < ActiveRecord::Base
     include Spotlight::SolrDocument::AtomicUpdates
+    include ActiveSupport::Benchmarkable
+
     extend ActiveModel::Callbacks
     define_model_callbacks :index
 
@@ -52,16 +54,13 @@ module Spotlight
     ##
     # Index the result of {#to_solr} into the index in batches of {#batch_size}
     def reindex
-      run_callbacks :index do
-        data = to_solr
-        return if data.blank?
-
-        data &&= [data] if data.is_a? Hash
-
-        data.each_slice(batch_size) do |batch|
-          blacklight_solr.update params: { commitWithin: 500 },
-                                 data: batch.reject(&:blank?).map { |doc| doc.reverse_merge(existing_solr_doc_hash(doc[unique_key]) || {}) }.to_json,
-                                 headers: { 'Content-Type' => 'application/json' }
+      benchmark "Reindexing #{self} (batch size: #{batch_size})" do
+        run_callbacks :index do
+          documents_to_index.each_slice(batch_size) do |batch|
+            blacklight_solr.update params: { commitWithin: 500 },
+                                   data: batch.to_json,
+                                   headers: { 'Content-Type' => 'application/json' }
+          end
         end
       end
     end
@@ -121,6 +120,21 @@ module Spotlight
         Spotlight::Resource.resource_global_id_field => (to_global_id.to_s if persisted?),
         Spotlight::SolrDocument.resource_type_field => self.class.to_s.tableize
       }
+    end
+
+    ##
+    # @return an enumerator of all the indexable documents for this resource
+    def documents_to_index
+      return to_enum(:documents_to_index) unless block_given?
+
+      data = to_solr
+      return if data.blank?
+
+      data &&= [data] if data.is_a? Hash
+
+      data.reject(&:blank?).each do |doc|
+        yield doc.reverse_merge(existing_solr_doc_hash(doc[unique_key]) || {})
+      end
     end
 
     ##
