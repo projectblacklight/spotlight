@@ -24,20 +24,20 @@ describe Spotlight::Resource, type: :model do
   describe '#reindex' do
     context 'with a provider that generates ids' do
       subject do
-        Class.new(described_class) do
-          def to_solr
-            super.merge(id: 123)
-          end
-        end.new(exhibit: exhibit)
+        Class.new(described_class).new(exhibit: exhibit)
       end
+
+      let(:solr_response) { { id: 123 } }
 
       before do
         SolrDocument.new(id: 123).sidecars.create!(exhibit: exhibit, data: { document_data: true })
-        allow(subject).to receive_messages(to_global_id: '', update_index_time!: nil)
+        allow(subject).to receive_messages(to_global_id: '')
+
+        allow(subject).to receive(:to_solr).and_return(solr_response)
       end
 
       it 'includes exhibit document-specific data' do
-        expect(subject.send(:blacklight_solr)).to receive(:update) do |options|
+        allow(subject.send(:blacklight_solr)).to receive(:update) do |options|
           data = JSON.parse(options[:data], symbolize_names: true)
 
           expect(data.length).to eq 1
@@ -47,6 +47,33 @@ describe Spotlight::Resource, type: :model do
         end
 
         subject.reindex
+      end
+
+      context 'with a resource that creates multiple solr documents' do
+        let(:solr_response) { [{ id: 1 }, { id: 2 }] }
+
+        before do
+          allow(subject.send(:blacklight_solr)).to receive(:update)
+        end
+
+        it 'returns the number of indexed objects' do
+          expect(subject.reindex).to eq 2
+        end
+
+        it 'triggers a solr commit' do
+          expect(subject.send(:blacklight_solr)).to receive(:commit).once
+
+          subject.reindex
+        end
+
+        it 'records indexing metadata as document attributes' do
+          subject.reindex
+
+          expect(subject.indexed_at).to be > Time.zone.now - 5.seconds
+          expect(subject.last_indexed_estimate).to eq 2
+          expect(subject.last_indexed_count).to eq 2
+          expect(subject.last_index_elapsed_time).to be < 1
+        end
       end
     end
   end
@@ -60,10 +87,20 @@ describe Spotlight::Resource, type: :model do
     end
   end
 
-  it 'reindexs after save' do
-    expect(subject).to receive(:reindex)
-    subject.data_will_change!
-    subject.save!
+  describe '#save_and_index' do
+    before do
+      allow(subject.send(:blacklight_solr)).to receive(:update)
+    end
+
+    it 'saves the object' do
+      expect(subject).to receive(:save).twice
+      subject.save_and_index
+    end
+
+    it 'reindexes after save' do
+      expect(subject).to receive(:reindex)
+      subject.save_and_index
+    end
   end
 
   it 'stores arbitrary data' do
@@ -72,20 +109,5 @@ describe Spotlight::Resource, type: :model do
 
     expect(subject.data[:a]).to eq 1
     expect(subject.data[:b]).to eq 2
-  end
-
-  describe '#update_index_time!' do
-    it 'updates the index_time column' do
-      expect(subject).to receive(:update_columns).with(hash_including(:indexed_at))
-      subject.update_index_time!
-    end
-  end
-
-  describe '#save_and_commit' do
-    it 'saves the object and commit to solr' do
-      expect(subject).to receive(:save)
-      expect(subject.send(:blacklight_solr)).to receive(:commit)
-      subject.save_and_commit
-    end
   end
 end

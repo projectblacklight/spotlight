@@ -27,7 +27,7 @@ module Spotlight
       @resource.attributes = resource_params
       @resource = @resource.becomes_provider
 
-      if @resource.save_and_commit
+      if @resource.save_and_index
         if from_popup?
           render layout: false, text: '<html><script>window.close();</script></html>'
         else

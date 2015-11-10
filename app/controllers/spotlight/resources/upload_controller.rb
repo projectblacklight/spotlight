@@ -26,7 +26,7 @@ module Spotlight
       def create
         @resource.attributes = resource_params
 
-        if @resource.save_and_commit
+        if @resource.save_and_index
           flash[:notice] = t('spotlight.resources.upload.success')
           if params['add-and-continue']
             redirect_to new_exhibit_resources_upload_path(@resource.exhibit)

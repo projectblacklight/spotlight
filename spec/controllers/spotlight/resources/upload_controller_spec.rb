@@ -71,12 +71,11 @@ describe Spotlight::Resources::UploadController, type: :controller do
       let(:blacklight_solr) { double }
 
       before do
-        allow(blacklight_solr).to receive(:commit)
         allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
         allow_any_instance_of(Spotlight::Resource).to receive(:blacklight_solr).and_return blacklight_solr
       end
       it 'create a Spotlight::Resources::Upload resource' do
-        expect(blacklight_solr).to receive(:commit)
+        expect_any_instance_of(Spotlight::Resource).to receive(:reindex)
         post :create, exhibit_id: exhibit, resources_upload: { url: 'url-data' }
         expect(assigns[:resource]).to be_persisted
         expect(assigns[:resource]).to be_a(Spotlight::Resources::Upload)
