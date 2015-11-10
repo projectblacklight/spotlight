@@ -2,7 +2,7 @@ notifications:
   email: false
 
 rvm:
-  - 2.2.2
+  - 2.2.3
 
 notifications:
   irc: "irc.freenode.org#blacklight"
