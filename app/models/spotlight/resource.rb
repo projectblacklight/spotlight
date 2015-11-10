@@ -8,7 +8,6 @@ module Spotlight
     extend ActiveModel::Callbacks
     define_model_callbacks :index
 
-    class_attribute :providers
     class_attribute :weight
 
     belongs_to :exhibit
@@ -19,14 +18,6 @@ module Spotlight
     around_index :reindex_with_lock
 
     after_index :update_index_time!
-
-    def self.providers
-      Spotlight::Engine.config.resource_providers
-    end
-
-    def self.class_for_resource(r)
-      providers.select { |provider| provider.can_provide? r }.sort_by(&:weight).first
-    end
 
     ##
     # @abstract
@@ -70,7 +61,7 @@ module Spotlight
     end
 
     def becomes_provider
-      klass = Spotlight::Resource.class_for_resource(self)
+      klass = Spotlight::ResourceProvider.for_resource(self)
 
       if klass
         self.becomes! klass
