@@ -38,3 +38,7 @@ Metrics/AbcSize:
 
 Metrics/ModuleLength:
   Max: 120
+
+Metrics/ClassLength:
+  Exclude:
+    - 'app/models/spotlight/resource.rb'
