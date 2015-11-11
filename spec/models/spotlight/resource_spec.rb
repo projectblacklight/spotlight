@@ -93,13 +93,22 @@ describe Spotlight::Resource, type: :model do
     end
 
     it 'saves the object' do
-      expect(subject).to receive(:save).twice
+      expect(subject).to receive(:save).twice.and_return(true)
       subject.save_and_index
     end
 
     it 'reindexes after save' do
+      expect(subject).to receive(:save).and_return(true)
       expect(subject).to receive(:reindex)
       subject.save_and_index
+    end
+
+    context 'if the save fails' do
+      it 'does not reindex' do
+        expect(subject).to receive(:save).and_return(false)
+        expect(subject).not_to receive(:reindex)
+        subject.save_and_index
+      end
     end
   end
 

@@ -40,7 +40,7 @@ module Spotlight
     #
     # @param [Hash] All arguments will be passed through to ActiveRecord's #save method
     def save_and_index(*args)
-      save(*args).tap { reindex }
+      save(*args) && reindex
     end
 
     concerning :GeneratingSolrDocuments do

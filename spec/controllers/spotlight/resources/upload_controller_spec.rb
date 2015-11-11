@@ -71,7 +71,7 @@ describe Spotlight::Resources::UploadController, type: :controller do
       let(:blacklight_solr) { double }
 
       before do
-        allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
+        allow_any_instance_of(Spotlight::Resource).to receive(:reindex).and_return(true)
         allow_any_instance_of(Spotlight::Resource).to receive(:blacklight_solr).and_return blacklight_solr
       end
       it 'create a Spotlight::Resources::Upload resource' do
