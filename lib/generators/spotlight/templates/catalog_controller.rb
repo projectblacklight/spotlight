@@ -1,6 +1,3 @@
-# -*- encoding : utf-8 -*-
-require 'blacklight/catalog'
-
 ##
 # Simplified catalog controller
 class CatalogController < ApplicationController
