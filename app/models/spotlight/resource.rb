@@ -15,7 +15,8 @@ module Spotlight
     store :metadata, accessors: [
       :last_indexed_estimate,
       :last_indexed_count,
-      :last_index_elapsed_time], coder: JSON
+      :last_index_elapsed_time,
+      :last_indexed_finished], coder: JSON
 
     around_index :reindex_with_lock
     around_index :reindex_with_logging
@@ -123,7 +124,7 @@ module Spotlight
           run_callbacks :index do
             documents_to_index.each_slice(batch_size) do |batch|
               write_to_index(batch)
-              count += batch.length
+              update(last_indexed_count: (count += batch.length))
             end
 
             count
@@ -142,13 +143,16 @@ module Spotlight
       def reindex_with_logging
         time_start = Time.zone.now
 
+        update(indexed_at: time_start,
+               last_indexed_estimate: documents_to_index.size,
+               last_indexed_finished: nil,
+               last_index_elapsed_time: nil)
+
         count = yield
 
         time_end = Time.zone.now
-
-        update(indexed_at: Time.current,
-               last_indexed_estimate: documents_to_index.size,
-               last_indexed_count: count,
+        update(last_indexed_count: count,
+               last_indexed_finished: time_end,
                last_index_elapsed_time: time_end - time_start)
       end
 
