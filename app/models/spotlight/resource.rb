@@ -40,7 +40,13 @@ module Spotlight
     #
     # @param [Hash] All arguments will be passed through to ActiveRecord's #save method
     def save_and_index(*args)
-      save(*args) && reindex
+      save(*args) && reindex_later
+    end
+
+    ##
+    # Enqueue an asynchronous reindexing job for this resource
+    def reindex_later
+      Spotlight::ReindexJob.perform_later(self)
     end
 
     concerning :GeneratingSolrDocuments do
