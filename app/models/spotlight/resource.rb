@@ -35,10 +35,12 @@ module Spotlight
       type.blank?
     end
 
-    def save_and_index
-      save.tap do
-        reindex
-      end
+    ##
+    # Persist the record to the database, and trigger a reindex to solr
+    #
+    # @param [Hash] All arguments will be passed through to ActiveRecord's #save method
+    def save_and_index(*args)
+      save(*args).tap { reindex }
     end
 
     concerning :GeneratingSolrDocuments do
