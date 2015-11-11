@@ -23,7 +23,7 @@ describe 'adding an item using the provided bookmarklet', type: :feature do
   end
 
   it 'submits the form to create a new item' do
-    allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
+    allow_any_instance_of(Spotlight::Resource).to receive(:reindex_later)
     visit spotlight.new_exhibit_resource_path(exhibit, popup: true, resource: { url: 'info:url' })
     expect(page).to have_content 'Add Resource'
     expect(first('#resource_url', visible: false).value).to eq 'info:url'

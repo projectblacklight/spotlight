@@ -90,23 +90,24 @@ describe Spotlight::Resource, type: :model do
   describe '#save_and_index' do
     before do
       allow(subject.send(:blacklight_solr)).to receive(:update)
+      allow(subject).to receive(:reindex_later)
     end
 
     it 'saves the object' do
-      expect(subject).to receive(:save).twice.and_return(true)
+      expect(subject).to receive(:save).and_return(true)
       subject.save_and_index
     end
 
     it 'reindexes after save' do
       expect(subject).to receive(:save).and_return(true)
-      expect(subject).to receive(:reindex)
+      expect(subject).to receive(:reindex_later)
       subject.save_and_index
     end
 
     context 'if the save fails' do
       it 'does not reindex' do
         expect(subject).to receive(:save).and_return(false)
-        expect(subject).not_to receive(:reindex)
+        expect(subject).not_to receive(:reindex_later)
         subject.save_and_index
       end
     end
