@@ -260,4 +260,36 @@ describe Spotlight::CatalogController, type: :controller do
       end
     end
   end
+
+  describe '.exhibit_search_facet_url' do
+    before do
+      allow(subject).to receive(:current_exhibit).and_return(exhibit)
+    end
+
+    it 'routes to the facet page' do
+      url = subject.exhibit_search_facet_url(id: 'x').sub('http://test.host/spotlight/', '/')
+      route = Spotlight::Engine.routes.recognize_path(url)
+      expect(route).to include controller: 'spotlight/catalog',
+                               action: 'facet',
+                               id: 'x'
+    end
+
+    it 'preserves the current exhibit context' do
+      url = subject.exhibit_search_facet_url(id: 'x').sub('http://test.host/spotlight/', '/')
+      route = Spotlight::Engine.routes.recognize_path(url)
+      expect(route).to include exhibit_id: exhibit.slug
+    end
+
+    context 'with search parameters' do
+      before do
+        allow(subject).to receive(:search_results).and_return([])
+      end
+
+      it 'preserves query parameters' do
+        get :index, q: 'xyz', exhibit_id: exhibit
+        url = subject.exhibit_search_facet_url(id: 'x')
+        expect(url).to include '?q=xyz'
+      end
+    end
+  end
 end
