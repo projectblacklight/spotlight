@@ -72,7 +72,7 @@ module Spotlight
     def exhibit_search_facet_url(*args)
       options = args.extract_options!
       only_path = options[:only_path]
-      options.except! :exhibit_id, :only_path
+      options = params.merge(options).except(:exhibit_id, :only_path)
 
       if only_path
         spotlight.exhibit_catalog_facet_url(current_exhibit, *args, options)
