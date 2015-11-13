@@ -74,7 +74,7 @@ module Spotlight
 
         return to_enum(:documents_to_index) { data.size } unless block_given?
 
-        data.reject(&:blank?).each do |doc|
+        data.lazy.reject(&:blank?).each do |doc|
           yield doc.reverse_merge(existing_solr_doc_hash(doc[unique_key]) || {})
         end
       end
