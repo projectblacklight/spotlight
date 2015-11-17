@@ -25,8 +25,6 @@ module Spotlight
       property prop
     end
 
-    property :default, setter: ->(val, _args) { self.default = val if val && !Spotlight::Exhibit.default? }
-
     collection :searches, parse_strategy: ->(fragment, _i, options) { options.represented.searches.find_or_initialize_by(slug: fragment['slug']) },
                           class: Spotlight::Search do
       (Spotlight::Search.attribute_names - %w(id exhibit_id)).each do |prop|

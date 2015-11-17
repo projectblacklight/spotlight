@@ -49,17 +49,6 @@ module Spotlight
     after_create :initialize_browse
     after_create :initialize_main_navigation
 
-    # Find or create the default exhibit
-    def self.default
-      self.find_or_create_by!(default: true) do |e|
-        e.title = 'Default exhibit'.freeze
-      end
-    end
-
-    def self.default?
-      where(default: true).any?
-    end
-
     def main_about_page
       @main_about_page ||= about_pages.published.first
     end
