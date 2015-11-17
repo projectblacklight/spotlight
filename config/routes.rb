@@ -9,8 +9,6 @@ Spotlight::Engine.routes.draw do
       post 'reindex', to: 'exhibits#reindex'
     end
 
-    get '/' => 'home_pages#show', as: :root
-
     resources :attachments, only: :create
     resource :contact_form, path: 'contact', only: [:new, :create]
     resource :blacklight_configuration, only: [:update]
@@ -94,5 +92,6 @@ Spotlight::Engine.routes.draw do
     post 'solr/update' => 'solr#update'
   end
 
+  get '/:exhibit_id' => 'home_pages#show', as: :exhibit_root
   post 'versions/:id/revert' => 'versions#revert', as: :revert_version
 end

@@ -7,7 +7,7 @@ describe 'Home page', type: :feature do
   before { login_as exhibit_visitor }
 
   it 'exists by default on exhibits' do
-    visit '/'
+    visit spotlight.url_for(default_exhibit)
 
     expect(page).to have_selector '.site-title', text: 'Default exhibit'
     expect(page).to have_link 'More Exhibits'
