@@ -49,12 +49,6 @@ module Spotlight
     after_create :initialize_browse
     after_create :initialize_main_navigation
 
-    after_destroy do
-      # Touch the default exhibit to ensure caching knows that
-      # the exhibits have changed.
-      Spotlight::Exhibit.default.touch
-    end
-
     # Find or create the default exhibit
     def self.default
       self.find_or_create_by!(default: true) do |e|

@@ -132,16 +132,6 @@ describe Spotlight::Exhibit, type: :model do
     end
   end
 
-  describe '#destroy' do
-    subject { FactoryGirl.create(:exhibit) }
-    let(:default_exhibit) { double }
-    it 'touches the default exhibit when it is destroyed' do
-      allow(described_class).to receive_messages(default: default_exhibit)
-      expect(default_exhibit).to receive(:touch)
-      subject.destroy
-    end
-  end
-
   describe '#solr_data' do
     subject { FactoryGirl.create(:exhibit) }
 
