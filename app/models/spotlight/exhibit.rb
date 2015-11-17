@@ -5,6 +5,8 @@ module Spotlight
   class Exhibit < ActiveRecord::Base
     include Spotlight::ExhibitAnalytics
 
+    scope :published, -> { where(published: true) }
+
     extend FriendlyId
     friendly_id :title, use: [:slugged, :finders]
     validates :title, presence: true

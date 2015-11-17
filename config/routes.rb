@@ -1,13 +1,15 @@
 Spotlight::Engine.routes.draw do
   devise_for :contact_email, class_name: 'Spotlight::ContactEmail', only: [:confirmations]
 
-  resources :exhibits, path: '/', except: [:index, :show] do
+  resources :exhibits, path: '/', except: [:show] do
     member do
       get 'exhibit', to: 'exhibits#show', as: 'get'
       post 'import', to: 'exhibits#process_import'
       patch 'import', to: 'exhibits#process_import'
       post 'reindex', to: 'exhibits#reindex'
     end
+
+    get '/' => 'home_pages#show', as: :root
 
     resources :attachments, only: :create
     resource :contact_form, path: 'contact', only: [:new, :create]
@@ -93,5 +95,4 @@ Spotlight::Engine.routes.draw do
   end
 
   post 'versions/:id/revert' => 'versions#revert', as: :revert_version
-  get '/:exhibit_id' => 'home_pages#show', as: :exhibit_root
 end

@@ -17,6 +17,13 @@ describe Spotlight::ExhibitsController, type: :controller do
   end
 
   describe 'when not logged in' do
+    describe '#index' do
+      it 'is allowed' do
+        get :index
+        expect(response).to be_success
+      end
+    end
+
     describe '#new' do
       it 'does not be allowed' do
         get :new, id: exhibit

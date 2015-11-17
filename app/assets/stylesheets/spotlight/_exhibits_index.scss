@@ -1,0 +1,97 @@
+.exhibit-card {
+  box-sizing: border-box;
+  float: left;
+  height: $exhibit-card-height;
+  margin: 0 -1 * $exhibit-card-gutter $exhibit-card-gutter $exhibit-card-gutter;
+  //               image width        +       gutter         + border (x2)
+  max-width: $exhibit-card-image-size + $exhibit-card-gutter + 2px;
+  padding: 0 $exhibit-card-gutter 0 0;
+  perspective: 1000; // for flip animation
+  position: relative;
+
+  .flipper {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: 0.6s;
+  }
+
+  &.hover .flipper,
+  &:hover .flipper {
+    -ms-filter: "FlipH"; // autoprefixer doesn't handle this case.
+    filter: FlipH;
+    transform: rotateY(180deg);
+  }
+}
+
+.card-face {
+  backface-visibility: hidden;
+  background-color: $exhibit-card-bg;
+  border: 1px solid $exhibit-card-border;
+  height: $exhibit-card-height;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform-style: preserve-3d;
+  transition: 0.6s;
+  width: 100%;
+}
+
+.card-title {
+  @extend .h5;
+  @extend .text-center;
+
+  font-size: $font-size-h4;
+}
+
+.card-front {
+  transform: rotateY(0deg);
+  z-index: 2;
+
+  img {
+    height: $exhibit-card-image-size;
+    object-fit: cover;
+    width: $exhibit-card-image-size;
+  }
+
+  .card-title {
+    padding-top: $padding-large-vertical;
+  }
+}
+
+.card-back {
+  box-shadow: $exhibit-card-shadow;
+  padding: 0 $exhibit-card-gutter;
+  transform: rotateY(-180deg);
+
+  .card-title {
+    border-bottom: 1px dotted $exhibit-card-border;
+    line-height: $headings-line-height;
+    margin-bottom: $padding-base-vertical;
+    padding-bottom: $padding-base-vertical;
+  }
+
+  .subtitle {
+    @extend .h5;
+    @extend .text-center;
+    line-height: $headings-line-height;
+  }
+
+  .description {
+    font-size: $font-size-h6;
+  }
+
+  .visit-exhibit {
+    bottom: $exhibit-card-gutter;
+    position: absolute;
+  }
+}
+
+.center-btn {
+  left: 50%;
+  position: absolute;
+
+  .btn {
+    left: -50%;
+    position: relative;
+  }
+}
