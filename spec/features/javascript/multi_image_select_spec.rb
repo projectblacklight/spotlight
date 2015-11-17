@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Multi image selector', type: :feature, js: true do
-  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   let(:feature_page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
   before { login_as exhibit_curator }

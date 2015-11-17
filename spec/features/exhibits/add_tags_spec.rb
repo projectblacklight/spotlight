@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Add tags to an item in an exhibit', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   let(:custom_field) { FactoryGirl.create(:custom_field, exhibit: exhibit) }
 

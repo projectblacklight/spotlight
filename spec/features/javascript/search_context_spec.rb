@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Search contexts' do
-  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   let(:feature_page) do
     FactoryGirl.create(

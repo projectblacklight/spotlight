@@ -1,8 +1,8 @@
 require 'spec_helper'
 describe 'Home page', type: :feature do
   let(:exhibit_visitor) { FactoryGirl.create(:exhibit_visitor) }
-  let!(:default_exhibit) { FactoryGirl.create(:default_exhibit, title: 'Default exhibit') }
-  let!(:second_exhibit) { FactoryGirl.create(:exhibit, title: 'Second exhibit') }
+  let!(:default_exhibit) { FactoryGirl.create(:exhibit, title: 'Default exhibit', published: true) }
+  let!(:second_exhibit) { FactoryGirl.create(:exhibit, title: 'Second exhibit', published: true) }
 
   before { login_as exhibit_visitor }
 
