@@ -25,6 +25,16 @@ module Spotlight
       generate 'paper_trail:install'
     end
 
+    def sitemaps
+      gem 'sitemap_generator'
+      copy_file 'config/sitemap.rb', 'config/sitemap.rb'
+
+      say <<-EOS.strip_heredoc, :red
+       Added a default sitemap_generator configuration in config/sitemap.rb; please
+       update the default host to match your environment
+      EOS
+    end
+
     def assets
       copy_file 'spotlight.scss', 'app/assets/stylesheets/spotlight.scss'
       copy_file 'spotlight.js', 'app/assets/javascripts/spotlight.js'

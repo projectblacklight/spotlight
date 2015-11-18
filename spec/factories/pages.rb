@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :feature_page, class: Spotlight::FeaturePage do
     exhibit
-    title 'Page1'
+    sequence(:title) { |n| "FeaturePage#{n}" }
     published true
     content '[]'
   end
@@ -15,7 +15,7 @@ FactoryGirl.define do
   end
   factory :about_page, class: Spotlight::AboutPage do
     exhibit
-    title 'Page1'
+    sequence(:title) { |n| "AboutPage#{n}" }
     content '[]'
     published true
   end
