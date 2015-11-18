@@ -14,7 +14,9 @@ module SirTrevorRails
       end
 
       def searches
-        @searches ||= parent.exhibit.searches.published.where(slug: item_ids).sort { |a, b| order.index(a.id) <=> order.index(b.id) }
+        @searches ||= parent.exhibit.searches.published.where(slug: item_ids).sort do |a, b|
+          order.index(a.slug) <=> order.index(b.slug)
+        end
       end
 
       def searches?

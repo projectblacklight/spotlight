@@ -5,13 +5,13 @@ Spotlight.Block.Resources = (function(){
     formable: true,
     autocompleteable: true,
     show_heading: true,
-    
+
     title: function() { return i18n.t("blocks:" + this.type + ":title"); },
     description: function() { return i18n.t("blocks:" + this.type + ":description"); },
 
     icon_name: "resources",
     blockGroup: function() { return i18n.t("blocks:group:items") },
-    
+
     primary_field_key: "primary-caption-field",
     show_primary_field_key: "show-primary-caption",
     secondary_field_key: "secondary-caption-field",
@@ -63,11 +63,11 @@ Spotlight.Block.Resources = (function(){
       var panel = $(_.template(markup)(this));
       var context = this;
 
-      $('.remove a', panel).on('click', function(e) { 
-        e.preventDefault(); 
+      $('.remove a', panel).on('click', function(e) {
+        e.preventDefault();
         $(this).closest('.field').remove();
         context.afterPanelDelete();
-        
+
       });
 
       this.afterPanelRender(data, panel);
@@ -78,14 +78,15 @@ Spotlight.Block.Resources = (function(){
     afterPanelRender: function(data, panel) {
 
     },
-    
+
     afterPanelDelete: function() {
 
     },
 
-    createItemPanel: function(data) { 
+    createItemPanel: function(data) {
       var panel = this._itemPanel(data);
       $(panel).appendTo(this.$el.find('.panels > ol'));
+      this.$el.find('[data-behavior="nestable"]').trigger('change');
     },
 
     item_options: function() { return ""; },
@@ -126,7 +127,7 @@ Spotlight.Block.Resources = (function(){
 
       this.$el.find('[data-input-select-target]').selectRelatedInput();
     },
-    
+
     afterLoadData: function(data) {
       var context = this;
       $.each(Object.keys(data.item || {}).map(function(k) { return data.item[k]}).sort(function(a,b) { return a.weight - b.weight; }), function(index, item) {
