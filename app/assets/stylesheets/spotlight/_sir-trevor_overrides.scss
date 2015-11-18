@@ -91,6 +91,15 @@
     }
   }
 
+  .st-icon-uploaded_items {
+    @extend .icon;
+    background-image: image-url('spotlight/blocks/item-row.png');
+
+    &:hover {
+      background-image: image-url('spotlight/blocks/item-row-on.png');
+    }
+  }
+
   .st-icon-search_results {
     @extend .icon;
     background-image: image-url('spotlight/blocks/results.png');

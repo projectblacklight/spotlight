@@ -1,0 +1,7 @@
+[data-type='uploaded_items'] {
+  // SirTrevor's Uploadable mixin adds a
+  // styled div that we need to remove
+  .st-block__inputs {
+    display: none;
+  }
+}
