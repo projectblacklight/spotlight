@@ -17,7 +17,7 @@ feature 'Search Configuration Administration', js: true do
       click_link 'Search'
       click_link 'Options'
 
-      uncheck 'Enable field-based search'
+      uncheck 'Display search box'
 
       click_button 'Save changes'
 

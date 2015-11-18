@@ -1,14 +1,13 @@
 <% default_field = @blacklight_configuration.blacklight_config.default_search_field %>
+<div class="checkbox">
+  <label>
+    <%= check_box_tag :enable_feature, '1', @blacklight_configuration.blacklight_config.search_fields.select { |_k, v| v.enabled && v.include_in_simple_select != false }.any?, data: { behavior: 'enable-feature', target: '#search_fields' } %> <%= t(:'.enable_feature') %>
+  </label>
+</div>
+
 <%= field_set_tag(t(:'.header'), id: 'search_fields') do %>
   <p class="instructions"><%= t(:'.help') %></p>
   <p class="instructions"><%= t(:'.instructions') %></p>
-  <p class="instructions">
-    <div class="checkbox">
-      <label>
-        <%= check_box_tag :enable_feature, '1', @blacklight_configuration.blacklight_config.search_fields.select { |_k, v| v.enabled && v.include_in_simple_select != false }.any?, data: { behavior: 'enable-feature', target: '#search_fields' } %> <%= t(:'.enable_feature') %>
-      </label>
-    </div>
-  </p>
 
   <%= f.fields_for :search_fields, @blacklight_configuration.blacklight_config.search_fields.keys do |vt| %>
     <ol class="dd-list col-md-7 disabled-search-option search_fields_admin">
@@ -39,7 +38,7 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <%= vt.fields_for k, config do |field| %>
-                        <%= field.check_box_without_bootstrap :enabled  %>
+                        <%= field.check_box_without_bootstrap :enabled %>
                         <h3 class="panel-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
                           <a href="#edit-in-place" class="field-label edit-in-place"><%= config.label %></a>
                           <%= field.hidden_field :label, {data: {:"edit-field-target" => "true"}} %>
