@@ -5,6 +5,8 @@ module Spotlight
   class Exhibit < ActiveRecord::Base
     include Spotlight::ExhibitAnalytics
 
+    scope :published, -> { where(published: true) }
+
     extend FriendlyId
     friendly_id :title, use: [:slugged, :finders]
     validates :title, presence: true
@@ -46,23 +48,6 @@ module Spotlight
     after_create :initialize_config
     after_create :initialize_browse
     after_create :initialize_main_navigation
-
-    after_destroy do
-      # Touch the default exhibit to ensure caching knows that
-      # the exhibits have changed.
-      Spotlight::Exhibit.default.touch
-    end
-
-    # Find or create the default exhibit
-    def self.default
-      self.find_or_create_by!(default: true) do |e|
-        e.title = 'Default exhibit'.freeze
-      end
-    end
-
-    def self.default?
-      where(default: true).any?
-    end
 
     def main_about_page
       @main_about_page ||= about_pages.published.first

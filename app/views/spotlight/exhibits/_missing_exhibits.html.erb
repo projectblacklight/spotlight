@@ -1,0 +1,17 @@
+<div class="empty-page-block">
+  <h2>Welcome to Spotlight!</h2>
+
+  <% unless current_user %>
+    <p>In order to create exhibits, you need to <%= link_to t('spotlight.header_links.login'), main_app.new_user_session_path %></p>
+  <% end %>
+
+  <% if can? :create, Spotlight::Exhibit %>
+    <p>When you're ready to begin building your exhibit, here's how to get started:</p>
+
+    <ol>
+      <li>Visit the <%= link_to "Create Exhibit", new_exhibit_path %> page to create a new exhibit.</li>
+
+      <li>Visit the Spotlight <%= link_to "documentation pages", "https://github.com/sul-dlss/spotlight/wiki" %> to learn how to add and edit feature pages, about pages, custom browse categories, and more.</li>
+    </ol>
+  <% end %>
+</div>

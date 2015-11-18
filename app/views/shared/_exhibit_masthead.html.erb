@@ -5,7 +5,7 @@
     <span class='background-container-gradient'></span>
   <% end %>
   <div class="container">
-    <%= cache [current_exhibit,cache_key_for_spotlight_exhibits] do %>
+    <%= cache [current_exhibit, cache_key_for_spotlight_exhibits] do %>
     <ul class="more-exhibits nav navbar-nav navbar-sm">
       <% if Spotlight::Exhibit.many? %>
         <li class="dropdown">

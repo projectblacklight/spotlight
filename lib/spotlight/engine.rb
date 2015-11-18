@@ -2,7 +2,6 @@
 require 'blacklight'
 require 'blacklight/oembed'
 require 'autoprefixer-rails'
-require 'spotlight/rails/routes'
 require 'friendly_id'
 require 'devise'
 require 'tophat'

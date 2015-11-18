@@ -11,10 +11,9 @@ module Spotlight
     def inject_spotlight_routes
       route "mount Spotlight::Engine, at: 'spotlight'"
       gsub_file 'config/routes.rb', /^\s*root.*/ do |match|
-        '#' + match + ' # replaced by spotlight_root'
+        '#' + match + ' # replaced by spotlight root path'
       end
-
-      route 'spotlight_root'
+      route "root to: 'spotlight/exhibits#index'"
     end
 
     def friendly_id

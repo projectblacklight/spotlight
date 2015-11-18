@@ -2,3 +2,10 @@ $footer-top-margin: 3 * $padding-small-vertical;
 $footer-height: 118px;
 $white: #FFFFFF;
 $black: #000000;
+
+$exhibit-card-height: 350px;
+$exhibit-card-bg: $well-bg;
+$exhibit-card-border: $well-border;
+$exhibit-card-gutter: $padding-large-horizontal;
+$exhibit-card-image-size: 273px;
+$exhibit-card-shadow: inset 2px 2px 5px -2px $exhibit-card-border;

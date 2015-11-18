@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Catalog', type: :feature do
   describe 'admin' do
-    let(:exhibit) { FactoryGirl.create(:default_exhibit) }
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
     let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
 
     before do

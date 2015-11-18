@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Metadata Administration', js: true do
-  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as admin }
   describe 'Select/Deselect all button' do

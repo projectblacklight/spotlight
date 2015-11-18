@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Item Administration', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:default_exhibit) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as curator }
 

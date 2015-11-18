@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Report a Problem', type: :feature do
-  let!(:exhibit) { FactoryGirl.create(:default_exhibit) }
+  let!(:exhibit) { FactoryGirl.create(:exhibit) }
   it 'does not have a header link' do
     visit root_path
     expect(page).to_not have_content 'Feedback'
