@@ -8,7 +8,9 @@ module SirTrevorRails
       end
 
       def pages
-        @pages ||= parent.exhibit.pages.published.where(slug: item_ids).sort { |a, b| order.index(a.id) <=> order.index(b.id) }
+        @pages ||= parent.exhibit.pages.published.where(slug: item_ids).sort do |a, b|
+          order.index(a.slug) <=> order.index(b.slug)
+        end
       end
 
       def pages?
