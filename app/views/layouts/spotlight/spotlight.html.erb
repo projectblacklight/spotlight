@@ -30,28 +30,17 @@
 
   </head>
   <body class="<%= render_body_class %>">
-  <%= render :partial => 'shared/header_navbar' %>
+  <%= render partial: 'shared/header_navbar' %>
+  <%= render partial: 'shared/exhibit_masthead_and_navbar' %>
+  <%= content_for?(:header_content) ? yield(:header_content) : "" %>
 
+  <%= render partial: 'shared/ajax_modal' %>
 
-  <div id="ajax-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal menu" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      </div>
-    </div>
-  </div>
-
-<!-- /container -->
   <div id="main-container" class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div id="main-flashes">
-          <%= render :partial=>'/flash_msg' %>
-        </div>
-      </div>
-    </div>
+    <%= render partial: 'shared/flash_messages' %>
 
     <div class="row">
-      <%= yield %>
+      <%= content_for?(:content) ? yield(:content) : yield %>
     </div>
   </div>
 
