@@ -4,6 +4,7 @@ module Spotlight
   # Spotlight exhibit
   class Exhibit < ActiveRecord::Base
     include Spotlight::ExhibitAnalytics
+    include Spotlight::ExhibitDocuments
 
     scope :published, -> { where(published: true) }
 
@@ -48,6 +49,8 @@ module Spotlight
     after_create :initialize_config
     after_create :initialize_browse
     after_create :initialize_main_navigation
+
+    scope :published, -> { where(published: true) }
 
     def main_about_page
       @main_about_page ||= about_pages.published.first
