@@ -156,6 +156,10 @@ en:
         home: "Home"
       header: "Curation"
     search_configurations:
+      document_index_view_types:
+        label: Result page types
+      default_per_page:
+        label: Default per page
       edit:
         header: "Search"
         tab:
