@@ -16,6 +16,8 @@ describe Spotlight::ExhibitExportSerializer do
     expect(subject).to_not have_key 'slug'
     expect(subject).to_not have_key 'name'
     expect(subject).to_not have_key 'default'
+    expect(subject).to_not have_key 'masthead_id'
+    expect(subject).to_not have_key 'thumbnail_id'
   end
 
   it 'has search attributes' do
@@ -135,6 +137,26 @@ describe Spotlight::ExhibitExportSerializer do
       expect(subject.feature_pages.first.child_pages.length).to eq 1
     end
 
+    context 'with a feature page' do
+      let(:feature_page) { FactoryGirl.create(:feature_page, exhibit: source_exhibit) }
+      let(:thumbnail) { FactoryGirl.create(:featured_image) }
+
+      before do
+        feature_page.thumbnail = thumbnail
+        feature_page.save
+      end
+
+      it 'copies the masthead' do
+        expect(subject.feature_pages.first.thumbnail).not_to be_blank
+        expect(subject.feature_pages.first.thumbnail.image.file.path).not_to eq feature_page.thumbnail.image.file.path
+      end
+
+      it 'copies the thumbnail' do
+        expect(subject.searches.first.thumbnail).not_to be_blank
+        expect(subject.searches.first.thumbnail.image.file.path).not_to eq source_exhibit.searches.first.thumbnail.image.file.path
+      end
+    end
+
     it 'assigns STI resources the correct class' do
       resource = FactoryGirl.create :uploaded_resource, exhibit: source_exhibit
       expect(subject.resources.length).to eq 1
@@ -153,6 +175,52 @@ describe Spotlight::ExhibitExportSerializer do
       contact = FactoryGirl.create :contact, exhibit: source_exhibit
       expect(subject.contacts.length).to eq 1
       expect(subject.contacts.first.avatar.file.path).not_to eq contact.avatar.file.path
+    end
+
+    context 'with a browse category' do
+      let(:masthead) { FactoryGirl.create(:masthead) }
+      let(:thumbnail) { FactoryGirl.create(:featured_image) }
+      let!(:search) { FactoryGirl.create(:search, exhibit: source_exhibit, masthead: masthead, thumbnail: thumbnail) }
+
+      before do
+        source_exhibit.reload
+      end
+
+      it 'copies the masthead' do
+        expect(subject.searches.last.masthead).not_to be_blank
+        expect(subject.searches.last.masthead.image.file.path).not_to eq search.masthead.image.file.path
+      end
+
+      it 'copies the thumbnail' do
+        expect(subject.searches.first.thumbnail).not_to be_blank
+        expect(subject.searches.first.thumbnail.image.file.path).not_to eq search.thumbnail.image.file.path
+      end
+    end
+
+    context 'with a masthead' do
+      let!(:masthead) { FactoryGirl.create(:masthead) }
+
+      before do
+        source_exhibit.masthead = masthead
+      end
+
+      it 'is copied' do
+        expect(subject.masthead).not_to be_blank
+        expect(subject.masthead.image.file.path).not_to eq source_exhibit.masthead.image.file.path
+      end
+    end
+
+    context 'with a thumbnail' do
+      let!(:thumbnail) { FactoryGirl.create(:featured_image) }
+
+      before do
+        source_exhibit.thumbnail = thumbnail
+      end
+
+      it 'is copied' do
+        expect(subject.thumbnail).not_to be_blank
+        expect(subject.thumbnail.image.file.path).not_to eq source_exhibit.thumbnail.image.file.path
+      end
     end
   end
 

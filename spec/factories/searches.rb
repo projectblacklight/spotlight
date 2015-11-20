@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :search, class: Spotlight::Search do
     exhibit
-    title 'Search1'
+    sequence(:title) { |n| "Exhibit Search #{n}" }
+    sequence(:slug) { |n| "Search#{n}" }
 
     after(:build) { |search| search.thumbnail = FactoryGirl.create(:featured_image) }
   end
@@ -15,9 +16,5 @@ FactoryGirl.define do
     long_description 'All items in this exhibit.'
 
     after(:build) { |search| search.thumbnail = FactoryGirl.create(:featured_image) }
-  end
-
-  factory :featured_image, class: Spotlight::FeaturedImage do
-    image { File.open(File.join(FIXTURES_PATH, 'avatar.png')) }
   end
 end
