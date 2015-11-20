@@ -1,0 +1,15 @@
+inherit_from: .rubocop_todo.yml
+
+require: rubocop-rspec
+
+AllCops:
+  Exclude:
+    - 'Gemfile'
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'config/**/*'
+    - '.internal_test_app/**/*'
+    - 'spec/test_app_templates/**/*'
+    - 'spec/spec_helper.rb'
+    - 'spec/teaspoon_env.rb'
+    - 'vendor/**/*'
