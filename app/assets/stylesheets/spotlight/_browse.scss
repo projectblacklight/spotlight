@@ -25,13 +25,17 @@ $image-overlay-bottom-margin: $padding-large-vertical * 3;
   }
 
   .image-overlay {
-    img {width: 100%;}
-    position: relative;
+    border: 2px solid $gray-light;
+    border-radius: $border-radius-large;
     margin-bottom: $image-overlay-bottom-margin;
     max-height: 240px;
-    border-radius: $border-radius-large;
-    border: 2px solid $gray-light;
+    min-height: 140px;
     overflow: hidden;
+    position: relative;
+
+    img {
+      width: 100%;
+    }
   }
 
   .text-overlay {

@@ -17,18 +17,27 @@ describe Spotlight::Search, type: :model do
 
   it { is_expected.to be_a Spotlight::Catalog::AccessControlsEnforcement }
 
-  it 'has a default feature image' do
-    allow(subject).to receive_messages(documents: [document])
-    subject.save!
-    expect(subject.thumbnail).not_to be_nil
-    expect(subject.thumbnail.image.path).to end_with 'default.jpg'
-  end
+  context 'thumbnail' do
+    it 'calls DefaultThumbnailJob to fetch a default feature image' do
+      expect(Spotlight::DefaultThumbnailJob).to receive(:perform_later).with(subject)
+      subject.save!
+    end
 
-  it 'uses a document with an image for the default feature image' do
-    allow(subject).to receive_messages(documents: [document_without_an_image, document])
-    subject.save!
-    expect(subject.thumbnail).not_to be_nil
-    expect(subject.thumbnail.image.path).to end_with 'default.jpg'
+    context '#set_default_thumbnail' do
+      it 'has a default feature image' do
+        allow(subject).to receive_messages(documents: [document])
+        subject.set_default_thumbnail
+        expect(subject.thumbnail).not_to be_nil
+        expect(subject.thumbnail.image.path).to end_with 'default.jpg'
+      end
+
+      it 'uses a document with an image for the default feature image' do
+        allow(subject).to receive_messages(documents: [document_without_an_image, document])
+        subject.set_default_thumbnail
+        expect(subject.thumbnail).not_to be_nil
+        expect(subject.thumbnail.image.path).to end_with 'default.jpg'
+      end
+    end
   end
 
   it 'has items' do

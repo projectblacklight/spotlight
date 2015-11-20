@@ -2,6 +2,7 @@ module Spotlight
   ##
   # Exhibit saved searches
   class Search < ActiveRecord::Base
+    include DefaultThumbnailable
     extend FriendlyId
     friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: :exhibit
 
@@ -17,8 +18,6 @@ module Spotlight
     belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
     accepts_nested_attributes_for :thumbnail, update_only: true
     accepts_nested_attributes_for :masthead, update_only: true
-
-    before_create :set_default_featured_image
 
     include Blacklight::SearchHelper
     include Spotlight::Catalog::AccessControlsEnforcement
@@ -55,6 +54,19 @@ module Spotlight
       masthead && masthead.display?
     end
 
+    def set_default_thumbnail
+      self.thumbnail ||= begin
+        doc = documents.detect { |x| x.first(Spotlight::Engine.config.full_image_field) }
+        if doc
+          create_thumbnail(
+            source: 'exhibit',
+            document_global_id: doc.to_global_id.to_s,
+            remote_image_url: doc.first(Spotlight::Engine.config.full_image_field)
+          )
+        end
+      end
+    end
+
     private
 
     def solr_response
@@ -77,15 +89,6 @@ module Spotlight
 
     def should_generate_new_friendly_id?
       title_changed?
-    end
-
-    def set_default_featured_image
-      self.thumbnail ||= begin
-        doc = documents.detect { |x| x.first(Spotlight::Engine.config.full_image_field) }
-        if doc
-          create_thumbnail source: 'exhibit', document_global_id: doc.to_global_id.to_s, remote_image_url: doc.first(Spotlight::Engine.config.full_image_field)
-        end
-      end
     end
 
     alias_method :current_exhibit, :exhibit
