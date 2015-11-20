@@ -11,5 +11,4 @@ AllCops:
     - '.internal_test_app/**/*'
     - 'spec/test_app_templates/**/*'
     - 'spec/spec_helper.rb'
-    - 'spec/teaspoon_env.rb'
     - 'vendor/**/*'
