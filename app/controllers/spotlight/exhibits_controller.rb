@@ -88,6 +88,13 @@ module Spotlight
       )
     end
 
+    def create_params
+      params.require(:exhibit).permit(
+        :title,
+        :slug
+      )
+    end
+
     def import_exhibit_params
       params.require(:file)
     end

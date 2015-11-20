@@ -70,6 +70,25 @@ describe Spotlight::ExhibitsController, type: :controller do
         expect(response).to be_successful
       end
     end
+
+    describe '#create' do
+      before do
+        # decouple this test from needing solr running
+        allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
+      end
+
+      it 'is successful' do
+        expect do
+          post :create, exhibit: { title: 'Some Title', slug: 'custom-slug' }
+        end.to change { Spotlight::Exhibit.count }.by(1)
+
+        exhibit = Spotlight::Exhibit.last
+        expect(response).to redirect_to(exhibit_dashboard_path(exhibit))
+
+        expect(exhibit.title).to eq 'Some Title'
+        expect(exhibit.slug).to eq 'custom-slug'
+      end
+    end
   end
 
   describe 'when signed in as an exhibit admin' do
