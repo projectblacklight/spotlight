@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sul-dlss/spotlight-iiif-resources.svg?branch=master)](https://travis-ci.org/sul-dlss/spotlight-iiif-resources) [![Coverage Status](https://coveralls.io/repos/sul-dlss/spotlight-iiif-resources/badge.svg?branch=master&service=github)](https://coveralls.io/github/sul-dlss/spotlight-iiif-resources?branch=master) [![Dependency Status](https://gemnasium.com/sul-dlss/spotlight-iiif-resources.svg)](https://gemnasium.com/sul-dlss/spotlight-iiif-resources) [![Gem Version](https://badge.fury.io/rb/spotlight-iiif-resources.png)](http://badge.fury.io/rb/spotlight-iiif-resources)
+
 # Spotlight::Iiif::Resources
 
 Spotlight Resource Indexer for IIIF manifests or collections.
