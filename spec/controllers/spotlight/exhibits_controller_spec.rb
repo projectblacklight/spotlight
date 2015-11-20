@@ -104,6 +104,7 @@ describe Spotlight::ExhibitsController, type: :controller do
 
     describe '#process_import' do
       it 'is successful' do
+        expect_any_instance_of(Spotlight::Exhibit).to receive(:reindex_later).and_return(true)
         f = Tempfile.new('foo')
         begin
           f.write '{ "title": "Foo", "subtitle": "Bar"}'
