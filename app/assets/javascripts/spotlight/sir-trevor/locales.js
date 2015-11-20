@@ -21,6 +21,11 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
     url: "URL",
   },
 
+  uploaded_items: {
+    title: "Uploaded Item Row",
+    description: "This widget displays uploaded items in a horizontal row. Optionally, you can add a heading and/or text to be displayed adjacent to the items."
+  },
+
   featured_pages: {
     title:  "Feature Pages",
     description: "This widget highlights feature pages. Each highlighted item links to the corresponding feature page."
@@ -68,7 +73,7 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
       title: "Maximum carousel height"
     }
   },
-  
+
   solr_documents_embed: {
     title: "Item Embed",
     description: "This widget embeds exhibit items on a page. Optionally, you can add a heading and/or text to be displayed adjacent to the items.",

@@ -1,0 +1,22 @@
+<div class="content-block item-text row">
+  <div class="items-col spotlight-flexbox <%= 'col-md-6' if uploaded_items_block.text? %> col-xs-12 uploaded-items-block pull-<%= uploaded_items_block.content_align %>">
+    <% if uploaded_items_block.files.present? %>
+      <% uploaded_items_block.files.each do |file| %>
+        <div class="box" data-id="<%= file[:id] %>">
+          <div class="contents">
+            <div class="thumbnail">
+              <img src='<%= file[:url] %>' alt='<%= file[:title] %>' />
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if uploaded_items_block.text? %>
+    <div class="text-col col-md-6">
+      <%= content_tag(:h3, uploaded_items_block.title) if uploaded_items_block.title.present? %>
+      <%= sir_trevor_markdown uploaded_items_block.text %>
+    </div>
+  <% end %>
+</div>
