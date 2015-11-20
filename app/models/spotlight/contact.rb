@@ -12,6 +12,10 @@ module Spotlight
 
     mount_uploader :avatar, Spotlight::AvatarUploader
 
+    before_save do
+      self.contact_info = contact_info.symbolize_keys
+    end
+
     ## carrierwave-crop doesn't want to store the crop points. we do.
     # so instead of this:
     # crop_uploaded :avatar  ## Add this

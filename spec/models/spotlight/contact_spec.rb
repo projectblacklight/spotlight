@@ -19,4 +19,12 @@ describe Spotlight::Contact, type: :model do
       expect(subject.class.fields).to have_key(:new_field)
     end
   end
+
+  describe '#contact_info' do
+    it 'persisted symbolized keys' do
+      subject.contact_info = { 'some' => 'value' }
+      subject.save
+      expect(subject.contact_info).to include some: 'value'
+    end
+  end
 end
