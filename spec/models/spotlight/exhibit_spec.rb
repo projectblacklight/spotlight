@@ -47,6 +47,23 @@ describe Spotlight::Exhibit, type: :model do
     end
   end
 
+  context 'thumbnail' do
+    it 'calls DefaultThumbnailJob to fetch a default feature image' do
+      expect(Spotlight::DefaultThumbnailJob).to receive(:perform_later).with(subject.searches.first)
+      expect(Spotlight::DefaultThumbnailJob).to receive(:perform_later).with(subject)
+      subject.save!
+    end
+
+    context '#set_default_thumbnail' do
+      before { subject.save! }
+      it 'uses the thubmnail from the first search' do
+        subject.set_default_thumbnail
+        expect(subject.thumbnail).not_to be_nil
+        expect(subject.thumbnail).to eq subject.searches.first.thumbnail
+      end
+    end
+  end
+
   describe '#main_navigations' do
     subject { FactoryGirl.create(:exhibit, title: 'Sample') }
     it 'has main navigations' do
