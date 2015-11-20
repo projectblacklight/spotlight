@@ -41,10 +41,6 @@ describe Spotlight::ExhibitExportSerializer do
     expect(subject['custom_fields']).to have(source_exhibit.custom_fields.count).items
   end
 
-  it 'has contacts' do
-    expect(subject['contacts']).to have(source_exhibit.contacts.count).items
-  end
-
   it 'has contact emails' do
     expect(subject['contact_emails']).to have(source_exhibit.contact_emails.count).items
   end
@@ -112,6 +108,19 @@ describe Spotlight::ExhibitExportSerializer do
 
     it 'has sidecars' do
       expect(SolrDocument.new(id: 1).public? subject).to be_falsey
+    end
+
+    context 'for an exhibit with contacts' do
+      let!(:curator) do
+        FactoryGirl.create(:contact,
+                           exhibit: source_exhibit,
+                           contact_info: { title: 'xyz' })
+      end
+      it 'has contacts' do
+        expect(subject.contacts.count).to eq 1
+        contact = subject.contacts.first
+        expect(contact.contact_info[:title]).to eq 'xyz'
+      end
     end
 
     it 'has tags' do
