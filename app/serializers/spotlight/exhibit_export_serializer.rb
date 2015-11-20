@@ -21,15 +21,19 @@ module Spotlight
   class ExhibitExportSerializer < Roar::Decorator
     include Roar::JSON
 
-    (Spotlight::Exhibit.attribute_names - %w(id slug)).each do |prop|
+    (Spotlight::Exhibit.attribute_names - %w(id slug masthead_id thumbnail_id)).each do |prop|
       property prop
     end
 
     collection :searches, parse_strategy: ->(fragment, _i, options) { options.represented.searches.find_or_initialize_by(slug: fragment['slug']) },
                           class: Spotlight::Search do
-      (Spotlight::Search.attribute_names - %w(id exhibit_id)).each do |prop|
+      (Spotlight::Search.attribute_names - %w(id scope exhibit_id masthead_id thumbnail_id)).each do |prop|
         property prop
       end
+
+      property :masthead, class: Spotlight::Masthead, decorator: FeaturedImageRepresenter
+
+      property :thumbnail, class: Spotlight::FeaturedImage, decorator: FeaturedImageRepresenter
     end
 
     collection :about_pages, parse_strategy: ->(fragment, _i, options) { options.represented.about_pages.find_or_initialize_by(slug: fragment['slug']) },
@@ -44,6 +48,10 @@ module Spotlight
     property :home_page, parse_strategy: ->(_fragment, options) { options.represented.home_page },
                          class: Spotlight::HomePage,
                          decorator: PageRepresenter
+
+    property :masthead, class: Spotlight::Masthead, decorator: FeaturedImageRepresenter
+
+    property :thumbnail, class: Spotlight::FeaturedImage, decorator: FeaturedImageRepresenter
 
     property :blacklight_configuration, class: Spotlight::BlacklightConfiguration, decorator: ConfigurationRepresenter
 
