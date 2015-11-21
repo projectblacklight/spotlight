@@ -31,7 +31,6 @@ the export option behind a bootstrap tab)))
   end
 
   it 'allows admins to import content into an exhibit' do
-    pending 'PhantomJS 2.0.0 is unable to upload files; see https://github.com/ariya/phantomjs/issues/12506'
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
 
     click_link user.email
