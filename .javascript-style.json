@@ -1,0 +1,10 @@
+{
+  "maxlen": 120,
+  "predef": [
+    "$",
+    "jQuery",
+    "Blacklight",
+    "Spotlight"
+  ]
+}
+

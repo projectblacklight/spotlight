@@ -1,0 +1,11 @@
+scss_files: 'app/assets/**/*.scss'
+
+exclude: 'vendor/**'
+
+linters:
+  SelectorDepth:
+    enabled: true
+    max_depth: 3
+
+  SelectorFormat:
+    enabled: false
