@@ -49,6 +49,7 @@ module Spotlight
     after_create :initialize_config
     after_create :initialize_browse
     after_create :initialize_main_navigation
+    include Spotlight::DefaultThumbnailable
 
     scope :published, -> { where(published: true) }
 
@@ -83,6 +84,10 @@ module Spotlight
 
     def searchable?
       blacklight_config.search_fields.any? { |_k, v| v.enabled && v.include_in_simple_select != false }
+    end
+
+    def set_default_thumbnail
+      self.thumbnail ||= searches.first.try(:thumbnail)
     end
 
     protected
