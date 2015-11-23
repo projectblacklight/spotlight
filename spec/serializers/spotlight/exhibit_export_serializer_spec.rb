@@ -195,6 +195,18 @@ describe Spotlight::ExhibitExportSerializer do
         expect(subject.searches.first.thumbnail).not_to be_blank
         expect(subject.searches.first.thumbnail.image.file.path).not_to eq search.thumbnail.image.file.path
       end
+
+      context 'without an attached image' do
+        before do
+          search.masthead.remove_image!
+          search.masthead.save
+        end
+
+        it 'copies the masthead without an image' do
+          expect(subject.searches.last.masthead).not_to be_blank
+          expect(subject.searches.last.masthead.image).to be_blank
+        end
+      end
     end
 
     context 'with a masthead' do
