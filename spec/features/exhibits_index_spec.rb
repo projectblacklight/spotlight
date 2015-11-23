@@ -8,7 +8,7 @@ describe 'Exhibits index page', type: :feature do
     it 'shows some cards for each published exhibit' do
       visit spotlight.exhibits_path
 
-      within '.exhibit-card:first' do
+      within '.exhibit-card:first-child' do
         expect(page).to have_selector 'h2', text: 'Some Exhibit Title'
       end
     end
