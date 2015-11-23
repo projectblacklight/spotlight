@@ -15,12 +15,28 @@ RuboCop::RakeTask.new(:rubocop) do |task|
   task.options = ['-l'] # run lint cops only
 end
 
-desc 'run specs and rubocop'
-task ci: [:spec, :rubocop]
+ZIP_URL = "https://github.com/projectblacklight/blacklight-jetty/archive/v4.10.4.zip"
+require 'jettywrapper'
 
-task default: :ci
+require 'engine_cart/rake_task'
+EngineCart.fingerprint_proc = EngineCart.rails_fingerprint_proc
 
-# Use yard to build docs
+require 'exhibits_solr_conf'
+
+desc 'Run tests in generated test Rails app with generated Solr instance running'
+task ci: ['engine_cart:generate', 'jetty:clean', 'exhibits:configure_solr'] do
+  ENV['environment'] = 'test'
+  jetty_params = Jettywrapper.load_config
+  jetty_params[:startup_wait] = 60
+
+  Jettywrapper.wrap(jetty_params) do
+    # run the tests
+    Rake::Task['spec'].invoke
+  end
+end
+
+task default: [:ci, :rubocop]
+
 require 'yard'
 require 'yard/rake/yardoc_task'
 begin
