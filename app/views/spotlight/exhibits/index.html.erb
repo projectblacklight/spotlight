@@ -10,6 +10,15 @@
     </div>
     <% end %>
   <% end %>
+
+  <% private_exhibits = @exhibits.unpublished.accessible_by(current_ability) %>
+
+  <% if private_exhibits.any? %>
+    <h2><%= t(:'.private') %></h2>
+    <ul>
+      <%= render collection: private_exhibits, partial: 'exhibit_list', as: 'exhibit' %>
+    </ul>
+  <% end %>
 </div>
 
 <aside class="col-md-3">
