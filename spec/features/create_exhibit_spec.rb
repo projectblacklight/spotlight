@@ -27,5 +27,21 @@ describe 'Create a new exhibit', type: :feature do
     click_button 'Save'
 
     expect(page).to have_content 'The exhibit was created.'
+    expect(Spotlight::Exhibit.last.slug).to eq 'my-exhibit-title'
+  end
+
+  it 'allows admins to create a new exhibit with a slug' do
+    visit '/'
+    within '.dropdown-menu' do
+      click_link 'Create Exhibit'
+    end
+
+    fill_in 'Title', with: 'My exhibit title'
+    fill_in 'URL slug', with: 'custom-slug'
+
+    click_button 'Save'
+
+    expect(page).to have_content 'The exhibit was created.'
+    expect(Spotlight::Exhibit.last.slug).to eq 'custom-slug'
   end
 end

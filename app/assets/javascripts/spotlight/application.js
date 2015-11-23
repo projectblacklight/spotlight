@@ -14,6 +14,7 @@
 //= require lodash
 //= require sir-trevor
 //= require nestable
+//= require parameterize
 //= require spotlight/spotlight
 //= require bootstrap/tab
 //= require bootstrap/tooltip

@@ -92,7 +92,7 @@ module Spotlight
       params.require(:exhibit).permit(
         :title,
         :slug
-      )
+      ).reject { |_k, v| v.blank? }
     end
 
     def import_exhibit_params
