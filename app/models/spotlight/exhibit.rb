@@ -7,6 +7,7 @@ module Spotlight
     include Spotlight::ExhibitDocuments
 
     scope :published, -> { where(published: true) }
+    scope :unpublished, -> { where(published: false) }
 
     extend FriendlyId
     friendly_id :title, use: [:slugged, :finders]

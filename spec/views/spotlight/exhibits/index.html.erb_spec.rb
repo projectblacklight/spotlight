@@ -3,10 +3,12 @@ require 'spec_helper'
 module Spotlight
   describe 'spotlight/exhibits/index', type: :view do
     let(:exhibits) { Spotlight::Exhibit.none }
+    let(:ability) { ::Ability.new(user) }
+    let(:user) { ::User.new }
 
     before do
       assign(:exhibits, exhibits)
-      allow(view).to receive_messages(exhibit_path: '/')
+      allow(view).to receive_messages(exhibit_path: '/', current_ability: ability)
     end
 
     context 'with published exhibits' do
@@ -23,6 +25,19 @@ module Spotlight
         expect(rendered).to have_text exhibit_a.title
         expect(rendered).to have_text exhibit_b.title
         expect(rendered).not_to have_text exhibit_c.title
+
+        expect(rendered).not_to include 'Private exhibits'
+      end
+
+      context 'with an authorized user' do
+        let(:user) { FactoryGirl.create(:site_admin) }
+
+        it 'includes a list of unpublished exhibits' do
+          render
+
+          expect(rendered).to include 'Private exhibits'
+          expect(rendered).to have_text exhibit_c.title
+        end
       end
     end
 

@@ -302,6 +302,8 @@ en:
           header: "Most popular pages"
     exhibits:
       breadcrumb: Home
+      index:
+        private: Private exhibits
       delete:
         heading: Delete exhibit
         warning_html: >
