@@ -4,7 +4,8 @@
     "$",
     "jQuery",
     "Blacklight",
-    "Spotlight"
+    "Spotlight",
+    "URLify"
   ]
 }
 

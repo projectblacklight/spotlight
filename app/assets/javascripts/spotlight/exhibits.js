@@ -1,4 +1,18 @@
 Spotlight.onLoad(function() {
+
+  // auto-fill the exhibit slug on the new exhibit form
+  $('#new_exhibit').each(function() {
+    $('#exhibit_title').on('change keyup', function() {
+      $('#exhibit_slug').attr('placeholder', URLify($(this).val(), $(this).val().length));
+    });
+
+    $('#exhibit_slug').on('focus', function() {
+      if ($(this).val() === '') {
+        $(this).val($(this).attr('placeholder'));
+      }
+    });
+  });
+
   $("#another-email").on("click", function() {
     var container = $(this).closest('.form-group');
     var contacts = container.find('.contact');
@@ -24,5 +38,5 @@ Spotlight.onLoad(function() {
   // Put focus in saved search title input when Save this search modal is shown
   $('#save-modal').on('shown.bs.modal', function () {
       $('#search_title').focus();
-  })
+  });
 });
