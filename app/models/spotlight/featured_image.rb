@@ -4,11 +4,7 @@ module Spotlight
   class FeaturedImage < ActiveRecord::Base
     mount_uploader :image, Spotlight::FeaturedImageUploader
 
-    before_validation do
-      if document && document.uploaded_resource?
-        self.image = document.uploaded_resource.url.file
-      end
-    end
+    before_validation :set_image_from_uploaded_resource
 
     after_save do
       if image.present?
@@ -33,6 +29,19 @@ module Spotlight
       end
 
       @document ||= GlobalID::Locator.locate document_global_id
+
+    rescue Blacklight::Exceptions::RecordNotFound => e
+      Rails.logger.info("Exception fetching record by id: #{document_global_id}")
+      Rails.logger.info(e)
+
+      nil
+    end
+
+    private
+
+    def set_image_from_uploaded_resource
+      return unless document && document.uploaded_resource?
+      self.image = document.uploaded_resource.url.file
     end
   end
 end
