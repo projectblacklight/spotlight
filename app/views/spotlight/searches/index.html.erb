@@ -2,19 +2,19 @@
 <div id="content" class="col-md-9">
   <%= curation_page_title %>
   <h3><%= header_with_count(t(:'.categories_header'), @searches.count) %></h3>
-  
+
   <% if @searches.empty? %>
     <%= t :'.no_saved_searches' %>
     <% unless @exhibit.searchable? %>
       <p class="instructions alert-warning">
-        <%= t(:'.not_searchable_html', href: link_to(t(:'spotlight.administration.sidebar.appearance'), spotlight.edit_exhibit_appearance_path(@exhibit))) %>
+        <%= t(:'.not_searchable_html', href: link_to(t(:'spotlight.curation.sidebar.search_configuration'), spotlight.edit_exhibit_search_configuration_path(@exhibit))) %>
       </p>
     <% end %>
   <% else %>
     <p class="instructions"><%= t(:'.instructions') %></p>
     <% unless @exhibit.searchable? %>
       <p class="instructions alert-warning">
-        <%= t(:'.not_searchable_html', href: link_to(t(:'spotlight.administration.sidebar.appearance'), spotlight.edit_exhibit_appearance_path(@exhibit))) %>
+        <%= t(:'.not_searchable_html', href: link_to(t(:'spotlight.curation.sidebar.search_configuration'), spotlight.edit_exhibit_search_configuration_path(@exhibit))) %>
       </p>
     <% end %>
     <%= bootstrap_form_for @exhibit, url: update_all_exhibit_searches_path(@exhibit), layout: :horizontal, control_col: 'col-sm-10' do |f| %>

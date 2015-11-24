@@ -25,9 +25,9 @@ describe 'spotlight/searches/index.html.erb', type: :view do
       render
       expect(rendered).to have_css '.alert-warning', text: %(\
 This exhibit is not currently searchable. To perform searches that can \
-be saved as additional browse categories, an Administrator must \
-temporarily turn on the Searchable option in the search configuration section \
-of the Administration > Appearance page.)
+be saved as additional browse categories, \
+temporarily turn on the Display search box option in the Options section \
+of the Curation > Search page.)
     end
   end
 end
