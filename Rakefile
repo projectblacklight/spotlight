@@ -39,6 +39,25 @@ end
 
 task default: [:ci, :rubocop]
 
+desc 'Run generated test Rails app with generated Solr instance running'
+task :server do
+  Rake::Task['engine_cart:generate'].invoke
+
+  unless File.exist? 'jetty'
+    Rake::Task['jetty:clean'].invoke
+    Rake::Task['exhibits:configure_solr'].invoke
+  end
+
+  jetty_params = Jettywrapper.load_config
+  jetty_params[:startup_wait]= 30
+
+  Jettywrapper.wrap(jetty_params) do
+    within_test_app do
+      system "bundle exec rails s"
+    end
+  end
+end
+
 require 'yard'
 require 'yard/rake/yardoc_task'
 begin
