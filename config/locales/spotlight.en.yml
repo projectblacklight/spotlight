@@ -551,8 +551,6 @@ en:
       redo: Redo changes
       undo_error: Unable to undo changes
   shared:
-    exhibit_masthead:
-      more_exhibits: More Exhibits
     share_follow:
       share_follow: "Share & Follow"
     home_sidebar:
