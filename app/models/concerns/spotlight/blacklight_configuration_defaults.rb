@@ -6,11 +6,14 @@ module Spotlight
 
     included do
       before_create :setup_defaults
+      attr_accessor :skip_default_configuration
     end
 
     protected
 
     def setup_defaults
+      return if skip_default_configuration
+
       default_search_fields
       default_sort_fields
       default_view_types

@@ -100,6 +100,17 @@ describe Spotlight::ExhibitExportSerializer do
       expect(subject.blacklight_configuration).to be_persisted
     end
 
+    context 'for an exhibit without search fields' do
+      before do
+        source_exhibit.blacklight_configuration.search_fields = {}
+        source_exhibit.blacklight_configuration.save
+      end
+
+      it 'remains without search fields' do
+        expect(subject.blacklight_configuration.search_fields).to be_blank
+      end
+    end
+
     it 'has home page properties' do
       expect(subject.home_page).to be_persisted
       expect(subject.home_page.id).not_to eq source_exhibit.home_page.id
@@ -122,6 +133,24 @@ describe Spotlight::ExhibitExportSerializer do
         expect(subject.contacts.count).to eq 1
         contact = subject.contacts.first
         expect(contact.contact_info[:title]).to eq 'xyz'
+      end
+    end
+
+    it 'has tags' do
+      expect(subject.owned_taggings.length).to eq source_exhibit.owned_taggings.length
+      expect(subject.owned_taggings.first).to be_persisted
+      expect(subject.owned_taggings.first.tag.name).to eq 'xyz'
+    end
+
+    context 'with custom main navigation labels' do
+      before do
+        nav = source_exhibit.main_navigations.about
+        nav.label = 'Custom Label'
+        nav.save
+      end
+
+      it 'persists across import/export' do
+        expect(subject.main_navigations.about.label).to eq 'Custom Label'
       end
     end
 

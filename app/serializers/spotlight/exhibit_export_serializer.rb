@@ -12,6 +12,14 @@ module Spotlight
     (Spotlight::BlacklightConfiguration.attribute_names - %w(id exhibit_id)).each do |prop|
       property prop
     end
+
+    property :skip_default_configuration, exec_context: :decorator
+
+    def skip_default_configuration
+      true
+    end
+
+    delegate :skip_default_configuration=, to: :represented
   end
 
   ##
@@ -52,6 +60,8 @@ module Spotlight
     property :masthead, class: Spotlight::Masthead, decorator: FeaturedImageRepresenter
 
     property :thumbnail, class: Spotlight::FeaturedImage, decorator: FeaturedImageRepresenter
+
+    collection :main_navigations, class: Spotlight::MainNavigation, decorator: MainNavigationRepresenter
 
     property :blacklight_configuration, class: Spotlight::BlacklightConfiguration, decorator: ConfigurationRepresenter
 
