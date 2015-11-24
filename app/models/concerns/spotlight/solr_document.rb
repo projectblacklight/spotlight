@@ -64,18 +64,20 @@ module Spotlight
       { self.class.unique_key.to_sym => id }.reverse_merge(sidecars.inject({}) { |a, e| a.merge(e.to_solr) }).merge(tags_to_solr)
     end
 
-    # rubocop:disable Metrics/LineLength
     def self.solr_field_for_tagger(tagger)
-      :"#{Spotlight::Engine.config.solr_fields.prefix}#{tagger.class.model_name.param_key}_#{tagger.to_param}_tags#{Spotlight::Engine.config.solr_fields.string_suffix}"
+      :"#{solr_field_prefix(tagger)}tags#{Spotlight::Engine.config.solr_fields.string_suffix}"
     end
 
     def self.visibility_field(exhibit)
-      :"#{Spotlight::Engine.config.solr_fields.prefix}#{exhibit.class.model_name.param_key}_#{exhibit.to_param}_public#{Spotlight::Engine.config.solr_fields.boolean_suffix}"
+      :"#{solr_field_prefix(exhibit)}public#{Spotlight::Engine.config.solr_fields.boolean_suffix}"
     end
-    # rubocop:enable Metrics/LineLength
 
     def self.resource_type_field
       :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_resource_type#{Spotlight::Engine.config.solr_fields.string_suffix}"
+    end
+
+    def self.solr_field_prefix(exhibit)
+      "#{Spotlight::Engine.config.solr_fields.prefix}#{exhibit.class.model_name.param_key}_#{exhibit.to_param}_"
     end
 
     def make_public!(exhibit)

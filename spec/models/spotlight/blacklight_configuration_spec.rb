@@ -440,10 +440,10 @@ describe Spotlight::BlacklightConfiguration, type: :model do
 
   describe '#custom_index_fields' do
     it 'converts exhibit-specific fields to Blacklight configurations' do
-      allow(subject).to receive_messages(exhibit: double(custom_fields: [
-        stub_model(Spotlight::CustomField, field: 'abc', configuration: { a: 1 }),
-        stub_model(Spotlight::CustomField, field: 'xyz', configuration: { x: 2 })
-      ]))
+      allow(subject.exhibit).to receive_messages(custom_fields: [
+        stub_model(Spotlight::CustomField, field: 'abc', configuration: { a: 1 }, exhibit: subject.exhibit),
+        stub_model(Spotlight::CustomField, field: 'xyz', configuration: { x: 2 }, exhibit: subject.exhibit)
+      ])
 
       expect(subject.custom_index_fields).to include 'abc', 'xyz'
       expect(subject.custom_index_fields['abc']).to be_a_kind_of Blacklight::Configuration::Field
