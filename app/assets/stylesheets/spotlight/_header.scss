@@ -163,51 +163,11 @@ $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
     small {
       color: $white;
     }
-
-    .more-exhibits {
-      a {
-        color: $gray-lighter;
-        background: rgba(0, 0, 0, 0.4);
-        border-top-left-radius: $border-radius-base;
-        border-top-right-radius: $border-radius-base;
-      }
-
-      a:hover,
-      a:focus,
-      a:active {
-        background: rgba(0, 0, 0, 0.6);
-      }
-
-      .dropdown-menu a {
-        background: none;
-        color: $gray;
-
-        &:hover,
-        &:focus,
-        &:active {
-          background-color: $gray-lighter;
-        }
-      }
-    }
-  }
-
-  .more-exhibits {
-    @extend .navbar-right;
   }
 
   &.with-page-masthead {
     .site-title {
       margin-top: $padding-large-vertical * 3;
-    }
-
-    .more-exhibits {
-      @extend .navbar-left;
-      padding-top: $padding-base-vertical;
-
-      .dropdown-menu {
-        left: 0;
-        right: auto;
-      }
     }
   }
 

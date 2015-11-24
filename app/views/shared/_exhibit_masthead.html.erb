@@ -5,23 +5,6 @@
     <span class='background-container-gradient'></span>
   <% end %>
   <div class="container">
-    <%= cache [current_exhibit, cache_key_for_spotlight_exhibits] do %>
-    <ul class="more-exhibits nav navbar-nav navbar-sm">
-      <% if Spotlight::Exhibit.many? %>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t(:'.more_exhibits') %> <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <% Spotlight::Exhibit.accessible_by(current_ability).where.not(id: current_exhibit).each do |exhibit| %>
-              <li>
-              <%= link_to exhibit.title, [spotlight, exhibit] %>
-              </li>
-            <% end %>
-          </ul>
-        </li>
-      <% end %>
-    </ul>
-    <% end if current_exhibit %>
-
     <div class="site-title h1">
       <% if content_for? :masthead %>
         <%= content_for :masthead %>
