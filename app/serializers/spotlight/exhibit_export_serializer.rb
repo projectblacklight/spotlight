@@ -12,6 +12,14 @@ module Spotlight
     (Spotlight::BlacklightConfiguration.attribute_names - %w(id exhibit_id)).each do |prop|
       property prop
     end
+
+    property :skip_default_configuration, exec_context: :decorator
+
+    def skip_default_configuration
+      true
+    end
+
+    delegate :skip_default_configuration=, to: :represented
   end
 
   ##

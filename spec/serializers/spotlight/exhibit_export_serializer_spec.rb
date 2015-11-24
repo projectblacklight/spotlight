@@ -100,6 +100,17 @@ describe Spotlight::ExhibitExportSerializer do
       expect(subject.blacklight_configuration).to be_persisted
     end
 
+    context 'for an exhibit without search fields' do
+      before do
+        source_exhibit.blacklight_configuration.search_fields = {}
+        source_exhibit.blacklight_configuration.save
+      end
+
+      it 'remains without search fields' do
+        expect(subject.blacklight_configuration.search_fields).to be_blank
+      end
+    end
+
     it 'has home page properties' do
       expect(subject.home_page).to be_persisted
       expect(subject.home_page.id).not_to eq source_exhibit.home_page.id
