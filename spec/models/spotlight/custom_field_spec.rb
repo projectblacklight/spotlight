@@ -45,22 +45,63 @@ describe Spotlight::CustomField, type: :model do
   end
 
   describe '#field' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
-    it 'is auto-generated from the field label' do
-      subject.configuration['label'] = 'xyz'
-      subject.exhibit = exhibit
+    let(:exhibit) { double(to_param: 'a', solr_document_sidecars: Spotlight::SolrDocumentSidecar.none) }
+
+    before do
+      subject.label = 'xyz'
       subject.save
 
-      expect(subject.field).to eq "exhibit_#{exhibit.to_param}_xyz_tesim"
+      allow(Spotlight::RenameSidecarFieldJob).to receive(:perform_later)
     end
 
-    it 'uses the solr field prefix' do
-      allow(Spotlight::Engine.config.solr_fields).to receive(:prefix).and_return 'prefix_'
+    it 'is auto-generated from the field label' do
+      expect(subject.field).to start_with 'xyz'
+    end
+
+    it 'ends in the text suffix if it is a text field' do
+      subject.field_type = 'text'
+      subject.save
+      expect(subject.field).to end_with Spotlight::Engine.config.solr_fields.text_suffix
+    end
+
+    it 'ends in a string suffix if it is a vocab field' do
+      subject.field_type = 'vocab'
+      subject.save
+      expect(subject.field).to end_with Spotlight::Engine.config.solr_fields.string_suffix
+    end
+  end
+
+  describe '#solr_field' do
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
+
+    before do
       subject.configuration['label'] = 'xyz'
       subject.exhibit = exhibit
       subject.save
+    end
 
-      expect(subject.field).to eq "prefix_exhibit_#{exhibit.to_param}_xyz_tesim"
+    it 'is auto-generated from the field label' do
+      expect(subject.solr_field).to eq "exhibit_#{exhibit.to_param}_xyz_tesim"
+    end
+
+    context 'with a solr field prefix configured' do
+      before do
+        allow(Spotlight::Engine.config.solr_fields).to receive(:prefix).and_return 'prefix_'
+      end
+
+      it 'uses the solr field prefix' do
+        expect(subject.solr_field).to eq "prefix_exhibit_#{exhibit.to_param}_xyz_tesim"
+      end
+    end
+
+    context 'for a legacy solr field name' do
+      before do
+        subject.field = "exhibit_#{exhibit.to_param}_xyz_tesim"
+      end
+
+      it 'returns the original field name' do
+        expect(subject.solr_field).to eq "exhibit_#{exhibit.to_param}_xyz_tesim"
+      end
     end
   end
 
@@ -98,24 +139,6 @@ describe Spotlight::CustomField, type: :model do
       subject.save
 
       expect(subject).to_not be_configured_to_display
-    end
-  end
-
-  describe '#field_name' do
-    let(:exhibit) { double(to_param: 'a') }
-
-    before do
-      subject.label = 'xyz'
-    end
-
-    it 'ends in the text suffix if it is a text field' do
-      subject.field_type = 'text'
-      expect(subject.send(:field_name)).to end_with Spotlight::Engine.config.solr_fields.text_suffix
-    end
-
-    it 'ends in a string suffix if it is a vocab field' do
-      subject.field_type = 'vocab'
-      expect(subject.send(:field_name)).to end_with Spotlight::Engine.config.solr_fields.string_suffix
     end
   end
 

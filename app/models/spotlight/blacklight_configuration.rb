@@ -192,14 +192,14 @@ module Spotlight
 
     def custom_index_fields
       Hash[exhibit.custom_fields.map do |x|
-        field = Blacklight::Configuration::IndexField.new x.configuration.merge(field: x.field)
+        field = Blacklight::Configuration::IndexField.new x.configuration.merge(key: x.field, field: x.solr_field)
         [x.field, field]
       end]
     end
 
     def custom_facet_fields
       Hash[exhibit.custom_fields.vocab.map do |x|
-        field = Blacklight::Configuration::FacetField.new x.configuration.merge(field: x.field, show: false)
+        field = Blacklight::Configuration::FacetField.new x.configuration.merge(key: x.field, field: x.solr_field, show: false)
         [x.field, field]
       end]
     end
