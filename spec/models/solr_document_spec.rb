@@ -80,13 +80,13 @@ describe SolrDocument, type: :model do
     it 'includes exhibit-specific tags' do
       exhibit.tag(subject, with: 'paris', on: :tags)
 
-      expect(subject.to_solr).to include :exhibit_1_tags_ssim
-      expect(subject.to_solr[:exhibit_1_tags_ssim]).to include 'paris'
+      expect(subject.to_solr).to include :"exhibit_#{exhibit.slug}_tags_ssim"
+      expect(subject.to_solr[:"exhibit_#{exhibit.slug}_tags_ssim"]).to include 'paris'
     end
 
     it "includes placeholders for all exhibits' tags" do
-      expect(subject.to_solr).to include :exhibit_1_tags_ssim
-      expect(subject.to_solr[:exhibit_1_tags_ssim]).to eq nil
+      expect(subject.to_solr).to include :"exhibit_#{exhibit.slug}_tags_ssim"
+      expect(subject.to_solr[:"exhibit_#{exhibit.slug}_tags_ssim"]).to eq nil
     end
 
     it 'includes sidecar fields' do

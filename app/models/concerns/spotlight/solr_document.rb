@@ -66,11 +66,11 @@ module Spotlight
 
     # rubocop:disable Metrics/LineLength
     def self.solr_field_for_tagger(tagger)
-      :"#{Spotlight::Engine.config.solr_fields.prefix}#{tagger.class.model_name.param_key}_#{tagger.id}_tags#{Spotlight::Engine.config.solr_fields.string_suffix}"
+      :"#{Spotlight::Engine.config.solr_fields.prefix}#{tagger.class.model_name.param_key}_#{tagger.to_param}_tags#{Spotlight::Engine.config.solr_fields.string_suffix}"
     end
 
     def self.visibility_field(exhibit)
-      :"#{Spotlight::Engine.config.solr_fields.prefix}#{exhibit.class.model_name.param_key}_#{exhibit.id}_public#{Spotlight::Engine.config.solr_fields.boolean_suffix}"
+      :"#{Spotlight::Engine.config.solr_fields.prefix}#{exhibit.class.model_name.param_key}_#{exhibit.to_param}_public#{Spotlight::Engine.config.solr_fields.boolean_suffix}"
     end
     # rubocop:enable Metrics/LineLength
 
