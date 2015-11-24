@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This gem adds a new "Repository Item" form to your Spotlight application. This form allows curators to input one or more URLs to a IIIF Manifest or collection, and the contents of the feed will be harvested as new items in the Spotlight exhibit.
 
 ## Development
 
