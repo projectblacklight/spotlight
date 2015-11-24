@@ -10,7 +10,6 @@ Gem::Specification.new do |spec|
   spec.email         = ["ndushay@stanford.edu"]
 
   spec.summary       = 'Spotlight Resource Indexer for IIIF manifests or collections.'
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
   spec.homepage      = "https://github.com/sul-dlss/spotlight-iiif-resources"
   spec.license       = 'Apache-2.0'
 
