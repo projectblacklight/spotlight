@@ -131,6 +131,24 @@ describe Spotlight::ExhibitExportSerializer do
       expect(subject.owned_taggings.first.tag.name).to eq 'xyz'
     end
 
+    context 'with custom main navigation labels' do
+      before do
+        nav = source_exhibit.main_navigations.about
+        nav.label = 'Custom Label'
+        nav.save
+      end
+
+      it 'persists across import/export' do
+        expect(subject.main_navigations.about.label).to eq 'Custom Label'
+      end
+    end
+
+    it 'has tags' do
+      expect(subject.owned_taggings.length).to eq source_exhibit.owned_taggings.length
+      expect(subject.owned_taggings.first).to be_persisted
+      expect(subject.owned_taggings.first.tag.name).to eq 'xyz'
+    end
+
     it 'deals with nested feature pages' do
       FactoryGirl.create :feature_subpage, exhibit: source_exhibit
       expect(subject.feature_pages.at_top_level.length).to eq 1

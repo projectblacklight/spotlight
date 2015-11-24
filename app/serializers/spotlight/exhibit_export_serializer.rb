@@ -53,6 +53,8 @@ module Spotlight
 
     property :thumbnail, class: Spotlight::FeaturedImage, decorator: FeaturedImageRepresenter
 
+    collection :main_navigations, class: Spotlight::MainNavigation, decorator: MainNavigationRepresenter
+
     property :blacklight_configuration, class: Spotlight::BlacklightConfiguration, decorator: ConfigurationRepresenter
 
     collection :custom_fields, parse_strategy: ->(fragment, _i, options) { options.represented.custom_fields.find_or_initialize_by(slug: fragment['slug']) },
