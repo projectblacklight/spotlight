@@ -10,25 +10,13 @@ module Spotlight
 
     scope :vocab, -> { where(field_type: 'vocab') }
 
-    before_save do
+    before_create do
       self.field ||= field_name
       self.field_type ||= 'text'
     end
 
     before_save do
-      if persisted? && field_type_changed?
-        old_field = self.field
-        self.field = field_name
-
-        if blacklight_configuration && blacklight_configuration.index_fields.key?(old_field)
-          blacklight_configuration.index_fields_will_change!
-          f = blacklight_configuration.index_fields.delete(old_field)
-          blacklight_configuration.index_fields[field] = f
-          blacklight_configuration.save
-        end
-
-        Spotlight::RenameSidecarFieldJob.perform_later(exhibit, old_field, self.field)
-      end
+      update_field_name(field_name) if persisted? && field_type_changed?
     end
 
     def label=(label)
@@ -62,6 +50,15 @@ module Spotlight
         end
     end
 
+    def solr_field
+      if field && field.starts_with?(solr_field_prefix)
+        # backwards compatibility with pre-0.9 custom fields
+        field
+      else
+        "#{solr_field_prefix}#{field || field_name}"
+      end
+    end
+
     protected
 
     def blacklight_configuration
@@ -76,7 +73,15 @@ module Spotlight
     end
 
     def field_name
-      "#{Spotlight::Engine.config.solr_fields.prefix}exhibit_#{exhibit.to_param}_#{configuration['label'].parameterize}#{field_suffix}"
+      "#{field_slug}#{field_suffix}"
+    end
+
+    def field_slug
+      configuration['label'].parameterize
+    end
+
+    def solr_field_prefix
+      "#{Spotlight::Engine.config.solr_fields.prefix}exhibit_#{exhibit.to_param}_"
     end
 
     def field_suffix
@@ -107,6 +112,23 @@ module Spotlight
         :label,
         :field
       ]
+    end
+
+    ##
+    # Rename this custom field to new_name
+    # @param [String] the new name for the field
+    def update_field_name(new_field)
+      old_field = field
+      self.field = new_field
+
+      if blacklight_configuration && blacklight_configuration.index_fields.key?(old_field)
+        blacklight_configuration.index_fields_will_change!
+        f = blacklight_configuration.index_fields.delete(old_field)
+        blacklight_configuration.index_fields[field] = f
+        blacklight_configuration.save
+      end
+
+      Spotlight::RenameSidecarFieldJob.perform_later(exhibit, old_field, self.field)
     end
   end
 end

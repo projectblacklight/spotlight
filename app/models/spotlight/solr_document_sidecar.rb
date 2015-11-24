@@ -44,7 +44,16 @@ module Spotlight
     end
 
     def data_to_solr
-      data.except('configured_fields').merge(configured_fields_data_to_solr)
+      custom_fields_data_to_solr.merge(configured_fields_data_to_solr)
+    end
+
+    def custom_fields_data_to_solr
+      data.except('configured_fields').each_with_object({}) do |(key, value), solr_hash|
+        custom_field = custom_fields[key]
+        field_name = custom_field.solr_field if custom_field
+        field_name ||= key
+        solr_hash[field_name] = value
+      end
     end
 
     def configured_fields_data_to_solr
@@ -64,6 +73,12 @@ module Spotlight
 
     def upload_fields
       Spotlight::Resources::Upload.fields(exhibit)
+    end
+
+    def custom_fields
+      exhibit.custom_fields.each_with_object({}) do |custom_field, hash|
+        hash[custom_field.field] = custom_field
+      end
     end
   end
 end
