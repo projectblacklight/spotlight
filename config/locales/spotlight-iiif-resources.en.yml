@@ -1,0 +1,11 @@
+en:
+  spotlight:
+    resources:
+      iiif:
+        tabbed_form:
+          manifest: "IIIF Manifest"
+        manifest:
+          manifest: "Manifest"
+          add_item: "Add IIIF manifest URLs"
+          url-field:
+            help: "Add the URL of a IIIF manifest."
