@@ -485,8 +485,8 @@ en:
           which will be displayed here.
         not_searchable_html: >
           This exhibit is not currently searchable. To perform searches that can be saved as
-          additional browse categories, an Administrator must temporarily turn on the Searchable
-          option in the search configuration section of the Administration > %{href} page.
+          additional browse categories, temporarily turn on the Display search box
+          option in the Options section of the Curation > %{href} page.
       edit:
         header: "Edit Browse Category"
         title: "Curation - Browse"
