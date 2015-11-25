@@ -30,6 +30,10 @@ module Spotlight
       rescue Blacklight::Exceptions::InvalidSolrID => e
         Rails.logger.debug "Unable to find document #{id}: #{e}"
       end
+
+      def reindex_all
+        find_each(&:reindex)
+      end
     end
 
     def update(current_exhibit, new_attributes)

@@ -151,4 +151,29 @@ describe SolrDocument, type: :model do
       end
     end
   end
+
+  describe '.find_each' do
+    it 'enumerates the documents in the exhibit' do
+      expect(described_class.find_each).to be_a Enumerable
+    end
+
+    it 'pages through the index' do
+      allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(start: 0)).and_return(double(documents: [1, 2, 3]))
+      allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(start: 3)).and_return(double(documents: [4, 5, 6]))
+      allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(start: 6)).and_return(double(documents: []))
+
+      expect(described_class.find_each.to_a).to match_array [1, 2, 3, 4, 5, 6]
+    end
+  end
+
+  describe '.reindex_all' do
+    let(:doc) { described_class.new id: 1 }
+
+    it 'reindexes all solr documents' do
+      expect(described_class).to receive(:find_each).and_yield(doc)
+      expect(doc).to receive(:reindex)
+
+      described_class.reindex_all
+    end
+  end
 end
