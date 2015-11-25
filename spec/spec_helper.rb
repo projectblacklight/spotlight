@@ -1,9 +1,6 @@
 require 'coveralls'
 Coveralls.wear!
 
-require 'engine_cart'
-EngineCart.load_application!
-
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -19,11 +16,4 @@ RSpec.configure do |config|
   end
 
   config.order = :random
-
-  # Limits the available syntax to the non-monkey patched syntax that is
-  # recommended. For more details, see:
-  #   - http://rspec.info/blog/2012/06/rspecs-new-expectation-syntax/
-  #   - http://www.teaisaweso.me/blog/2013/05/27/rspecs-new-message-expectation-syntax/
-  #   - http://rspec.info/blog/2014/05/notable-changes-in-rspec-3/#zero-monkey-patching-mode
-  #config.disable_monkey_patching!
 end

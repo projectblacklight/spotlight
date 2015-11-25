@@ -10,7 +10,6 @@ Gem::Specification.new do |spec|
   spec.email         = ["ndushay@stanford.edu"]
 
   spec.summary       = 'Spotlight Resource Indexer for IIIF manifests or collections.'
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
   spec.homepage      = "https://github.com/sul-dlss/spotlight-iiif-resources"
   spec.license       = 'Apache-2.0'
 
@@ -24,6 +23,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec-rails"
+  spec.add_development_dependency 'capybara'
+  spec.add_development_dependency 'factory_girl', '~> 4.5'
+  spec.add_development_dependency 'database_cleaner', '~> 1.3'
+#  spec.add_development_dependency 'poltergeist', '>= 1.5.0' # for js testing using phantomjs
   spec.add_development_dependency "coveralls"
   spec.add_development_dependency "rubocop"
   spec.add_development_dependency "rubocop-rspec"
@@ -31,4 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "engine_cart"
   spec.add_development_dependency "jettywrapper"
   spec.add_development_dependency 'exhibits_solr_conf'
+  # FIXME: we shouldn't need this here as it should come with spotlight
+  #   but travis fails without it (though tests run fine locally)
+  spec.add_development_dependency 'sitemap_generator'
 end
