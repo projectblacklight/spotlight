@@ -31,9 +31,4 @@ class TestAppGenerator < Rails::Generators::Base
 
     generate 'spotlight:install', '-f --mailer_default_url_host=localhost:3000'
   end
-
-#  def install_engine
-#    generate 'spotlight-iiif-resources:install'
-#  end
-
 end
