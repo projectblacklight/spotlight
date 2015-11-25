@@ -34,7 +34,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "engine_cart"
   spec.add_development_dependency "jettywrapper"
   spec.add_development_dependency 'exhibits_solr_conf'
-  # FIXME: we shouldn't need this here as it should come with spotlight
+  # FIXME: we shouldn't need explicit sitemap_generator dependency here as it should come with spotlight
   #   but travis fails without it (though tests run fine locally)
+  # cbeer:  "we’re injecting the dependency into the host app. maybe we’re just
+  #   missing a `bundle install` somewhere to fix that up"
   spec.add_development_dependency 'sitemap_generator'
 end
