@@ -28,8 +28,10 @@
     padding: 0 15px 0 0;
   }
 
-  .dashboard > a {
-    padding-left: 0;
+  &.top-level {
+    li > a {
+      padding-left: 0;
+    }
   }
 }
 

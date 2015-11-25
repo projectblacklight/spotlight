@@ -1,6 +1,5 @@
 <%= cache current_exhibit, expires_in: 1.hour do %>
-<% if Spotlight::Engine.config.analytics_provider and Spotlight::Engine.config.analytics_provider.enabled? %>
-  <h3><%= t :'.header' %></h3>
+  <h3><%= t :'.monthly_header' %></h3>
   <table class="table analytics">
     <tr>
     <% Spotlight::Engine.config.analytics_provider.metrics.elements.each do |e| %>
@@ -33,5 +32,4 @@
     <% end %>
   </table>
   <% end %>
-<% end %>
 <% end %>

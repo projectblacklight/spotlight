@@ -23,11 +23,22 @@ module Spotlight
       attach_dashboard_breadcrumbs
     end
 
+    def analytics
+      authorize! :curate, @exhibit
+
+      attach_analytics_breadcrumbs
+    end
+
     def _prefixes
       @_prefixes ||= super + ['spotlight/catalog', 'catalog']
     end
 
     protected
+
+    def attach_analytics_breadcrumbs
+      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
+      add_breadcrumb t(:'spotlight.curation.sidebar.analytics'), analytics_exhibit_dashboard_path(@exhibit)
+    end
 
     def attach_dashboard_breadcrumbs
       add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit

@@ -26,12 +26,27 @@ describe Spotlight::DashboardsController, type: :controller do
         expect(assigns[:solr_documents]).to have(1).item
       end
     end
+
+    describe 'GET analytics' do
+      it 'loads the exhibit' do
+        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to receive(:add_breadcrumb).with('Analytics', analytics_exhibit_dashboard_path(exhibit))
+        get :analytics, exhibit_id: exhibit.id
+        expect(response).to render_template 'spotlight/dashboards/analytics'
+        expect(assigns[:exhibit]).to eq exhibit
+      end
+    end
   end
 
   describe 'when user does not have access' do
     before { sign_in FactoryGirl.create(:exhibit_visitor) }
     it 'does not allow show' do
       get :show, exhibit_id: exhibit.id
+      expect(response).to redirect_to main_app.root_path
+    end
+
+    it 'does not allow analytics' do
+      get :analytics, exhibit_id: exhibit.id
       expect(response).to redirect_to main_app.root_path
     end
   end
