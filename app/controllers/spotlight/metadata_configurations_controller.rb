@@ -17,8 +17,8 @@ module Spotlight
 
     def edit
       add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
-      add_breadcrumb t(:'spotlight.curation.sidebar.metadata'), edit_exhibit_metadata_configuration_path(@exhibit)
+      add_breadcrumb t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit)
+      add_breadcrumb t(:'spotlight.configuration.sidebar.metadata'), edit_exhibit_metadata_configuration_path(@exhibit)
     end
 
     def update

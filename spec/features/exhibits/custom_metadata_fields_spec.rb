@@ -48,7 +48,7 @@ describe 'Adding custom metadata fields', type: :feature do
   it 'has breadcrumbs' do
     visit spotlight.edit_exhibit_metadata_configuration_path exhibit
     click_on 'Add new field'
-    expect(page).to have_breadcrumbs 'Home', 'Curation', 'Metadata', 'Add new field'
+    expect(page).to have_breadcrumbs 'Home', 'Configuration', 'Metadata', 'Add new field'
   end
 
   it 'lets the curator choose the type of field on create' do

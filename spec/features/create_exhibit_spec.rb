@@ -12,7 +12,7 @@ describe 'Create a new exhibit', type: :feature do
     within '.dropdown-menu' do
       click_link 'Create Exhibit'
     end
-    expect(page).to have_selector 'h1', text: 'Administration'
+    expect(page).to have_selector 'h1', text: 'Configuration'
     expect(page).to have_selector 'h1 small', text: 'Create a new exhibit'
   end
 

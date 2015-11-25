@@ -3,14 +3,14 @@ describe Spotlight::CustomFieldsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
-  describe 'when signed in as a curator' do
-    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  describe 'when signed in as an exhibit admin' do
+    let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
     before { sign_in user }
 
     describe 'GET new' do
       it 'assigns a new custom field' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Metadata', edit_exhibit_metadata_configuration_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Add new field', new_exhibit_custom_field_path(exhibit))
         get :new, exhibit_id: exhibit
@@ -22,7 +22,7 @@ describe Spotlight::CustomFieldsController, type: :controller do
       let(:field) { FactoryGirl.create(:custom_field, exhibit: exhibit) }
       it 'assigns the requested custom_field' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Metadata', edit_exhibit_metadata_configuration_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(field.label, edit_exhibit_custom_field_path(exhibit, field))
         get :edit, exhibit_id: exhibit, id: field

@@ -1,0 +1,8 @@
+<div id="sidebar" class="col-md-3" role="complementary">
+  <ul class="nav sidenav top-level">
+    <li><%= link_to t(:'spotlight.curation.sidebar.dashboard'), spotlight.exhibit_dashboard_path(current_exhibit) %></li>
+    <li><%= link_to t(:'spotlight.curation.sidebar.analytics'), spotlight.analytics_exhibit_dashboard_path(current_exhibit) %></li>
+  </ul>
+  <%= render 'spotlight/shared/configuration_sidebar' if can? :update, current_exhibit %>
+  <%= render 'spotlight/shared/curation_sidebar' %>
+</div>

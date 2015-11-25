@@ -1,0 +1,14 @@
+<h4><%=t(:'spotlight.configuration.sidebar.header') %></h4>
+<ul class="nav sidenav">
+  <% if can? :update, current_exhibit %>
+    <li><%= link_to t(:'spotlight.configuration.sidebar.settings'), spotlight.edit_exhibit_path(current_exhibit) %></li>
+    <li><%= link_to t(:'spotlight.configuration.sidebar.appearance'), spotlight.edit_exhibit_appearance_path(current_exhibit) %></li>
+  <% end %>
+  <% if can? :manage, Spotlight::Role.new(exhibit: current_exhibit) %>
+    <li><%= link_to t(:'spotlight.configuration.sidebar.users'), spotlight.exhibit_roles_path(current_exhibit) %></li>
+  <% end %>
+  <% if can? :update, current_exhibit.blacklight_configuration %>
+    <li><%= link_to t(:'spotlight.configuration.sidebar.metadata'), spotlight.edit_exhibit_metadata_configuration_path(current_exhibit) %></li>
+    <li><%= link_to t(:'spotlight.configuration.sidebar.search_configuration'), spotlight.edit_exhibit_search_configuration_path(current_exhibit) %></li>
+  <% end %>
+</ul>

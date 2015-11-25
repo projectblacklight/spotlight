@@ -40,10 +40,10 @@ describe Spotlight::TitleHelper, type: :helper do
     end
   end
 
-  describe '#administration_page_title' do
-    it 'renders a page title in the administration section' do
-      title = helper.administration_page_title 'Some title'
-      expect(title).to have_selector 'h1', text: 'Administration'
+  describe '#configuration_page_title' do
+    it 'renders a page title in the configuration section' do
+      title = helper.configuration_page_title 'Some title'
+      expect(title).to have_selector 'h1', text: 'Configuration'
       expect(title).to have_selector 'h1 small', text: 'Some title'
     end
   end

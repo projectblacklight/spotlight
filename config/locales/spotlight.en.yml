@@ -1,4 +1,3 @@
-
 en:
   cancel: "Cancel"
   drag: "Drag"
@@ -98,15 +97,15 @@ en:
     application_name: "%{exhibit} - %{application_name}"
     html_title: "%{title} | %{application_name}"
     html_admin_title: "%{section} - %{title}"
-    administration:
+    configuration:
       sidebar:
-        header: Administration
-        dashboard: Dashboard
-        settings: Settings
+        header: Configuration
+        settings: General
         appearance: Appearance
         users: Users
-        import: "Import/Export"
-      header: "Administration"
+        metadata: Metadata
+        search_configuration: Search
+      header: "Configuration"
       page_title: "Page title"
       settings:
         header: "Settings"
@@ -146,14 +145,10 @@ en:
         dashboard: Dashboard
         analytics: Analytics
         items: Items
-        metadata: Metadata
-        sort_fields: Sort fields
         tags: Tags
-        search_facets: Search facets
         browse: Browse
         feature_pages: Feature pages
         about_pages: About pages
-        search_configuration: Search
       nav:
         home: "Home"
       header: "Curation"
@@ -468,7 +463,7 @@ en:
       reindexing_in_progress: "Reindexing all resources"
     roles:
       index:
-        title: Site Administration - Users
+        title: Site Configuration - Users
         header: Users
         name: Username
         role: "Role"
@@ -489,7 +484,7 @@ en:
         not_searchable_html: >
           This exhibit is not currently searchable. To perform searches that can be saved as
           additional browse categories, temporarily turn on the Display search box
-          option in the Options section of the Curation > %{href} page.
+          option in the Options section of the Configuration > %{href} page.
       edit:
         header: "Edit Browse Category"
         title: "Curation - Browse"

@@ -10,13 +10,13 @@
 
     <ol>
       <% if can? :update, current_exhibit %>
-        <li>Visit the <%= link_to "Administrative Dashboard Settings", edit_exhibit_path(current_exhibit) %> page to configure the exhibit title and subtitle.</li>
+        <li>Visit the <%= link_to "Configuration > General", edit_exhibit_path(current_exhibit) %> page to configure the exhibit title and subtitle.</li>
 
-        <li>Next, go to the <%= link_to "Administration > Appearance", edit_exhibit_appearance_path(current_exhibit) %> page to add a site masthead image and configure other appearance options.</li>
+        <li>Next, go to the <%= link_to "Configuration > Appearance", edit_exhibit_appearance_path(current_exhibit) %> page to add a site masthead image and configure other appearance options.</li>
       <% end %>
 
       <% if can? :manage, Spotlight::Role.new(exhibit: current_exhibit) %>
-        <li>If you want help building the exhibit, use the <%= link_to "Administration > Users", exhibit_roles_path(current_exhibit) %> page to add other user accounts.</li>
+        <li>If you want help building the exhibit, use the <%= link_to "Configuration > Users", exhibit_roles_path(current_exhibit) %> page to add other user accounts.</li>
       <% end %>
 
       <% unless Spotlight::Engine.config.resource_providers.any? %>

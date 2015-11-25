@@ -26,7 +26,7 @@
           <% unless field.configured_to_display? %>
             <p class="bg-warning help-block">
               <%= t(:'.blank_field_warning_html',
-                    link: link_to(t(:'spotlight.curation.sidebar.metadata'), spotlight.edit_exhibit_metadata_configuration_path(current_exhibit))) %>
+                    link: link_to(t(:'spotlight.configuration.sidebar.metadata'), spotlight.edit_exhibit_metadata_configuration_path(current_exhibit))) %>
             </p>
           <% end %>
         </div>

@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe 'Metadata Administration', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-  before { login_as exhibit_curator }
+  let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  before { login_as user }
 
   describe 'edit' do
     it 'displays the metadata edit page' do
