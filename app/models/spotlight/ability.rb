@@ -14,7 +14,7 @@ module Spotlight
 
       # exhibit admin
       can [:update, :import, :export, :destroy], Spotlight::Exhibit, id: user.admin_roles.pluck(:exhibit_id)
-      can :manage, Spotlight::Role, exhibit_id: user.admin_roles.pluck(:exhibit_id)
+      can :manage, [Spotlight::BlacklightConfiguration, Spotlight::Role], exhibit_id: user.admin_roles.pluck(:exhibit_id)
 
       can :manage, PaperTrail::Version if user.roles.any?
 
@@ -28,8 +28,6 @@ module Spotlight
         Spotlight::CustomField], exhibit_id: user.roles.pluck(:exhibit_id)
 
       can :manage, Spotlight::Lock, by: user
-
-      can [:read, :update], Spotlight::BlacklightConfiguration, exhibit_id: user.roles.pluck(:exhibit_id)
 
       can [:read, :curate, :tag], Spotlight::Exhibit, id: user.roles.pluck(:exhibit_id)
 

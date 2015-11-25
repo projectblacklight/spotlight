@@ -17,7 +17,7 @@ the export option behind a bootstrap tab)))
       click_link 'Dashboard'
     end
 
-    click_link 'Settings'
+    click_link 'General'
     within('.nav-tabs') do
       click_link 'Export data'
     end
@@ -38,7 +38,7 @@ the export option behind a bootstrap tab)))
       click_link 'Dashboard'
     end
 
-    click_link 'Settings'
+    click_link 'General'
 
     within('.nav-tabs') do
       click_link 'Import data'

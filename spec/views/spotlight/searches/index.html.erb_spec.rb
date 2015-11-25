@@ -27,7 +27,7 @@ describe 'spotlight/searches/index.html.erb', type: :view do
 This exhibit is not currently searchable. To perform searches that can \
 be saved as additional browse categories, \
 temporarily turn on the Display search box option in the Options section \
-of the Curation > Search page.)
+of the Configuration > Search page.)
     end
   end
 end

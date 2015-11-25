@@ -18,7 +18,7 @@ describe Spotlight::RolesController, type: :controller do
     before { sign_in admin }
     it 'allows index' do
       expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-      expect(controller).to receive(:add_breadcrumb).with('Administration', exhibit_dashboard_path(exhibit))
+      expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
       expect(controller).to receive(:add_breadcrumb).with('Users', exhibit_roles_path(exhibit))
       get :index, exhibit_id: exhibit
       expect(response).to be_successful

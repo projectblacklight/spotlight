@@ -44,7 +44,7 @@ describe Spotlight::MetadataConfigurationsController, type: :controller do
     describe '#edit' do
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Metadata', edit_exhibit_metadata_configuration_path(exhibit))
         get :edit, exhibit_id: exhibit
         expect(response).to be_successful

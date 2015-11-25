@@ -2,15 +2,15 @@ require 'spec_helper'
 
 feature 'Search Configuration Administration', js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-  before { login_as exhibit_curator }
+  let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  before { login_as user }
 
   describe 'search fields' do
     it 'allows the curator to disable all search fields' do
       visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
       expect(page).to have_css 'select#search_field'
 
-      click_link exhibit_curator.email
+      click_link user.email
       within '#user-util-collapse .dropdown' do
         click_link 'Dashboard'
       end
@@ -28,7 +28,7 @@ feature 'Search Configuration Administration', js: true do
 
     it 'allows the curator to update search field options' do
       visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-      click_link exhibit_curator.email
+      click_link user.email
       within '#user-util-collapse .dropdown' do
         click_link 'Dashboard'
       end
@@ -56,7 +56,7 @@ feature 'Search Configuration Administration', js: true do
     it 'allows us to update the label with edit-in-place' do
       input_id = 'blacklight_configuration_facet_fields_genre_ssim_label'
       visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-      click_link exhibit_curator.email
+      click_link user.email
       within '#user-util-collapse .dropdown' do
         click_link 'Dashboard'
       end
@@ -87,7 +87,7 @@ feature 'Search Configuration Administration', js: true do
   describe 'results' do
     it 'updates search result options' do
       visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-      click_link exhibit_curator.email
+      click_link user.email
       within '#user-util-collapse .dropdown' do
         click_link 'Dashboard'
       end
@@ -113,7 +113,7 @@ feature 'Search Configuration Administration', js: true do
     end
     it 'updates Sort field result options' do
       visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-      click_link exhibit_curator.email
+      click_link user.email
       within '#user-util-collapse .dropdown' do
         click_link 'Dashboard'
       end

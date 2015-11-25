@@ -43,6 +43,6 @@ describe 'Editing metadata fields', type: :feature do
   it 'has breadcrumbs' do
     visit spotlight.edit_exhibit_metadata_configuration_path exhibit
 
-    expect(page).to have_breadcrumbs 'Home', 'Curation', 'Metadata'
+    expect(page).to have_breadcrumbs 'Home', 'Configuration', 'Metadata'
   end
 end

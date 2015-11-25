@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe 'Search Administration', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-  before { login_as exhibit_curator }
+  let(:exhibit_admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  before { login_as exhibit_admin }
 
   describe 'edit' do
     it 'displays the search configuration edit screen' do
@@ -13,7 +13,7 @@ describe 'Search Administration', type: :feature do
 
     it 'has breadcrumbs' do
       visit spotlight.edit_exhibit_search_configuration_path exhibit
-      expect(page).to have_breadcrumbs 'Home', 'Curation', 'Search'
+      expect(page).to have_breadcrumbs 'Home', 'Configuration', 'Search'
     end
 
     describe 'facets' do
@@ -29,7 +29,7 @@ describe 'Search Administration', type: :feature do
       it 'allows curators to select and unselect facets for display' do
         visit spotlight.edit_exhibit_search_configuration_path exhibit
 
-        expect(page).to have_content 'Curation Search Options Facets'
+        expect(page).to have_content 'Configuration Search Options Facets'
         expect(page).to have_button 'Save'
 
         uncheck 'blacklight_configuration_facet_fields_language_ssim_show' # Language

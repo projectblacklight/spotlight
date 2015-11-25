@@ -6,8 +6,8 @@ module Spotlight
       page_title t(:'spotlight.curation.header'), title
     end
 
-    def administration_page_title(title = nil)
-      page_title t(:'spotlight.administration.header'), title
+    def configuration_page_title(title = nil)
+      page_title t(:'spotlight.configuration.header'), title
     end
 
     def page_title(section, title = nil)

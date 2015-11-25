@@ -49,7 +49,7 @@ module Spotlight
 
     def attach_breadcrumbs
       add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
+      add_breadcrumb t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit)
       add_breadcrumb t(:'spotlight.metadata_configurations.edit.header'), edit_exhibit_metadata_configuration_path(@exhibit)
     end
 

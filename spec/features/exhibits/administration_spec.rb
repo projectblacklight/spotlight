@@ -12,7 +12,7 @@ describe 'Exhibit Administration', type: :feature do
   describe 'Contact Emails' do
     it 'has breadcrumbs' do
       visit spotlight.edit_exhibit_path(exhibit)
-      expect(page).to have_breadcrumbs 'Home', 'Administration', 'Settings'
+      expect(page).to have_breadcrumbs 'Home', 'Configuration', 'General'
     end
 
     it 'has a blank input field when there are no contacts yet' do
