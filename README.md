@@ -1,15 +1,15 @@
-[![Build Status](https://travis-ci.org/sul-dlss/spotlight-iiif-resources.svg?branch=master)](https://travis-ci.org/sul-dlss/spotlight-iiif-resources) [![Coverage Status](https://coveralls.io/repos/sul-dlss/spotlight-iiif-resources/badge.svg?branch=master&service=github)](https://coveralls.io/github/sul-dlss/spotlight-iiif-resources?branch=master) [![Dependency Status](https://gemnasium.com/sul-dlss/spotlight-iiif-resources.svg)](https://gemnasium.com/sul-dlss/spotlight-iiif-resources) [![Gem Version](https://badge.fury.io/rb/spotlight-iiif-resources.png)](http://badge.fury.io/rb/spotlight-iiif-resources)
+[![Build Status](https://travis-ci.org/sul-dlss/spotlight-resources-iiif.svg?branch=master)](https://travis-ci.org/sul-dlss/spotlight-resources-iiif) [![Coverage Status](https://coveralls.io/repos/sul-dlss/spotlight-resources-iiif/badge.svg?branch=master&service=github)](https://coveralls.io/github/sul-dlss/spotlight-resources-iiif?branch=master) [![Dependency Status](https://gemnasium.com/sul-dlss/spotlight-resources-iiif.svg)](https://gemnasium.com/sul-dlss/spotlight-resources-iiif) [![Gem Version](https://badge.fury.io/rb/spotlight-resources-iiif.png)](http://badge.fury.io/rb/spotlight-resources-iiif)
 
-# Spotlight::Iiif::Resources
+# Spotlight::Resources::Iiif
 
-Spotlight Resource Indexer for IIIF manifests or collections.
+Spotlight Resource Indexer for IIIF manifests or collections.  A Rails engine gem for use in the blacklight-spotlight Rails engine gem.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your blacklight-spotlight Rails application's Gemfile:
 
 ```ruby
-gem 'spotlight-iiif-resources'
+gem 'spotlight-resources-iiif'
 ```
 
 And then execute:
@@ -18,23 +18,17 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install spotlight-iiif-resources
+    $ gem install spotlight-resources-iiif
 
 ## Usage
 
+This is a Rails engine gem to be used along with blacklight-spotlight, another Rails engine gem used to build exhibits sites while leveraging the blacklight Rails engine gem.
+
 This gem adds a new "Repository Item" form to your Spotlight application. This form allows curators to input one or more URLs to a IIIF Manifest or collection, and the contents of the feed will be harvested as new items in the Spotlight exhibit.
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake false` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. 
-
-To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/sul-dlss/spotlight-iiif-resources.
+Bug reports and pull requests are welcome on GitHub at https://github.com/sul-dlss/spotlight-resources-iiif.
 
 ## Contributing
 

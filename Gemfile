@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in spotlight-iiif-resources.gemspec
+# Specify your gem's dependencies in spotlight-resources-iiif.gemspec
 gemspec
 
 # BEGIN ENGINE_CART BLOCK
