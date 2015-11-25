@@ -1,6 +1,6 @@
 (function( $ ){
 
-  $.fn.spotlight_users = function( options ) {  
+  $.fn.spotlight_users = function( options ) {
 
     // Create some defaults, extending them with any options that were provided
     var settings = $.extend( { }, options);
@@ -27,13 +27,15 @@
     }
 
     function clear_errors(element) {
-      element.find('.has-error').removeClass('has-error');
-      element.find('.help-block').remove(); // Remove the error messages
+      element.find('.has-error')
+             .removeClass('has-error')
+             .find('.help-block')
+             .remove(); // Remove the error messages
     }
 
     function rollback_changes(element) {
       $.each(element.find('input[type="text"], select'), function() {
-        $(this).val($(this).data('orig'));
+        $(this).val($(this).data('orig')).trigger('change');
       });
     }
 
@@ -58,7 +60,7 @@
       edit_row.next().show();
     }
 
-    return this.each(function() {        
+    return this.each(function() {
 
       container = $(this);
       $('[data-edit-for]', container).hide();

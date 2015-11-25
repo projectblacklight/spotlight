@@ -74,5 +74,64 @@ describe Spotlight::RolesController, type: :controller do
         expect(flash[:alert]).to eq 'There was a problem saving the users.'
       end
     end
+
+    describe 'GET exists' do
+      it 'requires a user parameter' do
+        expect do
+          get :exists, exhibit_id: exhibit
+        end.to raise_error(ActionController::ParameterMissing)
+      end
+
+      it 'returns a successful status when the requested user exists' do
+        user = FactoryGirl.create(:exhibit_curator)
+        get :exists, exhibit_id: exhibit, user: user.email
+        expect(response).to be_success
+      end
+
+      it 'returns an unsuccessful status when the user does not exist' do
+        get :exists, exhibit_id: exhibit, user: 'user@example.com'
+        expect(response).not_to be_success
+        expect(response.status).to eq 404
+      end
+    end
+
+    describe 'GET invite' do
+      before { request.env['HTTP_REFERER'] = 'http://example.com' }
+      it 'requires a user and role parameter' do
+        expect do
+          get :invite, exhibit_id: exhibit, user: 'user@example.com'
+        end.to raise_error(ActionController::ParameterMissing)
+
+        expect do
+          get :invite, exhibit_id: exhibit, role: 'admin'
+        end.to raise_error(ActionController::ParameterMissing)
+      end
+
+      it 'invites the selected user' do
+        expect do
+          get :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'curator'
+        end.to change { ::User.count }.by(1)
+        expect(::User.last.roles.length).to eq 1
+        expect(::User.last.roles.first.exhibit).to eq exhibit
+      end
+
+      it 'adds the user to the exhibit via a role' do
+        expect do
+          get :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'curator'
+        end.to change { Spotlight::Role.count }.by(1)
+      end
+
+      it 'redirects back with a flash notice upon success' do
+        get :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'curator'
+        expect(flash[:notice]).to eq 'User has been updated.'
+        expect(response).to redirect_to(:back)
+      end
+
+      it 'redirects back with flash error upon failure' do
+        get :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'not-a-real-role'
+        expect(flash[:alert]).to eq 'There was a problem saving the users.'
+        expect(response).to redirect_to(:back)
+      end
+    end
   end
 end

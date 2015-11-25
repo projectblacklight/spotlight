@@ -21,6 +21,10 @@ module Spotlight
       roles.build role: 'admin' unless self.class.any?
     end
 
+    def invite_pending?
+      invited_to_sign_up? && !invitation_accepted?
+    end
+
     alias_attribute :user_key, :email
 
     ##

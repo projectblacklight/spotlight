@@ -30,10 +30,34 @@ module Spotlight
       end
     end
 
+    def exists
+      if ::User.where(email: exisits_params).present?
+        render json: { message: 'User exists' }
+      else
+        render json: { message: 'User does not exist' }, status: :not_found
+      end
+    end
+
+    def invite
+      params.require(:user)
+      params.require(:role)
+      user = ::User.invite!(email: params[:user])
+      role = Spotlight::Role.create(exhibit: current_exhibit, user: user, role: params[:role])
+      if role.save
+        redirect_to :back, notice: t(:'helpers.submit.role.updated')
+      else
+        redirect_to :back, alert: t(:'helpers.submit.role.batch_error')
+      end
+    end
+
     protected
 
     def exhibit_params
       params.require(:exhibit).permit(roles_attributes: [:id, :user_key, :role, :_destroy])
+    end
+
+    def exisits_params
+      params.require(:user)
     end
 
     # When nested attributes are passed in, ensure we have authorization to update each row.

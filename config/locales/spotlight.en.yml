@@ -466,8 +466,12 @@ en:
         bookmarklet: "%{application_name} widget"
       reindexing_in_progress: "Reindexing all resources"
     roles:
+      edit_fields:
+        invite_html: "This user does not yet exist. Would you lke to send them an %{link}?"
+        invite_link: invite
       index:
         title: Site Configuration - Users
+        invite_pending: pending
         header: Users
         name: Username
         role: "Role"

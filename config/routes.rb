@@ -88,6 +88,8 @@ Spotlight::Engine.routes.draw do
 
     resources :roles, path: 'users', only: [:index, :create, :destroy] do
       collection do
+        get :invite
+        get :exists
         patch :update_all
       end
     end
