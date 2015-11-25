@@ -13,7 +13,7 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
     end
 
     its(:to_solr) { should include id: 'doc_id' }
-    its(:to_solr) { should include "exhibit_#{exhibit.id}_public_bsi".to_sym => true }
+    its(:to_solr) { should include "exhibit_#{exhibit.slug}_public_bsi".to_sym => true }
     its(:to_solr) { should include 'a_tesim', 'b_tesim', 'c_tesim' }
   end
 end

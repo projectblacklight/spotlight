@@ -46,7 +46,7 @@ describe Spotlight::Catalog::AccessControlsEnforcement do
 
       subject.apply_permissive_visibility_filter(solr_request)
       expect(solr_request).to include :fq
-      expect(solr_request[:fq]).to include '-exhibit_1_public_bsi:false'
+      expect(solr_request[:fq]).to include "-exhibit_#{exhibit.slug}_public_bsi:false"
     end
 
     it 'does not filter resources to just those created by the exhibit' do

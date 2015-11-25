@@ -81,7 +81,7 @@ module Spotlight
     end
 
     def solr_field_prefix
-      "#{Spotlight::Engine.config.solr_fields.prefix}exhibit_#{exhibit.to_param}_"
+      Spotlight::SolrDocument.solr_field_prefix(exhibit)
     end
 
     def field_suffix
