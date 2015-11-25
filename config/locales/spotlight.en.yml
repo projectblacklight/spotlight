@@ -1,3 +1,4 @@
+
 en:
   cancel: "Cancel"
   drag: "Drag"
@@ -143,6 +144,7 @@ en:
       sidebar:
         header: Curation
         dashboard: Dashboard
+        analytics: Analytics
         items: Items
         metadata: Metadata
         sort_fields: Sort fields
@@ -293,7 +295,8 @@ en:
         header: Recently Updated Items
         no_documents: There are no documents in this exhibit
       analytics:
-        header: "User Activity Over the Past Month"
+        header: "Analytics"
+        monthly_header: "User Activity Over the Past Month"
         pageviews: "page views"
         users: "unique visits"
         sessions: "visitors"

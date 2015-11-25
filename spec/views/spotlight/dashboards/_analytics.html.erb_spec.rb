@@ -6,7 +6,6 @@ describe 'spotlight/dashboards/_analytics.html.erb', type: :view do
   let(:page_data) { [OpenStruct.new(pageTitle: 'title', pagePath: '/path', pageviews: '123')] }
   before do
     allow(view).to receive_messages(current_exhibit: current_exhibit, exhibit_root_path: '/some/path')
-    allow(Spotlight::Analytics::Ga).to receive(:enabled?).and_return(true)
     allow(current_exhibit).to receive(:analytics).and_return(ga_data)
     allow(current_exhibit).to receive(:page_analytics).and_return(page_data)
   end
