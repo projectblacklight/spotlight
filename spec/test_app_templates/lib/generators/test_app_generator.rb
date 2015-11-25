@@ -1,7 +1,7 @@
 require 'rails/generators'
 
 class TestAppGenerator < Rails::Generators::Base
-  source_root File.expand_path("../../../../spec/test_app_templates", __FILE__)
+  source_root '../spec/test_app_templates'
 
   # if you need to generate any additional configuration
   # into the test app, this generator will be run immediately
