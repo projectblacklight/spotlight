@@ -101,7 +101,7 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
         expect(response).to redirect_to edit_exhibit_search_configuration_path(exhibit)
         assigns[:exhibit].tap do |saved|
           expect(saved.blacklight_configuration.search_fields).to eq(
-            'all_fields' => { 'label' => 'All fields', 'enabled' => true },
+            'all_fields' => { 'label' => 'Everything', 'enabled' => true },
             'title' => { 'label' => 'Title', 'enabled' => false },
             'author' => { 'label' => 'Primary Author', 'enabled' => true }
           )

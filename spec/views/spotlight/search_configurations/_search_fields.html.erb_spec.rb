@@ -32,7 +32,7 @@ module Spotlight
       expect(rendered).to have_selector 'input[data-behavior="enable-feature"][data-target="#search_fields"]'
     end
 
-    it 'has a read-only "all fields" search option' do
+    it 'has a read-only "everything" search option' do
       render partial: 'spotlight/search_configurations/search_fields', locals: { f: f }
       expect(rendered).to have_selector "input[name='blacklight_configuration[search_fields][all_fields][enabled]'][data-readonly='true']"
     end
