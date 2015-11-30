@@ -50,7 +50,7 @@
   img {
     height: $exhibit-card-image-size;
     object-fit: cover;
-    width: $exhibit-card-image-size;
+    width: 100%;
   }
 
   .card-title {
@@ -83,6 +83,25 @@
   .visit-exhibit {
     bottom: $exhibit-card-gutter;
     position: absolute;
+  }
+}
+
+// between the small and medium breakpoints, reduce the size of the image by a little bit
+@media (min-width: $screen-sm-min) and (max-width: $screen-md-max) {
+
+  // calculate the size of one full grid column
+  $reduce-exhibit-card-image-size: ((($container-sm - $grid-gutter-width) / $grid-columns) - ($grid-gutter-width / 2));
+
+  .exhibit-card,
+  .card-face {
+    height: $exhibit-card-height - $reduce-exhibit-card-image-size;
+  }
+
+  .card-front,
+  .card-back {
+    img {
+      height: $exhibit-card-image-size - $reduce-exhibit-card-image-size;
+    }
   }
 }
 
