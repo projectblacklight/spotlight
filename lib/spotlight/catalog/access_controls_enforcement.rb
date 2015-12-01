@@ -12,6 +12,12 @@ module Spotlight
       ##
       # SearchBuilder mixin
       module SearchBuilder
+        extend ActiveSupport::Concern
+
+        included do
+          self.default_processor_chain += [:apply_permissive_visibility_filter, :apply_exhibit_resources_filter]
+        end
+
         def apply_permissive_visibility_filter(solr_params)
           return unless current_exhibit
           return if scope.respond_to?(:can?) && scope.can?(:curate, current_exhibit) && !blacklight_params[:public]
