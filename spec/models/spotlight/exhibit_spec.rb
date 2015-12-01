@@ -174,9 +174,11 @@ describe Spotlight::Exhibit, type: :model do
 
   describe '#solr_documents' do
     let(:blacklight_config) { Blacklight::Configuration.new }
+    let(:slug) { 'some_slug' }
 
     before do
       allow(subject).to receive(:blacklight_config).and_return(blacklight_config)
+      allow(subject).to receive(:slug).and_return(slug)
     end
 
     it 'enumerates the documents in the exhibit' do
@@ -184,7 +186,7 @@ describe Spotlight::Exhibit, type: :model do
     end
 
     it 'pages through the index' do
-      allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(start: 0)).and_return(double(documents: [1, 2, 3]))
+      allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).and_return(double(documents: [1, 2, 3]))
       allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(start: 3)).and_return(double(documents: [4, 5, 6]))
       allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(start: 6)).and_return(double(documents: []))
 
@@ -197,7 +199,8 @@ describe Spotlight::Exhibit, type: :model do
       end
 
       it 'filters the solr results using the exhibit filter' do
-        allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(fq: [subject.solr_data])).and_return(double(documents: []))
+        expected_query_params = { fq: ["spotlight_exhibit_slug_#{subject.slug}_bsi:true"] }
+        allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(expected_query_params)).and_return(double(documents: []))
         expect(subject.solr_documents.to_a).to be_blank
       end
     end
