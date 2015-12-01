@@ -10,22 +10,25 @@ module Spotlight
       return to_enum(:solr_documents) unless block_given?
 
       start = 0
-      response = repository.search(exhibit_search_params.merge(start: start))
+      search_params = exhibit_search_builder.merge(q: '*:*', fl: '*')
+
+      response = repository.search(search_params.start(start).to_h)
 
       while response.documents.present?
         response.documents.each { |x| yield x }
         start += response.documents.length
-        response = repository.search(exhibit_search_params.merge(start: start))
+        response = repository.search(search_params.start(start).to_h)
       end
     end
 
     private
 
-    def exhibit_search_params
-      params = { q: '*:*', fl: '*' }
-      params[:fq] ||= []
-      params[:fq] << solr_data if Spotlight::Engine.config.filter_resources_by_exhibit
-      params
+    def exhibit_search_builder
+      blacklight_config.search_builder_class.new(true, exhibit_search_builder_context).except(:apply_permissive_visibility_filter)
+    end
+
+    def exhibit_search_builder_context
+      OpenStruct.new(blacklight_config: blacklight_config, current_exhibit: self)
     end
 
     def repository

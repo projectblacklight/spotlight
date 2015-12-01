@@ -75,6 +75,16 @@ module Spotlight
       end
     end
 
+    def add_search_builder_mixin
+      if File.exist? 'app/models/search_builder.rb'
+        inject_into_file 'app/models/search_builder.rb', after: "include Blacklight::Solr::SearchBuilderBehavior\n" do
+          "\n  include Spotlight::Catalog::AccessControlsEnforcement::SearchBuilder\n"
+        end
+      else
+        say 'Unable to find SearchBuilder class; add `include Spotlight::Catalog::AccessControlsEnforcement::SearchBuilder` to the class manually.'
+      end
+    end
+
     def add_example_catalog_controller
       copy_file 'catalog_controller.rb', 'app/controllers/catalog_controller.rb'
     end
