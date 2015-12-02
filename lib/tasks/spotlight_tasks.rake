@@ -52,6 +52,13 @@ namespace :spotlight do
     puts Spotlight::ExhibitExportSerializer.new(exhibit.reload).to_json
   end
 
+  desc 'Export an exhibit as JSON'
+  task :export, [:exhibit_slug] => :environment do |_, args|
+    exhibit = Spotlight::Exhibit.find_by(slug: args[:exhibit_slug])
+
+    puts Spotlight::ExhibitExportSerializer.new(exhibit).to_json
+  end
+
   def prompt_to_create_user
     User.find_or_create_by!(email: prompt_for_email) do |u|
       puts 'User not found. Enter a password to create the user.'
