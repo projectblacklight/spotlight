@@ -30,7 +30,7 @@ namespace :spotlight do
   end
 
   desc 'Import an exhibit'
-  task import: :environment do
+  task :import, [:exhibit_slug] => :environment do |_, args|
     contents = if ENV['FILE']
                  File.read(ENV['FILE'])
                else
@@ -39,7 +39,9 @@ namespace :spotlight do
 
     data = JSON.parse(contents)
 
-    exhibit = Spotlight::Exhibit.find_or_create_by! slug: data['slug'] do |e|
+    slug = args[:exhibit_slug] || data['slug']
+
+    exhibit = Spotlight::Exhibit.find_or_create_by! slug: slug do |e|
       e.title = data['title']
     end
 
@@ -50,6 +52,13 @@ namespace :spotlight do
     exhibit.reindex_later
 
     puts Spotlight::ExhibitExportSerializer.new(exhibit.reload).to_json
+  end
+
+  desc 'Export an exhibit as JSON'
+  task :export, [:exhibit_slug] => :environment do |_, args|
+    exhibit = Spotlight::Exhibit.find_by(slug: args[:exhibit_slug])
+
+    puts Spotlight::ExhibitExportSerializer.new(exhibit).to_json
   end
 
   def prompt_to_create_user
