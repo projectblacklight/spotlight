@@ -1,0 +1,48 @@
+// Transparent navbar styling, adapted directly from Bootstrap's navbar styles:
+// https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/_navbar.scss
+
+.navbar-transparent {
+  background-color: $navbar-transparent-bg;
+  border-color: $navbar-transparent-border;
+
+  .navbar-brand {
+    color: $navbar-transparent-brand-color;
+    &:hover,
+    &:focus {
+      color: $navbar-transparent-brand-hover-color;
+      background-color: $navbar-transparent-brand-hover-bg;
+    }
+  }
+
+  .navbar-text {
+    color: $navbar-transparent-color;
+  }
+
+  .navbar-nav {
+    > li > a {
+      color: $navbar-transparent-link-color;
+
+      &:hover,
+      &:focus {
+        color: $navbar-transparent-link-hover-color;
+        background-color: $navbar-transparent-link-hover-bg;
+      }
+    }
+    > .active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: $navbar-transparent-link-active-color;
+        background-color: $navbar-transparent-link-active-bg;
+      }
+    }
+    > .disabled > a {
+      &,
+      &:hover,
+      &:focus {
+        color: $navbar-transparent-link-disabled-color;
+        background-color: $navbar-transparent-link-disabled-bg;
+      }
+    }
+  }
+}

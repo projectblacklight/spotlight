@@ -1,7 +1,5 @@
 $masthead-height: 180px;
 $masthead-image-blur: 1px;
-$menu-link-background-color-active: rgba(255, 255, 255, 0.3);
-$menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
 
 @mixin masthead-background-containers() {
   position: absolute;
@@ -12,7 +10,9 @@ $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
   height: inherit;
 }
 
-@mixin masthead-navigation-menu() {
+@mixin transparent-masthead-navigation-menu() {
+  @extend .navbar-transparent;
+
   border: 0;
   border-radius: 0;
 
@@ -21,38 +21,13 @@ $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
       text-transform: uppercase;
 
       a {
-        color: $gray-lighter;
         letter-spacing: 1.2px;
       }
     }
 
-    a:hover {
-      background-color: $menu-link-background-color-hover;
-    }
-
-    > .active > a {
-      background-color: $menu-link-background-color-active;
-      color: $white;
-    }
-
     .dropdown-menu {
       text-transform: none;
-
-      > li a {
-        color: $black;
-
-        &:hover {
-          background-color: $gray-lighter;
-        }
-      }
     }
-  }
-
-  // Curated Features menu link when it has dropdown menu
-  .navbar-nav > .open > a,
-  .navbar-nav > .open > a:hover,
-  .navbar-nav > .open > a:focus {
-    background-color: $menu-link-background-color-hover;
   }
 }
 
@@ -65,27 +40,13 @@ $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
   z-index: 100;
 
   &.page-masthead {
-    @include masthead-navigation-menu();
-    background-color: rgba(0, 0, 0, 0.5);
-    border-bottom: 1px solid $gray;
+    @include transparent-masthead-navigation-menu();
+    border-bottom: 1px solid $navbar-transparent-border;
     margin-bottom: 0;
     margin-top: 0;
 
     .navbar-nav {
       float: right;
-    }
-
-    .navbar-brand,
-    .navbar-nav li {
-      color: $gray-lighter;
-
-      &.active a {
-        color: $gray;
-      }
-
-      a {
-        color: $gray-lighter;
-      }
     }
   }
 
@@ -95,9 +56,9 @@ $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
 }
 
 #exhibit-masthead.with-image + #exhibit-navbar.navbar-default {
-  @include masthead-navigation-menu();
-  background-color: rgba(0, 0, 0, 0.2);
-  border-top: 1px solid $gray;
+  @include transparent-masthead-navigation-menu();
+  background-color: $navbar-transparent-bg;
+  border-top: 1px solid $navbar-transparent-border;
 }
 
 .navbar + .navbar {
