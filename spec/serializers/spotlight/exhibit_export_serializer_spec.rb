@@ -134,6 +134,16 @@ describe Spotlight::ExhibitExportSerializer do
         contact = subject.contacts.first
         expect(contact.contact_info[:title]).to eq 'xyz'
       end
+
+      describe 'for a contact without an avatar' do
+        let!(:curator) do
+          FactoryGirl.create(:contact, exhibit: source_exhibit, avatar: nil)
+        end
+
+        it 'has contacts' do
+          expect(subject.contacts.count).to eq 1
+        end
+      end
     end
 
     it 'has tags' do

@@ -83,6 +83,8 @@ module Spotlight
       def avatar
         file = represented.avatar.file
 
+        return unless file
+
         { filename: file.filename, content_type: file.content_type, content: Base64.encode64(file.read) }
       end
 
