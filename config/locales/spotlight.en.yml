@@ -308,7 +308,7 @@ en:
           This action is irreversible. Be sure to back up the exhibit settings and content using
           the %{export_link} feature before proceeding.
       edit:
-        header: Settings
+        header: General
         basic_settings:
           heading: Basic settings
       form:
