@@ -1,9 +1,8 @@
 class RemoveDefaultFromSpotlightExhibit < ActiveRecord::Migration
   def up
-    return unless Spotlight::Exhibit.column_names.include? :default
+    return unless Spotlight::Exhibit.column_names.include? 'default'
 
     remove_column :spotlight_exhibits, :default
-    remove_index :spotlight_exhibits, :default
   end
   
   def down
