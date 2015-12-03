@@ -218,8 +218,8 @@ en:
           show: "Item Details"
         instructions: >
           Select metadata fields to display on each type of page. Click a field name
-          to edit its display label. Drag and drop fields to specify the order they
-          are displayed on the Item Details page.
+          to edit its display label. Drag and drop fields to specify the order in which they
+          are displayed.
     catalog:
       breadcrumb:
         index: 'Search Results'
