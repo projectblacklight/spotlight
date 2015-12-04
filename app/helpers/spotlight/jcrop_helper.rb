@@ -15,15 +15,23 @@ module Spotlight
     end
 
     def default_thumbnail_jcrop_options
+      w, h = Spotlight::Engine.config.featured_image_thumb_size
+
       {
         croppable: true,
         selector: 'featuredimage_image',
         bg_color: 'black',
         bg_opacity: '.4',
         box_width: '600',
-        aspect_ratio: 4.0 / 3.0,
+        aspect_ratio: w.to_f / h.to_f,
         initial_set_select: '[0, 0, 100000, 100000]'
       }
+    end
+
+    def default_site_thumbnail_jcrop_options
+      w, h = Spotlight::Engine.config.featured_image_square_size
+
+      default_thumbnail_jcrop_options.merge(aspect_ratio: w.to_f / h.to_f)
     end
   end
 end

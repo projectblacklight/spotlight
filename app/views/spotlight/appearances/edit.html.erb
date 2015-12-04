@@ -39,7 +39,7 @@
       <div role="tabpanel" class="tab-pane" id="site-thumbnail">
         <p class="instructions"><%= t(:'.site_thumbnail.help') %></p>
         <%= f.fields_for(:thumbnail, current_exhibit.thumbnail || current_exhibit.build_thumbnail) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, jcrop_options: default_thumbnail_jcrop_options %>
+          <%= render '/spotlight/featured_images/form', f: m, jcrop_options: default_site_thumbnail_jcrop_options %>
         <% end %>
       </div>
 

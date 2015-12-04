@@ -11,7 +11,11 @@ module Spotlight
     end
 
     version :thumb, from_version: :cropped do
-      process resize_to_fill: [400, 300]
+      process resize_to_fill: Spotlight::Engine.config.featured_image_thumb_size
+    end
+
+    version :square, from_version: :cropped do
+      process resize_to_fill: Spotlight::Engine.config.featured_image_square_size
     end
 
     def store_dir

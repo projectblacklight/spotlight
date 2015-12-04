@@ -91,6 +91,8 @@ module Spotlight
 
     # Configure the CarrierWave file storage mechanism
     Spotlight::Engine.config.uploader_storage = :file
+    Spotlight::Engine.config.featured_image_thumb_size = [400, 300]
+    Spotlight::Engine.config.featured_image_square_size = [400, 400]
 
     initializer 'spotlight-assets.initialize' do
       Rails.application.config.assets.precompile += %w( Jcrop.gif )
