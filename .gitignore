@@ -24,3 +24,4 @@ Gemfile.lock
 jetty
 _site/
 .internal_test_app
+pkg/
