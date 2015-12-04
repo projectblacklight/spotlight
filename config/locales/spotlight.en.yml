@@ -72,7 +72,7 @@ en:
       role:
         updated: "User has been updated."
         destroyed: "User has been removed."
-        batch_error: "There was a problem saving the users."
+        batch_error: "There was a problem saving the user(s)."
     label:
       solr_document:
         exhibit_tag_list: "Tags"
@@ -261,6 +261,12 @@ en:
           non_repo_item: "Add non-repository item"
       new:
         header: Import items
+    invitation_mailer:
+      invitation_instructions:
+        hello: "Hello %{email}!"
+        someone_invited_you: "The Exhibits Administrator has invited you to be '%{role}' for '%{exhibit_name}' at %{url}. You can accept it through the link below.</p>"
+        accept: "Accept invitation"
+        ignore: "If you don't want to accept the invitation, please ignore this email.<br />Your account won't be created until you access the link above."
     confirmation_mailer:
       confirmation_instructions:
         welcome: "Welcome %{email}!"
@@ -469,11 +475,14 @@ en:
       edit_fields:
         invite_html: "This user does not yet exist. Would you lke to send them an %{link}?"
         invite_link: invite
+        invalid_email: "The email address you entered is not valid."
+
       index:
         title: Site Configuration - Users
         invite_pending: pending
         header: Users
         name: Username
+        email: "Email Address"
         role: "Role"
         actions: "Actions"
     searches: &search

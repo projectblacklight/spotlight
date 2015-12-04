@@ -1,0 +1,7 @@
+<p><%= t("spotlight.invitation_mailer.invitation_instructions.hello", email: @resource.email) %>!</p>
+
+<p><%= t("spotlight.invitation_mailer.invitation_instructions.someone_invited_you", role: @resource.roles.first.role, exhibit_name: @resource.roles.first.exhibit.title, url: spotlight.exhibit_home_page_url(@resource.roles.first.exhibit)) %></p>
+
+<p><%= link_to t("spotlight.invitation_mailer.invitation_instructions.accept"), accept_invitation_url(@resource, :invitation_token => @token) %></p>
+
+<p><%= t("spotlight.invitation_mailer.invitation_instructions.ignore").html_safe %></p>

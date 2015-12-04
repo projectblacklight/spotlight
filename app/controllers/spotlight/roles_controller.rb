@@ -31,7 +31,9 @@ module Spotlight
     end
 
     def exists
-      if ::User.where(email: exisits_params).present?
+      # note: the messages returned are not shown to users and really only useful for debug, hence no translation necessary
+      #  app uses html status code to act on response
+      if ::User.where(email: exists_params).present?
         render json: { message: 'User exists' }
       else
         render json: { message: 'User does not exist' }, status: :not_found
@@ -41,9 +43,10 @@ module Spotlight
     def invite
       params.require(:user)
       params.require(:role)
-      user = ::User.invite!(email: params[:user])
+      user = ::User.invite!(email: params[:user], skip_invitation: true) # don't deliver the invitation yet
       role = Spotlight::Role.create(exhibit: current_exhibit, user: user, role: params[:role])
       if role.save
+        user.deliver_invitation # now deliver it when we have saved the role
         redirect_to :back, notice: t(:'helpers.submit.role.updated')
       else
         redirect_to :back, alert: t(:'helpers.submit.role.batch_error')
@@ -56,7 +59,7 @@ module Spotlight
       params.require(:exhibit).permit(roles_attributes: [:id, :user_key, :role, :_destroy])
     end
 
-    def exisits_params
+    def exists_params
       params.require(:user)
     end
 

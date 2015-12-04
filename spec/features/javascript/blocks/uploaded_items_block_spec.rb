@@ -45,7 +45,7 @@ feature 'Uploaded Items Block', feature: true, js: true do
     end
   end
 
-  scenario 'users can to toggle individual images to not display' do
+  scenario 'users can toggle individual images to not display' do
     attach_file('uploaded_item_url', fixture_file1)
     attach_file('uploaded_item_url', fixture_file2)
 

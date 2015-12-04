@@ -5,6 +5,9 @@
               <%= t('.invite_html', link: link_to(t('.invite_link'), spotlight.invite_exhibit_roles_path(current_exhibit), data: { :'invite-url' => spotlight.invite_exhibit_roles_path(current_exhibit) })) %>
               <span class='label label-warning pending-label'><%= t('.pending') %></span>
             </span>
+            <span style='display:none' class='help-block' data-behavior='invalid-email-note'>
+              <%= t('.invalid_email') %>
+            </span>
           </td>
           <td><%= f.select :role, roles_for_select, hide_label: true %></td>
           <td></td>
