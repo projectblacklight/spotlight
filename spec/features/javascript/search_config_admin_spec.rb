@@ -82,6 +82,25 @@ feature 'Search Configuration Administration', js: true do
       expect(page).not_to have_content('Genre')
       expect(page).to have_content('Topic')
     end
+
+    it 'allows the curator to select a different facet sort order' do
+      visit spotlight.edit_exhibit_search_configuration_path(exhibit)
+      click_link 'Facets'
+
+      within '.facet-config-genre_ssim' do
+        click_link 'Options'
+        expect(find(:css, '#blacklight_configuration_facet_fields_genre_ssim_sort_count')).to be_checked
+
+        choose 'Value'
+      end
+
+      click_button 'Save changes'
+
+      expect(page).to have_content('The exhibit was successfully updated.')
+
+      exhibit.reload
+      expect(exhibit.blacklight_config.facet_fields['genre_ssim'].sort).to eq 'index'
+    end
   end
 
   describe 'results' do

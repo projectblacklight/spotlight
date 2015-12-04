@@ -12,7 +12,7 @@
                 <%= facet.hidden_field :weight, 'data-property' => 'weight' %>
                 <%= facet.check_box :show, checked: config.show, label: "", title: key %>
                 <div class="main row">
-                  <div class="col-sm-7">
+                  <div class="col-sm-5">
                     <h3 class="panel-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
                       <a href="#edit-in-place" class="field-label edit-in-place"><%= facet_field_label(key) %></a>
                       <%= facet.hidden_field :label, value: facet_field_label(key), class: 'form-control input-sm', data: {:"edit-field-target" => 'true'} %>
@@ -25,6 +25,19 @@
                       <% if metadata[:terms].any? %>
                         <%= tag("span", class: 'btn-with-tooltip glyphicon glyphicon-info-sign', data: {container: 'body', toggle: 'tooltip', placement: 'top', title: metadata[:terms].keys.map(&:to_s).join(" • ")}) %>
                       <% end %>
+                    <% end %>
+                  </div>
+                  <div class="col-sm-2 pull-right">
+                    <a class="btn btn-link collapse-toggle collapsed" role="button" data-toggle="collapse" href="#<%= key.parameterize %>_facet_options" aria-expanded="false" aria-controls="<%= key.parameterize %>_facet_options">
+                      Options
+                    </a>
+                  </div>
+                </div>
+                <div id="<%= key.parameterize %>_facet_options" class="options row collapse">
+                  <div class="col-sm-12">
+                    <%= facet.form_group :terms, label_col: 'col-md-2', label: { text: t(:'.sort_by.label') } do %>
+                      <%= facet.radio_button :sort, 'count', label: t(:'.sort_by.count'), inline: true, checked: (config.sort.to_s == 'count' || config.sort.nil?) %>
+                      <%= facet.radio_button :sort, 'index', label: t(:'.sort_by.index'), inline: true, checked: (config.sort.to_s == 'index') %>
                     <% end %>
                   </div>
                 </div>

@@ -42,18 +42,24 @@
     display: inline-block;
     padding-top: 0;
   }
-}
 
-.panel-heading {
   .publish-control {
     display: inline;
     .checkbox {
       padding-top: 0;
     }
   }
+
   .main {
     display: inline-block;
     vertical-align: text-bottom;
+  }
+
+  .btn-link.collapse-toggle {
+    // removing padding and margins to style this button as a simple link
+    // with the expected vertical alignment with the rest of the header.
+    margin: 0;
+    padding: 0;
   }
 }
 
