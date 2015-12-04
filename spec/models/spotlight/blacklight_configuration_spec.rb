@@ -68,6 +68,17 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.blacklight_config.facet_fields.keys).to eq %w(c a b)
     end
 
+    it 'allows the facet sort to be configured' do
+      subject.facet_fields['a'] = { sort: 'count' }
+      subject.facet_fields['b'] = { sort: 'index' }
+
+      blacklight_config.add_facet_field 'a'
+      blacklight_config.add_facet_field 'b'
+
+      expect(subject.blacklight_config.facet_fields['a'].sort).to eq 'count'
+      expect(subject.blacklight_config.facet_fields['b'].sort).to eq 'index'
+    end
+
     context 'custom fields' do
       it 'includes any custom fields' do
         allow(subject).to receive_messages(custom_facet_fields: { 'a' => double(if: nil, :if= => true, merge!: true, validate!: true, normalize!: true) })

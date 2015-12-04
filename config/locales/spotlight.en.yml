@@ -186,6 +186,10 @@ en:
         value_count:
           one: "%{count} unique value"
           other: "%{count} unique values"
+        sort_by:
+          label: "Sort by:"
+          count: Frequency
+          index: Value
       sort:
         header: "Sort fields"
         help: >
