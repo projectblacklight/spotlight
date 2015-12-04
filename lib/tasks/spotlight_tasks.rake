@@ -50,8 +50,6 @@ namespace :spotlight do
     exhibit.save!
 
     exhibit.reindex_later
-
-    puts Spotlight::ExhibitExportSerializer.new(exhibit.reload).to_json
   end
 
   desc 'Export an exhibit as JSON'
