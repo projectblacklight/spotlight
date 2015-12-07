@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Create a new exhibit', type: :feature do
   let(:user) { FactoryGirl.create(:site_admin) }
   before do
-    allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
+    allow(Spotlight::DefaultThumbnailJob).to receive(:perform_later)
     login_as user
   end
 

@@ -4,6 +4,10 @@ describe Spotlight::ExhibitsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
+  before do
+    allow(Spotlight::DefaultThumbnailJob).to receive(:perform_later)
+  end
+
   describe 'when the user is not authorized' do
     before do
       sign_in FactoryGirl.create(:exhibit_visitor)
