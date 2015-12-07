@@ -42,7 +42,7 @@ module Spotlight
     protected
 
     def should_generate_new_friendly_id?
-      name_changed?
+      super || (name_changed? && persisted?)
     end
   end
 end

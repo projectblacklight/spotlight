@@ -88,7 +88,7 @@ module Spotlight
     end
 
     def should_generate_new_friendly_id?
-      title_changed?
+      super || (title_changed? && persisted?)
     end
 
     alias_method :current_exhibit, :exhibit

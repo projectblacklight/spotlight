@@ -74,4 +74,25 @@ describe Spotlight::Page, type: :model do
       expect(page).to have_content
     end
   end
+
+  describe '#slug' do
+    let(:page) { FactoryGirl.create(:feature_page) }
+
+    it 'gets a default slug' do
+      expect(page.slug).not_to be_blank
+    end
+
+    it 'is updated when the title changes' do
+      page.update(title: 'abc')
+      expect(page.slug).to eq 'abc'
+    end
+
+    context 'with a custom slug' do
+      let(:page) { FactoryGirl.create(:feature_page, slug: 'xyz') }
+
+      it 'gets a default slug' do
+        expect(page.slug).to eq 'xyz'
+      end
+    end
+  end
 end
