@@ -71,14 +71,17 @@ feature 'Search contexts' do
     expect(page).to have_link 'FeaturePage1', href: spotlight.exhibit_feature_page_path(exhibit, feature_page)
   end
 
-  scenario 'should add context breadcrumbs back to the browse page when navigating to an item from a browse page', js: true do
-    search = Spotlight::Search.create! exhibit_id: exhibit.id, title: 'Some Saved Search', published: true
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    click_link 'Browse'
-    click_link 'Some Saved Search'
-    click_link 'A MAP of AMERICA from the latest and best Observations'
-    expect(page).to have_link 'Home'
-    expect(page).to have_link 'Browse'
-    expect(page).to have_link 'Some Saved Search', href: spotlight.exhibit_browse_path(exhibit, search)
+  context 'from a browse page' do
+    let!(:search) { FactoryGirl.create(:search, title: 'Some Saved Search', exhibit: exhibit, published: true) }
+
+    scenario 'should add context breadcrumbs back to the browse page when navigating to an item', js: true do
+      visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
+      click_link 'Browse'
+      click_link 'Some Saved Search'
+      click_link 'A MAP of AMERICA from the latest and best Observations'
+      expect(page).to have_link 'Home'
+      expect(page).to have_link 'Browse'
+      expect(page).to have_link 'Some Saved Search', href: spotlight.exhibit_browse_path(exhibit, search)
+    end
   end
 end
