@@ -10,12 +10,7 @@ describe 'Allow exhibit admins to import and export content from an exhibit', ty
     pending(%(There's not really any good way to test the contents of a
 downloaded file with Poltergeist (which is now necessary since we've moved
 the export option behind a bootstrap tab)))
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-
-    click_link user.email
-    within '#user-util-collapse .dropdown-menu' do
-      click_link 'Dashboard'
-    end
+    visit spotlight.exhibit_dashboard_path(exhibit)
 
     click_link 'General'
     within('.nav-tabs') do
@@ -31,12 +26,7 @@ the export option behind a bootstrap tab)))
   end
 
   it 'allows admins to import content into an exhibit' do
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-
-    click_link user.email
-    within '#user-util-collapse .dropdown-menu' do
-      click_link 'Dashboard'
-    end
+    visit spotlight.exhibit_dashboard_path(exhibit)
 
     click_link 'General'
 

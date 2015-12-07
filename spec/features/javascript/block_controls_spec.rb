@@ -7,11 +7,8 @@ feature 'Block controls' do
 
   scenario 'should be split into separate sections', js: true do
     # create page
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    click_link exhibit_curator.email
-    within '#user-util-collapse .dropdown' do
-      click_link 'Dashboard'
-    end
+    visit spotlight.exhibit_dashboard_path(exhibit)
+
     click_link 'Feature pages'
 
     add_new_page_via_button('My New Feature Page')

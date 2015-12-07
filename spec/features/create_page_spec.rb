@@ -10,10 +10,7 @@ describe 'Creating a page', type: :feature do
     let!(:page3) { FactoryGirl.create(:about_page, exhibit: exhibit, title: 'A new one') }
     it 'is able to show a list of About pages to be curated' do
       login_as exhibit_curator
-      visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-      within '#user-util-collapse .dropdown' do
-        click_link 'Dashboard'
-      end
+      visit spotlight.exhibit_dashboard_path(exhibit)
       within '#sidebar' do
         click_link 'About pages'
       end

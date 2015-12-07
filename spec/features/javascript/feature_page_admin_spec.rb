@@ -18,16 +18,11 @@ feature 'Feature Pages Adminstration', js: true do
       display_sidebar: true
     )
   end
+
   before { login_as exhibit_curator }
+
   it 'is able to create new pages' do
-    login_as exhibit_curator
-
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    click_link exhibit_curator.email
-
-    within '#user-util-collapse .dropdown' do
-      click_link 'Dashboard'
-    end
+    visit spotlight.exhibit_dashboard_path(exhibit)
 
     click_link 'Feature pages'
 
@@ -39,12 +34,7 @@ feature 'Feature Pages Adminstration', js: true do
   end
 
   it 'updates the page titles' do
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    click_link exhibit_curator.email
-
-    within '#user-util-collapse .dropdown' do
-      click_link 'Dashboard'
-    end
+    visit spotlight.exhibit_dashboard_path(exhibit)
 
     click_link 'Feature pages'
     within("[data-id='#{page1.id}']") do
@@ -84,11 +74,7 @@ feature 'Feature Pages Adminstration', js: true do
   end
 
   it 'does not update the pages list when the user has unsaved changes' do
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    click_link exhibit_curator.email
-    within '#user-util-collapse .dropdown' do
-      click_link 'Dashboard'
-    end
+    visit spotlight.exhibit_dashboard_path(exhibit)
 
     click_link 'Feature pages'
     within("[data-id='#{page1.id}']") do
@@ -122,11 +108,7 @@ feature 'Feature Pages Adminstration', js: true do
   end
 
   it 'is able to update home page titles' do
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    click_link exhibit_curator.email
-    within '#user-util-collapse .dropdown' do
-      click_link 'Dashboard'
-    end
+    visit spotlight.exhibit_dashboard_path(exhibit)
 
     click_link 'Feature pages'
 

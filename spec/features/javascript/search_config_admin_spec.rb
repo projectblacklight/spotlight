@@ -27,11 +27,8 @@ feature 'Search Configuration Administration', js: true do
     end
 
     it 'allows the curator to update search field options' do
-      visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-      click_link user.email
-      within '#user-util-collapse .dropdown' do
-        click_link 'Dashboard'
-      end
+      visit spotlight.exhibit_dashboard_path(exhibit)
+
       click_link 'Search'
 
       click_link 'Options'
@@ -55,11 +52,8 @@ feature 'Search Configuration Administration', js: true do
   describe 'facets' do
     it 'allows us to update the label with edit-in-place' do
       input_id = 'blacklight_configuration_facet_fields_genre_ssim_label'
-      visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-      click_link user.email
-      within '#user-util-collapse .dropdown' do
-        click_link 'Dashboard'
-      end
+      visit spotlight.exhibit_dashboard_path(exhibit)
+
       click_link 'Search'
 
       click_link 'Facets'
@@ -105,11 +99,8 @@ feature 'Search Configuration Administration', js: true do
 
   describe 'results' do
     it 'updates search result options' do
-      visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-      click_link user.email
-      within '#user-util-collapse .dropdown' do
-        click_link 'Dashboard'
-      end
+      visit spotlight.exhibit_dashboard_path(exhibit)
+
       click_link 'Search'
 
       click_link 'Results'
@@ -131,11 +122,8 @@ feature 'Search Configuration Administration', js: true do
       expect(field_labeled('10')).to_not be_checked
     end
     it 'updates Sort field result options' do
-      visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-      click_link user.email
-      within '#user-util-collapse .dropdown' do
-        click_link 'Dashboard'
-      end
+      visit spotlight.exhibit_dashboard_path(exhibit)
+
       click_link 'Search'
 
       click_link 'Results'
