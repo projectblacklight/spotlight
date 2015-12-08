@@ -41,6 +41,7 @@ $masthead-image-blur: 1px;
 
   &.page-masthead {
     @include transparent-masthead-navigation-menu();
+    background-color: $navbar-transparent-page-bg;
     border-bottom: 1px solid $navbar-transparent-border;
     margin-bottom: 0;
     margin-top: 0;
