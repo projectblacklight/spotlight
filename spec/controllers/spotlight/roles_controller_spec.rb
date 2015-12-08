@@ -100,7 +100,7 @@ describe Spotlight::RolesController, type: :controller do
 
       it 'invites the selected user' do
         expect do
-          get :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'curator'
+          post :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'curator'
         end.to change { ::User.count }.by(1)
         expect(::User.last.roles.length).to eq 1
         expect(::User.last.roles.first.exhibit).to eq exhibit
@@ -108,18 +108,18 @@ describe Spotlight::RolesController, type: :controller do
 
       it 'adds the user to the exhibit via a role' do
         expect do
-          get :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'curator'
+          post :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'curator'
         end.to change { Spotlight::Role.count }.by(1)
       end
 
       it 'redirects back with a flash notice upon success' do
-        get :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'curator'
+        post :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'curator'
         expect(flash[:notice]).to eq 'User has been updated.'
         expect(response).to redirect_to(:back)
       end
 
       it 'redirects back with flash error upon failure' do
-        get :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'not-a-real-role'
+        post :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'not-a-real-role'
         expect(flash[:alert]).to eq 'There was a problem saving the user(s).'
         expect(response).to redirect_to(:back)
       end
