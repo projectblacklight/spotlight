@@ -21,6 +21,8 @@ $navbar-transparent-link-active-bg: rgba(255, 255, 255, 0.3) !default;
 $navbar-transparent-link-disabled-color: #ccc !default;
 $navbar-transparent-link-disabled-bg: transparent !default;
 
+$navbar-transparent-page-bg: rgba(0, 0, 0, 0.5) !default;
+
 // Navbar brand label
 $navbar-transparent-brand-color: $navbar-transparent-link-color !default;
 $navbar-transparent-brand-hover-color: darken($navbar-transparent-brand-color, 10%) !default;
