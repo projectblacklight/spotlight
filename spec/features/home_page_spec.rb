@@ -4,20 +4,14 @@ describe 'Home page', type: :feature do
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
   it 'exists by default on exhibits' do
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    within '#user-util-collapse .dropdown-menu' do
-      click_link 'Dashboard'
-    end
+    visit spotlight.exhibit_dashboard_path(exhibit)
     click_link 'Feature pages'
     expect(page).to have_selector 'h3', text: 'Homepage'
     expect(page).to have_selector 'h3.panel-title', text: 'Exhibit Home'
   end
 
   it 'allows users to edit the home page title' do
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    within '#user-util-collapse .dropdown-menu' do
-      click_link 'Dashboard'
-    end
+    visit spotlight.exhibit_dashboard_path(exhibit)
     click_link 'Feature pages'
     within('.home_page') do
       click_link 'Edit'

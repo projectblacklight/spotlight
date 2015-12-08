@@ -7,13 +7,7 @@ feature 'About Pages Adminstration', js: true do
 
   it 'is able to create new pages' do
     login_as exhibit_curator
-
-    visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-    click_link exhibit_curator.email
-
-    within '#user-util-collapse .dropdown' do
-      click_link 'Dashboard'
-    end
+    visit spotlight.exhibit_dashboard_path(exhibit)
 
     click_link 'About pages'
 

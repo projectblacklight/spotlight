@@ -341,6 +341,10 @@ describe Spotlight::ExhibitExportSerializer do
         source_exhibit.searches.create title: 'custom query', slug: 'xyz', published: true
       end
 
+      before do
+        allow(Spotlight::DefaultThumbnailJob).to receive(:perform_later)
+      end
+
       it 'creates a search within the exhibit' do
         expect(subject.feature_pages.first.content.first.search.exhibit).to eq subject
       end
