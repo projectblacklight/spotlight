@@ -42,3 +42,4 @@ Metrics/ModuleLength:
 Metrics/ClassLength:
   Exclude:
     - 'app/models/spotlight/resource.rb'
+    - 'lib/generators/spotlight/**/*' # Generators tend to have longer class lengths due to their lengthy public API

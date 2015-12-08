@@ -10,35 +10,14 @@
 
     function checkIfUserExists() {
       target = $(this);
-      if (validateEmail(target.val()) === false) {
-        emailIsInvalid();
+      var form = target.closest('form');
+      if (target.val() !== '' && form[0].checkValidity()) {
+        $.ajax(userExistsUrl())
+         .success(userExists)
+         .fail(userDoesNotExist);
+      } else {
+        userExists();
       }
-      else {
-        emailIsValid();
-        if (target.val() !== '') {
-          $.ajax(userExistsUrl())
-           .success(userExists)
-           .fail(userDoesNotExist);
-        } else {
-          userExists();
-        }
-      }
-    }
-
-    function emailIsValid() {
-      invalidEmailNote().hide();
-      submitButton().prop('disabled', true);
-    }
-
-    function emailIsInvalid() {
-      invalidEmailNote().show();
-      noUserNote().hide();
-      submitButton().prop('disabled', true);
-    }
-
-    function validateEmail(email) {
-        var re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i;
-        return re.test(email);
     }
 
     function cleanUpBlankUserField() {
@@ -74,11 +53,6 @@
     function noUserNote() {
       return target.closest('td')
                    .find('[data-behavior="no-user-note"]');
-    }
-
-    function invalidEmailNote() {
-      return target.closest('td')
-                   .find('[data-behavior="invalid-email-note"]');
     }
 
     function submitButton() {

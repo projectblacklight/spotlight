@@ -1,12 +1,9 @@
         <tr data-edit-for="<%= f.object.new_record? ? 'new' : f.object.id %>">
           <td>
-            <%= f.text_field :user_key, hide_label: true, disabled: f.object.persisted?, data: { behavior: 'check-user-existence' } %>
+            <%= f.email_field :user_key, hide_label: true, disabled: f.object.persisted?, data: { behavior: 'check-user-existence' } %>
             <span style='display:none' class='help-block' data-behavior='no-user-note'>
-              <%= t('.invite_html', link: link_to(t('.invite_link'), spotlight.invite_exhibit_roles_path(current_exhibit), data: { :'invite-url' => spotlight.invite_exhibit_roles_path(current_exhibit) })) %>
+              <%= t('.invite_html', link: link_to(t('.invite_link'), spotlight.invite_exhibit_roles_path(current_exhibit), data: { 'invite-url': spotlight.invite_exhibit_roles_path(current_exhibit) })) %>
               <span class='label label-warning pending-label'><%= t('.pending') %></span>
-            </span>
-            <span style='display:none' class='help-block' data-behavior='invalid-email-note'>
-              <%= t('.invalid_email') %>
             </span>
           </td>
           <td><%= f.select :role, roles_for_select, hide_label: true %></td>

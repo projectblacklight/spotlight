@@ -41,10 +41,8 @@ module Spotlight
     end
 
     def invite
-      params.require(:user)
-      params.require(:role)
-      user = ::User.invite!(email: params[:user], skip_invitation: true) # don't deliver the invitation yet
-      role = Spotlight::Role.create(exhibit: current_exhibit, user: user, role: params[:role])
+      user = ::User.invite!(email: invite_params[:user], skip_invitation: true) # don't deliver the invitation yet
+      role = Spotlight::Role.create(exhibit: current_exhibit, user: user, role: invite_params[:role])
       if role.save
         user.deliver_invitation # now deliver it when we have saved the role
         redirect_to :back, notice: t(:'helpers.submit.role.updated')
@@ -57,6 +55,10 @@ module Spotlight
 
     def exhibit_params
       params.require(:exhibit).permit(roles_attributes: [:id, :user_key, :role, :_destroy])
+    end
+
+    def invite_params
+      params.permit(:user, :role)
     end
 
     def exists_params

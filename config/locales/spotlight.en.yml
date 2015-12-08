@@ -264,9 +264,9 @@ en:
     invitation_mailer:
       invitation_instructions:
         hello: "Hello %{email}!"
-        someone_invited_you: "The Exhibits Administrator has invited you to be '%{role}' for '%{exhibit_name}' at %{url}. You can accept it through the link below.</p>"
+        someone_invited_you: "The Exhibits Administrator has invited to be a member of '%{exhibit_name}' at %{url}. You can accept it through the link below."
         accept: "Accept invitation"
-        ignore: "If you don't want to accept the invitation, please ignore this email.<br />Your account won't be created until you access the link above."
+        ignore_html: "If you don't want to accept the invitation, please ignore this email.<br />Your account won't be created until you access the link above."
     confirmation_mailer:
       confirmation_instructions:
         welcome: "Welcome %{email}!"
@@ -473,10 +473,8 @@ en:
       reindexing_in_progress: "Reindexing all resources"
     roles:
       edit_fields:
-        invite_html: "This user does not yet exist. Would you lke to send them an %{link}?"
+        invite_html: "This user does not yet exist. Would you like to send them an %{link}?"
         invite_link: invite
-        invalid_email: "The email address you entered is not valid."
-
       index:
         title: Site Configuration - Users
         invite_pending: pending

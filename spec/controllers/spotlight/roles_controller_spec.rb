@@ -97,15 +97,6 @@ describe Spotlight::RolesController, type: :controller do
 
     describe 'GET invite' do
       before { request.env['HTTP_REFERER'] = 'http://example.com' }
-      it 'requires a user and role parameter' do
-        expect do
-          get :invite, exhibit_id: exhibit, user: 'user@example.com'
-        end.to raise_error(ActionController::ParameterMissing)
-
-        expect do
-          get :invite, exhibit_id: exhibit, role: 'admin'
-        end.to raise_error(ActionController::ParameterMissing)
-      end
 
       it 'invites the selected user' do
         expect do

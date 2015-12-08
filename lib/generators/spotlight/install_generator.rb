@@ -1,4 +1,3 @@
-# rubocop:disable ClassLength
 require 'rails/generators'
 
 module Spotlight
@@ -130,4 +129,3 @@ module Spotlight
     end
   end
 end
-# rubocop:enable ClassLength
