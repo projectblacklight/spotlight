@@ -13,6 +13,8 @@ module Spotlight
     friendly_id :title, use: [:slugged, :finders]
     validates :title, presence: true
 
+    default_scope { order('weight ASC') }
+
     acts_as_tagger
     delegate :blacklight_config, to: :blacklight_configuration
     serialize :facets, Array
