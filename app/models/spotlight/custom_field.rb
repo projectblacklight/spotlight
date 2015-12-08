@@ -102,7 +102,7 @@ module Spotlight
     end
 
     def should_generate_new_friendly_id?
-      true
+      super || persisted?
     end
 
     # Try building a slug based on the following fields in

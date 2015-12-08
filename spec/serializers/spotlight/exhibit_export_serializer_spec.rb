@@ -176,6 +176,14 @@ describe Spotlight::ExhibitExportSerializer do
       expect(subject.feature_pages.first.child_pages.length).to eq 1
     end
 
+    context 'page slugs' do
+      let!(:feature_page) { FactoryGirl.create(:feature_page, exhibit: source_exhibit, slug: 'xyz') }
+
+      it 'uses the existing slug for the page' do
+        expect(subject.feature_pages.find('xyz')).to be_persisted
+      end
+    end
+
     context 'with a feature page' do
       let(:feature_page) { FactoryGirl.create(:feature_page, exhibit: source_exhibit) }
       let(:thumbnail) { FactoryGirl.create(:featured_image) }

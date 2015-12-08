@@ -58,4 +58,25 @@ describe Spotlight::Search, type: :model do
       expect(described_class.published.map(&:weight)).to eq [1, 5, 10]
     end
   end
+
+  describe '#slug' do
+    let(:search) { FactoryGirl.create(:search) }
+
+    it 'gets a default slug' do
+      expect(search.slug).not_to be_blank
+    end
+
+    it 'is updated when the title changes' do
+      search.update(title: 'abc')
+      expect(search.slug).to eq 'abc'
+    end
+
+    context 'with a custom slug' do
+      let(:search) { FactoryGirl.create(:search, slug: 'xyz') }
+
+      it 'gets a default slug' do
+        expect(search.slug).to eq 'xyz'
+      end
+    end
+  end
 end
