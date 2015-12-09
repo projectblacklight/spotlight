@@ -8,8 +8,8 @@ module Spotlight
     friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: :exhibit
 
     belongs_to :exhibit, touch: true
-    belongs_to :created_by, class_name: '::User'
-    belongs_to :last_edited_by, class_name: '::User'
+    belongs_to :created_by, class_name: Spotlight::Engine.config.user_class
+    belongs_to :last_edited_by, class_name: Spotlight::Engine.config.user_class
     validates :weight, inclusion: { in: proc { 0..Spotlight::Page::MAX_PAGES } }
 
     default_scope { order('weight ASC') }

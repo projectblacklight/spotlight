@@ -4,7 +4,7 @@ module Spotlight
   describe 'spotlight/exhibits/index', type: :view do
     let(:exhibits) { Spotlight::Exhibit.none }
     let(:ability) { ::Ability.new(user) }
-    let(:user) { ::User.new }
+    let(:user) { Spotlight::Engine.user_class.new }
 
     before do
       assign(:exhibits, exhibits)

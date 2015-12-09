@@ -33,7 +33,7 @@ module Spotlight
     def exists
       # note: the messages returned are not shown to users and really only useful for debug, hence no translation necessary
       #  app uses html status code to act on response
-      if ::User.where(email: exists_params).present?
+      if Spotlight::Engine.user_class.where(email: exists_params).present?
         render json: { message: 'User exists' }
       else
         render json: { message: 'User does not exist' }, status: :not_found
@@ -41,7 +41,7 @@ module Spotlight
     end
 
     def invite
-      user = ::User.invite!(email: invite_params[:user], skip_invitation: true) # don't deliver the invitation yet
+      user = Spotlight::Engine.user_class.invite!(email: invite_params[:user], skip_invitation: true) # don't deliver the invitation yet
       role = Spotlight::Role.create(exhibit: current_exhibit, user: user, role: invite_params[:role])
       if role.save
         user.deliver_invitation # now deliver it when we have saved the role

@@ -32,7 +32,7 @@ module Spotlight
     has_many :roles, dependent: :delete_all
     has_many :searches, dependent: :destroy, extend: FriendlyId::FinderMethods
     has_many :solr_document_sidecars, dependent: :delete_all
-    has_many :users, through: :roles, class_name: '::User'
+    has_many :users, through: :roles, class_name: Spotlight::Engine.config.user_class
     has_many :pages, dependent: :destroy
 
     has_one :blacklight_configuration, class_name: 'Spotlight::BlacklightConfiguration', dependent: :delete

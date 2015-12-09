@@ -47,6 +47,10 @@ module Spotlight
       FactoryGirl.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryGirl)
     end
 
+    def self.user_class
+      Spotlight::Engine.config.user_class.constantize
+    end
+
     def self.catalog_controller
       Spotlight::Engine.config.catalog_controller_class.constantize
     end
@@ -54,6 +58,8 @@ module Spotlight
     def self.blacklight_config
       Spotlight::Engine.config.default_blacklight_config || catalog_controller.blacklight_config
     end
+
+    Spotlight::Engine.config.user_class = '::User'
 
     Spotlight::Engine.config.catalog_controller_class = '::CatalogController'
     Spotlight::Engine.config.default_blacklight_config = nil

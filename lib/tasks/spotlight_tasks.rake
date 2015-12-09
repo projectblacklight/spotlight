@@ -60,7 +60,7 @@ namespace :spotlight do
   end
 
   def prompt_to_create_user
-    User.find_or_create_by!(email: prompt_for_email) do |u|
+    Spotlight::Engine.user_class.find_or_create_by!(email: prompt_for_email) do |u|
       puts 'User not found. Enter a password to create the user.'
       u.password = prompt_for_password
     end

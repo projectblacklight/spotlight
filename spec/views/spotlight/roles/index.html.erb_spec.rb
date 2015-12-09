@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Spotlight
   describe 'spotlight/roles/index', type: :view do
-    let(:user) { stub_model(::User, email: 'jane@example.com') }
+    let(:user) { stub_model(Spotlight::Engine.user_class, email: 'jane@example.com') }
 
     let(:exhibit) { FactoryGirl.create(:exhibit) }
     let(:admin_role) { FactoryGirl.create(:role, role: 'admin', user: user, exhibit: exhibit) }
