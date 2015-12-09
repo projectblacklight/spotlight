@@ -6,7 +6,7 @@ module Spotlight
 
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def initialize(user)
-      user ||= ::User.new
+      user ||= Spotlight::Engine.user_class.new
 
       alias_action :process_import, to: :import
 

@@ -4,7 +4,7 @@ module Spotlight
   class Role < ActiveRecord::Base
     ROLES = %w(admin curator)
     belongs_to :exhibit
-    belongs_to :user, class_name: '::User', autosave: true
+    belongs_to :user, class_name: Spotlight::Engine.config.user_class, autosave: true
     validates :role, inclusion: { in: ROLES }
     validates :user_key, presence: true
     validate :user_must_exist, if: -> { user_key.present? }
@@ -21,7 +21,7 @@ module Spotlight
     # setting user key causes the user to get set
     def user_key=(key)
       @user_key = key
-      self.user ||= ::User.find_by_user_key(key)
+      self.user ||= Spotlight::Engine.user_class.find_by_user_key(key)
       user.user_key = key if user
     end
 
