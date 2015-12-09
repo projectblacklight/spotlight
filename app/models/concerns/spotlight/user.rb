@@ -4,7 +4,7 @@ module Spotlight
   module User
     extend ActiveSupport::Concern
     included do
-      has_many :roles, class_name: 'Spotlight::Role'
+      has_many :roles, class_name: 'Spotlight::Role', dependent: :destroy
 
       before_create :add_default_roles
     end
@@ -19,6 +19,10 @@ module Spotlight
 
     def add_default_roles
       roles.build role: 'admin' unless self.class.any?
+    end
+
+    def invite_pending?
+      invited_to_sign_up? && !invitation_accepted?
     end
 
     alias_attribute :user_key, :email

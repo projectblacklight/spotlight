@@ -30,10 +30,39 @@ module Spotlight
       end
     end
 
+    def exists
+      # note: the messages returned are not shown to users and really only useful for debug, hence no translation necessary
+      #  app uses html status code to act on response
+      if ::User.where(email: exists_params).present?
+        render json: { message: 'User exists' }
+      else
+        render json: { message: 'User does not exist' }, status: :not_found
+      end
+    end
+
+    def invite
+      user = ::User.invite!(email: invite_params[:user], skip_invitation: true) # don't deliver the invitation yet
+      role = Spotlight::Role.create(exhibit: current_exhibit, user: user, role: invite_params[:role])
+      if role.save
+        user.deliver_invitation # now deliver it when we have saved the role
+        redirect_to :back, notice: t(:'helpers.submit.role.updated')
+      else
+        redirect_to :back, alert: t(:'helpers.submit.role.batch_error')
+      end
+    end
+
     protected
 
     def exhibit_params
       params.require(:exhibit).permit(roles_attributes: [:id, :user_key, :role, :_destroy])
+    end
+
+    def invite_params
+      params.permit(:user, :role)
+    end
+
+    def exists_params
+      params.require(:user)
     end
 
     # When nested attributes are passed in, ensure we have authorization to update each row.

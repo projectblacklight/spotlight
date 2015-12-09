@@ -10,11 +10,11 @@
     margin-top: 10px;
     margin-left: 0;
     padding-left: 0;
-    
+
     &.not-validated {
       margin-top: 0;
     }
-    
+
     .confirmed {
       @extend .text-success;
       white-space: nowrap;
@@ -84,4 +84,14 @@
   }
 
   border-bottom: 1px solid $table-border-color;
+}
+
+.pending-label {
+  display: none;
+}
+
+.invite-pending {
+  .pending-label {
+    display: inline;
+  }
 }

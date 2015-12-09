@@ -1,11 +1,10 @@
 <%= render 'spotlight/shared/exhibit_sidebar' %>
-<div id="content" class="col-md-9">
+<div id="content" class="col-md-9" data-user-exists-url="<%= spotlight.exists_exhibit_roles_path(current_exhibit) %>">
   <%= configuration_page_title %>
-  <%= bootstrap_form_for @exhibit, url: spotlight.update_all_exhibit_roles_path(@exhibit) do |f| %>
-
+  <%= bootstrap_form_for current_exhibit, url: spotlight.update_all_exhibit_roles_path(current_exhibit) do |f| %>
     <table class="table table-striped users">
       <thead>
-        <th><%= t '.name' %></th>
+        <th><%= t '.email' %></th>
         <th><%= t '.role' %></th>
         <th><%= t '.actions' %></th>
       </thead>
@@ -25,8 +24,11 @@
             </td>
           </tr>
         <% else %>
-          <tr data-show-for="<%= r.object.id %>">
-            <td><%= r.object.user.to_s %></td>
+          <tr data-show-for="<%= r.object.id %>" class="<%= 'invite-pending' if r.object.user.invite_pending? %>">
+            <td>
+              <%= r.object.user.to_s %>
+              <span class='label label-warning pending-label'><%= t('.invite_pending') %></span>
+            </td>
             <td><%= r.object.role.humanize %></td>
             <td><%= link_to "#", data: {behavior: 'edit-user', target: r.object.id } do %>
               <span class="glyphicon glyphicon-edit"></span>

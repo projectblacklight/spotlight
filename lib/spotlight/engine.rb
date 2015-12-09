@@ -1,9 +1,13 @@
 # Load blacklight which will give spotlight views a higher preference than those in blacklight
+
+# devise must be required to first to ensure we can override devise and invitable views in spotlight correctly
+require 'devise'
+require 'devise_invitable'
+
 require 'blacklight'
 require 'blacklight/oembed'
 require 'autoprefixer-rails'
 require 'friendly_id'
-require 'devise'
 require 'tophat'
 require 'paper_trail'
 

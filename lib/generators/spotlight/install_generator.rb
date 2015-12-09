@@ -121,5 +121,11 @@ module Spotlight
       copy_file 'jetty.rake', 'lib/tasks/jetty.rake'
       directory 'solr_conf'
     end
+
+    def generate_devise_invitable
+      gem 'devise_invitable'
+      generate 'devise_invitable:install'
+      generate 'devise_invitable', 'User'
+    end
   end
 end
