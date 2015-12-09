@@ -43,7 +43,10 @@
       var originalHref = link.data('inviteUrl');
       var userName = target.val();
       var role = roleSelect().val();
-      link.attr('href', originalHref + '?user=' + userName + '&role=' + role);
+      link.attr(
+        'href',
+        originalHref + '?user=' + encodeURIComponent(userName) + '&role=' + encodeURIComponent(role)
+      );
     }
 
     function roleSelect() {
