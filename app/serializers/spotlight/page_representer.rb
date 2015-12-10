@@ -12,8 +12,8 @@ module Spotlight
     property :content, exec_context: :decorator
 
     def content
-      # get the sir-trevor objects as JSON.
-      represented.content.as_json
+      # get the original data, bypassing any Sir-Trevor transformations
+      represented.read_attribute(:content)
     end
 
     delegate :content=, to: :represented
