@@ -19,20 +19,15 @@ module Spotlight
     accepts_nested_attributes_for :thumbnail, update_only: true
     accepts_nested_attributes_for :masthead, update_only: true
 
-    include Blacklight::SearchHelper
-    include Spotlight::Catalog::AccessControlsEnforcement
-
     def thumbnail_image_url
       thumbnail.image.thumb.url if thumbnail && thumbnail.image
     end
 
-    def count
-      repository.search(search_builder.with(query_params).rows(0).merge(facet: false))['response']['numFound']
-    end
-
     def images
-      documents.map do |doc|
-        [
+      return enum_for(:images) { documents.size } unless block_given?
+
+      documents.each do |doc|
+        yield [
           doc.first(blacklight_config.document_model.unique_key),
           doc.first(blacklight_config.index.title_field),
           doc.first(blacklight_config.index.thumbnail_field)
@@ -41,10 +36,15 @@ module Spotlight
     end
 
     def documents
-      return enum_for(:documents) unless block_given?
+      start = 0
+      response = repository.search(search_params.start(start))
 
-      Blacklight::Solr::Response.new(solr_response, {}).docs.each do |result|
-        yield blacklight_config.document_model.new(result)
+      return to_enum(:documents) { response['response']['numFound'] } unless block_given?
+
+      while response.documents.present?
+        response.documents.each { |x| yield x }
+        start += response.documents.length
+        response = repository.search(search_params.start(start))
       end
     end
 
@@ -67,15 +67,22 @@ module Spotlight
       end
     end
 
+    def search_params
+      search_builder.with(query_params.with_indifferent_access).merge(facet: false, fl: default_search_fields)
+    end
+
     private
 
-    def solr_response
-      @solr_response ||= repository.search(
-        search_builder.with(query_params).rows(1000).merge(
-          facet: false,
-          fl: default_search_fields
-        )
-      )
+    def search_builder_class
+      blacklight_config.search_builder_class
+    end
+
+    def search_builder
+      search_builder_class.new(true, self)
+    end
+
+    def repository
+      Blacklight.default_index
     end
 
     def default_search_fields

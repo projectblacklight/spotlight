@@ -4,7 +4,7 @@ describe 'spotlight/browse/search', type: :view do
   let(:search) { FactoryGirl.create(:search) }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   before :each do
-    allow(search).to receive_messages(count: 15)
+    allow(search).to receive_messages(documents: double(size: 15))
     allow(search).to receive_message_chain(:thumbnail, :image, thumb: '/some/image')
   end
 
@@ -24,6 +24,6 @@ describe 'spotlight/browse/search', type: :view do
 
   it 'displays the item count' do
     render partial: 'spotlight/browse/search', locals: { search: search }
-    expect(response).to have_selector 'small', text: /#{search.count} items/i
+    expect(response).to have_selector 'small', text: /#{search.documents.size} items/i
   end
 end
