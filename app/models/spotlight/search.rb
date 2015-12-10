@@ -19,15 +19,12 @@ module Spotlight
     accepts_nested_attributes_for :thumbnail, update_only: true
     accepts_nested_attributes_for :masthead, update_only: true
 
-    include Blacklight::SearchHelper
-    include Spotlight::Catalog::AccessControlsEnforcement
-
     def thumbnail_image_url
       thumbnail.image.thumb.url if thumbnail && thumbnail.image
     end
 
     def count
-      repository.search(search_builder.with(query_params).rows(0).merge(facet: false))['response']['numFound']
+      repository.search(search_params.rows(0))['response']['numFound']
     end
 
     def images
@@ -67,15 +64,26 @@ module Spotlight
       end
     end
 
+    def search_params
+      search_builder.with(query_params.with_indifferent_access).merge(facet: false)
+    end
+
     private
 
+    def search_builder_class
+      blacklight_config.search_builder_class
+    end
+
+    def search_builder
+      search_builder_class.new(true, self)
+    end
+
+    def repository
+      Blacklight.default_index
+    end
+
     def solr_response
-      @solr_response ||= repository.search(
-        search_builder.with(query_params).rows(1000).merge(
-          facet: false,
-          fl: default_search_fields
-        )
-      )
+      @solr_response ||= repository.search(search_params.rows(1000).merge(fl: default_search_fields))
     end
 
     def default_search_fields

@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe Spotlight::Search, type: :model do
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+
   let(:query_params) { { 'f' => { 'genre_sim' => ['map'] } } }
-  subject { FactoryGirl.create(:exhibit).searches.build(title: 'Search', query_params: query_params) }
+  subject { exhibit.searches.build(title: 'Search', query_params: query_params) }
 
   let(:blacklight_config) { ::CatalogController.blacklight_config }
   let(:document) do
@@ -14,8 +16,6 @@ describe Spotlight::Search, type: :model do
     SolrDocument.new(id: 'ab123fd9876',
                      blacklight_config.index.title_field => 'title')
   end
-
-  it { is_expected.to be_a Spotlight::Catalog::AccessControlsEnforcement }
 
   context 'thumbnail' do
     it 'calls DefaultThumbnailJob to fetch a default feature image' do
@@ -40,14 +40,18 @@ describe Spotlight::Search, type: :model do
     end
   end
 
-  it 'has items' do
-    expect(subject.count).to eq 55
-  end
+  describe 'for a search matching all items' do
+    let(:query_params) { {} }
 
-  it 'has images' do
-    expect(subject.images.size).to eq(55)
-    expect(subject.images.map(&:last)).to include 'https://stacks.stanford.edu/image/dq287tq6352/dq287tq6352_05_0001_thumb',
-                                                  'https://stacks.stanford.edu/image/jp266yb7109/jp266yb7109_05_0001_thumb'
+    it 'has items' do
+      expect(subject.count).to eq 55
+    end
+
+    it 'has images' do
+      expect(subject.images.size).to eq(55)
+      expect(subject.images.map(&:last)).to include 'https://stacks.stanford.edu/image/dq287tq6352/dq287tq6352_05_0001_thumb',
+                                                    'https://stacks.stanford.edu/image/jp266yb7109/jp266yb7109_05_0001_thumb'
+    end
   end
 
   describe 'default_scope' do
@@ -76,6 +80,22 @@ describe Spotlight::Search, type: :model do
 
       it 'gets a default slug' do
         expect(search.slug).to eq 'xyz'
+      end
+    end
+  end
+
+  describe '#search_params' do
+    it 'maps the search to the appropriate facet values' do
+      expect(subject.search_params.to_hash).to include 'fq' => array_including('{!raw f=genre_sim}map')
+    end
+
+    context 'with filter_resources_by_exhibit configured' do
+      before do
+        allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(true)
+      end
+
+      it 'includes the exhibit context' do
+        expect(subject.search_params.to_hash).to include 'fq' => array_including("spotlight_exhibit_slug_#{exhibit.slug}_bsi:true")
       end
     end
   end
