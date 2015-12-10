@@ -23,13 +23,11 @@ module Spotlight
       thumbnail.image.thumb.url if thumbnail && thumbnail.image
     end
 
-    def count
-      repository.search(search_params.rows(0))['response']['numFound']
-    end
-
     def images
-      documents.map do |doc|
-        [
+      return enum_for(:images) { documents.size } unless block_given?
+
+      documents.each do |doc|
+        yield [
           doc.first(blacklight_config.document_model.unique_key),
           doc.first(blacklight_config.index.title_field),
           doc.first(blacklight_config.index.thumbnail_field)
@@ -38,10 +36,15 @@ module Spotlight
     end
 
     def documents
-      return enum_for(:documents) unless block_given?
+      start = 0
+      response = repository.search(search_params.start(start))
 
-      Blacklight::Solr::Response.new(solr_response, {}).docs.each do |result|
-        yield blacklight_config.document_model.new(result)
+      return to_enum(:documents) { response['response']['numFound'] } unless block_given?
+
+      while response.documents.present?
+        response.documents.each { |x| yield x }
+        start += response.documents.length
+        response = repository.search(search_params.start(start))
       end
     end
 
@@ -65,7 +68,7 @@ module Spotlight
     end
 
     def search_params
-      search_builder.with(query_params.with_indifferent_access).merge(facet: false)
+      search_builder.with(query_params.with_indifferent_access).merge(facet: false, fl: default_search_fields)
     end
 
     private
@@ -80,10 +83,6 @@ module Spotlight
 
     def repository
       Blacklight.default_index
-    end
-
-    def solr_response
-      @solr_response ||= repository.search(search_params.rows(1000).merge(fl: default_search_fields))
     end
 
     def default_search_fields

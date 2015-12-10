@@ -44,7 +44,7 @@ describe Spotlight::Search, type: :model do
     let(:query_params) { {} }
 
     it 'has items' do
-      expect(subject.count).to eq 55
+      expect(subject.documents.size).to eq 55
     end
 
     it 'has images' do

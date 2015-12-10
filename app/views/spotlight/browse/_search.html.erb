@@ -1,4 +1,4 @@
-<%= cache [@exhibit, search, search.count] do %>
+<%= cache [@exhibit, search, search.documents.size] do %>
   <div class="col-sm-4 col-xs-12 category">
     <%= link_to spotlight.exhibit_browse_path(@exhibit, search) do %>
       <div class="image-overlay">
@@ -6,7 +6,7 @@
         <div class="text-overlay">
            <h2 class="browse-category-title">
              <%= search.title%>
-             <small><%= t :'spotlight.browse.search.item_count', count: search.count %></small>
+             <small><%= t :'spotlight.browse.search.item_count', count: search.documents.size %></small>
            </h2>
          </div>
       </div>
