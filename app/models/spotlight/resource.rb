@@ -18,7 +18,6 @@ module Spotlight
       :last_index_elapsed_time,
       :last_indexed_finished], coder: JSON
 
-    around_index :reindex_with_lock
     around_index :reindex_with_logging
     after_index :commit
 
@@ -133,12 +132,6 @@ module Spotlight
       end
 
       protected
-
-      def reindex_with_lock
-        with_lock do
-          yield
-        end
-      end
 
       def reindex_with_logging
         time_start = Time.zone.now
