@@ -189,6 +189,7 @@ describe Spotlight::ExhibitExportSerializer do
       let(:thumbnail) { FactoryGirl.create(:featured_image) }
 
       before do
+        feature_page.content = { data: [{ type: 'text', data: { text: 'xyz' } }] }.to_json
         feature_page.thumbnail = thumbnail
         feature_page.save
       end
@@ -199,8 +200,14 @@ describe Spotlight::ExhibitExportSerializer do
       end
 
       it 'copies the thumbnail' do
-        expect(subject.searches.first.thumbnail).not_to be_blank
-        expect(subject.searches.first.thumbnail.image.file.path).not_to eq source_exhibit.searches.first.thumbnail.image.file.path
+        expect(subject.feature_pages.first.thumbnail).not_to be_blank
+        expect(subject.feature_pages.first.thumbnail.image.file.path).not_to eq source_exhibit.feature_pages.first.thumbnail.image.file.path
+      end
+
+      it 'copies the content' do
+        expect(JSON.parse(subject.feature_pages.first.read_attribute(:content))).to have_key 'data'
+        expect(subject.feature_pages.first.content.length).to eq 1
+        expect(subject.feature_pages.first.content.first).to be_a_kind_of SirTrevorRails::Blocks::TextBlock
       end
     end
 
