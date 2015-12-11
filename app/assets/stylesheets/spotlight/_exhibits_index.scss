@@ -56,6 +56,14 @@
   .card-title {
     padding-top: $padding-large-vertical;
   }
+
+  .unpublished {
+    @extend .center-block;
+
+    margin-top: -1em;
+    position: relative;
+    width: 15ch;
+  }
 }
 
 .card-back {

@@ -5,6 +5,7 @@ module Spotlight
     extend ActiveSupport::Concern
     included do
       has_many :roles, class_name: 'Spotlight::Role', dependent: :destroy
+      has_many :exhibits, class_name: 'Spotlight::Exhibit', through: :roles
 
       before_create :add_default_roles
     end
