@@ -91,6 +91,8 @@ describe Spotlight::ExhibitsController, type: :controller do
 
         expect(exhibit.title).to eq 'Some Title'
         expect(exhibit.slug).to eq 'custom-slug'
+
+        expect(user.exhibits).to include exhibit
       end
     end
   end
