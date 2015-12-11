@@ -264,9 +264,9 @@ en:
     invitation_mailer:
       invitation_instructions:
         hello: "Hello %{email}!"
-        someone_invited_you: "The Exhibits Administrator has invited to be a member of '%{exhibit_name}' at %{url}. You can accept it through the link below."
+        someone_invited_you: "The Exhibits Administrator has invited you to help work on the \"%{exhibit_name}\" exhibit at %{url}. You can accept this invitation by clicking the link below."
         accept: "Accept invitation"
-        ignore_html: "If you don't want to accept the invitation, please ignore this email.<br />Your account won't be created until you access the link above."
+        ignore_html: "If you don't want to accept the invitation, please ignore this email. Your account won't be created until you access the link above."
     confirmation_mailer:
       confirmation_instructions:
         welcome: "Welcome %{email}!"
