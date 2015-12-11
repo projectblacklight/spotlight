@@ -292,4 +292,85 @@ describe Spotlight::CatalogController, type: :controller do
       end
     end
   end
+
+  describe 'next and previous documents' do
+    before do
+      exhibit.searches.first.update(published: true)
+      allow(controller).to receive(:current_search_session).and_return(search)
+      allow(controller).to receive(:search_session).and_return(search_session)
+    end
+
+    let(:search_session) { { 'counter' => 2 } }
+
+    let(:response) { double(total: 5, documents: [first_doc, nil, last_doc]) }
+    let(:first_doc) { double }
+    let(:last_doc) { double }
+
+    context 'when arriving from a browse page' do
+      let(:search) do
+        Search.new(query_params: { action: 'show', controller: 'spotlight/browse', id: exhibit.searches.first.id }.with_indifferent_access)
+      end
+
+      context 'when published' do
+        before do
+          exhibit.searches.first.update(published: true)
+          allow(controller).to receive(:get_previous_and_next_documents_for_search).with(1, exhibit.searches.first.query_params).and_return(response)
+        end
+
+        it 'uses the saved search context' do
+          get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+
+          expect(assigns(:previous_document)).to eq first_doc
+          expect(assigns(:next_document)).to eq last_doc
+        end
+      end
+
+      context 'when arriving from a private browse page' do
+        before do
+          exhibit.searches.first.update(published: false)
+        end
+
+        it 'ignores the search context' do
+          get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+
+          expect(assigns(:previous_document)).to be_nil
+          expect(assigns(:next_document)).to be_nil
+        end
+      end
+    end
+
+    context 'when arriving from a feature page' do
+      let(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+      let(:search) do
+        Search.new(query_params: { action: 'show', controller: 'spotlight/feature_pages', id: page.id }.with_indifferent_access)
+      end
+
+      context 'when published' do
+        before do
+          page.update(published: true)
+        end
+
+        it 'uses the page context' do
+          pending 'Waiting to figure out how to construct previous/next documents'
+          get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+
+          expect(assigns(:previous_document)).to be_a_kind_of SolrDocument
+          expect(assigns(:next_document)).to be_a_kind_of SolrDocument
+        end
+      end
+
+      context 'when unpublished' do
+        before do
+          page.update(published: false)
+        end
+
+        it 'ignores the search context' do
+          get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+
+          expect(assigns(:previous_document)).to be_nil
+          expect(assigns(:next_document)).to be_nil
+        end
+      end
+    end
+  end
 end
