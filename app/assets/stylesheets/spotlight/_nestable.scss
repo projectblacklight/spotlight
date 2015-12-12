@@ -36,9 +36,9 @@ tr.dd-item {
 
 .dd-handle { display: block; height: 100%; margin: 5px 0; padding: 5px 10px; color: #333; text-decoration: none; font-weight: bold; border: 1px solid #ccc;
     background: #fafafa;
-    background: -webkit-linear-gradient(top, #fafafa 0%, #eee 100%);
-    background:    -moz-linear-gradient(top, #fafafa 0%, #eee 100%);
-    background:         linear-gradient(top, #fafafa 0%, #eee 100%);
+    background: -webkit-linear-gradient(to bottom, #fafafa 0%, #eee 100%);
+    background:    -moz-linear-gradient(to bottom, #fafafa 0%, #eee 100%);
+    background:         linear-gradient(to bottom, #fafafa 0%, #eee 100%);
     -webkit-border-radius: 3px;
             border-radius: 3px;
     box-sizing: border-box; -moz-box-sizing: border-box;
@@ -84,9 +84,9 @@ tr.dd-item {
 
 .dd3-content { display: block; margin: 5px 0; padding: 0 0 0 30px;
     background: #fafafa;
-    background: -webkit-linear-gradient(top, #fafafa 0%, #eee 100%);
-    background:    -moz-linear-gradient(top, #fafafa 0%, #eee 100%);
-    background:         linear-gradient(top, #fafafa 0%, #eee 100%);
+    background: -webkit-linear-gradient(to bottom, #fafafa 0%, #eee 100%);
+    background:    -moz-linear-gradient(to bottom, #fafafa 0%, #eee 100%);
+    background:         linear-gradient(to bottom, #fafafa 0%, #eee 100%);
     -webkit-border-radius: 3px;
             border-radius: 3px;
     box-sizing: border-box; -moz-box-sizing: border-box;
@@ -99,15 +99,15 @@ tr.dd-item {
 
 .dd3-item > button { margin-left: 30px; }
 
-.dd3-handle { 
+.dd3-handle {
     position: absolute; margin: 0; left: 0; top: 0; cursor: pointer; width: 30px;
     text-indent: 100px;
     white-space: nowrap; overflow: hidden;
     border: 1px solid #aaa;
     background: #ddd;
-    background: -webkit-linear-gradient(top, #ddd 0%, #bbb 100%);
-    background:    -moz-linear-gradient(top, #ddd 0%, #bbb 100%);
-    background:         linear-gradient(top, #ddd 0%, #bbb 100%);
+    background: -webkit-linear-gradient(to bottom, #ddd 0%, #bbb 100%);
+    background:    -moz-linear-gradient(to bottom, #ddd 0%, #bbb 100%);
+    background:         linear-gradient(to bottom, #ddd 0%, #bbb 100%);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
