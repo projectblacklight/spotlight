@@ -1,4 +1,4 @@
-$masthead-height: 180px;
+$masthead-height: 130px;
 $masthead-image-blur: 1px;
 
 @mixin masthead-background-containers() {
@@ -31,6 +31,7 @@ $masthead-image-blur: 1px;
   }
 }
 
+#site-masthead,
 #exhibit-masthead,
 #exhibit-navbar {
   z-index: 1;
@@ -70,40 +71,11 @@ $masthead-image-blur: 1px;
   margin-bottom: 0;
 }
 
+#site-masthead,
 #exhibit-masthead {
   height: $masthead-height;
-  margin-bottom: -50px;
   padding: 0;
   position: static;
-
-  & > .container {
-    position: relative;
-    top: 33%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-
-  &.with-page-masthead {
-    margin-bottom: $padding-base-vertical;
-    margin-top: -51px;
-
-    > .container {
-      top: 60%;
-    }
-
-    .navbar-brand {
-      font-size: $font-size-large;
-      text-shadow: 1px 1px 0 $black;
-    }
-
-    .search-title {
-      text-align: center;
-
-      small {
-        text-transform: uppercase;
-      }
-    }
-  }
 
   .site-title {
     font-size: 30px;
@@ -127,10 +99,11 @@ $masthead-image-blur: 1px;
     }
   }
 
-  &.with-page-masthead {
-    .site-title {
-      margin-top: $padding-large-vertical * 3;
-    }
+  & > .container {
+    position: relative;
+    top: 33%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
   }
 
   // This is to add a background image to the masthead, in a way that
@@ -162,6 +135,44 @@ $masthead-image-blur: 1px;
        rgba(0, 0, 0, 0.5)
      );
   }
+}
+
+#site-masthead {
+  background-color: $masthead-bg;
+  margin-bottom: 2em;
+  border-bottom: 1px solid $navbar-default-border;
+}
+
+#exhibit-masthead {
+  height: $masthead-height + 50px;
+  margin-bottom: -50px;
+
+  &.with-page-masthead {
+    margin-bottom: $padding-base-vertical;
+    margin-top: -51px;
+
+    > .container {
+      top: 60%;
+    }
+
+    .navbar-brand {
+      font-size: $font-size-large;
+      text-shadow: 1px 1px 0 $black;
+    }
+
+    .search-title {
+      text-align: center;
+
+      small {
+        text-transform: uppercase;
+      }
+    }
+
+    .site-title {
+      margin-top: $padding-large-vertical * 3;
+    }
+  }
+
 }
 
 // Margin between bottom of masthead and start of page content.

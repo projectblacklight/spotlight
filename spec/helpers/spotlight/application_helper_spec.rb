@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe Spotlight::ApplicationHelper, type: :helper do
   describe '#application_name' do
+    let(:site) { Spotlight::Site.instance }
+    before do
+      allow(helper).to receive(:current_site).and_return(site)
+    end
+
     it 'includes the exhibit' do
       allow(helper).to receive_messages(current_exhibit: double(title: 'My Exhibit'))
       expect(helper.application_name).to eq 'My Exhibit - Blacklight'
@@ -10,6 +15,17 @@ describe Spotlight::ApplicationHelper, type: :helper do
     it "is just the application name if there isn't an exhibit" do
       allow(helper).to receive_messages(current_exhibit: nil)
       expect(helper.application_name).to eq 'Blacklight'
+    end
+
+    context 'with a configured site title' do
+      before do
+        site.title = 'Some Title'
+        allow(helper).to receive_messages(current_exhibit: nil)
+      end
+
+      it 'uses the configured name' do
+        expect(helper.application_name).to eq 'Some Title'
+      end
     end
   end
 

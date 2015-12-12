@@ -31,7 +31,7 @@
   </head>
   <body class="<%= render_body_class %>">
   <%= render partial: 'shared/header_navbar' %>
-  <%= render partial: 'shared/exhibit_masthead_and_navbar' %>
+  <%= render partial: 'shared/masthead' %>
   <%= content_for?(:header_content) ? yield(:header_content) : "" %>
 
   <%= render partial: 'shared/ajax_modal' %>

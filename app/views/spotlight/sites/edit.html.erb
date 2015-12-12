@@ -1,0 +1,19 @@
+<div id="content" class="col-md-9 exhibit-admin">
+  <%= page_title(t('.section'), t('.page_title')) %>
+  <div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="basic">
+        <%= render 'form' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<aside class="col-md-3">
+  <%= render "shared/site_sidebar" %>
+</aside>

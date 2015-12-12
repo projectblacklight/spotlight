@@ -55,6 +55,7 @@ en:
         destroyed: "The %{model} was deleted."
       exhibit: *spotlight_default
       search: *spotlight_default
+      site: *spotlight_default
       contact_form:
         create: "Send"
         created: "Thanks. Your feedback has been sent."
@@ -486,6 +487,12 @@ en:
         email: "Email Address"
         role: "Role"
         actions: "Actions"
+    sites:
+      edit:
+        section: Customize appearance
+        page_title: Exhibits landing page
+        basic_settings:
+          heading: Title
     searches: &search
       nav_link: "Browse"
       index:
@@ -569,5 +576,6 @@ en:
   shared:
     share_follow:
       share_follow: "Share & Follow"
-    home_sidebar:
+    site_sidebar:
+      header: Actions
       create_exhibit: 'Create a new exhibit'

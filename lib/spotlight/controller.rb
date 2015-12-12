@@ -7,7 +7,11 @@ module Spotlight
     include Spotlight::Config
 
     included do
-      helper_method :current_exhibit, :current_masthead, :exhibit_masthead?
+      helper_method :current_site, :current_exhibit, :current_masthead, :exhibit_masthead?
+    end
+
+    def current_site
+      @current_site ||= Spotlight::Site.instance
     end
 
     def current_exhibit
@@ -15,9 +19,11 @@ module Spotlight
     end
 
     def current_masthead
-      @masthead ||= begin
-        current_exhibit.masthead if current_exhibit && current_exhibit.masthead && current_exhibit.masthead.display?
-      end
+      @masthead ||= if current_exhibit
+                      current_exhibit.masthead if current_exhibit.masthead && current_exhibit.masthead.display?
+                    else
+                      current_site.masthead if current_site.masthead && current_site.masthead.display?
+                    end
     end
 
     def current_masthead=(masthead)
