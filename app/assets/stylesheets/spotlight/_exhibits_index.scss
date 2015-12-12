@@ -67,10 +67,10 @@
     margin-top: -1em;
     position: relative;
     width: 15ch;
-  }
 
-  .unpublished + .card-title {
-    padding-top: 0;
+    + .card-title {
+      padding-top: 0;
+    }
   }
 }
 
