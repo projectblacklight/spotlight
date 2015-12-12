@@ -41,6 +41,7 @@
   @extend .text-center;
 
   font-size: $font-size-h4;
+  line-height: 1.2;
 }
 
 .card-front {
@@ -54,7 +55,22 @@
   }
 
   .card-title {
+    padding-left: $padding-small-horizontal;
+    padding-right: $padding-small-horizontal;
     padding-top: $padding-large-vertical;
+  }
+
+  .unpublished {
+    @extend .center-block;
+
+    font-size: $font-size-base;
+    margin-top: -1em;
+    position: relative;
+    width: 15ch;
+
+    + .card-title {
+      padding-top: 0;
+    }
   }
 }
 

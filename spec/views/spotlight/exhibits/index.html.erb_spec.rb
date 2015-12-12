@@ -8,7 +8,7 @@ module Spotlight
 
     before do
       assign(:exhibits, exhibits)
-      allow(view).to receive_messages(exhibit_path: '/', current_ability: ability)
+      allow(view).to receive_messages(exhibit_path: '/', current_user: user, current_ability: ability)
     end
 
     context 'with published exhibits' do
@@ -29,24 +29,53 @@ module Spotlight
         expect(rendered).not_to include 'Private exhibits'
       end
 
-      context 'with an authorized user' do
-        let(:user) { FactoryGirl.create(:site_admin) }
+      it 'does not include the tab bar' do
+        render
 
-        it 'includes a list of unpublished exhibits' do
+        expect(rendered).not_to have_selector '.nav-tabs'
+      end
+
+      context 'with an exhibit admin' do
+        let(:user) { FactoryGirl.create(:exhibit_admin) }
+
+        it 'includes a tab with the exhibits curated by the user' do
           render
 
-          expect(rendered).to include 'Private exhibits'
+          expect(rendered).to have_selector '.nav-tabs'
+          expect(rendered).to have_link 'Your exhibits'
+          expect(rendered).to have_text user.exhibits.first.title
+        end
+
+        it 'does not include a tab for unpublished exhibits' do
+          render
+
+          expect(rendered).to have_selector '.nav-tabs'
+          expect(rendered).not_to have_link 'Unpublished exhibits'
+        end
+      end
+
+      context 'with a site admin' do
+        let(:user) { FactoryGirl.create(:site_admin) }
+
+        before do
+          allow(view).to receive_messages(can?: true, new_exhibit_path: '/exhibits/new')
+        end
+
+        it 'includes a tab with unpublished exhibits' do
+          render
+
+          expect(rendered).to have_selector '.nav-tabs'
+          expect(rendered).to have_link 'Unpublished exhibits'
           expect(rendered).to have_text exhibit_c.title
         end
       end
     end
 
     context 'with an authorized user' do
-      let(:current_user) { double }
+      let(:user) { FactoryGirl.build(:site_admin) }
 
       before do
         allow(view).to receive_messages(can?: true,
-                                        current_user: current_user,
                                         new_exhibit_path: '/exhibits/new')
       end
 

@@ -2,6 +2,9 @@
   <div class="flipper">
     <div class="card-front card-face">
       <%= image_tag(exhibit.thumbnail.image.square.url) if exhibit.thumbnail.present? %>
+      <% unless exhibit.published? %>
+        <div class="label label-warning unpublished"><%= t('.unpublished') %></div>
+      <% end %>
       <h2 class="card-title"><%= exhibit.title %></h2>
     </div>
     <div class="card-back card-face">
