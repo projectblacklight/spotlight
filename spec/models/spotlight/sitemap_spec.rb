@@ -89,7 +89,7 @@ describe Spotlight::Sitemap do
   end
 
   describe '#add_resources' do
-    let(:document) { ::SolrDocument.new(id: 'a') }
+    let(:document) { blacklight_config.document_model.new(id: 'a') }
 
     before do
       allow(exhibit).to receive(:solr_documents).and_return([document])

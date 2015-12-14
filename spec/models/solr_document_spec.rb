@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SolrDocument, type: :model do
-  subject { ::SolrDocument.new(id: 'abcd123') }
+  subject { described_class.new(id: 'abcd123') }
   its(:to_key) { should == ['abcd123'] }
   its(:persisted?) { should be_truthy }
   before do
@@ -23,21 +23,21 @@ describe SolrDocument, type: :model do
   end
 
   it 'has find' do
-    expect(::SolrDocument.find('dq287tq6352')).to be_kind_of described_class
+    expect(described_class.find('dq287tq6352')).to be_kind_of described_class
   end
 
   it 'has ==' do
-    expect(::SolrDocument.find('dq287tq6352')).to eq ::SolrDocument.find('dq287tq6352')
+    expect(described_class.find('dq287tq6352')).to eq described_class.find('dq287tq6352')
   end
 
   describe 'GlobalID' do
     let(:doc_id) { 'dq287tq6352' }
     it 'responds to #to_global_id' do
-      expect(::SolrDocument.find(doc_id).to_global_id.to_s).to eq "gid://internal/SolrDocument/#{doc_id}"
+      expect(described_class.find(doc_id).to_global_id.to_s).to eq "gid://internal/SolrDocument/#{doc_id}"
     end
     it 'is able to locate SolrDocuments by their GlobalID' do
       expect(GlobalID::Locator.locate(
-        ::SolrDocument.find(doc_id).to_global_id
+        described_class.find(doc_id).to_global_id
       )['id']).to eq doc_id
     end
   end

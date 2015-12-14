@@ -18,7 +18,7 @@ module Spotlight
                                             query: {
                                               private: {
                                                 label: I18n.t(:'spotlight.catalog.facets.exhibit_visibility.private'),
-                                                fq: "#{Spotlight::SolrDocument.visibility_field(current_exhibit)}:false" }
+                                                fq: "#{blacklight_config.document_model.visibility_field(current_exhibit)}:false" }
                                             }
         end
       end

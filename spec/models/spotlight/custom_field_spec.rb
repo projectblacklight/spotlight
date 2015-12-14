@@ -73,15 +73,14 @@ describe Spotlight::CustomField, type: :model do
 
   describe '#solr_field' do
     let(:exhibit) { FactoryGirl.create(:exhibit) }
-
-    before do
-      subject.configuration['label'] = 'xyz'
-      subject.exhibit = exhibit
-      subject.save
+    let(:custom_field) do
+      described_class.create(exhibit: exhibit, configuration: { 'label' => 'xyz' })
     end
 
+    subject { custom_field.solr_field(SolrDocument) }
+
     it 'is auto-generated from the field label' do
-      expect(subject.solr_field).to eq "exhibit_#{exhibit.to_param}_xyz_tesim"
+      expect(subject).to eq "exhibit_#{exhibit.to_param}_xyz_tesim"
     end
 
     context 'with a solr field prefix configured' do
@@ -90,17 +89,17 @@ describe Spotlight::CustomField, type: :model do
       end
 
       it 'uses the solr field prefix' do
-        expect(subject.solr_field).to eq "prefix_exhibit_#{exhibit.to_param}_xyz_tesim"
+        expect(subject).to eq "prefix_exhibit_#{exhibit.to_param}_xyz_tesim"
       end
     end
 
     context 'for a legacy solr field name' do
       before do
-        subject.field = "exhibit_#{exhibit.to_param}_xyz_tesim"
+        custom_field.field = "exhibit_#{exhibit.to_param}_xyz_tesim"
       end
 
       it 'returns the original field name' do
-        expect(subject.solr_field).to eq "exhibit_#{exhibit.to_param}_xyz_tesim"
+        expect(subject).to eq "exhibit_#{exhibit.to_param}_xyz_tesim"
       end
     end
   end

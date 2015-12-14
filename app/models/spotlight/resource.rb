@@ -102,7 +102,7 @@ module Spotlight
       def spotlight_resource_metadata_for_solr
         {
           Spotlight::Engine.config.resource_global_id_field => (to_global_id.to_s if persisted?),
-          Spotlight::SolrDocument.resource_type_field => self.class.to_s.tableize
+          document_model.resource_type_field => self.class.to_s.tableize
         }
       end
 
