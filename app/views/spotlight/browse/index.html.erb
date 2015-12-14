@@ -1,6 +1,8 @@
 <% set_html_page_title %>
-<h1 class="sr-only"><%= t :'.header' %></h1>
+<div class="col-md-12">
+  <h1 class="sr-only"><%= t :'.header' %></h1>
 
-<div class="browse-landing">
-  <%= render collection: @searches, partial: 'spotlight/browse/search' %>
+  <div class="browse-landing">
+    <%= render collection: @searches, partial: 'spotlight/browse/search' %>
+  </div>
 </div>

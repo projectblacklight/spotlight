@@ -1,5 +1,5 @@
 <% set_html_page_title @search.title %>
-<div>
+<div class="col-md-12">
   <%= exhibit_edit_link @search, class: 'edit-button pull-right btn btn-primary' if can? :edit, @search %>
   <% if exhibit_masthead? %>
     <%= render 'search_title', search: @search %>
@@ -15,7 +15,7 @@
   <% end %>
 </div>
 
-<div>
+<div class="col-md-12">
   <%= render 'sort_and_per_page' %>
   <%= render_document_index(@document_list) %>
   <%= render 'results_pagination' %>
