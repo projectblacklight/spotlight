@@ -36,7 +36,7 @@ module Spotlight
     protected
 
     def visibility_field
-      Spotlight::SolrDocument.visibility_field(exhibit)
+      blacklight_config.document_model.visibility_field(exhibit)
     end
 
     def blacklight_config

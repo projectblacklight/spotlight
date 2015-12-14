@@ -23,7 +23,7 @@ module Spotlight
           return unless current_exhibit
           return if scope.respond_to?(:can?) && scope.can?(:curate, current_exhibit) && !blacklight_params[:public]
 
-          solr_params.append_filter_query "-#{Spotlight::SolrDocument.visibility_field(current_exhibit)}:false"
+          solr_params.append_filter_query "-#{blacklight_config.document_model.visibility_field(current_exhibit)}:false"
         end
 
         def apply_exhibit_resources_filter(solr_params)

@@ -81,7 +81,7 @@ module Spotlight
     end
 
     def solr_field_prefix
-      Spotlight::SolrDocument.solr_field_prefix(exhibit)
+      document_model.solr_field_prefix(exhibit)
     end
 
     def field_suffix
@@ -129,6 +129,10 @@ module Spotlight
       end
 
       Spotlight::RenameSidecarFieldJob.perform_later(exhibit, old_field, self.field)
+    end
+
+    def document_model
+      blacklight_configuration.document_model
     end
   end
 end

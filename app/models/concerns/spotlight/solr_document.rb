@@ -34,6 +34,22 @@ module Spotlight
       def reindex_all
         find_each(&:reindex)
       end
+
+      def solr_field_for_tagger(tagger)
+        :"#{solr_field_prefix(tagger)}tags#{Spotlight::Engine.config.solr_fields.string_suffix}"
+      end
+
+      def visibility_field(exhibit)
+        :"#{solr_field_prefix(exhibit)}public#{Spotlight::Engine.config.solr_fields.boolean_suffix}"
+      end
+
+      def resource_type_field
+        :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_resource_type#{Spotlight::Engine.config.solr_fields.string_suffix}"
+      end
+
+      def solr_field_prefix(exhibit)
+        "#{Spotlight::Engine.config.solr_fields.prefix}#{exhibit.class.model_name.param_key}_#{exhibit.to_param}_"
+      end
     end
 
     def update(current_exhibit, new_attributes)
@@ -68,22 +84,6 @@ module Spotlight
       { self.class.unique_key.to_sym => id }.reverse_merge(sidecars.inject({}) { |a, e| a.merge(e.to_solr) }).merge(tags_to_solr)
     end
 
-    def self.solr_field_for_tagger(tagger)
-      :"#{solr_field_prefix(tagger)}tags#{Spotlight::Engine.config.solr_fields.string_suffix}"
-    end
-
-    def self.visibility_field(exhibit)
-      :"#{solr_field_prefix(exhibit)}public#{Spotlight::Engine.config.solr_fields.boolean_suffix}"
-    end
-
-    def self.resource_type_field
-      :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_resource_type#{Spotlight::Engine.config.solr_fields.string_suffix}"
-    end
-
-    def self.solr_field_prefix(exhibit)
-      "#{Spotlight::Engine.config.solr_fields.prefix}#{exhibit.class.model_name.param_key}_#{exhibit.to_param}_"
-    end
-
     def make_public!(exhibit)
       sidecar(exhibit).public!
     end
@@ -101,8 +101,8 @@ module Spotlight
     end
 
     def uploaded_resource?
-      self[Spotlight::SolrDocument.resource_type_field].present? &&
-        self[Spotlight::SolrDocument.resource_type_field].include?('spotlight/resources/uploads')
+      self[self.class.resource_type_field].present? &&
+        self[self.class.resource_type_field].include?('spotlight/resources/uploads')
     end
 
     def attribute_present?(*_args)
@@ -117,11 +117,11 @@ module Spotlight
       # Adding a placeholder entry in case the last tag for an exhibit
       # is removed, so we clear out the solr field too.
       Spotlight::Exhibit.find_each do |exhibit|
-        h[Spotlight::SolrDocument.solr_field_for_tagger(exhibit)] = nil
+        h[self.class.solr_field_for_tagger(exhibit)] = nil
       end
 
       taggings.includes(:tag, :tagger).map do |tagging|
-        key = Spotlight::SolrDocument.solr_field_for_tagger(tagging.tagger)
+        key = self.class.solr_field_for_tagger(tagging.tagger)
         h[key] ||= []
         h[key] << tagging.tag.name
       end

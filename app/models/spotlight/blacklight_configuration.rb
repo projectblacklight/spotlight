@@ -19,6 +19,8 @@ module Spotlight
     include Spotlight::BlacklightConfigurationDefaults
     include Spotlight::ImageDerivatives
 
+    delegate :document_model, to: :default_blacklight_config
+
     # get rid of empty values
     before_validation do |model|
       model.index_fields.each do |_k, v|
@@ -190,14 +192,18 @@ module Spotlight
 
     def custom_index_fields
       Hash[exhibit.custom_fields.map do |x|
-        field = Blacklight::Configuration::IndexField.new x.configuration.merge(key: x.field, field: x.solr_field)
+        field = Blacklight::Configuration::IndexField.new x.configuration.merge(
+          key: x.field, field: x.solr_field
+        )
         [x.field, field]
       end]
     end
 
     def custom_facet_fields
       Hash[exhibit.custom_fields.vocab.map do |x|
-        field = Blacklight::Configuration::FacetField.new x.configuration.merge(key: x.field, field: x.solr_field, show: false)
+        field = Blacklight::Configuration::FacetField.new x.configuration.merge(
+          key: x.field, field: x.solr_field, show: false
+        )
         [x.field, field]
       end]
     end
@@ -252,11 +258,11 @@ module Spotlight
     def add_exhibit_tags_fields(config)
       # rubocop:disable Style/GuardClause
       unless config.show_fields.include? :exhibit_tags
-        config.add_show_field :exhibit_tags, field: Spotlight::SolrDocument.solr_field_for_tagger(exhibit), link_to_search: true
+        config.add_show_field :exhibit_tags, field: config.document_model.solr_field_for_tagger(exhibit), link_to_search: true
       end
 
       unless config.facet_fields.include? :exhibit_tags
-        config.add_facet_field :exhibit_tags, field: Spotlight::SolrDocument.solr_field_for_tagger(exhibit)
+        config.add_facet_field :exhibit_tags, field: config.document_model.solr_field_for_tagger(exhibit)
       end
       # rubocop:enable Style/GuardClause
     end
