@@ -9,7 +9,7 @@ describe Spotlight::AboutPagesController, type: :controller do
   describe 'when not logged in' do
     describe 'POST update_all' do
       let(:exhibit) { FactoryGirl.create(:exhibit) }
-      it 'does not be allowed' do
+      it 'is not allowed' do
         post :update_all, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end

@@ -6,9 +6,11 @@ describe Spotlight::RolesController, type: :controller do
 
   describe 'when user does not have access' do
     before { sign_in FactoryGirl.create(:exhibit_visitor) }
-    it 'does not allow index' do
-      get :index, exhibit_id: exhibit
-      expect(response).to redirect_to main_app.root_path
+    describe 'GET index' do
+      it 'denies access' do
+        get :index, exhibit_id: exhibit
+        expect(response).to redirect_to main_app.root_path
+      end
     end
   end
 

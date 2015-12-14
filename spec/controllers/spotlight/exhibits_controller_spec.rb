@@ -13,51 +13,53 @@ describe Spotlight::ExhibitsController, type: :controller do
       sign_in FactoryGirl.create(:exhibit_visitor)
     end
 
-    it 'denies access' do
-      get :edit, id: exhibit
-      expect(response).to redirect_to main_app.root_path
-      expect(flash[:alert]).to be_present
+    describe 'GET edit' do
+      it 'denies access' do
+        get :edit, id: exhibit
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to be_present
+      end
     end
   end
 
   describe 'when not logged in' do
-    describe '#index' do
+    describe 'GET index' do
       it 'is allowed' do
         get :index
         expect(response).to be_success
       end
     end
 
-    describe '#new' do
-      it 'does not be allowed' do
+    describe 'GET new' do
+      it 'is not allowed' do
         get :new, id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
-    describe '#edit' do
-      it 'does not be allowed' do
+    describe 'GET edit' do
+      it 'is not allowed' do
         get :edit, id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
-    describe '#update' do
-      it 'does not be allowed' do
+    describe 'PATCH update' do
+      it 'is not allowed' do
         patch :update, id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
-    describe '#process_import' do
-      it 'does not be allowed' do
+    describe 'PATCH process_import' do
+      it 'is not allowed' do
         patch :process_import, id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
-    describe '#destroy' do
-      it 'does not be allowed' do
+    describe 'DELETE destroy' do
+      it 'is not allowed' do
         delete :destroy, id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end
@@ -68,14 +70,14 @@ describe Spotlight::ExhibitsController, type: :controller do
     let(:user) { FactoryGirl.create(:site_admin) }
     before { sign_in user }
 
-    describe '#new' do
+    describe 'GET new' do
       it 'is successful' do
         get :new
         expect(response).to be_successful
       end
     end
 
-    describe '#create' do
+    describe 'POST create' do
       before do
         # decouple this test from needing solr running
         allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
@@ -101,14 +103,14 @@ describe Spotlight::ExhibitsController, type: :controller do
     let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
     before { sign_in user }
 
-    describe '#new' do
-      it 'does not be allowed' do
+    describe 'GET new' do
+      it 'is not allowed' do
         get :new
         expect(response).to_not be_successful
       end
     end
 
-    describe '#process_import' do
+    describe 'PATCH process_import' do
       it 'is successful' do
         expect_any_instance_of(Spotlight::Exhibit).to receive(:reindex_later).and_return(true)
         f = Tempfile.new('foo')
@@ -129,7 +131,7 @@ describe Spotlight::ExhibitsController, type: :controller do
       end
     end
 
-    describe '#edit' do
+    describe 'GET edit' do
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))

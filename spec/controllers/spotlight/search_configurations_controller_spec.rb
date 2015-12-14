@@ -8,22 +8,24 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
       sign_in FactoryGirl.create(:exhibit_visitor)
     end
 
-    it 'denies access' do
-      get :edit, exhibit_id: exhibit
-      expect(response).to redirect_to main_app.root_path
-      expect(flash[:alert]).to be_present
+    describe 'GET edit' do
+      it 'denies access' do
+        get :edit, exhibit_id: exhibit
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to be_present
+      end
     end
   end
 
   describe 'when not logged in' do
-    describe '#update' do
+    describe 'PATCH update' do
       it 'denies access' do
         patch :update, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
-    describe '#edit' do
+    describe 'GET edit' do
       it 'denies access' do
         get :edit, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
@@ -35,7 +37,7 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
     let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
     before { sign_in user }
 
-    describe '#edit' do
+    describe 'GET edit' do
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
@@ -52,7 +54,7 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
       end
     end
 
-    describe '#update' do
+    describe 'PATCH update' do
       it 'updates facet fields' do
         patch :update, exhibit_id: exhibit, blacklight_configuration: {
           facet_fields: { 'genre_ssim' => { enabled: '1', label: 'Label' } }

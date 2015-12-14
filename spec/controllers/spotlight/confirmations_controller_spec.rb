@@ -7,12 +7,15 @@ describe Spotlight::ConfirmationsController, type: :controller do
     @request.env['devise.mapping'] = Devise.mappings[:contact_email]
     # rubocop:enable RSpec/InstanceVariable
   end
-  it 'has new' do
-    get :new
-    expect(response).to be_successful
+
+  describe 'GET new' do
+    it 'exists' do
+      get :new
+      expect(response).to be_successful
+    end
   end
 
-  describe '#show' do
+  describe 'GET show' do
     let(:exhibit) { FactoryGirl.create(:exhibit) }
     let(:contact_email) { Spotlight::ContactEmail.create!(email: 'justin@example.com', exhibit: exhibit) }
     let(:raw_token) { contact_email.instance_variable_get(:@raw_confirmation_token) }

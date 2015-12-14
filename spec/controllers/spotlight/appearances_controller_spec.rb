@@ -8,16 +8,18 @@ describe Spotlight::AppearancesController, type: :controller do
       sign_in FactoryGirl.create(:exhibit_visitor)
     end
 
-    it 'denies access' do
-      get :edit, exhibit_id: exhibit
-      expect(response).to redirect_to main_app.root_path
-      expect(flash[:alert]).to be_present
+    describe 'GET edit' do
+      it 'denies access' do
+        get :edit, exhibit_id: exhibit
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to be_present
+      end
     end
   end
 
   describe 'when not logged in' do
-    describe '#update' do
-      it 'does not be allowed' do
+    describe 'PATCH update' do
+      it 'is not allowed' do
         patch :update, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end
@@ -28,7 +30,7 @@ describe Spotlight::AppearancesController, type: :controller do
     let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
     before { sign_in user }
 
-    describe '#edit' do
+    describe 'GET edit' do
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
@@ -39,7 +41,7 @@ describe Spotlight::AppearancesController, type: :controller do
       end
     end
 
-    describe '#update' do
+    describe 'PATCH update' do
       it 'updates the navigation' do
         first_nav = exhibit.main_navigations.first
         last_nav = exhibit.main_navigations.last

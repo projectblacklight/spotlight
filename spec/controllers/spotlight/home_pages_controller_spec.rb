@@ -47,7 +47,7 @@ describe Spotlight::HomePagesController, type: :controller do
     end
   end
 
-  describe 'Rendering home page' do
+  describe 'GET show' do
     it 'gets search results for display facets' do
       allow(controller).to receive_messages(search_results: [double, double])
       get :show, exhibit_id: exhibit
@@ -69,33 +69,32 @@ describe Spotlight::HomePagesController, type: :controller do
       expect(assigns).not_to have_key :response
       expect(assigns).not_to have_key :document_list
     end
-  end
 
-  describe 'when the exhibit is not published' do
-    before do
-      exhibit.published = false
-      exhibit.save!
-    end
+    context 'when the exhibit is not published' do
+      before do
+        exhibit.update(published: false)
+      end
 
-    it 'redirects an anonymous user to the signin path' do
-      get :show, exhibit_id: exhibit
-      expect(response).to redirect_to(main_app.new_user_session_path)
-    end
-
-    it 'redirects an unauthorized user to the signin path' do
-      user = FactoryGirl.create(:exhibit_curator)
-      sign_in user
-      expect do
+      it 'redirects an anonymous user to the signin path' do
         get :show, exhibit_id: exhibit
-      end.to raise_error ActionController::RoutingError
-    end
+        expect(response).to redirect_to(main_app.new_user_session_path)
+      end
 
-    it 'redirects an authorized user to the signin path' do
-      user = FactoryGirl.create(:exhibit_curator)
-      FactoryGirl.create(:role, exhibit: exhibit, user: user)
-      sign_in user
-      get :show, exhibit_id: exhibit
-      expect(response).to be_successful
+      it 'redirects an unauthorized user to the signin path' do
+        user = FactoryGirl.create(:exhibit_curator)
+        sign_in user
+        expect do
+          get :show, exhibit_id: exhibit
+        end.to raise_error ActionController::RoutingError
+      end
+
+      it 'redirects an authorized user to the signin path' do
+        user = FactoryGirl.create(:exhibit_curator)
+        FactoryGirl.create(:role, exhibit: exhibit, user: user)
+        sign_in user
+        get :show, exhibit_id: exhibit
+        expect(response).to be_successful
+      end
     end
   end
 end

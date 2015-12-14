@@ -6,7 +6,7 @@ describe Spotlight::Resources::UploadController, type: :controller do
 
   describe 'when not logged in' do
     describe 'POST create' do
-      it 'does not be allowed' do
+      it 'is not allowed' do
         post :create, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end

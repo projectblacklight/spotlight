@@ -13,16 +13,20 @@ describe Spotlight::SearchesController, type: :controller do
       sign_in FactoryGirl.create(:exhibit_visitor)
     end
 
-    it 'raises an error' do
-      post :create, exhibit_id: exhibit
-      expect(response).to redirect_to main_app.root_path
-      expect(flash[:alert]).to be_present
+    describe 'POST create' do
+      it 'denies access' do
+        post :create, exhibit_id: exhibit
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to be_present
+      end
     end
 
-    it 'raises an error' do
-      get :index, exhibit_id: exhibit
-      expect(response).to redirect_to main_app.root_path
-      expect(flash[:alert]).to be_present
+    describe 'GET index' do
+      it 'denies access' do
+        get :index, exhibit_id: exhibit
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to be_present
+      end
     end
   end
 
