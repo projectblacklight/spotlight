@@ -233,4 +233,10 @@ describe Spotlight::Exhibit, type: :model do
       end
     end
   end
+
+  describe '#reindex_progress' do
+    it 'returns a Spotlight::ReindexProgress' do
+      expect(subject.reindex_progress).to be_a Spotlight::ReindexProgress
+    end
+  end
 end

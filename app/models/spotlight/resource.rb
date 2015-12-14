@@ -18,8 +18,11 @@ module Spotlight
       :last_index_elapsed_time,
       :last_indexed_finished], coder: JSON
 
+    enum index_status: [:waiting, :completed, :errored]
+
     around_index :reindex_with_logging
     after_index :commit
+    after_index :completed!
 
     def becomes_provider
       klass = Spotlight::ResourceProvider.for_resource(self)
@@ -46,6 +49,7 @@ module Spotlight
     ##
     # Enqueue an asynchronous reindexing job for this resource
     def reindex_later
+      waiting!
       Spotlight::ReindexJob.perform_later(self)
     end
 

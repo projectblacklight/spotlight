@@ -1,16 +1,19 @@
 <% if can? :manage, Spotlight::Resource.new(exhibit: current_exhibit) %>
-<div class="add-items-nav clearfix">
-  <div class="pull-left">
-    <%= link_to t('.reindex'), reindex_all_exhibit_resources_path(current_exhibit), method: :post, class: 'btn btn-default' %>
+  <div data-behavior='reindex-monitor' data-monitor-url="<%= monitor_exhibit_resources_path(current_exhibit) %>">
+    <%= render 'reindex_progress_panel' %>
   </div>
-  <div class="pull-right">
-    <% if Spotlight::Engine.config.new_resource_partials.any? %>
-      <%= link_to t('.new.repo_item'), new_exhibit_catalog_path(current_exhibit), class: 'btn btn-default' %>
-    <% end %>
-    
-    <% if Spotlight::Engine.config.uploaded_resource_partials.any? %>
-      <%= link_to t('.new.non_repo_item'), new_exhibit_resources_upload_path(current_exhibit), class: 'btn btn-default' %>
-    <% end %>
+  <div class="add-items-nav clearfix">
+    <div class="pull-left">
+      <%= link_to t('.reindex'), reindex_all_exhibit_resources_path(current_exhibit), method: :post, class: 'btn btn-default' %>
+    </div>
+    <div class="pull-right">
+      <% if Spotlight::Engine.config.new_resource_partials.any? %>
+        <%= link_to t('.new.repo_item'), new_exhibit_catalog_path(current_exhibit), class: 'btn btn-default' %>
+      <% end %>
+
+      <% if Spotlight::Engine.config.uploaded_resource_partials.any? %>
+        <%= link_to t('.new.non_repo_item'), new_exhibit_resources_upload_path(current_exhibit), class: 'btn btn-default' %>
+      <% end %>
+    </div>
   </div>
-</div>
 <% end %>

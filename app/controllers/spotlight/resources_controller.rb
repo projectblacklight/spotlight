@@ -39,6 +39,10 @@ module Spotlight
     end
     # rubocop:enable Metrics/MethodLength
 
+    def monitor
+      render json: current_exhibit.reindex_progress
+    end
+
     def reindex_all
       @exhibit.reindex_later
 
