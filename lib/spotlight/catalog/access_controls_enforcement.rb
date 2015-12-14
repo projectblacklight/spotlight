@@ -18,6 +18,7 @@ module Spotlight
           self.default_processor_chain += [:apply_permissive_visibility_filter, :apply_exhibit_resources_filter]
         end
 
+        # Adds a filter that excludes resources that have been marked as not-visible
         def apply_permissive_visibility_filter(solr_params)
           return unless current_exhibit
           return if scope.respond_to?(:can?) && scope.can?(:curate, current_exhibit) && !blacklight_params[:public]
