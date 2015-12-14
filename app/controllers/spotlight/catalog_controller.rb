@@ -136,9 +136,9 @@ module Spotlight
     # Override Blacklight's #setup_next_and_previous_documents to handle
     # browse categories too
     def setup_next_and_previous_documents
-      if current_browse_category
-        setup_next_and_previous_documents_from_browse_category
-      elsif current_page_context
+      if current_search_session_from_browse_category?
+        setup_next_and_previous_documents_from_browse_category if current_browse_category
+      elsif current_search_session_from_page? || current_search_session_from_home_page?
         # TODO: figure out how to construct previous/next documents
       else
         super
@@ -147,10 +147,13 @@ module Spotlight
 
     def setup_next_and_previous_documents_from_browse_category
       index = search_session['counter'].to_i - 1
-      response, documents = get_previous_and_next_documents_for_search index, current_browse_category.query_params.with_indifferent_access
+      response, _docs = get_previous_and_next_documents_for_search index, current_browse_category.query_params.with_indifferent_access
+
+      return unless response
+
       search_session['total'] = response.total
-      @previous_document = documents.first
-      @next_document = documents.last
+      @previous_document = response.documents.first
+      @next_document = response.documents.last
     end
 
     def _prefixes
@@ -206,7 +209,7 @@ module Spotlight
       elsif current_page_context && current_page_context.title.present? && !current_page_context.is_a?(Spotlight::HomePage)
         add_breadcrumb current_page_context.title, [current_page_context.exhibit, current_page_context]
       elsif current_search_session
-        add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), search_action_url(current_search_session[:query_params])
+        add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), search_action_url(current_search_session.query_params)
       end
 
       add_breadcrumb Array(document[blacklight_config.view_config(:show).title_field]).join(', '), exhibit_catalog_path(current_exhibit, document)
