@@ -6,21 +6,21 @@ describe Spotlight::ResourcesController, type: :controller do
 
   describe 'when not logged in' do
     describe 'GET new' do
-      it 'does not be allowed' do
+      it 'is not allowed' do
         get :new, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe 'POST create' do
-      it 'does not be allowed' do
+      it 'is not allowed' do
         post :create, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe 'POST reindex_all' do
-      it 'does not be allowed' do
+      it 'is not allowed' do
         post :reindex_all, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end

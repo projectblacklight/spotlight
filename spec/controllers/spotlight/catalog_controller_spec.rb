@@ -17,7 +17,7 @@ describe Spotlight::CatalogController, type: :controller do
     end
 
     describe 'GET edit' do
-      it 'does not be allowed' do
+      it 'is not allowed' do
         get :edit, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to redirect_to main_app.new_user_session_path
       end
@@ -135,7 +135,7 @@ describe Spotlight::CatalogController, type: :controller do
     end
 
     describe 'GET edit' do
-      it 'does not be allowed' do
+      it 'is not allowed' do
         get :edit, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to eq 'You are not authorized to access this page.'
@@ -143,7 +143,7 @@ describe Spotlight::CatalogController, type: :controller do
     end
 
     describe 'GET show with private item' do
-      it 'does not be allowed' do
+      it 'is not allowed' do
         allow_any_instance_of(::SolrDocument).to receive(:private?).and_return(true)
         get :show, exhibit_id: exhibit, id: 'dq287tq6352'
         expect(response).to redirect_to main_app.root_path
@@ -152,7 +152,7 @@ describe Spotlight::CatalogController, type: :controller do
     end
 
     describe 'PUT make_public' do
-      it 'does not be allowed' do
+      it 'is not allowed' do
         put :make_public, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to eq 'You are not authorized to access this page.'
@@ -160,7 +160,7 @@ describe Spotlight::CatalogController, type: :controller do
     end
 
     describe 'DELETE make_private' do
-      it 'does not be allowed' do
+      it 'is not allowed' do
         delete :make_private, exhibit_id: exhibit, catalog_id: 'dq287tq6352'
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to eq 'You are not authorized to access this page.'
@@ -249,7 +249,7 @@ describe Spotlight::CatalogController, type: :controller do
   describe 'when the user is a site admin' do
     before { sign_in FactoryGirl.create(:site_admin, exhibit: exhibit) }
 
-    describe 'show' do
+    describe 'GET show' do
       it 'has a solr_json serialization' do
         get :show, exhibit_id: exhibit, id: 'dq287tq6352', format: :solr_json
         expect(response).to be_successful

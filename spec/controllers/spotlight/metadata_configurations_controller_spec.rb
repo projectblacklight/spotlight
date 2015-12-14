@@ -8,28 +8,32 @@ describe Spotlight::MetadataConfigurationsController, type: :controller do
       sign_in FactoryGirl.create(:exhibit_visitor)
     end
 
-    it 'denies access' do
-      get :show, exhibit_id: exhibit
-      expect(response).to redirect_to main_app.root_path
-      expect(flash[:alert]).to be_present
+    describe 'GET show' do
+      it 'denies access' do
+        get :show, exhibit_id: exhibit
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to be_present
+      end
     end
 
-    it 'denies access' do
-      get :edit, exhibit_id: exhibit
-      expect(response).to redirect_to main_app.root_path
-      expect(flash[:alert]).to be_present
+    describe 'GET edit' do
+      it 'denies access' do
+        get :edit, exhibit_id: exhibit
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to be_present
+      end
     end
   end
 
   describe 'when not logged in' do
-    describe '#update' do
+    describe 'PATCH update' do
       it 'denies access' do
         patch :update, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
-    describe '#edit' do
+    describe 'GET edit' do
       it 'denies access' do
         get :edit, exhibit_id: exhibit
         expect(response).to redirect_to main_app.new_user_session_path
@@ -41,7 +45,7 @@ describe Spotlight::MetadataConfigurationsController, type: :controller do
     let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
     before { sign_in user }
 
-    describe '#edit' do
+    describe 'GET edit' do
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
@@ -51,7 +55,7 @@ describe Spotlight::MetadataConfigurationsController, type: :controller do
       end
     end
 
-    describe '#show' do
+    describe 'GET show' do
       it 'is successful' do
         get :show, exhibit_id: exhibit, format: 'json'
         expect(response).to be_successful
@@ -59,7 +63,7 @@ describe Spotlight::MetadataConfigurationsController, type: :controller do
       end
     end
 
-    describe '#update' do
+    describe 'PATCH update' do
       it 'updates metadata fields' do
         blacklight_config = Blacklight::Configuration.new
         blacklight_config.add_index_field %w(a b c d e f)

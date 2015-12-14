@@ -15,7 +15,7 @@ describe Spotlight::ContactFormsController, type: :controller do
       end
     end
   end
-  describe '#create' do
+  describe 'POST create' do
     it 'redirects back' do
       post :create, exhibit_id: exhibit.id, contact_form: { name: 'Joe Doe', email: 'jdoe@example.com' }
       expect(response).to redirect_to :back

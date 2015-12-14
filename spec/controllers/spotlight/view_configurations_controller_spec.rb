@@ -8,10 +8,12 @@ describe Spotlight::ViewConfigurationsController, type: :controller do
       sign_in FactoryGirl.create(:exhibit_visitor)
     end
 
-    it 'denies access' do
-      get :show, exhibit_id: exhibit
-      expect(response).to redirect_to main_app.root_path
-      expect(flash[:alert]).to be_present
+    describe 'GET show' do
+      it 'denies access' do
+        get :show, exhibit_id: exhibit
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to be_present
+      end
     end
   end
 
@@ -19,7 +21,7 @@ describe Spotlight::ViewConfigurationsController, type: :controller do
     let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
     before { sign_in user }
 
-    describe '#show' do
+    describe 'GET show' do
       it 'is successful' do
         get :show, exhibit_id: exhibit, format: 'json'
         expect(response).to be_successful
