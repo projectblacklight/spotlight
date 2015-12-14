@@ -8,7 +8,7 @@ describe 'shared/_exhibit_navbar', type: :view do
   let(:unpublished_about_page) { FactoryGirl.create(:about_page, published: false, exhibit: current_exhibit) }
 
   before :each do
-    allow(view).to receive_messages(exhibit_masthead?: true)
+    allow(view).to receive_messages(resource_masthead?: false)
     allow(view).to receive_messages(current_exhibit: current_exhibit)
     allow(view).to receive_messages(on_browse_page?: false, on_about_page?: false)
     allow(view).to receive_messages(render_search_bar: 'Search Bar')
@@ -16,7 +16,7 @@ describe 'shared/_exhibit_navbar', type: :view do
   end
 
   it 'links to the exhibit home page (as branding) when there is a current search masthead' do
-    allow(view).to receive_messages(exhibit_masthead?: false)
+    allow(view).to receive_messages(resource_masthead?: true)
     render
     expect(response).to have_selector('a.navbar-brand', text: current_exhibit.title)
   end
@@ -112,14 +112,8 @@ describe 'shared/_exhibit_navbar', type: :view do
     expect(response).to have_content 'Search Bar'
   end
 
-  it 'does not include the search bar when the exhibit is searchable' do
+  it 'does not include the search bar when the exhibit is not searchable' do
     expect(current_exhibit).to receive(:searchable?).and_return(false)
-    render
-    expect(response).to_not have_content 'Search Bar'
-  end
-
-  it 'does not include the search bar when there is a current search masthead' do
-    allow(view).to receive_messages(exhibit_masthead?: false)
     render
     expect(response).to_not have_content 'Search Bar'
   end

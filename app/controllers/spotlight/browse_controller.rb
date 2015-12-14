@@ -11,7 +11,7 @@ module Spotlight
     before_action :attach_breadcrumbs
     record_search_parameters only: :show
 
-    before_action :set_masthead, only: :show
+    helper_method :should_render_spotlight_search_bar?
 
     def index
       @searches = @exhibit.searches.published
@@ -47,8 +47,20 @@ module Spotlight
       @_prefixes ||= super + ['catalog']
     end
 
-    def set_masthead
-      self.current_masthead = @search.masthead if @search.masthead && @search.masthead.display?
+    def current_masthead
+      if resource_masthead?
+        @search.masthead
+      else
+        super
+      end
+    end
+
+    def resource_masthead?
+      @search && @search.masthead && @search.masthead.display?
+    end
+
+    def should_render_spotlight_search_bar?
+      !resource_masthead?
     end
   end
 end

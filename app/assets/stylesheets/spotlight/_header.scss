@@ -1,6 +1,3 @@
-$masthead-height: 130px;
-$masthead-image-blur: 1px;
-
 @mixin masthead-background-containers() {
   position: absolute;
   left: 0;
@@ -31,24 +28,39 @@ $masthead-image-blur: 1px;
   }
 }
 
-#site-masthead,
-#exhibit-masthead,
-#exhibit-navbar {
-  z-index: 1;
+.navbar-static-top {
+  margin-bottom: 0;
 }
 
-#exhibit-navbar {
-  z-index: 100;
+.masthead {
+  background-color: $masthead-bg;
+  border-bottom: 1px solid $navbar-default-border;
+  margin-bottom: $padding-large-vertical * 2.5;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  // allow dropdowns in the top nav to stack above the masthead
+  z-index: $zindex-navbar - 1;
 
-  &.page-masthead {
-    @include transparent-masthead-navigation-menu();
-    background-color: $navbar-transparent-page-bg;
-    border-bottom: 1px solid $navbar-transparent-border;
-    margin-bottom: 0;
-    margin-top: 0;
 
-    .navbar-nav {
-      float: right;
+  .site-title {
+    padding-bottom: $padding-base-vertical;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  small {
+    @extend .hidden-xs;
+
+    display: block;
+    margin-top: $padding-base-vertical;
+    padding-bottom: $padding-base-vertical;
+    padding-top: $padding-base-vertical;
+  }
+
+  .navbar {
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 
@@ -57,53 +69,46 @@ $masthead-image-blur: 1px;
   }
 }
 
-#exhibit-masthead.with-image + #exhibit-navbar.navbar-default {
-  @include transparent-masthead-navigation-menu();
-  background-color: $navbar-transparent-bg;
-  border-top: 1px solid $navbar-transparent-border;
-}
-
-.navbar + .navbar {
-  margin-top: 0;
-}
-
-#header-navbar {
-  margin-bottom: 0;
-}
-
-#site-masthead,
-#exhibit-masthead {
-  height: $masthead-height;
-  padding: 0;
-  position: static;
-
+.resource-masthead {
   .site-title {
-    font-size: 30px;
+    @extend .text-center;
+  }
+
+  .navbar {
+    border-bottom: 1px solid $navbar-transparent-border;
+    border-top: 0;
+    margin-bottom: 0;
+  }
+
+  .navbar-nav {
+    float: right;
+  }
+
+  .search-query-form {
+    display: none;
+  }
+}
+
+.site-title-container {
+  max-height: $masthead-height - $navbar-height;
+  
+  padding-bottom: $padding-large-vertical;
+  padding-top: $padding-large-vertical;
+}
+
+.image-masthead {
+  .navbar {
+    @include transparent-masthead-navigation-menu();
+    background-color: $navbar-transparent-page-bg;
+  }
+
+  .h1 {
+    color: $white;
+    text-shadow: 1px 1px 0 $black;
   }
 
   small {
-    display: block;
-    padding-top: $padding-base-vertical;
-    @extend .hidden-xs;
-  }
-
-  &.with-image {
-    .site-title,
-    .search-title {
-      color: $white;
-      text-shadow: 1px 1px 0 $black;
-    }
-
-    small {
-      color: $white;
-    }
-  }
-
-  & > .container {
-    position: relative;
-    top: 33%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
+    color: $white;
   }
 
   // This is to add a background image to the masthead, in a way that
@@ -112,16 +117,21 @@ $masthead-image-blur: 1px;
     @include masthead-background-containers();
     background-repeat: no-repeat;
     background-size: cover;
+
+    // Add right border to image to hide lighter blurred edge
+    border-right: 1px solid $black;
+
     // Add small amount of blur to help text stand out
     //filter: url(masthead/blur.svg#blur); // for older versions of FF
     -webkit-filter: blur($masthead-image-blur);
     filter: blur($masthead-image-blur);
+
+    height: $masthead-height;
+
     // Shift image slightly to hide blurred edge of image
     margin-left: -$masthead-image-blur;
     margin-top: -$masthead-image-blur;
     overflow: hidden;
-    // Add right border to image to hide lighter blurred edge
-    border-right: 1px solid $black;
   }
 
   // Include gradient to improve text legibility,
@@ -134,53 +144,9 @@ $masthead-image-blur: 1px;
        rgba(0, 0, 0, 0.4),
        rgba(0, 0, 0, 0.5)
      );
+
+    height: $masthead-height;
   }
-}
-
-#site-masthead {
-  background-color: $masthead-bg;
-  margin-bottom: 2em;
-  border-bottom: 1px solid $navbar-default-border;
-}
-
-#exhibit-masthead {
-  height: $masthead-height + 50px;
-  margin-bottom: -50px;
-
-  &.with-page-masthead {
-    margin-bottom: $padding-base-vertical;
-    margin-top: -51px;
-
-    > .container {
-      top: 60%;
-    }
-
-    .navbar-brand {
-      font-size: $font-size-large;
-      text-shadow: 1px 1px 0 $black;
-    }
-
-    .search-title {
-      text-align: center;
-
-      small {
-        text-transform: uppercase;
-      }
-    }
-
-    .site-title {
-      margin-top: $padding-large-vertical * 3;
-    }
-  }
-
-}
-
-// Margin between bottom of masthead and start of page content.
-// Need to apply bottom margin to different element, depending on
-// whether it is a regular masthead or a browse category masthead
-#exhibit-masthead + #exhibit-navbar,
-#exhibit-navbar + #exhibit-masthead {
-  margin-bottom: $padding-large-vertical * 2.5;
 }
 
 .col-md-4 {

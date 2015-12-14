@@ -37,7 +37,7 @@ describe 'Add and update the site masthead', type: :feature do
   end
   it 'displays a masthead image when one is uploaded and configured' do
     visit spotlight.exhibit_dashboard_path(exhibit)
-    expect(page).to_not have_css('#exhibit-masthead.with-image')
+    expect(page).to_not have_css('.image-masthead')
     within '#sidebar' do
       click_link 'Appearance'
     end
@@ -54,11 +54,11 @@ describe 'Add and update the site masthead', type: :feature do
 
     expect(page).to have_content('The exhibit was successfully updated.')
 
-    expect(page).to have_css('#exhibit-masthead.with-image .background-container')
+    expect(page).to have_css('.image-masthead .background-container')
   end
   it 'does not display an uploaded masthead if configured to not display' do
     visit spotlight.exhibit_dashboard_path(exhibit)
-    expect(page).to_not have_css('#exhibit-masthead.with-image')
+    expect(page).to_not have_css('.image-masthead')
     within '#sidebar' do
       click_link 'Appearance'
     end
@@ -73,12 +73,12 @@ describe 'Add and update the site masthead', type: :feature do
 
     expect(page).to have_content('The exhibit was successfully updated.')
 
-    expect(page).to_not have_css('#exhibit-masthead.with-image .background-container')
+    expect(page).to_not have_css('.image-masthead .background-container')
   end
   it 'displays a masthead image when one is uploaded from an exhibit item', js: true do
     skip "Capyabara and jcrop don't play well together.."
     visit spotlight.exhibit_dashboard_path(exhibit)
-    expect(page).to_not have_css('#exhibit-masthead.with-image')
+    expect(page).to_not have_css('.image-masthead')
     within '#sidebar' do
       click_link 'Appearance'
     end
@@ -95,6 +95,6 @@ describe 'Add and update the site masthead', type: :feature do
 
     expect(page).to have_content('The appearance was successfully updated.')
 
-    expect(page).to have_css('#exhibit-masthead.with-image .background-container')
+    expect(page).to have_css('.image-masthead .background-container')
   end
 end
