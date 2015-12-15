@@ -74,7 +74,7 @@ module Spotlight
     end
 
     def solr_data
-      { :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_exhibit_slug_#{slug}#{Spotlight::Engine.config.solr_fields.boolean_suffix}" => true }
+      Spotlight::Engine.config.exhibit_filter.call(self)
     end
 
     def reindex_later
