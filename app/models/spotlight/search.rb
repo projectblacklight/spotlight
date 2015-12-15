@@ -82,7 +82,7 @@ module Spotlight
     end
 
     def repository
-      Blacklight.default_index
+      @repository ||= Blacklight::Solr::Repository.new(blacklight_config)
     end
 
     def default_search_fields
