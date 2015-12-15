@@ -99,4 +99,14 @@ describe Spotlight::Search, type: :model do
       end
     end
   end
+
+  describe '#repository' do
+    let(:search) { FactoryGirl.create(:search) }
+    before do
+      allow(search).to receive(:blacklight_config).and_return blacklight_config
+    end
+    it 'returns an exhibit specific config' do
+      expect(search.send(:repository).blacklight_config).to eql blacklight_config
+    end
+  end
 end
