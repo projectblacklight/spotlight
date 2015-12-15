@@ -1,9 +1,0 @@
-<%= render 'shared/exhibit_navbar' unless exhibit_masthead? %>
-<% if current_exhibit %>
-  <%= render 'spotlight/shared/report_a_problem' if show_contact_form? %>
-  <%= render 'shared/exhibit_masthead' %>
-<% end %>
-<% if exhibit_masthead? %>
-  <%= render 'shared/exhibit_navbar' %>
-  <%= render 'shared/breadcrumbs' %>
-<% end %>

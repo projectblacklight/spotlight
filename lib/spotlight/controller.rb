@@ -7,7 +7,11 @@ module Spotlight
     include Spotlight::Config
 
     included do
-      helper_method :current_exhibit, :current_masthead, :exhibit_masthead?
+      helper_method :current_site, :current_exhibit, :current_masthead, :exhibit_masthead?, :resource_masthead?
+    end
+
+    def current_site
+      @current_site ||= Spotlight::Site.instance
     end
 
     def current_exhibit
@@ -15,21 +19,28 @@ module Spotlight
     end
 
     def current_masthead
-      @masthead ||= begin
-        current_exhibit.masthead if current_exhibit && current_exhibit.masthead && current_exhibit.masthead.display?
-      end
+      @masthead ||= if resource_masthead?
+                      # TODO: is there a way to get this generically, instead of requiring controllers
+                      #  to override #current_masthead or set it explicitly?. In the meantime, `nil` is
+                      #  hopefully less confusing than a wrong value.
+                      nil
+                    elsif current_exhibit
+                      current_exhibit.masthead if exhibit_masthead?
+                    else
+                      current_site.masthead if current_site.masthead && current_site.masthead.display?
+                    end
     end
 
     def current_masthead=(masthead)
       @masthead = masthead
     end
 
-    def default_masthead?
-      current_exhibit.nil? || current_masthead.nil?
+    def resource_masthead?
+      false
     end
 
     def exhibit_masthead?
-      default_masthead? || current_masthead == current_exhibit.masthead
+      current_exhibit && current_exhibit.masthead && current_exhibit.masthead.display?
     end
 
     # overwrites Blacklight::Controller#blacklight_config

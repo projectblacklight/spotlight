@@ -1,0 +1,13 @@
+<%= bootstrap_form_for @site, url: spotlight.site_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10', html: {class: "row"} do |f| %>
+<div class="row col-md-12">
+  <%= f.text_field :title %>
+  <%= f.text_field :subtitle %>
+
+  <div class="form-actions">
+    
+    <div class="primary-actions">
+      <%= f.submit nil, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
+<% end %>

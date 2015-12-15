@@ -1,21 +1,19 @@
 <% set_html_page_title @search.title %>
-<div>
+<div class="col-md-12">
   <%= exhibit_edit_link @search, class: 'edit-button pull-right btn btn-primary' if can? :edit, @search %>
-  <% if exhibit_masthead? %>
-    <%= render 'search_title', search: @search %>
-  <% else %>
+  <% if resource_masthead? %>
     <% content_for :masthead do %>
-      <div class='search-title'>
-        <%= render 'search_title', search: @search %>
-      </div>
+      <%= render 'search_title', search: @search %>
     <% end %>
+  <% else %>
+    <h1><%= render 'search_title', search: @search %></h1>
   <% end %>
   <% if @search.long_description.present? %>
     <p class="long-description-text"><%= @search.long_description %></p>
   <% end %>
 </div>
 
-<div>
+<div class="col-md-12">
   <%= render 'sort_and_per_page' %>
   <%= render_document_index(@document_list) %>
   <%= render 'results_pagination' %>

@@ -1,0 +1,17 @@
+<% form_prefix = f.object_name.parameterize("_") %>
+<%= field_set_tag do %>
+  <%= f.check_box(:display) %>
+<% end if f.object.is_a? Spotlight::Masthead %>
+<%= field_set_tag(t(:'.source.header')) do %>
+  <div>
+    <%= f.hidden_field(:source, value: :remote, label: t(:'.source.remote.label')) %>
+    <%= f.file_field_without_bootstrap(:image, data: jcrop_options.merge(input_select_target: "##{form_prefix}_source_remote")) %>
+  </div>
+<% end %>
+<%= field_set_tag(t(:'.source.remote.header')) do %>
+  <p class="instructions"><%= t(:'.source.remote.help') %></p>
+  <div class="form-group croppable-loading-area <%= "missing-croppable" unless f.object.try(:image).present? %>">
+    <%= hidden_field_tag :"#{jcrop_options.fetch(:selector, "image")}_crop", ([f.object.image_crop_x.to_i, f.object.image_crop_y.to_i, f.object.image_crop_x.to_i + f.object.image_crop_w.to_i, f.object.image_crop_y.to_i + f.object.image_crop_h.to_i].to_json if f.object.try(:image_crop_x)) %>
+    <%= f.cropbox :image %>
+  </div>
+<% end %>

@@ -1,0 +1,32 @@
+<%= render 'spotlight/shared/report_a_problem' if show_contact_form? %>
+
+<div class="masthead <%= 'image-masthead' if current_masthead %> <%= 'resource-masthead' if resource_masthead? %>">
+  <% if current_masthead %>
+    <span class='background-container' style="background-image: url('<%= image_path(current_masthead.image.cropped) %>')"></span>
+    <span class='background-container-gradient'></span>
+  <% end %>
+  
+  <%= render 'shared/exhibit_navbar' if current_exhibit && resource_masthead? %>
+
+  <div class="container site-title-container">
+    <div class="site-title h1">
+      <% if content_for? :masthead %>
+        <%= content_for :masthead %>
+      <% elsif current_exhibit %>
+        <%= current_exhibit.title %>
+        <% if current_exhibit.subtitle.present? %>
+          <small><%= current_exhibit.subtitle %></small>
+        <% end %>
+      <% else %>
+        <%= application_name %>
+        <% if current_site.subtitle.present? %>
+          <small><%= current_site.subtitle %></small>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <%= render 'shared/exhibit_navbar' if current_exhibit && !resource_masthead? %>
+</div>
+
+<%= render 'shared/breadcrumbs' unless resource_masthead? %>

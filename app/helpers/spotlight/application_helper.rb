@@ -9,7 +9,8 @@ module Spotlight
     ##
     # Give the application name a chance to include the exhibit title
     def application_name
-      name = super
+      name = current_site.title if current_site.title.present?
+      name ||= super
 
       if current_exhibit
         t :'spotlight.application_name', exhibit: current_exhibit.title, application_name: name

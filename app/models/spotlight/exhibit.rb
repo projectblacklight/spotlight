@@ -38,6 +38,7 @@ module Spotlight
     has_one :blacklight_configuration, class_name: 'Spotlight::BlacklightConfiguration', dependent: :delete
     has_one :home_page
 
+    belongs_to :site
     belongs_to :masthead, dependent: :destroy
     belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
 
@@ -49,6 +50,7 @@ module Spotlight
 
     before_save :sanitize_description, if: :description_changed?
     before_create :build_home_page
+    before_create :add_site_reference
     after_create :initialize_config
     after_create :initialize_browse
     after_create :initialize_main_navigation
@@ -94,6 +96,10 @@ module Spotlight
     end
 
     protected
+
+    def add_site_reference
+      self.site ||= Spotlight::Site.instance
+    end
 
     def initialize_config
       self.blacklight_configuration ||= Spotlight::BlacklightConfiguration.create!

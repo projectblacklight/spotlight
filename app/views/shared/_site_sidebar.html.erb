@@ -1,0 +1,10 @@
+<% if can?(:manage, Spotlight::Site.instance) || can?(:create, Spotlight::Exhibit) %>
+<h4><%=t(:'.header') %></h4>
+<ul class="nav sidenav">
+  <% if can? :manage, Spotlight::Site.instance %>
+    <li><%= link_to t(:'spotlight.sites.edit.section'), spotlight.edit_site_path %></li>
+  <% end %>
+</ul>
+
+<%= link_to t('.create_exhibit'), new_exhibit_path, class: 'btn btn-default', role: 'button' if can? :create, Spotlight::Exhibit %>
+<% end %>

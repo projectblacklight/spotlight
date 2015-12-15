@@ -55,6 +55,7 @@ en:
         destroyed: "The %{model} was deleted."
       exhibit: *spotlight_default
       search: *spotlight_default
+      site: *spotlight_default
       contact_form:
         create: "Send"
         created: "Thanks. Your feedback has been sent."
@@ -431,7 +432,7 @@ en:
       page_options:
         published: "Publish"
     featured_images:
-      form:
+      form: &featured_images_form
         source:
           header: "Image source"
           exhibit:
@@ -443,6 +444,7 @@ en:
             help: >
               Adjust the cropping box to cover the area of the image you want to use
               as the thumbnail image. Click "Save Changes" to save the cropped area.
+      upload_form: *featured_images_form
 
     resources:
       new:
@@ -486,6 +488,20 @@ en:
         email: "Email Address"
         role: "Role"
         actions: "Actions"
+    sites:
+      edit:
+        section: Customize appearance
+        page_title: Exhibits landing page
+        basic_settings:
+          heading: Title
+        site_masthead:
+          heading: Site masthead
+          help: >
+              You can select and crop an image to use as a background for your home page masthead.
+
+              To use an image as a masthead background, you should use an image that is at least
+              120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide.
+              You can crop larger images using the cropping tool below.
     searches: &search
       nav_link: "Browse"
       index:
@@ -569,5 +585,6 @@ en:
   shared:
     share_follow:
       share_follow: "Share & Follow"
-    home_sidebar:
+    site_sidebar:
+      header: Actions
       create_exhibit: 'Create a new exhibit'
