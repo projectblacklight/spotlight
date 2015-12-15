@@ -256,7 +256,7 @@ describe Spotlight::CatalogController, type: :controller do
         data = JSON.parse(response.body).with_indifferent_access
         expect(data).to include id: 'dq287tq6352'
         expect(data).to include exhibit.solr_data
-        expect(data).to include Spotlight::SolrDocument.solr_field_for_tagger(exhibit)
+        expect(data).to include ::SolrDocument.solr_field_for_tagger(exhibit)
       end
     end
   end

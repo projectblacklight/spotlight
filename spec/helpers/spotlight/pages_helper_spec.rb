@@ -3,8 +3,8 @@ require 'spec_helper'
 module Spotlight
   describe PagesHelper, type: :helper do
     let(:blacklight_config) { Blacklight::Configuration.new { |config| config.show.title_field = :abc } }
-    let(:titled_document) { ::SolrDocument.new(abc: 'value') }
-    let(:untitled_document) { ::SolrDocument.new(id: '1234') }
+    let(:titled_document) { blacklight_config.document_model.new(abc: 'value') }
+    let(:untitled_document) { blacklight_config.document_model.new(id: '1234') }
     let!(:current_exhibit) { FactoryGirl.create(:exhibit) }
     let!(:home_page) { current_exhibit.home_page }
     let!(:search) { FactoryGirl.create(:search, exhibit: current_exhibit, query_params: { 'q' => 'query' }, published: true) }

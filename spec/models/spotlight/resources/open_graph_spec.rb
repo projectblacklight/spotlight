@@ -6,7 +6,7 @@ describe Spotlight::Resources::OpenGraph, type: :model do
     include Spotlight::Resources::OpenGraph
   end
 
-  let(:exhibit) { double(solr_data: {}) }
+  let(:exhibit) { double(solr_data: {}, blacklight_config: Blacklight::Configuration.new) }
 
   subject { TestResource.new url: 'info:url' }
 
