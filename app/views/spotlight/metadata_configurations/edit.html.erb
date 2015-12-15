@@ -6,18 +6,18 @@
 
     <p class="instructions"><%= t :'.instructions' %></p>
 
-    <table id="nested-fields" class="table table-striped">
+    <table id="nested-fields" class="table table-striped dd-table">
       <thead>
         <tr>
           <th><%= t :'.fields.label' %></th>
-          <th>
+          <th class="text-center">
             <div>
               <%= t :'.view.show', default: t(:'blacklight.search.view.show') %>
             </div>
             <%= select_deselect_button %>
           </th>
           <% available_view_fields.keys.each do |type| %>
-            <th>
+            <th class="text-center">
               <div>
                 <%= t :".view.#{type}", default: t(:".view.#{type}") %>
               </div>

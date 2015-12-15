@@ -19,6 +19,7 @@ describe 'Add and update the site masthead', type: :feature do
 
     expect(page).to have_content('The site was successfully updated.')
 
+    visit spotlight.edit_site_path
     click_link 'Site masthead'
 
     within '#site-masthead' do

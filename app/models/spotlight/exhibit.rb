@@ -95,6 +95,10 @@ module Spotlight
       self.thumbnail ||= searches.first.try(:thumbnail)
     end
 
+    def requested_by
+      roles.first.user if roles.first
+    end
+
     protected
 
     def add_site_reference

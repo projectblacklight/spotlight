@@ -1,10 +1,8 @@
 .dd-item td {
-  text-align:center;
-
   &:first-child {
     padding: 0;
     
-    a {
+    .edit-in-place {
       cursor: text;
       color: inherit;
       text-decoration: none;
@@ -23,7 +21,6 @@
       
     }
 
-    text-align: left;
     .dd3-handle:before {
       top: 3px;
     }
@@ -49,15 +46,19 @@
   }
 }
 
-#nested-fields {
-  margin-bottom: 1em;
+.dd-table {
+  margin-top: 2 * $padding-large-vertical;
+
   th {
     &:first-child {
       padding-left: 40px;
-      text-align: left;
     }
-    text-align:center;
   }
+}
+
+#nested-fields {
+  margin-bottom: 1em;
+
   .metadata-select {
     display: inline-block;
     min-width: 72px;

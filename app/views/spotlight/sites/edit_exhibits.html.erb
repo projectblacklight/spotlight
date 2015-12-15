@@ -1,0 +1,32 @@
+<div id="content" class="col-md-9 exhibit-admin">
+  <%= page_title(t('.section'), t('.page_title')) %>
+  <%= bootstrap_form_for @site, url: spotlight.site_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10' do |f| %>
+    <p class="instructions"><%= t :'.instructions' %></p>
+    <table class="table table-striped dd-table">
+      <thead>
+        <tr>
+          <th><%= Spotlight::Exhibit.human_attribute_name(:title) %></th>
+          <th class="text-right"><%= Spotlight::Exhibit.human_attribute_name(:published)  %></th>
+          <th class="text-right"><%= Spotlight::Exhibit.human_attribute_name(:requested_by) %></th>
+          <th class="text-right"><%= Spotlight::Exhibit.human_attribute_name(:created_at)  %></th>
+          <th class="text-right"><%= Spotlight::Exhibit.human_attribute_name(:updated_at)  %></th>
+        </tr>
+      </thead>
+      <tbody class="table metadata_fields dd dd-list" data-behavior="nestable" data-max-depth="1" data-list-node-name="tbody" data-item-node-name="tr" data-expand-btn-HTML=" " data-collapse-btn-HTML=" ">
+        <%= f.fields_for :exhibits do |exhibit_form| %>
+          <%= render partial: 'exhibit', locals: { f: exhibit_form } %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="form-actions">
+      <div class="primary-actions">
+        <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<aside class="col-md-3">
+  <%= render "shared/site_sidebar" %>
+</aside>

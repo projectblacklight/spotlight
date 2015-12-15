@@ -216,4 +216,21 @@ describe Spotlight::Exhibit, type: :model do
       end
     end
   end
+
+  describe '#requested_by' do
+    context 'with multiple exhibit users' do
+      let!(:exhibit_admin) { FactoryGirl.create(:exhibit_admin, exhibit: subject) }
+      let!(:another_exhibit_admin) { FactoryGirl.create(:exhibit_admin, exhibit: subject) }
+
+      it 'is the first listed user' do
+        expect(subject.requested_by).to eq exhibit_admin
+      end
+    end
+
+    context 'if no user has roles on the exhibit' do
+      it 'is nil' do
+        expect(subject.requested_by).to be_nil
+      end
+    end
+  end
 end

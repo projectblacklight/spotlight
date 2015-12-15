@@ -84,6 +84,8 @@ en:
     attributes:
       "spotlight/contact":
           avatar: "Photo"
+      "spotlight/exhibit":
+          published: "Published?"
       "spotlight/page":
         display_sidebar?: "Show sidebar"
         display_title: "Show title"
@@ -502,6 +504,10 @@ en:
               To use an image as a masthead background, you should use an image that is at least
               120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide.
               You can crop larger images using the cropping tool below.
+      edit_exhibits:
+        section: Manage exhibits
+        page_title: Existing exhibits
+        instructions: Drag and drop the exhibits below to specify the order in which they are displayed on the exhibits homepage.
     searches: &search
       nav_link: "Browse"
       index:
