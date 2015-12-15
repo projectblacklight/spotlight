@@ -50,12 +50,12 @@ module Spotlight
         end
     end
 
-    def solr_field
-      if field && field.starts_with?(solr_field_prefix)
+    def solr_field(document_model)
+      if field && field.starts_with?(solr_field_prefix(document_model))
         # backwards compatibility with pre-0.9 custom fields
         field
       else
-        "#{solr_field_prefix}#{field || field_name}"
+        "#{solr_field_prefix(document_model)}#{field || field_name}"
       end
     end
 
@@ -80,8 +80,8 @@ module Spotlight
       configuration['label'].parameterize
     end
 
-    def solr_field_prefix
-      Spotlight::SolrDocument.solr_field_prefix(exhibit)
+    def solr_field_prefix(document_model)
+      document_model.solr_field_prefix(exhibit)
     end
 
     def field_suffix

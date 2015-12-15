@@ -36,7 +36,7 @@ module Spotlight
     protected
 
     def visibility_field
-      Spotlight::SolrDocument.visibility_field(exhibit)
+      blacklight_config.document_model.visibility_field(exhibit)
     end
 
     def blacklight_config
@@ -50,7 +50,7 @@ module Spotlight
     def custom_fields_data_to_solr
       data.except('configured_fields').each_with_object({}) do |(key, value), solr_hash|
         custom_field = custom_fields[key]
-        field_name = custom_field.solr_field if custom_field
+        field_name = custom_field.solr_field(default_document_type) if custom_field
         field_name ||= key
         solr_hash[field_name] = value
       end

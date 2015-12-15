@@ -6,7 +6,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_block.html.erb', type: :vi
   let(:block) do
     SirTrevorRails::Blocks::SolrDocumentsBlock.new({ type: 'block', data: { title: 'Some title', text: 'Some text', 'text-align' => 'right' } }, page)
   end
-  let(:doc) { ::SolrDocument.new(id: 1) }
+  let(:doc) { blacklight_config.document_model.new(id: 1) }
   let(:blacklight_config) do
     Blacklight::Configuration.new do |config|
       config.view.embed.partials = %w(a b c)
