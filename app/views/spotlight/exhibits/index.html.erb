@@ -5,7 +5,9 @@
       <% if can?(:manage, Spotlight::Exhibit) %>
         <li role="presentation"><a href="#unpublished" aria-controls="unpublished" role="tab" data-toggle="tab"><%= t('.unpublished') %></a></li>
       <% end %>
-      <li role="presentation"><a href="#user" aria-controls="user" role="tab" data-toggle="tab"><%= t('.user') %></a></li>
+      <% if current_user && current_user.exhibits.any? %>
+        <li role="presentation"><a href="#user" aria-controls="user" role="tab" data-toggle="tab"><%= t('.user') %></a></li>
+      <% end %>
     </ul>
   <% end %>
 
