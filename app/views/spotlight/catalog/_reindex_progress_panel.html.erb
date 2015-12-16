@@ -1,0 +1,21 @@
+<div class="panel panel-info index-status" style='display:none;'>
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('.heading') %></h3>
+  </div>
+  <div class="panel-body">
+    <p data-behavior='monitor-start'>
+      <span class="text-muted" data-behavior='date'></span> <%= t('.begin_html') %>
+    </p>
+    <p data-behavior='monitor-current'>
+      <span class="text-muted" data-behavior='date'></span> <%= t('.completed_html') %>
+    </p>
+
+    <p class="bg-warning" data-behavior='monitor-error' style='display:none;'>
+      <%= t('.error') %>
+    </p>
+
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax=""></div>
+    </div>
+  </div>
+</div>

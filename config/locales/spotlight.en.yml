@@ -264,6 +264,11 @@ en:
           non_repo_item: "Add non-repository item"
       new:
         header: Import items
+      reindex_progress_panel:
+        heading: Reindexing status
+        begin_html: "Began reindexing a total of <span data-behavior='total'></span> items."
+        completed_html: "Reindexed <span data-behavior='completed'></span> of <span data-behavior='total'></span> items."
+        error: 'An error occured while reindexing. Contact your exhibits administrator for more information.'
     invitation_mailer:
       invitation_instructions:
         hello: "Hello %{email}!"

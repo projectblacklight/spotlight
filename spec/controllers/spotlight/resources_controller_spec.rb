@@ -12,6 +12,13 @@ describe Spotlight::ResourcesController, type: :controller do
       end
     end
 
+    describe 'GET monitor' do
+      it 'is not allowed' do
+        get :monitor, exhibit_id: exhibit
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
+    end
+
     describe 'POST create' do
       it 'is not allowed' do
         post :create, exhibit_id: exhibit
@@ -47,6 +54,13 @@ describe Spotlight::ResourcesController, type: :controller do
           get :new, exhibit_id: exhibit, popup: true
           expect(response).to render_template 'layouts/spotlight/popup'
         end
+      end
+    end
+
+    describe 'GET monitor' do
+      it 'succesfully renders json' do
+        get :monitor, exhibit_id: exhibit
+        expect(response).to be_success
       end
     end
 

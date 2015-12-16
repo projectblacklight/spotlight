@@ -71,6 +71,8 @@ module Spotlight
     Spotlight::Engine.config.uploaded_resource_partials = ['spotlight/resources/upload/single_item_form', 'spotlight/resources/upload/multi_item_form']
     Spotlight::Engine.config.solr_batch_size = 20
 
+    Spotlight::Engine.config.reindex_progress_window = 10
+
     # Filter resources by exhibit by default
     Spotlight::Engine.config.filter_resources_by_exhibit = true
     # The allowed file extensions for uploading non-repository items.

@@ -49,6 +49,7 @@ Spotlight::Engine.routes.draw do
 
     resources :resources do
       collection do
+        get :monitor
         post :reindex_all
       end
     end

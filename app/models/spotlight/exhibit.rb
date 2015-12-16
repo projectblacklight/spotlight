@@ -99,6 +99,10 @@ module Spotlight
       roles.first.user if roles.first
     end
 
+    def reindex_progress
+      @reindex_progress ||= ReindexProgress.new(resources.order('updated_at')) if resources
+    end
+
     protected
 
     def add_site_reference
