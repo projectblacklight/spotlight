@@ -13,8 +13,8 @@ describe Spotlight::ContactsController, type: :controller do
   end
 
   describe 'when signed in as a curator' do
-    let(:user) { FactoryGirl.create(:exhibit_curator) }
-    let(:exhibit) { user.roles.first.exhibit }
+    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
     let(:contact) { FactoryGirl.create(:contact, exhibit: exhibit, name: 'Andrew Carnegie') }
     before { sign_in user }
 

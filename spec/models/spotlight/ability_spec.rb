@@ -43,7 +43,7 @@ describe Spotlight::Ability, type: :model do
     it { is_expected.to be_able_to(:process_import, exhibit) }
     it { is_expected.to be_able_to(:destroy, exhibit) }
 
-    let(:blacklight_config) { role.exhibit.blacklight_configuration }
+    let(:blacklight_config) { exhibit.blacklight_configuration }
   end
 
   describe 'a user with curate role' do
@@ -72,7 +72,6 @@ describe Spotlight::Ability, type: :model do
     it { is_expected.to be_able_to(:create, contact) }
     it { is_expected.to be_able_to(:destroy, contact) }
 
-    let(:role) { FactoryGirl.create(:role, exhibit: user.roles.first.exhibit) }
-    let(:blacklight_config) { role.exhibit.blacklight_configuration }
+    let(:blacklight_config) { exhibit.blacklight_configuration }
   end
 end
