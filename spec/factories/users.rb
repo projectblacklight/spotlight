@@ -8,18 +8,18 @@ FactoryGirl.define do
 
     factory :site_admin do
       after(:create) do |user, _evaluator|
-        create_list(:role, 1, user: user, exhibit_id: nil, role: 'admin')
+        user.roles.create role: 'admin', resource: Spotlight::Site.instance
       end
     end
 
     factory :exhibit_admin do
       after(:create) do |user, evaluator|
-        create_list(:role, 1, user: user, exhibit: evaluator.exhibit, role: 'admin')
+        user.roles.create role: 'admin', resource: evaluator.exhibit
       end
     end
     factory :exhibit_curator do
       after(:create) do |user, evaluator|
-        create_list(:role, 1, user: user, exhibit: evaluator.exhibit, role: 'curator')
+        user.roles.create role: 'curator', resource: evaluator.exhibit
       end
     end
 

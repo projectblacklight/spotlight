@@ -5,7 +5,7 @@ module Spotlight
     let(:user) { stub_model(Spotlight::Engine.user_class, email: 'jane@example.com') }
 
     let(:exhibit) { FactoryGirl.create(:exhibit) }
-    let(:admin_role) { FactoryGirl.create(:role, role: 'admin', user: user, exhibit: exhibit) }
+    let(:admin_role) { FactoryGirl.create(:role, role: 'admin', user: user, resource: exhibit) }
     let(:roles) { [admin_role] }
 
     before do

@@ -105,7 +105,7 @@ describe Spotlight::RolesController, type: :controller do
           post :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'curator'
         end.to change { Spotlight::Engine.user_class.count }.by(1)
         expect(Spotlight::Engine.user_class.last.roles.length).to eq 1
-        expect(Spotlight::Engine.user_class.last.roles.first.exhibit).to eq exhibit
+        expect(Spotlight::Engine.user_class.last.roles.first.resource).to eq exhibit
       end
 
       it 'adds the user to the exhibit via a role' do

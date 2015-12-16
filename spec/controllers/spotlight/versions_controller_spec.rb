@@ -31,10 +31,9 @@ describe Spotlight::VersionsController, type: :controller do
 
   describe 'when logged in as a curator' do
     let(:exhibit) { FactoryGirl.create(:exhibit) }
-    let(:user) { FactoryGirl.create(:exhibit_curator) }
+    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
     let!(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
     before do
-      FactoryGirl.create(:role, exhibit: exhibit, user: user)
       sign_in user
     end
 

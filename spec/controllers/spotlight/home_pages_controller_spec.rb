@@ -9,9 +9,8 @@ describe Spotlight::HomePagesController, type: :controller do
   it { is_expected.to be_a Spotlight::Catalog::AccessControlsEnforcement }
 
   describe 'when signed in as a curator' do
-    let(:user) { FactoryGirl.create(:exhibit_curator) }
+    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
     before do
-      FactoryGirl.create(:role, exhibit: exhibit, user: user)
       sign_in user
     end
 
@@ -89,8 +88,7 @@ describe Spotlight::HomePagesController, type: :controller do
       end
 
       it 'redirects an authorized user to the signin path' do
-        user = FactoryGirl.create(:exhibit_curator)
-        FactoryGirl.create(:role, exhibit: exhibit, user: user)
+        user = FactoryGirl.create(:exhibit_curator, exhibit: exhibit)
         sign_in user
         get :show, exhibit_id: exhibit
         expect(response).to be_successful
