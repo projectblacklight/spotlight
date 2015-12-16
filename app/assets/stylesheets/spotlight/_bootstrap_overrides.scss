@@ -21,18 +21,26 @@
 }
 
 .sidenav {
-
   margin-bottom: 24px;
 
-  li > a {
-    padding: 0 15px 0 0;
-  }
+  .active {
+    a {
+      color: $black;
 
-  &.top-level {
-    li > a {
-      padding-left: 0;
+      &:hover {
+        background-color: inherit;
+      }
     }
   }
+}
+
+.nav-heading {
+  margin: 0;
+  padding: $nav-link-padding;
+}
+
+.btn-nav {
+  margin: $nav-link-padding;
 }
 
 h1,h2,h3,h4,h5,h6 {
