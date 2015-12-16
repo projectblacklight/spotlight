@@ -5,10 +5,10 @@ class ChangeRolesToSupportPolymorphicAssociations < ActiveRecord::Migration
 
     migrate_role_data_to_polymorphic_resource
 
+    remove_index :spotlight_roles, [:exhibit_id, :user_id]
     remove_column :spotlight_roles, :exhibit_id
 
     add_index :spotlight_roles, [:resource_type, :resource_id, :user_id], unique: true, name: 'index_spotlight_roles_on_resource_and_user_id'
-    remove_index :spotlight_roles, [:exhibit_id, :user_id]
   end
 
   def down
@@ -20,12 +20,13 @@ class ChangeRolesToSupportPolymorphicAssociations < ActiveRecord::Migration
     Spotlight::Role.find_each do |e|
       e.update(exhibit_id: e.resource_id) if e.exhibit_id.nil? && e.resource_type == 'Spotlight::Exhibit'
     end
+    
+    remove_index :spotlight_roles, name: 'index_spotlight_roles_on_resource_and_user_id'
 
     remove_column :spotlight_roles, :resource_id
     remove_column :spotlight_roles, :resource_type
 
     add_index :spotlight_roles, [:exhibit_id, :user_id], unique: true
-    remove_index :spotlight_roles, name: 'index_spotlight_roles_on_resource_and_user_id'
   end
 
   private
