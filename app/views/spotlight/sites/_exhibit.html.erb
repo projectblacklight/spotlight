@@ -1,0 +1,18 @@
+<% exhibit = f.object %>
+<tr class="dd-item dd3-item" data-id="<%= exhibit.id %>">
+  <td>
+     <div class="handle-wrap">
+       <div class="dd-handle dd3-handle"><%= t :drag %></div>
+
+       <%= f.hidden_field :id %>
+       <%= f.hidden_field :weight, data: { property: "weight" } %>
+
+       <%= link_to exhibit.title, exhibit %>
+     </div>
+
+  </td>
+  <td class="text-right"><%= exhibit.published? ? t(:'.published') : t(:'.unpublished') %></td>
+  <td class="text-right"><%= exhibit.requested_by %></td>
+  <td class="text-right"><%= l exhibit.created_at, format: :short %></td>
+  <td class="text-right"><%= l exhibit.updated_at, format: :short %></td>
+</tr>

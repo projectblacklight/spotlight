@@ -2,6 +2,7 @@ Spotlight::Engine.routes.draw do
   devise_for :contact_email, class_name: 'Spotlight::ContactEmail', only: [:confirmations]
 
   get '/edit' => 'sites#edit', as: :edit_site
+  get '/exhibits/edit' => 'sites#edit_exhibits', as: :edit_site_exhibits
   patch '/edit' => 'sites#update', as: :site
 
   resources :exhibits, path: '/', except: [:show] do

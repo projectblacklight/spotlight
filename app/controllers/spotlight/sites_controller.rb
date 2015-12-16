@@ -9,9 +9,12 @@ module Spotlight
     def edit
     end
 
+    def edit_exhibits
+    end
+
     def update
       if @site.update(site_params)
-        redirect_to edit_site_path, notice: t(:'helpers.submit.site.updated', model: @site.class.model_name.human.downcase)
+        redirect_to exhibits_path, notice: t(:'helpers.submit.site.updated', model: @site.class.model_name.human.downcase)
       else
         flash[:alert] = @site.errors.full_messages.join('<br>'.html_safe)
         render action: :edit
@@ -28,7 +31,8 @@ module Spotlight
       params.require(:site).permit(
         :title,
         :subtitle,
-        masthead_attributes: masthead_params
+        masthead_attributes: masthead_params,
+        exhibits_attributes: [:id, :weight]
       )
     end
 
