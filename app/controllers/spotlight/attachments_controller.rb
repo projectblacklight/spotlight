@@ -9,11 +9,8 @@ module Spotlight
     # POST /attachments
     def create
       @attachment.attributes = attachment_params
-      if @attachment.save
-        render json: @attachment
-      else
-        render action: 'new'
-      end
+      @attachment.save!
+      render json: @attachment
     end
 
     private
