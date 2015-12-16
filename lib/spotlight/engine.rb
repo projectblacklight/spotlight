@@ -59,57 +59,57 @@ module Spotlight
       Spotlight::Engine.config.default_blacklight_config || catalog_controller.blacklight_config
     end
 
-    Spotlight::Engine.config.user_class = '::User'
+    config.user_class = '::User'
 
-    Spotlight::Engine.config.catalog_controller_class = '::CatalogController'
-    Spotlight::Engine.config.default_blacklight_config = nil
+    config.catalog_controller_class = '::CatalogController'
+    config.default_blacklight_config = nil
 
-    Spotlight::Engine.config.exhibit_main_navigation = [:curated_features, :browse, :about]
+    config.exhibit_main_navigation = [:curated_features, :browse, :about]
 
-    Spotlight::Engine.config.resource_providers = []
-    Spotlight::Engine.config.new_resource_partials = [] # e.g. "spotlight/resources/bookmarklet"
-    Spotlight::Engine.config.uploaded_resource_partials = ['spotlight/resources/upload/single_item_form', 'spotlight/resources/upload/multi_item_form']
-    Spotlight::Engine.config.solr_batch_size = 20
+    config.resource_providers = []
+    config.new_resource_partials = [] # e.g. "spotlight/resources/bookmarklet"
+    config.uploaded_resource_partials = ['spotlight/resources/upload/single_item_form', 'spotlight/resources/upload/multi_item_form']
+    config.solr_batch_size = 20
 
     Spotlight::Engine.config.reindex_progress_window = 10
 
     # Filter resources by exhibit by default
-    Spotlight::Engine.config.filter_resources_by_exhibit = true
+    config.filter_resources_by_exhibit = true
     # The allowed file extensions for uploading non-repository items.
-    Spotlight::Engine.config.allowed_upload_extensions = %w(jpg jpeg png)
+    config.allowed_upload_extensions = %w(jpg jpeg png)
 
     # Suffixes for exhibit-specific solr fields
-    Spotlight::Engine.config.solr_fields = OpenStruct.new
-    Spotlight::Engine.config.solr_fields.prefix = ''.freeze
-    Spotlight::Engine.config.solr_fields.boolean_suffix = '_bsi'.freeze
-    Spotlight::Engine.config.solr_fields.string_suffix = '_ssim'.freeze
-    Spotlight::Engine.config.solr_fields.text_suffix = '_tesim'.freeze
+    config.solr_fields = OpenStruct.new
+    config.solr_fields.prefix = ''.freeze
+    config.solr_fields.boolean_suffix = '_bsi'.freeze
+    config.solr_fields.string_suffix = '_ssim'.freeze
+    config.solr_fields.text_suffix = '_tesim'.freeze
 
     # A lambda expression that filters the solr index per exhibit
     config.exhibit_filter = lambda do |exhibit|
       { :"#{config.solr_fields.prefix}spotlight_exhibit_slug_#{exhibit.slug}#{config.solr_fields.boolean_suffix}" => true }
     end
 
-    Spotlight::Engine.config.resource_global_id_field = :"#{config.solr_fields.prefix}spotlight_resource_id#{config.solr_fields.string_suffix}"
+    config.resource_global_id_field = :"#{config.solr_fields.prefix}spotlight_resource_id#{config.solr_fields.string_suffix}"
 
     # The solr field that original (largest) images will be stored.
-    Spotlight::Engine.config.full_image_field = :full_image_url_ssm
-    Spotlight::Engine.config.thumbnail_field = :thumbnail_url_ssm
-    Spotlight::Engine.config.square_image_field = :thumbnail_square_url_ssm
+    config.full_image_field = :full_image_url_ssm
+    config.thumbnail_field = :thumbnail_url_ssm
+    config.square_image_field = :thumbnail_square_url_ssm
 
     # Defaults to the blacklight_config.index.title_field:
-    Spotlight::Engine.config.upload_title_field = nil # OpenStruct.new(...)
+    config.upload_title_field = nil # OpenStruct.new(...)
 
-    Spotlight::Engine.config.upload_fields = [
+    config.upload_fields = [
       OpenStruct.new(field_name: :spotlight_upload_description_tesim, label: 'Description', form_field_type: :text_area),
       OpenStruct.new(field_name: :spotlight_upload_attribution_tesim, label: 'Attribution'),
       OpenStruct.new(field_name: :spotlight_upload_date_tesim, label: 'Date')
     ]
 
     # Configure the CarrierWave file storage mechanism
-    Spotlight::Engine.config.uploader_storage = :file
-    Spotlight::Engine.config.featured_image_thumb_size = [400, 300]
-    Spotlight::Engine.config.featured_image_square_size = [400, 400]
+    config.uploader_storage = :file
+    config.featured_image_thumb_size = [400, 300]
+    config.featured_image_square_size = [400, 400]
 
     initializer 'spotlight-assets.initialize' do
       Rails.application.config.assets.precompile += %w( Jcrop.gif )
@@ -117,7 +117,7 @@ module Spotlight
 
     # To present curators with analytics reports on the exhibit dashboard, you need to configure
     # an Analytics provider. Google Analytics support is provided out-of-the-box.
-    Spotlight::Engine.config.analytics_provider = nil
+    config.analytics_provider = nil
 
     initializer 'analytics.initialize' do
       Spotlight::Engine.config.analytics_provider = Spotlight::Analytics::Ga
@@ -133,21 +133,21 @@ module Spotlight
     # b) download the pkcs12 key and make it accessible to your application
     # c) in e.g. an initializer, set these configuration values as appropriate
     #    to your OAuth2 service account and analytics property:
-    Spotlight::Engine.config.ga_pkcs12_key_path = nil
-    Spotlight::Engine.config.ga_web_property_id = nil
-    Spotlight::Engine.config.ga_email = nil
-    Spotlight::Engine.config.ga_analytics_options = {}
-    Spotlight::Engine.config.ga_page_analytics_options = Spotlight::Engine.config.ga_analytics_options.merge(limit: 5)
+    config.ga_pkcs12_key_path = nil
+    config.ga_web_property_id = nil
+    config.ga_email = nil
+    config.ga_analytics_options = {}
+    config.ga_page_analytics_options = config.ga_analytics_options.merge(limit: 5)
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
 
     # Query parameters for autocomplete requests
-    Spotlight::Engine.config.autocomplete_search_field = 'autocomplete'
-    Spotlight::Engine.config.default_autocomplete_params = { qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng',
-                                                             facet: false,
-                                                             'facet.field' => [] }
+    config.autocomplete_search_field = 'autocomplete'
+    config.default_autocomplete_params = { qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng',
+                                           facet: false,
+                                           'facet.field' => [] }
 
-    Spotlight::Engine.config.default_browse_index_view_type = :gallery
+    config.default_browse_index_view_type = :gallery
 
     initializer 'blacklight.configuration' do
       # Field containing the last modified date for a Solr document
