@@ -1,4 +1,6 @@
-require "spotlight/resources/iiif/version"
+require 'spotlight/resources/iiif/version'
+require 'spotlight'
+require 'faraday'
 
 module Spotlight
   module Resources

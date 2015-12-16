@@ -6,8 +6,8 @@ require 'spotlight/resources/iiif/version'
 Gem::Specification.new do |spec|
   spec.name          = "spotlight-resources-iiif"
   spec.version       = Spotlight::Resources::Iiif::VERSION
-  spec.authors       = ["Naomi Dushay"]
-  spec.email         = ["ndushay@stanford.edu"]
+  spec.authors       = ["Naomi Dushay", "Peter Mangiafico"]
+  spec.email         = ["ndushay@stanford.edu", "petucket@stanford.edu"]
 
   spec.summary       = 'Spotlight Resource Indexer for IIIF manifests or collections.'
   spec.homepage      = "https://github.com/sul-dlss/spotlight-resources-iiif"
@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "blacklight-spotlight"
+  spec.add_dependency "faraday"
 
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
