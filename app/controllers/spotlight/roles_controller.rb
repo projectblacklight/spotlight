@@ -42,7 +42,7 @@ module Spotlight
 
     def invite
       user = Spotlight::Engine.user_class.invite!(email: invite_params[:user], skip_invitation: true) # don't deliver the invitation yet
-      role = Spotlight::Role.create(exhibit: current_exhibit, user: user, role: invite_params[:role])
+      role = Spotlight::Role.create(resource: current_exhibit, user: user, role: invite_params[:role])
       if role.save
         user.deliver_invitation # now deliver it when we have saved the role
         redirect_to :back, notice: t(:'helpers.submit.role.updated')

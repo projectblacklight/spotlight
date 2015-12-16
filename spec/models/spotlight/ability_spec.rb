@@ -30,7 +30,7 @@ describe Spotlight::Ability, type: :model do
 
   describe 'a user with admin role' do
     let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
-    let(:role) { FactoryGirl.create(:role, exhibit: exhibit) }
+    let(:role) { FactoryGirl.create(:role, resource: exhibit) }
 
     it { is_expected.to be_able_to(:update, exhibit) }
 

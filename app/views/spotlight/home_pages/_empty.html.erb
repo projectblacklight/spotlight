@@ -15,7 +15,7 @@
         <li>Next, go to the <%= link_to "Configuration > Appearance", edit_exhibit_appearance_path(current_exhibit) %> page to add a site masthead image and configure other appearance options.</li>
       <% end %>
 
-      <% if can? :manage, Spotlight::Role.new(exhibit: current_exhibit) %>
+      <% if can? :manage, Spotlight::Role.new(resource: current_exhibit) %>
         <li>If you want help building the exhibit, use the <%= link_to "Configuration > Users", exhibit_roles_path(current_exhibit) %> page to add other user accounts.</li>
       <% end %>
 
