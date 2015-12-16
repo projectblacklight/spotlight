@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Spotlight::FieldMetadata do
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:repository) { double }
   let(:blacklight_config) do
     Blacklight::Configuration.new do |config|
@@ -10,28 +11,15 @@ describe Spotlight::FieldMetadata do
     end
   end
 
-  let(:luke_response) do
-    {
-      fields: {
-        a: {
-          distinct: 100,
-          topTerms: %w(q w e)
-        },
-        b: {
-          distinct: 50,
-          topTerms: %w(r t y)
-        },
-        c: {
-          distinct: 3,
-          topTerms: [7, 8, 9]
-        }
-      }
-    }.with_indifferent_access
-  end
-
   let(:facet_response) do
     {
       facet_counts: {
+        facet_fields: {
+          a: { 'a' => 1, 'b' => 2, 'c' => 3 },
+          b: { 'b' => 1 },
+          c: { 7 => 1, 8 => 2, 9 => 3 }
+        },
+
         facet_queries: {
           'a:[* TO *]' => 5,
           'b:[* TO *]' => 10,
@@ -41,11 +29,10 @@ describe Spotlight::FieldMetadata do
     }.with_indifferent_access
   end
 
-  subject { described_class.new(repository, blacklight_config) }
+  subject { described_class.new(exhibit, repository, blacklight_config) }
 
   before do
-    allow(repository).to receive(:send_and_receive).with('admin/luke', hash_including(fl: '*')).and_return(luke_response)
-    allow(repository).to receive(:search).with(hash_including('facet' => true)).and_return(facet_response)
+    allow(repository).to receive(:search).with(an_instance_of(SearchBuilder)).and_return(Blacklight::Solr::Response.new(facet_response, {}))
   end
 
   describe '#field' do
@@ -56,14 +43,14 @@ describe Spotlight::FieldMetadata do
     end
 
     it 'has a value count' do
-      expect(subject.field('a')[:value_count]).to eq 100
-      expect(subject.field('b')[:value_count]).to eq 50
+      expect(subject.field('a')[:value_count]).to eq 3
+      expect(subject.field('b')[:value_count]).to eq 1
       expect(subject.field('c')[:value_count]).to eq 3
     end
 
     it 'gets a list of top terms' do
-      expect(subject.field('a')[:terms]).to match_array %w(q w e)
-      expect(subject.field('b')[:terms]).to match_array %w(r t y)
+      expect(subject.field('a')[:terms]).to match_array %w(a b c)
+      expect(subject.field('b')[:terms]).to match_array %w(b)
       expect(subject.field('c')[:terms]).to match_array [7, 8, 9]
     end
 

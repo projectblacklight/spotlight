@@ -1,0 +1,12 @@
+<%= content_tag :span, t(:'.document_count', count: metadata[:document_count]) %>
+<% if metadata[:document_count] > 0 %>
+  •
+  <% if metadata[:value_count] > Spotlight::FieldMetadata::FACET_LIMIT %>
+    <%= content_tag :span, t(:'.too_many_values_count', count: Spotlight::FieldMetadata::FACET_LIMIT) %>
+  <% else %>
+    <%= content_tag :span, t(:'.value_count', count: metadata[:value_count]) %>
+  <% end %>
+  <% if metadata[:terms].any? %>
+    <%= tag("span", class: 'btn-with-tooltip glyphicon glyphicon-info-sign', data: {container: 'body', toggle: 'tooltip', placement: 'top', title: metadata[:terms].join(" • ")}) %>
+  <% end %>
+<% end %>

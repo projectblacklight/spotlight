@@ -19,13 +19,7 @@
                     </h3>
                   </div>
                   <div class="facet-metadata col-sm-5">
-                    <%= content_tag :span, t(:'.document_count', count: metadata[:document_count]) %>
-                    <% if metadata[:document_count] > 0 %>
-                      • <%= content_tag :span, t(:'.value_count', count: metadata[:value_count]) %>
-                      <% if metadata[:terms].any? %>
-                        <%= tag("span", class: 'btn-with-tooltip glyphicon glyphicon-info-sign', data: {container: 'body', toggle: 'tooltip', placement: 'top', title: metadata[:terms].keys.map(&:to_s).join(" • ")}) %>
-                      <% end %>
-                    <% end %>
+                    <%= render partial: 'facet_metadata', locals: { metadata: metadata } %>
                   </div>
                   <div class="col-sm-2 pull-right">
                     <a class="btn btn-link collapse-toggle collapsed" role="button" data-toggle="collapse" href="#<%= key.parameterize %>_facet_options" aria-expanded="false" aria-controls="<%= key.parameterize %>_facet_options">
