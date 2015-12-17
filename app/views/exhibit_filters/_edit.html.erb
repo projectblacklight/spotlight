@@ -1,0 +1,9 @@
+<div role="tabpanel" class="tab-pane" id="filter">
+
+<%= bootstrap_form_for [@exhibit, @exhibit.exhibit_filters.first] do |f| %>
+  <%= f.text_field :field %>
+  <%= f.text_field :value %>
+  <%= f.submit %>
+<% end %>
+</div>
+

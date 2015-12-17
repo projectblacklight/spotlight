@@ -37,6 +37,7 @@ module Spotlight
     has_many :solr_document_sidecars, dependent: :delete_all
     has_many :users, through: :roles, class_name: Spotlight::Engine.config.user_class
     has_many :pages, dependent: :destroy
+    has_many :exhibit_filters, dependent: :delete_all
 
     has_one :blacklight_configuration, class_name: 'Spotlight::BlacklightConfiguration', dependent: :delete
     has_one :home_page
@@ -47,7 +48,7 @@ module Spotlight
 
     accepts_nested_attributes_for :about_pages, :attachments, :contacts, :custom_fields, :feature_pages,
                                   :main_navigations, :owned_taggings, :resources, :searches, :solr_document_sidecars
-    accepts_nested_attributes_for :blacklight_configuration, :home_page, :masthead, :thumbnail, update_only: true
+    accepts_nested_attributes_for :blacklight_configuration, :home_page, :masthead, :thumbnail, :exhibit_filters, update_only: true
     accepts_nested_attributes_for :contact_emails, reject_if: proc { |attr| attr['email'].blank? }
     accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc { |attr| attr['user_key'].blank? }
 
@@ -72,7 +73,14 @@ module Spotlight
     end
 
     def solr_data
-      Spotlight::Engine.config.exhibit_filter.call(self)
+      exhibit_filters.each_with_object({}) do |filter, hash|
+        value = if filter.field.end_with?(Spotlight::Engine.config.solr_fields.boolean_suffix)
+                  filter.value == 'true'
+                else
+                  RSolr.solr_escape(filter.value)
+                end
+        hash[filter.field] = value
+      end
     end
 
     def reindex_later

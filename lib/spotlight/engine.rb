@@ -89,11 +89,6 @@ module Spotlight
     config.solr_fields.string_suffix = '_ssim'.freeze
     config.solr_fields.text_suffix = '_tesim'.freeze
 
-    # A lambda expression that filters the solr index per exhibit
-    config.exhibit_filter = lambda do |exhibit|
-      { :"#{config.solr_fields.prefix}spotlight_exhibit_slug_#{exhibit.slug}#{config.solr_fields.boolean_suffix}" => true }
-    end
-
     config.resource_global_id_field = :"#{config.solr_fields.prefix}spotlight_resource_id#{config.solr_fields.string_suffix}"
 
     # The solr field that original (largest) images will be stored.

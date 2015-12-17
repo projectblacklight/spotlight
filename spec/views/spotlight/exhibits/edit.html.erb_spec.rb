@@ -9,6 +9,7 @@ module Spotlight
       allow(view).to receive_messages(can?: true)
       allow(view).to receive_messages(import_exhibit_path: '/')
       allow(view).to receive_messages(get_exhibit_path: '/')
+      allow(view).to receive_messages(exhibit_exhibit_filter_path: '/')
     end
 
     it 'renders the edit page form' do
