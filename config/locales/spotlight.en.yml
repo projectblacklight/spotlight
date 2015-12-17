@@ -77,6 +77,8 @@ en:
     label:
       solr_document:
         exhibit_tag_list: "Tags"
+      spotlight/exhibit:
+        tag_list: 'Tags'
   activerecord:
     models:
       spotlight:
@@ -91,6 +93,9 @@ en:
         display_title: "Show title"
       "spotlight/masthead":
         display: "Show background image in masthead"
+    help:
+      spotlight/exhibit:
+        tag_list: "Enter tags separated by commas."
   blacklight:
     search:
       fields:
