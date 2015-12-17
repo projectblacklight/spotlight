@@ -183,16 +183,18 @@ en:
           the facets shown in the sidebar to limit a search.  You can select the facets
           that are available for searching below. Click a facet field name to edit its display label.
           Drag and drop facets to specify the order they are displayed in the sidebar.
-        document_count:
-          one: "%{count} item"
-          other:  "%{count} items"
-        value_count:
-          one: "%{count} unique value"
-          other: "%{count} unique values"
         sort_by:
           label: "Sort by:"
           count: Frequency
           index: Value
+      facet_metadata:
+        document_count:
+          one: "%{count} item"
+          other:  "%{count} items"
+        too_many_values_count: "%{count}+ unique values"
+        value_count:
+          one: "%{count} unique value"
+          other: "%{count} unique values"
       sort:
         header: "Sort fields"
         help: >
