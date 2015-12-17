@@ -18,7 +18,7 @@ describe SirTrevorRails::Blocks::Textable do
   end
   describe '#text_align' do
     it 'proxies the sir-trevor text-align attribute' do
-      allow(subject).to receive_messages('text-align': 'text-align-value')
+      allow(subject).to receive_messages('text-align' => 'text-align-value')
       expect(subject.text_align).to eq 'text-align-value'
     end
   end
