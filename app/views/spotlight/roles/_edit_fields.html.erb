@@ -2,7 +2,7 @@
           <td>
             <%= f.email_field :user_key, hide_label: true, disabled: f.object.persisted?, data: { behavior: 'check-user-existence' } %>
             <span style='display:none' class='help-block' data-behavior='no-user-note'>
-              <%= t('.invite_html', link: link_to(t('.invite_link'), spotlight.invite_exhibit_roles_path(current_exhibit), data: { method: 'post', 'invite-url': spotlight.invite_exhibit_roles_path(current_exhibit) })) %>
+              <%= t('.invite_html', link: link_to(t('.invite_link'), spotlight.invite_exhibit_roles_path(current_exhibit), data: { method: 'post', 'invite-url' => spotlight.invite_exhibit_roles_path(current_exhibit) })) %>
               <span class='label label-warning pending-label'><%= t('.pending') %></span>
             </span>
           </td>
