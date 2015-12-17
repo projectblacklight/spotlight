@@ -13,6 +13,8 @@ gemspec
 # To use debugger
 # gem 'byebug'
 
+gem 'sprockets-rails', '< 3' # sprockets-rails 3.0.0 doesn't play well with Rails' asset helpers
+
 # BEGIN ENGINE_CART BLOCK
 # engine_cart: 0.8.0
 # engine_cart stanza: 0.8.0
