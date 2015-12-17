@@ -36,7 +36,6 @@
   background-color: $masthead-bg;
   border-bottom: 1px solid $navbar-default-border;
   margin-bottom: $padding-large-vertical * 2.5;
-  overflow: hidden;
   padding: 0;
   position: relative;
   // allow dropdowns in the top nav to stack above the masthead
@@ -126,7 +125,7 @@
     -webkit-filter: blur($masthead-image-blur);
     filter: blur($masthead-image-blur);
 
-    height: $masthead-height;
+    height: 100%;
 
     // Shift image slightly to hide blurred edge of image
     margin-left: -$masthead-image-blur;
@@ -145,7 +144,7 @@
        rgba(0, 0, 0, 0.5)
      );
 
-    height: $masthead-height;
+    height: 100%;
   }
 }
 
