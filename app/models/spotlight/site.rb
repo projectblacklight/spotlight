@@ -7,7 +7,8 @@ module Spotlight
 
     belongs_to :masthead, dependent: :destroy
 
-    accepts_nested_attributes_for :masthead, :exhibits
+    accepts_nested_attributes_for :masthead, update_only: true
+    accepts_nested_attributes_for :exhibits
 
     def self.instance
       first || create
