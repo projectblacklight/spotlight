@@ -57,8 +57,6 @@ module Spotlight
     after_create :initialize_main_navigation
     include Spotlight::DefaultThumbnailable
 
-    scope :published, -> { where(published: true) }
-
     def main_about_page
       @main_about_page ||= about_pages.published.first
     end
