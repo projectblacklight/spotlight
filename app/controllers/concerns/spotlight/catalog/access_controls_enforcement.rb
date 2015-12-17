@@ -27,7 +27,7 @@ module Spotlight
         end
 
         def apply_exhibit_resources_filter(solr_params)
-          return unless Spotlight::Engine.config.filter_resources_by_exhibit && current_exhibit
+          return unless current_exhibit
 
           current_exhibit.solr_data.each do |facet_field, values|
             Array(values).each do |value|
