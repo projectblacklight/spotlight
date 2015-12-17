@@ -38,10 +38,6 @@ module SirTrevorRails
       def display_item_counts?
         send(:'display-item-counts') == 'true'
       end
-
-      def item_count(category)
-        solr_helper.search_results(category.query_params, solr_helper.search_params_logic).first['response']['numFound']
-      end
     end
   end
 end
