@@ -404,6 +404,12 @@ en:
           help: >
             You can select and crop an image to visually represent this page. It will be
             used as the thumbnail image if you include this page using the 'Highlight Featured Pages' widget.
+    sir_trevor:
+      blocks:
+        browse_block:
+          items:
+            one: "%{count} item"
+            other: "%{count} items"
     contacts:
       edit:
         header: "Edit Contact"
