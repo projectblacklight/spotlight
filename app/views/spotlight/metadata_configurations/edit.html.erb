@@ -1,7 +1,7 @@
 <%= render 'spotlight/shared/exhibit_sidebar' %>
 <div id="content" class="col-md-9">
 <%= configuration_page_title %>
-<%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_metadata_configuration_path(@exhibit), layout: :horizontal, label_col: 'col-md-3', control_col: 'col-sm-5' do |f| %>
+<%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_metadata_configuration_path(@exhibit), layout: :horizontal, label_col: 'col-md-3 col-sm-3', control_col: 'col-md-5 col-sm-5' do |f| %>
     <h3><%= t(:'.order_header') %></h3>
 
     <p class="instructions"><%= t :'.instructions' %></p>
