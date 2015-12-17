@@ -601,3 +601,4 @@ en:
     site_sidebar:
       header: Actions
       create_exhibit: 'Create a new exhibit'
+      documentation: 'Curator documentation'
