@@ -12,6 +12,7 @@ module Spotlight
     extend FriendlyId
     friendly_id :title, use: [:slugged, :finders]
     validates :title, presence: true
+    validates :slug, uniqueness: true
 
     default_scope { order('weight ASC') }
 
