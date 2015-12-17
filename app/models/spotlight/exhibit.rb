@@ -18,6 +18,7 @@ module Spotlight
     default_scope { order('weight ASC') }
 
     acts_as_tagger
+    acts_as_taggable
     delegate :blacklight_config, to: :blacklight_configuration
     serialize :facets, Array
 
