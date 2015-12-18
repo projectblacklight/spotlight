@@ -75,6 +75,10 @@ module Spotlight
 
     # Filter resources by exhibit by default
     config.filter_resources_by_exhibit = true
+
+    # Should Spotlight write to solr? If set to false, Spotlight will not initiate indexing.
+    config.writable_index = true
+
     # The allowed file extensions for uploading non-repository items.
     config.allowed_upload_extensions = %w(jpg jpeg png)
 

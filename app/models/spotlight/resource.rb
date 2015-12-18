@@ -168,12 +168,14 @@ module Spotlight
       end
 
       def write_to_index(batch)
+        return unless write?
         blacklight_solr.update params: { commitWithin: 500 },
                                data: batch.to_json,
                                headers: { 'Content-Type' => 'application/json' }
       end
 
       def commit
+        return unless write?
         blacklight_solr.commit
       rescue => e
         Rails.logger.warn "Unable to commit to solr: #{e}"
