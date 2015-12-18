@@ -1,0 +1,5 @@
+<% exhibits.each_slice(3).each do |row| %>
+  <div class="row"><!-- start main content row -->
+    <%= render collection: row, partial: 'exhibit_card', as: 'exhibit' %>
+  </div>
+<% end %>

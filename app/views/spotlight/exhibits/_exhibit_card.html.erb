@@ -1,7 +1,11 @@
 <div class="col-xs-12 col-sm-4 exhibit-card">
   <div class="flipper">
     <div class="card-front card-face">
-      <%= image_tag(exhibit.thumbnail.image.square.url) if exhibit.thumbnail.present? %>
+      <% if exhibit.thumbnail.present? %>
+        <%= image_tag(exhibit.thumbnail.image.square.url) %>
+      <% else %>
+        <%= image_tag 'spotlight/default_thumbnail.jpg' %>
+      <% end %>
       <% unless exhibit.published? %>
         <div class="label label-warning unpublished"><%= t('.unpublished') %></div>
       <% end %>

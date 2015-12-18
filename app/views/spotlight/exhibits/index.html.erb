@@ -18,31 +18,19 @@
       <% end %>
 
       <%= cache cache_key_for_spotlight_exhibits do %>
-        <% @exhibits.published.each_slice(3).each do |row| %>
-        <div class="row"><!-- start main content row -->
-          <%= render collection: row, partial: 'exhibit_card', as: 'exhibit' %>
-        </div>
-        <% end %>
+        <%= render 'exhibits', exhibits: @exhibits.published %>
       <% end %>
     </div>
 
     <% if @exhibits.unpublished.accessible_by(current_ability).any? %>
       <div role="tabpanel" class="tab-pane" id="unpublished">
-        <% @exhibits.unpublished.accessible_by(current_ability).each_slice(3).each do |row| %>
-          <div class="row"><!-- start main content row -->
-            <%= render collection: row, partial: 'exhibit_card', as: 'exhibit' %>
-          </div>
-        <% end %>
+        <%= render 'exhibits', exhibits: @exhibits.unpublished.accessible_by(current_ability) %>
       </div>
     <% end %>
 
     <% if current_user && current_user.exhibits.any? %>
       <div role="tabpanel" class="tab-pane" id="user">
-        <% current_user.exhibits.each_slice(3).each do |row| %>
-          <div class="row"><!-- start main content row -->
-            <%= render collection: row, partial: 'exhibit_card', as: 'exhibit' %>
-          </div>
-        <% end %>
+        <%= render 'exhibits', exhibits: current_user.exhibits %>
       </div>
     <% end %>
   </div>
