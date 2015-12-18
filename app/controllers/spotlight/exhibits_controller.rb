@@ -85,6 +85,7 @@ module Spotlight
         :subtitle,
         :description,
         :published,
+        :tag_list,
         contact_emails_attributes: [:id, :email]
       )
     end

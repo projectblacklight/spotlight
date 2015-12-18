@@ -85,7 +85,7 @@ describe Spotlight::ExhibitsController, type: :controller do
 
       it 'is successful' do
         expect do
-          post :create, exhibit: { title: 'Some Title', slug: 'custom-slug' }
+          post :create, exhibit: { title: 'Some Title', slug: 'custom-slug', tag_list: '2014, R. Buckminster Fuller' }
         end.to change { Spotlight::Exhibit.count }.by(1)
 
         exhibit = Spotlight::Exhibit.last
@@ -93,6 +93,7 @@ describe Spotlight::ExhibitsController, type: :controller do
 
         expect(exhibit.title).to eq 'Some Title'
         expect(exhibit.slug).to eq 'custom-slug'
+        expect(exhibit.tags.map(&:name)).to eq ['2014', 'R. Buckminster Fuller']
 
         expect(user.exhibits).to include exhibit
       end
