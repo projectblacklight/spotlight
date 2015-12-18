@@ -47,6 +47,10 @@ module Spotlight
       FactoryGirl.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryGirl)
     end
 
+    initializer 'spotlight.assets.precompile' do |app|
+      app.config.assets.precompile += %w(spotlight/default_thumbnail.jpg)
+    end
+
     def self.user_class
       Spotlight::Engine.config.user_class.constantize
     end
