@@ -16,13 +16,24 @@ module Spotlight::Resources
 
     def items
 
-      if is_manifest?
-        [process_manifest(iiif_object)]
-        # TODO create correct objects that can be iterated over in iiif_harvester
+      # TODO create correct objects that can be iterated over in iiif_harvester
+
+      items=[]
+
+      if is_manifest? # single manifest
+        items << process_manifest(iiif_object)
       elsif is_collection?
-        []
-        # TODO iterate through collections to get down to manifest level, and then do those
+        # TODO also iterate recurisvely through collections to get down to manifest level, and then do those
+        # do the top level manifests in the collection
+        Rails.logger.info "#{manifests.size} manifests to process for #{url}"
+        manifests.each_with_index do |manifest,x|
+          manifest_url=manifest['@id']
+          Rails.logger.info "#{x+1} of #{manifests.size}: #{manifest_url} "
+          items << process_manifest(self.class.new(manifest_url).iiif_object)
+        end
       end
+
+      items
 
     end
 
@@ -64,8 +75,10 @@ module Spotlight::Resources
 
       solr_doc_hash={}
 
+      solr_doc_hash[:title_display]=iiif_object['label']
+
       image_urls=iiif_object['sequences'].flat_map(&:canvases).flat_map(&:images).flat_map(&:resource).map do |resource|
-        next unless resource
+        next unless resource && !resource.service.empty?
         image_url=resource.service['@id']
         image_url="#{image_url}/info.json" unless image_url.downcase.ends_with?("/info.json")
       end
