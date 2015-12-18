@@ -127,10 +127,36 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#solr_data' do
-    subject { FactoryGirl.create(:exhibit) }
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    subject { exhibit.solr_data }
 
-    it 'provides a solr field with the exhibit slug' do
-      expect(subject.solr_data).to include(:"spotlight_exhibit_slug_#{subject.slug}_bsi" => true)
+    context 'when not filtering by exhibit' do
+      before do
+        allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(false)
+      end
+
+      it 'is blank' do
+        expect(subject).to be_blank
+      end
+    end
+
+    context 'when no filters have been defined' do
+      before do
+        allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(true)
+      end
+
+      it 'provides a solr field with the exhibit slug' do
+        expect(subject).to include("spotlight_exhibit_slug_#{exhibit.slug}_bsi" => true)
+      end
+    end
+
+    context 'with a filter' do
+      before do
+        exhibit.filters.create(field: 'orcid_ssim', value: '123')
+      end
+      it 'uses the provided filter' do
+        expect(subject).to include('orcid_ssim' => '123')
+      end
     end
   end
 
@@ -175,10 +201,15 @@ describe Spotlight::Exhibit, type: :model do
   describe '#solr_documents' do
     let(:blacklight_config) { Blacklight::Configuration.new }
     let(:slug) { 'some_slug' }
+    let(:filter) do
+      Spotlight::Filter.new(field: subject.send(:default_filter_field),
+                            value: subject.send(:default_filter_value))
+    end
 
     before do
       allow(subject).to receive(:blacklight_config).and_return(blacklight_config)
       allow(subject).to receive(:slug).and_return(slug)
+      allow(subject).to receive(:filters).and_return([filter])
     end
 
     it 'enumerates the documents in the exhibit' do

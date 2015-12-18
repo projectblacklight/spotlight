@@ -67,8 +67,26 @@ describe Spotlight::Catalog::AccessControlsEnforcement do
         allow(scope).to receive(:can?).and_return(true)
 
         subject.apply_exhibit_resources_filter(solr_request)
+
         expect(solr_request).to include :fq
         expect(solr_request[:fq]).to include "spotlight_exhibit_slug_#{exhibit.slug}_bsi:true"
+      end
+    end
+
+    context 'with a custom exhibit filter' do
+      let(:filter) { exhibit.filters.first_or_initialize }
+
+      before do
+        filter.update(field: 'author_ssim', value: 'Coyne, Justin')
+      end
+
+      it 'filters resources to just those identified by the exhibit filter' do
+        allow(scope).to receive(:can?).and_return(true)
+
+        subject.apply_exhibit_resources_filter(solr_request)
+
+        expect(solr_request).to include :fq
+        expect(solr_request[:fq]).to include '{!raw f=author_ssim}Coyne, Justin'
       end
     end
   end

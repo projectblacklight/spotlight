@@ -23,6 +23,8 @@ Spotlight::Engine.routes.draw do
     resource :search_configuration, only: [:show, :edit, :update]
     resource :view_configuration, only: [:show]
 
+    resources :filters, only: [:create, :update]
+
     blacklight_for :catalog, only: [:export]
 
     resources :catalog do

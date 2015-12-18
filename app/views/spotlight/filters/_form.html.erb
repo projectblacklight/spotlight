@@ -1,0 +1,13 @@
+<div role="tabpanel" class="tab-pane" id="filter">
+  <%= bootstrap_form_for [@exhibit, @exhibit.filters.first_or_initialize], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10', html: {class: "row"} do |f| %>
+    <%= f.text_field :field %>
+    <%= f.text_field :value %>
+
+    <div class="form-actions">
+      <div class="primary-actions">
+        <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
