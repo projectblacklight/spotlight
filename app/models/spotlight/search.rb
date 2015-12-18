@@ -54,8 +54,10 @@ module Spotlight
       masthead && masthead.display?
     end
 
+    # rubocop:disable Metrics/MethodLength
     def set_default_thumbnail
       self.thumbnail ||= begin
+        return unless Spotlight::Engine.config.full_image_field
         doc = documents.detect { |x| x.first(Spotlight::Engine.config.full_image_field) }
         if doc
           create_thumbnail(
@@ -66,6 +68,7 @@ module Spotlight
         end
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     def search_params
       search_builder.with(query_params.with_indifferent_access).merge(facet: false, fl: default_search_fields)
@@ -91,7 +94,7 @@ module Spotlight
         blacklight_config.index.title_field,
         blacklight_config.index.thumbnail_field,
         Spotlight::Engine.config.full_image_field
-      ]
+      ].compact
     end
 
     def should_generate_new_friendly_id?
