@@ -1,0 +1,23 @@
+<h2 class="card-title">
+  <%= exhibit.title %>
+</h2>
+
+<p class="subtitle">
+  <%= exhibit.subtitle %>
+</p>
+
+<% if exhibit.description %>
+  <p class="description">
+    <%= exhibit.description.truncate(168, omission: "") %>
+    <% if exhibit.description.length > 168 %>
+      <%= content_tag(:span,"&hellip;".html_safe, class: "visible-sm visible-md") %>
+      <span class="hidden-sm hidden-md">
+        <%= exhibit.description.slice(168, exhibit.description.length) %>
+      </span>
+    <% end %>
+  </p>
+<% end %>
+
+<div class="visit-exhibit center-btn">
+  <%= link_to t(:'.visit_exhibit'), exhibit, class: "btn btn-primary", role: "button" %>
+</div>

@@ -1,0 +1,11 @@
+<% if exhibit.thumbnail.present? %>
+  <%= image_tag(exhibit.thumbnail.image.square.url) %>
+<% else %>
+  <%= image_tag 'spotlight/default_thumbnail.jpg', class: 'default-thumbnail' %>
+<% end %>
+
+<% unless exhibit.published? %>
+  <div class="label label-warning unpublished"><%= t('.unpublished') %></div>
+<% end %>
+
+<h2 class="card-title"><%= exhibit.title %></h2>
