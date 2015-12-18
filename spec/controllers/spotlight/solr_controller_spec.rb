@@ -21,7 +21,7 @@ describe Spotlight::SolrController, type: :controller do
     let(:solr) { double }
     before { sign_in admin }
     before do
-      expect(controller).to receive(:blacklight_solr).and_return(solr)
+      allow(controller).to receive(:blacklight_solr).and_return(solr)
     end
 
     describe 'POST update' do
@@ -35,6 +35,18 @@ describe Spotlight::SolrController, type: :controller do
 
         expect(response).to be_successful
         expect(doc).to include 'a' => 1
+      end
+
+      context 'when the index is not writable' do
+        before do
+          allow(Spotlight::Engine.config).to receive_messages(writable_index: false)
+        end
+
+        it 'raises an error' do
+          post :update, { a: 1 }.to_json, content_type: :json, exhibit_id: exhibit
+
+          expect(response.code).to eq '409'
+        end
       end
 
       it 'enriches the request with exhibit solr data' do
