@@ -2,7 +2,7 @@
   <% if (current_user && current_user.exhibits.any?) || can?(:manage, Spotlight::Exhibit) %>
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#published" aria-controls="published" role="tab" data-toggle="tab"><%= t('.published') %></a></li>
-      <% if can?(:manage, Spotlight::Exhibit) %>
+      <% if can?(:manage, Spotlight::Exhibit) && @exhibits.unpublished.accessible_by(current_ability).any? %>
         <li role="presentation"><a href="#unpublished" aria-controls="unpublished" role="tab" data-toggle="tab"><%= t('.unpublished') %></a></li>
       <% end %>
       <% if current_user && current_user.exhibits.any? %>
