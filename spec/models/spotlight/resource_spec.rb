@@ -49,6 +49,17 @@ describe Spotlight::Resource, type: :model do
         subject.reindex
       end
 
+      context 'when the index is not writable' do
+        before do
+          allow(Spotlight::Engine.config).to receive_messages(writable_index: false)
+        end
+
+        it "doesn't write" do
+          expect(subject.send(:blacklight_solr)).not_to receive(:update)
+          subject.reindex
+        end
+      end
+
       context 'with a resource that creates multiple solr documents' do
         let(:solr_response) { [{ id: 1 }, { id: 2 }] }
 

@@ -9,8 +9,14 @@ module Spotlight
     before_action :authenticate_user!
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def update
       authorize! :update_solr, @exhibit
+
+      unless Spotlight::Engine.config.writable_index
+        render text: 'Spotlight is unable to write to solr', status: 409
+        return
+      end
 
       req = ActiveSupport::JSON.decode(request.body.read)
 
@@ -22,5 +28,6 @@ module Spotlight
 
       render nothing: true
     end
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end
 end
