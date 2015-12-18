@@ -7,6 +7,8 @@ module Spotlight
   # workflows with exhibit-specific content
   class SolrController < Spotlight::ApplicationController
     before_action :authenticate_user!
+    before_action :validate_writable_index!
+
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
     def update
@@ -21,6 +23,14 @@ module Spotlight
       blacklight_solr.update docs
 
       render nothing: true
+    end
+
+    private
+
+    def validate_writable_index!
+      return if Spotlight::Engine.config.writable_index
+
+      render text: 'Spotlight is unable to write to solr', status: 409
     end
   end
 end
