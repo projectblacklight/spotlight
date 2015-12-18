@@ -44,4 +44,21 @@ describe 'Create a new exhibit', type: :feature do
     expect(page).to have_content 'The exhibit was created.'
     expect(Spotlight::Exhibit.last.slug).to eq 'custom-slug'
   end
+
+  it 'fails validation if the slug is already used' do
+    visit spotlight.new_exhibit_path
+
+    fill_in 'Title', with: 'My exhibit title'
+    fill_in 'URL slug', with: 'custom-slug'
+
+    click_button 'Save'
+
+    visit spotlight.new_exhibit_path
+
+    fill_in 'Title', with: 'My exhibit title'
+    fill_in 'URL slug', with: 'custom-slug'
+
+    click_button 'Save'
+    expect(page).to have_content 'has already been taken'
+  end
 end

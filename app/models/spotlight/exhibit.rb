@@ -12,6 +12,7 @@ module Spotlight
     extend FriendlyId
     friendly_id :title, use: [:slugged, :finders]
     validates :title, presence: true
+    validates :slug, uniqueness: true
 
     default_scope { order('weight ASC') }
 
@@ -55,8 +56,6 @@ module Spotlight
     after_create :initialize_browse
     after_create :initialize_main_navigation
     include Spotlight::DefaultThumbnailable
-
-    scope :published, -> { where(published: true) }
 
     def main_about_page
       @main_about_page ||= about_pages.published.first
