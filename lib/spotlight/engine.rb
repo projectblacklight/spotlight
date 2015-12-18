@@ -93,6 +93,7 @@ module Spotlight
     config.resource_global_id_field = :"#{config.solr_fields.prefix}spotlight_resource_id#{config.solr_fields.string_suffix}"
 
     # The solr field that original (largest) images will be stored.
+    # Set to nil if you don't want to pull thumbnails from the index
     config.full_image_field = :full_image_url_ssm
     config.thumbnail_field = :thumbnail_url_ssm
     config.square_image_field = :thumbnail_square_url_ssm
