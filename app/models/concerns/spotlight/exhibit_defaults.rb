@@ -9,9 +9,14 @@ module Spotlight
       after_create :initialize_config
       after_create :initialize_browse
       after_create :initialize_main_navigation
+      after_create :initialize_filter
     end
 
     protected
+
+    def initialize_filter
+      exhibit_filters.create field: default_filter_field, value: default_filter_value
+    end
 
     def initialize_config
       self.blacklight_configuration ||= Spotlight::BlacklightConfiguration.create!
@@ -32,6 +37,14 @@ module Spotlight
 
     def add_site_reference
       self.site ||= Spotlight::Site.instance
+    end
+
+    def default_filter_field
+      "#{Spotlight::Engine.config.solr_fields.prefix}spotlight_exhibit_slug_#{slug}#{Spotlight::Engine.config.solr_fields.boolean_suffix}"
+    end
+
+    def default_filter_value
+      'true'
     end
 
     private
