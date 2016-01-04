@@ -80,7 +80,8 @@ module Spotlight::Resources
       image_urls=iiif_object['sequences'].flat_map(&:canvases).flat_map(&:images).flat_map(&:resource).map do |resource|
         next unless resource && !resource.service.empty?
         image_url=resource.service['@id']
-        image_url="#{image_url}/info.json" unless image_url.downcase.ends_with?("/info.json")
+        image_url+="/info.json" unless image_url.downcase.ends_with?("/info.json")
+        image_url
       end
 
       solr_doc_hash[:content_metadata_image_iiif_info_ssm]=image_urls.uniq.compact
