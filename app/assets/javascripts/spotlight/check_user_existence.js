@@ -10,8 +10,7 @@
 
     function checkIfUserExists() {
       target = $(this);
-      var form = target.closest('form');
-      if (target.val() !== '' && form[0].checkValidity()) {
+      if (target.val() !== '' && form()[0].checkValidity()) {
         $.ajax(userExistsUrl())
          .success(userExists)
          .fail(userDoesNotExist);
@@ -42,11 +41,18 @@
       var link = noUserNote().find('a');
       var originalHref = link.data('inviteUrl');
       var userName = target.val();
-      var role = roleSelect().val();
       link.attr(
         'href',
-        originalHref + '?user=' + encodeURIComponent(userName) + '&role=' + encodeURIComponent(role)
+        originalHref + '?user=' + encodeURIComponent(userName) + '&role=' + encodeURIComponent(roleValue())
       );
+    }
+
+    function roleValue() {
+      if (roleSelect().length > 0) {
+        return roleSelect().val();
+      } else {
+        return target.closest('tr').find('[data-user-role]').data('userRole');
+      }
     }
 
     function roleSelect() {
@@ -54,14 +60,15 @@
     }
 
     function noUserNote() {
-      return target.closest('td')
-                   .find('[data-behavior="no-user-note"]');
+      return form().find('[data-behavior="no-user-note"]');
     }
 
     function submitButton() {
-      return target.closest('tr')
-                   .next('tr')
-                   .find('input[type="submit"]');
+      return form().find('input[type="submit"]');
+    }
+
+    function form() {
+      return target.closest('form');
     }
 
     function userExistsUrl() {

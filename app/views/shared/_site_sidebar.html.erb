@@ -9,6 +9,7 @@
 
   <% if can? :manange, Spotlight::Exhibit %>
     <li><%= link_to t(:'spotlight.sites.edit_exhibits.section'), spotlight.edit_site_exhibits_path %></li>
+    <li><%= link_to t(:'spotlight.admin_users.index.section'), spotlight.admin_users_path %></li>
   <% end %>
 </ul>
 

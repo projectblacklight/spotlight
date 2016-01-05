@@ -75,5 +75,5 @@
 
 
 Spotlight.onLoad(function() {
-  $('.edit_exhibit').spotlight_users();
+  $('.edit_exhibit, .admin-users').spotlight_users();
 });
