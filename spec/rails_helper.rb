@@ -7,8 +7,9 @@ EngineCart.load_application!
 
 require 'rspec/rails'
 
-require 'factory_girl'
-FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+require 'factory_girl_rails'
+FactoryGirl.definition_file_paths ||= []
+FactoryGirl.definition_file_paths << "#{Gem.loaded_specs['blacklight-spotlight'].full_gem_path}/spec/factories"
 FactoryGirl.find_definitions
 
 require 'database_cleaner'
