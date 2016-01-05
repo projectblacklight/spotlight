@@ -75,6 +75,8 @@ en:
         updated: "User has been updated."
         destroyed: "User has been removed."
         batch_error: "There was a problem saving the user(s)."
+      invite:
+        invited: 'User has been invited.'
     label:
       solr_document:
         exhibit_tag_list: "Tags"
@@ -121,6 +123,21 @@ en:
       page_title: "Page title"
       settings:
         header: "Settings"
+    admin_users:
+      create:
+        success: Added user as exhibts adminstrator
+        error: There was a problem adding the user as an exhibits adminstrator
+      destroy:
+        success: User removed from site adminstrator role
+        error: There was a problem removing the user from the site adminstrator role
+      index:
+        section: Manage users
+        page_title: Exhibits administrators
+        instructions: Existing exhibit administrators
+        add: Add new administrator
+        destroy: Remove from role
+        save: Add role
+        pending: pending
     appearances:
       edit:
         header: Appearance
@@ -286,6 +303,12 @@ en:
         someone_invited_you: "The Exhibits Administrator has invited you to help work on the \"%{exhibit_name}\" exhibit at %{url}. You can accept this invitation by clicking the link below."
         accept: "Accept invitation"
         ignore_html: "If you don't want to accept the invitation, please ignore this email. Your account won't be created until you access the link above."
+    exhibits_admin_invitation_mailer:
+      invitation_instructions:
+        hello: "Hello %{email}!"
+        someone_invited_you: "The Exhibits Administrator has invited you to help manage exhibits. You can accept this invitation by clicking the link below."
+        accept: "Accept invitation"
+        ignore_html: "If you don't want to accept the invitation, please ignore this email. Your exhibits administrator account won't be created until you access the link above."
     confirmation_mailer:
       confirmation_instructions:
         welcome: "Welcome %{email}!"

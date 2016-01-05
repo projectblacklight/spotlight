@@ -10,7 +10,7 @@ module Spotlight
         role = Spotlight::Role.create(resource: exhibit_or_site, user: user, role: invite_params[:role])
         if role.save
           user.deliver_invitation # now deliver it when we have saved the role
-          redirect_to :back, notice: t(:'helpers.submit.role.updated')
+          redirect_to :back, notice: t(:'helpers.submit.invite.invited')
         else
           redirect_to :back, alert: t(:'helpers.submit.role.batch_error')
         end

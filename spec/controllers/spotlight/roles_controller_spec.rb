@@ -116,7 +116,7 @@ describe Spotlight::RolesController, type: :controller do
 
       it 'redirects back with a flash notice upon success' do
         post :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'curator'
-        expect(flash[:notice]).to eq 'User has been updated.'
+        expect(flash[:notice]).to eq 'User has been invited.'
         expect(response).to redirect_to(:back)
       end
 
