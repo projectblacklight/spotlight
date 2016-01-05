@@ -14,9 +14,9 @@ module Spotlight::Resources
 
       add_document_id solr_hash
       solr_hash.merge(data)
-      
+
       solr_hash
-   end
+    end
 
   end
 end
