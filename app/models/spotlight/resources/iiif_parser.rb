@@ -1,9 +1,20 @@
 require 'iiif/presentation'
 
+# collection:
+# url='http://iiif.bodleian.ox.ac.uk/iiif/collection/WesternManuscripts'
+
+# manifest:
+# url='http://iiif.biblissima.fr/manifests/ark:/12148/btv1b8438663z/manifest.json'
+
+# harvest to database:
 # s=Spotlight::Resources::IiifHarvester.new
-# s.url='http://iiif.biblissima.fr/manifests/ark:/12148/btv1b8438663z/manifest.json'
+# s.url=url
 # s.exhibit=Spotlight::Exhibit.first
 # s.save
+
+# just run parsing:
+# parser=Spotlight::Resources::IiifParser.new(url)
+# parser.items
 
 module Spotlight::Resources
   class IiifParser
@@ -44,6 +55,7 @@ module Spotlight::Resources
 
     # the parsed IIIF object
     def iiif_object
+      # TODO catch HTTP timeouts/errors 
       @iiif_object ||= IIIF::Service.parse(response_body)
     end
 
