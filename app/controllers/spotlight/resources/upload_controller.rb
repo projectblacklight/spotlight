@@ -1,6 +1,3 @@
-# encoding: utf-8
-require 'csv'
-
 module Spotlight
   module Resources
     ##
@@ -34,26 +31,10 @@ module Spotlight
       end
       # rubocop:enable Metrics/MethodLength
 
-      def csv_upload
-        file = csv_params[:url]
-        csv = CSV.parse(file.read, headers: true, return_headers: false, encoding: 'utf-8').map(&:to_hash)
-        Spotlight::AddUploadsFromCSV.perform_later(csv, current_exhibit, current_user)
-        flash[:notice] = t('spotlight.resources.upload.csv.success', file_name: file.original_filename)
-        redirect_to :back
-      end
-
-      def template
-        render text: CSV.generate { |csv| csv << data_param_keys.unshift(:url) }, content_type: 'text/csv'
-      end
-
       private
 
       def build_resource
         @resource ||= Spotlight::Resources::Upload.new exhibit: current_exhibit
-      end
-
-      def csv_params
-        params.require(:resources_csv_upload).permit(:url)
       end
 
       def resource_params

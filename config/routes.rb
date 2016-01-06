@@ -70,9 +70,9 @@ Spotlight::Engine.routes.draw do
       end
     end
 
-    post :csv_uploads, to: 'resources/upload#csv_upload', path: 'upload_resources/csv_upload', as: :resources_csv_uploads
+    resources :resources_uploads, controller: 'resources/upload', path: 'upload_resources', only: [:create]
 
-    resources :resources_uploads, controller: 'resources/upload', path: 'upload_resources' do
+    resources :resources_csv_uploads, controller: 'resources/csv_upload', path: 'upload_csv', only: [:create] do
       collection do
         get :template
       end
