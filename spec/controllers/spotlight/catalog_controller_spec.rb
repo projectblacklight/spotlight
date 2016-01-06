@@ -190,17 +190,6 @@ describe Spotlight::CatalogController, type: :controller do
       expect(controller.blacklight_config.view.admin_table.document_actions).to be_empty
     end
 
-    describe 'GET new' do
-      it 'is successful' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
-        expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Items', admin_exhibit_catalog_index_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Import items', new_exhibit_catalog_path(exhibit))
-        get :new, exhibit_id: exhibit
-        expect(response).to be_successful
-      end
-    end
-
     describe 'GET edit' do
       it 'is successful' do
         get :edit, exhibit_id: exhibit, id: 'dq287tq6352'

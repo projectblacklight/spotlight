@@ -17,17 +17,6 @@ describe Spotlight::Resources::UploadController, type: :controller do
     let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
     before { sign_in user }
 
-    describe 'GET new' do
-      it 'is successful' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Items', admin_exhibit_catalog_index_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Add non-repository items', new_exhibit_resources_upload_path(exhibit))
-        get :new, exhibit_id: exhibit
-        expect(response).to be_successful
-      end
-    end
-
     describe 'POST csv_upload' do
       let(:csv) { fixture_file_upload(File.expand_path(File.join('..', 'spec', 'fixtures', 'csv-upload-fixture.csv'), Rails.root), 'text/csv') }
       let(:serialized_csv) do
@@ -88,7 +77,7 @@ describe Spotlight::Resources::UploadController, type: :controller do
       it 'redirects to the upload form when the add-and-continue parameter is present' do
         post :create, exhibit_id: exhibit, 'add-and-continue' => 'true', resources_upload: { url: 'url-data' }
         expect(flash[:notice]).to eq 'Object uploaded successfully.'
-        expect(response).to redirect_to new_exhibit_resources_upload_path(exhibit)
+        expect(response).to redirect_to new_exhibit_resource_path(exhibit, anchor: 'new_resources_upload')
       end
     end
   end

@@ -8,9 +8,11 @@ describe 'Uploading a non-repository item', type: :feature do
 
   describe 'forms' do
     it 'displays the single item upload form' do
-      visit spotlight.new_exhibit_resources_upload_path(exhibit)
+      visit spotlight.new_exhibit_resource_path(exhibit)
       expect(page).to have_css('h1', text: /Curation/)
-      expect(page).to have_css 'h1 small', text: 'Add non-repository items'
+      expect(page).to have_css 'h1 small', text: 'Add items'
+
+      click_link 'Upload item'
 
       within('form#new_resources_upload') do
         expect(page).to have_css('#resources_upload_url[type="file"]')
@@ -22,20 +24,12 @@ describe 'Uploading a non-repository item', type: :feature do
         expect(page).to have_css("#resources_upload_data_#{custom_field.field}[type='text']")
       end
     end
-    it 'displays the multi-item CSV upload form' do
-      visit spotlight.new_exhibit_resources_upload_path(exhibit)
-      expect(page).to have_css('h1', text: /Curation/)
-      expect(page).to have_css 'h1 small', text: 'Add non-repository items'
-      within('form#new_resources_csv_upload') do
-        expect(page).to have_css('#resources_csv_upload_url[type="file"]')
-        expect(page).to have_css('.help-block a', text: 'Download template')
-      end
-    end
-  end
 
-  describe 'upload' do
-    it 'creates a new non-repository item' do
-      visit spotlight.new_exhibit_resources_upload_path(exhibit)
+    it 'creates a new item' do
+      visit spotlight.new_exhibit_resource_path(exhibit)
+
+      click_link 'Upload item'
+
       attach_file('resources_upload_url', File.join(FIXTURES_PATH, '800x600.png'))
       fill_in 'Title', with: '800x600'
 
@@ -49,8 +43,26 @@ describe 'Uploading a non-repository item', type: :feature do
       Blacklight.default_index.connection.commit
     end
 
+    it 'displays the multi-item CSV upload form' do
+      visit spotlight.new_exhibit_resource_path(exhibit)
+      expect(page).to have_css('h1', text: /Curation/)
+      expect(page).to have_css 'h1 small', text: 'Add items'
+
+      click_link 'Upload multiple items'
+
+      within('form#new_resources_csv_upload') do
+        expect(page).to have_css('#resources_csv_upload_url[type="file"]')
+        expect(page).to have_css('.help-block a', text: 'Download template')
+      end
+    end
+  end
+
+  describe 'upload' do
     it 'is editable' do
-      visit spotlight.new_exhibit_resources_upload_path(exhibit)
+      visit spotlight.new_exhibit_resource_path(exhibit)
+
+      click_link 'Upload item'
+
       attach_file('resources_upload_url', File.join(FIXTURES_PATH, '800x600.png'))
       fill_in 'Title', with: '800x600'
 

@@ -41,7 +41,7 @@ Spotlight::Engine.routes.draw do
 
     blacklight_for :catalog, only: [:export]
 
-    resources :catalog do
+    resources :catalog, only: [:index, :show, :edit, :update] do
       collection do
         get 'admin'
         get 'autocomplete'

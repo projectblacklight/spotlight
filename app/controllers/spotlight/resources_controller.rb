@@ -11,8 +11,10 @@ module Spotlight
     helper_method :from_popup?
 
     def new
-      @resource.attributes = resource_params if params[:resource]
-      @resource = @resource.becomes_provider
+      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), exhibit_root_path(@exhibit)
+      add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
+      add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)
+      add_breadcrumb t(:'spotlight.resources.new.header'), new_exhibit_resource_path(@exhibit)
 
       ## TODO: in Rails 4.1, replace this with a variant
       if from_popup?
