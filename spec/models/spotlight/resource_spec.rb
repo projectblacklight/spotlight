@@ -89,15 +89,6 @@ describe Spotlight::Resource, type: :model do
     end
   end
 
-  describe '#becomes_provider' do
-    it 'converts the resource to a provider-specific resource' do
-      SomeClass = Class.new(described_class)
-      allow(Spotlight::ResourceProvider).to receive_messages(for_resource: SomeClass)
-      expect(subject.becomes_provider).to be_a_kind_of(SomeClass)
-      expect(subject.becomes_provider.type).to eq 'SomeClass'
-    end
-  end
-
   describe '#save_and_index' do
     before do
       allow(subject.send(:blacklight_solr)).to receive(:update)

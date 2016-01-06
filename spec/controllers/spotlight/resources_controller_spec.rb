@@ -43,18 +43,6 @@ describe Spotlight::ResourcesController, type: :controller do
         get :new, exhibit_id: exhibit
         expect(response).to render_template 'spotlight/resources/new'
       end
-
-      it 'populates the resource with parameters from the url' do
-        get :new, exhibit_id: exhibit, resource: { url: 'info:uri' }
-        expect(assigns[:resource].url).to eq 'info:uri'
-      end
-
-      describe 'Within a popup' do
-        it 'renders with the simplified popup layout' do
-          get :new, exhibit_id: exhibit, popup: true
-          expect(response).to render_template 'layouts/spotlight/popup'
-        end
-      end
     end
 
     describe 'GET monitor' do

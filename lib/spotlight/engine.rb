@@ -70,7 +70,6 @@ module Spotlight
 
     config.exhibit_main_navigation = [:curated_features, :browse, :about]
 
-    config.resource_providers = []
     config.resource_partials = ['spotlight/resources/external_resources_form', 'spotlight/resources/upload/form', 'spotlight/resources/csv_upload/form']
     config.external_resources_partials = []
     config.solr_batch_size = 20
