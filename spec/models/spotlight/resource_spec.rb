@@ -131,4 +131,10 @@ describe Spotlight::Resource, type: :model do
     expect(subject.data[:a]).to eq 1
     expect(subject.data[:b]).to eq 2
   end
+
+  it "spotlight_resource_metadata_for_solr doesn't error when document_model is nil" do
+    # allows indexing to be trigger outside of the rails app (e.g. at the command line)
+    allow(subject).to receive(:exhibit).and_return(nil)
+    subject.send(:spotlight_resource_metadata_for_solr)
+  end
 end
