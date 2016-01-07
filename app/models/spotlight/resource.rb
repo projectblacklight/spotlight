@@ -24,20 +24,6 @@ module Spotlight
     after_index :commit
     after_index :completed!
 
-    def becomes_provider
-      klass = Spotlight::ResourceProvider.for_resource(self)
-
-      if klass
-        self.becomes! klass
-      else
-        self
-      end
-    end
-
-    def needs_provider?
-      type.blank?
-    end
-
     ##
     # Persist the record to the database, and trigger a reindex to solr
     #

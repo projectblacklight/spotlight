@@ -287,9 +287,7 @@ en:
         header: Items
       admin_header:
         reindex: "Reindex items"
-        new:
-          repo_item: "Add repository item"
-          non_repo_item: "Add non-repository item"
+        new_resource: "Add items"
       new:
         header: Import items
       reindex_progress_panel:
@@ -497,7 +495,7 @@ en:
 
     resources:
       new:
-        header: "Add Resource"
+        header: "Add items"
       form:
         needs_provider: "Could not find an appropriate importer"
         has_provider: "Ready to import"
@@ -505,26 +503,30 @@ en:
         csv:
           success: "'%{file_name}' has been uploaded.  An email will be sent to you once indexing is complete."
         new:
-          header: "Add non-repository items"
           single_item_form: "Single item"
           multi_item_form: "Multiple items using CSV file"
         error: "There was a problem uploading your object."
-        multi_item_form:
-          add_item: "Add item"
-          help_html: "%{link}"
-          template: "Download template"
-          file_label: "CSV File"
         success: "Object uploaded successfully."
-        single_item_form:
+        form:
+          title: "Upload item"
           add_item: "Add item"
           add_item_and_continue: "Add item and continue adding"
           full_title_tesim: "Title"
           url-field:
             help: "Valid file types: %{extensions}"
+      csv_upload:
+        form:
+          title: "Upload multiple items"
+          add_item: "Add item"
+          help_html: "%{link}"
+          template: "Download template"
+          file_label: "CSV File"
       bookmarklet:
         instructions:  "Drag this button to the bookmarks toolbar in your web browser"
         bookmarklet: "%{application_name} widget"
       reindexing_in_progress: "Reindexing all resources"
+      external_resources_form:
+        title: "From external resource"
     roles:
       edit_fields:
         invite_html: "This user does not yet exist. Would you like to send them an %{link}?"

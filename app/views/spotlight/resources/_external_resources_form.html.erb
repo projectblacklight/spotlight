@@ -1,0 +1,20 @@
+<% if Spotlight::Engine.config.external_resources_partials.empty? %>
+  <%= render 'missing_external_resources_partials' %>
+<% end %>
+
+<div role="tabpanel">
+  <ul class="nav nav-pills" role="tablist">
+    <% Spotlight::Engine.config.external_resources_partials.each_with_index do |p, i| %>
+      <li role="presentation" class="<%= "active" if i == 0 %>">
+        <%= link_to t("#{p.gsub('/', '.')}.title"), "#external_resource_tab_#{i}", role: 'tab', 'data-toggle' => 'tab', 'aria-controls' => "external_resource_tab_#{i}" %>
+      </li>
+    <% end %>
+  </ul>
+  <div class="tab-content">
+    <% Spotlight::Engine.config.external_resources_partials.each_with_index do |p, i| %>
+      <%= content_tag :div, id: "external_resource_tab_#{i}", role: 'tabpanel', class: "tab-pane #{"active" if i == 0}" do %>
+        <%= render p %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -36,13 +36,6 @@ module Spotlight
       blacklight_config.view.edit.partials.insert(2, :edit)
     end
 
-    def new
-      add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
-      add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_index_path(@exhibit)
-      add_breadcrumb t(:'spotlight.catalog.new.header'), new_exhibit_catalog_path(@exhibit)
-      @resource = @exhibit.resources.build
-    end
-
     def show
       super
 
