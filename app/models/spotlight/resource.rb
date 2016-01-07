@@ -104,10 +104,9 @@ module Spotlight
       end
 
       def spotlight_resource_metadata_for_solr
-        {
-          Spotlight::Engine.config.resource_global_id_field => (to_global_id.to_s if persisted?),
-          document_model.resource_type_field => self.class.to_s.tableize
-        }
+        hash = { Spotlight::Engine.config.resource_global_id_field => (to_global_id.to_s if persisted?) }
+        hash[document_model.resource_type_field] = self.class.to_s.tableize if document_model
+        hash
       end
 
       def document_model
