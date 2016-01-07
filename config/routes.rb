@@ -1,9 +1,23 @@
 Spotlight::Engine.routes.draw do
   devise_for :contact_email, class_name: 'Spotlight::ContactEmail', only: [:confirmations]
 
+  concern :user_existable do
+    collection do
+      get :exists
+    end
+  end
+
+  concern :user_invitable do
+    collection do
+      post :invite
+    end
+  end
+
   get '/edit' => 'sites#edit', as: :edit_site
   get '/exhibits/edit' => 'sites#edit_exhibits', as: :edit_site_exhibits
   patch '/edit' => 'sites#update', as: :site
+
+  resources :admin_users, only: [:index, :create, :destroy], concerns: [:user_existable, :user_invitable]
 
   resources :exhibits, path: '/', except: [:show] do
     member do
@@ -93,10 +107,8 @@ Spotlight::Engine.routes.draw do
 
     resources :lock, only: [:destroy]
 
-    resources :roles, path: 'users', only: [:index, :create, :destroy] do
+    resources :roles, path: 'users', only: [:index, :create, :destroy], concerns: [:user_existable, :user_invitable] do
       collection do
-        get :exists
-        post :invite
         patch :update_all
       end
     end

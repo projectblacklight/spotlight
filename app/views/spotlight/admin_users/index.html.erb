@@ -1,0 +1,57 @@
+<div id="content" class="col-md-9 admin-users">
+  <%= page_title(t('.section'), t('.page_title')) %>
+  <%= bootstrap_form_for Spotlight::Engine.user_class.new, url: spotlight.admin_users_path do |f| %>
+    <p class="instructions"><%= t :'.instructions' %></p>
+    <table class="table table-striped ">
+      <thead>
+        <tr>
+          <th><%= Spotlight::Engine.user_class.human_attribute_name(:email)  %></th>
+        </tr>
+      </thead>
+      <tbody class="table">
+        <% @site.roles.map(&:user).each do |user| %>
+          <tr>
+            <td class="<%= 'invite-pending' if user.invite_pending? %>">
+              <%= user.email %>
+              <span class='label label-warning pending-label'><%= t('.pending') %></span>
+            </td>
+            <td>
+              <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-danger pull-right') unless user == current_user %>
+            </td>
+          </tr>
+        <% end %>
+        <tr data-edit-for='new'>
+          <td>
+            <%= f.email_field :email, hide_label: true, data: { behavior: 'check-user-existence', 'user-exists-url': spotlight.exists_admin_users_path } %>
+            <span data-user-role='admin'></span>
+          </td>
+          <td>
+            <div class="form-actions">
+              <div class="primary-actions">
+              <%= cancel_link f.object, '#', class: 'btn btn-link', data: { behavior: 'cancel-edit' } %>
+              <%= f.submit t('.save'), class: 'btn btn-primary'%>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr data-edit-for='new'>
+          <td colspan='2'>
+            <span style='display:none' class='help-block' data-behavior='no-user-note'>
+              <%= t('spotlight.roles.edit_fields.invite_html', link: link_to(t('spotlight.roles.edit_fields.invite_link'), 'javascript:;', data: { method: 'post', 'invite-url': spotlight. invite_admin_users_path })) %>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="form-actions">
+      <div class="primary-actions">
+        <%= link_to(t('.add'), 'javascript:;', class: 'btn btn-default', data: { behavior: 'new-user' }) %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<aside class="col-md-3">
+  <%= render "shared/site_sidebar" %>
+</aside>
