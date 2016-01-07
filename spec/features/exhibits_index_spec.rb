@@ -12,6 +12,37 @@ describe 'Exhibits index page', type: :feature do
         expect(page).to have_selector 'h2', text: 'Some Exhibit Title'
       end
     end
+
+    context 'with tagged exhibits' do
+      before do
+        exhibit.tag_list = %w(a)
+        other_exhibit.tag_list = %w(a b)
+
+        exhibit.save
+        other_exhibit.save
+      end
+
+      it 'shows controls to filter exhibits by tags' do
+        visit spotlight.exhibits_path
+
+        expect(page).to have_selector '.exhibit-card', count: 2
+
+        within '.tags' do
+          expect(page).to have_selector '.active', text: 'All'
+
+          click_link 'a'
+        end
+
+        expect(page).to have_selector '.exhibit-card', count: 2
+
+        within '.tags' do
+          expect(page).to have_selector '.active', text: 'a'
+          click_link 'b'
+        end
+
+        expect(page).to have_selector '.exhibit-card', count: 1
+      end
+    end
   end
 
   context 'with a single exhibit' do

@@ -15,11 +15,20 @@
     <div role="tabpanel" class="tab-pane active" id="published">
       <% if @exhibits.published.none? %>
         <%= render 'missing_exhibits' %>
+      <% else %>
+        <%= render 'tags', tags: @exhibits.published.all_tags %>
+        <%= render 'exhibits', exhibits: @published_exhibits %>
+
+        <% if @published_exhibits.total_count > @published_exhibits.size %>
+          <nav>
+            <ul class="pager">
+              <li><%= link_to_previous_page @published_exhibits, t('views.pagination.previous').html_safe %></li>
+              <li><%= link_to_next_page @published_exhibits, t('views.pagination.next').html_safe %></li>
+            </ul>
+          </nav>
+        <% end %>
       <% end %>
 
-      <%= cache cache_key_for_spotlight_exhibits do %>
-        <%= render 'exhibits', exhibits: @exhibits.published %>
-      <% end %>
     </div>
 
     <% if @exhibits.unpublished.accessible_by(current_ability).any? %>
