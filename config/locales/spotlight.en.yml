@@ -401,6 +401,8 @@ en:
         confirmation_sent: Confirmation sent.
         not_validated: Not validated.
         resend: Resend confirmation?
+      tags:
+        all: All
     main_navigation:
       about: "About"
       browse: "Browse"

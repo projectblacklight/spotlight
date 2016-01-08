@@ -1,9 +1,9 @@
 <% if tags.any? %>
 <div class="row">
   <ul class="nav nav-pills col-md-10 col-md-offset-1 tags">
-    <li class="<%= 'active' if params[:tag].blank? %>"><%= link_to "All", exhibits_path %></li>
+    <li class="<%= 'active' if params[:tag].blank? %>"><%= link_to t('.all'), exhibits_path %></li>
 
-    <% tags.each do |tag| %>
+    <% tags.sort_by(&:name).each do |tag| %>
       <li class="<%= 'active' if params[:tag] == tag.name %>"><%= link_to tag.name, exhibits_path(tag: tag.name) %></li>
     <% end %>
   </ul>
