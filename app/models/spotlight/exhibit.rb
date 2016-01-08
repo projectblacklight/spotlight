@@ -10,6 +10,8 @@ module Spotlight
     scope :published, -> { where(published: true) }
     scope :unpublished, -> { where(published: false) }
 
+    paginates_per 50
+
     extend FriendlyId
     friendly_id :title, use: [:slugged, :finders]
     validates :title, presence: true

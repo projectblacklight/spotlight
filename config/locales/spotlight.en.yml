@@ -378,8 +378,9 @@ en:
           slug:
             label: URL slug
             help_block: A hyphenated name to be displayed in the URL for the exhibit (e.g., "maps-of-africa").
-      exhibit_card:
+      exhibit_card_front:
         unpublished: Unpublished
+      exhibit_card_back:
         visit_exhibit: "Visit exhibit"
       new:
         header: Create a new exhibit

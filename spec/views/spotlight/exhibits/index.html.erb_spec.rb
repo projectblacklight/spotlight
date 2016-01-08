@@ -3,12 +3,15 @@ require 'spec_helper'
 module Spotlight
   describe 'spotlight/exhibits/index', type: :view do
     let(:exhibits) { Spotlight::Exhibit.none }
+    let(:published_exhibits) { exhibits.published.page(1) }
+
     let(:ability) { ::Ability.new(user) }
     let(:user) { Spotlight::Engine.user_class.new }
 
     before do
       assign(:exhibits, exhibits)
-      allow(view).to receive_messages(exhibit_path: '/', current_user: user, current_ability: ability)
+      assign(:published_exhibits, published_exhibits)
+      allow(view).to receive_messages(exhibits_path: '/', exhibit_path: '/', current_user: user, current_ability: ability)
     end
 
     context 'with published exhibits' do
@@ -33,6 +36,49 @@ module Spotlight
         render
 
         expect(rendered).not_to have_selector '.nav-tabs'
+      end
+
+      it 'does not include tags controls' do
+        render
+
+        expect(rendered).not_to have_selector '.tags'
+      end
+
+      it 'does not include pagination controls' do
+        render
+
+        expect(rendered).not_to have_selector '.pager'
+      end
+
+      context 'with tagged exhibits' do
+        before do
+          exhibit_a.tag_list = ['a']
+          exhibit_b.tag_list = ['a']
+          exhibit_c.tag_list = ['b']
+
+          exhibit_a.save
+          exhibit_b.save
+          exhibit_c.save
+        end
+
+        it 'filters by tags' do
+          render
+
+          expect(rendered).to have_link 'All'
+          expect(rendered).to have_link 'a'
+          expect(rendered).to have_link 'b'
+        end
+      end
+
+      context 'with paginated exhibits' do
+        let(:published_exhibits) { exhibits.published.page(1).per(1) }
+
+        it 'renders pagination controls' do
+          render
+
+          expect(rendered).to have_selector '.pager'
+          expect(rendered).to have_link 'Next', href: '/?page=2'
+        end
       end
 
       context 'with an exhibit admin' do
