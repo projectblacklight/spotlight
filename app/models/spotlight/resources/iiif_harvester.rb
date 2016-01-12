@@ -9,23 +9,6 @@ module Spotlight
 
       validate :valid_url?
 
-      def self.can_provide?(res)
-        url_is_iiif?(res.url)
-      end
-
-      def self.url_is_iiif?(url)
-        valid_content_types = ['application/json', 'application/ld+json']
-        req = Faraday.head(url)
-        return unless req.success?
-        valid_content_types.any? do |valid_type|
-          req.headers['content-type'].include?(valid_type)
-        end
-      end
-
-      def valid_url?
-        errors.add(:url, 'Invalid IIIF URL') unless self.class.url_is_iiif?(url)
-      end
-
       def to_solr
         return to_enum(:to_solr) { 0 } unless block_given?
 
@@ -41,6 +24,19 @@ module Spotlight
 
       def iiif_manifests
         @iiif_manifests ||= IiifService.parse(url)
+      end
+
+      def valid_url?
+        errors.add(:url, 'Invalid IIIF URL') unless url_is_iiif?(url)
+      end
+
+      def url_is_iiif?(url)
+        valid_content_types = ['application/json', 'application/ld+json']
+        req = Faraday.head(url)
+        return unless req.success?
+        valid_content_types.any? do |valid_type|
+          req.headers['content-type'].include?(valid_type)
+        end
       end
     end
   end

@@ -24,6 +24,10 @@ class TestAppGenerator < Rails::Generators::Base
     rake 'db:migrate'
   end
 
+  def run_spotlight_resource_iif_generator
+    generate 'spotlight:resources:iiif:install'
+  end
+
   def add_spotlight_routes_and_assets
     # spotlight will provide its own catalog controller.. remove blacklight's to
     # avoid getting prompted about file conflicts
