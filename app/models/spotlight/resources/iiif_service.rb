@@ -19,11 +19,14 @@ module Spotlight
         @manifests ||= if manifest?
                          [create_iiif_manifest(object)]
                        else
-                         (object.try(:manifests) || []).map do |manifest|
-                           create_iiif_manifest(
+                         things = []
+                         things << create_iiif_manifest(object) if collection?
+                         (object.try(:manifests) || []).each do |manifest|
+                           things << create_iiif_manifest(
                              self.class.new(manifest['@id']).object
                            )
                          end
+                         things
                        end
       end
 
@@ -57,6 +60,10 @@ module Spotlight
 
       def manifest?
         object.is_a?(IIIF::Presentation::Manifest)
+      end
+
+      def collection?
+        object.is_a?(IIIF::Presentation::Collection)
       end
 
       def response

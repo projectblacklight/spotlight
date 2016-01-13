@@ -22,7 +22,7 @@ describe Spotlight::Resources::IiifHarvester do
 
     it 'returns an Enumerator of all the solr documents' do
       expect(subject.to_solr).to be_a(Enumerator)
-      expect(subject.to_solr.count).to eq 4
+      expect(subject.to_solr.count).to eq 8
     end
 
     it 'all solr documents include exhibit context' do
