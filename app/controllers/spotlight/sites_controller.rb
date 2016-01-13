@@ -21,6 +21,14 @@ module Spotlight
       end
     end
 
+    def tags
+      authorize! :tag, @site
+
+      respond_to do |format|
+        format.json { render json: Spotlight::Exhibit.all_tags.map(&:name) }
+      end
+    end
+
     private
 
     def load_site
