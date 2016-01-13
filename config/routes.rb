@@ -13,9 +13,9 @@ Spotlight::Engine.routes.draw do
     end
   end
 
-  get '/edit' => 'sites#edit', as: :edit_site
-  get '/exhibits/edit' => 'sites#edit_exhibits', as: :edit_site_exhibits
-  patch '/edit' => 'sites#update', as: :site
+  resource :site, only: [:edit, :update]
+
+  get '/exhibits/edit', to: 'sites#edit_exhibits', as: 'edit_site_exhibits'
 
   resources :admin_users, only: [:index, :create, :destroy], concerns: [:user_existable, :user_invitable]
 
