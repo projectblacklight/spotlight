@@ -21,8 +21,6 @@ module Spotlight
     def update_all
       authorize_nested_attributes! exhibit_params[:roles_attributes], Role
 
-      any_deleted = exhibit_params[:roles_attributes].values.any? { |item| item['_destroy'].present? }
-
       if @exhibit.update(exhibit_params)
         notice = any_deleted ? t(:'helpers.submit.role.destroyed') : t(:'helpers.submit.role.updated')
         redirect_to exhibit_roles_path(@exhibit), notice: notice
@@ -36,6 +34,12 @@ module Spotlight
 
     def exhibit_params
       params.require(:exhibit).permit(roles_attributes: [:id, :user_key, :role, :_destroy])
+    end
+
+    def any_deleted
+      exhibit_params[:roles_attributes].values.any? do |item|
+        item['_destroy'].present? && item['_destroy'] != 'false'
+      end
     end
 
     # When nested attributes are passed in, ensure we have authorization to update each row.
