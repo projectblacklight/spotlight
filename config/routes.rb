@@ -13,7 +13,11 @@ Spotlight::Engine.routes.draw do
     end
   end
 
-  resource :site, only: [:edit, :update]
+  resource :site, only: [:edit, :update] do
+    collection do
+      get '/tags', to: 'sites#tags'
+    end
+  end
 
   get '/exhibits/edit', to: 'sites#edit_exhibits', as: 'edit_site_exhibits'
 

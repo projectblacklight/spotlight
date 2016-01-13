@@ -44,5 +44,17 @@ describe Spotlight::SitesController, type: :controller do
         expect(exhibit_a.reload.weight).to eq 5
       end
     end
+
+    describe 'GET tags' do
+      let!(:exhibit_a) { FactoryGirl.create(:exhibit, tag_list: 'a') }
+
+      it 'serializes the exhibit-level tags' do
+        get :tags, format: 'json'
+        expect(response).to be_successful
+        data = JSON.parse(response.body)
+
+        expect(data).to include 'a'
+      end
+    end
   end
 end
