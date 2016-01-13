@@ -22,6 +22,18 @@ describe 'Roles Admin', type: :feature, js: true do
     expect(page).to have_css('input[disabled]')
   end
 
+  it 'has the appropriate status message when an existing user is added' do
+    second_user = FactoryGirl.create(:site_admin)
+
+    click_link 'Add a new user'
+    fill_in 'User key', with: second_user.email
+
+    click_button 'Save changes'
+
+    expect(page).to have_css('.alert-info', text: 'User has been updated.')
+    expect(page).to have_css('.table.users td', text: second_user.email)
+  end
+
   it 'persists invited users to the exhibits user list' do
     expect(page).not_to have_css('.label-warning pending-label', text: 'pending', visible: true)
 
