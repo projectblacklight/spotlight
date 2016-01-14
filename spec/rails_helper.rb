@@ -14,6 +14,9 @@ FactoryGirl.find_definitions
 
 require 'database_cleaner'
 
+# Require all support files
+Dir[Spotlight::Resources::Iiif::Engine.root.join("spec/support/**/*.rb")].each { |f| require f }
+
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
