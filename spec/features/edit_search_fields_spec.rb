@@ -54,7 +54,7 @@ describe 'Search Administration', type: :feature do
 
         # #field_labeled doesn't appear to work for disabled inputs
         expect(page).to have_css("input[name='blacklight_configuration[sort_fields][relevance][enable]'][disabled='disabled']")
-        expect(page).to have_css('#nested-sort-fields .dd-item:nth-child(5) h3', text: 'Identifier')
+        expect(page).to have_css('#nested-sort-fields .dd-item:nth-child(5) h3', text: 'Date (new to old)')
 
         uncheck 'blacklight_configuration_sort_fields_title_enabled'
         uncheck 'blacklight_configuration_sort_fields_identifier_enabled'

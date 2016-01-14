@@ -92,8 +92,8 @@ class CatalogController < ApplicationController
     config.add_sort_field 'relevance', sort: 'score desc, sort_title_ssi asc', label: 'Relevance'
     config.add_sort_field 'title', sort: 'sort_title_ssi asc', label: 'Title'
     config.add_sort_field 'type', sort: 'sort_type_ssi asc', label: 'Type'
-    config.add_sort_field 'date', sort: 'sort_date_dtsi asc', label: 'Date (old to new)'
     config.add_sort_field 'source', sort: 'sort_source_ssi asc', label: 'Source'
     config.add_sort_field 'identifier', sort: 'id asc', label: 'Identifier'
+    config.add_sort_field 'date', sort: 'sort_date_dtsi desc', label: 'Date (new to old)'
   end
 end
