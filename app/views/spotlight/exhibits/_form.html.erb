@@ -3,7 +3,7 @@
   <%= f.text_field :title %>
   <%= f.text_field :subtitle %>
   <%= f.text_area :description %>
-  <%= f.text_field :tag_list, value: f.object.tag_list.to_s %>
+  <%= f.select :tag_list, options_for_select(f.object.site.tag_list, f.object.tag_list), {}, multiple: true, include_blank: false, class: 'assign-tags' %>
   <%= f.form_group(:contact_emails, label: { text: nil, class: nil }, help: nil) do %>
   <%= f.fields_for :contact_emails do |contact| %>
   <%= render partial: 'contact', locals: {contact: contact} %>

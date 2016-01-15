@@ -1,0 +1,35 @@
+<div id="content" class="col-md-9 exhibit-admin">
+  <%= page_title(t('.section'), t('.page_title')) %>
+
+  <div role="tabpanel">
+    <%= bootstrap_form_for @site, url: spotlight.site_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10', html: {class: "row"} do |f| %>
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#manage" aria-controls="manage" role="tab" data-toggle="tab"><%= t(:'spotlight.sites.manage_tags.heading') %></a>
+        </li>
+        <li role="presentation">
+          <a href="#assign" aria-controls="assign" role="tab" data-toggle="tab"><%= t(:'spotlight.sites.assign_tags.heading') %></a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="manage">
+          <%= render 'manage_tags', f: f %>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="assign">
+          <%= render 'assign_tags', f: f %>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <div class="primary-actions">
+          <%= f.submit nil, class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<aside class="col-md-3">
+  <%= render "shared/site_sidebar" %>
+</aside>

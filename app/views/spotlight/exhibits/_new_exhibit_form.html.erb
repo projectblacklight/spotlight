@@ -2,7 +2,7 @@
 <div class="row col-md-12">
   <%= f.text_field :title, label: t(:'.fields.title.label'), help: t(:'.fields.title.help_block') %>
   <%= f.text_field :slug, label: t(:'.fields.slug.label'), help: t(:'.fields.slug.help_block') %>
-  <%= f.text_field :tag_list %>
+  <%= f.select :tag_list, options_for_select(f.object.site.tag_list, f.object.tag_list), {}, multiple: true, include_blank: false, class: 'assign-tags' %>
 
   <%= render 'initial_resources_form', locals: { f: f } %>
 

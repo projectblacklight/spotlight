@@ -1,0 +1,12 @@
+<p class="instructions"><%= t :'.instructions' %></p>
+
+<table class="table table-striped">
+  <% tags = @site.exhibits.all_tags.map(&:name) %>
+
+  <%= f.fields_for :exhibits do |e| %>
+    <tr>
+      <td><%= e.hidden_field :id %><%= e.object.title %></td>
+      <td><%= e.select_without_bootstrap :tag_list, options_for_select(tags, e.object.tag_list), {}, multiple: true, include_blank: false, class: 'assign-tags' %></td>
+    </tr>
+  <% end %>
+</table>
