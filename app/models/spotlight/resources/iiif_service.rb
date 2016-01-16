@@ -44,14 +44,25 @@ module Spotlight
 
       attr_reader :url
 
-      def self.recursive_manifests(thing, &block)
-        return to_enum(:recursive_manifests, thing) unless block_given?
+      class << self
+        private
 
-        thing.manifests.each(&block)
+        def recursive_manifests(thing, &block)
+          return to_enum(:recursive_manifests, thing) unless block_given?
 
-        thing.collections.each do |collection|
-          recursive_manifests(collection, &block)
-        end if thing.collections.present?
+          thing.manifests.each(&block)
+
+          thing.collections.each do |collection|
+            recursive_manifests(collection, &block)
+          end if thing.collections.present?
+        end
+
+        def iiif_response(url)
+          Faraday.get(url).body
+        rescue Faraday::Error::ConnectionFailed, Faraday::TimeoutError => e
+          Rails.logger.warn("HTTP GET for #{url} failed with #{e}")
+          {}.to_json
+        end
       end
 
       def create_iiif_manifest(manifest)
@@ -68,13 +79,6 @@ module Spotlight
 
       def response
         @response ||= self.class.iiif_response(url)
-      end
-
-      def self.iiif_response(url)
-        Faraday.get(url).body
-      rescue Faraday::Error::ConnectionFailed, Faraday::TimeoutError => e
-        Rails.logger.warn("HTTP GET for #{url} failed with #{e}")
-        {}.to_json
       end
     end
   end
