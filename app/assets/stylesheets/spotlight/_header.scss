@@ -52,7 +52,6 @@
     @extend .hidden-xs;
 
     display: block;
-    margin-top: $padding-base-vertical;
     padding-bottom: $padding-base-vertical;
     padding-top: $padding-base-vertical;
   }
@@ -90,7 +89,6 @@
 
 .site-title-container {
   max-height: $masthead-height - $navbar-height;
-  
   padding-bottom: $padding-large-vertical;
   padding-top: $padding-large-vertical;
 }
