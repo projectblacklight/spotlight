@@ -26,8 +26,8 @@ module Spotlight
                       nil
                     elsif current_exhibit
                       current_exhibit.masthead if exhibit_masthead?
-                    else
-                      current_site.masthead if current_site.masthead && current_site.masthead.display?
+                    elsif current_site.masthead && current_site.masthead.display?
+                      current_site.masthead
                     end
     end
 
@@ -82,14 +82,9 @@ module Spotlight
 
     def exhibit_search_facet_url(*args)
       options = args.extract_options!
-      only_path = options[:only_path]
       options = params.merge(options).except(:exhibit_id, :only_path)
 
-      if only_path
-        spotlight.exhibit_catalog_facet_url(current_exhibit, *args, options)
-      else
-        spotlight.exhibit_catalog_facet_url(current_exhibit, *args, options)
-      end
+      spotlight.exhibit_catalog_facet_url(current_exhibit, *args, options)
     end
   end
 end

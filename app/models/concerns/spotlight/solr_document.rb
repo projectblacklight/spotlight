@@ -93,7 +93,7 @@ module Spotlight
     end
 
     def private?(exhibit)
-      !(public?(exhibit))
+      !public?(exhibit)
     end
 
     def public?(exhibit)

@@ -4,7 +4,7 @@ rescue LoadError
   puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
 end
 
-ZIP_URL = 'https://github.com/projectblacklight/blacklight-jetty/archive/v4.10.4.zip'
+ZIP_URL = 'https://github.com/projectblacklight/blacklight-jetty/archive/v4.10.4.zip'.freeze
 
 require 'rdoc/task'
 
@@ -48,7 +48,7 @@ namespace :spotlight do
   desc 'Copies the default SOLR config for the bundled Testing Server'
   task :configure_jetty do
     FileList['solr_conf/conf/*'].each do |f|
-      cp("#{f}", 'jetty/solr/blacklight-core/conf/', verbose: true)
+      cp(f, 'jetty/solr/blacklight-core/conf/', verbose: true)
     end
   end
 

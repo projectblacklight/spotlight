@@ -9,10 +9,10 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_grid_block.html.erb', type
 
   before do
     allow(block).to receive(:each_document).and_return([
-      [{}, SolrDocument.new(id: 1)],
-      [{}, SolrDocument.new(id: 2)],
-      [{}, SolrDocument.new(id: 3)]
-    ])
+                                                         [{}, SolrDocument.new(id: 1)],
+                                                         [{}, SolrDocument.new(id: 2)],
+                                                         [{}, SolrDocument.new(id: 3)]
+                                                       ])
   end
 
   before do

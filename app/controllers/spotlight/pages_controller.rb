@@ -126,7 +126,7 @@ module Spotlight
       @human_name ||= page_collection_name.humanize
     end
 
-    alias_method :page_collection_name, :controller_name
+    alias page_collection_name controller_name
 
     def attach_breadcrumbs
       if view_context.current_page? '/'

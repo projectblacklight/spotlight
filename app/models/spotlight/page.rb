@@ -43,7 +43,7 @@ module Spotlight
     def content?
       self[:content].present? && content.present?
     end
-    alias_method :has_content?, :content?
+    alias has_content? content?
 
     def display_sidebar?
       true
