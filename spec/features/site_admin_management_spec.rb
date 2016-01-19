@@ -20,7 +20,7 @@ describe 'Site admin management', js: true do
     fill_in 'user_email', with: existing_user.email
     click_button 'Add role'
 
-    expect(page).to have_content('Added user as exhibts adminstrator')
+    expect(page).to have_content('Added user as an exhibits adminstrator')
     expect(page).to have_css('td', text: existing_user.email)
   end
 

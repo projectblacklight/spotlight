@@ -89,3 +89,9 @@ label.radio {
     margin-top: $padding-large-vertical;
   }
 }
+
+@media (max-width: $screen-sm-max) {
+  aside.col-md-3 {
+    padding-left: 0;
+  }
+}

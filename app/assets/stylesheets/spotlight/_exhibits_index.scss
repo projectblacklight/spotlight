@@ -102,6 +102,10 @@
   }
 }
 
+.nav.tags {
+  display: inline-block;
+}
+
 // between the small and medium breakpoints, reduce the size of the image by a little bit
 @media (min-width: $screen-sm-min) and (max-width: $screen-md-max) {
 
@@ -128,5 +132,23 @@
   .btn {
     left: -50%;
     position: relative;
+  }
+}
+
+// For the medium breakpoint, reduce the max width of the .exhibit-card to align right-edge of row correctly
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  .exhibit-card {
+
+    // each card is 3 columns wide
+    max-width: 3 * ($container-md / $grid-columns) - $padding-xs-horizontal;
+  }
+}
+
+// For the small breakpoint, reduce the max width of the .exhibit-card to align right-edge of row correctly
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  .exhibit-card {
+
+    // each card is 4 columns wide
+    max-width: 4 * ($container-sm / $grid-columns) - $padding-xs-horizontal;
   }
 }

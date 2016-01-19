@@ -125,15 +125,15 @@ en:
         header: "Settings"
     admin_users:
       create:
-        success: Added user as exhibts adminstrator
+        success: Added user as an exhibits adminstrator
         error: There was a problem adding the user as an exhibits adminstrator
       destroy:
         success: User removed from site adminstrator role
         error: There was a problem removing the user from the site adminstrator role
       index:
-        section: Manage users
-        page_title: Exhibits administrators
-        instructions: Existing exhibit administrators
+        section: Manage exhibits
+        page_title: Manage administrators
+        instructions: Existing exhibits administrators
         add: Add new administrator
         destroy: Remove from role
         save: Add role
@@ -493,7 +493,7 @@ en:
             header: "Cropped image"
             help: >
               Adjust the cropping box to cover the area of the image you want to use
-              as the thumbnail image. Click "Save Changes" to save the cropped area.
+              as the thumbnail image. Click "Save changes" to save the cropped area.
       upload_form: *featured_images_form
 
     resources:
@@ -543,9 +543,12 @@ en:
         role: "Role"
         actions: "Actions"
     sites:
+      new:
+        section: Manage exhibits
+        page_title: Create a new exhibit
       edit:
-        section: Customize appearance
-        page_title: Exhibits landing page
+        section: Manage exhibits
+        page_title: Customize appearance
         basic_settings:
           heading: Title
         site_masthead:
@@ -558,7 +561,7 @@ en:
               You can crop larger images using the cropping tool below.
       edit_exhibits:
         section: Manage exhibits
-        page_title: Existing exhibits
+        page_title: Order exhibits
         instructions: Drag and drop the exhibits below to specify the order in which they are displayed on the exhibits homepage.
     searches: &search
       nav_link: "Browse"
