@@ -101,6 +101,6 @@ module Spotlight
       super || (title_changed? && persisted?)
     end
 
-    alias_method :current_exhibit, :exhibit
+    alias current_exhibit exhibit
   end
 end

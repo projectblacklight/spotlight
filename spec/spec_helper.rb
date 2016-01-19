@@ -51,11 +51,11 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before :each do
-    if Capybara.current_driver == :rack_test
-      DatabaseCleaner.strategy = :transaction
-    else
-      DatabaseCleaner.strategy = :truncation
-    end
+    DatabaseCleaner.strategy = if Capybara.current_driver == :rack_test
+                                 :transaction
+                               else
+                                 :truncation
+                               end
     DatabaseCleaner.start
 
     # The first user is automatically granted admin privileges; we don't want that behavior for many of our tests

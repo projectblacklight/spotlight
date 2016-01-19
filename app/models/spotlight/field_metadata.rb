@@ -61,6 +61,6 @@ module Spotlight
       blacklight_config.facet_fields.reject { |_k, v| v.pivot || v.query }
     end
 
-    alias_method :current_exhibit, :exhibit
+    alias current_exhibit exhibit
   end
 end

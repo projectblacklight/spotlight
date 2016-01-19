@@ -8,6 +8,12 @@ module Spotlight
     before_save :publish
     before_create :default_content
 
+    class << self
+      def default_title_text
+        I18n.t('spotlight.pages.index.home_pages.title')
+      end
+    end
+
     def should_display_title?
       display_title?
     end
@@ -17,10 +23,6 @@ module Spotlight
     end
 
     private
-
-    def self.default_title_text
-      I18n.t('spotlight.pages.index.home_pages.title')
-    end
 
     def publish
       self.published = true

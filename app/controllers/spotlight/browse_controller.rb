@@ -40,7 +40,7 @@ module Spotlight
 
     def attach_breadcrumbs
       add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb((@exhibit.main_navigations.browse.label_or_default), exhibit_browse_index_path(@exhibit))
+      add_breadcrumb(@exhibit.main_navigations.browse.label_or_default, exhibit_browse_index_path(@exhibit))
     end
 
     def _prefixes

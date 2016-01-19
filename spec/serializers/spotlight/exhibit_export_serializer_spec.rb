@@ -120,7 +120,7 @@ describe Spotlight::ExhibitExportSerializer do
     end
 
     it 'has sidecars' do
-      expect(SolrDocument.new(id: 1).public? subject).to be_falsey
+      expect(SolrDocument.new(id: 1).public?(subject)).to be_falsey
     end
 
     context 'for an exhibit with contacts' do

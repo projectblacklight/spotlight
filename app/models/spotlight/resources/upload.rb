@@ -52,11 +52,11 @@ module Spotlight
 
       def add_file_versions(solr_hash)
         spotlight_image_derivatives.each do |config|
-          if config[:version]
-            solr_hash[config[:field]] = url.send(config[:version]).url
-          else
-            solr_hash[config[:field]] = url.url
-          end
+          solr_hash[config[:field]] = if config[:version]
+                                        url.send(config[:version]).url
+                                      else
+                                        url.url
+                                      end
         end
       end
 
