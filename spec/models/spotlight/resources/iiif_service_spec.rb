@@ -23,9 +23,9 @@ describe Spotlight::Resources::IiifService do
 
   describe '#manifests' do
     it 'returns manifests for the current service level' do
-      expect(subject.manifests.length).to eq 1
+      expect(subject.manifests.length).to eq 2
       expect(subject.manifests.first).to be_a Spotlight::Resources::IiifManifest
-      expect(subject.collections.first.manifests.length).to eq 1
+      expect(subject.collections.first.manifests.length).to eq 2
       expect(
         subject.collections.first.manifests.first
       ).to be_a Spotlight::Resources::IiifManifest
@@ -36,14 +36,13 @@ describe Spotlight::Resources::IiifService do
     let(:manifests) { described_class.parse(url) }
 
     it 'recursively traverses all all the collections and returns manifests' do
-      expect(manifests.count).to eq 4
       expect(manifests).to be_all do |manifest|
         manifest.is_a?(Spotlight::Resources::IiifManifest)
       end
     end
 
-    pending 'returns manifests representing collection documents' do
-      expect(manifests.count).to eq 7 # 3 collections + 4 manifests
+    it 'returns manifests representing collection documents' do
+      expect(manifests.count).to eq 8
     end
   end
 end
