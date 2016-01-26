@@ -3,7 +3,7 @@ class CreateSpotlightExhibitFilters < ActiveRecord::Migration
     create_table :spotlight_filters do |t|
       t.string :field
       t.string :value
-      t.references :exhibit, index: true, foreign_key: true
+      t.references :spotlight_exhibit, index: true, foreign_key: true
 
       t.timestamps null: false
     end
