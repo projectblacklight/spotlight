@@ -48,7 +48,7 @@ these collections.)
   s.add_dependency 'legato'
   s.add_dependency 'google-api-client', '~> 0.8.0'
   s.add_dependency 'oauth2'
-  s.add_dependency 'paper_trail', '~> 4.0.0.beta'
+  s.add_dependency 'paper_trail', '~> 4.0'
   s.add_dependency 'openseadragon'
 
   s.add_development_dependency 'sqlite3'
