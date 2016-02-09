@@ -19,7 +19,7 @@ module Spotlight
             authenticate_user!
 
             # If that fails (and we end up back here), offer a 404 error instead
-            fail ActionController::RoutingError, 'Not Found'
+            raise ActionController::RoutingError, 'Not Found'
           else
             redirect_to main_app.root_url, alert: exception.message
           end
