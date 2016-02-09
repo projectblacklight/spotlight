@@ -20,6 +20,10 @@ Or install it yourself as:
 
     $ gem install spotlight-resources-iiif
 
+Then run the engine's generator:
+
+    $ bundle exec rails generate spotlight:resources:iiif:install
+
 ## Usage
 
 This is a Rails engine gem to be used along with blacklight-spotlight, another Rails engine gem used to build exhibits sites while leveraging the blacklight Rails engine gem.
