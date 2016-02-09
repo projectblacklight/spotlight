@@ -9,6 +9,7 @@ AllCops:
     - 'db/**/*'
     - 'spec/internal/**/*'
     - 'vendor/**/*'
+  TargetRubyVersion: 2.2
 
 Rails:
   Enabled: true

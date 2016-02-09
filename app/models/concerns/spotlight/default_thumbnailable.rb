@@ -19,7 +19,7 @@ module Spotlight
     end
 
     def set_default_thumbnail
-      fail NotImplementedError
+      raise NotImplementedError
     end
   end
 end

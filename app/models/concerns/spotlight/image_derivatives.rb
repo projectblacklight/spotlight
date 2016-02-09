@@ -38,7 +38,7 @@ module Spotlight
       {
         version: :thumb,
         field: Spotlight::Engine.config.try(:thumbnail_field),
-        lambda: lambda do|_|
+        lambda: lambda do |_|
           version :thumb do
             process resize_to_fit: [400, 400]
           end
@@ -47,7 +47,7 @@ module Spotlight
       {
         version: :square,
         field: Spotlight::Engine.config.try(:square_image_field),
-        lambda: lambda do|_|
+        lambda: lambda do |_|
           version :square do
             process resize_to_fill: [100, 100]
           end

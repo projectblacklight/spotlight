@@ -48,7 +48,7 @@ these collections.)
   s.add_dependency 'legato'
   s.add_dependency 'google-api-client', '~> 0.8.0'
   s.add_dependency 'oauth2'
-  s.add_dependency 'paper_trail', '~> 4.0.0.beta'
+  s.add_dependency 'paper_trail', '~> 4.0'
   s.add_dependency 'openseadragon'
 
   s.add_development_dependency 'sqlite3'
@@ -57,7 +57,7 @@ these collections.)
   s.add_development_dependency 'rspec-activemodel-mocks'
   s.add_development_dependency 'rspec-collection_matchers'
   s.add_development_dependency 'capybara', '>= 2.5.0'
-  s.add_development_dependency 'rubocop', '~> 0.36'
+  s.add_development_dependency 'rubocop', '~> 0.37'
   s.add_development_dependency 'rubocop-rspec'
   s.add_development_dependency 'poltergeist', '>= 1.5.0'
   s.add_development_dependency 'factory_girl', '~> 4.5'
