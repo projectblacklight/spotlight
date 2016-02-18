@@ -1,7 +1,7 @@
 <%= render 'spotlight/shared/exhibit_sidebar' %>
 <div id="content" class="col-md-9">
   <%= curation_page_title %>
-  <h3><%= header_with_count(t(:'.categories_header'), @searches.count) %></h3>
+  <h3><%= t(:'.categories_header') %></h3>
 
   <% if @searches.empty? %>
     <%= t :'.no_saved_searches' %>

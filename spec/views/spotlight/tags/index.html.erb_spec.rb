@@ -19,10 +19,4 @@ describe 'spotlight/tags/index.html.erb', type: :view do
       end
     end
   end
-  describe 'Total tags' do
-    it 'is displayed' do
-      render
-      expect(rendered).to have_css('span.label.label-default', text: 2)
-    end
-  end
 end
