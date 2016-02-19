@@ -9,3 +9,9 @@
 # Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
   Max: 160
+
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/NotToNot:
+  Enabled: false
