@@ -9,6 +9,7 @@ module Spotlight
     friendly_id :slug_candidates, use: [:slugged, :scoped, :finders], scope: :exhibit
 
     scope :vocab, -> { where(field_type: 'vocab') }
+    scope :writeable, -> { where(readonly_field: false) }
 
     before_create do
       self.field ||= field_name

@@ -204,6 +204,16 @@ describe Spotlight::CatalogController, type: :controller do
           patch :update, exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { exhibit_tag_list: 'one, two' }
         end.to change { exhibit.owned_taggings.count }.by(2)
       end
+      it 'can update non-readonly fields' do
+        field = FactoryGirl.create(:custom_field, exhibit: exhibit)
+        patch :update, exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } }
+        expect(assigns[:document].sidecar(exhibit).data).to eq(field.field => 'no')
+      end
+      it "can't update readonly fields" do
+        field = FactoryGirl.create(:custom_field, exhibit: exhibit, readonly_field: true)
+        patch :update, exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } }
+        expect(assigns[:document].sidecar(exhibit).data).to eq({})
+      end
     end
 
     describe 'PUT make_public' do
