@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'database_cleaner', '~> 1.3'
 #  spec.add_development_dependency 'poltergeist', '>= 1.5.0' # for js testing using phantomjs
   spec.add_development_dependency "coveralls"
-  spec.add_development_dependency "rubocop"
+  spec.add_development_dependency 'rubocop', '~> 0.37.2'
   spec.add_development_dependency "rubocop-rspec"
   spec.add_development_dependency "yard"
   spec.add_development_dependency "engine_cart"

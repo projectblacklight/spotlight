@@ -77,6 +77,10 @@ describe Spotlight::Resources::IiifManifest do
         expect { subject.to_solr }.to change(Spotlight::CustomField, :count).by(5)
       end
 
+      it "creates read-only custom fields" do
+        expect { subject.to_solr }.to change(Spotlight::CustomField.where(readonly_field: true), :count).by(5)
+      end
+
       context 'custom class' do
         before do
           Spotlight::Resources::Iiif::Engine.config.metadata_class = -> { TestMetadataClass }
