@@ -72,7 +72,7 @@ module Spotlight
 
       def create_sidecars_for(*keys)
         missing_keys(keys).each do |k|
-          exhibit.custom_fields.create! label: k
+          exhibit.custom_fields.create! label: k, readonly_field: true
         end
         @exhibit_custom_fields = nil
       end
