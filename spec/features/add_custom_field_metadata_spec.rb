@@ -30,6 +30,19 @@ describe 'Adding custom metadata field data', type: :feature do
     expect(page).to have_content 'My new custom field value'
   end
 
+  context 'when given a read-only field' do
+    let(:custom_field) { FactoryGirl.create(:custom_field, exhibit: exhibit, readonly_field: true) }
+    it 'can not be edited' do
+      visit spotlight.exhibit_catalog_path(exhibit, 'dq287tq6352')
+
+      expect(page).to have_link 'Edit'
+
+      click_on 'Edit'
+
+      expect(page).to have_selector 'input[type=text][readonly]'
+    end
+  end
+
   it 'has a public toggle' do
     visit spotlight.exhibit_catalog_path(exhibit, 'dq287tq6352')
 

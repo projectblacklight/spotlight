@@ -179,7 +179,7 @@ module Spotlight
     end
 
     def custom_field_params
-      current_exhibit.custom_fields.pluck(:field)
+      current_exhibit.custom_fields.writeable.pluck(:field)
     end
 
     def check_authorization
