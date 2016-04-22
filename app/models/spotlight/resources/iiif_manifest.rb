@@ -3,9 +3,11 @@ module Spotlight
     ##
     # A PORO to construct a solr hash for a given IiifManifest
     class IiifManifest
+      attr_reader :collection
       def initialize(attrs = {})
         @url = attrs[:url]
         @manifest = attrs[:manifest]
+        @collection = attrs[:collection]
         @solr_hash = {}
       end
 
@@ -16,6 +18,7 @@ module Spotlight
         add_manifest_url
         add_image_urls
         add_metadata
+        add_collection_id
         solr_hash
       end
 
@@ -23,17 +26,27 @@ module Spotlight
         @exhibit = e
       end
 
+      def compound_id
+        Digest::MD5.hexdigest("#{exhibit.id}-#{url}")
+      end
+
       private
 
       attr_reader :url, :manifest, :exhibit, :solr_hash
       delegate :blacklight_config, to: :exhibit
 
-      def compound_id
-        Digest::MD5.hexdigest("#{exhibit.id}-#{url}")
-      end
-
       def add_document_id
         solr_hash[exhibit.blacklight_config.document_model.unique_key.to_sym] = compound_id
+      end
+
+      def add_collection_id
+        if collection
+          solr_hash[collection_id_field] = [collection.compound_id]
+        end
+      end
+
+      def collection_id_field
+        Spotlight::Resources::Iiif::Engine.config.collection_id_field
       end
 
       def add_manifest_url

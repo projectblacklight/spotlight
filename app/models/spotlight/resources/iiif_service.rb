@@ -20,10 +20,13 @@ module Spotlight
                          [create_iiif_manifest(object)]
                        else
                          things = []
-                         things << create_iiif_manifest(object) if collection?
+                         if collection?
+                           self_manifest = create_iiif_manifest(object)
+                           things << self_manifest
+                         end
                          (object.try(:manifests) || []).each do |manifest|
                            things << create_iiif_manifest(
-                             self.class.new(manifest['@id']).object
+                             self.class.new(manifest['@id']).object, self_manifest
                            )
                          end
                          things
@@ -65,8 +68,8 @@ module Spotlight
         end
       end
 
-      def create_iiif_manifest(manifest)
-        IiifManifest.new(url: manifest['@id'], manifest: manifest)
+      def create_iiif_manifest(manifest, collection = nil)
+        IiifManifest.new(url: manifest['@id'], manifest: manifest, collection: collection)
       end
 
       def manifest?
