@@ -44,5 +44,9 @@ describe Spotlight::Resources::IiifService do
     it 'returns manifests representing collection documents' do
       expect(manifests.count).to eq 8
     end
+    it 'keeps track of the parent collection' do
+      arr = manifests.to_a
+      expect(arr[1].collection).to eq arr[0]
+    end
   end
 end

@@ -11,7 +11,8 @@ end
 
 describe Spotlight::Resources::IiifManifest do
   let(:url) { 'uri://to-manifest' }
-  subject { described_class.new({ url: url, manifest: manifest }) }
+  subject { described_class.new({ url: url, manifest: manifest, collection: collection}) }
+  let(:collection) { double( compound_id: "1" ) }
   before do
     stub_iiif_response_for_url(url, test_manifest1)
     subject.with_exhibit(exhibit)
@@ -30,6 +31,12 @@ describe Spotlight::Resources::IiifManifest do
     describe 'label' do
       it 'is inlcuded in the solr document when present' do
         expect(subject.to_solr['full_title_tesim']).to eq 'Test Manifest 1'
+      end
+    end
+
+    describe "collection id" do
+      it "is included when a collection is given" do
+        expect(subject.to_solr[:collection_id_ssim]).to eq ["1"]
       end
     end
 
