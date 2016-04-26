@@ -48,9 +48,9 @@ describe 'spotlight/about_pages/index.html.erb', type: :view do
     expect(rendered).to have_selector '.panel-title', text: 'Title2'
 
     expect(rendered).to have_selector '.contacts_admin ol.dd-list li[data-id]', count: 2
-    expect(rendered).to have_selector '.contacts_admin ol.dd-list li input[data-property=weight]', count: 2
-    expect(rendered).to have_selector '.contacts_admin ol.dd-list li input#exhibit_contacts_attributes_0_id'
-    expect(rendered).to have_selector '.contacts_admin ol.dd-list li input#exhibit_contacts_attributes_1_id'
+    expect(rendered).to have_selector '.contacts_admin ol.dd-list li input[data-property=weight]', visible: false, count: 2
+    expect(rendered).to have_selector '.contacts_admin ol.dd-list li input#exhibit_contacts_attributes_0_id', visible: false
+    expect(rendered).to have_selector '.contacts_admin ol.dd-list li input#exhibit_contacts_attributes_1_id', visible: false
   end
 
   describe 'Save button' do
