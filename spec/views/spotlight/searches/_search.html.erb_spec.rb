@@ -31,6 +31,6 @@ describe 'spotlight/searches/_search.html.erb', type: :view do
     expect(rendered).to have_selector "li[data-id='99']"
     expect(rendered).to have_selector '.panel-heading .main .title', text: 'Title1'
     expect(rendered).to have_selector 'img[src="/some/image"]'
-    expect(rendered).to have_selector 'input[type=hidden][data-property=weight]'
+    expect(rendered).to have_selector 'input[type=hidden][data-property=weight]', visible: false
   end
 end
