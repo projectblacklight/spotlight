@@ -43,23 +43,27 @@ Spotlight::Engine.routes.draw do
 
     resources :filters, only: [:create, :update]
 
-    blacklight_for :catalog, only: [:export]
+    concern :searchable, Blacklight::Routes::Searchable.new
 
-    resources :catalog, only: [:index, :show, :edit, :update] do
+    resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
+      concerns :searchable
+
       collection do
         get 'admin'
         get 'autocomplete'
       end
-
-      get 'facet/:id', to: 'catalog#facet', as: 'catalog_facet'
-
-      put 'visiblity', to: 'catalog#make_public'
-      delete 'visiblity', to: 'catalog#make_private'
     end
 
-    get 'catalog/:id', to: 'catalog#show', as: 'solr_document'
+    concern :exportable, Blacklight::Routes::Exportable.new
 
-    resources :solr_document, only: [:edit], to: 'catalog#edit'
+    resources :solr_documents, except: [:index], path: '/catalog', controller: 'catalog' do
+      concerns :exportable
+
+      member do
+        put 'visibility', action: 'make_public'
+        delete 'visibility', action: 'make_private'
+      end
+    end
 
     resources :custom_fields
 

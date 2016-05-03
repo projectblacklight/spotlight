@@ -21,13 +21,13 @@ describe 'Catalog', type: :feature do
     end
 
     it "has a 'Item Visiblity' facet" do
-      visit spotlight.exhibit_catalog_index_path(exhibit)
+      visit spotlight.search_exhibit_catalog_path(exhibit)
       expect(page).to have_selector '.panel-title', text: 'Item Visibility'
     end
   end
   describe 'Non-spotlight #show' do
     it 'is able to render without exhibit context' do
-      visit catalog_path('dq287tq6352')
+      visit solr_document_path('dq287tq6352')
       expect(page).to have_css 'h1', text: "L'AMERIQUE"
     end
   end

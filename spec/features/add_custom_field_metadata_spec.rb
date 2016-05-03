@@ -12,7 +12,7 @@ describe 'Adding custom metadata field data', type: :feature do
   end
 
   it 'works' do
-    visit spotlight.exhibit_catalog_path(exhibit, 'dq287tq6352')
+    visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
 
     expect(page).to have_link 'Edit'
 
@@ -25,7 +25,7 @@ describe 'Adding custom metadata field data', type: :feature do
     expect(::SolrDocument.find('dq287tq6352').sidecar(exhibit).data).to include 'field_name_tesim' => 'My new custom field value'
     sleep(1) # The data isn't commited to solr immediately.
 
-    visit spotlight.exhibit_catalog_path(exhibit, 'dq287tq6352')
+    visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
     expect(page).to have_content 'Some Field'
     expect(page).to have_content 'My new custom field value'
   end
@@ -44,7 +44,7 @@ describe 'Adding custom metadata field data', type: :feature do
   end
 
   it 'has a public toggle' do
-    visit spotlight.exhibit_catalog_path(exhibit, 'dq287tq6352')
+    visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
 
     expect(page).not_to have_selector '.blacklight-private'
 

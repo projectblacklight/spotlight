@@ -24,7 +24,7 @@ describe 'spotlight/searches/edit.html.erb', type: :view do
 
   it 'renders a form w/ the appropriate autocomplete data attribute' do
     render
-    expect(rendered).to have_selector 'form[data-autocomplete-exhibit-catalog-index-path]'
+    expect(rendered).to have_selector 'form[data-autocomplete-exhibit-catalog-path]'
   end
 
   it 'renders active search constraints' do

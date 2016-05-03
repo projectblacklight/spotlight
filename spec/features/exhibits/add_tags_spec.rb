@@ -10,7 +10,7 @@ describe 'Add tags to an item in an exhibit', type: :feature do
   end
 
   it 'changes and display the of tags' do
-    visit spotlight.exhibit_catalog_path(exhibit, 'dq287tq6352')
+    visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
 
     expect(page).to have_link 'Edit'
 
@@ -20,7 +20,7 @@ describe 'Add tags to an item in an exhibit', type: :feature do
 
     click_on 'Save changes'
 
-    visit spotlight.exhibit_catalog_path(exhibit, 'dq287tq6352')
+    visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
 
     within('dd.blacklight-exhibit_tags') do
       expect(page).to have_selector 'a', text: 'One'

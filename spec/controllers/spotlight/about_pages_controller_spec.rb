@@ -4,8 +4,6 @@ describe Spotlight::AboutPagesController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { 'title' => 'MyString' } }
 
-  it { is_expected.to be_a Spotlight::Catalog::AccessControlsEnforcement }
-
   describe 'when not logged in' do
     describe 'POST update_all' do
       let(:exhibit) { FactoryGirl.create(:exhibit) }
