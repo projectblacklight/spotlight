@@ -29,7 +29,7 @@ module Spotlight
         full_images: doc.spotlight_image_versions.try(:full),
         image_versions: doc.spotlight_image_versions.image_versions(:thumb, :full),
         description: doc.id,
-        url: exhibit_catalog_path(current_exhibit, doc),
+        url: polymorphic_path([current_exhibit, doc]),
         private: doc.private?(current_exhibit),
         global_id: doc.to_global_id.to_s
       }

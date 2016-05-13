@@ -31,7 +31,7 @@ module Spotlight
     end
 
     def search_builder
-      search_builder_class.new(true, self)
+      search_builder_class.new(self)
     end
 
     def solr_response

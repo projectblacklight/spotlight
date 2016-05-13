@@ -6,8 +6,6 @@ describe Spotlight::HomePagesController, type: :controller do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:page) { exhibit.home_page }
 
-  it { is_expected.to be_a Spotlight::Catalog::AccessControlsEnforcement }
-
   describe 'when signed in as a curator' do
     let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
     before do

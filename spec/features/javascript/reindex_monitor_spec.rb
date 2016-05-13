@@ -9,7 +9,7 @@ feature 'Reindex Monitor', js: true do
 
   before do
     login_as exhibit_curator
-    visit spotlight.admin_exhibit_catalog_index_path(exhibit)
+    visit spotlight.admin_exhibit_catalog_path(exhibit)
   end
 
   it 'is rendered on the item admin page' do

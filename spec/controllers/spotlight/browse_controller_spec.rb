@@ -7,8 +7,6 @@ describe Spotlight::BrowseController, type: :controller do
   let!(:unpublished) { FactoryGirl.create(:search, exhibit: exhibit) }
   let(:admin) { FactoryGirl.create(:site_admin) }
 
-  it { is_expected.to be_a Spotlight::Catalog::AccessControlsEnforcement }
-
   describe 'when authenticated as an admin' do
     before { sign_in admin }
     describe 'GET index' do

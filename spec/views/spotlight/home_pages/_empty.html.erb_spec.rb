@@ -8,7 +8,7 @@ describe 'spotlight/home_pages/_empty.html.erb', type: :view do
                                       edit_exhibit_path: '/',
                                       edit_exhibit_appearance_path: '/',
                                       exhibit_roles_path: '/',
-                                      admin_exhibit_catalog_index_path: '/',
+                                      admin_exhibit_catalog_path: '/',
                                       edit_exhibit_metadata_configuration_path: '/',
                                       edit_exhibit_search_configuration_path: '/')
     end
