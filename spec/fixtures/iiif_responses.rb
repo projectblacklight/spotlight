@@ -114,6 +114,7 @@ module IiifResponses
                   "@type": 'oa:Annotation',
                   "resource": {
                     "@type": 'dcterms:Image',
+                    "@id": 'uri://full-image',
                     "service": {
                       "@id": 'uri://to-image-service'
                     }

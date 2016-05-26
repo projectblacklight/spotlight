@@ -15,6 +15,7 @@ module Spotlight
         add_document_id
         add_label
         add_thumbnail_url
+        add_full_image_urls
         add_manifest_url
         add_image_urls
         add_metadata
@@ -56,6 +57,11 @@ module Spotlight
       def add_thumbnail_url
         return unless thumbnail_field && manifest['thumbnail'].present?
         solr_hash[thumbnail_field] = manifest['thumbnail']['@id']
+      end
+
+      def add_full_image_urls
+        return unless full_image_field && full_image_url
+        solr_hash[full_image_field] = full_image_url
       end
 
       def add_label
@@ -112,6 +118,10 @@ module Spotlight
         end
       end
 
+      def full_image_url
+        resources.first.try(:[], '@id')
+      end
+
       def resources
         @resources ||= sequences
                        .flat_map(&:canvases)
@@ -125,6 +135,10 @@ module Spotlight
 
       def thumbnail_field
         blacklight_config.index.try(:thumbnail_field)
+      end
+
+      def full_image_field
+        Spotlight::Engine.config.full_image_field
       end
 
       def tile_source_field
