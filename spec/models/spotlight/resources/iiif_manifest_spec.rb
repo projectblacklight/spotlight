@@ -52,6 +52,12 @@ describe Spotlight::Resources::IiifManifest do
       end
     end
 
+    describe 'full size image url' do
+      it "is included in the solr document" do
+        expect(subject.to_solr[:full_image_url_ssm]).to eq 'uri://full-image'
+      end
+    end
+
     describe 'image urls' do
       it 'is included in the solr document when present' do
         expect(subject.to_solr[:content_metadata_image_iiif_info_ssm]).to eq ['uri://to-image-service/info.json']
