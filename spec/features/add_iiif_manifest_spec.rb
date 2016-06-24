@@ -6,7 +6,7 @@ describe 'adding IIIF Manifest', type: :feature do
   before { login_as curator }
 
   it 'has form to add IIIF Manifests' do
-    visit spotlight.admin_exhibit_catalog_index_path(exhibit)
+    visit spotlight.admin_exhibit_catalog_path(exhibit)
     click_link 'Add items'
 
     expect(page).to have_link('IIIF URL') # tab name
@@ -18,7 +18,7 @@ describe 'adding IIIF Manifest', type: :feature do
   it 'submits the form to create a new item' do
     expect_any_instance_of(Spotlight::Resource).to receive(:reindex_later)
     url = 'https://purl.stanford.edu/vw754mr2281/iiif/manifest.json'
-    visit spotlight.admin_exhibit_catalog_index_path(exhibit)
+    visit spotlight.admin_exhibit_catalog_path(exhibit)
 
     click_link 'Add items'
     fill_in 'URL', with: url
@@ -29,7 +29,7 @@ describe 'adding IIIF Manifest', type: :feature do
   end
 
   it 'returns an error message if the URL returned in not a IIIF endpoint' do
-    visit spotlight.admin_exhibit_catalog_index_path(exhibit)
+    visit spotlight.admin_exhibit_catalog_path(exhibit)
 
     click_link 'Add items'
     fill_in 'URL', with: 'http://example.com'
