@@ -28,3 +28,4 @@ else
   end
 end
 # END ENGINE_CART BLOCK
+gem 'blacklight-spotlight', github: 'projectblacklight/spotlight'
