@@ -69,6 +69,12 @@ describe Spotlight::CustomField, type: :model do
       subject.save
       expect(subject.field).to end_with Spotlight::Engine.config.solr_fields.string_suffix
     end
+
+    it 'begins with readonly if it is readonly' do
+      subject.readonly_field = true
+      subject.save
+      expect(subject.field).to start_with('readonly_')
+    end
   end
 
   describe '#solr_field' do

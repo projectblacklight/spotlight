@@ -17,7 +17,7 @@ module Spotlight
     end
 
     before_save do
-      update_field_name(field_name) if persisted? && field_type_changed?
+      update_field_name(field_name) if update_field_name?
     end
 
     def label=(label)
@@ -74,24 +74,11 @@ module Spotlight
     end
 
     def field_name
-      "#{field_slug}#{field_suffix}"
-    end
-
-    def field_slug
-      configuration['label'].parameterize
+      CustomFieldName.new(self).to_s
     end
 
     def solr_field_prefix
       document_model.solr_field_prefix(exhibit)
-    end
-
-    def field_suffix
-      case field_type
-      when 'vocab'
-        Spotlight::Engine.config.solr_fields.string_suffix
-      else
-        Spotlight::Engine.config.solr_fields.text_suffix
-      end
     end
 
     def view_types
@@ -134,6 +121,10 @@ module Spotlight
 
     def document_model
       blacklight_configuration.document_model
+    end
+
+    def update_field_name?
+      persisted? && (field_type_changed? || readonly_field_changed?)
     end
   end
 end
