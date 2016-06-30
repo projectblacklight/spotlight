@@ -34,5 +34,11 @@ describe Spotlight::MainAppHelpers, type: :helper do
       before { allow(helper).to receive_messages current_exhibit: nil }
       its(:show_contact_form?) { should be_falsey }
     end
+
+    context 'with a default contact address' do
+      before { allow(Spotlight::Engine.config).to receive_messages default_contact_email: 'root@localhost' }
+      before { allow(helper).to receive_messages current_exhibit: exhibit }
+      its(:show_contact_form?) { should be_truthy }
+    end
   end
 end

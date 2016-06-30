@@ -154,6 +154,9 @@ module Spotlight
 
     config.default_browse_index_view_type = :gallery
 
+    # default email address to send "Report a Problem" feedback to (in addition to any exhibit-specific contacts)
+    config.default_contact_email = nil
+
     initializer 'blacklight.configuration' do
       # Field containing the last modified date for a Solr document
       Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'

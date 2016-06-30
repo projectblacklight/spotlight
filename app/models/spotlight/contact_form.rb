@@ -15,7 +15,7 @@ module Spotlight
     def headers
       {
         subject: "#{I18n.t(:'blacklight.application_name')} Contact Form",
-        to: current_exhibit.contact_emails.first,
+        to: Spotlight::Engine.config.default_contact_email || current_exhibit.contact_emails.first.to_s,
         from: %("#{name}" <#{email}>),
         cc: current_exhibit.contact_emails.join(', ')
       }

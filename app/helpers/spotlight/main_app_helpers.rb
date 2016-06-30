@@ -16,7 +16,7 @@ module Spotlight
     end
 
     def show_contact_form?
-      current_exhibit && current_exhibit.contact_emails.confirmed.any?
+      current_exhibit && (Spotlight::Engine.config.default_contact_email || current_exhibit.contact_emails.confirmed.any?)
     end
 
     def link_back_to_catalog(opts = { label: nil })
