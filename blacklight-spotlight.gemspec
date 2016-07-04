@@ -63,7 +63,7 @@ these collections.)
   s.add_development_dependency 'factory_girl', '~> 4.5'
   s.add_development_dependency 'engine_cart', '~> 0.9'
   s.add_development_dependency 'database_cleaner', '~> 1.3'
-  s.add_development_dependency 'jettywrapper'
+  s.add_development_dependency 'solr_wrapper'
   s.add_development_dependency 'simplecov', '~> 0.10.0'
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'sitemap_generator'

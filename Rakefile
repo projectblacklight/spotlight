@@ -4,8 +4,6 @@ rescue LoadError
   puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
 end
 
-ZIP_URL = 'https://github.com/projectblacklight/blacklight-jetty/archive/v4.10.4.zip'.freeze
-
 require 'rdoc/task'
 
 RDoc::Task.new(:rdoc) do |rdoc|
@@ -18,40 +16,33 @@ end
 
 Bundler::GemHelper.install_tasks
 
+require 'solr_wrapper'
+
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
 require 'rubocop/rake_task'
 RuboCop::RakeTask.new(:rubocop)
 
-require 'jettywrapper'
-
 require 'engine_cart/rake_task'
 EngineCart.fingerprint_proc = EngineCart.rails_fingerprint_proc
 
 require 'spotlight/version'
 
-task ci: ['engine_cart:generate', 'jetty:clean', 'spotlight:configure_jetty'] do
+task ci: ['engine_cart:generate'] do
   ENV['environment'] = 'test'
-  jetty_params = Jettywrapper.load_config
-  jetty_params[:startup_wait] = 60
 
-  Jettywrapper.wrap(jetty_params) do
-    Rake::Task['spotlight:fixtures'].invoke
+  SolrWrapper.wrap(port: '8983') do |solr|
+    solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path(File.dirname(__FILE__)), 'solr_conf', 'conf')) do
+      Rake::Task['spotlight:fixtures'].invoke
 
-    # run the tests
-    Rake::Task['spec'].invoke
+      # run the tests
+      Rake::Task['spec'].invoke
+    end
   end
 end
 
 namespace :spotlight do
-  desc 'Copies the default SOLR config for the bundled Testing Server'
-  task :configure_jetty do
-    FileList['solr_conf/conf/*'].each do |f|
-      cp(f, 'jetty/solr/blacklight-core/conf/', verbose: true)
-    end
-  end
-
   desc 'Load fixtures'
   task fixtures: ['engine_cart:generate'] do
     within_test_app do
@@ -64,22 +55,16 @@ namespace :spotlight do
   task :server do
     Rake::Task['engine_cart:generate'].invoke
 
-    unless File.exist? 'jetty'
-      Rake::Task['jetty:clean'].invoke
-      Rake::Task['spotlight:configure_jetty'].invoke
-    end
-
-    jetty_params = Jettywrapper.load_config
-    jetty_params[:startup_wait] = 60
-
-    Jettywrapper.wrap(jetty_params) do
-      within_test_app do
-        unless File.exist? '.initialized'
-          system 'bundle exec rake spotlight:initialize'
-          system 'bundle exec rake spotlight_test:solr:seed'
-          File.open('.initialized', 'w') {}
+    SolrWrapper.wrap(port: '8983') do |solr|
+      solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path(File.dirname(__FILE__)), 'solr_conf', 'conf')) do
+        within_test_app do
+          unless File.exist? '.initialized'
+            system 'bundle exec rake spotlight:initialize'
+            system 'bundle exec rake spotlight_test:solr:seed'
+            File.open('.initialized', 'w') {}
+          end
+          system 'bundle exec rails s'
         end
-        system 'bundle exec rails s'
       end
     end
   end
@@ -111,9 +96,10 @@ namespace :spotlight do
             Bundler.with_clean_env do
               Dir.chdir('internal') do
                 APP_ROOT = Dir.pwd
-                jetty_params = Jettywrapper.load_config
-                Jettywrapper.wrap(jetty_params) do
-                  system 'bundle exec rails s'
+                SolrWrapper.wrap(port: '8983') do |solr|
+                  solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path('..', File.dirname(__FILE__)), 'solr', 'conf')) do
+                    system 'bundle exec rails s'
+                  end
                 end
               end
             end
