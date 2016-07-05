@@ -1,6 +1,6 @@
 default:
   jetty_port: 8983
 test:
-  jetty_port: <%= ENV['TEST_JETTY_PORT'] || 8888 %>
+  jetty_port: <%= ENV['TEST_JETTY_PORT'] || 8983 %>
   jetty_home: <%= ENV['TEST_JETTY_PATH'] || File.expand_path(File.join('..', 'jetty'), __FILE__) %>
   startup_wait: 15

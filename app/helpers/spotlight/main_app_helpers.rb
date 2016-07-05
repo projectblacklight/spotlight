@@ -25,5 +25,14 @@ module Spotlight
       end
       super
     end
+
+    def presenter(document)
+      case action_name
+      when 'index'
+        super
+      else
+        show_presenter(document)
+      end
+    end
   end
 end

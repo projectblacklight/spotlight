@@ -22,7 +22,7 @@ module Spotlight
     def autocomplete_json_response_for_document(doc)
       {
         id: doc.id,
-        title: CGI.unescapeHTML(view_context.presenter(doc).document_heading.to_str),
+        title: CGI.unescapeHTML(view_context.presenter(doc).heading.to_str),
         thumbnail: doc.first(blacklight_config.index.thumbnail_field),
         thumbnails: doc.spotlight_image_versions.try(:thumb) || doc[blacklight_config.index.thumbnail_field],
         full_image_url: doc.spotlight_image_versions.try(:full).try(:first),
