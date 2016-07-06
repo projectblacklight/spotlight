@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version = Spotlight::VERSION
   s.authors = ['Chris Beer', 'Jessie Keck', 'Gary Geisler', 'Justin Coyne']
   s.email = ['exhibits-feedback@lists.stanford.edu']
-  s.homepage = 'https://github.com/sul-dlss/spotlight'
+  s.homepage = 'https://github.com/projectblacklight/spotlight'
   s.summary = %(Enable librarians, curators, and others who are responsible
 for digital collections to create attractive, feature-rich websites that feature
 these collections.)
