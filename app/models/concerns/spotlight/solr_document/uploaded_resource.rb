@@ -22,8 +22,7 @@ module Spotlight
             image_url,
             width: self[:spotlight_full_image_width_ssm][index],
             height: self[:spotlight_full_image_height_ssm][index]
-          ) => {}
-          }
+          ) => {} }
         end
       end
 

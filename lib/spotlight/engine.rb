@@ -117,7 +117,7 @@ module Spotlight
     config.featured_image_square_size = [400, 400]
 
     initializer 'spotlight-assets.initialize' do
-      Rails.application.config.assets.precompile += %w( Jcrop.gif )
+      Rails.application.config.assets.precompile += %w(Jcrop.gif)
     end
 
     # To present curators with analytics reports on the exhibit dashboard, you need to configure

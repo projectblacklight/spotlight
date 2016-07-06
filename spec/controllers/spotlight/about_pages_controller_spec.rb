@@ -122,7 +122,8 @@ describe Spotlight::AboutPagesController, type: :controller do
       it 'updates contacts' do
         patch :update_contacts, exhibit_id: exhibit, exhibit: { contacts_attributes: [
           { 'show_in_sidebar' => '1', 'id' => contact1.id, weight: 1 },
-          { 'show_in_sidebar' => '0', 'id' => contact2.id, weight: 2 }] }
+          { 'show_in_sidebar' => '0', 'id' => contact2.id, weight: 2 }
+        ] }
         expect(response).to redirect_to exhibit_about_pages_path(exhibit)
         expect(flash[:notice]).to eq 'Contacts were successfully updated.'
         expect(exhibit.contacts.size).to eq 2
@@ -135,7 +136,8 @@ describe Spotlight::AboutPagesController, type: :controller do
         patch :update_contacts, exhibit_id: exhibit, exhibit: { contacts_attributes: [
           { 'show_in_sidebar' => '1', 'name' => 'Justin Coyne', 'email' => 'jcoyne@justincoyne.com', 'title' => '', 'location' => 'US' },
           { 'show_in_sidebar' => '0', 'name' => '', 'email' => '', 'title' => '', 'location' => '' },
-          { 'show_in_sidebar' => '0', 'name' => '', 'email' => '', 'title' => 'Librarian', 'location' => '' }] }
+          { 'show_in_sidebar' => '0', 'name' => '', 'email' => '', 'title' => 'Librarian', 'location' => '' }
+        ] }
         expect(response).to render_template('index')
       end
     end

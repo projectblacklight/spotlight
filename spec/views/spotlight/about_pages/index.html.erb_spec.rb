@@ -6,23 +6,19 @@ describe 'spotlight/about_pages/index.html.erb', type: :view do
       stub_model(Spotlight::AboutPage,
                  title: 'Title1',
                  content: '[]',
-                 exhibit: exhibit
-                ),
+                 exhibit: exhibit),
       stub_model(Spotlight::AboutPage,
                  title: 'Title2',
                  content: '[]',
-                 exhibit: exhibit
-                )
+                 exhibit: exhibit)
     ]
   end
   let(:contacts) do
     [
       stub_model(Spotlight::Contact,
-                 exhibit: exhibit
-                ),
+                 exhibit: exhibit),
       stub_model(Spotlight::Contact,
-                 exhibit: exhibit
-                )
+                 exhibit: exhibit)
     ]
   end
   let(:exhibit) { stub_model(Spotlight::Exhibit) }

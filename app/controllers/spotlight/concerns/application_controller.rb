@@ -27,12 +27,11 @@ module Spotlight
       end
 
       def enabled_in_spotlight_view_type_configuration?(config, *args)
-        case
-        when config.respond_to?(:upstream_if) &&
-          !config.upstream_if.nil? &&
-          !blacklight_configuration_context.evaluate_configuration_conditional(config.upstream_if, config, *args)
+        if config.respond_to?(:upstream_if) &&
+           !config.upstream_if.nil? &&
+           !blacklight_configuration_context.evaluate_configuration_conditional(config.upstream_if, config, *args)
           false
-        when current_exhibit.nil? || is_a?(Spotlight::PagesController)
+        elsif current_exhibit.nil? || is_a?(Spotlight::PagesController)
           true
         else
           current_exhibit.blacklight_configuration.document_index_view_types.include? config.key.to_s
@@ -41,16 +40,15 @@ module Spotlight
 
       # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength
       def field_enabled?(field, *args)
-        case
-        when !field.enabled
+        if !field.enabled
           false
-        when field.respond_to?(:upstream_if) &&
-          !field.upstream_if.nil? &&
-          !blacklight_configuration_context.evaluate_configuration_conditional(field.upstream_if, field, *args)
+        elsif field.respond_to?(:upstream_if) &&
+              !field.upstream_if.nil? &&
+              !blacklight_configuration_context.evaluate_configuration_conditional(field.upstream_if, field, *args)
           false
-        when field.is_a?(Blacklight::Configuration::SortField) || field.is_a?(Blacklight::Configuration::SearchField)
+        elsif field.is_a?(Blacklight::Configuration::SortField) || field.is_a?(Blacklight::Configuration::SearchField)
           field.enabled
-        when field.is_a?(Blacklight::Configuration::FacetField) || (is_a?(Blacklight::Catalog) && %w(edit show).include?(action_name))
+        elsif field.is_a?(Blacklight::Configuration::FacetField) || (is_a?(Blacklight::Catalog) && %w(edit show).include?(action_name))
           field.show
         else
           field.send(document_index_view_type)

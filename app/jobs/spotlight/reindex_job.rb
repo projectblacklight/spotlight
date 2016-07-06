@@ -15,10 +15,9 @@ module Spotlight
     private
 
     def resource_list(exhibit_or_resources)
-      case
-      when exhibit_or_resources.is_a?(Spotlight::Exhibit)
+      if exhibit_or_resources.is_a?(Spotlight::Exhibit)
         exhibit_or_resources.resources.find_each
-      when exhibit_or_resources.is_a?(Enumerable)
+      elsif exhibit_or_resources.is_a?(Enumerable)
         exhibit_or_resources
       else
         Array(exhibit_or_resources)

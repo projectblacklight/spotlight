@@ -11,7 +11,8 @@ module Spotlight
         current_exhibit: exhibit,
         blacklight_config: exhibit.blacklight_configuration,
         available_view_fields: { some_view_type: 1, another_view_type: 2 },
-        select_deselect_button: nil)
+        select_deselect_button: nil
+      )
     end
 
     let(:facet_field) { Blacklight::Configuration::FacetField.new }
