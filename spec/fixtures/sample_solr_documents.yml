@@ -99,7 +99,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_[]_tesim:
   - 'Dedication: A Monseigneur le Dauphin, parson tres-humble, tres-obeifsant, et
     tres-fidele serviteur, P. DvVal Geographe du Roy.'
@@ -251,7 +251,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_[]_tesim:
   - From Eptiome Geographiae Cluverianae Nova...Phillippi Cluverii? 1727
   - In Latin.
@@ -410,7 +410,7 @@
   coordinates_tesim:
   - "(W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)"
   point_bbox:
-  - "-173.0 7.166666666666667 -10.0 84.0"
+  - "ENVELOPE(-10.0, -173.0, 84.0, 7.166666666666667)"
   note_State 2_tesim:
   - 'At page top, above map: das Mitternächtige America. Fig: 8. Barania R is unlabeled.
     With French title inside border and German title outside border.'
@@ -576,7 +576,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_State 1_tesim:
   - '1626, "Are to be sold in pops-head alley against the Exchange by G. Humble, 1626".
     Issued in his: A prospect of the most famous parts of the world . -- London :
@@ -756,7 +756,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_State 2_tesim:
   - 'Without ‘fol.4’; with shortened title: PLANISPHERE URANO-GEOGRAPHIQUE c''estadire
     LES SPHERES CELESTE et TERRESTRE mises en plan; and without much text on map;
@@ -903,7 +903,7 @@
   coordinates_tesim:
   - "(W 180° --E 180°/N 85° --S 85°)"
   point_bbox:
-  - "-180.0 -85.0 180.0 85.0"
+  - "ENVELOPE(180.0, -180.0, 85.0, -85.0)"
   note_[]_tesim:
   - Includes bibliographical references (p. xv-xvi) and indexes.
   note_Statement of responsibility_tesim:
@@ -1041,7 +1041,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_[]_tesim:
   - 'California with indented northern coast. California shown on 3 of the 18 maps.
     Map titles with paragraph of descriptive text for each (from top left): L''Ameriqve,
@@ -1389,7 +1389,7 @@
   coordinates_tesim:
   - "(W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)"
   point_bbox:
-  - "-173.0 7.166666666666667 -10.0 84.0"
+  - "ENVELOPE(-10.0, -173.0, 84.0, 7.166666666666667)"
   note_State 7_tesim:
   - A later reproduction probably copied from the first (1674) state. Based upon the
     cartography and the dating, it appears to have been produced between 1674 and
@@ -1565,7 +1565,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_State 3_tesim:
   - Undated, with imprint Apud Carolum Allard.
   note_Statement of responsibility_tesim:
@@ -1717,7 +1717,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_State 1_tesim:
   - 'JKS NOTE: Two maps are on this record: one in black and white, one in color.'
   note_[]_tesim:
@@ -1869,7 +1869,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_[]_tesim:
   - California as an island on second Sanson model, and with M. Nevada, several points,
     and one town, St Isidore, marked.
@@ -2024,7 +2024,7 @@
   coordinates_tesim:
   - "(W 0° --E 0°/N 90° --N 90°)"
   point_bbox:
-  - "-0.0 90.0 0.0 90.0"
+  - "ENVELOPE(0.0, -0.0, 90.0, 90.0)"
   note_[]_tesim:
   - Tycho Brahe’s theory of the universe is diagrammed.
   - 'Koeman IV, Cel 1(6); Celestial charts, antique maps of the heavens, p. 58-59
@@ -2561,7 +2561,7 @@
   coordinates_tesim:
   - "(W 21° --E 159°/N 90° --S 90°)"
   point_bbox:
-  - "-21.0 -90.0 159.0 90.0"
+  - "ENVELOPE(159.0, -21.0, 90.0, -90.0)"
   note_State 1_tesim:
   - 'With no imprint. Issued in: Atlas coelestis; seu harmonia macrocosmica (Celestial
     atlas of universal harmony). -- Amstelodami : apud Joannem Janssonium, 1660, 1661.'
@@ -2730,7 +2730,7 @@
   coordinates_tesim:
   - "(W 0° --E 0°/N 90° --N 90°)"
   point_bbox:
-  - "-0.0 90.0 0.0 90.0"
+  - "ENVELOPE(0.0, -0.0, 90.0, 90.0)"
   note_[]_tesim:
   - Copperplate engraved.
   - L.C. 469, 4274; Koeman IV,Cel 1(19); Cel 2, Cel 3.
@@ -3066,7 +3066,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_[]_tesim:
   - California with nearly flat northern coast and many coastal place names. TERRA
     ESONIS INCOGNITA and Fretum Anian to northwest, and Paye de Moozemleck to north.
@@ -3211,7 +3211,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_[]_tesim:
   - California with indented northern coastline and without place names, except on
     State 9, which is engraved by H. van Loon. Mainland coastline continues northwest
@@ -3371,7 +3371,7 @@
   coordinates_tesim:
   - "(W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)"
   point_bbox:
-  - "-173.0 7.166666666666667 -10.0 84.0"
+  - "ENVELOPE(-10.0, -173.0, 84.0, 7.166666666666667)"
   note_State 2_tesim:
   - '1690, with “augmentée et corrigée en cette seconde edition” inserted in title
     above Par G. Sanson, and with additions of Detroit d''Anien, Nouvelle Albion,
@@ -3541,7 +3541,7 @@
   coordinates_tesim:
   - "(W 0° --E 0°/N 90° --N 90°)"
   point_bbox:
-  - "-0.0 90.0 0.0 90.0"
+  - "ENVELOPE(0.0, -0.0, 90.0, 90.0)"
   note_State 1_tesim:
   - 'At page top, above map: TERRES ARCTIQUES. [PAGE] 273[,] FIGURE XCIX. [Figure]273
     (map top right). Tome I. (page bottom left) and S (page bottom right). Issued
@@ -3710,7 +3710,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_State 2_tesim:
   - Similar to DeWit's map of same title, with copied title cartouche and plaque surrounded
     by angels. New Guinea, Solomon Islands and Quiri Regio, Fretum Aniani and Terra
@@ -3866,7 +3866,7 @@
   coordinates_tesim:
   - "(W 180° --E 180°/N 85° --S 85°)"
   point_bbox:
-  - "-180.0 -85.0 180.0 85.0"
+  - "ENVELOPE(180.0, -180.0, 85.0, -85.0)"
   note_[]_tesim:
   - Western Hemisphere of azimuthal equal-area projection. No place names except for
     the label “America” on the continent. Attempt to show the ocean floor in relief.
@@ -4025,7 +4025,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_State 2_tesim:
   - "[1721?], with changed imprint: Per Caroli Allard ex Officina I. Cóvens et C.
     Mortier Cum Privilegio. Possibly a separate issue as it is not noted in the known
@@ -4186,7 +4186,7 @@
   coordinates_tesim:
   - "(E 110° --W 70°/N 63° --S 53°)"
   point_bbox:
-  - 110.0 -53.0 -70.0 63.0
+  - ENVELOPE(-70.0, 110.0, 63.0, -53.0)
   note_[]_tesim:
   - California with indented northern coast. Map in reverse.
   - '"INSVLA CALIFORNIA" AND "MARE VERMEIO" on map left and "IAPONIA","TARTARIA",
@@ -4358,7 +4358,7 @@
   coordinates_tesim:
   - "(W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)"
   point_bbox:
-  - "-173.0 7.166666666666667 -10.0 84.0"
+  - "ENVELOPE(-10.0, -173.0, 84.0, 7.166666666666667)"
   note_State 1_tesim:
   - In French. California with flat northern coastline.
   note_State 2_tesim:
@@ -4730,7 +4730,7 @@
   coordinates_tesim:
   - "(E 110° --W 70°/N 63° --S 53°)"
   point_bbox:
-  - 110.0 -53.0 -70.0 63.0
+  - ENVELOPE(-70.0, 110.0, 63.0, -53.0)
   note_State 3_tesim:
   - 'Issued by Hendrick Doncker, in Amsterdam. Without island chain. Dedication: Ampl.mo
     Spectat.mo Gravissimog Viro D.D. Georgio Backer... Hendrick Doncker. (lower left),
@@ -4894,7 +4894,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_State 8_tesim:
   - 1684, with additions of "Partie de la grande Terre Australe" added (lower right)
     and pictorial cartouche of native and his canoe and net surrounds "Explication
@@ -5058,7 +5058,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_[]_tesim:
   - California with flat northern coast sloping up to east. Destroit d' Anien, Anien,
     and Terre de Iesso to the north.
@@ -5396,7 +5396,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_State 1_tesim:
   - Date, 1660, within title cartouche; 'f.o 2' (top right)
   note_State 2_tesim:
@@ -5559,7 +5559,7 @@
   coordinates_tesim:
   - "(W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)"
   point_bbox:
-  - "-173.0 7.166666666666667 -10.0 84.0"
+  - "ENVELOPE(-10.0, -173.0, 84.0, 7.166666666666667)"
   note_[]_tesim:
   - Nordenskiöld Collection, 3, Vol.I, 610 (1, State 2); Nordenskiöld Collection,
     3, 398 Vol.II (11, State 3); UCB (State 6).
@@ -5745,7 +5745,7 @@
   coordinates_tesim:
   - "(W 0° --E 0°/N 90° --N 90°)"
   point_bbox:
-  - "-0.0 90.0 0.0 90.0"
+  - "ENVELOPE(0.0, -0.0, 90.0, 90.0)"
   note_State 1_tesim:
   - See general notes.
   note_State 2_tesim:
@@ -5913,7 +5913,7 @@
   coordinates_tesim:
   - "(W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)"
   point_bbox:
-  - "-173.0 7.166666666666667 -10.0 84.0"
+  - "ENVELOPE(-10.0, -173.0, 84.0, 7.166666666666667)"
   note_State 1_tesim:
   - 'With “Fol 65” (top left). Issued in: West-Indische Spieghel / Athanasium Inga.
     -- Amsterdam, 1624.'
@@ -6084,7 +6084,7 @@
   coordinates_tesim:
   - "(W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)"
   point_bbox:
-  - "-173.0 7.166666666666667 -10.0 84.0"
+  - "ENVELOPE(-10.0, -173.0, 84.0, 7.166666666666667)"
   note_State 1_tesim:
   - tom 2. P296 (top right, within border)
   note_State 2_tesim:
@@ -6261,7 +6261,7 @@
   coordinates_tesim:
   - "(W 180° --E 180°/N 85° --S 85°)"
   point_bbox:
-  - "-180.0 -85.0 180.0 85.0"
+  - "ENVELOPE(180.0, -180.0, 85.0, -85.0)"
   note_State 2_tesim:
   - With seven astronomical charts surrounding the map. Longitude and latitude lines
     marked along the equator and the center latitude line, respectively.
@@ -6420,7 +6420,7 @@
   coordinates_tesim:
   - "(W 125° --W 110°/N 47° --N 31°)"
   point_bbox:
-  - "-125.0 31.0 -110.0 47.0"
+  - "ENVELOPE(-110.0, -125.0, 47.0, 31.0)"
   note_[]_tesim:
   - 'California as an island with flat northern coast and place names including Pt.
     Sr. Franc Draco, C. Mendocino at northnmost place on island, and Anian to the
@@ -6556,7 +6556,7 @@
   coordinates_tesim:
   - "(E 110° --W 70°/N 63° --S 53°)"
   point_bbox:
-  - 110.0 -53.0 -70.0 63.0
+  - ENVELOPE(-70.0, 110.0, 63.0, -53.0)
   note_[]_tesim:
   - Includes bibliographical references (p. xv-xvi) and indexes.
   note_Statement of responsibility_tesim:
@@ -6856,7 +6856,7 @@
   coordinates_tesim:
   - "(W 21° --E 159°/N 90° --S 90°)"
   point_bbox:
-  - "-21.0 -90.0 159.0 90.0"
+  - "ENVELOPE(159.0, -21.0, 90.0, -90.0)"
   note_[]_tesim:
   - Asian continent, including eastern Mediterranean Sea, and northern part of Australia.
   - Title with vignette to its right of Asian natives working with bundled goods;
@@ -7004,7 +7004,7 @@
   coordinates_tesim:
   - "(W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)"
   point_bbox:
-  - "-173.0 7.166666666666667 -10.0 84.0"
+  - "ENVELOPE(-10.0, -173.0, 84.0, 7.166666666666667)"
   note_State 1_tesim:
   - 'Pagination above map: "III.c". No text below map. Issued in his: Kurtz-bündige
     Abbildund Vorstellung der Gantzen Welt, Ulm, Georg Wilhelm Kühnen, 1692'
@@ -7403,7 +7403,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_State 2_tesim:
   - 'On single undated sheet or two sheets, with "fol.21" (top right). "Page 21. |
     I.re partie | de L''Introduction" (bottom right). Single sheet includes “La Sphere
@@ -7564,7 +7564,7 @@
   coordinates_tesim:
   - "(W 0° --E 0°/N 90° --N 90°)"
   point_bbox:
-  - "-0.0 90.0 0.0 90.0"
+  - "ENVELOPE(0.0, -0.0, 90.0, 90.0)"
   note_[]_tesim:
   - LC 539; Tooley/1(53); Maritime 460;Tom Suarez, correspondence, 1995
   - 'North polar projection with California as an island with rounded northern coastline.
@@ -7729,7 +7729,7 @@
   coordinates_tesim:
   - "(W 92°15ʹ --W 77°10ʹ/N 18°30ʹ --N 7°10ʹ)"
   point_bbox:
-  - "-92.25 7.166666666666667 -77.16666666666667 18.5"
+  - "ENVELOPE(-77.16666666666667, -92.25, 18.5, 7.166666666666667)"
   note_State 1_tesim:
   - See general notes.
   note_State 2_tesim:
@@ -8118,7 +8118,7 @@
   coordinates_tesim:
   - "(W 160° --E 20°/N 90° --S 90°)"
   point_bbox:
-  - "-160.0 -90.0 20.0 90.0"
+  - "ENVELOPE(20.0, -160.0, 90.0, -90.0)"
   note_State 2_tesim:
   - 'With place names: C. Blanco, P. de Monte Rÿ, Canala d. s. Barbara, I. d. s. Catalina,
     s. Clement, I. d. Pararos, P. d. s. Apolline, and C. Lucas. With "MARE" above
@@ -8322,7 +8322,7 @@
   coordinates_tesim:
   - "(W 180° --E 180°/N 85° --S 85°)"
   point_bbox:
-  - "-180.0 -85.0 180.0 85.0"
+  - "ENVELOPE(180.0, -180.0, 85.0, -85.0)"
   note_[]_tesim:
   - "California shown with a rounded northern coastline and labeled California.  Island
     curves sharply to the east giving the appearance of a long nearly flat southern
@@ -8643,7 +8643,7 @@
   coordinates_tesim:
   - "(W 180° --E 180°/N 85° --S 85°)"
   point_bbox:
-  - "-180.0 -85.0 180.0 85.0"
+  - "ENVELOPE(180.0, -180.0, 85.0, -85.0)"
   note_[]_tesim:
   - 'Relief shown pictorially. Two hemispheres. Pacific ocean labeled “The Great South
     Sea” and Atlantic labeled: “Atlantick Ocean”. Great lakes complete. California
@@ -8820,7 +8820,7 @@
   coordinates_tesim:
   - "(W 173°00ʹ --W 10°00ʹ/N 84°00ʹ --N 7°10ʹ)"
   point_bbox:
-  - "-173.0 7.166666666666667 -10.0 84.0"
+  - "ENVELOPE(-10.0, -173.0, 84.0, 7.166666666666667)"
   note_[]_tesim:
   - 'First issued in 1674. Reissued 1685, 1690, 1692, and 1695. Of these, only the
     1692 issue has been seen and listed as a separate state; if the others include
@@ -9197,7 +9197,7 @@
   coordinates_tesim:
   - "(W 92°15ʹ --W 77°10ʹ/N 18°30ʹ --N 7°10ʹ)"
   point_bbox:
-  - "-92.25 7.166666666666667 -77.16666666666667 18.5"
+  - "ENVELOPE(-77.16666666666667, -92.25, 18.5, 7.166666666666667)"
   note_[]_tesim:
   - 'Issued in his: A new voyage round the world / By William Dampier. -- London:
     Printed for James Knapton, 1697.'
