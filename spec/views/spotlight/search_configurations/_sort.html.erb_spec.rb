@@ -8,7 +8,8 @@ module Spotlight
       assign(:blacklight_configuration, exhibit.blacklight_configuration)
       allow(view).to receive_messages(
         current_exhibit: exhibit,
-        translate_sort_fields: '')
+        translate_sort_fields: ''
+      )
     end
 
     let(:f) do

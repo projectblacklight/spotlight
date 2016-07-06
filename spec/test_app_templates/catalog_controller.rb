@@ -1,6 +1,7 @@
 class CatalogController < ApplicationController
   include Blacklight::Catalog
   helper Openseadragon::OpenseadragonHelper
+  before_action :set_paper_trail_whodunnit
 
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params

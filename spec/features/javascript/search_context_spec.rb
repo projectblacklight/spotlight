@@ -24,7 +24,8 @@ feature 'Search contexts' do
             }
           }
         }
-      }].to_json
+      }
+    ].to_json
     exhibit.home_page.save
 
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
@@ -53,7 +54,8 @@ feature 'Search contexts' do
             }
           }
         }
-      }].to_json
+      }
+    ].to_json
     feature_page.save
 
     visit spotlight.exhibit_feature_page_path(exhibit, feature_page)

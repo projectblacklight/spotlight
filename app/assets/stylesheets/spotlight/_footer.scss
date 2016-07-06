@@ -14,30 +14,13 @@
     a {
       display: block;
       margin-bottom: 5px;
-      background: none;
-      width: 100%;
+      padding-left: 18px;
+      text-indent: 10px;
       color: $gray-light;
     }
     a:hover, a:focus {
       color: $gray;
       text-decoration: none;
-    }
-    a:before {
-      content: '';
-      margin-right: 5px;
-      margin-bottom: -3px;
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-    }
-    a.social-share-button-twitter:before {
-      background: image-url("sprites/social-share-button.png") -32px -48px no-repeat;
-    }
-    a.social-share-button-facebook:before {
-      background: image-url("sprites/social-share-button.png") -32px 0px no-repeat;
-    }
-    a.social-share-button-google_plus:before {
-      background: image-url("sprites/social-share-button.png") -16px -32px no-repeat;
     }
   }
 }

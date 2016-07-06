@@ -12,7 +12,8 @@ module SirTrevorRails
       end
 
       def content_align
-        text_align == 'left' ? 'right' : 'left' if text?
+        return unless text?
+        text_align == 'left' ? 'right' : 'left'
       end
 
       def text
