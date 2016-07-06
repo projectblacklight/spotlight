@@ -14,8 +14,8 @@ gemspec
 # gem 'byebug'
 
 # BEGIN ENGINE_CART BLOCK
-# engine_cart: 0.9.0
-# engine_cart stanza: 0.8.0
+# engine_cart: 0.10.0
+# engine_cart stanza: 0.10.0
 # the below comes from engine_cart, a gem used to test this Rails engine gem in the context of a Rails app.
 file = File.expand_path('Gemfile', ENV['ENGINE_CART_DESTINATION'] || ENV['RAILS_ROOT'] || File.expand_path('.internal_test_app', File.dirname(__FILE__)))
 if File.exist?(file)
@@ -37,13 +37,12 @@ else
     end
   end
 
-  if ENV['RAILS_VERSION'].nil? || ENV['RAILS_VERSION'] =~ /^5.0/ || ENV['RAILS_VERSION'] == 'edge'
-    # nop
-  elsif ENV['RAILS_VERSION'] =~ /^4.2/
+  case ENV['RAILS_VERSION']
+  when /^4.2/
     gem 'responders', '~> 2.0'
     gem 'sass-rails', '>= 5.0'
     gem 'coffee-rails', '~> 4.1.0'
-  else
+  when /^4.[01]/
     gem 'sass-rails', '< 5.0'
   end
 end
