@@ -1,4 +1,4 @@
-.ruby-version
+.ruby-*
 *.rbc
 *.sassc
 .sass-cache
