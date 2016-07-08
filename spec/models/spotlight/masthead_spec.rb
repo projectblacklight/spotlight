@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::Masthead, type: :model do
   describe '#masthead_exists?' do
     let(:masthead) { stub_model(described_class) }

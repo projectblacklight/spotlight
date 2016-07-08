@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::SitesController, type: :controller do
   routes { Spotlight::Engine.routes }
 

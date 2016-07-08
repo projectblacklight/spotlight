@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::AboutPage, type: :model do
   let(:page) { described_class.create! exhibit: FactoryGirl.create(:exhibit) }
   it { is_expected.not_to be_feature_page }

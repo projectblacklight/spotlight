@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::RenameSidecarFieldJob do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

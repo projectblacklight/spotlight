@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::BrowseHelper, type: :helper do
   it 'defaults to the gallery' do

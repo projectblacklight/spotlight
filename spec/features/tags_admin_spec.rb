@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Tags Administration', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:tagging) { FactoryGirl.create(:tagging, tagger: exhibit) }

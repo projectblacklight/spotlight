@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Horizontal rule block', type: :feature, js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }

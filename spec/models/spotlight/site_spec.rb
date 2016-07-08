@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::Site do
   subject { described_class.instance }
 

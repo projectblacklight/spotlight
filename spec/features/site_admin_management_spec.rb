@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Site admin management', js: true do
   let(:user) { FactoryGirl.create(:site_admin) }
   let(:existing_user) { FactoryGirl.create(:exhibit_visitor) }

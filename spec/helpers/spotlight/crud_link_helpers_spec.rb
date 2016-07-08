@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 module Spotlight
   describe CrudLinkHelpers, type: :helper do

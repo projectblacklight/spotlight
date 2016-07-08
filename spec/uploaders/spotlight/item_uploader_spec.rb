@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'carrierwave/test/matchers'
 
 describe Spotlight::ItemUploader do

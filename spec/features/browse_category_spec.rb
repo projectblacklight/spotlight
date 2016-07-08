@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 feature 'Browse pages' do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 

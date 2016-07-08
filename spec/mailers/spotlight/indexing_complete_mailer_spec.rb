@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::IndexingCompleteMailer do
   let(:user) { double(email: 'test@example.com') }

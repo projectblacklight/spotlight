@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'Adding custom metadata fields', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

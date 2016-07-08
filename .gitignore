@@ -3,7 +3,6 @@
 *.sassc
 .sass-cache
 capybara-*.html
-.rspec
 .rvmrc
 .ruby-version
 /.bundle

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::User do
   subject { Class.new }
   before { subject.extend described_class }

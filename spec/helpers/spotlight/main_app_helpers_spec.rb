@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::MainAppHelpers, type: :helper do
   describe '#show_contact_form?' do

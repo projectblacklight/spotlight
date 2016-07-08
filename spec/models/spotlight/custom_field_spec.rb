@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::CustomField, type: :model do
   describe '#label' do

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::HomePagesController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { 'title' => 'MyString' } }

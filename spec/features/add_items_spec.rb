@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Uploading a non-repository item', type: :feature do
   let!(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:custom_field) { FactoryGirl.create(:custom_field, exhibit: exhibit) }

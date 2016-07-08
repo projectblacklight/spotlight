@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::AdminUsersController, type: :controller do
   routes { Spotlight::Engine.routes }
 

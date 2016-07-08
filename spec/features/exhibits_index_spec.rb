@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Exhibits index page', type: :feature do
   context 'with multiple exhibits' do
     let!(:exhibit) { FactoryGirl.create(:exhibit, title: 'Some Exhibit Title') }

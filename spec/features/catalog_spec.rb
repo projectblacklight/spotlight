@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Catalog', type: :feature do
   describe 'admin' do
     let(:exhibit) { FactoryGirl.create(:exhibit) }

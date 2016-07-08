@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'sitemap_generator'
 
 describe Spotlight::Sitemap do

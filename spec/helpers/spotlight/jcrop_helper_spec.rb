@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::JcropHelper do
   describe '.default_thumbnail_jcrop_options' do

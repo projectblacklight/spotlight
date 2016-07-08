@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::FieldMetadata do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:repository) { double }
