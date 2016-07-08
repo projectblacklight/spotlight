@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::ExhibitExportSerializer do
   let!(:source_exhibit) { FactoryGirl.create(:exhibit) }
 

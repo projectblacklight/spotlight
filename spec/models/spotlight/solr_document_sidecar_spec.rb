@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::SolrDocumentSidecar, type: :model do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   before do

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::ContactEmail, type: :model do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   subject { described_class.new(exhibit: exhibit) }

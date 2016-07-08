@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'shared/_exhibit_navbar', type: :view do
   let(:current_exhibit) { FactoryGirl.create(:exhibit) }
   let(:feature_page) { FactoryGirl.create(:feature_page, exhibit: current_exhibit) }

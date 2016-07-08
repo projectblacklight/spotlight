@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::DefaultThumbnailJob do
   let(:thumbnailable) { double('Thumbnailable') }

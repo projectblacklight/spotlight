@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::ReindexJob do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

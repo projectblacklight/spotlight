@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::BlacklightConfiguration, type: :model do
   subject { described_class.new }
   let(:blacklight_config) { Blacklight::Configuration.new }

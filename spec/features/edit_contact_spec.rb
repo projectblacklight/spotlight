@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Add a contact to an exhibit', type: :feature do
   let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
@@ -14,7 +12,6 @@ describe 'Add a contact to an exhibit', type: :feature do
     end
 
     click_button 'Save'
-
     expect(page).to have_content 'The contact was successfully updated.'
   end
 end

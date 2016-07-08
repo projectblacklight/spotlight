@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Metadata Administration', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }

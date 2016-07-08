@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 class TestSpotlightImageDerivatives
   include Spotlight::ImageDerivatives
 end

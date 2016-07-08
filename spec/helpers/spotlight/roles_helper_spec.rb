@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::RolesHelper, type: :helper do
   it 'is a list of options' do

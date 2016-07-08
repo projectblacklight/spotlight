@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::DefaultThumbnailable do
   let(:test_class) { Class.new }
   subject { test_class.new }

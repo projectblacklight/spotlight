@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe SolrDocument, type: :model do
   subject { described_class.new(id: 'abcd123') }
   its(:to_key) { should == ['abcd123'] }

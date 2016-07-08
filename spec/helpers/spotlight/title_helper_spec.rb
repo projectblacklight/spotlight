@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::TitleHelper, type: :helper do
   before do

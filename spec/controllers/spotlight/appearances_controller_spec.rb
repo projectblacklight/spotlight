@@ -1,4 +1,3 @@
-require 'spec_helper'
 describe Spotlight::AppearancesController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }

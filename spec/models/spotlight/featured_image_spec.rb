@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::FeaturedImage do
   context 'with an uploaded resource' do
     subject { described_class.new }

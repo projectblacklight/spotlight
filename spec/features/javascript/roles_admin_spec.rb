@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Roles Admin', type: :feature, js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }

@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::ApplicationHelper, type: :helper do
   describe '#application_name' do

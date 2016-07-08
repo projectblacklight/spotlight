@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::DashboardsController, type: :controller do
   routes { Spotlight::Engine.routes }

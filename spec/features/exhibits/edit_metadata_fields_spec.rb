@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'Editing metadata fields', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

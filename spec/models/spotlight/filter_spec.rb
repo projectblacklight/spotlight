@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::Filter do
   context 'with a simple string field' do
     subject { described_class.new(field: 'x', value: 'y') }

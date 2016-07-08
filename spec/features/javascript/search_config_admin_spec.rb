@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 feature 'Search Configuration Administration', js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }

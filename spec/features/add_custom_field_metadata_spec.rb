@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Adding custom metadata field data', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }

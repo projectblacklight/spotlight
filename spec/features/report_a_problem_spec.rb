@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Report a Problem', type: :feature do
   let!(:exhibit) { FactoryGirl.create(:exhibit) }
   it 'does not have a header link' do

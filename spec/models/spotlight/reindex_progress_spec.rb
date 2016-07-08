@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::ReindexProgress, type: :model do
   let(:start_time) { 20.minutes.ago }
   let(:finish_time) { 5.minutes.ago }

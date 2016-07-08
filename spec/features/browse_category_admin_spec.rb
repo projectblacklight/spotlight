@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Browse Category Administration', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
