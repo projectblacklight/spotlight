@@ -28,7 +28,6 @@ these collections.)
   s.add_dependency 'carrierwave-crop'
   s.add_dependency 'mini_magick'
   s.add_dependency 'bootstrap_form', '~> 2.2'
-  s.add_dependency 'mail_form', '~> 1.5', '>= 1.5.1'
   s.add_dependency 'acts-as-taggable-on', '~> 3.5'
   s.add_dependency 'friendly_id', '~> 5.1.0'
   s.add_dependency 'breadcrumbs_on_rails', '~> 2.3.0'

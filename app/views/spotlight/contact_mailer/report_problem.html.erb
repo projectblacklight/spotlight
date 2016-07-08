@@ -1,0 +1,14 @@
+<p><%= @contact_form.name %></p>
+<p>From: <%= %("#{@contact_form.name}" <#{@contact_form.email}>) %></p>
+
+<p><%= @contact_form.message %></p>
+
+----
+
+<dl>
+  <dt>REMOTE_IP</dt><dd><%= @contact_form.request.remote_ip %></dd>
+  <dt>USER AGENT</dt><dd><%= @contact_form.request.user_agent %></dd>
+  <dt>EXHIBIT</dt><dd><%= @contact_form.current_exhibit.title %></dd>
+  <dt>CURRENT_URL</dt><dd><%= @contact_form.current_url %></dd>
+  <dt>UUID</dt><dd><%= @contact_form.request.uuid %></dd>
+</dl>
