@@ -17,11 +17,12 @@ module Spotlight
     it 'renders the index page form' do
       render
 
-      assert_select 'form[action=?][method=?]', spotlight.update_all_exhibit_roles_path(exhibit), 'post' do
-        assert_select 'tr[data-show-for=?]', admin_role.id
-        assert_select 'tr[data-edit-for=?]', admin_role.id, 2
-        assert_select "input[type='submit'][data-behavior='destroy-user'][data-target=?]", admin_role.id
-        assert_select "input[type='hidden'][data-destroy-for=?]", admin_role.id
+      action = spotlight.update_all_exhibit_roles_path(exhibit)
+      assert_select "form[action='#{action}'][method='post']" do
+        assert_select "tr[data-show-for='#{admin_role.id}']"
+        assert_select "tr[data-edit-for='#{admin_role.id}']"
+        assert_select "input[type='submit'][data-behavior='destroy-user'][data-target='#{admin_role.id}']"
+        assert_select "input[type='hidden'][data-destroy-for='#{admin_role.id}']"
         assert_select "a[data-behavior='cancel-edit']"
         assert_select "input[type='submit'][value='Save changes']"
       end
