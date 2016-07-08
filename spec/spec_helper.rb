@@ -68,8 +68,14 @@ RSpec.configure do |config|
 
   config.filter_run_excluding js: true if ENV['CI']
 
-  config.include Devise::TestHelpers, type: :controller
-  config.include Devise::TestHelpers, type: :view
+  if defined? Devise::Test::ControllerHelpers
+    config.include Devise::Test::ControllerHelpers, type: :controller
+    config.include Devise::Test::ControllerHelpers, type: :view
+  else
+    config.include Devise::TestHelpers, type: :controller
+    config.include Devise::TestHelpers, type: :view
+  end
+
   config.include Spotlight::TestViewHelpers, type: :view
   config.include Warden::Test::Helpers, type: :feature
 

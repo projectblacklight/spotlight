@@ -34,7 +34,7 @@ these collections.)
   s.add_dependency 'social-share-button', '~> 0.3'
   s.add_dependency 'blacklight-gallery', '>= 0.3.0'
   s.add_dependency 'blacklight-oembed', '>= 0.0.3'
-  s.add_dependency 'devise', '~> 3.0'
+  s.add_dependency 'devise', '>= 3.0'
   s.add_dependency 'devise_invitable', '~> 1.5'
   s.add_dependency 'roar-rails'
   s.add_dependency 'faraday'
