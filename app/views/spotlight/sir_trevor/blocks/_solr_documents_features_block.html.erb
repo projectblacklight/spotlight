@@ -8,6 +8,7 @@
       <div class="col-sm-6">
         <div class="carousel-inner">
           <% solr_documents_features_block.each_document.each_with_index do |(block_options, document), index| %>
+            <% doc_presenter = index_presenter(document) %>
             <div class="item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
               <% if block_thumb = block_options[:full_image_url] %>
                 <%= link_to_document(document, image_tag(block_thumb), counter: -1) %>
@@ -18,11 +19,11 @@
 
             <% indicators << capture do %>
               <li data-target="#<%= html_id %>" data-slide-to="<%= index %>" class="list-group-item <%= 'active' if index == 0 %>">
-                <a href="#" title="<%= (caption_text = render_index_field_value(document, (solr_documents_features_block.primary_caption_field if solr_documents_features_block.primary_caption?) || document_show_link_field)) %>">
+                <a href="#" title="<%= (caption_text = doc_presenter.field_value(solr_documents_features_block.primary_caption? ? solr_documents_features_block.primary_caption_field : document_show_link_field)) %>">
                   <%= truncate(caption_text, length: 95) %>
                 </a>
                 <% if solr_documents_features_block.secondary_caption? %>
-                  <p><%= render_index_field_value(document, solr_documents_features_block.secondary_caption_field) %></p>
+                  <p><%= doc_presenter.field_value solr_documents_features_block.secondary_caption_field %></p>
                 <% end %>
               </li>
             <% end %>

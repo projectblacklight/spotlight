@@ -14,7 +14,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_carousel_block.html.erb', 
                                                        ])
     allow(block).to receive_messages(documents?: true)
     allow(view).to receive_messages(solr_documents_carousel_block: block)
-    allow(view).to receive_messages(has_thumbnail?: true, render_thumbnail_tag: 'thumb')
+    allow(view).to receive_messages(has_thumbnail?: true, render_thumbnail_tag: 'thumb', blacklight_config: Blacklight::Configuration.new)
   end
 
   it 'has a slideshow block' do

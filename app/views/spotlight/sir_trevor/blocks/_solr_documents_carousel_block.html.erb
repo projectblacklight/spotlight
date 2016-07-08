@@ -6,6 +6,7 @@
   <div id="<%= html_id %>" class="carousel slide" data-ride="carousel"  data-interval="<%= solr_documents_carousel_block.interval %>">
     <div class="carousel-inner">
     <% solr_documents_carousel_block.each_document.each_with_index do |(block_options, document), index| %>
+      <% doc_presenter = index_presenter(document) %>
       <div class="item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
         <% if block_thumb = block_options[:full_image_url] %>
           <%= link_to_document(document, image_tag(block_thumb), counter: -1) %>
@@ -15,12 +16,12 @@
         <div class="carousel-caption">
           <% if solr_documents_carousel_block.primary_caption? %>
             <h3 class="primary">
-              <%= render_index_field_value document, solr_documents_carousel_block.primary_caption_field %>
+              <%= doc_presenter.field_value solr_documents_carousel_block.primary_caption_field %>
             </h3>
           <% end %>
           <% if solr_documents_carousel_block.secondary_caption? %>
             <div class="secondary">
-              <%= render_index_field_value document, solr_documents_carousel_block.secondary_caption_field %>
+              <%= doc_presenter.field_value solr_documents_carousel_block.secondary_caption_field %>
             </div>
           <% end %>
         </div>

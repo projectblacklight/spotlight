@@ -5,6 +5,7 @@
 
     <div class="items-col spotlight-flexbox pull-<%= solr_documents_block.content_align %> <%= solr_documents_block.text? ? "col-md-6" : "col-md-12" %> ">
       <% solr_documents_block.each_document do |block_options, document| %>
+        <% doc_presenter = index_presenter(document) %>
         <div class="box" data-id="<%= document.id %>">
           <div class="contents">
             <% if block_thumb = block_options[:thumbnail_image_url] %>
@@ -14,12 +15,12 @@
             <% end %>
             <% if solr_documents_block.primary_caption? %>
               <div class="caption primary-caption">
-                <%= render_index_field_value document, solr_documents_block.primary_caption_field %>
+                <%= doc_presenter.field_value solr_documents_block.primary_caption_field %>
               </div>
             <% end %>
             <% if solr_documents_block.secondary_caption? %>
               <div class="caption secondary-caption">
-                <%= render_index_field_value document, solr_documents_block.secondary_caption_field %>
+                <%= doc_presenter.field_value solr_documents_block.secondary_caption_field %>
               </div>
             <% end %>
           </div>
