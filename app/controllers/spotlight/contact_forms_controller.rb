@@ -11,11 +11,7 @@ module Spotlight
 
     def create
       if @contact_form.valid?
-        if @contact_form.respond_to? :deliver_now
-          @contact_form.deliver_now
-        else
-          @contact_form.deliver
-        end
+        ContactMailer.report_problem(@contact_form).deliver_now
 
         redirect_to :back, notice: t(:'helpers.submit.contact_form.created')
       else
