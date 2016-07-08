@@ -191,7 +191,7 @@ module Spotlight
     end
 
     def add_breadcrumb_with_search_params
-      add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), request.fullpath if has_search_parameters?
+      add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), spotlight.search_exhibit_catalog_path(params.to_unsafe_h) if has_search_parameters?
     end
 
     # rubocop:disable Metrics/AbcSize

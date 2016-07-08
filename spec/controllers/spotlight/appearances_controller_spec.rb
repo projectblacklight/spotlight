@@ -45,10 +45,10 @@ describe Spotlight::AppearancesController, type: :controller do
         first_nav = exhibit.main_navigations.first
         last_nav = exhibit.main_navigations.last
         patch :update, exhibit_id: exhibit, exhibit: {
-          main_navigations_attributes: [
-            { id: first_nav.id, label: 'Some Label', weight: 500 },
-            { id: last_nav.id, display: false }
-          ]
+          main_navigations_attributes: {
+            0 => { id: first_nav.id, label: 'Some Label', weight: 500 },
+            1 => { id: last_nav.id, display: false }
+          }
         }
         expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
         expect(response).to redirect_to edit_exhibit_appearance_path(exhibit)

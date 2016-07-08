@@ -49,11 +49,19 @@ module Spotlight
     end
 
     def enqueued_at
-      ActiveRecord::Type::DateTime.new.type_cast_from_database(super)
+      if defined? ActiveModel::Type::DateTime
+        ActiveModel::Type::DateTime.new.cast(super)
+      else
+        ActiveRecord::Type::DateTime.new.type_cast_from_database(super)
+      end
     end
 
     def last_indexed_finished
-      ActiveRecord::Type::DateTime.new.type_cast_from_database(super)
+      if defined? ActiveModel::Type::DateTime
+        ActiveModel::Type::DateTime.new.cast(super)
+      else
+        ActiveRecord::Type::DateTime.new.type_cast_from_database(super)
+      end
     end
 
     def document_model

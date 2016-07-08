@@ -13,7 +13,7 @@ module Spotlight
 
     def create
       @search.attributes = search_params
-      @search.query_params = params.except(:exhibit_id, :search, *blacklisted_search_session_params).reject { |_k, v| v.blank? }
+      @search.query_params = params.to_unsafe_h.except(:exhibit_id, :search, *blacklisted_search_session_params).reject { |_k, v| v.blank? }
 
       if @search.save
         redirect_to :back, notice: t(:'helpers.submit.search.created', model: @search.class.model_name.human.downcase)

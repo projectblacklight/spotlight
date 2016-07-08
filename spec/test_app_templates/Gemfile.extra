@@ -1,0 +1,2 @@
+gem 'friendly_id', github: 'norman/friendly_id'
+gem 'social-share-button', github: 'cbeer/social-share-button', branch: 'on_load'

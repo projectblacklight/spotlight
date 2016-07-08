@@ -19,7 +19,7 @@ these collections.)
 
   s.required_ruby_version = '~> 2.2'
 
-  s.add_dependency 'rails', '~> 4.0', '>= 4.2.0'
+  s.add_dependency 'rails', '>= 4.2.0', '< 6'
   s.add_dependency 'blacklight', '~> 6.3'
   s.add_dependency 'autoprefixer-rails'
   s.add_dependency 'cancancan'
@@ -28,8 +28,8 @@ these collections.)
   s.add_dependency 'carrierwave-crop'
   s.add_dependency 'mini_magick'
   s.add_dependency 'bootstrap_form', '~> 2.2'
-  s.add_dependency 'acts-as-taggable-on', '~> 3.5'
-  s.add_dependency 'friendly_id', '~> 5.1.0'
+  s.add_dependency 'acts-as-taggable-on', '>= 4.0.0.pre'
+  s.add_dependency 'friendly_id', '>= 5.2.0.beta.1', '< 6'
   s.add_dependency 'breadcrumbs_on_rails', '~> 2.3.0'
   s.add_dependency 'social-share-button', '~> 0.3'
   s.add_dependency 'blacklight-gallery', '>= 0.3.0'
@@ -55,6 +55,7 @@ these collections.)
   s.add_development_dependency 'rspec-its'
   s.add_development_dependency 'rspec-activemodel-mocks'
   s.add_development_dependency 'rspec-collection_matchers'
+  s.add_development_dependency 'rails-controller-testing'
   s.add_development_dependency 'capybara', '>= 2.5.0'
   s.add_development_dependency 'rubocop', '~> 0.41', '>= 0.41.2'
   s.add_development_dependency 'rubocop-rspec'

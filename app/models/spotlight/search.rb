@@ -48,6 +48,10 @@ module Spotlight
       end
     end
 
+    def count
+      documents.size
+    end
+
     delegate :blacklight_config, to: :exhibit
 
     def display_masthead?

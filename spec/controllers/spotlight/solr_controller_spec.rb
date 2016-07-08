@@ -29,7 +29,7 @@ describe Spotlight::SolrController, type: :controller do
           doc = arr.first
         end
 
-        post :update, { a: 1 }.to_json, content_type: :json, exhibit_id: exhibit
+        post :update, body: { a: 1 }.to_json, params: { exhibit_id: exhibit }, as: :json
 
         expect(response).to be_successful
         expect(doc).to include 'a' => 1
@@ -41,7 +41,7 @@ describe Spotlight::SolrController, type: :controller do
         end
 
         it 'raises an error' do
-          post :update, { a: 1 }.to_json, content_type: :json, exhibit_id: exhibit
+          post :update, body: { a: 1 }.to_json, params: { exhibit_id: exhibit }, as: :json
 
           expect(response.code).to eq '409'
         end
@@ -53,7 +53,7 @@ describe Spotlight::SolrController, type: :controller do
           doc = arr.first
         end
 
-        post :update, { a: 1 }.to_json, content_type: :json, exhibit_id: exhibit
+        post :update, body: { a: 1 }.to_json, params: { exhibit_id: exhibit }, as: :json
 
         expect(response).to be_successful
         expect(doc).to include exhibit.solr_data
@@ -67,7 +67,7 @@ describe Spotlight::SolrController, type: :controller do
 
         allow_any_instance_of(SolrDocument).to receive(:to_solr).and_return(b: 1)
 
-        post :update, { a: 1 }.to_json, content_type: :json, exhibit_id: exhibit
+        post :update, body: { a: 1 }.to_json, params: { exhibit_id: exhibit }, as: :json
 
         expect(response).to be_successful
         expect(doc).to include b: 1
