@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::ContactForm do
   subject { described_class.new(name: 'Root', email: 'user@example.com').tap { |c| c.current_exhibit = exhibit } }
   let(:exhibit) { FactoryGirl.create(:exhibit) }

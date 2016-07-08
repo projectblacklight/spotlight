@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::BrowseController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }

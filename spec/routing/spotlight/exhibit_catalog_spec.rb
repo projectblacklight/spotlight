@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 module Spotlight
   describe 'Catalog controller', type: :routing do

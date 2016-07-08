@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Edit in place', type: :feature, js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }

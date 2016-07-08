@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::AccessControlsEnforcementSearchBuilder do
   class MockSearchBuilder < Blacklight::SearchBuilder
     attr_reader :blacklight_params, :scope

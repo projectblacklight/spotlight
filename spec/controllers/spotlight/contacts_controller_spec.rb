@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::ContactsController, type: :controller do
   routes { Spotlight::Engine.routes }
   describe 'when not logged in' do

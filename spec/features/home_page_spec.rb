@@ -1,4 +1,3 @@
-require 'spec_helper'
 describe 'Home page', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }

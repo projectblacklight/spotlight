@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Search Administration', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }

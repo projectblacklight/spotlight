@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::Controller do
   class MockController < ActionController::Base

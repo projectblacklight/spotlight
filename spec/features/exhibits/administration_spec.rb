@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'Exhibit Administration', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

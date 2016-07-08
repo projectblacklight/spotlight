@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'Add tags to an item in an exhibit', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

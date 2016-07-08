@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'tempfile'
 
 describe 'Allow exhibit admins to import and export content from an exhibit', type: :feature, js: true do

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Confirming an email', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:contact_email) { Spotlight::ContactEmail.create!(email: 'justin@example.com', exhibit: exhibit) }

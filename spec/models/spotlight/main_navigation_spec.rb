@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::MainNavigation, type: :model do
   before do
     subject.exhibit = FactoryGirl.create(:exhibit)

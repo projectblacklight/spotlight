@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Add and update the site masthead', type: :feature do
   let(:user) { FactoryGirl.create(:site_admin) }
 
@@ -60,9 +58,7 @@ describe 'Add and update the site masthead', type: :feature do
     end
 
     click_button 'Save changes'
-
     expect(page).to have_content('The site was successfully updated.')
-
     expect(page).to have_css('.image-masthead .background-container')
   end
   it 'does not display an uploaded masthead if configured to not display' do
@@ -77,9 +73,7 @@ describe 'Add and update the site masthead', type: :feature do
     end
 
     click_button 'Save changes'
-
     expect(page).to have_content('The site was successfully updated.')
-
     expect(page).to_not have_css('.image-masthead .background-container')
   end
 end

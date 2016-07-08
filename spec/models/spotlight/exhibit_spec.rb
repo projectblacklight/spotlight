@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::Exhibit, type: :model do
   subject { FactoryGirl.build(:exhibit, title: 'Sample') }
 

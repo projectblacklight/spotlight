@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::FeaturePage, type: :model do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   describe 'default_scope' do

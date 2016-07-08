@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::FiltersController do
   routes { Spotlight::Engine.routes }
 

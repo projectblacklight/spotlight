@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::Role, type: :model do
   describe 'validations' do
     subject { described_class.new(args) }

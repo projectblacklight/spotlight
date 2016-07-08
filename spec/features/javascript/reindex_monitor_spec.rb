@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 feature 'Reindex Monitor', js: true do
   let(:resources) do
     [FactoryGirl.create(:resource, updated_at: Time.zone.now, index_status: 1)]

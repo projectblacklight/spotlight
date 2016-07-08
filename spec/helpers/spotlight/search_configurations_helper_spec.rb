@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::SearchConfigurationsHelper, type: :helper do
   describe '#translate_sort_fields' do

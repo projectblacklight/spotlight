@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::HomePage, type: :model do
   let(:home_page) { FactoryGirl.create(:home_page) }
   it { is_expected.not_to be_feature_page }

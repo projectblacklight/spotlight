@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 feature 'Feature Pages Adminstration', js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }

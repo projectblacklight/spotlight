@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Spotlight::Contact, type: :model do
   context '#show_in_sidebar' do
     it 'is an attribute' do
