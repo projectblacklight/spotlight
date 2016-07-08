@@ -1,24 +1,26 @@
-require 'mail_form'
-
 module Spotlight
   ##
   # Exhibit feedback form
-  class ContactForm < MailForm::Base
-    attribute :current_exhibit
-    attribute :name, validate: false
-    attribute :email, validate: /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
-    attribute :message
-    attribute :current_url
+  class ContactForm
+    include ActiveModel::Model
 
-    append :remote_ip, :user_agent
+    attr_accessor :current_exhibit, :name, :email, :message, :current_url, :request
+
+    validates :email, format: { with: /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i }
 
     def headers
       {
+        to: to,
         subject: "#{I18n.t(:'blacklight.application_name')} Contact Form",
-        to: Spotlight::Engine.config.default_contact_email || current_exhibit.contact_emails.first.to_s,
         from: %("#{name}" <#{email}>),
         cc: current_exhibit.contact_emails.join(', ')
       }
+    end
+
+    private
+
+    def to
+      Spotlight::Engine.config.default_contact_email || current_exhibit.contact_emails.first.to_s
     end
   end
 end

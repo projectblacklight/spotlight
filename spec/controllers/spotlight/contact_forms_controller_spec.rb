@@ -14,6 +14,11 @@ describe Spotlight::ContactFormsController, type: :controller do
     end
   end
   describe 'POST create' do
+    it 'sends an email' do
+      expect do
+        post :create, exhibit_id: exhibit.id, contact_form: { name: 'Joe Doe', email: 'jdoe@example.com' }
+      end.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
     it 'redirects back' do
       post :create, exhibit_id: exhibit.id, contact_form: { name: 'Joe Doe', email: 'jdoe@example.com' }
       expect(response).to redirect_to :back
