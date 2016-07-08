@@ -36,12 +36,6 @@ RSpec/DescribeClass:
     - 'spec/features/**/*'
     - 'spec/views/**/*'
 
-# Pending https://github.com/bbatsov/rubocop/pull/3250
-RSpec/InstanceVariable:
-  Exclude:
-    - 'spec/controllers/spotlight/confirmations_controller_spec.rb'
-    - 'spec/views/spotlight/searches/_search.html.erb_spec.rb'
-
 Metrics/AbcSize:
   Max: 20
 
