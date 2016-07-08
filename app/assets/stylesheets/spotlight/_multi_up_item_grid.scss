@@ -43,6 +43,7 @@
 
     @media (max-width: $screen-xs-max) {
       min-width: 200px;
+      -webkit-flex: 1 1 200px;
     }
 
     .caption {
@@ -57,5 +58,6 @@
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
+    -webkit-flex: 1 1 125px;
   }
 }
