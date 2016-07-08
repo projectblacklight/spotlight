@@ -16,12 +16,6 @@ describe Spotlight::ContactEmail, type: :model do
     before { subject.email = 'foo@example.com' }
     it { is_expected.to be_valid }
 
-    describe 'when saved' do
-      it 'sends a confirmation' do
-        expect(subject).to receive(:send_devise_notification)
-        subject.save
-      end
-    end
     describe '#send_devise_notification' do
       it 'sends stuff' do
         expect do
