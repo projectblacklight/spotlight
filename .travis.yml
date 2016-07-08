@@ -2,8 +2,8 @@ notifications:
   email: false
 
 rvm:
-  - 2.2.4
-  - 2.1.8
+  - 2.3.1
+  - 2.2.5
 
 notifications:
   irc: "irc.freenode.org#blacklight"
@@ -11,9 +11,12 @@ notifications:
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    - RAILS_VERSION=4.2.6
 
 sudo: false
 language: ruby
 
 script:
   - bundle exec rake
+
+jdk: oraclejdk8

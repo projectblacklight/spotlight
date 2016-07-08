@@ -20,15 +20,5 @@ module Spotlight
       @page_title = strip_tags(t(:'spotlight.html_title', title: title || t(:'.title', default: :'.header'), application_name: application_name))
     end
     # rubocop:enable Style/AccessorMethodName
-
-    def header_with_count(*args)
-      title, count = if args.length == 2
-                       args
-                     else
-                       [t(:'.header'), args.first]
-                     end
-
-      safe_join([title, content_tag(:span, count, class: 'label label-default')], ' ')
-    end
   end
 end

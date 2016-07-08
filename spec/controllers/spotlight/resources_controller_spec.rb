@@ -66,7 +66,7 @@ describe Spotlight::ResourcesController, type: :controller do
       it 'triggers a reindex' do
         expect_any_instance_of(Spotlight::Exhibit).to receive(:reindex_later)
         post :reindex_all, exhibit_id: exhibit
-        expect(response).to redirect_to admin_exhibit_catalog_index_path(exhibit)
+        expect(response).to redirect_to admin_exhibit_catalog_path(exhibit)
         expect(flash[:notice]).to include 'Reindexing'
       end
     end

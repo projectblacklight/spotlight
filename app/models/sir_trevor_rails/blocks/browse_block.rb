@@ -28,7 +28,7 @@ module SirTrevorRails
       end
 
       def items
-        item.values.select { |x| x[:display] == 'true' }
+        item_values.select { |x| x[:display] == 'true' }
       end
 
       def order
@@ -37,6 +37,12 @@ module SirTrevorRails
 
       def display_item_counts?
         send(:'display-item-counts') == 'true'
+      end
+
+      private
+
+      def item_values
+        item.try(:values) || []
       end
     end
   end

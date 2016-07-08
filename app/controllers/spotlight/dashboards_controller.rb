@@ -6,7 +6,6 @@ module Spotlight
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
     include Spotlight::Base
-    include Spotlight::Catalog::AccessControlsEnforcement
 
     before_action only: [:show] do
       blacklight_config.view.reject! { |_k, _v| true }
@@ -47,7 +46,7 @@ module Spotlight
 
     def load_recent_solr_documents(count)
       solr_params = { sort: "#{blacklight_config.index.timestamp_field} desc" }
-      @response, docs = search_results(solr_params, search_params_logic)
+      @response, docs = search_results(solr_params)
       docs.take(count)
     end
   end

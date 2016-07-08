@@ -49,7 +49,7 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
       it 'assigns the field metadata' do
         get :edit, exhibit_id: exhibit
         expect(assigns(:field_metadata)).to be_an_instance_of(Spotlight::FieldMetadata)
-        expect(assigns(:field_metadata).repository).to eq controller.repository
+        expect(assigns(:field_metadata).repository).to be_an_instance_of(controller.repository.class)
         expect(assigns(:field_metadata).blacklight_config).to eq controller.blacklight_config
       end
     end

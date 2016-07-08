@@ -47,12 +47,4 @@ describe Spotlight::TitleHelper, type: :helper do
       expect(title).to have_selector 'h1 small', text: 'Some title'
     end
   end
-
-  describe '#header_with_count' do
-    it 'merges the title with a count label' do
-      val = helper.header_with_count 'some title', 5
-      expect(val).to include 'some title'
-      expect(val).to have_selector 'span.label', text: 5
-    end
-  end
 end

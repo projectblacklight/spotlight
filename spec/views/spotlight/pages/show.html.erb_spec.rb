@@ -7,8 +7,7 @@ module Spotlight
       stub_model(FeaturePage,
                  exhibit: exhibit,
                  title: 'Title',
-                 content: '[]'
-                )
+                 content: '[]')
     end
     before(:each) do
       allow(view).to receive(:current_exhibit).and_return(exhibit)

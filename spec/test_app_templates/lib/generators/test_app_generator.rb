@@ -4,7 +4,7 @@ class TestAppGenerator < Rails::Generators::Base
   source_root '../spec/test_app_templates'
 
   def add_gems
-    gem 'blacklight', '~> 5.16'
+    gem 'blacklight', '~> 6.0'
     gem 'blacklight-gallery', '>= 0.3.0'
     gem 'jettywrapper'
     Bundler.with_clean_env do
@@ -46,6 +46,14 @@ class TestAppGenerator < Rails::Generators::Base
       # exhibit specific solr documents for tests that don't use the default exhibit.
       Spotlight::Engine.config.filter_resources_by_exhibit = false
 EOF
+    end
+  end
+
+  def disable_papertrail_associations
+    initializer 'paper_trail.rb' do
+      <<-EOF
+        PaperTrail.config.track_associations = false
+      EOF
     end
   end
 end

@@ -59,7 +59,7 @@ describe 'Search Administration', type: :feature do
         uncheck 'blacklight_configuration_sort_fields_title_enabled'
         uncheck 'blacklight_configuration_sort_fields_identifier_enabled'
 
-        find('#blacklight_configuration_sort_fields_type_weight').set('100')
+        find('#blacklight_configuration_sort_fields_type_weight', visible: false).set('100')
 
         click_button 'Save changes'
 

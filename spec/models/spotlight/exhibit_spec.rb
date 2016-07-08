@@ -82,7 +82,8 @@ describe Spotlight::Exhibit, type: :model do
     before do
       subject.contacts_attributes = [
         { 'show_in_sidebar' => '0', 'name' => 'Justin Coyne', 'contact_info' => { 'email' => 'jcoyne@justincoyne.com', 'title' => '', 'location' => 'US' } },
-        { 'show_in_sidebar' => '0', 'name' => '', 'contact_info' => { 'email' => '', 'title' => 'Librarian', 'location' => '' } }]
+        { 'show_in_sidebar' => '0', 'name' => '', 'contact_info' => { 'email' => '', 'title' => 'Librarian', 'location' => '' } }
+      ]
     end
     it 'accepts nested contacts' do
       expect(subject.contacts.size).to eq 2
@@ -230,7 +231,7 @@ describe Spotlight::Exhibit, type: :model do
       end
 
       it 'filters the solr results using the exhibit filter' do
-        expected_query_params = { fq: ["spotlight_exhibit_slug_#{subject.slug}_bsi:true"] }
+        expected_query_params = { fq: ["{!term f=spotlight_exhibit_slug_#{subject.slug}_bsi}true"] }
         allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(expected_query_params)).and_return(double(documents: []))
         expect(subject.solr_documents.to_a).to be_blank
       end

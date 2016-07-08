@@ -28,6 +28,8 @@ module Spotlight
 
     config.autoload_paths += %W(
       #{config.root}/app/builders
+      #{config.root}/app/controllers/concerns
+      #{config.root}/app/models/concerns
     )
 
     initializer 'spotlight.initialize' do
@@ -115,7 +117,7 @@ module Spotlight
     config.featured_image_square_size = [400, 400]
 
     initializer 'spotlight-assets.initialize' do
-      Rails.application.config.assets.precompile += %w( Jcrop.gif )
+      Rails.application.config.assets.precompile += %w(Jcrop.gif)
     end
 
     # To present curators with analytics reports on the exhibit dashboard, you need to configure
@@ -151,6 +153,9 @@ module Spotlight
                                            'facet.field' => [] }
 
     config.default_browse_index_view_type = :gallery
+
+    # default email address to send "Report a Problem" feedback to (in addition to any exhibit-specific contacts)
+    config.default_contact_email = nil
 
     initializer 'blacklight.configuration' do
       # Field containing the last modified date for a Solr document

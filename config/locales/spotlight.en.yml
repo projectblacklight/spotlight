@@ -294,13 +294,13 @@ en:
         error: 'An error occured while reindexing. Contact your exhibits administrator for more information.'
     invitation_mailer:
       invitation_instructions:
-        hello: "Hello %{email}!"
-        someone_invited_you: "The Exhibits Administrator has invited you to help work on the \"%{exhibit_name}\" exhibit at %{url}. You can accept this invitation by clicking the link below."
+        hello: "Hello!"
+        someone_invited_you: "The Exhibits Administrator has invited you to help work on the \"%{exhibit_name}\" exhibit. You can accept this invitation by clicking the link below."
         accept: "Accept invitation"
         ignore_html: "If you don't want to accept the invitation, please ignore this email. Your account won't be created until you access the link above."
     exhibits_admin_invitation_mailer:
       invitation_instructions:
-        hello: "Hello %{email}!"
+        hello: "Hello!"
         someone_invited_you: "The Exhibits Administrator has invited you to help manage exhibits. You can accept this invitation by clicking the link below."
         accept: "Accept invitation"
         ignore_html: "If you don't want to accept the invitation, please ignore this email. Your exhibits administrator account won't be created until you access the link above."

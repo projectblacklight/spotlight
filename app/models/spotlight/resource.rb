@@ -16,7 +16,8 @@ module Spotlight
       :last_indexed_estimate,
       :last_indexed_count,
       :last_index_elapsed_time,
-      :last_indexed_finished], coder: JSON
+      :last_indexed_finished
+    ], coder: JSON
 
     enum index_status: [:waiting, :completed, :errored]
 

@@ -16,6 +16,7 @@ describe Spotlight::RolesController, type: :controller do
 
   describe 'when user is an admin' do
     let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+    let(:user) { FactoryGirl.create(:user) }
     let(:role) { admin.roles.first }
     before { sign_in admin }
     it 'allows index' do
@@ -28,24 +29,46 @@ describe Spotlight::RolesController, type: :controller do
     end
 
     describe 'PATCH update_all' do
-      it 'is successful' do
+      it 'creates new roles' do
         patch :update_all, exhibit_id: exhibit, 'exhibit' => {
           'roles_attributes' => {
-            '0' => { 'user_key' => 'cbeer@cbeer.io', 'role' => 'curator', 'id' => role.id },
-            '1' => { 'user_key' => '', 'role' => 'admin' }
+            '0' => { 'role' => 'curator', 'user_key' => user.email }
+          }
+        }
+
+        expect(exhibit.roles.last.role).to eq 'curator'
+        expect(exhibit.roles.last.user.email).to eq user.email
+      end
+
+      it 'updates roles' do
+        patch :update_all, exhibit_id: exhibit, 'exhibit' => {
+          'roles_attributes' => {
+            '0' => { 'role' => 'curator', 'id' => role.id }
           }
         }
         expect(response).to redirect_to exhibit_roles_path(exhibit)
         expect(flash[:notice]).to eq 'User has been updated.'
-        expect(admin.reload.roles.first.role).to eq 'curator'
-        expect(admin.reload.roles.first.user.email).to eq 'cbeer@cbeer.io'
+
+        admin.reload
+
+        expect(admin.roles.first.role).to eq 'curator'
+      end
+
+      it 'ignores empty roles' do
+        expect do
+          patch :update_all, exhibit_id: exhibit, 'exhibit' => {
+            'roles_attributes' => {
+              '0' => { 'user_key' => '', 'role' => '' }
+            }
+          }
+        end.not_to change { exhibit.roles.length }
       end
 
       it 'authorizes records' do
         allow(controller).to receive(:authorize!).and_raise(CanCan::AccessDenied)
         patch :update_all, exhibit_id: exhibit, 'exhibit' => {
           'roles_attributes' => {
-            '0' => { 'user_key' => 'cbeer@cbeer.info', 'role' => 'curator', 'id' => role.id }
+            '0' => { 'role' => 'curator', 'id' => role.id }
           }
         }
         expect(response).to redirect_to main_app.root_path
@@ -56,7 +79,7 @@ describe Spotlight::RolesController, type: :controller do
       it 'destroys records' do
         patch :update_all, exhibit_id: exhibit, 'exhibit' => {
           'roles_attributes' => {
-            '0' => { 'user_key' => 'cbeer@cbeer.info', 'role' => 'curator', 'id' => role.id, '_destroy' => '1' }
+            '0' => { 'role' => 'curator', 'id' => role.id, '_destroy' => '1' }
           }
         }
 
@@ -69,7 +92,7 @@ describe Spotlight::RolesController, type: :controller do
         allow_any_instance_of(Spotlight::Exhibit).to receive_messages(update: false)
         patch :update_all, exhibit_id: exhibit, 'exhibit' => {
           'roles_attributes' => {
-            '0' => { 'user_key' => 'cbeer@cbeer.info', 'role' => 'curator', 'id' => role.id }
+            '0' => { 'role' => 'curator', 'id' => role.id }
           }
         }
         expect(response).to be_successful

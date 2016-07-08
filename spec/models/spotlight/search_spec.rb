@@ -97,7 +97,7 @@ describe Spotlight::Search, type: :model do
 
   describe '#search_params' do
     it 'maps the search to the appropriate facet values' do
-      expect(subject.search_params.to_hash).to include 'fq' => array_including('{!raw f=genre_sim}map')
+      expect(subject.search_params.to_hash).to include 'fq' => array_including('{!term f=genre_sim}map')
     end
 
     context 'with filter_resources_by_exhibit configured' do
@@ -106,7 +106,7 @@ describe Spotlight::Search, type: :model do
       end
 
       it 'includes the exhibit context' do
-        expect(subject.search_params.to_hash).to include 'fq' => array_including("spotlight_exhibit_slug_#{exhibit.slug}_bsi:true")
+        expect(subject.search_params.to_hash).to include 'fq' => array_including("{!term f=spotlight_exhibit_slug_#{exhibit.slug}_bsi}true")
       end
     end
   end

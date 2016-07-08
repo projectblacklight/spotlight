@@ -52,7 +52,7 @@ module Spotlight
                                   :main_navigations, :owned_taggings, :resources, :searches, :solr_document_sidecars
     accepts_nested_attributes_for :blacklight_configuration, :home_page, :masthead, :thumbnail, :filters, update_only: true
     accepts_nested_attributes_for :contact_emails, reject_if: proc { |attr| attr['email'].blank? }
-    accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc { |attr| attr['user_key'].blank? }
+    accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc { |attr| attr['user_key'].blank? && attr['id'].blank? }
 
     before_save :sanitize_description, if: :description_changed?
     include Spotlight::DefaultThumbnailable

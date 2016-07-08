@@ -9,6 +9,7 @@ AllCops:
     - 'db/**/*'
     - 'spec/internal/**/*'
     - 'vendor/**/*'
+  TargetRubyVersion: 2.2
 
 Rails:
   Enabled: true
@@ -34,10 +35,6 @@ RSpec/DescribeClass:
   Exclude:
     - 'spec/features/**/*'
     - 'spec/views/**/*'
-
-# Disabled check pending https://github.com/nevir/rubocop-rspec/pull/60
-RSpec/FilePath:
-  Enabled: false
 
 Metrics/AbcSize:
   Max: 20

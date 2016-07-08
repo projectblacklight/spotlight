@@ -1,5 +1,5 @@
 Spotlight = function() {
-  var buffer = new Array;
+  var buffer = [];
   return {
     onLoad: function(func) {
       buffer.push(func);
@@ -10,18 +10,12 @@ Spotlight = function() {
         buffer[i].call();
       }
     }
-  }
+  };
 }();
 
-if (typeof Turbolinks !== "undefined") {
-  $(document).on('page:load', function() {
-    Spotlight.activate();
-  });
-}
-$(document).ready(function() {
+Blacklight.onLoad(function() {
   Spotlight.activate();
 });
-
 
 Spotlight.onLoad(function(){
   SpotlightNestable.init();

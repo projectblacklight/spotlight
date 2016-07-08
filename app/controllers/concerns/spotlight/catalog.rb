@@ -6,10 +6,6 @@ module Spotlight
     include Blacklight::Catalog
     include Spotlight::Base
 
-    require 'spotlight/catalog/access_controls_enforcement'
-
-    include Spotlight::Catalog::AccessControlsEnforcement
-
     included do
       before_action :add_facet_visibility_field
     end
@@ -23,8 +19,14 @@ module Spotlight
                                         query: {
                                           private: {
                                             label: I18n.t(:'spotlight.catalog.facets.exhibit_visibility.private'),
-                                            fq: "#{blacklight_config.document_model.visibility_field(current_exhibit)}:false" }
+                                            fq: "#{blacklight_config.document_model.visibility_field(current_exhibit)}:false"
+                                          }
                                         }
+    end
+
+    def render_save_this_search?
+      (current_exhibit && can?(:curate, current_exhibit)) &&
+        !(params[:controller] == 'spotlight/catalog' && params[:action] == 'admin')
     end
   end
 end
