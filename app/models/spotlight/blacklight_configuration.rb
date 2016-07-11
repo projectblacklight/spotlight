@@ -97,7 +97,7 @@ module Spotlight
             set_index_field_defaults(v)
           end
           v.upstream_if = v.if unless v.if.nil?
-          v.if = :field_enabled?
+          v.if = :field_enabled? unless v.if == false
 
           v.normalize! config
           v.validate!
@@ -115,7 +115,7 @@ module Spotlight
           end
 
           v.upstream_if = v.if unless v.if.nil?
-          v.if = :field_enabled?
+          v.if = :field_enabled? unless v.if == false
 
           v.normalize! config
           v.validate!
@@ -128,7 +128,7 @@ module Spotlight
 
           config.search_fields.each do |k, v|
             v.upstream_if = v.if unless v.if.nil?
-            v.if = :field_enabled?
+            v.if = :field_enabled? unless v.if == false
             next if search_fields[k].blank?
 
             v.merge! search_fields[k].symbolize_keys
@@ -142,7 +142,7 @@ module Spotlight
 
           config.sort_fields.each do |k, v|
             v.upstream_if = v.if unless v.if.nil?
-            v.if = :field_enabled?
+            v.if = :field_enabled? unless v.if == false
             next if sort_fields[k].blank?
 
             v.merge! sort_fields[k].symbolize_keys
@@ -161,7 +161,7 @@ module Spotlight
             v.merge! facet_fields[k].symbolize_keys
             v.upstream_if = v.if unless v.if.nil?
             v.enabled = v.show
-            v.if = :field_enabled?
+            v.if = :field_enabled? unless v.if == false
             v.normalize! config
             v.validate!
           end
@@ -177,7 +177,7 @@ module Spotlight
         config.view.each do |k, v|
           v.key = k
           v.upstream_if = v.if unless v.if.nil?
-          v.if = :enabled_in_spotlight_view_type_configuration?
+          v.if = :enabled_in_spotlight_view_type_configuration? unless v.if == false
         end unless document_index_view_types.blank?
 
         if config.search_fields.blank?
