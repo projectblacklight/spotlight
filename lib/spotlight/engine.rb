@@ -29,7 +29,7 @@ module Spotlight
 
     require 'carrierwave'
     require 'carrierwave/crop'
-    require 'lodash-rails'
+    require 'underscore-rails'
     require 'github/markup'
     require 'sir_trevor_rails'
     require 'openseadragon'

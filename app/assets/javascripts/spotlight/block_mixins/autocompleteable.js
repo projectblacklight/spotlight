@@ -24,7 +24,7 @@
     },
 
     addAutocompletetoSirTrevorForm: function() {
-      this.$('[data-twitter-typeahead]').spotlightSearchTypeAhead({bloodhound: this.bloodhound(), template: this.autocomplete_template()}).on('typeahead:selected typeahead:autocompleted', this.autocompletedHandler()).on( 'focus', function() {
+      $('[data-twitter-typeahead]', this.inner).spotlightSearchTypeAhead({bloodhound: this.bloodhound(), template: this.autocomplete_template()}).on('typeahead:selected typeahead:autocompleted', this.autocompletedHandler()).on( 'focus', function() {
         if($(this).val() === '') {
           $(this).data().ttTypeahead.input.trigger('queryChanged', '');
         }

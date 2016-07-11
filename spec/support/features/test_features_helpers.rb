@@ -16,21 +16,17 @@ module Spotlight
       click_add_widget
 
       # click the item + image widget
-      expect(page).to have_css("a[data-type='#{type}']")
-      find("a[data-type='#{type}']").click
+      expect(page).to have_css("button[data-type='#{type}']")
+      find("button[data-type='#{type}']").click
     end
 
     def click_add_widget
-      # Lame hack to get the sir-trevor Add widget link to work.
-      # Not sure if it's the font-icon delayed loading, or something weird w/ the
-      # test under javascript where the click handler hasn't been applied when the click happens,
-      # but clicking on it an additional time seems to do the trick. 5 times is totally arbitrary,
-      # it seems to work after the first attempt.
-      5.times do
-        break if all('a[data-type]').present?
-        find('[data-icon="add"]').click
-        sleep(0.1)
+      unless all('.st-block-replacer').present?
+        expect(page).to have_css('.st-block-addition')
+        first('.st-block-addition').trigger('click')
       end
+      expect(page).to have_css('.st-block-replacer')
+      first('.st-block-replacer').trigger('click')
     end
 
     def save_page

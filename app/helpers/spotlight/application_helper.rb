@@ -79,6 +79,8 @@ module Spotlight
     # Return a copy of the blacklight configuration
     # that only includes views conifgured by our block
     def blacklight_view_config_for_search_block(block)
+      return {} unless block.view.present?
+
       # Reject any views that aren't configured to display for this block
       blacklight_config.view.select do |view, _|
         block.view.include? view.to_s
@@ -88,11 +90,13 @@ module Spotlight
     def block_document_index_view_type(block)
       views = blacklight_view_config_for_search_block(block)
 
-      if views.key? document_index_view_type
-        document_index_view_type
-      else
-        views.keys.first
-      end
+      selected_view = if views.key? document_index_view_type
+                        document_index_view_type
+                      else
+                        views.keys.first
+                      end
+
+      selected_view || default_document_index_view_type
     end
 
     # Return the list of views that are configured to display for a block

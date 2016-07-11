@@ -166,4 +166,35 @@ describe Spotlight::ApplicationHelper, type: :helper do
       expect(helper.available_view_fields).to_not include :b
     end
   end
+
+  describe '#block_document_index_view_type' do
+    let(:blacklight_config) { Blacklight::Configuration.new }
+    let(:block) { double(view: %w(b c)) }
+    let(:block_with_bad_or_missing_data) { double(view: []) }
+
+    before do
+      # clean out the default views
+      blacklight_config.view.reject! { |_| true }
+
+      blacklight_config.view.a
+      blacklight_config.view.b
+      blacklight_config.view.c
+      allow(helper).to receive(:blacklight_config).and_return(blacklight_config)
+    end
+
+    it 'selects the users chosen view' do
+      allow(helper).to receive(:document_index_view_type).and_return(:c)
+      expect(helper.block_document_index_view_type(block)).to eq :c
+    end
+
+    it 'defaults to the first available blacklight views' do
+      allow(helper).to receive(:document_index_view_type).and_return(:a)
+      expect(helper.block_document_index_view_type(block)).to eq :b
+    end
+
+    it 'falls back to the original default view' do
+      allow(helper).to receive(:document_index_view_type).and_return(:value_not_present)
+      expect(helper.block_document_index_view_type(block_with_bad_or_missing_data)).to eq :a
+    end
+  end
 end

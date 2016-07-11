@@ -10,7 +10,7 @@
 SirTrevor.Blocks.Oembed =  (function(){
 
   return Spotlight.Block.extend({
-    textable: true,
+    plustextable: true,
 
     id_key:"url",
 

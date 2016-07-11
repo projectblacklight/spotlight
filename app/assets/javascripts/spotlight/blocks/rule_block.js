@@ -15,8 +15,6 @@ SirTrevor.Blocks.Rule = (function(){
     title: function() { return i18n.t('blocks:rule:title'); },
 
     icon_name: "rule",
-
-    previewable: false,
     
     editorHTML: function() {
       return _.template(this.template, this)(this);

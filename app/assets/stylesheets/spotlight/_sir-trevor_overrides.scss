@@ -17,176 +17,24 @@
   margin-bottom: 3*$padding-large-vertical;
 }
 
-.st-block-ui-btn--preview {
-  width: 8ch;
-}
-
-.st-block-ui-btn--preview, .st-block-ui-btn--edit {
-  font-family: $font-family-base;
-}
-
-.st-block-controls {
-  border-radius: 12px;
-  border: 3px dotted #999;
-}
-
-.st-group-control-label {
-  margin-bottom: $padding-large-vertical;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: $padding-small-vertical;
-  margin: 0 (2 * $padding-large-horizontal) $padding-large-vertical;
-}
-
-.st-controls-group + .st-controls-group {
-  margin-top: 2 * $padding-large-vertical;;
-}
-
-.st-block-control {
-  @extend .btn;
-
-  max-width: 100px;
-  word-wrap: break-word;
-  white-space: normal;
-  color: #666;
-  vertical-align: top;
-  line-height: 1.2;
-
-  .icon {
-    width: 70px;
-    height: 38px;
-    background-repeat: no-repeat;
-    background-position: 50% 40%;
-    @extend .text-hide;
-  }
-
-  .st-icon-rule {
-    @extend .icon;
-    background-image: image-url('spotlight/blocks/rule.png');
-    &:hover {
-      background-image: image-url('spotlight/blocks/rule-on.png');
-    }
-  }
-
-  .st-icon-text {
-    @extend .icon;
-    background-image: image-url('spotlight/blocks/text.png');
-    &:hover {
-      background-image: image-url('spotlight/blocks/text-on.png');
-    }
-  }
-
-  .st-icon-browse {
-    @extend .icon;
-    background-image: image-url('spotlight/blocks/browse.png');
-    &:hover {
-      background-image: image-url('spotlight/blocks/browse-on.png');
-    }
-  }
-
-  .st-icon-featured_pages {
-    @extend .icon;
-    background-image: image-url('spotlight/blocks/features.png');
-    &:hover {
-      background-image: image-url('spotlight/blocks/features-on.png');
-    }
-  }
-
-  .st-icon-uploaded_items {
-    @extend .icon;
-    background-image: image-url('spotlight/blocks/item-row.png');
-
-    &:hover {
-      background-image: image-url('spotlight/blocks/item-row-on.png');
-    }
-  }
-
-  .st-icon-search_results {
-    @extend .icon;
-    background-image: image-url('spotlight/blocks/results.png');
-    &:hover {
-      background-image: image-url('spotlight/blocks/results-on.png');
-    }
-  }
-
-  .st-icon-solr_documents {
-    @extend .icon;
-    background-image: image-url('spotlight/blocks/item-row.png');
-    &:hover {
-      background-image: image-url('spotlight/blocks/item-row-on.png');
-    }
-  }
-
-  .st-icon-solr_documents_carousel {
-    @extend .icon;
-    background-image: image-url('spotlight/blocks/item-carousel.png');
-    &:hover {
-      background-image: image-url('spotlight/blocks/item-carousel-on.png');
-    }
-  }
-
-  .st-icon-solr_documents_features {
-    @extend .icon;
-    background-image: image-url('spotlight/blocks/item-slideshow.png');
-    &:hover {
-      background-image: image-url('spotlight/blocks/item-slideshow-on.png');
-    }
-  }
-
-  .st-icon-solr_documents_grid {
-    @extend .icon;
-    background-image: image-url('spotlight/blocks/item-grid.png');
-    &:hover {
-      background-image: image-url('spotlight/blocks/item-grid-on.png');
-    }
-  }
-
-  .st-icon-solr_documents_embed {
-    @extend .icon;
-    background-image: image-url('spotlight/blocks/item-embed.png');
-    &:hover {
-      background-image: image-url('spotlight/blocks/item-embed-on.png');
-    }
-  }
-}
-
 .st-block__inner {
-  @extend .panel;
-  @extend .panel-default;
-
-  border-color: $gray-lighter;
+  border: 1px solid $gray-lighter;
   box-shadow: 3px 3px 15px $gray-lighter;
-
-  padding-top: 2.5em;
-
-  &:hover {
-    @extend .panel-info;
-  }
+  margin: 1em 20px;
+  padding: 1.875em 1.875em 2.8em;
 }
 
-.st-block-ui-btn, .st-block-control-ui-btn {
-
-  color: $panel-info-text;
-  border-color: $panel-info-heading-bg;
-
-  &:hover {
-    color: $panel-info-text;
-    border-color: $panel-info-heading-bg;
-    background-color: $panel-info-heading-bg;
-    text-decoration: none;
-  }
+.st-block--textable .st-block__inner {
+  margin: 1em 20px;
+  transition: padding-left .2s ease;
 }
 
-.st-block {
-  margin-top: 1.5em;
+.st-block--empty.st-block--textable .st-block__inner {
+  padding-left: 75px;
 }
 
-.st-block-controls__top, .st-block--with-plus {
-
-    &:hover {
-      &:before, &:after {
-      color: #666;
-    }
-  }
+.st-block-replacer {
+  top: 40%;
 }
 
 .form-group .st-text-block {
@@ -195,14 +43,40 @@
   min-height: 6em;
 }
 
-.st-icon--add:after {
-  cursor: pointer;
+.st-block .st-block-ui-btn__delete {
+  display: block !important;
 }
 
-.st-title {
-  display: block;
+.st-block-addition {
+  display: block !important;
 }
 
-.st-block-positioner {
-  left: -6.5em;
+.st-block-controls {
+  display: none !important;
+}
+
+.st-block--controls-active .st-block__inner {
+  display: none;
+}
+
+.spotlight-block-controls {
+  border: 1px solid $gray-lighter;
+  border-radius: 4px;
+  box-shadow: 3px 3px 15px $gray-lighter;
+  margin: 1em 20px;
+  padding: 1.875em 1.875em 2.8em 70px;
+}
+
+.st-block-controls__button {
+  @extend .btn;
+  @extend .btn-default;
+
+  background-color: $btn-default-bg;
+  border: 1px solid $gray-lighter;
+  color: $btn-default-color;
+
+  .st-icon {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

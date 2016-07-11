@@ -3,13 +3,13 @@
 SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
 
   return SirTrevor.Blocks.SolrDocuments.extend({
-    textable: false,
+    plustextable: false,
     type: "solr_documents_features",
 
     icon_name: "item_features",
     
     afterPreviewLoad: function(options) {
-      this.$el.find('.carousel').carousel();
+      $(this.inner).find('.carousel').carousel();
 
       // the bootstrap carousel only initializes data-slide widgets on page load, so we need
       // to initialize them ourselves..
@@ -31,7 +31,7 @@ SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
         e.preventDefault()
       }
 
-      this.$el.find('.carousel')
+      $(this.inner).find('.carousel')
         .on('click.bs.carousel.data-api', '[data-slide]', clickHandler)
         .on('click.bs.carousel.data-api', '[data-slide-to]', clickHandler)
     }
