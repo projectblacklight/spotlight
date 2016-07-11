@@ -12,6 +12,7 @@ SirTrevor.Blocks.Browse = (function(){
 
     item_options: function() { return [
       '<label>',
+        '<input type="hidden" name="display-item-counts" value="false" />',
         '<input type="checkbox" name="display-item-counts" value="true" checked />',
         '<%= i18n.t("blocks:browse:item_counts") %>',
       '</label>'
