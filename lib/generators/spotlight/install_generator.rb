@@ -21,6 +21,12 @@ module Spotlight
       generate 'friendly_id'
     end
 
+    def riiif
+      gem 'riiif', '~> 0.4.0'
+      route "mount Riiif::Engine => '/images', as: 'riiif'"
+      copy_file 'config/initializers/riiif.rb'
+    end
+
     def paper_trail
       generate 'paper_trail:install'
     end
