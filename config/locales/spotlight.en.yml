@@ -593,6 +593,7 @@ en:
         search_description: "Description"
         search_masthead: "Masthead"
         search_thumbnail: "Thumbnail"
+        default_index_view_type: Default view
         masthead:
           help: >
             You can select and crop an image to use as a browse category-specific masthead, instead

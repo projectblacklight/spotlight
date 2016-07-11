@@ -61,6 +61,19 @@ describe 'Browse Category Administration', type: :feature do
       expect(search.thumbnail.image.thumb).not_to be_nil
       expect(search.thumbnail.image.path).to end_with 'avatar.png'
     end
+
+    it 'can select a default index view type' do
+      visit spotlight.edit_exhibit_search_path exhibit, search
+      choose 'List'
+
+      click_button 'Save changes'
+
+      expect(page).to have_content('The search was successfully updated.')
+
+      search.reload
+
+      expect(search.default_index_view_type).to eq 'list'
+    end
   end
   describe 'destroy' do
     it 'destroys a tag' do
