@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/feature_pages/_empty.html.erb', type: :view do
   let(:can?) { false }

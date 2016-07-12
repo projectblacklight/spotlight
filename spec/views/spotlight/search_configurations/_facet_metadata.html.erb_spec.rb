@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 module Spotlight
   describe 'spotlight/search_configurations/_facet_metadata', type: :view do

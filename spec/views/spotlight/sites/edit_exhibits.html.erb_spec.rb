@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 module Spotlight
   describe 'spotlight/sites/edit_exhibits', type: :view do

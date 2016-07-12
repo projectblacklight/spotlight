@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::SolrDocument::UploadedResource, type: :model do
   let(:valid_resource) do

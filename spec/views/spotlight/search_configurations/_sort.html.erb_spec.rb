@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 module Spotlight
   describe 'spotlight/search_configurations/_sort', type: :view do

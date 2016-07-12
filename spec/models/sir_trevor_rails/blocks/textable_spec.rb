@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe SirTrevorRails::Blocks::Textable do
   class TextableTestClass

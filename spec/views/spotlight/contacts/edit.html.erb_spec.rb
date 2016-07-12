@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/contacts/edit.html.erb' do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

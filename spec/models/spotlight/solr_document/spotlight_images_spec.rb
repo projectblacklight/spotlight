@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::SolrDocument::SpotlightImages do
   subject do

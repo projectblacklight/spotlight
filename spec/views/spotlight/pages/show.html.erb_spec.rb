@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 module Spotlight
   describe 'spotlight/pages/show', type: :view do

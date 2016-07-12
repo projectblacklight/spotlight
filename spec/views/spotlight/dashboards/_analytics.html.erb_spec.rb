@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/dashboards/_analytics.html.erb', type: :view do
   let(:current_exhibit) { FactoryGirl.create(:exhibit) }

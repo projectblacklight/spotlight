@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'Search Result Block', type: :feature, js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

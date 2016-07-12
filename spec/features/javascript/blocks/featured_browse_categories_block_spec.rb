@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'Featured Browse Category Block', type: :feature, js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

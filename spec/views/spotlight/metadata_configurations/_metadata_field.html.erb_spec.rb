@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 module Spotlight
   describe 'spotlight/metadata_configurations/_metadata_field', type: :view do

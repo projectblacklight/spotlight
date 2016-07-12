@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::SolrDocument::AtomicUpdates, type: :model do
   let(:blacklight_solr) { double }

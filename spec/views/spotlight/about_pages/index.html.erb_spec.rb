@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/about_pages/index.html.erb', type: :view do
   let(:pages) do

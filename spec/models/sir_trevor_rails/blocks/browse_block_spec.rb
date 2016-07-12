@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe SirTrevorRails::Blocks::BrowseBlock do
   let(:page) { FactoryGirl.create(:feature_page) }

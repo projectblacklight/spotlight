@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/browse/search', type: :view do
   let(:search) { FactoryGirl.create(:search) }

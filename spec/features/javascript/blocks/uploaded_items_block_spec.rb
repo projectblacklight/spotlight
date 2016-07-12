@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 feature 'Uploaded Items Block', feature: true, js: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 feature 'Solr Document Block', feature: true do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::Resources::Web, type: :model do
   class TestResource < Spotlight::Resource
