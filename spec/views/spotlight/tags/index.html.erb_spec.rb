@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/tags/index.html.erb', type: :view do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

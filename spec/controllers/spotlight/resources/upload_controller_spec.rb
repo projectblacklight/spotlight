@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::Resources::UploadController, type: :controller do
   routes { Spotlight::Engine.routes }

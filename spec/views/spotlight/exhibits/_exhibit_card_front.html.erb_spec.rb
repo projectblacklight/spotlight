@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/exhibits/_exhibit_card_front.html.erb', type: :view do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

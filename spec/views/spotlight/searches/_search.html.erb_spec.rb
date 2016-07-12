@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/searches/_search.html.erb', type: :view do
   let(:search) do

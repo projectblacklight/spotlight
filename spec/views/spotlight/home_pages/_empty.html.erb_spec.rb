@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/home_pages/_empty.html.erb', type: :view do
   describe 'resource providers' do

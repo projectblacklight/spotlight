@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::Resources::OpenGraph, type: :model do
   class TestResource < Spotlight::Resource

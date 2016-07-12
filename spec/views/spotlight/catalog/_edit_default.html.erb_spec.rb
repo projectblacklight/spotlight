@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
   let(:blacklight_config) do

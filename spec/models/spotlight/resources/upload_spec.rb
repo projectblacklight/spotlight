@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::Resources::Upload, type: :model do
   let!(:exhibit) { FactoryGirl.create :exhibit }

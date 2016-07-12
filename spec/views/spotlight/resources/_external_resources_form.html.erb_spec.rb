@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/resources/_external_resources_form.html.erb', type: :view do
   let(:blacklight_config) { Blacklight::Configuration.new }

@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/home_pages/_sidebar.html.erb', type: :view do
   before do

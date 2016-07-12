@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe Spotlight::Analytics::Ga do
   it 'does not be enabled without configuration' do

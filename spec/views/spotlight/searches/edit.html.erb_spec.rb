@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/searches/edit.html.erb', type: :view do
   let(:blacklight_config) do

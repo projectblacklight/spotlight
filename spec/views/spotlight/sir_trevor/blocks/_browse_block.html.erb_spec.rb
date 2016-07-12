@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/sir_trevor/blocks/_browse_block.html.erb', type: :view do
   let(:p) { 'spotlight/sir_trevor/blocks/browse_block.html.erb' }

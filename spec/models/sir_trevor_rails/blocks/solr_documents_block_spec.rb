@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe SirTrevorRails::Blocks::SolrDocumentsBlock do
   let(:page) { FactoryGirl.create(:feature_page) }

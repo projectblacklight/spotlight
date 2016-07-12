@@ -1,4 +1,3 @@
-require 'spec_helper'
 
 describe 'spotlight/about_pages/_sidebar.html.erb', type: :view do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
