@@ -7,9 +7,7 @@
     <%= render 'analytics' %>
   <% else %>
     <div class="empty-page-block">
-      <% unless current_user %>
-        <p>In order to view exhibit analytics, the site administrator must <a href="https://github.com/projectblacklight/spotlight/wiki/Installation">configure an analytics provider.</a></p>
-      <% end %>
+      <p>In order to view exhibit analytics, the site administrator must <a href="https://github.com/projectblacklight/spotlight/wiki/Installation">configure an analytics provider.</a></p>
     </div>
   <% end %>
 </div>

@@ -1,10 +1,11 @@
+require 'signet/oauth_2/client'
+require 'legato'
+
 module Spotlight
   module Analytics
     ##
     # Google Analytics data provider for the curation dashboard
     class Ga
-      require 'legato'
-
       extend Legato::Model
 
       cattr_writer :user, :site
@@ -62,7 +63,8 @@ module Spotlight
       def self.oauth_token(scope)
         require 'oauth2'
 
-        OAuth2::AccessToken.new(oauth_client, api_client(scope).authorization.access_token, expires_in: 1.hour)
+        access_token = auth_client(scope).fetch_access_token!
+        OAuth2::AccessToken.new(oauth_client, access_token['access_token'], expires_in: access_token['expires_in'])
       end
 
       def self.oauth_client
@@ -70,21 +72,17 @@ module Spotlight
                                    token_url: 'https://accounts.google.com/o/oauth2/token')
       end
 
-      def self.service_account(scope)
-        @service_account ||= begin
-          oauth_key = Google::APIClient::PKCS12.load_key(Spotlight::Engine.config.ga_pkcs12_key_path, 'notasecret')
-          Google::APIClient::JWTAsserter.new(Spotlight::Engine.config.ga_email, scope, oauth_key)
-        end
+      def self.signing_key
+        @signing_key ||= OpenSSL::PKCS12.new(File.read(Spotlight::Engine.config.ga_pkcs12_key_path), 'notasecret').key
       end
 
-      def self.api_client(scope)
-        require 'google/api_client'
-        client = Google::APIClient.new(
-          application_name: 'spotlight',
-          application_version: Spotlight::VERSION
-        )
-        client.authorization = service_account(scope).authorize
-        client
+      def self.auth_client(scope)
+        Signet::OAuth2::Client.new token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
+                                   audience: 'https://accounts.google.com/o/oauth2/token',
+                                   scope: scope,
+                                   issuer: Spotlight::Engine.config.ga_email,
+                                   signing_key: signing_key,
+                                   sub: Spotlight::Engine.config.ga_email
       end
     end
   end
