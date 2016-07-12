@@ -15,6 +15,10 @@
 
 <div class="col-md-12">
   <%= render 'sort_and_per_page' %>
-  <%= render_document_index(@document_list) %>
+  <% if @search.default_index_view_type && params[:view].blank? %>
+    <%= render_document_index_with_view(@search.default_index_view_type, @document_list) %>
+  <% else %>
+    <%= render_document_index(@document_list) %>
+  <% end %>
   <%= render 'results_pagination' %>
 </div>

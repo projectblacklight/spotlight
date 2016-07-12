@@ -3,6 +3,13 @@ feature 'Browse pages' do
 
   context 'a browse page' do
     let!(:search) { FactoryGirl.create(:search, title: 'Some Saved Search', exhibit: exhibit, published: true) }
+
+    let(:mock_response) { Blacklight::Solr::Response.new({ response: { numFound: 10, docs: mock_documents } }, {}) }
+    let(:mock_documents) { [] }
+    before do
+      allow_any_instance_of(Spotlight::BrowseController).to receive(:search_results).and_return([mock_response, mock_documents])
+    end
+
     context 'with the standard exhibit masthead' do
       it 'includes the search title and resource count in the body' do
         visit spotlight.exhibit_browse_path(exhibit, search)
@@ -57,6 +64,26 @@ feature 'Browse pages' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
         expect(page).not_to have_selector '.breadcrumbs-container'
+      end
+    end
+
+    context 'without a curator-selected view' do
+      it 'renders the gallery view' do
+        visit spotlight.exhibit_browse_path(exhibit, search)
+        expect(page).to have_selector '.view-type-gallery.active'
+        expect(page).to have_selector '#documents.gallery'
+      end
+    end
+
+    context 'with a curator-selected default view' do
+      before do
+        search.update(default_index_view_type: 'list')
+      end
+
+      it 'renders the selected view' do
+        visit spotlight.exhibit_browse_path(exhibit, search)
+        expect(page).to have_selector '.view-type-list.active'
+        expect(page).to have_selector '#documents.documents-list'
       end
     end
   end

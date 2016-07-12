@@ -94,7 +94,13 @@ module Spotlight
     end
 
     def search_params
-      params.require(:search).permit(:title, :long_description, masthead_attributes: featured_image_attributes, thumbnail_attributes: featured_image_attributes)
+      params.require(:search).permit(
+        :title,
+        :long_description,
+        :default_index_view_type,
+        masthead_attributes: featured_image_attributes,
+        thumbnail_attributes: featured_image_attributes
+      )
     end
 
     def featured_image_attributes

@@ -77,6 +77,11 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.blacklight_config.facet_fields['b'].sort).to eq 'index'
     end
 
+    it 'respects upstream configuration that disables the field entirely' do
+      blacklight_config.add_facet_field 'a', if: false
+      expect(subject.blacklight_config.facet_fields['a'].if).to eq false
+    end
+
     context 'custom fields' do
       it 'includes any custom fields' do
         allow(subject).to receive_messages(custom_facet_fields: { 'a' => double(if: nil, :if= => true, merge!: true, validate!: true, normalize!: true) })
@@ -343,6 +348,11 @@ describe Spotlight::BlacklightConfiguration, type: :model do
 
       expect(subject.blacklight_config.search_fields.select { |_k, v| v.enabled == true }).to include('a', 'c')
       expect(subject.blacklight_config.search_fields.select { |_k, v| v.enabled == true }).not_to include('b', 'd')
+    end
+
+    it 'respects upstream configuration that disables the field entirely' do
+      blacklight_config.add_search_field 'a', if: false
+      expect(subject.blacklight_config.search_fields['a'].if).to eq false
     end
   end
 
