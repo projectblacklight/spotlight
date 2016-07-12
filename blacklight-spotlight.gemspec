@@ -45,7 +45,7 @@ these collections.)
   s.add_dependency 'lodash-rails'
   s.add_dependency 'tophat'
   s.add_dependency 'legato'
-  s.add_dependency 'google-api-client', '~> 0.8.0'
+  s.add_dependency 'signet'
   s.add_dependency 'oauth2'
   s.add_dependency 'paper_trail', '~> 5.0'
   s.add_dependency 'openseadragon'
