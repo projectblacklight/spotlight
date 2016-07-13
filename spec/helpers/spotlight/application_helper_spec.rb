@@ -1,4 +1,3 @@
-
 describe Spotlight::ApplicationHelper, type: :helper do
   describe '#application_name' do
     let(:site) { Spotlight::Site.instance }
@@ -77,6 +76,7 @@ describe Spotlight::ApplicationHelper, type: :helper do
       end
     end
   end
+
   describe 'render_document_class' do
     let(:current_exhibit) { FactoryGirl.create(:exhibit) }
     let(:document) { SolrDocument.new(some_field: 'Some data') }
@@ -133,13 +133,8 @@ describe Spotlight::ApplicationHelper, type: :helper do
   end
 
   describe '#uploaded_field_label' do
-    let :field do
-      OpenStruct.new field_name: 'x'
-    end
-
-    let :blacklight_config do
-      Blacklight::Configuration.new
-    end
+    let(:field) { OpenStruct.new field_name: 'x' }
+    let(:blacklight_config) { Blacklight::Configuration.new }
 
     before do
       allow(helper).to receive_messages(blacklight_config: blacklight_config)
@@ -157,9 +152,7 @@ describe Spotlight::ApplicationHelper, type: :helper do
   end
 
   describe '#available_view_fields' do
-    let :blacklight_config do
-      Blacklight::Configuration.new
-    end
+    let(:blacklight_config) { Blacklight::Configuration.new }
 
     before do
       allow(helper).to receive_message_chain(:current_exhibit, :blacklight_configuration, default_blacklight_config: blacklight_config)

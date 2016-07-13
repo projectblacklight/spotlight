@@ -1,4 +1,3 @@
-
 describe Spotlight::TitleHelper, type: :helper do
   before do
     allow(helper).to receive_messages(application_name: 'Application')
