@@ -1,4 +1,4 @@
-DEFAULT_BLACKLIGHT_OPTIONS = '--devise --jettywrapper'.freeze
+DEFAULT_BLACKLIGHT_OPTIONS = '--devise'.freeze
 DEFAULT_SPOTLIGHT_OPTIONS = '-f --openseadragon --mailer_default_url_host=localhost:3000'.freeze
 blacklight_options = ENV.fetch('BLACKLIGHT_INSTALL_OPTIONS', DEFAULT_BLACKLIGHT_OPTIONS)
 spotlight_options = ENV.fetch('SPOTLIGHT_INSTALL_OPTIONS', DEFAULT_SPOTLIGHT_OPTIONS)
@@ -23,6 +23,3 @@ if !options['quiet'] && yes?('Would you like to create an initial administrator?
   rake 'db:migrate' # we only need to run the migrations if we are creating an admin user
   rake 'spotlight:initialize'
 end
-
-# and configure jetty with a useful configuration
-rake 'jetty:configure_solr' if blacklight_options =~ /jettywrapper/
