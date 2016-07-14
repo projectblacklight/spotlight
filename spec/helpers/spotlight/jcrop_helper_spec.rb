@@ -1,4 +1,3 @@
-
 describe Spotlight::JcropHelper do
   describe '.default_thumbnail_jcrop_options' do
     it 'produces a 4:3 aspect ratio by default' do

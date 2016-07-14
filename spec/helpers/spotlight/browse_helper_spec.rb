@@ -1,4 +1,3 @@
-
 describe Spotlight::BrowseHelper, type: :helper do
   it 'defaults to the gallery' do
     allow(helper).to receive_messages(blacklight_config: double(view: { gallery: true }))

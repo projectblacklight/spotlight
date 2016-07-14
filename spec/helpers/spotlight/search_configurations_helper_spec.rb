@@ -1,4 +1,3 @@
-
 describe Spotlight::SearchConfigurationsHelper, type: :helper do
   describe '#translate_sort_fields' do
     let(:sort_config) do
@@ -11,7 +10,6 @@ describe Spotlight::SearchConfigurationsHelper, type: :helper do
 
     it 'humanizes untranslatable sort fields' do
       sort_config.sort = 'some_other_field desc'
-
       expect(translate_sort_fields(sort_config)).to eq 'some other field descending'
     end
 
