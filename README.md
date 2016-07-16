@@ -73,7 +73,6 @@ Our `$ rake ci` and `$ rake spotlight:server` tasks utilize Solr and the testing
 ##  More Information for Developers
 
 * [Contributing to Spotlight](https://github.com/projectblacklight/spotlight/wiki/Contributing-to-Spotlight)
-* [Testing](https://github.com/projectblacklight/spotlight/wiki/Testing)
 
 ## Tests
 
