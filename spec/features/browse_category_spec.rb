@@ -35,11 +35,11 @@ feature 'Browse pages' do
     end
 
     context 'with a custom masthead' do
-      let(:masthead) { FactoryGirl.create(:masthead, display: true) }
+      let(:masthead) { FactoryGirl.create(:masthead, display: true, iiif_url: 'http://test.host/images/1') }
 
       before do
         search.masthead = masthead
-        search.save
+        search.save!
       end
 
       it 'has a contextual masthead with the title and resource count' do

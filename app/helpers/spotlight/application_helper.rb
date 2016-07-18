@@ -4,8 +4,8 @@ module Spotlight
   module ApplicationHelper
     include CrudLinkHelpers
     include TitleHelper
-    include JcropHelper
     include MetaHelper
+    include CropHelper
 
     ##
     # Give the application name a chance to include the exhibit title

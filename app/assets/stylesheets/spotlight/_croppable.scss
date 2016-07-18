@@ -1,16 +1,97 @@
-@mixin jcrop-loading-background {
-  background-image: image-url('Jcrop.gif');
-  background-color: transparent !important;
-}
-.form-group.croppable-loading-area {
-  min-height: 100px;
-  margin: ($padding-large-vertical * 2) $padding-large-vertical;
+.osd-container {
+  height: 400px;
+  margin: 0 auto;
+  margin-top: 5%;
+  width: 100%;
 }
 
-.loading-jcrop {
-  @include jcrop-loading-background;
-  .jcrop-tracker {
-    @include jcrop-loading-background;
-  }
+$selection-background-color: rgba(255, 255, 255, .1);
+$selection-border-color: #fff;
+$selection-mask-color: rgba(0, 0, 0, .5);
+$drag-node-border: #fff;
+$drag-node-background: #000;
+
+.iiif-crop-selection {
+  background-color: $selection-background-color;
+  border: 2px solid $selection-border-color;
+  // The following shadow makes up the
+  // "mask" that sits over the rest of
+  // the canvas around the selected area.
+  // The first parameter prevents the shadow
+  // from "spreading", and extends a very long way.
+  box-shadow: 0 0 0 10000px $selection-mask-color;
+  cursor: move;
+  opacity: 1;
+  pointerevents: none;
+  position: absolute;
+  transition: opacity .2s ease-out;
 }
 
+.iiif-crop-dragNode {
+  background: $drag-node-background;
+  border: 2px solid $drag-node-border;
+  border-radius: 20px;
+  box-sizing: border-box;
+  height: 12px;
+  width: 12px;
+}
+
+.iiif-crop-top-drag-handle {
+  cursor: ns-resize;
+  height: 14px;
+  position: absolute;
+  top: -7px;
+  width: 100%;
+}
+
+.iiif-crop-bottom-drag-handle {
+  bottom: -7px;
+  cursor: ns-resize;
+  height: 14px;
+  position: absolute;
+  width: 100%;
+}
+
+.iiif-crop-left-drag-handle {
+  cursor: ew-resize;
+  height: 100%;
+  left: -7px;
+  position: absolute;
+  width: 14px;
+}
+
+.iiif-crop-right-drag-handle {
+  cursor: ew-resize;
+  height: 100%;
+  position: absolute;
+  right: -7px;
+  width: 14px;
+}
+
+.iiif-crop-top-left-drag-node {
+  cursor: nw-resize;
+  left: -6px;
+  position: absolute;
+  top: -6px;
+}
+
+.iiif-crop-top-right-drag-node {
+  cursor: ne-resize;
+  position: absolute;
+  right: -6px;
+  top: -6px;
+}
+
+.iiif-crop-bottom-left-drag-node {
+  bottom: -6px;
+  cursor: sw-resize;
+  left: -6px;
+  position: absolute;
+}
+
+.iiif-crop-bottom-right-drag-node {
+  bottom: -6px;
+  cursor: se-resize;
+  position: absolute;
+  right: -6px;
+}

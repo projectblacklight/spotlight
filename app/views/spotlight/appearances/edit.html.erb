@@ -31,15 +31,16 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="site-masthead">
         <p class="instructions"><%= t(:'.site_masthead.help') %></p>
+        <%= f.hidden_field :masthead_id %>
         <%= f.fields_for(:masthead, current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, jcrop_options: default_masthead_jcrop_options %>
+          <%= render '/spotlight/featured_images/form', f: m, crop_options: masthead_crop_options %>
         <% end %>
       </div>
       
       <div role="tabpanel" class="tab-pane" id="site-thumbnail">
         <p class="instructions"><%= t(:'.site_thumbnail.help') %></p>
         <%= f.fields_for(:thumbnail, current_exhibit.thumbnail || current_exhibit.build_thumbnail) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, jcrop_options: default_site_thumbnail_jcrop_options %>
+          <%= render '/spotlight/featured_images/form', f: m, crop_options: site_thumbnail_crop_options %>
         <% end %>
       </div>
 

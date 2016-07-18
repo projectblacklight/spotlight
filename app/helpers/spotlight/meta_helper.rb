@@ -11,14 +11,18 @@ module Spotlight
         card.url exhibit_root_url(current_exhibit)
         card.title current_exhibit.title
         card.description current_exhibit.subtitle
-        card.image carrierwave_url(current_exhibit.thumbnail.image.thumb) if current_exhibit.thumbnail
+        card.image meta_image if current_exhibit.thumbnail
       end
+    end
+
+    def meta_image
+      current_exhibit.thumbnail.iiif_url
     end
 
     def exhibit_opengraph_content
       opengraph do |graph|
         graph.title current_exhibit.title
-        graph.image carrierwave_url(current_exhibit.thumbnail.image.thumb) if current_exhibit.thumbnail
+        graph.image meta_image if current_exhibit.thumbnail
         graph.site_name site_title
       end
     end
@@ -31,7 +35,7 @@ module Spotlight
     def page_twitter_card_content(page)
       twitter_card('summary_large_image') do |card|
         card.title page.title
-        card.image carrierwave_url(page.thumbnail.image.thumb) if page.thumbnail
+        card.image page.thumbnail.iiif_url if page.thumbnail
       end
     end
 
@@ -40,7 +44,7 @@ module Spotlight
         graph.type 'article'
         graph.site_name application_name
         graph.title page.title
-        graph.send('og:image', carrierwave_url(page.thumbnail.image.thumb)) if page.thumbnail
+        graph.send('og:image', page.thumbnail.iiif_url) if page.thumbnail
         graph.send('article:published_time', page.created_at.iso8601)
         graph.send('article:modified_time', page.updated_at.iso8601)
       end
@@ -54,7 +58,7 @@ module Spotlight
     def browse_twitter_card_content(browse)
       twitter_card('summary_large_image') do |card|
         card.title browse.title
-        card.image carrierwave_url(browse.thumbnail.image.thumb) if browse.thumbnail
+        card.image browse.thumbnail.iiif_url if browse.thumbnail
       end
     end
 
@@ -63,7 +67,7 @@ module Spotlight
         graph.type 'article'
         graph.site_name application_name
         graph.title browse.title
-        graph.send('og:image', carrierwave_url(browse.thumbnail.image.thumb)) if browse.thumbnail
+        graph.send('og:image', browse.thumbnail.iiif_url) if browse.thumbnail
         graph.send('article:published_time', browse.created_at.iso8601)
         graph.send('article:modified_time', browse.updated_at.iso8601)
       end
@@ -90,20 +94,6 @@ module Spotlight
         graph.site_name application_name
         graph.title presenter.heading
         graph.send('og:image', document.first(blacklight_config.index.thumbnail_field))
-      end
-    end
-
-    private
-
-    def carrierwave_url(upload)
-      # Carrierwave's #url returns either a full url (if asset path was configured)
-      # or just the path to the image. We'll try to normalize it to a url.
-      url = upload.url
-
-      if url.nil? || url.starts_with?('http')
-        url
-      else
-        (URI.parse(Rails.application.config.asset_host || root_url) + url).to_s
       end
     end
   end

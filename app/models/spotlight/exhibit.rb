@@ -49,7 +49,8 @@ module Spotlight
 
     accepts_nested_attributes_for :about_pages, :attachments, :contacts, :custom_fields, :feature_pages,
                                   :main_navigations, :owned_taggings, :resources, :searches, :solr_document_sidecars
-    accepts_nested_attributes_for :blacklight_configuration, :home_page, :masthead, :thumbnail, :filters, update_only: true
+    accepts_nested_attributes_for :blacklight_configuration, :home_page, :filters, update_only: true
+    accepts_nested_attributes_for :masthead, :thumbnail, update_only: true, reject_if: proc { |attr| attr['id'].blank? || attr['iiif_url'].blank? }
     accepts_nested_attributes_for :contact_emails, reject_if: proc { |attr| attr['email'].blank? }
     accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc { |attr| attr['user_key'].blank? && attr['id'].blank? }
 
