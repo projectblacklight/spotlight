@@ -25,7 +25,6 @@ these collections.)
   s.add_dependency 'cancancan'
   s.add_dependency 'sir_trevor_rails', '~> 0.5'
   s.add_dependency 'carrierwave'
-  s.add_dependency 'carrierwave-crop'
   s.add_dependency 'mini_magick'
   s.add_dependency 'bootstrap_form', '~> 2.2'
   s.add_dependency 'acts-as-taggable-on', '>= 4.0.0.pre'
@@ -48,6 +47,8 @@ these collections.)
   s.add_dependency 'paper_trail', '~> 5.0', '>= 5.2.1'
   s.add_dependency 'openseadragon'
   s.add_dependency 'clipboard-rails', '~> 1.5'
+  s.add_dependency 'almond-rails', '~> 0.0.1'
+  s.add_dependency 'sprockets-es6'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.1'

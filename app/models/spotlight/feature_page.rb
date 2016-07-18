@@ -9,7 +9,9 @@ module Spotlight
     belongs_to :parent_page, class_name: 'Spotlight::FeaturePage'
 
     accepts_nested_attributes_for :child_pages
-    accepts_nested_attributes_for :thumbnail, update_only: true
+
+    belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
+    accepts_nested_attributes_for :thumbnail, update_only: true, reject_if: :all_blank
 
     before_validation unless: :top_level_page? do
       self.exhibit = top_level_page_or_self.exhibit
@@ -20,7 +22,9 @@ module Spotlight
     end
 
     def thumbnail_image_url
-      thumbnail.image.thumb.url if thumbnail && thumbnail.image
+      return unless thumbnail_id
+      riiif = Riiif::Engine.routes.url_helpers
+      riiif.image_path(thumbnail_id, size: Spotlight::Engine.config.featured_image_thumb_size.join(','))
     end
   end
 end

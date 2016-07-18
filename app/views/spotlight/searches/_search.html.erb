@@ -5,7 +5,7 @@
     <div class="panel-heading search">
       <%= f.check_box :published, label: '' %>
       
-      <div class="pic thumbnail"><%= image_tag(search.thumbnail.image.thumb) if search.thumbnail %></div>
+      <div class="pic thumbnail"><%= image_tag(riiif.image_path(search.thumbnail.id, size: Spotlight::Engine.config.featured_image_thumb_size.join(','))) if search.thumbnail %></div>
       <div class="main">
         <div class="title panel-title"><%= search.title %></div>
         <div class="count"><%= t :'.item_count', count: search.documents.size %></div>

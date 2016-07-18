@@ -10,9 +10,11 @@
 
   <div class="form-group croppable-loading-area <%= "missing-croppable" unless @contact.avatar.present? %>">
     <div class="col-sm-5 col-sm-offset-2">
-      <%= hidden_field_tag :contact_avatar_crop, ([@contact.avatar_crop_x.to_i, @contact.avatar_crop_y.to_i, @contact.avatar_crop_x.to_i + @contact.avatar_crop_w.to_i, @contact.avatar_crop_y.to_i + @contact.avatar_crop_h.to_i].to_json if @contact.avatar_crop_x) %>
-      <%= f.previewbox :avatar %>
-      <%= f.cropbox :avatar %>
+      <%# <%= hidden_field_tag :contact_avatar_crop, ([@contact.avatar_crop_x.to_i, @contact.avatar_crop_y.to_i, @contact.avatar_crop_x.to_i + @contact.avatar_crop_w.to_i, @contact.avatar_crop_y.to_i + @contact.avatar_crop_h.to_i].to_json if @contact.avatar_crop_x) %1> %>
+      <%# <%= f.previewbox :avatar %1> %>
+      <%# <%= f.cropbox :avatar %1> %>
+      <%= f.text_field :iiif_url, size: 120 %>
+      <div id="osdCanvas1" class="osd-container"></div>
     </div>
   </div>
 
