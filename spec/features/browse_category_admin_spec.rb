@@ -37,7 +37,6 @@ describe 'Browse Category Administration', type: :feature do
       search.reload
 
       expect(search.masthead).not_to be nil
-      expect(search.masthead.image.cropped).not_to be_nil
       expect(search.masthead.image.path).to end_with 'avatar.png'
     end
 
@@ -58,8 +57,6 @@ describe 'Browse Category Administration', type: :feature do
       search.reload
 
       expect(search.thumbnail).not_to be nil
-      expect(search.thumbnail.image.thumb).not_to be_nil
-      expect(search.thumbnail.image.path).to end_with 'avatar.png'
     end
 
     it 'can select a default index view type' do

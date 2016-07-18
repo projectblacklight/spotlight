@@ -1,5 +1,5 @@
 <% if exhibit.thumbnail.present? %>
-  <%= image_tag(exhibit.thumbnail.image.square.url) %>
+  <%= image_tag(riiif.image_path(exhibit.thumbnail, region: 'square', size: Spotlight::Engine.config.featured_image_thumb_size.join(','))) %>
 <% else %>
   <%= image_tag 'spotlight/default_thumbnail.jpg', class: 'default-thumbnail' %>
 <% end %>
