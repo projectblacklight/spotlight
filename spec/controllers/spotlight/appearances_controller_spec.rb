@@ -41,8 +41,11 @@ describe Spotlight::AppearancesController, type: :controller do
     end
 
     describe 'PATCH update' do
+      let(:masthead) { FactoryGirl.create(:masthead) }
+      let(:thumbnail) { FactoryGirl.create(:featured_image) }
       let(:first_nav) { exhibit.main_navigations.first }
       let(:last_nav) { exhibit.main_navigations.last }
+<<<<<<< 0ae522fd8dcd57514c8733e953545187a45b3c5c
       it 'updates the navigation' do
         if Rails::VERSION::MAJOR >= 5
           patch :update, params: {
@@ -63,14 +66,39 @@ describe Spotlight::AppearancesController, type: :controller do
                 { id: last_nav.id, display: false }
               ]
             }
+=======
+      let(:submitted) do
+        {
+          exhibit_id: exhibit,
+          exhibit: {
+            masthead_id: masthead,
+            thumbnail_id: thumbnail,
+            masthead_attributes: {
+              iiif_url: 'http://test.host/1/foo'
+            },
+            thumbnail_attributes: {
+              iiif_url: 'http://test.host/2/foo'
+            },
+            main_navigations_attributes: [
+               { id: first_nav.id, label: 'Some Label', weight: 500 },
+               { id: last_nav.id, display: false }
+            ]
+>>>>>>> Add iiif-crop to spotlight
           }
-        end
+        }
+      end
+      it 'updates the navigation' do
+        patch :update, params: submitted
         expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
         expect(response).to redirect_to edit_exhibit_appearance_path(exhibit)
         assigns[:exhibit].tap do |saved|
           expect(saved.main_navigations.find(first_nav.id).label).to eq 'Some Label'
           expect(saved.main_navigations.find(first_nav.id).weight).to eq 500
           expect(saved.main_navigations.find(last_nav.id)).not_to be_displayable
+          expect(saved.masthead).to eq masthead
+          expect(saved.thumbnail).to eq thumbnail
+          expect(saved.masthead.iiif_url).to eq 'http://test.host/1/foo'
+          expect(saved.thumbnail.iiif_url).to eq 'http://test.host/2/foo'
         end
       end
     end

@@ -1,6 +1,9 @@
 Spotlight::Engine.routes.draw do
   devise_for :contact_email, class_name: 'Spotlight::ContactEmail', only: [:confirmations]
 
+  resources :mastheads, only: :create
+  resources :featured_images, only: :create
+
   resource :site, only: [:edit, :update] do
     collection do
       get '/tags', to: 'sites#tags'

@@ -11,8 +11,8 @@
     <%= f.radio_button(:source, :exhibit, label: t(:'.source.exhibit.label')) %>
     <div>
       <%= f.hidden_field(:document_global_id) %>
-      <%= f.hidden_field(:remote_image_url, data: jcrop_options) %>
-      <%= text_field_tag(:document_title, (presenter(f.object.document).document_show_html_title if f.object.document), class: "form-control", data: {input_select_target: "##{form_prefix}_source_exhibit", masthead_typeahead: true, target_panel: "##{form_prefix}-target-panel", :'id-field' => "##{form_prefix}_document_global_id", remote_url_field: "##{form_prefix}_remote_image_url" }) %>
+      <%= f.hidden_field(:remote_image_url) %>
+      <%= text_field_tag(:document_title, (presenter(f.object.document).document_show_html_title if f.object.document), class: "form-control", data: { input_select_target: "##{form_prefix}_source_exhibit", masthead_typeahead: true, target_panel: "##{form_prefix}-target-panel", :'id-field' => "##{form_prefix}_document_global_id", remote_url_field: "##{form_prefix}_remote_image_url" }) %>
       <div id="<%= form_prefix %>-target-panel" style="display:none">
         <div class="panel-heading">
           <div data-item-title="true"></div>
@@ -24,13 +24,18 @@
   </div>
   <div>
     <%= f.radio_button(:source, :remote, label: t(:'.source.remote.label')) %>
-    <%= f.file_field_without_bootstrap(:image, data: jcrop_options.merge(input_select_target: "##{form_prefix}_source_remote")) %>
+    <%= f.file_field_without_bootstrap(:image, data: {
+      endpoint: polymorphic_path(f.object.model_name.route_key),
+      tilesource: f.object.persisted? ? riiif.info_url(f.object.id) : nil,
+      association: 'exhibit_masthead_id',
+      url: "#{form_prefix}_iiif_url",
+      selector: crop_options[:selector],
+      croppable: true }) %>
   </div>
 <% end %>
 <%= field_set_tag(t(:'.source.remote.header')) do %>
   <p class="instructions"><%= t(:'.source.remote.help') %></p>
-  <div class="form-group croppable-loading-area <%= "missing-croppable" unless f.object.try(:image).present? %>">
-    <%= hidden_field_tag :"#{jcrop_options.fetch(:selector, "image")}_crop", ([f.object.image_crop_x.to_i, f.object.image_crop_y.to_i, f.object.image_crop_x.to_i + f.object.image_crop_w.to_i, f.object.image_crop_y.to_i + f.object.image_crop_h.to_i].to_json if f.object.try(:image_crop_x)) %>
-    <%= f.cropbox :image %>
-  </div>
+  <%# <div class="form-group croppable-loading-area <%= "missing-croppable" unless f.object.try(:image).present? %1>"> %>
+    <%= f.text_field :iiif_url, size: 120 %>
+    <div id="<%= crop_options[:selector] %>" class="osd-container"></div>
 <% end %>

@@ -24,5 +24,7 @@
 //= require bootstrap-tagsinput
 //= require jquery.serializejson
 //= require clipboard
-
+//= require iiif-osd-crop
+// Provide AMD module support
+//= require almond
 //= require_tree .

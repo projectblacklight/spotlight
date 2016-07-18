@@ -2,7 +2,7 @@
   <div class="col-sm-4 col-xs-12 category">
     <%= link_to spotlight.exhibit_browse_path(@exhibit, search) do %>
       <div class="image-overlay">
-        <%= image_tag(search.thumbnail.image.thumb, class: 'img-responsive') if search.thumbnail %>
+        <%= image_tag(riiif.image_path(search.thumbnail, size: Spotlight::Engine.config.featured_image_thumb_size.join(',')), class: 'img-responsive') if search.thumbnail %>
         <div class="text-overlay">
            <h2 class="browse-category-title">
              <%= search.title%>

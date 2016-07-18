@@ -12,6 +12,7 @@ module Spotlight
 
     def update
       if @site.update(site_params)
+        update_masthead
         redirect_to exhibits_path, notice: t(:'helpers.submit.site.updated', model: @site.class.model_name.human.downcase)
       else
         flash[:alert] = @site.errors.full_messages.join('<br>'.html_safe)
@@ -29,6 +30,11 @@ module Spotlight
 
     private
 
+    def update_masthead
+      return unless @site.masthead
+      @site.masthead.update(params.require(:site).require(:masthead_attributes).permit(masthead_params))
+    end
+
     def load_site
       @site ||= Spotlight::Site.instance
     end
@@ -37,7 +43,8 @@ module Spotlight
       params.require(:site).permit(
         :title,
         :subtitle,
-        masthead_attributes: masthead_params,
+        :masthead_id,
+        # masthead_attributes: masthead_params,
         exhibits_attributes: [:id, :weight]
       )
     end
@@ -45,11 +52,11 @@ module Spotlight
     def masthead_params
       [
         :display,
-        :source,
-        :image,
-        :remote_image_url,
-        :document_global_id,
-        :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h
+        # :source,
+        :iiif_url,
+        # :remote_image_url,
+        # :document_global_id,
+        # :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h
       ]
     end
   end

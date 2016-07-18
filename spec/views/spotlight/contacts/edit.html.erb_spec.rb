@@ -19,8 +19,8 @@ describe 'spotlight/contacts/edit.html.erb' do
     expect(rendered).to have_content 'Photo'
   end
 
-  it 'has a cropbox' do
+  it 'has an IIIF crop' do
     render
-    expect(rendered).to have_selector '#contact_avatar_cropbox'
+    expect(rendered).to have_selector '.osd-container'
   end
 end
