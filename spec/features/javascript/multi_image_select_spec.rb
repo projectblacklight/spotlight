@@ -7,7 +7,7 @@ describe 'Multi image selector', type: :feature, js: true do
   it 'allows the user to select which image in a multi image object to display' do
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
 
-    add_widget 'solr_documents'
+    add_widget 'solr_documents' # the "Item Row" widget
 
     fill_in_typeahead_field with: 'xd327cm9378'
 

@@ -1,4 +1,3 @@
-
 describe 'spotlight/searches/edit.html.erb', type: :view do
   let(:blacklight_config) do
     Blacklight::Configuration.new do |config|
@@ -12,13 +11,15 @@ describe 'spotlight/searches/edit.html.erb', type: :view do
   end
   before do
     allow(view).to receive(:search_action_path).and_return('/search')
+    allow(view).to receive(:mastheads_path).and_return('/mastheads')
+    allow(view).to receive(:featured_images_path).and_return('/featured_images')
     allow(view).to receive(:exhibit_search_path).and_return('/search')
     allow(view).to receive(:exhibit_searches_path).and_return('/searches')
     allow(view).to receive(:blacklight_config).and_return(blacklight_config)
     assign(:exhibit, exhibit)
     assign(:search, search)
     allow(view).to receive(:current_exhibit).and_return(exhibit)
-    allow(view).to receive_messages(default_masthead_jcrop_options: {}, default_thumbnail_jcrop_options: {})
+    allow(view).to receive_messages(masthead_crop_options: {}, thumbnail_crop_options: {})
   end
 
   it 'renders a form w/ the appropriate autocomplete data attribute' do

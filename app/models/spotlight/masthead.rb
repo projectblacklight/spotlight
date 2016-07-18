@@ -5,7 +5,7 @@ module Spotlight
     mount_uploader :image, Spotlight::MastheadUploader
 
     def display?
-      display && image.cropped.present?
+      display && iiif_url.present?
     end
 
     # Duplicated from Spotlight::FeaturedImage, because mount_uploader

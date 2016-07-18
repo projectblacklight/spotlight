@@ -16,15 +16,11 @@ module Spotlight
       self.contact_info = contact_info.symbolize_keys
     end
 
-    ## carrierwave-crop doesn't want to store the crop points. we do.
-    # so instead of this:
-    # crop_uploaded :avatar  ## Add this
-    # we do this:
+    ## store the crop points
     after_save do
       if avatar.present?
         avatar.cache! unless avatar.cached?
         avatar.store!
-        recreate_avatar_versions
       end
     end
 

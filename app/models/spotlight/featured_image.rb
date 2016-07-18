@@ -10,7 +10,6 @@ module Spotlight
       if image.present?
         image.cache! unless image.cached?
         image.store!
-        recreate_image_versions
       end
     end
 

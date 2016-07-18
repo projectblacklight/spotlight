@@ -20,7 +20,9 @@ module Spotlight
     accepts_nested_attributes_for :masthead, update_only: true
 
     def thumbnail_image_url
-      thumbnail.image.thumb.url if thumbnail && thumbnail.image
+      return unless thumbnail && thumbnail.image
+      riiif = Riiif::Engine.routes.url_helpers
+      riiif.image_path(thumbnail.id, size: Spotlight::Engine.config.featured_image_thumb_size.join(','))
     end
 
     def images
