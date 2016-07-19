@@ -17,7 +17,7 @@ module Spotlight
 
     # rubocop:disable Style/AccessorMethodName
     def set_html_page_title(title = nil)
-      @page_title = strip_tags(t(:'spotlight.html_title', title: title || t(:'.title', default: :'.header'), application_name: application_name))
+      @page_title = strip_tags(t(:'spotlight.html_title', title: title || t(:'.title', default: :'.header'), application_name: application_name)).html_safe
     end
     # rubocop:enable Style/AccessorMethodName
   end
