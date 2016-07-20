@@ -28,6 +28,14 @@ describe 'spotlight/pages/show', type: :view do
     render
   end
 
+  it 'does not double-escape HTML entities in the HTML title' do
+    allow(page).to receive_messages(title: 'Abbott & Costello')
+    stub_template '_user_util_links.html.erb' => ''
+    stub_template 'shared/_masthead.html.erb' => ''
+    render template: 'spotlight/pages/show', layout: 'layouts/spotlight/spotlight'
+    expect(rendered).to have_content('Abbott & Costello | Blacklight')
+  end
+
   it 'does not include the page title' do
     allow(page).to receive_messages(should_display_title?: false)
     expect(view).to_not receive(:set_html_page_title)
