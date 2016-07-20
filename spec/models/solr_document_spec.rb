@@ -69,6 +69,8 @@ describe SolrDocument, type: :model do
     before do
       Spotlight::SolrDocumentSidecar.create! document: subject, exhibit: exhibit,
                                              data: { 'a_tesim' => 1, 'b_tesim' => 2, 'c_tesim' => 3 }
+      Spotlight::SolrDocumentSidecar.create! document: subject, exhibit: exhibit_alt,
+                                             data: { 'd_tesim' => 1, 'e_tesim' => 2, 'f_tesim' => 3 }
     end
 
     it 'includes the doc id' do
@@ -88,7 +90,13 @@ describe SolrDocument, type: :model do
     end
 
     it 'includes sidecar fields' do
-      expect(subject.to_solr).to include('a_tesim' => 1, 'b_tesim' => 2, 'c_tesim' => 3)
+      expect(subject.to_solr).to include('a_tesim' => 1,
+                                         'b_tesim' => 2,
+                                         'c_tesim' => 3,
+                                         'd_tesim' => 1,
+                                         'e_tesim' => 2,
+                                         'f_tesim' => 3,
+                                        )
     end
   end
 

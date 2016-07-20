@@ -52,6 +52,8 @@ module Spotlight
       end
     end
 
+    # Warning, calling update in current_exhibit overwrites this doc in all other
+    # exhibits because it doesn't load their sidecars.
     def update(current_exhibit, new_attributes)
       attributes = new_attributes.stringify_keys
 
