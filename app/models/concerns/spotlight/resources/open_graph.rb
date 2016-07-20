@@ -23,10 +23,6 @@ module Spotlight
           ["#{k.parameterize('_')}_tesim", v]
         end]
       end
-
-      def to_solr
-        super.merge(opengraph_properties)
-      end
     end
   end
 end

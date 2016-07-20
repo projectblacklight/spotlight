@@ -10,6 +10,8 @@ module Spotlight
       # we want to do this before reindexing
       after_create :update_document_sidecar
 
+      self.document_builder_class = UploadSolrDocumentBuilder
+
       def self.fields(exhibit)
         @fields ||= {}
         @fields[exhibit] ||= begin
@@ -18,54 +20,18 @@ module Spotlight
         end
       end
 
-      def configured_fields
-        self.class.fields(exhibit)
+      def compound_id
+        "#{exhibit_id}-#{id}"
       end
 
-      def to_solr
-        store_url! # so that #url doesn't return the tmp directory
-
-        solr_hash = super
-
-        add_default_solr_fields solr_hash
-
-        add_image_dimensions solr_hash
-
-        add_file_versions solr_hash
-
-        add_sidecar_fields solr_hash
-
-        solr_hash
+      def sidecar
+        @sidecar ||= document_model.new(id: compound_id).sidecar(exhibit)
       end
 
       private
 
-      def add_default_solr_fields(solr_hash)
-        solr_hash[exhibit.blacklight_config.document_model.unique_key.to_sym] = compound_id
-      end
-
-      def add_image_dimensions(solr_hash)
-        dimensions = ::MiniMagick::Image.open(url.file.file)[:dimensions]
-        solr_hash[:spotlight_full_image_width_ssm] = dimensions.first
-        solr_hash[:spotlight_full_image_height_ssm] = dimensions.last
-      end
-
-      def add_file_versions(solr_hash)
-        spotlight_image_derivatives.each do |config|
-          solr_hash[config[:field]] = if config[:version]
-                                        url.send(config[:version]).url
-                                      else
-                                        url.url
-                                      end
-        end
-      end
-
-      def add_sidecar_fields(solr_hash)
-        solr_hash.merge! sidecar.to_solr
-      end
-
-      def compound_id
-        "#{exhibit_id}-#{id}"
+      def configured_fields
+        self.class.fields(exhibit)
       end
 
       def update_document_sidecar
@@ -82,10 +48,6 @@ module Spotlight
 
       def configured_fields_data
         data.slice(*configured_fields.map(&:field_name).map(&:to_s)).select { |_k, v| v.present? }
-      end
-
-      def sidecar
-        @sidecar ||= document_model.new(id: compound_id).sidecar(exhibit)
       end
     end
   end
