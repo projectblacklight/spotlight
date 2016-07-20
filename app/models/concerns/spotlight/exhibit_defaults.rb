@@ -5,7 +5,7 @@ module Spotlight
 
     included do
       before_create :build_home_page
-      before_create :add_site_reference
+      after_initialize :add_site_reference
       after_create :initialize_config
       after_create :initialize_browse
       after_create :initialize_main_navigation

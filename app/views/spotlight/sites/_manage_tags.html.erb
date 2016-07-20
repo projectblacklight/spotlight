@@ -1,0 +1,24 @@
+<p class="instructions"><%= t :'.instructions' %></p>
+
+<div class="nav">
+  <a class="btn btn-default pull-right" id="add-new-tag" data-target="#site-tags" data-template-target="#site-tags-template"><%= t :'.add_new_tag' %></a>
+</div>
+
+<% if @site.tags.empty? %>
+  <div class="alert alert-info" id="no-tags-warning">
+    <%= t :'.missing' %>
+  </div>
+<% end %>
+
+<table id="site-tags-template" class="hidden">
+  <%= f.fields_for [ActsAsTaggableOn::Tag.new] do |e| %>
+    <%= render 'tags_row', e: e %>
+  <% end %>
+</table>
+
+<table class="table table-striped" id="site-tags">
+
+  <%= f.fields_for :tags do |e| %>
+    <%= render 'tags_row', e: e %>
+  <% end %>
+</table>

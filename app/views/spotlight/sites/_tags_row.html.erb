@@ -1,0 +1,17 @@
+<tr data-original-name="<%= e.object.name %>">
+  <td>
+    <%= e.hidden_field :id %>
+    <h3 class="panel-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+      <a href="#edit-in-place" class="field-label edit-in-place"><%= e.object.name %></a>
+      <%= e.hidden_field :name, data: {:"edit-field-target" => 'true'}, class: 'tag_name' %>
+    </h3>
+  </td>
+  <td>
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-danger">
+        <%= e.check_box_without_bootstrap :_destroy, autocomplete: false, include_hidden: false, class: 'destroy-row' %>
+        <%= t(:'helpers.action.destroy') %>
+      </label>
+    </div>
+  </td>
+</tr>

@@ -20,8 +20,10 @@
 //= require bootstrap/tooltip
 //= require bootstrap/popover
 //= require bootstrap/carousel
+//= require bootstrap/button
 //= require bootstrap-tagsinput
 //= require social-share-button
 //= require jquery.serializejson
+//= require bootstrap-multiselect
 
 //= require_tree .

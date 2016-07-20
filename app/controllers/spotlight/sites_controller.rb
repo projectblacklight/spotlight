@@ -25,6 +25,7 @@ module Spotlight
       authorize! :tag, @site
 
       respond_to do |format|
+        format.html
         format.json { render json: Spotlight::Exhibit.all_tags.map(&:name) }
       end
     end
@@ -40,7 +41,8 @@ module Spotlight
         :title,
         :subtitle,
         masthead_attributes: masthead_params,
-        exhibits_attributes: [:id, :weight]
+        exhibits_attributes: [:id, :weight, tag_list: []],
+        tags_attributes: [:id, :name, :_destroy]
       )
     end
 

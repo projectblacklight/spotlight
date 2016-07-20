@@ -99,9 +99,6 @@ en:
         display_title: "Show title"
       "spotlight/masthead":
         display: "Show background image in masthead"
-    help:
-      spotlight/exhibit:
-        tag_list: "Enter tags separated by commas."
   blacklight:
     search:
       fields:
@@ -563,6 +560,17 @@ en:
         section: Manage exhibits
         page_title: Order exhibits
         instructions: Drag and drop the exhibits below to specify the order in which they are displayed on the exhibits homepage.
+      tags:
+        section: Manage exhibits
+        page_title: Tag exhibits
+      manage_tags:
+        heading: Manage tags
+        missing: No exhibit tags exist. Use the "Add new tag" button to create a tag.
+        add_new_tag: Add new tag
+        instructions: "Tags listed below will be available when assigning tags to exhibits. Click on a tag to rename it."
+      assign_tags:
+        heading: Assign tags
+        instructions: "Published exhibits can be filtered on the exhibits home page by the tags they are assigned."
     searches: &search
       nav_link: "Browse"
       index:

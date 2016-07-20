@@ -85,7 +85,7 @@ describe Spotlight::ExhibitsController, type: :controller do
 
       it 'is successful' do
         expect do
-          post :create, exhibit: { title: 'Some Title', slug: 'custom-slug', tag_list: '2014, R. Buckminster Fuller' }
+          post :create, exhibit: { title: 'Some Title', slug: 'custom-slug', tag_list: ['2014', 'R. Buckminster Fuller'] }
         end.to change { Spotlight::Exhibit.count }.by(1)
 
         exhibit = Spotlight::Exhibit.last
