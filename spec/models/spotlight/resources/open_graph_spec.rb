@@ -1,7 +1,12 @@
-
 describe Spotlight::Resources::OpenGraph, type: :model do
+  class TestDocBuilder < Spotlight::SolrDocumentBuilder
+    def to_solr
+      super.merge(resource.opengraph_properties)
+    end
+  end
+
   class TestResource < Spotlight::Resource
-    include Spotlight::Resources::Web
+    self.document_builder_class = TestDocBuilder
     include Spotlight::Resources::OpenGraph
   end
 
@@ -14,7 +19,7 @@ describe Spotlight::Resources::OpenGraph, type: :model do
       allow(subject).to receive_messages id: 15, opengraph_properties: {}, exhibit: exhibit, persisted?: true
     end
 
-    let(:solr_doc) { subject.to_solr }
+    let(:solr_doc) { subject.document_builder.to_solr }
 
     it 'includes this record id' do
       expect(solr_doc).to include spotlight_resource_id_ssim: subject.to_global_id.to_s

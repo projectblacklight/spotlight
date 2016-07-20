@@ -4,21 +4,6 @@ describe Spotlight::Resource, type: :model do
   end
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
-  describe '#to_solr' do
-    before do
-      allow(subject).to receive(:exhibit).and_return(exhibit)
-      allow(subject).to receive_messages(type: 'Spotlight::Resource::Something', id: 15, persisted?: true)
-    end
-    it 'includes a reference to the resource' do
-      expect(subject.to_solr).to include spotlight_resource_id_ssim: subject.to_global_id.to_s
-    end
-
-    it 'includes exhibit-specific data' do
-      allow(exhibit).to receive(:solr_data).and_return(exhibit_data: true)
-      expect(subject.to_solr).to include exhibit_data: true
-    end
-  end
-
   describe '#reindex' do
     context 'with a provider that generates ids' do
       subject do
@@ -31,7 +16,7 @@ describe Spotlight::Resource, type: :model do
         SolrDocument.new(id: 123).sidecars.create!(exhibit: exhibit, data: { document_data: true })
         allow(subject).to receive_messages(to_global_id: '')
 
-        allow(subject).to receive(:to_solr).and_return(solr_response)
+        allow(subject.document_builder).to receive(:to_solr).and_return(solr_response)
       end
 
       it 'includes exhibit document-specific data' do

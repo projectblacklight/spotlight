@@ -5,6 +5,9 @@ module Spotlight
     include Spotlight::SolrDocument::AtomicUpdates
     include ActiveSupport::Benchmarkable
 
+    class_attribute :document_builder_class
+    self.document_builder_class = SolrDocumentBuilder
+
     extend ActiveModel::Callbacks
     define_model_callbacks :index
 
@@ -40,66 +43,8 @@ module Spotlight
       Spotlight::ReindexJob.perform_later(self)
     end
 
-    concerning :GeneratingSolrDocuments do
-      ##
-      # @abstract
-      # Convert this resource into zero-to-many new solr documents. The data here
-      # should be merged into the resource-specific {#to_solr} data.
-      #
-      # @return [Hash] a single solr document hash
-      # @return [Enumerator<Hash>] multiple solr document hashes. This can be a
-      #   simple array, or an lazy enumerator
-      def to_solr
-        (exhibit_specific_solr_data || {}).merge(spotlight_resource_metadata_for_solr || {})
-      end
-
-      protected
-
-      ##
-      # @return an enumerator of all the indexable documents for this resource
-      def documents_to_index
-        data = to_solr
-        return [] if data.blank?
-        data &&= [data] if data.is_a? Hash
-
-        return to_enum(:documents_to_index) { data.size } unless block_given?
-
-        data.lazy.reject(&:blank?).each do |doc|
-          yield doc.reverse_merge(existing_solr_doc_hash(doc[unique_key]) || {})
-        end
-      end
-
-      private
-
-      ##
-      # Get any exhibit-specific metadata stored in e.g. sidecars, tags, etc
-      # This needs the generated solr document
-      def existing_solr_doc_hash(id)
-        document_model.new(unique_key => id).to_solr if document_model && id.present?
-      end
-
-      def unique_key
-        if document_model
-          document_model.unique_key.to_sym
-        else
-          :id
-        end
-      end
-
-      def exhibit_specific_solr_data
-        exhibit.solr_data if exhibit
-      end
-
-      def spotlight_resource_metadata_for_solr
-        {
-          Spotlight::Engine.config.resource_global_id_field => (to_global_id.to_s if persisted?),
-          document_model.resource_type_field => self.class.to_s.tableize
-        }
-      end
-
-      def document_model
-        exhibit.blacklight_config.document_model if exhibit
-      end
+    def document_model
+      exhibit.blacklight_config.document_model if exhibit
     end
 
     concerning :Indexing do
@@ -112,7 +57,7 @@ module Spotlight
           count = 0
 
           run_callbacks :index do
-            documents_to_index.each_slice(batch_size) do |batch|
+            document_builder.documents_to_index.each_slice(batch_size) do |batch|
               write_to_index(batch)
               update(last_indexed_count: (count += batch.length))
             end
@@ -122,13 +67,17 @@ module Spotlight
         end
       end
 
+      def document_builder
+        @document_builder ||= document_builder_class.new(self)
+      end
+
       protected
 
       def reindex_with_logging
         time_start = Time.zone.now
 
         update(indexed_at: time_start,
-               last_indexed_estimate: documents_to_index.size,
+               last_indexed_estimate: document_builder.documents_to_index.size,
                last_indexed_finished: nil,
                last_index_elapsed_time: nil)
 
