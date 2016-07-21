@@ -5,6 +5,10 @@ describe SolrDocument, type: :model do
 
   describe '#save' do
     context 'when filter_resources_by_exhibit is true' do
+      let(:expectation) do
+        hash_including(:"exhibit_#{exhibit.slug}_public_bsi",
+                       :"exhibit_#{exhibit_alt.slug}_public_bsi")
+      end
       before do
         Spotlight::Engine.config.filter_resources_by_exhibit = true
         Spotlight::SolrDocumentSidecar.create! document: subject, exhibit: exhibit,
@@ -13,8 +17,7 @@ describe SolrDocument, type: :model do
                                                data: { 'd_tesim' => 1, 'e_tesim' => 2, 'f_tesim' => 3 }
       end
       it 'includes filter fields' do
-        expectation = hash_including(:"spotlight_exhibit_slug_#{exhibit.slug}_bsi", :"spotlight_exhibit_slug_#{exhibit_alt.slug}_bsi")
-        expect(subject).to receive('hash_for_solr_update').with(expectation)
+        expect(subject).to receive(:hash_for_solr_update).with(expectation).and_call_original
         subject.save
       end
     end
