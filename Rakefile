@@ -89,7 +89,7 @@ namespace :spotlight do
 
                 _, exit_status = Process.wait2(io.pid)
 
-                raise 'Failed to generate spotlight' if exit_status != 0
+                raise 'Failed to generate spotlight' if exit_status.nonzero?
               end
             end
 
