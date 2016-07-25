@@ -38,7 +38,7 @@ describe Spotlight::SitesController, type: :controller do
 
         expect(response).to redirect_to(exhibits_path)
 
-        expect(Spotlight::Exhibit.all.first).to eq exhibit_b
+        expect(Spotlight::Exhibit.ordered_by_weight.first).to eq exhibit_b
         expect(exhibit_a.reload.weight).to eq 5
       end
     end

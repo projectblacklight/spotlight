@@ -9,6 +9,7 @@ module Spotlight
 
     scope :published, -> { where(published: true) }
     scope :unpublished, -> { where(published: false) }
+    scope :ordered_by_weight, -> { order('weight ASC') }
 
     paginates_per 50
 
@@ -16,8 +17,6 @@ module Spotlight
     friendly_id :title, use: [:slugged, :finders]
     validates :title, presence: true
     validates :slug, uniqueness: true
-
-    default_scope { order('weight ASC') }
 
     acts_as_tagger
     acts_as_taggable

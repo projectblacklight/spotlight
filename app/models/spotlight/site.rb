@@ -2,7 +2,7 @@ module Spotlight
   ##
   # Global spotlight configuration
   class Site < ActiveRecord::Base
-    has_many :exhibits
+    has_many :exhibits, -> { ordered_by_weight }
     has_many :roles, as: :resource
 
     belongs_to :masthead, dependent: :destroy
