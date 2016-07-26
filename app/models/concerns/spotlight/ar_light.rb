@@ -66,6 +66,7 @@ module Spotlight
     def initialize(source_doc = {}, solr_response = nil)
       @association_cache = {}
       super
+      yield self if block_given?
     end
 
     # Returns true if +comparison_object+ is the same exact object, or +comparison_object+

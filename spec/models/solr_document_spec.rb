@@ -1,5 +1,6 @@
 describe SolrDocument, type: :model do
-  subject { described_class.new(id: 'abcd123') }
+  let(:document) { described_class.new(id: 'abcd123') }
+  subject { document }
   its(:to_key) { should == ['abcd123'] }
   its(:persisted?) { should be_truthy }
   before do
@@ -8,6 +9,16 @@ describe SolrDocument, type: :model do
 
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_alt) { FactoryGirl.create(:exhibit) }
+
+  describe '.build_for_exhibit' do
+    let(:id) { '123abc' }
+    subject { described_class.build_for_exhibit(id, exhibit) }
+
+    it 'has a persisted sidecar' do
+      expect(subject.sidecars.first).to be_persisted
+      expect(subject.sidecars.first.exhibit).to eq exhibit
+    end
+  end
 
   it 'has tags on the exhibit' do
     expect(subject.tags_from(exhibit)).to be_empty

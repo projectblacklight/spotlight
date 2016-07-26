@@ -18,7 +18,7 @@ module Spotlight
       return to_enum(:documents_to_index) { data.size } unless block_given?
 
       data.lazy.reject(&:blank?).each do |doc|
-        yield doc.reverse_merge(existing_solr_doc_hash(doc[unique_key]) || {})
+        yield doc.reverse_merge(exhibit_solr_doc(doc[unique_key]).to_solr)
       end
     end
 
@@ -33,16 +33,25 @@ module Spotlight
     # @return [Enumerator<Hash>] multiple solr document hashes. This can be a
     #   simple array, or an lazy enumerator
     def to_solr
-      (exhibit_specific_solr_data || {}).merge(spotlight_resource_metadata_for_solr || {})
+      spotlight_resource_metadata_for_solr
     end
 
     private
 
+    # Null object for SolrDocument
+    module NilSolrDocument
+      def self.to_solr
+        {}
+      end
+    end
+
     ##
     # Get any exhibit-specific metadata stored in e.g. sidecars, tags, etc
     # This needs the generated solr document
-    def existing_solr_doc_hash(id)
-      document_model.new(unique_key => id).to_solr if document_model && id.present?
+    # @returns [#to_solr] something that responds to `to_solr'
+    def exhibit_solr_doc(id)
+      return NilSolrDocument unless document_model || id.present?
+      document_model.build_for_exhibit(id, exhibit)
     end
 
     def unique_key
@@ -51,10 +60,6 @@ module Spotlight
       else
         :id
       end
-    end
-
-    def exhibit_specific_solr_data
-      exhibit.solr_data if exhibit
     end
 
     def spotlight_resource_metadata_for_solr
