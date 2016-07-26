@@ -2,7 +2,6 @@ module Spotlight
   ##
   # Exhibit resources
   class Resource < ActiveRecord::Base
-    include Spotlight::SolrDocument::AtomicUpdates
     include ActiveSupport::Benchmarkable
 
     class_attribute :document_builder_class
@@ -115,6 +114,10 @@ module Spotlight
         blacklight_solr.commit
       rescue => e
         Rails.logger.warn "Unable to commit to solr: #{e}"
+      end
+
+      def write?
+        Spotlight::Engine.config.writable_index
       end
     end
   end
