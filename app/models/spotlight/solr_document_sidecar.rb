@@ -2,14 +2,17 @@ module Spotlight
   ##
   # Exhibit-specific metadata for indexed documents
   class SolrDocumentSidecar < ActiveRecord::Base
-    belongs_to :exhibit
-    belongs_to :document, polymorphic: true
+    belongs_to :exhibit, required: true
+    belongs_to :document, required: true, polymorphic: true
     serialize :data, Hash
 
     delegate :has_key?, :key?, to: :data
 
     def to_solr
-      { document.class.unique_key.to_sym => document.id, visibility_field => public? }.merge(data_to_solr)
+      { document.class.unique_key.to_sym => document.id,
+        visibility_field => public? }
+        .merge(data_to_solr)
+        .merge(exhibit.solr_data)
     end
 
     def private!

@@ -25,6 +25,12 @@ module Spotlight
     ##
     # Class-level methods
     module ClassMethods
+      def build_for_exhibit(id, exhibit)
+        new(unique_key => id) do |doc|
+          doc.sidecar(exhibit).save! # save is a nop if the sidecar isn't modified.
+        end
+      end
+
       def reindex(id)
         find(id).reindex
       rescue Blacklight::Exceptions::InvalidSolrID => e
