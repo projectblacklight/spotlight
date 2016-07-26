@@ -7,13 +7,16 @@ describe Spotlight::Resource, type: :model do
   describe '#reindex' do
     context 'with a provider that generates ids' do
       subject do
-        Class.new(described_class).new(exhibit: exhibit)
+        described_class.new(exhibit: exhibit)
       end
 
       let(:solr_response) { { id: 123 } }
+      let(:doc) { SolrDocument.new(id: 123) }
+      let(:exhibit_alt) { FactoryGirl.create(:exhibit) }
 
       before do
-        SolrDocument.new(id: 123).sidecars.create!(exhibit: exhibit, data: { document_data: true })
+        doc.sidecars.create!(exhibit: exhibit, data: { document_data: true })
+        doc.sidecars.create!(exhibit: exhibit_alt, data: { alt_document_data: true })
         allow(subject).to receive_messages(to_global_id: '')
 
         allow(subject.document_builder).to receive(:to_solr).and_return(solr_response)
@@ -26,7 +29,7 @@ describe Spotlight::Resource, type: :model do
           expect(data.length).to eq 1
           doc = data.first
 
-          expect(doc).to include document_data: true
+          expect(doc).to include document_data: true, alt_document_data: true
         end
 
         subject.reindex
