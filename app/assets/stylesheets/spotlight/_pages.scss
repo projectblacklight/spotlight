@@ -116,7 +116,13 @@
 }
 
 .item-grid-block {
-  h3 {margin-top: 0;}
+  h3 { margin-top: 0; }
+
+  .text-col {
+    float: none;
+    width: auto;
+  }
+
   .items-col {
     margin-bottom: 1em;
     z-index: 1;
@@ -125,67 +131,70 @@
     justify-content: space-between;
     align-content: stretch;
 
-    .box {
-      align-self: auto;
-      order: 1;
-      margin: auto;
-      flex: 1 0 25%;
+    @media (max-width: $screen-sm-max) {
+      margin-bottom: $line-height-computed;
+    }
+  }
 
-      .thumbnail {
-        border: 1px solid $gray-lighter;
-        padding: 0;
-        margin: 0;
-        border-radius: 0;
+  .box {
+    align-self: auto;
+    flex: 1 0 25%;
+    margin: auto;
+    min-width: 25%;
+    order: 1;
+    padding: 5px;
 
-        a {
-          & > img {
-            border: 1px solid $gray-light;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            overflow: hidden;
-          }
-        }
+    @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+      min-width: 128px;
+    }
+  }
 
-      }
+  .thumbnail {
+    border: 1px solid $gray-lighter;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
 
-      min-width: 25%;
-      height: 120px;
+    img {
+      border: 1px solid $gray-light;
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      overflow: hidden;
+
       @media (min-width: $screen-lg-min) {
-        height: 170px; // default: no sidebar, no text column
+        height: 160px; // default: no sidebar, no text column
         // reduce height if on a page with a sidebar or text column, because will be less wide
         .col-md-9 & {
-          height: 135px;
-        }
-      }
-      padding: 5px;
-    }
-
-    .item-0 {
-      flex: 3 1 41%;
-    }
-
-    .item-2 {
-      flex: 2 1 33%;
-    }
-
-    .item-0, .item-1, .item-2 {
-      height: 220px;
-      order: 0;
-      @media (min-width: $screen-lg-min) {
-        height: 280px; // default: no sidebar, no text column
-        // reduce height if on a page with a sidebar or text column, because will be less wide
-        .col-md-9 & {
-          height: 240px;
+          height: 125px;
         }
       }
     }
   }
-  @media (max-width: $screen-sm-max) {
-    &.items-block .items-col {margin-bottom: $line-height-computed;}
+
+  .item-0 {
+    flex: 3 1 41%;
   }
-  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
-    &.items-block .items-col .box {min-width: 128px;}
+
+  .item-2 {
+    flex: 2 1 33%;
+  }
+
+  .item-0,
+  .item-1,
+  .item-2 {
+    order: 0;
+
+    .thumbnail img {
+      height: 210px;
+      @media (min-width: $screen-lg-min) {
+        height: 270px; // default: no sidebar, no text column
+        // reduce height if on a page with a sidebar or text column, because will be less wide
+        .col-md-9 & {
+          height: 230px;
+        }
+      }
+    }
   }
 }
 
