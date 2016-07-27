@@ -100,7 +100,7 @@ module Spotlight
     end
 
     def reindex_progress
-      @reindex_progress ||= ReindexProgress.new(resources.order('updated_at')) if resources
+      @reindex_progress ||= ReindexProgress.new(resources) if resources
     end
 
     protected

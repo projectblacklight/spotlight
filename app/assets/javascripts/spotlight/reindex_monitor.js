@@ -22,7 +22,7 @@ Spotlight.onLoad(function() {
     }
 
     function success(data) {
-      if (data.in_progress) {
+      if (data.recently_in_progress) {
         monitorPanel().show();
         updateMonitorPanel(data);
       } else {
@@ -33,7 +33,7 @@ Spotlight.onLoad(function() {
     function fail() { monitorPanel().hide(); }
 
     function updateMonitorPanel(data) {
-      panelStartDate().text(data.started);
+      panelStartDate().text(data.started_at);
       panelCurrentDate().text(data.updated_at);
       panelCompleted().text(data.completed);
       updatePanelTotals(data);

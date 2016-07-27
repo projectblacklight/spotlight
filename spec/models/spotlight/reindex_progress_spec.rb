@@ -1,82 +1,96 @@
 describe Spotlight::ReindexProgress, type: :model do
-  let(:start_time) { 20.minutes.ago }
-  let(:finish_time) { 5.minutes.ago }
-  let(:first_resource) do
+  let(:start_time) { 20.minutes.ago.at_beginning_of_minute }
+  let(:finish_time) { 5.minutes.ago.at_beginning_of_minute }
+  let(:updated_time) { 1.minute.ago.at_beginning_of_minute }
+  let!(:first_resource) do
     FactoryGirl.create(
       :resource,
-      updated_at: 15.minutes.ago,
+      updated_at: updated_time,
       indexed_at: start_time,
+      enqueued_at: start_time,
+      last_indexed_finished: start_time,
       last_indexed_estimate: 7,
       last_indexed_count: 5,
       index_status: 1
     )
   end
-  let(:last_resource) do
+  let!(:last_resource) do
     FactoryGirl.create(
       :resource,
       updated_at: finish_time,
-      indexed_at: 15.minutes.ago,
+      indexed_at: finish_time,
+      enqueued_at: start_time,
+      last_indexed_finished: finish_time,
       last_indexed_estimate: 3,
       last_indexed_count: 2,
       index_status: 1
     )
   end
   let(:resources) { [first_resource, last_resource] }
-  subject { described_class.new(resources) }
+  subject { described_class.new(Spotlight::Resource.all) }
   let(:json) { JSON.parse(subject.to_json) }
 
   before do
     allow(subject).to receive_messages(completed_resources: resources)
   end
 
-  describe '#in_progress' do
+  describe '#recently_in_progress?' do
     context 'when the last resource has been updated within the allotted time' do
       it 'is true' do
-        expect(subject).to be_in_progress
+        expect(subject).to be_recently_in_progress
       end
     end
 
     context 'when any of the resources is makred as waiting' do
       before do
-        expect(last_resource).to receive_messages(updated_at: 12.minutes.ago)
         first_resource.waiting!
       end
       it 'is true' do
-        expect(subject).to be_in_progress
+        expect(subject).to be_recently_in_progress
       end
     end
 
     context 'when the last resources has been updated outside of the allotted time ' do
       before do
-        expect(last_resource).to receive_messages(updated_at: 12.minutes.ago)
+        expect(last_resource).to receive_messages(last_indexed_finished: 12.minutes.ago)
       end
       it 'is false' do
-        expect(subject).not_to be_in_progress
+        expect(subject).not_to be_recently_in_progress
       end
     end
 
     it 'is included in the json' do
-      expect(json['in_progress']).to be true
+      expect(json['recently_in_progress']).to be true
     end
   end
 
-  describe '#started' do
+  describe '#started_at' do
     it 'returns the indexed_at attribute of the first resource' do
-      expect(subject.started).to eq start_time
+      expect(subject.started_at).to eq start_time
     end
 
     it 'is included in the json as a localized string' do
-      expect(json['started']).to eq I18n.l(start_time, format: :short)
+      expect(json['started_at']).to eq I18n.l(start_time, format: :short)
     end
   end
 
-  describe '#finished' do
+  describe '#updated_at' do
     it 'returns the updated_at attribute of the last resource' do
-      expect(subject.finished).to eq finish_time
+      expect(subject.updated_at).to eq updated_time
     end
 
     it 'is included in the json as a localized string under the updated_at attribute' do
-      expect(json['updated_at']).to eq I18n.l(finish_time, format: :short)
+      expect(json['updated_at']).to eq I18n.l(updated_time, format: :short)
+    end
+  end
+
+  describe '#finished_at' do
+    it 'returns the updated_at attribute of the last resource' do
+      expect(subject.finished_at).to eq finish_time
+    end
+
+    it 'is included in the json as a localized string under the updated_at attribute' do
+      expect(json['finished_at']).to eq I18n.l(finish_time, format: :short)
     end
   end
 
