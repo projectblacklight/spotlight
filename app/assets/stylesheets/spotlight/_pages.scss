@@ -253,10 +253,10 @@
       .box {
         padding: 0.25em;
         img {
-          height: 250px;
+          max-height: 250px;
           object-fit: cover;
           @media (max-width: $screen-sm-max) {
-            height: 175px;
+            max-height: 175px;
           }
         }
 
