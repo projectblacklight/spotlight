@@ -15,6 +15,7 @@ module Spotlight
     belongs_to :exhibit
     serialize :data, Hash
     store :metadata, accessors: [
+      :enqueued_at,
       :last_indexed_estimate,
       :last_indexed_count,
       :last_index_elapsed_time,
@@ -40,6 +41,16 @@ module Spotlight
     def reindex_later
       waiting!
       Spotlight::ReindexJob.perform_later(self)
+    end
+
+    def waiting!
+      update(enqueued_at: Time.zone.now)
+      super
+    end
+
+    def enqueued_at
+      value = super
+      Time.zone.parse(value) if value
     end
 
     def document_model

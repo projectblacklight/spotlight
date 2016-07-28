@@ -4,23 +4,33 @@ module Spotlight
   class ReindexProgress
     def initialize(resource_list)
       @resources = if resource_list.present?
-                     resource_list
+                     resource_list.order('updated_at')
                    else
-                     null_resources
+                     Spotlight::Resource.none
                    end
     end
 
-    def in_progress?
-      return unless finished
-      any_waiting? || finished > Spotlight::Engine.config.reindex_progress_window.minutes.ago
+    def recently_in_progress?
+      any_waiting? || (!!finished_at && finished_at > Spotlight::Engine.config.reindex_progress_window.minutes.ago)
     end
 
-    def started
-      @started ||= resources.first.indexed_at
+    def started_at
+      return unless resources.present?
+
+      @started ||= resources.min_by(&:enqueued_at).enqueued_at
     end
 
-    def finished
-      @finished ||= completed_resources.last.updated_at
+    def updated_at
+      @updated ||= resources.maximum(:updated_at) || started_at
+    end
+
+    def finished?
+      completed_resources.present? && !any_waiting?
+    end
+
+    def finished_at
+      return unless finished?
+      @finished ||= completed_resources.max_by(&:last_indexed_finished).last_indexed_finished
     end
 
     def total
@@ -37,11 +47,12 @@ module Spotlight
 
     def as_json(*)
       {
-        in_progress: in_progress?,
-        started: localized_start_time,
+        recently_in_progress: recently_in_progress?,
+        started_at: localized_start_time,
+        finished_at: localized_finish_time,
+        updated_at: localized_updated_time,
         total: total,
         completed: completed,
-        updated_at: localized_finish_time,
         errored: errored?
       }
     end
@@ -55,53 +66,22 @@ module Spotlight
     end
 
     def localized_start_time
-      return unless started
-      I18n.l(started, format: :short)
+      return unless started_at
+      I18n.l(started_at, format: :short)
     end
 
     def localized_finish_time
-      return unless finished
-      I18n.l(finished, format: :short)
+      return unless finished_at
+      I18n.l(finished_at, format: :short)
+    end
+
+    def localized_updated_time
+      return unless updated_at
+      I18n.l(updated_at, format: :short)
     end
 
     def completed_resources
-      if resources.try(:completed).present?
-        resources.completed
-      else
-        null_resources
-      end
-    end
-
-    def null_resources
-      [NullResource.new]
-    end
-
-    ##
-    # A NullObject for use in the absense of resources
-    class NullResource
-      def updated_at
-        nil
-      end
-
-      def indexed_at
-        nil
-      end
-
-      def last_indexed_estimate
-        0
-      end
-
-      def last_indexed_count
-        0
-      end
-
-      def waiting?
-        false
-      end
-
-      def errored?
-        false
-      end
+      resources.completed
     end
   end
 end
