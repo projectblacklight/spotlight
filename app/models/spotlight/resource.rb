@@ -49,8 +49,11 @@ module Spotlight
     end
 
     def enqueued_at
-      value = super
-      Time.zone.parse(value) if value
+      ActiveRecord::Type::DateTime.new.type_cast_from_database(super)
+    end
+
+    def last_indexed_finished
+      ActiveRecord::Type::DateTime.new.type_cast_from_database(super)
     end
 
     def document_model

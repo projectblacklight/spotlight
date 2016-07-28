@@ -4,6 +4,24 @@ describe Spotlight::Resource, type: :model do
   end
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
+  describe '#enqueued_at' do
+    it 'casts values to Time objects' do
+      t = Time.zone.now.at_beginning_of_minute
+      subject.enqueued_at = t
+
+      expect(subject.enqueued_at).to eq t
+    end
+  end
+
+  describe '#last_indexed_finished' do
+    it 'casts values to Time objects' do
+      t = Time.zone.now.at_beginning_of_minute
+      subject.last_indexed_finished = t
+
+      expect(subject.last_indexed_finished).to eq t
+    end
+  end
+
   describe '#reindex' do
     context 'with a provider that generates ids' do
       subject do
