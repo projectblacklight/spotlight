@@ -73,7 +73,7 @@ describe Spotlight::AdminUsersController, type: :controller do
 
       it 'redirects back with flash error upon failure' do
         post :invite, user: 'user@example.com', role: 'not-a-real-role'
-        expect(flash[:alert]).to eq 'There was a problem saving the user(s).'
+        expect(flash[:alert]).to eq 'There was a problem saving the user.'
         expect(response).to redirect_to(:back)
       end
     end

@@ -74,7 +74,9 @@ en:
       role:
         updated: "User has been updated."
         destroyed: "User has been removed."
-        batch_error: "There was a problem saving the user(s)."
+        batch_error:
+          one: "There was a problem saving the user."
+          other: "There was a problem saving the users."
       invite:
         invited: 'User has been invited.'
     label:
