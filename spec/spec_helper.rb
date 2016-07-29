@@ -7,11 +7,11 @@ EngineCart.load_application!
 
 Internal::Application.config.active_job.queue_adapter = :inline
 
+require 'rails-controller-testing' if Rails::VERSION::MAJOR >= 5
 require 'rspec/collection_matchers'
 require 'rspec/its'
 require 'rspec/rails'
 require 'rspec/active_model/mocks'
-require 'rails-controller-testing'
 
 require 'capybara/poltergeist'
 
@@ -91,8 +91,10 @@ RSpec.configure do |config|
   config.after(:each, type: :feature) { Warden.test_reset! }
   config.include Controllers::EngineHelpers, type: :controller
   config.include Capybara::DSL
-  config.include ::Rails.application.routes.url_helpers
-  config.include ::Rails.application.routes.mounted_helpers
+  if Rails::VERSION::MAJOR >= 5
+    config.include ::Rails.application.routes.url_helpers
+    config.include ::Rails.application.routes.mounted_helpers
+  end
   config.include Spotlight::TestFeaturesHelpers, type: :feature
 end
 

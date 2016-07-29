@@ -13,7 +13,7 @@ module Spotlight
 
     def create
       @search.attributes = search_params
-      @search.query_params = params.to_unsafe_h.except(:exhibit_id, :search, *blacklisted_search_session_params).reject { |_k, v| v.blank? }
+      @search.query_params = query_params
 
       if @search.save
         redirect_to :back, notice: t(:'helpers.submit.search.created', model: @search.class.model_name.human.downcase)
@@ -101,6 +101,10 @@ module Spotlight
         masthead_attributes: featured_image_attributes,
         thumbnail_attributes: featured_image_attributes
       )
+    end
+
+    def query_params
+      params.to_unsafe_h.with_indifferent_access.except(:exhibit_id, :search, *blacklisted_search_session_params).reject { |_k, v| v.blank? }
     end
 
     def featured_image_attributes
