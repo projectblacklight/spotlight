@@ -94,7 +94,7 @@ describe Spotlight::RolesController, type: :controller do
           }
         }
         expect(response).to be_successful
-        expect(flash[:alert]).to eq 'There was a problem saving the user(s).'
+        expect(flash[:alert]).to eq 'There was a problem saving the user.'
       end
     end
 
@@ -143,7 +143,7 @@ describe Spotlight::RolesController, type: :controller do
 
       it 'redirects back with flash error upon failure' do
         post :invite, exhibit_id: exhibit, user: 'user@example.com', role: 'not-a-real-role'
-        expect(flash[:alert]).to eq 'There was a problem saving the user(s).'
+        expect(flash[:alert]).to eq 'There was a problem saving the user.'
         expect(response).to redirect_to(:back)
       end
     end

@@ -12,7 +12,7 @@ module Spotlight
           user.deliver_invitation # now deliver it when we have saved the role
           redirect_to :back, notice: t(:'helpers.submit.invite.invited')
         else
-          redirect_to :back, alert: t(:'helpers.submit.role.batch_error')
+          redirect_to :back, alert: t(:'helpers.submit.role.batch_error', count: 1)
         end
       end
 
