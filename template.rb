@@ -1,3 +1,5 @@
+require 'bundler'
+
 DEFAULT_BLACKLIGHT_OPTIONS = '--devise'.freeze
 DEFAULT_SPOTLIGHT_OPTIONS = '-f --openseadragon --mailer_default_url_host=localhost:3000'.freeze
 blacklight_options = ENV.fetch('BLACKLIGHT_INSTALL_OPTIONS', DEFAULT_BLACKLIGHT_OPTIONS)
