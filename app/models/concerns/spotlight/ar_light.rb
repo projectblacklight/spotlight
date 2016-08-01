@@ -30,14 +30,6 @@ module Spotlight
         false
       end
 
-      def generated_feature_methods
-        @generated_feature_methods ||= begin
-          mod = const_set(:GeneratedFeatureMethods, Module.new)
-          include mod
-          mod
-        end
-      end
-
       def before_destroy(*_args)
       end
 
