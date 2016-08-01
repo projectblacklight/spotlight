@@ -17,9 +17,20 @@ module Spotlight
       return value unless field
 
       if field.ends_with? Spotlight::Engine.config.solr_fields.boolean_suffix
-        ActiveRecord::Type::Boolean.new.type_cast_from_database(value)
+        value_to_boolean(value)
       else
         value
+      end
+    end
+
+    def value_to_boolean(v)
+      if defined? ActiveModel::Type::Boolean
+        ActiveModel::Type::Boolean.new.cast v
+      elsif defined? ActiveRecord::Type::Boolean
+        # Rails 4.2+
+        ActiveRecord::Type::Boolean.new.type_cast_from_database v
+      else
+        ActiveRecord::ConnectionAdapters::Column.value_to_boolean v
       end
     end
   end

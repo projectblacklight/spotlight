@@ -5,6 +5,11 @@ rvm:
   - 2.3.1
   - 2.2.5
 
+matrix:
+  include:
+    - rvm: 2.3.1
+      env: "RAILS_VERSION=5.0.0"
+
 notifications:
   irc: "irc.freenode.org#blacklight"
 

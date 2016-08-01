@@ -10,7 +10,6 @@ module Spotlight
     include GlobalID::Identification
 
     included do
-      extend ActsAsTaggableOn::Compatibility
       extend ActsAsTaggableOn::Taggable
 
       acts_as_taggable
