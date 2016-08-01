@@ -9,18 +9,4 @@
   bottom: 0;
   height: $footer-height;
   width: 100%;
-
-  .social-share-button {
-    a {
-      display: block;
-      margin-bottom: 5px;
-      padding-left: 18px;
-      text-indent: 10px;
-      color: $gray-light;
-    }
-    a:hover, a:focus {
-      color: $gray;
-      text-decoration: none;
-    }
-  }
 }

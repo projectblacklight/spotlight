@@ -118,8 +118,7 @@ module Spotlight
       end
     end
 
-    def generate_social_share_button_initializer
-      gem 'social-share-button', github: 'cbeer/social-share-button', branch: 'on_load'
+    def generate_config
       directory 'config'
     end
 
