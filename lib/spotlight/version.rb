@@ -1,3 +1,3 @@
 module Spotlight
-  VERSION = '0.20.3'.freeze
+  VERSION = '0.21.0'.freeze
 end
