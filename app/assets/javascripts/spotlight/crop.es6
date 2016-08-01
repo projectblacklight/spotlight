@@ -20,8 +20,20 @@ export default class Crop {
        preserveViewport: true,
        showNavigationControl: false,
        constrainDuringPan: true,
-       tileSources: [tileSource]
+       tileSources: [tileSource],
+
+       // disable zooming
+       gestureSettingsMouse: {
+         clickToZoom: false,
+         scrollToZoom: false
+       },
+
+       // disable panning
+       panHorizontal: false,
+       panVertical: false
+
     });
+
     this.osdCanvas.iiifCrop();
     this.osdCanvas.addHandler('tile-drawn', () => {
       // remove the handler so we only fire on the first instance
