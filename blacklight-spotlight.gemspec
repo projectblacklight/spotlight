@@ -31,7 +31,6 @@ these collections.)
   s.add_dependency 'acts-as-taggable-on', '>= 4.0.0.pre'
   s.add_dependency 'friendly_id', '>= 5.2.0.beta.1', '< 6'
   s.add_dependency 'breadcrumbs_on_rails', '~> 2.3.0'
-  s.add_dependency 'social-share-button', '~> 0.3'
   s.add_dependency 'blacklight-gallery', '>= 0.3.0'
   s.add_dependency 'blacklight-oembed', '>= 0.0.3'
   s.add_dependency 'devise', '>= 3.0'
