@@ -13,6 +13,14 @@ module Spotlight
     ##
     # Mock activerecord class-level methods
     module ClassMethods
+      def has_attribute?(*_args)
+        false
+      end
+
+      def columns_hash
+        {}
+      end
+
       def base_class
         self
       end

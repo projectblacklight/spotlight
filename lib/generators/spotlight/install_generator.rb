@@ -17,7 +17,7 @@ module Spotlight
     end
 
     def friendly_id
-      gem 'friendly_id'
+      gem 'friendly_id', github: 'norman/friendly_id'
       generate 'friendly_id'
     end
 
@@ -119,7 +119,7 @@ module Spotlight
     end
 
     def generate_social_share_button_initializer
-      gem 'social-share-button'
+      gem 'social-share-button', github: 'cbeer/social-share-button', branch: 'on_load'
       directory 'config'
     end
 

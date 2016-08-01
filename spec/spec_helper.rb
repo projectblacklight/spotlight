@@ -1,11 +1,13 @@
 ENV['RAILS_ENV'] ||= 'test'
-
 require 'factory_girl'
 require 'database_cleaner'
 require 'devise'
 require 'engine_cart'
 EngineCart.load_application!
 
+Internal::Application.config.active_job.queue_adapter = :inline
+
+require 'rails-controller-testing' if Rails::VERSION::MAJOR >= 5
 require 'rspec/collection_matchers'
 require 'rspec/its'
 require 'rspec/rails'
@@ -47,6 +49,7 @@ FIXTURES_PATH = File.expand_path('../fixtures', __FILE__)
 
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
+  config.filter_rails_from_backtrace!
 
   config.use_transactional_fixtures = false
 
@@ -88,6 +91,10 @@ RSpec.configure do |config|
   config.after(:each, type: :feature) { Warden.test_reset! }
   config.include Controllers::EngineHelpers, type: :controller
   config.include Capybara::DSL
+  if Rails::VERSION::MAJOR >= 5
+    config.include ::Rails.application.routes.url_helpers
+    config.include ::Rails.application.routes.mounted_helpers
+  end
   config.include Spotlight::TestFeaturesHelpers, type: :feature
 end
 

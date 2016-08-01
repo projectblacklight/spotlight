@@ -336,7 +336,9 @@ module Spotlight
     end
 
     def value_to_boolean(v)
-      if defined? ActiveRecord::Type
+      if defined? ActiveModel::Type::Boolean
+        ActiveModel::Type::Boolean.new.cast v
+      elsif defined? ActiveRecord::Type::Boolean
         # Rails 4.2+
         ActiveRecord::Type::Boolean.new.type_cast_from_database v
       else
