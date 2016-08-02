@@ -116,7 +116,9 @@ describe Spotlight::SearchesController, type: :controller do
           search: {
             title: 'Hey man',
             long_description: 'long',
-            featured_image: 'http://lorempixel.com/64/64/'
+            featured_image: 'http://lorempixel.com/64/64/',
+            masthead_attributes: { iiif_url: '' },
+            thumbnail_attributes: { iiif_url: '' }
           }
         }
 

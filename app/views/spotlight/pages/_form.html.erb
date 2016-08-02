@@ -61,9 +61,11 @@
 
       <% if @page.respond_to? :thumbnail %>
       <div role="tabpanel" class="tab-pane" id="page-thumbnail">
+        <% image_form = iiif_cropper(f, :thumbnail, 120, 120) %>
+        <%= image_form.hidden_field %>
         <%= f.fields_for :thumbnail, (@page.thumbnail || @page.build_thumbnail) do |m| %>
           <p class="instructions"><%= t(:'.thumbnail.help') %></p>
-          <%= render '/spotlight/featured_images/form', f: m, crop_options: thumbnail_crop_options %>
+          <%= render '/spotlight/featured_images/form', f: m, image_form: image_form %>
         <% end %>
       </div>
       <% end %>

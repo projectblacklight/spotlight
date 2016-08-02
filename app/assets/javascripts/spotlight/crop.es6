@@ -11,6 +11,9 @@ export default class Crop {
     // and the image.
     this.association = $(`#${fileUpload.data('association')}`);
     this.osdSelector = fileUpload.data('selector');
+    if(typeof this.osdSelector === 'undefined')
+      console.error(`required attribute data-selector was not provided on #${fileUpload.attr('id')}`)
+
     this.setupOpenSeadragon(fileUpload.data('tilesource'));
     this.setupFormSubmit(iiif_url_field);
   }
@@ -56,8 +59,12 @@ export default class Crop {
     var re = /https?:\/\/[^/]*\/[^/]*\/[^/]*\/([^/]*)\//
     var arr = re.exec(url)
     if (arr == null)
-      return [0, 0, 1200, 120]
+      return this.getDefaultCrop();
     return arr[1].split(',').map((x) => parseInt(x))
+  }
+
+  getDefaultCrop() {
+    return [0, 0, 1200, 120]
   }
 
   setupFormSubmit(iiif_url_field) {
