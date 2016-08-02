@@ -22,31 +22,21 @@ module Spotlight
     # we normalize all the parameters.
     def create_params
       if params.key? :exhibit
-        exhibit_params
+        image_params(:exhibit)
+      elsif params.key? :feature_page
+        image_params(:feature_page)
       elsif params.key? :contact
-        contact_params
+        image_params(:contact, :avatar_attributes)
       end
     end
 
-    # Params from the exhibit thumbnail
-    def exhibit_params
-      exhibit_params = params.fetch(:exhibit)
-      if exhibit_params.key?(:thumbnail_attributes)
-        { image: exhibit_params.fetch(:thumbnail_attributes).fetch(:image, {}) }
+    # Params from the avatar/exhibit/feature_page image upload
+    def image_params(key, association_key = :thumbnail_attributes)
+      parent_params = params.fetch(key)
+      if parent_params.key?(association_key)
+        { image: parent_params.fetch(association_key).fetch(:file, {}) }
       else
-        logger.warn "missing expected parameter exhibit[thumbnail_attributes]. Found: #{exhibit_params.keys.join(', ')}"
-        { image: {} }
-      end
-    end
-
-    # Params from the contact avatar upload
-    def contact_params
-      contact_params = params.fetch(:contact)
-      logger.info "Contact params: #{contact_params.keys.inspect}"
-      if contact_params.key?(:file)
-        { image: contact_params.fetch(:file) }
-      else
-        logger.warn "missing expected parameter contact[file]. Found: #{contact_params.keys.join(', ')}"
+        logger.warn "missing expected parameter #{key}[#{association_key}]. Found: #{parent_params.keys.join(', ')}"
         { image: {} }
       end
     end

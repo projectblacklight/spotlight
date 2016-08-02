@@ -22,7 +22,13 @@ describe Spotlight::MastheadsController, type: :controller do
     context 'POST create for a site' do
       it 'is successful' do
         expect do
-          post :create, site: { masthead_attributes: { image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png') } }
+          post :create, params: {
+            site: {
+              masthead_attributes: {
+                file: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
+              }
+            }
+          }
         end.to change { Spotlight::Masthead.count }.by(1)
 
         expect(response).to be_successful
@@ -33,7 +39,13 @@ describe Spotlight::MastheadsController, type: :controller do
     context 'POST create for an exhibit' do
       it 'is successful' do
         expect do
-          post :create, exhibit: { masthead_attributes: { image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png') } }
+          post :create, params: {
+            exhibit: {
+              masthead_attributes: {
+                file: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
+              }
+            }
+          }
         end.to change { Spotlight::Masthead.count }.by(1)
 
         expect(response).to be_successful

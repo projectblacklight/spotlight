@@ -1,7 +1,10 @@
 describe Spotlight::CropHelper do
-  describe '.site_thumbnail_crop_options' do
+  describe '.contact_crop' do
+    let(:template) { double }
+    let(:form) { double(draw: true) }
     it 'has initial_set_select' do
-      expect(helper.site_thumbnail_crop_options[:initial_set_select]).to eq [0, 0, 400, 400]
+      expect(Spotlight::IIIFCropper).to receive(:new).with(template, :avatar, 70, 70).and_return(form)
+      helper.contact_crop(template, :avatar)
     end
   end
 end
