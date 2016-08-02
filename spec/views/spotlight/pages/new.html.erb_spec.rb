@@ -3,7 +3,7 @@ describe 'spotlight/pages/new', type: :view do
   before do
     assign(:page, stub_model(Spotlight::FeaturePage, exhibit: exhibit).as_new_record)
     allow(view).to receive_messages(featured_images_path: '/foo',
-                                    thumbnail_crop_options: {},
+                                    iiif_cropper: double(hidden_field: '', upload: '', text_and_display: ''),
                                     available_index_fields: [],
                                     available_view_fields: [])
   end

@@ -82,7 +82,7 @@ describe 'Add and update the site masthead', type: :feature do
     click_link 'Site masthead'
 
     within '#site-masthead' do
-      attach_file('site_masthead_attributes_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
+      attach_file('site_masthead_attributes_file', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
     end
 
     click_button 'Save changes'
