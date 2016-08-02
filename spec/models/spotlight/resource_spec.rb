@@ -11,6 +11,11 @@ describe Spotlight::Resource, type: :model do
 
       expect(subject.enqueued_at).to eq t
     end
+
+    it 'handles blank values' do
+      subject.enqueued_at = nil
+      expect(subject.enqueued_at).to be_nil
+    end
   end
 
   describe '#last_indexed_finished' do

@@ -49,19 +49,15 @@ module Spotlight
     end
 
     def enqueued_at
-      if defined? ActiveModel::Type::DateTime
-        ActiveModel::Type::DateTime.new.cast(super)
-      else
-        ActiveRecord::Type::DateTime.new.type_cast_from_database(super)
-      end
+      cast_to_date_time(super)
+    end
+
+    def enqueued_at?
+      enqueued_at.present?
     end
 
     def last_indexed_finished
-      if defined? ActiveModel::Type::DateTime
-        ActiveModel::Type::DateTime.new.cast(super)
-      else
-        ActiveRecord::Type::DateTime.new.type_cast_from_database(super)
-      end
+      cast_to_date_time(super)
     end
 
     def document_model
@@ -140,6 +136,16 @@ module Spotlight
 
       def write?
         Spotlight::Engine.config.writable_index
+      end
+
+      def cast_to_date_time(value)
+        return unless value
+
+        if defined? ActiveModel::Type::DateTime
+          ActiveModel::Type::DateTime.new.cast(value)
+        else
+          ActiveRecord::Type::DateTime.new.type_cast_from_database(value)
+        end
       end
     end
   end

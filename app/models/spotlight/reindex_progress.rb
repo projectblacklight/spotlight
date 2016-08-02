@@ -17,7 +17,7 @@ module Spotlight
     def started_at
       return unless resources.present?
 
-      @started ||= resources.min_by(&:enqueued_at).enqueued_at
+      @started ||= resources.select(&:enqueued_at?).min_by(&:enqueued_at).enqueued_at
     end
 
     def updated_at
@@ -34,11 +34,11 @@ module Spotlight
     end
 
     def total
-      @total ||= resources.map(&:last_indexed_estimate).sum
+      @total ||= resources.map(&:last_indexed_estimate).compact.sum
     end
 
     def completed
-      @completed ||= completed_resources.map(&:last_indexed_count).sum
+      @completed ||= completed_resources.map(&:last_indexed_count).compact.sum
     end
 
     def errored?

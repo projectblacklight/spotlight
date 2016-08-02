@@ -26,7 +26,15 @@ describe Spotlight::ReindexProgress, type: :model do
       index_status: 1
     )
   end
-  let(:resources) { [first_resource, last_resource] }
+
+  let(:new_resource) do
+    FactoryGirl.create(
+      :resource,
+      index_status: 0
+    )
+  end
+
+  let(:resources) { [first_resource, last_resource, new_resource] }
   subject { described_class.new(Spotlight::Resource.all) }
   let(:json) { JSON.parse(subject.to_json) }
 
@@ -35,13 +43,14 @@ describe Spotlight::ReindexProgress, type: :model do
   end
 
   describe '#recently_in_progress?' do
+    let(:resources) { [first_resource, last_resource] }
     context 'when the last resource has been updated within the allotted time' do
       it 'is true' do
         expect(subject).to be_recently_in_progress
       end
     end
 
-    context 'when any of the resources is makred as waiting' do
+    context 'when any of the resources is marked as waiting' do
       before do
         first_resource.waiting!
       end
@@ -75,6 +84,8 @@ describe Spotlight::ReindexProgress, type: :model do
   end
 
   describe '#updated_at' do
+    let(:resources) { [first_resource, last_resource] }
+
     it 'returns the updated_at attribute of the last resource' do
       expect(subject.updated_at).to eq updated_time
     end
@@ -85,6 +96,8 @@ describe Spotlight::ReindexProgress, type: :model do
   end
 
   describe '#finished_at' do
+    let(:resources) { [first_resource, last_resource] }
+
     it 'returns the updated_at attribute of the last resource' do
       expect(subject.finished_at).to eq finish_time
     end
