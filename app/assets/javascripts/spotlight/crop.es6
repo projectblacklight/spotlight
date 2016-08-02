@@ -3,9 +3,12 @@ export default class Crop {
     this.fileUpload = fileUpload;
     this.form = fileUpload.closest('form');
     this.setupAsyncUpload();
+    // The input field that stores the IIIF url
     var iiif_url_field = $(`#${fileUpload.data('url')}`);
 
     this.region = this.getRegionFromIiifUrl(iiif_url_field.val());
+    // The hidden input field that stores the association between the parent record
+    // and the image.
     this.association = $(`#${fileUpload.data('association')}`);
     this.osdSelector = fileUpload.data('selector');
     this.setupOpenSeadragon(fileUpload.data('tilesource'));

@@ -10,7 +10,7 @@ Spotlight.onLoad(function() {
   Adds initialSetSelect option to set a select box on the intial upload of an object.
 */
 
-var xosd;  // debug -- remove.
+var xosd;  // TODO debug -- remove.
 (function($) {
   $.fn.croppable = function(opts) {
     var croppables = this;

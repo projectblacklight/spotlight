@@ -80,8 +80,8 @@ describe Spotlight::AppearancesController, type: :controller do
               iiif_url: 'http://test.host/2/foo'
             },
             main_navigations_attributes: [
-               { id: first_nav.id, label: 'Some Label', weight: 500 },
-               { id: last_nav.id, display: false }
+              { id: first_nav.id, label: 'Some Label', weight: 500 },
+              { id: last_nav.id, display: false }
             ]
 >>>>>>> Add iiif-crop to spotlight
           }

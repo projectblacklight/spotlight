@@ -10,18 +10,11 @@ module Spotlight
     extend FriendlyId
     friendly_id :name, use: [:slugged, :scoped, :finders], scope: :exhibit
 
-    mount_uploader :avatar, Spotlight::AvatarUploader
+    belongs_to :avatar, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
+    accepts_nested_attributes_for :avatar
 
     before_save do
       self.contact_info = contact_info.symbolize_keys
-    end
-
-    ## store the crop points
-    after_save do
-      if avatar.present?
-        avatar.cache! unless avatar.cached?
-        avatar.store!
-      end
     end
 
     before_save on: :create do
