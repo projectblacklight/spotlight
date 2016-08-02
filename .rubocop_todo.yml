@@ -21,6 +21,9 @@ RSpec/NotToNot:
 RSpec/ExampleLength:
   Max: 30
 
+RSpec/NamedSubject:
+  Enabled: false
+
 Rails/OutputSafety:
   Enabled: false
 
