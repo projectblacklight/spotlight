@@ -4,8 +4,8 @@ describe 'spotlight/pages/edit', type: :view do
   before do
     assign(:page, page)
     allow(view).to receive_messages(featured_images_path: '/foo',
-                                    thumbnail_crop_options: {},
                                     available_index_fields: [],
+                                    iiif_cropper: double(hidden_field: '', upload: '', text_and_display: ''),
                                     available_view_fields: [])
   end
 
