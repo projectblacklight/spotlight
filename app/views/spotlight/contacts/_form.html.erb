@@ -6,17 +6,22 @@
     <% end %>
   <% end %>
 
-  <%= f.file_field :avatar, data: { croppable: true, aspect_ratio: 1, box_width: 600 } %>
-
-  <div class="form-group croppable-loading-area <%= "missing-croppable" unless @contact.avatar.present? %>">
-    <div class="col-sm-5 col-sm-offset-2">
-      <%# <%= hidden_field_tag :contact_avatar_crop, ([@contact.avatar_crop_x.to_i, @contact.avatar_crop_y.to_i, @contact.avatar_crop_x.to_i + @contact.avatar_crop_w.to_i, @contact.avatar_crop_y.to_i + @contact.avatar_crop_h.to_i].to_json if @contact.avatar_crop_x) %1> %>
-      <%# <%= f.previewbox :avatar %1> %>
-      <%# <%= f.cropbox :avatar %1> %>
-      <%= f.text_field :iiif_url, size: 120 %>
-      <div id="osdCanvas1" class="osd-container"></div>
-    </div>
-  </div>
+  <%= field_set_tag(t(:'.avatar.header')) do %>
+    <p class="instructions"><%= t(:'.avatar.help') %></p>
+    <% crop_options = contact_crop_options %>
+    <%= f.hidden_field :avatar_id %>
+    <%= f.file_field :file, data: {
+        endpoint: featured_images_path,
+        tilesource: f.object.avatar ? riiif.info_url(f.object.avatar.id) : nil,
+        association: 'contact_avatar_id',
+        url: 'contact_avatar_attributes_iiif_url',
+        selector: crop_options[:selector],
+        croppable: true } %>
+      <%= f.fields_for(:avatar) do |avatar| %>
+        <%= avatar.text_field :iiif_url, size: 120 %>
+      <% end %>
+      <div id="<%= crop_options[:selector] %>" class="osd-container"></div>
+  <% end %>
 
   <div class="form-group primary-actions">
     <%= cancel_link @contact, exhibit_about_pages_path(@contact.exhibit), class: "btn btn-link" %>

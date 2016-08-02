@@ -137,6 +137,7 @@ module Spotlight
     config.uploader_storage = :file
     config.featured_image_thumb_size = [400, 300]
     config.featured_image_square_size = [400, 400]
+    config.contact_square_size = [70, 70]
 
     initializer 'spotlight-assets.initialize' do
       Rails.application.config.assets.precompile += %w(Jcrop.gif)
