@@ -10,6 +10,8 @@ module Spotlight
 
     def new
       add_breadcrumb t(:'helpers.action.spotlight/contact.create'), new_exhibit_contact_path(@exhibit)
+      # Enable the nested form to be drawn.
+      @contact.build_avatar
     end
 
     def edit

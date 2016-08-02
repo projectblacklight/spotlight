@@ -6,11 +6,11 @@ module Spotlight
     def create_params
       { image: parent_param
         .fetch(:masthead_attributes, {})
-        .fetch(:image, {}) }
+        .fetch(:file, {}) }
     end
 
     def parent_param
-      params[:site] || params[:exhibit] || {}
+      params[:site] || params[:exhibit] || params[:exhibit] || {}
     end
   end
 end

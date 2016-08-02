@@ -31,16 +31,19 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="site-masthead">
         <p class="instructions"><%= t(:'.site_masthead.help') %></p>
-        <%= f.hidden_field :masthead_id %>
+        <% image_form = iiif_cropper(f, :masthead, 120, 1200) %>
+        <%= image_form.hidden_field %>
         <%= f.fields_for(:masthead, current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, crop_options: masthead_crop_options %>
+          <%= render '/spotlight/featured_images/form', f: m, image_form: image_form %>
         <% end %>
       </div>
       
       <div role="tabpanel" class="tab-pane" id="site-thumbnail">
         <p class="instructions"><%= t(:'.site_thumbnail.help') %></p>
+        <% image_form = iiif_cropper(f, :thumbnail, 120, 120) %>
+        <%= image_form.hidden_field %>
         <%= f.fields_for(:thumbnail, current_exhibit.thumbnail || current_exhibit.build_thumbnail) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, crop_options: site_thumbnail_crop_options %>
+          <%= render '/spotlight/featured_images/form', f: m, image_form: image_form %>
         <% end %>
       </div>
 

@@ -76,7 +76,7 @@ describe 'Add and update the site masthead', type: :feature do
     click_link 'Site masthead'
 
     within '#site-masthead' do
-      attach_file('exhibit_masthead_attributes_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
+      attach_file('exhibit_masthead_attributes_file', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
     end
 
     click_button 'Save changes'
@@ -85,6 +85,7 @@ describe 'Add and update the site masthead', type: :feature do
 
     expect(page).to_not have_css('.image-masthead .background-container')
   end
+
   it 'displays a masthead image when one is uploaded from an exhibit item', js: true do
     skip "Capyabara and jcrop don't play well together.."
     visit spotlight.exhibit_dashboard_path(exhibit)

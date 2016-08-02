@@ -4,22 +4,14 @@ Spotlight.onLoad(function() {
 
 
 /*
-  Croppable plugin
-  Implements http://deepliquid.com/content/Jcrop.html
-  Add jcrop data-attributes to file input (with data-croppable='true') to instantiate.
-  Adds initialSetSelect option to set a select box on the intial upload of an object.
+  IIIF image cropping plugin
+  Add iiif-crop data-attributes to file input (with data-croppable='true') to instantiate.
 */
 
 var xosd;  // TODO debug -- remove.
 (function($) {
-  $.fn.croppable = function(opts) {
+  $.fn.croppable = function() {
     var croppables = this;
-    var opts = opts;
-
-    // TODO initial selection
-    var pluginDefults = {
-      setSelect: "[0,0,200,200]"
-    }
 
     var Crop = require('spotlight/crop');
     $(croppables).each(function() {

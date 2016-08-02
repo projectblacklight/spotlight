@@ -2,33 +2,13 @@ module Spotlight
   ##
   # iiif-crop options helpers
   module CropHelper
-    def masthead_crop_options
-      {
-        croppable: true,
-        selector: 'masthead_image',
-        initial_set_select: [0, 0, 1800, 180]
-      }
+    def iiif_cropper(form, name, height, width)
+      IIIFCropper.new(form, name, height, width)
     end
 
-    def thumbnail_crop_options
-      w, h = Spotlight::Engine.config.featured_image_thumb_size
-
-      {
-        croppable: true,
-        selector: 'featuredimage_image',
-        initial_set_select: [0, 0, w, h]
-        # TODO: we need to use initial_set_select
-      }
-    end
-
-    def site_thumbnail_crop_options
-      w, h = Spotlight::Engine.config.featured_image_square_size
-      thumbnail_crop_options.merge(initial_set_select: [0, 0, w, h])
-    end
-
-    def contact_crop_options
+    def contact_crop(form, name)
       w, h = Spotlight::Engine.config.contact_square_size
-      thumbnail_crop_options.merge(initial_set_select: [0, 0, w, h])
+      iiif_cropper(form, name, w, h).draw
     end
   end
 end
