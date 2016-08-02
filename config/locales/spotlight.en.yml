@@ -470,6 +470,11 @@ en:
           placeholder: Name of library or other physical location
         telephone:
           placeholder: Telephone number (optional)
+        avatar:
+          header: Avatar
+          help: >
+            Adjust the cropping box to cover the area of the image you want to use
+            as the avatar image. Click "Save" to save the cropped area.
     about_pages:
       contacts_form:
         header: Contacts

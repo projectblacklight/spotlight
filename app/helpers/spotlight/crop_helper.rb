@@ -16,13 +16,19 @@ module Spotlight
       {
         croppable: true,
         selector: 'featuredimage_image',
-        initial_set_select: [0, 0, h, w]
+        initial_set_select: [0, 0, w, h]
+        # TODO: we need to use initial_set_select
       }
     end
 
     def site_thumbnail_crop_options
       w, h = Spotlight::Engine.config.featured_image_square_size
-      thumbnail_crop_options.merge(initial_set_select: [0, 0, h, w])
+      thumbnail_crop_options.merge(initial_set_select: [0, 0, w, h])
+    end
+
+    def contact_crop_options
+      w, h = Spotlight::Engine.config.contact_square_size
+      thumbnail_crop_options.merge(initial_set_select: [0, 0, w, h])
     end
   end
 end

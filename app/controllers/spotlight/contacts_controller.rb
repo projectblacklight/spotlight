@@ -18,6 +18,7 @@ module Spotlight
 
     def update
       if @contact.update(contact_params)
+        update_avatar
         redirect_to exhibit_about_pages_path(@contact.exhibit), notice: t(:'helpers.submit.contact.updated', model: @contact.class.model_name.human.downcase)
       else
         render 'edit'
@@ -45,13 +46,14 @@ module Spotlight
       add_breadcrumb t(:'spotlight.pages.index.about_pages.header'), exhibit_about_pages_path(@exhibit)
     end
 
+    def update_avatar
+      return unless @contact.avatar
+      @contact.avatar.update(params.require(:contact).require(:avatar_attributes).permit(:iiif_url))
+    end
+
     def contact_params
       params.require(:contact).permit(:name,
-                                      :avatar,
-                                      :avatar_crop_x,
-                                      :avatar_crop_y,
-                                      :avatar_crop_w,
-                                      :avatar_crop_h,
+                                      :avatar_id,
                                       contact_info: Spotlight::Contact.fields.keys)
     end
   end

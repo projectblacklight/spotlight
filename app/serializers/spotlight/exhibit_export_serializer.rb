@@ -74,25 +74,11 @@ module Spotlight
 
     collection :contacts, parse_strategy: ->(fragment, _i, options) { options.represented.contacts.find_or_initialize_by(slug: fragment['slug']) },
                           class: Spotlight::Contact do
-      (Spotlight::Contact.attribute_names - %w(id exhibit_id avatar)).each do |prop|
+      (Spotlight::Contact.attribute_names - %w(id exhibit_id)).each do |prop|
         property prop
       end
 
-      property :avatar, exec_context: :decorator
-
-      def avatar
-        file = represented.avatar.file
-
-        return unless file
-
-        { filename: file.filename, content_type: file.content_type, content: Base64.encode64(file.read) }
-      end
-
-      def avatar=(file)
-        represented.avatar = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file['content'])),
-                                                            filename: file['filename'],
-                                                            content_type: file['content_type']
-      end
+      property :avatar, class: Spotlight::FeaturedImage, decorator: FeaturedImageRepresenter
     end
 
     collection :contact_emails, class: Spotlight::ContactEmail do
