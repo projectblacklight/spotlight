@@ -35,7 +35,6 @@
 <% end %>
 <%= field_set_tag(t(:'.source.remote.header')) do %>
   <p class="instructions"><%= t(:'.source.remote.help') %></p>
-  <%# <div class="form-group croppable-loading-area <%= "missing-croppable" unless f.object.try(:image).present? %1>"> %>
-    <%= f.text_field :iiif_url, size: 120 %>
-    <div id="<%= crop_options[:selector] %>" class="osd-container"></div>
+  <%= f.text_field :iiif_url, size: 120 %>
+  <div id="<%= crop_options[:selector] %>" class="osd-container"></div>
 <% end %>
