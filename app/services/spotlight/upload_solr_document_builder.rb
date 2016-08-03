@@ -32,12 +32,25 @@ module Spotlight
     end
 
     def add_file_versions(solr_hash)
+      riiif = Riiif::Engine.routes.url_helpers
       resource.spotlight_image_derivatives.each do |config|
         solr_hash[config[:field]] = if config[:version]
-                                      resource.url.send(config[:version]).url
+                                      # TODO: this path is wrong until Uploads are merged with FeaturedImage.
+                                      riiif.image_path(resource.id, size: image_size(config[:version]))
                                     else
-                                      resource.url.url
+                                      riiif.image_path(resource.id, size: 'full')
                                     end
+      end
+    end
+
+    def image_size(version)
+      case version
+      when :thumb
+        '400x400'
+      when :square
+        '100x100'
+      else
+        raise "What size should we use for #{config[:version]}?"
       end
     end
 

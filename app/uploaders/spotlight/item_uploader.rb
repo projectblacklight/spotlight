@@ -5,10 +5,8 @@ module Spotlight
   # representation. See {Spotlight::Resource::Upload}
   class ItemUploader < CarrierWave::Uploader::Base
     include CarrierWave::MiniMagick
-    extend Spotlight::ImageDerivatives
-    storage Spotlight::Engine.config.uploader_storage
 
-    apply_spotlight_image_derivative_versions
+    storage Spotlight::Engine.config.uploader_storage
 
     def extension_white_list
       Spotlight::Engine.config.allowed_upload_extensions
