@@ -4,7 +4,7 @@ describe Spotlight::AttachmentsController, type: :controller do
   describe 'when not logged in' do
     describe 'GET edit' do
       it 'is successful' do
-        post :create, exhibit_id: exhibit
+        post :create, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
@@ -16,7 +16,7 @@ describe Spotlight::AttachmentsController, type: :controller do
 
     describe 'POST create' do
       it 'is successful' do
-        post :create, exhibit_id: exhibit, attachment: { name: 'xyz' }
+        post :create, params: { exhibit_id: exhibit, attachment: { name: 'xyz' } }
         expect(response).to be_successful
       end
     end

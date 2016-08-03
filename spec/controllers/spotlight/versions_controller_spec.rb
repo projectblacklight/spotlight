@@ -4,7 +4,7 @@ describe Spotlight::VersionsController, type: :controller do
   describe 'when not logged in' do
     describe 'POST revert' do
       it 'is not allowed' do
-        post :revert, id: 1
+        post :revert, params: { id: 1 }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
@@ -20,7 +20,7 @@ describe Spotlight::VersionsController, type: :controller do
 
     describe 'POST revert' do
       it 'is not allowed' do
-        post :revert, id: page.versions.last
+        post :revert, params: { id: page.versions.last }
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to be_present
       end
@@ -40,7 +40,7 @@ describe Spotlight::VersionsController, type: :controller do
         page.title = 'xyz'
         page.save!
 
-        post :revert, id: page.versions.last
+        post :revert, params: { id: page.versions.last }
         page.reload
         expect(page.title).not_to eq 'xyz'
         expect(response).to redirect_to [exhibit, page]

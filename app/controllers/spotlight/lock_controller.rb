@@ -8,7 +8,7 @@ module Spotlight
     def destroy
       @lock.destroy
 
-      render text: '', status: 204
+      render plain: '', status: 204
     end
   end
 end

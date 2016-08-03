@@ -94,6 +94,8 @@ RSpec.configure do |config|
   if Rails::VERSION::MAJOR >= 5
     config.include ::Rails.application.routes.url_helpers
     config.include ::Rails.application.routes.mounted_helpers
+  else
+    config.include BackportTestHelpers, type: :controller
   end
   config.include Spotlight::TestFeaturesHelpers, type: :feature
 end

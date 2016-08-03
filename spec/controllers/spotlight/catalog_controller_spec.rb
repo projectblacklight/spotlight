@@ -9,14 +9,14 @@ describe Spotlight::CatalogController, type: :controller do
   describe 'when the user is not authenticated' do
     describe 'GET admin' do
       it 'redirects to the login page' do
-        get :admin, exhibit_id: exhibit
+        get :admin, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe 'GET edit' do
       it 'is not allowed' do
-        get :edit, exhibit_id: exhibit, id: 'dq287tq6352'
+        get :edit, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
@@ -27,7 +27,7 @@ describe Spotlight::CatalogController, type: :controller do
       it 'shows the item' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
-        get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to be_successful
       end
 
@@ -38,7 +38,7 @@ describe Spotlight::CatalogController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(search.title, exhibit_browse_path(exhibit, search))
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
-        get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to be_successful
       end
 
@@ -49,7 +49,7 @@ describe Spotlight::CatalogController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with(feature_page.title, [exhibit, feature_page])
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
-        get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to be_successful
       end
 
@@ -59,17 +59,17 @@ describe Spotlight::CatalogController, type: :controller do
 
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
-        get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to be_successful
       end
 
       it 'adds the curation widget' do
-        get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(controller.blacklight_config.show.partials.first).to eq 'curation_mode_toggle'
       end
 
       it 'does not have a solr_json serialization' do
-        get :show, exhibit_id: exhibit, id: 'dq287tq6352', format: :solr_json
+        get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352', format: :solr_json }
         expect(response).not_to be_successful
       end
     end
@@ -78,11 +78,11 @@ describe Spotlight::CatalogController, type: :controller do
       it 'shows the index when there are parameters' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with('Search Results', search_exhibit_catalog_path(exhibit, q: 'map'))
-        get :index, exhibit_id: exhibit, q: 'map'
+        get :index, params: { exhibit_id: exhibit, q: 'map' }
         expect(response).to be_successful
       end
       it 'redirects to the exhibit home page when there are no parameters' do
-        get :index, exhibit_id: exhibit
+        get :index, params: { exhibit_id: exhibit }
         expect(response).to redirect_to(exhibit_root_path(exhibit))
       end
     end
@@ -90,7 +90,7 @@ describe Spotlight::CatalogController, type: :controller do
     describe 'GET autocomplete' do
       it 'has partial matches for title' do
         # Testing with ps921pn8250 because it has html escapable characters in the title (c&#39;estadire)
-        get :autocomplete, exhibit_id: exhibit, q: 'PLANIS', format: 'json'
+        get :autocomplete, params: { exhibit_id: exhibit, q: 'PLANIS', format: 'json' }
         expect(assigns[:document_list].first.id).to eq 'ps921pn8250'
         expect(response).to be_successful
         json = JSON.parse(response.body)
@@ -103,7 +103,7 @@ describe Spotlight::CatalogController, type: :controller do
         expect(doc['url']).to eq exhibit_solr_document_path(exhibit, id: 'ps921pn8250')
       end
       it 'has partial matches for id' do
-        get :autocomplete, exhibit_id: exhibit, q: 'dx157', format: 'json'
+        get :autocomplete, params: { exhibit_id: exhibit, q: 'dx157', format: 'json' }
         expect(assigns[:document_list].first.id).to eq 'dx157dh4345'
         expect(response).to be_successful
         json = JSON.parse(response.body)
@@ -120,7 +120,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'GET admin' do
       it 'denies access' do
-        get :admin, exhibit_id: exhibit
+        get :admin, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to be_present
       end
@@ -128,7 +128,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'GET edit' do
       it 'is not allowed' do
-        get :edit, exhibit_id: exhibit, id: 'dq287tq6352'
+        get :edit, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to eq 'You are not authorized to access this page.'
       end
@@ -137,7 +137,7 @@ describe Spotlight::CatalogController, type: :controller do
     describe 'GET show with private item' do
       it 'is not allowed' do
         allow_any_instance_of(::SolrDocument).to receive(:private?).and_return(true)
-        get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+        get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to eq 'You are not authorized to access this page.'
       end
@@ -145,7 +145,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'PUT make_public' do
       it 'is not allowed' do
-        put :make_public, exhibit_id: exhibit, id: 'dq287tq6352'
+        put :make_public, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
 
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to eq 'You are not authorized to access this page.'
@@ -154,7 +154,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'DELETE make_private' do
       it 'is not allowed' do
-        delete :make_private, exhibit_id: exhibit, id: 'dq287tq6352'
+        delete :make_private, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to eq 'You are not authorized to access this page.'
       end
@@ -168,7 +168,7 @@ describe Spotlight::CatalogController, type: :controller do
       expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
       expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
       expect(controller).to receive(:add_breadcrumb).with('Items', admin_exhibit_catalog_path(exhibit))
-      get :admin, exhibit_id: exhibit
+      get :admin, params: { exhibit_id: exhibit }
       expect(response).to be_successful
       expect(assigns[:document_list]).to be_a Array
       expect(assigns[:exhibit]).to eq exhibit
@@ -177,7 +177,7 @@ describe Spotlight::CatalogController, type: :controller do
     end
 
     it 'uses the admin table view and hide the document actions' do
-      get :admin, exhibit_id: exhibit
+      get :admin, params: { exhibit_id: exhibit }
 
       expect(controller.blacklight_config.view.to_h.keys).to match_array [:admin_table]
       expect(controller.blacklight_config.view.admin_table.document_actions).to be_empty
@@ -185,7 +185,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'GET edit' do
       it 'is successful' do
-        get :edit, exhibit_id: exhibit, id: 'dq287tq6352'
+        get :edit, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to be_successful
         expect(assigns[:exhibit]).to eq exhibit
         expect(assigns[:document]).to be_kind_of SolrDocument
@@ -194,17 +194,17 @@ describe Spotlight::CatalogController, type: :controller do
     describe 'PATCH update' do
       it 'is successful' do
         expect do
-          patch :update, exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { exhibit_tag_list: 'one, two' }
+          patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { exhibit_tag_list: 'one, two' } }
         end.to change { exhibit.owned_taggings.count }.by(2)
       end
       it 'can update non-readonly fields' do
         field = FactoryGirl.create(:custom_field, exhibit: exhibit)
-        patch :update, exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } }
+        patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } } }
         expect(assigns[:document].sidecar(exhibit).data).to eq(field.field => 'no')
       end
       it "can't update readonly fields" do
         field = FactoryGirl.create(:custom_field, exhibit: exhibit, readonly_field: true)
-        patch :update, exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } }
+        patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } } }
         expect(assigns[:document].sidecar(exhibit).data).to eq({})
       end
     end
@@ -218,7 +218,7 @@ describe Spotlight::CatalogController, type: :controller do
       it 'is successful' do
         expect_any_instance_of(::SolrDocument).to receive(:reindex)
         expect_any_instance_of(::SolrDocument).to receive(:make_public!).with(exhibit)
-        put :make_public, exhibit_id: exhibit, id: 'dq287tq6352'
+        put :make_public, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to redirect_to 'where_i_came_from'
       end
     end
@@ -232,7 +232,7 @@ describe Spotlight::CatalogController, type: :controller do
       it 'is successful' do
         expect_any_instance_of(::SolrDocument).to receive(:reindex)
         expect_any_instance_of(::SolrDocument).to receive(:make_private!).with(exhibit)
-        delete :make_private, exhibit_id: exhibit, id: 'dq287tq6352'
+        delete :make_private, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to redirect_to 'where_i_came_from'
       end
     end
@@ -243,7 +243,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'GET show' do
       it 'has a solr_json serialization' do
-        get :show, exhibit_id: exhibit, id: 'dq287tq6352', format: :solr_json
+        get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352', format: :solr_json }
         expect(response).to be_successful
         data = JSON.parse(response.body).with_indifferent_access
         expect(data).to include id: 'dq287tq6352'
@@ -278,7 +278,7 @@ describe Spotlight::CatalogController, type: :controller do
       end
 
       it 'preserves query parameters' do
-        get :index, q: 'xyz', exhibit_id: exhibit
+        get :index, params: { q: 'xyz', exhibit_id: exhibit }
         url = subject.exhibit_search_facet_url(id: 'x')
         expect(url).to include '?q=xyz'
       end
@@ -310,7 +310,7 @@ describe Spotlight::CatalogController, type: :controller do
         end
 
         it 'uses the saved search context' do
-          get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+          get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
 
           expect(assigns(:previous_document)).to eq first_doc
           expect(assigns(:next_document)).to eq last_doc
@@ -323,7 +323,7 @@ describe Spotlight::CatalogController, type: :controller do
         end
 
         it 'ignores the search context' do
-          get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+          get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
 
           expect(assigns(:previous_document)).to be_nil
           expect(assigns(:next_document)).to be_nil
@@ -344,7 +344,7 @@ describe Spotlight::CatalogController, type: :controller do
 
         it 'uses the page context' do
           pending 'Waiting to figure out how to construct previous/next documents'
-          get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+          get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
 
           expect(assigns(:previous_document)).to be_a_kind_of SolrDocument
           expect(assigns(:next_document)).to be_a_kind_of SolrDocument
@@ -357,7 +357,7 @@ describe Spotlight::CatalogController, type: :controller do
         end
 
         it 'ignores the search context' do
-          get :show, exhibit_id: exhibit, id: 'dq287tq6352'
+          get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
 
           expect(assigns(:previous_document)).to be_nil
           expect(assigns(:next_document)).to be_nil

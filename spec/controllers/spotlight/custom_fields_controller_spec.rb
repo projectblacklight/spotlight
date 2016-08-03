@@ -12,7 +12,7 @@ describe Spotlight::CustomFieldsController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Metadata', edit_exhibit_metadata_configuration_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Add new field', new_exhibit_custom_field_path(exhibit))
-        get :new, exhibit_id: exhibit
+        get :new, params: { exhibit_id: exhibit }
         expect(assigns(:custom_field)).to be_a_new(Spotlight::CustomField)
       end
     end
@@ -24,7 +24,7 @@ describe Spotlight::CustomFieldsController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Metadata', edit_exhibit_metadata_configuration_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(field.label, edit_exhibit_custom_field_path(exhibit, field))
-        get :edit, exhibit_id: exhibit, id: field
+        get :edit, params: { exhibit_id: exhibit, id: field }
         expect(assigns(:custom_field)).to eq field
         expect(assigns(:exhibit)).to eq exhibit
       end
@@ -34,12 +34,12 @@ describe Spotlight::CustomFieldsController, type: :controller do
       describe 'with valid params' do
         it 'creates a new Page' do
           expect do
-            post :create, custom_field: { label: 'MyString' }, exhibit_id: exhibit
+            post :create, params: { custom_field: { label: 'MyString' }, exhibit_id: exhibit }
           end.to change(Spotlight::CustomField, :count).by(1)
         end
 
         it 'redirects to the exhibit metadata page' do
-          post :create, custom_field: { label: 'MyString' }, exhibit_id: exhibit
+          post :create, params: { custom_field: { label: 'MyString' }, exhibit_id: exhibit }
           expect(response).to redirect_to(edit_exhibit_metadata_configuration_path(exhibit))
         end
       end
@@ -48,7 +48,7 @@ describe Spotlight::CustomFieldsController, type: :controller do
         it "re-renders the 'new' template" do
           # Trigger the behavior that occurs when invalid params are submitted
           allow_any_instance_of(Spotlight::CustomField).to receive(:save).and_return(false)
-          post :create, custom_field: { label: 'MyString' }, exhibit_id: exhibit
+          post :create, params: { custom_field: { label: 'MyString' }, exhibit_id: exhibit }
           expect(assigns(:custom_field)).to be_a_new(Spotlight::CustomField)
           expect(response).to render_template('new')
         end

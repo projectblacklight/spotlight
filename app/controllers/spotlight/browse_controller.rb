@@ -20,10 +20,16 @@ module Spotlight
       blacklight_config.index.document_actions = blacklight_config.browse.document_actions
 
       add_breadcrumb @search.title, exhibit_browse_path(@exhibit, @search)
-      (@response, @document_list) = search_results(@search.query_params.with_indifferent_access.merge(params))
+      (@response, @document_list) = search_results(search_query)
     end
 
     protected
+
+    def search_query
+      base_query = Blacklight::SearchState.new(@search.query_params, blacklight_config)
+      user_query = Blacklight::SearchState.new(params, blacklight_config).to_h
+      base_query.params_for_search(user_query)
+    end
 
     ##
     # Browsing an exhibit should start a new search session

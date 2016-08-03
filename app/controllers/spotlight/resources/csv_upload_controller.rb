@@ -17,11 +17,11 @@ module Spotlight
         csv = CSV.parse(file.read, headers: true, return_headers: false, encoding: 'utf-8').map(&:to_hash)
         Spotlight::AddUploadsFromCSV.perform_later(csv, current_exhibit, current_user)
         flash[:notice] = t('spotlight.resources.upload.csv.success', file_name: file.original_filename)
-        redirect_to :back
+        redirect_back(fallback_location: spotlight.exhibit_resources_path(current_exhibit))
       end
 
       def template
-        render text: CSV.generate { |csv| csv << data_param_keys.unshift(:url) }, content_type: 'text/csv'
+        render plain: CSV.generate { |csv| csv << data_param_keys.unshift(:url) }, content_type: 'text/csv'
       end
 
       private

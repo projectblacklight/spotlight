@@ -16,9 +16,10 @@ module Spotlight
       @search.query_params = query_params
 
       if @search.save
-        redirect_to :back, notice: t(:'helpers.submit.search.created', model: @search.class.model_name.human.downcase)
+        redirect_back fallback_location: fallback_url,
+                      notice: t(:'helpers.submit.search.created', model: @search.class.model_name.human.downcase)
       else
-        redirect_to :back, alert: @search.errors.full_messages.join('<br>'.html_safe)
+        redirect_back fallback_location: fallback_url, alert: @search.errors.full_messages.join('<br>'.html_safe)
       end
     end
 
@@ -64,7 +65,7 @@ module Spotlight
                else
                  t(:'helpers.submit.search.batch_error', model: Spotlight::Search.model_name.human.pluralize.downcase)
                end
-      redirect_to :back, notice: notice
+      redirect_back fallback_location: fallback_url, notice: notice
     end
 
     def show
@@ -117,6 +118,10 @@ module Spotlight
 
     def blacklisted_search_session_params
       [:commit, :counter, :total, :search_id, :page, :per_page, :authenticity_token, :utf8, :action, :controller]
+    end
+
+    def fallback_url
+      spotlight.exhibit_searches_path(current_exhibit)
     end
   end
 end

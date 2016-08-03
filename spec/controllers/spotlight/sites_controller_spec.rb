@@ -34,7 +34,7 @@ describe Spotlight::SitesController, type: :controller do
       let!(:exhibit_b) { FactoryGirl.create(:exhibit) }
 
       it 'changes the exhibit order' do
-        patch :update, site: { exhibits_attributes: [{ id: exhibit_a.id, weight: 5 }, { id: exhibit_b.id, weight: 2 }] }
+        patch :update, params: { site: { exhibits_attributes: [{ id: exhibit_a.id, weight: 5 }, { id: exhibit_b.id, weight: 2 }] } }
 
         expect(response).to redirect_to(exhibits_path)
 
@@ -47,7 +47,7 @@ describe Spotlight::SitesController, type: :controller do
       let!(:exhibit_a) { FactoryGirl.create(:exhibit, tag_list: 'a') }
 
       it 'serializes the exhibit-level tags' do
-        get :tags, format: 'json'
+        get :tags, params: { format: 'json' }
         expect(response).to be_successful
         data = JSON.parse(response.body)
 

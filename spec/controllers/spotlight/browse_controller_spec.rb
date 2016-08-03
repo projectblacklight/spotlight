@@ -11,7 +11,7 @@ describe Spotlight::BrowseController, type: :controller do
       it 'does not show unpublished categories' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
-        get :index, exhibit_id: exhibit
+        get :index, params: { exhibit_id: exhibit }
         expect(response).to be_successful
         expect(assigns[:searches]).to eq [search]
         expect(assigns[:searches]).to_not include unpublished
@@ -26,7 +26,7 @@ describe Spotlight::BrowseController, type: :controller do
       it 'shows the list of browse categories' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
-        get :index, exhibit_id: exhibit
+        get :index, params: { exhibit_id: exhibit }
         expect(response).to be_successful
         expect(assigns[:searches]).to eq [search]
         expect(assigns[:searches]).to_not include unpublished
@@ -45,7 +45,7 @@ describe Spotlight::BrowseController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(search.title, exhibit_browse_path(exhibit, search))
-        get :show, id: search, exhibit_id: exhibit
+        get :show, params: { id: search, exhibit_id: exhibit }
         expect(response).to be_successful
         expect(assigns[:search]).to be_a Spotlight::Search
         expect(assigns[:response]).to eq mock_response
@@ -54,7 +54,7 @@ describe Spotlight::BrowseController, type: :controller do
       end
 
       it 'removes all the document actions' do
-        get :show, id: search, exhibit_id: exhibit
+        get :show, params: { id: search, exhibit_id: exhibit }
         expect(controller.blacklight_config.index.document_actions).to be_blank
       end
 
@@ -65,7 +65,7 @@ describe Spotlight::BrowseController, type: :controller do
 
         allow(controller). to receive(:blacklight_config).and_return(config)
 
-        get :show, id: search, exhibit_id: exhibit
+        get :show, params: { id: search, exhibit_id: exhibit }
         expect(controller.blacklight_config.index.document_actions).to match_array [:a, :b, :c]
       end
     end

@@ -25,7 +25,7 @@ describe Spotlight::ConfirmationsController, type: :controller do
     end
     describe 'when the token is valid' do
       it 'updates the user' do
-        get :show, confirmation_token: raw_token
+        get :show, params: { confirmation_token: raw_token }
         expect(contact_email.reload).to be_confirmed
         expect(response).to redirect_to main_app.new_user_session_path
       end

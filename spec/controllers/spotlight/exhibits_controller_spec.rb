@@ -15,7 +15,7 @@ describe Spotlight::ExhibitsController, type: :controller do
 
     describe 'GET edit' do
       it 'denies access' do
-        get :edit, id: exhibit
+        get :edit, params: { id: exhibit }
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to be_present
       end
@@ -32,35 +32,35 @@ describe Spotlight::ExhibitsController, type: :controller do
 
     describe 'GET new' do
       it 'is not allowed' do
-        get :new, id: exhibit
+        get :new, params: { id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe 'GET edit' do
       it 'is not allowed' do
-        get :edit, id: exhibit
+        get :edit, params: { id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe 'PATCH update' do
       it 'is not allowed' do
-        patch :update, id: exhibit
+        patch :update, params: { id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe 'PATCH process_import' do
       it 'is not allowed' do
-        patch :process_import, id: exhibit
+        patch :process_import, params: { id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe 'DELETE destroy' do
       it 'is not allowed' do
-        delete :destroy, id: exhibit
+        delete :destroy, params: { id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
@@ -85,7 +85,7 @@ describe Spotlight::ExhibitsController, type: :controller do
 
       it 'is successful' do
         expect do
-          post :create, exhibit: { title: 'Some Title', slug: 'custom-slug', tag_list: '2014, R. Buckminster Fuller' }
+          post :create, params: { exhibit: { title: 'Some Title', slug: 'custom-slug', tag_list: '2014, R. Buckminster Fuller' } }
         end.to change { Spotlight::Exhibit.count }.by(1)
 
         exhibit = Spotlight::Exhibit.last
@@ -119,7 +119,7 @@ describe Spotlight::ExhibitsController, type: :controller do
           f.write '{ "title": "Foo", "subtitle": "Bar"}'
           f.rewind
           file = Rack::Test::UploadedFile.new(f.path, 'application/json')
-          patch :process_import, id: exhibit, file: file
+          patch :process_import, params: { id: exhibit, file: file }
         ensure
           f.close
           f.unlink
@@ -137,18 +137,21 @@ describe Spotlight::ExhibitsController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('General', edit_exhibit_path(exhibit))
-        get :edit, id: exhibit
+        get :edit, params: { id: exhibit }
         expect(response).to be_successful
       end
     end
 
     describe '#update' do
       it 'is successful' do
-        patch :update, id: exhibit, exhibit: {
-          title: 'Foo',
-          subtitle: 'Bar',
-          description: 'Baz',
-          contact_emails_attributes: { '0' => { email: 'bess@stanford.edu' }, '1' => { email: 'naomi@stanford.edu' } }
+        patch :update, params: {
+          id: exhibit,
+          exhibit: {
+            title: 'Foo',
+            subtitle: 'Bar',
+            description: 'Baz',
+            contact_emails_attributes: { '0' => { email: 'bess@stanford.edu' }, '1' => { email: 'naomi@stanford.edu' } }
+          }
         }
 
         expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
@@ -162,11 +165,14 @@ describe Spotlight::ExhibitsController, type: :controller do
       end
 
       it 'shows errors and ignore blank emails' do
-        patch :update, id: exhibit, exhibit: {
-          title: 'Foo',
-          subtitle: 'Bar',
-          description: 'Baz',
-          contact_emails_attributes: { '0' => { email: 'bess@stanford.edu' }, '1' => { email: 'naomi@' }, '2' => { email: '' } }
+        patch :update, params: {
+          id: exhibit,
+          exhibit: {
+            title: 'Foo',
+            subtitle: 'Bar',
+            description: 'Baz',
+            contact_emails_attributes: { '0' => { email: 'bess@stanford.edu' }, '1' => { email: 'naomi@' }, '2' => { email: '' } }
+          }
         }
 
         expect(response).to be_successful
@@ -179,7 +185,7 @@ describe Spotlight::ExhibitsController, type: :controller do
 
     describe '#destroy' do
       it 'is successful' do
-        delete :destroy, id: exhibit
+        delete :destroy, params: { id: exhibit }
         expect(Spotlight::Exhibit.exists?(exhibit.id)).to be_falsey
         expect(flash[:notice]).to eq 'The exhibit was deleted.'
         expect(response).to redirect_to main_app.root_path
