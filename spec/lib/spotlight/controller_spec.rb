@@ -6,8 +6,10 @@ describe Spotlight::Controller do
 
   subject { MockController.new }
 
+  let(:params) { { action: 'show' } }
+
   before do
-    allow(subject).to receive_messages(params: { action: 'show' })
+    allow(subject).to receive_messages(params: ActionController::Parameters.new(params))
   end
 
   describe '#current_exhibit' do
@@ -80,6 +82,19 @@ describe Spotlight::Controller do
   describe '#resource_masthead?' do
     it 'is false by default' do
       expect(subject.resource_masthead?).to eq false
+    end
+  end
+
+  describe '#exhibit_search_facet_url' do
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:params) { { action: 'index', q: 'xyz' } }
+
+    before do
+      allow(subject).to receive(:current_exhibit).and_return(exhibit)
+    end
+    it 'adds the current exhibit context to the route' do
+      expect(subject.spotlight).to receive(:facet_exhibit_catalog_url).with(exhibit, id: 'some_field', q: 'xyz')
+      subject.exhibit_search_facet_url(id: 'some_field')
     end
   end
 end
