@@ -48,6 +48,7 @@ these collections.)
   s.add_dependency 'oauth2'
   s.add_dependency 'paper_trail', '~> 5.0'
   s.add_dependency 'openseadragon'
+  s.add_dependency 'clipboard-rails', '~> 1.5'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.1'

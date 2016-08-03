@@ -136,6 +136,8 @@ en:
         section: Manage exhibits
         page_title: Manage administrators
         instructions: Existing exhibits administrators
+        all_users: Administrators and curators of all exhibits
+        copy: Copy
         add: Add new administrator
         destroy: Remove from role
         save: Add role
