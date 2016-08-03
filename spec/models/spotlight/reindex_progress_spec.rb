@@ -81,6 +81,14 @@ describe Spotlight::ReindexProgress, type: :model do
     it 'is included in the json as a localized string' do
       expect(json['started_at']).to eq I18n.l(start_time, format: :short)
     end
+
+    context 'with unqueued resources' do
+      subject { described_class.new(Spotlight::Resource.where(id: new_resource.id)) }
+
+      it 'returns the indexed_at attribute of the first resource' do
+        expect(subject.started_at).to be_nil
+      end
+    end
   end
 
   describe '#updated_at' do
