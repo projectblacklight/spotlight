@@ -1,8 +1,9 @@
 describe 'Uploading a non-repository item', type: :feature do
   let!(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:custom_field) { FactoryGirl.create(:custom_field, exhibit: exhibit) }
-  let!(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-  before { login_as exhibit_curator }
+  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let(:user) { exhibit_curator }
+  before { login_as user }
 
   describe 'forms' do
     it 'displays the single item upload form' do
@@ -51,6 +52,26 @@ describe 'Uploading a non-repository item', type: :feature do
       within('form#new_resources_csv_upload') do
         expect(page).to have_css('#resources_csv_upload_url[type="file"]')
         expect(page).to have_css('.help-block a', text: 'Download template')
+      end
+    end
+
+    it 'does not display the raw documents upload form' do
+      visit spotlight.new_exhibit_resource_path(exhibit)
+      click_link 'Upload raw documents'
+      expect(page).not_to have_css('form#new_resources_json_upload')
+    end
+
+    context 'as an site administrator' do
+      let(:user) { FactoryGirl.create(:site_admin, exhibit: exhibit) }
+
+      it 'displays the JSON upload form' do
+        visit spotlight.new_exhibit_resource_path(exhibit)
+
+        click_link 'Upload raw documents'
+
+        within('form#new_resources_json_upload') do
+          expect(page).to have_css('#resources_json_upload_json[type="file"]')
+        end
       end
     end
   end

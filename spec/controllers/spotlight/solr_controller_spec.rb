@@ -16,23 +16,24 @@ describe Spotlight::SolrController, type: :controller do
   describe 'when user is an admin' do
     let(:admin) { FactoryGirl.create(:site_admin) }
     let(:role) { admin.roles.first }
-    let(:solr) { double }
+    let(:connection) { instance_double(RSolr::Client) }
+    let(:repository) { instance_double(Blacklight::Solr::Repository, connection: connection) }
     before { sign_in admin }
     before do
-      allow(controller).to receive(:blacklight_solr).and_return(solr)
+      allow(controller).to receive(:repository).and_return(repository)
     end
 
     describe 'POST update' do
       it 'passes through the request data' do
         doc = {}
-        expect(solr).to receive(:update) do |arr|
-          doc = arr.first
+        expect(connection).to receive(:update) do |params|
+          doc = JSON.parse(params[:data], symbolize_names: true)
         end
 
         post_update_with_json_body(exhibit, a: 1)
 
         expect(response).to be_successful
-        expect(doc).to include 'a' => 1
+        expect(doc.first).to include a: 1
       end
 
       context 'when the index is not writable' do
@@ -49,20 +50,20 @@ describe Spotlight::SolrController, type: :controller do
 
       it 'enriches the request with exhibit solr data' do
         doc = {}
-        expect(solr).to receive(:update) do |arr|
-          doc = arr.first
+        expect(connection).to receive(:update) do |params|
+          doc = JSON.parse(params[:data], symbolize_names: true)
         end
 
         post_update_with_json_body(exhibit, a: 1)
 
         expect(response).to be_successful
-        expect(doc).to include exhibit.solr_data
+        expect(doc.first).to include exhibit.solr_data
       end
 
       it 'enriches the request with sidecar data' do
         doc = {}
-        expect(solr).to receive(:update) do |arr|
-          doc = arr.first
+        expect(connection).to receive(:update) do |params|
+          doc = JSON.parse(params[:data], symbolize_names: true)
         end
 
         allow_any_instance_of(SolrDocument).to receive(:to_solr).and_return(b: 1)
@@ -70,7 +71,22 @@ describe Spotlight::SolrController, type: :controller do
         post_update_with_json_body(exhibit, a: 1)
 
         expect(response).to be_successful
-        expect(doc).to include b: 1
+        expect(doc.first).to include b: 1
+      end
+
+      context 'with a file upload' do
+        let(:json) { fixture_file_upload(File.expand_path(File.join('..', 'spec', 'fixtures', 'json-upload-fixture.json'), Rails.root), 'application/json') }
+
+        it 'parses the uploaded file' do
+          doc = {}
+          expect(connection).to receive(:update) do |params|
+            doc = JSON.parse(params[:data], symbolize_names: true)
+          end
+          post :update, resources_json_upload: { json: json }, content_type: :json, exhibit_id: exhibit
+
+          expect(response).to be_successful
+          expect(doc.first).to include a: 1
+        end
       end
     end
   end
