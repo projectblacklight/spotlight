@@ -45,28 +45,6 @@ describe Spotlight::AppearancesController, type: :controller do
       let(:thumbnail) { FactoryGirl.create(:featured_image) }
       let(:first_nav) { exhibit.main_navigations.first }
       let(:last_nav) { exhibit.main_navigations.last }
-<<<<<<< 0ae522fd8dcd57514c8733e953545187a45b3c5c
-      it 'updates the navigation' do
-        if Rails::VERSION::MAJOR >= 5
-          patch :update, params: {
-            exhibit_id: exhibit,
-            exhibit: {
-              main_navigations_attributes: {
-                0 => { id: first_nav.id, label: 'Some Label', weight: 500 },
-                1 => { id: last_nav.id, display: false }
-              }
-            }
-          }
-        else
-          patch :update, params: {
-            exhibit_id: exhibit,
-            exhibit: {
-              main_navigations_attributes: [
-                { id: first_nav.id, label: 'Some Label', weight: 500 },
-                { id: last_nav.id, display: false }
-              ]
-            }
-=======
       let(:submitted) do
         {
           exhibit_id: exhibit,
@@ -79,13 +57,22 @@ describe Spotlight::AppearancesController, type: :controller do
             thumbnail_attributes: {
               iiif_url: 'http://test.host/2/foo'
             },
-            main_navigations_attributes: [
-              { id: first_nav.id, label: 'Some Label', weight: 500 },
-              { id: last_nav.id, display: false }
-            ]
->>>>>>> Add iiif-crop to spotlight
+            main_navigations_attributes: main_navigation_attributes
           }
         }
+      end
+      let(:main_navigation_attributes) do
+        if Rails::VERSION::MAJOR >= 5
+          {
+            0 => { id: first_nav.id, label: 'Some Label', weight: 500 },
+            1 => { id: last_nav.id, display: false }
+          }
+        else
+          [
+            { id: first_nav.id, label: 'Some Label', weight: 500 },
+            { id: last_nav.id, display: false }
+          ]
+        end
       end
       it 'updates the navigation' do
         patch :update, params: submitted
