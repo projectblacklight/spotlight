@@ -833,7 +833,10 @@
 	    // reference to prevInteraction which could lead to a memory leak
 	    this.dx = prevInteraction.mousePosition.x - this.mousePosition.x;
 	    this.dy = prevInteraction.mousePosition.y - this.mousePosition.y;
-	  }
+	  } else {
+      this.dx = 0.0
+      this.dy = 0.0
+    }
 	};
 
 	InteractionEvent.prototype = {
@@ -1003,13 +1006,13 @@
 	  right: function() {}, // getter/setter
 	  bottom: function() {},
 	  update: function(options) {
-	    if (options.left)
+	    if (typeof options.left !== 'undefined')
 	      this.left = options.left;
-	    if (options.top)
+	    if (typeof options.top !== 'undefined')
 	      this.top = options.top;
-	    if (options.right)
+	    if (typeof options.right !== 'undefined')
 	      this.right = options.right;
-	    if (options.bottom)
+	    if (typeof options.bottom !== 'undefined')
 	      this.bottom = options.bottom;
 	  },
 	  getWidth: function () {
