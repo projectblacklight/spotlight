@@ -1,6 +1,8 @@
 describe 'Site admin management', js: true do
   let(:user) { FactoryGirl.create(:site_admin) }
-  let(:existing_user) { FactoryGirl.create(:exhibit_visitor) }
+  let!(:existing_user) { FactoryGirl.create(:exhibit_visitor) }
+  let!(:exhibit_admin) { FactoryGirl.create(:exhibit_admin) }
+  let!(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
 
   before do
     login_as(user)
@@ -9,6 +11,16 @@ describe 'Site admin management', js: true do
 
   it 'displays the current admin users' do
     expect(page).to have_css('td', text: user.email)
+  end
+
+  describe 'copy email addresses' do
+    it 'displays only email addresses of users w/ roles' do
+      expect(page).to have_css('div#all_users', text: user.email)
+      expect(page).to have_css('div#all_users', text: exhibit_admin.email)
+      expect(page).to have_css('div#all_users', text: exhibit_curator.email)
+      expect(page).not_to have_css('div#all_users', text: existing_user.email)
+      expect(page).to have_css('button.copy-email-addresses')
+    end
   end
 
   it 'allows for existing users to be added as site adminstrators' do

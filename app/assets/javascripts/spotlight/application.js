@@ -22,5 +22,6 @@
 //= require bootstrap/carousel
 //= require bootstrap-tagsinput
 //= require jquery.serializejson
+//= require clipboard
 
 //= require_tree .

@@ -50,6 +50,16 @@
       </div>
     </div>
   <% end %>
+
+  <p class="instructions"><%= t :'.all_users' %></p>
+  <div id="all_users" class="well well-sm">
+      <div class='btn-toolbar pull-right'>
+          <button class="btn btn-xs btn-default copy-email-addresses" data-clipboard-target="#all_users">
+              Copy
+          </button>
+      </div>
+      <%= Spotlight::Engine.user_class.with_roles.pluck(:email).sort.join(', ') %>
+  </div>
 </div>
 
 <aside class="col-md-3">

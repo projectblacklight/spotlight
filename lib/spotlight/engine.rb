@@ -10,6 +10,7 @@ require 'autoprefixer-rails'
 require 'friendly_id'
 require 'tophat'
 require 'paper_trail'
+require 'clipboard/rails'
 
 module Spotlight
   ##
