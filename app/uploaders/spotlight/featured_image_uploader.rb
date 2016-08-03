@@ -6,14 +6,6 @@ module Spotlight
 
     storage Spotlight::Engine.config.uploader_storage
 
-    # version :thumb, from_version: :cropped do
-    #   process resize_to_fill: Spotlight::Engine.config.featured_image_thumb_size
-    # end
-
-    # version :square, from_version: :cropped do
-    #   process resize_to_fill: Spotlight::Engine.config.featured_image_square_size
-    # end
-
     def store_dir
       "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
