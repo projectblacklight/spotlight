@@ -17,7 +17,11 @@ module Spotlight
     def started_at
       return unless resources.present?
 
-      @started ||= resources.select(&:enqueued_at?).min_by(&:enqueued_at).enqueued_at
+      enqueued_resources = resources.select(&:enqueued_at?)
+
+      return unless enqueued_resources.any?
+
+      @started ||= enqueued_resources.min_by(&:enqueued_at).enqueued_at
     end
 
     def updated_at

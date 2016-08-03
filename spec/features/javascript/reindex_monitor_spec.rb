@@ -1,11 +1,12 @@
 feature 'Reindex Monitor', js: true do
   let(:resources) do
-    [FactoryGirl.create(:resource, updated_at: Time.zone.now, index_status: 1)]
+    [FactoryGirl.create(:resource)]
   end
   let(:exhibit) { FactoryGirl.create(:exhibit, resources: resources) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
 
   before do
+    resources.each(&:waiting!)
     login_as exhibit_curator
     visit spotlight.admin_exhibit_catalog_path(exhibit)
   end
