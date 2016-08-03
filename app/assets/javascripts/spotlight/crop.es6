@@ -4,9 +4,7 @@ export default class Crop {
     this.form = fileUpload.closest('form');
     this.setupAsyncUpload();
     // The input field that stores the IIIF url
-    var iiif_url_field = $(`#${fileUpload.data('url')}`);
-
-    this.region = this.getRegionFromIiifUrl(iiif_url_field.val());
+    this.iiif_url_field = $(`#${fileUpload.data('url')}`);
     // The hidden input field that stores the association between the parent record
     // and the image.
     this.association = $(`#${fileUpload.data('association')}`);
@@ -15,7 +13,7 @@ export default class Crop {
       console.error(`required attribute data-selector was not provided on #${fileUpload.attr('id')}`)
 
     this.setupOpenSeadragon(fileUpload.data('tilesource'));
-    this.setupFormSubmit(iiif_url_field);
+    this.setupFormSubmit();
   }
 
   setupOpenSeadragon(tileSource) {
@@ -44,7 +42,7 @@ export default class Crop {
     this.osdCanvas.addHandler('tile-drawn', () => {
       // remove the handler so we only fire on the first instance
       this.osdCanvas.removeHandler('tile-drawn');
-      this.osdCanvas.cropper.setRegion.apply(this.osdCanvas.cropper, this.region);
+      this.applyCurrentRegion();
     });
     this.osdCanvas.cropper.lockAspectRatio()
     xosd = this.osdCanvas; // for debugging, remove.
@@ -64,13 +62,21 @@ export default class Crop {
   }
 
   getDefaultCrop() {
+    var area = this.fileUpload.data('initial-set-select')
+    if (typeof area !== 'undefined')
+      return area
     return [0, 0, 1200, 120]
   }
 
   setupFormSubmit(iiif_url_field) {
     this.form.on('submit', (e) => {
-      iiif_url_field.val(this.getIiifRegion())
+      this.iiif_url_field.val(this.getIiifRegion())
     });
+  }
+
+  applyCurrentRegion() {
+    var region = this.getRegionFromIiifUrl(this.iiif_url_field.val());
+    this.osdCanvas.cropper.setRegion.apply(this.osdCanvas.cropper, region);
   }
 
   getIiifRegion() {
