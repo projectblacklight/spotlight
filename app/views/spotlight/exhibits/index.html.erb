@@ -33,7 +33,7 @@
 
     <% if @exhibits.unpublished.accessible_by(current_ability).any? %>
       <div role="tabpanel" class="tab-pane" id="unpublished">
-        <%= render 'exhibits', exhibits: @exhibits.unpublished.accessible_by(current_ability) %>
+        <%= render 'exhibits', exhibits: @exhibits.unpublished.ordered_by_weight.accessible_by(current_ability) %>
       </div>
     <% end %>
 
