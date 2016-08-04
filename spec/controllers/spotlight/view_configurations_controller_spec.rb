@@ -9,7 +9,7 @@ describe Spotlight::ViewConfigurationsController, type: :controller do
 
     describe 'GET show' do
       it 'denies access' do
-        get :show, exhibit_id: exhibit
+        get :show, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to be_present
       end
@@ -22,7 +22,7 @@ describe Spotlight::ViewConfigurationsController, type: :controller do
 
     describe 'GET show' do
       it 'is successful' do
-        get :show, exhibit_id: exhibit, format: 'json'
+        get :show, params: { exhibit_id: exhibit, format: 'json' }
         expect(response).to be_successful
         available = JSON.parse(response.body)
         expect(available).to match_array %w(list gallery slideshow)

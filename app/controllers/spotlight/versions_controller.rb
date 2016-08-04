@@ -15,7 +15,7 @@ module Spotlight
           redirect_to [obj.exhibit, obj], flash: { html_safe: true }, notice: view_context.t(:'spotlight.versions.undo_error')
         end
       else
-        redirect_to :back, flash: { html_safe: true }, notice: view_context.t(:'spotlight.versions.undo_error')
+        redirect_back fallback_location: main_app.root_url, flash: { html_safe: true }, notice: view_context.t(:'spotlight.versions.undo_error')
       end
     end
 

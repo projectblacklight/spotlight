@@ -92,7 +92,7 @@ module Spotlight
       @document.save
 
       respond_to do |format|
-        format.html { redirect_to :back }
+        format.html { redirect_back(fallback_location: [spotlight, current_exhibit, @document]) }
         format.json { render json: true }
       end
     end
@@ -103,7 +103,7 @@ module Spotlight
       @document.save
 
       respond_to do |format|
-        format.html { redirect_to :back }
+        format.html { redirect_back(fallback_location: [spotlight, current_exhibit, @document]) }
         format.json { render json: true }
       end
     end

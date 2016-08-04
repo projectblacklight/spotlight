@@ -7,7 +7,7 @@ module Spotlight
       has_many :roles, class_name: 'Spotlight::Role', dependent: :destroy
       has_many :exhibits, class_name: 'Spotlight::Exhibit', through: :roles, source: 'resource', source_type: 'Spotlight::Exhibit'
 
-      scope :with_roles, -> { where(id: Spotlight::Role.uniq.pluck(:user_id)) }
+      scope :with_roles, -> { where(id: Spotlight::Role.distinct.pluck(:user_id)) }
 
       before_create :add_default_roles
     end

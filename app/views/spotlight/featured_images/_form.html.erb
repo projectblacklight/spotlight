@@ -1,4 +1,8 @@
-<% form_prefix = f.object_name.parameterize("_") %>
+<% if Rails::VERSION::MAJOR >= 5 %>
+  <% form_prefix = f.object_name.parameterize(separator: '_') %>
+<% else %>
+  <% form_prefix = f.object_name.parameterize('_') %>
+<% end %>  
 <%= field_set_tag do %>
   <%= f.check_box(:display) %>
 <% end if f.object.is_a? Spotlight::Masthead %>

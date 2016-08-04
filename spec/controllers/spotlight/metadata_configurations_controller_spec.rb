@@ -9,7 +9,7 @@ describe Spotlight::MetadataConfigurationsController, type: :controller do
 
     describe 'GET show' do
       it 'denies access' do
-        get :show, exhibit_id: exhibit
+        get :show, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to be_present
       end
@@ -17,7 +17,7 @@ describe Spotlight::MetadataConfigurationsController, type: :controller do
 
     describe 'GET edit' do
       it 'denies access' do
-        get :edit, exhibit_id: exhibit
+        get :edit, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to be_present
       end
@@ -27,14 +27,14 @@ describe Spotlight::MetadataConfigurationsController, type: :controller do
   describe 'when not logged in' do
     describe 'PATCH update' do
       it 'denies access' do
-        patch :update, exhibit_id: exhibit
+        patch :update, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe 'GET edit' do
       it 'denies access' do
-        get :edit, exhibit_id: exhibit
+        get :edit, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
@@ -49,14 +49,14 @@ describe Spotlight::MetadataConfigurationsController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Metadata', edit_exhibit_metadata_configuration_path(exhibit))
-        get :edit, exhibit_id: exhibit
+        get :edit, params: { exhibit_id: exhibit }
         expect(response).to be_successful
       end
     end
 
     describe 'GET show' do
       it 'is successful' do
-        get :show, exhibit_id: exhibit, format: 'json'
+        get :show, params: { exhibit_id: exhibit, format: 'json' }
         expect(response).to be_successful
         expect(JSON.parse(response.body).keys).to eq exhibit.blacklight_config.index_fields.keys
       end
@@ -67,12 +67,15 @@ describe Spotlight::MetadataConfigurationsController, type: :controller do
         blacklight_config = Blacklight::Configuration.new
         blacklight_config.add_index_field %w(a b c d e f)
         allow(::CatalogController).to receive_messages(blacklight_config: blacklight_config)
-        patch :update, exhibit_id: exhibit, blacklight_configuration: {
-          index_fields: {
-            c: { enabled: true, show: true },
-            d: { enabled: true, show: true },
-            e: { enabled: true, list: true },
-            f: { enabled: true, list: true }
+        patch :update, params: {
+          exhibit_id: exhibit,
+          blacklight_configuration: {
+            index_fields: {
+              c: { enabled: true, show: true },
+              d: { enabled: true, show: true },
+              e: { enabled: true, list: true },
+              f: { enabled: true, list: true }
+            }
           }
         }
 

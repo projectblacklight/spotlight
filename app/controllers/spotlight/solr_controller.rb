@@ -21,7 +21,11 @@ module Spotlight
 
       repository.connection.update params: { commitWithin: 500 }, data: data.to_json, headers: { 'Content-Type' => 'application/json' } unless data.empty?
 
-      render nothing: true
+      if respond_to? :head
+        head :ok
+      else
+        render nothing: true
+      end
     end
 
     private
@@ -45,7 +49,7 @@ module Spotlight
     def validate_writable_index!
       return if Spotlight::Engine.config.writable_index
 
-      render text: 'Spotlight is unable to write to solr', status: 409
+      render plain: 'Spotlight is unable to write to solr', status: 409
     end
   end
 end

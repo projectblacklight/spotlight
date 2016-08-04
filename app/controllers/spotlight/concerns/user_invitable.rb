@@ -10,9 +10,9 @@ module Spotlight
         role = Spotlight::Role.create(resource: exhibit_or_site, user: user, role: invite_params[:role])
         if role.save
           user.deliver_invitation # now deliver it when we have saved the role
-          redirect_to :back, notice: t(:'helpers.submit.invite.invited')
+          redirect_back fallback_location: fallback_location, notice: t(:'helpers.submit.invite.invited')
         else
-          redirect_to :back, alert: t(:'helpers.submit.role.batch_error', count: 1)
+          redirect_back fallback_location: fallback_location, alert: t(:'helpers.submit.role.batch_error', count: 1)
         end
       end
 
@@ -24,6 +24,14 @@ module Spotlight
 
       def exhibit_or_site
         current_exhibit || @site
+      end
+
+      def fallback_location
+        if current_exhibit
+          spotlight.exhibit_roles_path(current_exhibit)
+        else
+          spotlight.admin_users_path
+        end
       end
     end
   end

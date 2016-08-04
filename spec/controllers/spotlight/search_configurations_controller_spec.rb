@@ -9,7 +9,7 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
 
     describe 'GET edit' do
       it 'denies access' do
-        get :edit, exhibit_id: exhibit
+        get :edit, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to be_present
       end
@@ -19,14 +19,14 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
   describe 'when not logged in' do
     describe 'PATCH update' do
       it 'denies access' do
-        patch :update, exhibit_id: exhibit
+        patch :update, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
 
     describe 'GET edit' do
       it 'denies access' do
-        get :edit, exhibit_id: exhibit
+        get :edit, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
@@ -41,12 +41,12 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Search', edit_exhibit_search_configuration_path(exhibit))
-        get :edit, exhibit_id: exhibit
+        get :edit, params: { exhibit_id: exhibit }
         expect(response).to be_successful
       end
 
       it 'assigns the field metadata' do
-        get :edit, exhibit_id: exhibit
+        get :edit, params: { exhibit_id: exhibit }
         expect(assigns(:field_metadata)).to be_an_instance_of(Spotlight::FieldMetadata)
         expect(assigns(:field_metadata).repository).to be_an_instance_of(controller.repository.class)
         expect(assigns(:field_metadata).blacklight_config).to eq controller.blacklight_config
@@ -55,8 +55,11 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
 
     describe 'PATCH update' do
       it 'updates facet fields' do
-        patch :update, exhibit_id: exhibit, blacklight_configuration: {
-          facet_fields: { 'genre_ssim' => { enabled: '1', label: 'Label' } }
+        patch :update, params: {
+          exhibit_id: exhibit,
+          blacklight_configuration: {
+            facet_fields: { 'genre_ssim' => { enabled: '1', label: 'Label' } }
+          }
         }
         expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
         expect(response).to redirect_to edit_exhibit_search_configuration_path(exhibit)
@@ -66,14 +69,17 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
       end
 
       it 'updates sort fields' do
-        patch :update, exhibit_id: exhibit, blacklight_configuration: {
-          sort_fields: {
-            'relevance' => { 'enabled' => '1', 'label' => 'Relevance' },
-            'title' => { 'enabled' => '1', 'label' => 'Title' },
-            'type' => { 'enabled' => '1', 'label' => 'Type' },
-            'date' => { 'enabled' => '0', 'label' => 'Date' },
-            'source' => { 'enabled' => '0', 'label' => 'Source' },
-            'identifier' => { 'enabled' => '0', 'label' => 'Identifier' }
+        patch :update, params: {
+          exhibit_id: exhibit,
+          blacklight_configuration: {
+            sort_fields: {
+              'relevance' => { 'enabled' => '1', 'label' => 'Relevance' },
+              'title' => { 'enabled' => '1', 'label' => 'Title' },
+              'type' => { 'enabled' => '1', 'label' => 'Type' },
+              'date' => { 'enabled' => '0', 'label' => 'Date' },
+              'source' => { 'enabled' => '0', 'label' => 'Source' },
+              'identifier' => { 'enabled' => '0', 'label' => 'Identifier' }
+            }
           }
         }
         expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
@@ -91,11 +97,14 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
       end
 
       it 'updates search fields' do
-        patch :update, exhibit_id: exhibit, blacklight_configuration: {
-          search_fields: {
-            'all_fields' => { 'enabled' => '1' },
-            'title' => { 'enabled' => '0', 'label' => 'Title' },
-            'author' => { 'enabled' => '1', 'label' => 'Primary Author' }
+        patch :update, params: {
+          exhibit_id: exhibit,
+          blacklight_configuration: {
+            search_fields: {
+              'all_fields' => { 'enabled' => '1' },
+              'title' => { 'enabled' => '0', 'label' => 'Title' },
+              'author' => { 'enabled' => '1', 'label' => 'Primary Author' }
+            }
           }
         }
         expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
@@ -110,9 +119,12 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
       end
 
       it 'updates appearance fields' do
-        patch :update, exhibit_id: exhibit, blacklight_configuration: {
-          document_index_view_types: { 'list' => '1', 'gallery' => '1', 'map' => '0' },
-          default_per_page: '50'
+        patch :update, params: {
+          exhibit_id: exhibit,
+          blacklight_configuration: {
+            document_index_view_types: { 'list' => '1', 'gallery' => '1', 'map' => '0' },
+            default_per_page: '50'
+          }
         }
         expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
         expect(response).to redirect_to edit_exhibit_search_configuration_path(exhibit)

@@ -23,13 +23,13 @@ describe Spotlight::AdminUsersController, type: :controller do
 
     describe 'DELETE destroy' do
       before do
-        post :invite, user: 'user@example.com', role: 'admin'
+        post :invite, params: { user: 'user@example.com', role: 'admin' }
       end
       it 'removes the site admin role from the given user' do
         last_user = Spotlight::Site.instance.roles.last.user
         expect(last_user.email).to eq 'user@example.com'
 
-        delete :destroy, id: last_user.id
+        delete :destroy, params: { id: last_user.id }
         expect(response).to redirect_to(admin_users_path)
         expect(flash[:notice]).to eq 'User removed from site adminstrator role'
         expect(Spotlight::Site.instance.roles.last.user.id).not_to eq last_user.id
@@ -45,12 +45,12 @@ describe Spotlight::AdminUsersController, type: :controller do
 
       it 'returns a successful status when the requested user exists' do
         user = FactoryGirl.create(:exhibit_curator)
-        get :exists, user: user.email
+        get :exists, params: { user: user.email }
         expect(response).to be_success
       end
 
       it 'returns an unsuccessful status when the user does not exist' do
-        get :exists, user: 'user@example.com'
+        get :exists, params: { user: 'user@example.com' }
         expect(response).not_to be_success
         expect(response.status).to eq 404
       end
@@ -59,22 +59,22 @@ describe Spotlight::AdminUsersController, type: :controller do
     describe 'GET invite' do
       it 'invites the selected user to be an admin' do
         expect do
-          post :invite, user: 'user@example.com', role: 'admin'
+          post :invite, params: { user: 'user@example.com', role: 'admin' }
         end.to change { Spotlight::Engine.user_class.count }.by(1)
         expect(Spotlight::Engine.user_class.last.roles.length).to eq 1
         expect(Spotlight::Engine.user_class.last.roles.first.resource).to eq Spotlight::Site.instance
       end
 
       it 'redirects back with a flash notice upon success' do
-        post :invite, user: 'user@example.com', role: 'admin'
+        post :invite, params: { user: 'user@example.com', role: 'admin' }
         expect(flash[:notice]).to eq 'User has been invited.'
-        expect(response).to redirect_to(:back)
+        expect(response).to redirect_to('http://example.com')
       end
 
       it 'redirects back with flash error upon failure' do
-        post :invite, user: 'user@example.com', role: 'not-a-real-role'
+        post :invite, params: { user: 'user@example.com', role: 'not-a-real-role' }
         expect(flash[:alert]).to eq 'There was a problem saving the user.'
-        expect(response).to redirect_to(:back)
+        expect(response).to redirect_to('http://example.com')
       end
     end
   end

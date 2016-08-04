@@ -6,7 +6,7 @@ describe Spotlight::Resources::UploadController, type: :controller do
   describe 'when not logged in' do
     describe 'POST create' do
       it 'is not allowed' do
-        post :create, exhibit_id: exhibit
+        post :create, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
@@ -25,17 +25,17 @@ describe Spotlight::Resources::UploadController, type: :controller do
       end
       it 'create a Spotlight::Resources::Upload resource' do
         expect_any_instance_of(Spotlight::Resource).to receive(:reindex_later)
-        post :create, exhibit_id: exhibit, resources_upload: { url: 'url-data' }
+        post :create, params: { exhibit_id: exhibit, resources_upload: { url: 'url-data' } }
         expect(assigns[:resource]).to be_persisted
         expect(assigns[:resource]).to be_a(Spotlight::Resources::Upload)
       end
       it 'redirects to the item admin page' do
-        post :create, exhibit_id: exhibit, resources_upload: { url: 'url-data' }
+        post :create, params: { exhibit_id: exhibit, resources_upload: { url: 'url-data' } }
         expect(flash[:notice]).to eq 'Object uploaded successfully.'
         expect(response).to redirect_to admin_exhibit_catalog_path(exhibit, sort: :timestamp)
       end
       it 'redirects to the upload form when the add-and-continue parameter is present' do
-        post :create, exhibit_id: exhibit, 'add-and-continue' => 'true', resources_upload: { url: 'url-data' }
+        post :create, params: { exhibit_id: exhibit, 'add-and-continue' => 'true', resources_upload: { url: 'url-data' } }
         expect(flash[:notice]).to eq 'Object uploaded successfully.'
         expect(response).to redirect_to new_exhibit_resource_path(exhibit, anchor: 'new_resources_upload')
       end

@@ -6,7 +6,7 @@ describe Spotlight::AboutPagesController, type: :controller do
     describe 'POST update_all' do
       let(:exhibit) { FactoryGirl.create(:exhibit) }
       it 'is not allowed' do
-        post :update_all, exhibit_id: exhibit
+        post :update_all, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
@@ -24,7 +24,7 @@ describe Spotlight::AboutPagesController, type: :controller do
         it 'is successful' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with('About', [exhibit, page])
-          get :show, id: page, exhibit_id: exhibit
+          get :show, params: { id: page, exhibit_id: exhibit }
           expect(assigns(:page)).to eq page
           expect(assigns(:exhibit)).to eq exhibit
         end
@@ -34,7 +34,7 @@ describe Spotlight::AboutPagesController, type: :controller do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with('About', [exhibit, page])
           expect(controller).to receive(:add_breadcrumb).with(page2.title, [exhibit, page2])
-          get :show, id: page2, exhibit_id: exhibit
+          get :show, params: { id: page2, exhibit_id: exhibit }
           expect(assigns(:page)).to eq page2
           expect(assigns(:exhibit)).to eq exhibit
         end
@@ -48,7 +48,7 @@ describe Spotlight::AboutPagesController, type: :controller do
         it 'is successful' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with('About Pages', exhibit_about_pages_path(exhibit))
-          get :edit, id: page, exhibit_id: exhibit
+          get :edit, params: { id: page, exhibit_id: exhibit }
           expect(assigns(:page)).to eq page
           expect(assigns(:exhibit)).to eq exhibit
         end
@@ -58,7 +58,7 @@ describe Spotlight::AboutPagesController, type: :controller do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with('About Pages', exhibit_about_pages_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with(page2.title, [:edit, exhibit, page2])
-          get :edit, id: page2, exhibit_id: exhibit
+          get :edit, params: { id: page2, exhibit_id: exhibit }
           expect(assigns(:page)).to eq page2
           expect(assigns(:exhibit)).to eq exhibit
         end
@@ -71,7 +71,7 @@ describe Spotlight::AboutPagesController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('About Pages', exhibit_about_pages_path(exhibit))
-        get :index, exhibit_id: exhibit
+        get :index, params: { exhibit_id: exhibit }
         expect(assigns(:page)).to be_kind_of Spotlight::Page
         expect(assigns(:page)).to be_new_record
         expect(assigns(:pages)).to include page
@@ -80,14 +80,14 @@ describe Spotlight::AboutPagesController, type: :controller do
     end
     describe 'POST create' do
       it 'redirects to the about page index' do
-        post :create, about_page: { title: 'MyString' }, exhibit_id: exhibit
+        post :create, params: { about_page: { title: 'MyString' }, exhibit_id: exhibit }
         expect(response).to redirect_to(exhibit_about_pages_path(exhibit))
       end
     end
     describe 'PUT update' do
       let!(:page) { FactoryGirl.create(:about_page, exhibit: exhibit) }
       it 'redirects to the about page' do
-        put :update, id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes
+        put :update, params: { id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes }
         page.reload
         expect(response).to redirect_to(exhibit_about_page_path(page.exhibit, page))
         expect(flash[:notice]).to have_link 'Undo changes'
@@ -99,11 +99,14 @@ describe Spotlight::AboutPagesController, type: :controller do
       let!(:page3) { FactoryGirl.create(:about_page, exhibit: exhibit, published: true) }
       before { request.env['HTTP_REFERER'] = 'http://example.com' }
       it 'updates whether they are on the landing page' do
-        post :update_all, exhibit_id: page1.exhibit, exhibit: {
-          about_pages_attributes: [
-            { id: page1.id, published: true, title: 'This is a new title!' },
-            { id: page2.id, published: false }
-          ]
+        post :update_all, params: {
+          exhibit_id: page1.exhibit,
+          exhibit: {
+            about_pages_attributes: [
+              { id: page1.id, published: true, title: 'This is a new title!' },
+              { id: page2.id, published: false }
+            ]
+          }
         }
         expect(response).to redirect_to 'http://example.com'
         expect(flash[:notice]).to eq 'About pages were successfully updated.'
@@ -118,10 +121,15 @@ describe Spotlight::AboutPagesController, type: :controller do
       let!(:contact1) { FactoryGirl.create(:contact, name: 'Aphra Behn', exhibit: exhibit) }
       let!(:contact2) { FactoryGirl.create(:contact, exhibit: exhibit) }
       it 'updates contacts' do
-        patch :update_contacts, exhibit_id: exhibit, exhibit: { contacts_attributes: [
-          { 'show_in_sidebar' => '1', 'id' => contact1.id, weight: 1 },
-          { 'show_in_sidebar' => '0', 'id' => contact2.id, weight: 2 }
-        ] }
+        patch :update_contacts, params: {
+          exhibit_id: exhibit,
+          exhibit: {
+            contacts_attributes: [
+              { 'show_in_sidebar' => '1', 'id' => contact1.id, weight: 1 },
+              { 'show_in_sidebar' => '0', 'id' => contact2.id, weight: 2 }
+            ]
+          }
+        }
         expect(response).to redirect_to exhibit_about_pages_path(exhibit)
         expect(flash[:notice]).to eq 'Contacts were successfully updated.'
         expect(exhibit.contacts.size).to eq 2
@@ -131,11 +139,14 @@ describe Spotlight::AboutPagesController, type: :controller do
       end
       it 'shows index on failure' do
         expect_any_instance_of(Spotlight::Exhibit).to receive(:update).and_return(false)
-        patch :update_contacts, exhibit_id: exhibit, exhibit: { contacts_attributes: [
-          { 'show_in_sidebar' => '1', 'name' => 'Justin Coyne', 'email' => 'jcoyne@justincoyne.com', 'title' => '', 'location' => 'US' },
-          { 'show_in_sidebar' => '0', 'name' => '', 'email' => '', 'title' => '', 'location' => '' },
-          { 'show_in_sidebar' => '0', 'name' => '', 'email' => '', 'title' => 'Librarian', 'location' => '' }
-        ] }
+        patch :update_contacts, params: {
+          exhibit_id: exhibit,
+          exhibit: { contacts_attributes: [
+            { 'show_in_sidebar' => '1', 'name' => 'Justin Coyne', 'email' => 'jcoyne@justincoyne.com', 'title' => '', 'location' => 'US' },
+            { 'show_in_sidebar' => '0', 'name' => '', 'email' => '', 'title' => '', 'location' => '' },
+            { 'show_in_sidebar' => '0', 'name' => '', 'email' => '', 'title' => 'Librarian', 'location' => '' }
+          ] }
+        }
         expect(response).to render_template('index')
       end
     end

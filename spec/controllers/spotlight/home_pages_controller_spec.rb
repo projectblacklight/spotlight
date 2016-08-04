@@ -20,7 +20,7 @@ describe Spotlight::HomePagesController, type: :controller do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with('Exhibit Home', [:edit, exhibit, page])
-          get :edit, id: page, exhibit_id: page.exhibit
+          get :edit, params: { id: page, exhibit_id: page.exhibit }
           expect(response).to be_successful
         end
       end
@@ -28,13 +28,13 @@ describe Spotlight::HomePagesController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(page.title, [:edit, exhibit, page])
-        get :edit, id: page, exhibit_id: page.exhibit
+        get :edit, params: { id: page, exhibit_id: page.exhibit }
         expect(response).to be_successful
       end
     end
     describe 'PUT update' do
       it 'redirects to the feature page index action' do
-        put :update, id: page, exhibit_id: page.exhibit.id, home_page: valid_attributes
+        put :update, params: { id: page, exhibit_id: page.exhibit.id, home_page: valid_attributes }
         page.reload
         expect(response).to redirect_to(exhibit_home_page_path(page.exhibit, page))
         expect(flash[:notice]).to have_link 'Undo changes'
@@ -45,7 +45,7 @@ describe Spotlight::HomePagesController, type: :controller do
   describe 'GET show' do
     it 'gets search results for display facets' do
       allow(controller).to receive_messages(search_results: [double, double])
-      get :show, exhibit_id: exhibit
+      get :show, params: { exhibit_id: exhibit }
       expect(assigns[:response]).to_not be_blank
       expect(assigns[:document_list]).to_not be_blank
       expect(assigns[:page]).to eq exhibit.home_page
@@ -53,14 +53,14 @@ describe Spotlight::HomePagesController, type: :controller do
     it 'does not render breadcrumbs' do
       expect(controller).not_to receive(:add_breadcrumb)
       allow(controller).to receive_messages(search_results: [double, double])
-      get :show, exhibit_id: exhibit
+      get :show, params: { exhibit_id: exhibit }
       expect(response).to be_successful
     end
     it 'does not do the search when the sidebar is hidden' do
       page.display_sidebar = false
       page.save
       allow(controller).to receive_messages(search_results: [double, double])
-      get :show, exhibit_id: exhibit
+      get :show, params: { exhibit_id: exhibit }
       expect(assigns).not_to have_key :response
       expect(assigns).not_to have_key :document_list
     end
@@ -71,7 +71,7 @@ describe Spotlight::HomePagesController, type: :controller do
       end
 
       it 'redirects an anonymous user to the signin path' do
-        get :show, exhibit_id: exhibit
+        get :show, params: { exhibit_id: exhibit }
         expect(response).to redirect_to(main_app.new_user_session_path)
       end
 
@@ -79,14 +79,14 @@ describe Spotlight::HomePagesController, type: :controller do
         user = FactoryGirl.create(:exhibit_curator)
         sign_in user
         expect do
-          get :show, exhibit_id: exhibit
+          get :show, params: { exhibit_id: exhibit }
         end.to raise_error ActionController::RoutingError
       end
 
       it 'redirects an authorized user to the signin path' do
         user = FactoryGirl.create(:exhibit_curator, exhibit: exhibit)
         sign_in user
-        get :show, exhibit_id: exhibit
+        get :show, params: { exhibit_id: exhibit }
         expect(response).to be_successful
       end
     end

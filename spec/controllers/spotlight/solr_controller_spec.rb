@@ -7,7 +7,7 @@ describe Spotlight::SolrController, type: :controller do
 
     describe 'POST update' do
       it 'does not allow update' do
-        post :update, exhibit_id: exhibit
+        post :update, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.root_path
       end
     end
@@ -82,7 +82,7 @@ describe Spotlight::SolrController, type: :controller do
           expect(connection).to receive(:update) do |params|
             doc = JSON.parse(params[:data], symbolize_names: true)
           end
-          post :update, resources_json_upload: { json: json }, content_type: :json, exhibit_id: exhibit
+          post :update, params: { resources_json_upload: { json: json }, exhibit_id: exhibit }, content_type: :json
 
           expect(response).to be_successful
           expect(doc.first).to include a: 1
@@ -92,10 +92,6 @@ describe Spotlight::SolrController, type: :controller do
   end
 
   def post_update_with_json_body(exhibit, hash)
-    if Rails::VERSION::MAJOR >= 5
-      post :update, body: hash.to_json, params: { exhibit_id: exhibit }, as: :json
-    else
-      post :update, hash.to_json, content_type: :json, exhibit_id: exhibit
-    end
+    post :update, body: hash.to_json, params: { exhibit_id: exhibit }, as: :json
   end
 end

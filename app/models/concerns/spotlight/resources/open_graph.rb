@@ -20,8 +20,18 @@ module Spotlight
 
       def opengraph_properties
         Hash[opengraph.map do |k, v|
-          ["#{k.parameterize('_')}_tesim", v]
+          ["#{opengraph_solr_field_name(k)}_tesim", v]
         end]
+      end
+
+      private
+
+      def opengraph_solr_field_name(field)
+        if Rails::VERSION::MAJOR >= 5
+          field.parameterize(separator: '_')
+        else
+          field.parameterize('_')
+        end
       end
     end
   end

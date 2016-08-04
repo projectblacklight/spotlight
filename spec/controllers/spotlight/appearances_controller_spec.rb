@@ -9,7 +9,7 @@ describe Spotlight::AppearancesController, type: :controller do
 
     describe 'GET edit' do
       it 'denies access' do
-        get :edit, exhibit_id: exhibit
+        get :edit, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to be_present
       end
@@ -19,7 +19,7 @@ describe Spotlight::AppearancesController, type: :controller do
   describe 'when not logged in' do
     describe 'PATCH update' do
       it 'is not allowed' do
-        patch :update, exhibit_id: exhibit
+        patch :update, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
@@ -34,7 +34,7 @@ describe Spotlight::AppearancesController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Appearance', edit_exhibit_appearance_path(exhibit))
-        get :edit, exhibit_id: exhibit
+        get :edit, params: { exhibit_id: exhibit }
         expect(response).to be_successful
         expect(assigns[:exhibit]).to be_kind_of Spotlight::Exhibit
       end
@@ -55,11 +55,14 @@ describe Spotlight::AppearancesController, type: :controller do
             }
           }
         else
-          patch :update, exhibit_id: exhibit, exhibit: {
-            main_navigations_attributes: [
-              { id: first_nav.id, label: 'Some Label', weight: 500 },
-              { id: last_nav.id, display: false }
-            ]
+          patch :update, params: {
+            exhibit_id: exhibit,
+            exhibit: {
+              main_navigations_attributes: [
+                { id: first_nav.id, label: 'Some Label', weight: 500 },
+                { id: last_nav.id, display: false }
+              ]
+            }
           }
         end
         expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
