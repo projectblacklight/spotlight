@@ -18,6 +18,8 @@ module Spotlight
 
     def friendly_id
       gem 'friendly_id', github: 'norman/friendly_id'
+      # we need to immediately run `bundle install` while pointing at github.
+      Bundler.with_clean_env { run 'bundle install' }
       generate 'friendly_id'
     end
 
