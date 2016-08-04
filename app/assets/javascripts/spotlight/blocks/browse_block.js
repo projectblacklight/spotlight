@@ -5,7 +5,7 @@ SirTrevor.Blocks.Browse = (function(){
   return Spotlight.Block.Resources.extend({
     type: "browse",
 
-    icon_name: "pages",
+    icon_name: "browse",
 
     autocomplete_url: function() {
       return $(this.inner).closest('form[data-autocomplete-exhibit-searches-path]').data('autocomplete-exhibit-searches-path').replace("%25QUERY", "%QUERY");
