@@ -50,6 +50,14 @@ $ rake spotlight:server
 
 Go to http://localhost:3000 in your browser.
 
+## Upgrade notes
+
+To convert your images to IIIF run the following command
+
+```shell
+$ rake spotlight:migrate_to_iiif[https://spotlight.myinstitution.org]
+```
+
 
 ## Configuration
 
