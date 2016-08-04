@@ -1,0 +1,15 @@
+<% if can? :update_solr, current_exhibit %>
+  <%= bootstrap_form_for([current_exhibit, @resource.becomes(Spotlight::Resources::JsonUpload)], url: spotlight.exhibit_solr_update_path(current_exhibit), layout: :horizontal, label_col: 'col-md-2', control_col: 'col-sm-6 col-md-6', html: { class: 'item-upload-form', multipart: true } ) do |f| %>
+    <%= f.url_field :json, type: "file", label: t('.file_label') %>
+    <div class="form-actions">
+      <div class="primary-actions">
+        <%= cancel_link @resource, :back, class: 'btn btn-default' %>
+        <%= f.submit t('.add_item'), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="alert alert-info">
+    Uploading raw documents is restricted to site administrators.
+  </div>
+<% end %>

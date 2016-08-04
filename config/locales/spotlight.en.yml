@@ -528,6 +528,11 @@ en:
           help_html: "%{link}"
           template: "Download template"
           file_label: "CSV File"
+      json_upload:
+        form:
+          title: "Upload raw documents"
+          add_item: "Add item"
+          file_label: "JSON File"
       bookmarklet:
         instructions:  "Drag this button to the bookmarks toolbar in your web browser"
         bookmarklet: "%{application_name} widget"
