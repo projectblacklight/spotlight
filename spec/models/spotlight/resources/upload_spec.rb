@@ -16,15 +16,17 @@ describe Spotlight::Resources::Upload, type: :model do
       custom_field.field => 'Custom Field Data'
     }
   end
+  let(:featured_image) { FactoryGirl.create(:featured_image, image: File.open(File.join(FIXTURES_PATH, '800x600.png'))) }
 
   before do
+    Rails.cache.clear # wipes out any cached image info.
     allow(resource).to receive(:configured_fields).and_return configured_fields
     allow(described_class).to receive(:fields).and_return configured_fields
 
     allow(resource.send(:blacklight_solr)).to receive(:update)
     allow(Spotlight::Engine.config).to receive(:upload_title_field).and_return(title_field)
     resource.data = upload_data
-    resource.url = File.open(File.join(FIXTURES_PATH, '800x600.png'))
+    resource.upload = featured_image
     resource.save
   end
 

@@ -6,6 +6,7 @@ FactoryGirl.define do
   end
   factory :uploaded_resource, class: Spotlight::Resources::Upload, parent: :resource do
     type 'Spotlight::Resources::Upload'
-    url { Rack::Test::UploadedFile.new(File.expand_path(File.join('..', 'fixtures', 'avatar.png'), __dir__)) }
+    association :upload, factory: :featured_image
+    # url { Rack::Test::UploadedFile.new(File.expand_path(File.join('..', 'fixtures', 'avatar.png'), __dir__)) }
   end
 end
