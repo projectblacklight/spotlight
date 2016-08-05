@@ -30,6 +30,8 @@ describe Spotlight::ReindexProgress, type: :model do
   let(:new_resource) do
     FactoryGirl.create(
       :resource,
+      last_indexed_count: 10,
+      last_indexed_estimate: 15,
       index_status: 0
     )
   end
@@ -117,21 +119,21 @@ describe Spotlight::ReindexProgress, type: :model do
 
   describe '#total' do
     it 'sums the resources last_indexed_estimate' do
-      expect(subject.total).to eq 10
+      expect(subject.total).to eq 25
     end
 
     it 'is included in the json' do
-      expect(json['total']).to eq 10
+      expect(json['total']).to eq 25
     end
   end
 
   describe '#completed' do
     it 'sums the resources last_indexed_count' do
-      expect(subject.completed).to eq 7
+      expect(subject.completed).to eq 17
     end
 
     it 'is included in the json' do
-      expect(json['completed']).to eq 7
+      expect(json['completed']).to eq 17
     end
   end
 end
