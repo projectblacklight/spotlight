@@ -27,6 +27,29 @@ describe Spotlight::ApplicationHelper, type: :helper do
     end
   end
 
+  describe '#site_title' do
+    let(:site) { Spotlight::Site.instance }
+    before do
+      allow(helper).to receive(:current_site).and_return(site)
+    end
+
+    context 'with a configured site title' do
+      before do
+        site.title = 'Some Title'
+      end
+
+      it 'uses the configured name' do
+        expect(helper.site_title).to eq 'Some Title'
+      end
+    end
+
+    context 'without a configured site title' do
+      it 'is nil' do
+        expect(helper.site_title).to be_nil
+      end
+    end
+  end
+
   describe '#url_to_tag_facet' do
     before do
       allow(helper).to receive_messages(current_exhibit: FactoryGirl.create(:exhibit))
@@ -92,43 +115,6 @@ describe Spotlight::ApplicationHelper, type: :helper do
     end
     it 'prefixs "blacklight-" to the configured type' do
       expect(helper.render_document_class(document)).to include 'blacklight-some-data'
-    end
-  end
-
-  describe '#add_exhibit_twitter_card_content' do
-    let(:current_exhibit) { FactoryGirl.create(:exhibit) }
-    before do
-      allow(helper).to receive_messages(current_exhibit: current_exhibit)
-      current_exhibit.subtitle = 'xyz'
-      current_exhibit.description = 'abc'
-      TopHat.current['twitter_card'] = nil
-    end
-
-    it 'generates a twitter card for the exhibit' do
-      allow(helper).to receive(:exhibit_root_url).and_return('some/url')
-      allow(current_exhibit).to receive(:thumbnail).and_return(double)
-      allow(current_exhibit).to receive_message_chain(:thumbnail, :image, :thumb, url: '/image')
-
-      helper.add_exhibit_twitter_card_content
-
-      card = helper.twitter_card
-      expect(card).to have_css "meta[name='twitter:card'][value='summary']", visible: false
-      expect(card).to have_css "meta[name='twitter:url'][value='some/url']", visible: false
-      expect(card).to have_css "meta[name='twitter:title'][value='#{current_exhibit.title}']", visible: false
-      expect(card).to have_css "meta[name='twitter:description'][value='#{current_exhibit.subtitle}']", visible: false
-      expect(card).to have_css "meta[name='twitter:image'][value='http://test.host/image']", visible: false
-    end
-  end
-
-  describe '#carrierwave_url' do
-    it 'turns a application-relative URI into a path' do
-      upload = double(url: '/x/y/z')
-      expect(helper.carrierwave_url(upload)).to eq 'http://test.host/x/y/z'
-    end
-
-    it 'passes a full URI through' do
-      upload = double(url: 'http://some.host/x/y/z')
-      expect(helper.carrierwave_url(upload)).to eq 'http://some.host/x/y/z'
     end
   end
 

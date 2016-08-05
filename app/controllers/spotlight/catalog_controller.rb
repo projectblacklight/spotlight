@@ -18,6 +18,7 @@ module Spotlight
     before_action :attach_breadcrumbs
 
     before_action only: :show do
+      blacklight_config.show.partials.unshift 'tophat'
       blacklight_config.show.partials.unshift 'curation_mode_toggle'
     end
 

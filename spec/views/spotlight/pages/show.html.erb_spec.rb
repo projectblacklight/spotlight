@@ -10,6 +10,7 @@ describe 'spotlight/pages/show', type: :view do
     allow(view).to receive(:current_exhibit).and_return(exhibit)
     assign(:page, page)
     stub_template 'spotlight/pages/_sidebar.html.erb' => 'Sidebar'
+    stub_template 'spotlight/pages/_tophat.html.erb' => ''
   end
 
   it 'renders the title as a heading' do

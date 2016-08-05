@@ -29,4 +29,18 @@ describe 'Catalog', type: :feature do
       expect(page).to have_css 'h1', text: "L'AMERIQUE"
     end
   end
+
+  describe 'viewing the page' do
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    it 'has <meta> tags' do
+      TopHat.current['twitter_card'] = nil
+      TopHat.current['opengraph'] = nil
+
+      visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
+
+      expect(page).to have_css "meta[name='twitter:title']", visible: false
+      expect(page).to have_css "meta[property='og:site_name']", visible: false
+      expect(page).to have_css "meta[property='og:title']", visible: false
+    end
+  end
 end

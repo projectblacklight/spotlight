@@ -1,6 +1,24 @@
 describe 'Feature page', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+
+  describe 'viewing the page' do
+    let!(:feature_page) do
+      FactoryGirl.create(:feature_page, title: 'Parent Page', exhibit: exhibit)
+    end
+    it 'has <meta> tags' do
+      TopHat.current['twitter_card'] = nil
+      TopHat.current['opengraph'] = nil
+
+      visit spotlight.exhibit_feature_page_path(feature_page.exhibit, feature_page)
+
+      expect(page).to have_css "meta[name='twitter:title'][value='#{feature_page.title}']", visible: false
+      expect(page).to have_css "meta[property='og:site_name']", visible: false
+      expect(page).to have_css "meta[property='og:type'][content='article']", visible: false
+      expect(page).to have_css "meta[property='og:title'][content='#{feature_page.title}']", visible: false
+    end
+  end
+
   describe 'sidebar' do
     let!(:parent_feature_page) do
       FactoryGirl.create(:feature_page, title: 'Parent Page', exhibit: exhibit)

@@ -9,8 +9,6 @@ module Spotlight
     belongs_to :parent_page, class_name: 'Spotlight::FeaturePage'
 
     accepts_nested_attributes_for :child_pages
-
-    belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
     accepts_nested_attributes_for :thumbnail, update_only: true
 
     before_validation unless: :top_level_page? do
