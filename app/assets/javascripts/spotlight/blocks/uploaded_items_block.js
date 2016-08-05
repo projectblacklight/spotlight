@@ -1,6 +1,6 @@
 SirTrevor.Blocks.UploadedItems = (function(){
   return Spotlight.Block.Resources.extend({
-    textable: true,
+    plustextable: true,
     uploadable: true,
     autocompleteable: false,
 
@@ -16,10 +16,10 @@ SirTrevor.Blocks.UploadedItems = (function(){
     // since we will be using our own custom controls
     upload_options: { html: '' },
 
-    fileInput: function() { return this.$el.find('input[type="file"]'); },
+    fileInput: function() { return $(this.inner).find('input[type="file"]'); },
 
     onBlockRender: function(){
-      SpotlightNestable.init(this.$el.find('[data-behavior="nestable"]'));
+      SpotlightNestable.init($(this.inner).find('[data-behavior="nestable"]'));
 
       this.fileInput().on('change', (function(ev) {
         this.onDrop(ev.currentTarget);

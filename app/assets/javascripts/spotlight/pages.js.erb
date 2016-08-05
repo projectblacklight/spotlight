@@ -1,0 +1,40 @@
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+Spotlight.onLoad(function(){
+
+  SirTrevor.setDefaults({
+    iconUrl: <%= asset_path('spotlight/blocks/sir-trevor-icons.svg').to_json %>,
+    uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint')
+  });
+
+  SirTrevor.Blocks.Heading.prototype.toolbarEnabled = true;
+  SirTrevor.Blocks.Quote.prototype.toolbarEnabled = true;
+  SirTrevor.Blocks.Text.prototype.toolbarEnabled = true;
+
+  var instance = $('.js-st-instance').first();
+
+  if (instance.length) {
+    var editor = new SirTrevor.Editor({
+      el: instance[0],
+      blockTypes:["Heading", "Text", "List","Quote","Iframe", "Video", "Oembed", "Rule", "UploadedItems",
+                 "Browse", "FeaturedPages", "SolrDocuments",  "SolrDocumentsCarousel", "SolrDocumentsEmbed", "SolrDocumentsFeatures", "SolrDocumentsGrid", "SearchResults"],
+      defaultType:["Text"],
+      onEditorRender: function() {
+        serializeObservedForms(observedForms());
+      },
+      blockTypeLimits: {
+        "SearchResults": 1
+      }
+    });
+
+    editor.blockControls = Spotlight.BlockControls.create(editor);
+
+    SirTrevor.EventBus.on('onUploadStart', function(data) {
+      data.append('authenticity_token', $('meta[name=csrf-token]').attr('content'));
+    });
+
+    new Spotlight.BlockLimits(editor).enforceLimits(editor);
+  }
+
+  $('.carousel').carousel();
+});

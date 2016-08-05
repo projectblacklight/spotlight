@@ -7,8 +7,7 @@ feature 'Editing the Home Page', js: true do
   it 'does not have a search results widget' do
     visit spotlight.edit_exhibit_home_page_path(exhibit)
     click_add_widget
-    within("[data-icon='add']") do
-      expect(page).not_to have_css("[data-type='search_results']", visible: true)
-    end
+    expect(page).to have_css("[data-type='solr_documents']", visible: true)
+    expect(page).not_to have_css("[data-type='search_results']", visible: true)
   end
 end

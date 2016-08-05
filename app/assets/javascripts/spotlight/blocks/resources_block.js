@@ -85,15 +85,15 @@ Spotlight.Block.Resources = (function(){
 
     createItemPanel: function(data) {
       var panel = this._itemPanel(data);
-      $(panel).appendTo(this.$el.find('.panels > ol'));
-      this.$el.find('[data-behavior="nestable"]').trigger('change');
+      $(panel).appendTo($('.panels > ol', this.inner));
+      $('[data-behavior="nestable"]', this.inner).trigger('change');
     },
 
     item_options: function() { return ""; },
 
     content: function() {
       var templates = [this.items_selector()];
-      if (this.textable) {
+      if (this.plustextable) {
         templates.push(this.text_area());
       }
       return _.template(templates.join("<hr />\n"))(this);
@@ -123,9 +123,9 @@ Spotlight.Block.Resources = (function(){
     ].join("\n"),
 
     onBlockRender: function() {
-      SpotlightNestable.init(this.$el.find('[data-behavior="nestable"]'));
+      SpotlightNestable.init(('[data-behavior="nestable"]', this.inner));
 
-      this.$el.find('[data-input-select-target]').selectRelatedInput();
+      $('[data-input-select-target]', this.inner).selectRelatedInput();
     },
 
     afterLoadData: function(data) {

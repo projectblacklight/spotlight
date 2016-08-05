@@ -5,9 +5,11 @@ SirTrevor.Blocks.Browse = (function(){
   return Spotlight.Block.Resources.extend({
     type: "browse",
 
-    icon_name: "pages",
+    icon_name: "browse",
 
-    autocomplete_url: function() { return this.$el.closest('form[data-autocomplete-exhibit-searches-path]').data('autocomplete-exhibit-searches-path').replace("%25QUERY", "%QUERY"); },
+    autocomplete_url: function() {
+      return $(this.inner).closest('form[data-autocomplete-exhibit-searches-path]').data('autocomplete-exhibit-searches-path').replace("%25QUERY", "%QUERY");
+    },
     autocomplete_template: function() { return '<div class="autocomplete-item{{#unless published}} blacklight-private{{/unless}}">{{#if thumbnail_image_url}}<div class="document-thumbnail thumbnail"><img src="{{thumbnail_image_url}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>' },
 
     item_options: function() { return [

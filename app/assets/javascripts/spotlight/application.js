@@ -11,7 +11,8 @@
 // about supported directives.
 //
 //= require jquery
-//= require lodash
+//= require underscore
+//= require eventable
 //= require sir-trevor
 //= require nestable
 //= require parameterize

@@ -31,10 +31,6 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
     description: "This widget highlights feature pages. Each highlighted item links to the corresponding feature page."
   },
 
-  previewable: {
-    title: "Preview"
-  },
-
   resources: {
     panel: {
       drag: "Drag",

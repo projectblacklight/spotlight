@@ -41,7 +41,6 @@ these collections.)
   s.add_dependency 'nokogiri'
   s.add_dependency 'underscore-rails', '~> 1.6'
   s.add_dependency 'github-markup'
-  s.add_dependency 'lodash-rails'
   s.add_dependency 'tophat'
   s.add_dependency 'legato'
   s.add_dependency 'signet'

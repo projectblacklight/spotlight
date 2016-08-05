@@ -1,5 +1,5 @@
 (function ($){
-  SirTrevor.BlockMixins.Textable = {
+  SirTrevor.BlockMixins.Plustextable = {
     mixinName: "Textable",
     preload: true,
 
@@ -53,5 +53,5 @@
   };
   
 
-  SirTrevor.Block.prototype.availableMixins.push("textable");
+  SirTrevor.Block.prototype.availableMixins.push("plustextable");
 })(jQuery);

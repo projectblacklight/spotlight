@@ -5,7 +5,7 @@ SirTrevor.Blocks.SolrDocuments = (function(){
   return Spotlight.Block.Resources.extend({
     type: "solr_documents",
 
-    textable: true,
+    plustextable: true,
 
     icon_name: "items",
 

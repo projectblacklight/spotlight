@@ -10,7 +10,7 @@ SirTrevor.Blocks.SearchResults =  (function(){
 
     searches_key: "slug",
     view_key: "view",
-    textable: false,
+    plustextable: false,
 
     content: function() {
       return _.template([this.items_selector()].join("<hr />\n"))(this);
@@ -33,11 +33,11 @@ SirTrevor.Blocks.SearchResults =  (function(){
     },
 
     afterPanelRender: function(data, panel) {
-      this.$el.find('.item-input-field').attr("disabled", "disabled");
+      $(this.inner).find('.item-input-field').attr("disabled", "disabled");
     },
 
     afterPanelDelete: function() {
-      this.$el.find('.item-input-field').removeAttr("disabled");
+      $(this.inner).find('.item-input-field').removeAttr("disabled");
     },
 
   });
