@@ -65,6 +65,7 @@ export default class Crop {
     var area = this.fileUpload.data('initial-set-select')
     if (typeof area !== 'undefined')
       return area
+    console.warn("unable to find initial-set-select")
     return [0, 0, 1200, 120]
   }
 
