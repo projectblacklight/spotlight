@@ -25,7 +25,6 @@ module Spotlight
   ##
   # Serialize an exhibit with all the data needed to reconstruct it
   # in a different environment
-  # rubocop:disable Metrics/ClassLength
   class ExhibitExportSerializer < Roar::Decorator
     include Roar::JSON
 
@@ -137,39 +136,22 @@ module Spotlight
     end
 
     collection :resources, class: ->(fragment, *) { fragment.key?('type') ? fragment['type'].constantize : Spotlight::Resource } do
-      (Spotlight::Resource.attribute_names - %w(id url exhibit_id)).each do |prop|
+      (Spotlight::Resource.attribute_names - %w(id upload_id exhibit_id)).each do |prop|
         property prop
       end
 
-      property :url, exec_context: :decorator
-      property :file, exec_context: :decorator
+      property :upload, exec_context: :decorator
 
-      def url
-        return if represented.is_a? Spotlight::Resources::Upload
-
-        represented.url
-      end
-
-      def url=(url)
-        return if represented.is_a? Spotlight::Resources::Upload
-
-        represented.url = url
-      end
-
-      def file
+      def upload
         return unless represented.is_a? Spotlight::Resources::Upload
-        file = represented.url.file
 
-        { filename: file.filename, content_type: file.content_type, content: Base64.encode64(file.read) }
+        FeaturedImageRepresenter.new(represented.upload).to_json
       end
 
-      def file=(file)
+      def upload=(json)
         return unless represented.is_a? Spotlight::Resources::Upload
-        represented.url = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file['content'])),
-                                                         filename: file['filename'],
-                                                         content_type: file['content_type']
+        FeaturedImageRepresenter.new(represented.build_upload).from_json(json)
       end
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end
