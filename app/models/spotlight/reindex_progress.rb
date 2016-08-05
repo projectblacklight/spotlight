@@ -42,7 +42,7 @@ module Spotlight
     end
 
     def completed
-      @completed ||= completed_resources.map(&:last_indexed_count).compact.sum
+      @completed ||= resources.map(&:last_indexed_count).compact.sum
     end
 
     def errored?
