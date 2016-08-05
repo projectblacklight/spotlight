@@ -5,11 +5,12 @@ module Spotlight
     include CrudLinkHelpers
     include TitleHelper
     include JcropHelper
+    include MetaHelper
 
     ##
     # Give the application name a chance to include the exhibit title
     def application_name
-      name = current_site.title if current_site.title.present?
+      name = site_title
       name ||= super
 
       if current_exhibit
@@ -17,6 +18,10 @@ module Spotlight
       else
         name
       end
+    end
+
+    def site_title
+      current_site.title if current_site.title.present?
     end
 
     # Can search for named routes directly in the main app, omitting
@@ -116,27 +121,6 @@ module Spotlight
           'select-text' => t(:".select_all")
         }
       )
-    end
-
-    def add_exhibit_twitter_card_content
-      twitter_card('summary') do |card|
-        card.url exhibit_root_url(current_exhibit)
-        card.title current_exhibit.title
-        card.description current_exhibit.subtitle
-        card.image carrierwave_url(current_exhibit.thumbnail.image.thumb) if current_exhibit.thumbnail
-      end
-    end
-
-    def carrierwave_url(upload)
-      # Carrierwave's #url returns either a full url (if asset path was configured)
-      # or just the path to the image. We'll try to normalize it to a url.
-      url = upload.url
-
-      if url.nil? || url.starts_with?('http')
-        url
-      else
-        (URI.parse(Rails.application.config.asset_host || root_url) + url).to_s
-      end
     end
 
     def uploaded_field_label(config)

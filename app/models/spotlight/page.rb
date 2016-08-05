@@ -10,6 +10,8 @@ module Spotlight
     belongs_to :exhibit, touch: true
     belongs_to :created_by, class_name: Spotlight::Engine.config.user_class
     belongs_to :last_edited_by, class_name: Spotlight::Engine.config.user_class
+    belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
+
     validates :weight, inclusion: { in: proc { 0..Spotlight::Page::MAX_PAGES } }
 
     default_scope { order('weight ASC') }
