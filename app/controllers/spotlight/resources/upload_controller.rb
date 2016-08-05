@@ -13,9 +13,10 @@ module Spotlight
 
       load_and_authorize_resource class: 'Spotlight::Resources::Upload', through_association: 'exhibit.resources', instance_name: 'resource'
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def create
         @resource.attributes = resource_params
+        @resource.build_upload(image: params[:resources_upload][:url])
 
         if @resource.save_and_index
           flash[:notice] = t('spotlight.resources.upload.success')
@@ -29,7 +30,7 @@ module Spotlight
           redirect_to admin_exhibit_catalog_path(@resource.exhibit, sort: :timestamp)
         end
       end
-      # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       private
 
@@ -38,7 +39,7 @@ module Spotlight
       end
 
       def resource_params
-        params.require(:resources_upload).permit(:url, data: data_param_keys)
+        params.require(:resources_upload).permit(data: data_param_keys)
       end
 
       def data_param_keys
