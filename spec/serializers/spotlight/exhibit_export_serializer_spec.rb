@@ -216,7 +216,7 @@ describe Spotlight::ExhibitExportSerializer do
       resource = FactoryGirl.create :uploaded_resource, exhibit: source_exhibit
       expect(subject.resources.length).to eq 1
       expect(subject.resources.first.class).to eq Spotlight::Resources::Upload
-      expect(subject.resources.first.url.file.path).not_to eq resource.url.file.path
+      expect(subject.resources.first.upload.image.path).not_to eq resource.upload.image.path
     end
 
     it 'assigns normal resources the correct class' do
