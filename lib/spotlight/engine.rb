@@ -34,6 +34,8 @@ module Spotlight
     require 'sir_trevor_rails'
     require 'openseadragon'
 
+    config.assets.precompile += %w(spotlight/fallback/*.png)
+
     config.autoload_paths += %W(
       #{config.root}/app/builders
       #{config.root}/app/controllers/concerns
