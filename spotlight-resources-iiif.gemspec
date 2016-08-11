@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "blacklight-spotlight"
+  spec.add_dependency "blacklight-spotlight", "~> 0.26"
   spec.add_dependency "faraday"
   spec.add_dependency "iiif-presentation"
 
@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 0.37.2'
   spec.add_development_dependency "rubocop-rspec"
   spec.add_development_dependency "yard"
+  spec.add_development_dependency "riiif"
   spec.add_development_dependency "engine_cart"
   spec.add_development_dependency "jettywrapper"
   spec.add_development_dependency 'exhibits_solr_conf'

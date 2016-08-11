@@ -2,9 +2,10 @@ require 'rails_helper'
 
 describe Spotlight::Resources::IiifHarvester do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
-  subject { described_class.create(exhibit_id: exhibit.id, url: url) }
+  let(:harvester) { described_class.create(exhibit_id: exhibit.id, url: url) }
 
   describe 'Validation' do
+    subject { harvester }
     context 'when given an invalid URL' do
       let(:url) { 'http://example.com' }
 
@@ -16,17 +17,18 @@ describe Spotlight::Resources::IiifHarvester do
     end
   end
 
-  describe '#to_solr' do
+  describe '#documents_to_index' do
     let(:url) { 'uri://for-top-level-collection' }
     before { stub_default_collection }
+    subject { harvester.document_builder }
 
     it 'returns an Enumerator of all the solr documents' do
-      expect(subject.to_solr).to be_a(Enumerator)
-      expect(subject.to_solr.count).to eq 8
+      expect(subject.documents_to_index).to be_a(Enumerator)
+      expect(subject.documents_to_index.count).to eq 8
     end
 
     it 'all solr documents include exhibit context' do
-      subject.to_solr.each do |doc|
+      subject.documents_to_index.each do |doc|
         expect(doc).to have_key("spotlight_exhibit_slug_#{exhibit.slug}_bsi")
       end
     end

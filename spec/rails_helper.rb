@@ -34,4 +34,11 @@ RSpec.configure do |config|
 
   config.after { DatabaseCleaner.clean }
   config.include Warden::Test::Helpers, type: :feature # use login_as helper
+
+  if Rails::VERSION::MAJOR >= 5
+    config.include ::Rails.application.routes.url_helpers
+    config.include ::Rails.application.routes.mounted_helpers
+  else
+    config.include BackportTestHelpers, type: :controller
+  end
 end

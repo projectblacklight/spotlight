@@ -35,4 +35,12 @@ class TestAppGenerator < Rails::Generators::Base
 
     generate 'spotlight:install', '-f --mailer_default_url_host=localhost:3000'
   end
+
+  def disable_papertrail_associations
+    initializer 'paper_trail.rb' do
+      <<-EOF
+        PaperTrail.config.track_associations = false
+      EOF
+    end
+  end
 end
