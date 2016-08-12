@@ -19,7 +19,7 @@ module Spotlight
     end
 
     def default_url
-      ActionController::Base.helpers.asset_path('fallback/' + [version_name, 'default.png'].compact.join('_'))
+      ActionController::Base.helpers.image_path('spotlight/fallback/' + [version_name, 'default.png'].compact.join('_'))
     end
   end
 end
