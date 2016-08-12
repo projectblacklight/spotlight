@@ -506,6 +506,7 @@ en:
       form:
         needs_provider: "Could not find an appropriate importer"
         has_provider: "Ready to import"
+        add_item: "Add item"
       upload:
         csv:
           success: "'%{file_name}' has been uploaded.  An email will be sent to you once indexing is complete."

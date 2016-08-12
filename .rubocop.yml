@@ -50,3 +50,7 @@ Metrics/ClassLength:
 Style/PredicateName:
   Exclude:
     - 'app/models/concerns/spotlight/ar_light.rb'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'lib/generators/spotlight/**/*'

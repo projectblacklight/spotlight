@@ -5,9 +5,9 @@ module Spotlight
     before_action :authenticate_user!, except: [:show]
 
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
-    before_action :build_resource, only: [:create]
 
-    load_and_authorize_resource through: :exhibit
+    # explicit options support better subclassing
+    load_and_authorize_resource through: :exhibit, instance_name: :resource, through_association: :resources
 
     def new
       add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), exhibit_root_path(@exhibit)
@@ -20,11 +20,12 @@ module Spotlight
 
     def create
       if @resource.save_and_index
-        redirect_to admin_exhibit_catalog_path(@resource.exhibit, sort: :timestamp)
+        redirect_to spotlight.admin_exhibit_catalog_path(@resource.exhibit, sort: :timestamp)
       else
         render action: 'new'
       end
     end
+    alias update create
 
     def monitor
       render json: current_exhibit.reindex_progress
@@ -38,12 +39,13 @@ module Spotlight
 
     protected
 
-    def resource_params
-      params.require(:resource).permit(:url, data: params[:resource][:data].try(:keys))
+    def resource_class
+      Spotlight::Resource
     end
 
-    def build_resource
-      @resource ||= @exhibit.resources.build(resource_params)
+    def resource_params
+      params.require(:resource).tap { |x| x['type'] ||= resource_class.name }
+            .permit(:url, :type, *resource_class.stored_attributes[:data], data: params[:resource][:data].try(:keys))
     end
   end
 end
