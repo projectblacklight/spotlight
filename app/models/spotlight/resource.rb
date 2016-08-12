@@ -41,6 +41,7 @@ module Spotlight
     def reindex_later
       waiting!
       Spotlight::ReindexJob.perform_later(self)
+      true
     end
 
     def waiting!
