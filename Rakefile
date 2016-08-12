@@ -17,23 +17,18 @@ RuboCop::RakeTask.new(:rubocop) do |task|
   task.options = ['-l'] # run lint cops only
 end
 
-ZIP_URL = "https://github.com/projectblacklight/blacklight-jetty/archive/v4.10.4.zip"
-require 'jettywrapper'
-
 require 'engine_cart/rake_task'
 EngineCart.fingerprint_proc = EngineCart.rails_fingerprint_proc
 
-require 'exhibits_solr_conf'
-
-desc 'Run tests in generated test Rails app with generated Solr instance running'
-task ci: ['engine_cart:generate', 'jetty:clean', 'exhibits:configure_solr'] do
+task ci: ['engine_cart:generate'] do
+  require 'solr_wrapper'
   ENV['environment'] = 'test'
-  jetty_params = Jettywrapper.load_config
-  jetty_params[:startup_wait] = 60
 
-  Jettywrapper.wrap(jetty_params) do
-    # run the tests
-    Rake::Task['spec'].invoke
+  SolrWrapper.wrap(port: '8983') do |solr|
+    solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path(File.dirname(__FILE__)), 'solr', 'conf')) do
+      # run the tests
+      Rake::Task['spec'].invoke
+    end
   end
 end
 
@@ -42,18 +37,13 @@ task default: [:ci, :rubocop]
 desc 'Run generated test Rails app with generated Solr instance running'
 task :server do
   Rake::Task['engine_cart:generate'].invoke
+  require 'solr_wrapper'
 
-  unless File.exist? 'jetty'
-    Rake::Task['jetty:clean'].invoke
-    Rake::Task['exhibits:configure_solr'].invoke
-  end
-
-  jetty_params = Jettywrapper.load_config
-  jetty_params[:startup_wait]= 30
-
-  Jettywrapper.wrap(jetty_params) do
-    within_test_app do
-      system "bundle exec rails s"
+  SolrWrapper.wrap(port: '8983') do |solr|
+    solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path(File.dirname(__FILE__)), 'solr', 'conf')) do
+      within_test_app do
+        system 'bundle exec rails s'
+      end
     end
   end
 end
@@ -67,7 +57,7 @@ begin
   YARD::Rake::YardocTask.new(:doc) do |yt|
     yt.files = Dir.glob(File.join(project_root, 'lib', '**', '*.rb')) +
                [File.join(project_root, 'README.md')]
-    yt.options = ['--output-dir', doc_dest_dir, '--readme', 'README.md', '--title', 'Stanford-Mods Documentation']
+    yt.options = ['--output-dir', doc_dest_dir, '--readme', 'README.md', '--title', 'Spotlight IIIF Resource Harvester Documentation']
   end
 rescue LoadError
   desc "Generate YARD Documentation"

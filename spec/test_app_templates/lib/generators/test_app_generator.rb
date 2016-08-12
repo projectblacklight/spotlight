@@ -16,7 +16,7 @@ class TestAppGenerator < Rails::Generators::Base
 
   def run_blacklight_generator
     say_status('warning', 'GENERATING BL', :yellow)
-    generate 'blacklight:install', '--devise --jettywrapper'
+    generate 'blacklight:install', '--devise'
   end
 
   def run_spotlight_migrations
