@@ -4,6 +4,7 @@ module SirTrevorRails
     # Multi-up document viewer with text block
     class SolrDocumentsBlock < SirTrevorRails::Block
       include Textable
+      include Displayable
       attr_reader :solr_helper
 
       def with_solr_helper(solr_helper)
@@ -29,10 +30,6 @@ module SirTrevorRails
 
       def documents?
         each_document.any?
-      end
-
-      def items
-        (item || {}).values.select { |x| x[:display] == 'true' }
       end
 
       def primary_caption?
