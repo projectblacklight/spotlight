@@ -5,26 +5,16 @@ module Spotlight
     # harvest Images from IIIF Manifest and turn them into a Spotlight::Resource
     # Note: IIIF API : http://iiif.io/api/presentation/2.0
     class IiifHarvester < Spotlight::Resource
+      self.document_builder_class = Spotlight::Resources::IiifBuilder
       self.weight = -5000
 
       validate :valid_url?
 
-      def to_solr
-        return to_enum(:to_solr) { 0 } unless block_given?
-
-        base_doc = super
-        iiif_manifests.each do |manifest|
-          manifest.with_exhibit(exhibit)
-          manifest_solr = manifest.to_solr
-          yield base_doc.merge(manifest_solr) if manifest_solr.present?
-        end
-      end
-
-      private
-
       def iiif_manifests
         @iiif_manifests ||= IiifService.parse(url)
       end
+
+      private
 
       def valid_url?
         errors.add(:url, 'Invalid IIIF URL') unless url_is_iiif?(url)

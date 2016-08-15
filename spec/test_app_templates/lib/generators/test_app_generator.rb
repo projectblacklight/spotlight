@@ -16,7 +16,7 @@ class TestAppGenerator < Rails::Generators::Base
 
   def run_blacklight_generator
     say_status('warning', 'GENERATING BL', :yellow)
-    generate 'blacklight:install', '--devise --jettywrapper'
+    generate 'blacklight:install', '--devise'
   end
 
   def run_spotlight_migrations
@@ -34,5 +34,13 @@ class TestAppGenerator < Rails::Generators::Base
     remove_file 'app/controllers/catalog_controller.rb'
 
     generate 'spotlight:install', '-f --mailer_default_url_host=localhost:3000'
+  end
+
+  def disable_papertrail_associations
+    initializer 'paper_trail.rb' do
+      <<-EOF
+        PaperTrail.config.track_associations = false
+      EOF
+    end
   end
 end

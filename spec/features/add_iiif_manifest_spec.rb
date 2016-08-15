@@ -10,13 +10,13 @@ describe 'adding IIIF Manifest', type: :feature do
     click_link 'Add items'
 
     expect(page).to have_link('IIIF URL') # tab name
-    expect(page).to have_css("input[id='resources_iiif_harvester_url'][type='text']")
+    expect(page).to have_css("input[id='resource_url'][type='text']")
     expect(page).to have_content 'Add the URL of a IIIF manifest or collection'
     expect(page).to have_button 'Add IIIF items'
   end
 
   it 'submits the form to create a new item' do
-    expect_any_instance_of(Spotlight::Resource).to receive(:reindex_later)
+    expect_any_instance_of(Spotlight::Resource).to receive(:reindex_later).and_return(true)
     url = 'https://purl.stanford.edu/vw754mr2281/iiif/manifest.json'
     visit spotlight.admin_exhibit_catalog_path(exhibit)
 

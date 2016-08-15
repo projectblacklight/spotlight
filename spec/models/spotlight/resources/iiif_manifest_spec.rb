@@ -66,24 +66,24 @@ describe Spotlight::Resources::IiifManifest do
 
     describe 'metadata' do
       it 'includes the top-level attribution' do
-        expect(subject.to_solr['attribution_tesim']).to eq ['Attribution Data']
+        expect(subject.to_solr['readonly_attribution_tesim']).to eq ['Attribution Data']
       end
 
       it 'includes the top-level description' do
-        expect(subject.to_solr['description_tesim']).to eq ['A test IIIF manifest']
+        expect(subject.to_solr['readonly_description_tesim']).to eq ['A test IIIF manifest']
       end
 
       it 'includes the top-level license' do
-        expect(subject.to_solr['license_tesim']).to eq ['http://www.example.org/license.html']
+        expect(subject.to_solr['readonly_license_tesim']).to eq ['http://www.example.org/license.html']
       end
 
       it 'includes fields for each label/value pair in the metadata section' do
-        expect(subject.to_solr['author_tesim']).to include 'John Doe'
-        expect(subject.to_solr['another-field_tesim']).to eq ['Some data']
+        expect(subject.to_solr['readonly_author_tesim']).to include 'John Doe'
+        expect(subject.to_solr['readonly_another-field_tesim']).to eq ['Some data']
       end
 
       it 'collects items with the same label into an array' do
-        expect(subject.to_solr['author_tesim']).to eq ['John Doe', 'Jane Doe']
+        expect(subject.to_solr['readonly_author_tesim']).to eq ['John Doe', 'Jane Doe']
       end
 
       it 'exhibit custom fields are created for the necessary fields' do
@@ -100,7 +100,7 @@ describe Spotlight::Resources::IiifManifest do
         end
 
         it 'merges the solr hash from the configured custom metadata class' do
-          expect(subject.to_solr['test_field_tesim']).to eq 'metadata-to-solr'
+          expect(subject.to_solr['readonly_test_field_tesim']).to eq 'metadata-to-solr'
         end
       end
     end
