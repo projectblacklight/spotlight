@@ -52,11 +52,20 @@ describe Spotlight::ResourcesController, type: :controller do
 
     describe 'POST create' do
       let(:blacklight_solr) { double }
+      let(:invalid_resource) { Spotlight::Resource.new.tap { |x| x.errors.add(:url, 'is invalid') } }
       it 'create a resource' do
-        expect_any_instance_of(Spotlight::Resource).to receive(:reindex_later)
+        expect_any_instance_of(Spotlight::Resource).to receive(:reindex_later).and_return(true)
         allow_any_instance_of(Spotlight::Resource).to receive(:blacklight_solr).and_return blacklight_solr
         post :create, params: { exhibit_id: exhibit, resource: { url: 'info:uri' } }
         expect(assigns[:resource]).to be_persisted
+      end
+
+      it 'adds errors to the flash message' do
+        allow_any_instance_of(Spotlight::Resource).to receive_messages(save: false)
+        allow_any_instance_of(Spotlight::Resource).to receive(:errors).and_return invalid_resource.errors
+        post :create, params: { exhibit_id: exhibit, resource: { url: 'info:uri' } }
+        expect(assigns[:resource]).not_to be_persisted
+        expect(flash[:error]).to include 'Url is invalid'
       end
     end
 

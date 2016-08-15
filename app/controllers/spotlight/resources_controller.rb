@@ -9,6 +9,8 @@ module Spotlight
     # explicit options support better subclassing
     load_and_authorize_resource through: :exhibit, instance_name: :resource, through_association: :resources
 
+    helper_method :resource_class
+
     def new
       add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), exhibit_root_path(@exhibit)
       add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
@@ -22,6 +24,7 @@ module Spotlight
       if @resource.save_and_index
         redirect_to spotlight.admin_exhibit_catalog_path(@resource.exhibit, sort: :timestamp)
       else
+        flash[:error] = @resource.errors.full_messages.to_sentence if @resource.errors.present?
         render action: 'new'
       end
     end
