@@ -13,6 +13,8 @@ module Spotlight
     class_attribute :weight
 
     belongs_to :exhibit
+    has_many :solr_document_sidecars
+
     serialize :data, Hash
     store :metadata, accessors: [
       :enqueued_at,
