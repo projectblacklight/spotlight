@@ -34,6 +34,15 @@ describe Spotlight::SolrDocumentBuilder do
         expect(result).to include "spotlight_exhibit_slug_#{resource.exhibit.slug}_bsi"
         expect(result).to include "spotlight_exhibit_slug_#{resource_alt.exhibit.slug}_bsi"
       end
+
+      it 'creates a sidecar resource for the document' do
+        resource.document_builder.documents_to_index.first
+
+        expect(Spotlight::SolrDocumentSidecar.where(document_id: 'abc123', document_type: SolrDocument).size).to eq 2
+        sidecar = resource.solr_document_sidecars.find_by(document_id: 'abc123', document_type: SolrDocument)
+        expect(sidecar.exhibit).to eq resource.exhibit
+        expect(sidecar.resource).to eq resource
+      end
     end
   end
 end

@@ -24,9 +24,9 @@ module Spotlight
     ##
     # Class-level methods
     module ClassMethods
-      def build_for_exhibit(id, exhibit)
+      def build_for_exhibit(id, exhibit, attributes = {})
         new(unique_key => id) do |doc|
-          doc.sidecar(exhibit).save! # save is a nop if the sidecar isn't modified.
+          doc.sidecar(exhibit).tap { |x| x.assign_attributes(attributes) }.save! # save is a nop if the sidecar isn't modified.
         end
       end
 

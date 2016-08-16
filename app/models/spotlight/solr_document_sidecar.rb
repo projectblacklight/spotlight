@@ -3,8 +3,11 @@ module Spotlight
   # Exhibit-specific metadata for indexed documents
   class SolrDocumentSidecar < ActiveRecord::Base
     belongs_to :exhibit, required: true
+    belongs_to :resource
     belongs_to :document, required: true, polymorphic: true
     serialize :data, Hash
+
+    store :data, accessors: [:index_status]
 
     delegate :has_key?, :key?, to: :data
 

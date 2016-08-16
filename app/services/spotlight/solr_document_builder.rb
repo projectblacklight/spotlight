@@ -51,7 +51,7 @@ module Spotlight
     # @returns [#to_solr] something that responds to `to_solr'
     def exhibit_solr_doc(id)
       return NilSolrDocument unless document_model || id.present?
-      document_model.build_for_exhibit(id, exhibit)
+      document_model.build_for_exhibit(id, exhibit, resource: resource)
     end
 
     def unique_key
