@@ -39,11 +39,9 @@ describe 'Site admin management', js: true do
 
     fill_in 'user_email', with: 'not-an-existing-user@example.com'
 
-    expect(page).to have_content('This user does not yet exist. Would you like to send them an invite?')
+    click_button 'Add role'
 
-    expect { click_link('invite') }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-    expect(page).to have_content('User has been invited.')
+    expect(page).to have_content('not-an-existing-user@example.com pending')
   end
 
   it 'allows the admin to remove the admin role from the user' do
@@ -51,8 +49,7 @@ describe 'Site admin management', js: true do
 
     fill_in 'user_email', with: 'not-an-admin@example.com'
 
-    click_link 'invite'
-    expect(page).to have_content('User has been invited.')
+    click_button 'Add role'
 
     expect(page).to have_css(:td, text: 'not-an-admin@example.com')
 

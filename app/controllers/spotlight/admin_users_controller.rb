@@ -2,9 +2,6 @@ module Spotlight
   ##
   # A controller to handle the adminstration of site admin users
   class AdminUsersController < Spotlight::ApplicationController
-    include Spotlight::Concerns::UserExistable
-    include Spotlight::Concerns::UserInvitable
-
     before_action :authenticate_user!
     before_action :load_site
     load_and_authorize_resource :site, class: 'Spotlight::Site'
@@ -42,8 +39,7 @@ module Spotlight
     end
 
     def update_roles
-      user = Spotlight::Engine.user_class.where(email: create_params[:email]).first
-      Spotlight::Role.create(user: user, role: 'admin', resource: @site).save
+      Spotlight::Role.create(user_key: create_params[:email], role: 'admin', resource: @site).save
     end
   end
 end

@@ -8,18 +8,6 @@ describe 'Roles Admin', type: :feature, js: true do
     click_link 'Users'
   end
 
-  it 'informs the admin that a user they are trying to add does not yet exist' do
-    expect(page).to have_css('.help-block[data-behavior="no-user-note"]', visible: false)
-    expect(page).not_to have_css('input[disabled]')
-
-    click_link 'Add a new user'
-    fill_in 'User key', with: 'user@example.com'
-
-    expect(page).to have_css('.help-block[data-behavior="no-user-note"]', visible: true)
-    expect(page).to have_link('invite', visible: true)
-    expect(page).to have_css('input[disabled]')
-  end
-
   it 'has the appropriate status message when an existing user is added' do
     second_user = FactoryGirl.create(:site_admin)
 
@@ -37,7 +25,7 @@ describe 'Roles Admin', type: :feature, js: true do
 
     click_link 'Add a new user'
     fill_in 'User key', with: 'user@example.com'
-    click_link 'invite'
+    click_button 'Save changes'
 
     within('tr.invite-pending') do
       expect(page).to have_css('td', text: 'user@example.com')

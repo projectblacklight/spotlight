@@ -28,7 +28,9 @@ module Spotlight
     protected
 
     def user_must_exist
-      errors.add(:user_key, 'User must sign up first.') unless user.present?
+      return if user.present?
+
+      self.user ||= Spotlight::Engine.user_class.invite!(email: user_key, skip_invitation: true)
     end
 
     # This is just like
