@@ -6,8 +6,7 @@ module Spotlight
     belongs_to :resource
     belongs_to :document, required: true, polymorphic: true
     serialize :data, Hash
-
-    store :data, accessors: [:index_status]
+    serialize :index_status, Hash
 
     delegate :has_key?, :key?, to: :data
 
