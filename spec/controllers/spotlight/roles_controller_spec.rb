@@ -115,55 +115,5 @@ describe Spotlight::RolesController, type: :controller do
         expect(flash[:alert]).to eq 'There was a problem saving the user.'
       end
     end
-
-    describe 'GET exists' do
-      it 'requires a user parameter' do
-        expect do
-          get :exists, params: { exhibit_id: exhibit }
-        end.to raise_error(ActionController::ParameterMissing)
-      end
-
-      it 'returns a successful status when the requested user exists' do
-        user = FactoryGirl.create(:exhibit_curator)
-        get :exists, params: { exhibit_id: exhibit, user: user.email }
-        expect(response).to be_success
-      end
-
-      it 'returns an unsuccessful status when the user does not exist' do
-        get :exists, params: { exhibit_id: exhibit, user: 'user@example.com' }
-        expect(response).not_to be_success
-        expect(response.status).to eq 404
-      end
-    end
-
-    describe 'GET invite' do
-      before { request.env['HTTP_REFERER'] = 'http://example.com' }
-
-      it 'invites the selected user' do
-        expect do
-          post :invite, params: { exhibit_id: exhibit, user: 'user@example.com', role: 'curator' }
-        end.to change { Spotlight::Engine.user_class.count }.by(1)
-        expect(Spotlight::Engine.user_class.last.roles.length).to eq 1
-        expect(Spotlight::Engine.user_class.last.roles.first.resource).to eq exhibit
-      end
-
-      it 'adds the user to the exhibit via a role' do
-        expect do
-          post :invite, params: { exhibit_id: exhibit, user: 'user@example.com', role: 'curator' }
-        end.to change { Spotlight::Role.count }.by(1)
-      end
-
-      it 'redirects back with a flash notice upon success' do
-        post :invite, params: { exhibit_id: exhibit, user: 'user@example.com', role: 'curator' }
-        expect(flash[:notice]).to eq 'User has been invited.'
-        expect(response).to redirect_to('http://example.com')
-      end
-
-      it 'redirects back with flash error upon failure' do
-        post :invite, params: { exhibit_id: exhibit, user: 'user@example.com', role: 'not-a-real-role' }
-        expect(flash[:alert]).to eq 'There was a problem saving the user.'
-        expect(response).to redirect_to('http://example.com')
-      end
-    end
   end
 end

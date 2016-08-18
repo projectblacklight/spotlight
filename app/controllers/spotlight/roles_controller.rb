@@ -3,8 +3,6 @@ module Spotlight
   # CRUD actions for assigning exhibit roles to
   # existing users
   class RolesController < Spotlight::ApplicationController
-    include Spotlight::Concerns::UserExistable
-    include Spotlight::Concerns::UserInvitable
     before_action :authenticate_user!
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
     load_and_authorize_resource through: :exhibit, except: [:update_all]

@@ -22,7 +22,7 @@
         <% end %>
         <tr data-edit-for='new'>
           <td>
-            <%= f.email_field :email, hide_label: true, data: { behavior: 'check-user-existence', 'user-exists-url': spotlight.exists_admin_users_path } %>
+            <%= f.email_field :email, hide_label: true %>
             <span data-user-role='admin'></span>
           </td>
           <td>
@@ -36,9 +36,6 @@
         </tr>
         <tr data-edit-for='new'>
           <td colspan='2'>
-            <span style='display:none' class='help-block' data-behavior='no-user-note'>
-              <%= t('spotlight.roles.edit_fields.invite_html', link: link_to(t('spotlight.roles.edit_fields.invite_link'), 'javascript:;', data: { method: 'post', 'invite-url': spotlight. invite_admin_users_path })) %>
-            </span>
           </td>
         </tr>
       </tbody>

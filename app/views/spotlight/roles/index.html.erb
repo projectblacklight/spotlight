@@ -1,5 +1,5 @@
 <%= render 'spotlight/shared/exhibit_sidebar' %>
-<div id="content" class="col-md-9" data-user-exists-url="<%= spotlight.exists_exhibit_roles_path(current_exhibit) %>">
+<div id="content" class="col-md-9">
   <%= configuration_page_title %>
   <%= bootstrap_form_for current_exhibit, url: spotlight.update_all_exhibit_roles_path(current_exhibit) do |f| %>
     <table class="table table-striped users">

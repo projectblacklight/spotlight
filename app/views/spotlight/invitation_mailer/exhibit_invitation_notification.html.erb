@@ -1,0 +1,12 @@
+<p><%= t("spotlight.#{@key}.invitation_instructions.hello", email: @role.user.email) %></p>
+
+<p><%= t("spotlight.#{@key}.invitation_instructions.someone_invited_you", role: @role, exhibit_name: @role.resource.title) %></p>
+
+<% if @role.user.invite_pending? %>
+  <p><%= t("spotlight.#{@key}.invitation_instructions.accept_invitation") %></p>
+  <p><%= link_to t("spotlight.#{@key}.invitation_instructions.accept"), accept_invitation_url(@role.user, invitation_token: @role.user.invitation_token) %></p>
+<% elsif @role.resource.is_a? Spotlight::Exhibit %>
+  <p><%= link_to t("spotlight.#{@key}.invitation_instructions.visit"), url: spotlight.exhibit_home_page_url(@role.resource) %></p>
+<% end %>
+
+<p><%= t("spotlight.#{@key}.invitation_instructions.ignore") %></p>
