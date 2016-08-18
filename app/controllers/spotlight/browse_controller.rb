@@ -26,9 +26,7 @@ module Spotlight
     protected
 
     def search_query
-      base_query = Blacklight::SearchState.new(@search.query_params, blacklight_config)
-      user_query = Blacklight::SearchState.new(params, blacklight_config).to_h
-      base_query.params_for_search(user_query)
+      @search.merge_params_for_search(params, blacklight_config)
     end
 
     ##

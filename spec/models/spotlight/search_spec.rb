@@ -118,4 +118,20 @@ describe Spotlight::Search, type: :model do
       expect(search.send(:repository).blacklight_config).to eql blacklight_config
     end
   end
+
+  describe '#merge_params_for_search' do
+    it 'merges user-supplied parameters into the search query' do
+      user_params = { view: 'x' }
+      search_params = subject.merge_params_for_search(user_params, blacklight_config)
+      expect(search_params).to include query_params
+      expect(search_params).to include user_params
+    end
+
+    it 'preserves user pagination' do
+      user_params = { page: 5, per_page: 7 }
+      search_params = subject.merge_params_for_search(user_params, blacklight_config)
+      expect(search_params).to include query_params
+      expect(search_params).to include user_params
+    end
+  end
 end

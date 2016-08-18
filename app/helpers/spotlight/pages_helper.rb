@@ -21,8 +21,8 @@ module Spotlight
     end
 
     def get_search_widget_search_results(block)
-      if block.searches?
-        search_results(search_widget_search_query(block))
+      if block.search.present?
+        search_results(block.search.merge_params_for_search(params, blacklight_config))
       else
         []
       end
@@ -49,14 +49,6 @@ module Spotlight
 
     def render_contact_email_address(address)
       mail_to address, address
-    end
-
-    private
-
-    def search_widget_search_query(block)
-      base_query = Blacklight::SearchState.new(block.query_params, blacklight_config)
-      user_query = Blacklight::SearchState.new(params, blacklight_config).to_h
-      base_query.params_for_search(user_query)
     end
   end
 end
