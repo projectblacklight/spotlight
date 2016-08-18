@@ -20,7 +20,7 @@
 }
 
 .tt-dropdown-menu {
-  z-index: 1000 !important;
+  z-index: $zindex-dropdown !important;
   margin-top: 2px;
   max-height: 360px;
   overflow-y: auto;
@@ -37,6 +37,7 @@
 }
 
 .twitter-typeahead {
+  z-index: $zindex-dropdown !important; /* get typeahead to float on top of e.g. leaflet */
   .tt-suggestion {
     font-size: 18px;
     line-height: 24px;
