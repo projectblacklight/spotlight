@@ -4,7 +4,13 @@ Spotlight.onLoad(function(){
 
   SirTrevor.setDefaults({
     iconUrl: <%= asset_path('spotlight/blocks/sir-trevor-icons.svg').to_json %>,
-    uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint')
+    uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint'),
+    ajaxOptions: {
+      headers: {
+        'X-CSRF-Token': $.rails.csrfToken()
+      },
+      credentials: 'same-origin'
+    }
   });
 
   SirTrevor.Blocks.Heading.prototype.toolbarEnabled = true;
@@ -28,10 +34,6 @@ Spotlight.onLoad(function(){
     });
 
     editor.blockControls = Spotlight.BlockControls.create(editor);
-
-    SirTrevor.EventBus.on('onUploadStart', function(data) {
-      data.append('authenticity_token', $('meta[name=csrf-token]').attr('content'));
-    });
 
     new Spotlight.BlockLimits(editor).enforceLimits(editor);
   }
