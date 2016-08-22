@@ -5,25 +5,38 @@ module Spotlight
   class BrowseController < Spotlight::ApplicationController
     load_and_authorize_resource :exhibit, class: 'Spotlight::Exhibit'
     include Spotlight::Base
+    include Blacklight::Facet
 
     load_and_authorize_resource :search, except: :index, through: :exhibit, parent: false
     before_action :attach_breadcrumbs
+    before_action :attach_search_breadcrumb, only: :show
     record_search_parameters only: :show
 
     helper_method :should_render_spotlight_search_bar?
+
+    before_action :swap_actions_configuration, only: :show
 
     def index
       @searches = @exhibit.searches.published
     end
 
     def show
-      blacklight_config.index.document_actions = blacklight_config.browse.document_actions
+      @response, @document_list = search_results(search_query)
 
-      add_breadcrumb @search.title, exhibit_browse_path(@exhibit, @search)
-      (@response, @document_list) = search_results(search_query)
+      respond_to do |format|
+        format.html
+        format.json do
+          @presenter = Blacklight::JsonPresenter.new(@response, @document_list, facets_from_request, blacklight_config)
+          render template: 'catalog/index'
+        end
+      end
     end
 
     protected
+
+    def swap_actions_configuration
+      blacklight_config.index.document_actions = blacklight_config.browse.document_actions
+    end
 
     def search_query
       @search.merge_params_for_search(params, blacklight_config)
@@ -44,6 +57,10 @@ module Spotlight
     def attach_breadcrumbs
       add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
       add_breadcrumb(@exhibit.main_navigations.browse.label_or_default, exhibit_browse_index_path(@exhibit))
+    end
+
+    def attach_search_breadcrumb
+      add_breadcrumb @search.title, exhibit_browse_path(@exhibit, @search)
     end
 
     def _prefixes
