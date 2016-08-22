@@ -91,4 +91,10 @@ describe Spotlight::PagesHelper, type: :helper do
       end
     end
   end
+
+  describe '#sir_trevor_markdown' do
+    it 'handles nil input' do
+      expect(helper.sir_trevor_markdown(nil)).to be_blank
+    end
+  end
 end

@@ -6,7 +6,13 @@ module Spotlight
     # Override the default #sir_trevor_markdown so we can use
     # a more complete markdown rendered
     def sir_trevor_markdown(text)
-      GitHub::Markup.render('.md', text.gsub('<br>', "\n").gsub('<p>', '').gsub('</p>', "\n\n")).html_safe
+      clean_text = if text
+                     text.gsub('<br>', "\n").gsub('<p>', '').gsub('</p>', "\n\n")
+                   else
+                     ''
+                   end
+
+      GitHub::Markup.render('.md', clean_text).html_safe
     end
 
     def available_index_fields
