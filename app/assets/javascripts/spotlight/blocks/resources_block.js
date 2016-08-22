@@ -123,7 +123,7 @@ Spotlight.Block.Resources = (function(){
     ].join("\n"),
 
     onBlockRender: function() {
-      SpotlightNestable.init(('[data-behavior="nestable"]', this.inner));
+      SpotlightNestable.init($('[data-behavior="nestable"]', this.inner));
 
       $('[data-input-select-target]', this.inner).selectRelatedInput();
     },
