@@ -7,7 +7,7 @@
                 :'form-observer' => true,
                 :'blacklight-configuration-index-fields' => available_index_fields,
                 :'blacklight-configuration-search-views' => available_view_fields.map { |k,v| { key: k, label: view_label(k) }},
-                :'attachment-endpoint' => spotlight.exhibit_attachments_url(@page.exhibit),
+                :'attachment-endpoint' => spotlight.exhibit_attachments_path(@page.exhibit),
                 :'autocomplete-exhibit-catalog-path'=> spotlight.autocomplete_exhibit_catalog_path(@page.exhibit, q: "%QUERY", format: "json"),
                 :'autocomplete-exhibit-feature-pages-path' => spotlight.exhibit_feature_pages_path(@page.exhibit, format: "json"),
                 :'autocomplete-exhibit-searches-path' => spotlight.exhibit_searches_path(@page.exhibit, format: "json"),
