@@ -55,6 +55,8 @@
 
 form.edit_solr_document {
   .bootstrap-tagsinput {
+    @extend .clearfix;
+    cursor: text;
     display: block;
   }
   .bg-warning.help-block {
