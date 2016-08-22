@@ -5,6 +5,7 @@ module Spotlight
   class BrowseController < Spotlight::ApplicationController
     load_and_authorize_resource :exhibit, class: 'Spotlight::Exhibit'
     include Spotlight::Base
+    include Blacklight::Facet
 
     load_and_authorize_resource :search, except: :index, through: :exhibit, parent: false
     before_action :attach_breadcrumbs
@@ -22,6 +23,13 @@ module Spotlight
     def show
       @response, @document_list = search_results(search_query)
 
+      respond_to do |format|
+        format.html
+        format.json do
+          @presenter = Blacklight::JsonPresenter.new(@response, @document_list, facets_from_request, blacklight_config)
+          render template: 'catalog/index'
+        end
+      end
     end
 
     protected

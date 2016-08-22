@@ -36,7 +36,7 @@ describe Spotlight::BrowseController, type: :controller do
     end
 
     describe 'GET show' do
-      let(:mock_response) { double }
+      let(:mock_response) { double aggregations: {} }
       let(:document_list) { double }
       before do
         allow(controller).to receive_messages(search_results: [mock_response, document_list])
@@ -67,6 +67,12 @@ describe Spotlight::BrowseController, type: :controller do
 
         get :show, params: { id: search, exhibit_id: exhibit }
         expect(controller.blacklight_config.index.document_actions).to match_array [:a, :b, :c]
+      end
+
+      it 'has a json response' do
+        get :show, params: { id: search, exhibit_id: exhibit, format: :json }
+        expect(assigns[:presenter]).to be_a Blacklight::JsonPresenter
+        expect(response).to render_template 'catalog/index'
       end
     end
   end
