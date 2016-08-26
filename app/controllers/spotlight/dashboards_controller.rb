@@ -28,8 +28,8 @@ module Spotlight
       attach_analytics_breadcrumbs
     end
 
-    def _prefixes
-      @_prefixes ||= super + ['spotlight/catalog', 'catalog']
+    def self.local_prefixes
+      super + ['spotlight/catalog', 'catalog']
     end
 
     protected

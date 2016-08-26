@@ -150,8 +150,8 @@ module Spotlight
       @next_document = response.documents.last
     end
 
-    def _prefixes
-      @_prefixes ||= super + ['catalog']
+    def self.local_prefixes
+      super + ['catalog']
     end
 
     ##

@@ -87,8 +87,8 @@ module Spotlight
 
     protected
 
-    def _prefixes
-      @_prefixes ||= super + ['catalog']
+    def self.local_prefixes
+      super + ['catalog']
     end
 
     def undo_link
