@@ -6,7 +6,7 @@ describe Spotlight::PagesHelper, type: :helper do
   let!(:home_page) { current_exhibit.home_page }
   let!(:search) { FactoryGirl.create(:search, exhibit: current_exhibit, query_params: { 'q' => 'query' }, published: true) }
 
-  before(:each) do
+  before do
     allow(helper).to receive_messages(blacklight_config: blacklight_config)
   end
 

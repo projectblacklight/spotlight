@@ -63,8 +63,8 @@ module Spotlight
       add_breadcrumb @search.title, exhibit_browse_path(@exhibit, @search)
     end
 
-    def _prefixes
-      @_prefixes ||= super + ['catalog']
+    def self.local_prefixes
+      super + ['catalog']
     end
 
     def current_masthead

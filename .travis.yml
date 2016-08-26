@@ -3,12 +3,11 @@ notifications:
 
 rvm:
   - 2.3.1
-  - 2.2.5
 
 matrix:
   include:
-    - rvm: 2.3.1
-      env: "RAILS_VERSION=5.0.0"
+    - rvm: 2.2.5
+      env: "RAILS_VERSION=4.2.7.1"
 
 notifications:
   irc: "irc.freenode.org#blacklight"
@@ -16,7 +15,7 @@ notifications:
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-    - RAILS_VERSION=4.2.6
+    - RAILS_VERSION=5.0.0.1
 
 sudo: false
 language: ruby

@@ -2,12 +2,12 @@
 describe 'spotlight/browse/search', type: :view do
   let(:search) { FactoryGirl.create(:search) }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
-  before :each do
+  before do
     allow(search).to receive_messages(documents: double(size: 15))
     allow(search).to receive_message_chain(:thumbnail, :image, thumb: '/some/image')
   end
 
-  before :each do
+  before do
     assign :exhibit, exhibit
   end
 
