@@ -6,7 +6,7 @@ describe 'spotlight/pages/show', type: :view do
                title: 'Title',
                content: '[]')
   end
-  before(:each) do
+  before do
     allow(view).to receive(:current_exhibit).and_return(exhibit)
     assign(:page, page)
     stub_template 'spotlight/pages/_sidebar.html.erb' => 'Sidebar'
