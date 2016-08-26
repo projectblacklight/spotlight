@@ -3,7 +3,7 @@ describe 'spotlight/browse/show', type: :view do
   let(:search) { FactoryGirl.create(:published_search) }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
-  before :each do
+  before do
     allow(view).to receive_messages(resource_masthead?: false)
     allow(view).to receive_messages(blacklight_config: Blacklight::Configuration.new)
     view.blacklight_config.view.gallery = true
@@ -14,7 +14,7 @@ describe 'spotlight/browse/show', type: :view do
     stub_template 'spotlight/browse/_tophat.html.erb' => ''
   end
 
-  before :each do
+  before do
     assign :exhibit, exhibit
     assign :search, search
     assign :document_list, []

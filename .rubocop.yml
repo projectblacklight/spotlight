@@ -42,6 +42,9 @@ Metrics/AbcSize:
 Metrics/ModuleLength:
   Max: 120
 
+Metrics/LineLength:
+  Max: 160
+
 Metrics/ClassLength:
   Exclude:
     - 'app/models/spotlight/resource.rb'
@@ -54,3 +57,11 @@ Style/PredicateName:
 Metrics/MethodLength:
   Exclude:
     - 'lib/generators/spotlight/**/*'
+    
+RSpec/NestedGroups:
+  MaxNesting: 4
+
+RSpec/MultipleExpectations:
+  Max: 8
+  Exclude:
+    - 'spec/features/**/*'
