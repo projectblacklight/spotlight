@@ -5,7 +5,7 @@ describe 'shared/_exhibit_navbar', type: :view do
   let(:about_page) { FactoryGirl.create(:about_page, exhibit: current_exhibit) }
   let(:unpublished_about_page) { FactoryGirl.create(:about_page, published: false, exhibit: current_exhibit) }
 
-  before :each do
+  before do
     allow(view).to receive_messages(resource_masthead?: false)
     allow(view).to receive_messages(current_exhibit: current_exhibit)
     allow(view).to receive_messages(on_browse_page?: false, on_about_page?: false)

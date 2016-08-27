@@ -1,12 +1,9 @@
-
 describe Spotlight::Resources::Web, type: :model do
   class TestResource < Spotlight::Resource
     include Spotlight::Resources::Web
   end
 
   subject { TestResource.new }
-  describe '.fetch' do
-  end
 
   describe '#harvest!' do
     it 'caches the body and headers in the data' do

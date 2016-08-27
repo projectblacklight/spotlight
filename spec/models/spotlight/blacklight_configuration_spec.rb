@@ -2,7 +2,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
   subject { described_class.new }
   let(:blacklight_config) { Blacklight::Configuration.new }
 
-  before :each do
+  before do
     blacklight_config.configure do |config|
       config.add_sort_field 'relevance', sort: 'score desc, sort_title_ssi asc', label: 'Relevance'
       config.add_sort_field 'title', sort: 'sort_title_ssi asc', label: 'Title'
