@@ -14,8 +14,7 @@ module Spotlight
 
       def create
         file = csv_params[:url]
-#       csv = CSV.parse(file.read, headers: true, return_headers: false, encoding: 'utf-8').map(&:to_hash)
-        csv = CSV.parse(File.read(file.tempfile.to_path.to_s, {encoding: 'UTF-8'}), headers: true, return_headers: false, encoding: 'utf-8').map(&:to_hash)
+        csv = CSV.parse(File.read(file.tempfile.to_path.to_s, encoding: 'UTF-8'), headers: true, return_headers: false, encoding: 'utf-8').map(&:to_hash)
         Spotlight::AddUploadsFromCSV.perform_later(csv, current_exhibit, current_user)
         flash[:notice] = t('spotlight.resources.upload.csv.success', file_name: file.original_filename)
         redirect_back(fallback_location: spotlight.exhibit_resources_path(current_exhibit))
