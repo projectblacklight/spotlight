@@ -13,6 +13,7 @@ describe 'spotlight/search_configurations/_search_fields', type: :view do
     assign(:blacklight_configuration, exhibit.blacklight_configuration)
     allow(view).to receive_messages(current_exhibit: exhibit)
     exhibit.blacklight_config.add_search_field 'some_hidden_field', include_in_simple_select: false
+    exhibit.blacklight_config.add_search_field 'some_field with_a_space'
     render partial: 'spotlight/search_configurations/search_fields', locals: { f: f }
   end
 
@@ -36,5 +37,9 @@ describe 'spotlight/search_configurations/_search_fields', type: :view do
   it 'excludes search options that do not show up in the search dropdown' do
     expect(rendered).not_to have_selector "input[name='blacklight_configuration[search_fields][autocomplete][enabled]']"
     expect(rendered).not_to have_selector "input[name='blacklight_configuration[search_fields][some_hidden_field][enabled]']"
+  end
+
+  it 'parameterizes the data-id attribute for searcn field keh' do
+    expect(rendered).to have_selector '[data-id="some_field-with_a_space-id"]'
   end
 end
