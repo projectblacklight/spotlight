@@ -45,7 +45,7 @@ these collections.)
   s.add_dependency 'legato'
   s.add_dependency 'signet'
   s.add_dependency 'oauth2'
-  s.add_dependency 'paper_trail', '~> 5.0'
+  s.add_dependency 'paper_trail', '~> 5.0', '>= 5.2.1'
   s.add_dependency 'openseadragon'
   s.add_dependency 'clipboard-rails', '~> 1.5'
 
