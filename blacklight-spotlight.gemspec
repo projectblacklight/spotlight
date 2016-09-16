@@ -60,7 +60,7 @@ these collections.)
   s.add_development_dependency 'rubocop-rspec'
   s.add_development_dependency 'poltergeist', '>= 1.5.0'
   s.add_development_dependency 'factory_girl', '~> 4.5'
-  s.add_development_dependency 'engine_cart', '~> 0.9'
+  s.add_development_dependency 'engine_cart', '~> 1.0'
   s.add_development_dependency 'database_cleaner', '~> 1.3'
   s.add_development_dependency 'solr_wrapper'
   s.add_development_dependency 'simplecov', '~> 0.12'
