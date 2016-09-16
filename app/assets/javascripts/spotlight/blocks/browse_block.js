@@ -12,6 +12,13 @@ SirTrevor.Blocks.Browse = (function(){
     },
     autocomplete_template: function() { return '<div class="autocomplete-item{{#unless published}} blacklight-private{{/unless}}">{{#if thumbnail_image_url}}<div class="document-thumbnail thumbnail"><img src="{{thumbnail_image_url}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>' },
 
+    bloodhoundOptions: function() {
+      return {
+        prefetch: this.autocomplete_url(),
+        ttl: 0
+      };
+    },
+
     item_options: function() { return [
       '<label>',
         '<input type="hidden" name="display-item-counts" value="false" />',
