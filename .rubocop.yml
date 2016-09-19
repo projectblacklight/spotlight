@@ -31,6 +31,10 @@ Style/DoubleNegation:
 Style/SpecialGlobalVars:
   Enabled: false
 
+# Temp. disable due to https://github.com/bbatsov/rubocop/issues/3514
+Style/VariableNumber:
+  Enabled: false
+
 RSpec/DescribeClass:
   Exclude:
     - 'spec/features/**/*'
@@ -57,7 +61,7 @@ Style/PredicateName:
 Metrics/MethodLength:
   Exclude:
     - 'lib/generators/spotlight/**/*'
-    
+
 RSpec/NestedGroups:
   MaxNesting: 4
 
