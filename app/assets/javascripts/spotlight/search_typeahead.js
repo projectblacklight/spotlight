@@ -31,10 +31,10 @@
 function itemsBloodhound() {
   var results = new Bloodhound({
     datumTokenizer: function(d) {
-      return Bloodhound.tokenizers.whitespace(d.title); 
+      return Bloodhound.tokenizers.whitespace(d.title);
     },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
-    limit: 10,
+    limit: 100,
     remote: {
       url: $('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path').replace("%25QUERY", "%QUERY"),
       filter: function(response) {

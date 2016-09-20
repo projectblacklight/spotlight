@@ -7,7 +7,7 @@ Spotlight.onLoad(function() {
     var tags = new Bloodhound({
       datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit: 10,
+      limit: 100,
       prefetch: {
         url: $('#solr_document_exhibit_tag_list').data('autocomplete_url'),
         ttl: 1,
@@ -45,6 +45,6 @@ Spotlight.onLoad(function() {
               docTarget.addClass("blacklight-private");
             }
           }
-      }); 
+      });
 
 });

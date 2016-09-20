@@ -17,6 +17,12 @@
   margin-bottom: 3*$padding-large-vertical;
 }
 
+// Sir-trevor sets the overflow to hidden which
+// obscures the bottom of things like the typeahead
+.st-block {
+  overflow: visible;
+}
+
 .st-block__inner {
   border: 1px solid $gray-lighter;
   box-shadow: 3px 3px 15px $gray-lighter;
