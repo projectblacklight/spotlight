@@ -60,7 +60,7 @@
           return Bloodhound.tokenizers.whitespace(d.title);
         },
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 10,
+        limit: 100,
       }, block.bloodhoundOptions()));
       results.initialize();
       return results;
