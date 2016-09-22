@@ -11,8 +11,10 @@ SirTrevor.Blocks.FeaturedPages = (function(){
     autocomplete_template: function() { return '<div class="autocomplete-item{{#unless published}} blacklight-private{{/unless}}">{{log "Look at me"}}{{log thumbnail_image_url}}{{#if thumbnail_image_url}}<div class="document-thumbnail thumbnail"><img src="{{thumbnail_image_url}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>' },
     bloodhoundOptions: function() {
       return {
-        prefetch: this.autocomplete_url(),
-        ttl: 0
+        prefetch: {
+          url: this.autocomplete_url(),
+          ttl: 0
+        }
       };
     }
   });

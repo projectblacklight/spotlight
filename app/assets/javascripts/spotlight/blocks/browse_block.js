@@ -14,8 +14,10 @@ SirTrevor.Blocks.Browse = (function(){
 
     bloodhoundOptions: function() {
       return {
-        prefetch: this.autocomplete_url(),
-        ttl: 0
+        prefetch: {
+          url: this.autocomplete_url(),
+          ttl: 0
+        }
       };
     },
 
