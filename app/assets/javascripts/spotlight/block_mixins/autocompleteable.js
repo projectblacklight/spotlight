@@ -17,6 +17,17 @@
       if (_.isUndefined(this['transform_autocomplete_results'])) {
         this.transform_autocomplete_results = _.identity;
       }
+
+      if (_.isUndefined(this['bloodhoundOptions'])) {
+        this.bloodhoundOptions = function() {
+          return {
+            remote: {
+              url: this.autocomplete_url(),
+              filter: this.transform_autocomplete_results
+            }
+          };
+        };
+      }
     },
 
     autocomplete_control: function() {
@@ -44,17 +55,13 @@
 
     bloodhound: function() {
       var block = this;
-      var results = new Bloodhound({
+      var results = new Bloodhound(_.extend({
         datumTokenizer: function(d) {
           return Bloodhound.tokenizers.whitespace(d.title);
         },
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 10,
-        remote: {
-          url: block.autocomplete_url(),
-          filter: block.transform_autocomplete_results
-        }
-      });
+        limit: 100,
+      }, block.bloodhoundOptions()));
       results.initialize();
       return results;
     },

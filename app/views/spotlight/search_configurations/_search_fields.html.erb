@@ -31,7 +31,7 @@
     <div class="panel-group dd search_fields_admin col-sm-7" id="nested-search-fields" data-behavior="nestable" data-max-depth="1">
       <ol class="dd-list">
         <% @blacklight_configuration.blacklight_config.search_fields.select { |_k, v| v.include_in_simple_select != false }.except(default_field.key).each_with_index do |(k, config), index| %>
-            <li class="dd-item dd3-item" data-id="<%= k %>-id">
+            <li class="dd-item dd3-item" data-id="<%= k.parameterize %>-id">
               <div class="dd3-content panel panel-default">
                 <div class="dd-handle dd3-handle"><%= t(:drag) %></div>
                 <div class="panel-heading" data-behavior="restore-default">
