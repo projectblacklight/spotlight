@@ -39,14 +39,15 @@ module Spotlight
       private
 		
       def create_thumbnail
-	    if !@resource.thumbnail.nil?
-	    	FileUtils.cp(@resource.thumbnail.path, "public/#{@resource.url.store_dir}/thumb_#{@resource.thumbnail.original_filename}")
+	    if !params[:resources_upload][:thumb].nil?
+	    	FileUtils.cp(params[:resources_upload][:thumb].path, "public/#{@resource.url.store_dir}/thumb_#{params[:resources_upload][:thumb].original_filename}")
+	    	FileUtils.cp(params[:resources_upload][:thumb].path, "public/#{@resource.url.store_dir}/square_#{params[:resources_upload][:thumb].original_filename}")
 	    	#minimagic should go here instead
 	    end
 	  end
 		
       def build_resource
-        @resource ||= Spotlight::Resources::Upload.new exhibit: current_exhibit, thumb: params[:resources_upload][:thumb]
+        @resource ||= Spotlight::Resources::Upload.new exhibit: current_exhibit
       end
 
       def resource_params

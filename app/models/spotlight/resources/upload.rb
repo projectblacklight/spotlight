@@ -9,8 +9,6 @@ module Spotlight
 
       # we want to do this before reindexing
       after_create :update_document_sidecar
-
-      attr_accessor :thumbnail
       
       self.document_builder_class = UploadSolrDocumentBuilder
 
@@ -20,12 +18,6 @@ module Spotlight
           title_field = Spotlight::Engine.config.upload_title_field || OpenStruct.new(field_name: exhibit.blacklight_config.index.title_field)
           [title_field] + exhibit.uploaded_resource_fields
         end
-      end
-      
-      def initialize(args = {})
-      	  t = args.delete(:thumb)
-      	  super(args)
-      	  self.thumbnail = t
       end
       
       def compound_id
