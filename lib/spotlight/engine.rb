@@ -100,7 +100,9 @@ module Spotlight
     config.writable_index = true
 
     # The allowed file extensions for uploading non-repository items.
-    config.allowed_upload_extensions = %w(jpg jpeg png)
+    config.allowed_audio_extensions = %w(mp3)
+    config.allowed_video_extensions = %w(mp4)
+    config.allowed_upload_extensions = %w(jpg jpeg png mp3 mp4)
 
     # Suffixes for exhibit-specific solr fields
     config.solr_fields = OpenStruct.new

@@ -10,6 +10,8 @@ module Spotlight
       # we want to do this before reindexing
       after_create :update_document_sidecar
 
+      attr_accessor :thumbnail
+      
       self.document_builder_class = UploadSolrDocumentBuilder
 
       def self.fields(exhibit)
@@ -19,11 +21,18 @@ module Spotlight
           [title_field] + exhibit.uploaded_resource_fields
         end
       end
-
+      
+      def initialize(args = {})
+      	  t = args.delete(:thumb)
+      	  super(args)
+      	  self.thumbnail = t
+      end
+      
       def compound_id
         "#{exhibit_id}-#{id}"
       end
 
+      
       def sidecar
         @sidecar ||= document_model.new(id: compound_id).sidecar(exhibit)
       end

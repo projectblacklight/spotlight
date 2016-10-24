@@ -15,9 +15,14 @@ module Spotlight
 
       # rubocop:disable Metrics/MethodLength
       def create
+	  	if Spotlight::Engine.config.allowed_audio_extensions.include?(params[:resources_upload][:url].path.split('.').last) ||
+	  		Spotlight::Engine.config.allowed_video_extensions.include?(params[:resources_upload][:url].path.split('.').last)
+			@resource.url.versions.delete(:thumb)
+			@resource.url.versions.delete(:square)
+		end
         @resource.attributes = resource_params
-
         if @resource.save_and_index
+          create_thumbnail
           flash[:notice] = t('spotlight.resources.upload.success')
           if params['add-and-continue']
             redirect_to new_exhibit_resource_path(@resource.exhibit, anchor: :new_resources_upload)
@@ -32,9 +37,16 @@ module Spotlight
       # rubocop:enable Metrics/MethodLength
 
       private
-
+		
+      def create_thumbnail
+	    if !@resource.thumbnail.nil?
+	    	FileUtils.cp(@resource.thumbnail.path, "public/#{@resource.url.store_dir}/thumb_#{@resource.thumbnail.original_filename}")
+	    	#minimagic should go here instead
+	    end
+	  end
+		
       def build_resource
-        @resource ||= Spotlight::Resources::Upload.new exhibit: current_exhibit
+        @resource ||= Spotlight::Resources::Upload.new exhibit: current_exhibit, thumb: params[:resources_upload][:thumb]
       end
 
       def resource_params

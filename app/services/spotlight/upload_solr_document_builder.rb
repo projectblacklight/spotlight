@@ -9,11 +9,14 @@ module Spotlight
       solr_hash = super
 
       add_default_solr_fields solr_hash
-
-      add_image_dimensions solr_hash
-
-      add_file_versions solr_hash
-
+      
+      if Spotlight::Engine.config.allowed_audio_extensions.include?(resource[:url].split('.').last) ||
+      	  Spotlight::Engine.config.allowed_video_extensions.include?(resource[:url].split('.').last)
+      	  	  solr_hash[:thumbnail_url_ssm] = Dir.glob("public/#{resource.url.store_dir}/thumb_*").first.remove("public") 
+      else
+      	  add_image_dimensions solr_hash
+      	  add_file_versions solr_hash
+      end
       add_sidecar_fields solr_hash
 
       solr_hash
