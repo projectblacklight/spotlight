@@ -14,6 +14,7 @@ module Spotlight
       	  Spotlight::Engine.config.allowed_video_extensions.include?(resource[:url].split('.').last)
       	  	  solr_hash[:thumbnail_url_ssm] = Dir.glob("public/#{resource.url.store_dir}/thumb_*").first.remove("public") 
       	  	  solr_hash[:thumbnail_square_url_ssm] = Dir.glob("public/#{resource.url.store_dir}/square_*").first.remove("public")
+      	  	  solr_hash[:full_image_url_ssm] = "/#{resource.url.store_dir}/#{resource[:url]}"
       else
       	  add_image_dimensions solr_hash
       	  add_file_versions solr_hash
