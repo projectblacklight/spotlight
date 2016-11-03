@@ -10,6 +10,7 @@ AllCops:
     - 'spec/internal/**/*'
     - 'vendor/**/*'
   TargetRubyVersion: 2.2
+  DisplayCopNames: true
 
 Rails:
   Enabled: true
