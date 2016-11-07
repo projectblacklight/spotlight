@@ -1,0 +1,57 @@
+<% image = document.to_openseadragon(blacklight_config.view_config(:show)) %>
+<%
+	image = []
+	@docs.each do |doc|
+		image << doc.to_openseadragon(blacklight_config.view_config(:show)).first.first.first
+	end
+%>
+<%
+  osd_config = {
+    crossOriginPolicy: false,
+    zoomInButton:     "osd-zoom-in",
+    zoomOutButton:    "osd-zoom-out",
+    homeButton:       "osd-home",
+    fullPageButton:   "osd-full-page",
+    nextButton:       "osd-next",
+    previousButton:   "osd-previous"
+  }
+
+  osd_config_referencestrip = {
+  	sequenceMode: 					true,
+    showReferenceStrip:             true,
+    referenceStripPosition:         'OUTSIDE',
+    referenceStripScroll:           'vertical',
+    referenceStripWidth:            100,
+    referenceStripBackgroundColor:  'transparent'
+  }
+%>
+<% unless image.nil? %>
+  <% count = Array(image).length %>
+  <div class="openseadragon-container <%= osd_container_class %>">
+    <div class="osd-toolbar row">
+      <% if count > 1 %>
+        <% osd_config = osd_config_referencestrip.merge(osd_config) %>
+
+        <div class="col-md-6 pagination">
+          <a id="osd-previous"><span class="glyphicon glyphicon-chevron-left"></span></a>
+          <span id="osd-page">1</span>  of <%= count %>
+          <a id="osd-next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+      <% end %>
+        <div class="col-md-6 controls">
+          <a id="osd-zoom-in"><span class="glyphicon glyphicon-plus-sign"></span></a>
+          <a id="osd-zoom-out"><span class="glyphicon glyphicon-minus-sign"></span></a>
+          <a id="osd-home"><span class="glyphicon glyphicon-resize-small"></span></a>
+          <a id="osd-full-page"><span class="glyphicon glyphicon-fullscreen"></span></a>
+        </div>
+    </div>
+    <%= openseadragon_picture_tag image, class: 'osd-image row', data: { openseadragon: osd_config } %>
+  </div>
+  <script>
+  function changePageInfo() {
+	var current_page =  $('picture[data-openseadragon]').data('osdViewer').currentPage();
+	$('#osd-page').html(current_page+1); 
+  }
+  setInterval(changePageInfo, 500);
+  </script>
+<% end %>

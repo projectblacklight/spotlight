@@ -1,1 +1,5 @@
-<%= exhibit_edit_link document, [:edit, current_exhibit, document], class: 'pull-right btn btn-primary' if can?(:curate, current_exhibit) and !current_page? [:edit, current_exhibit, document]  %>
+<% if(((document.sidecars.first.data["configured_fields"].key? "items") && (document.sidecars.first.data["configured_fields"]["items"].length > 0))) %>
+	<%= link_to "Edit Compound Object", edit_exhibit_compound_path({exhibit_id: current_exhibit, id: document.id}) , class: 'pull-right btn btn-primary' if can?(:curate, current_exhibit) and !current_page? [:edit, current_exhibit, document]  %>
+<% else %>
+	<%= exhibit_edit_link document, [:edit, current_exhibit, document], class: 'pull-right btn btn-primary' if can?(:curate, current_exhibit) and !current_page? [:edit, current_exhibit, document]  %>
+<% end %>

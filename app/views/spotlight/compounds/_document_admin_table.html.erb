@@ -1,0 +1,34 @@
+<%# container for all documents in index view -%>
+<table id="documents" class="table" data-turbolinks="false">
+  <thead>
+    <tr>
+      <th class="col-sm-1"></th>
+      <th class="col-sm-5"><%= t(:'spotlight.catalog.fields.title') %></th>
+      <th class="col-sm-2"><%= t(:'spotlight.catalog.fields.date_added') %></th>
+      <th class="col-sm-1 checkbox-toggle"><%= t(:'spotlight.catalog.fields.visibility') %></th>
+    </tr>
+  </thead>
+  <% @documents.each do |document| %>
+  <tr>	
+  <td><a href="<%=exhibit_solr_document_path({exhibit_id: @exhibit.slug, id: document._source[:id]})%>">
+  	  		<%= image_tag thumbnail_url(document), {:width => "60"} %></a></td>
+  	  <td>
+  	  <div class="documetHeader row"><h5 class="index_title col-md-12">
+  	  	<a href="<%=exhibit_solr_document_path({exhibit_id: @exhibit.slug, id: document.id})%>">
+  	  		<%=document._source.key?(blacklight_config.index.title_field) ? document._source[blacklight_config.index.title_field].first : document.id%> 
+  	  	</a></h5></div>
+	  <div class="page-links">
+	  <%= view_link document, url_for_document(document), class: 'btn btn-link' %> &middot;
+	  <%= exhibit_edit_link document, [:edit, current_exhibit, document], class: 'btn btn-link' %>
+	  </div>
+		</td>
+		
+		<td>
+		  <%= l Date.parse(document[blacklight_config.index.timestamp_field]) if document[blacklight_config.index.timestamp_field] %>
+		</td>
+		
+		<td class="checkbox-toggle">
+		  <%= render partial: 'spotlight/catalog/document_visibility_control', locals: { document: document} %>
+		</td> </tr>
+  <% end %>
+</table>

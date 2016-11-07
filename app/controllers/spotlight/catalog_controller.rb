@@ -39,7 +39,12 @@ module Spotlight
 
     def show
       super
-
+      @docs = []
+      @document.sidecars.first.data["configured_fields"]["items"].each do |cur_id|
+      	  resp, doc = fetch cur_id
+      	  @docs << doc
+      end
+      	  
       if @document.private? current_exhibit
         authenticate_user! && authorize!(:curate, current_exhibit)
       end
