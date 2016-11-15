@@ -10,7 +10,7 @@
   </thead>
   <% @documents.each do |document| %>
   <tr>	
-  <td><a href="<%=exhibit_solr_document_path({exhibit_id: @exhibit.slug, id: document._source[:id]})%>">
+  <td><a href="<%=exhibit_solr_document_path({exhibit_id: @exhibit.slug, id: document.id})%>">
   	  		<%= image_tag thumbnail_url(document), {:width => "60"} %></a></td>
   	  <td>
   	  <div class="documetHeader row"><h5 class="index_title col-md-12">

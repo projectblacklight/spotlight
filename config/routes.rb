@@ -108,11 +108,10 @@ Spotlight::Engine.routes.draw do
         patch :update_all
       end
     end
-    post 'solr/update' => 'solr#update'	
+    post 'solr/update' => 'solr#update'
     resources :compounds
   end
 
   get '/:exhibit_id' => 'home_pages#show', as: :exhibit_root
   post 'versions/:id/revert' => 'versions#revert', as: :revert_version
-
 end

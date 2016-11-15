@@ -1,6 +1,4 @@
-<% image = document.to_openseadragon(blacklight_config.view_config(:show)) %>
-<%
-	image = []
+<% 	image = []
 	@docs.each do |doc|
 		image << doc.to_openseadragon(blacklight_config.view_config(:show)).first.first.first
 	end

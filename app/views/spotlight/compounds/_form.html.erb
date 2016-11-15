@@ -1,16 +1,4 @@
-<script src='/assets/dragula.min.js'></script>
-<link rel="stylesheet" href="/assets/dragula.min.css">
 <style>
-/* Prevent the contents of draggable elements from being selectable. */
-[draggable] {
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  /* Required to make elements draggable in old WebKit */
-  -khtml-user-drag: element;
-  -webkit-user-drag: element;
-}
 .column {
   height: 150px;
   width: 100%;
@@ -63,36 +51,34 @@
               }
 } ) do |f| %>
   
-  <input type="hidden" class="form-control" name="[data][spotlight_upload_compound_object_is]" id="_data_spotlight_upload_compound_object_is" value="1" />
   <%= f.fields_for :data do |d| %>
     <% Spotlight::Resources::Upload.fields(current_exhibit).each do |config| %>
-      <% next if config.field_name.to_s.include? "annotation" %>
       <%= d.send((config.form_field_type || :text_field), config.field_name, label: uploaded_field_label(config), wrapper: { class: "blacklight-"+config.field_name.to_s }) %>
     <% end %>
     <% current_exhibit.custom_fields.each do |custom_field| %>
       <%= d.text_field custom_field.field, label: custom_field.label %>
     <% end %>
   <% end %>
-  
-  
+
   <div id="remote">
-	  <div id="columns-full">
-	  </div>
+  	<div id="holder" class="dd">
+	  <ol id="columns-full" class="dd-list">
+	  </ol>
+	</div>
 	  <input class="typeahead" type="text" placeholder="Enter Title Here...">
   </div>
   <script type="text/javascript">
   var items_list = [];
   function makeNewCol(id, image, title) {
   	  columns = document.getElementById('columns-full');
-  	  elt = document.createElement('DIV');
-  	  elt.className = 'column col-md-9';
-  	  elt.draggable = "true";
+  	  elt = document.createElement('LI');
+  	  elt.className = 'column dd-item dd3-item';
   	  dragElt = document.createElement('DIV');
-  	  dragElt.className = 'dd-compound dd3-handle';
+  	  dragElt.className = 'dd-compound dd3-handle dd-handle';
   	  dragElt.innerHTML = "Drag";
   	  contentElt = document.createElement('DIV');
   	  contentElt.className = 'col-content';
-  	  contentElt.id = id;
+  	  contentElt.id = id; 
   	  imageElt = document.createElement('DIV');
   	  imageElt.className = 'col-image';
   	  thumbElt = document.createElement('IMG');
@@ -112,33 +98,23 @@
   	  elt.appendChild(contentElt);
   	  elt.appendChild(hiddenElt);
   	  columns.appendChild(elt);
-  } 
-	dragula([document.getElementById("columns-full")], {
-		moves: function (el, container, handle) {
-		return handle.className === 'dd-compound dd3-handle';
-	  }
-	});
+  }
+
+  $('.dd').nestable({maxDepth: 1});
 
   $('#remote .typeahead').spotlightSearchTypeAhead({ bloodhound: itemsBloodhound(), template: itemsTemplate() }).on('click', function() {
       $(this).select();
     }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
-    	/*var str = "";
-    	$.each(data, function(key, value){
-    			str = str + key + ": " + value + "\n<br>";
-    	});
-    	alert(str);*/
     	if(items_list.indexOf(data["id"]) == -1) {
     		items_list.push(data["id"]);
     		makeNewCol(data["id"], data["thumbnail"], data["title"]);
     	} 
     	$(this).val("");
-    	//<div class="column col-md-9" draggable="true"><div class="dd-compound dd3-handle">Drag</div>A</div>
     });
 
   </script>
   <div class="form-actions">
     <div class="primary-actions">
-
       <%= f.submit t('spotlight.resources.upload.form.add_compound'), class: 'btn btn-primary' %>
     </div>
   </div>

@@ -24,6 +24,5 @@
 //= require bootstrap-tagsinput
 //= require jquery.serializejson
 //= require clipboard
-//= require dragula.min
 
 //= require_tree .
