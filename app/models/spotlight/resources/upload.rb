@@ -5,11 +5,11 @@ module Spotlight
     # Exhibit-specific resources, created using uploaded and custom fields
     class Upload < Spotlight::Resource
       mount_uploader :url, Spotlight::ItemUploader
+      mount_uploader :thumb, Spotlight::ItemUploader
       include Spotlight::ImageDerivatives
-
       # we want to do this before reindexing
       after_create :update_document_sidecar
-      
+
       self.document_builder_class = UploadSolrDocumentBuilder
 
       def self.fields(exhibit)
@@ -19,12 +19,11 @@ module Spotlight
           [title_field] + exhibit.uploaded_resource_fields
         end
       end
-      
+
       def compound_id
         "#{exhibit_id}-#{id}"
       end
 
-      
       def sidecar
         @sidecar ||= document_model.new(id: compound_id).sidecar(exhibit)
       end

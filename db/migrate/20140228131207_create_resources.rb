@@ -4,6 +4,7 @@ class CreateResources < ActiveRecord::Migration
       t.references :exhibit
       t.string     :type
       t.string     :url
+      t.string     :thumb
       t.text       :data
       t.datetime   :indexed_at
       t.timestamps
