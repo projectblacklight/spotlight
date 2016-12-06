@@ -30,15 +30,13 @@ module Spotlight
         false
       end
 
-      def before_destroy(*_args)
-      end
+      def before_destroy(*_args); end
 
       def pluralize_table_names
         true
       end
 
-      def add_autosave_association_callbacks(_arg)
-      end
+      def add_autosave_association_callbacks(_arg); end
 
       # needed for Rails 4.1 + act_as_taggable
       def dangerous_attribute_method?(*_args)

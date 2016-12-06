@@ -24,3 +24,4 @@ Gemfile.lock
 _site/
 .internal_test_app
 pkg/
+/spec/examples.txt
