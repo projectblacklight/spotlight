@@ -6,11 +6,9 @@ module Spotlight
     before_action :load_site
     load_and_authorize_resource
 
-    def edit
-    end
+    def edit; end
 
-    def edit_exhibits
-    end
+    def edit_exhibits; end
 
     def update
       if @site.update(site_params)
