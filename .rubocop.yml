@@ -70,3 +70,9 @@ RSpec/MultipleExpectations:
   Max: 8
   Exclude:
     - 'spec/features/**/*'
+
+Bundler/DuplicatedGem:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false

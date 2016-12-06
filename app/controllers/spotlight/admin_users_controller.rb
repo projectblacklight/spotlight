@@ -6,8 +6,7 @@ module Spotlight
     before_action :load_site
     load_and_authorize_resource :site, class: 'Spotlight::Site'
 
-    def index
-    end
+    def index; end
 
     def create
       if update_roles

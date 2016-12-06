@@ -38,8 +38,7 @@ module Spotlight
     end
 
     # GET /exhibits/1/pages/new
-    def new
-    end
+    def new; end
 
     # GET /pages/1/edit
     def edit
