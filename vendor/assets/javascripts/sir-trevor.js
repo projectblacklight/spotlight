@@ -17054,7 +17054,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this._scribe.getTextContent() !== '') {
 	      var fakeContent = document.createElement('div');
 	      fakeContent.innerHTML = this.getTextBlockHTML();
-	      content = fakeContent.firstChild.innerHTML || fakeContent.innerHTML;
+
+	      // We concatenate the content of each paragraph and take into account the new lines
+	      content = fakeContent.children && Array.prototype.slice.call(fakeContent.children).reduce(function (res, child) {
+	        return res + child.innerHTML;
+	      }, '') || fakeContent.innerHTML;
+
 	      return content.replace(/^[\s\uFEFF\xA0]+|$/g, '');
 	    }
 	    return content;
@@ -18790,7 +18795,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _this3.deleteEl.classList.remove("active");
 	    };
 
-	    this.ui.insertAdjacentHTML("beforeend", DELETE_TEMPLATE);
+	    this.ui.insertAdjacentHTML("beforeend", DELETE_TEMPLATE());
 	    Events.delegate(this.el, ".js-st-block-confirm-delete", "click", this.onDeleteConfirm);
 	    Events.delegate(this.el, ".js-st-block-deny-delete", "click", onDeleteDeny);
 	  },
@@ -18882,19 +18887,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return;
 	      }
 
-	      var ctrlDown = false;
-
-	      Events.delegate(block.el, '.st-text-block', 'keyup', function (ev) {
-	        if (ev.which === 17 || ev.which === 224 || ev.which === 91) {
-	          ctrlDown = false;
-	        }
-	      });
 	      Events.delegate(block.el, '.st-text-block', 'keydown', function (ev) {
-	        if (ev.which === 17 || ev.which === 224 || ev.which === 91) {
-	          ctrlDown = true;
-	        }
-
-	        if (ev.which === cmd.keyCode && ctrlDown) {
+	        if ((ev.metaKey || ev.ctrlKey) && ev.keyCode === cmd.keyCode) {
 	          ev.preventDefault();
 	          block.execTextBlockCommand(cmd.cmd);
 	        }
@@ -19625,9 +19619,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 252 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
-	module.exports = '\n  <div class="st-block__ui-delete-controls">\n    <label class="st-block__delete-label">\n      ' + i18n.t('general:delete') + '\n    </label>\n    <button class=\'st-block-ui__confirm js-st-block-confirm-delete\' type="button">\n      ' + i18n.t('general:yes') + '\n    </button>\n    <button class=\'st-block-ui__confirm js-st-block-deny-delete\' type="button">\n      ' + i18n.t('general:no') + '\n    </button>\n  </div>\n';
+	module.exports = function () {
+	  return '\n    <div class="st-block__ui-delete-controls">\n      <label class="st-block__delete-label">\n        ' + i18n.t('general:delete') + '\n      </label>\n      <button class=\'st-block-ui__confirm js-st-block-confirm-delete\' type="button">\n        ' + i18n.t('general:yes') + '\n      </button>\n      <button class=\'st-block-ui__confirm js-st-block-deny-delete\' type="button">\n        ' + i18n.t('general:no') + '\n      </button>\n    </div>\n  ';
+	};
 
 /***/ },
 /* 253 */
@@ -19763,6 +19759,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var range = selection.range.cloneRange();
 
 	      range.setStartBefore(scribe.el.firstChild, 0);
+
+	      var node = range.endContainer.nodeType === 3 ? range.endContainer.parentNode : range.endContainer;
+
+	      // We make sure that the caret must be inside the first element to consider
+	      // it at the beginning of the block
+	      if (scribe.el.firstChild !== node) {
+	        return false;
+	      }
 
 	      return rangeToHTML(range, false) === '';
 	    };
@@ -20499,8 +20503,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (_.isUndefined(data.status_url)) {
 	      data.status_url = '';
 	    }
-	    var iframe = this.inner.querySelector('iframe');
-	    Dom.remove(iframe);
+	    var twitterwidget = this.inner.querySelector('twitterwidget');
+	    Dom.remove(twitterwidget);
 
 	    this.inner.insertAdjacentHTML("afterbegin", tweet_template(data));
 
