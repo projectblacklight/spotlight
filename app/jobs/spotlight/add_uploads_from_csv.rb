@@ -15,11 +15,13 @@ module Spotlight
         url = row.delete('url')
         next unless url.present?
 
-        Spotlight::Resources::Upload.create(
+        resource = Spotlight::Resources::Upload.new(
           remote_url_url: url,
           data: row,
           exhibit: exhibit
         )
+
+        resource.save_and_index
       end
     end
 
