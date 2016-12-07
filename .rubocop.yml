@@ -67,7 +67,7 @@ RSpec/NestedGroups:
   MaxNesting: 4
 
 RSpec/MultipleExpectations:
-  Max: 8
+  Max: 9
   Exclude:
     - 'spec/features/**/*'
 
