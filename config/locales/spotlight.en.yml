@@ -515,6 +515,7 @@ en:
       upload:
         csv:
           success: "'%{file_name}' has been uploaded.  An email will be sent to you once indexing is complete."
+          anonymous_file: '(blank)'
         new:
           single_item_form: "Single item"
           multi_item_form: "Multiple items using CSV file"
