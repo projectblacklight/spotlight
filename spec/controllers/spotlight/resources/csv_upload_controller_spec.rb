@@ -33,6 +33,13 @@ describe Spotlight::Resources::CsvUploadController, type: :controller do
             'spotlight_upload_description_tesim' => 'A random 900 by 600 image from lorempixel',
             'spotlight_upload_attribution_tesim' => 'lorempixel.com',
             'spotlight_upload_date_tesim' => '2014'
+          },
+          {
+            'url' => 'http://lorempixel.com/900/600/',
+            'full_title_tesim' => 'Yet another random image to test UTF8 text',
+            'spotlight_upload_description_tesim' => 'A random 900 by 600 image from lorempixel and some UTF8: Hüsker Dü',
+            'spotlight_upload_attribution_tesim' => 'lorempixel.com',
+            'spotlight_upload_date_tesim' => '2016'
           }
         ]
       end
