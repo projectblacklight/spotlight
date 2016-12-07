@@ -65,10 +65,11 @@ describe Spotlight::ContactsController, type: :controller do
       end
       it 'is successful' do
         expect do
-          post :create, params: { exhibit_id: exhibit, contact: { name: 'Chester' } }
+          post :create, params: { exhibit_id: exhibit, contact: { name: 'Chester', avatar_attributes: { iiif_url: 'someurl' } } }
         end.to change { Spotlight::Contact.count }.by(1)
         expect(response).to redirect_to exhibit_about_pages_path(exhibit)
         expect(Spotlight::Contact.last.show_in_sidebar).to be_truthy
+        expect(Spotlight::Contact.last.avatar.iiif_url).to be_present
       end
     end
   end

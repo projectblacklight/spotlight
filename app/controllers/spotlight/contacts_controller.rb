@@ -56,7 +56,8 @@ module Spotlight
     def contact_params
       params.require(:contact).permit(:name,
                                       :avatar_id,
-                                      contact_info: Spotlight::Contact.fields.keys)
+                                      contact_info: Spotlight::Contact.fields.keys,
+                                      avatar_attributes: [:iiif_url])
     end
   end
 end
