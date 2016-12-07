@@ -41,19 +41,19 @@ describe 'Add a contact to an exhibit', type: :feature do
   end
 
   it "allows the curator to crop the contact's avatar", js: true do
-    skip "Capyabara and jcrop don't play well together.."
+    skip "Capybara doesn't play well with the image cropper..."
 
     visit spotlight.exhibit_about_pages_path(exhibit)
     click_link 'Add contact'
-    page.document.synchronize do
-      find('.jcrop-holder')
-    end
+
     within '#new_contact' do
       fill_in 'Name', with: 'Pictured User'
       fill_in 'Email', with: 'marcus@rome.gov'
-      attach_file('contact_avatar', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
+      attach_file('contact_avatar_attributes_file', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
+      click_button 'Save'
     end
     expect(page).to have_content 'The contact was created.'
     expect(page).to have_selector 'img.contact-photo'
+    expect(Spotlight::Contact.last.avatar.iiif_url).to be_present
   end
 end
