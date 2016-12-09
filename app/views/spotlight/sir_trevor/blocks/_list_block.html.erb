@@ -1,3 +1,11 @@
 <div class="st__content-block st__content-block--list">
-	<%= sir_trevor_markdown list_block.text %>
+  <% if list_block.format == :html %>
+    <ul>
+      <% list_block.listItems.each do |item| %>
+        <li><%= sir_trevor_format item[:content], format: list_block.format %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <%= sir_trevor_markdown list_block.text %>
+  <% end %>
 </div>
