@@ -139,10 +139,6 @@ module Spotlight
     config.featured_image_square_size = '400,'
     config.contact_square_size = [70, 70]
 
-    initializer 'spotlight-assets.initialize' do
-      Rails.application.config.assets.precompile += %w(Jcrop.gif)
-    end
-
     # To present curators with analytics reports on the exhibit dashboard, you need to configure
     # an Analytics provider. Google Analytics support is provided out-of-the-box.
     config.analytics_provider = nil
