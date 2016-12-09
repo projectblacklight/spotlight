@@ -87,7 +87,8 @@ describe 'Add and update the site masthead', type: :feature do
   end
 
   it 'displays a masthead image when one is uploaded from an exhibit item', js: true do
-    skip "Capyabara and jcrop don't play well together.."
+    skip "Capyabara and the cropping tool don't play well together.."
+
     visit spotlight.exhibit_dashboard_path(exhibit)
     expect(page).to_not have_css('.image-masthead')
     within '#sidebar' do
