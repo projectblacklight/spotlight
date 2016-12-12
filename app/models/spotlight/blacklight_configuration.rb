@@ -295,7 +295,12 @@ module Spotlight
     end
 
     def default_autocomplete_field_list(config)
-      "#{config.document_model.unique_key} #{config.view_config(:show).title_field} #{spotlight_image_version_fields.join(' ')}"
+      [
+        config.document_model.unique_key,
+        config.view_config(:show).title_field,
+        spotlight_image_version_fields,
+        Spotlight::Engine.config.iiif_manifest_field
+      ].flatten.join(' ')
     end
 
     def spotlight_image_version_fields

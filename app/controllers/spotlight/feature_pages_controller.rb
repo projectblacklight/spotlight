@@ -41,5 +41,9 @@ module Spotlight
     def allowed_page_params
       super.concat [:display_sidebar, :published]
     end
+
+    def page_thumbnail_attributes
+      params.require(controller_name.singularize).require(:thumbnail_attributes).permit(featured_image_attributes)
+    end
   end
 end

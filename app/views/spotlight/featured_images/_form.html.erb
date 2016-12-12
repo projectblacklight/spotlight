@@ -2,7 +2,7 @@
   <% form_prefix = f.object_name.parameterize(separator: '_') %>
 <% else %>
   <% form_prefix = f.object_name.parameterize('_') %>
-<% end %>  
+<% end %>
 <%= field_set_tag do %>
   <%= f.check_box(:display) %>
 <% end if f.object.is_a? Spotlight::Masthead %>
@@ -12,7 +12,7 @@
     <div>
       <%= f.hidden_field(:document_global_id) %>
       <%= f.hidden_field(:remote_image_url) %>
-      <%= text_field_tag(:document_title, (presenter(f.object.document).document_show_html_title if f.object.document), class: "form-control", data: { input_select_target: "##{form_prefix}_source_exhibit", masthead_typeahead: true, target_panel: "##{form_prefix}-target-panel", :'id-field' => "##{form_prefix}_document_global_id", remote_url_field: "##{form_prefix}_remote_image_url" }) %>
+      <%= text_field_tag(:document_title, (presenter(f.object.document).document_show_html_title if f.object.document), class: "form-control", data: { input_select_target: "##{form_prefix}_source_exhibit", 'behavior': 'autocomplete', masthead_typeahead: true, 'cropper': image_form.name, target_panel: "##{form_prefix}-target-panel", :'id-field' => "##{form_prefix}_document_global_id", remote_url_field: "##{form_prefix}_remote_image_url" }) %>
       <div id="<%= form_prefix %>-target-panel" style="display:none">
         <div class="panel-heading">
           <div data-item-title="true"></div>
@@ -29,5 +29,6 @@
 <% end %>
 <%= field_set_tag(t(:'.source.remote.header')) do %>
   <p class="instructions"><%= t(:'.source.remote.help') %></p>
+  <%= image_form.iiif_hidden_fields(f) %>
   <%= image_form.text_and_display(f) %>
 <% end %>

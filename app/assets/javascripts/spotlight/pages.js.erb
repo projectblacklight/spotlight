@@ -7,7 +7,7 @@ Spotlight.onLoad(function(){
     uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint'),
     ajaxOptions: {
       headers: {
-        'X-CSRF-Token': $.rails.csrfToken()
+        'X-CSRF-Token': $.rails.csrfToken() || ''
       },
       credentials: 'same-origin'
     }

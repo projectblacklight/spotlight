@@ -35,7 +35,7 @@ feature 'Browse pages' do
     end
 
     context 'with a custom masthead' do
-      let(:masthead) { FactoryGirl.create(:masthead, display: true, iiif_url: 'http://test.host/images/1') }
+      let(:masthead) { FactoryGirl.create(:masthead, display: true, iiif_tilesource: 'http://test.host/images/1') }
 
       before do
         search.masthead = masthead

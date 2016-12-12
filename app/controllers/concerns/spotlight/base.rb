@@ -31,7 +31,8 @@ module Spotlight
         description: doc.id,
         url: polymorphic_path([current_exhibit, doc]),
         private: doc.private?(current_exhibit),
-        global_id: doc.to_global_id.to_s
+        global_id: doc.to_global_id.to_s,
+        iiif_manifest: doc[Spotlight::Engine.config.iiif_manifest_field]
       }
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize

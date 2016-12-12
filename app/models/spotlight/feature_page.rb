@@ -22,9 +22,8 @@ module Spotlight
     end
 
     def thumbnail_image_url
-      return unless thumbnail_id
-      riiif = Riiif::Engine.routes.url_helpers
-      riiif.image_path(thumbnail_id, size: Spotlight::Engine.config.featured_image_thumb_size.join(','))
+      return unless thumbnail && thumbnail.iiif_url
+      thumbnail.iiif_url
     end
   end
 end

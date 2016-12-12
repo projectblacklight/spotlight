@@ -27,16 +27,4 @@ describe Spotlight::MetaHelper, type: :helper do
       expect(graph).to have_css "meta[property='og:site_name'][content='some title']", visible: false
     end
   end
-
-  describe '#carrierwave_url' do
-    it 'turns a application-relative URI into a path' do
-      upload = double(url: '/x/y/z')
-      expect(helper.send(:carrierwave_url, upload)).to eq 'http://test.host/x/y/z'
-    end
-
-    it 'passes a full URI through' do
-      upload = double(url: 'http://some.host/x/y/z')
-      expect(helper.send(:carrierwave_url, upload)).to eq 'http://some.host/x/y/z'
-    end
-  end
 end

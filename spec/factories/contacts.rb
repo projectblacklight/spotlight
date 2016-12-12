@@ -3,7 +3,7 @@ FactoryGirl.define do
     exhibit
 
     trait :with_avatar do
-      association :avatar, factory: :featured_image
+      association :avatar, factory: :contact_image
     end
   end
 end

@@ -49,10 +49,9 @@ module Spotlight
 
     def update
       if @search.update search_params
-        # Update masthead attributes, only after we have saved the masthead_id
-        update_masthead
-        # Update thumbnail attributes, only after we have saved the thumbnail_id
-        update_thumbnail
+        # Update masthead and thumbnail attributes only after we have saved the association id
+        @search.update_masthead(masthead_params)
+        @search.update_thumbnail(thumbnail_params)
 
         redirect_to exhibit_searches_path(@search.exhibit), notice: t(:'helpers.submit.search.updated', model: @search.class.model_name.human.downcase)
       else
@@ -80,14 +79,12 @@ module Spotlight
 
     protected
 
-    def update_masthead
-      return unless @search.masthead
-      @search.masthead.update(params.require(:search).require(:masthead_attributes).permit(featured_image_params))
+    def masthead_params
+      params.require(:search).require(:masthead_attributes).permit(featured_image_params)
     end
 
-    def update_thumbnail
-      return unless @search.thumbnail
-      @search.thumbnail.update(params.require(:search).require(:thumbnail_attributes).permit(featured_image_params))
+    def thumbnail_params
+      params.require(:search).require(:thumbnail_attributes).permit(featured_image_params)
     end
 
     def autocomplete_params
@@ -126,7 +123,8 @@ module Spotlight
 
     def featured_image_params
       [
-        :iiif_url,
+        :iiif_region,
+        :iiif_tilesource,
         :display,
         :source,
         :image,

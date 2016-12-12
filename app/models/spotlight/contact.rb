@@ -10,7 +10,7 @@ module Spotlight
     extend FriendlyId
     friendly_id :name, use: [:slugged, :scoped, :finders], scope: :exhibit
 
-    belongs_to :avatar, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
+    belongs_to :avatar, class_name: 'Spotlight::ContactImage', dependent: :destroy
     accepts_nested_attributes_for :avatar
 
     before_save do
