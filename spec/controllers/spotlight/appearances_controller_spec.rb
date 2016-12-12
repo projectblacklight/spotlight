@@ -42,7 +42,7 @@ describe Spotlight::AppearancesController, type: :controller do
 
     describe 'PATCH update' do
       let(:masthead) { FactoryGirl.create(:masthead) }
-      let(:thumbnail) { FactoryGirl.create(:featured_image) }
+      let(:thumbnail) { FactoryGirl.create(:exhibit_thumbnail) }
       let(:first_nav) { exhibit.main_navigations.first }
       let(:last_nav) { exhibit.main_navigations.last }
       let(:submitted) do
@@ -52,10 +52,12 @@ describe Spotlight::AppearancesController, type: :controller do
             masthead_id: masthead,
             thumbnail_id: thumbnail,
             masthead_attributes: {
-              iiif_url: 'http://test.host/1/foo'
+              iiif_tilesource: 'http://test.host/1/foo',
+              iiif_region: '0,0,2000,200'
             },
             thumbnail_attributes: {
-              iiif_url: 'http://test.host/2/foo'
+              iiif_tilesource: 'http://test.host/2/foo',
+              iiif_region: '0,0,600,600'
             },
             main_navigations_attributes: main_navigation_attributes
           }
@@ -84,8 +86,8 @@ describe Spotlight::AppearancesController, type: :controller do
           expect(saved.main_navigations.find(last_nav.id)).not_to be_displayable
           expect(saved.masthead).to eq masthead
           expect(saved.thumbnail).to eq thumbnail
-          expect(saved.masthead.iiif_url).to eq 'http://test.host/1/foo'
-          expect(saved.thumbnail.iiif_url).to eq 'http://test.host/2/foo'
+          expect(saved.masthead.iiif_url).to eq 'http://test.host/1/foo/0,0,2000,200/1800,180/0/default.jpg'
+          expect(saved.thumbnail.iiif_url).to eq 'http://test.host/2/foo/0,0,600,600/400,400/0/default.jpg'
         end
       end
     end

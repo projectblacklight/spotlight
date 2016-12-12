@@ -158,6 +158,8 @@
   - https://stacks.stanford.edu/image/dq287tq6352/dq287tq6352_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/dq287tq6352/dq287tq6352_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/dq287tq6352/iiif/manifest.json
 - :id: jp266yb7109
   :druid_ssi: jp266yb7109
   mods_xml_ssm:
@@ -309,6 +311,8 @@
   - https://stacks.stanford.edu/image/jp266yb7109/jp266yb7109_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/jp266yb7109/jp266yb7109_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/jp266yb7109/iiif/manifest.json
 - :id: zv316zr9542
   :druid_ssi: zv316zr9542
   mods_xml_ssm:
@@ -469,6 +473,8 @@
   - https://stacks.stanford.edu/image/zv316zr9542/zv316zr9542_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/zv316zr9542/zv316zr9542_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/zv316zr9542/iiif/manifest.json
 - :id: vw323gf4937
   :druid_ssi: vw323gf4937
   mods_xml_ssm:
@@ -651,6 +657,8 @@
   - https://stacks.stanford.edu/image/vw323gf4937/vw323gf4937_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/vw323gf4937/vw323gf4937_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/vw323gf4937/iiif/manifest.json
 - :id: ps921pn8250
   :druid_ssi: ps921pn8250
   mods_xml_ssm:
@@ -818,6 +826,8 @@
   - https://stacks.stanford.edu/image/ps921pn8250/ps921pn8250_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/ps921pn8250/ps921pn8250_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/ps921pn8250/iiif/manifest.json
 - :id: nq874ts4848
   :druid_ssi: nq874ts4848
   mods_xml_ssm:
@@ -946,6 +956,8 @@
   - https://stacks.stanford.edu/image/nq874ts4848/nq874ts4848_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/nq874ts4848/nq874ts4848_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/nq874ts4848/iiif/manifest.json
 - :id: bm387cy2596
   :druid_ssi: bm387cy2596
   mods_xml_ssm:
@@ -1096,6 +1108,8 @@
   - https://stacks.stanford.edu/image/bm387cy2596/bm387cy2596_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/bm387cy2596/bm387cy2596_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/bm387cy2596/iiif/manifest.json
 - :id: gk446cj2442
   :druid_ssi: gk446cj2442
   mods_xml_ssm:
@@ -1276,6 +1290,8 @@
   - https://stacks.stanford.edu/image/gk446cj2442/gk446cj2442_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/gk446cj2442/gk446cj2442_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/gk446cj2442/iiif/manifest.json
 - :id: zs247rr8237
   :druid_ssi: zs247rr8237
   mods_xml_ssm:
@@ -1463,6 +1479,8 @@
   - https://stacks.stanford.edu/image/zs247rr8237/zs247rr8237_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/zs247rr8237/zs247rr8237_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/zs247rr8237/iiif/manifest.json
 - :id: rx614sw9194
   :druid_ssi: rx614sw9194
   mods_xml_ssm:
@@ -1626,6 +1644,8 @@
   - https://stacks.stanford.edu/image/rx614sw9194/rx614sw9194_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/rx614sw9194/rx614sw9194_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/rx614sw9194/iiif/manifest.json
 - :id: dx157dh4345
   :druid_ssi: dx157dh4345
   mods_xml_ssm:
@@ -1777,6 +1797,8 @@
   - https://stacks.stanford.edu/image/dx157dh4345/dx157dh4345_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/dx157dh4345/dx157dh4345_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/dx157dh4345/iiif/manifest.json
 - :id: sd345mz1879
   :druid_ssi: sd345mz1879
   mods_xml_ssm:
@@ -1922,6 +1944,8 @@
   - https://stacks.stanford.edu/image/sd345mz1879/sd345mz1879_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/sd345mz1879/sd345mz1879_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/sd345mz1879/iiif/manifest.json
 - :id: gw298sq0504
   :druid_ssi: gw298sq0504
   mods_xml_ssm:
@@ -2079,6 +2103,8 @@
   - https://stacks.stanford.edu/image/gw298sq0504/gw298sq0504_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/gw298sq0504/gw298sq0504_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/gw298sq0504/iiif/manifest.json
 - :id: sn161bw2027
   :druid_ssi: sn161bw2027
   mods_xml_ssm:
@@ -2273,6 +2299,8 @@
   - https://stacks.stanford.edu/image/sn161bw2027/sn161bw2027_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/sn161bw2027/sn161bw2027_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/sn161bw2027/iiif/manifest.json
 - :id: yh941cp6284
   :druid_ssi: yh941cp6284
   mods_xml_ssm:
@@ -2461,6 +2489,8 @@
   - https://stacks.stanford.edu/image/yh941cp6284/yh941cp6284_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/yh941cp6284/yh941cp6284_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/yh941cp6284/iiif/manifest.json
 - :id: gv664gb7394
   :druid_ssi: gv664gb7394
   mods_xml_ssm:
@@ -2625,6 +2655,8 @@
   - https://stacks.stanford.edu/image/gv664gb7394/gv664gb7394_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/gv664gb7394/gv664gb7394_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/gv664gb7394/iiif/manifest.json
 - :id: ys360dp2191
   :druid_ssi: ys360dp2191
   mods_xml_ssm:
@@ -2791,6 +2823,8 @@
   - https://stacks.stanford.edu/image/ys360dp2191/ys360dp2191_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/ys360dp2191/ys360dp2191_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/ys360dp2191/iiif/manifest.json
 - :id: sb904gg2771
   :druid_ssi: sb904gg2771
   mods_xml_ssm:
@@ -2969,6 +3003,8 @@
   - https://stacks.stanford.edu/image/sb904gg2771/sb904gg2771_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/sb904gg2771/sb904gg2771_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/sb904gg2771/iiif/manifest.json
 - :id: vb000vb1451
   :druid_ssi: vb000vb1451
   mods_xml_ssm:
@@ -3116,6 +3152,8 @@
   - https://stacks.stanford.edu/image/vb000vb1451/vb000vb1451_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/vb000vb1451/vb000vb1451_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/vb000vb1451/iiif/manifest.json
 - :id: vy180gj7659
   :druid_ssi: vy180gj7659
   mods_xml_ssm:
@@ -3265,6 +3303,8 @@
   - https://stacks.stanford.edu/image/vy180gj7659/vy180gj7659_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/vy180gj7659/vy180gj7659_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/vy180gj7659/iiif/manifest.json
 - :id: nz081wv9348
   :druid_ssi: nz081wv9348
   mods_xml_ssm:
@@ -3438,6 +3478,8 @@
   - https://stacks.stanford.edu/image/nz081wv9348/nz081wv9348_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/nz081wv9348/nz081wv9348_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/nz081wv9348/iiif/manifest.json
 - :id: wt855xd4818
   :druid_ssi: wt855xd4818
   mods_xml_ssm:
@@ -3609,6 +3651,8 @@
   - https://stacks.stanford.edu/image/wt855xd4818/wt855xd4818_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/wt855xd4818/wt855xd4818_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/wt855xd4818/iiif/manifest.json
 - :id: jy409qg0248
   :druid_ssi: jy409qg0248
   mods_xml_ssm:
@@ -3772,6 +3816,8 @@
   - https://stacks.stanford.edu/image/jy409qg0248/jy409qg0248_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/jy409qg0248/jy409qg0248_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/jy409qg0248/iiif/manifest.json
 - :id: kw406zk5778
   :druid_ssi: kw406zk5778
   mods_xml_ssm:
@@ -3920,6 +3966,8 @@
   - https://stacks.stanford.edu/image/kw406zk5778/kw406zk5778_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/kw406zk5778/kw406zk5778_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/kw406zk5778/iiif/manifest.json
 - :id: sx619yv5558
   :druid_ssi: sx619yv5558
   mods_xml_ssm:
@@ -4251,6 +4299,8 @@
   - https://stacks.stanford.edu/image/zq083qg2931/zq083qg2931_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/zq083qg2931/zq083qg2931_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/zq083qg2931/iiif/manifest.json
 - :id: sn343fc0807
   :druid_ssi: sn343fc0807
   mods_xml_ssm:
@@ -4434,6 +4484,8 @@
   - https://stacks.stanford.edu/image/sn343fc0807/sn343fc0807_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/sn343fc0807/sn343fc0807_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/sn343fc0807/iiif/manifest.json
 - :id: ym733yc1437
   :druid_ssi: ym733yc1437
   mods_xml_ssm:
@@ -4628,6 +4680,8 @@
   - https://stacks.stanford.edu/image/ym733yc1437/ym733yc1437_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/ym733yc1437/ym733yc1437_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/ym733yc1437/iiif/manifest.json
 - :id: rz043dh7915
   :druid_ssi: rz043dh7915
   mods_xml_ssm:
@@ -4797,6 +4851,8 @@
   - https://stacks.stanford.edu/image/rz043dh7915/rz043dh7915_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/rz043dh7915/rz043dh7915_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/rz043dh7915/iiif/manifest.json
 - :id: qb677kc3995
   :druid_ssi: qb677kc3995
   mods_xml_ssm:
@@ -4956,6 +5012,8 @@
   - https://stacks.stanford.edu/image/qb677kc3995/qb677kc3995_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/qb677kc3995/qb677kc3995_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/qb677kc3995/iiif/manifest.json
 - :id: zn001wm6450
   :druid_ssi: zn001wm6450
   mods_xml_ssm:
@@ -5120,6 +5178,8 @@
   - https://stacks.stanford.edu/image/zn001wm6450/zn001wm6450_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/zn001wm6450/zn001wm6450_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/zn001wm6450/iiif/manifest.json
 - :id: fh912bx9878
   :druid_ssi: fh912bx9878
   mods_xml_ssm:
@@ -5293,6 +5353,8 @@
   - https://stacks.stanford.edu/image/fh912bx9878/fh912bx9878_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/fh912bx9878/fh912bx9878_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/fh912bx9878/iiif/manifest.json
 - :id: tg729zw9405
   :druid_ssi: tg729zw9405
   mods_xml_ssm:
@@ -5465,6 +5527,8 @@
   - https://stacks.stanford.edu/image/tg729zw9405/tg729zw9405_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/tg729zw9405/tg729zw9405_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/tg729zw9405/iiif/manifest.json
 - :id: yn959jw9550
   :druid_ssi: yn959jw9550
   mods_xml_ssm:
@@ -5637,6 +5701,8 @@
   - https://stacks.stanford.edu/image/yn959jw9550/yn959jw9550_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/yn959jw9550/yn959jw9550_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/yn959jw9550/iiif/manifest.json
 - :id: zn845sh3664
   :druid_ssi: zn845sh3664
   mods_xml_ssm:
@@ -5809,6 +5875,8 @@
   - https://stacks.stanford.edu/image/zn845sh3664/zn845sh3664_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/zn845sh3664/zn845sh3664_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/zn845sh3664/iiif/manifest.json
 - :id: rz818vx8201
   :druid_ssi: rz818vx8201
   mods_xml_ssm:
@@ -5979,6 +6047,8 @@
   - https://stacks.stanford.edu/image/rz818vx8201/rz818vx8201_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/rz818vx8201/rz818vx8201_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/rz818vx8201/iiif/manifest.json
 - :id: sw106rc9347
   :druid_ssi: sw106rc9347
   mods_xml_ssm:
@@ -6157,6 +6227,8 @@
   - https://stacks.stanford.edu/image/sw106rc9347/sw106rc9347_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/sw106rc9347/sw106rc9347_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/sw106rc9347/iiif/manifest.json
 - :id: sp821gh4463
   :druid_ssi: sp821gh4463
   mods_xml_ssm:
@@ -6320,6 +6392,8 @@
   - https://stacks.stanford.edu/image/sp821gh4463/sp821gh4463_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/sp821gh4463/sp821gh4463_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/sp821gh4463/iiif/manifest.json
 - :id: cz507zk0531
   :druid_ssi: cz507zk0531
   mods_xml_ssm:
@@ -6483,6 +6557,8 @@
   - https://stacks.stanford.edu/image/cz507zk0531/cz507zk0531_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/cz507zk0531/cz507zk0531_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/cz507zk0531/iiif/manifest.json
 - :id: wb806ct0449
   :druid_ssi: wb806ct0449
   mods_xml_ssm:
@@ -6602,6 +6678,8 @@
   - https://stacks.stanford.edu/image/wb806ct0449/wb806ct0449_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/wb806ct0449/wb806ct0449_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/wb806ct0449/iiif/manifest.json
 - :id: rc221bv1386
   :druid_ssi: rc221bv1386
   mods_xml_ssm:
@@ -6759,6 +6837,8 @@
   - https://stacks.stanford.edu/image/rc221bv1386/rc221bv1386_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/rc221bv1386/rc221bv1386_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/rc221bv1386/iiif/manifest.json
 - :id: zr014mj0786
   :druid_ssi: zr014mj0786
   mods_xml_ssm:
@@ -6911,6 +6991,8 @@
   - https://stacks.stanford.edu/image/zr014mj0786/zr014mj0786_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/zr014mj0786/zr014mj0786_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/zr014mj0786/iiif/manifest.json
 - :id: jr961xz9944
   :druid_ssi: jr961xz9944
   mods_xml_ssm:
@@ -7067,6 +7149,8 @@
   - https://stacks.stanford.edu/image/jr961xz9944/jr961xz9944_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/jr961xz9944/jr961xz9944_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/jr961xz9944/iiif/manifest.json
 - :id: np731wc7689
   :druid_ssi: np731wc7689
   mods_xml_ssm:
@@ -7295,6 +7379,8 @@
   - https://stacks.stanford.edu/image/np731wc7689/np731wc7689_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/np731wc7689/np731wc7689_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/np731wc7689/iiif/manifest.json
 - :id: gt736xf9712
   :druid_ssi: gt736xf9712
   mods_xml_ssm:
@@ -7467,6 +7553,8 @@
   - https://stacks.stanford.edu/image/gt736xf9712/gt736xf9712_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/gt736xf9712/gt736xf9712_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/gt736xf9712/iiif/manifest.json
 - :id: nr766vt0518
   :druid_ssi: nr766vt0518
   mods_xml_ssm:
@@ -7621,6 +7709,8 @@
   - https://stacks.stanford.edu/image/nr766vt0518/nr766vt0518_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/nr766vt0518/nr766vt0518_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/nr766vt0518/iiif/manifest.json
 - :id: qt469cf8909
   :druid_ssi: qt469cf8909
   mods_xml_ssm:
@@ -7801,6 +7891,8 @@
   - https://stacks.stanford.edu/image/qt469cf8909/qt469cf8909_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/qt469cf8909/qt469cf8909_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/qt469cf8909/iiif/manifest.json
 - :id: kw703rh2327
   :druid_ssi: kw703rh2327
   mods_xml_ssm:
@@ -8017,6 +8109,8 @@
   - https://stacks.stanford.edu/image/kw703rh2327/kw703rh2327_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/kw703rh2327/kw703rh2327_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/kw703rh2327/iiif/manifest.json
 - :id: pm812zf5263
   :druid_ssi: pm812zf5263
   mods_xml_ssm:
@@ -8385,6 +8479,8 @@
   - https://stacks.stanford.edu/image/pt603pv6417/pt603pv6417_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/pt603pv6417/pt603pv6417_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/pt603pv6417/iiif/manifest.json
 - :id: ds525vw8509
   :druid_ssi: ds525vw8509
   mods_xml_ssm:
@@ -8540,6 +8636,8 @@
   - https://stacks.stanford.edu/image/ds525vw8509/ds525vw8509_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/ds525vw8509/ds525vw8509_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/ds525vw8509/iiif/manifest.json
 - :id: rj993fh5469
   :druid_ssi: rj993fh5469
   mods_xml_ssm:
@@ -8701,6 +8799,8 @@
   - https://stacks.stanford.edu/image/rj993fh5469/rj993fh5469_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/rj993fh5469/rj993fh5469_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/rj993fh5469/iiif/manifest.json
 - :id: mw236cd6430
   :druid_ssi: mw236cd6430
   mods_xml_ssm:
@@ -8917,6 +9017,8 @@
   - https://stacks.stanford.edu/image/mw236cd6430/mw236cd6430_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/mw236cd6430/mw236cd6430_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/mw236cd6430/iiif/manifest.json
 - :id: xd327cm9378
   :druid_ssi: xd327cm9378
   mods_xml_ssm:
@@ -9096,6 +9198,8 @@
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/xd327cm9378/xd327cm9378_05_0001_full
   - https://stacks.stanford.edu/image/xd327cm9378/xd327cm9378_05_0002_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/xd327cm9378/iiif/manifest.json
 - :id: dy396mt9665
   :druid_ssi: dy396mt9665
   mods_xml_ssm:
@@ -9277,3 +9381,5 @@
   - https://stacks.stanford.edu/image/dy396mt9665/dy396mt9665_05_0001_large
   full_image_url_ssm:
   - https://stacks.stanford.edu/image/dy396mt9665/dy396mt9665_05_0001_full
+  iiif_manifest_url_ssi:
+  - https://purl.stanford.edu/dy396mt9665/iiif/manifest.json

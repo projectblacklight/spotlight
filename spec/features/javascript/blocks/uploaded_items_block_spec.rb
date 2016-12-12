@@ -49,7 +49,7 @@ feature 'Uploaded Items Block', feature: true, js: true do
     attach_file('uploaded_item_url', fixture_file2)
 
     # This line blocks until the javascript has added the file to the page:
-    expect(find('#st-block-2_display-checkbox_2')).to be_present
+    expect(find('#st-block-3_display-checkbox_2')).to be_present
 
     # Uncheck the first checkbox
     all('input[type="checkbox"]').first.click

@@ -58,7 +58,7 @@ module Spotlight
 
     property :masthead, class: Spotlight::Masthead, decorator: FeaturedImageRepresenter
 
-    property :thumbnail, class: Spotlight::FeaturedImage, decorator: FeaturedImageRepresenter
+    property :thumbnail, class: Spotlight::ExhibitThumbnail, decorator: FeaturedImageRepresenter
 
     collection :main_navigations, class: Spotlight::MainNavigation, decorator: MainNavigationRepresenter
 
@@ -77,7 +77,7 @@ module Spotlight
         property prop
       end
 
-      property :avatar, class: Spotlight::FeaturedImage, decorator: FeaturedImageRepresenter
+      property :avatar, class: Spotlight::ContactImage, decorator: FeaturedImageRepresenter
     end
 
     collection :contact_emails, class: Spotlight::ContactEmail do

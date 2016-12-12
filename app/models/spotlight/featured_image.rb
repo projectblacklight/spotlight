@@ -4,13 +4,18 @@ module Spotlight
   class FeaturedImage < ActiveRecord::Base
     mount_uploader :image, Spotlight::FeaturedImageUploader
 
-    before_validation :set_image_from_uploaded_resource
-
     after_save do
       if image.present?
         image.cache! unless image.cached?
         image.store!
       end
+    end
+
+    after_create :set_tilesource_from_uploaded_resource
+
+    def iiif_url
+      return unless iiif_service_base.present?
+      [iiif_service_base, iiif_region || 'full', image_size.join(','), '0', 'default.jpg'].join('/')
     end
 
     def remote_image_url=(url)
@@ -36,11 +41,26 @@ module Spotlight
       nil
     end
 
+    def file_present?
+      image.file.present?
+    end
+
     private
 
-    def set_image_from_uploaded_resource
-      return unless document && document.uploaded_resource?
-      self.image = document.uploaded_resource.url.file
+    def set_tilesource_from_uploaded_resource
+      return if iiif_tilesource
+      riiif = Riiif::Engine.routes.url_helpers
+      self.iiif_tilesource = riiif.info_path(id)
+      save
+    end
+
+    def image_size
+      Spotlight::Engine.config.featured_image_thumb_size
+    end
+
+    def iiif_service_base
+      return unless iiif_tilesource
+      iiif_tilesource.sub('/info.json', '')
     end
   end
 end

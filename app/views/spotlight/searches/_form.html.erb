@@ -42,8 +42,7 @@
         <% end unless @search.query_params.blank? %>
       </div>
       <div role="tabpanel" class="tab-pane" id="search-masthead">
-        <% image_form = iiif_cropper(f, :masthead, 120, 1200) %>
-        <%= image_form.hidden_field %>
+        <% image_form = iiif_cropper(f, :masthead, *Spotlight::Engine.config.masthead_initial_crop_selection) %>
         <%= f.fields_for :masthead, (@search.masthead || @search.build_masthead) do |m| %>
           <p class="instructions"><%= t(:'.masthead.help') %></p>
           <p class="instructions"><%= t(:'.masthead.help_secondary') %></p>
@@ -51,8 +50,7 @@
         <% end %>
       </div>
       <div role="tabpanel" class="tab-pane" id="search-thumbnail">
-        <% image_form = iiif_cropper(f, :thumbnail, 120, 120) %>
-        <%= image_form.hidden_field %>
+        <% image_form = iiif_cropper(f, :thumbnail, *Spotlight::Engine.config.featured_image_thumb_size) %>
         <%= f.fields_for :thumbnail, (@search.thumbnail || @search.build_thumbnail) do |m| %>
           <p class="instructions"><%= t(:'.thumbnail.help') %></p>
           <%= render '/spotlight/featured_images/form', f: m, image_form: image_form %>

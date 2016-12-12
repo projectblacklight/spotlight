@@ -4,7 +4,7 @@ describe 'spotlight/browse/search', type: :view do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   before do
     allow(search).to receive_messages(documents: double(size: 15))
-    allow(search).to receive_message_chain(:thumbnail, :image, thumb: '/some/image')
+    allow(search).to receive_message_chain(:thumbnail, iiif_url: '/some/image')
   end
 
   before do
@@ -13,7 +13,7 @@ describe 'spotlight/browse/search', type: :view do
 
   it 'displays the image' do
     render partial: 'spotlight/browse/search', locals: { search: search }
-    expect(response).to have_selector 'a img'
+    expect(response).to have_selector 'a img[src="/some/image"]'
   end
 
   it 'has a heading' do

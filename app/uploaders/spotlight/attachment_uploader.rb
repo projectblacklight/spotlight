@@ -3,10 +3,6 @@ module Spotlight
   ##
   # Sir-trevor image widget uploads
   class AttachmentUploader < CarrierWave::Uploader::Base
-    # Include RMagick or MiniMagick support:
-    # include CarrierWave::RMagick
-    include CarrierWave::MiniMagick
-
     storage Spotlight::Engine.config.uploader_storage
 
     # Override the directory where uploaded files will be stored.

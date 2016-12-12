@@ -1,7 +1,7 @@
 // Module to add multi-image selector to widget panels
 
 (function(){
-  $.fn.multiImageSelector = function(image_versions) {
+  $.fn.multiImageSelector = function(image_versions, clickCallback) {
     var changeLink          = $(" <a href='javascript:;'>Change</a>"),
         thumbsListContainer = $("<div class='thumbs-list' style='display:none'></div>"),
         thumbList           = $("<ul></ul>"),
@@ -103,7 +103,7 @@
     }
     function addThumbsToList(){
       $.each(image_versions, function(i){
-        var listItem = $('<li><a href="javascript:;"><img data-full-image="' + image_versions[i]['full'] +'" data-src="' + image_versions[i]['thumb'] +'" /></a></li>');
+        var listItem = $('<li><a href="javascript:;"><img data-iiif-tilesource="' + image_versions[i]['tilesource'] + '" data-full-image="' + image_versions[i]['full'] +'" data-src="' + image_versions[i]['thumb'] +'" /></a></li>');
         listItem.on('click', function(){
           var src = $('img', $(this)).attr('src');
           $('li', thumbList).removeClass('active');
@@ -111,8 +111,13 @@
           $(".pic.thumbnail img", panel).attr("src", src);
           $("[data-item-grid-thumbnail]", panel).attr('value', src);
           $("[data-item-grid-full-image]", panel).attr('value', $('img', $(this)).data('full-image'));
-          $('[data-panel-image-pagination] [data-current-image]', panel).text(indexOf(currentThumb()));
-          scrollToActiveThumb()
+          $('[data-panel-image-pagination] [data-current-image]', panel).text(
+            $('li', thumbList).index($(this)) + 1
+          );
+          scrollToActiveThumb();
+          if (typeof clickCallback === 'function' ) {
+            clickCallback(image_versions[i]);
+          }
         });
         $("img", listItem).on('load', function() {
           updateThumbListWidth();

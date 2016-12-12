@@ -10,7 +10,7 @@ describe 'spotlight/searches/_search.html.erb', type: :view do
                                          }
                                        })
   end
-  let(:thumbnail) { double(id: '7777') }
+  let(:thumbnail) { double(id: '7777', iiif_url: '/images/7777/full/400,300/0/default.jpg') }
 
   before do
     allow(view).to receive(:edit_search_path).and_return('/edit')
