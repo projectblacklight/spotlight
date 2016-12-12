@@ -1,7 +1,9 @@
 Spotlight::Engine.routes.draw do
   devise_for :contact_email, class_name: 'Spotlight::ContactEmail', only: [:confirmations]
 
-  resources :mastheads, only: :create
+  resources :contact_images, controller: :featured_images, only: :create
+  resources :exhibit_thumbnails, controller: :featured_images, only: :create
+  resources :mastheads, controller: :featured_images, only: :create
   resources :featured_images, only: :create
 
   resource :site, only: [:edit, :update] do

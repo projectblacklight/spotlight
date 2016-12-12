@@ -20,9 +20,8 @@ module Spotlight
     accepts_nested_attributes_for :masthead, update_only: true
 
     def thumbnail_image_url
-      return unless thumbnail && thumbnail.image
-      riiif = Riiif::Engine.routes.url_helpers
-      riiif.image_path(thumbnail.id, size: Spotlight::Engine.config.featured_image_thumb_size.join(','))
+      return unless thumbnail && thumbnail.iiif_url
+      thumbnail.iiif_url
     end
 
     def images
@@ -73,6 +72,7 @@ module Spotlight
           )
         end
       end
+      save
     end
     # rubocop:enable Metrics/MethodLength
 
@@ -84,6 +84,18 @@ module Spotlight
       base_query = Blacklight::SearchState.new(query_params, blacklight_config)
       user_query = Blacklight::SearchState.new(params, blacklight_config).to_h
       base_query.params_for_search(user_query).merge(user_query.slice(:page))
+    end
+
+    def update_masthead(attributes = {})
+      to_be_updated = masthead || build_masthead
+      to_be_updated.update(attributes)
+      save
+    end
+
+    def update_thumbnail(attributes = {})
+      to_be_updated = thumbnail || build_thumbnail
+      to_be_updated.update(attributes)
+      save
     end
 
     private

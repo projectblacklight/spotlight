@@ -13,5 +13,11 @@ module Spotlight
     def self.instance
       first || create
     end
+
+    def update_masthead(attributes = {})
+      to_be_updated = masthead || build_masthead
+      to_be_updated.update(attributes)
+      save
+    end
   end
 end

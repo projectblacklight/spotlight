@@ -42,7 +42,7 @@
         <% end unless @search.query_params.blank? %>
       </div>
       <div role="tabpanel" class="tab-pane" id="search-masthead">
-        <% image_form = iiif_cropper(f, :masthead, 120, 1200) %>
+        <% image_form = iiif_cropper(f, :masthead, 1200, 120) %>
         <%= image_form.hidden_field %>
         <%= f.fields_for :masthead, (@search.masthead || @search.build_masthead) do |m| %>
           <p class="instructions"><%= t(:'.masthead.help') %></p>

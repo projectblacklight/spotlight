@@ -1,6 +1,14 @@
 describe Spotlight::Masthead, type: :model do
+  let(:masthead) { stub_model(described_class) }
+
+  describe '#iiif_url' do
+    it 'inlcudes the appropriate size' do
+      masthead.iiif_tilesource = 'http://example.com/iiif/abc123/info.json'
+      expect(masthead.iiif_url).to match(%r{/full/1800,180/})
+    end
+  end
+
   describe '#display?' do
-    let(:masthead) { stub_model(described_class) }
     let(:image) { OpenStruct.new }
     subject { masthead.display? }
 
@@ -15,7 +23,8 @@ describe Spotlight::Masthead, type: :model do
 
     context 'when the cropped image is present' do
       before do
-        masthead.iiif_url = 'http://test.host/images/1/100,0,200,300/full/0/default.jpg'
+        masthead.iiif_tilesource = 'http://test.host/images/1'
+        masthead.iiif_region = '100,0,200,300'
       end
 
       context 'but the masthead is set to not display' do

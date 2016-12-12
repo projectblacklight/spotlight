@@ -7,10 +7,9 @@ module Spotlight
 
     def update
       if @exhibit.update(exhibit_params)
-        # Update masthead attributes, only after we have saved the masthead_id
-        update_masthead
-        # Update thumbnail attributes, only after we have saved the thumbnail_id
-        update_thumbnail
+        # Update masthead and thumbnail attributes, only after we have saved the association id
+        @exhibit.update_masthead(masthead_params)
+        @exhibit.update_thumbnail(thumbnail_params)
 
         notice = t(:'helpers.submit.spotlight_default.updated', model: @exhibit.class.model_name.human.downcase)
         redirect_to edit_exhibit_appearance_path(@exhibit), notice: notice
@@ -27,14 +26,12 @@ module Spotlight
 
     protected
 
-    def update_masthead
-      return unless @exhibit.masthead
-      @exhibit.masthead.update(params.require(:exhibit).require(:masthead_attributes).permit(featured_image_params))
+    def masthead_params
+      params.require(:exhibit).require(:masthead_attributes).permit(featured_image_params)
     end
 
-    def update_thumbnail
-      return unless @exhibit.thumbnail
-      @exhibit.thumbnail.update(params.require(:exhibit).require(:thumbnail_attributes).permit(featured_image_params))
+    def thumbnail_params
+      params.require(:exhibit).require(:thumbnail_attributes).permit(featured_image_params)
     end
 
     def exhibit_params
@@ -45,7 +42,8 @@ module Spotlight
 
     def featured_image_params
       [
-        :iiif_url,
+        :iiif_region,
+        :iiif_tilesource,
         :display,
         :source,
         :image,

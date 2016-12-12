@@ -45,7 +45,7 @@ module Spotlight
 
     belongs_to :site
     belongs_to :masthead, dependent: :destroy
-    belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
+    belongs_to :thumbnail, class_name: 'Spotlight::ExhibitThumbnail', dependent: :destroy
 
     accepts_nested_attributes_for :about_pages, :attachments, :contacts, :custom_fields, :feature_pages,
                                   :main_navigations, :owned_taggings, :resources, :searches, :solr_document_sidecars
@@ -93,7 +93,10 @@ module Spotlight
     end
 
     def set_default_thumbnail
-      self.thumbnail ||= searches.first.try(:thumbnail)
+      first_search_thumb = searches.first.try(:thumbnail)
+      return unless first_search_thumb
+      self.thumbnail ||= create_thumbnail(iiif_tilesource: first_search_thumb.iiif_tilesource)
+      save if thumbnail.present?
     end
 
     def requested_by
@@ -102,6 +105,18 @@ module Spotlight
 
     def reindex_progress
       @reindex_progress ||= ReindexProgress.new(resources) if resources
+    end
+
+    def update_masthead(attributes = {})
+      to_be_updated = masthead || build_masthead
+      to_be_updated.update(attributes)
+      save
+    end
+
+    def update_thumbnail(attributes = {})
+      to_be_updated = thumbnail || build_thumbnail
+      to_be_updated.update(attributes)
+      save
     end
 
     protected

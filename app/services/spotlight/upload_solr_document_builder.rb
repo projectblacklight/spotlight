@@ -25,7 +25,6 @@ module Spotlight
     end
 
     def add_file_versions(solr_hash)
-      riiif = Riiif::Engine.routes.url_helpers
       resource.spotlight_image_derivatives.each do |config|
         solr_hash[config[:field]] = if config[:version]
                                       riiif.image_path(resource.upload_id, size: image_size(config[:version]))
@@ -48,6 +47,10 @@ module Spotlight
 
     def add_sidecar_fields(solr_hash)
       solr_hash.merge! resource.sidecar.to_solr
+    end
+
+    def riiif
+      Riiif::Engine.routes.url_helpers
     end
   end
 end

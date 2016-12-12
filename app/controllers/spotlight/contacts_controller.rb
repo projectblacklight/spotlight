@@ -50,14 +50,14 @@ module Spotlight
 
     def update_avatar
       return unless @contact.avatar
-      @contact.avatar.update(params.require(:contact).require(:avatar_attributes).permit(:iiif_url))
+      @contact.avatar.update(params.require(:contact).require(:avatar_attributes).permit(:iiif_region, :iiif_tilesource))
     end
 
     def contact_params
       params.require(:contact).permit(:name,
                                       :avatar_id,
                                       contact_info: Spotlight::Contact.fields.keys,
-                                      avatar_attributes: [:iiif_url])
+                                      avatar_attributes: [:iiif_tilesource, :iiif_region])
     end
   end
 end

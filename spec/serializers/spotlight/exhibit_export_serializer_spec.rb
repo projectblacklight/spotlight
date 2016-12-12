@@ -132,7 +132,7 @@ describe Spotlight::ExhibitExportSerializer do
           expect(subject.contacts.count).to eq 1
           contact = subject.contacts.first
           expect(contact.contact_info[:title]).to eq 'xyz'
-          expect(contact.avatar).to be_kind_of Spotlight::FeaturedImage
+          expect(contact.avatar).to be_kind_of Spotlight::ContactImage
         end
       end
 
@@ -286,7 +286,7 @@ describe Spotlight::ExhibitExportSerializer do
     end
 
     context 'with a thumbnail' do
-      let!(:thumbnail) { FactoryGirl.create(:featured_image) }
+      let!(:thumbnail) { FactoryGirl.create(:exhibit_thumbnail) }
 
       before do
         source_exhibit.thumbnail = thumbnail
