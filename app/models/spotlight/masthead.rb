@@ -2,8 +2,6 @@ module Spotlight
   ##
   # Exhibit and browse category mastheads
   class Masthead < Spotlight::FeaturedImage
-    mount_uploader :image, Spotlight::MastheadUploader
-
     def display?
       display && iiif_url.present?
     end
@@ -16,6 +14,12 @@ module Spotlight
     # catch is in before_validation..
     def remote_image_url=(url)
       super url unless url.starts_with? '/'
+    end
+
+    private
+
+    def image_size
+      [1800, 180]
     end
   end
 end

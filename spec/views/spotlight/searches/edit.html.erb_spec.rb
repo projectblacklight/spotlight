@@ -10,7 +10,7 @@ describe 'spotlight/searches/edit.html.erb', type: :view do
                                   id: 99, title: 'Title1', query_params: { f: { 'some_field' => ['xyz'] } })
   end
 
-  let(:image_form) { double(hidden_field: '', upload: '', text_and_display: '') }
+  let(:image_form) { double(hidden_field: '', iiif_hidden_fields: '', name: '', upload: '', text_and_display: '') }
   before do
     allow(view).to receive(:search_action_path).and_return('/search')
     allow(view).to receive(:mastheads_path).and_return('/mastheads')

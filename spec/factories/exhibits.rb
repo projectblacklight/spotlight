@@ -5,7 +5,7 @@ FactoryGirl.define do
     after(:build) { |exhibit| exhibit.searches << FactoryGirl.build(:default_search) }
 
     trait :with_thumbnail do
-      association :thumbnail, factory: :featured_image
+      association :thumbnail, factory: :exhibit_thumbnail
     end
   end
 end

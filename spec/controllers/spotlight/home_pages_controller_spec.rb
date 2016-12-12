@@ -1,6 +1,6 @@
 describe Spotlight::HomePagesController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:valid_attributes) { { 'title' => 'MyString' } }
+  let(:valid_attributes) { { 'title' => 'MyString', thumbnail: { iiif_url: '' } } }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:page) { exhibit.home_page }
 

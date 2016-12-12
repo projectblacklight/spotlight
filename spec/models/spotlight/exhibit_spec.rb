@@ -54,10 +54,10 @@ describe Spotlight::Exhibit, type: :model do
 
     context '#set_default_thumbnail' do
       before { subject.save! }
-      it 'uses the thubmnail from the first search' do
+      it "uses the iiif_tilesource from the first search's thumbnail" do
         subject.set_default_thumbnail
         expect(subject.thumbnail).not_to be_nil
-        expect(subject.thumbnail).to eq subject.searches.first.thumbnail
+        expect(subject.thumbnail.iiif_tilesource).to eq subject.searches.first.thumbnail.iiif_tilesource
       end
     end
   end

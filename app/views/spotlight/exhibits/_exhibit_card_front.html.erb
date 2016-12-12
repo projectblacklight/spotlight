@@ -1,5 +1,5 @@
-<% if exhibit.thumbnail.present? %>
-  <%= image_tag(card_image(exhibit)) %>
+<% if exhibit.thumbnail.present? && exhibit.thumbnail.iiif_url %>
+  <%= image_tag(exhibit.thumbnail.iiif_url) %>
 <% else %>
   <%= image_tag 'spotlight/default_thumbnail.jpg', class: 'default-thumbnail' %>
 <% end %>

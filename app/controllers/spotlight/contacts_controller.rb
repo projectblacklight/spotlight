@@ -48,16 +48,11 @@ module Spotlight
       add_breadcrumb t(:'spotlight.pages.index.about_pages.header'), exhibit_about_pages_path(@exhibit)
     end
 
-    def update_avatar
-      return unless @contact.avatar
-      @contact.avatar.update(params.require(:contact).require(:avatar_attributes).permit(:iiif_url))
-    end
-
     def contact_params
       params.require(:contact).permit(:name,
                                       :avatar_id,
                                       contact_info: Spotlight::Contact.fields.keys,
-                                      avatar_attributes: [:iiif_url])
+                                      avatar_attributes: [:iiif_tilesource, :iiif_region])
     end
   end
 end

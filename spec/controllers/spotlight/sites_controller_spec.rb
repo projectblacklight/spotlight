@@ -34,7 +34,12 @@ describe Spotlight::SitesController, type: :controller do
       let!(:exhibit_b) { FactoryGirl.create(:exhibit) }
 
       it 'changes the exhibit order' do
-        patch :update, params: { site: { exhibits_attributes: [{ id: exhibit_a.id, weight: 5 }, { id: exhibit_b.id, weight: 2 }] } }
+        patch :update, params: {
+          site: {
+            exhibits_attributes: [{ id: exhibit_a.id, weight: 5 }, { id: exhibit_b.id, weight: 2 }],
+            masthead_attributes: { display: 0 }
+          }
+        }
 
         expect(response).to redirect_to(exhibits_path)
 

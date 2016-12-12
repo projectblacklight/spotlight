@@ -49,11 +49,8 @@ module Migration
       filepath = "public/uploads/spotlight/contact/avatar/#{contact.id}/#{filename}"
       old_file = File.new(filepath)
       image = contact.create_avatar { |i| i.image.store!(old_file) }
-      iiif_url = riiif.image_url(image.id,
-                                 region: avatar_coordinates(contact),
-                                 size: avatar_size(contact),
-                                 host: hostname)
-      image.update(iiif_url: iiif_url)
+      iiif_tilesource = riiif.info_path(image.id)
+      image.update(iiif_tilesource: iiif_tilesource, iiif_region: avatar_coordinates(contact))
       image
     end
 

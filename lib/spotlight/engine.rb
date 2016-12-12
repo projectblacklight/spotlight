@@ -133,10 +133,15 @@ module Spotlight
       OpenStruct.new(field_name: :spotlight_upload_date_tesim, label: 'Date')
     ]
 
+    config.iiif_manifest_field = :iiif_manifest_url_ssi
+
+    config.masthead_initial_crop_selection = [1200, 120]
+    config.thumbnail_initial_crop_selection = [120, 120]
+
     # Configure the CarrierWave file storage mechanism
     config.uploader_storage = :file
     config.featured_image_thumb_size = [400, 300]
-    config.featured_image_square_size = '400,'
+    config.featured_image_square_size = [400, 400]
     config.contact_square_size = [70, 70]
 
     # To present curators with analytics reports on the exhibit dashboard, you need to configure
