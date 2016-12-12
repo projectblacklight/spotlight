@@ -75,7 +75,7 @@
 	var ee =                   __webpack_require__(2),
 	    SelectionDOMRenderer = __webpack_require__(17),
 	    TransformSelection =   __webpack_require__(22),
-	    Selection =            __webpack_require__(24) 
+	    Selection =            __webpack_require__(24)
 
 	// This is a factory, not a constructor.
 	// The API is designed so that it is only
@@ -586,7 +586,7 @@
 	  function render(state) {
 	    if (!selectionBox) {
 	      selectionBox = buildSelectionBox();
-	      canvas.appendChild(selectionBox);
+	      canvas.parentNode.appendChild(selectionBox);
 	      bindSelectionEvents(selectionBox);
 	      update(selectionBox, state);
 	    } else {
@@ -643,13 +643,9 @@
 	    // receiving them. The "click-to-zoom"
 	    // function in OSD is constructed from
 	    // the mouseup and mousedown events.
-	    selectionBox.addEventListener('click', function(e) {
-	      e.stopPropagation();
-	      e.preventDefault();
-	    });
 
 	    selectionBox.addEventListener('mousedown', handleDragStart);
-	    canvas.addEventListener('mouseup', handleDragStop);
+	    canvas.parentNode.addEventListener('mouseup', handleDragStop);
 	  }
 
 	  function handleDragStop(e) {
@@ -658,7 +654,7 @@
 
 	    listener = undefined;
 	    interaction = undefined;
-	    canvas.removeEventListener('mousemove', mouseMoved);
+	    canvas.parentNode.removeEventListener('mousemove', mouseMoved);
 	  }
 
 	  function handleDragStart(event) {
@@ -671,7 +667,7 @@
 	    } else {
 	      listener = new Resize(state, currentDragHandle, settings);
 	    }
-	    canvas.addEventListener('mousemove', mouseMoved);
+	    canvas.parentNode.addEventListener('mousemove', mouseMoved);
 	  }
 
 	  function mouseMoved(event) {
@@ -834,9 +830,9 @@
 	    this.dx = prevInteraction.mousePosition.x - this.mousePosition.x;
 	    this.dy = prevInteraction.mousePosition.y - this.mousePosition.y;
 	  } else {
-      this.dx = 0.0
-      this.dy = 0.0
-    }
+	    this.dx = 0;
+	    this.dy = 0;
+	  }
 	};
 
 	InteractionEvent.prototype = {
@@ -872,22 +868,33 @@
 
 	  // Map a rectangle defined in web coordinates to image coordinates
 	  toImageRegion: function(selection) {
-	    var x = Math.round(selection.left);
-	    var y = Math.round(selection.top);
-	    var top_left = this.coordinateForPixel(x, y);
-	    var bottom_right = this.coordinateForPixel(selection.right, selection.bottom);
-
-	    return new IiifRegion({ x:           top_left.x,
-	                            y:           top_left.y,
-	                            height:      bottom_right.y - top_left.y,
-	                            width:       bottom_right.x - top_left.x,
-	                            serviceBase: this.osdCanvas.source['@id']
-	                           });
+	    return new IiifRegion(this.coordinatesForIIIFRegion(selection));
 	  },
 
 	  pixelForCoordinate: function(x, y) {
 	    var view_coord = this.osdCanvas.viewport.imageToViewportCoordinates(x, y);
 	    return this.osdCanvas.viewport.pixelFromPoint(view_coord);
+	  },
+
+	  coordinatesForIIIFRegion: function(selection) {
+	    var x = Math.round(selection.left);
+	    var y = Math.round(selection.top);
+	    var top_left = this.coordinateForPixel(x, y);
+	    var bottom_right = this.coordinateForPixel(selection.right, selection.bottom);
+	    var height = bottom_right.y - top_left.y;
+	    var width = bottom_right.x - top_left.x;
+	    if (width < 1) {
+	      width = 1;
+	    }
+	    if (height < 1) {
+	      height = 1;
+	    }
+	    return { x:           top_left.x,
+	             y:           top_left.y,
+	             height:      height,
+	             width:       width,
+	             serviceBase: this.osdCanvas.source['@id']
+	    };
 	  },
 
 	  // Map a rectangle defined in image coordinates to web coordinates
