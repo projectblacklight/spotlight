@@ -39,7 +39,7 @@ module Migration
     def migrate_contact_avatars
       Spotlight::Contact.all.each do |contact|
         avatar = copy_contact_image_to_avatar(contact)
-        contact.update(avatar: avatar)
+        contact.update(avatar: avatar) if avatar
       end
     end
 
@@ -47,12 +47,12 @@ module Migration
     def copy_contact_image_to_avatar(contact)
       filename = contact.read_attribute_before_type_cast('avatar')
       filepath = "public/uploads/spotlight/contact/avatar/#{contact.id}/#{filename}"
+      return unless File.exist?(filepath)
       old_file = File.new(filepath)
       image = contact.create_avatar { |i| i.image.store!(old_file) }
-      iiif_url = riiif.image_url(image.id,
-                                 region: avatar_coordinates(contact),
-                                 size: avatar_size(contact),
-                                 host: hostname)
+      iiif_url = riiif.image_url(
+        image.id, region: avatar_coordinates(contact), size: avatar_size(contact), host: hostname
+      )
       image.update(iiif_url: iiif_url)
       image
     end

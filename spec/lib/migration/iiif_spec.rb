@@ -32,18 +32,25 @@ RSpec.describe Migration::IIIF do
     let(:file) { double }
     let(:contact1) { Spotlight::Contact.create }
     let(:contact2) { Spotlight::Contact.create }
+    let(:contact3) { Spotlight::Contact.create }
+
     before do
       allow(File).to receive(:new).and_return(file)
       allow(contact1).to receive('read_attribute_before_type_cast').and_call_original
       allow(contact2).to receive('read_attribute_before_type_cast').and_call_original
+      allow(contact3).to receive('read_attribute_before_type_cast').and_call_original
       allow(contact1).to receive('read_attribute_before_type_cast').with('avatar').and_return('file1.jpg')
       allow(contact2).to receive('read_attribute_before_type_cast').with('avatar').and_return('file2.jpg')
+      allow(contact3).to receive('read_attribute_before_type_cast').with('avatar').and_return(nil)
+      allow(File).to receive(:exist?).with('public/uploads/spotlight/contact/avatar/1/').and_return(true)
+      allow(File).to receive(:exist?).with('public/uploads/spotlight/contact/avatar/2/').and_return(true)
+      allow(File).to receive(:exist?).with('public/uploads/spotlight/contact/avatar/3/').and_return(false)
     end
     it 'migrates' do
       expect do
         instance.send :migrate_contact_avatars
       end.to change { Spotlight::FeaturedImage.count }.by(2)
-      expect(Spotlight::Contact.all.pluck(:avatar_id)).to eq Spotlight::FeaturedImage.all.pluck(:id)
+      expect(Spotlight::Contact.all.pluck(:avatar_id).compact).to eq Spotlight::FeaturedImage.all.pluck(:id)
     end
   end
 end
