@@ -1,5 +1,7 @@
 describe 'Report a Problem', type: :feature do
   let!(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:honeypot_field_name) { Spotlight::Engine.config.spambot_honeypot_email_field }
+
   it 'does not have a header link' do
     visit root_path
     expect(page).to_not have_content 'Feedback'
@@ -29,6 +31,20 @@ describe 'Report a Problem', type: :feature do
       expect do
         click_on 'Send'
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+
+    it 'rejects a spammy looking problem report', js: true do
+      visit spotlight.exhibit_solr_document_path(exhibit, id: 'dq287tq6352')
+      click_on 'Feedback'
+      expect(find('#contact_form_current_url', visible: false).value).to end_with spotlight.exhibit_solr_document_path(exhibit, id: 'dq287tq6352')
+      fill_in 'Name', with: 'Some Body'
+      fill_in 'Email', with: 'test@example.com'
+      page.find("#contact_form_#{honeypot_field_name}", visible: false).set 'possible_spam@spam.com'
+      fill_in 'Message', with: 'This is my problem report'
+
+      expect do
+        click_on 'Send'
+      end.not_to change { ActionMailer::Base.deliveries.count }
     end
   end
 end

@@ -15,6 +15,7 @@ require 'clipboard/rails'
 module Spotlight
   ##
   # Spotlight::Engine
+  # rubocop:disable ClassLength
   class Engine < ::Rails::Engine
     isolate_namespace Spotlight
     # Breadcrumbs on rails must be required outside of an initializer or it doesn't get loaded.
@@ -171,6 +172,8 @@ module Spotlight
 
     # default email address to send "Report a Problem" feedback to (in addition to any exhibit-specific contacts)
     config.default_contact_email = nil
+
+    config.spambot_honeypot_email_field = :email_address
 
     initializer 'blacklight.configuration' do
       # Field containing the last modified date for a Solr document
