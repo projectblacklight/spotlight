@@ -4,8 +4,9 @@
   <div class="row">
     <%= f.text_field :name %>
     <span style="display:none;visibility:hidden;">
-      <%= label_tag(:email_address, 'Ignore this text box. It is used to detect spammers. If you enter anything into this text box, your message will not be sent.') %><br/>
-      <%= f.email_field :email_address %>
+      <% honeypot_field_name = Spotlight::Engine.config.spambot_honeypot_email_field %>
+      <%= label_tag(honeypot_field_name, t(:'.honeypot_field_explanation')) %><br/>
+      <%= f.email_field honeypot_field_name %>
     </span>
     <%= f.email_field :email %>
     <%= f.text_area :message, rows: 7 %>

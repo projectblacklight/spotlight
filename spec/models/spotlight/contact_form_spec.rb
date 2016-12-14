@@ -1,6 +1,7 @@
 describe Spotlight::ContactForm do
   subject { described_class.new(name: 'Root', email: 'user@example.com').tap { |c| c.current_exhibit = exhibit } }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:honeypot_field_name) { Spotlight::Engine.config.spambot_honeypot_email_field }
 
   context 'with a site-wide contact email' do
     before { allow(Spotlight::Engine.config).to receive_messages default_contact_email: 'root@localhost' }
@@ -34,23 +35,23 @@ describe Spotlight::ContactForm do
   context 'when validating feedback submission fields' do
     it 'allows submissions that set a valid email address' do
       subject.email = 'user@legitimatebusinesspersonssocialclub.biz'
-      subject.email_address = ''
+      subject.send("#{honeypot_field_name}=", '')
       expect(subject).to be_valid
     end
 
     it 'rejects submissions that set an invalid email address' do
       subject.email = 'user'
-      subject.email_address = ''
+      subject.send("#{honeypot_field_name}=", '')
       expect(subject).to_not be_valid
     end
 
     it 'allows submissions that leave the spammer honeypot field blank' do
-      subject.email_address = ''
+      subject.send("#{honeypot_field_name}=", '')
       expect(subject).to be_valid
     end
 
     it 'rejects submissions that set the spammer honeypot field' do
-      subject.email_address = 'spam@spam.com'
+      subject.send("#{honeypot_field_name}=", 'spam@spam.com')
       expect(subject).to_not be_valid
     end
   end

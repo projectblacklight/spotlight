@@ -29,7 +29,7 @@ module Spotlight
     end
 
     def contact_form_params
-      params.require(:contact_form).permit(:name, :email, :email_address, :message, :current_url)
+      params.require(:contact_form).permit(:name, :email, Spotlight::Engine.config.spambot_honeypot_email_field, :message, :current_url)
     end
   end
 end
