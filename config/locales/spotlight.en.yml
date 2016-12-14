@@ -172,6 +172,7 @@ en:
     contact_forms:
       new:
         header: "Feedback"
+        honeypot_field_explanation: 'Ignore this text box. It is used to detect spammers. If you enter anything into this text box, your message will not be sent.'
     curation:
       sidebar:
         header: Curation
@@ -650,6 +651,7 @@ en:
     shared:
       report_a_problem:
         title: Contact Us
+        honeypot_field_explanation: 'Ignore this text box. It is used to detect spammers. If you enter anything into this text box, your message will not be sent.'
     indexing_complete_mailer:
       documents_indexed:
         title: "Your CSV file has just finished being processed."
