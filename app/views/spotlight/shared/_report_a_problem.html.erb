@@ -6,7 +6,11 @@
 
     <h2><%= t(:'.title') %></h2>
     <%= f.text_field :name %>
-    <%= f.text_field :email %>
+    <span style="display:none;visibility:hidden;">
+      <%= label_tag(:email_address, 'Ignore this text box. It is used to detect spammers. If you enter anything into this text box, your message will not be sent.') %><br/>
+      <%= f.email_field :email_address %>
+    </span>
+    <%= f.email_field :email %>
     <%= f.text_area :message, rows: 7 %>
     <%= f.hidden_field :current_url %>
     <div class="form-actions">

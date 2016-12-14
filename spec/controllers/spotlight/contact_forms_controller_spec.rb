@@ -16,15 +16,15 @@ describe Spotlight::ContactFormsController, type: :controller do
   describe 'POST create' do
     it 'sends an email' do
       expect do
-        post :create, params: { exhibit_id: exhibit.id, contact_form: { name: 'Joe Doe', email: 'jdoe@example.com' } }
+        post :create, params: { exhibit_id: exhibit.id, contact_form: { name: 'Joe Doe', email: 'jdoe@example.com', email_address: '' } }
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
     it 'redirects back' do
-      post :create, params: { exhibit_id: exhibit.id, contact_form: { name: 'Joe Doe', email: 'jdoe@example.com' } }
+      post :create, params: { exhibit_id: exhibit.id, contact_form: { name: 'Joe Doe', email: 'jdoe@example.com', email_address: '' } }
       expect(response).to redirect_to 'http://example.com'
     end
     it 'sets a flash message' do
-      post :create, params: { exhibit_id: exhibit.id, contact_form: { name: 'Joe Doe', email: 'jdoe@example.com' } }
+      post :create, params: { exhibit_id: exhibit.id, contact_form: { name: 'Joe Doe', email: 'jdoe@example.com', email_address: '' } }
       expect(flash[:notice]).to eq 'Thanks. Your feedback has been sent.'
     end
   end

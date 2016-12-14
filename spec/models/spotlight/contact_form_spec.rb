@@ -30,4 +30,28 @@ describe Spotlight::ContactForm do
       expect(subject.headers[:cc]).to eq 'curator@example.com, addl_curator@example.com'
     end
   end
+
+  context 'when validating feedback submission fields' do
+    it 'allows submissions that set a valid email address' do
+      subject.email = 'user@legitimatebusinesspersonssocialclub.biz'
+      subject.email_address = ''
+      expect(subject).to be_valid
+    end
+
+    it 'rejects submissions that set an invalid email address' do
+      subject.email = 'user'
+      subject.email_address = ''
+      expect(subject).to_not be_valid
+    end
+
+    it 'allows submissions that leave the spammer honeypot field blank' do
+      subject.email_address = ''
+      expect(subject).to be_valid
+    end
+
+    it 'rejects submissions that set the spammer honeypot field' do
+      subject.email_address = 'spam@spam.com'
+      expect(subject).to_not be_valid
+    end
+  end
 end
