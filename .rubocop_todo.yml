@@ -116,3 +116,9 @@ Style/MultilineIfModifier:
 Style/SingleLineBlockParams:
   Exclude:
     - 'app/models/concerns/spotlight/solr_document.rb'
+
+RSpec/MessageSpies:
+  Enabled: false
+  
+RSpec/RepeatedDescription:
+  Enabled: false
