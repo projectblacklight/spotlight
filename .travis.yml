@@ -2,11 +2,11 @@ notifications:
   email: false
 
 rvm:
-  - 2.3.1
+  - 2.4.0
 
 matrix:
   include:
-    - rvm: 2.2.5
+    - rvm: 2.3.3
       env: "RAILS_VERSION=4.2.7.1"
 
 notifications:
@@ -15,7 +15,7 @@ notifications:
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-    - RAILS_VERSION=5.0.0.1
+    - RAILS_VERSION=5.0.1
 
 sudo: false
 language: ruby
