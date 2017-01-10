@@ -338,6 +338,15 @@ en:
     dashboards:
       show:
         header: Dashboard
+      reindexing_activity:
+        no_reindexing_activity: There has been no reindexing activity
+        header: Recent Item Indexing Activity
+        field:
+          date: Date
+          items_reindexed_count: Items Indexed
+          duration: Elapsed Time
+          job_status: Status
+          user: Requested By
       page_activity:
         header: Recent Site Building Activity
         new_feature_page: "Add new Feature page"
@@ -669,3 +678,9 @@ en:
       header: Actions
       create_exhibit: 'Create a new exhibit'
       documentation: 'Curator documentation'
+  reindexing_log:
+    status:
+      unstarted: Not Yet Started
+      in_progress: In Progress
+      succeeded: Successful
+      failed: Failed
