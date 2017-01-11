@@ -3,6 +3,8 @@ module Spotlight
   # Helper for browse views
   module BrowseHelper
     include ::BlacklightConfigurationHelper
+    include Spotlight::RenderingHelper
+
     def document_index_view_type
       if @search && @search.default_index_view_type.present? && params[:view].blank?
         blacklight_config.view[@search.default_index_view_type].key

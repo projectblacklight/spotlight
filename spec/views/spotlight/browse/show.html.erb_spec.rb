@@ -45,6 +45,12 @@ describe 'spotlight/browse/show', type: :view do
     expect(response).to have_selector 'p', text: search.long_description
   end
 
+  it 'renders the long description as markdown' do
+    allow(search).to receive_messages(long_description: '[some link](/somewhere)')
+    render
+    expect(response).to have_selector 'p a', text: 'some link'
+  end
+
   it 'displays search results actions' do
     render
     expect(response).to have_content 'Sort and Per Page actions'
