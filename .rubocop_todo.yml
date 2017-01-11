@@ -100,7 +100,7 @@ Rails/OutputSafety:
     - 'app/controllers/spotlight/filters_controller.rb'
     - 'app/controllers/spotlight/searches_controller.rb'
     - 'app/controllers/spotlight/sites_controller.rb'
-    - 'app/helpers/spotlight/pages_helper.rb'
+    - 'app/helpers/spotlight/rendering_helper.rb'
     - 'app/helpers/spotlight/title_helper.rb'
 
 # Offense count: 6

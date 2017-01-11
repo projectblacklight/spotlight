@@ -2,6 +2,8 @@ module Spotlight
   ##
   # Sir-trevor helpers methods
   module PagesHelper
+    include Spotlight::RenderingHelper
+
     ##
     # Override the default #sir_trevor_markdown so we can use
     # a more complete markdown rendered
@@ -12,7 +14,7 @@ module Spotlight
                      ''
                    end
 
-      GitHub::Markup.render('.md', clean_text).html_safe
+      render_markdown(clean_text)
     end
 
     def available_index_fields

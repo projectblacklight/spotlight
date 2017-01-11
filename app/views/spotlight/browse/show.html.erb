@@ -10,7 +10,7 @@
     <h1><%= render 'search_title', search: @search %></h1>
   <% end %>
   <% if @search.long_description.present? %>
-    <p class="long-description-text"><%= @search.long_description %></p>
+    <p class="long-description-text"><%= render_markdown @search.long_description %></p>
   <% end %>
 </div>
 
