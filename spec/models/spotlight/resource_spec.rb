@@ -83,6 +83,14 @@ describe Spotlight::Resource, type: :model do
           subject.reindex
         end
 
+        it 'touches the exhibit to clear any caches' do
+          allow(subject.exhibit).to receive(:touch)
+
+          subject.reindex
+
+          expect(subject.exhibit).to have_received(:touch)
+        end
+
         it 'records indexing metadata as document attributes' do
           subject.reindex
 

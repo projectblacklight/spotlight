@@ -29,6 +29,7 @@ module Spotlight
     around_index :reindex_with_logging
     after_index :commit
     after_index :completed!
+    after_index :touch_exhibit!
 
     ##
     # Persist the record to the database, and trigger a reindex to solr
@@ -134,6 +135,10 @@ module Spotlight
         blacklight_solr.commit
       rescue => e
         Rails.logger.warn "Unable to commit to solr: #{e}"
+      end
+
+      def touch_exhibit!
+        exhibit.touch
       end
 
       def write?
