@@ -22,7 +22,7 @@ module Spotlight
   ##
   # Serialize the page hierarchy (e.g. for Feature pages)
   class NestedPageRepresenter < PageRepresenter
-    collection :child_pages, parse_strategy: ->(fragment, _i, options) { options.represented.child_pages.find_or_initialize_by(slug: fragment['slug']) },
+    collection :child_pages, populator: ->(fragment, options) { options[:represented].child_pages.find_or_initialize_by(slug: fragment['slug']) },
                              class: Spotlight::FeaturePage,
                              extend: NestedPageRepresenter
 
