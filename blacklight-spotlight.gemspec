@@ -35,6 +35,7 @@ these collections.)
   s.add_dependency 'blacklight-oembed', '>= 0.0.3'
   s.add_dependency 'devise', '>= 3.0'
   s.add_dependency 'devise_invitable', '~> 1.6'
+  s.add_dependency 'roar', '~> 1.1'
   s.add_dependency 'roar-rails'
   s.add_dependency 'faraday'
   s.add_dependency 'faraday_middleware'

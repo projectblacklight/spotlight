@@ -33,7 +33,7 @@ module Spotlight
       property prop
     end
 
-    collection :searches, parse_strategy: ->(fragment, _i, options) { options.represented.searches.find_or_initialize_by(slug: fragment['slug']) },
+    collection :searches, populator: ->(fragment, options) { options[:represented].searches.find_or_initialize_by(slug: fragment['slug']) },
                           class: Spotlight::Search do
       (Spotlight::Search.attribute_names - %w(id scope exhibit_id masthead_id thumbnail_id)).each do |prop|
         property prop
@@ -44,16 +44,16 @@ module Spotlight
       property :thumbnail, class: Spotlight::FeaturedImage, decorator: FeaturedImageRepresenter
     end
 
-    collection :about_pages, parse_strategy: ->(fragment, _i, options) { options.represented.about_pages.find_or_initialize_by(slug: fragment['slug']) },
+    collection :about_pages, populator: ->(fragment, options) { options[:represented].about_pages.find_or_initialize_by(slug: fragment['slug']) },
                              class: Spotlight::AboutPage,
                              decorator: PageRepresenter
 
-    collection :feature_pages, parse_strategy: ->(fragment, _i, options) { options.represented.feature_pages.find_or_initialize_by(slug: fragment['slug']) },
+    collection :feature_pages, populator: ->(fragment, options) { options[:represented].feature_pages.find_or_initialize_by(slug: fragment['slug']) },
                                getter: ->(_opts) { feature_pages.at_top_level },
                                class: Spotlight::FeaturePage,
                                decorator: NestedPageRepresenter
 
-    property :home_page, parse_strategy: ->(_fragment, options) { options.represented.home_page },
+    property :home_page, populator: ->(_fragment, options) { options[:represented].home_page },
                          class: Spotlight::HomePage,
                          decorator: PageRepresenter
 
@@ -65,14 +65,14 @@ module Spotlight
 
     property :blacklight_configuration, class: Spotlight::BlacklightConfiguration, decorator: ConfigurationRepresenter
 
-    collection :custom_fields, parse_strategy: ->(fragment, _i, options) { options.represented.custom_fields.find_or_initialize_by(slug: fragment['slug']) },
+    collection :custom_fields, populator: ->(fragment, options) { options[:represented].custom_fields.find_or_initialize_by(slug: fragment['slug']) },
                                class: Spotlight::CustomField do
       (Spotlight::CustomField.attribute_names - %w(id exhibit_id)).each do |prop|
         property prop
       end
     end
 
-    collection :contacts, parse_strategy: ->(fragment, _i, options) { options.represented.contacts.find_or_initialize_by(slug: fragment['slug']) },
+    collection :contacts, populator: ->(fragment, options) { options[:represented].contacts.find_or_initialize_by(slug: fragment['slug']) },
                           class: Spotlight::Contact do
       (Spotlight::Contact.attribute_names - %w(id exhibit_id avatar)).each do |prop|
         property prop
@@ -150,7 +150,7 @@ module Spotlight
       end
     end
 
-    collection :resources, class: ->(fragment, *) { fragment.key?('type') ? fragment['type'].constantize : Spotlight::Resource } do
+    collection :resources, class: ->(options) { options[:fragment].key?('type') ? options[:fragment]['type'].constantize : Spotlight::Resource } do
       (Spotlight::Resource.attribute_names - %w(id url exhibit_id)).each do |prop|
         property prop
       end
