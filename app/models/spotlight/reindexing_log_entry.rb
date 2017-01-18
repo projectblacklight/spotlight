@@ -14,5 +14,26 @@ module Spotlight
     def duration
       end_time - start_time if end_time
     end
+
+    def in_progress!
+      self.start_time = Time.zone.now
+      super
+    rescue
+      Rails.logger.error "unexpected error updating log entry to :in_progress from #{caller}"
+    end
+
+    def succeeded!
+      self.end_time = Time.zone.now
+      super
+    rescue
+      Rails.logger.error "unexpected error updating log entry to :succeeded from #{caller}"
+    end
+
+    def failed!
+      self.end_time = Time.zone.now
+      super
+    rescue
+      Rails.logger.error "unexpected error updating log entry to :failed from #{caller}"
+    end
   end
 end
