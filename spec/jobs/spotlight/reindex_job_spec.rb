@@ -2,6 +2,8 @@
 describe Spotlight::ReindexJob do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:resource) { FactoryGirl.create(:resource) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:log_entry) { Spotlight::ReindexingLogEntry.create(exhibit: exhibit, user: user) }
 
   before do
     allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
@@ -14,6 +16,7 @@ describe Spotlight::ReindexJob do
       exhibit.resources << resource
       exhibit.save
     end
+
     it 'attempts to reindex every resource in the exhibit' do
       # ActiveJob will reload the collection, so we go through a little trouble:
       expect_any_instance_of(Spotlight::Resource).to receive(:reindex) do |thingy|
@@ -21,6 +24,28 @@ describe Spotlight::ReindexJob do
       end
 
       subject.perform_now
+    end
+
+    context 'with a log_entry' do
+      subject { described_class.new(exhibit, log_entry) }
+
+      it 'marks the log entry as started' do
+        expect(log_entry).to receive(:in_progress!)
+        subject.perform_now
+      end
+
+      it 'marks the log entry as successful if there is no error' do
+        expect(log_entry).to receive(:succeeded!)
+        subject.perform_now
+      end
+
+      it 'marks the log entry as failed if there is an error' do
+        unexpected_error = StandardError.new
+        # it'd be more realistic to raise on resource#reindex, but that's already stubbed above, so this'll have to do
+        expect(subject).to receive(:perform).with(exhibit, log_entry).and_raise unexpected_error
+        expect(log_entry).to receive(:failed!)
+        expect { subject.perform_now }.to raise_error unexpected_error
+      end
     end
   end
 

@@ -8,7 +8,21 @@ module Spotlight
       resource_list(job.arguments.first).each(&:waiting!)
     end
 
-    def perform(exhibit_or_resources)
+    around_perform do |job, block|
+      job_log_entry = log_entry(job)
+      job_log_entry.in_progress! if job_log_entry
+
+      begin
+        block.call
+      rescue
+        job_log_entry.failed! if job_log_entry
+        raise
+      end
+
+      job_log_entry.succeeded! if job_log_entry
+    end
+
+    def perform(exhibit_or_resources, _log_entry = nil)
       resource_list(exhibit_or_resources).each(&:reindex)
     end
 
@@ -22,6 +36,10 @@ module Spotlight
       else
         Array(exhibit_or_resources)
       end
+    end
+
+    def log_entry(job)
+      job.arguments.second if job.arguments.second.is_a?(Spotlight::ReindexingLogEntry)
     end
   end
 end

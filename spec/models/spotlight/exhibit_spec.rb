@@ -190,10 +190,28 @@ describe Spotlight::Exhibit, type: :model do
 
   describe '#reindex_later' do
     subject { FactoryGirl.create(:exhibit) }
+    let(:log_entry) { Spotlight::ReindexingLogEntry.new(exhibit: subject, user: user, items_reindexed_count: subject.resources.size) }
 
-    it 'queues a reindex job for the exhibit' do
-      expect(Spotlight::ReindexJob).to receive(:perform_later).with(subject)
-      subject.reindex_later
+    context 'user is omitted' do
+      let(:user) { nil }
+
+      it 'queues a reindex job for the exhibit, with nil user for the log entry' do
+        expect(subject).to receive(:new_reindexing_log_entry).with(nil).and_return(log_entry)
+        expect(Spotlight::ReindexJob).to receive(:perform_later).with(subject, log_entry)
+        subject.reindex_later
+        expect(log_entry.user).to be nil
+      end
+    end
+
+    context 'non-nil user is provided' do
+      let(:user) { FactoryGirl.build(:user) }
+
+      it 'queues a reindex job for the exhibit, with actual user for the log entry' do
+        expect(subject).to receive(:new_reindexing_log_entry).with(user).and_return(log_entry)
+        expect(Spotlight::ReindexJob).to receive(:perform_later).with(subject, log_entry)
+        subject.reindex_later user
+        expect(log_entry.user).to eq user
+      end
     end
   end
 
