@@ -80,8 +80,8 @@ module Spotlight
       end
     end
 
-    def reindex_later
-      Spotlight::ReindexJob.perform_later(self)
+    def reindex_later(user = nil)
+      Spotlight::ReindexJob.perform_later(self, new_reindexing_log_entry(user))
     end
 
     def uploaded_resource_fields
@@ -108,6 +108,10 @@ module Spotlight
 
     def sanitize_description
       self.description = ::Rails::Html::FullSanitizer.new.sanitize(description)
+    end
+
+    def new_reindexing_log_entry(user = nil)
+      Spotlight::ReindexingLogEntry.create(exhibit: self, user: user, items_reindexed_count: resources.size, job_status: 'unstarted')
     end
   end
 end

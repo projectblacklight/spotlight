@@ -35,7 +35,7 @@ module Spotlight
     end
 
     def reindex_all
-      @exhibit.reindex_later
+      @exhibit.reindex_later current_user
 
       redirect_to admin_exhibit_catalog_path(@exhibit), notice: t(:'spotlight.resources.reindexing_in_progress')
     end
