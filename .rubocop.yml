@@ -50,6 +50,10 @@ Metrics/ModuleLength:
 Metrics/LineLength:
   Max: 160
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/models/spotlight/blacklight_configuration_spec.rb'
+
 Metrics/ClassLength:
   Exclude:
     - 'app/models/spotlight/resource.rb'
