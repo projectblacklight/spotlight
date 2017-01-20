@@ -162,6 +162,7 @@ module Spotlight
             v.upstream_if = v.if unless v.if.nil?
             v.enabled = v.show
             v.if = :field_enabled? unless v.if == false
+            v.upstream_if = nil if v.upstream_if == v.if
             v.normalize! config
             v.validate!
           end
@@ -204,6 +205,8 @@ module Spotlight
         field = Blacklight::Configuration::FacetField.new x.configuration.merge(
           key: x.field, field: x.solr_field, show: false, custom_field: true
         )
+        field.if = :field_enabled?
+        field.enabled = false
         [x.field, field]
       end]
     end
