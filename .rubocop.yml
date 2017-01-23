@@ -64,7 +64,7 @@ Metrics/MethodLength:
     - 'lib/generators/spotlight/**/*'
 
 RSpec/NestedGroups:
-  MaxNesting: 4
+  Max: 4
 
 RSpec/MultipleExpectations:
   Max: 8
