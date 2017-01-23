@@ -86,7 +86,7 @@ module Spotlight
     end
 
     def to_solr
-      { self.class.unique_key.to_sym => id }.reverse_merge(sidecars.inject({}) { |a, e| a.merge(e.to_solr) }).merge(tags_to_solr)
+      { self.class.unique_key.to_sym => id }.reverse_merge(sidecars.inject({}) { |acc, elem| acc.merge(elem.to_solr) }).merge(tags_to_solr)
     end
 
     def make_public!(exhibit)
