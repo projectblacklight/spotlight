@@ -10,7 +10,7 @@ describe 'Add and update the site masthead', type: :feature do
       click_link 'Appearance'
     end
 
-    click_link 'Site masthead'
+    click_link 'Exhibit masthead'
 
     within '#site-masthead' do
       check 'Show background image in masthead'
@@ -30,7 +30,7 @@ describe 'Add and update the site masthead', type: :feature do
       click_link 'Appearance'
     end
 
-    click_link 'Site masthead'
+    click_link 'Exhibit masthead'
 
     within '#site-masthead' do
       expect(field_labeled('Show background image in masthead')).to be_checked
@@ -45,7 +45,7 @@ describe 'Add and update the site masthead', type: :feature do
       click_link 'Appearance'
     end
 
-    click_link 'Site masthead'
+    click_link 'Exhibit masthead'
 
     within '#site-masthead' do
       check 'Show background image in masthead'
@@ -70,7 +70,7 @@ describe 'Add and update the site masthead', type: :feature do
       click_link 'Appearance'
     end
 
-    click_link 'Site masthead'
+    click_link 'Exhibit masthead'
 
     within '#site-masthead' do
       attach_file('exhibit_masthead_attributes_file', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
@@ -92,7 +92,7 @@ describe 'Add and update the site masthead', type: :feature do
       click_link 'Appearance'
     end
 
-    click_link 'Site masthead'
+    click_link 'Exhibit masthead'
 
     within '#site-masthead' do
       check 'Show background image in masthead'
