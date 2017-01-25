@@ -45,13 +45,13 @@
         <%= f.fields_for :masthead, (@search.masthead || @search.build_masthead) do |m| %>
           <p class="instructions"><%= t(:'.masthead.help') %></p>
           <p class="instructions"><%= t(:'.masthead.help_secondary') %></p>
-          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection %>
+          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection, crop_type: :masthead %>
         <% end %>
       </div>
       <div role="tabpanel" class="tab-pane" id="search-thumbnail">
         <%= f.fields_for :thumbnail, (@search.thumbnail || @search.build_thumbnail) do |m| %>
           <p class="instructions"><%= t(:'.thumbnail.help') %></p>
-          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.featured_image_thumb_size %>
+          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.featured_image_thumb_size, crop_type: :thumbnail %>
         <% end %>
       </div>
 

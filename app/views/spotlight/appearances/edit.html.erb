@@ -32,14 +32,14 @@
       <div role="tabpanel" class="tab-pane active" id="site-masthead">
         <p class="instructions"><%= t(:'.site_masthead.help') %></p>
         <%= f.fields_for(:masthead, current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection %>
+          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection, crop_type: :masthead %>
         <% end %>
       </div>
 
       <div role="tabpanel" class="tab-pane" id="site-thumbnail">
         <p class="instructions"><%= t(:'.site_thumbnail.help') %></p>
         <%= f.fields_for(:thumbnail, current_exhibit.thumbnail || current_exhibit.build_thumbnail) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.thumbnail_initial_crop_selection %>
+          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.thumbnail_initial_crop_selection, crop_type: :thumbnail %>
         <% end %>
       </div>
 

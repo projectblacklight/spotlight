@@ -9,7 +9,7 @@
   </div>
 <% end %>
 <%= field_set_tag(t(:'.source.remote.header')) do %>
-  <p class="instructions"><%= t(:'.source.remote.help') %></p>
+  <p class="instructions"><%= t(:'.crop_area.help', thing: crop_type) %></p>
   <%= iiif_cropper_tags f, initial_crop_selection: initial_crop_selection %>
 <% end %>
 </div>

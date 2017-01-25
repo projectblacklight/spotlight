@@ -9,7 +9,7 @@
   <%= f.fields_for :avatar, (@contact.avatar || @contact.build_avatar) do |af| %>
     <div data-cropper="<%= af.object.model_name.singular_route_key %>" data-form-prefix="<%= form_prefix(af) %>">
     <%= field_set_tag(t(:'.avatar.header')) do %>
-      <p class="instructions"><%= t(:'.avatar.help') %></p>
+      <p class="instructions"><%= t(:'featured_images.form.crop_area.help', scope: [:spotlight], thing: 'contact photo') %></p>
 
       <div>
         <%= af.radio_button(:source, :remote, label: t(:'.source.remote.label')) %>

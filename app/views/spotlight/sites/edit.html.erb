@@ -21,7 +21,7 @@
         <div role="tabpanel" class="tab-pane" id="site-masthead">
           <p class="instructions"><%= t(:'.site_masthead.help') %></p>
           <%= f.fields_for(:masthead, @site.masthead || @site.build_masthead) do |m| %>
-            <%= render '/spotlight/featured_images/upload_form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection %>
+            <%= render '/spotlight/featured_images/upload_form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection, crop_type: :masthead %>
           <% end %>
         </div>
       </div>
