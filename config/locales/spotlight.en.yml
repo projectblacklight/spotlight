@@ -485,9 +485,6 @@ en:
             label: "Upload an image"
         avatar:
           header: Avatar
-          help: >
-            Adjust the cropping box to cover the area of the image you want to use
-            as the avatar image. Click "Save" to save the cropped area.
     about_pages:
       contacts_form:
         header: Contacts
@@ -510,6 +507,10 @@ en:
         published: "Publish"
     featured_images:
       form: &featured_images_form
+        crop_area:
+          help: >
+            Adjust the image so that the rectangle contains the area you want to use as the %{thing}.
+            Click "Save changes" to save the cropped area.
         source:
           header: "Image source"
           exhibit:
@@ -518,9 +519,6 @@ en:
           remote:
             label: "Upload an image"
             header: "Cropped image"
-            help: >
-              Adjust the cropping box to cover the area of the image you want to use
-              as the thumbnail image. Click "Save changes" to save the cropped area.
       upload_form: *featured_images_form
 
     resources:
