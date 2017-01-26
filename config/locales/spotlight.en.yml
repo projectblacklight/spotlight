@@ -511,6 +511,10 @@ en:
           help: >
             Adjust the image so that the rectangle contains the area you want to use as the %{thing}.
             Click "Save changes" to save the cropped area.
+        non_iiif_alert_html: >
+          The image source must be a IIIF image.
+          Contact your exhibits adminstrator or see the
+          <a href="http://iiif.io">IIIF website</a> for more information about IIIF.
         source:
           header: "Image source"
           exhibit:

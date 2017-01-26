@@ -66,7 +66,8 @@ function addAutocompletetoFeaturedImage(){
 }
 
 function addImageSelector(input, panel, manifestUrl) {
-  if (manifestUrl === undefined) {
+  if (!manifestUrl) {
+    showNonIiifAlert(input);
     return;
   }
   var cropper = input.data('iiifCropper');
@@ -87,6 +88,8 @@ function addImageSelector(input, panel, manifestUrl) {
         });
       });
 
+      hideNonIiifAlert(input);
+
       if(thumbs.length == 1) {
         cropper.setTileSource(thumbs[0].tilesource);
       } else {
@@ -97,6 +100,14 @@ function addImageSelector(input, panel, manifestUrl) {
       }
     }
   );
+}
+
+function showNonIiifAlert(input){
+  input.parent().prev('[data-behavior="non-iiif-alert"]').show();
+}
+
+function hideNonIiifAlert(input){
+  input.parent().prev('[data-behavior="non-iiif-alert"]').hide();
 }
 
 Spotlight.onLoad(function(){
