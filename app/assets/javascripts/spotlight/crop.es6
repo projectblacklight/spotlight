@@ -7,6 +7,10 @@ export default class Crop {
     this.formPrefix = this.cropTool.data('form-prefix');
     this.iiifUrlField = $('#' + this.formPrefix + '_iiif_tilesource');
     this.iiifRegionField = $('#' + this.formPrefix + '_iiif_region');
+    this.iiifManifestField = $('#' + this.formPrefix + '_iiif_manifest_url');
+    this.iiifCanvasField = $('#' + this.formPrefix + '_iiif_canvas_id');
+    this.iiifImageField = $('#' + this.formPrefix + '_iiif_image_id');
+
     this.form = cropArea.closest('form');
     this.initialCropRegion = [0, 0, cropArea.data('crop-width'), cropArea.data('crop-height')];
     this.tileSource = null;
@@ -15,6 +19,15 @@ export default class Crop {
     this.setupAjaxFileUpload();
     this.setupExistingIiiifCropper();
     this.invalidateMapSizeOnTabToggle();
+  }
+
+  // Set all of the various input fields to
+  // the appropriate IIIF URL or identifier
+  setIiifFields(iiifObject) {
+    this.setTileSource(iiifObject.tilesource);
+    this.iiifManifestField.val(iiifObject.manifest);
+    this.iiifCanvasField.val(iiifObject.canvasId);
+    this.iiifImageField.val(iiifObject.imageId);
   }
 
   // Set the Crop tileSource and setup the cropper

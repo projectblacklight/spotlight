@@ -81,7 +81,10 @@ function addImageSelector(input, panel, manifestUrl) {
             thumbs.push(
               {
                 'thumb': iiifService + '/full/!100,100/0/default.jpg',
-                'tilesource': iiifService + '/info.json'
+                'tilesource': iiifService + '/info.json',
+                'manifest': manifestUrl,
+                'canvasId': canvas['@id'],
+                'imageId': image['@id']
               }
             );
           });
@@ -91,11 +94,11 @@ function addImageSelector(input, panel, manifestUrl) {
       hideNonIiifAlert(input);
 
       if(thumbs.length == 1) {
-        cropper.setTileSource(thumbs[0].tilesource);
+        cropper.setIiifFields(thumbs[0]);
       } else {
         panel.show();
         panel.multiImageSelector(thumbs, function(selectorImage) {
-          cropper.setTileSource(selectorImage.tilesource);
+          cropper.setIiifFields(selectorImage);
         });
       }
     }
