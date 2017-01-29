@@ -1,0 +1,84 @@
+/* Header bar at top (Bootstrap nav-bar) */
+
+.navbar-inverse .navbar-brand {
+  color: $navbar-inverse-link-color;
+}
+
+.navbar-inverse .navbar-brand:hover {
+  color: $navbar-inverse-link-hover-color;
+}
+
+/* this is not overriding blacklight's navbar-brand in _header.scss */
+.navbar-brand {
+  /* The main logo image for the Blacklight instance */
+  @if $logo-image {
+    background: transparent $logo-image no-repeat top left !important;
+  }
+
+  @if $logo_image {
+    /* deprecated */
+    background: transparent image_url($logo_image) no-repeat top left !important;
+  }
+
+  display: inline-block !important;
+  flex: 0 0 40px !important;
+  height: 48px !important;
+  width: 58px !important;
+  margin-right: 25px !important;
+  margin-top: 2px !important;
+  overflow: visible !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-indent: 100% !important;
+  white-space: nowrap !important;
+  font-size: 1.15em !important;
+
+  .vertical-line {
+    width: 1px;
+    height: 150%;
+    top: -4px;
+    position: relative;
+    background: $navbar-inverse-link-color;
+  }
+
+  .vertical-line: hover {
+    background: $navbar-inverse-link-hover-color;
+  }
+
+  @media (max-width: 768px) {
+    .vertical-line {
+      display: none;
+    }
+    .logo-brand-name {
+      display: none;
+    }
+  }
+  
+}
+
+.submit-search-text {
+  @extend .sr-only;
+}
+
+.search-query-form {
+  z-index: 1;
+
+  .input-group {
+    width: 100%;
+  }
+
+  .input-group-addon {
+    &.for-search-field {
+      background-color: $input-bg;
+      border-radius: $border-radius-base 0 0 $border-radius-base;
+      width: 15ch;
+    }
+  }
+
+  .search_field {
+    background: transparent;
+    border: none;
+    font-size: $font-size-small;
+  }
+}
+

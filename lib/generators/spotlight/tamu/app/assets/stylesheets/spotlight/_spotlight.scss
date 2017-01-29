@@ -1,0 +1,46 @@
+@import "spotlight/variables";
+@import "spotlight/mixins";
+@import "bootstrap/variables";
+
+@import "spotlight/navbar";
+@import "spotlight/sir-trevor_overrides";
+@import "spotlight/attachments";
+@import "spotlight/pages";
+@import 'blacklight_gallery/default';
+@import "spotlight/browse";
+@import "spotlight/header";
+@import "spotlight/footer";
+@import "spotlight/catalog";
+@import "spotlight/croppable";
+@import "spotlight/curation";
+@import "spotlight/exhibit_admin";
+@import "spotlight/edit_in_place";
+@import "spotlight/featured_browse_categories_block";
+@import "spotlight/item_text_block";
+@import "spotlight/uploaded_items_block";
+@import "spotlight/multi_image_selector";
+@import "spotlight/multi_up_item_grid";
+@import "spotlight/slideshow_block";
+@import "spotlight/upload";
+@import "spotlight/nestable";
+@import "spotlight/blacklight_configuration";
+@import "spotlight/typeahead";
+@import "spotlight/bootstrap_overrides";
+@import "spotlight/blacklight_overrides";
+@import "spotlight/report_a_problem";
+@import "spotlight/exhibits_index";
+@import "spotlight/collapse_toggle";
+
+/* Styles below keep footer at bottom of viewport */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: $footer-height + $footer-top-margin;
+  overflow-x: hidden;
+  
+  #main-container {
+    padding-bottom: 125px;
+  }
+}

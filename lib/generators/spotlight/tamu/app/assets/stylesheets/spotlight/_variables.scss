@@ -1,0 +1,47 @@
+$footer-top-margin: 3 * $padding-small-vertical !default;
+$footer-height: 118px !default;
+$white: #ffffff !default;
+$black: #000000 !default;
+
+$masthead-bg: $well-bg !default;
+$masthead-height: 180px !default;
+$masthead-image-blur: 1px !default;
+
+$exhibit-card-height: 350px !default;
+$exhibit-card-bg: $well-bg !default;
+$exhibit-card-border: $well-border !default;
+$exhibit-card-gutter: $padding-large-horizontal !default;
+$exhibit-card-image-size: 269px !default;
+$exhibit-card-shadow: inset 2px 2px 5px -2px $exhibit-card-border !default;
+
+$navbar-transparent-color: $gray !default;
+$navbar-transparent-bg: rgba(0, 0, 0, 0.2) !default;
+$navbar-transparent-border: $gray !default;
+$navbar-transparent-link-color: $gray-lighter !default;
+$navbar-transparent-link-hover-color: $gray-lighter !default;
+$navbar-transparent-link-hover-bg: rgba(255, 255, 255, 0.15) !default;
+$navbar-transparent-link-active-color: $gray-lighter !default;
+$navbar-transparent-link-active-bg: rgba(255, 255, 255, 0.3) !default;
+$navbar-transparent-link-disabled-color: #ccc !default;
+$navbar-transparent-link-disabled-bg: transparent !default;
+
+$navbar-transparent-page-bg: rgba(0, 0, 0, 0.5) !default;
+
+/* Navbar brand label */
+$navbar-transparent-brand-color: $navbar-transparent-link-color !default;
+$navbar-transparent-brand-hover-color: darken($navbar-transparent-brand-color, 10%) !default;
+$navbar-transparent-brand-hover-bg: transparent !default;
+
+/* Navbar toggle */
+$navbar-transparent-toggle-hover-bg: $navbar-default-toggle-hover-bg !default;
+$navbar-transparent-toggle-icon-bar-bg: $navbar-default-toggle-icon-bar-bg !default;
+$navbar-transparent-toggle-border-color: $navbar-default-toggle-border-color !default;
+
+$logo-image: image_url('tamu/tamu-logo-white.svg') !default;
+
+$footer-upper-background-color: #ededed;
+$footer-upper-color: #a9a09a;
+
+$footer-lower-height: 85px;
+$footer-lower-background-color: #4d4d4d;
+$footer-lower-color: #e3dfd5;
