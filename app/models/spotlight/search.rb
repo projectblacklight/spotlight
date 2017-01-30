@@ -16,8 +16,8 @@ module Spotlight
 
     belongs_to :masthead, dependent: :destroy
     belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
-    accepts_nested_attributes_for :thumbnail, update_only: true
-    accepts_nested_attributes_for :masthead, update_only: true
+    accepts_nested_attributes_for :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
+    accepts_nested_attributes_for :masthead, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
 
     def thumbnail_image_url
       return unless thumbnail && thumbnail.iiif_url

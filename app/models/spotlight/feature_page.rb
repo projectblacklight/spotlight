@@ -11,7 +11,7 @@ module Spotlight
     accepts_nested_attributes_for :child_pages
 
     belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
-    accepts_nested_attributes_for :thumbnail, update_only: true, reject_if: :all_blank
+    accepts_nested_attributes_for :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
 
     before_validation unless: :top_level_page? do
       self.exhibit = top_level_page_or_self.exhibit
