@@ -49,10 +49,6 @@ module Spotlight
 
     def update
       if @search.update search_params
-        # Update masthead and thumbnail attributes only after we have saved the association id
-        @search.update_masthead(masthead_params)
-        @search.update_thumbnail(thumbnail_params)
-
         redirect_to exhibit_searches_path(@search.exhibit), notice: t(:'helpers.submit.search.updated', model: @search.class.model_name.human.downcase)
       else
         render action: 'edit'
@@ -79,14 +75,6 @@ module Spotlight
 
     protected
 
-    def masthead_params
-      params.require(:search).require(:masthead_attributes).permit(featured_image_params)
-    end
-
-    def thumbnail_params
-      params.require(:search).require(:thumbnail_attributes).permit(featured_image_params)
-    end
-
     def autocomplete_params
       ##
       # Ideally, we would be able to search within results for all queries, but in practice
@@ -112,8 +100,8 @@ module Spotlight
         :title,
         :long_description,
         :default_index_view_type,
-        :masthead_id,
-        :thumbnail_id
+        masthead_attributes: featured_image_params,
+        thumbnail_attributes: featured_image_params
       )
     end
 
@@ -129,8 +117,7 @@ module Spotlight
         :source,
         :image,
         :remote_image_url,
-        :document_global_id,
-        # :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h
+        :document_global_id
       ]
     end
 
