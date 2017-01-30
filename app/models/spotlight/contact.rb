@@ -11,7 +11,7 @@ module Spotlight
     friendly_id :name, use: [:slugged, :scoped, :finders], scope: :exhibit
 
     belongs_to :avatar, class_name: 'Spotlight::ContactImage', dependent: :destroy
-    accepts_nested_attributes_for :avatar
+    accepts_nested_attributes_for :avatar, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
 
     before_save do
       self.contact_info = contact_info.symbolize_keys

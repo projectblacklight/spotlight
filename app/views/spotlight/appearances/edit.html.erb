@@ -32,7 +32,6 @@
       <div role="tabpanel" class="tab-pane active" id="site-masthead">
         <p class="instructions"><%= t(:'.site_masthead.help') %></p>
         <% image_form = iiif_cropper(f, :masthead, 1200, 120) %>
-        <%= image_form.hidden_field %>
         <%= f.fields_for(:masthead, current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
           <%= render '/spotlight/featured_images/form', f: m, image_form: image_form %>
         <% end %>
@@ -41,7 +40,6 @@
       <div role="tabpanel" class="tab-pane" id="site-thumbnail">
         <p class="instructions"><%= t(:'.site_thumbnail.help') %></p>
         <% image_form = iiif_cropper(f, :thumbnail, 120, 120) %>
-        <%= image_form.hidden_field %>
         <%= f.fields_for(:thumbnail, current_exhibit.thumbnail || current_exhibit.build_thumbnail) do |m| %>
           <%= render '/spotlight/featured_images/form', f: m, image_form: image_form %>
         <% end %>
