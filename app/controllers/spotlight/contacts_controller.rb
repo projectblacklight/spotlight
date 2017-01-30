@@ -10,8 +10,6 @@ module Spotlight
 
     def new
       add_breadcrumb t(:'helpers.action.spotlight/contact.create'), new_exhibit_contact_path(@exhibit)
-      # Enable the nested form to be drawn.
-      @contact.build_avatar
     end
 
     def edit
@@ -20,7 +18,6 @@ module Spotlight
 
     def update
       if @contact.update(contact_params)
-        update_avatar
         redirect_to exhibit_about_pages_path(@contact.exhibit), notice: t(:'helpers.submit.contact.updated', model: @contact.class.model_name.human.downcase)
       else
         render 'edit'
@@ -50,7 +47,6 @@ module Spotlight
 
     def contact_params
       params.require(:contact).permit(:name,
-                                      :avatar_id,
                                       contact_info: Spotlight::Contact.fields.keys,
                                       avatar_attributes: [:iiif_tilesource, :iiif_region])
     end

@@ -1,7 +1,6 @@
 module Spotlight
   ##
   # Base CRUD controller for pages
-  # rubocop:disable Metrics/ClassLength
   class PagesController < Spotlight::ApplicationController
     before_action :authenticate_user!, except: [:show]
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
@@ -63,9 +62,6 @@ module Spotlight
       @page.lock.delete if @page.lock
 
       if @page.update(page_params.merge(last_edited_by: current_user))
-
-        update_thumbnail
-
         redirect_to [@page.exhibit, @page], flash: { html_safe: true }, notice: undo_notice(:updated)
       else
         render action: 'edit'
@@ -120,7 +116,6 @@ module Spotlight
     def featured_image_attributes
       [
         :source, :image, :remote_image_url, :document_global_id, :iiif_region, :iiif_tilesource
-        # :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h
       ]
     end
 
@@ -138,16 +133,6 @@ module Spotlight
       end
     end
 
-    def update_thumbnail
-      @page.thumbnail ||= Spotlight::FeaturedImage.new
-      @page.thumbnail.update(page_thumbnail_attributes)
-      @page.save
-    end
-
-    def page_thumbnail_attributes
-      params.require(controller_name.singularize).require(:thumbnail).permit(featured_image_attributes)
-    end
-
     private
 
     # Only allow a trusted parameter "white list" through.
@@ -155,5 +140,4 @@ module Spotlight
       params.require(controller_name.singularize).permit(allowed_page_params)
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end
