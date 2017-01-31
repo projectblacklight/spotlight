@@ -2,9 +2,11 @@ export default class Crop {
   constructor(cropArea) {
     this.cropArea = cropArea;
     this.cropArea.data('iiifCropper', this);
-    this.cropSelector = '[data-cropper="' + cropArea.data('cropper') + '"]';
-    this.iiifUrlField = $('#' + cropArea.data('iiif-url-field'));
-    this.iiifRegionField = $('#' + cropArea.data('iiif-region-field'))
+    this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
+    this.cropTool = $(this.cropSelector);
+    this.formPrefix = this.cropTool.data('form-prefix');
+    this.iiifUrlField = $('#' + this.formPrefix + '_iiif_tilesource');
+    this.iiifRegionField = $('#' + this.formPrefix + '_iiif_region');
     this.form = cropArea.closest('form');
     this.initialCropRegion = [0, 0, cropArea.data('crop-width'), cropArea.data('crop-height')];
     this.tileSource = null;
@@ -26,12 +28,12 @@ export default class Crop {
 
   // Setup autocomplete inputs to have the iiif_cropper context
   setupAutoCompletes() {
-    var input = $('[data-behavior="autocomplete"]' + this.cropSelector, this.form);
+    var input = $('[data-behavior="autocomplete"]', this.cropTool);
     input.data('iiifCropper', this);
   }
 
   setupAjaxFileUpload() {
-    this.fileInput = $('input[type="file"]' + this.cropSelector, this.form);
+    this.fileInput = $('input[type="file"]', this.cropTool);
     this.fileInput.change(() => this.uploadFile());
   }
 

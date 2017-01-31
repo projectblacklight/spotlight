@@ -6,9 +6,19 @@
     <% end %>
   <% end %>
 
-  <%= field_set_tag(t(:'.avatar.header')) do %>
-    <p class="instructions"><%= t(:'.avatar.help') %></p>
-    <%= contact_crop(f, :avatar) %>
+  <%= f.fields_for :avatar, (@contact.avatar || @contact.build_avatar) do |af| %>
+    <div data-cropper="<%= af.object.model_name.singular_route_key %>" data-form-prefix="<%= form_prefix(af) %>">
+    <%= field_set_tag(t(:'.avatar.header')) do %>
+      <p class="instructions"><%= t(:'.avatar.help') %></p>
+
+      <div>
+        <%= af.radio_button(:source, :remote, label: t(:'.source.remote.label')) %>
+        <%= iiif_upload_tag(af) %>
+      </div>
+
+      <%= iiif_cropper_tags af, initial_crop_selection: Spotlight::Engine.config.contact_square_size %>
+    <% end %>
+    </div>
   <% end %>
 
   <div class="form-group primary-actions">
