@@ -4,29 +4,6 @@ describe Spotlight::Resource, type: :model do
   end
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
-  describe '#enqueued_at' do
-    it 'casts values to Time objects' do
-      t = Time.zone.now.at_beginning_of_minute
-      subject.enqueued_at = t
-
-      expect(subject.enqueued_at).to eq t
-    end
-
-    it 'handles blank values' do
-      subject.enqueued_at = nil
-      expect(subject.enqueued_at).to be_nil
-    end
-  end
-
-  describe '#last_indexed_finished' do
-    it 'casts values to Time objects' do
-      t = Time.zone.now.at_beginning_of_minute
-      subject.last_indexed_finished = t
-
-      expect(subject.last_indexed_finished).to eq t
-    end
-  end
-
   describe '#reindex' do
     context 'with a provider that generates ids' do
       subject do
@@ -53,6 +30,18 @@ describe Spotlight::Resource, type: :model do
         end
 
         subject.reindex
+      end
+
+      context 'reindexing_log_entry is provided' do
+        before do
+          allow(subject.send(:blacklight_solr)).to receive(:update)
+        end
+
+        it 'updates the count of reindexed items in the log entry' do
+          reindexing_log_entry = double(Spotlight::ReindexingLogEntry)
+          expect(reindexing_log_entry).to receive(:update).with(items_reindexed_count: 1)
+          subject.reindex reindexing_log_entry
+        end
       end
 
       context 'when the index is not writable' do
@@ -89,15 +78,6 @@ describe Spotlight::Resource, type: :model do
           subject.reindex
 
           expect(subject.exhibit).to have_received(:touch)
-        end
-
-        it 'records indexing metadata as document attributes' do
-          subject.reindex
-
-          expect(subject.indexed_at).to be > Time.zone.now - 5.seconds
-          expect(subject.last_indexed_estimate).to eq 2
-          expect(subject.last_indexed_count).to eq 2
-          expect(subject.last_index_elapsed_time).to be < 1
         end
       end
     end

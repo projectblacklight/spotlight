@@ -46,6 +46,18 @@ describe Spotlight::ReindexJob do
         expect(log_entry).to receive(:failed!)
         expect { subject.perform_now }.to raise_error unexpected_error
       end
+
+      it 'updates the items_reindexed_estimate field on the log entry' do
+        expect(log_entry).to receive(:update).with(items_reindexed_estimate: 1)
+        subject.perform_now
+      end
+
+      it 'passes log_entry to the resource.reindex call' do
+        # ActiveJob will reload the collection, so we go through a little trouble:
+        expect_any_instance_of(Spotlight::Resource).to receive(:reindex).with(log_entry).exactly(:once)
+        # expect(resource).to receive(:reindex).with(log_entry)
+        subject.perform_now
+      end
     end
   end
 

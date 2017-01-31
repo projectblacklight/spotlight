@@ -4,8 +4,14 @@ module Spotlight
   class ReindexJob < ActiveJob::Base
     queue_as :default
 
-    before_enqueue do |job|
-      resource_list(job.arguments.first).each(&:waiting!)
+    before_perform do |job|
+      job_log_entry = log_entry(job)
+      next unless job_log_entry
+
+      items_reindexed_estimate = resource_list(job.arguments.first).sum do |resource|
+        resource.document_builder.documents_to_index.size
+      end
+      job_log_entry.update(items_reindexed_estimate: items_reindexed_estimate)
     end
 
     around_perform do |job, block|
@@ -22,8 +28,10 @@ module Spotlight
       job_log_entry.succeeded! if job_log_entry
     end
 
-    def perform(exhibit_or_resources, _log_entry = nil)
-      resource_list(exhibit_or_resources).each(&:reindex)
+    def perform(exhibit_or_resources, log_entry = nil)
+      resource_list(exhibit_or_resources).each do |resource|
+        resource.reindex(log_entry)
+      end
     end
 
     private

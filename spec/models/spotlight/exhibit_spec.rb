@@ -190,7 +190,7 @@ describe Spotlight::Exhibit, type: :model do
 
   describe '#reindex_later' do
     subject { FactoryGirl.create(:exhibit) }
-    let(:log_entry) { Spotlight::ReindexingLogEntry.new(exhibit: subject, user: user, items_reindexed_count: subject.resources.size) }
+    let(:log_entry) { Spotlight::ReindexingLogEntry.new(exhibit: subject, user: user, items_reindexed_count: 0) }
 
     context 'user is omitted' do
       let(:user) { nil }
@@ -212,6 +212,25 @@ describe Spotlight::Exhibit, type: :model do
         subject.reindex_later user
         expect(log_entry.user).to eq user
       end
+    end
+  end
+
+  describe '#new_reindexing_log_entry' do
+    let(:user) { FactoryGirl.build(:user) }
+    it 'returns a properly configured Spotlight::ReindexingLogEntry instance' do
+      reindexing_log_entry = subject.send(:new_reindexing_log_entry, user)
+      expect(reindexing_log_entry.exhibit).to eq subject
+      expect(reindexing_log_entry.user).to eq user
+      expect(reindexing_log_entry.items_reindexed_count).to eq 0
+      expect(reindexing_log_entry.unstarted?).to be true
+    end
+
+    it 'does not require user the user parameter' do
+      reindexing_log_entry = subject.send(:new_reindexing_log_entry)
+      expect(reindexing_log_entry.exhibit).to eq subject
+      expect(reindexing_log_entry.user).to be nil
+      expect(reindexing_log_entry.items_reindexed_count).to eq 0
+      expect(reindexing_log_entry.unstarted?).to be true
     end
   end
 
@@ -284,7 +303,9 @@ describe Spotlight::Exhibit, type: :model do
 
   describe '#reindex_progress' do
     it 'returns a Spotlight::ReindexProgress' do
-      expect(subject.reindex_progress).to be_a Spotlight::ReindexProgress
+      reindex_progress = subject.reindex_progress
+      expect(reindex_progress).to be_a Spotlight::ReindexProgress
+      expect(reindex_progress.exhibit).to eq subject
     end
   end
 end

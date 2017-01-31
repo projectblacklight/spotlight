@@ -1,139 +1,171 @@
 describe Spotlight::ReindexProgress, type: :model do
-  let(:start_time) { 20.minutes.ago.at_beginning_of_minute }
-  let(:finish_time) { 5.minutes.ago.at_beginning_of_minute }
-  let(:updated_time) { 1.minute.ago.at_beginning_of_minute }
-  let!(:first_resource) do
-    FactoryGirl.create(
-      :resource,
-      updated_at: updated_time,
-      indexed_at: start_time,
-      enqueued_at: start_time,
-      last_indexed_finished: start_time,
-      last_indexed_estimate: 7,
-      last_indexed_count: 5,
-      index_status: 1
-    )
+  let(:reindexing_log_entries) do
+    [
+      # failed is the later of the two, and thus the return value for current_log_entry
+      FactoryGirl.create(:reindexing_log_entry, items_reindexed_estimate: 11),
+      FactoryGirl.create(:failed_reindexing_log_entry, items_reindexed_estimate: 12)
+    ]
   end
-  let!(:last_resource) do
-    FactoryGirl.create(
-      :resource,
-      updated_at: finish_time,
-      indexed_at: finish_time,
-      enqueued_at: start_time,
-      last_indexed_finished: finish_time,
-      last_indexed_estimate: 3,
-      last_indexed_count: 2,
-      index_status: 1
-    )
-  end
+  let(:exhibit) { FactoryGirl.create(:exhibit, reindexing_log_entries: reindexing_log_entries) }
 
-  let(:new_resource) do
-    FactoryGirl.create(
-      :resource,
-      last_indexed_count: 10,
-      last_indexed_estimate: 15,
-      index_status: 0
-    )
-  end
-
-  let(:resources) { [first_resource, last_resource, new_resource] }
-  subject { described_class.new(Spotlight::Resource.all) }
-  let(:json) { JSON.parse(subject.to_json) }
-
-  before do
-    allow(subject).to receive_messages(completed_resources: resources)
-  end
-
-  describe '#recently_in_progress?' do
-    let(:resources) { [first_resource, last_resource] }
-    context 'when the last resource has been updated within the allotted time' do
-      it 'is true' do
-        expect(subject).to be_recently_in_progress
-      end
-    end
-
-    context 'when any of the resources is marked as waiting' do
-      before do
-        first_resource.waiting!
-      end
-      it 'is true' do
-        expect(subject).to be_recently_in_progress
-      end
-    end
-
-    context 'when the last resources has been updated outside of the allotted time ' do
-      before do
-        expect(last_resource).to receive_messages(last_indexed_finished: 12.minutes.ago)
-      end
-      it 'is false' do
-        expect(subject).not_to be_recently_in_progress
-      end
-    end
-
-    it 'is included in the json' do
-      expect(json['recently_in_progress']).to be true
-    end
-  end
+  let(:subject) { described_class.new(exhibit) }
 
   describe '#started_at' do
-    it 'returns the indexed_at attribute of the first resource' do
-      expect(subject.started_at).to eq start_time
-    end
-
-    it 'is included in the json as a localized string' do
-      expect(json['started_at']).to eq I18n.l(start_time, format: :short)
-    end
-
-    context 'with unqueued resources' do
-      subject { described_class.new(Spotlight::Resource.where(id: new_resource.id)) }
-
-      it 'returns the indexed_at attribute of the first resource' do
-        expect(subject.started_at).to be_nil
-      end
+    it 'returns start_time for current_log_entry' do
+      expect(subject.started_at).to eq(Time.zone.parse('2017-01-10 23:00:00'))
     end
   end
 
   describe '#updated_at' do
-    let(:resources) { [first_resource, last_resource] }
+    # disable SkipsModelValidations cop for this test, because it complains about #touch, which is convenient here
+    # rubocop:disable Rails/SkipsModelValidations
+    it 'returns the time of last update for current_log_entry' do
+      lower_bound = Time.zone.now
+      subject.send(:current_log_entry).touch
+      upper_bound = Time.zone.now
 
-    it 'returns the updated_at attribute of the last resource' do
-      expect(subject.updated_at).to eq updated_time
+      expect(subject.updated_at).to be_between(lower_bound, upper_bound)
     end
+    # rubocop:enable Rails/SkipsModelValidations
+  end
 
-    it 'is included in the json as a localized string under the updated_at attribute' do
-      expect(json['updated_at']).to eq I18n.l(updated_time, format: :short)
+  describe '#finished?' do
+    it 'returns true if current_log_entry is succeeded or failed' do
+      expect(subject.finished?).to be true
     end
   end
 
   describe '#finished_at' do
-    let(:resources) { [first_resource, last_resource] }
-
-    it 'returns the updated_at attribute of the last resource' do
-      expect(subject.finished_at).to eq finish_time
-    end
-
-    it 'is included in the json as a localized string under the updated_at attribute' do
-      expect(json['finished_at']).to eq I18n.l(finish_time, format: :short)
+    it 'returns end_time for current_log_entry' do
+      expect(subject.finished_at).to eq(Time.zone.parse('2017-01-10 23:05:00'))
     end
   end
 
   describe '#total' do
-    it 'sums the resources last_indexed_estimate' do
-      expect(subject.total).to eq 25
-    end
-
-    it 'is included in the json' do
-      expect(json['total']).to eq 25
+    it 'returns items_reindexed_estimate for current_log_entry' do
+      expect(subject.total).to be 12
     end
   end
 
   describe '#completed' do
-    it 'sums the resources last_indexed_count' do
-      expect(subject.completed).to eq 17
+    it 'returns items_reindexed_count for current_log_entry' do
+      expect(subject.completed).to be 10
+    end
+  end
+
+  describe '#errored?' do
+    it 'returns true for log entries marked as failed' do
+      expect(subject.errored?).to be true
+    end
+  end
+
+  describe '#as_json' do
+    it 'returns a hash with values for current_log_entry via the various helper methods' do
+      expect(subject.as_json).to eq(
+        recently_in_progress: subject.recently_in_progress?,
+        started_at: subject.send(:localized_start_time),
+        finished_at: subject.send(:localized_finish_time),
+        updated_at: subject.send(:localized_updated_time),
+        total: subject.total,
+        completed: subject.completed,
+        errored: subject.errored?
+      )
+    end
+  end
+
+  describe '#recently_in_progress?' do
+    context 'there is no end_time for current_log_entry' do
+      let(:current_log_entry) { FactoryGirl.create(:in_progress_reindexing_log_entry) }
+      let(:exhibit) { FactoryGirl.create(:exhibit, reindexing_log_entries: [current_log_entry]) }
+
+      it 'returns true' do
+        expect(subject.recently_in_progress?).to be true
+      end
     end
 
-    it 'is included in the json' do
-      expect(json['completed']).to eq 17
+    context 'current_log_entry has an end_time less than Spotlight::Engine.config.reindex_progress_window.minutes.ago' do
+      let(:current_log_entry) { FactoryGirl.create(:recent_reindexing_log_entry, end_time: Time.zone.now) }
+      let(:exhibit) { FactoryGirl.create(:exhibit, reindexing_log_entries: [current_log_entry]) }
+
+      it 'returns true' do
+        expect(subject.recently_in_progress?).to be true
+      end
     end
+
+    context 'current_log_entry is unstarted ' do
+      let(:current_log_entry) { FactoryGirl.create(:unstarted_reindexing_log_entry) }
+      let(:exhibit) { FactoryGirl.create(:exhibit, reindexing_log_entries: [current_log_entry]) }
+
+      it 'returns false' do
+        expect(subject.recently_in_progress?).to be false
+      end
+    end
+  end
+
+  describe 'private methods' do
+    describe '#current_log_entry' do
+      let(:reindexing_log_entries) do
+        [
+          FactoryGirl.create(:unstarted_reindexing_log_entry),
+          FactoryGirl.create(:reindexing_log_entry),
+          FactoryGirl.create(:in_progress_reindexing_log_entry),
+          FactoryGirl.create(:failed_reindexing_log_entry),
+          FactoryGirl.create(:unstarted_reindexing_log_entry)
+        ]
+      end
+
+      it 'returns the latest log entry that is not unstarted' do
+        expect(subject.send(:current_log_entry)).to eq(reindexing_log_entries[2])
+      end
+    end
+
+    describe '#localized_start_time' do
+      it 'returns the short formatted start time' do
+        expect(subject.send(:localized_start_time)).to eq I18n.l(subject.started_at, format: :short)
+      end
+    end
+
+    describe '#localized_finish_time' do
+      it 'returns the short formatted end time' do
+        expect(subject.send(:localized_finish_time)).to eq I18n.l(subject.finished_at, format: :short)
+      end
+    end
+
+    describe '#localized_updated_time' do
+      it 'returns the short formatted last updated time' do
+        expect(subject.send(:localized_updated_time)).to eq I18n.l(subject.updated_at, format: :short)
+      end
+    end
+  end
+
+  context 'current_log_entry is nil' do
+    let(:reindexing_log_entries) { [] }
+
+    # rubocop:disable RSpec/MultipleExpectations
+    it 'methods return gracefully' do
+      expect(subject.send(:current_log_entry)).to be nil
+
+      expect(subject.recently_in_progress?).to be false
+      expect(subject.started_at).to be nil
+      expect(subject.updated_at).to be nil
+      expect(subject.finished?).to be false
+      expect(subject.finished_at).to be nil
+      expect(subject.total).to be nil
+      expect(subject.completed).to be nil
+      expect(subject.errored?).to be false
+      expect(subject.send(:localized_start_time)).to be nil
+      expect(subject.send(:localized_finish_time)).to be nil
+      expect(subject.send(:localized_updated_time)).to be nil
+      expect(subject.as_json).to eq(
+        recently_in_progress: false,
+        started_at: nil,
+        finished_at: nil,
+        updated_at: nil,
+        total: nil,
+        completed: nil,
+        errored: false
+      )
+    end
+    # rubocop:enable RSpec/MultipleExpectations
   end
 end
