@@ -1,5 +1,4 @@
 $bootstrap-sass-asset-helper: false !default;
-
 /* Variables */
 /* Colors */
 $gray-base: #000 !default;
@@ -13,27 +12,20 @@ $brand-success: #5cb85c !default;
 $brand-info: #5bc0de !default;
 $brand-warning: #f0ad4e !default;
 $brand-danger: #d9534f !default;
-
 /* Scaffolding */
 /* Background color for `<body>`. */
 $body-bg: #fff !default;
-
 /* Global text color on `<body>`. */
 $text-color: $gray-dark !default;
-
 /* Global textual link color. */
 $link-color: $brand-primary !default;
-
 /* Link hover color set via `darken()` function. */
 $link-hover-color: darken($link-color, 15%) !default;
-
 /* Link hover decoration. */
 $link-hover-decoration: underline !default;
-
 /* Typography */
 $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-serif: Georgia, "Times New Roman", Times, serif !default;
-
 /* Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`. */
 $font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base: $font-family-sans-serif !default;
@@ -46,19 +38,15 @@ $font-size-h3: ceil(($font-size-base * 1.53)) !default; // ~201px
 $font-size-h4: ceil(($font-size-base * 1.21)) !default; // ~17px
 $font-size-h5: $font-size-base !default;
 $font-size-h6: ceil(($font-size-base * 0.85)) !default; // ~12px
-
 /* Unit-less `line-height` for use in components like buttons. */
 $line-height-base: 1.428571429 !default; // 20/14
-
 /* Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc. */
 $line-height-computed: floor(($font-size-base * $line-height-base)) !default; // ~20px
-
 /* By default, this inherits from the `<body>`. */
 $headings-font-family: inherit !default;
 $headings-font-weight: 500 !default;
 $headings-line-height: 1.1 !default;
 $headings-color: inherit !default;
-
 /* Inverted navbar */
 $navbar-inverse-color: lighten($gray-light, 15%) !default;
 $navbar-inverse-bg: #3c0000 !default;
@@ -76,40 +64,28 @@ $navbar-inverse-brand-hover-bg: transparent !default;
 $navbar-inverse-toggle-hover-bg: #333 !default;
 $navbar-inverse-toggle-icon-bar-bg: #fff !default;
 $navbar-inverse-toggle-border-color: #333 !default;
-
 /* Components */
 $padding-base-vertical: 6px !default;
 $padding-base-horizontal: 12px !default;
-
 $padding-large-vertical: 10px !default;
 $padding-large-horizontal: 16px !default;
-
 $padding-small-vertical: 5px !default;
 $padding-small-horizontal: 10px !default;
-
 $padding-xs-vertical: 1px !default;
 $padding-xs-horizontal: 5px !default;
-
 $line-height-large: 1.3333333 !default; // extra decimals for Win 8.1 Chrome
 $line-height-small: 1.5 !default;
-
 $border-radius-base: 4px !default;
 $border-radius-large: 6px !default;
 $border-radius-small: 3px !default;
-
-
 /* Global color for active items (e.g., navs or dropdowns). */
 $component-active-color: #fff !default;
-
 /* Global background color for active items (e.g., navs or dropdowns). */
 $component-active-bg: $brand-primary !default;
-
 /* Width of the `border` for generating carets that indicate dropdowns. */
 $caret-width-base: 4px !default;
-
 /* Carets increase slightly in size for larger components. */
 $caret-width-large: 5px !default;
-
 /* Wells */
 $well-bg: #f5f5f5 !default;
 $well-border: darken($well-bg, 7%) !default;

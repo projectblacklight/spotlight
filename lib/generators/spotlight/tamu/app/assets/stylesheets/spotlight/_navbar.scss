@@ -1,0 +1,84 @@
+// Transparent navbar styling, adapted directly from Bootstrap's navbar styles:
+// https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/_navbar.scss
+
+.navbar-transparent {
+    background-color: $navbar-transparent-bg;
+    border-color: $navbar-transparent-border;
+
+    .navbar-brand {
+        color: $navbar-transparent-brand-color;
+
+        &:focus,
+        &:hover {
+            color: $navbar-transparent-brand-hover-color;
+            background-color: $navbar-transparent-brand-hover-bg;
+        }
+    }
+
+    .navbar-text {
+        color: $navbar-transparent-color;
+    }
+
+    .navbar-nav {
+        > li > a {
+            color: $navbar-transparent-link-color;
+
+            &:focus,
+            &:hover {
+                color: $navbar-transparent-link-hover-color;
+                background-color: $navbar-transparent-link-hover-bg;
+            }
+        }
+
+        > .active > a {
+            &,
+            &:focus,
+            &:hover {
+                color: $navbar-transparent-link-active-color;
+                background-color: $navbar-transparent-link-active-bg;
+            }
+        }
+
+        > .disabled > a {
+            &,
+            &:focus,
+            &:hover {
+                color: $navbar-transparent-link-disabled-color;
+                background-color: $navbar-transparent-link-disabled-bg;
+            }
+        }
+    }
+}
+/* Header bar at top (Bootstrap nav-bar) */
+.navbar-inverse .navbar-brand {
+    color: $navbar-inverse-link-color;
+}
+
+.navbar-inverse .navbar-brand:hover {
+    color: $navbar-inverse-link-hover-color;
+}
+/* this is not overriding blacklight's navbar-brand in _header.scss */
+.navbar-brand {
+    @if $logo-image-full {
+        background: transparent $logo-image-full no-repeat top left !important;
+    }
+    flex: 0 0 384px !important;
+    height: 48px !important;
+    width: 384px !important;
+    margin-right: 25px !important;
+    margin-top: 2px !important;
+}
+@media (max-width: 768px) {
+    .navbar {
+        min-height: auto;
+    }
+}
+@media (max-width: 480px) {
+    .navbar-brand {
+        @if $logo-image {
+            background: transparent $logo-image no-repeat top left !important;
+        }
+        flex: 0 0 48px !important;
+        width: 48px !important;
+    }
+}
