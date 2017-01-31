@@ -10,7 +10,6 @@ describe 'spotlight/searches/edit.html.erb', type: :view do
                                   id: 99, title: 'Title1', query_params: { f: { 'some_field' => ['xyz'] } })
   end
 
-  let(:image_form) { double(hidden_field: '', iiif_hidden_fields: '', name: '', upload: '', text_and_display: '') }
   before do
     allow(view).to receive(:search_action_path).and_return('/search')
     allow(view).to receive(:mastheads_path).and_return('/mastheads')
@@ -21,7 +20,6 @@ describe 'spotlight/searches/edit.html.erb', type: :view do
     assign(:exhibit, exhibit)
     assign(:search, search)
     allow(view).to receive(:current_exhibit).and_return(exhibit)
-    allow(view).to receive_messages(iiif_cropper: image_form)
   end
 
   it 'renders a form w/ the appropriate autocomplete data attribute' do
