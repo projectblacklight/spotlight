@@ -20,11 +20,7 @@ module Spotlight
     # The create action can be called from a number of different forms, so
     # we normalize all the parameters.
     def create_params
-      parent_param = params.fetch(:featured_image)
-      image_params = parent_param[:thumbnail] ||
-                     parent_param[:masthead] ||
-                     parent_param[:avatar]
-      { image: image_params || {} }
+      params.require(:featured_image).permit(:image)
     end
   end
 end
