@@ -101,7 +101,7 @@ module Spotlight
     end
 
     def reindex_progress
-      @reindex_progress ||= ReindexProgress.new(resources) if resources
+      @reindex_progress ||= ReindexProgress.new(self)
     end
 
     protected
@@ -111,7 +111,7 @@ module Spotlight
     end
 
     def new_reindexing_log_entry(user = nil)
-      Spotlight::ReindexingLogEntry.create(exhibit: self, user: user, items_reindexed_count: resources.size, job_status: 'unstarted')
+      Spotlight::ReindexingLogEntry.create(exhibit: self, user: user, items_reindexed_count: 0, job_status: 'unstarted')
     end
   end
 end

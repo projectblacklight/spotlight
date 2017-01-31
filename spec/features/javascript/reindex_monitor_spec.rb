@@ -6,7 +6,7 @@ feature 'Reindex Monitor', js: true do
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
 
   before do
-    resources.each(&:waiting!)
+    FactoryGirl.create(:in_progress_reindexing_log_entry, exhibit: exhibit, items_reindexed_estimate: 5)
     login_as exhibit_curator
     visit spotlight.admin_exhibit_catalog_path(exhibit)
   end
@@ -14,8 +14,8 @@ feature 'Reindex Monitor', js: true do
   it 'is rendered on the item admin page' do
     expect(page).to have_css('.panel.index-status', visible: true)
     within('.panel.index-status') do
-      expect(page).to have_css('p', text: /Began reindexing a total of \d items/)
-      expect(page).to have_css('p', text: /Reindexed \d of \d items/)
+      expect(page).to have_css('p', text: /Began reindexing a total of \d+ items/)
+      expect(page).to have_css('p', text: /Reindexed \d+ of \d+ items/)
     end
   end
 end

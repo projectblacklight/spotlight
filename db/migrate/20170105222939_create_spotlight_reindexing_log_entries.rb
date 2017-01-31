@@ -2,6 +2,7 @@ class CreateSpotlightReindexingLogEntries < ActiveRecord::Migration
   def change
     create_table :spotlight_reindexing_log_entries do |t|
       t.integer :items_reindexed_count
+      t.integer :items_reindexed_estimate
       t.datetime :start_time
       t.datetime :end_time
       t.integer :job_status
