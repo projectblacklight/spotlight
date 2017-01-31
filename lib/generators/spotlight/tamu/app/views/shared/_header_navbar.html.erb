@@ -1,13 +1,15 @@
 <div id="header-navbar" class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
   <div class="container">
     <div class="navbar-header">
-	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#user-util-collapse">
-	      <span class="sr-only"><%= t :toggle_nav %></span>
-	      <span class="icon-bar"></span>
-	      <span class="icon-bar"></span>
-	      <span class="icon-bar"></span>
-	    </button>
-	    <%= link_to ("<span class='vertical-line pull-right'></span><span class='logo-brand-name'>Texas A&M University Libraries</span>").html_safe, "http://library.tamu.edu", class: "navbar-brand pull-left" %>
+      <% if current_user %>
+  	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#user-util-collapse">
+  	      <span class="sr-only"><%= t :toggle_nav %></span>
+  	      <span class="icon-bar"></span>
+  	      <span class="icon-bar"></span>
+  	      <span class="icon-bar"></span>
+  	    </button>
+	    <% end %>
+	  <%= link_to "Spotlight", "http://library.tamu.edu", class: "navbar-brand pull-left" %>
     </div>
     <div class="collapse navbar-collapse" id="user-util-collapse">
       <%= render :partial=>'tamu/user_menu' %>

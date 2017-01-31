@@ -1,7 +1,6 @@
 @import "spotlight/variables";
 @import "spotlight/mixins";
 @import "bootstrap/variables";
-
 @import "spotlight/navbar";
 @import "spotlight/sir-trevor_overrides";
 @import "spotlight/attachments";
@@ -31,13 +30,14 @@
 @import "spotlight/exhibits_index";
 @import "spotlight/collapse_toggle";
 
-html,
-body {
+body,
+html {
     height: 100%;
     margin: 0;
     padding: 0;
 }
-body {  
+
+body {
     min-height: 100%;
     display: flex;
     flex-direction: column;
