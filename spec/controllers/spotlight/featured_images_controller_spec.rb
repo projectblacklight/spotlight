@@ -11,7 +11,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
         expect do
           post :create, params: {
             featured_image: {
-              thumbnail: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
+              image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
             }
           }
         end.not_to change { Spotlight::FeaturedImage.count }
@@ -31,7 +31,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
         expect do
           post :create, params: {
             featured_image: {
-              thumbnail: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
+              image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
             }
           }
         end.to change { Spotlight::FeaturedImage.count }.by(1)
@@ -46,7 +46,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
         expect do
           post :create, params: {
             featured_image: {
-              masthead: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
+              image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
             }
           }
         end.to change { Spotlight::FeaturedImage.count }.by(1)
@@ -61,7 +61,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
         expect do
           post :create, params: {
             featured_image: {
-              avatar: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
+              image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
             }
           }
         end.to change { Spotlight::FeaturedImage.count }.by(1)

@@ -20,10 +20,8 @@
 
         <div role="tabpanel" class="tab-pane" id="site-masthead">
           <p class="instructions"><%= t(:'.site_masthead.help') %></p>
-          <% image_form = iiif_cropper(f, :masthead, *Spotlight::Engine.config.masthead_initial_crop_selection) %>
           <%= f.fields_for(:masthead, @site.masthead || @site.build_masthead) do |m| %>
-            <%= image_form.iiif_region_field(m) %>
-            <%= render '/spotlight/featured_images/upload_form', f: m, image_form: image_form %>
+            <%= render '/spotlight/featured_images/upload_form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection %>
           <% end %>
         </div>
       </div>

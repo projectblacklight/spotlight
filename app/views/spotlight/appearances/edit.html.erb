@@ -31,17 +31,15 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="site-masthead">
         <p class="instructions"><%= t(:'.site_masthead.help') %></p>
-        <% image_form = iiif_cropper(f, :masthead, *Spotlight::Engine.config.masthead_initial_crop_selection) %>
         <%= f.fields_for(:masthead, current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, image_form: image_form %>
+          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection %>
         <% end %>
       </div>
 
       <div role="tabpanel" class="tab-pane" id="site-thumbnail">
         <p class="instructions"><%= t(:'.site_thumbnail.help') %></p>
-        <% image_form = iiif_cropper(f, :thumbnail, *Spotlight::Engine.config.thumbnail_initial_crop_selection) %>
         <%= f.fields_for(:thumbnail, current_exhibit.thumbnail || current_exhibit.build_thumbnail) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, image_form: image_form %>
+          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.thumbnail_initial_crop_selection %>
         <% end %>
       </div>
 

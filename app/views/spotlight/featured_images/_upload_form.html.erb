@@ -1,18 +1,15 @@
-<% if Rails::VERSION::MAJOR >= 5 %>
-  <% form_prefix = f.object_name.parameterize(separator: '_') %>
-<% else %>
-  <% form_prefix = f.object_name.parameterize('_') %>
-<% end %>
+<div data-cropper="<%= f.object.model_name.singular_route_key %>" data-form-prefix="<%= form_prefix(f) %>">
 <%= field_set_tag do %>
   <%= f.check_box(:display) %>
 <% end if f.object.is_a? Spotlight::Masthead %>
 <%= field_set_tag(t(:'.source.header')) do %>
   <div>
     <%= f.hidden_field(:source, value: :remote, label: t(:'.source.remote.label')) %>
-    <%= image_form.upload(f) %>
+    <%= iiif_upload_tag(f) %>
   </div>
 <% end %>
 <%= field_set_tag(t(:'.source.remote.header')) do %>
   <p class="instructions"><%= t(:'.source.remote.help') %></p>
-  <%= image_form.text_and_display(f) %>
+  <%= iiif_cropper_tags f, initial_crop_selection: initial_crop_selection %>
 <% end %>
+</div>
