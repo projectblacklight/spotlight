@@ -7,8 +7,7 @@
     <%= f.radio_button(:source, :exhibit, label: t(:'.source.exhibit.label')) %>
     <div>
       <%= f.hidden_field(:document_global_id) %>
-      <%= f.hidden_field(:remote_image_url) %>
-      <%= text_field_tag(:document_title, (presenter(f.object.document).document_show_html_title if f.object.document), class: "form-control", data: { input_select_target: "##{form_prefix(f)}_source_exhibit", 'behavior': 'autocomplete', masthead_typeahead: true, target_panel: "##{form_prefix(f)}-target-panel", :'id-field' => "##{form_prefix(f)}_document_global_id", remote_url_field: "##{form_prefix(f)}_remote_image_url" }) %>
+      <%= text_field_tag(:document_title, (presenter(f.object.document).document_show_html_title if f.object.document), class: "form-control", data: { input_select_target: "##{form_prefix(f)}_source_exhibit", 'behavior': 'autocomplete', featured_image_typeahead: true, target_panel: "##{form_prefix(f)}-target-panel", :'id-field' => "##{form_prefix(f)}_document_global_id" }) %>
       <div id="<%= form_prefix(f) %>-target-panel" style="display:none">
         <div class="panel-heading">
           <div data-item-title="true"></div>
