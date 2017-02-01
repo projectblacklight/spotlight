@@ -38,13 +38,14 @@ html {
 }
 
 body {
+    display: table;
+    width: 100%;
     min-height: 100%;
-    display: flex;
-    flex-direction: column;
     overflow-x: hidden;
 
     #main-container {
-        flex: 1;
-        margin-bottom: 25px;
+        display: table-row;
+        table-layout: fixed;
+        height: 100%;
     }
 }
