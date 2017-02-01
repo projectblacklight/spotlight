@@ -19,7 +19,8 @@
         <% end %>
       <% end %>
 
-      <% current_exhibit.custom_fields.each do |field| %>
+      <%# Using `includes(:exhibit)` to ensure all fields are using the same exhibit object to take advantage of memoization %>
+      <% current_exhibit.custom_fields.includes(:exhibit).each do |field| %>
         <div class="form-group">
           <%= d.label field.field, field.label %>
           <%= d.text_field_without_bootstrap field.field, value: document.sidecar(current_exhibit).data[field.field.to_s], class: 'form-control', readonly: field.readonly_field? %>
