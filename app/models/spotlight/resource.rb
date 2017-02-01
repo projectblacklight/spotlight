@@ -38,6 +38,14 @@ module Spotlight
       exhibit.blacklight_config.document_model if exhibit
     end
 
+    def audio?
+      !self[:url].nil? && Spotlight::Engine.config.allowed_audio_extensions.include?(self[:url].split('.').last)
+    end
+
+    def video?
+      !self[:url].nil? && Spotlight::Engine.config.allowed_video_extensions.include?(self[:url].split('.').last)
+    end
+
     concerning :Indexing do
       ##
       # Index the result of {#to_solr} into the index in batches of {#batch_size}

@@ -1,3 +1,11 @@
 <div id="document" class="document <%= render_document_class %>" itemscope  itemtype="<%= @document.itemtype %>">
-  <%= render_document_partials @document, blacklight_config.view_config(:edit).partials %>
+ 	<% partials = blacklight_config.view_config(:edit).partials %>
+ 	<% case @document[:full_image_url_ssm].first.split('.').last %>
+    <% when *Spotlight::Engine.config.allowed_audio_extensions %>
+    	<%= render_document_partials @document, partials.dup.delete_if{|x| x==:openseadragon}.insert(partials.index(:openseadragon), :audio) %>
+    <% when *Spotlight::Engine.config.allowed_video_extensions %>
+    	<%= render_document_partials @document, partials.dup.delete_if{|x| x==:openseadragon}.insert(partials.index(:openseadragon), :video) %>
+    <% else %>
+    	<%= render_document_partials @document, partials %>
+    <% end %>
 </div>

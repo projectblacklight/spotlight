@@ -5,8 +5,8 @@ module Spotlight
     # Exhibit-specific resources, created using uploaded and custom fields
     class Upload < Spotlight::Resource
       mount_uploader :url, Spotlight::ItemUploader
+      mount_uploader :thumb, Spotlight::ItemUploader
       include Spotlight::ImageDerivatives
-
       # we want to do this before reindexing
       after_create :update_document_sidecar
 

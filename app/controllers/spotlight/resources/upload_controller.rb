@@ -15,6 +15,7 @@ module Spotlight
 
       # rubocop:disable Metrics/MethodLength
       def create
+        check_versions
         @resource.attributes = resource_params
 
         if @resource.save_and_index
@@ -33,12 +34,18 @@ module Spotlight
 
       private
 
+      def check_versions
+        return if params['resources_upload']['thumb'].nil?
+        @resource.url.versions.delete(:thumb)
+        @resource.url.versions.delete(:square)
+      end
+
       def build_resource
         @resource ||= Spotlight::Resources::Upload.new exhibit: current_exhibit
       end
 
       def resource_params
-        params.require(:resources_upload).permit(:url, data: data_param_keys)
+        params.require(:resources_upload).permit(:url, :thumb, data: data_param_keys)
       end
 
       def data_param_keys
