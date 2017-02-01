@@ -18,10 +18,10 @@ module Spotlight
       [iiif_service_base, iiif_region || 'full', image_size.join(','), '0', 'default.jpg'].join('/')
     end
 
+    # This is used to fetch images given the URL field in the CSV uploads
+    # If the image is local, this step will fail, which is okay since the only
+    # consumer is CSV uploads and the URL is intended to be remote
     def remote_image_url=(url)
-      # if the image is local, this step will fail..
-      # hopefully it's local because it's an uploaded resource, and we'll
-      # catch is in before_validation..
       super url unless url.starts_with? '/'
     end
 

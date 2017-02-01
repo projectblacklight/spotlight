@@ -35,7 +35,6 @@ module Spotlight
         :display,
         :source,
         :image,
-        :remote_image_url,
         :document_global_id
       ]
     end
