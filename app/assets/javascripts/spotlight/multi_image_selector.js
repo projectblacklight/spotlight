@@ -103,7 +103,7 @@
     }
     function addThumbsToList(){
       $.each(image_versions, function(i){
-        var listItem = $('<li><a href="javascript:;"><img data-iiif-tilesource="' + image_versions[i]['tilesource'] + '" data-full-image="' + image_versions[i]['full'] +'" data-src="' + image_versions[i]['thumb'] +'" /></a></li>');
+        var listItem = $('<li><a href="javascript:;"><img data-full-image="' + image_versions[i]['full'] +'" data-src="' + image_versions[i]['thumb'] +'" /></a></li>');
         listItem.on('click', function(){
           var src = $('img', $(this)).attr('src');
           $('li', thumbList).removeClass('active');
