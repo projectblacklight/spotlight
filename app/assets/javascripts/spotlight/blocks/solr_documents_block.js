@@ -49,6 +49,12 @@ SirTrevor.Blocks.SolrDocuments = (function(){
       '</div>',
     ].join("\n") },
 
+    _itemPanelIiifFields: function(index, data) {
+      return [
+        '<input type="hidden" name="item[' + index + '][full_image_url]" data-item-grid-full-image="true"  value="' + (data.full_image_url || data.thumbnail_image_url || data.thumbnail) + '"/>',
+        '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" data-item-grid-thumbnail="true"  value="' + (data.thumbnail_image_url || data.thumbnail) + '"/>',
+      ].join("\n");
+    },
     afterPanelRender: function(data, panel) {
       var context = this;
 
