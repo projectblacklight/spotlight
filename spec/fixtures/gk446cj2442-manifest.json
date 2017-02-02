@@ -1,0 +1,58 @@
+
+{
+  "@context":"http://iiif.io/api/presentation/2/context.json",
+  "@id":"https://purl.stanford.edu/gk446cj2442/iiif/manifest",
+  "@type":"sc:Manifest",
+  "label":"[World map",
+  "attribution":"This work has been identified as being free of known restrictions under copyright law, including all related and neighboring rights. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.",
+  "seeAlso":{
+    "@id":"https://purl.stanford.edu/gk446cj2442.mods",
+    "format":"application/mods+xml"
+  },
+  "thumbnail":{
+    "@id":"https://stacks.stanford.edu/image/iiif/gk446cj2442%2Fgk446cj2442_05_0001/full/!400,400/0/default.jpg",
+    "@type":"dctypes:Image",
+    "format":"image/jpeg",
+    "service":{
+      "@context":"http://iiif.io/api/image/2/context.json",
+      "@id":"https://stacks.stanford.edu/image/iiif/gk446cj2442%2Fgk446cj2442_05_0001",
+      "profile":"http://iiif.io/api/image/2/level1.json"
+    }
+  },
+  "sequences":[
+    {
+      "@id":"https://purl.stanford.edu/gk446cj2442#sequence-1",
+      "@type":"sc:Sequence",
+      "label":"Current order",
+      "canvases":[
+        {
+          "@id":"https://purl.stanford.edu/gk446cj2442/iiif/canvas/gk446cj2442_1",
+          "@type":"sc:Canvas",
+          "label":"mclaughlin_gk446cj2442",
+          "height":3943,
+          "width":4956,
+          "images":[
+            {
+              "@id":"https://purl.stanford.edu/gk446cj2442/iiif/annotation/gk446cj2442_1",
+              "@type":"oa:Annotation",
+              "motivation":"sc:painting",
+              "resource":{
+                "@id":"https://stacks.stanford.edu/image/iiif/gk446cj2442%2Fgk446cj2442_05_0001/full/full/0/default.jpg",
+                "@type":"dctypes:Image",
+                "format":"image/jpeg",
+                "height":3943,
+                "width":4956,
+                "service":{
+                  "@context":"http://iiif.io/api/image/2/context.json",
+                  "@id":"https://stacks.stanford.edu/image/iiif/gk446cj2442%2Fgk446cj2442_05_0001",
+                  "profile":"http://iiif.io/api/image/2/level1.json"
+                  }
+                },
+              "on":"https://purl.stanford.edu/gk446cj2442/iiif/canvas/gk446cj2442_1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

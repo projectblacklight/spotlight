@@ -115,7 +115,8 @@ module Spotlight
 
     def featured_image_attributes
       [
-        :source, :image, :document_global_id, :iiif_region, :iiif_tilesource
+        :source, :image, :document_global_id, :iiif_region, :iiif_tilesource,
+        :iiif_manifest_url, :iiif_canvas_id, :iiif_image_id
       ]
     end
 
