@@ -23,8 +23,8 @@ Spotlight.onLoad(function() {
 
     function success(data) {
       if (data.recently_in_progress) {
-        monitorPanel().show();
         updateMonitorPanel(data);
+        monitorPanel().show();
       } else {
         monitorPanel().hide();
       }
