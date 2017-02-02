@@ -17,13 +17,6 @@ module Migration
 
     attr_reader :hostname
 
-    def iiif_url(image)
-      riiif.image_url(image.id,
-                      region: coordinates(image),
-                      size: size(image),
-                      host: hostname)
-    end
-
     private
 
     def riiif
@@ -33,14 +26,30 @@ module Migration
     def migrate_featured_images
       Spotlight::FeaturedImage.all.each do |image|
         update_iiif_url(image)
+        copy_exhibit_thumbnail_from_featured_image(image)
       end
     end
 
     def migrate_contact_avatars
       Spotlight::Contact.all.each do |contact|
         avatar = copy_contact_image_to_avatar(contact)
-        contact.update(avatar: avatar)
+        contact.update(avatar: avatar) if avatar
       end
+    end
+
+    # Checks if the image was associated as a thumbnail.
+    # If so, this will update the STI type column of the FeaturedImage as well
+    # as copy the file over to the correct directory given the new class name
+    def copy_exhibit_thumbnail_from_featured_image(image)
+      return unless Spotlight::Exhibit.where(thumbnail_id: image.id).any?
+      filename = image.read_attribute_before_type_cast('image')
+      old_file = "public/#{image.image.store_dir}/#{filename}"
+      image.becomes!(Spotlight::ExhibitThumbnail)
+      image.save
+      # AR + STI seems to require that we re-query for this
+      # otherwise we get an association miss-match
+      reloaded_image = Spotlight::ExhibitThumbnail.find(image.id)
+      reloaded_image.image.store!(File.new(old_file))
     end
 
     # Looks for a file at the old uploader location and copies it to a FeaturedImage
@@ -55,24 +64,15 @@ module Migration
     end
 
     def update_iiif_url(image)
-      image.update(iiif_url: iiif_url(image))
-    end
-
-    def size(image)
-      case image
-      when Spotlight::Masthead
-        '1440,'
-      else
-        "#{image.image_crop_w},#{image.image_crop_h}"
-      end
+      image.update(
+        iiif_tilesource: riiif.info_url(image.id, host: hostname),
+        iiif_region: coordinates(image)
+      )
     end
 
     def coordinates(image)
+      return unless image.image_crop_x.present?
       [image.image_crop_x, image.image_crop_y, image.image_crop_w, image.image_crop_h].join(',')
-    end
-
-    def avatar_size(contact)
-      "#{contact.avatar_crop_w},#{contact.avatar_crop_h}"
     end
 
     def avatar_coordinates(contact)
