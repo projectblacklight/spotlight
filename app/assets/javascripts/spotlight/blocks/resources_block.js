@@ -21,6 +21,10 @@ Spotlight.Block.Resources = (function(){
 
     globalIndex: 0,
 
+    _itemPanelIiifFields: function(index, data) {
+      return [];
+    },
+
     _itemPanel: function(data) {
       var index = "item_" + this.globalIndex++;
       var checked;
@@ -33,8 +37,7 @@ Spotlight.Block.Resources = (function(){
           '<li class="field form-inline dd-item dd3-item" data-id="' + index + '" id="' + this.formId("item_" + data.id) + '">',
             '<input type="hidden" name="item[' + index + '][id]" value="' + (data.slug || data.id) + '" />',
             '<input type="hidden" name="item[' + index + '][title]" value="' + data.title + '" />',
-            '<input type="hidden" name="item[' + index + '][full_image_url]" data-item-grid-full-image="true"  value="' + (data.full_image_url || data.thumbnail_image_url || data.thumbnail) + '"/>',
-            '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" data-item-grid-thumbnail="true"  value="' + (data.thumbnail_image_url || data.thumbnail) + '"/>',
+            this._itemPanelIiifFields(index, data),
             '<input data-property="weight" type="hidden" name="item[' + index + '][weight]" value="' + data.weight + '" />',
             '<div class="dd-handle dd3-handle"><%= i18n.t("blocks:resources:panel:drag") %></div>',
               '<div class="dd3-content panel panel-default">',
