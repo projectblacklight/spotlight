@@ -109,6 +109,16 @@ module Spotlight
       end
     end
 
+    def manifest
+      _, document = fetch params[:id]
+
+      if document.uploaded_resource?
+        render json: Spotlight::IiifManifestPresenter.new(document, self).iiif_manifest_json
+      else
+        head :not_found
+      end
+    end
+
     protected
 
     # TODO: move this out of app/helpers/blacklight/catalog_helper_behavior.rb and into blacklight/catalog.rb

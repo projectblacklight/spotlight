@@ -9,6 +9,7 @@ module Spotlight
         add_image_dimensions solr_hash
         add_file_versions solr_hash
         add_sidecar_fields solr_hash
+        add_manifest_path solr_hash
       end
     end
 
@@ -47,6 +48,14 @@ module Spotlight
 
     def add_sidecar_fields(solr_hash)
       solr_hash.merge! resource.sidecar.to_solr
+    end
+
+    def add_manifest_path(solr_hash)
+      solr_hash[Spotlight::Engine.config.iiif_manifest_field] = spotlight_routes.manifest_exhibit_solr_document_path(exhibit, resource.compound_id)
+    end
+
+    def spotlight_routes
+      Spotlight::Engine.routes.url_helpers
     end
 
     def riiif

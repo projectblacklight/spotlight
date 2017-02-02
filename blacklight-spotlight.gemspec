@@ -69,4 +69,5 @@ these collections.)
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'sitemap_generator'
   s.add_development_dependency 'riiif', '~> 0.4.0' # This is an optional dependency in production
+  s.add_development_dependency 'iiif_manifest'
 end
