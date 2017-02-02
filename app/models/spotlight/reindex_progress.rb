@@ -2,46 +2,41 @@ module Spotlight
   ##
   # ReindexProgress is a class that models the progress of reindexing a list of resources
   class ReindexProgress
-    attr_reader :exhibit
+    attr_reader :current_log_entry
 
-    def initialize(exhibit)
-      @exhibit = exhibit
+    delegate :updated_at, to: :current_log_entry
+
+    def initialize(current_log_entry)
+      @current_log_entry = current_log_entry
     end
 
     def recently_in_progress?
-      return false if current_log_entry.blank?
       return true if current_log_entry.in_progress?
 
       current_log_entry.end_time.present? && (current_log_entry.end_time > Spotlight::Engine.config.reindex_progress_window.minutes.ago)
     end
 
     def started_at
-      current_log_entry.try(:start_time)
-    end
-
-    def updated_at
-      current_log_entry.try(:updated_at)
+      current_log_entry.start_time
     end
 
     def finished?
-      return false if current_log_entry.blank?
       current_log_entry.succeeded? || current_log_entry.failed?
     end
 
     def finished_at
-      current_log_entry.try(:end_time)
+      current_log_entry.end_time
     end
 
     def total
-      current_log_entry.try(:items_reindexed_estimate)
+      current_log_entry.items_reindexed_estimate
     end
 
     def completed
-      current_log_entry.try(:items_reindexed_count)
+      current_log_entry.items_reindexed_count
     end
 
     def errored?
-      return false if current_log_entry.blank?
       current_log_entry.failed?
     end
 
@@ -59,10 +54,6 @@ module Spotlight
     end
 
     private
-
-    def current_log_entry
-      exhibit.reindexing_log_entries.where.not(job_status: 'unstarted').first
-    end
 
     def localized_start_time
       return unless started_at
