@@ -48,6 +48,10 @@ Spotlight.onLoad(function() {
         .attr('aria-valuenow', percentage)
         .css('width', percentage + '%')
         .text(percentage + '%');
+
+      if (data.finished) {
+        progressBar().removeClass('active').removeClass('progress-bar-striped');
+      }
     }
 
     function updatePanelErrorMessage(data) {

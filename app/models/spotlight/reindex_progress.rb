@@ -53,6 +53,7 @@ module Spotlight
         updated_at: localized_updated_time,
         total: total,
         completed: completed,
+        finished: finished?,
         errored: errored?
       }
     end
