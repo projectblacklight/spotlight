@@ -27,6 +27,7 @@
 //= require leaflet-iiif
 //= require Leaflet.Editable
 //= require Path.Drag
+//= require action_cable
 // Provide AMD module support
 //= require almond
 //= require polyfill.min.js
