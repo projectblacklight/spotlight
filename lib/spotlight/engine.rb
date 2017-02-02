@@ -126,9 +126,10 @@ module Spotlight
 
     # Defaults to the blacklight_config.index.title_field:
     config.upload_title_field = nil # OpenStruct.new(...)
+    config.upload_description_field = :spotlight_upload_description_tesim
 
     config.upload_fields = [
-      OpenStruct.new(field_name: :spotlight_upload_description_tesim, label: 'Description', form_field_type: :text_area),
+      OpenStruct.new(field_name: config.upload_description_field, label: 'Description', form_field_type: :text_area),
       OpenStruct.new(field_name: :spotlight_upload_attribution_tesim, label: 'Attribution'),
       OpenStruct.new(field_name: :spotlight_upload_date_tesim, label: 'Date')
     ]

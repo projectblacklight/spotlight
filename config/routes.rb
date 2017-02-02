@@ -55,6 +55,7 @@ Spotlight::Engine.routes.draw do
       member do
         put 'visibility', action: 'make_public'
         delete 'visibility', action: 'make_private'
+        get 'manifest'
       end
     end
 

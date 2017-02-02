@@ -94,5 +94,9 @@ describe Spotlight::Resources::Upload, type: :model do
     it 'has fields representing exhibit specific custom fields' do
       expect(subject[custom_field.solr_field]).to eq 'Custom Field Data'
     end
+    it 'has a field for the iiif manifest url' do
+      manifest_path = Spotlight::Engine.routes.url_helpers.manifest_exhibit_solr_document_path(exhibit, resource.compound_id)
+      expect(subject[Spotlight::Engine.config.iiif_manifest_field]).to eq(manifest_path)
+    end
   end
 end
