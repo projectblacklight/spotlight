@@ -68,7 +68,8 @@ describe Spotlight::ReindexProgress, type: :model do
         updated_at: subject.send(:localized_updated_time),
         total: subject.total,
         completed: subject.completed,
-        errored: subject.errored?
+        errored: subject.errored?,
+        finished: subject.finished?
       )
     end
   end
@@ -163,7 +164,8 @@ describe Spotlight::ReindexProgress, type: :model do
         updated_at: nil,
         total: nil,
         completed: nil,
-        errored: false
+        errored: false,
+        finished: false
       )
     end
     # rubocop:enable RSpec/MultipleExpectations
