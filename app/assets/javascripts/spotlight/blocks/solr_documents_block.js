@@ -51,24 +51,53 @@ SirTrevor.Blocks.SolrDocuments = (function(){
 
     _itemPanelIiifFields: function(index, data) {
       return [
-        '<input type="hidden" name="item[' + index + '][full_image_url]" data-item-grid-full-image="true"  value="' + (data.full_image_url || data.thumbnail_image_url || data.thumbnail) + '"/>',
-        '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" data-item-grid-thumbnail="true"  value="' + (data.thumbnail_image_url || data.thumbnail) + '"/>',
+        // '<input type="hidden" name="item[' + index + '][iiif_region]" value="' + (data.iiif_region) + '"/>',
+        '<input type="hidden" name="item[' + index + '][iiif_tilesource]" value="' + (data.iiif_tilesource) + '"/>',
+        '<input type="hidden" name="item[' + index + '][iiif_manifest_url]" value="' + (data.iiif_manifest_url) + '"/>',
+        '<input type="hidden" name="item[' + index + '][iiif_canvas_id]" value="' + (data.iiif_canvas_id) + '"/>',
+        '<input type="hidden" name="item[' + index + '][iiif_image_id]" value="' + (data.iiif_image_id) + '"/>',
       ].join("\n");
+    },
+    setIiifFields: function(data) {
+      $(this.inner).find('[name$="[iiif_image_id]"]').val(data.imageId);
+      $(this.inner).find('[name$="[iiif_tilesource]"]').val(data.tilesource);
+      $(this.inner).find('[name$="[iiif_manifest_url]"]').val(data.manifest);
+      $(this.inner).find('[name$="[iiif_canvas_id]"]').val(data.canvasId);
     },
     afterPanelRender: function(data, panel) {
       var context = this;
+      var manifestUrl = data.iiif_manifest || data.iiif_manifest_url;
 
-      if (_.isUndefined(data['image_versions'])) {
-        $.getJSON(this.autocomplete_url().replace("%QUERY", "id:" + data.id), function(data) {
-          var doc = context.transform_autocomplete_results(data)[0];
+      $.ajax(manifestUrl).success(
+        function(manifest) {
+          var thumbs = [];
+          manifest.sequences.forEach(function(sequence) {
+            sequence.canvases.forEach(function(canvas) {
+              canvas.images.forEach(function(image) {
+                var iiifService = image.resource.service['@id'];
+                thumbs.push(
+                  {
+                    'thumb': iiifService + '/full/!100,100/0/default.jpg',
+                    'tilesource': iiifService + '/info.json',
+                    'manifest': manifestUrl,
+                    'canvasId': canvas['@id'],
+                    'imageId': image['@id']
+                  }
+                );
+              });
+            });
+          });
 
-          if (!_.isUndefined(doc)) {
-            panel.multiImageSelector(doc['image_versions']);
+          if (!data.iiif_manifest_url) {
+            context.setIiifFields(thumbs[0]);
           }
-        });
-      } else {
-        panel.multiImageSelector(data['image_versions']);
-      }
+          if(thumbs.length > 1) {
+            panel.multiImageSelector(thumbs, function(selectorImage) {
+              context.setIiifFields(selectorImage);
+            });
+          }
+        }
+      );
     }
   });
 

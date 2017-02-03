@@ -7,7 +7,7 @@
         thumbList           = $("<ul></ul>"),
         panel;
 
-    var thumbnails = $.map(image_versions, function(e) { return e['thumb']; });
+    var image_ids = $.map(image_versions, function(e) { return e['imageId']; });
 
     return init(this);
 
@@ -26,10 +26,10 @@
       addChangeLinkBehavior();
     }
     function currentThumb(){
-      return $("[data-item-grid-thumbnail]", panel).attr('value');
+      return $("[name$='[iiif_image_id]']", panel).attr('value');
     }
     function indexOf(thumb){
-      if( (index = thumbnails.indexOf(thumb)) > -1 ){
+      if( (index = image_ids.indexOf(thumb)) > -1 ){
         return index + 1;
       } else {
         return 1;
@@ -91,7 +91,7 @@
     function updateActiveThumb(){
       $('li', thumbList).each(function(){
         var item = $(this);
-        if($('img', item).attr('data-src') == currentThumb()){
+        if($('img', item).data('image-id') == currentThumb()){
           item.addClass('active');
         }
       });
@@ -103,14 +103,19 @@
     }
     function addThumbsToList(){
       $.each(image_versions, function(i){
-        var listItem = $('<li><a href="javascript:;"><img data-full-image="' + image_versions[i]['full'] +'" data-src="' + image_versions[i]['thumb'] +'" /></a></li>');
+        var listItem = $('<li><a href="javascript:;"><img src="' + image_versions[i]['thumb'] +'" data-image-id="' + image_versions[i]['imageId'] +'" /></a></li>');
         listItem.on('click', function(){
+          // get the current image id
+          var imageid = $('img', $(this)).data('image-id');
           var src = $('img', $(this)).attr('src');
-          $('li', thumbList).removeClass('active');
+
+          // mark the current selection as active
+          $('li.active', thumbList).removeClass('active');
           $(this).addClass('active');
+
+          // update the multi-image selector image
           $(".pic.thumbnail img", panel).attr("src", src);
-          $("[data-item-grid-thumbnail]", panel).attr('value', src);
-          $("[data-item-grid-full-image]", panel).attr('value', $('img', $(this)).data('full-image'));
+
           $('[data-panel-image-pagination] [data-current-image]', panel).text(
             $('li', thumbList).index($(this)) + 1
           );
