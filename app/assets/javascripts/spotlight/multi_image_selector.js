@@ -7,7 +7,7 @@
         thumbList           = $("<ul class='pagination'></ul>"),
         panel;
 
-    var image_ids = $.map(image_versions, function(e) { return e['imageId']; });
+    var imageIds = $.map(image_versions, function(e) { return e['imageId']; });
 
     return init(this);
 
@@ -30,7 +30,7 @@
       return $("[name$='[iiif_image_id]']", panel).attr('value');
     }
     function indexOf(thumb){
-      if( (index = image_ids.indexOf(thumb)) > -1 ){
+      if( (index = imageIds.indexOf(thumb)) > -1 ){
         return index + 1;
       } else {
         return 1;

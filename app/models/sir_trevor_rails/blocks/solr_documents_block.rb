@@ -16,6 +16,7 @@ module SirTrevorRails
 
         items.each do |i|
           document = documents.detect { |doc| doc.id == i[:id] }
+          i[:iiif_tilesource_base] = i.fetch(:iiif_tilesource, '').sub('/info.json', '')
           yield i, document if document
         end
       end

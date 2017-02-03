@@ -29,4 +29,5 @@
 //= require leaflet-areaselect
 // Provide AMD module support
 //= require almond
+//= require polyfill.min.js
 //= require_tree .
