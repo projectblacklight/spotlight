@@ -4,7 +4,7 @@
   $.fn.multiImageSelector = function(image_versions, clickCallback) {
     var changeLink          = $("<a href='javascript:;'>Change</a>"),
         thumbsListContainer = $("<div class='thumbs-list' style='display:none'></div>"),
-        thumbList           = $("<ul></ul>"),
+        thumbList           = $("<ul class='pagination'></ul>"),
         panel;
 
     var image_ids = $.map(image_versions, function(e) { return e['imageId']; });
@@ -99,7 +99,7 @@
     }
     function swapChangeLinkText(link){
       link.text(
-        link.text() == 'Change' ? 'Cancel' : 'Change'
+        link.text() == 'Change' ? 'Close' : 'Change'
       )
     }
     function addThumbsToList(){
