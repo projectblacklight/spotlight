@@ -17,7 +17,6 @@ module Spotlight
     serialize :document_index_view_types, Array
 
     include Spotlight::BlacklightConfigurationDefaults
-    include Spotlight::ImageDerivatives
 
     delegate :document_model, to: :default_blacklight_config
 

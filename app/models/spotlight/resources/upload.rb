@@ -4,7 +4,6 @@ module Spotlight
     ##
     # Exhibit-specific resources, created using uploaded and custom fields
     class Upload < Spotlight::Resource
-      include Spotlight::ImageDerivatives
       belongs_to :upload, class_name: 'Spotlight::FeaturedImage'
 
       # we want to do this before reindexing
