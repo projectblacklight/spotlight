@@ -2,7 +2,7 @@
 
 (function(){
   $.fn.multiImageSelector = function(image_versions, clickCallback) {
-    var changeLink          = $(" <a href='javascript:;'>Change</a>"),
+    var changeLink          = $("<a href='javascript:;'>Change</a>"),
         thumbsListContainer = $("<div class='thumbs-list' style='display:none'></div>"),
         thumbList           = $("<ul></ul>"),
         panel;
@@ -22,6 +22,7 @@
       $('[data-panel-image-pagination]', panel)
         .html("Image <span data-current-image='true'>" + indexOf(currentThumb()) + "</span> of " + image_versions.length)
         .show()
+        .append(" ")
         .append(changeLink);
       addChangeLinkBehavior();
     }
