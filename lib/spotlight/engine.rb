@@ -62,7 +62,7 @@ module Spotlight
     end
 
     initializer 'spotlight.assets.precompile' do |app|
-      app.config.assets.precompile += %w(spotlight/default_thumbnail.jpg)
+      app.config.assets.precompile += %w(spotlight/default_thumbnail.jpg spotlight/default_browse_thumbnail.jpg)
 
       Sprockets::ES6.configuration = { 'modules' => 'amd', 'moduleIds' => true }
       # When we upgrade to Sprockets 4, we can ditch sprockets-es6 and config AMD

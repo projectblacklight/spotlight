@@ -56,7 +56,6 @@ module Spotlight
     accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc { |attr| attr['user_key'].blank? && attr['id'].blank? }
 
     before_save :sanitize_description, if: :description_changed?
-    include Spotlight::DefaultThumbnailable
 
     def main_about_page
       @main_about_page ||= about_pages.published.first
@@ -91,13 +90,6 @@ module Spotlight
 
     def searchable?
       blacklight_config.search_fields.any? { |_k, v| v.enabled && v.include_in_simple_select != false }
-    end
-
-    def set_default_thumbnail
-      first_search_thumb = searches.first.try(:thumbnail)
-      return unless first_search_thumb
-      self.thumbnail ||= create_thumbnail(iiif_tilesource: first_search_thumb.iiif_tilesource)
-      save if thumbnail.present?
     end
 
     def requested_by
