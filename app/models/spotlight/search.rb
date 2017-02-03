@@ -58,22 +58,6 @@ module Spotlight
       masthead && masthead.display?
     end
 
-    # rubocop:disable Metrics/MethodLength
-    def set_default_thumbnail
-      self.thumbnail ||= begin
-        return unless Spotlight::Engine.config.full_image_field
-        doc = documents.detect { |x| x.first(Spotlight::Engine.config.full_image_field) }
-        if doc
-          create_thumbnail(
-            source: 'exhibit',
-            document_global_id: doc.to_global_id.to_s,
-            remote_image_url: doc.first(Spotlight::Engine.config.full_image_field)
-          )
-        end
-      end
-    end
-    # rubocop:enable Metrics/MethodLength
-
     def search_params
       search_builder.with(query_params.with_indifferent_access).merge(facet: false, fl: default_search_fields)
     end
