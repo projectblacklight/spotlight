@@ -1,4 +1,3 @@
-
 describe Spotlight::SolrDocument::UploadedResource, type: :model do
   let(:valid_resource) do
     SolrDocument.new(id: '123',
@@ -17,35 +16,18 @@ describe Spotlight::SolrDocument::UploadedResource, type: :model do
     end
   end
   describe 'to_openseadragon' do
-    let(:subject) { valid_resource.to_openseadragon }
+    subject(:osd) { valid_resource.to_openseadragon }
+    let(:uploaded_resource) { instance_double(Spotlight::Resources::Upload, upload: upload) }
+    let(:upload) { instance_double(Spotlight::FeaturedImage, iiif_tilesource: '/whatever/info.json') }
+
+    before do
+      allow(valid_resource).to receive(:uploaded_resource).and_return(uploaded_resource)
+    end
+
     it 'includes hashes for each full_image_url_ssm' do
-      expect(subject).to be_an Array
-      expect(subject.length).to eq 1
-      expect(subject.first.keys.length).to eq 1
-    end
-    it 'the hashes key should be a LegacyImagePyramidTileSource object' do
-      expect(subject.first.keys.first).to be_a(Spotlight::SolrDocument::UploadedResource::LegacyImagePyramidTileSource)
-    end
-    describe 'LegacyImagePyramidTileSource' do
-      let(:subject) { valid_resource.to_openseadragon.first.keys.first.to_tilesource }
-      it 'is a hash' do
-        expect(subject).to be_a Hash
-      end
-      it 'is a legacy image pyramid type' do
-        expect(subject[:type]).to eq 'legacy-image-pyramid'
-      end
-      describe 'levels' do
-        it 'includes one level' do
-          expect(subject[:levels].length).to eq 1
-        end
-        it 'includes the image url' do
-          expect(subject[:levels].first[:url]).to eq 'http://example.com/png.png'
-        end
-        it 'includes the height and width from the document' do
-          expect(subject[:levels].first[:height]).to eq '1400'
-          expect(subject[:levels].first[:width]).to eq '1000'
-        end
-      end
+      expect(osd).to be_an Array
+      expect(osd.length).to eq 1
+      expect(osd.first).to end_with '/whatever/info.json'
     end
   end
 end
