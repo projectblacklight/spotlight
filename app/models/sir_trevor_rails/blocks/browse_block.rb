@@ -28,6 +28,16 @@ module SirTrevorRails
       def display_item_counts?
         send(:'display-item-counts') == 'true'
       end
+
+      def as_json
+        result = super
+
+        result[:data][:item].each do |_k, v|
+          v['thumbnail_image_url'] = parent.exhibit.searches.find(v['id']).thumbnail_image_url
+        end
+
+        result
+      end
     end
   end
 end
