@@ -14,5 +14,9 @@ module Spotlight
     def tamu_assets_precompile
       append_to_file 'config/initializers/assets.rb', 'Rails.application.config.assets.precompile += %w( *.svg *.png *.ico )'
     end
+
+    def tinymce_rails
+      gem 'tinymce-rails'
+    end
   end
 end
