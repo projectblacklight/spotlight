@@ -83,9 +83,7 @@ describe Spotlight::Resources::Upload, type: :model do
       expect(subject[:spotlight_resource_type_ssim]).to eq 'spotlight/resources/uploads'
     end
     it 'has the various image fields' do
-      expect(subject).to have_key Spotlight::Engine.config.full_image_field
       expect(subject).to have_key Spotlight::Engine.config.thumbnail_field
-      expect(subject).to have_key Spotlight::Engine.config.square_image_field
     end
     it 'has the full image dimensions fields' do
       expect(subject[:spotlight_full_image_height_ssm]).to eq 600
