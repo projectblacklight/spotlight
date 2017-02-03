@@ -525,9 +525,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
         expect(search_field.solr_parameters).to have_key :fl
         expect(search_field.solr_parameters[:fl]).to include 'id'
         expect(search_field.solr_parameters[:fl]).to include 'some_field'
-        expect(search_field.solr_parameters[:fl]).to include 'full_image_url_ssm'
         expect(search_field.solr_parameters[:fl]).to include 'thumbnail_url_ssm'
-        expect(search_field.solr_parameters[:fl]).to include 'thumbnail_square_url_ssm'
       end
     end
   end
