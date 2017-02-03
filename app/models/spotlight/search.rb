@@ -23,18 +23,6 @@ module Spotlight
       thumbnail.iiif_url
     end
 
-    def images
-      return enum_for(:images) { documents.size } unless block_given?
-
-      documents.each do |doc|
-        yield [
-          doc.first(blacklight_config.document_model.unique_key),
-          doc.first(blacklight_config.index.title_field),
-          doc.first(blacklight_config.index.thumbnail_field)
-        ]
-      end
-    end
-
     def documents
       start = 0
       response = repository.search(search_params.start(start))
