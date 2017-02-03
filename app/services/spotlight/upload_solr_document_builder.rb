@@ -26,24 +26,7 @@ module Spotlight
     end
 
     def add_file_versions(solr_hash)
-      resource.spotlight_image_derivatives.each do |config|
-        solr_hash[config[:field]] = if config[:version]
-                                      riiif.image_path(resource.upload_id, size: image_size(config[:version]))
-                                    else
-                                      riiif.image_path(resource.upload_id, size: 'full')
-                                    end
-      end
-    end
-
-    def image_size(version)
-      case version
-      when :thumb
-        '400,400'
-      when :square
-        '100,100'
-      else
-        raise "What size should we use for #{config[:version]}?"
-      end
+      solr_hash[Spotlight::Engine.config.thumbnail_field] = riiif.image_path(resource.upload_id, size: '400,400')
     end
 
     def add_sidecar_fields(solr_hash)
