@@ -48,7 +48,7 @@ Spotlight.Block.Resources = (function(){
                     '<label class="sr-only" for="'+ this.formId(this.display_checkbox + '_' + data.id) +'"><%= i18n.t("blocks:resources:panel:display") %></label>',
                   '</div>',
                   '<div class="pic thumbnail">',
-                    '<img src="' + (data.thumbnail_image_url || data.thumbnail) + '" />',
+                    '<img src="' + (data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg"))) + '" />',
                   '</div>',
                   '<div class="main">',
                     '<div class="title panel-title">' + data.title + '</div>',
