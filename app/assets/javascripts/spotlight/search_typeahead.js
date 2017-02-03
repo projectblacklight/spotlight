@@ -73,23 +73,10 @@ function addImageSelector(input, panel, manifestUrl) {
   var cropper = input.data('iiifCropper');
   $.ajax(manifestUrl).success(
     function(manifest) {
-      var thumbs = [];
-      manifest.sequences.forEach(function(sequence) {
-        sequence.canvases.forEach(function(canvas) {
-          canvas.images.forEach(function(image) {
-            var iiifService = image.resource.service['@id'];
-            thumbs.push(
-              {
-                'thumb': iiifService + '/full/!100,100/0/default.jpg',
-                'tilesource': iiifService + '/info.json',
-                'manifest': manifestUrl,
-                'canvasId': canvas['@id'],
-                'imageId': image['@id']
-              }
-            );
-          });
-        });
-      });
+      var Iiif = require('spotlight/iiif');
+      var iiifManifest = new Iiif(manifestUrl, manifest);
+
+      var thumbs = iiifManifest.imagesArray();
 
       hideNonIiifAlert(input);
 
