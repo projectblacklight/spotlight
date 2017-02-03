@@ -30,7 +30,7 @@ describe 'Autocomplete typeahead', type: :feature, js: true do
 
     context 'for items that do not include a IIIF manifest' do
       before do
-        Spotlight::Engine.config.iiif_manifest_field = 'not_a_real_field'
+        allow(Spotlight::Engine.config).to receive(:iiif_manifest_field).and_return('not_a_real_field')
       end
 
       it 'provides an alert informing the user that they cannot crop from that item' do
@@ -38,7 +38,7 @@ describe 'Autocomplete typeahead', type: :feature, js: true do
 
         expect(page).not_to have_css('[data-behavior="non-iiif-alert"]', visible: true)
 
-        fill_in_typeahead_field(with: 'gk446cj2442', type: 'masthead')
+        fill_in_typeahead_field(with: 'gk446cj2442', type: 'featured-image')
 
         expect(page).to have_css('[data-behavior="non-iiif-alert"]', visible: true)
       end
