@@ -2,7 +2,6 @@ module Spotlight
   ##
   # Exhibit saved searches
   class Search < ActiveRecord::Base
-    include DefaultThumbnailable
     extend FriendlyId
     friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: :exhibit
 

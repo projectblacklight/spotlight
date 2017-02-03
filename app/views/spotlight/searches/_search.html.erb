@@ -6,9 +6,7 @@
       <%= f.check_box :published, label: '' %>
 
       <div class="pic thumbnail">
-        <% if search.thumbnail_image_url %>
-          <%= image_tag(search.thumbnail_image_url, class: 'img-responsive') %>
-        <% end %>
+        <%= image_tag(search.thumbnail_image_url || 'spotlight/default_browse_thumbnail', class: 'img-responsive') %>
       </div>
       <div class="main">
         <div class="title panel-title"><%= search.title %></div>

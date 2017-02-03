@@ -15,40 +15,6 @@ describe Spotlight::Search, type: :model do
                      blacklight_config.index.title_field => 'title')
   end
 
-  context 'thumbnail' do
-    it 'calls DefaultThumbnailJob to fetch a default feature image' do
-      expect(Spotlight::DefaultThumbnailJob).to receive(:perform_later).with(subject)
-      subject.save!
-    end
-
-    context '#set_default_thumbnail' do
-      it 'has a default feature image' do
-        allow(subject).to receive_messages(documents: [document])
-        subject.set_default_thumbnail
-        expect(subject.thumbnail).not_to be_nil
-        expect(subject.thumbnail.image.path).to end_with 'default.jpg'
-      end
-
-      it 'uses a document with an image for the default feature image' do
-        allow(subject).to receive_messages(documents: [document_without_an_image, document])
-        subject.set_default_thumbnail
-        expect(subject.thumbnail).not_to be_nil
-        expect(subject.thumbnail.image.path).to end_with 'default.jpg'
-      end
-
-      context 'when full_image_field is nil' do
-        before do
-          allow(Spotlight::Engine.config).to receive_messages(full_image_field: nil)
-        end
-        it "doesn't query solr" do
-          expect(subject).not_to receive(:documents)
-          subject.set_default_thumbnail
-          expect(subject.thumbnail).to be_nil
-        end
-      end
-    end
-  end
-
   describe 'for a search matching all items' do
     let(:query_params) { {} }
 
