@@ -183,10 +183,17 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.blacklight_config.index_fields['a'].list).to be_truthy
     end
 
+    it 'applies immutable values from the configuration' do
+      blacklight_config.add_index_field 'a', immutable: { something: 'set_in_configuration', another: 'immutable' }
+      subject.index_fields['a'] = { something: 'set_in_db' }
+      expect(subject.blacklight_config.index_fields['a'].something).to eq 'set_in_configuration'
+      expect(subject.blacklight_config.index_fields['a'].another).to eq 'immutable'
+    end
+
     context 'custom fields' do
       it 'includes any custom fields' do
         subject.index_fields['a'] = { enabled: true, list: true }
-        allow(subject).to receive_messages(custom_index_fields: { 'a' => double(if: nil, :if= => true, merge!: true, validate!: true, normalize!: true) })
+        allow(subject).to receive_messages(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
         expect(subject.blacklight_config.index_fields).to include('a')
       end
 
@@ -249,7 +256,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     it 'includes any custom fields' do
       subject.index_fields['a'] = { enabled: true, show: true }
 
-      allow(subject).to receive_messages(custom_index_fields: { 'a' => double(if: nil, :if= => true, merge!: true, validate!: true, normalize!: true) })
+      allow(subject).to receive_messages(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
 
       expect(subject.blacklight_config.show_fields).to include('a')
     end
