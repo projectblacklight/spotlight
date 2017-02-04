@@ -195,5 +195,7 @@ module Spotlight
 
     # make blacklight configuration play nice with bootstrap_form
     Blacklight::OpenStructWithHashAccess.send(:extend, ActiveModel::Translation)
+
+    config.exhibit_themes = ['default']
   end
 end

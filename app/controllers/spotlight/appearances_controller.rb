@@ -23,7 +23,8 @@ module Spotlight
     protected
 
     def exhibit_params
-      params.require(:exhibit).permit(main_navigations_attributes: [:id, :display, :label, :weight],
+      params.require(:exhibit).permit(:theme,
+                                      main_navigations_attributes: [:id, :display, :label, :weight],
                                       masthead_attributes: featured_image_params,
                                       thumbnail_attributes: featured_image_params)
     end
