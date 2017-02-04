@@ -17,6 +17,7 @@ module Spotlight
     friendly_id :title, use: [:slugged, :finders]
     validates :title, presence: true
     validates :slug, uniqueness: true
+    validates :theme, inclusion: { in: Spotlight::Engine.config.exhibit_themes }, allow_blank: true
 
     acts_as_tagger
     acts_as_taggable

@@ -8,6 +8,7 @@ describe 'Autocomplete typeahead', type: :feature, js: true do
     context 'for items that include a IIIF manifest' do
       it 'instantiates a cropper and persists all levels of the IIIF manifest' do
         visit spotlight.edit_exhibit_appearance_path(exhibit)
+        click_link 'Exhibit masthead'
 
         expect(page).not_to have_css('.leaflet-container')
 
@@ -35,6 +36,7 @@ describe 'Autocomplete typeahead', type: :feature, js: true do
 
       it 'provides an alert informing the user that they cannot crop from that item' do
         visit spotlight.edit_exhibit_appearance_path(exhibit)
+        click_link 'Exhibit masthead'
 
         expect(page).not_to have_css('[data-behavior="non-iiif-alert"]', visible: true)
 
