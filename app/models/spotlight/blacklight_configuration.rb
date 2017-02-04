@@ -96,6 +96,10 @@ module Spotlight
           else
             set_index_field_defaults(v)
           end
+
+          v.immutable = Blacklight::OpenStructWithHashAccess.new(v.immutable)
+          v.merge! v.immutable.to_h.symbolize_keys
+
           v.upstream_if = v.if unless v.if.nil?
           v.if = :field_enabled? unless v.if == false
 
@@ -113,6 +117,9 @@ module Spotlight
           else
             set_show_field_defaults(v)
           end
+
+          v.immutable = Blacklight::OpenStructWithHashAccess.new(v.immutable)
+          v.merge! v.immutable.to_h.symbolize_keys
 
           v.upstream_if = v.if unless v.if.nil?
           v.if = :field_enabled? unless v.if == false
