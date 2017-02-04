@@ -20,7 +20,7 @@ describe 'Home page', type: :feature do
     expect(page).to have_content('The home page was successfully updated.')
 
     within '.dropdown-menu' do
-      click_link 'Dashboard'
+      click_link 'Exhibit dashboard'
     end
     click_link 'Feature pages'
     expect(page).to have_content 'New Home Page Title'

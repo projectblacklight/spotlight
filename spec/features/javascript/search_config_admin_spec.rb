@@ -10,7 +10,7 @@ feature 'Search Configuration Administration', js: true do
 
       click_link user.email
       within '#user-util-collapse .dropdown' do
-        click_link 'Dashboard'
+        click_link 'Exhibit dashboard'
       end
       click_link 'Search'
       click_link 'Options'

@@ -663,6 +663,9 @@ en:
     header_links:
       login: "Sign in"
       logout: "Sign out"
+      edit_site: "Site administration"
+      create_exhibit: "Create new exhibit"
+      dashboard: "Exhibit dashboard"
       contact: "Feedback"
     saved_search:
       label: "Save this search"
