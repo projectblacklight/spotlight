@@ -32,7 +32,7 @@ describe '_user_util_links', type: :view do
     it 'renders the links' do
       render
       expect(rendered).to have_link 'Feedback'
-      expect(rendered).to_not have_link 'Dashboard'
+      expect(rendered).to_not have_link 'Exhibit dashboard'
       expect(rendered).to have_link 'Sign out'
     end
   end
@@ -40,6 +40,7 @@ describe '_user_util_links', type: :view do
   describe 'when user is a curator' do
     let(:current_user) { Spotlight::Engine.user_class.new }
     before do
+      allow(view).to receive(:can?).with(:manage, Spotlight::Site).and_return(false)
       allow(view).to receive(:can?).with(:update, current_exhibit).and_return(false)
       allow(view).to receive(:can?).with(:create, Spotlight::Exhibit).and_return(false)
       allow(view).to receive(:can?).with(:curate, current_exhibit).and_return(true)
@@ -47,7 +48,7 @@ describe '_user_util_links', type: :view do
     it 'renders the links' do
       render
       expect(rendered).to have_link 'Feedback'
-      expect(rendered).to have_link 'Dashboard'
+      expect(rendered).to have_link 'Exhibit dashboard'
       expect(rendered).to have_link 'Sign out'
     end
   end
@@ -55,6 +56,7 @@ describe '_user_util_links', type: :view do
   describe 'when user is an admin' do
     let(:current_user) { Spotlight::Engine.user_class.new }
     before do
+      allow(view).to receive(:can?).with(:manage, Spotlight::Site).and_return(false)
       allow(view).to receive(:can?).with(:update, current_exhibit).and_return(true)
       allow(view).to receive(:can?).with(:create, Spotlight::Exhibit).and_return(false)
       allow(view).to receive(:can?).with(:curate, current_exhibit).and_return(true)
@@ -62,7 +64,7 @@ describe '_user_util_links', type: :view do
     it 'renders the links' do
       render
       expect(rendered).to have_link 'Feedback'
-      expect(rendered).to have_link 'Dashboard'
+      expect(rendered).to have_link 'Exhibit dashboard'
       expect(rendered).to have_link 'Sign out'
     end
   end
@@ -70,6 +72,7 @@ describe '_user_util_links', type: :view do
   describe 'when user is a site-wide admin' do
     let(:current_user) { Spotlight::Engine.user_class.new }
     before do
+      allow(view).to receive(:can?).with(:manage, Spotlight::Site).and_return(true)
       allow(view).to receive(:can?).with(:update, current_exhibit).and_return(true)
       allow(view).to receive(:can?).with(:create, Spotlight::Exhibit).and_return(true)
       allow(view).to receive(:can?).with(:curate, current_exhibit).and_return(true)
@@ -77,8 +80,9 @@ describe '_user_util_links', type: :view do
     it 'renders the links' do
       render
       expect(rendered).to have_link 'Feedback'
-      expect(rendered).to have_link 'Dashboard'
-      expect(rendered).to have_link 'Create Exhibit'
+      expect(rendered).to have_link 'Site administration'
+      expect(rendered).to have_link 'Exhibit dashboard'
+      expect(rendered).to have_link 'Create new exhibit'
       expect(rendered).to have_link 'Sign out'
     end
   end

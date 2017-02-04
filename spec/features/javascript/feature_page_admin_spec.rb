@@ -95,7 +95,7 @@ feature 'Feature Pages Adminstration', js: true do
     # ensure page title not changed
     click_link exhibit_curator.email
     within '#user-util-collapse .dropdown' do
-      click_link 'Dashboard'
+      click_link 'Exhibit dashboard'
     end
     click_link 'Feature pages'
     within("[data-id='#{page1.id}']") do
