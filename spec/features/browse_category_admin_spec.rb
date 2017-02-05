@@ -9,6 +9,27 @@ describe 'Browse Category Administration', type: :feature do
       expect(page).to have_css('.panel .search .title', text: search.title)
     end
   end
+  describe 'create' do
+    it 'creates a new browse category with the current search parameters', js: true do
+      visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
+      click_button 'Save this search'
+      expect(page).to have_css('#save-modal')
+      fill_in 'search_title', with: 'Some search'
+      expect do
+        click_button 'Save'
+        exhibit.searches.reload
+      end.to change { exhibit.searches.count }.by 1
+      expect(exhibit.searches.last.query_params).to eq 'q' => 'xyz'
+    end
+    it 'updates an existing browse category with the current search parameters', js: true do
+      visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
+      click_button 'Save this search'
+      expect(page).to have_css('#save-modal')
+      select search.title, from: 'id'
+      click_button 'Save'
+      expect(search.reload.query_params).to eq 'q' => 'xyz'
+    end
+  end
   describe 'edit' do
     it 'displays an edit form' do
       visit spotlight.edit_exhibit_search_path(exhibit, search)
