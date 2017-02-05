@@ -680,7 +680,8 @@ en:
       contact: "Feedback"
     saved_search:
       label: "Save this search"
-      title: "Saved search title"
+      title: "Enter a title to create a new saved search"
+      id: "Select a title to update a previously saved search"
     shared:
       report_a_problem:
         title: Contact Us
