@@ -97,7 +97,7 @@ module Spotlight
     end
 
     def reindex_progress
-      @reindex_progress ||= ReindexProgress.new(self)
+      @reindex_progress ||= ReindexProgress.new(current_reindexing_log_entry)
     end
 
     protected
@@ -108,6 +108,12 @@ module Spotlight
 
     def new_reindexing_log_entry(user = nil)
       Spotlight::ReindexingLogEntry.create(exhibit: self, user: user, items_reindexed_count: 0, job_status: 'unstarted')
+    end
+
+    private
+
+    def current_reindexing_log_entry
+      reindexing_log_entries.started_or_completed.first || reindexing_log_entries.build
     end
   end
 end
