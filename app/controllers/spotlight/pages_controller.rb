@@ -4,6 +4,7 @@ module Spotlight
   class PagesController < Spotlight::ApplicationController
     before_action :authenticate_user!, except: [:show]
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
+    load_and_authorize_resource through: :exhibit, instance_name: 'page', only: [:index]
 
     helper Openseadragon::OpenseadragonHelper
     include Spotlight::Base
