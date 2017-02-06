@@ -50,6 +50,8 @@ these collections.)
   s.add_dependency 'clipboard-rails', '~> 1.5'
   s.add_dependency 'almond-rails', '~> 0.0.1'
   s.add_dependency 'sprockets-es6'
+  s.add_dependency 'riiif', '~> 1.0'
+  s.add_dependency 'iiif_manifest'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.1'
@@ -68,6 +70,4 @@ these collections.)
   s.add_development_dependency 'simplecov', '~> 0.12'
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'sitemap_generator'
-  s.add_development_dependency 'riiif', '~> 0.4.0' # This is an optional dependency in production
-  s.add_development_dependency 'iiif_manifest'
 end
