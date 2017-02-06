@@ -26,6 +26,7 @@ Spotlight.onLoad(function() {
     });
 
     input_container.find('.first-row-only').remove();
+    input_container.find('.confirmation-status').remove();
 
     // bootstrap does not render input-groups with only one value in them correctly.
     input_container.find('.input-group input:only-child').closest('.input-group').removeClass('input-group');
