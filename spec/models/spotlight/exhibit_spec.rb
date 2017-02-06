@@ -1,5 +1,5 @@
 describe Spotlight::Exhibit, type: :model do
-  subject { FactoryGirl.build(:exhibit, title: 'Sample') }
+  subject(:exhibit) { FactoryGirl.build(:exhibit, title: 'Sample') }
 
   it 'has a title' do
     subject.title = 'Test title'
@@ -285,10 +285,24 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#reindex_progress' do
-    it 'returns a Spotlight::ReindexProgress' do
+    let!(:reindexing_log_entries) do
+      [
+        FactoryGirl.create(:unstarted_reindexing_log_entry, exhibit: exhibit),
+        FactoryGirl.create(:reindexing_log_entry, exhibit: exhibit),
+        in_progress_entry,
+        FactoryGirl.create(:failed_reindexing_log_entry, exhibit: exhibit),
+        FactoryGirl.create(:unstarted_reindexing_log_entry, exhibit: exhibit)
+      ]
+    end
+
+    let(:in_progress_entry) do
+      FactoryGirl.create(:in_progress_reindexing_log_entry, exhibit: exhibit)
+    end
+
+    it 'returns the latest log entry that is not unstarted' do
       reindex_progress = subject.reindex_progress
       expect(reindex_progress).to be_a Spotlight::ReindexProgress
-      expect(reindex_progress.exhibit).to eq subject
+      expect(reindex_progress.current_log_entry).to eq in_progress_entry
     end
   end
 end
