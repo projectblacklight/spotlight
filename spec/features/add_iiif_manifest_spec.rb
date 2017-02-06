@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 
 describe 'adding IIIF Manifest', type: :feature do
   let(:exhibit) { FactoryGirl.create(:exhibit) }

@@ -41,17 +41,15 @@ module Spotlight
       end
 
       def add_collection_id
-        if collection
-          solr_hash[collection_id_field] = [collection.compound_id]
-        end
+        solr_hash[collection_id_field] = [collection.compound_id] if collection
       end
 
       def collection_id_field
-        Spotlight::Resources::Iiif::Engine.config.collection_id_field
+        Spotlight::Engine.config.iiif_collection_id_field
       end
 
       def add_manifest_url
-        solr_hash[Spotlight::Resources::Iiif::Engine.config.iiif_manifest_field] = url
+        solr_hash[Spotlight::Engine.config.iiif_manifest_field] = url
       end
 
       def add_thumbnail_url
@@ -158,7 +156,7 @@ module Spotlight
       end
 
       def metadata_class
-        Spotlight::Resources::Iiif::Engine.config.metadata_class.call
+        Spotlight::Engine.config.iiif_metadata_class.call
       end
 
       ###

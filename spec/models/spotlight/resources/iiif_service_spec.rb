@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 
 describe Spotlight::Resources::IiifService do
   let(:url) { 'uri://for-top-level-collection' }

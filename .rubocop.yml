@@ -46,6 +46,8 @@ Metrics/AbcSize:
 
 Metrics/ModuleLength:
   Max: 120
+  Exclude:
+    - 'spec/fixtures/**/*'
 
 Metrics/LineLength:
   Max: 160
@@ -57,6 +59,7 @@ Metrics/BlockLength:
 Metrics/ClassLength:
   Exclude:
     - 'app/models/spotlight/resource.rb'
+    - 'app/models/spotlight/resources/iiif_manifest.rb'
     - 'lib/generators/spotlight/**/*' # Generators tend to have longer class lengths due to their lengthy public API
 
 Style/PredicateName:
@@ -66,6 +69,7 @@ Style/PredicateName:
 Metrics/MethodLength:
   Exclude:
     - 'lib/generators/spotlight/**/*'
+    - 'spec/fixtures/**/*'
 
 RSpec/NestedGroups:
   Max: 4

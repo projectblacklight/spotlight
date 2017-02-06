@@ -1,8 +1,7 @@
-require 'rails_helper'
+require 'spec_helper'
 
 class TestMetadataClass
-  def initialize(*)
-  end
+  def initialize(*); end
 
   def to_solr
     { 'test_field' => 'metadata-to-solr' }
@@ -11,8 +10,8 @@ end
 
 describe Spotlight::Resources::IiifManifest do
   let(:url) { 'uri://to-manifest' }
-  subject { described_class.new({ url: url, manifest: manifest, collection: collection}) }
-  let(:collection) { double( compound_id: "1" ) }
+  subject { described_class.new(url: url, manifest: manifest, collection: collection) }
+  let(:collection) { double(compound_id: '1') }
   before do
     stub_iiif_response_for_url(url, test_manifest1)
     subject.with_exhibit(exhibit)
@@ -34,15 +33,15 @@ describe Spotlight::Resources::IiifManifest do
       end
     end
 
-    describe "collection id" do
-      it "is included when a collection is given" do
-        expect(subject.to_solr[:collection_id_ssim]).to eq ["1"]
+    describe 'collection id' do
+      it 'is included when a collection is given' do
+        expect(subject.to_solr[:collection_id_ssim]).to eq ['1']
       end
     end
 
     describe 'manifest url' do
       it 'is inlcuded in the solr document when present' do
-        expect(subject.to_solr[:content_metadata_iiif_manifest_ssm]).to eq url
+        expect(subject.to_solr[:iiif_manifest_url_ssi]).to eq url
       end
     end
 
@@ -53,7 +52,7 @@ describe Spotlight::Resources::IiifManifest do
     end
 
     describe 'full size image url' do
-      it "is included in the solr document" do
+      it 'is included in the solr document' do
         expect(subject.to_solr[:full_image_url_ssm]).to eq 'uri://full-image'
       end
     end
@@ -90,13 +89,13 @@ describe Spotlight::Resources::IiifManifest do
         expect { subject.to_solr }.to change(Spotlight::CustomField, :count).by(5)
       end
 
-      it "creates read-only custom fields" do
+      it 'creates read-only custom fields' do
         expect { subject.to_solr }.to change(Spotlight::CustomField.where(readonly_field: true), :count).by(5)
       end
 
       context 'custom class' do
         before do
-          Spotlight::Resources::Iiif::Engine.config.metadata_class = -> { TestMetadataClass }
+          Spotlight::Engine.config.iiif_metadata_class = -> { TestMetadataClass }
         end
 
         it 'merges the solr hash from the configured custom metadata class' do

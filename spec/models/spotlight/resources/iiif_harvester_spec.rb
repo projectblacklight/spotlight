@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 
 describe Spotlight::Resources::IiifHarvester do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
@@ -25,12 +25,6 @@ describe Spotlight::Resources::IiifHarvester do
     it 'returns an Enumerator of all the solr documents' do
       expect(subject.documents_to_index).to be_a(Enumerator)
       expect(subject.documents_to_index.count).to eq 8
-    end
-
-    it 'all solr documents include exhibit context' do
-      subject.documents_to_index.each do |doc|
-        expect(doc).to have_key("spotlight_exhibit_slug_#{exhibit.slug}_bsi")
-      end
     end
   end
 end

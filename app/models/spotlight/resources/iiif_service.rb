@@ -19,17 +19,7 @@ module Spotlight
         @manifests ||= if manifest?
                          [create_iiif_manifest(object)]
                        else
-                         things = []
-                         if collection?
-                           self_manifest = create_iiif_manifest(object)
-                           things << self_manifest
-                         end
-                         (object.try(:manifests) || []).each do |manifest|
-                           things << create_iiif_manifest(
-                             self.class.new(manifest['@id']).object, self_manifest
-                           )
-                         end
-                         things
+                         build_collection_manifest.to_a
                        end
       end
 
@@ -62,9 +52,11 @@ module Spotlight
 
           thing.manifests.each(&block)
 
+          return unless thing.collections.present?
+
           thing.collections.each do |collection|
             recursive_manifests(collection, &block)
-          end if thing.collections.present?
+          end
         end
       end
 
@@ -82,6 +74,19 @@ module Spotlight
 
       def response
         @response ||= self.class.iiif_response(url)
+      end
+
+      def build_collection_manifest
+        return to_enum(:build_collection_manifest) unless block_given?
+
+        if collection?
+          self_manifest = create_iiif_manifest(object)
+          yield self_manifest
+        end
+
+        (object.try(:manifests) || []).each do |manifest|
+          yield create_iiif_manifest(self.class.new(manifest['@id']).object, self_manifest)
+        end
       end
     end
   end
