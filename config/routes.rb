@@ -106,6 +106,7 @@ Spotlight::Engine.routes.draw do
     end
     resource :home_page, path: 'home', controller: 'home_pages'
     post '/pages/:id/preview' => 'pages#preview', as: :preview_block
+    get '/pages' => 'pages#index', constraints: { format: 'json' }
 
     resources :lock, only: [:destroy]
 

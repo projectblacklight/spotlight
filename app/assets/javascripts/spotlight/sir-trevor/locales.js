@@ -27,8 +27,8 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
   },
 
   featured_pages: {
-    title:  "Feature Pages",
-    description: "This widget highlights feature pages. Each highlighted item links to the corresponding feature page."
+    title:  "Pages",
+    description: "This widget highlights pages from this exhibit. Each highlighted item links to the corresponding page."
   },
 
   resources: {

@@ -55,6 +55,11 @@ module Spotlight
       nil
     end
 
+    def thumbnail_image_url
+      return unless thumbnail && thumbnail.iiif_url
+      thumbnail.iiif_url
+    end
+
     # explicitly set the partial path so that
     # we don't have to duplicate view logic.
     def to_partial_path

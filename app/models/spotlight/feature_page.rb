@@ -20,10 +20,5 @@ module Spotlight
     def display_sidebar?
       child_pages.published.present? || display_sidebar
     end
-
-    def thumbnail_image_url
-      return unless thumbnail && thumbnail.iiif_url
-      thumbnail.iiif_url
-    end
   end
 end
