@@ -5,14 +5,14 @@
   <%= f.text_area :description %>
   <%= f.text_field :tag_list, value: f.object.tag_list.to_s %>
   <%= f.form_group(:contact_emails, label: { text: nil, class: nil }, help: nil) do %>
-  <%= f.fields_for :contact_emails do |contact| %>
-  <%= render partial: 'contact', locals: {contact: contact} %>
-  <% end %>
-  <p class="help-block"><%= t(:'.fields.contact_emails.help_block') %></p>
+    <%= f.fields_for :contact_emails do |contact| %>
+      <%= render partial: 'contact', locals: {contact: contact} %>
+    <% end %>
+    <p class="help-block"><%= t(:'.fields.contact_emails.help_block') %></p>
   <% end %>
   <%= f.form_group :published, label: { text: nil, class: nil }, help: nil do %>
-  <%= f.check_box :published, label: "" %>
-  <p class="help-block"><%= t(:'.fields.published.help_block') %></p>
+    <%= f.check_box :published, label: "" %>
+    <p class="help-block"><%= t(:'.fields.published.help_block') %></p>
   <% end %>
   
   <div class="form-actions">
