@@ -35,6 +35,9 @@ module Spotlight
 
     def sitemaps
       gem 'sitemap_generator'
+
+      Bundler.with_clean_env { run 'bundle install' }
+
       copy_file 'config/sitemap.rb', 'config/sitemap.rb'
 
       say <<-EOS.strip_heredoc, :red
