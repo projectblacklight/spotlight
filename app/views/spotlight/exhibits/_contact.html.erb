@@ -1,14 +1,7 @@
         <%= contact.hidden_field :id %>
         <div class="row contact">
           <div class="col-md-8<%= ' has-error' if contact.object.errors[:email].present? %>">
-            <% if contact.index == 0 %>
-              <div class="input-group">
-                <%= text_field_tag "#{contact.object_name}[email]", contact.object.email, class: 'exhibit-contact form-control' %>
-                <span id='another-email' class="input-group-addon first-row-only">+</span>
-              </div>
-            <% else %>
-              <%= text_field_tag "#{contact.object_name}[email]", contact.object.email, class: 'exhibit-contact form-control' %>
-            <% end %>
+            <%= text_field_tag "#{contact.object_name}[email]", contact.object.email, class: 'exhibit-contact form-control' %>
             <% if contact.object.errors[:email].present? %>
               <span class="help-block"><%=contact.object.errors[:email].join(", ".html_safe) %></span>
             <% end %>

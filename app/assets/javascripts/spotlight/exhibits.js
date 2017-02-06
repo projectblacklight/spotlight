@@ -25,7 +25,6 @@ Spotlight.onLoad(function() {
       $(this).attr('name', $(this).attr('name').replace('0', contacts.length));
     });
 
-    input_container.find('.first-row-only').remove();
     input_container.find('.confirmation-status').remove();
 
     // bootstrap does not render input-groups with only one value in them correctly.

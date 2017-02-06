@@ -383,6 +383,7 @@ en:
         basic_settings:
           heading: Basic settings
       form:
+        add_contact_email_button: Add new contact
         fields:
           contact_emails:
             help_block: Each contact email will receive feedback submissions
