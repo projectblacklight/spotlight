@@ -111,10 +111,10 @@ export default class Crop {
       var xRatio = self.iiifLayer.x / imageSize.x;
       var yRatio = self.iiifLayer.y / imageSize.y;
       var region = [
-        Math.floor(min.x * xRatio),
-        Math.floor(max.y * yRatio),
-        Math.floor((max.x - min.x) * xRatio),
-        Math.floor((min.y - max.y) * yRatio)
+        Math.max(Math.floor(min.x * xRatio), 0),
+        Math.max(Math.floor(max.y * yRatio), 0),
+        Math.min(Math.floor((max.x - min.x) * xRatio), self.iiifLayer.x),
+        Math.min(Math.floor((min.y - max.y) * yRatio), self.iiifLayer.y),
       ];
       if (self.existingCropBoxSet) {
         self.iiifRegionField.val(region.join(','));
