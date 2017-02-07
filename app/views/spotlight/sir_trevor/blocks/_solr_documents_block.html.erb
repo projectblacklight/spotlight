@@ -25,6 +25,9 @@
                 <%= doc_presenter.field_value solr_documents_block.secondary_caption_field %>
               </div>
             <% end %>
+            <% if solr_documents_block.zpr_link? && block_options[:iiif_tilesource].present? %>
+              <button class="btn btn-default zpr-link" data-iiif-tilesource="<%= block_options[:iiif_tilesource] %>">Show in ZPR viewer</button>
+            <% end %>
           </div>
         </div>
       <% end %>

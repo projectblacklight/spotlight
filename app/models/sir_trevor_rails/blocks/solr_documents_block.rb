@@ -41,6 +41,10 @@ module SirTrevorRails
         secondary_caption_field.present? && send(:'show-secondary-caption')
       end
 
+      def zpr_link?
+        zpr_link == 'true'
+      end
+
       def primary_caption_field
         val = send(:'primary-caption-field')
         val unless val.blank?

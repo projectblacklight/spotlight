@@ -289,3 +289,7 @@
   padding-left: 2 * $padding-large-horizontal;
   padding-right: 2 * $padding-large-horizontal;
 }
+
+.zpr-link {
+  @extend .btn-sm;
+}

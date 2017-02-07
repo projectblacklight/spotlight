@@ -128,6 +128,18 @@ feature 'Solr Document Block', feature: true do
     end
   end
 
+  scenario 'should allow you to optionally display a ZPR link with the image', js: true do
+    fill_in_typeahead_field with: 'gk446cj2442'
+
+    check 'zpr_link'
+
+    save_page
+
+    expect(page).to have_selector('.zpr-link[data-iiif-tilesource]')
+    click_on 'Show in ZPR viewer'
+    expect(page).to have_css('#osd-modal-container')
+  end
+
   scenario 'should allow you to add text to the image', js: true do
     # fill in the content-editable div
     content_editable = find('.st-text-block')
