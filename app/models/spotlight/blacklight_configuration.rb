@@ -17,7 +17,6 @@ module Spotlight
     serialize :document_index_view_types, Array
 
     include Spotlight::BlacklightConfigurationDefaults
-    include Spotlight::ImageDerivatives
 
     delegate :document_model, to: :default_blacklight_config
 
@@ -308,15 +307,9 @@ module Spotlight
       [
         config.document_model.unique_key,
         config.view_config(:show).title_field,
-        spotlight_image_version_fields,
+        config.index.thumbnail_field || Spotlight::Engine.config.thumbnail_field,
         Spotlight::Engine.config.iiif_manifest_field
       ].flatten.join(' ')
-    end
-
-    def spotlight_image_version_fields
-      spotlight_image_derivatives.map do |version|
-        version[:field]
-      end
     end
 
     # rubocop:disable Style/AccessorMethodName

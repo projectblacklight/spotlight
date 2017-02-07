@@ -49,20 +49,60 @@ SirTrevor.Blocks.SolrDocuments = (function(){
       '</div>',
     ].join("\n") },
 
+    _itemPanelIiifFields: function(index, data) {
+      return [
+        // '<input type="hidden" name="item[' + index + '][iiif_region]" value="' + (data.iiif_region) + '"/>',
+        // for legacy compatiblity:
+        '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" value="' + (data.thumbnail_image_url || data.thumbnail || "") + '"/>',
+        '<input type="hidden" name="item[' + index + '][full_image_url]" value="' + (data.full_image_url || data.thumbnail_image_url || data.thumbnail || "") + '"/>',
+        '<input type="hidden" name="item[' + index + '][iiif_tilesource]" value="' + (data.iiif_tilesource) + '"/>',
+        '<input type="hidden" name="item[' + index + '][iiif_manifest_url]" value="' + (data.iiif_manifest_url) + '"/>',
+        '<input type="hidden" name="item[' + index + '][iiif_canvas_id]" value="' + (data.iiif_canvas_id) + '"/>',
+        '<input type="hidden" name="item[' + index + '][iiif_image_id]" value="' + (data.iiif_image_id) + '"/>',
+      ].join("\n");
+    },
+    setIiifFields: function(panel, data, initialize) {
+      var legacyThumbnailField = $(panel).find('[name$="[thumbnail_image_url]"]')
+      var legacyFullField = $(panel).find('[name$="[full_image_url]"]')
+
+      if (initialize && legacyThumbnailField.val().length > 0) {
+        return;
+      }
+
+      legacyThumbnailField.val("");
+      legacyFullField.val("");
+      $(panel).find('[name$="[iiif_image_id]"]').val(data.imageId);
+      $(panel).find('[name$="[iiif_tilesource]"]').val(data.tilesource);
+      $(panel).find('[name$="[iiif_manifest_url]"]').val(data.manifest);
+      $(panel).find('[name$="[iiif_canvas_id]"]').val(data.canvasId);
+      $(panel).find('.thumbnail img').attr('src', data.thumbnail_image_url || data.tilesource.replace("/info.json", "/full/100,100/0/default.jpg"));
+    },
     afterPanelRender: function(data, panel) {
       var context = this;
+      var manifestUrl = data.iiif_manifest || data.iiif_manifest_url;
 
-      if (_.isUndefined(data['image_versions'])) {
-        $.getJSON(this.autocomplete_url().replace("%QUERY", "id:" + data.id), function(data) {
-          var doc = context.transform_autocomplete_results(data)[0];
+      if (!manifestUrl) {
+        $(panel).find('[name$="[thumbnail_image_url]"]').val(data.thumbnail);
+        $(panel).find('[name$="[full_image_url]"]').val(data.full_image_url);
 
-          if (!_.isUndefined(doc)) {
-            panel.multiImageSelector(doc['image_versions']);
-          }
-        });
-      } else {
-        panel.multiImageSelector(data['image_versions']);
+        return;
       }
+
+      $.ajax(manifestUrl).success(
+        function(manifest) {
+          var Iiif = require('spotlight/iiif');
+          var iiifManifest = new Iiif(manifestUrl, manifest);
+
+          var thumbs = iiifManifest.imagesArray();
+          context.setIiifFields(panel, thumbs[0], !!data.iiif_manifest_url);
+
+          if(thumbs.length > 1) {
+            panel.multiImageSelector(thumbs, function(selectorImage) {
+              context.setIiifFields(panel, selectorImage, false);
+            });
+          }
+        }
+      );
     }
   });
 
