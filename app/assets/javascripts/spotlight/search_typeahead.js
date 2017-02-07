@@ -80,9 +80,9 @@ function addImageSelector(input, panel, manifestUrl) {
 
       hideNonIiifAlert(input);
 
-      if(thumbs.length == 1) {
-        cropper.setIiifFields(thumbs[0]);
-      } else {
+      cropper.setIiifFields(thumbs[0]);
+
+      if(thumbs.length > 1) {
         panel.show();
         panel.multiImageSelector(thumbs, function(selectorImage) {
           cropper.setIiifFields(selectorImage);
