@@ -17,7 +17,7 @@ export default class Crop {
 
     this.setupAutoCompletes();
     this.setupAjaxFileUpload();
-    this.setupExistingIiiifCropper();
+    this.setupExistingIiifCropper();
     this.invalidateMapSizeOnTabToggle();
   }
 
@@ -52,7 +52,7 @@ export default class Crop {
 
   // Setup the cropper on page load if the field
   // that holds the IIIF url is populated
-  setupExistingIiiifCropper() {
+  setupExistingIiifCropper() {
     if(this.iiifUrlField.val() === '') {
       return;
     }
@@ -99,7 +99,7 @@ export default class Crop {
 
     this.iiifCropBox.addTo(this.iiifCropper);
 
-    this.positionIiiifCropBox();
+    this.positionIiifCropBox();
 
     var self = this;
     this.iiifCropBox.on('change', function(){
@@ -123,7 +123,7 @@ export default class Crop {
     this.cropArea.data('initiallyVisible', this.cropArea.is(':visible'));
   }
 
-  positionIiiifCropBox() {
+  positionIiifCropBox() {
     var self = this;
     this.iiifLayer.on('load', function() {
       var regionFieldValue = self.iiifRegionField.val();
