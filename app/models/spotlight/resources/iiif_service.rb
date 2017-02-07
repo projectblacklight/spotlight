@@ -2,7 +2,7 @@ require 'iiif/presentation'
 module Spotlight
   module Resources
     ###
-    # Wrapper around IIIIF-Presentation's IIIF::Service that provides the
+    # Wrapper around IIIF-Presentation's IIIF::Service that provides the
     # ability to recursively traverse through all collections and manifests
     class IiifService
       def initialize(url)
