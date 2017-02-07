@@ -1,7 +1,7 @@
 // Module to add multi-image selector to widget panels
 
 (function(){
-  $.fn.multiImageSelector = function(image_versions, clickCallback) {
+  $.fn.multiImageSelector = function(image_versions, clickCallback, activeImageId) {
     var changeLink          = $("<a href='javascript:;'>Change</a>"),
         thumbsListContainer = $("<div class='thumbs-list' style='display:none'></div>"),
         thumbList           = $("<ul class='pagination'></ul>"),
@@ -20,15 +20,13 @@
     }
     function addChangeLink() {
       $('[data-panel-image-pagination]', panel)
-        .html("Image <span data-current-image='true'>" + indexOf(currentThumb()) + "</span> of " + image_versions.length)
+        .html("Image <span data-current-image='true'>" + indexOf(activeImageId) + "</span> of " + image_versions.length)
         .show()
         .append(" ")
         .append(changeLink);
       addChangeLinkBehavior();
     }
-    function currentThumb(){
-      return $("[name$='[iiif_image_id]']", panel).attr('value');
-    }
+
     function indexOf(thumb){
       if( (index = imageIds.indexOf(thumb)) > -1 ){
         return index + 1;
@@ -92,7 +90,7 @@
     function updateActiveThumb(){
       $('li', thumbList).each(function(){
         var item = $(this);
-        if($('img', item).data('image-id') == currentThumb()){
+        if($('img', item).data('image-id') == activeImageId){
           item.addClass('active');
         }
       });
@@ -102,6 +100,7 @@
         link.text() == 'Change' ? 'Close' : 'Change'
       )
     }
+
     function addThumbsToList(){
       $.each(image_versions, function(i){
         var listItem = $('<li><a href="javascript:;"><img src="' + image_versions[i]['thumb'] +'" data-image-id="' + image_versions[i]['imageId'] +'" /></a></li>');

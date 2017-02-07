@@ -86,7 +86,7 @@ function addImageSelector(input, panel, manifestUrl) {
         panel.show();
         panel.multiImageSelector(thumbs, function(selectorImage) {
           cropper.setIiifFields(selectorImage);
-        });
+        }, cropper.iiifImageField.val());
       }
     }
   );

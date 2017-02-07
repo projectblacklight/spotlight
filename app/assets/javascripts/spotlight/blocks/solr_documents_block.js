@@ -99,7 +99,7 @@ SirTrevor.Blocks.SolrDocuments = (function(){
           if(thumbs.length > 1) {
             panel.multiImageSelector(thumbs, function(selectorImage) {
               context.setIiifFields(panel, selectorImage, false);
-            });
+            }, data.iiif_image_id);
           }
         }
       );
