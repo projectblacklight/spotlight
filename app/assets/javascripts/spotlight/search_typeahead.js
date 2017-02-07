@@ -58,14 +58,14 @@ function addAutocompletetoFeaturedImage(){
       $(this).select();
     }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
       var panel = $($(this).data('target-panel'));
-      addImageSelector($(this), panel, data.iiif_manifest);
+      addImageSelector($(this), panel, data.iiif_manifest, true);
       $($(this).data('id-field')).val(data['global_id']);
       $(this).attr('type', 'text');
     });
   }
 }
 
-function addImageSelector(input, panel, manifestUrl) {
+function addImageSelector(input, panel, manifestUrl, initialize) {
   if (!manifestUrl) {
     showNonIiifAlert(input);
     return;
@@ -80,9 +80,11 @@ function addImageSelector(input, panel, manifestUrl) {
 
       hideNonIiifAlert(input);
 
-      if(thumbs.length == 1) {
+      if (initialize) {
         cropper.setIiifFields(thumbs[0]);
-      } else {
+      }
+
+      if(thumbs.length > 1) {
         panel.show();
         panel.multiImageSelector(thumbs, function(selectorImage) {
           cropper.setIiifFields(selectorImage);
