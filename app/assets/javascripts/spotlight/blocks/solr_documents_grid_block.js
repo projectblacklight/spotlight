@@ -1,8 +1,8 @@
-//= require spotlight/blocks/solr_documents_block
+//= require spotlight/blocks/solr_documents_base_block
 
 SirTrevor.Blocks.SolrDocumentsGrid = (function(){
 
-  return SirTrevor.Blocks.SolrDocuments.extend({
+  return SirTrevor.Blocks.SolrDocumentsBase.extend({
     type: "solr_documents_grid",
 
     icon_name: "item_grid",

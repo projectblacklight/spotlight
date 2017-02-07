@@ -1,0 +1,30 @@
+Spotlight.onLoad(function(){
+  $('.zpr-link').on('click', function() {
+    $('#ajax-modal .modal-content').html('<div id="osd-modal-container"></div>');
+    var controls = [
+      '<div class="controls">',
+      '  <a id="osd-zoom-in"><span class="glyphicon glyphicon-plus-sign"></span></a>',
+      '  <a id="osd-zoom-out"><span class="glyphicon glyphicon-minus-sign"></span></a>',
+      '  <a id="osd-home"><span class="glyphicon glyphicon-resize-small"></span></a>',
+      '  <a id="osd-full-page"><span class="glyphicon glyphicon-fullscreen"></span></a>',
+      '</div>'
+    ].join("\n");
+
+    $('#osd-modal-container').append(controls);
+    $('#osd-modal-container').append('<div id="osd-div"></div>');
+    $('#osd-div').css('height', '400px');
+
+    $('#ajax-modal').modal('show');
+
+    OpenSeadragon({
+      id: 'osd-div',
+      zoomInButton:     "osd-zoom-in",
+      zoomOutButton:    "osd-zoom-out",
+      homeButton:       "osd-home",
+      fullPageButton:   "osd-full-page",
+      nextButton:       "osd-next",
+      previousButton:   "osd-previous",
+      tileSources: [$(this).data('iiif-tilesource')]
+    })
+  });
+});

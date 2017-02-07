@@ -55,6 +55,9 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
       placeholder: "Select...",
       primary: "Primary caption",
       secondary: "Secondary caption"
+    },
+    zpr: {
+      title: 'Display ZPR link'
     }
   },
 
