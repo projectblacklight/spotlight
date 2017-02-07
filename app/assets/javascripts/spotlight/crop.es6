@@ -56,7 +56,20 @@ export default class Crop {
     if(this.iiifUrlField.val() === '') {
       return;
     }
+
+    this.addImageSelectorToExistingCropTool();
     this.setTileSource(this.iiifUrlField.val());
+  }
+
+  addImageSelectorToExistingCropTool() {
+    if(this.iiifManifestField.val() === '') {
+      return;
+    }
+
+    var input = $('[data-behavior="autocomplete"]', this.cropTool);
+    var panel = $(input.data('target-panel'));
+    // This is defined in search_typeahead.js
+    addImageSelector(input, panel, this.iiifManifestField.val());
   }
 
   setupIiifCropper() {
