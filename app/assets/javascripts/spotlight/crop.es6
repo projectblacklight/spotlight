@@ -32,6 +32,12 @@ export default class Crop {
 
   // Set the Crop tileSource and setup the cropper
   setTileSource(source) {
+    if (source == this.tileSource) {
+      return;
+    } else if(this.previousCropBox) {
+      this.previousCropBox.remove();
+    }
+
     this.tileSource = source;
     this.iiifUrlField.val(source);
     this.setupIiifCropper();
@@ -144,7 +150,8 @@ export default class Crop {
 
       // Pop a rectangle on there to show where it goes
       var bounds = L.latLngBounds(min, max);
-      L.rectangle(bounds).addTo(self.iiifCropper);
+      self.previousCropBox = L.rectangle(bounds);
+      self.previousCropBox.addTo(self.iiifCropper);
       self.iiifCropper.panTo(bounds.getCenter());
 
       self.iiifCropBox.setDimensions({
