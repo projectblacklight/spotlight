@@ -94,7 +94,11 @@ SirTrevor.Blocks.SolrDocuments = (function(){
           var iiifManifest = new Iiif(manifestUrl, manifest);
 
           var thumbs = iiifManifest.imagesArray();
-          context.setIiifFields(panel, thumbs[0], !!data.iiif_manifest_url);
+
+          if (!data.iiif_image_id) {
+            context.setIiifFields(panel, thumbs[0], !!data.iiif_manifest_url);
+          }
+
 
           if(thumbs.length > 1) {
             panel.multiImageSelector(thumbs, function(selectorImage) {

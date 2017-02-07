@@ -51,6 +51,36 @@ feature 'Solr Document Block', feature: true do
     expect(page).to have_selector '.items-block .box', count: 2
   end
 
+  scenario 'it should allow you to choose from a multi-image solr document (and persist through edits)', js: true do
+    fill_in_typeahead_field with: 'xd327cm9378'
+
+    expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
+
+    # Select the last image
+    click_link('Change')
+    all('.thumbs-list li').last.click
+
+    save_page
+
+    # The thumbnail on the rendered block should be correct
+    thumb = find('.thumbnail img')
+    expect(thumb['src']).to match(%r{xd327cm9378_05_0002/full})
+
+    # revisit the edit page
+    visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
+
+    # Expect the image on the rendered edit screen to be correct
+    expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/, visible: true)
+    thumb = find('.pic.thumbnail img')
+    expect(thumb['src']).to match(%r{xd327cm9378_05_0002/full})
+
+    save_page
+
+    # Expect that the original image selection was retained
+    thumb = find('.thumbnail img')
+    expect(thumb['src']).to match(%r{xd327cm9378_05_0002/full})
+  end
+
   scenario 'it should allow you toggle visibility of solr documents', js: true do
     fill_in_typeahead_field with: 'dq287tq6352'
 
