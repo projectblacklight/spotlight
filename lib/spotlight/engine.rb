@@ -93,7 +93,8 @@ module Spotlight
       'spotlight/resources/external_resources_form',
       'spotlight/resources/upload/form',
       'spotlight/resources/csv_upload/form',
-      'spotlight/resources/json_upload/form'
+      'spotlight/resources/json_upload/form',
+      'spotlight/resources/iiif/form'
     ]
     config.external_resources_partials = []
     config.solr_batch_size = 20
@@ -133,6 +134,8 @@ module Spotlight
     ]
 
     config.iiif_manifest_field = :iiif_manifest_url_ssi
+    config.iiif_metadata_class = -> { Spotlight::Resources::IiifManifest::Metadata }
+    config.iiif_collection_id_field = :collection_id_ssim
 
     config.masthead_initial_crop_selection = [1200, 120]
     config.thumbnail_initial_crop_selection = [120, 120]

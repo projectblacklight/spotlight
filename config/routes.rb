@@ -80,6 +80,8 @@ Spotlight::Engine.routes.draw do
       end
     end
 
+    resources :iiif_harvesters, controller: 'resources/iiif_harvester', only: :create, as: 'resources_iiif_harvesters'
+
     resources :searches do
       collection do
         patch :update_all

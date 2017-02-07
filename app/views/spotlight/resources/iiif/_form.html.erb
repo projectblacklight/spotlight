@@ -1,0 +1,9 @@
+<%= bootstrap_form_for([spotlight, current_exhibit, @resource.becomes(Spotlight::Resources::IiifHarvester)], as: :resource, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-sm-6 col-md-6' ) do |f| %>
+  <%= f.text_field :url, help: t('.url-field.help'), label: t('.manifest') %>
+  <div class="form-actions">
+    <div class="primary-actions">
+      <%= cancel_link @resource, :back, class: 'btn btn-default' %>
+      <%= f.submit t('.add_item'), class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>
