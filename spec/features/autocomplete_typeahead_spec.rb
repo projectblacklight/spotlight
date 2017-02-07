@@ -51,6 +51,19 @@ describe 'Autocomplete typeahead', type: :feature, js: true do
 
         expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/, visible: true)
       end
+
+      it 'removes the multi-image selector when a non multi-image item is selected' do
+        visit spotlight.edit_exhibit_appearance_path(exhibit)
+        click_link 'Exhibit masthead'
+
+        fill_in_typeahead_field(with: 'xd327cm9378', type: 'featured-image')
+
+        expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
+
+        fill_in_typeahead_field(with: 'gk446cj2442', type: 'featured-image')
+
+        expect(page).not_to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/)
+      end
     end
 
     context 'for items that do not include a IIIF manifest' do

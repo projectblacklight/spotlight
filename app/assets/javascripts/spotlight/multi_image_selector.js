@@ -13,6 +13,8 @@
 
     function init(el) {
       panel = el;
+
+      destroyExistingImageSelector();
       if(image_versions && image_versions.length > 1) {
         addChangeLink();
         addThumbsList();
@@ -25,6 +27,12 @@
         .append(" ")
         .append(changeLink);
       addChangeLinkBehavior();
+    }
+
+    function destroyExistingImageSelector() {
+      var pagination = $('[data-panel-image-pagination]', panel);
+      pagination.html('');
+      pagination.next('.' + thumbsListContainer.attr('class')).remove();
     }
 
     function indexOf(thumb){
