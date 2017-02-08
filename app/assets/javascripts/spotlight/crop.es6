@@ -157,8 +157,8 @@ export default class Crop {
       self.iiifCropper.panTo(bounds.getCenter());
 
       self.iiifCropBox.setDimensions({
-        width: Math.abs(x),
-        height: Math.abs(y)
+        width: Math.round(Math.abs(x)),
+        height: Math.round(Math.abs(y))
       });
 
       self.existingCropBoxSet = true;
