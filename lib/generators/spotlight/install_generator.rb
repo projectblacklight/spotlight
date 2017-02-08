@@ -17,14 +17,14 @@ module Spotlight
     end
 
     def friendly_id
-      gem 'friendly_id', github: 'norman/friendly_id'
+      gem 'friendly_id'
       # we need to immediately run `bundle install` while pointing at github.
       Bundler.with_clean_env { run 'bundle install' }
       generate 'friendly_id'
     end
 
     def riiif
-      gem 'riiif', '~> 0.4.0'
+      gem 'riiif', '~> 1.0'
       route "mount Riiif::Engine => '/images', as: 'riiif'"
       copy_file 'config/initializers/riiif.rb'
     end
@@ -35,6 +35,9 @@ module Spotlight
 
     def sitemaps
       gem 'sitemap_generator'
+
+      Bundler.with_clean_env { run 'bundle install' }
+
       copy_file 'config/sitemap.rb', 'config/sitemap.rb'
 
       say <<-EOS.strip_heredoc, :red

@@ -1,0 +1,28 @@
+<h3><%= t :'.header' %></h3>
+
+<% unless @recent_reindexing.empty? %>
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="col-md-3"><%= t :'.field.date' %></th>
+      <th class="col-md-2"><%= t :'.field.user' %></th>
+      <th class="col-md-1"><%= t :'.field.items_reindexed_count' %></th>
+      <th class="col-md-2"><%= t :'.field.duration' %></th>
+      <th class="col-md-2"><%= t :'.field.job_status' %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recent_reindexing.each do |log_entry| %>
+      <tr>
+        <td><%= l log_entry.start_time, format: :short if log_entry.start_time %></td>
+        <td><%= log_entry.user.email if log_entry.user %></td>
+        <td><%= log_entry.items_reindexed_count %></td>
+        <td><%= distance_of_time_in_words log_entry.duration, 0, include_seconds: true if log_entry.duration %></td>
+        <td><%= t "reindexing_log.status.#{log_entry.job_status}" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+<% else %>
+  <p><%= t(:'.no_reindexing_activity') %></p>
+<% end %>

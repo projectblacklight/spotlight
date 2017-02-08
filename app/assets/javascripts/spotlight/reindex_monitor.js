@@ -23,8 +23,8 @@ Spotlight.onLoad(function() {
 
     function success(data) {
       if (data.recently_in_progress) {
-        monitorPanel().show();
         updateMonitorPanel(data);
+        monitorPanel().show();
       } else {
         monitorPanel().hide();
       }
@@ -48,6 +48,10 @@ Spotlight.onLoad(function() {
         .attr('aria-valuenow', percentage)
         .css('width', percentage + '%')
         .text(percentage + '%');
+
+      if (data.finished) {
+        progressBar().removeClass('active').removeClass('progress-bar-striped');
+      }
     }
 
     function updatePanelErrorMessage(data) {

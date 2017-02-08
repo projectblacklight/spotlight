@@ -12,12 +12,17 @@ describe 'spotlight/metadata_configurations/_metadata_field', type: :view do
     )
   end
 
-  let(:facet_field) { Blacklight::Configuration::FacetField.new }
+  let(:field) { Blacklight::Configuration::Field.new immutable: OpenStruct.new(another_view_type: false) }
   let(:builder) { ActionView::Helpers::FormBuilder.new 'z', nil, view, {} }
 
   it 'uses the index_field_label helper to render the label' do
     allow(view).to receive(:index_field_label).with(nil, 'some_key').and_return 'Some label'
-    render partial: p, locals: { key: 'some_key', config: facet_field, f: builder }
+    render partial: p, locals: { key: 'some_key', config: field, f: builder }
     expect(rendered).to have_selector '.field-label', text: 'Some label'
+  end
+
+  it 'marks views as disabled if they are immutable' do
+    render partial: p, locals: { key: 'some_key', config: field, f: builder }
+    expect(rendered).to have_selector 'input[disabled][name="z[some_key][another_view_type]"]'
   end
 end

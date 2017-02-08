@@ -93,4 +93,18 @@ describe Spotlight::Page, type: :model do
       end
     end
   end
+
+  describe 'thumbnail_image_url' do
+    subject(:thumbnail) { FactoryGirl.create(:featured_image) }
+    subject(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+
+    it 'is nil when there is no thumbnail' do
+      expect(page.thumbnail_image_url).to be_nil
+    end
+
+    it "is returns the thumbnail's IIIF url" do
+      page.thumbnail = thumbnail
+      expect(page.thumbnail_image_url).to eq thumbnail.iiif_url
+    end
+  end
 end

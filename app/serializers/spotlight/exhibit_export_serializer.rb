@@ -25,7 +25,6 @@ module Spotlight
   ##
   # Serialize an exhibit with all the data needed to reconstruct it
   # in a different environment
-  # rubocop:disable Metrics/ClassLength
   class ExhibitExportSerializer < Roar::Decorator
     include Roar::JSON
 
@@ -59,7 +58,7 @@ module Spotlight
 
     property :masthead, class: Spotlight::Masthead, decorator: FeaturedImageRepresenter
 
-    property :thumbnail, class: Spotlight::FeaturedImage, decorator: FeaturedImageRepresenter
+    property :thumbnail, class: Spotlight::ExhibitThumbnail, decorator: FeaturedImageRepresenter
 
     collection :main_navigations, class: Spotlight::MainNavigation, decorator: MainNavigationRepresenter
 
@@ -74,25 +73,11 @@ module Spotlight
 
     collection :contacts, populator: ->(fragment, options) { options[:represented].contacts.find_or_initialize_by(slug: fragment['slug']) },
                           class: Spotlight::Contact do
-      (Spotlight::Contact.attribute_names - %w(id exhibit_id avatar)).each do |prop|
+      (Spotlight::Contact.attribute_names - %w(id exhibit_id)).each do |prop|
         property prop
       end
 
-      property :avatar, exec_context: :decorator
-
-      def avatar
-        file = represented.avatar.file
-
-        return unless file
-
-        { filename: file.filename, content_type: file.content_type, content: Base64.encode64(file.read) }
-      end
-
-      def avatar=(file)
-        represented.avatar = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file['content'])),
-                                                            filename: file['filename'],
-                                                            content_type: file['content_type']
-      end
+      property :avatar, class: Spotlight::ContactImage, decorator: FeaturedImageRepresenter
     end
 
     collection :contact_emails, class: Spotlight::ContactEmail do
@@ -151,39 +136,22 @@ module Spotlight
     end
 
     collection :resources, class: ->(options) { options[:fragment].key?('type') ? options[:fragment]['type'].constantize : Spotlight::Resource } do
-      (Spotlight::Resource.attribute_names - %w(id url exhibit_id)).each do |prop|
+      (Spotlight::Resource.attribute_names - %w(id upload_id exhibit_id)).each do |prop|
         property prop
       end
 
-      property :url, exec_context: :decorator
-      property :file, exec_context: :decorator
+      property :upload, exec_context: :decorator
 
-      def url
-        return if represented.is_a? Spotlight::Resources::Upload
-
-        represented.url
-      end
-
-      def url=(url)
-        return if represented.is_a? Spotlight::Resources::Upload
-
-        represented.url = url
-      end
-
-      def file
+      def upload
         return unless represented.is_a? Spotlight::Resources::Upload
-        file = represented.url.file
 
-        { filename: file.filename, content_type: file.content_type, content: Base64.encode64(file.read) }
+        FeaturedImageRepresenter.new(represented.upload).to_json
       end
 
-      def file=(file)
+      def upload=(json)
         return unless represented.is_a? Spotlight::Resources::Upload
-        represented.url = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file['content'])),
-                                                         filename: file['filename'],
-                                                         content_type: file['content_type']
+        FeaturedImageRepresenter.new(represented.build_upload).from_json(json)
       end
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end

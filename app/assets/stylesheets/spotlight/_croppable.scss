@@ -1,16 +1,11 @@
-@mixin jcrop-loading-background {
-  background-image: image-url('Jcrop.gif');
-  background-color: transparent !important;
-}
-.form-group.croppable-loading-area {
-  min-height: 100px;
-  margin: ($padding-large-vertical * 2) $padding-large-vertical;
+.leaflet-container {
+  height: 400px;
+  margin: 0;
 }
 
-.loading-jcrop {
-  @include jcrop-loading-background;
-  .jcrop-tracker {
-    @include jcrop-loading-background;
-  }
+.leaflet-areaselect-container {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: 800;
 }
-

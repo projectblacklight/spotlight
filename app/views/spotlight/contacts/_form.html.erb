@@ -6,15 +6,20 @@
     <% end %>
   <% end %>
 
-  <%= f.file_field :avatar, data: { croppable: true, aspect_ratio: 1, box_width: 600 } %>
+  <%= f.fields_for :avatar, (@contact.avatar || @contact.build_avatar) do |af| %>
+    <div data-cropper="<%= af.object.model_name.singular_route_key %>" data-form-prefix="<%= form_prefix(af) %>">
+    <%= field_set_tag(t(:'.avatar.header')) do %>
+      <p class="instructions"><%= t(:'featured_images.form.crop_area.help', scope: [:spotlight], thing: 'contact photo') %></p>
 
-  <div class="form-group croppable-loading-area <%= "missing-croppable" unless @contact.avatar.present? %>">
-    <div class="col-sm-5 col-sm-offset-2">
-      <%= hidden_field_tag :contact_avatar_crop, ([@contact.avatar_crop_x.to_i, @contact.avatar_crop_y.to_i, @contact.avatar_crop_x.to_i + @contact.avatar_crop_w.to_i, @contact.avatar_crop_y.to_i + @contact.avatar_crop_h.to_i].to_json if @contact.avatar_crop_x) %>
-      <%= f.previewbox :avatar %>
-      <%= f.cropbox :avatar %>
+      <div>
+        <%= af.radio_button(:source, :remote, label: t(:'.source.remote.label')) %>
+        <%= iiif_upload_tag(af) %>
+      </div>
+
+      <%= iiif_cropper_tags af, initial_crop_selection: Spotlight::Engine.config.contact_square_size %>
+    <% end %>
     </div>
-  </div>
+  <% end %>
 
   <div class="form-group primary-actions">
     <%= cancel_link @contact, exhibit_about_pages_path(@contact.exhibit), class: "btn btn-link" %>

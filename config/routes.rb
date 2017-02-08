@@ -1,6 +1,11 @@
 Spotlight::Engine.routes.draw do
   devise_for :contact_email, class_name: 'Spotlight::ContactEmail', only: [:confirmations]
 
+  resources :contact_images, controller: :featured_images, only: :create
+  resources :exhibit_thumbnails, controller: :featured_images, only: :create
+  resources :mastheads, controller: :featured_images, only: :create
+  resources :featured_images, only: :create
+
   resource :site, only: [:edit, :update] do
     collection do
       get '/tags', to: 'sites#tags'
@@ -50,6 +55,7 @@ Spotlight::Engine.routes.draw do
       member do
         put 'visibility', action: 'make_public'
         delete 'visibility', action: 'make_private'
+        get 'manifest'
       end
     end
 
@@ -73,6 +79,8 @@ Spotlight::Engine.routes.draw do
         get :template
       end
     end
+
+    resources :iiif_harvesters, controller: 'resources/iiif_harvester', only: :create, as: 'resources_iiif_harvesters'
 
     resources :searches do
       collection do
@@ -100,6 +108,7 @@ Spotlight::Engine.routes.draw do
     end
     resource :home_page, path: 'home', controller: 'home_pages'
     post '/pages/:id/preview' => 'pages#preview', as: :preview_block
+    get '/pages' => 'pages#index', constraints: { format: 'json' }
 
     resources :lock, only: [:destroy]
 

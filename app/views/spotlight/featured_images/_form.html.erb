@@ -1,8 +1,4 @@
-<% if Rails::VERSION::MAJOR >= 5 %>
-  <% form_prefix = f.object_name.parameterize(separator: '_') %>
-<% else %>
-  <% form_prefix = f.object_name.parameterize('_') %>
-<% end %>  
+<div data-cropper="<%= f.object.model_name.singular_route_key %>" data-form-prefix="<%= form_prefix(f) %>">
 <%= field_set_tag do %>
   <%= f.check_box(:display) %>
 <% end if f.object.is_a? Spotlight::Masthead %>
@@ -11,9 +7,12 @@
     <%= f.radio_button(:source, :exhibit, label: t(:'.source.exhibit.label')) %>
     <div>
       <%= f.hidden_field(:document_global_id) %>
-      <%= f.hidden_field(:remote_image_url, data: jcrop_options) %>
-      <%= text_field_tag(:document_title, (presenter(f.object.document).document_show_html_title if f.object.document), class: "form-control", data: {input_select_target: "##{form_prefix}_source_exhibit", masthead_typeahead: true, target_panel: "##{form_prefix}-target-panel", :'id-field' => "##{form_prefix}_document_global_id", remote_url_field: "##{form_prefix}_remote_image_url" }) %>
-      <div id="<%= form_prefix %>-target-panel" style="display:none">
+      <div class="alert alert-danger" data-behavior="non-iiif-alert" role="alert" style="display:none;">
+        <span class="glyphicon glyphicon-alert"></span>
+        <%= t(:'.non_iiif_alert_html') %>
+      </div>
+      <%= text_field_tag(:document_title, (presenter(f.object.document).document_show_html_title if f.object.document), class: "form-control", data: { input_select_target: "##{form_prefix(f)}_source_exhibit", 'behavior': 'autocomplete', featured_image_typeahead: true, target_panel: "##{form_prefix(f)}-target-panel", :'id-field' => "##{form_prefix(f)}_document_global_id" }) %>
+      <div id="<%= form_prefix(f) %>-target-panel" style="display:none">
         <div class="panel-heading">
           <div data-item-title="true"></div>
           <div data-panel-image-pagination="true"></div>
@@ -24,13 +23,11 @@
   </div>
   <div>
     <%= f.radio_button(:source, :remote, label: t(:'.source.remote.label')) %>
-    <%= f.file_field_without_bootstrap(:image, data: jcrop_options.merge(input_select_target: "##{form_prefix}_source_remote")) %>
+    <%= iiif_upload_tag(f) %>
   </div>
 <% end %>
 <%= field_set_tag(t(:'.source.remote.header')) do %>
-  <p class="instructions"><%= t(:'.source.remote.help') %></p>
-  <div class="form-group croppable-loading-area <%= "missing-croppable" unless f.object.try(:image).present? %>">
-    <%= hidden_field_tag :"#{jcrop_options.fetch(:selector, "image")}_crop", ([f.object.image_crop_x.to_i, f.object.image_crop_y.to_i, f.object.image_crop_x.to_i + f.object.image_crop_w.to_i, f.object.image_crop_y.to_i + f.object.image_crop_h.to_i].to_json if f.object.try(:image_crop_x)) %>
-    <%= f.cropbox :image %>
-  </div>
+  <p class="instructions"><%= t(:'.crop_area.help', thing: crop_type) %></p>
+  <%= iiif_cropper_tags f, initial_crop_selection: initial_crop_selection %>
 <% end %>
+</div>

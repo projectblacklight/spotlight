@@ -21,6 +21,10 @@ Spotlight.Block.Resources = (function(){
 
     globalIndex: 0,
 
+    _itemPanelIiifFields: function(index, data) {
+      return [];
+    },
+
     _itemPanel: function(data) {
       var index = "item_" + this.globalIndex++;
       var checked;
@@ -33,8 +37,7 @@ Spotlight.Block.Resources = (function(){
           '<li class="field form-inline dd-item dd3-item" data-id="' + index + '" id="' + this.formId("item_" + data.id) + '">',
             '<input type="hidden" name="item[' + index + '][id]" value="' + (data.slug || data.id) + '" />',
             '<input type="hidden" name="item[' + index + '][title]" value="' + data.title + '" />',
-            '<input type="hidden" name="item[' + index + '][full_image_url]" data-item-grid-full-image="true"  value="' + (data.full_image_url || data.thumbnail_image_url || data.thumbnail) + '"/>',
-            '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" data-item-grid-thumbnail="true"  value="' + (data.thumbnail_image_url || data.thumbnail) + '"/>',
+            this._itemPanelIiifFields(index, data),
             '<input data-property="weight" type="hidden" name="item[' + index + '][weight]" value="' + data.weight + '" />',
             '<div class="dd-handle dd3-handle"><%= i18n.t("blocks:resources:panel:drag") %></div>',
               '<div class="dd3-content panel panel-default">',
@@ -45,16 +48,16 @@ Spotlight.Block.Resources = (function(){
                     '<label class="sr-only" for="'+ this.formId(this.display_checkbox + '_' + data.id) +'"><%= i18n.t("blocks:resources:panel:display") %></label>',
                   '</div>',
                   '<div class="pic thumbnail">',
-                    '<img src="' + (data.thumbnail_image_url || data.thumbnail) + '" />',
+                    '<img src="' + (data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg"))) + '" />',
                   '</div>',
                   '<div class="main">',
                     '<div class="title panel-title">' + data.title + '</div>',
                     '<div>' + (data.slug || data.id) + '</div>',
-                    '<div data-panel-image-pagination="true"></div>',
                   '</div>',
                   '<div class="remove pull-right">',
                     '<a data-item-grid-panel-remove="true" href="#"><%= i18n.t("blocks:resources:panel:remove") %></a>',
                   '</div>',
+                  '<div class="h5" data-panel-image-pagination="true"></div>',
                 '</div>',
               '</div>',
             '</li>'

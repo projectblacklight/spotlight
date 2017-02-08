@@ -31,7 +31,10 @@ describe 'shared/_masthead', type: :view do
   end
 
   context 'with an exhibit masthead' do
-    let(:masthead) { FactoryGirl.create(:masthead) }
+    let(:iiif_url) { 'http://test.host/1/10,10,130,1210/1800,180/0/default.jpg' }
+    let(:masthead) do
+      FactoryGirl.create(:masthead, iiif_tilesource: 'http://test.host/1', iiif_region: '10,10,130,1210')
+    end
 
     before do
       exhibit.masthead = masthead
@@ -47,7 +50,7 @@ describe 'shared/_masthead', type: :view do
       render
       expect(rendered).to have_selector '.background-container'
       expect(rendered).to have_selector '.background-container-gradient'
-      expect(rendered).to match(/background-image: url\('#{masthead.image.cropped.url}'\)/)
+      expect(rendered).to match(/background-image: url\('#{iiif_url}'\)/)
     end
   end
 

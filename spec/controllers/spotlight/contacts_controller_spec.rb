@@ -32,6 +32,24 @@ describe Spotlight::ContactsController, type: :controller do
         expect(response).to redirect_to exhibit_about_pages_path(exhibit)
         expect(contact.reload.name).to eq 'Chester'
       end
+
+      it 'allows thumbnails to be updated' do
+        contact = FactoryGirl.create(:contact, exhibit: exhibit, name: 'Andrew Carnegie')
+        patch :update, params: {
+          id: contact,
+          contact: {
+            avatar_attributes: {
+              iiif_tilesource: 'https://example.com/iiif',
+              iiif_region: '0,0,200,200'
+            }
+          },
+          exhibit_id: contact.exhibit
+        }
+
+        expect(response).to redirect_to exhibit_about_pages_path(exhibit)
+        expect(contact.reload.avatar.iiif_url).to eq 'https://example.com/iiif/0,0,200,200/70,70/0/default.jpg'
+      end
+
       it 'fails by rendering edit' do
         expect_any_instance_of(Spotlight::Contact).to receive(:update).and_return(false)
         patch :update, params: { id: contact, contact: { name: 'Chester' }, exhibit_id: contact.exhibit }
@@ -65,10 +83,11 @@ describe Spotlight::ContactsController, type: :controller do
       end
       it 'is successful' do
         expect do
-          post :create, params: { exhibit_id: exhibit, contact: { name: 'Chester' } }
+          post :create, params: { exhibit_id: exhibit, contact: { name: 'Chester', avatar_attributes: { iiif_tilesource: 'someurl' } } }
         end.to change { Spotlight::Contact.count }.by(1)
         expect(response).to redirect_to exhibit_about_pages_path(exhibit)
         expect(Spotlight::Contact.last.show_in_sidebar).to be_truthy
+        expect(Spotlight::Contact.last.avatar.iiif_url).to be_present
       end
     end
   end

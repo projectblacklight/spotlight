@@ -7,7 +7,7 @@ describe 'Multi image selector', type: :feature, js: true do
   it 'allows the user to select which image in a multi image object to display' do
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
 
-    add_widget 'solr_documents'
+    add_widget 'solr_documents' # the "Item Row" widget
 
     fill_in_typeahead_field with: 'xd327cm9378'
 
@@ -21,10 +21,9 @@ describe 'Multi image selector', type: :feature, js: true do
     save_page
 
     visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
-
     expect(page).to have_css("[data-id='xd327cm9378']")
-    expect(page).to have_css("img[src='https://stacks.stanford.edu/image/xd327cm9378/xd327cm9378_05_0001_thumb']")
-    expect(page).to_not have_css("img[src='https://stacks.stanford.edu/image/xd327cm9378/xd327cm9378_05_0002_thumb']")
+    expect(page).to have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0001/full/!400,400/0/default.jpg']")
+    expect(page).to_not have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0002/full/!400,400/0/default.jpg']")
 
     click_link('Edit')
 
@@ -42,7 +41,7 @@ describe 'Multi image selector', type: :feature, js: true do
     save_page
 
     expect(page).to have_css("[data-id='xd327cm9378']")
-    expect(page).to_not have_css("img[src='https://stacks.stanford.edu/image/xd327cm9378/xd327cm9378_05_0001_thumb']")
-    expect(page).to have_css("img[src='https://stacks.stanford.edu/image/xd327cm9378/xd327cm9378_05_0002_thumb']")
+    expect(page).to_not have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0001/full/!400,400/0/default.jpg']")
+    expect(page).to have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0002/full/!400,400/0/default.jpg']")
   end
 end

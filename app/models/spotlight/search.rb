@@ -2,7 +2,6 @@ module Spotlight
   ##
   # Exhibit saved searches
   class Search < ActiveRecord::Base
-    include DefaultThumbnailable
     extend FriendlyId
     friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: :exhibit
 
@@ -16,23 +15,12 @@ module Spotlight
 
     belongs_to :masthead, dependent: :destroy
     belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
-    accepts_nested_attributes_for :thumbnail, update_only: true
-    accepts_nested_attributes_for :masthead, update_only: true
+    accepts_nested_attributes_for :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
+    accepts_nested_attributes_for :masthead, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
 
     def thumbnail_image_url
-      thumbnail.image.thumb.url if thumbnail && thumbnail.image
-    end
-
-    def images
-      return enum_for(:images) { documents.size } unless block_given?
-
-      documents.each do |doc|
-        yield [
-          doc.first(blacklight_config.document_model.unique_key),
-          doc.first(blacklight_config.index.title_field),
-          doc.first(blacklight_config.index.thumbnail_field)
-        ]
-      end
+      return unless thumbnail && thumbnail.iiif_url
+      thumbnail.iiif_url
     end
 
     def documents
@@ -57,22 +45,6 @@ module Spotlight
     def display_masthead?
       masthead && masthead.display?
     end
-
-    # rubocop:disable Metrics/MethodLength
-    def set_default_thumbnail
-      self.thumbnail ||= begin
-        return unless Spotlight::Engine.config.full_image_field
-        doc = documents.detect { |x| x.first(Spotlight::Engine.config.full_image_field) }
-        if doc
-          create_thumbnail(
-            source: 'exhibit',
-            document_global_id: doc.to_global_id.to_s,
-            remote_image_url: doc.first(Spotlight::Engine.config.full_image_field)
-          )
-        end
-      end
-    end
-    # rubocop:enable Metrics/MethodLength
 
     def search_params
       search_builder.with(query_params.with_indifferent_access).merge(facet: false, fl: default_search_fields)
@@ -102,8 +74,7 @@ module Spotlight
       [
         blacklight_config.document_model.unique_key,
         blacklight_config.index.title_field,
-        blacklight_config.index.thumbnail_field,
-        Spotlight::Engine.config.full_image_field
+        blacklight_config.index.thumbnail_field
       ].compact
     end
 

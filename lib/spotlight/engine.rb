@@ -29,11 +29,12 @@ module Spotlight
     end
 
     require 'carrierwave'
-    require 'carrierwave/crop'
     require 'underscore-rails'
     require 'github/markup'
     require 'sir_trevor_rails'
     require 'openseadragon'
+    require 'sprockets/es6'
+    require 'almond-rails'
 
     config.assets.precompile += %w(spotlight/fallback/*.png)
 
@@ -61,7 +62,12 @@ module Spotlight
     end
 
     initializer 'spotlight.assets.precompile' do |app|
-      app.config.assets.precompile += %w(spotlight/default_thumbnail.jpg)
+      app.config.assets.precompile += %w(spotlight/default_thumbnail.jpg spotlight/default_browse_thumbnail.jpg)
+
+      Sprockets::ES6.configuration = { 'modules' => 'amd', 'moduleIds' => true }
+      # When we upgrade to Sprockets 4, we can ditch sprockets-es6 and config AMD
+      # in this way:
+      # https://github.com/rails/sprockets/issues/73#issuecomment-139113466
     end
 
     def self.user_class
@@ -87,7 +93,8 @@ module Spotlight
       'spotlight/resources/external_resources_form',
       'spotlight/resources/upload/form',
       'spotlight/resources/csv_upload/form',
-      'spotlight/resources/json_upload/form'
+      'spotlight/resources/json_upload/form',
+      'spotlight/resources/iiif/form'
     ]
     config.external_resources_partials = []
     config.solr_batch_size = 20
@@ -112,29 +119,32 @@ module Spotlight
 
     config.resource_global_id_field = :"#{config.solr_fields.prefix}spotlight_resource_id#{config.solr_fields.string_suffix}"
 
-    # The solr field that original (largest) images will be stored.
     # Set to nil if you don't want to pull thumbnails from the index
     config.full_image_field = :full_image_url_ssm
     config.thumbnail_field = :thumbnail_url_ssm
-    config.square_image_field = :thumbnail_square_url_ssm
 
     # Defaults to the blacklight_config.index.title_field:
     config.upload_title_field = nil # OpenStruct.new(...)
+    config.upload_description_field = :spotlight_upload_description_tesim
 
     config.upload_fields = [
-      OpenStruct.new(field_name: :spotlight_upload_description_tesim, label: 'Description', form_field_type: :text_area),
+      OpenStruct.new(field_name: config.upload_description_field, label: 'Description', form_field_type: :text_area),
       OpenStruct.new(field_name: :spotlight_upload_attribution_tesim, label: 'Attribution'),
       OpenStruct.new(field_name: :spotlight_upload_date_tesim, label: 'Date')
     ]
+
+    config.iiif_manifest_field = :iiif_manifest_url_ssi
+    config.iiif_metadata_class = -> { Spotlight::Resources::IiifManifest::Metadata }
+    config.iiif_collection_id_field = :collection_id_ssim
+
+    config.masthead_initial_crop_selection = [1200, 120]
+    config.thumbnail_initial_crop_selection = [120, 120]
 
     # Configure the CarrierWave file storage mechanism
     config.uploader_storage = :file
     config.featured_image_thumb_size = [400, 300]
     config.featured_image_square_size = [400, 400]
-
-    initializer 'spotlight-assets.initialize' do
-      Rails.application.config.assets.precompile += %w(Jcrop.gif)
-    end
+    config.contact_square_size = [70, 70]
 
     # To present curators with analytics reports on the exhibit dashboard, you need to configure
     # an Analytics provider. Google Analytics support is provided out-of-the-box.
@@ -185,5 +195,7 @@ module Spotlight
 
     # make blacklight configuration play nice with bootstrap_form
     Blacklight::OpenStructWithHashAccess.send(:extend, ActiveModel::Translation)
+
+    config.exhibit_themes = ['default']
   end
 end

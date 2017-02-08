@@ -37,7 +37,7 @@ describe 'Uploading a non-repository item', type: :feature do
       end
       expect(page).to have_content 'Object uploaded successfully.'
 
-      expect(Spotlight::Resource.last.url.file.path).to end_with '800x600.png'
+      expect(Spotlight::Resource.last.upload.image.file.path).to end_with '800x600.png'
       Blacklight.default_index.connection.delete_by_id Spotlight::Resource.last.send(:compound_id)
       Blacklight.default_index.connection.commit
     end
@@ -98,7 +98,7 @@ describe 'Uploading a non-repository item', type: :feature do
       click_button 'Save'
 
       expect(page).to have_content 'This is a now an avatar'
-      expect(Spotlight::Resource.last.url.file.path).to end_with 'avatar.png'
+      expect(Spotlight::Resource.last.upload.image.path).to end_with 'avatar.png'
       Blacklight.default_index.connection.delete_by_id Spotlight::Resource.last.send(:compound_id)
       Blacklight.default_index.connection.commit
     end

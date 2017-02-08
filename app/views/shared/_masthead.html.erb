@@ -2,7 +2,7 @@
 
 <div class="masthead <%= 'image-masthead' if current_masthead %> <%= 'resource-masthead' if resource_masthead? %>">
   <% if current_masthead %>
-    <span class='background-container' style="background-image: url('<%= image_path(current_masthead.image.cropped) %>')"></span>
+    <span class='background-container' style="background-image: url('<%= current_masthead.iiif_url %>')"></span>
     <span class='background-container-gradient'></span>
   <% end %>
   

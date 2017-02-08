@@ -37,7 +37,6 @@
 }
 
 .twitter-typeahead {
-  z-index: 1000 !important; /* get typeahead to float on top of e.g. jcrop */
   .tt-suggestion {
     font-size: 18px;
     line-height: 24px;

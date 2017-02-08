@@ -59,6 +59,16 @@ namespace :spotlight do
     puts Spotlight::ExhibitExportSerializer.new(exhibit).to_json
   end
 
+  desc 'Migrate to IIIF'
+  task :migrate_to_iiif, [:hostname] => :environment do |_, args|
+    if args[:hostname]
+      require 'migration/iiif'
+      Migration::IIIF.run args[:hostname]
+    else
+      STDERR.puts "\nUsage: rake spotlight:migrate_to_iiif[hostname]\n\n  Example: rake spotlight:migrate_to_iiif[https://exhibits.stanford.edu]\n\n"
+    end
+  end
+
   def prompt_to_create_user
     Spotlight::Engine.user_class.find_or_create_by!(email: prompt_for_email) do |u|
       puts 'User not found. Enter a password to create the user.'

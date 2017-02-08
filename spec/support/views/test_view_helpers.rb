@@ -9,6 +9,7 @@ module Spotlight
         view.send(:extend, Spotlight::CrudLinkHelpers)
         view.send(:extend, Spotlight::TitleHelper)
         view.send(:extend, Spotlight::NavbarHelper)
+        view.send(:extend, Spotlight::CropHelper)
         view.send(:extend, Blacklight::ComponentHelperBehavior)
         view.send(:extend, BreadcrumbsOnRails::ActionController::HelperMethods)
       end

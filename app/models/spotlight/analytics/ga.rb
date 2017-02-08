@@ -4,7 +4,7 @@ require 'legato'
 module Spotlight
   module Analytics
     ##
-    # Google Analytics data provider for the curation dashboard
+    # Google Analytics data provider for the Exhibit dashboard
     class Ga
       extend Legato::Model
 

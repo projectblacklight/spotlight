@@ -16,15 +16,17 @@ describe Spotlight::Resources::Upload, type: :model do
       custom_field.field => 'Custom Field Data'
     }
   end
+  let(:featured_image) { FactoryGirl.create(:featured_image, image: File.open(File.join(FIXTURES_PATH, '800x600.png'))) }
 
   before do
+    Rails.cache.clear # wipes out any cached image info.
     allow(resource).to receive(:configured_fields).and_return configured_fields
     allow(described_class).to receive(:fields).and_return configured_fields
 
     allow(resource.send(:blacklight_solr)).to receive(:update)
     allow(Spotlight::Engine.config).to receive(:upload_title_field).and_return(title_field)
     resource.data = upload_data
-    resource.url = File.open(File.join(FIXTURES_PATH, '800x600.png'))
+    resource.upload = featured_image
     resource.save
   end
 
@@ -81,9 +83,7 @@ describe Spotlight::Resources::Upload, type: :model do
       expect(subject[:spotlight_resource_type_ssim]).to eq 'spotlight/resources/uploads'
     end
     it 'has the various image fields' do
-      expect(subject).to have_key Spotlight::Engine.config.full_image_field
       expect(subject).to have_key Spotlight::Engine.config.thumbnail_field
-      expect(subject).to have_key Spotlight::Engine.config.square_image_field
     end
     it 'has the full image dimensions fields' do
       expect(subject[:spotlight_full_image_height_ssm]).to eq 600
@@ -91,6 +91,10 @@ describe Spotlight::Resources::Upload, type: :model do
     end
     it 'has fields representing exhibit specific custom fields' do
       expect(subject[custom_field.solr_field]).to eq 'Custom Field Data'
+    end
+    it 'has a field for the iiif manifest url' do
+      manifest_path = Spotlight::Engine.routes.url_helpers.manifest_exhibit_solr_document_path(exhibit, resource.compound_id)
+      expect(subject[Spotlight::Engine.config.iiif_manifest_field]).to eq(manifest_path)
     end
   end
 end

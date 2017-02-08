@@ -155,15 +155,19 @@ en:
             Click a menu item to change its display label. Drag and drop a menu item
             to change their order in the menu.
         restore_default: "Restore default"
+        site_theme:
+          heading: Visual theme
+          help: ""
+          label: Exhibit theme
         site_masthead:
-          heading: Site masthead
+          heading: Exhibit masthead
           help: >
             You can select and crop an image to use as a background in your exhibit site's
             masthead. To use an image as a masthead background, you should use an image that
             is at least 120 pixels tall and 1200 pixels wide. For best results use an image at
             least 1800 pixels wide. You can crop larger images using the cropping tool below.
         site_thumbnail:
-          heading: Site thumbnail
+          heading: Exhibit thumbnail
           help: "You can select and crop an image to visually represent this exhibit."
         thumbnail:
           small: Small
@@ -338,6 +342,15 @@ en:
     dashboards:
       show:
         header: Dashboard
+      reindexing_activity:
+        no_reindexing_activity: There has been no reindexing activity
+        header: Recent Item Indexing Activity
+        field:
+          date: Date
+          items_reindexed_count: Items Indexed
+          duration: Elapsed Time
+          job_status: Status
+          user: Requested By
       page_activity:
         header: Recent Site Building Activity
         new_feature_page: "Add new Feature page"
@@ -471,6 +484,11 @@ en:
           placeholder: Name of library or other physical location
         telephone:
           placeholder: Telephone number (optional)
+        source:
+          remote:
+            label: "Upload an image"
+        avatar:
+          header: Avatar
     about_pages:
       contacts_form:
         header: Contacts
@@ -493,6 +511,14 @@ en:
         published: "Publish"
     featured_images:
       form: &featured_images_form
+        crop_area:
+          help: >
+            Adjust the image so that the rectangle contains the area you want to use as the %{thing}.
+            Click "Save changes" to save the cropped area.
+        non_iiif_alert_html: >
+          The image source must be a IIIF image.
+          Contact your exhibits adminstrator or see the
+          <a href="http://iiif.io">IIIF website</a> for more information about IIIF.
         source:
           header: "Image source"
           exhibit:
@@ -501,9 +527,6 @@ en:
           remote:
             label: "Upload an image"
             header: "Cropped image"
-            help: >
-              Adjust the cropping box to cover the area of the image you want to use
-              as the thumbnail image. Click "Save changes" to save the cropped area.
       upload_form: *featured_images_form
 
     resources:
@@ -541,6 +564,13 @@ en:
           title: "Upload raw documents"
           add_item: "Add item"
           file_label: "JSON File"
+      iiif:
+        form:
+          title: 'IIIF URL'
+          manifest: "URL"
+          add_item: "Add IIIF items"
+          url-field:
+            help: "Add the URL of a IIIF manifest or collection."
       bookmarklet:
         instructions:  "Drag this button to the bookmarks toolbar in your web browser"
         bookmarklet: "%{application_name} widget"
@@ -644,10 +674,14 @@ en:
     header_links:
       login: "Sign in"
       logout: "Sign out"
+      edit_site: "Site administration"
+      create_exhibit: "Create new exhibit"
+      dashboard: "Exhibit dashboard"
       contact: "Feedback"
     saved_search:
       label: "Save this search"
-      title: "Saved search title"
+      title: "Enter a title to create a new saved search"
+      id: "Select a title to update a previously saved search"
     shared:
       report_a_problem:
         title: Contact Us
@@ -669,3 +703,9 @@ en:
       header: Actions
       create_exhibit: 'Create a new exhibit'
       documentation: 'Curator documentation'
+  reindexing_log:
+    status:
+      unstarted: Not Yet Started
+      in_progress: In Progress
+      succeeded: Successful
+      failed: Failed

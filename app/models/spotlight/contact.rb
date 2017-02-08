@@ -10,22 +10,11 @@ module Spotlight
     extend FriendlyId
     friendly_id :name, use: [:slugged, :scoped, :finders], scope: :exhibit
 
-    mount_uploader :avatar, Spotlight::AvatarUploader
+    belongs_to :avatar, class_name: 'Spotlight::ContactImage', dependent: :destroy
+    accepts_nested_attributes_for :avatar, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
 
     before_save do
       self.contact_info = contact_info.symbolize_keys
-    end
-
-    ## carrierwave-crop doesn't want to store the crop points. we do.
-    # so instead of this:
-    # crop_uploaded :avatar  ## Add this
-    # we do this:
-    after_save do
-      if avatar.present?
-        avatar.cache! unless avatar.cached?
-        avatar.store!
-        recreate_avatar_versions
-      end
     end
 
     before_save on: :create do
