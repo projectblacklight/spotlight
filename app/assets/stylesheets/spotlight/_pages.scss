@@ -108,6 +108,7 @@
   float: left;
   margin-right: 15px;
   margin-top: 3px;
+  max-height: 70px;
 }
 
 // Indent contact fields so they align evenly, only when there is a contact photo
@@ -287,4 +288,8 @@
 .carousel-block .carousel-caption h3 {
   padding-left: 2 * $padding-large-horizontal;
   padding-right: 2 * $padding-large-horizontal;
+}
+
+.zpr-link {
+  @extend .btn-sm;
 }

@@ -24,5 +24,10 @@
 //= require bootstrap-tagsinput
 //= require jquery.serializejson
 //= require clipboard
-
+//= require leaflet
+//= require leaflet-iiif
+//= require leaflet-areaselect
+// Provide AMD module support
+//= require almond
+//= require polyfill.min.js
 //= require_tree .

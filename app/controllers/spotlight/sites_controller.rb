@@ -45,11 +45,8 @@ module Spotlight
     def masthead_params
       [
         :display,
-        :source,
-        :image,
-        :remote_image_url,
-        :document_global_id,
-        :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h
+        :iiif_region,
+        :iiif_tilesource
       ]
     end
   end

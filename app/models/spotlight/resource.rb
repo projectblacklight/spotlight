@@ -16,19 +16,8 @@ module Spotlight
     has_many :solr_document_sidecars
 
     serialize :data, Hash
-    store :metadata, accessors: [
-      :enqueued_at,
-      :last_indexed_estimate,
-      :last_indexed_count,
-      :last_index_elapsed_time,
-      :last_indexed_finished
-    ], coder: JSON
 
-    enum index_status: [:waiting, :completed, :errored]
-
-    around_index :reindex_with_logging
     after_index :commit
-    after_index :completed!
     after_index :touch_exhibit!
 
     ##
@@ -42,25 +31,7 @@ module Spotlight
     ##
     # Enqueue an asynchronous reindexing job for this resource
     def reindex_later
-      waiting!
       Spotlight::ReindexJob.perform_later(self)
-    end
-
-    def waiting!
-      update(enqueued_at: Time.zone.now)
-      super
-    end
-
-    def enqueued_at
-      cast_to_date_time(super)
-    end
-
-    def enqueued_at?
-      enqueued_at.present?
-    end
-
-    def last_indexed_finished
-      cast_to_date_time(super)
     end
 
     def document_model
@@ -72,41 +43,26 @@ module Spotlight
       # Index the result of {#to_solr} into the index in batches of {#batch_size}
       #
       # @return [Integer] number of records indexed
-      def reindex
+      # rubocop:disable Metrics/MethodLength
+      def reindex(reindexing_log_entry = nil)
         benchmark "Reindexing #{self} (batch size: #{batch_size})" do
           count = 0
 
           run_callbacks :index do
             document_builder.documents_to_index.each_slice(batch_size) do |batch|
               write_to_index(batch)
-              update(last_indexed_count: (count += batch.length))
+              count += batch.length
+              reindexing_log_entry.update(items_reindexed_count: count) if reindexing_log_entry
             end
 
             count
           end
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       def document_builder
         @document_builder ||= document_builder_class.new(self)
-      end
-
-      protected
-
-      def reindex_with_logging
-        time_start = Time.zone.now
-
-        update(indexed_at: time_start,
-               last_indexed_estimate: document_builder.documents_to_index.size,
-               last_indexed_finished: nil,
-               last_index_elapsed_time: nil)
-
-        count = yield
-
-        time_end = Time.zone.now
-        update(last_indexed_count: count,
-               last_indexed_finished: time_end,
-               last_index_elapsed_time: time_end - time_start)
       end
 
       private
@@ -143,16 +99,6 @@ module Spotlight
 
       def write?
         Spotlight::Engine.config.writable_index
-      end
-
-      def cast_to_date_time(value)
-        return unless value
-
-        if defined? ActiveModel::Type::DateTime
-          ActiveModel::Type::DateTime.new.cast(value)
-        else
-          ActiveRecord::Type::DateTime.new.type_cast_from_database(value)
-        end
       end
     end
   end

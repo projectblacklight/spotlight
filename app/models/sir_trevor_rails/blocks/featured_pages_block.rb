@@ -18,6 +18,16 @@ module SirTrevorRails
       def pages?
         !pages.empty?
       end
+
+      def as_json
+        result = super
+
+        result[:data][:item].each do |_k, v|
+          v['thumbnail_image_url'] = parent.exhibit.pages.find(v['id']).thumbnail_image_url
+        end
+
+        result
+      end
     end
   end
 end

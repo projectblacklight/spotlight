@@ -2,17 +2,19 @@ module Spotlight
   ##
   # CRUD actions for curating browse categories (see
   # {Spotlight::BrowseController} for the end-user read and index actions)
+  # rubocop:disable Metrics/ClassLength
   class SearchesController < Spotlight::ApplicationController
     load_resource :exhibit, class: 'Spotlight::Exhibit'
     before_action :authenticate_user!
     before_action :only_curators!
+    before_action :create_or_load_resource, only: [:create]
     load_and_authorize_resource through: :exhibit
     before_action :attach_breadcrumbs, only: [:index, :edit], unless: -> { request.format.json? }
 
     include Spotlight::Base
 
     def create
-      @search.attributes = search_params
+      @search.assign_attributes(search_params.except((:title unless @search.new_record?)))
       @search.query_params = query_params
 
       if @search.save
@@ -99,8 +101,8 @@ module Spotlight
         :title,
         :long_description,
         :default_index_view_type,
-        masthead_attributes: featured_image_attributes,
-        thumbnail_attributes: featured_image_attributes
+        masthead_attributes: featured_image_params,
+        thumbnail_attributes: featured_image_params
       )
     end
 
@@ -108,8 +110,15 @@ module Spotlight
       params.to_unsafe_h.with_indifferent_access.except(:exhibit_id, :search, *blacklisted_search_session_params).reject { |_k, v| v.blank? }
     end
 
-    def featured_image_attributes
-      [:display, :source, :image, :remote_image_url, :document_global_id, :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h]
+    def featured_image_params
+      [
+        :iiif_region, :iiif_tilesource,
+        :iiif_manifest_url, :iiif_canvas_id, :iiif_image_id,
+        :display,
+        :source,
+        :image,
+        :document_global_id
+      ]
     end
 
     def only_curators!
@@ -117,11 +126,16 @@ module Spotlight
     end
 
     def blacklisted_search_session_params
-      [:commit, :counter, :total, :search_id, :page, :per_page, :authenticity_token, :utf8, :action, :controller]
+      [:id, :commit, :counter, :total, :search_id, :page, :per_page, :authenticity_token, :utf8, :action, :controller]
     end
 
     def fallback_url
       spotlight.exhibit_searches_path(current_exhibit)
     end
+
+    def create_or_load_resource
+      @search = current_exhibit.searches.find(params[:id]) if params[:id].present?
+    end
   end
+  # rubocop:enable Metrics/ClassLength
 end

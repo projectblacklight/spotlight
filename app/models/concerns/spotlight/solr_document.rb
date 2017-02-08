@@ -6,7 +6,6 @@ module Spotlight
 
     include Spotlight::SolrDocument::ActiveModelConcern
     include Spotlight::SolrDocument::Finder
-    include Spotlight::SolrDocument::SpotlightImages
     include GlobalID::Identification
 
     included do
@@ -74,7 +73,7 @@ module Spotlight
 
     def update_exhibit_resource(resource_attributes)
       return unless resource_attributes && resource_attributes['url']
-      uploaded_resource.update url: resource_attributes['url']
+      uploaded_resource.upload.update image: resource_attributes['url']
     end
 
     def reindex

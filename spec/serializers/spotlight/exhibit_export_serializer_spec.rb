@@ -122,18 +122,21 @@ describe Spotlight::ExhibitExportSerializer do
     end
 
     context 'for an exhibit with contacts' do
-      let!(:curator) do
-        FactoryGirl.create(:contact,
-                           exhibit: source_exhibit,
-                           contact_info: { title: 'xyz' })
-      end
-      it 'has contacts' do
-        expect(subject.contacts.count).to eq 1
-        contact = subject.contacts.first
-        expect(contact.contact_info[:title]).to eq 'xyz'
+      context 'for a contact with an avatar' do
+        let!(:curator) do
+          FactoryGirl.create(:contact, :with_avatar,
+                             exhibit: source_exhibit,
+                             contact_info: { title: 'xyz' })
+        end
+        it 'has contacts' do
+          expect(subject.contacts.count).to eq 1
+          contact = subject.contacts.first
+          expect(contact.contact_info[:title]).to eq 'xyz'
+          expect(contact.avatar).to be_kind_of Spotlight::ContactImage
+        end
       end
 
-      describe 'for a contact without an avatar' do
+      context 'for a contact without an avatar' do
         let!(:curator) do
           FactoryGirl.create(:contact, exhibit: source_exhibit, avatar: nil)
         end
@@ -213,7 +216,7 @@ describe Spotlight::ExhibitExportSerializer do
       resource = FactoryGirl.create :uploaded_resource, exhibit: source_exhibit
       expect(subject.resources.length).to eq 1
       expect(subject.resources.first.class).to eq Spotlight::Resources::Upload
-      expect(subject.resources.first.url.file.path).not_to eq resource.url.file.path
+      expect(subject.resources.first.upload.image.path).not_to eq resource.upload.image.path
     end
 
     it 'assigns normal resources the correct class' do
@@ -221,12 +224,6 @@ describe Spotlight::ExhibitExportSerializer do
       expect(subject.resources.length).to eq 1
       expect(subject.resources.first.class).to eq Spotlight::Resource
       expect(subject.resources.first.url).to eq resource.url
-    end
-
-    it 'copies contact avatars' do
-      contact = FactoryGirl.create :contact, exhibit: source_exhibit
-      expect(subject.contacts.length).to eq 1
-      expect(subject.contacts.first.avatar.file.path).not_to eq contact.avatar.file.path
     end
 
     context 'with a browse category' do
@@ -289,7 +286,7 @@ describe Spotlight::ExhibitExportSerializer do
     end
 
     context 'with a thumbnail' do
-      let!(:thumbnail) { FactoryGirl.create(:featured_image) }
+      let!(:thumbnail) { FactoryGirl.create(:exhibit_thumbnail) }
 
       before do
         source_exhibit.thumbnail = thumbnail

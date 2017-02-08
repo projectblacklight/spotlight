@@ -17,7 +17,6 @@ module Spotlight
     serialize :document_index_view_types, Array
 
     include Spotlight::BlacklightConfigurationDefaults
-    include Spotlight::ImageDerivatives
 
     delegate :document_model, to: :default_blacklight_config
 
@@ -96,6 +95,10 @@ module Spotlight
           else
             set_index_field_defaults(v)
           end
+
+          v.immutable = Blacklight::OpenStructWithHashAccess.new(v.immutable)
+          v.merge! v.immutable.to_h.symbolize_keys
+
           v.upstream_if = v.if unless v.if.nil?
           v.if = :field_enabled? unless v.if == false
 
@@ -113,6 +116,9 @@ module Spotlight
           else
             set_show_field_defaults(v)
           end
+
+          v.immutable = Blacklight::OpenStructWithHashAccess.new(v.immutable)
+          v.merge! v.immutable.to_h.symbolize_keys
 
           v.upstream_if = v.if unless v.if.nil?
           v.if = :field_enabled? unless v.if == false
@@ -162,6 +168,7 @@ module Spotlight
             v.upstream_if = v.if unless v.if.nil?
             v.enabled = v.show
             v.if = :field_enabled? unless v.if == false
+            v.upstream_if = nil if v.upstream_if == v.if
             v.normalize! config
             v.validate!
           end
@@ -204,6 +211,8 @@ module Spotlight
         field = Blacklight::Configuration::FacetField.new x.configuration.merge(
           key: x.field, field: x.solr_field, show: false, custom_field: true
         )
+        field.if = :field_enabled?
+        field.enabled = false
         [x.field, field]
       end]
     end
@@ -295,13 +304,12 @@ module Spotlight
     end
 
     def default_autocomplete_field_list(config)
-      "#{config.document_model.unique_key} #{config.view_config(:show).title_field} #{spotlight_image_version_fields.join(' ')}"
-    end
-
-    def spotlight_image_version_fields
-      spotlight_image_derivatives.map do |version|
-        version[:field]
-      end
+      [
+        config.document_model.unique_key,
+        config.view_config(:show).title_field,
+        config.index.thumbnail_field || Spotlight::Engine.config.thumbnail_field,
+        Spotlight::Engine.config.iiif_manifest_field
+      ].flatten.join(' ')
     end
 
     # rubocop:disable Style/AccessorMethodName

@@ -111,6 +111,46 @@ describe Spotlight::CatalogController, type: :controller do
         expect(json['docs'].first['title']).to eq 'KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721 en 1722'
       end
     end
+
+    describe 'GET manifest' do
+      context 'document is an uploaded resource' do
+        it 'returns the json manifest produced by Spotlight::IiifManifestPresenter, based on the retrieved document and the controller' do
+          uploaded_resource = FactoryGirl.create(:uploaded_resource)
+          compound_id = uploaded_resource.compound_id
+          slug = uploaded_resource.exhibit.slug
+
+          uploaded_resource.save_and_index
+
+          get :manifest, params: { exhibit_id: uploaded_resource.exhibit, id: compound_id }
+
+          expect(response).to be_successful
+
+          json = JSON.parse(response.body)
+          expect(json['@context']).to eq 'http://iiif.io/api/presentation/2/context.json'
+          expect(json['@id']).to eq "http://test.host/spotlight/#{slug}/catalog/#{compound_id}/manifest"
+          expect(json['@type']).to eq 'sc:Manifest'
+
+          canvas = json['sequences'].first['canvases'].first
+          expect(canvas['@id']).to eq "http://test.host/spotlight/#{slug}/catalog/#{compound_id}/manifest/canvas/#{compound_id}"
+          expect(canvas['@type']).to eq 'sc:Canvas'
+
+          image = canvas['images'].first
+          expect(image['resource']['@id']).to eq compound_id
+          expect(image['resource']['format']).to eq 'image/jpeg'
+
+          # clean up solr document created by save_and_index above
+          Blacklight.default_index.connection.delete_by_id uploaded_resource.compound_id
+          Blacklight.default_index.connection.commit
+        end
+      end
+      context 'document is not an uploaded resource' do
+        it 'returns a 404 when called on something other than an uploaded resource' do
+          get :manifest, params: { exhibit_id: exhibit, id: 'dx157dh4345' }
+          expect(response).not_to be_successful
+          expect(response.status).to eq(404)
+        end
+      end
+    end
   end
 
   describe 'when the user is not authorized' do

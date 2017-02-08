@@ -17,6 +17,7 @@ module Spotlight
     friendly_id :title, use: [:slugged, :finders]
     validates :title, presence: true
     validates :slug, uniqueness: true
+    validates :theme, inclusion: { in: Spotlight::Engine.config.exhibit_themes }, allow_blank: true
 
     acts_as_tagger
     acts_as_taggable
@@ -32,6 +33,7 @@ module Spotlight
     has_many :feature_pages, extend: FriendlyId::FinderMethods
     has_many :main_navigations, dependent: :delete_all
     has_many :owned_taggings, class_name: 'ActsAsTaggableOn::Tagging', as: :tagger
+    has_many :reindexing_log_entries, dependent: :destroy
     has_many :resources
     has_many :roles, as: :resource, dependent: :delete_all
     has_many :searches, dependent: :destroy, extend: FriendlyId::FinderMethods
@@ -45,16 +47,16 @@ module Spotlight
 
     belongs_to :site
     belongs_to :masthead, dependent: :destroy
-    belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
+    belongs_to :thumbnail, class_name: 'Spotlight::ExhibitThumbnail', dependent: :destroy
 
     accepts_nested_attributes_for :about_pages, :attachments, :contacts, :custom_fields, :feature_pages,
                                   :main_navigations, :owned_taggings, :resources, :searches, :solr_document_sidecars
-    accepts_nested_attributes_for :blacklight_configuration, :home_page, :masthead, :thumbnail, :filters, update_only: true
+    accepts_nested_attributes_for :blacklight_configuration, :home_page, :filters, update_only: true
+    accepts_nested_attributes_for :masthead, :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
     accepts_nested_attributes_for :contact_emails, reject_if: proc { |attr| attr['email'].blank? }
     accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc { |attr| attr['user_key'].blank? && attr['id'].blank? }
 
     before_save :sanitize_description, if: :description_changed?
-    include Spotlight::DefaultThumbnailable
 
     def main_about_page
       @main_about_page ||= about_pages.published.first
@@ -79,8 +81,8 @@ module Spotlight
       end
     end
 
-    def reindex_later
-      Spotlight::ReindexJob.perform_later(self)
+    def reindex_later(user = nil)
+      Spotlight::ReindexJob.perform_later(self, new_reindexing_log_entry(user))
     end
 
     def uploaded_resource_fields
@@ -91,22 +93,28 @@ module Spotlight
       blacklight_config.search_fields.any? { |_k, v| v.enabled && v.include_in_simple_select != false }
     end
 
-    def set_default_thumbnail
-      self.thumbnail ||= searches.first.try(:thumbnail)
-    end
-
     def requested_by
       roles.first.user if roles.first
     end
 
     def reindex_progress
-      @reindex_progress ||= ReindexProgress.new(resources) if resources
+      @reindex_progress ||= ReindexProgress.new(current_reindexing_log_entry)
     end
 
     protected
 
     def sanitize_description
       self.description = ::Rails::Html::FullSanitizer.new.sanitize(description)
+    end
+
+    def new_reindexing_log_entry(user = nil)
+      Spotlight::ReindexingLogEntry.create(exhibit: self, user: user, items_reindexed_count: 0, job_status: 'unstarted')
+    end
+
+    private
+
+    def current_reindexing_log_entry
+      reindexing_log_entries.started_or_completed.first || reindexing_log_entries.build
     end
   end
 end

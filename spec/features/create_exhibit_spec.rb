@@ -8,7 +8,7 @@ describe 'Create a new exhibit', type: :feature do
   it 'has a link in the user dropdown' do
     visit '/'
     within '.dropdown-menu' do
-      click_link 'Create Exhibit'
+      click_link 'Create new exhibit'
     end
     expect(page).to have_selector 'h1', text: 'Manage exhibits'
     expect(page).to have_selector 'h1 small', text: 'Create a new exhibit'
@@ -17,7 +17,7 @@ describe 'Create a new exhibit', type: :feature do
   it 'allows admins to create a new exhibit' do
     visit '/'
     within '.dropdown-menu' do
-      click_link 'Create Exhibit'
+      click_link 'Create new exhibit'
     end
 
     fill_in 'Title', with: 'My exhibit title'
@@ -31,7 +31,7 @@ describe 'Create a new exhibit', type: :feature do
   it 'allows admins to create a new exhibit with a slug' do
     visit '/'
     within '.dropdown-menu' do
-      click_link 'Create Exhibit'
+      click_link 'Create new exhibit'
     end
 
     fill_in 'Title', with: 'My exhibit title'

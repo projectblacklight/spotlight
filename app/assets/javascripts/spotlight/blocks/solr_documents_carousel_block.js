@@ -1,8 +1,8 @@
-//= require spotlight/blocks/solr_documents_block
+//= require spotlight/blocks/solr_documents_base_block
 
 SirTrevor.Blocks.SolrDocumentsCarousel = (function(){
 
-  return SirTrevor.Blocks.SolrDocuments.extend({
+  return SirTrevor.Blocks.SolrDocumentsBase.extend({
     plustextable: false,
     type: "solr_documents_carousel",
 

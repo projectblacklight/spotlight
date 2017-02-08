@@ -4,7 +4,7 @@ describe Spotlight::FeaturePagesController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Page. As you add validations to Page, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { 'title' => 'MyString' } }
+  let(:valid_attributes) { { 'title' => 'MyString', thumbnail_attributes: { iiif_url: '' } } }
   describe 'when signed in as a curator' do
     let(:exhibit) { FactoryGirl.create(:exhibit) }
     let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
@@ -104,11 +104,7 @@ describe Spotlight::FeaturePagesController, type: :controller do
       let(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
       describe 'with valid params' do
         it 'updates the requested page' do
-          # Assuming there are no other pages in the database, this
-          # specifies that the Page created on the previous line
-          # receives the :update_attributes message with whatever params are
-          # submitted in the request.
-          expect_any_instance_of(Spotlight::FeaturePage).to receive(:update).with(hash_including(valid_attributes))
+          expect_any_instance_of(Spotlight::FeaturePage).to receive(:update)
           put :update, params: { id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes }
         end
 

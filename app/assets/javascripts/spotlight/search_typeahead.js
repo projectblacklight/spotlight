@@ -52,71 +52,57 @@ function itemsTemplate() {
   return '<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail thumbnail"><img src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>';
 }
 
-function addAutocompletetoMastheadUpload(){
-  if($('[data-masthead-typeahead]').length > 0) {
-    $('[data-masthead-typeahead]').spotlightSearchTypeAhead({bloodhound: itemsBloodhound(), template: itemsTemplate()}).on('click', function() {
+function addAutocompletetoFeaturedImage(){
+  if($('[data-featured-image-typeahead]').length > 0) {
+    $('[data-featured-image-typeahead]').spotlightSearchTypeAhead({bloodhound: itemsBloodhound(), template: itemsTemplate()}).on('click', function() {
       $(this).select();
     }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
-      var remoteUrlField = $($(this).data('remoteUrlField'));
       var panel = $($(this).data('target-panel'));
-      swapInputForPanel($(this), panel, data);
+      addImageSelector($(this), panel, data.iiif_manifest, true);
       $($(this).data('id-field')).val(data['global_id']);
-      remoteUrlField.val(data['full_images'][0]).trigger('change');
       $(this).attr('type', 'text');
-      $('.thumbs-list li', panel).on('click.masthead', function(){
-        var index = $('.thumbs-list li').index($(this));
-        remoteUrlField.val(data['full_images'][index]).trigger('change');
-      });
     });
   }
 }
 
-function addAutocompletetoFeaturedImage() {
-  if($('[data-featured-item-typeahead]').length > 0) {
-    $('[data-featured-item-typeahead]').spotlightSearchTypeAhead({bloodhound: itemsBloodhound(), template: itemsTemplate()}).on('click', function() {
-      $(this).select();
-    }).on('change', function() {
-      $($(this).data('id-field')).val("");
-    }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
-      $($(this).data('id-field')).val(data['id']);
-    });
+function addImageSelector(input, panel, manifestUrl, initialize) {
+  if (!manifestUrl) {
+    showNonIiifAlert(input);
+    return;
   }
+  var cropper = input.data('iiifCropper');
+  $.ajax(manifestUrl).success(
+    function(manifest) {
+      var Iiif = require('spotlight/iiif');
+      var iiifManifest = new Iiif(manifestUrl, manifest);
+
+      var thumbs = iiifManifest.imagesArray();
+
+      hideNonIiifAlert(input);
+
+      if (initialize) {
+        cropper.setIiifFields(thumbs[0]);
+        panel.multiImageSelector(); // Clears out existing selector
+      }
+
+      if(thumbs.length > 1) {
+        panel.show();
+        panel.multiImageSelector(thumbs, function(selectorImage) {
+          cropper.setIiifFields(selectorImage);
+        }, cropper.iiifImageField.val());
+      }
+    }
+  );
 }
 
-function swapInputForPanel(input, panel, data){
-  $(".pic.thumbnail img", panel).attr("src", data['thumbnail']).show();
-  $("[data-item-grid-thumbnail]", panel).attr('value', data['thumbnail']);
-  $("[data-panel-title]", panel).text(data['title']);
-
-  if(data['private']) {
-    panel.addClass("blacklight-private");
-  }
-
-  $("[data-panel-id-display]", panel).text(data['id']);
-  $(input.data('id_field')).val(data['id']);
-
-  panel.multiImageSelector(data['image_versions']);
-
-  $(input.data('checkbox_field')).prop('checked', true);
-  input.attr('type', 'hidden');
-  panel.show();
+function showNonIiifAlert(input){
+  input.parent().prev('[data-behavior="non-iiif-alert"]').show();
 }
-function addRemoveAutocompletedPanelBehavior() {
-  $("[data-item-grid-panel-remove]").on('click', function(e){
-    e.preventDefault();
-    var listItem = $(this).closest('li.dd-item');
-    var textField = $("[data-target-panel='#" + listItem.attr('id') + "']");
-    $("input[type='hidden']", listItem).prop('value', '');
-    textField.attr('value', '');
-    textField.attr('type', 'text');
-    listItem.hide();
-  });
-}
-function replaceName(element, i) {
-  element.prop('name', element.prop('name').replace(/\d/, i));
+
+function hideNonIiifAlert(input){
+  input.parent().prev('[data-behavior="non-iiif-alert"]').hide();
 }
 
 Spotlight.onLoad(function(){
   addAutocompletetoFeaturedImage();
-  addAutocompletetoMastheadUpload();
 });

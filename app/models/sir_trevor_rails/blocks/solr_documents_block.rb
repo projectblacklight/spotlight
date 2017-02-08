@@ -16,6 +16,7 @@ module SirTrevorRails
 
         items.each do |i|
           document = documents.detect { |doc| doc.id == i[:id] }
+          i[:iiif_tilesource_base] = i.fetch(:iiif_tilesource, '').sub('/info.json', '')
           yield i, document if document
         end
       end
@@ -38,6 +39,10 @@ module SirTrevorRails
 
       def secondary_caption?
         secondary_caption_field.present? && send(:'show-secondary-caption')
+      end
+
+      def zpr_link?
+        zpr_link == 'true'
       end
 
       def primary_caption_field

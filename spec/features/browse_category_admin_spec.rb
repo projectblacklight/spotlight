@@ -9,6 +9,27 @@ describe 'Browse Category Administration', type: :feature do
       expect(page).to have_css('.panel .search .title', text: search.title)
     end
   end
+  describe 'create' do
+    it 'creates a new browse category with the current search parameters', js: true do
+      visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
+      click_button 'Save this search'
+      expect(page).to have_css('#save-modal')
+      fill_in 'search_title', with: 'Some search'
+      expect do
+        click_button 'Save'
+        exhibit.searches.reload
+      end.to change { exhibit.searches.count }.by 1
+      expect(exhibit.searches.last.query_params).to eq 'q' => 'xyz'
+    end
+    it 'updates an existing browse category with the current search parameters', js: true do
+      visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
+      click_button 'Save this search'
+      expect(page).to have_css('#save-modal')
+      select search.title, from: 'id'
+      click_button 'Save'
+      expect(search.reload.query_params).to eq 'q' => 'xyz'
+    end
+  end
   describe 'edit' do
     it 'displays an edit form' do
       visit spotlight.edit_exhibit_search_path(exhibit, search)
@@ -27,7 +48,10 @@ describe 'Browse Category Administration', type: :feature do
 
       within '#search-masthead' do
         choose 'Upload an image'
-        attach_file('search_masthead_attributes_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
+        # attach_file('search_masthead_attributes_file', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
+        # The JS fills in these fields:
+        find('#search_masthead_attributes_iiif_tilesource', visible: false).set 'http://test.host/images/7'
+        find('#search_masthead_attributes_iiif_region', visible: false).set '0,0,100,200'
       end
 
       click_button 'Save changes'
@@ -37,8 +61,7 @@ describe 'Browse Category Administration', type: :feature do
       search.reload
 
       expect(search.masthead).not_to be nil
-      expect(search.masthead.image.cropped).not_to be_nil
-      expect(search.masthead.image.path).to end_with 'avatar.png'
+      expect(search.masthead.iiif_url).to eq 'http://test.host/images/7/0,0,100,200/1800,180/0/default.jpg'
     end
 
     it 'attaches a thumbnail image' do
@@ -48,7 +71,7 @@ describe 'Browse Category Administration', type: :feature do
 
       within '#search-thumbnail' do
         choose 'Upload an image'
-        attach_file('search_thumbnail_attributes_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
+        attach_file('search_thumbnail_attributes_file', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
       end
 
       click_button 'Save changes'
@@ -58,8 +81,6 @@ describe 'Browse Category Administration', type: :feature do
       search.reload
 
       expect(search.thumbnail).not_to be nil
-      expect(search.thumbnail.image.thumb).not_to be_nil
-      expect(search.thumbnail.image.path).to end_with 'avatar.png'
     end
 
     it 'can select a default index view type' do

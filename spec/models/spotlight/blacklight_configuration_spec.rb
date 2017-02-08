@@ -89,9 +89,16 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       end
 
       it 'defaults to not showing a custom field in the facets' do
-        allow(subject).to receive_messages(custom_facet_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
+        field = double('field', field: 'a', solr_field: 'a', configuration: {})
+        custom_fields = double('custom_fields', vocab: [field])
+        allow(custom_fields).to receive(:map) do |&block|
+          block.call(field)
+        end
+        allow(subject.exhibit).to receive(:custom_fields).and_return(custom_fields)
         expect(subject.blacklight_config.facet_fields).to include('a')
         expect(subject.blacklight_config.facet_fields['a'].show).to be_falsey
+        expect(subject.blacklight_config.facet_fields['a'].if).to eq :field_enabled?
+        expect(subject.blacklight_config.facet_fields['a'].enabled).to eq false
       end
     end
 
@@ -176,10 +183,17 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.blacklight_config.index_fields['a'].list).to be_truthy
     end
 
+    it 'applies immutable values from the configuration' do
+      blacklight_config.add_index_field 'a', immutable: { something: 'set_in_configuration', another: 'immutable' }
+      subject.index_fields['a'] = { something: 'set_in_db' }
+      expect(subject.blacklight_config.index_fields['a'].something).to eq 'set_in_configuration'
+      expect(subject.blacklight_config.index_fields['a'].another).to eq 'immutable'
+    end
+
     context 'custom fields' do
       it 'includes any custom fields' do
         subject.index_fields['a'] = { enabled: true, list: true }
-        allow(subject).to receive_messages(custom_index_fields: { 'a' => double(if: nil, :if= => true, merge!: true, validate!: true, normalize!: true) })
+        allow(subject).to receive_messages(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
         expect(subject.blacklight_config.index_fields).to include('a')
       end
 
@@ -242,7 +256,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     it 'includes any custom fields' do
       subject.index_fields['a'] = { enabled: true, show: true }
 
-      allow(subject).to receive_messages(custom_index_fields: { 'a' => double(if: nil, :if= => true, merge!: true, validate!: true, normalize!: true) })
+      allow(subject).to receive_messages(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
 
       expect(subject.blacklight_config.show_fields).to include('a')
     end
@@ -511,9 +525,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
         expect(search_field.solr_parameters).to have_key :fl
         expect(search_field.solr_parameters[:fl]).to include 'id'
         expect(search_field.solr_parameters[:fl]).to include 'some_field'
-        expect(search_field.solr_parameters[:fl]).to include 'full_image_url_ssm'
         expect(search_field.solr_parameters[:fl]).to include 'thumbnail_url_ssm'
-        expect(search_field.solr_parameters[:fl]).to include 'thumbnail_square_url_ssm'
       end
     end
   end

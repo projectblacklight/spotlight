@@ -8,8 +8,10 @@
     <% solr_documents_carousel_block.each_document.each_with_index do |(block_options, document), index| %>
       <% doc_presenter = index_presenter(document) %>
       <div class="item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
-        <% if block_thumb = block_options[:full_image_url] %>
-          <%= link_to_document(document, image_tag(block_thumb), counter: -1) %>
+        <% if block_options[:full_image_url].present? %>
+          <%= link_to_document(document, image_tag(block_options[:full_image_url]), counter: -1) %>
+        <% elsif block_options[:iiif_tilesource_base].present?  %>
+          <%= link_to_document(document, image_tag(block_options[:iiif_tilesource_base] + '/full/!800,800/0/default.jpg'), counter: -1) %>
         <% elsif has_thumbnail? document %>
           <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
         <% end %>

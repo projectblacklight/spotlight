@@ -1,18 +1,20 @@
 // Module to add multi-image selector to widget panels
 
 (function(){
-  $.fn.multiImageSelector = function(image_versions) {
-    var changeLink          = $(" <a href='javascript:;'>Change</a>"),
+  $.fn.multiImageSelector = function(image_versions, clickCallback, activeImageId) {
+    var changeLink          = $("<a href='javascript:;'>Change</a>"),
         thumbsListContainer = $("<div class='thumbs-list' style='display:none'></div>"),
-        thumbList           = $("<ul></ul>"),
+        thumbList           = $("<ul class='pagination'></ul>"),
         panel;
 
-    var thumbnails = $.map(image_versions, function(e) { return e['thumb']; });
+    var imageIds = $.map(image_versions, function(e) { return e['imageId']; });
 
     return init(this);
 
     function init(el) {
       panel = el;
+
+      destroyExistingImageSelector();
       if(image_versions && image_versions.length > 1) {
         addChangeLink();
         addThumbsList();
@@ -20,16 +22,21 @@
     }
     function addChangeLink() {
       $('[data-panel-image-pagination]', panel)
-        .html("Image <span data-current-image='true'>" + indexOf(currentThumb()) + "</span> of " + image_versions.length)
+        .html("Image <span data-current-image='true'>" + indexOf(activeImageId) + "</span> of " + image_versions.length)
         .show()
+        .append(" ")
         .append(changeLink);
       addChangeLinkBehavior();
     }
-    function currentThumb(){
-      return $("[data-item-grid-thumbnail]", panel).attr('value');
+
+    function destroyExistingImageSelector() {
+      var pagination = $('[data-panel-image-pagination]', panel);
+      pagination.html('');
+      pagination.next('.' + thumbsListContainer.attr('class')).remove();
     }
+
     function indexOf(thumb){
-      if( (index = thumbnails.indexOf(thumb)) > -1 ){
+      if( (index = imageIds.indexOf(thumb)) > -1 ){
         return index + 1;
       } else {
         return 1;
@@ -91,28 +98,39 @@
     function updateActiveThumb(){
       $('li', thumbList).each(function(){
         var item = $(this);
-        if($('img', item).attr('data-src') == currentThumb()){
+        if($('img', item).data('image-id') == activeImageId){
           item.addClass('active');
         }
       });
     }
     function swapChangeLinkText(link){
       link.text(
-        link.text() == 'Change' ? 'Cancel' : 'Change'
+        link.text() == 'Change' ? 'Close' : 'Change'
       )
     }
+
     function addThumbsToList(){
       $.each(image_versions, function(i){
-        var listItem = $('<li><a href="javascript:;"><img data-full-image="' + image_versions[i]['full'] +'" data-src="' + image_versions[i]['thumb'] +'" /></a></li>');
+        var listItem = $('<li><a href="javascript:;"><img src="' + image_versions[i]['thumb'] +'" data-image-id="' + image_versions[i]['imageId'] +'" /></a></li>');
         listItem.on('click', function(){
+          // get the current image id
+          var imageid = $('img', $(this)).data('image-id');
           var src = $('img', $(this)).attr('src');
-          $('li', thumbList).removeClass('active');
+
+          // mark the current selection as active
+          $('li.active', thumbList).removeClass('active');
           $(this).addClass('active');
+
+          // update the multi-image selector image
           $(".pic.thumbnail img", panel).attr("src", src);
-          $("[data-item-grid-thumbnail]", panel).attr('value', src);
-          $("[data-item-grid-full-image]", panel).attr('value', $('img', $(this)).data('full-image'));
-          $('[data-panel-image-pagination] [data-current-image]', panel).text(indexOf(currentThumb()));
-          scrollToActiveThumb()
+
+          $('[data-panel-image-pagination] [data-current-image]', panel).text(
+            $('li', thumbList).index($(this)) + 1
+          );
+          scrollToActiveThumb();
+          if (typeof clickCallback === 'function' ) {
+            clickCallback(image_versions[i]);
+          }
         });
         $("img", listItem).on('load', function() {
           updateThumbListWidth();

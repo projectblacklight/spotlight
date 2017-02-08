@@ -2,51 +2,42 @@ module Spotlight
   ##
   # ReindexProgress is a class that models the progress of reindexing a list of resources
   class ReindexProgress
-    def initialize(resource_list)
-      @resources = if resource_list.present?
-                     resource_list.order('updated_at')
-                   else
-                     Spotlight::Resource.none
-                   end
+    attr_reader :current_log_entry
+
+    delegate :updated_at, to: :current_log_entry
+
+    def initialize(current_log_entry)
+      @current_log_entry = current_log_entry
     end
 
     def recently_in_progress?
-      any_waiting? || (!!finished_at && finished_at > Spotlight::Engine.config.reindex_progress_window.minutes.ago)
+      return true if current_log_entry.in_progress?
+
+      current_log_entry.end_time.present? && (current_log_entry.end_time > Spotlight::Engine.config.reindex_progress_window.minutes.ago)
     end
 
     def started_at
-      return unless resources.present?
-
-      enqueued_resources = resources.select(&:enqueued_at?)
-
-      return unless enqueued_resources.any?
-
-      @started ||= enqueued_resources.min_by(&:enqueued_at).enqueued_at
-    end
-
-    def updated_at
-      @updated ||= resources.maximum(:updated_at) || started_at
+      current_log_entry.start_time
     end
 
     def finished?
-      completed_resources.present? && !any_waiting?
+      current_log_entry.succeeded? || current_log_entry.failed?
     end
 
     def finished_at
-      return unless finished?
-      @finished ||= completed_resources.max_by(&:last_indexed_finished).last_indexed_finished
+      current_log_entry.end_time
     end
 
     def total
-      @total ||= resources.map(&:last_indexed_estimate).compact.sum
+      current_log_entry.items_reindexed_estimate
     end
 
     def completed
-      @completed ||= resources.map(&:last_indexed_count).compact.sum
+      current_log_entry.items_reindexed_count
     end
 
     def errored?
-      resources.any?(&:errored?)
+      current_log_entry.failed?
     end
 
     def as_json(*)
@@ -57,17 +48,12 @@ module Spotlight
         updated_at: localized_updated_time,
         total: total,
         completed: completed,
+        finished: finished?,
         errored: errored?
       }
     end
 
     private
-
-    attr_reader :resources
-
-    def any_waiting?
-      resources.any?(&:waiting?)
-    end
 
     def localized_start_time
       return unless started_at
@@ -82,10 +68,6 @@ module Spotlight
     def localized_updated_time
       return unless updated_at
       I18n.l(updated_at, format: :short)
-    end
-
-    def completed_resources
-      resources.completed
     end
   end
 end

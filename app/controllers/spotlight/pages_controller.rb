@@ -4,6 +4,7 @@ module Spotlight
   class PagesController < Spotlight::ApplicationController
     before_action :authenticate_user!, except: [:show]
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
+    load_and_authorize_resource through: :exhibit, instance_name: 'page', only: [:index]
 
     helper Openseadragon::OpenseadragonHelper
     include Spotlight::Base
@@ -115,8 +116,8 @@ module Spotlight
 
     def featured_image_attributes
       [
-        :source, :image, :remote_image_url, :document_global_id,
-        :image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h
+        :source, :image, :document_global_id, :iiif_region, :iiif_tilesource,
+        :iiif_manifest_url, :iiif_canvas_id, :iiif_image_id
       ]
     end
 
