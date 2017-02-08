@@ -63,8 +63,10 @@ module Spotlight
       end
 
       def add_label
-        return unless title_field && manifest.try(:label)
-        solr_hash[title_field] = manifest.label
+        return unless title_fields.present? && manifest.try(:label)
+        title_fields.each do |field|
+          solr_hash[field] = manifest.label
+        end
       end
 
       def add_image_urls
@@ -143,8 +145,8 @@ module Spotlight
         blacklight_config.show.try(:tile_source_field)
       end
 
-      def title_field
-        blacklight_config.index.try(:title_field)
+      def title_fields
+        Spotlight::Engine.config.iiif_title_fields || blacklight_config.index.try(:title_field)
       end
 
       def sidecar
