@@ -132,7 +132,10 @@ module IiifResponses
     {
       "@id": 'uri://for-manifest2',
       "@type": 'sc:Manifest',
-      "label": 'Test Manifest 2',
+      "label": {
+        "@value": 'Test Manifest 2',
+        "@language": 'en'
+      },
       "attribution": 'Attribution Data',
       "description": 'A test IIIF manifest',
       "license": 'http://www.example.org/license.html',
@@ -186,7 +189,16 @@ module IiifResponses
     {
       "@id": 'uri://for-manifest3',
       "@type": 'sc:Manifest',
-      "label": 'Test Manifest 3',
+      "label": [
+        {
+          "@value": 'Test Manifest 3',
+          "@language": 'en'
+        },
+        {
+          "@value": "Manifeste d'essai 3",
+          "@language": 'fr'
+        }
+      ],
       "attribution": 'Attribution Data',
       "description": 'A test IIIF manifest',
       "license": 'http://www.example.org/license.html',
