@@ -82,6 +82,7 @@ function addImageSelector(input, panel, manifestUrl, initialize) {
 
       if (initialize) {
         cropper.setIiifFields(thumbs[0]);
+        panel.multiImageSelector(); // Clears out existing selector
       }
 
       if(thumbs.length > 1) {
