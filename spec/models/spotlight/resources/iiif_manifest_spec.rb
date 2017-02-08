@@ -12,8 +12,9 @@ describe Spotlight::Resources::IiifManifest do
   let(:url) { 'uri://to-manifest' }
   subject { described_class.new(url: url, manifest: manifest, collection: collection) }
   let(:collection) { double(compound_id: '1') }
+  let(:manifest_fixture) { test_manifest1 }
   before do
-    stub_iiif_response_for_url(url, test_manifest1)
+    stub_iiif_response_for_url(url, manifest_fixture)
     subject.with_exhibit(exhibit)
   end
 
@@ -33,10 +34,31 @@ describe Spotlight::Resources::IiifManifest do
       end
 
       it 'indexes to multiple fields when configured' do
-        expect(Spotlight::Engine.config).to receive(:iiif_title_fields).at_least(:once).and_return(%w(title_field1 title_field2))
+        allow(Spotlight::Engine.config).to receive(:iiif_title_fields).at_least(:once).and_return(%w(title_field1 title_field2))
 
         expect(subject.to_solr['title_field1']).to eq 'Test Manifest 1'
         expect(subject.to_solr['title_field2']).to eq 'Test Manifest 1'
+      end
+    end
+
+    context 'JSON-LD style labels' do
+      context 'when it is an array' do
+        let(:manifest_fixture) { test_manifest3 }
+
+        it 'uses the configured language to find a value' do
+          expect(subject.to_solr['full_title_tesim']).to eq 'Test Manifest 3'
+
+          allow(Spotlight::Engine.config).to receive(:default_json_ld_language).and_return('fr')
+          expect(subject.to_solr['full_title_tesim']).to eq "Manifeste d'essai 3"
+        end
+      end
+
+      context 'when it is a hash' do
+        let(:manifest_fixture) { test_manifest2 }
+
+        it 'is parsed correctly' do
+          expect(subject.to_solr['full_title_tesim']).to eq 'Test Manifest 2'
+        end
       end
     end
 

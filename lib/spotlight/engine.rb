@@ -137,6 +137,7 @@ module Spotlight
     config.iiif_metadata_class = -> { Spotlight::Resources::IiifManifest::Metadata }
     config.iiif_collection_id_field = :collection_id_ssim
     config.iiif_title_fields = nil
+    config.default_json_ld_language = 'en'
 
     config.masthead_initial_crop_selection = [1200, 120]
     config.thumbnail_initial_crop_selection = [120, 120]
