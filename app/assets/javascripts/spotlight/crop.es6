@@ -30,6 +30,12 @@ export default class Crop {
     this.iiifImageField.val(iiifObject.imageId);
   }
 
+  emptyIiifFields() {
+    this.iiifManifestField.val('');
+    this.iiifCanvasField.val('');
+    this.iiifImageField.val('');
+  }
+
   // Set the Crop tileSource and setup the cropper
   setTileSource(source) {
     if (source == this.tileSource) {
@@ -95,7 +101,9 @@ export default class Crop {
       crs: L.CRS.Simple,
       zoom: 0
     });
-    this.iiifLayer = L.tileLayer.iiif(this.tileSource).addTo(this.iiifCropper);
+    this.iiifLayer = L.tileLayer.iiif(this.tileSource, {
+      tileSize: 512
+    }).addTo(this.iiifCropper);
 
     this.iiifCropBox = L.areaSelect({
       width: this.cropArea.data('crop-width') / 2,
@@ -155,8 +163,8 @@ export default class Crop {
       self.iiifCropper.panTo(bounds.getCenter());
 
       self.iiifCropBox.setDimensions({
-        width: Math.abs(x),
-        height: Math.abs(y)
+        width: Math.round(Math.abs(x)),
+        height: Math.round(Math.abs(y))
       });
 
       self.existingCropBoxSet = true;
@@ -200,6 +208,7 @@ export default class Crop {
   }
 
   successHandler(data, stat, xhr) {
+    this.emptyIiifFields();
     this.setTileSource(data.tilesource);
   }
 }

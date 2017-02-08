@@ -63,8 +63,11 @@ module Spotlight
       end
 
       def add_label
-        return unless title_field && manifest.try(:label)
-        solr_hash[title_field] = manifest.label
+        return unless title_fields.present? && manifest.try(:label)
+
+        Array.wrap(title_fields).each do |field|
+          solr_hash[field] = json_ld_value(manifest.label)
+        end
       end
 
       def add_image_urls
@@ -85,6 +88,12 @@ module Spotlight
           next unless (field = exhibit_custom_fields[key])
           hash[field.field] = value
         end
+      end
+
+      def json_ld_value(value)
+        return value['@value'] if value.is_a?(Hash)
+        return value.find { |v| v['@language'] == default_json_ld_language }.try(:[], '@value') if value.is_a?(Array)
+        value
       end
 
       def create_sidecars_for(*keys)
@@ -143,8 +152,12 @@ module Spotlight
         blacklight_config.show.try(:tile_source_field)
       end
 
-      def title_field
-        blacklight_config.index.try(:title_field)
+      def title_fields
+        Spotlight::Engine.config.iiif_title_fields || blacklight_config.index.try(:title_field)
+      end
+
+      def default_json_ld_language
+        Spotlight::Engine.config.default_json_ld_language
       end
 
       def sidecar
