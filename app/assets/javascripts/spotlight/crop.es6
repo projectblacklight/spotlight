@@ -30,6 +30,12 @@ export default class Crop {
     this.iiifImageField.val(iiifObject.imageId);
   }
 
+  emptyIiifFields() {
+    this.iiifManifestField.val('');
+    this.iiifCanvasField.val('');
+    this.iiifImageField.val('');
+  }
+
   // Set the Crop tileSource and setup the cropper
   setTileSource(source) {
     if (source == this.tileSource) {
@@ -202,6 +208,7 @@ export default class Crop {
   }
 
   successHandler(data, stat, xhr) {
+    this.emptyIiifFields();
     this.setTileSource(data.tilesource);
   }
 }
