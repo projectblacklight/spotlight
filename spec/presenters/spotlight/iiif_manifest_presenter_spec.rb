@@ -1,12 +1,17 @@
 describe Spotlight::IiifManifestPresenter do
   require 'iiif_manifest'
 
-  let(:resource) { FactoryGirl.build(:uploaded_resource) }
+  let(:resource) { SolrDocument.new(id: '1-1') }
+  let(:uploaded_resource) { FactoryGirl.build(:uploaded_resource) }
   let(:controller) { double(Spotlight::CatalogController) }
 
   let(:subject) { described_class.new(resource, controller) }
 
   let(:profile_url) { 'http://iiif.io/api/image/2/level2.json' }
+
+  before do
+    allow(resource).to receive(:uploaded_resource).and_return(uploaded_resource)
+  end
 
   describe 'public methods' do
     let(:iiif_url) { 'https://iiif.test/images/1-1' }
@@ -23,9 +28,7 @@ describe Spotlight::IiifManifestPresenter do
     let(:img_height) { 10 }
 
     before do
-      allow(resource).to receive(:uploaded_resource).and_return(double(exhibit: resource.exhibit))
-
-      allow(spotlight_route_helper).to receive(:manifest_exhibit_solr_document_url).with(resource.exhibit, resource).and_return(manifest_url)
+      allow(spotlight_route_helper).to receive(:manifest_exhibit_solr_document_url).with(uploaded_resource.exhibit, resource).and_return(manifest_url)
       allow(controller).to receive(:spotlight).and_return(spotlight_route_helper)
 
       allow(blacklight_config).to receive(:view_config).with(:show).and_return(double(title_field: title_field_name))
