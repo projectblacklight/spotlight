@@ -31,6 +31,13 @@ describe Spotlight::Resources::IiifManifest do
       it 'is inlcuded in the solr document when present' do
         expect(subject.to_solr['full_title_tesim']).to eq 'Test Manifest 1'
       end
+
+      it 'indexes to multiple fields when configured' do
+        expect(Spotlight::Engine.config).to receive(:iiif_title_fields).at_least(:once).and_return(%w(title_field1 title_field2))
+
+        expect(subject.to_solr['title_field1']).to eq 'Test Manifest 1'
+        expect(subject.to_solr['title_field2']).to eq 'Test Manifest 1'
+      end
     end
 
     describe 'collection id' do
