@@ -158,7 +158,7 @@ export default class Crop {
 
       // Pop a rectangle on there to show where it goes
       var bounds = L.latLngBounds(min, max);
-      self.previousCropBox = L.rectangle(bounds);
+      self.previousCropBox = L.polygon([min, [min.lat, max.lng], max, [max.lat, min.lng]]);
       self.previousCropBox.addTo(self.iiifCropper);
       self.iiifCropper.panTo(bounds.getCenter());
 
