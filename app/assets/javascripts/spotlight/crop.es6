@@ -95,7 +95,9 @@ export default class Crop {
       crs: L.CRS.Simple,
       zoom: 0
     });
-    this.iiifLayer = L.tileLayer.iiif(this.tileSource).addTo(this.iiifCropper);
+    this.iiifLayer = L.tileLayer.iiif(this.tileSource, {
+      tileSize: 512
+    }).addTo(this.iiifCropper);
 
     this.iiifCropBox = L.areaSelect({
       width: this.cropArea.data('crop-width') / 2,
