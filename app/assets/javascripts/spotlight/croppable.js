@@ -15,7 +15,9 @@ Spotlight.onLoad(function() {
     var Crop = require('spotlight/crop');
     $(croppables).each(function() {
       var cropElement = $(this);
-      new Crop(cropElement);
+      var c = new Crop(cropElement);
+
+      c.render();
     });
 
     return this;

@@ -17,8 +17,52 @@ export default class Crop {
 
     this.setupAutoCompletes();
     this.setupAjaxFileUpload();
-    this.setupExistingIiifCropper();
+  }
+
+  render() {
+    this.iiifCropper = L.map(this.cropArea.attr('id'), {
+      editable: true,
+      center: [0, 0],
+      crs: L.CRS.Simple,
+      zoom: 0,
+      editOptions: {
+        rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(parseInt(this.cropArea.data('crop-width')) / parseInt(this.cropArea.data('crop-height')))
+      }
+    });
+    this.renderCropBox();
     this.invalidateMapSizeOnTabToggle();
+    this.setupExistingIiifCropper();
+  }
+
+  renderCropBox() {
+    var bounds = this.cropRegion();
+    this.iiifCropBox = L.rectangle([
+      bounds.getNorthWest(), bounds.getSouthEast()
+    ]);
+    this.iiifCropBox.addTo(this.iiifCropper);
+    this.iiifCropBox.enableEdit();
+    this.iiifCropBox.on('dblclick', L.DomEvent.stop).on('dblclick', this.iiifCropBox.toggleEdit);
+    var self = this;
+
+    this.iiifCropper.on('editable:dragend editable:vertex:dragend', function(e) {
+      var bounds = e.layer.getBounds();
+      var min = e.target.project(bounds.getNorthWest(), self.maxZoom());
+      var max = e.target.project(bounds.getSouthEast(), self.maxZoom());
+      var region = [
+        Math.max(Math.round(min.x), 0),
+        Math.max(Math.round(min.y), 0),
+        Math.round(max.x - min.x),
+        Math.round(max.y - min.y)
+      ];
+
+      self.iiifRegionField.val(region.join(','));
+    });
+  }
+
+  maxZoom() {
+    if(this.iiifLayer) {
+      return this.iiifLayer.maxZoom;
+    }
   }
 
   // Set all of the various input fields to
@@ -28,12 +72,6 @@ export default class Crop {
     this.iiifManifestField.val(iiifObject.manifest);
     this.iiifCanvasField.val(iiifObject.canvasId);
     this.iiifImageField.val(iiifObject.imageId);
-  }
-
-  emptyIiifFields() {
-    this.iiifManifestField.val('');
-    this.iiifCanvasField.val('');
-    this.iiifImageField.val('');
   }
 
   // Set the Crop tileSource and setup the cropper
@@ -46,6 +84,7 @@ export default class Crop {
 
     this.tileSource = source;
     this.iiifUrlField.val(source);
+    this.loaded = false;
     this.setupIiifCropper();
   }
 
@@ -90,114 +129,50 @@ export default class Crop {
       return;
     }
 
-    if(this.iiifCropper) {
+    if(this.iiifLayer) {
       this.iiifCropper.removeLayer(this.iiifLayer);
-      this.iiifLayer = L.tileLayer.iiif(this.tileSource).addTo(this.iiifCropper);
-      return;
     }
 
-    this.iiifCropper = L.map(this.cropArea.attr('id'), {
-      center: [0, 0],
-      crs: L.CRS.Simple,
-      zoom: 0
-    });
     this.iiifLayer = L.tileLayer.iiif(this.tileSource, {
       tileSize: 512
     }).addTo(this.iiifCropper);
 
-    this.iiifCropBox = L.areaSelect({
-      width: this.cropArea.data('crop-width') / 2,
-      height: this.cropArea.data('crop-height') / 2,
-      keepAspectRatio: true
-    });
-
-    this.iiifCropBox.addTo(this.iiifCropper);
-
     this.positionIiifCropBox();
-
-    var self = this;
-    this.iiifCropBox.on('change', function(){
-      var bounds = this.getBounds();
-      var zoom = self.iiifCropper.getZoom();
-      var min = self.iiifCropper.project(bounds.getSouthWest(), zoom);
-      var max = self.iiifCropper.project(bounds.getNorthEast(), zoom);
-      var imageSize = self.iiifLayer._imageSizes[zoom];
-      var xRatio = self.iiifLayer.x / imageSize.x;
-      var yRatio = self.iiifLayer.y / imageSize.y;
-      var region = [
-        Math.max(Math.floor(min.x * xRatio), 0),
-        Math.max(Math.floor(max.y * yRatio), 0),
-        Math.min(Math.floor((max.x - min.x) * xRatio), self.iiifLayer.x),
-        Math.min(Math.floor((min.y - max.y) * yRatio), self.iiifLayer.y),
-      ];
-      if (self.existingCropBoxSet) {
-        self.iiifRegionField.val(region.join(','));
-      }
-    });
-
-    this.iiifCropper.on('zoom', function() {
-      self.updateIiifCropBox();
-    });
 
     this.cropArea.data('initiallyVisible', this.cropArea.is(':visible'));
   }
 
-  updateIiifCropBox() {
-    var regionFieldValue = this.iiifRegionField.val();
-    if(!regionFieldValue || regionFieldValue === '') {
-      return;
-    }
-
-    var maxZoom = this.iiifLayer.maxZoom;
-    var currentZoom = this.iiifCropper.getZoom();
-    var b = regionFieldValue.split(',');
-    var minPoint = L.point(parseInt(b[0]), parseInt(b[1]));
-    var maxPoint = L.point(parseInt(b[0]) + parseInt(b[2]), parseInt(b[1]) + parseInt(b[3]));
-
-    var min = this.iiifCropper.unproject(minPoint, maxZoom - currentZoom);
-    var max = this.iiifCropper.unproject(maxPoint, maxZoom - currentZoom);
-
-    var y = max.lat - min.lat;
-    var x = max.lng - min.lng;
-
-    var size = this.iiifCropper.getSize();
-
-    if (Math.abs(x) > size.x || Math.abs(y) > size.y) {
-      return;
-    }
-
-    this.iiifCropBox.setDimensions({
-      width: Math.round(Math.abs(x)),
-      height: Math.round(Math.abs(y))
+  positionIiifCropBox(region) {
+    var self = this;
+    this.iiifLayer.on('load', function() {
+      if (!self.loaded) {
+        var bounds = self.cropRegion();
+        self.iiifCropper.panTo(bounds.getCenter());
+        self.iiifCropBox.setBounds(bounds);
+        self.iiifCropBox.editor.editLayer.clearLayers();
+        self.iiifCropBox.editor.refresh();
+        self.iiifCropBox.editor.initVertexMarkers();
+        self.loaded = true;
+      }
     });
   }
 
-  positionIiifCropBox() {
-    var self = this;
-    this.iiifLayer.on('load', function() {
-      var regionFieldValue = self.iiifRegionField.val();
-      if(!regionFieldValue || regionFieldValue === '' || self.existingCropBoxSet) {
-        self.existingCropBoxSet = true;
-        return;
-      }
-      var maxZoom = self.iiifLayer.maxZoom;
-      var b = regionFieldValue.split(',');
-      var minPoint = L.point(parseInt(b[0]), parseInt(b[1]));
-      var maxPoint = L.point(parseInt(b[0]) + parseInt(b[2]), parseInt(b[1]) + parseInt(b[3]));
+  cropRegion() {
+    var regionFieldValue = this.iiifRegionField.val();
+    var b;
+    if(!regionFieldValue || regionFieldValue === '') {
+      b = this.initialCropRegion;
+    } else {
+      b = regionFieldValue.split(',');
+    }
 
-      var min = self.iiifCropper.unproject(minPoint, maxZoom);
-      var max = self.iiifCropper.unproject(maxPoint, maxZoom);
+    var minPoint = L.point(parseInt(b[0]), parseInt(b[1]));
+    var maxPoint = L.point(parseInt(b[0]) + parseInt(b[2]), parseInt(b[1]) + parseInt(b[3]));
 
-      // Pop a rectangle on there to show where it goes
-      var bounds = L.latLngBounds(min, max);
-      self.previousCropBox = L.polygon([min, [min.lat, max.lng], max, [max.lat, min.lng]]);
-      self.previousCropBox.addTo(self.iiifCropper);
-      self.iiifCropper.panTo(bounds.getCenter());
-
-      self.updateIiifCropBox();
-
-      self.existingCropBoxSet = true;
-    });
+    var min = this.iiifCropper.unproject(minPoint, this.maxZoom());
+    var max = this.iiifCropper.unproject(maxPoint, this.maxZoom());
+    var bounds = L.latLngBounds(min, max);
+    return bounds;
   }
 
   invalidateMapSizeOnTabToggle() {
@@ -237,7 +212,32 @@ export default class Crop {
   }
 
   successHandler(data, stat, xhr) {
-    this.emptyIiifFields();
-    this.setTileSource(data.tilesource);
+    this.setIiifFields({ tilesource: data.tilesource });
   }
+
+  aspectRatioPreservingRectangleEditor(aspect) {
+    return L.Editable.RectangleEditor.extend({
+      extendBounds: function (e) {
+        var index = e.vertex.getIndex(),
+            next = e.vertex.getNext(),
+            previous = e.vertex.getPrevious(),
+            oppositeIndex = (index + 2) % 4,
+            opposite = e.vertex.latlngs[oppositeIndex];
+
+        if ((index % 2) == 1) {
+          // calculate horiz. displacement
+          e.latlng.update([opposite.lat + ((1 / aspect) * (opposite.lng - e.latlng.lng)), e.latlng.lng]);
+        } else {
+          // calculate vert. displacement
+          e.latlng.update([e.latlng.lat, (opposite.lng - (aspect * (opposite.lat - e.latlng.lat)))]);
+        }
+        var bounds = new L.LatLngBounds(e.latlng, opposite);
+        // Update latlngs by hand to preserve order.
+        previous.latlng.update([e.latlng.lat, opposite.lng]);
+        next.latlng.update([opposite.lat, e.latlng.lng]);
+        this.updateBounds(bounds);
+        this.refreshVertexMarkers();
+      }
+    });
+    }
 }
