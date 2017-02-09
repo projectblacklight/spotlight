@@ -134,7 +134,42 @@ export default class Crop {
         self.iiifRegionField.val(region.join(','));
       }
     });
+
+    this.iiifCropper.on('zoom', function() {
+      self.updateIiifCropBox();
+    });
+
     this.cropArea.data('initiallyVisible', this.cropArea.is(':visible'));
+  }
+
+  updateIiifCropBox() {
+    var regionFieldValue = this.iiifRegionField.val();
+    if(!regionFieldValue || regionFieldValue === '') {
+      return;
+    }
+
+    var maxZoom = this.iiifLayer.maxZoom;
+    var currentZoom = this.iiifCropper.getZoom();
+    var b = regionFieldValue.split(',');
+    var minPoint = L.point(parseInt(b[0]), parseInt(b[1]));
+    var maxPoint = L.point(parseInt(b[0]) + parseInt(b[2]), parseInt(b[1]) + parseInt(b[3]));
+
+    var min = this.iiifCropper.unproject(minPoint, maxZoom - currentZoom);
+    var max = this.iiifCropper.unproject(maxPoint, maxZoom - currentZoom);
+
+    var y = max.lat - min.lat;
+    var x = max.lng - min.lng;
+
+    var size = this.iiifCropper.getSize();
+
+    if (Math.abs(x) > size.x || Math.abs(y) > size.y) {
+      return;
+    }
+
+    this.iiifCropBox.setDimensions({
+      width: Math.round(Math.abs(x)),
+      height: Math.round(Math.abs(y))
+    });
   }
 
   positionIiifCropBox() {
@@ -153,19 +188,13 @@ export default class Crop {
       var min = self.iiifCropper.unproject(minPoint, maxZoom);
       var max = self.iiifCropper.unproject(maxPoint, maxZoom);
 
-      var y = max.lat - min.lat;
-      var x = max.lng - min.lng;
-
       // Pop a rectangle on there to show where it goes
       var bounds = L.latLngBounds(min, max);
       self.previousCropBox = L.polygon([min, [min.lat, max.lng], max, [max.lat, min.lng]]);
       self.previousCropBox.addTo(self.iiifCropper);
       self.iiifCropper.panTo(bounds.getCenter());
 
-      self.iiifCropBox.setDimensions({
-        width: Math.round(Math.abs(x)),
-        height: Math.round(Math.abs(y))
-      });
+      self.updateIiifCropBox();
 
       self.existingCropBoxSet = true;
     });
