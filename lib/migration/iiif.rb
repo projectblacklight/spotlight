@@ -43,19 +43,22 @@ module Migration
     def copy_exhibit_thumbnail_from_featured_image(image)
       return unless Spotlight::Exhibit.where(thumbnail_id: image.id).any?
       filename = image.read_attribute_before_type_cast('image')
-      old_file = "public/#{image.image.store_dir}/#{filename}"
+      filepath = "public/#{image.image.store_dir}/#{filename}"
       image.becomes!(Spotlight::ExhibitThumbnail)
       image.save
+      return unless filename.present? && File.exist?(filepath)
+      old_file = File.new(filepath)
       # AR + STI seems to require that we re-query for this
       # otherwise we get an association miss-match
       reloaded_image = Spotlight::ExhibitThumbnail.find(image.id)
-      reloaded_image.image.store!(File.new(old_file))
+      reloaded_image.image.store!(old_file)
     end
 
     # Looks for a file at the old uploader location and copies it to a FeaturedImage
     def copy_contact_image_to_avatar(contact)
       filename = contact.read_attribute_before_type_cast('avatar')
       filepath = "public/uploads/spotlight/contact/avatar/#{contact.id}/#{filename}"
+      return unless filename.present? && File.exist?(filepath)
       old_file = File.new(filepath)
       image = contact.create_avatar { |i| i.image.store!(old_file) }
       iiif_tilesource = riiif.info_path(image.id)
