@@ -20,6 +20,13 @@ export default class Crop {
   }
 
   render() {
+    this.setupExistingIiifCropper();
+  }
+
+  renderCropArea() {
+    if (this.iiifCropper) {
+      return;
+    }
     this.iiifCropper = L.map(this.cropArea.attr('id'), {
       editable: true,
       center: [0, 0],
@@ -30,7 +37,6 @@ export default class Crop {
       }
     });
     this.invalidateMapSizeOnTabToggle();
-    this.setupExistingIiifCropper();
   }
 
   renderCropBox() {
@@ -127,6 +133,8 @@ export default class Crop {
       console.error('No tilesource provided when setting up IIIF Cropper');
       return;
     }
+
+    this.renderCropArea();
 
     if(this.iiifLayer) {
       this.iiifCropper.removeLayer(this.iiifLayer);
