@@ -13,12 +13,11 @@ export default class Crop {
 
     this.form = cropArea.closest('form');
     this.tileSource = null;
-
-    this.setupAutoCompletes();
-    this.setupAjaxFileUpload();
   }
 
   render() {
+    this.setupAutoCompletes();
+    this.setupAjaxFileUpload();
     this.setupExistingIiifCropper();
   }
 
