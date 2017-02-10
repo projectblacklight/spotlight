@@ -85,10 +85,11 @@ export default class Crop {
   setTileSource(source) {
     if (source == this.tileSource) {
       return;
-    } else if(this.previousCropBox) {
-      this.previousCropBox.remove();
     }
 
+    if (this.iiifCropBox) {
+      this.iiifRegionField.val("");
+    }
     this.tileSource = source;
     this.iiifUrlField.val(source);
     this.loaded = false;
@@ -157,6 +158,7 @@ export default class Crop {
       if (!self.loaded) {
         var bounds = self.cropRegion();
         self.renderCropBox();
+        self.iiifCropper.invalidateSize();
         self.iiifCropper.panTo(bounds.getCenter());
         self.iiifCropBox.setBounds(bounds);
         self.iiifCropBox.editor.editLayer.clearLayers();
