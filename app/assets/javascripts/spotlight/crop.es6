@@ -277,5 +277,5 @@ export default class Crop {
         this.refreshVertexMarkers();
       }
     });
-    }
+  }
 }
