@@ -34,6 +34,8 @@ export default class Crop {
   }
 
   setupIiifCropper() {
+    this.loaded = false;
+
     this.renderCropperMap();
 
     if (this.imageLayer) {
@@ -87,7 +89,6 @@ export default class Crop {
 
     this.tileSource = source;
     this.iiifUrlField.val(source);
-    this.loaded = false;
     this.setupIiifCropper();
   }
 
