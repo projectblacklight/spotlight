@@ -179,10 +179,10 @@ export default class Crop {
       var cropHeight = parseInt(this.cropArea.data('crop-height'));
       var aspect = cropWidth / cropHeight;
 
-      var boxWidth = imageWidth / 2;
-      var boxHeight = boxWidth / aspect;
+      var boxWidth = Math.floor(imageWidth / 2);
+      var boxHeight = Math.floor(boxWidth / aspect);
 
-      b = [(imageWidth - boxWidth) / 2, (imageHeight - boxHeight) / 2, boxWidth, boxHeight];
+      b = [Math.floor((imageWidth - boxWidth) / 2), Math.floor((imageHeight - boxHeight) / 2), boxWidth, boxHeight];
       this.iiifRegionField.val(b);
     } else {
       b = regionFieldValue.split(',');
