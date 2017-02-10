@@ -40,6 +40,9 @@ export default class Crop {
   }
 
   renderCropBox() {
+    if (this.iiifCropBox) {
+      return;
+    }
     var bounds = this.cropRegion();
     this.iiifCropBox = L.rectangle([
       bounds.getNorthWest(), bounds.getSouthEast()
