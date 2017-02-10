@@ -42,10 +42,16 @@ Run the database migrations:
 $ rake db:migrate
 ```
 
-Start Solr and the Rails development server:
+Start Solr (possibly using `solr_wrapper` in development or testing):
 
 ```
-$ rake spotlight:server
+$ solr_wrapper 
+```
+
+and the Rails development server:
+
+```
+$ rails server
 ```
 
 Go to http://localhost:3000 in your browser.

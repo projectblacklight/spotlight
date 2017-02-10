@@ -26,7 +26,8 @@
 //= require clipboard
 //= require leaflet
 //= require leaflet-iiif
-//= require leaflet-areaselect
+//= require Leaflet.Editable
+//= require Path.Drag
 // Provide AMD module support
 //= require almond
 //= require polyfill.min.js
