@@ -22,54 +22,43 @@ export default class Crop {
     this.setupExistingIiifCropper();
   }
 
-  renderCropArea() {
-    if (this.iiifCropper) {
+  // Setup the cropper on page load if the field
+  // that holds the IIIF url is populated
+  setupExistingIiifCropper() {
+    if(this.iiifUrlField.val() === '') {
       return;
     }
-    this.iiifCropper = L.map(this.cropArea.attr('id'), {
-      editable: true,
-      center: [0, 0],
-      crs: L.CRS.Simple,
-      zoom: 0,
-      editOptions: {
-        rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(parseInt(this.cropArea.data('crop-width')) / parseInt(this.cropArea.data('crop-height')))
+
+    this.addImageSelectorToExistingCropTool();
+    this.setTileSource(this.iiifUrlField.val());
+  }
+
+  setupIiifCropper() {
+    this.renderCropperMap();
+
+    if (this.imageLayer) {
+      this.cropperMap.removeLayer(this.imageLayer);
+    }
+
+    this.imageLayer = L.tileLayer.iiif(this.tileSource).addTo(this.cropperMap);
+
+    var self = this;
+    this.imageLayer.on('load', function() {
+      if (!self.loaded) {
+        var region = self.getCropRegion();
+        var bounds = self.unprojectIIIFRegionToBounds(region);
+        self.positionIiifCropBox(bounds);
+        self.loaded = true;
       }
     });
-    this.invalidateMapSizeOnTabToggle();
+
+    this.cropArea.data('initiallyVisible', this.cropArea.is(':visible'));
   }
 
-  renderCropBox() {
-    if (this.iiifCropBox) {
-      return;
-    }
-    var bounds = this.cropRegion();
-    this.iiifCropBox = L.rectangle([
-      bounds.getNorthWest(), bounds.getSouthEast()
-    ]);
-    this.iiifCropBox.addTo(this.iiifCropper);
-    this.iiifCropBox.enableEdit();
-    this.iiifCropBox.on('dblclick', L.DomEvent.stop).on('dblclick', this.iiifCropBox.toggleEdit);
-    var self = this;
-
-    this.iiifCropper.on('editable:dragend editable:vertex:dragend', function(e) {
-      var bounds = e.layer.getBounds();
-      var min = e.target.project(bounds.getNorthWest(), self.maxZoom());
-      var max = e.target.project(bounds.getSouthEast(), self.maxZoom());
-      var region = [
-        Math.max(Math.floor(min.x), 0),
-        Math.max(Math.floor(min.y), 0),
-        Math.floor(max.x - min.x),
-        Math.floor(max.y - min.y)
-      ];
-
-      self.iiifRegionField.val(region.join(','));
-    });
-  }
-
-  maxZoom() {
-    if(this.iiifLayer) {
-      return this.iiifLayer.maxZoom;
-    }
+  positionIiifCropBox(bounds) {
+    this.renderCropBox(bounds);
+    this.cropperMap.invalidateSize();
+    this.cropperMap.panTo(bounds.getCenter());
   }
 
   // Set all of the various input fields to
@@ -87,13 +76,67 @@ export default class Crop {
       return;
     }
 
-    if (this.iiifCropBox) {
+    if (source === null || source === undefined) {
+      console.error('No tilesource provided when setting up IIIF Cropper');
+      return;
+    }
+
+    if (this.cropBox) {
       this.iiifRegionField.val("");
     }
+
     this.tileSource = source;
     this.iiifUrlField.val(source);
     this.loaded = false;
     this.setupIiifCropper();
+  }
+
+  renderCropperMap() {
+    if (this.cropperMap) {
+      return;
+    }
+    this.cropperMap = L.map(this.cropArea.attr('id'), {
+      editable: true,
+      center: [0, 0],
+      crs: L.CRS.Simple,
+      zoom: 0,
+      editOptions: {
+        rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(parseInt(this.cropArea.data('crop-width')) / parseInt(this.cropArea.data('crop-height')))
+      }
+    });
+    this.invalidateMapSizeOnTabToggle();
+  }
+
+  renderCropBox(bounds) {
+    if (this.cropBox) {
+      this.cropBox.setBounds(bounds);
+      this.cropperMap.fitBounds(bounds);
+      this.cropBox.editor.editLayer.clearLayers();
+      this.cropBox.editor.refresh();
+      this.cropBox.editor.initVertexMarkers();
+
+      return;
+    }
+
+    this.cropBox = L.rectangle(bounds);
+    this.cropBox.addTo(this.cropperMap);
+    this.cropperMap.fitBounds(bounds);
+    this.cropBox.enableEdit();
+    this.cropBox.on('dblclick', L.DomEvent.stop).on('dblclick', this.cropBox.toggleEdit);
+
+    var self = this;
+    this.cropperMap.on('editable:dragend editable:vertex:dragend', function(e) {
+      var bounds = e.layer.getBounds();
+      var region = self.projectBoundsToIIIFRegion(bounds);
+
+      self.iiifRegionField.val(region.join(','));
+    });
+  }
+
+  maxZoom() {
+    if(this.imageLayer) {
+      return this.imageLayer.maxZoom;
+    }
   }
 
   // TODO: Add accessors to update hidden inputs with IIIF uri/ids?
@@ -109,17 +152,6 @@ export default class Crop {
     this.fileInput.change(() => this.uploadFile());
   }
 
-  // Setup the cropper on page load if the field
-  // that holds the IIIF url is populated
-  setupExistingIiifCropper() {
-    if(this.iiifUrlField.val() === '') {
-      return;
-    }
-
-    this.addImageSelectorToExistingCropTool();
-    this.setTileSource(this.iiifUrlField.val());
-  }
-
   addImageSelectorToExistingCropTool() {
     if(this.iiifManifestField.val() === '') {
       return;
@@ -131,70 +163,33 @@ export default class Crop {
     addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
   }
 
-  setupIiifCropper() {
-    if (this.tileSource === null || this.tileSource === undefined) {
-      console.error('No tilesource provided when setting up IIIF Cropper');
-      return;
-    }
-
-    this.renderCropArea();
-
-    if(this.iiifLayer) {
-      this.iiifCropper.removeLayer(this.iiifLayer);
-    }
-
-    this.iiifLayer = L.tileLayer.iiif(this.tileSource, {
-      tileSize: 512
-    }).addTo(this.iiifCropper);
-
-    this.positionIiifCropBox();
-
-    this.cropArea.data('initiallyVisible', this.cropArea.is(':visible'));
-  }
-
-  positionIiifCropBox(region) {
-    var self = this;
-    this.iiifLayer.on('load', function() {
-      if (!self.loaded) {
-        var bounds = self.cropRegion();
-        self.renderCropBox();
-        self.iiifCropper.invalidateSize();
-        self.iiifCropper.panTo(bounds.getCenter());
-        self.iiifCropBox.setBounds(bounds);
-        self.iiifCropBox.editor.editLayer.clearLayers();
-        self.iiifCropBox.editor.refresh();
-        self.iiifCropBox.editor.initVertexMarkers();
-        self.loaded = true;
-      }
-    });
-  }
-
-  cropRegion() {
+  getCropRegion() {
     var regionFieldValue = this.iiifRegionField.val();
-    var b;
     if(!regionFieldValue || regionFieldValue === '') {
-      var imageWidth = this.iiifLayer.x;
-      var imageHeight = this.iiifLayer.y;
-      var cropWidth = parseInt(this.cropArea.data('crop-width'));
-      var cropHeight = parseInt(this.cropArea.data('crop-height'));
-      var aspect = cropWidth / cropHeight;
-
-      var boxWidth = Math.floor(imageWidth / 2);
-      var boxHeight = Math.floor(boxWidth / aspect);
-
-      b = [Math.floor((imageWidth - boxWidth) / 2), Math.floor((imageHeight - boxHeight) / 2), boxWidth, boxHeight];
-      this.iiifRegionField.val(b);
+      var region = this.defaultCropRegion();
+      this.iiifRegionField.val(region);
+      return region;
     } else {
-      b = regionFieldValue.split(',');
+      return regionFieldValue.split(',');
     }
+  }
 
-    var minPoint = L.point(parseInt(b[0]), parseInt(b[1]));
-    var maxPoint = L.point(parseInt(b[0]) + parseInt(b[2]), parseInt(b[1]) + parseInt(b[3]));
+  defaultCropRegion() {
+    var imageWidth = this.imageLayer.x;
+    var imageHeight = this.imageLayer.y;
+    var cropWidth = parseInt(this.cropArea.data('crop-width'));
+    var cropHeight = parseInt(this.cropArea.data('crop-height'));
+    var aspect = cropWidth / cropHeight;
 
-    var min = this.iiifCropper.unproject(minPoint, this.maxZoom());
-    var max = this.iiifCropper.unproject(maxPoint, this.maxZoom());
-    var bounds = L.latLngBounds(min, max);
-    return bounds;
+    var boxWidth = Math.floor(imageWidth / 2);
+    var boxHeight = Math.floor(boxWidth / aspect);
+
+    return [
+      Math.floor((imageWidth - boxWidth) / 2),
+      Math.floor((imageHeight - boxHeight) / 2),
+      boxWidth,
+      boxHeight
+    ];
   }
 
   invalidateMapSizeOnTabToggle() {
@@ -202,10 +197,30 @@ export default class Crop {
     var self = this;
     tabs.on('shown.bs.tab', function() {
       if(self.cropArea.data('initiallyVisible') === false && self.cropArea.is(':visible')) {
-        self.iiifCropper.invalidateSize();
+        self.cropperMap.invalidateSize();
         self.cropArea.data('initiallyVisible', null);
       }
     });
+  }
+
+  projectBoundsToIIIFRegion(bounds) {
+    var min = this.cropperMap.project(bounds.getNorthWest(), this.maxZoom());
+    var max = this.cropperMap.project(bounds.getSouthEast(), this.maxZoom());
+    return [
+      Math.max(Math.floor(min.x), 0),
+      Math.max(Math.floor(min.y), 0),
+      Math.floor(max.x - min.x),
+      Math.floor(max.y - min.y)
+    ];
+  }
+
+  unprojectIIIFRegionToBounds(region) {
+    var minPoint = L.point(parseInt(region[0]), parseInt(region[1]));
+    var maxPoint = L.point(parseInt(region[0]) + parseInt(region[2]), parseInt(region[1]) + parseInt(region[3]));
+
+    var min = this.cropperMap.unproject(minPoint, this.maxZoom());
+    var max = this.cropperMap.unproject(maxPoint, this.maxZoom());
+    return L.latLngBounds(min, max);
   }
 
   // Get all the form data with the exception of the _method field.
