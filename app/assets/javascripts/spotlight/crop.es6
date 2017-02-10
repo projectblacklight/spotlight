@@ -15,6 +15,7 @@ export default class Crop {
     this.tileSource = null;
   }
 
+  // Render the cropper environment and add hooks into the autocomplete and upload forms
   render() {
     this.setupAutoCompletes();
     this.setupAjaxFileUpload();
@@ -32,6 +33,7 @@ export default class Crop {
     this.setTileSource(this.iiifUrlField.val());
   }
 
+  // Display the IIIF Cropper map with the current IIIF Layer (and cropbox, once the layer is available)
   setupIiifCropper() {
     this.loaded = false;
 
@@ -47,8 +49,7 @@ export default class Crop {
     this.imageLayer.on('load', function() {
       if (!self.loaded) {
         var region = self.getCropRegion();
-        var bounds = self.unprojectIIIFRegionToBounds(region);
-        self.positionIiifCropBox(bounds);
+        self.positionIiifCropBox(region);
         self.loaded = true;
       }
     });
@@ -56,10 +57,56 @@ export default class Crop {
     this.cropArea.data('initiallyVisible', this.cropArea.is(':visible'));
   }
 
-  positionIiifCropBox(bounds) {
-    this.renderCropBox(bounds);
+  // Get (or initialize) the current crop region from the form data
+  getCropRegion() {
+    var regionFieldValue = this.iiifRegionField.val();
+    if(!regionFieldValue || regionFieldValue === '') {
+      var region = this.defaultCropRegion();
+      this.iiifRegionField.val(region);
+      return region;
+    } else {
+      return regionFieldValue.split(',');
+    }
+  }
+
+  // Calculate a default crop region in the center of the image using the correct aspect ratio
+  defaultCropRegion() {
+    var imageWidth = this.imageLayer.x;
+    var imageHeight = this.imageLayer.y;
+
+    var boxWidth = Math.floor(imageWidth / 2);
+    var boxHeight = Math.floor(boxWidth / this.aspectRatio());
+
+    return [
+      Math.floor((imageWidth - boxWidth) / 2),
+      Math.floor((imageHeight - boxHeight) / 2),
+      boxWidth,
+      boxHeight
+    ];
+  }
+
+  // Calculate the required aspect ratio for the crop area
+  aspectRatio() {
+    var cropWidth = parseInt(this.cropArea.data('crop-width'));
+    var cropHeight = parseInt(this.cropArea.data('crop-height'));
+    return cropWidth / cropHeight;
+  }
+
+  // Position the IIIF Crop Box at the given IIIF region
+  positionIiifCropBox(region) {
+    var bounds = this.unprojectIIIFRegionToBounds(region);
+
+    if (!this.cropBox) {
+      this.renderCropBox(bounds);
+    }
+
+    this.cropBox.setBounds(bounds);
     this.cropperMap.invalidateSize();
-    this.cropperMap.panTo(bounds.getCenter());
+    this.cropperMap.fitBounds(bounds);
+
+    this.cropBox.editor.editLayer.clearLayers();
+    this.cropBox.editor.refresh();
+    this.cropBox.editor.initVertexMarkers();
   }
 
   // Set all of the various input fields to
@@ -91,6 +138,7 @@ export default class Crop {
     this.setupIiifCropper();
   }
 
+  // Render the Leaflet Map into the crop area
   renderCropperMap() {
     if (this.cropperMap) {
       return;
@@ -101,26 +149,16 @@ export default class Crop {
       crs: L.CRS.Simple,
       zoom: 0,
       editOptions: {
-        rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(parseInt(this.cropArea.data('crop-width')) / parseInt(this.cropArea.data('crop-height')))
+        rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(this.aspectRatio())
       }
     });
     this.invalidateMapSizeOnTabToggle();
   }
 
-  renderCropBox(bounds) {
-    if (this.cropBox) {
-      this.cropBox.setBounds(bounds);
-      this.cropperMap.fitBounds(bounds);
-      this.cropBox.editor.editLayer.clearLayers();
-      this.cropBox.editor.refresh();
-      this.cropBox.editor.initVertexMarkers();
-
-      return;
-    }
-
-    this.cropBox = L.rectangle(bounds);
+  // Render the crop box (a Leaflet editable rectangle) onto the canvas
+  renderCropBox(initialBounds) {
+    this.cropBox = L.rectangle(initialBounds);
     this.cropBox.addTo(this.cropperMap);
-    this.cropperMap.fitBounds(bounds);
     this.cropBox.enableEdit();
     this.cropBox.on('dblclick', L.DomEvent.stop).on('dblclick', this.cropBox.toggleEdit);
 
@@ -133,10 +171,33 @@ export default class Crop {
     });
   }
 
+  // Get the maximum zoom level for the IIIF Layer (always 1:1 image pixel to canvas?)
   maxZoom() {
     if(this.imageLayer) {
       return this.imageLayer.maxZoom;
     }
+  }
+
+  // Take a Leaflet LatLngBounds object and transform it into a IIIF [x, y, w, h] region
+  projectBoundsToIIIFRegion(bounds) {
+    var min = this.cropperMap.project(bounds.getNorthWest(), this.maxZoom());
+    var max = this.cropperMap.project(bounds.getSouthEast(), this.maxZoom());
+    return [
+      Math.max(Math.floor(min.x), 0),
+      Math.max(Math.floor(min.y), 0),
+      Math.floor(max.x - min.x),
+      Math.floor(max.y - min.y)
+    ];
+  }
+
+  // Take a IIIF [x, y, w, h] region and transform it into a Leaflet LatLngBounds
+  unprojectIIIFRegionToBounds(region) {
+    var minPoint = L.point(parseInt(region[0]), parseInt(region[1]));
+    var maxPoint = L.point(parseInt(region[0]) + parseInt(region[2]), parseInt(region[1]) + parseInt(region[3]));
+
+    var min = this.cropperMap.unproject(minPoint, this.maxZoom());
+    var max = this.cropperMap.unproject(maxPoint, this.maxZoom());
+    return L.latLngBounds(min, max);
   }
 
   // TODO: Add accessors to update hidden inputs with IIIF uri/ids?
@@ -163,35 +224,6 @@ export default class Crop {
     addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
   }
 
-  getCropRegion() {
-    var regionFieldValue = this.iiifRegionField.val();
-    if(!regionFieldValue || regionFieldValue === '') {
-      var region = this.defaultCropRegion();
-      this.iiifRegionField.val(region);
-      return region;
-    } else {
-      return regionFieldValue.split(',');
-    }
-  }
-
-  defaultCropRegion() {
-    var imageWidth = this.imageLayer.x;
-    var imageHeight = this.imageLayer.y;
-    var cropWidth = parseInt(this.cropArea.data('crop-width'));
-    var cropHeight = parseInt(this.cropArea.data('crop-height'));
-    var aspect = cropWidth / cropHeight;
-
-    var boxWidth = Math.floor(imageWidth / 2);
-    var boxHeight = Math.floor(boxWidth / aspect);
-
-    return [
-      Math.floor((imageWidth - boxWidth) / 2),
-      Math.floor((imageHeight - boxHeight) / 2),
-      boxWidth,
-      boxHeight
-    ];
-  }
-
   invalidateMapSizeOnTabToggle() {
     var tabs = $('[role="tablist"]', this.form);
     var self = this;
@@ -201,26 +233,6 @@ export default class Crop {
         self.cropArea.data('initiallyVisible', null);
       }
     });
-  }
-
-  projectBoundsToIIIFRegion(bounds) {
-    var min = this.cropperMap.project(bounds.getNorthWest(), this.maxZoom());
-    var max = this.cropperMap.project(bounds.getSouthEast(), this.maxZoom());
-    return [
-      Math.max(Math.floor(min.x), 0),
-      Math.max(Math.floor(min.y), 0),
-      Math.floor(max.x - min.x),
-      Math.floor(max.y - min.y)
-    ];
-  }
-
-  unprojectIIIFRegionToBounds(region) {
-    var minPoint = L.point(parseInt(region[0]), parseInt(region[1]));
-    var maxPoint = L.point(parseInt(region[0]) + parseInt(region[2]), parseInt(region[1]) + parseInt(region[3]));
-
-    var min = this.cropperMap.unproject(minPoint, this.maxZoom());
-    var max = this.cropperMap.unproject(maxPoint, this.maxZoom());
-    return L.latLngBounds(min, max);
   }
 
   // Get all the form data with the exception of the _method field.
