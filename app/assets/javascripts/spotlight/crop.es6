@@ -29,7 +29,6 @@ export default class Crop {
         rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(parseInt(this.cropArea.data('crop-width')) / parseInt(this.cropArea.data('crop-height')))
       }
     });
-    this.renderCropBox();
     this.invalidateMapSizeOnTabToggle();
     this.setupExistingIiifCropper();
   }
@@ -147,6 +146,7 @@ export default class Crop {
     this.iiifLayer.on('load', function() {
       if (!self.loaded) {
         var bounds = self.cropRegion();
+        self.renderCropBox();
         self.iiifCropper.panTo(bounds.getCenter());
         self.iiifCropBox.setBounds(bounds);
         self.iiifCropBox.editor.editLayer.clearLayers();
