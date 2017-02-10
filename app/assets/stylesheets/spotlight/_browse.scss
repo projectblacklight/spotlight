@@ -6,9 +6,17 @@ $image-overlay-bottom-margin: $padding-large-vertical * 3;
 }
 
 .long-description-text {
-  column-width: 20em;
-  column-gap: 3em;
   margin: ($padding-base-vertical * 2) 0;
+  width: 40em;
+}
+
+.very-long-description-text {
+  width: auto;
+
+  @media (min-width: $screen-sm-max) {
+    column-gap: 3em;
+    column-width: 20em;
+  }
 }
 
 .browse-landing {
