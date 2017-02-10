@@ -26,11 +26,12 @@ describe Spotlight::AddUploadsFromCSV do
   end
 
   it 'creates uploaded resources for each row of data' do
-    expect(Spotlight::Resources::Upload).to receive(:new).with(hash_including(remote_url_url: 'x')).and_return(resource_x)
-    expect(Spotlight::Resources::Upload).to receive(:new).with(hash_including(remote_url_url: 'y')).and_return(resource_y)
+    upload = FactoryGirl.create(:uploaded_resource)
+    expect(Spotlight::Resources::Upload).to receive(:new).at_least(:once).and_return(upload)
 
-    expect(resource_x).to receive(:save_and_index)
-    expect(resource_y).to receive(:save_and_index)
+    expect(upload).to receive(:build_upload).with(remote_image_url: 'x').and_call_original
+    expect(upload).to receive(:build_upload).with(remote_image_url: 'y').and_call_original
+    expect(upload).to receive(:save_and_index).at_least(:once)
 
     job.perform_now
   end
