@@ -12,7 +12,6 @@ export default class Crop {
     this.iiifImageField = $('#' + this.formPrefix + '_iiif_image_id');
 
     this.form = cropArea.closest('form');
-    this.initialCropRegion = [0, 0, cropArea.data('crop-width'), cropArea.data('crop-height')];
     this.tileSource = null;
 
     this.setupAutoCompletes();
@@ -172,7 +171,17 @@ export default class Crop {
     var regionFieldValue = this.iiifRegionField.val();
     var b;
     if(!regionFieldValue || regionFieldValue === '') {
-      b = this.initialCropRegion;
+      var imageWidth = this.iiifLayer.x;
+      var imageHeight = this.iiifLayer.y;
+      var cropWidth = parseInt(this.cropArea.data('crop-width'));
+      var cropHeight = parseInt(this.cropArea.data('crop-height'));
+      var aspect = cropWidth / cropHeight;
+
+      var boxWidth = imageWidth / 2;
+      var boxHeight = boxWidth / aspect;
+
+      b = [(imageWidth - boxWidth) / 2, (imageHeight - boxHeight) / 2, boxWidth, boxHeight];
+      this.iiifRegionField.val(b);
     } else {
       b = regionFieldValue.split(',');
     }
