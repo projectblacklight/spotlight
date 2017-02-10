@@ -56,10 +56,10 @@ export default class Crop {
       var min = e.target.project(bounds.getNorthWest(), self.maxZoom());
       var max = e.target.project(bounds.getSouthEast(), self.maxZoom());
       var region = [
-        Math.max(Math.round(min.x), 0),
-        Math.max(Math.round(min.y), 0),
-        Math.round(max.x - min.x),
-        Math.round(max.y - min.y)
+        Math.max(Math.floor(min.x), 0),
+        Math.max(Math.floor(min.y), 0),
+        Math.floor(max.x - min.x),
+        Math.floor(max.y - min.y)
       ];
 
       self.iiifRegionField.val(region.join(','));
