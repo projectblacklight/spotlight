@@ -3,10 +3,6 @@ require 'migration/iiif'
 RSpec.describe Migration::IIIF do
   let(:instance) { described_class.new('http://test.host') }
 
-  before do
-    expect(File).to receive(:new).and_return(double)
-  end
-
   context '#migrate_featured_images' do
     let!(:old_exhibit_thumbnail) { FactoryGirl.create(:featured_image, type: nil, iiif_tilesource: nil) }
     let!(:exhibit) { FactoryGirl.create(:exhibit, thumbnail_id: old_exhibit_thumbnail.id) }
@@ -51,19 +47,20 @@ RSpec.describe Migration::IIIF do
 
   describe '#migrate_contact_avatars' do
     let(:file) { double }
-    let(:contact1) { Spotlight::Contact.create }
-    let(:contact2) { Spotlight::Contact.create }
+    let!(:contact1) { Spotlight::Contact.create }
+
     before do
+      allow(File).to receive(:exist?).and_return(true)
       allow(File).to receive(:new).and_return(file)
-      allow(contact1).to receive('read_attribute_before_type_cast').and_call_original
-      allow(contact2).to receive('read_attribute_before_type_cast').and_call_original
-      allow(contact1).to receive('read_attribute_before_type_cast').with('avatar').and_return('file1.jpg')
-      allow(contact2).to receive('read_attribute_before_type_cast').with('avatar').and_return('file2.jpg')
+      expect_any_instance_of(Spotlight::Contact).to receive('read_attribute_before_type_cast').with('avatar').and_return('file1.jpg')
+      # allow other calls (from rails 4)
+      allow_any_instance_of(Spotlight::Contact).to receive('read_attribute_before_type_cast').with(anything).and_call_original
     end
+
     it 'migrates' do
       expect do
         instance.send :migrate_contact_avatars
-      end.to change { Spotlight::FeaturedImage.count }.by(2)
+      end.to change { Spotlight::FeaturedImage.count }.by(1)
       expect(Spotlight::Contact.all.pluck(:avatar_id)).to eq Spotlight::FeaturedImage.all.pluck(:id)
     end
   end

@@ -16,11 +16,10 @@ module Spotlight
         next unless url.present?
 
         resource = Spotlight::Resources::Upload.new(
-          remote_url_url: url,
           data: row,
           exhibit: exhibit
         )
-
+        resource.build_upload(remote_image_url: url)
         resource.save_and_index
       end
     end
