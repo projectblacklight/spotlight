@@ -20,15 +20,7 @@ module Spotlight
     after_index :commit
     after_index :touch_exhibit!
 
-    after_destroy :cleanup_solr_record
-
-    def cleanup_solr_record
-     blacklight_solr.delete_by_id(document_ids, params: { softCommit: true })
-    end
-
-    def document_ids
-      document_builder.documents_to_index.to_a.map { |y| y[:id] }
-    end
+    after_destroy :cleanup_solr_record, :cleanup_featured_image
 
     ##
     # Persist the record to the database, and trigger a reindex to solr
@@ -76,6 +68,20 @@ module Spotlight
       end
 
       private
+
+      def cleanup_solr_record
+        blacklight_solr.delete_by_id(document_ids, params: { softCommit: true })
+      end
+
+      def document_ids
+        document_builder.documents_to_index.to_a.map { |y| y[:id] }
+      end
+
+      def cleanup_featured_image
+        featured_image = Spotlight::FeaturedImage.find(id)
+        return unless featured_image
+        FileUtils.remove_dir(File.dirname(featured_image.image.path)) if featured_image.image
+      end
 
       def blacklight_solr
         @solr ||= RSolr.connect(connection_config)
