@@ -109,6 +109,12 @@ describe Spotlight::Resource, type: :model do
     end
   end
 
+  describe '#cleanup_solr_record' do
+  end
+
+  describe '#cleanup_featured_image' do
+  end
+
   it 'stores arbitrary data' do
     subject.data[:a] = 1
     subject.data[:b] = 2
