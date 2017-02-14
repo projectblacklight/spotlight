@@ -16,21 +16,32 @@ Spotlight.onLoad(function() {
   $("#another-email").on("click", function() {
     var container = $(this).closest('.form-group');
     var contacts = container.find('.contact');
-    var input_container = contacts.first().clone();
+    var inputContainer = contacts.first().clone();
 
     // wipe out any values from the inputs
-    input_container.find('input').each(function() {
+    inputContainer.find('input').each(function() {
       $(this).val('');
       $(this).attr('id', $(this).attr('id').replace('0', contacts.length));
       $(this).attr('name', $(this).attr('name').replace('0', contacts.length));
     });
 
-    input_container.find('.confirmation-status').remove();
+    inputContainer.find('.contact-email-delete-wrapper').remove();
+    inputContainer.find('.confirmation-status').remove();
 
     // bootstrap does not render input-groups with only one value in them correctly.
-    input_container.find('.input-group input:only-child').closest('.input-group').removeClass('input-group');
+    inputContainer.find('.input-group input:only-child').closest('.input-group').removeClass('input-group');
 
-    $(input_container).insertAfter(contacts.last());
+    $(inputContainer).insertAfter(contacts.last());
+  });
+
+  $('.contact-email-delete').on('ajax:success', function() {
+    $(this).closest('.contact').fadeOut(250, function() { $(this).remove(); });
+  });
+
+  $('.contact-email-delete').on('ajax:error', function(_event, _xhr, _status, error) {
+    var errSpan = $(this).closest('.contact').find('.contact-email-delete-error');
+    errSpan.show();
+    errSpan.find('.error-msg').first().text(error);
   });
 
   $('.btn-with-tooltip').tooltip();

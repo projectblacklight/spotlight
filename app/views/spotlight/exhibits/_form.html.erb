@@ -6,7 +6,7 @@
   <%= f.text_field :tag_list, value: f.object.tag_list.to_s %>
   <%= f.form_group(:contact_emails, label: { text: nil, class: nil }, help: nil) do %>
     <%= f.fields_for :contact_emails do |contact| %>
-      <%= render partial: 'contact', locals: {contact: contact} %>
+      <%= render partial: 'contact', locals: {exhibit: @exhibit, contact: contact} %>
     <% end %>
     <span id='another-email' class="btn-sm btn-info"><%= t('.add_contact_email_button') %></span>
     <p class="help-block"><%= t(:'.fields.contact_emails.help_block') %></p>

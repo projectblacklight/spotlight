@@ -1,4 +1,4 @@
-            <div class="col-md-4 confirmation-status <%= 'not-validated' unless contact_email.confirmed? or contact_email.recently_sent? %>">
+            <div class="confirmation-status <%= 'not-validated' unless contact_email.confirmed? or contact_email.recently_sent? %>">
               <% if contact_email.confirmed? %>
                 <span class="confirmed"><span class="glyphicon glyphicon-ok-sign"></span> <%= t('.confirmed') %></span>
               <% elsif contact_email.recently_sent? %>
