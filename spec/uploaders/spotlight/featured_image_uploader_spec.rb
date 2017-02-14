@@ -28,6 +28,6 @@ describe Spotlight::FeaturedImageUploader do
     end
   end
 
-  describe '#cleanup_store_dir'
+  describe '#cleanup_store_dir' do
   end
 end
