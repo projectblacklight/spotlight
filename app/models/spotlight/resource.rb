@@ -20,6 +20,8 @@ module Spotlight
     after_index :commit
     after_index :touch_exhibit!
 
+    after_destroy :cleanup_solr_record, :cleanup_featured_image
+
     ##
     # Persist the record to the database, and trigger a reindex to solr
     #
@@ -99,6 +101,19 @@ module Spotlight
 
       def write?
         Spotlight::Engine.config.writable_index
+      end
+
+      def cleanup_solr_record
+        blacklight_solr.delete_by_id(document_ids, params: { softCommit: true })
+      end
+
+      def document_ids
+        document_builder.documents_to_index.to_a.map { |y| y[:id] }
+      end
+
+      def cleanup_featured_image
+        featured_image = Spotlight::FeaturedImage.find(upload_id)
+        featured_image.image.remove! if featured_image
       end
     end
   end
