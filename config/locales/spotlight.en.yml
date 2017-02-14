@@ -382,6 +382,10 @@ en:
         header: General
         basic_settings:
           heading: Basic settings
+      contact:
+        email_delete_confirmation: Delete contact email address?
+        email_delete_error: 'Problem deleting contact email:'
+        email_delete_button: Delete contact
       form:
         add_contact_email_button: Add new contact
         fields:

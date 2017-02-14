@@ -14,7 +14,7 @@ module Spotlight
 
       # exhibit admin
       can [:update, :import, :export, :destroy], Spotlight::Exhibit, id: user.admin_roles.pluck(:resource_id)
-      can :manage, Spotlight::BlacklightConfiguration, exhibit_id: user.admin_roles.pluck(:resource_id)
+      can :manage, [Spotlight::BlacklightConfiguration, Spotlight::ContactEmail], exhibit_id: user.admin_roles.pluck(:resource_id)
       can :manage, Spotlight::Role, resource_id: user.admin_roles.pluck(:resource_id), resource_type: 'Spotlight::Exhibit'
 
       can :manage, PaperTrail::Version if user.roles.any?

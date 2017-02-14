@@ -1,10 +1,20 @@
-        <%= contact.hidden_field :id %>
         <div class="row contact">
+          <%= contact.hidden_field :id %>
           <div class="col-md-8<%= ' has-error' if contact.object.errors[:email].present? %>">
             <%= text_field_tag "#{contact.object_name}[email]", contact.object.email, class: 'exhibit-contact form-control' %>
             <% if contact.object.errors[:email].present? %>
               <span class="help-block"><%=contact.object.errors[:email].join(", ".html_safe) %></span>
             <% end %>
+            <p>
+              <span class="contact-email-delete-error text-danger callout-danger" style="display: none;"><%= t('.email_delete_error') %> <span class="error-msg"></span></span>
+            </p>
           </div>
-          <%= render partial: 'confirmation_status', locals: {contact_email: contact.object} unless contact.object.new_record? %>
+          <div class="col-md-4">
+            <% if contact.object.id %>
+              <span class="contact-email-delete-wrapper">
+                <%= link_to "<span class=\"btn-xs btn-danger\">#{t('.email_delete_button')}</span>".html_safe, exhibit_contact_email_path(exhibit_id: exhibit.id, id: contact.object.id), class: 'contact-email-delete', method: :delete, data: { confirm: t('.email_delete_confirmation'), remote: true } %>
+              </span>
+            <% end %>
+            <%= render partial: 'confirmation_status', locals: {contact_email: contact.object} unless contact.object.new_record? %>
+          </div>
         </div>
