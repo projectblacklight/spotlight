@@ -20,6 +20,14 @@ describe 'Report a Problem', type: :feature do
       end
     end
 
+    it 'allows the link to be opened w/o javascript (or in a new tab/window)' do
+      visit spotlight.exhibit_solr_document_path(exhibit, id: 'dq287tq6352')
+
+      click_on 'Feedback'
+
+      expect(page).to have_css('h2', text: 'Contact Us', visible: true)
+    end
+
     it 'accepts a problem report', js: true do
       visit spotlight.exhibit_solr_document_path(exhibit, id: 'dq287tq6352')
       click_on 'Feedback'
