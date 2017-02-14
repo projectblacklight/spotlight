@@ -78,9 +78,8 @@ module Spotlight
       end
 
       def cleanup_featured_image
-        featured_image = Spotlight::FeaturedImage.find(id)
-        return unless featured_image
-        FileUtils.remove_dir(File.dirname(featured_image.image.path)) if featured_image.image
+        featured_image = Spotlight::FeaturedImage.find(upload_id)
+        featured_image.image.remove! if featured_image
       end
 
       def blacklight_solr
