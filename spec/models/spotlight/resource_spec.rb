@@ -118,9 +118,6 @@ describe Spotlight::Resource, type: :model do
   # describe '#multiple_exhibit_solr_document' do
   # end
 
-  # describe '#solr_document_sidecars' do
-  # end
-
   # describe '#document_ids' do
   # end
 

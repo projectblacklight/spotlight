@@ -118,10 +118,6 @@ module Spotlight
         solr_document_sidecars.size > 1
       end
 
-      def solr_document_sidecars
-        Spotlight::SolrDocumentSidecar.where(document_id: document_id, document_type: SolrDocument)
-      end
-
       def document_id
         document_builder.documents_to_index.to_a.map { |y| y[:id] }
       end
