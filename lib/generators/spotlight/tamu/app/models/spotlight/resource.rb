@@ -78,7 +78,7 @@ module Spotlight
       end
 
       def cleanup_featured_image
-        featured_image = Spotlight::FeaturedImage.find(id)
+        featured_image = Spotlight::FeaturedImage.find(upload_id)
         return unless featured_image
         return unless featured_image.image
         featured_image_directory = File.dirname(featured_image.image.path)
