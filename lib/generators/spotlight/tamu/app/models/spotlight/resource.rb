@@ -79,13 +79,7 @@ module Spotlight
 
       def cleanup_featured_image
         featured_image = Spotlight::FeaturedImage.find(upload_id)
-        return unless featured_image
-        return unless featured_image.image
-        featured_image_directory = File.dirname(featured_image.image.path)
-        # use CarrierWave::Uploader::Remove to delete image
-        featured_image.image.remove!
-        # cleanup the featured_image directory
-        FileUtils.remove_dir(featured_image_directory) if File.directory?(featured_image_directory)
+        featured_image.image.remove! if featured_image
       end
 
       def blacklight_solr
