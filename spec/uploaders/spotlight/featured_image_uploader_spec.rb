@@ -27,4 +27,7 @@ describe Spotlight::FeaturedImageUploader do
       expect(store_dir).to end_with "/#{mounter.id}"
     end
   end
+
+  describe '#cleanup_store_dir'
+  end
 end

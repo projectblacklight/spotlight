@@ -112,6 +112,9 @@ describe Spotlight::Resource, type: :model do
   describe '#cleanup_solr_record' do
   end
 
+  describe '#document_ids' do
+  end
+
   describe '#cleanup_featured_image' do
   end
 
