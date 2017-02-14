@@ -115,11 +115,11 @@ module Spotlight
       end
 
       def multiple_exhibit_solr_document
-        number_solr_sidecards > 1
+        solr_document_sidecars.size > 1
       end
 
-      def number_solr_sidecards
-        Spotlight::SolrDocumentSidecar.where(document_id: document_id, document_type: SolrDocument).size
+      def solr_document_sidecars
+        Spotlight::SolrDocumentSidecar.where(document_id: document_id, document_type: SolrDocument)
       end
 
       def document_id

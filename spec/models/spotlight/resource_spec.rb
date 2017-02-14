@@ -109,20 +109,20 @@ describe Spotlight::Resource, type: :model do
     end
   end
 
-  describe '#cleanup_solr_document' do
-  end
+  # describe '#cleanup_solr_document' do
+  # end
 
-  describe '#cleanup_featured_image' do
-  end
+  # describe '#cleanup_featured_image' do
+  # end
 
-  describe '#multiple_exhibit_solr_document' do
-  end
+  # describe '#multiple_exhibit_solr_document' do
+  # end
 
-  describe '#number_solr_sidecards' do
-  end
+  # describe '#solr_document_sidecars' do
+  # end
 
-  describe '#document_ids' do
-  end
+  # describe '#document_ids' do
+  # end
 
   it 'stores arbitrary data' do
     subject.data[:a] = 1
