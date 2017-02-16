@@ -13,6 +13,7 @@ module Migration
     def run
       migrate_featured_images
       migrate_contact_avatars
+      migrate_upload_images
     end
 
     attr_reader :hostname
@@ -34,6 +35,12 @@ module Migration
       Spotlight::Contact.all.each do |contact|
         avatar = copy_contact_image_to_avatar(contact)
         contact.update(avatar: avatar) if avatar
+      end
+    end
+
+    def migrate_upload_images
+      Spotlight::Resources::Upload.all.each do |upload|
+        copy_upload_to_featured_image(upload)
       end
     end
 
@@ -64,6 +71,19 @@ module Migration
       iiif_tilesource = riiif.info_path(image.id)
       image.update(iiif_tilesource: iiif_tilesource, iiif_region: avatar_coordinates(contact))
       image
+    end
+
+    def copy_upload_to_featured_image(upload)
+      return unless upload.exhibit # We need exhibit context to re-index, and you can't find an item not in an exhibit
+      filename = upload.read_attribute_before_type_cast('url')
+      filepath = "public/uploads/spotlight/resources/upload/url/#{upload.id}/#{filename}"
+      return unless filename.present? && File.exist?(filepath)
+      old_file = File.new(filepath)
+      image = upload.create_upload { |i| i.image.store!(old_file) }
+      iiif_tilesource = riiif.info_path(image.id)
+      image.update(iiif_tilesource: iiif_tilesource)
+      upload.upload_id = image.id
+      upload.save_and_index
     end
 
     def update_iiif_url(image)
