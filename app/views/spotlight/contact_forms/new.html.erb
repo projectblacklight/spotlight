@@ -1,22 +1,3 @@
 <div id="content" class="col-md-9">
-<%= bootstrap_form_for @contact_form, url: spotlight.exhibit_contact_form_path(current_exhibit, @contact_form), layout: :horizontal, label_col: 'col-md-3 col-sm-3', control_col: 'col-sm-5 col-md-5' do |f| %>
-  <h1 class="page-title"><%= t(:'.header') %></h1>
-  <div class="row">
-    <%= f.text_field :name %>
-    <span style="display:none;visibility:hidden;">
-      <% honeypot_field_name = Spotlight::Engine.config.spambot_honeypot_email_field %>
-      <%= label_tag(honeypot_field_name, t(:'.honeypot_field_explanation')) %><br/>
-      <%= f.email_field honeypot_field_name %>
-    </span>
-    <%= f.email_field :email %>
-    <%= f.text_area :message, rows: 7 %>
-    <%= f.hidden_field :current_url %>
-    <div class="form-actions">
-      <div class="primary-actions">
-      <%= link_to t(:'helpers.action.cancel'), '#', class: 'btn btn-link', data: { 'behavior' => 'cancel-link' } %>
-      <%= f.submit nil, class: 'btn btn-primary' %>
-      </div>
-    </div>
-  </div>
-<% end %>
+  <%= render partial: 'spotlight/shared/report_a_problem', locals: { contact_form: @contact_form } %>
 </div>

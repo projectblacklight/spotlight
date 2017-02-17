@@ -45,6 +45,28 @@ RSpec.describe Migration::IIIF do
     end
   end
 
+  describe '#migrate_upload_images' do
+    let(:file) { double }
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let!(:upload) { Spotlight::Resources::Upload.create(exhibit: exhibit) }
+
+    before do
+      allow(File).to receive(:exist?).and_return(true)
+      allow(File).to receive(:new).and_return(file)
+      expect_any_instance_of(Spotlight::Resources::Upload).to receive('read_attribute_before_type_cast').with('url').and_return('file1.jpg')
+      # allow other calls (from rails 4)
+      allow_any_instance_of(Spotlight::Resources::Upload).to receive('read_attribute_before_type_cast').with(anything).and_call_original
+    end
+
+    it 'migrates and saves' do
+      expect_any_instance_of(Spotlight::Resources::Upload).to receive(:save_and_index)
+      expect do
+        instance.send :migrate_upload_images
+      end.to change { Spotlight::FeaturedImage.count }.by(1)
+      expect(Spotlight::FeaturedImage.all.pluck(:id)).to include Spotlight::Resources::Upload.last.id
+    end
+  end
+
   describe '#migrate_contact_avatars' do
     let(:file) { double }
     let!(:contact1) { Spotlight::Contact.create }

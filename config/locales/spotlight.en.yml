@@ -173,10 +173,6 @@ en:
           small: Small
           medium: Medium
           large: Large
-    contact_forms:
-      new:
-        header: "Feedback"
-        honeypot_field_explanation: 'Ignore this text box. It is used to detect spammers. If you enter anything into this text box, your message will not be sent.'
     curation:
       sidebar:
         header: Curation
