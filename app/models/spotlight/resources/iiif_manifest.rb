@@ -86,12 +86,13 @@ module Spotlight
 
         metadata.each_with_object({}) do |(key, value), hash|
           next unless (field = exhibit_custom_fields[key])
-          hash[field.field] = value
+          hash[field.field] = json_ld_value(v)
         end
       end
 
       def json_ld_value(value)
-        return value['@value'] if value.is_a?(Hash)
+        return value.map { |v| json_ld_value(v) } if value.is_a? Array
+        return (value['@value'] || value['@id']) if value.is_a?(Hash)
         return value.find { |v| v['@language'] == default_json_ld_language }.try(:[], '@value') if value.is_a?(Array)
         value
       end
