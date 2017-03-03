@@ -2,18 +2,10 @@ describe Spotlight::ReindexingLogEntry, type: :model do
   subject { FactoryGirl.build(:reindexing_log_entry) }
 
   describe 'scope' do
-    before(:all) do
-      # we only want to persist these rows for the duration a given test run...
-      DatabaseCleaner.start
-      # create (and save) entries in the log that can be queried, so that we can test our scopes
+    before do
       (0..10).to_a.each { FactoryGirl.create(:recent_reindexing_log_entry) }
       FactoryGirl.create(:unstarted_reindexing_log_entry)
       (0..10).to_a.each { FactoryGirl.create(:recent_reindexing_log_entry) }
-    end
-
-    after(:all) do
-      # ...remove the entries we created, now that we're done with them
-      DatabaseCleaner.clean
     end
 
     let(:sorted_log_entry_list) do
