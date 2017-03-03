@@ -99,6 +99,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
         expect(subject.blacklight_config.facet_fields['a'].show).to be_falsey
         expect(subject.blacklight_config.facet_fields['a'].if).to eq :field_enabled?
         expect(subject.blacklight_config.facet_fields['a'].enabled).to eq false
+        expect(subject.blacklight_config.facet_fields['a'].limit).to eq true
       end
     end
 
