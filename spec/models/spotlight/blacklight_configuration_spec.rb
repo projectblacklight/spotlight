@@ -474,14 +474,22 @@ describe Spotlight::BlacklightConfiguration, type: :model do
   describe '#custom_facet_fields' do
     it 'converts exhibit-specific fields to Blacklight configurations' do
       allow(subject.exhibit).to receive_message_chain(:custom_fields, vocab: [
-                                                        stub_model(Spotlight::CustomField, field: 'abc', configuration: { a: 1 }, exhibit: subject.exhibit),
-                                                        stub_model(Spotlight::CustomField, field: 'xyz', configuration: { x: 2 }, exhibit: subject.exhibit)
+                                                        stub_model(Spotlight::CustomField,
+                                                                   solr_field: 'abc',
+                                                                   field: 'abc',
+                                                                   configuration: { a: 1 },
+                                                                   exhibit: subject.exhibit),
+                                                        stub_model(Spotlight::CustomField,
+                                                                   solr_field: 'xyz',
+                                                                   field: 'xyz',
+                                                                   configuration: { x: 2 },
+                                                                   exhibit: subject.exhibit)
                                                       ])
-
       expect(subject.custom_facet_fields).to include 'abc', 'xyz'
       expect(subject.custom_facet_fields['abc']).to be_a_kind_of Blacklight::Configuration::Field
       expect(subject.custom_facet_fields['abc'].a).to eq 1
       expect(subject.custom_facet_fields['abc'].custom_field).to eq true
+      expect(subject.custom_facet_fields['abc'].limit).to eq true
     end
   end
 

@@ -79,6 +79,10 @@ RSpec/MultipleExpectations:
   Exclude:
     - 'spec/features/**/*'
 
+RSpec/BeforeAfterAll:
+  Exclude:
+    - 'spec/models/spotlight/reindexing_log_entry_spec.rb'
+
 Bundler/DuplicatedGem:
   Enabled: false
 
