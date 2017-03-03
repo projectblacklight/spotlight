@@ -12,11 +12,11 @@ module Spotlight
       @blacklight_config = blacklight_config
     end
 
-    def field(field_name)
+    def field(key)
       {
-        document_count: document_counts.fetch(field_name, 0),
-        value_count: terms.fetch(field_name, []).length,
-        terms: terms.fetch(field_name, [])
+        document_count: document_counts.fetch(field_name(key), 0),
+        value_count: terms.fetch(field_name(key), []).length,
+        terms: terms.fetch(field_name(key), [])
       }
     end
 
@@ -25,6 +25,14 @@ module Spotlight
     end
 
     private
+
+    def field_name(key)
+      if blacklight_config.facet_fields[key]
+        blacklight_config.facet_fields[key].field
+      else
+        key
+      end
+    end
 
     def search_builder_class
       blacklight_config.search_builder_class
