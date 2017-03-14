@@ -5,7 +5,7 @@
     <% end %>
 
     <ul class="nav navbar-nav">
-      <li class="<%= "active" if current_page?(current_exhibit) %>"><%= link_to t(:'spotlight.curation.nav.home'), current_exhibit %></li>
+      <li class="<%= "active" if current_page?([spotlight, current_exhibit]) %>"><%= link_to t(:'spotlight.curation.nav.home'), [spotlight, current_exhibit] %></li>
       <% current_exhibit.main_navigations.displayable.each do |navigation| %>
         <%= render partial: "shared/#{navigation.nav_type}_navbar", locals: { navigation: navigation } %>
       <% end %>
