@@ -4,7 +4,7 @@ module Spotlight
   class FeaturedImageUploader < CarrierWave::Uploader::Base
     storage Spotlight::Engine.config.uploader_storage
 
-    def extension_white_list
+    def extension_whitelist
       Spotlight::Engine.config.allowed_upload_extensions
     end
 

@@ -2,9 +2,9 @@ describe Spotlight::FeaturedImageUploader do
   let(:mounter) { FactoryGirl.create(:featured_image) }
   subject(:featured_image_uploader) { described_class.new(mounter, 'mounted_as') }
 
-  describe '#extension_white_list' do
+  describe '#extension_whitelist' do
     it 'is the configured array of approved extension to be uploaded' do
-      expect(featured_image_uploader.extension_white_list).to eq Spotlight::Engine.config.allowed_upload_extensions
+      expect(featured_image_uploader.extension_whitelist).to eq Spotlight::Engine.config.allowed_upload_extensions
     end
   end
 
