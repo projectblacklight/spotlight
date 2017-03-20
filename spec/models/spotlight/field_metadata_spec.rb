@@ -5,7 +5,7 @@ describe Spotlight::FieldMetadata do
     Blacklight::Configuration.new do |config|
       config.add_facet_field 'a'
       config.add_facet_field 'b'
-      config.add_facet_field 'c'
+      config.add_facet_field 'some_key', field: 'c'
     end
   end
 
@@ -37,19 +37,19 @@ describe Spotlight::FieldMetadata do
     it 'has a document count' do
       expect(subject.field('a')[:document_count]).to eq 5
       expect(subject.field('b')[:document_count]).to eq 10
-      expect(subject.field('c')[:document_count]).to eq 15
+      expect(subject.field('some_key')[:document_count]).to eq 15
     end
 
     it 'has a value count' do
       expect(subject.field('a')[:value_count]).to eq 3
       expect(subject.field('b')[:value_count]).to eq 1
-      expect(subject.field('c')[:value_count]).to eq 3
+      expect(subject.field('some_key')[:value_count]).to eq 3
     end
 
     it 'gets a list of top terms' do
       expect(subject.field('a')[:terms]).to match_array %w(a b c)
       expect(subject.field('b')[:terms]).to match_array %w(b)
-      expect(subject.field('c')[:terms]).to match_array [7, 8, 9]
+      expect(subject.field('some_key')[:terms]).to match_array [7, 8, 9]
     end
 
     context 'for a missing field' do
