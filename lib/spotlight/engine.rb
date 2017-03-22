@@ -199,5 +199,11 @@ module Spotlight
     Blacklight::OpenStructWithHashAccess.send(:extend, ActiveModel::Translation)
 
     config.exhibit_themes = ['default']
+
+    config.sir_trevor_widgets = %w(
+      Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse
+      FeaturedPages SolrDocuments SolrDocumentsCarousel SolrDocumentsEmbed
+      SolrDocumentsFeatures SolrDocumentsGrid SearchResults
+    )
   end
 end
