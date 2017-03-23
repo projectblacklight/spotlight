@@ -213,6 +213,7 @@ module Spotlight
         )
         field.if = :field_enabled?
         field.enabled = false
+        field.limit = true
         [x.field, field]
       end]
     end
