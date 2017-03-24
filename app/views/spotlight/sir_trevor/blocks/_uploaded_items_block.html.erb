@@ -6,6 +6,11 @@
           <div class="contents">
             <div class="thumbnail">
               <img src='<%= file[:url] %>' alt='<%= file[:title] %>' />
+              <% if file[:caption].present? %>
+                <div class="caption">
+                  <%= file[:caption] %>
+                </div>
+              <% end %>
             </div>
           </div>
         </div>
