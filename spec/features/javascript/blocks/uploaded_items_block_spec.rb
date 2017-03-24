@@ -24,6 +24,7 @@ feature 'Uploaded Items Block', feature: true, js: true do
     expect(page).to have_css('.dd-list li', count: 1)
     within('.dd-list') do
       expect(page).to have_css('.panel-title', text: '800x600.png')
+      fill_in 'Caption', with: 'Some caption text'
     end
 
     attach_file('uploaded_item_url', fixture_file2)
@@ -40,6 +41,7 @@ feature 'Uploaded Items Block', feature: true, js: true do
 
     within('.uploaded-items-block') do
       expect(page).to have_css('img[alt="800x600.png"]')
+      expect(page).to have_css '.caption', text: 'Some caption text'
       expect(page).to have_css('img[alt="avatar.png"]')
     end
   end
