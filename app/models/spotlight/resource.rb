@@ -32,6 +32,7 @@ module Spotlight
     # Enqueue an asynchronous reindexing job for this resource
     def reindex_later
       Spotlight::ReindexJob.perform_later(self)
+      true
     end
 
     def document_model
