@@ -111,7 +111,7 @@ module Spotlight
       def cleanup_featured_image
         return if multiple_exhibit_solr_document
         featured_image = Spotlight::FeaturedImage.find(upload_id)
-        featured_image.image.remove! if featured_image
+        featured_image.image.remove! if featured_image && featured_image.image
       end
 
       def multiple_exhibit_solr_document
