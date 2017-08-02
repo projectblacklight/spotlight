@@ -24,11 +24,6 @@ Lint/AmbiguousBlockAssociation:
     - 'spec/features/report_a_problem_spec.rb'
     - 'spec/models/spotlight/resources/iiif_service_spec.rb'
 
-# Offense count: 222
-# Configuration parameters: CountComments, ExcludedMethods.
-Metrics/BlockLength:
-  Max: 415
-
 # Offense count: 58
 RSpec/AnyInstance:
   Enabled: false
