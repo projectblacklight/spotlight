@@ -10,6 +10,10 @@ module Spotlight
     include ActiveRecord::Reflection
     include ActiveModel::Dirty
 
+    included do
+      inherited(self)
+    end
+
     ##
     # Mock activerecord class-level methods
     module ClassMethods
