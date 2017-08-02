@@ -1,4 +1,5 @@
 describe Spotlight::CatalogController, type: :controller do
+  include ActiveJob::TestHelper
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
@@ -119,7 +120,9 @@ describe Spotlight::CatalogController, type: :controller do
           compound_id = uploaded_resource.compound_id
           slug = uploaded_resource.exhibit.slug
 
-          uploaded_resource.save_and_index
+          perform_enqueued_jobs do
+            uploaded_resource.save_and_index
+          end
 
           get :manifest, params: { exhibit_id: uploaded_resource.exhibit, id: compound_id }
 
