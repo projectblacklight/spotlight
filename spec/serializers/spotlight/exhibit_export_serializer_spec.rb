@@ -67,14 +67,14 @@ describe Spotlight::ExhibitExportSerializer do
   end
 
   it 'has tags' do
-    source_exhibit.tag(SolrDocument.new(id: 1), with: 'xyz', on: :tags)
+    source_exhibit.tag(Spotlight::SolrDocumentSidecar.create(document_id: 1, document_type: 'SolrDocument'), with: 'xyz', on: :tags)
     expect(subject['owned_taggings']).to have(source_exhibit.owned_taggings.count).items
   end
 
   describe 'should round-trip data' do
     before do
-      source_exhibit.solr_document_sidecars.create! document: SolrDocument.new(id: 1), public: false
-      source_exhibit.tag(SolrDocument.new(id: 1), with: 'xyz', on: :tags)
+      sidecar = source_exhibit.solr_document_sidecars.create! document: SolrDocument.new(id: 1), public: false
+      source_exhibit.tag(sidecar, with: 'xyz', on: :tags)
     end
 
     let :export do
