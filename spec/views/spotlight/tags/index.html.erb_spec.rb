@@ -1,8 +1,8 @@
 
 describe 'spotlight/tags/index.html.erb', type: :view do
   let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let!(:tag1) { FactoryGirl.create(:tagging, tagger: exhibit) }
-  let!(:tag2) { FactoryGirl.create(:tagging, tagger: exhibit) }
+  let!(:tag1) { FactoryGirl.create(:tagging, tagger: exhibit, taggable: exhibit) }
+  let!(:tag2) { FactoryGirl.create(:tagging, tagger: exhibit, taggable: exhibit) }
   before do
     assign(:exhibit, exhibit)
     assign(:tags, exhibit.owned_tags)

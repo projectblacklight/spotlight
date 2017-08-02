@@ -1,4 +1,10 @@
 describe Spotlight::Contact, type: :model do
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+
+  before do
+    subject.exhibit = exhibit
+  end
+
   context '#show_in_sidebar' do
     it 'is an attribute' do
       subject.show_in_sidebar = false
