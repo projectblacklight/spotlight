@@ -165,12 +165,6 @@ describe Spotlight::ExhibitExportSerializer do
       end
     end
 
-    it 'has tags' do
-      expect(subject.owned_taggings.length).to eq source_exhibit.owned_taggings.length
-      expect(subject.owned_taggings.first).to be_persisted
-      expect(subject.owned_taggings.first.tag.name).to eq 'xyz'
-    end
-
     it 'deals with nested feature pages' do
       FactoryGirl.create :feature_subpage, exhibit: source_exhibit
       expect(subject.feature_pages.at_top_level.length).to eq 1
