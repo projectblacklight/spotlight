@@ -84,3 +84,9 @@ Bundler/DuplicatedGem:
 
 Bundler/OrderedGems:
   Enabled: false
+
+Rails/ApplicationRecord:
+  Enabled: false
+
+Rails/ApplicationJob:
+  Enabled: false

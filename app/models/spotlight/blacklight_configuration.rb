@@ -198,7 +198,7 @@ module Spotlight
     # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
     def custom_index_fields
-      Hash[exhibit.custom_fields.map do |x|
+      Hash[exhibit.custom_fields.reject(&:new_record?).map do |x|
         field = Blacklight::Configuration::IndexField.new x.configuration.merge(
           key: x.field, field: x.solr_field, custom_field: true
         )
@@ -207,7 +207,7 @@ module Spotlight
     end
 
     def custom_facet_fields
-      Hash[exhibit.custom_fields.vocab.map do |x|
+      Hash[exhibit.custom_fields.vocab.reject(&:new_record?).map do |x|
         field = Blacklight::Configuration::FacetField.new x.configuration.merge(
           key: x.field, field: x.solr_field, show: false, custom_field: true
         )
