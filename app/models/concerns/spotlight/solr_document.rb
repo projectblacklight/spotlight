@@ -9,12 +9,8 @@ module Spotlight
     include GlobalID::Identification
 
     included do
-      extend ActsAsTaggableOn::Taggable
-
-      acts_as_taggable
       has_many :sidecars, class_name: 'Spotlight::SolrDocumentSidecar', as: :document
 
-      before_save :save_owned_tags
       after_save :reindex
 
       use_extension(Spotlight::SolrDocument::UploadedResource, &:uploaded_resource?)
@@ -66,7 +62,7 @@ module Spotlight
       sidecar(current_exhibit).update(custom_data) if custom_data
 
       # Note: this causes a save
-      current_exhibit.tag(self, with: tags, on: :tags) if tags
+      current_exhibit.tag(sidecar(current_exhibit), with: tags, on: :tags) if tags
 
       update_exhibit_resource(resource_attributes) if uploaded_resource?
     end
@@ -118,16 +114,14 @@ module Spotlight
     def tags_to_solr
       h = {}
 
-      # Adding a placeholder entry in case the last tag for an exhibit
-      # is removed, so we clear out the solr field too.
-      Spotlight::Exhibit.find_each do |exhibit|
-        h[self.class.solr_field_for_tagger(exhibit)] = nil
-      end
+      sidecars.each do |sidecar|
+        h[self.class.solr_field_for_tagger(sidecar.exhibit)] = nil
 
-      taggings.includes(:tag, :tagger).map do |tagging|
-        key = self.class.solr_field_for_tagger(tagging.tagger)
-        h[key] ||= []
-        h[key] << tagging.tag.name
+        sidecar.taggings.includes(:tag, :tagger).map do |tagging|
+          key = self.class.solr_field_for_tagger(tagging.tagger)
+          h[key] ||= []
+          h[key] << tagging.tag.name
+        end
       end
       h
     end
@@ -135,7 +129,7 @@ module Spotlight
 end
 
 ActsAsTaggableOn::Tagging.after_destroy do |obj|
-  if obj.tagger.is_a? Spotlight::Exhibit
-    obj.tagger.blacklight_config.document_model.reindex(obj.taggable_id)
+  if obj.tagger.is_a?(Spotlight::Exhibit) && obj.taggable.is_a?(Spotlight::SolrDocumentSidecar)
+    obj.tagger.blacklight_config.document_model.reindex(obj.taggable.document_id)
   end
 end

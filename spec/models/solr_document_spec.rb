@@ -21,14 +21,14 @@ describe SolrDocument, type: :model do
   end
 
   it 'has tags on the exhibit' do
-    expect(subject.tags_from(exhibit)).to be_empty
+    expect(subject.sidecar(exhibit).tags_from(exhibit)).to be_empty
   end
 
   it 'is able to add tags' do
     expect do
-      exhibit.tag(subject, with: 'paris, normandy', on: :tags)
+      exhibit.tag(subject.sidecar(exhibit), with: 'paris, normandy', on: :tags)
     end.to change { ActsAsTaggableOn::Tag.count }.by(2)
-    expect(subject.tags_from(exhibit)).to eq %w(paris normandy)
+    expect(subject.sidecar(exhibit).tags_from(exhibit)).to eq %w(paris normandy)
   end
 
   it 'has find' do
@@ -72,7 +72,7 @@ describe SolrDocument, type: :model do
     end
     it 'stores tags' do
       subject.update exhibit, exhibit_tag_list: 'paris, normandy'
-      expect(subject.tags_from(exhibit)).to eq %w(paris normandy)
+      expect(subject.sidecar(exhibit).tags_from(exhibit)).to eq %w(paris normandy)
     end
   end
 
@@ -87,7 +87,7 @@ describe SolrDocument, type: :model do
     end
 
     it 'includes exhibit-specific tags' do
-      exhibit.tag(subject, with: 'paris', on: :tags)
+      exhibit.tag(subject.sidecar(exhibit), with: 'paris', on: :tags)
 
       expect(subject.to_solr).to include :"exhibit_#{exhibit.slug}_tags_ssim"
       expect(subject.to_solr[:"exhibit_#{exhibit.slug}_tags_ssim"]).to include 'paris'
