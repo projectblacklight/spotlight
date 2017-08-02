@@ -1,4 +1,4 @@
-class AddMetadataToSpotlightResource < ActiveRecord::Migration
+class AddMetadataToSpotlightResource < ActiveRecord::Migration[4.2]
   def up
     add_column :spotlight_resources, :metadata, :binary
   end

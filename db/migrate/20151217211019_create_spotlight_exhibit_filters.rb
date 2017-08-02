@@ -1,4 +1,4 @@
-class CreateSpotlightExhibitFilters < ActiveRecord::Migration
+class CreateSpotlightExhibitFilters < ActiveRecord::Migration[4.2]
   def change
     create_table :spotlight_filters do |t|
       t.string :field

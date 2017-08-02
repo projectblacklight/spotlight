@@ -1,4 +1,4 @@
-class AddResourceToSolrDocumentSidecar < ActiveRecord::Migration
+class AddResourceToSolrDocumentSidecar < ActiveRecord::Migration[4.2]
   def change
     add_column :spotlight_solr_document_sidecars, :resource_id, :integer
     add_column :spotlight_solr_document_sidecars, :resource_type, :string

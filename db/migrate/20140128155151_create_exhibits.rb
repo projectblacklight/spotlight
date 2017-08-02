@@ -1,4 +1,4 @@
-class CreateExhibits < ActiveRecord::Migration
+class CreateExhibits < ActiveRecord::Migration[4.2]
   def change
     create_table :spotlight_exhibits do |t|
       t.string :title, null: false

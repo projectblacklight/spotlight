@@ -27,11 +27,7 @@ module Spotlight
       private
 
       def opengraph_solr_field_name(field)
-        if Rails::VERSION::MAJOR >= 5
-          field.parameterize(separator: '_')
-        else
-          field.parameterize('_')
-        end
+        field.parameterize(separator: '_')
       end
     end
   end
