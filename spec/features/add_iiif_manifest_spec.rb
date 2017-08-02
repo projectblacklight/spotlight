@@ -17,7 +17,7 @@ describe 'adding IIIF Manifest', type: :feature do
 
   it 'submits the form to create a new item' do
     expect_any_instance_of(Spotlight::Resource).to receive(:reindex_later).and_return(true)
-    url = 'https://purl.stanford.edu/vw754mr2281/iiif/manifest.json'
+    url = 'https://purl.stanford.edu/vw754mr2281/iiif/manifest'
     visit spotlight.admin_exhibit_catalog_path(exhibit)
 
     click_link 'Add items'
