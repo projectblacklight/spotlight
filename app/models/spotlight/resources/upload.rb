@@ -4,7 +4,7 @@ module Spotlight
     ##
     # Exhibit-specific resources, created using uploaded and custom fields
     class Upload < Spotlight::Resource
-      belongs_to :upload, class_name: 'Spotlight::FeaturedImage'
+      belongs_to :upload, class_name: 'Spotlight::FeaturedImage', optional: true
 
       # we want to do this before reindexing
       after_create :update_document_sidecar
