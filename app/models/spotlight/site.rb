@@ -5,7 +5,7 @@ module Spotlight
     has_many :exhibits, -> { ordered_by_weight }
     has_many :roles, as: :resource
 
-    belongs_to :masthead, dependent: :destroy
+    belongs_to :masthead, dependent: :destroy, optional: true
 
     accepts_nested_attributes_for :masthead, update_only: true
     accepts_nested_attributes_for :exhibits

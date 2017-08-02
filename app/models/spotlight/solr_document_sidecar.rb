@@ -7,7 +7,7 @@ module Spotlight
     acts_as_taggable
 
     belongs_to :exhibit, required: true
-    belongs_to :resource
+    belongs_to :resource, optional: true
     belongs_to :document, required: true, polymorphic: true
     serialize :data, Hash
     serialize :index_status, Hash
