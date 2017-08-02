@@ -1,4 +1,4 @@
-class RemoveDefaultFromSpotlightExhibit < ActiveRecord::Migration
+class RemoveDefaultFromSpotlightExhibit < ActiveRecord::Migration[4.2]
   def up
     return unless Spotlight::Exhibit.column_names.include? 'default'
 

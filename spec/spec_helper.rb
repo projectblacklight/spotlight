@@ -94,12 +94,8 @@ RSpec.configure do |config|
   config.after(:each, type: :feature) { Warden.test_reset! }
   config.include Controllers::EngineHelpers, type: :controller
   config.include Capybara::DSL
-  if Rails::VERSION::MAJOR >= 5
-    config.include ::Rails.application.routes.url_helpers
-    config.include ::Rails.application.routes.mounted_helpers
-  else
-    config.include BackportTestHelpers, type: :controller
-  end
+  config.include ::Rails.application.routes.url_helpers
+  config.include ::Rails.application.routes.mounted_helpers
   config.include Spotlight::TestFeaturesHelpers, type: :feature
 
   config.expect_with :rspec do |expectations|
