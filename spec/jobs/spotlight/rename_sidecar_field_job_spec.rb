@@ -1,5 +1,7 @@
 
 describe Spotlight::RenameSidecarFieldJob do
+  include ActiveJob::TestHelper
+
   let(:exhibit) { FactoryGirl.create(:exhibit) }
   let(:sidecar) { SolrDocument.new(id: 'test').sidecar(exhibit).tap(&:save!) }
 
@@ -9,7 +11,9 @@ describe Spotlight::RenameSidecarFieldJob do
     sidecar.data['old_field'] = 'some value'
     sidecar.save!
 
-    described_class.perform_later(exhibit, 'old_field', 'new_field')
+    perform_enqueued_jobs do
+      described_class.perform_later(exhibit, 'old_field', 'new_field')
+    end
 
     sidecar.reload
     expect(sidecar.data['new_field']).to eq 'some value'
@@ -21,6 +25,8 @@ describe Spotlight::RenameSidecarFieldJob do
     sidecar.data['other_field'] = 'some value'
     sidecar.save!
 
-    described_class.perform_later(exhibit, 'old_field', 'new_field')
+    perform_enqueued_jobs do
+      described_class.perform_later(exhibit, 'old_field', 'new_field')
+    end
   end
 end

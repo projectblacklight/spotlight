@@ -1,4 +1,6 @@
 describe 'Uploading a non-repository item', type: :feature do
+  include ActiveJob::TestHelper
+
   let!(:exhibit) { FactoryGirl.create(:exhibit) }
   let!(:custom_field) { FactoryGirl.create(:custom_field, exhibit: exhibit) }
   let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
@@ -85,8 +87,10 @@ describe 'Uploading a non-repository item', type: :feature do
       attach_file('resources_upload_url', File.join(FIXTURES_PATH, '800x600.png'))
       fill_in 'Title', with: '800x600'
 
-      within '#new_resources_upload' do
-        click_button 'Add item'
+      perform_enqueued_jobs do
+        within '#new_resources_upload' do
+          click_button 'Add item'
+        end
       end
 
       click_link '800x600'
