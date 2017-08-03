@@ -4,15 +4,10 @@ module Spotlight
   module SolrDocument
     extend ActiveSupport::Concern
 
-    include Spotlight::SolrDocument::ActiveModelConcern
     include Spotlight::SolrDocument::Finder
     include GlobalID::Identification
 
     included do
-      has_many :sidecars, class_name: 'Spotlight::SolrDocumentSidecar', as: :document
-
-      after_save :reindex
-
       use_extension(Spotlight::SolrDocument::UploadedResource, &:uploaded_resource?)
     end
 
@@ -20,7 +15,7 @@ module Spotlight
     # Class-level methods
     module ClassMethods
       def build_for_exhibit(id, exhibit, attributes = {})
-        new(unique_key => id) do |doc|
+        new(unique_key => id).tap do |doc|
           doc.sidecar(exhibit).tap { |x| x.assign_attributes(attributes) }.save! # save is a nop if the sidecar isn't modified.
         end
       end
@@ -67,6 +62,10 @@ module Spotlight
       update_exhibit_resource(resource_attributes) if uploaded_resource?
     end
 
+    def save
+      reindex
+    end
+
     def update_exhibit_resource(resource_attributes)
       return unless resource_attributes && resource_attributes['url']
       uploaded_resource.upload.update image: resource_attributes['url']
@@ -76,8 +75,12 @@ module Spotlight
       # no-op reindex implementation
     end
 
+    def sidecars
+      Spotlight::SolrDocumentSidecar.where(document_id: id, document_type: self.class.to_s)
+    end
+
     def sidecar(exhibit)
-      sidecars.find_or_initialize_by exhibit: exhibit
+      sidecars.find_or_initialize_by exhibit: exhibit, document_id: id, document_type: self.class.to_s
     end
 
     def to_solr

@@ -38,6 +38,22 @@ module Spotlight
         end
       end
 
+      # Returns true if +comparison_object+ is the same exact object, or +comparison_object+
+      # is of the same type and +self+ has an ID and it is equal to +comparison_object.id+.
+      #
+      # Note that new records are different from any other record by definition, unless the
+      # other record is the receiver itself. Besides, if you fetch existing records with
+      # +select+ and leave the ID out, you're on your own, this predicate will return false.
+      #
+      # Note also that destroying a record preserves its ID in the model instance, so deleted
+      # models are still comparable.
+      def ==(other)
+        super ||
+          (other.instance_of?(self.class) &&
+            id &&
+            other.id == id)
+      end
+
       def blacklight_solr
         self.class.index.connection
       end

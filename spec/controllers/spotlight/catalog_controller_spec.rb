@@ -23,7 +23,7 @@ describe Spotlight::CatalogController, type: :controller do
     end
 
     describe 'GET show' do
-      let(:document) { SolrDocument.find('dq287tq6352') }
+      let(:document) { SolrDocument.new(id: 'dq287tq6352') }
       let(:search) { FactoryGirl.create(:search, exhibit: exhibit) }
       it 'shows the item' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
