@@ -13,18 +13,18 @@ require 'rspec/its'
 require 'rspec/rails'
 require 'rspec/active_model/mocks'
 
-require 'capybara/poltergeist'
+require 'selenium-webdriver'
 
-if ENV['POLTERGEIST_DEBUG']
-  Capybara.register_driver :poltergeist_debug do |app|
-    Capybara::Poltergeist::Driver.new(app, inspector: true, phantomjs_options: ['--load-images=no'])
-  end
-  Capybara.javascript_driver = :poltergeist_debug
-else
-  Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, phantomjs_options: ['--load-images=no'])
-  end
-  Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :headless_chrome
+
+Capybara.register_driver :headless_chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: %w[headless disable-gpu] }
+  )
+
+  Capybara::Selenium::Driver.new(app,
+                                 browser: :chrome,
+                                 desired_capabilities: capabilities)
 end
 Capybara.default_max_wait_time = 10
 
