@@ -13,9 +13,9 @@ module Spotlight
     before_action :authenticate_user!, only: [:admin, :edit, :make_public, :make_private]
     before_action :check_authorization, only: [:admin, :edit, :make_public, :make_private]
     before_action :redirect_to_exhibit_home_without_search_params!, only: :index
-    before_action :add_breadcrumb_with_search_params, only: :index
 
     before_action :attach_breadcrumbs
+    before_action :add_breadcrumb_with_search_params, only: :index
 
     before_action only: :show do
       blacklight_config.show.partials.unshift 'tophat'
