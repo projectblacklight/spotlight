@@ -17,13 +17,16 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     config.index.title_field = 'full_title_tesim'
 
-    config.add_facet_field 'language', field: 'language_ssim'
+    config.add_facet_field 'tag', field: 'tag_tesim'
     config.add_facet_field 'subject', field: 'subject_tesim'
+    config.add_facet_field 'attribution', field: 'attribution_tesim'
 
     config.add_facet_fields_to_solr_request!
 
-    config.add_search_field 'subject', label: 'Subject'
     config.add_search_field 'all_fields', label: 'Everything'
+    config.add_search_field 'tag', label: 'Tag'
+    config.add_search_field 'subject', label: 'Subject'
+    config.add_search_field 'attribution', label: 'Attribution'
 
     config.add_sort_field 'relevance', sort: 'score desc', label: 'Relevance'
 
