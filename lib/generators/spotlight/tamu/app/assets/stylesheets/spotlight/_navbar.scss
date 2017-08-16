@@ -1,84 +1,149 @@
-// Transparent navbar styling, adapted directly from Bootstrap's navbar styles:
-// https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/_navbar.scss
-
-.navbar-transparent {
-    background-color: $navbar-transparent-bg;
-    border-color: $navbar-transparent-border;
-
-    .navbar-brand {
-        color: $navbar-transparent-brand-color;
-
-        &:focus,
-        &:hover {
-            color: $navbar-transparent-brand-hover-color;
-            background-color: $navbar-transparent-brand-hover-bg;
-        }
-    }
-
-    .navbar-text {
-        color: $navbar-transparent-color;
-    }
-
-    .navbar-nav {
-        > li > a {
-            color: $navbar-transparent-link-color;
-
-            &:focus,
-            &:hover {
-                color: $navbar-transparent-link-hover-color;
-                background-color: $navbar-transparent-link-hover-bg;
-            }
-        }
-
-        > .active > a {
-            &,
-            &:focus,
-            &:hover {
-                color: $navbar-transparent-link-active-color;
-                background-color: $navbar-transparent-link-active-bg;
-            }
-        }
-
-        > .disabled > a {
-            &,
-            &:focus,
-            &:hover {
-                color: $navbar-transparent-link-disabled-color;
-                background-color: $navbar-transparent-link-disabled-bg;
-            }
-        }
-    }
-}
-/* Header bar at top (Bootstrap nav-bar) */
-.navbar-inverse .navbar-brand {
-    color: $navbar-inverse-link-color;
+/*Header*/
+.global-nav {
+    margin: 0;
+    text-align: center;
 }
 
-.navbar-inverse .navbar-brand:hover {
-    color: $navbar-inverse-link-hover-color;
+.global-nav, .global-nav .top-bar {
+    background: #3c0000;
 }
-/* this is not overriding blacklight's navbar-brand in _header.scss */
-.navbar-brand {
-    @if $logo-image-full {
-        background: transparent $logo-image-full no-repeat top left !important;
-    }
-    flex: 0 0 384px !important;
-    height: 48px !important;
-    width: 384px !important;
-    margin-right: 25px !important;
-    margin-top: 2px !important;
+
+
+.global-nav .tabs dd>a:hover {
+    background: #500000;
+    color: #ffffff;
+    text-decoration: none !important;
+
 }
-@media (max-width: 768px) {
-    .navbar {
-        min-height: auto;
-    }
+
+.lib-link a {
+    color: #fff !important;
+    text-decoration: none !important;
+    display: inline-block;
+    padding: 2px 0 0px 56px;
+    margin: 10px 0;
+    font-size: 1.15rem;
+    background: url('http://library.tamu.edu/assets/images/tam.png') no-repeat;
 }
-@media (max-width: 480px) {
-    .navbar-brand {
-        @if $logo-image {
-            background: transparent $logo-image no-repeat top left !important;
-        }
-        flex: 0 0 48px !important;
-        width: 48px !important;
-    }
+
+.global-nav li a {
+    background: none;
+    color: #fff !important;
+    font-size: 1em;
+    font-family: 'Lato', Arial, sans-serif;
+    margin-left: -5px;
+}
+
+.global-nav li {
+    border-right: 1px solid #6a0000;
+    
+    display: inline-block;
+    margin: 5px 0 0px 0;
+}
+
+.global-nav li:last-child {
+    border-right: 0 solid #6a0000;
+}
+
+.site {
+    color: #fff;
+    font-size: 1.25em;
+    font-family: 'Lato', Arial, sans-serif;
+    margin: 20px 0;
+    text-align: center;
+}
+
+
+.global-nav .global-tabs {
+    overflow: auto;
+    display: block;
+    /*width: 75%;*/
+}
+
+@media only screen and (min-width: 43.913em){
+.global-nav .tabs dd:last-child>a {
+    border-right: 1px solid #6a0000;
+}}
+.global-nav .tabs dd:last-child>a {
+    border-right: none;
+}
+.global-nav .tabs dd>a {
+    background: 0 0;
+    color: #fff;
+    font-size: .8rem;
+}
+.global-nav .tabs dd>a {
+    padding: 15px 18px;
+    border-right: 1px solid #6a0000;
+}
+
+.tabs .tab-title>a, .tabs dd>a {
+    outline: 0;
+    display: block;
+    padding: 1rem 2rem;
+    font-family: 'Lato',Arial,sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+@media only screen and (min-width: 43.913em){
+.global-nav .tabs dd {
+    width: auto;
+    text-align: left;
+}
+
+.global-nav .tabs dd>a {
+    padding: 15px 20px;
+    border-right: 1px solid #6a0000;
+    
+}
+
+}
+.global-nav .tabs dd {
+    width: auto;
+    text-align: center;
+}
+.tabs .tab-title, .tabs dd {
+    position: relative;
+    margin-bottom: 0!important;
+    list-style: none;
+    float: left;
+}
+
+
+@media only screen and (min-width: 768px){
+.global-nav {
+    margin: 0;
+    text-align: left;
+    padding: 0;
+}
+
+.site {
+    margin: 20px 0;
+    text-align: left;
+}
+.lib-link a{
+font-size: 1.25rem; 
+}
+
+
+
+}
+
+.tabBorder{
+    border-top: 1px #8d8d8d solid;
+    margin: 48px -30px 0 -30px;
+}
+
+
+.site-title {
+    background: #500000;
+    border-top: 1px solid #8d8d8d;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+       -moz-box-shadow: 0 8px 6px -6px black;
+            box-shadow: 0 8px 6px -6px black;
+}
+.site h2, .site h3 {
+    margin-top: 5px;
+    color:#ffffff;
 }
