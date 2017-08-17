@@ -1,61 +1,18 @@
-<section class="container-fluid global-nav">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12 pull-left hidden-xs lib-link"><a href="http://library.tamu.edu">Texas A&amp;M University <strong>Libraries</strong></a></div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="global-tabs pull-right hidden-xs">
-                    <dl class="tabs">
-                        <dd><a href="http://library.tamu.edu/about/hours.html">Hours</a></dd>
-                        <dd><a href="http://library.tamu.edu/about/index.html">Libraries</a></dd>
-                        <dd><a href="https://library.tamu.edu/mylibrary/" onclick="location.href='https://library.tamu.edu/mylibrary/'" title="Access the myLibrary online application">myLibrary</a></dd>
-                        <dd><a href="http://askus.library.tamu.edu/">Help</a></dd>
-                    </dl>
-                </div>
-            </div>
-        </div>
-        <div class="nav global-nav visible-xs-inline-block">
-            <dl class="tabs">
-                <dd><a href="http://library.tamu.edu/about/hours.html">Hours</a></dd>
-                <dd><a href="http://library.tamu.edu/about/index.html">Libraries</a></dd>
-                <dd><a href="https://library.tamu.edu/mylibrary/" onclick="location.href='https://library.tamu.edu/mylibrary/'" title="Access the myLibrary online application">myLibrary</a></dd>
-                <dd><a href="http://askus.library.tamu.edu/">Help</a></dd>
-            </dl>
-            <div class="tabBorder"></div>
-            <div class="lib-link"><a href="http://library.tamu.edu">Texas A&amp;M University <strong>Libraries</strong></a></div>
-        </div>
-    </div>
-    </div>
-</section>
-<section class="container-fluid site-title">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 visible-xs-block">
-                <div class="site">
-                    <h3><%= link_to application_name, main_app.root_path %></h3></div>
-            </div>
-            <div class="col-lg-12 hidden-xs pull-left">
-                <div class="site">
-                    <h2><%= link_to application_name, main_app.root_path %></h2></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<nav class="navbar navbar-inverse">
+<div id="header-navbar" class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
   <div class="container">
-      <div class="navbar-header">
+    <div class="navbar-header">
       <% if current_user %>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only"><%= t :toggle_nav %></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-          </button>
-      <% end %>
-      </div>
-      <div class="navbar-collapse collapse">
-        <%= render :partial=>'tamu/user_menu' %>
-      </div>
-      <!--/.nav-collapse -->
+  	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#user-util-collapse">
+  	      <span class="sr-only"><%= t :toggle_nav %></span>
+  	      <span class="icon-bar"></span>
+  	      <span class="icon-bar"></span>
+  	      <span class="icon-bar"></span>
+  	    </button>
+	    <% end %>
+	  <%= link_to application_name, main_app.root_path, class: "navbar-brand pull-left" %>
+    </div>
+    <div class="collapse navbar-collapse" id="user-util-collapse">
+      <%= render :partial=>'tamu/user_menu' %>
+    </div>
   </div>
-</nav>
+</div>
