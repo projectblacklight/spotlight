@@ -7,6 +7,9 @@
 
     .navbar-brand {
         color: $navbar-transparent-brand-color;
+        padding: 5px 0 5px 55px;
+        font-size: 1.4rem;
+        text-indent: inherit;
 
         &:focus,
         &:hover {
@@ -38,7 +41,6 @@
                 background-color: $navbar-transparent-link-active-bg;
             }
         }
-
         > .disabled > a {
             &,
             &:focus,
@@ -50,24 +52,38 @@
     }
 }
 /* Header bar at top (Bootstrap nav-bar) */
-.navbar-inverse .navbar-brand {
+#header-navbar .navbar-brand {
     color: $navbar-inverse-link-color;
+
 }
 
-.navbar-inverse .navbar-brand:hover {
+#header-navbar .navbar-inverse .navbar-brand:hover {
     color: $navbar-inverse-link-hover-color;
 }
-/* this is not overriding blacklight's navbar-brand in _header.scss */
-.navbar-brand {
+
+#header-navbar .navbar-header {
+    float: none;
+}
+
+#header-navbar .navbar-brand {
     @if $logo-image-full {
         background: transparent $logo-image-full no-repeat top left !important;
     }
-    flex: 0 0 384px !important;
-    height: 48px !important;
-    width: 384px !important;
-    margin-right: 25px !important;
-    margin-top: 2px !important;
+    flex: 0 0 340px;
+    height: 42px;
+    width: 340px;
+    margin-right: 25px;
+    margin-top: 10px;
+    padding: 5px 0 5px 55px;
+    font-size: 1.4rem;
+    text-indent: inherit;
 }
+
+.navbar {
+    min-height: 42px;
+    margin-bottom: 0;
+}
+
 @media (max-width: 768px) {
     .navbar {
         min-height: auto;
