@@ -100,7 +100,7 @@
 }
 
 .subnav {
-    background-image: url("../images/denim.png");
+    background-image: image_url("tamu/tamu-denim.png");
     background-repeat: repeat;
     background-color: #4d4d4d;
     min-height: 20px;
@@ -108,6 +108,11 @@
 
 .subnav a {
     color: #ffffff;
+}
+
+.subnav .nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .subnav .nav > li > a:hover, .nav > li > a:focus {
