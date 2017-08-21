@@ -1,14 +1,6 @@
 <div id="header-navbar" class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <% if current_user %>
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#user-util-collapse">
-              <span class="sr-only"><%= t :toggle_nav %></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <% end %>
       <a class="navbar-brand col-lg-4 col-xs-12" href="//library.tamu.edu/index.html">Texas A&amp;M University Libraries</a>
       <div class="col-lg-5 col-lg-offset-3 col-xs-12 col-sm-12 hidden-xs">
         <nav class="navbar" role="navigation">
@@ -109,9 +101,6 @@
               </ul>
           </nav>
         </div>
-    </div>
-    <div class="collapse navbar-collapse" id="user-util-collapse">
-      <%= render :partial=>'tamu/user_menu' %>
     </div>
   </div>
 </div>
