@@ -98,3 +98,18 @@
         width: 48px !important;
     }
 }
+
+.subnav {
+    background-image: url("../images/denim.png");
+    background-repeat: repeat;
+    background-color: #4d4d4d;
+    min-height: 20px;
+}
+
+.subnav a {
+    color: #ffffff;
+}
+
+.subnav .nav > li > a:hover, .nav > li > a:focus {
+    color: #040000;
+}
