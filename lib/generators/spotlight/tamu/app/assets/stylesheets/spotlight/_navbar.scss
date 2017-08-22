@@ -52,12 +52,12 @@
     }
 }
 /* Header bar at top (Bootstrap nav-bar) */
-#header-navbar .navbar-brand {
+#header-navbar .navbar-brand a {
     color: $navbar-inverse-link-color;
 
 }
 
-#header-navbar .navbar-inverse .navbar-brand:hover {
+#header-navbar .navbar-inverse .navbar-brand a:hover {
     color: $navbar-inverse-link-hover-color;
 }
 
