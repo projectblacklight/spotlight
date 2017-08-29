@@ -51,7 +51,7 @@
         </div>
         <div class="form-group">
           <%= f.label :content, class: 'sr-only' %>
-          <%= f.text_area_without_bootstrap :content, value: { data: f.object.content.as_json }.to_json, class: 'js-st-instance' %>
+          <%= f.text_area_without_bootstrap :content, value: { data: f.object.content.as_json }.to_json, class: 'js-st-instance', data: { blockTypes: Spotlight::Engine.config.sir_trevor_widgets } %>
         </div>
       </div>
 
