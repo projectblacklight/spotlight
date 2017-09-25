@@ -1,5 +1,5 @@
 namespace :spotlight do
-  desc 'Create an initial admin user and default exhibit'
+  desc 'Create an initial admin user'
   task initialize: :environment do
     puts 'Creating an initial admin user.'
     u = prompt_to_create_user
