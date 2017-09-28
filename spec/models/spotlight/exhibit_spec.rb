@@ -83,16 +83,6 @@ describe Spotlight::Exhibit, type: :model do
       subject.import 'title' => 'xyz'
       expect(subject.title).to eq 'xyz'
     end
-
-    it 'munges taggings so they can be imported easily' do
-      expect do
-        subject.import('owned_taggings' => [{ 'taggable_id' => '1', 'taggable_type' => 'SolrDocument', 'context' => 'tags', 'tag' => 'xyz' }])
-        subject.save
-      end.to change { subject.owned_taggings.count }.by(1)
-      tag = subject.owned_taggings.last
-      expect(tag.taggable_id).to eq '1'
-      expect(tag.tag.name).to eq 'xyz'
-    end
   end
 
   describe '#blacklight_config' do

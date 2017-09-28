@@ -13,8 +13,8 @@ module Spotlight
     validates :title, presence: true
     has_paper_trail
 
-    belongs_to :masthead, dependent: :destroy
-    belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy
+    belongs_to :masthead, dependent: :destroy, optional: true
+    belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy, optional: true
     accepts_nested_attributes_for :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
     accepts_nested_attributes_for :masthead, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
 

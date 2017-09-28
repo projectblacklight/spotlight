@@ -1,4 +1,4 @@
-class AddFieldTypeToCustomFields < ActiveRecord::Migration
+class AddFieldTypeToCustomFields < ActiveRecord::Migration[4.2]
   def up
     add_column :spotlight_custom_fields, :field_type, :string
 

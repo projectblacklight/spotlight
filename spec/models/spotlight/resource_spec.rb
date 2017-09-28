@@ -26,6 +26,8 @@ describe Spotlight::Resource, type: :model do
           expect(data.length).to eq 1
           doc = data.first
 
+          break if doc.first == :commit
+
           expect(doc).to include document_data: true
         end
 

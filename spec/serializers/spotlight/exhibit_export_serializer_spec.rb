@@ -67,14 +67,14 @@ describe Spotlight::ExhibitExportSerializer do
   end
 
   it 'has tags' do
-    source_exhibit.tag(SolrDocument.new(id: 1), with: 'xyz', on: :tags)
+    source_exhibit.tag(Spotlight::SolrDocumentSidecar.create(document_id: 1, document_type: 'SolrDocument'), with: 'xyz', on: :tags)
     expect(subject['owned_taggings']).to have(source_exhibit.owned_taggings.count).items
   end
 
   describe 'should round-trip data' do
     before do
-      source_exhibit.solr_document_sidecars.create! document: SolrDocument.new(id: 1), public: false
-      source_exhibit.tag(SolrDocument.new(id: 1), with: 'xyz', on: :tags)
+      sidecar = source_exhibit.solr_document_sidecars.create! document: SolrDocument.new(id: 1), public: false
+      source_exhibit.tag(sidecar, with: 'xyz', on: :tags)
     end
 
     let :export do
@@ -163,12 +163,6 @@ describe Spotlight::ExhibitExportSerializer do
       it 'persists across import/export' do
         expect(subject.main_navigations.about.label).to eq 'Custom Label'
       end
-    end
-
-    it 'has tags' do
-      expect(subject.owned_taggings.length).to eq source_exhibit.owned_taggings.length
-      expect(subject.owned_taggings.first).to be_persisted
-      expect(subject.owned_taggings.first.tag.name).to eq 'xyz'
     end
 
     it 'deals with nested feature pages' do

@@ -1,4 +1,4 @@
-class UpdateCustomFieldNames < ActiveRecord::Migration
+class UpdateCustomFieldNames < ActiveRecord::Migration[4.2]
   def up
     fields = {}
 

@@ -5,7 +5,7 @@ describe Spotlight::Role, type: :model do
       let(:args) { { user_key: '' } }
       it 'does not be valid' do
         expect(subject).not_to be_valid
-        expect(subject.errors.messages).to eq(role: ['is not included in the list'], user_key: ["can't be blank"])
+        expect(subject.errors.messages).to include(role: ['is not included in the list'], 'user.email': ["can't be blank"])
       end
     end
     describe 'with user_key' do

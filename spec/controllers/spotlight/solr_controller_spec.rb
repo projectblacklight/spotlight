@@ -82,7 +82,7 @@ describe Spotlight::SolrController, type: :controller do
           expect(connection).to receive(:update) do |params|
             doc = JSON.parse(params[:data], symbolize_names: true)
           end
-          post :update, params: { resources_json_upload: { json: json }, exhibit_id: exhibit }, content_type: :json
+          post :update, params: { resources_json_upload: { json: json }, exhibit_id: exhibit }
 
           expect(response).to be_successful
           expect(doc.first).to include a: 1

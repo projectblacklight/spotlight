@@ -1,4 +1,4 @@
-class AddSiteToSpotlightExhibits < ActiveRecord::Migration
+class AddSiteToSpotlightExhibits < ActiveRecord::Migration[4.2]
   def up
     add_column :spotlight_exhibits, :site_id, :integer
     add_index :spotlight_exhibits, :site_id

@@ -68,7 +68,7 @@ module Spotlight
       private
 
       def blacklight_solr
-        @solr ||= RSolr.connect(connection_config)
+        @solr ||= RSolr.connect(connection_config.merge(adapter: connection_config[:http_adapter]))
       end
 
       def connection_config

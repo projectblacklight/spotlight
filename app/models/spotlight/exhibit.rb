@@ -45,9 +45,9 @@ module Spotlight
     has_one :blacklight_configuration, class_name: 'Spotlight::BlacklightConfiguration', dependent: :delete
     has_one :home_page
 
-    belongs_to :site
-    belongs_to :masthead, dependent: :destroy
-    belongs_to :thumbnail, class_name: 'Spotlight::ExhibitThumbnail', dependent: :destroy
+    belongs_to :site, optional: true
+    belongs_to :masthead, dependent: :destroy, optional: true
+    belongs_to :thumbnail, class_name: 'Spotlight::ExhibitThumbnail', dependent: :destroy, optional: true
 
     accepts_nested_attributes_for :about_pages, :attachments, :contacts, :custom_fields, :feature_pages,
                                   :main_navigations, :owned_taggings, :resources, :searches, :solr_document_sidecars

@@ -54,7 +54,13 @@ Metrics/LineLength:
 
 Metrics/BlockLength:
   Exclude:
-    - 'spec/models/spotlight/blacklight_configuration_spec.rb'
+    - Rakefile
+    - blacklight-spotlight.gemspec
+    - config/**/*
+    - 'lib/tasks/*'
+    - 'spec/**/*'
+    - 'app/models/spotlight/blacklight_configuration.rb'
+    - 'app/models/spotlight/resource.rb'
 
 Metrics/ClassLength:
   Exclude:
@@ -83,4 +89,10 @@ Bundler/DuplicatedGem:
   Enabled: false
 
 Bundler/OrderedGems:
+  Enabled: false
+
+Rails/ApplicationRecord:
+  Enabled: false
+
+Rails/ApplicationJob:
   Enabled: false

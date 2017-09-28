@@ -7,7 +7,7 @@ Spotlight.onLoad(function(){
     uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint'),
     ajaxOptions: {
       headers: {
-        'X-CSRF-Token': $.rails.csrfToken() || ''
+        'X-CSRF-Token': (Rails || $.rails).csrfToken() || ''
       },
       credentials: 'same-origin'
     }
@@ -22,8 +22,7 @@ Spotlight.onLoad(function(){
   if (instance.length) {
     var editor = new SirTrevor.Editor({
       el: instance[0],
-      blockTypes:["Heading", "Text", "List","Quote","Iframe", "Video", "Oembed", "Rule", "UploadedItems",
-                 "Browse", "FeaturedPages", "SolrDocuments",  "SolrDocumentsCarousel", "SolrDocumentsEmbed", "SolrDocumentsFeatures", "SolrDocumentsGrid", "SearchResults"],
+      blockTypes: instance.data('blockTypes'),
       defaultType:["Text"],
       onEditorRender: function() {
         serializeObservedForms(observedForms());

@@ -1,4 +1,4 @@
-class ChangeRolesToSupportPolymorphicAssociations < ActiveRecord::Migration
+class ChangeRolesToSupportPolymorphicAssociations < ActiveRecord::Migration[4.2]
   def up
     add_column :spotlight_roles, :resource_id, :integer
     add_column :spotlight_roles, :resource_type, :string

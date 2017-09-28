@@ -6,6 +6,20 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
+# Offense count: 3
+# Cop supports --auto-correct.
+Layout/EmptyLineAfterMagicComment:
+  Exclude:
+    - 'app/jobs/spotlight/add_uploads_from_csv.rb'
+    - 'app/models/spotlight/resources/upload.rb'
+    - 'app/uploaders/spotlight/attachment_uploader.rb'
+
+# Offense count: 1
+# Cop supports --auto-correct.
+Layout/EmptyLinesAroundExceptionHandlingKeywords:
+  Exclude:
+    - 'app/models/spotlight/featured_image.rb'
+
 # Offense count: 22
 Lint/AmbiguousBlockAssociation:
   Exclude:
@@ -23,11 +37,6 @@ Lint/AmbiguousBlockAssociation:
     - 'spec/controllers/spotlight/roles_controller_spec.rb'
     - 'spec/features/report_a_problem_spec.rb'
     - 'spec/models/spotlight/resources/iiif_service_spec.rb'
-
-# Offense count: 222
-# Configuration parameters: CountComments, ExcludedMethods.
-Metrics/BlockLength:
-  Max: 415
 
 # Offense count: 58
 RSpec/AnyInstance:
@@ -218,20 +227,6 @@ Rails/SkipsModelValidations:
 Security/YAMLLoad:
   Exclude:
     - 'spec/test_app_templates/spotlight_test.rake'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/EmptyLineAfterMagicComment:
-  Exclude:
-    - 'app/jobs/spotlight/add_uploads_from_csv.rb'
-    - 'app/models/spotlight/resources/upload.rb'
-    - 'app/uploaders/spotlight/attachment_uploader.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/EmptyLinesAroundExceptionHandlingKeywords:
-  Exclude:
-    - 'app/models/spotlight/featured_image.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

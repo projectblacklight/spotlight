@@ -27,11 +27,7 @@ module Spotlight
     end
 
     def form_prefix(f)
-      if Rails::VERSION::MAJOR >= 5
-        f.object_name.parameterize(separator: '_')
-      else
-        f.object_name.parameterize('_')
-      end
+      f.object_name.parameterize(separator: '_')
     end
   end
 end

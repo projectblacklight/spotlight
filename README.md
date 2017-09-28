@@ -10,7 +10,7 @@ Read more about what Spotlight is, our motivations for creating it, and how to i
 ## Requirements
 
 1. Ruby (2.2.0 or greater)
-2. Rails (4.2.0 or greater)
+2. Rails (5.0 or greater)
 3. Java (7 or greater) *for Solr*
 4. ImageMagick (http://www.imagemagick.org/script/index.php) due to [carrierwave](https://github.com/carrierwaveuploader/carrierwave#adding-versions)
 

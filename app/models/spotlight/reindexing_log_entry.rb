@@ -5,7 +5,7 @@ module Spotlight
     enum job_status: { unstarted: 0, in_progress: 1, succeeded: 2, failed: 3 }
 
     belongs_to :exhibit, class_name: 'Spotlight::Exhibit'
-    belongs_to :user, class_name: '::User'
+    belongs_to :user, class_name: '::User', optional: true
 
     # null start times sort to the top, to more easily surface pending reindexing
     default_scope { order('start_time IS NOT NULL, start_time DESC') }

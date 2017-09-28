@@ -1,4 +1,4 @@
-class AddPolymorphicDocumentToSidecars < ActiveRecord::Migration
+class AddPolymorphicDocumentToSidecars < ActiveRecord::Migration[4.2]
   def change
     add_column :spotlight_solr_document_sidecars, :document_id, :string
     add_column :spotlight_solr_document_sidecars, :document_type, :string

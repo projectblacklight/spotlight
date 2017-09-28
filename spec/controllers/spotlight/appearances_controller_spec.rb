@@ -60,17 +60,10 @@ describe Spotlight::AppearancesController, type: :controller do
         }
       end
       let(:main_navigation_attributes) do
-        if Rails::VERSION::MAJOR >= 5
-          {
-            0 => { id: first_nav.id, label: 'Some Label', weight: 500 },
-            1 => { id: last_nav.id, display: false }
-          }
-        else
-          [
-            { id: first_nav.id, label: 'Some Label', weight: 500 },
-            { id: last_nav.id, display: false }
-          ]
-        end
+        {
+          0 => { id: first_nav.id, label: 'Some Label', weight: 500 },
+          1 => { id: last_nav.id, display: false }
+        }
       end
       it 'updates the navigation' do
         patch :update, params: submitted
