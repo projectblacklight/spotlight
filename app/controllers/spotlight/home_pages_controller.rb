@@ -19,10 +19,7 @@ module Spotlight
       redirect_to exhibit_feature_pages_path(@exhibit)
     end
 
-    # rubocop:disable Metrics/MethodLength
     def show
-      state = Blacklight::SearchState.new({}, blacklight_config, controller)
-      home_search_service = search_service_class.new(blacklight_config, state.to_h)
       @response, deprecated_document_list = home_search_service.search_results if @page.display_sidebar?
       @document_list = ActiveSupport::Deprecation::DeprecatedObjectProxy
                        .new(deprecated_document_list,
@@ -33,9 +30,13 @@ module Spotlight
         render 'show'
       end
     end
-    # rubocop:enable Metrics/MethodLength
 
     private
+
+    def home_search_service
+      state = Blacklight::SearchState.new({}, blacklight_config, self)
+      search_service_class.new(blacklight_config, state.to_h)
+    end
 
     alias search_action_url exhibit_search_action_url
     alias search_facet_url exhibit_search_facet_url

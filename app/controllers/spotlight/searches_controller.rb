@@ -33,8 +33,7 @@ module Spotlight
     end
 
     def autocomplete
-      search_params = autocomplete_params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field)
-      (_, document_list) = search_results(search_params)
+      (_, document_list) = autocomplete_service.search_results
 
       respond_to do |format|
         format.json do
@@ -75,6 +74,12 @@ module Spotlight
     end
 
     protected
+
+    def autocomplete_service
+      search_params = autocomplete_params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field)
+      state = Blacklight::SearchState.new(search_params, blacklight_config, self)
+      search_service_class.new(blacklight_config, state.to_h)
+    end
 
     def autocomplete_params
       ##

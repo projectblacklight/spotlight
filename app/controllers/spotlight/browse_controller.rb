@@ -21,12 +21,12 @@ module Spotlight
     end
 
     def show
-      @response, @document_list = search_results(search_query)
+      (@response,) = search_results(search_query)
 
       respond_to do |format|
         format.html
         format.json do
-          @presenter = Blacklight::JsonPresenter.new(@response, @document_list, facets_from_request, blacklight_config)
+          @presenter = Blacklight::JsonPresenter.new(@response, facets_from_request, blacklight_config)
           render template: 'catalog/index'
         end
       end

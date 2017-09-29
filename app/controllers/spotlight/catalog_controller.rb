@@ -64,7 +64,7 @@ module Spotlight
     def admin
       add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
       add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_path(@exhibit)
-      (@response,) = search_service.search_results(params)
+      (@response,) = search_service.search_results
       @filters = params[:f] || []
 
       respond_to do |format|
@@ -109,7 +109,7 @@ module Spotlight
     end
 
     def manifest
-      _, document = fetch params[:id]
+      _, document = search_service.fetch params[:id]
 
       if document.uploaded_resource?
         render json: Spotlight::IiifManifestPresenter.new(document, self).iiif_manifest_json
@@ -124,7 +124,7 @@ module Spotlight
       search_params = params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field,
                                    public: true,
                                    rows: 100)
-      state = Blacklight::SearchState.new(search_params, blacklight_config, controller)
+      state = Blacklight::SearchState.new(search_params, blacklight_config, self)
       search_service_class.new(blacklight_config, state.to_h)
     end
 
