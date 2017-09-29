@@ -1,5 +1,3 @@
-require 'blacklight/utils'
-
 module Spotlight
   ##
   # Exhibit-specific blacklight configuration model

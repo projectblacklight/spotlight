@@ -3,7 +3,7 @@ module Spotlight
   # Administrative CRUD actions for an exhibit
   class ExhibitsController < Spotlight::ApplicationController
     before_action :authenticate_user!, except: [:index]
-    include Blacklight::SearchHelper
+    #    include Blacklight::SearchHelper
 
     load_and_authorize_resource
 

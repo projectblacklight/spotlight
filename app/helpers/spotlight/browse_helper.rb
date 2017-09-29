@@ -2,7 +2,7 @@ module Spotlight
   ##
   # Helper for browse views
   module BrowseHelper
-    include ::BlacklightConfigurationHelper
+    #    include ::BlacklightConfigurationHelper
     include Spotlight::RenderingHelper
 
     def document_index_view_type

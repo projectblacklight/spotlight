@@ -6,8 +6,6 @@ module Spotlight
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
     load_and_authorize_resource :blacklight_configuration, through: :exhibit, singleton: true, parent: false
 
-    include Blacklight::SearchHelper
-
     def show
       respond_to do |format|
         format.json do
