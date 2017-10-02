@@ -21,8 +21,8 @@ module Spotlight
 
     def add_image_dimensions(solr_hash)
       dimensions = Riiif::Image.new(resource.upload_id).info
-      solr_hash[:spotlight_full_image_width_ssm] = dimensions[:width]
-      solr_hash[:spotlight_full_image_height_ssm] = dimensions[:height]
+      solr_hash[:spotlight_full_image_width_ssm] = dimensions.width
+      solr_hash[:spotlight_full_image_height_ssm] = dimensions.height
     end
 
     def add_file_versions(solr_hash)
