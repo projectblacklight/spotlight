@@ -49,8 +49,7 @@
   }
 
   small {
-    @extend .hidden-xs;
-
+    @extend .d-xs-none;
     display: block;
     padding-bottom: $padding-base-vertical;
     padding-top: $padding-base-vertical;

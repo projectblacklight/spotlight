@@ -88,11 +88,11 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
       }
     }
     .category-4 {
-      @extend .hidden-sm;
+      @extend .d-sm-none;
     }
     .category-5 {
-      @extend .hidden-md;
-      @extend .hidden-sm;
+      @extend .d-md-none;
+      @extend .d-sm-none;
     }
   }
 }

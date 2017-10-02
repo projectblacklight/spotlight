@@ -10,7 +10,7 @@
   display: inline-block;
   .input-field {
     input[type='text'] {
-      @extend .input-sm;
+      @extend .form-control-sm;
       height: auto;
       padding: 0 5px;
       width: 195px;
@@ -19,8 +19,8 @@
     }
     input[type='submit'] {
       @extend .btn;
-      @extend .btn-default;
-      @extend .btn-xs;
+      @extend .btn-secondary;
+      @extend .btn-sm;
     }
     display: none;
   }

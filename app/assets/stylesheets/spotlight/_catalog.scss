@@ -31,7 +31,6 @@
     text-align: center;
     li {
       @extend .label;
-      @extend .label-default;
       a {
         color: #fff;
       }
@@ -115,6 +114,5 @@ form.edit_solr_document {
 
   .blacklight-exhibit_tags a {
     @extend .label;
-    @extend .label-default;
   }
 }

@@ -11,7 +11,7 @@
     <%= exhibit.description.truncate(168, omission: "") %>
     <% if exhibit.description.length > 168 %>
       <%= content_tag(:span,"&hellip;".html_safe, class: "visible-sm visible-md") %>
-      <span class="hidden-sm hidden-md">
+      <span class="d-sm-none d-md-none">
         <%= exhibit.description.slice(168, exhibit.description.length) %>
       </span>
     <% end %>

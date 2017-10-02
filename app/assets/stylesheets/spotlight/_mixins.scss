@@ -15,7 +15,6 @@
 @mixin private-label() {
   &:after {
     @extend .label;
-    @extend .label-warning;
     content: 'Private';
     margin-left: 3px;
   }
