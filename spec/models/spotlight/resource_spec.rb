@@ -34,6 +34,17 @@ describe Spotlight::Resource, type: :model do
         subject.reindex
       end
 
+      context 'when a document does not have an identifier' do
+        let(:solr_response) { { other_field: 'Content' } }
+
+        it 'is not indexed (but a commit can be sent)' do
+          allow(subject.send(:blacklight_solr)).to receive(:commit)
+          expect(subject.send(:blacklight_solr)).not_to receive(:update)
+
+          subject.reindex
+        end
+      end
+
       context 'reindexing_log_entry is provided' do
         before do
           allow(subject.send(:blacklight_solr)).to receive(:update)
