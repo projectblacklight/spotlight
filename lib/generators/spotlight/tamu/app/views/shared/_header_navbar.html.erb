@@ -1,18 +1,124 @@
 <div id="header-navbar" class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <% if current_user %>
-  	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#user-util-collapse">
-  	      <span class="sr-only"><%= t :toggle_nav %></span>
-  	      <span class="icon-bar"></span>
-  	      <span class="icon-bar"></span>
-  	      <span class="icon-bar"></span>
-  	    </button>
-	    <% end %>
-	  <%= link_to application_name, main_app.root_path, class: "navbar-brand pull-left" %>
+      <div class="navbar-brand col-lg-4 col-xs-12">
+        <a href="//library.tamu.edu/index.html">Texas A&amp;M University Libraries</a>
+         | <%= link_to "Exhibits", main_app.root_path %>
+      </div>
+      <div class="col-lg-5 col-lg-offset-3 col-xs-12 col-sm-12 hidden-xs">
+        <nav class="navbar" role="navigation">
+          <div class="navbar-collapse js-navbar-collapse">
+            <ul class="nav navbar-nav browNav">
+              <li class="nav-item dropdown mega-dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Hours</a>
+                <ul class="dropdown-menu mega-dropdown-menu row">
+                  <li class="col-sm-12">
+                    <div id="allLib">
+                      <h4>Campus Libraries and Hours</h4>
+                      <h5>Fri May 26, 2017</h5>
+                      <div class="caldate Open">Evans<span>7:00 AM-7:00 PM</span></div>
+                      <div class="caldate Open">Annex<span>7:00 AM-7:00 PM</span></div>
+                      <div class="caldate Open">Cushing<span>8:00 AM-6:00 PM</span></div>
+                      <div class="caldate Open">MSL<span>7:00 AM-6:00 PM</span></div>
+                      <div class="caldate Open">PSEL<span>8:00 AM-5:00 PM</span></div>
+                      <div class="caldate Open">WCL<span>8:00 AM-5:00 PM</span></div>
+                      <h5><a href="//library.tamu.edu/about/hours.html" title="See All Hours">See All Hours</a></h5>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown mega-dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Libraries </a>
+                <ul class="dropdown-menu mega-dropdown-menu row">
+                  <li class="col-sm-12">
+                    <div class="library-col">
+                      <div class="libName">
+                        <h6><a href="//cushing.library.tamu.edu" onclick="location.href='//cushing.library.tamu.edu'" title="Go to Cushing Library website">Cushing Memorial Library &amp; Archives</a></h6>
+                        <p><a href="//library.tamu.edu/about/directions/cushing-library.html" title="Parking Directions for Cushing Library">Parking Directions</a> / 979-845-1951</p>
+                      </div>
+                      <div class="libName">
+                        <h6><a href="//msl.library.tamu.edu" onclick="location.href='//msl.library.tamu.edu'" title="Go to Medical Sciences Library website">Medical Sciences Library</a></h6>
+                        <p><a href="//library.tamu.edu/about/directions/medical-sciences-library.html" title="Parking Directions for Medical Sciences Library">Parking Directions</a> / 979-845-7428</p>
+                      </div>
+                      <div class="libName">
+                        <h6><a href="//psel.library.tamu.edu" onclick="location.href='//psel.library.tamu.edu'" title="Go to Policy Sciences and Economics Library website">Policy Sciences &amp; Economics Library</a></h6>
+                        <p><a href="//library.tamu.edu/about/directions/policy-sciences-economics-library.html" title="Parking Directions for Policy Sciences and Economics Library">Parking Directions</a> / 979-862-3544</p>
+                      </div>
+                      <div class="libName">
+                        <h6><a href="//evans.library.tamu.edu" onclick="location.href='//evans.library.tamu.edu'" title="Go to Evans Library website">Sterling C. Evans Library &amp; Annex</a></h6>
+                        <p><a href="//library.tamu.edu/about/directions/evans-library-annex.html" title="Parking Directions for Evans Library and Annex">Parking Directions</a> / 979-845-3731</p>
+                      </div>
+                      <div class="libName">
+                        <h6><a href="//wcl.library.tamu.edu" onclick="location.href='//wcl.library.tamu.edu'" title="Go to West Campus Library website">West Campus Library</a></h6>
+                        <p><a href="//library.tamu.edu/about/directions/west-campus-library.html" title="Parking Directions for West Campus Library">Parking Directions</a> / 979-845-2111</p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="//library.tamu.edu/mylibrary/">MyLibrary</a>
+              </li>
+              <li class="nav-item dropdown mega-dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Help </a>
+                <ul class="dropdown-menu mega-dropdown-menu row">
+                  <li class="col-sm-12">
+                    <div class="askUsImg2">
+                      <a href="http://askus.library.tamu.edu/"><img alt="AskUs logo" height="80px" src="//library.tamu.edu/assets/images/askus.png"></a>
+                    </div>
+                    <ul class="icon-list gray-icon-list ">
+                      <li><a href="http://askus.library.tamu.edu/">Chat with us</a></li>
+                      <li><a href="//library.tamu.edu/about/phone.html">Call us</a></li>
+                      <li><a href="sms:9792561091">Text us @ 979-256-1091</a></li>
+                      <li><a href="http://askus.library.tamu.edu/widget_standalone.php?la_widget_id=1066">Email us</a></li>
+                      <li><a href="http://askus.library.tamu.edu/">FAQs</a></li>
+                      <li><a href="http://asktamulib.altarama.com/reft100.aspx?key=Problem">Report a problem</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="col-12 visible-xs-inline">
+          <nav class="navbar" role="navigation">
+            <div class="navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Hours</a>
+
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Libraries </a>
+
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">MyLibrary</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Help </a>
+
+                </li>
+              </ul>
+              </li>
+              </ul>
+          </nav>
+        </div>
     </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 subnav">
+    <% if current_user %>
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#user-util-collapse">
+      <span class="sr-only"><%= t :toggle_nav %></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
     <div class="collapse navbar-collapse" id="user-util-collapse">
       <%= render :partial=>'tamu/user_menu' %>
     </div>
+    <% end %>
   </div>
 </div>

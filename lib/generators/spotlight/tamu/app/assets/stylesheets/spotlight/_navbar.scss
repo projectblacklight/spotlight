@@ -7,6 +7,9 @@
 
     .navbar-brand {
         color: $navbar-transparent-brand-color;
+        padding: 5px 0 5px 55px;
+        font-size: 1.4rem;
+        text-indent: inherit;
 
         &:focus,
         &:hover {
@@ -38,7 +41,6 @@
                 background-color: $navbar-transparent-link-active-bg;
             }
         }
-
         > .disabled > a {
             &,
             &:focus,
@@ -50,24 +52,38 @@
     }
 }
 /* Header bar at top (Bootstrap nav-bar) */
-.navbar-inverse .navbar-brand {
+#header-navbar .navbar-brand a {
     color: $navbar-inverse-link-color;
+
 }
 
-.navbar-inverse .navbar-brand:hover {
+#header-navbar .navbar-inverse .navbar-brand a:hover {
     color: $navbar-inverse-link-hover-color;
 }
-/* this is not overriding blacklight's navbar-brand in _header.scss */
-.navbar-brand {
+
+#header-navbar .navbar-header {
+    float: none;
+}
+
+#header-navbar .navbar-brand {
     @if $logo-image-full {
         background: transparent $logo-image-full no-repeat top left !important;
     }
-    flex: 0 0 384px !important;
-    height: 48px !important;
-    width: 384px !important;
-    margin-right: 25px !important;
-    margin-top: 2px !important;
+    flex: 0 0 340px;
+    height: 42px;
+    width: 340px;
+    margin-right: 25px;
+    margin-top: 10px;
+    padding: 5px 0 5px 55px;
+    font-size: 1.4rem;
+    text-indent: inherit;
 }
+
+.navbar {
+    min-height: 50px;
+    margin-bottom: 0;
+}
+
 @media (max-width: 768px) {
     .navbar {
         min-height: auto;
@@ -82,3 +98,171 @@
         width: 48px !important;
     }
 }
+
+.navbar-static-top {
+    border-width: 0;
+}
+
+.subnav {
+    background-image: image_url("tamu/tamu-denim.png");
+    background-repeat: repeat;
+    background-color: #4d4d4d;
+    min-height: 40px;
+}
+
+.subnav a {
+    color: #ffffff;
+}
+
+.subnav .nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.subnav .nav > li > a:hover, .nav > li > a:focus {
+    color: #040000;
+}
+
+#header-navbar .navbar-nav .nav-link {
+    font-size: 1.3rem;
+}
+
+#header-navbar .navbar-nav .nav-link:hover {
+  background: #4d4d4d;
+  color: #fff;
+  text-decoration: none; }
+
+.browNav li {
+  border-right: 1px solid #6a0000; }
+
+.browNav li a {
+  padding: 15px 20px;
+  color: #337ab7;
+ }
+
+#header-navbar ul li:last-child {
+  border-right: 0px solid #6a0000; }
+
+.browNav li a:focus {
+  color: #4d4d4d; }
+
+/*///////Mega dropdown menus//////////////////////////////////////////////////*/
+.browNav #allLib,
+.browNav .library-col {
+  color: #4d4d4d; }
+
+.browNav #allLib a {
+  color: #500000; }
+
+.navbar-nav > li > .dropdown-menu {
+  margin-top: 0px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px; }
+
+.mega-dropdown {
+  position: static !important; }
+
+.mega-dropdown-menu {
+  padding: 20px 0px;
+  width: 100%;
+  box-shadow: none;
+  -webkit-box-shadow: none; }
+
+.mega-dropdown-menu > li > ul {
+  padding: 0;
+  margin: 0; }
+
+.mega-dropdown-menu > li > ul > li {
+  list-style: none; }
+
+.mega-dropdown-menu > li > ul > li > a {
+  display: block;
+  padding: 10px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.428571429;
+  color: #deepGreyText;
+  white-space: normal; }
+
+.mega-dropdown-menu > li ul > li > a:hover,
+.mega-dropdown-menu > li ul > li > a:focus {
+  text-decoration: none;
+  color: #4d4d4d;
+  background-color: #fff; }
+
+.mega-dropdown-menu .dropdown-header {
+  color: #500000;
+  font-size: 18px;
+  font-weight: bold; }
+
+.mega-dropdown-menu form {
+  margin: 10px 20px; }
+
+.mega-dropdown-menu .form-group {
+  margin-bottom: 3px; }
+
+/*Dropdown Hours*/
+.caldate {
+  padding: 10px 0 0 0; }
+
+.caldate span {
+  float: right; }
+
+/*Library Dropdown*/
+.libName h6 a {
+  color: #500000;
+  text-transform: bold;
+  padding: 15px 0px; }
+
+.libName p a {
+  padding: 15px 0px; }
+
+.libName h6 {
+  margin-bottom: 0; }
+
+/*Help Dropdown*/
+.gray-icon-list li a:before {
+  background: #e0e0e0;
+  border: 2px solid #adadad;
+  color: #949494; }
+
+.icon-list li a:before {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-family: 'icomoon';
+  content: "\e609";
+  padding: 5px;
+  margin-right: 15px;
+  margin-left: -44px; }
+
+.gray-icon-list li a {
+  color: #500000; }
+
+.icon-list li a {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: block;
+  margin-left: 35px;
+  padding-left: 10px;
+  text-decoration: none; }
+
+.icon-list li {
+  border-right: 0px solid #6a0000; }
+
+.gray-icon-list li {
+  border-bottom-color: #e0e0e0; }
+
+.icon-list li {
+  border-right: 0px solid #6a0000; }
+
+.gray-icon-list li {
+  border-bottom-color: #e0e0e0; }
+
+.icon-list li {
+  border-bottom: 1px solid #e0e0e0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: relative; }
+
+/*//////////////////////////////////////////END MEGA DropDown////////////////////////////*/
