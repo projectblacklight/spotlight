@@ -1,4 +1,4 @@
-class CreateSpotlightReindexingLogEntries < ActiveRecord::Migration
+class CreateSpotlightReindexingLogEntries < ActiveRecord::Migration[4.2]
   def change
     create_table :spotlight_reindexing_log_entries do |t|
       t.integer :items_reindexed_count

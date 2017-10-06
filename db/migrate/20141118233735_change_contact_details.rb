@@ -1,4 +1,4 @@
-class ChangeContactDetails < ActiveRecord::Migration
+class ChangeContactDetails < ActiveRecord::Migration[4.2]
   def up
     add_column :spotlight_contacts, :contact_info, :text
 

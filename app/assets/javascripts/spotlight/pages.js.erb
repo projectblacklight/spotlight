@@ -1,13 +1,14 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 Spotlight.onLoad(function(){
-
+  // Set a ujs adapter to support both rails-ujs and jquery-ujs
+  var ujs = typeof Rails === 'undefined' ? $.rails : Rails;
   SirTrevor.setDefaults({
     iconUrl: <%= asset_path('spotlight/blocks/sir-trevor-icons.svg').to_json %>,
     uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint'),
     ajaxOptions: {
       headers: {
-        'X-CSRF-Token': $.rails.csrfToken() || ''
+        'X-CSRF-Token': ujs.csrfToken() || ''
       },
       credentials: 'same-origin'
     }
@@ -22,8 +23,7 @@ Spotlight.onLoad(function(){
   if (instance.length) {
     var editor = new SirTrevor.Editor({
       el: instance[0],
-      blockTypes:["Heading", "Text", "List","Quote","Iframe", "Video", "Oembed", "Rule", "UploadedItems",
-                 "Browse", "FeaturedPages", "SolrDocuments",  "SolrDocumentsCarousel", "SolrDocumentsEmbed", "SolrDocumentsFeatures", "SolrDocumentsGrid", "SearchResults"],
+      blockTypes: instance.data('blockTypes'),
       defaultType:["Text"],
       onEditorRender: function() {
         serializeObservedForms(observedForms());

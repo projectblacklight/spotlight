@@ -8,7 +8,6 @@ module Spotlight
 
     included do
       helper_method :current_site, :current_exhibit, :current_masthead, :exhibit_masthead?, :resource_masthead?
-      helper_method :redirect_back # helper method backported from Rails 5
     end
 
     def current_site
@@ -85,17 +84,6 @@ module Spotlight
       options = args.extract_options!
       options = Blacklight::Parameters.sanitize(params.to_unsafe_h.with_indifferent_access).merge(options).except(:exhibit_id, :only_path)
       spotlight.facet_exhibit_catalog_url(current_exhibit, *args, options)
-    end
-
-    # Backport from Rails 5
-    def redirect_back(fallback_location:, **args)
-      if defined?(super)
-        super
-      elsif request.headers['Referer']
-        redirect_to request.headers['Referer'], **args
-      else
-        redirect_to fallback_location, **args
-      end
     end
   end
 end

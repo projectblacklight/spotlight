@@ -1,4 +1,4 @@
-class AddAvatarToContacts < ActiveRecord::Migration
+class AddAvatarToContacts < ActiveRecord::Migration[4.2]
   def change
     add_column :spotlight_contacts, :avatar, :string
     add_column :spotlight_contacts, :avatar_crop_x, :integer

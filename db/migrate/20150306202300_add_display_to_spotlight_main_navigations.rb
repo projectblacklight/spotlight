@@ -1,4 +1,4 @@
-class AddDisplayToSpotlightMainNavigations < ActiveRecord::Migration
+class AddDisplayToSpotlightMainNavigations < ActiveRecord::Migration[4.2]
   def up
     add_column :spotlight_main_navigations, :display, :boolean, default: true
 

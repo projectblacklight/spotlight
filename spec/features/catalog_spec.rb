@@ -1,6 +1,7 @@
 describe 'Catalog', type: :feature do
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+
   describe 'admin' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
     let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
 
     before do
@@ -23,6 +24,12 @@ describe 'Catalog', type: :feature do
       expect(page).to have_selector '.panel-title', text: 'Item Visibility'
     end
   end
+
+  it 'has breadcrumbs' do
+    visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
+    expect(page).to have_breadcrumbs 'Home', 'Search Results'
+  end
+
   describe 'Non-spotlight #show' do
     it 'is able to render without exhibit context' do
       visit solr_document_path('dq287tq6352')

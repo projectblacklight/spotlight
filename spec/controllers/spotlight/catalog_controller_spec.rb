@@ -1,4 +1,5 @@
 describe Spotlight::CatalogController, type: :controller do
+  include ActiveJob::TestHelper
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryGirl.create(:exhibit) }
 
@@ -22,7 +23,7 @@ describe Spotlight::CatalogController, type: :controller do
     end
 
     describe 'GET show' do
-      let(:document) { SolrDocument.find('dq287tq6352') }
+      let(:document) { SolrDocument.new(id: 'dq287tq6352') }
       let(:search) { FactoryGirl.create(:search, exhibit: exhibit) }
       it 'shows the item' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
@@ -119,7 +120,9 @@ describe Spotlight::CatalogController, type: :controller do
           compound_id = uploaded_resource.compound_id
           slug = uploaded_resource.exhibit.slug
 
-          uploaded_resource.save_and_index
+          perform_enqueued_jobs do
+            uploaded_resource.save_and_index
+          end
 
           get :manifest, params: { exhibit_id: uploaded_resource.exhibit, id: compound_id }
 
@@ -288,7 +291,6 @@ describe Spotlight::CatalogController, type: :controller do
         data = JSON.parse(response.body).with_indifferent_access
         expect(data).to include id: 'dq287tq6352'
         expect(data).to include exhibit.solr_data
-        expect(data).to include ::SolrDocument.solr_field_for_tagger(exhibit)
       end
     end
   end

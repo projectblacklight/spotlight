@@ -1,4 +1,4 @@
-class RemoveSearchableFromExhibit < ActiveRecord::Migration
+class RemoveSearchableFromExhibit < ActiveRecord::Migration[4.2]
   def up
     Spotlight::Exhibit.where(searchable: false).find_each do |e|
       e.home_page.update(display_sidebar: false)

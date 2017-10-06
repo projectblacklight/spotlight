@@ -1,4 +1,4 @@
-class CreateSpotlightSolrDocumentSidecars < ActiveRecord::Migration
+class CreateSpotlightSolrDocumentSidecars < ActiveRecord::Migration[4.2]
   def change
     create_table :spotlight_solr_document_sidecars do |t|
       t.references :exhibit, index: true

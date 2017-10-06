@@ -1,4 +1,4 @@
-class CreateContactEmails < ActiveRecord::Migration
+class CreateContactEmails < ActiveRecord::Migration[4.2]
   def change
     create_table(:spotlight_contact_emails) do |t|
       t.references :exhibit

@@ -68,7 +68,7 @@ module Spotlight
       private
 
       def blacklight_solr
-        @solr ||= RSolr.connect(connection_config)
+        @solr ||= RSolr.connect(connection_config.merge(adapter: connection_config[:http_adapter]))
       end
 
       def connection_config
@@ -80,9 +80,11 @@ module Spotlight
       end
 
       def write_to_index(batch)
-        return unless write?
+        documents = documents_that_have_ids(batch)
+        return unless write? && documents.present?
+
         blacklight_solr.update params: { commitWithin: 500 },
-                               data: batch.to_json,
+                               data: documents.to_json,
                                headers: { 'Content-Type' => 'application/json' }
       end
 
@@ -99,6 +101,10 @@ module Spotlight
 
       def write?
         Spotlight::Engine.config.writable_index
+      end
+
+      def documents_that_have_ids(document_list)
+        document_list.reject { |d| d[document_builder.document_model.unique_key.to_sym].blank? }
       end
     end
   end

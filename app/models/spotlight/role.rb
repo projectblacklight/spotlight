@@ -3,11 +3,9 @@ module Spotlight
   # Exhibit authorization roles
   class Role < ActiveRecord::Base
     ROLES = %w(admin curator).freeze
-    belongs_to :resource, polymorphic: true
-    belongs_to :user, class_name: Spotlight::Engine.config.user_class, autosave: true
+    belongs_to :resource, polymorphic: true, optional: true
+    belongs_to :user, class_name: Spotlight::Engine.config.user_class, autosave: true, required: true
     validates :role, inclusion: { in: ROLES }
-    validates :user_key, presence: true
-    validate :user_must_exist, if: -> { user_key.present? }
     validate :user_must_be_unique, if: :user
 
     def user_key
@@ -22,16 +20,11 @@ module Spotlight
     def user_key=(key)
       @user_key = key
       self.user ||= Spotlight::Engine.user_class.find_by_user_key(key)
-      user.user_key = key if user
+      self.user ||= Spotlight::Engine.user_class.invite!(email: user_key, skip_invitation: true)
+      user.user_key = key
     end
 
     protected
-
-    def user_must_exist
-      return if user.present?
-
-      self.user ||= Spotlight::Engine.user_class.invite!(email: user_key, skip_invitation: true)
-    end
 
     # This is just like
     #    validates :user, uniqueness: { scope: :exhibit}

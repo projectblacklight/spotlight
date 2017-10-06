@@ -5,7 +5,7 @@ module Spotlight
   # Exhibit-specific blacklight configuration model
   # rubocop:disable Metrics/ClassLength
   class BlacklightConfiguration < ActiveRecord::Base
-    belongs_to :exhibit, touch: true
+    belongs_to :exhibit, touch: true, optional: true
     serialize :facet_fields, Hash
     serialize :index_fields, Hash
     serialize :search_fields, Hash
@@ -198,7 +198,7 @@ module Spotlight
     # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
     def custom_index_fields
-      Hash[exhibit.custom_fields.map do |x|
+      Hash[exhibit.custom_fields.reject(&:new_record?).map do |x|
         field = Blacklight::Configuration::IndexField.new x.configuration.merge(
           key: x.field, field: x.solr_field, custom_field: true
         )
@@ -207,7 +207,7 @@ module Spotlight
     end
 
     def custom_facet_fields
-      Hash[exhibit.custom_fields.vocab.map do |x|
+      Hash[exhibit.custom_fields.vocab.reject(&:new_record?).map do |x|
         field = Blacklight::Configuration::FacetField.new x.configuration.merge(
           key: x.field, field: x.solr_field, show: false, custom_field: true
         )
@@ -345,14 +345,7 @@ module Spotlight
     end
 
     def value_to_boolean(v)
-      if defined? ActiveModel::Type::Boolean
-        ActiveModel::Type::Boolean.new.cast v
-      elsif defined? ActiveRecord::Type::Boolean
-        # Rails 4.2+
-        ActiveRecord::Type::Boolean.new.type_cast_from_database v
-      else
-        ActiveRecord::ConnectionAdapters::Column.value_to_boolean v
-      end
+      ActiveModel::Type::Boolean.new.cast v
     end
   end
 end

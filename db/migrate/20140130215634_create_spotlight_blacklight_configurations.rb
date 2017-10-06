@@ -1,4 +1,4 @@
-class CreateSpotlightBlacklightConfigurations < ActiveRecord::Migration
+class CreateSpotlightBlacklightConfigurations < ActiveRecord::Migration[4.2]
   def change
     create_table :spotlight_blacklight_configurations do |t|
       t.references :exhibit

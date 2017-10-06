@@ -1,4 +1,4 @@
-class CreateLocks < ActiveRecord::Migration
+class CreateLocks < ActiveRecord::Migration[4.2]
   def change
     create_table :spotlight_locks do |t|
       t.references :on, polymorphic: true

@@ -3,7 +3,7 @@ module Spotlight
   # Exhibit custom fields
   class CustomField < ActiveRecord::Base
     serialize :configuration, Hash
-    belongs_to :exhibit
+    belongs_to :exhibit, optional: true
 
     extend FriendlyId
     friendly_id :slug_candidates, use: [:slugged, :scoped, :finders], scope: :exhibit

@@ -20,7 +20,7 @@ describe 'Adding custom metadata field data', type: :feature do
 
     click_on 'Save changes'
 
-    expect(::SolrDocument.find('dq287tq6352').sidecar(exhibit).data).to include 'field_name_tesim' => 'My new custom field value'
+    expect(::SolrDocument.new(id: 'dq287tq6352').sidecar(exhibit).data).to include 'field_name_tesim' => 'My new custom field value'
     sleep(1) # The data isn't commited to solr immediately.
 
     visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')

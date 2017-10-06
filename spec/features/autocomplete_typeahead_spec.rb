@@ -37,6 +37,7 @@ describe 'Autocomplete typeahead', type: :feature, js: true do
         check 'Show background image in masthead'
 
         fill_in_typeahead_field(with: 'xd327cm9378', type: 'featured-image')
+        sleep 1 # HACK: that seems to mysteriously work.
 
         expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
 

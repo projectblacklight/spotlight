@@ -83,8 +83,12 @@ SirTrevor.Blocks.UploadedItems = (function(){
                   '<div class="pic thumbnail">',
                     '<img src="' + dataUrl + '" />',
                   '</div>',
-                  '<div class="main">',
+                  '<div class="main form-horizontal">',
                     '<div class="title panel-title">' + dataTitle + '</div>',
+                    '<div class="field">',
+                      '<label for="' + this.formId('caption_' + dataId) + '" class="control-label col-md-3"><%= i18n.t("blocks:uploaded_items:caption") %></label>',
+                      '<input type="text" class="form-control" id="' + this.formId('caption_' + dataId) + '" name="item[' + index + '][caption]" data-field="caption"/>',
+                    '</div>',
                   '</div>',
                   '<div class="remove pull-right">',
                     '<a data-item-grid-panel-remove="true" href="#"><%= i18n.t("blocks:resources:panel:remove") %></a>',
@@ -95,6 +99,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
       ].join("\n");
 
       var panel = $(_.template(markup)(this));
+      panel.find('[data-field="caption"]').val(data.caption);
       var context = this;
 
       $('.remove a', panel).on('click', function(e) {
