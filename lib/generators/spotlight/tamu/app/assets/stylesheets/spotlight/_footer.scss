@@ -1,0 +1,40 @@
+.site-footer {
+    width: 100%;
+    margin-top: 25px;
+
+    .footer-upper {
+        text-align: center;
+        background-color: $footer-upper-background-color;
+        border-top: 1px solid $footer-upper-color;
+
+        * {
+            color: $black;
+        }
+
+        .footer-logo-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    }
+
+    .footer-lower {
+        text-align: center;
+        min-height: $footer-lower-height;
+        background: $footer-lower-background-color;
+
+        * {
+            color: $footer-lower-color;
+        }
+
+        .list-inline {
+            padding-top: 20px;
+            padding-bottom: 5px;
+        }
+
+        .footer-info-address {
+            .copyright {
+                font-size: 12px;
+            }
+        }
+    }
+}

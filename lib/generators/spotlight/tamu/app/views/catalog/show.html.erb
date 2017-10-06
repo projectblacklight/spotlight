@@ -1,0 +1,16 @@
+<!--
+<% if current_search_session %>
+  <div id="appliedParams" class="clearfix constraints-container">
+    <%= link_to t('blacklight.search.start_over'), start_over_path, class: "catalog_startOverLink btn btn-primary" %>
+    <%= link_back_to_catalog class: 'btn btn-secondary' %>
+  </div>
+<% end %>
+-->
+
+<%= render_document_main_content_partial %>
+
+<!--
+<% content_for(:sidebar) do %>
+  <%= render_document_sidebar_partial %>
+<% end %>
+-->

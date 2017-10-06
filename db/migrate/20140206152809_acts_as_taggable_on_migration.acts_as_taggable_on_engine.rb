@@ -8,15 +8,17 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration[4.2]
     create_table :taggings do |t|
       t.references :tag
 
+      # must be an integer for compatibility with postgres
+      t.integer :taggable_id
+
       # You should make sure that the column created is
       # long enough to store the required class names.
-      t.string :taggable_id
       t.string :taggable_type
-      t.references :tagger, :polymorphic => true
+      t.references :tagger, polymorphic: true
 
       # Limit is created to prevent MySQL error on index
       # length for MyISAM table type: http://bit.ly/vgW2Ql
-      t.string :context, :limit => 128
+      t.string :context, limit: 128
 
       t.datetime :created_at
     end

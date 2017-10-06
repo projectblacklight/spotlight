@@ -1,0 +1,32 @@
+<%= render 'shared/analytics' %>
+<footer class="site-footer">
+  <div class="footer-upper">
+  	<div class="container">
+	  <div class="footer-logo-container">
+	    <a href="http://library.tamu.edu"><img alt="Texas A&M University" height="45" src="<%= image_url('tamu/tamu-lib-maroon.png') %>"></a>
+	  </div>
+	  <%= render :partial=>'tamu/footer_user_util_links' %>
+	  <ul class="list-inline">
+	    <li><%= link_to "Texas A&M University Libraries", "http://library.tamu.edu" %></li>
+	    <li><%= link_to "Hours & locations", "http://library.tamu.edu/about/hours.html" %></li>
+	    <li><%= link_to "MyLibrary", "https://library.tamu.edu/mylibrary" %></li>
+	    <li><%= link_to "AskUs", "http://askus.library.tamu.edu" %></li>
+	  </ul>
+	</div>
+  </div>
+  <div class="footer-lower">
+  	<div class="container">
+      <ul class="list-inline">
+        <li><%= link_to "howdy.tamu.edu", "https://howdy.tamu.edu" %></li>
+        <li><%= link_to "Off-Campus Access", "http://library.tamu.edu/services/tech_troubleshooting.html" %></li>
+        <li><%= link_to "Texas A&M University", "http://www.tamu.edu" %></li>
+        <li><%= link_to "Site Policies", "http://library.tamu.edu/about/compliance.html" %></li>
+        <li><%= link_to "Texas CREWS", "http://www.thecb.state.tx.us/apps/txcrews" %></li>
+        <li><%= link_to "Comments", "http://asktamulib.altarama.com/reft100.aspx?key=comments" %></li>
+      </ul>
+      <div class="footer-info-address">
+        <p class="copyright">&copy; <span class="fn org">Texas A&amp;M University</span>, <span class="adr"> <span class="locality">College Station</span>, <span class="region">Texas</span> <span class="postal-code">77845</span></span>.
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,33 @@
+<div class="navbar-right">
+  <ul class="nav navbar-nav">
+    <% if current_user %>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=current_user%> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <% if can? :manage, Spotlight::Site.instance %>
+            <li><%= link_to t(:'spotlight.header_links.edit_site'), spotlight.edit_site_path %></li>
+          <% end %>
+          <% if can? :create, Spotlight::Exhibit %>
+            <li>
+              <%= link_to t(:'spotlight.header_links.create_exhibit'), spotlight.new_exhibit_path %>
+            </li>
+            <li class="divider"></li>
+          <% end %>
+          <% if current_exhibit && can?(:curate, current_exhibit) %>
+            <li>
+              <%= link_to t('spotlight.header_links.dashboard'), spotlight.exhibit_dashboard_path(current_exhibit) %>
+            </li>
+            <li class="divider"></li>
+          <% end %>
+
+          <li>
+            <%= link_to "Change Password", main_app.edit_user_registration_path %>
+          </li>
+          <li>
+            <%= link_to t('spotlight.header_links.logout'), main_app.destroy_user_session_path %>
+          </li>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+</div>
