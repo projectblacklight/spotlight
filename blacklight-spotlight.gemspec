@@ -52,6 +52,7 @@ these collections.)
   s.add_dependency 'sprockets-es6'
   s.add_dependency 'riiif', '~> 1.0'
   s.add_dependency 'iiif_manifest'
+  s.add_dependency 'leaflet-rails'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.1'

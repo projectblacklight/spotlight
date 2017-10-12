@@ -11,6 +11,7 @@ require 'friendly_id'
 require 'tophat'
 require 'paper_trail'
 require 'clipboard/rails'
+require 'leaflet-rails'
 
 module Spotlight
   ##
