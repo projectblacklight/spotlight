@@ -18,4 +18,12 @@ describe SirTrevorRails::Blocks::BrowseBlock do
       expect(subject.items).to eq([])
     end
   end
+  describe '#as_json' do
+    context 'when no items are present' do
+      it 'returns an empty items value' do
+        block_data[:items] = nil
+        expect(subject.as_json[:data]).to include items: nil
+      end
+    end
+  end
 end
