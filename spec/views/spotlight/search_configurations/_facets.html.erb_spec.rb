@@ -37,4 +37,16 @@ describe 'spotlight/search_configurations/_facets', type: :view do
   it 'hides the config for the empty genre facet' do
     expect(rendered).not_to have_content 'Genre'
   end
+
+  describe do
+    before do
+      original_config = Spotlight::Engine.blacklight_config.deep_dup
+      allow(Spotlight::Engine).to receive(:blacklight_config).and_return(original_config)
+      original_config.add_facet_field 'some_hidden_field', if: ->(*_args) { false }
+    end
+
+    it 'hides the config facets configured not to display' do
+      expect(rendered).not_to have_content 'Some hidden field'
+    end
+  end
 end
