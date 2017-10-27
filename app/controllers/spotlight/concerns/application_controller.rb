@@ -27,9 +27,7 @@ module Spotlight
       end
 
       def enabled_in_spotlight_view_type_configuration?(config, *args)
-        if config.respond_to?(:upstream_if) &&
-           !config.upstream_if.nil? &&
-           !blacklight_configuration_context.evaluate_configuration_conditional(config.upstream_if, config, *args)
+        if config.respond_to?(:original) && !blacklight_configuration_context.evaluate_if_unless_configuration(config.original, *args)
           false
         elsif current_exhibit.nil? || is_a?(Spotlight::PagesController)
           true
@@ -38,13 +36,11 @@ module Spotlight
         end
       end
 
-      # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
       def field_enabled?(field, *args)
         if !field.enabled
           false
-        elsif field.respond_to?(:upstream_if) &&
-              !field.upstream_if.nil? &&
-              !blacklight_configuration_context.evaluate_configuration_conditional(field.upstream_if, field, *args)
+        elsif field.respond_to?(:original) && !blacklight_configuration_context.evaluate_if_unless_configuration(field.original, *args)
           false
         elsif field.is_a?(Blacklight::Configuration::SortField) || field.is_a?(Blacklight::Configuration::SearchField)
           field.enabled
@@ -54,7 +50,7 @@ module Spotlight
           field.send(document_index_view_type)
         end
       end
-      # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
 
       private
 
