@@ -58,7 +58,7 @@ feature 'Solr Document Block', feature: true do
 
     # Select the last image
     click_link('Change')
-    all('.thumbs-list li').last.click
+    find('.thumbs-list li:last-child').click
 
     save_page
 
