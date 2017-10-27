@@ -43,7 +43,7 @@ describe 'Autocomplete typeahead', type: :feature, js: true do
 
         # Open the multi-image selector and choose the last one
         click_link('Change')
-        all('.thumbs-list li').last.click
+        find('.thumbs-list li:last-child').click
         expect(page).to have_css('.leaflet-container', visible: true)
 
         click_button 'Save changes'

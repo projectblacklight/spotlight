@@ -29,13 +29,13 @@ describe 'Multi image selector', type: :feature, js: true do
 
     within('.panel') do
       expect(page).to have_content(/Image \d of \d/)
-      find('a', text: 'Change').trigger('click')
+      find('a', text: 'Change').click
     end
 
     expect(page).to have_css('.thumbs-list ul', visible: true)
 
     within('.thumbs-list ul') do
-      all('li')[1].trigger('click')
+      all('li')[1].click
     end
 
     save_page
