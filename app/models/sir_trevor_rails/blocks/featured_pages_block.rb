@@ -22,7 +22,9 @@ module SirTrevorRails
       def as_json
         result = super
 
-        result[:data][:item].each do |_k, v|
+        result[:data][:item] ||= {}
+
+        result[:data][:item].each_value do |v|
           v['thumbnail_image_url'] = parent.exhibit.pages.find(v['id']).thumbnail_image_url
         end
 
