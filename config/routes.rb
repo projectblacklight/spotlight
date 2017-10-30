@@ -24,6 +24,7 @@ Spotlight::Engine.routes.draw do
       post 'reindex', to: 'exhibits#reindex'
     end
 
+    resources :contact_email, only: [:destroy], defaults: { format: :json }
     resources :attachments, only: :create
     resource :contact_form, path: 'contact', only: [:new, :create]
     resource :blacklight_configuration, only: [:update]

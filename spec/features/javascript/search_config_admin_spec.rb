@@ -13,7 +13,6 @@ feature 'Search Configuration Administration', js: true do
         click_link 'Exhibit dashboard'
       end
       click_link 'Search'
-      click_link 'Options'
 
       uncheck 'Display search box'
 

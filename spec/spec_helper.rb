@@ -72,8 +72,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  config.filter_run_excluding js: true if ENV['CI']
-
   if defined? Devise::Test::ControllerHelpers
     config.include Devise::Test::ControllerHelpers, type: :controller
     config.include Devise::Test::ControllerHelpers, type: :view

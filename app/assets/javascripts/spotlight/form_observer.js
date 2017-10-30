@@ -52,7 +52,7 @@ function observedFormsStatusHasChanged(){
 // Compare stored and current form serializations
 // to determine if the form has changed before
 // unload and before any turbolinks change event
-$(window).on('beforeunload page:before-change', function(event) {
+$(window).on('beforeunload page:before-change turbolinks:before-cache', function(event) {
   if ( observedFormsStatusHasChanged() ) {
     var message = "You have unsaved changes. Are you sure you want to leave this page?";
     if ( event.type == "beforeunload" ) {
