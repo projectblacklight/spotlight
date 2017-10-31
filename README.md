@@ -81,10 +81,6 @@ Our `$ rake ci` and `$ rake spotlight:server` tasks utilize Solr and the testing
 
 ## Tests
 
-### Prerequisites
-
-PhantomJS (https://github.com/teampoltergeist/poltergeist#installing-phantomjs) is an addition requirement for testing javascript.
-
 ### Run all the tests:
 
 ```
