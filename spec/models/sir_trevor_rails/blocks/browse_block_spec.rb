@@ -25,5 +25,15 @@ describe SirTrevorRails::Blocks::BrowseBlock do
         expect(subject.as_json[:data]).to include items: nil
       end
     end
+
+    context 'when the id of a browse category does not exist' do
+      it 'is not included the returned items hash' do
+        search = FactoryGirl.create(:search, exhibit: page.exhibit)
+        block_data[:item] = { item_0: { 'id' => 'abc123' }, item_1: { 'id' => search.slug } }
+
+        expect(subject.as_json[:data][:item]).not_to have_key :item_0
+        expect(subject.as_json[:data][:item]).to have_key :item_1
+      end
+    end
   end
 end

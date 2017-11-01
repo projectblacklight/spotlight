@@ -34,6 +34,10 @@ module SirTrevorRails
 
         result[:data][:item] ||= {}
 
+        # TODO: This is a temporary fix that simply removes any item if the search identifier does not exist
+        #       We should have a more permanent solution that will allow browse blocks to be updated without erroring
+        result[:data][:item].select! { |_, v| parent.exhibit.searches.exists?(v['id']) }
+
         result[:data][:item].each_value do |v|
           v['thumbnail_image_url'] = parent.exhibit.searches.find(v['id']).thumbnail_image_url
         end
