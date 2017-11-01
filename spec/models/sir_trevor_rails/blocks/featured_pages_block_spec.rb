@@ -20,8 +20,8 @@ describe SirTrevorRails::Blocks::FeaturedPagesBlock do
   describe '#as_json' do
     context 'when no items are present' do
       it 'returns an empty items value' do
-        block_data[:items] = nil
-        expect(subject.as_json[:data]).to include items: nil
+        block_data[:item] = nil
+        expect(subject.as_json[:data]).to include item: {}
       end
     end
   end
