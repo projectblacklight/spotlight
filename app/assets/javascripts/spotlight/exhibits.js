@@ -38,10 +38,10 @@ Spotlight.onLoad(function() {
     $(this).closest('.contact').fadeOut(250, function() { $(this).remove(); });
   });
 
-  $('.contact-email-delete').on('ajax:error', function(_event, _xhr, _status, error) {
+  $('.contact-email-delete').on('ajax:error', function(event, _xhr, _status, error) {
     var errSpan = $(this).closest('.contact').find('.contact-email-delete-error');
     errSpan.show();
-    errSpan.find('.error-msg').first().text(error);
+    errSpan.find('.error-msg').first().text(error || event.detail[1]);
   });
 
   $('.btn-with-tooltip').tooltip();
