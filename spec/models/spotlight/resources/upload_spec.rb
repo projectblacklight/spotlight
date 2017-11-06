@@ -1,7 +1,7 @@
 
 describe Spotlight::Resources::Upload, type: :model do
-  let!(:exhibit) { FactoryGirl.create :exhibit }
-  let!(:custom_field) { FactoryGirl.create :custom_field, exhibit: exhibit }
+  let!(:exhibit) { FactoryBot.create :exhibit }
+  let!(:custom_field) { FactoryBot.create :custom_field, exhibit: exhibit }
   let(:resource) { described_class.new(exhibit: exhibit) }
   let(:doc_builder) { resource.document_builder }
 
@@ -16,7 +16,7 @@ describe Spotlight::Resources::Upload, type: :model do
       custom_field.field => 'Custom Field Data'
     }
   end
-  let(:featured_image) { FactoryGirl.create(:featured_image, image: File.open(File.join(FIXTURES_PATH, '800x600.png'))) }
+  let(:featured_image) { FactoryBot.create(:featured_image, image: File.open(File.join(FIXTURES_PATH, '800x600.png'))) }
 
   before do
     Rails.cache.clear # wipes out any cached image info.

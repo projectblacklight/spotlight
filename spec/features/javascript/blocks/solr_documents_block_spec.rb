@@ -1,9 +1,9 @@
 
 feature 'Solr Document Block', feature: true do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:feature_page) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :feature_page,
       title: 'FeaturePage1',
       exhibit: exhibit

@@ -1,6 +1,6 @@
 describe Spotlight::MetaHelper, type: :helper do
   describe '#add_exhibit_meta_content' do
-    let(:current_exhibit) { FactoryGirl.create(:exhibit) }
+    let(:current_exhibit) { FactoryBot.create(:exhibit) }
     before do
       allow(helper).to receive_messages(current_exhibit: current_exhibit)
       allow(helper).to receive(:site_title).and_return('some title')

@@ -1,15 +1,15 @@
 describe 'Dashboard', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   before do
     login_as(admin)
   end
 
   let!(:parent_feature_page) do
-    FactoryGirl.create(:feature_page, title: 'Parent Page', exhibit: exhibit)
+    FactoryBot.create(:feature_page, title: 'Parent Page', exhibit: exhibit)
   end
   let!(:child_feature_page) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :feature_page,
       title: 'Child Page',
       parent_page: parent_feature_page,

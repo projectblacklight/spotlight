@@ -1,8 +1,8 @@
 
 describe 'Add tags to an item in an exhibit', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-  let(:custom_field) { FactoryGirl.create(:custom_field, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit) }
 
   before do
     login_as(curator)

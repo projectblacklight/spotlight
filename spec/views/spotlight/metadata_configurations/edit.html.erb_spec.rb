@@ -1,5 +1,5 @@
 describe 'spotlight/metadata_configurations/edit', type: :view do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   before do
     assign(:exhibit, exhibit)
     assign(:blacklight_configuration, exhibit.blacklight_configuration)

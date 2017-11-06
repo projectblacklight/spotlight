@@ -1,6 +1,6 @@
 describe 'Item Administration', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as curator }
 
   before do

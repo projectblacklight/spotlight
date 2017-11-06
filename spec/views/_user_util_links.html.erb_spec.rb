@@ -1,5 +1,5 @@
 describe '_user_util_links', type: :view do
-  let(:current_exhibit) { FactoryGirl.create(:exhibit) }
+  let(:current_exhibit) { FactoryBot.create(:exhibit) }
   before do
     allow(view).to receive(:blacklight_config).and_return(Blacklight::Configuration.new)
     allow(view).to receive(:current_user).and_return(current_user)

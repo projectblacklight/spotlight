@@ -1,8 +1,8 @@
 describe 'Catalog', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe 'admin' do
-    let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+    let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
 
     before do
       login_as curator
@@ -38,7 +38,7 @@ describe 'Catalog', type: :feature do
   end
 
   describe 'viewing the page' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
     it 'has <meta> tags' do
       TopHat.current['twitter_card'] = nil
       TopHat.current['opengraph'] = nil

@@ -1,5 +1,5 @@
 describe 'shared/_masthead', type: :view do
-  let(:exhibit) { FactoryGirl.create(:exhibit, subtitle: 'Some exhibit') }
+  let(:exhibit) { FactoryBot.create(:exhibit, subtitle: 'Some exhibit') }
   let(:masthead) { nil }
 
   before do
@@ -33,7 +33,7 @@ describe 'shared/_masthead', type: :view do
   context 'with an exhibit masthead' do
     let(:iiif_url) { 'http://test.host/1/10,10,130,1210/1800,180/0/default.jpg' }
     let(:masthead) do
-      FactoryGirl.create(:masthead, iiif_tilesource: 'http://test.host/1', iiif_region: '10,10,130,1210')
+      FactoryBot.create(:masthead, iiif_tilesource: 'http://test.host/1', iiif_region: '10,10,130,1210')
     end
 
     before do
@@ -55,7 +55,7 @@ describe 'shared/_masthead', type: :view do
   end
 
   context 'with a resource masthead' do
-    let(:masthead) { FactoryGirl.create(:masthead) }
+    let(:masthead) { FactoryBot.create(:masthead) }
 
     before do
       allow(view).to receive_messages(resource_masthead?: true)

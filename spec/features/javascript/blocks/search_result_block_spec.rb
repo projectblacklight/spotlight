@@ -1,10 +1,10 @@
 
 describe 'Search Result Block', type: :feature, js: true do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
 
-  let!(:feature_page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
-  let!(:alt_search) { FactoryGirl.create(:search, title: 'Alt. Search', exhibit: exhibit) }
+  let!(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+  let!(:alt_search) { FactoryBot.create(:search, title: 'Alt. Search', exhibit: exhibit) }
 
   before do
     login_as exhibit_curator

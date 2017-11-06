@@ -2,7 +2,7 @@ describe Spotlight::FiltersController do
   routes { Spotlight::Engine.routes }
 
   describe '#create' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:exhibit_filter) { exhibit.filters.first }
 
     before do
@@ -18,7 +18,7 @@ describe Spotlight::FiltersController do
 
     context 'when signed in as a site admin' do
       before { sign_in user }
-      let(:user) { FactoryGirl.create(:site_admin) }
+      let(:user) { FactoryBot.create(:site_admin) }
 
       it 'is successful' do
         post :create, params: { exhibit_id: exhibit, filter: { field: 'foo_ssi', value: 'bar' } }
@@ -35,7 +35,7 @@ describe Spotlight::FiltersController do
   end
 
   describe '#update' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:exhibit_filter) { exhibit.filters.first }
 
     before do
@@ -51,7 +51,7 @@ describe Spotlight::FiltersController do
 
     context 'when signed in as a site admin' do
       before { sign_in user }
-      let(:user) { FactoryGirl.create(:site_admin) }
+      let(:user) { FactoryBot.create(:site_admin) }
 
       it 'is successful' do
         patch :update, params: { exhibit_id: exhibit, id: exhibit_filter, filter: { field: 'foo_ssi', value: 'bar' } }

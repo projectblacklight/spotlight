@@ -1,8 +1,8 @@
 describe 'Site admin management', js: true do
-  let(:user) { FactoryGirl.create(:site_admin) }
-  let!(:existing_user) { FactoryGirl.create(:exhibit_visitor) }
-  let!(:exhibit_admin) { FactoryGirl.create(:exhibit_admin) }
-  let!(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
+  let(:user) { FactoryBot.create(:site_admin) }
+  let!(:existing_user) { FactoryBot.create(:exhibit_visitor) }
+  let!(:exhibit_admin) { FactoryBot.create(:exhibit_admin) }
+  let!(:exhibit_curator) { FactoryBot.create(:exhibit_curator) }
 
   before do
     login_as(user)

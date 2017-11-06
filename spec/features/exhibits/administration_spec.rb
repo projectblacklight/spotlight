@@ -1,6 +1,6 @@
 describe 'Exhibit Administration', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   let(:hidden_input_id_0) { 'exhibit_contact_emails_attributes_0_id' }
   let(:email_id_0) { 'exhibit_contact_emails_attributes_0_email' }
   let(:email_address_0) { 'admin@example.com' }

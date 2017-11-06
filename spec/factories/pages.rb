@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :feature_page, class: 'Spotlight::FeaturePage' do
     exhibit
     sequence(:title) { |n| "FeaturePage#{n}" }
@@ -11,7 +11,7 @@ FactoryGirl.define do
     end
     title 'SubPage1'
     content '[]'
-    after(:build) { |subpage, evaluator| subpage.parent_page = FactoryGirl.create(:feature_page, exhibit: evaluator.exhibit) }
+    after(:build) { |subpage, evaluator| subpage.parent_page = FactoryBot.create(:feature_page, exhibit: evaluator.exhibit) }
   end
   factory :about_page, class: 'Spotlight::AboutPage' do
     exhibit

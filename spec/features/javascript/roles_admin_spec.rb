@@ -1,6 +1,6 @@
 describe 'Roles Admin', type: :feature, js: true do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit_admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   before do
     login_as exhibit_admin
 
@@ -9,7 +9,7 @@ describe 'Roles Admin', type: :feature, js: true do
   end
 
   it 'has the appropriate status message when an existing user is added' do
-    second_user = FactoryGirl.create(:site_admin)
+    second_user = FactoryBot.create(:site_admin)
 
     click_link 'Add a new user'
     fill_in 'User key', with: second_user.email

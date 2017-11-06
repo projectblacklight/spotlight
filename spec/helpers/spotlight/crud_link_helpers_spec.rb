@@ -1,5 +1,5 @@
 describe Spotlight::CrudLinkHelpers, type: :helper do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:some_model) { Spotlight::FeaturePage.create! exhibit: exhibit }
   describe '#cancel_link' do
     it 'is a model-specific cancel link' do

@@ -1,6 +1,6 @@
 describe 'Search Administration', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit_admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as exhibit_admin }
 
   describe 'edit' do

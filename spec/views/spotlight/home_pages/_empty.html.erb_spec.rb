@@ -2,7 +2,7 @@
 describe 'spotlight/home_pages/_empty.html.erb', type: :view do
   describe 'resource providers' do
     before do
-      allow(view).to receive_messages(current_exhibit: FactoryGirl.create(:exhibit),
+      allow(view).to receive_messages(current_exhibit: FactoryBot.create(:exhibit),
                                       can?: true,
                                       edit_exhibit_path: '/',
                                       edit_exhibit_appearance_path: '/',

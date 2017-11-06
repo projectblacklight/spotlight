@@ -1,5 +1,5 @@
 describe Spotlight::ContactEmail, type: :model do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   subject { described_class.new(exhibit: exhibit) }
 
   it { is_expected.not_to be_valid }

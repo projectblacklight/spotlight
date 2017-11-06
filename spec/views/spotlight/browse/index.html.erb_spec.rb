@@ -1,7 +1,7 @@
 
 describe 'spotlight/browse/index', type: :view do
-  let(:search) { FactoryGirl.create(:search) }
-  let(:another_search) { FactoryGirl.create(:search) }
+  let(:search) { FactoryBot.create(:search) }
+  let(:another_search) { FactoryBot.create(:search) }
 
   it 'has a title' do
     render

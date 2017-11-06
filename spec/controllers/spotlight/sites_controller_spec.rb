@@ -2,7 +2,7 @@ describe Spotlight::SitesController, type: :controller do
   routes { Spotlight::Engine.routes }
 
   describe 'when user does not have access' do
-    before { sign_in FactoryGirl.create(:exhibit_visitor) }
+    before { sign_in FactoryBot.create(:exhibit_visitor) }
     describe 'GET edit' do
       it 'denies access' do
         get :edit
@@ -12,7 +12,7 @@ describe Spotlight::SitesController, type: :controller do
   end
 
   describe 'when user is an admin' do
-    let(:admin) { FactoryGirl.create(:site_admin) }
+    let(:admin) { FactoryBot.create(:site_admin) }
     before { sign_in admin }
 
     describe 'GET edit' do
@@ -30,8 +30,8 @@ describe Spotlight::SitesController, type: :controller do
     end
 
     describe 'PATCH update' do
-      let!(:exhibit_a) { FactoryGirl.create(:exhibit) }
-      let!(:exhibit_b) { FactoryGirl.create(:exhibit) }
+      let!(:exhibit_a) { FactoryBot.create(:exhibit) }
+      let!(:exhibit_b) { FactoryBot.create(:exhibit) }
 
       it 'changes the exhibit order' do
         patch :update, params: {
@@ -49,7 +49,7 @@ describe Spotlight::SitesController, type: :controller do
     end
 
     describe 'GET tags' do
-      let!(:exhibit_a) { FactoryGirl.create(:exhibit, tag_list: 'a') }
+      let!(:exhibit_a) { FactoryBot.create(:exhibit, tag_list: 'a') }
 
       it 'serializes the exhibit-level tags' do
         get :tags, params: { format: 'json' }

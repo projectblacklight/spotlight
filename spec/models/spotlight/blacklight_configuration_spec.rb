@@ -12,7 +12,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       config.add_sort_field 'identifier', sort: 'id asc', label: 'Identifier'
     end
     allow(subject).to receive_messages default_blacklight_config: blacklight_config
-    subject.exhibit = FactoryGirl.create(:exhibit)
+    subject.exhibit = FactoryBot.create(:exhibit)
   end
 
   it 'touches the exhibit' do

@@ -1,6 +1,6 @@
 
 describe 'spotlight/dashboards/analytics.html.erb', type: :view do
-  let(:current_exhibit) { FactoryGirl.create(:exhibit) }
+  let(:current_exhibit) { FactoryBot.create(:exhibit) }
 
   before do
     allow(view).to receive_messages(current_exhibit: current_exhibit, exhibit_root_path: '/some/path')

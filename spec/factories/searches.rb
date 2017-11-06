@@ -1,10 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :search, class: Spotlight::Search do
     exhibit
     sequence(:title) { |n| "Exhibit Search #{n}" }
     sequence(:slug) { |n| "Search#{n}" }
 
-    after(:build) { |search| search.thumbnail = FactoryGirl.create(:featured_image) }
+    after(:build) { |search| search.thumbnail = FactoryBot.create(:featured_image) }
   end
 
   factory :published_search, parent: :search do
@@ -15,6 +15,6 @@ FactoryGirl.define do
     title 'All Exhibit Items'
     long_description 'All items in this exhibit.'
 
-    after(:build) { |search| search.thumbnail = FactoryGirl.create(:featured_image) }
+    after(:build) { |search| search.thumbnail = FactoryBot.create(:featured_image) }
   end
 end

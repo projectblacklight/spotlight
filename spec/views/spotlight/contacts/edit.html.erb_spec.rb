@@ -1,6 +1,6 @@
 
 describe 'spotlight/contacts/edit.html.erb' do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   let(:contact) do
     Spotlight::Contact.new exhibit: exhibit

@@ -1,7 +1,7 @@
 describe 'Exhibits index page', type: :feature do
   context 'with multiple exhibits' do
-    let!(:exhibit) { FactoryGirl.create(:exhibit, title: 'Some Exhibit Title') }
-    let!(:other_exhibit) { FactoryGirl.create(:exhibit, title: 'Some Other Title') }
+    let!(:exhibit) { FactoryBot.create(:exhibit, title: 'Some Exhibit Title') }
+    let!(:other_exhibit) { FactoryBot.create(:exhibit, title: 'Some Other Title') }
 
     it 'shows some cards for each published exhibit' do
       visit spotlight.exhibits_path
@@ -44,7 +44,7 @@ describe 'Exhibits index page', type: :feature do
   end
 
   context 'with a single exhibit' do
-    let!(:exhibit) { FactoryGirl.create(:exhibit, title: 'Some Exhibit Title') }
+    let!(:exhibit) { FactoryBot.create(:exhibit, title: 'Some Exhibit Title') }
 
     it 'redirects to the exhibit home page' do
       visit spotlight.exhibits_path

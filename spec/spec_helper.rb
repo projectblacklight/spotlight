@@ -1,5 +1,5 @@
 ENV['RAILS_ENV'] ||= 'test'
-require 'factory_girl'
+require 'factory_bot'
 require 'database_cleaner'
 require 'devise'
 require 'engine_cart'
@@ -45,8 +45,8 @@ Spotlight::Engine.config.exhibit_themes = %w(default modern)
 
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 
-FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
-FactoryGirl.find_definitions
+FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+FactoryBot.find_definitions
 
 FIXTURES_PATH = File.expand_path('../fixtures', __FILE__)
 

@@ -49,8 +49,8 @@ describe Spotlight::Controller do
     let(:search_masthead) { double('search-masthead', display?: true) }
     let(:no_display_search_masthead) { double('no-display-search-masthead', display?: false) }
     let(:exhibit_masthead) { double('exhibit-masthead', display?: true) }
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
-    let(:search) { FactoryGirl.create(:search) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
+    let(:search) { FactoryBot.create(:search) }
 
     it 'is nil by default' do
       expect(subject.current_masthead).to be_nil
@@ -86,7 +86,7 @@ describe Spotlight::Controller do
   end
 
   describe '#exhibit_search_facet_url' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:params) { { action: 'index', q: 'xyz' } }
 
     before do

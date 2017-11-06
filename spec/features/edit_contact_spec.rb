@@ -1,8 +1,8 @@
 describe 'Add a contact to an exhibit', type: :feature do
-  let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let!(:about_page) { FactoryGirl.create(:about_page, exhibit: exhibit) }
-  let!(:contact) { FactoryGirl.create(:contact, name: 'Marcus Aurelius', exhibit: exhibit) }
+  let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let!(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+  let!(:contact) { FactoryBot.create(:contact, name: 'Marcus Aurelius', exhibit: exhibit) }
   before { login_as curator }
   it 'displays a newly added contact in the sidebar' do
     visit spotlight.exhibit_about_pages_path(exhibit)

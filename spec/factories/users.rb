@@ -1,7 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     transient do
-      exhibit { FactoryGirl.create(:exhibit) }
+      exhibit { FactoryBot.create(:exhibit) }
     end
     sequence(:email) { |n| "user#{n}@example.com" }
     password 'insecure'

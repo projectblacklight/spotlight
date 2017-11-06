@@ -1,11 +1,11 @@
 describe Spotlight::ReindexingLogEntry, type: :model do
-  subject { FactoryGirl.build(:reindexing_log_entry) }
+  subject { FactoryBot.build(:reindexing_log_entry) }
 
   describe 'scope' do
     before do
-      (0..10).to_a.each { FactoryGirl.create(:recent_reindexing_log_entry) }
-      FactoryGirl.create(:unstarted_reindexing_log_entry)
-      (0..10).to_a.each { FactoryGirl.create(:recent_reindexing_log_entry) }
+      (0..10).to_a.each { FactoryBot.create(:recent_reindexing_log_entry) }
+      FactoryBot.create(:unstarted_reindexing_log_entry)
+      (0..10).to_a.each { FactoryBot.create(:recent_reindexing_log_entry) }
     end
 
     let(:sorted_log_entry_list) do
@@ -37,7 +37,7 @@ describe Spotlight::ReindexingLogEntry, type: :model do
     end
 
     context 'when end_time is not present' do
-      subject { FactoryGirl.build(:in_progress_reindexing_log_entry) }
+      subject { FactoryBot.build(:in_progress_reindexing_log_entry) }
 
       it 'is nil' do
         expect(subject.duration).to be nil
@@ -47,7 +47,7 @@ describe Spotlight::ReindexingLogEntry, type: :model do
 
   describe 'state updating methods' do
     describe '#in_progress!' do
-      subject { FactoryGirl.build(:unstarted_reindexing_log_entry) }
+      subject { FactoryBot.build(:unstarted_reindexing_log_entry) }
 
       context 'executes normally' do
         it 'sets start_time and job_status' do
@@ -73,7 +73,7 @@ describe Spotlight::ReindexingLogEntry, type: :model do
     end
 
     describe '#succeeded!' do
-      subject { FactoryGirl.build(:in_progress_reindexing_log_entry) }
+      subject { FactoryBot.build(:in_progress_reindexing_log_entry) }
 
       context 'executes normally' do
         it 'sets end_time and job_status' do
@@ -99,7 +99,7 @@ describe Spotlight::ReindexingLogEntry, type: :model do
     end
 
     describe '#failed!' do
-      subject { FactoryGirl.build(:in_progress_reindexing_log_entry) }
+      subject { FactoryBot.build(:in_progress_reindexing_log_entry) }
 
       context 'executes normally' do
         it 'sets end_time and job_status' do

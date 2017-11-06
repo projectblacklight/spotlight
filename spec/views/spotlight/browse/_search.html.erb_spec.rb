@@ -1,7 +1,7 @@
 
 describe 'spotlight/browse/search', type: :view do
-  let(:search) { FactoryGirl.create(:search) }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:search) { FactoryBot.create(:search) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   before do
     allow(search).to receive_messages(documents: double(size: 15))
     allow(search).to receive_message_chain(:thumbnail, iiif_url: '/some/image')

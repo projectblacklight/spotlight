@@ -1,5 +1,5 @@
 describe 'Add and update the site masthead', type: :feature do
-  let(:user) { FactoryGirl.create(:site_admin) }
+  let(:user) { FactoryBot.create(:site_admin) }
 
   before { login_as user }
 

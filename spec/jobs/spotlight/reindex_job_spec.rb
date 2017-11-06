@@ -1,8 +1,8 @@
 
 describe Spotlight::ReindexJob do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:resource) { FactoryGirl.create(:resource) }
-  let(:user) { FactoryGirl.create(:user) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:resource) { FactoryBot.create(:resource) }
+  let(:user) { FactoryBot.create(:user) }
   let(:log_entry) { Spotlight::ReindexingLogEntry.create(exhibit: exhibit, user: user) }
 
   before do

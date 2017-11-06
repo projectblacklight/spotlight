@@ -1,9 +1,9 @@
 describe Spotlight::SolrController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe 'when user does not have access' do
-    before { sign_in FactoryGirl.create(:exhibit_visitor) }
+    before { sign_in FactoryBot.create(:exhibit_visitor) }
 
     describe 'POST update' do
       it 'does not allow update' do
@@ -14,7 +14,7 @@ describe Spotlight::SolrController, type: :controller do
   end
 
   describe 'when user is an admin' do
-    let(:admin) { FactoryGirl.create(:site_admin) }
+    let(:admin) { FactoryBot.create(:site_admin) }
     let(:role) { admin.roles.first }
     let(:connection) { instance_double(RSolr::Client) }
     let(:repository) { instance_double(Blacklight::Solr::Repository, connection: connection) }

@@ -2,7 +2,7 @@ describe Spotlight::ContactsController, type: :controller do
   routes { Spotlight::Engine.routes }
   describe 'when not logged in' do
     describe 'GET edit' do
-      let(:contact) { FactoryGirl.create(:contact) }
+      let(:contact) { FactoryBot.create(:contact) }
       it 'is successful' do
         get :edit, params: { id: contact, exhibit_id: contact.exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
@@ -11,9 +11,9 @@ describe Spotlight::ContactsController, type: :controller do
   end
 
   describe 'when signed in as a curator' do
-    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
-    let(:contact) { FactoryGirl.create(:contact, exhibit: exhibit, name: 'Andrew Carnegie') }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
+    let(:contact) { FactoryBot.create(:contact, exhibit: exhibit, name: 'Andrew Carnegie') }
     before { sign_in user }
 
     describe 'GET edit' do
@@ -34,7 +34,7 @@ describe Spotlight::ContactsController, type: :controller do
       end
 
       it 'allows thumbnails to be updated' do
-        contact = FactoryGirl.create(:contact, exhibit: exhibit, name: 'Andrew Carnegie')
+        contact = FactoryBot.create(:contact, exhibit: exhibit, name: 'Andrew Carnegie')
         patch :update, params: {
           id: contact,
           contact: {

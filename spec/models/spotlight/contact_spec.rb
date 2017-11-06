@@ -1,5 +1,5 @@
 describe Spotlight::Contact, type: :model do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do
     subject.exhibit = exhibit

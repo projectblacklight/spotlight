@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'adding IIIF Manifest', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as curator }
 
   it 'has form to add IIIF Manifests' do

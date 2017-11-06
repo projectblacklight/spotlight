@@ -1,6 +1,6 @@
 describe Spotlight::TagsController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe 'when not signed in' do
     describe 'GET index' do
@@ -11,7 +11,7 @@ describe Spotlight::TagsController, type: :controller do
     end
   end
   describe 'when signed in as a curator' do
-    before { sign_in FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+    before { sign_in FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
     describe 'GET index' do
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
@@ -30,7 +30,7 @@ describe Spotlight::TagsController, type: :controller do
     end
 
     describe 'DELETE destroy' do
-      let!(:tagging) { FactoryGirl.create(:tagging, tagger: exhibit, taggable: exhibit) }
+      let!(:tagging) { FactoryBot.create(:tagging, tagger: exhibit, taggable: exhibit) }
       it 'is successful' do
         expect do
           delete :destroy, params: { exhibit_id: exhibit, id: tagging.tag }
