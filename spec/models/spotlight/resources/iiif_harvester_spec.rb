@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spotlight::Resources::IiifHarvester do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:harvester) { described_class.create(exhibit_id: exhibit.id, url: url) }
 
   describe 'Validation' do

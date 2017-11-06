@@ -1,6 +1,6 @@
 
 describe 'spotlight/exhibits/_exhibit_card_front.html.erb', type: :view do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:p) { 'spotlight/exhibits/exhibit_card_front' }
 
   context 'for an exhibit without a thumbnail' do

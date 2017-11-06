@@ -4,8 +4,8 @@ RSpec.describe Migration::IIIF do
   let(:instance) { described_class.new('http://test.host') }
 
   context '#migrate_featured_images' do
-    let!(:old_exhibit_thumbnail) { FactoryGirl.create(:featured_image, type: nil, iiif_tilesource: nil) }
-    let!(:exhibit) { FactoryGirl.create(:exhibit, thumbnail_id: old_exhibit_thumbnail.id) }
+    let!(:old_exhibit_thumbnail) { FactoryBot.create(:featured_image, type: nil, iiif_tilesource: nil) }
+    let!(:exhibit) { FactoryBot.create(:exhibit, thumbnail_id: old_exhibit_thumbnail.id) }
     let(:updated_thumb) { Spotlight::FeaturedImage.find(old_exhibit_thumbnail.id) }
 
     context "when it's an exhibit thumbnail" do
@@ -47,7 +47,7 @@ RSpec.describe Migration::IIIF do
 
   describe '#migrate_upload_images' do
     let(:file) { double }
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
     let!(:upload) { Spotlight::Resources::Upload.create(exhibit: exhibit) }
 
     before do

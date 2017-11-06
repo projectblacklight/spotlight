@@ -1,6 +1,6 @@
 describe 'Metadata Administration', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as user }
 
   describe 'edit' do

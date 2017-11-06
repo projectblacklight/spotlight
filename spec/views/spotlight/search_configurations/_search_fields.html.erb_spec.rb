@@ -1,5 +1,5 @@
 describe 'spotlight/search_configurations/_search_fields', type: :view do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:f) do
     form_helper = nil
     controller.view_context.bootstrap_form_for(exhibit.blacklight_configuration, url: '/update') do |f|

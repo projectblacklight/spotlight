@@ -1,9 +1,9 @@
 describe Spotlight::RolesController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe 'when user does not have access' do
-    before { sign_in FactoryGirl.create(:exhibit_visitor) }
+    before { sign_in FactoryBot.create(:exhibit_visitor) }
     describe 'GET index' do
       it 'denies access' do
         get :index, params: { exhibit_id: exhibit }
@@ -13,8 +13,8 @@ describe Spotlight::RolesController, type: :controller do
   end
 
   describe 'when user is an admin' do
-    let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:user) }
     let(:role) { admin.roles.first }
     before { sign_in admin }
     it 'allows index' do

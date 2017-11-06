@@ -1,5 +1,5 @@
 describe Spotlight::ExhibitExportSerializer do
-  let!(:source_exhibit) { FactoryGirl.create(:exhibit) }
+  let!(:source_exhibit) { FactoryBot.create(:exhibit) }
 
   before do
     allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
@@ -82,7 +82,7 @@ describe Spotlight::ExhibitExportSerializer do
     end
 
     subject do
-      e = FactoryGirl.create(:exhibit)
+      e = FactoryBot.create(:exhibit)
       e.import(export).tap(&:save)
     end
 
@@ -124,9 +124,9 @@ describe Spotlight::ExhibitExportSerializer do
     context 'for an exhibit with contacts' do
       context 'for a contact with an avatar' do
         let!(:curator) do
-          FactoryGirl.create(:contact, :with_avatar,
-                             exhibit: source_exhibit,
-                             contact_info: { title: 'xyz' })
+          FactoryBot.create(:contact, :with_avatar,
+                            exhibit: source_exhibit,
+                            contact_info: { title: 'xyz' })
         end
         it 'has contacts' do
           expect(subject.contacts.count).to eq 1
@@ -138,7 +138,7 @@ describe Spotlight::ExhibitExportSerializer do
 
       context 'for a contact without an avatar' do
         let!(:curator) do
-          FactoryGirl.create(:contact, exhibit: source_exhibit, avatar: nil)
+          FactoryBot.create(:contact, exhibit: source_exhibit, avatar: nil)
         end
 
         it 'has contacts' do
@@ -166,13 +166,13 @@ describe Spotlight::ExhibitExportSerializer do
     end
 
     it 'deals with nested feature pages' do
-      FactoryGirl.create :feature_subpage, exhibit: source_exhibit
+      FactoryBot.create :feature_subpage, exhibit: source_exhibit
       expect(subject.feature_pages.at_top_level.length).to eq 1
       expect(subject.feature_pages.first.child_pages.length).to eq 1
     end
 
     context 'page slugs' do
-      let!(:feature_page) { FactoryGirl.create(:feature_page, exhibit: source_exhibit, slug: 'xyz') }
+      let!(:feature_page) { FactoryBot.create(:feature_page, exhibit: source_exhibit, slug: 'xyz') }
 
       it 'uses the existing slug for the page' do
         expect(subject.feature_pages.find('xyz')).to be_persisted
@@ -180,8 +180,8 @@ describe Spotlight::ExhibitExportSerializer do
     end
 
     context 'with a feature page' do
-      let(:feature_page) { FactoryGirl.create(:feature_page, exhibit: source_exhibit) }
-      let(:thumbnail) { FactoryGirl.create(:featured_image) }
+      let(:feature_page) { FactoryBot.create(:feature_page, exhibit: source_exhibit) }
+      let(:thumbnail) { FactoryBot.create(:featured_image) }
 
       before do
         feature_page.content = { data: [{ type: 'text', data: { text: 'xyz' } }] }.to_json
@@ -207,23 +207,23 @@ describe Spotlight::ExhibitExportSerializer do
     end
 
     it 'assigns STI resources the correct class' do
-      resource = FactoryGirl.create :uploaded_resource, exhibit: source_exhibit
+      resource = FactoryBot.create :uploaded_resource, exhibit: source_exhibit
       expect(subject.resources.length).to eq 1
       expect(subject.resources.first.class).to eq Spotlight::Resources::Upload
       expect(subject.resources.first.upload.image.path).not_to eq resource.upload.image.path
     end
 
     it 'assigns normal resources the correct class' do
-      resource = FactoryGirl.create :resource, exhibit: source_exhibit
+      resource = FactoryBot.create :resource, exhibit: source_exhibit
       expect(subject.resources.length).to eq 1
       expect(subject.resources.first.class).to eq Spotlight::Resource
       expect(subject.resources.first.url).to eq resource.url
     end
 
     context 'with a browse category' do
-      let(:masthead) { FactoryGirl.create(:masthead) }
-      let(:thumbnail) { FactoryGirl.create(:featured_image) }
-      let!(:search) { FactoryGirl.create(:search, exhibit: source_exhibit, masthead: masthead, thumbnail: thumbnail) }
+      let(:masthead) { FactoryBot.create(:masthead) }
+      let(:thumbnail) { FactoryBot.create(:featured_image) }
+      let!(:search) { FactoryBot.create(:search, exhibit: source_exhibit, masthead: masthead, thumbnail: thumbnail) }
 
       before do
         source_exhibit.reload
@@ -267,7 +267,7 @@ describe Spotlight::ExhibitExportSerializer do
     end
 
     context 'with a masthead' do
-      let!(:masthead) { FactoryGirl.create(:masthead) }
+      let!(:masthead) { FactoryBot.create(:masthead) }
 
       before do
         source_exhibit.masthead = masthead
@@ -280,7 +280,7 @@ describe Spotlight::ExhibitExportSerializer do
     end
 
     context 'with a thumbnail' do
-      let!(:thumbnail) { FactoryGirl.create(:exhibit_thumbnail) }
+      let!(:thumbnail) { FactoryBot.create(:exhibit_thumbnail) }
 
       before do
         source_exhibit.thumbnail = thumbnail
@@ -294,9 +294,9 @@ describe Spotlight::ExhibitExportSerializer do
   end
 
   it 'is idempotent-ish' do
-    FactoryGirl.create :feature_subpage, exhibit: source_exhibit
+    FactoryBot.create :feature_subpage, exhibit: source_exhibit
     export = described_class.new(source_exhibit).as_json
-    e = FactoryGirl.create(:exhibit)
+    e = FactoryBot.create(:exhibit)
     e.import(export).tap(&:save)
     e.import(export).tap(&:save)
   end
@@ -315,7 +315,7 @@ describe Spotlight::ExhibitExportSerializer do
     end
 
     subject do
-      e = FactoryGirl.create(:exhibit)
+      e = FactoryBot.create(:exhibit)
       e.import(export).tap(&:save)
     end
 

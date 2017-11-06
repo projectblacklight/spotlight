@@ -1,13 +1,13 @@
 
 describe 'spotlight/feature_pages/_sidebar.html.erb', type: :view do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let!(:parent1) { FactoryGirl.create(:feature_page, exhibit: exhibit, title: 'Parent Page') }
-  let!(:parent2) { FactoryGirl.create(:feature_page, exhibit: exhibit, title: 'Two') }
-  let!(:child1) { FactoryGirl.create(:feature_page, exhibit: exhibit, parent_page: parent1, title: 'Three', weight: 4) }
-  let!(:child2) { FactoryGirl.create(:feature_page, exhibit: exhibit, parent_page: parent2, title: 'Four') }
-  let!(:child3) { FactoryGirl.create(:feature_page, exhibit: exhibit, parent_page: parent1, title: 'Five', weight: 2) }
-  let!(:child4) { FactoryGirl.create(:feature_page, exhibit: exhibit, parent_page: parent1, title: 'Six', published: false) }
-  let!(:child5) { FactoryGirl.create(:feature_page, exhibit: FactoryGirl.create(:exhibit), title: 'Seven') }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let!(:parent1) { FactoryBot.create(:feature_page, exhibit: exhibit, title: 'Parent Page') }
+  let!(:parent2) { FactoryBot.create(:feature_page, exhibit: exhibit, title: 'Two') }
+  let!(:child1) { FactoryBot.create(:feature_page, exhibit: exhibit, parent_page: parent1, title: 'Three', weight: 4) }
+  let!(:child2) { FactoryBot.create(:feature_page, exhibit: exhibit, parent_page: parent2, title: 'Four') }
+  let!(:child3) { FactoryBot.create(:feature_page, exhibit: exhibit, parent_page: parent1, title: 'Five', weight: 2) }
+  let!(:child4) { FactoryBot.create(:feature_page, exhibit: exhibit, parent_page: parent1, title: 'Six', published: false) }
+  let!(:child5) { FactoryBot.create(:feature_page, exhibit: FactoryBot.create(:exhibit), title: 'Seven') }
 
   before do
     allow(view).to receive_messages(current_exhibit: parent1.exhibit)

@@ -1,19 +1,19 @@
 describe Spotlight::FeaturePage, type: :model do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   describe 'default_scope' do
-    let!(:page1) { FactoryGirl.create(:feature_page, weight: 5, exhibit: exhibit) }
-    let!(:page2) { FactoryGirl.create(:feature_page, weight: 1, exhibit: exhibit) }
-    let!(:page3) { FactoryGirl.create(:feature_page, weight: 10, exhibit: exhibit) }
+    let!(:page1) { FactoryBot.create(:feature_page, weight: 5, exhibit: exhibit) }
+    let!(:page2) { FactoryBot.create(:feature_page, weight: 1, exhibit: exhibit) }
+    let!(:page3) { FactoryBot.create(:feature_page, weight: 10, exhibit: exhibit) }
     it 'orders by weight' do
       expect(described_class.all.map(&:weight)).to eq [1, 5, 10]
     end
   end
 
   describe 'display_sidebar?' do
-    let(:parent) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
-    let!(:child) { FactoryGirl.create(:feature_page, parent_page: parent, exhibit: exhibit) }
-    let!(:unpublished_parent) { FactoryGirl.create(:feature_page, published: false, exhibit: exhibit) }
-    let!(:unpublished_child) { FactoryGirl.create(:feature_page, parent_page: unpublished_parent, published: false, exhibit: exhibit) }
+    let(:parent) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+    let!(:child) { FactoryBot.create(:feature_page, parent_page: parent, exhibit: exhibit) }
+    let!(:unpublished_parent) { FactoryBot.create(:feature_page, published: false, exhibit: exhibit) }
+    let!(:unpublished_child) { FactoryBot.create(:feature_page, parent_page: unpublished_parent, published: false, exhibit: exhibit) }
     before { unpublished_parent.display_sidebar = false }
     it 'is set to true if the page has a published child' do
       expect(parent.display_sidebar?).to be_truthy
@@ -32,9 +32,9 @@ describe Spotlight::FeaturePage, type: :model do
   end
 
   describe 'weight' do
-    let(:good_weight) { FactoryGirl.build(:feature_page, weight: 10, exhibit: exhibit) }
-    let(:low_weight) { FactoryGirl.build(:feature_page, weight: -1, exhibit: exhibit) }
-    let(:high_weight) { FactoryGirl.build(:feature_page, weight: 51, exhibit: exhibit) }
+    let(:good_weight) { FactoryBot.build(:feature_page, weight: 10, exhibit: exhibit) }
+    let(:low_weight) { FactoryBot.build(:feature_page, weight: -1, exhibit: exhibit) }
+    let(:high_weight) { FactoryBot.build(:feature_page, weight: 51, exhibit: exhibit) }
     it 'defaults to 50' do
       expect(described_class.new.weight).to eq 50
     end
@@ -56,9 +56,9 @@ describe Spotlight::FeaturePage, type: :model do
   it { is_expected.not_to be_about_page }
 
   describe 'relationships' do
-    let(:parent) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
-    let!(:child1) { FactoryGirl.create(:feature_page, parent_page: parent, exhibit: exhibit) }
-    let!(:child2) { FactoryGirl.create(:feature_page, parent_page: parent, exhibit: exhibit) }
+    let(:parent) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+    let!(:child1) { FactoryBot.create(:feature_page, parent_page: parent, exhibit: exhibit) }
+    let!(:child2) { FactoryBot.create(:feature_page, parent_page: parent, exhibit: exhibit) }
     it 'child pages should have a parent_page' do
       [child1, child2].each do |child|
         expect(child.parent_page).to eq parent

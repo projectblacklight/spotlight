@@ -1,10 +1,10 @@
 describe Spotlight::ViewConfigurationsController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe 'when the user is not authorized' do
     before do
-      sign_in FactoryGirl.create(:exhibit_visitor)
+      sign_in FactoryBot.create(:exhibit_visitor)
     end
 
     describe 'GET show' do
@@ -17,7 +17,7 @@ describe Spotlight::ViewConfigurationsController, type: :controller do
   end
 
   describe 'when signed in' do
-    let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
     before { sign_in user }
 
     describe 'GET show' do

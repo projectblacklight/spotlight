@@ -1,5 +1,5 @@
 describe 'Report a Problem', type: :feature do
-  let!(:exhibit) { FactoryGirl.create(:exhibit) }
+  let!(:exhibit) { FactoryBot.create(:exhibit) }
   let(:honeypot_field_name) { Spotlight::Engine.config.spambot_honeypot_email_field }
 
   it 'does not have a header link' do

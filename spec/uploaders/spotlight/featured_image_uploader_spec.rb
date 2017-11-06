@@ -1,5 +1,5 @@
 describe Spotlight::FeaturedImageUploader do
-  let(:mounter) { FactoryGirl.create(:featured_image) }
+  let(:mounter) { FactoryBot.create(:featured_image) }
   subject(:featured_image_uploader) { described_class.new(mounter, 'mounted_as') }
 
   describe '#extension_whitelist' do

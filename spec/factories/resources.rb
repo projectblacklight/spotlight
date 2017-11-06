@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :resource, class: Spotlight::Resource do
     exhibit
     type 'Spotlight::Resource'

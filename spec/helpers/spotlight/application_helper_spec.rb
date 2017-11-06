@@ -52,7 +52,7 @@ describe Spotlight::ApplicationHelper, type: :helper do
 
   describe '#url_to_tag_facet' do
     before do
-      allow(helper).to receive_messages(current_exhibit: FactoryGirl.create(:exhibit))
+      allow(helper).to receive_messages(current_exhibit: FactoryBot.create(:exhibit))
       allow(helper).to receive_messages(blacklight_config: Blacklight::Configuration.new)
 
       # controller provided helper.
@@ -101,7 +101,7 @@ describe Spotlight::ApplicationHelper, type: :helper do
   end
 
   describe 'render_document_class' do
-    let(:current_exhibit) { FactoryGirl.create(:exhibit) }
+    let(:current_exhibit) { FactoryBot.create(:exhibit) }
     let(:document) { SolrDocument.new(some_field: 'Some data') }
     before do
       allow(helper).to receive_messages(current_exhibit: current_exhibit)

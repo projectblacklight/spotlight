@@ -1,8 +1,8 @@
 
 describe 'Featured Pages Blocks', type: :feature, js: true do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:feature_page1) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :feature_page,
       title: 'FeaturePage1 Title',
       weight: 1,
@@ -10,7 +10,7 @@ describe 'Featured Pages Blocks', type: :feature, js: true do
     )
   end
   let!(:feature_page2) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :feature_page,
       title: 'FeaturePage2 Title',
       weight: 0,
@@ -18,7 +18,7 @@ describe 'Featured Pages Blocks', type: :feature, js: true do
     )
   end
 
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
 
   before do
     login_as exhibit_curator

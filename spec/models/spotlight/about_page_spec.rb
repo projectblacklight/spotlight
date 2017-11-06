@@ -1,5 +1,5 @@
 describe Spotlight::AboutPage, type: :model do
-  let(:page) { described_class.create! exhibit: FactoryGirl.create(:exhibit) }
+  let(:page) { described_class.create! exhibit: FactoryBot.create(:exhibit) }
   it { is_expected.not_to be_feature_page }
   it { is_expected.to be_about_page }
   it 'displays the sidebar' do

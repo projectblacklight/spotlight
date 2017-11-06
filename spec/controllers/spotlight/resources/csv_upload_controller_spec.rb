@@ -1,7 +1,7 @@
 
 describe Spotlight::Resources::CsvUploadController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe 'when not logged in' do
     describe 'POST create' do
@@ -13,7 +13,7 @@ describe Spotlight::Resources::CsvUploadController, type: :controller do
   end
 
   describe 'when signed in as a curator' do
-    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
     before { sign_in user }
 
     describe 'POST create' do

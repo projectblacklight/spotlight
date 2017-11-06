@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :role, class: Spotlight::Role do
-    resource { FactoryGirl.build(:exhibit) }
+    resource { FactoryBot.build(:exhibit) }
     role 'curator'
     user
   end

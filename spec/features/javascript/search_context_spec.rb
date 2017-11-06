@@ -1,8 +1,8 @@
 feature 'Search contexts' do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:feature_page) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :feature_page,
       title: 'FeaturePage1',
       exhibit: exhibit
@@ -72,7 +72,7 @@ feature 'Search contexts' do
   end
 
   context 'from a browse page' do
-    let!(:search) { FactoryGirl.create(:search, title: 'Some Saved Search', exhibit: exhibit, published: true) }
+    let!(:search) { FactoryBot.create(:search, title: 'Some Saved Search', exhibit: exhibit, published: true) }
 
     scenario 'should add context breadcrumbs back to the browse page when navigating to an item', js: true do
       visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)

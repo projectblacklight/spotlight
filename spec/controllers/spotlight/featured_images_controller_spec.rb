@@ -3,7 +3,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
 
   describe 'when the user is not authorized' do
     before do
-      sign_in FactoryGirl.create(:exhibit_visitor)
+      sign_in FactoryBot.create(:exhibit_visitor)
     end
 
     describe 'POST create' do
@@ -23,7 +23,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
   end
 
   describe 'when signed in as a site admin' do
-    let(:user) { FactoryGirl.create(:site_admin) }
+    let(:user) { FactoryBot.create(:site_admin) }
     before { sign_in user }
 
     describe 'POST create a thumbnail' do

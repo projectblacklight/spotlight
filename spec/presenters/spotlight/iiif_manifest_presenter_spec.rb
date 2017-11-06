@@ -2,7 +2,7 @@ describe Spotlight::IiifManifestPresenter do
   require 'iiif_manifest'
 
   let(:resource) { SolrDocument.new(id: '1-1') }
-  let(:uploaded_resource) { FactoryGirl.build(:uploaded_resource) }
+  let(:uploaded_resource) { FactoryBot.build(:uploaded_resource) }
   let(:controller) { double(Spotlight::CatalogController) }
 
   let(:subject) { described_class.new(resource, controller) }

@@ -1,6 +1,6 @@
 describe 'spotlight/search_configurations/_facets', type: :view do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let!(:custom_field) { FactoryGirl.create(:custom_field, exhibit: exhibit, label: 'Foobar', field_type: 'vocab') }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let!(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit, label: 'Foobar', field_type: 'vocab') }
   let(:config) do
     exhibit.blacklight_configuration
   end

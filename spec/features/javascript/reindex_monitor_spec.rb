@@ -1,12 +1,12 @@
 feature 'Reindex Monitor', js: true do
   let(:resources) do
-    [FactoryGirl.create(:resource)]
+    [FactoryBot.create(:resource)]
   end
-  let(:exhibit) { FactoryGirl.create(:exhibit, resources: resources) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit, resources: resources) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
 
   before do
-    FactoryGirl.create(:in_progress_reindexing_log_entry, exhibit: exhibit, items_reindexed_estimate: 5)
+    FactoryBot.create(:in_progress_reindexing_log_entry, exhibit: exhibit, items_reindexed_estimate: 5)
     login_as exhibit_curator
     visit spotlight.admin_exhibit_catalog_path(exhibit)
   end

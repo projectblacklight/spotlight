@@ -1,5 +1,5 @@
 describe Spotlight::Search, type: :model do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   let(:query_params) { { 'f' => { 'genre_sim' => ['map'] } } }
   subject { exhibit.searches.build(title: 'Search', query_params: query_params) }
@@ -19,16 +19,16 @@ describe Spotlight::Search, type: :model do
   end
 
   describe 'default_scope' do
-    let!(:page1) { FactoryGirl.create(:search, weight: 5, published: true) }
-    let!(:page2) { FactoryGirl.create(:search, weight: 1, published: true) }
-    let!(:page3) { FactoryGirl.create(:search, weight: 10, published: true) }
+    let!(:page1) { FactoryBot.create(:search, weight: 5, published: true) }
+    let!(:page2) { FactoryBot.create(:search, weight: 1, published: true) }
+    let!(:page3) { FactoryBot.create(:search, weight: 10, published: true) }
     it 'orders by weight' do
       expect(described_class.published.map(&:weight)).to eq [1, 5, 10]
     end
   end
 
   describe '#slug' do
-    let(:search) { FactoryGirl.create(:search) }
+    let(:search) { FactoryBot.create(:search) }
 
     it 'gets a default slug' do
       expect(search.slug).not_to be_blank
@@ -40,7 +40,7 @@ describe Spotlight::Search, type: :model do
     end
 
     context 'with a custom slug' do
-      let(:search) { FactoryGirl.create(:search, slug: 'xyz') }
+      let(:search) { FactoryBot.create(:search, slug: 'xyz') }
 
       it 'gets a default slug' do
         expect(search.slug).to eq 'xyz'
@@ -65,7 +65,7 @@ describe Spotlight::Search, type: :model do
   end
 
   describe '#repository' do
-    let(:search) { FactoryGirl.create(:search) }
+    let(:search) { FactoryBot.create(:search) }
     before do
       allow(search).to receive(:blacklight_config).and_return blacklight_config
     end

@@ -4,7 +4,7 @@ describe 'spotlight/searches/edit.html.erb', type: :view do
       config.add_facet_field :some_field
     end
   end
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:search) do
     stub_model(Spotlight::Search, exhibit: exhibit,
                                   id: 99, title: 'Title1', query_params: { f: { 'some_field' => ['xyz'] } })

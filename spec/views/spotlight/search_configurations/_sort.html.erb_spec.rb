@@ -1,5 +1,5 @@
 describe 'spotlight/search_configurations/_sort', type: :view do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   before do
     exhibit.blacklight_config.add_sort_field 'sort_title_ssi asc, plus_another_field desc', label: 'TestSort'
     assign(:exhibit, exhibit)

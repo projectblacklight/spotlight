@@ -1,8 +1,8 @@
 feature 'Browse pages' do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   context 'a browse page' do
-    let!(:search) { FactoryGirl.create(:search, title: 'Some Saved Search', exhibit: exhibit, published: true) }
+    let!(:search) { FactoryBot.create(:search, title: 'Some Saved Search', exhibit: exhibit, published: true) }
 
     let(:mock_response) { Blacklight::Solr::Response.new({ response: { numFound: 10, docs: mock_documents } }, {}) }
     let(:mock_documents) { [] }
@@ -35,7 +35,7 @@ feature 'Browse pages' do
     end
 
     context 'with a custom masthead' do
-      let(:masthead) { FactoryGirl.create(:masthead, display: true, iiif_tilesource: 'http://test.host/images/1') }
+      let(:masthead) { FactoryBot.create(:masthead, display: true, iiif_tilesource: 'http://test.host/images/1') }
 
       before do
         search.masthead = masthead

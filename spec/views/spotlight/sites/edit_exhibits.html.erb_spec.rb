@@ -1,6 +1,6 @@
 describe 'spotlight/sites/edit_exhibits', type: :view do
-  let!(:exhibit_a) { FactoryGirl.create(:exhibit) }
-  let!(:exhibit_b) { FactoryGirl.create(:exhibit) }
+  let!(:exhibit_a) { FactoryBot.create(:exhibit) }
+  let!(:exhibit_b) { FactoryBot.create(:exhibit) }
 
   before do
     assign(:site, Spotlight::Site.instance)

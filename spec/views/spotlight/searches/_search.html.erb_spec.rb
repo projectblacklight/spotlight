@@ -1,14 +1,14 @@
 
 describe 'spotlight/searches/_search.html.erb', type: :view do
   let(:search) do
-    FactoryGirl.build_stubbed(:search, exhibit: FactoryGirl.create(:exhibit),
-                                       id: 99,
-                                       title: 'Title1',
-                                       query_params: {
-                                         f: {
-                                           genre_ssim: ['xyz']
-                                         }
-                                       })
+    FactoryBot.build_stubbed(:search, exhibit: FactoryBot.create(:exhibit),
+                                      id: 99,
+                                      title: 'Title1',
+                                      query_params: {
+                                        f: {
+                                          genre_ssim: ['xyz']
+                                        }
+                                      })
   end
   let(:thumbnail) { double(id: '7777', iiif_url: '/images/7777/full/400,300/0/default.jpg') }
 

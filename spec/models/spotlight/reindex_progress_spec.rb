@@ -1,6 +1,6 @@
 describe Spotlight::ReindexProgress, type: :model do
   let(:reindexing_log_entry) do
-    FactoryGirl.create(:failed_reindexing_log_entry, items_reindexed_estimate: 12)
+    FactoryBot.create(:failed_reindexing_log_entry, items_reindexed_estimate: 12)
   end
 
   let(:subject) { described_class.new(reindexing_log_entry) }
@@ -64,7 +64,7 @@ describe Spotlight::ReindexProgress, type: :model do
 
   describe '#recently_in_progress?' do
     context 'there is no end_time for current_log_entry' do
-      let(:reindexing_log_entry) { FactoryGirl.create(:in_progress_reindexing_log_entry) }
+      let(:reindexing_log_entry) { FactoryBot.create(:in_progress_reindexing_log_entry) }
 
       it 'returns true' do
         expect(subject).to be_recently_in_progress
@@ -72,7 +72,7 @@ describe Spotlight::ReindexProgress, type: :model do
     end
 
     context 'current_log_entry has an end_time less than Spotlight::Engine.config.reindex_progress_window.minutes.ago' do
-      let(:reindexing_log_entry) { FactoryGirl.create(:recent_reindexing_log_entry, end_time: Time.zone.now) }
+      let(:reindexing_log_entry) { FactoryBot.create(:recent_reindexing_log_entry, end_time: Time.zone.now) }
 
       it 'returns true' do
         expect(subject).to be_recently_in_progress
@@ -80,7 +80,7 @@ describe Spotlight::ReindexProgress, type: :model do
     end
 
     context 'current_log_entry is unstarted ' do
-      let(:reindexing_log_entry) { FactoryGirl.create(:unstarted_reindexing_log_entry) }
+      let(:reindexing_log_entry) { FactoryBot.create(:unstarted_reindexing_log_entry) }
 
       it 'returns false' do
         expect(subject).not_to be_recently_in_progress

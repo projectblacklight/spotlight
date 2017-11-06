@@ -7,7 +7,7 @@ describe Spotlight::CustomField, type: :model do
     end
 
     describe 'when the exhibit has a config' do
-      let(:exhibit) { FactoryGirl.create(:exhibit) }
+      let(:exhibit) { FactoryBot.create(:exhibit) }
       before { subject.exhibit = exhibit }
       describe 'that overrides the label' do
         before do
@@ -29,7 +29,7 @@ describe Spotlight::CustomField, type: :model do
     end
 
     describe 'when the exhibit has a config' do
-      let(:exhibit) { FactoryGirl.create(:exhibit) }
+      let(:exhibit) { FactoryBot.create(:exhibit) }
       before { subject.exhibit = exhibit }
       describe 'that overrides the label' do
         before do
@@ -77,7 +77,7 @@ describe Spotlight::CustomField, type: :model do
   end
 
   describe '#solr_field' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:custom_field) do
       described_class.create(exhibit: exhibit, configuration: { 'label' => 'xyz' })
     end
@@ -110,7 +110,7 @@ describe Spotlight::CustomField, type: :model do
   end
 
   describe '#configured_to_display?' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
     before do
       exhibit.blacklight_configuration.blacklight_config.view = { view_name: {} }
       subject.exhibit = exhibit
@@ -147,7 +147,7 @@ describe Spotlight::CustomField, type: :model do
   end
 
   describe 'changing the field type' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
     before do
       subject.label = 'xyz'
       subject.exhibit = exhibit

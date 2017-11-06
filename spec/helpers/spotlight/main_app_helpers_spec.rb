@@ -2,8 +2,8 @@
 describe Spotlight::MainAppHelpers, type: :helper do
   describe '#show_contact_form?' do
     subject { helper }
-    let(:exhibit) { FactoryGirl.create :exhibit }
-    let(:exhibit_with_contacts) { FactoryGirl.create :exhibit }
+    let(:exhibit) { FactoryBot.create :exhibit }
+    let(:exhibit_with_contacts) { FactoryBot.create :exhibit }
     context 'with an exhibit with confirmed contacts' do
       before do
         exhibit_with_contacts.contact_emails.create(email: 'cabeer@stanford.edu').tap do |e|
@@ -42,7 +42,7 @@ describe Spotlight::MainAppHelpers, type: :helper do
   end
 
   describe '#exhibit_stylesheet_link_tag' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
     before do
       allow(helper).to receive_messages(current_exhibit: exhibit)
     end

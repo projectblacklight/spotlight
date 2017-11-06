@@ -2,7 +2,7 @@ require 'rack/test'
 
 describe Spotlight::ExhibitsController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do
     allow(Spotlight::DefaultThumbnailJob).to receive(:perform_later)
@@ -10,7 +10,7 @@ describe Spotlight::ExhibitsController, type: :controller do
 
   describe 'when the user is not authorized' do
     before do
-      sign_in FactoryGirl.create(:exhibit_visitor)
+      sign_in FactoryBot.create(:exhibit_visitor)
     end
 
     describe 'GET edit' do
@@ -67,7 +67,7 @@ describe Spotlight::ExhibitsController, type: :controller do
   end
 
   describe 'when signed in as a site admin' do
-    let(:user) { FactoryGirl.create(:site_admin) }
+    let(:user) { FactoryBot.create(:site_admin) }
     before { sign_in user }
 
     describe 'GET new' do
@@ -101,7 +101,7 @@ describe Spotlight::ExhibitsController, type: :controller do
   end
 
   describe 'when signed in as an exhibit admin' do
-    let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
     before { sign_in user }
 
     describe 'GET new' do

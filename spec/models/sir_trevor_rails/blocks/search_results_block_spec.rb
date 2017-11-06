@@ -1,5 +1,5 @@
 describe SirTrevorRails::Blocks::SearchResultsBlock do
-  let(:page) { FactoryGirl.create(:feature_page) }
+  let(:page) { FactoryBot.create(:feature_page) }
   let(:block_data) { {} }
   subject { described_class.new({ type: '', data: block_data }, page) }
 

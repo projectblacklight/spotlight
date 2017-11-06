@@ -58,8 +58,8 @@ module Spotlight
       OEmbed::Providers.register_all
     end
 
-    initializer 'spotlight.factories', after: 'factory_girl.set_factory_paths' do
-      FactoryGirl.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryGirl)
+    initializer 'spotlight.factories', after: 'factory_bot.set_factory_paths' do
+      FactoryBot.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryBot)
     end
 
     initializer 'spotlight.assets.precompile' do |app|

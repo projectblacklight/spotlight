@@ -1,6 +1,6 @@
 describe Spotlight::ContactEmailController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:contact_email) { FactoryGirl.create(:contact_email) }
+  let(:contact_email) { FactoryBot.create(:contact_email) }
 
   context 'when not logged in' do
     describe 'DELETE destroy' do
@@ -18,7 +18,7 @@ describe Spotlight::ContactEmailController, type: :controller do
     before { sign_in user }
 
     context 'as a visitor' do
-      let(:user) { FactoryGirl.create(:exhibit_visitor) }
+      let(:user) { FactoryBot.create(:exhibit_visitor) }
 
       describe 'DELETE destroy' do
         it 'redirects to the home page' do
@@ -30,7 +30,7 @@ describe Spotlight::ContactEmailController, type: :controller do
     end
 
     context 'as an exhibit curator' do
-      let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: contact_email.exhibit) }
+      let(:user) { FactoryBot.create(:exhibit_curator, exhibit: contact_email.exhibit) }
 
       describe 'DELETE destroy' do
         it 'redirects to the home page' do
@@ -42,7 +42,7 @@ describe Spotlight::ContactEmailController, type: :controller do
     end
 
     context 'as an exhibit admin' do
-      let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: contact_email.exhibit) }
+      let(:user) { FactoryBot.create(:exhibit_admin, exhibit: contact_email.exhibit) }
 
       describe 'DELETE destroy' do
         it 'is successful when the record exists' do

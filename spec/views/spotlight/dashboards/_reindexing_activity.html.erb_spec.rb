@@ -1,12 +1,12 @@
 describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
   # recent reindexing entries should be sorted by start_time in descending order, so mock that behavior
   let(:recent_reindexing) do
-    [FactoryGirl.build(:unstarted_reindexing_log_entry)] + # nil start_time is trouble for the sort_by used to create the rest of the fixture's rows
+    [FactoryBot.build(:unstarted_reindexing_log_entry)] + # nil start_time is trouble for the sort_by used to create the rest of the fixture's rows
       [
-        FactoryGirl.build(:reindexing_log_entry),
-        FactoryGirl.build(:in_progress_reindexing_log_entry),
-        FactoryGirl.build(:recent_reindexing_log_entry),
-        FactoryGirl.build(:failed_reindexing_log_entry)
+        FactoryBot.build(:reindexing_log_entry),
+        FactoryBot.build(:in_progress_reindexing_log_entry),
+        FactoryBot.build(:recent_reindexing_log_entry),
+        FactoryBot.build(:failed_reindexing_log_entry)
       ].sort_by(&:start_time).reverse
   end
   let(:p) { 'spotlight/dashboards/reindexing_activity' }
@@ -73,7 +73,7 @@ describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
 
   context 'a reindexing log entry has a null user' do
     it 'displays blank in the user field and renders without error' do
-      assign(:recent_reindexing, [FactoryGirl.build(:reindexing_log_entry_no_user)])
+      assign(:recent_reindexing, [FactoryBot.build(:reindexing_log_entry_no_user)])
       expect { render p }.not_to raise_error
 
       # we expect one blank table cell for the user, and values for everything else

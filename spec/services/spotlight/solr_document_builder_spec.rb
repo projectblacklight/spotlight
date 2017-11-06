@@ -1,5 +1,5 @@
 describe Spotlight::SolrDocumentBuilder do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:doc_builder) { described_class.new(resource) }
   let(:resource) { Spotlight::Resource.new }
 
@@ -18,8 +18,8 @@ describe Spotlight::SolrDocumentBuilder do
   describe '#documents_to_index' do
     context 'when the document belongs to more than one exhibit' do
       let(:doc) { SolrDocument.new(id: 'abc123') }
-      let(:resource) { FactoryGirl.create(:resource) }
-      let(:resource_alt) { FactoryGirl.create(:resource) }
+      let(:resource) { FactoryBot.create(:resource) }
+      let(:resource_alt) { FactoryBot.create(:resource) }
       subject { resource.document_builder }
 
       before do

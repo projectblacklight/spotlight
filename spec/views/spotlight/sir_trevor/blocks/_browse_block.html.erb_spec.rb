@@ -2,7 +2,7 @@
 describe 'spotlight/sir_trevor/blocks/_browse_block.html.erb', type: :view do
   let(:p) { 'spotlight/sir_trevor/blocks/browse_block.html.erb' }
   let(:page) { double('Page', display_sidebar?: true) }
-  let(:search) { FactoryGirl.create(:search) }
+  let(:search) { FactoryBot.create(:search) }
   let(:block) do
     assign(:page, page)
     SirTrevorRails::Blocks::BrowseBlock.new({ type: 'block', data: {} }, page)
