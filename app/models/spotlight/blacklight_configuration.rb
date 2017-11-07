@@ -5,6 +5,8 @@ module Spotlight
   # Exhibit-specific blacklight configuration model
   # rubocop:disable Metrics/ClassLength
   class BlacklightConfiguration < ActiveRecord::Base
+    has_paper_trail
+
     belongs_to :exhibit, touch: true, optional: true
     serialize :facet_fields, Hash
     serialize :index_fields, Hash

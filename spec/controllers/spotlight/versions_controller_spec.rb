@@ -1,4 +1,4 @@
-describe Spotlight::VersionsController, type: :controller do
+describe Spotlight::VersionsController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
 
   describe 'when not logged in' do

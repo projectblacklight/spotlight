@@ -1,4 +1,4 @@
-feature 'Editing the Home Page', js: true do
+feature 'Editing the Home Page', js: true, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
 

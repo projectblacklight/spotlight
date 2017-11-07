@@ -15,6 +15,10 @@ describe Spotlight::Page, type: :model do
     end
   end
 
+  it 'is expected to be versioned' do
+    is_expected.to be_versioned
+  end
+
   describe '#top_level_page?' do
     it 'checks if the page is a top-level page' do
       expect(parent_page).to be_a_top_level_page

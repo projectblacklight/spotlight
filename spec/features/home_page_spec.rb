@@ -1,4 +1,4 @@
-describe 'Home page', type: :feature do
+describe 'Home page', type: :feature, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }

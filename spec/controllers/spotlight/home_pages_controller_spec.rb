@@ -1,4 +1,4 @@
-describe Spotlight::HomePagesController, type: :controller do
+describe Spotlight::HomePagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { 'title' => 'MyString', thumbnail: { iiif_url: '' } } }
   let(:exhibit) { FactoryBot.create(:exhibit) }

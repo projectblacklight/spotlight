@@ -15,6 +15,10 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     subject.exhibit = FactoryBot.create(:exhibit)
   end
 
+  it 'is expected to be versioned' do
+    is_expected.to be_versioned
+  end
+
   it 'touches the exhibit' do
     expect(subject.exhibit).to receive :touch
     subject.save!
