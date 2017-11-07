@@ -12,6 +12,7 @@ require 'rspec/collection_matchers'
 require 'rspec/its'
 require 'rspec/rails'
 require 'rspec/active_model/mocks'
+require 'paper_trail/frameworks/rspec'
 
 require 'selenium-webdriver'
 

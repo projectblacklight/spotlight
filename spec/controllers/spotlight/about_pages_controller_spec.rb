@@ -1,4 +1,4 @@
-describe Spotlight::AboutPagesController, type: :controller do
+describe Spotlight::AboutPagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { 'title' => 'MyString', thumbnail: { iiif_url: '' } } }
 

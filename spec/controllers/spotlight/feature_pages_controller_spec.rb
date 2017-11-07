@@ -1,4 +1,4 @@
-describe Spotlight::FeaturePagesController, type: :controller do
+describe Spotlight::FeaturePagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
 
   # This should return the minimal set of attributes required to create a valid

@@ -1,5 +1,4 @@
-
-feature 'Uploaded Items Block', feature: true, js: true do
+feature 'Uploaded Items Block', feature: true, js: true, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:fixture_file1) { File.join(FIXTURES_PATH, '800x600.png') }

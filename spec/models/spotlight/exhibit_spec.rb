@@ -295,4 +295,8 @@ describe Spotlight::Exhibit, type: :model do
       expect(reindex_progress.current_log_entry).to eq in_progress_entry
     end
   end
+
+  it 'is expected to be versioned' do
+    is_expected.to be_versioned
+  end
 end
