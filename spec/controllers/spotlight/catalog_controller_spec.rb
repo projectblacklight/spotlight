@@ -440,7 +440,7 @@ describe Spotlight::CatalogController, type: :controller do
       expect(controller.field_enabled?(field)).to eq :value
     end
     it 'returns the value of the original if condition' do
-      allow(field).to receive(:upstream_if).and_return false
+      allow(field).to receive(:original).and_return false
       expect(controller.field_enabled?(field)).to eq false
     end
   end
@@ -452,7 +452,7 @@ describe Spotlight::CatalogController, type: :controller do
     end
 
     it 'respects the original if condition' do
-      view.upstream_if = false
+      view.original = false
       expect(controller.enabled_in_spotlight_view_type_configuration?(view)).to eq false
     end
 
