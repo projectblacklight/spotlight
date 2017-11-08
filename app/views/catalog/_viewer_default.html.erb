@@ -1,0 +1,5 @@
+<% if document.uploaded_resource? %>
+  <%= render partial: "openseadragon_default", locals: {document: document} %>
+<% else %>
+  <%= render partial: "iframe_default", locals: {document: document} %>
+<% end %>

@@ -77,9 +77,9 @@ module Spotlight
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
-        config.view.embed.partials ||= ['openseadragon']
+        config.view.embed.partials ||= ['iframe']
         config.view.embed.if = false
-        config.view.embed.locals ||= { osd_container_class: '' }
+        config.view.embed.locals ||= { iframe_container_class: '' }
 
         # Add any custom fields
         config.index_fields.merge! custom_index_fields

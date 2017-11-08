@@ -1,0 +1,14 @@
+<%
+iframe_url = nil
+if document.has_key?('full_image_url_ssm')
+	iframe_url_array = document.fetch('full_image_url_ssm')
+	iframe_url = iframe_url_array[0]
+end
+
+%>
+<div class="iframe-wrapper">
+<iframe
+    src="<%=iframe_url%>"
+    allowfullscreen="true"
+  ></iframe>
+</div>
