@@ -28,7 +28,9 @@ module Spotlight
     def index
       respond_to do |format|
         format.html
-        format.json { render json: @searches.published.as_json(methods: [:count, :thumbnail_image_url]), root: false }
+        format.json do
+          render json: @searches.as_json(methods: [:count, :thumbnail_image_url]), root: false
+        end
       end
     end
 

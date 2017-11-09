@@ -202,7 +202,7 @@ module Spotlight
     config.exhibit_themes = ['default']
 
     config.sir_trevor_widgets = %w(
-      Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse
+      Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse LinkToSearch
       FeaturedPages SolrDocuments SolrDocumentsCarousel SolrDocumentsEmbed
       SolrDocumentsFeatures SolrDocumentsGrid SearchResults
     )
