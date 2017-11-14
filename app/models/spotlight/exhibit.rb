@@ -24,6 +24,7 @@ module Spotlight
     delegate :blacklight_config, to: :blacklight_configuration
     serialize :facets, Array
 
+    
     # Note: friendly id associations need to be 'destroy'ed to reap the slug history
     has_many :about_pages, extend: FriendlyId::FinderMethods
     has_many :attachments, dependent: :destroy

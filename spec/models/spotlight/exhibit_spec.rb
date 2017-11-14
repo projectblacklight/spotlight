@@ -6,6 +6,7 @@ describe Spotlight::Exhibit, type: :model do
     expect(subject.title).to eq 'Test title'
   end
 
+  
   it 'has a subtitle' do
     subject.subtitle = 'Test subtitle'
     expect(subject.subtitle).to eq 'Test subtitle'
