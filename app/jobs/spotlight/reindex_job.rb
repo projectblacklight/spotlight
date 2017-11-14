@@ -47,7 +47,7 @@ module Spotlight
     end
 
     def log_entry(job)
-      job.arguments.second if job.arguments.second.is_a?(Spotlight::ReindexingLogEntry)
+      job.arguments.second if job.arguments.second.is_a?(Spotlight::JobLogEntry)
     end
   end
 end

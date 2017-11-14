@@ -51,7 +51,7 @@ describe Spotlight::Resource, type: :model do
         end
 
         it 'updates the count of reindexed items in the log entry' do
-          reindexing_log_entry = double(Spotlight::ReindexingLogEntry)
+          reindexing_log_entry = double(Spotlight::JobLogEntry)
           expect(reindexing_log_entry).to receive(:update).with(items_reindexed_count: 1)
           subject.reindex reindexing_log_entry
         end

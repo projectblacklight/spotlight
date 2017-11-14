@@ -108,7 +108,7 @@ module Spotlight
     end
 
     def new_reindexing_log_entry(user = nil)
-      Spotlight::ReindexingLogEntry.create(exhibit: self, user: user, items_reindexed_count: 0, job_status: 'unstarted')
+      Spotlight::JobLogEntry.create(exhibit: self, user: user, items_reindexed_count: 0, job_status: 'unstarted')
     end
 
     private

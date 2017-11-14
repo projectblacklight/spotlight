@@ -1,12 +1,12 @@
 FactoryGirl.define do
-  factory :unstarted_reindexing_log_entry, class: Spotlight::ReindexingLogEntry do
+  factory :unstarted_reindexing_log_entry, class: Spotlight::JobLogEntry do
     items_reindexed_count 15
     job_status 'unstarted'
     exhibit
     user
   end
 
-  factory :reindexing_log_entry, class: Spotlight::ReindexingLogEntry do
+  factory :reindexing_log_entry, class: Spotlight::JobLogEntry do
     items_reindexed_count 10
     start_time { Time.zone.parse('2017-01-05 23:00:00') }
     end_time { Time.zone.parse('2017-01-05 23:05:00') }
@@ -15,7 +15,7 @@ FactoryGirl.define do
     user
   end
 
-  factory :reindexing_log_entry_no_user, class: Spotlight::ReindexingLogEntry do
+  factory :reindexing_log_entry_no_user, class: Spotlight::JobLogEntry do
     items_reindexed_count 10
     start_time { Time.zone.parse('2017-01-05 23:00:00') }
     end_time { Time.zone.parse('2017-01-05 23:05:00') }
@@ -23,7 +23,7 @@ FactoryGirl.define do
     exhibit
   end
 
-  factory :in_progress_reindexing_log_entry, class: Spotlight::ReindexingLogEntry do
+  factory :in_progress_reindexing_log_entry, class: Spotlight::JobLogEntry do
     items_reindexed_count 100
     start_time { Time.zone.now - 300 }
     end_time nil
@@ -32,7 +32,7 @@ FactoryGirl.define do
     user
   end
 
-  factory :recent_reindexing_log_entry, class: Spotlight::ReindexingLogEntry do
+  factory :recent_reindexing_log_entry, class: Spotlight::JobLogEntry do
     sequence(:items_reindexed_count)
     start_time { Time.zone.now - 86_400 }
     end_time { Time.zone.now - 86_100 }
@@ -41,7 +41,7 @@ FactoryGirl.define do
     user
   end
 
-  factory :failed_reindexing_log_entry, class: Spotlight::ReindexingLogEntry do
+  factory :failed_reindexing_log_entry, class: Spotlight::JobLogEntry do
     items_reindexed_count 10
     start_time { Time.zone.parse('2017-01-10 23:00:00') }
     end_time { Time.zone.parse('2017-01-10 23:05:00') }

@@ -89,7 +89,7 @@ describe Spotlight::ReindexProgress, type: :model do
   end
 
   context 'current_log_entry is blan' do
-    let(:reindexing_log_entry) { Spotlight::ReindexingLogEntry.new }
+    let(:reindexing_log_entry) { Spotlight::JobLogEntry.new }
 
     # rubocop:disable RSpec/MultipleExpectations
     it 'methods return gracefully' do
