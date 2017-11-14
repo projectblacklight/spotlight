@@ -1,19 +1,19 @@
 describe Spotlight::ReindexProgress, type: :model do
-  let(:reindexing_log_entry) do
-    FactoryGirl.create(:failed_reindexing_log_entry, items_reindexed_estimate: 12)
+  let(:job_log_entry) do
+    FactoryGirl.create(:failed_reindexing_log_entry, job_items_estimate: 12)
   end
 
-  let(:subject) { described_class.new(reindexing_log_entry) }
+  let(:subject) { described_class.new(job_log_entry) }
 
   describe '#started_at' do
     it 'returns start_time for current_log_entry' do
-      expect(subject.started_at).to eq reindexing_log_entry.start_time
+      expect(subject.started_at).to eq job_log_entry.start_time
     end
   end
 
   describe '#updated_at' do
     it 'returns the time of last update for current_log_entry' do
-      expect(subject.updated_at).to eq reindexing_log_entry.updated_at
+      expect(subject.updated_at).to eq job_log_entry.updated_at
     end
   end
 
@@ -25,18 +25,18 @@ describe Spotlight::ReindexProgress, type: :model do
 
   describe '#finished_at' do
     it 'returns end_time for current_log_entry' do
-      expect(subject.finished_at).to eq(reindexing_log_entry.end_time)
+      expect(subject.finished_at).to eq(job_log_entry.end_time)
     end
   end
 
   describe '#total' do
-    it 'returns items_reindexed_estimate for current_log_entry' do
+    it 'returns job_items_estimate for current_log_entry' do
       expect(subject.total).to be 12
     end
   end
 
   describe '#completed' do
-    it 'returns items_reindexed_count for current_log_entry' do
+    it 'returns job_item_count for current_log_entry' do
       expect(subject.completed).to be 10
     end
   end
@@ -51,9 +51,9 @@ describe Spotlight::ReindexProgress, type: :model do
     it 'returns a hash with values for current_log_entry via the various helper methods' do
       expect(subject.as_json).to eq(
         recently_in_progress: subject.recently_in_progress?,
-        started_at: I18n.l(reindexing_log_entry.start_time, format: :short),
-        finished_at: I18n.l(reindexing_log_entry.end_time, format: :short),
-        updated_at: I18n.l(reindexing_log_entry.updated_at, format: :short),
+        started_at: I18n.l(job_log_entry.start_time, format: :short),
+        finished_at: I18n.l(job_log_entry.end_time, format: :short),
+        updated_at: I18n.l(job_log_entry.updated_at, format: :short),
         total: subject.total,
         completed: subject.completed,
         errored: subject.errored?,
@@ -64,7 +64,7 @@ describe Spotlight::ReindexProgress, type: :model do
 
   describe '#recently_in_progress?' do
     context 'there is no end_time for current_log_entry' do
-      let(:reindexing_log_entry) { FactoryGirl.create(:in_progress_reindexing_log_entry) }
+      let(:job_log_entry) { FactoryGirl.create(:in_progress_reindexing_log_entry) }
 
       it 'returns true' do
         expect(subject).to be_recently_in_progress
@@ -72,7 +72,7 @@ describe Spotlight::ReindexProgress, type: :model do
     end
 
     context 'current_log_entry has an end_time less than Spotlight::Engine.config.reindex_progress_window.minutes.ago' do
-      let(:reindexing_log_entry) { FactoryGirl.create(:recent_reindexing_log_entry, end_time: Time.zone.now) }
+      let(:job_log_entry) { FactoryGirl.create(:recent_reindexing_log_entry, end_time: Time.zone.now) }
 
       it 'returns true' do
         expect(subject).to be_recently_in_progress
@@ -80,7 +80,7 @@ describe Spotlight::ReindexProgress, type: :model do
     end
 
     context 'current_log_entry is unstarted ' do
-      let(:reindexing_log_entry) { FactoryGirl.create(:unstarted_reindexing_log_entry) }
+      let(:job_log_entry) { FactoryGirl.create(:unstarted_reindexing_log_entry) }
 
       it 'returns false' do
         expect(subject).not_to be_recently_in_progress
@@ -89,7 +89,7 @@ describe Spotlight::ReindexProgress, type: :model do
   end
 
   context 'current_log_entry is blan' do
-    let(:reindexing_log_entry) { Spotlight::JobLogEntry.new }
+    let(:job_log_entry) { Spotlight::JobLogEntry.new }
 
     # rubocop:disable RSpec/MultipleExpectations
     it 'methods return gracefully' do

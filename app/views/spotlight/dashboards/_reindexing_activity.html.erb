@@ -5,6 +5,7 @@
   <thead>
     <tr>
       <th class="col-md-3"><%= t :'.field.date' %></th>
+      <th class="col-md-2"><%= t :'.field.job_type' %></th>
       <th class="col-md-2"><%= t :'.field.user' %></th>
       <th class="col-md-1"><%= t :'.field.items_reindexed_count' %></th>
       <th class="col-md-2"><%= t :'.field.duration' %></th>
@@ -15,8 +16,9 @@
     <% @recent_reindexing.each do |log_entry| %>
       <tr>
         <td><%= l log_entry.start_time, format: :short if log_entry.start_time %></td>
+        <td><%= log_entry.job_type %></td>
         <td><%= log_entry.user.email if log_entry.user %></td>
-        <td><%= log_entry.items_reindexed_count %></td>
+        <td><%= log_entry.job_item_count %></td>
         <td><%= distance_of_time_in_words log_entry.duration, 0, include_seconds: true if log_entry.duration %></td>
         <td><%= t "reindexing_log.status.#{log_entry.job_status}" %></td>
       </tr>

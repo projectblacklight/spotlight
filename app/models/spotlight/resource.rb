@@ -44,7 +44,7 @@ module Spotlight
       #
       # @return [Integer] number of records indexed
       # rubocop:disable Metrics/MethodLength
-      def reindex(reindexing_log_entry = nil)
+      def reindex(job_log_entry = nil)
         benchmark "Reindexing #{self} (batch size: #{batch_size})" do
           count = 0
 
@@ -52,7 +52,7 @@ module Spotlight
             document_builder.documents_to_index.each_slice(batch_size) do |batch|
               write_to_index(batch)
               count += batch.length
-              reindexing_log_entry.update(items_reindexed_count: count) if reindexing_log_entry
+              job_log_entry.update(job_item_count: count) if job_log_entry
             end
 
             count

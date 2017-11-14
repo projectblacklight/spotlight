@@ -45,15 +45,15 @@ describe Spotlight::Resource, type: :model do
         end
       end
 
-      context 'reindexing_log_entry is provided' do
+      context 'job_log_entry is provided' do
         before do
           allow(subject.send(:blacklight_solr)).to receive(:update)
         end
 
         it 'updates the count of reindexed items in the log entry' do
-          reindexing_log_entry = double(Spotlight::JobLogEntry)
-          expect(reindexing_log_entry).to receive(:update).with(items_reindexed_count: 1)
-          subject.reindex reindexing_log_entry
+          job_log_entry = double(Spotlight::JobLogEntry)
+          expect(job_log_entry).to receive(:update).with(job_item_count: 1)
+          subject.reindex job_log_entry
         end
       end
 

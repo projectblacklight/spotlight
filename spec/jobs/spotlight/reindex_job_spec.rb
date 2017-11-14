@@ -47,8 +47,8 @@ describe Spotlight::ReindexJob do
         expect { subject.perform_now }.to raise_error unexpected_error
       end
 
-      it 'updates the items_reindexed_estimate field on the log entry' do
-        expect(log_entry).to receive(:update).with(items_reindexed_estimate: 1)
+      it 'updates the job_items_estimate field on the log entry' do
+        expect(log_entry).to receive(:update).with(job_items_estimate: 1)
         subject.perform_now
       end
 

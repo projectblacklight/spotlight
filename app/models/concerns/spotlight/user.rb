@@ -8,7 +8,6 @@ module Spotlight
       has_many :exhibits, class_name: 'Spotlight::Exhibit', through: :roles, source: 'resource', source_type: 'Spotlight::Exhibit'
       has_many :job_log_entries, class_name: 'Spotlight::JobLogEntry'
 
-      
       scope :with_roles, -> { where(id: Spotlight::Role.distinct.pluck(:user_id)) }
 
       before_create :add_default_roles

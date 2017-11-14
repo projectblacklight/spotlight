@@ -3,7 +3,7 @@ describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
   let(:recent_reindexing) do
     [FactoryGirl.build(:unstarted_reindexing_log_entry)] + # nil start_time is trouble for the sort_by used to create the rest of the fixture's rows
       [
-        FactoryGirl.build(:reindexing_log_entry),
+        FactoryGirl.build(:job_log_entry),
         FactoryGirl.build(:in_progress_reindexing_log_entry),
         FactoryGirl.build(:recent_reindexing_log_entry),
         FactoryGirl.build(:failed_reindexing_log_entry)

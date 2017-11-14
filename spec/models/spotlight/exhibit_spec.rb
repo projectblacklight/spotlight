@@ -5,7 +5,7 @@ describe Spotlight::Exhibit, type: :model do
     subject.title = 'Test title'
     expect(subject.title).to eq 'Test title'
   end
-
+  
   
   it 'has a subtitle' do
     subject.subtitle = 'Test subtitle'
@@ -164,13 +164,13 @@ describe Spotlight::Exhibit, type: :model do
 
   describe '#reindex_later' do
     subject { FactoryGirl.create(:exhibit) }
-    let(:log_entry) { Spotlight::JobLogEntry.new(exhibit: subject, user: user, items_reindexed_count: 0) }
+    let(:log_entry) { Spotlight::JobLogEntry.new(exhibit: subject, user: user, job_item_count: 0) }
 
     context 'user is omitted' do
       let(:user) { nil }
 
       it 'queues a reindex job for the exhibit, with nil user for the log entry' do
-        expect(subject).to receive(:new_reindexing_log_entry).with(nil).and_return(log_entry)
+        expect(subject).to receive(:new_job_log_entry).with(nil).and_return(log_entry)
         expect(Spotlight::ReindexJob).to receive(:perform_later).with(subject, log_entry)
         subject.reindex_later
         expect(log_entry.user).to be nil
@@ -181,7 +181,7 @@ describe Spotlight::Exhibit, type: :model do
       let(:user) { FactoryGirl.build(:user) }
 
       it 'queues a reindex job for the exhibit, with actual user for the log entry' do
-        expect(subject).to receive(:new_reindexing_log_entry).with(user).and_return(log_entry)
+        expect(subject).to receive(:new_job_log_entry).with(user).and_return(log_entry)
         expect(Spotlight::ReindexJob).to receive(:perform_later).with(subject, log_entry)
         subject.reindex_later user
         expect(log_entry.user).to eq user
@@ -189,22 +189,22 @@ describe Spotlight::Exhibit, type: :model do
     end
   end
 
-  describe '#new_reindexing_log_entry' do
+  describe '#new_job_log_entry' do
     let(:user) { FactoryGirl.build(:user) }
     it 'returns a properly configured Spotlight::JobLogEntry instance' do
-      reindexing_log_entry = subject.send(:new_reindexing_log_entry, user)
-      expect(reindexing_log_entry.exhibit).to eq subject
-      expect(reindexing_log_entry.user).to eq user
-      expect(reindexing_log_entry.items_reindexed_count).to eq 0
-      expect(reindexing_log_entry.unstarted?).to be true
+      job_log_entry = subject.send(:new_job_log_entry, user)
+      expect(job_log_entry.exhibit).to eq subject
+      expect(job_log_entry.user).to eq user
+      expect(job_log_entry.job_item_count).to eq 0
+      expect(job_log_entry.unstarted?).to be true
     end
 
     it 'does not require user the user parameter' do
-      reindexing_log_entry = subject.send(:new_reindexing_log_entry)
-      expect(reindexing_log_entry.exhibit).to eq subject
-      expect(reindexing_log_entry.user).to be nil
-      expect(reindexing_log_entry.items_reindexed_count).to eq 0
-      expect(reindexing_log_entry.unstarted?).to be true
+      job_log_entry = subject.send(:new_job_log_entry)
+      expect(job_log_entry.exhibit).to eq subject
+      expect(job_log_entry.user).to be nil
+      expect(job_log_entry.job_item_count).to eq 0
+      expect(job_log_entry.unstarted?).to be true
     end
   end
 
@@ -279,7 +279,7 @@ describe Spotlight::Exhibit, type: :model do
     let!(:job_log_entries) do
       [
         FactoryGirl.create(:unstarted_reindexing_log_entry, exhibit: exhibit),
-        FactoryGirl.create(:reindexing_log_entry, exhibit: exhibit),
+        FactoryGirl.create(:job_log_entry, exhibit: exhibit),
         in_progress_entry,
         FactoryGirl.create(:failed_reindexing_log_entry, exhibit: exhibit),
         FactoryGirl.create(:unstarted_reindexing_log_entry, exhibit: exhibit)

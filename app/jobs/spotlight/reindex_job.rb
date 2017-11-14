@@ -8,10 +8,10 @@ module Spotlight
       job_log_entry = log_entry(job)
       next unless job_log_entry
 
-      items_reindexed_estimate = resource_list(job.arguments.first).sum do |resource|
+      job_items_estimate = resource_list(job.arguments.first).sum do |resource|
         resource.document_builder.documents_to_index.size
       end
-      job_log_entry.update(items_reindexed_estimate: items_reindexed_estimate)
+      job_log_entry.update(job_items_estimate: job_items_estimate)
     end
 
     around_perform do |job, block|
