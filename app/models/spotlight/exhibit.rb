@@ -33,7 +33,7 @@ module Spotlight
     has_many :feature_pages, extend: FriendlyId::FinderMethods
     has_many :main_navigations, dependent: :delete_all
     has_many :owned_taggings, class_name: 'ActsAsTaggableOn::Tagging', as: :tagger
-    has_many :reindexing_log_entries, dependent: :destroy
+    has_many :job_log_entries, dependent: :destroy
     has_many :resources
     has_many :roles, as: :resource, dependent: :delete_all
     has_many :searches, dependent: :destroy, extend: FriendlyId::FinderMethods
@@ -113,8 +113,8 @@ module Spotlight
 
     private
 
-    def current_reindexing_log_entry
-      reindexing_log_entries.started_or_completed.first || reindexing_log_entries.build
+    def current_job_log_entry
+      job_log_entries.started_or_completed.first || job_log_entries.build
     end
   end
 end

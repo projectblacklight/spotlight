@@ -275,7 +275,7 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#reindex_progress' do
-    let!(:reindexing_log_entries) do
+    let!(:job_log_entries) do
       [
         FactoryGirl.create(:unstarted_reindexing_log_entry, exhibit: exhibit),
         FactoryGirl.create(:reindexing_log_entry, exhibit: exhibit),
