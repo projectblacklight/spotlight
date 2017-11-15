@@ -6,7 +6,7 @@ SirTrevor.Blocks.LinkToSearch = (function(){
 
     type: "link_to_search",
 
-    icon_name: 'link_to_search',
+    icon_name: 'search_results',
 
     searches_key: "slug",
     view_key: "view",
