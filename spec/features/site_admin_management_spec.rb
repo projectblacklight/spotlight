@@ -64,6 +64,17 @@ describe 'Site admin management', js: true do
     expect(page).not_to have_css(:td, text: 'not-an-admin@example.com')
   end
 
+  it 'sends an invitation email to users who do not exist' do
+    click_link 'Add new administrator'
+
+    fill_in 'user_email', with: 'a-user-that-did-not-exist@example.com'
+
+    expect do
+      click_button 'Add role'
+    end.to change { Devise::Mailer.deliveries.count }.by(1)
+    expect(User.where(email: 'a-user-that-did-not-exist@example.com').first.invitation_sent_at).to be_present
+  end
+
   it 'does not provide a button for users to remove their own adminstrator privs' do
     click_link 'Add new administrator'
 
