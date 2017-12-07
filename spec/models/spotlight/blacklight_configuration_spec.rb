@@ -289,6 +289,19 @@ describe Spotlight::BlacklightConfiguration, type: :model do
 
       expect(subject.blacklight_config.show_fields.keys).to eq %w(c a b)
     end
+
+    context 'title only configuration' do
+      before do
+        blacklight_config.configure do |config|
+          config.view.gallery.title_only_by_default = true
+          config.add_index_field 'a'
+        end
+      end
+      it 'only shows titles (i.e., no metadata) for gallery view' do
+        expect(subject.blacklight_config.index_fields['a'][:list]).to eq true
+        expect(subject.blacklight_config.index_fields['a'][:gallery]).to eq false
+      end
+    end
   end
 
   describe 'a newly created instance' do
