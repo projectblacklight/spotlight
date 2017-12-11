@@ -173,6 +173,8 @@ module Spotlight
             v.validate!
           end
         end
+        
+        config.add_facet_fields_to_solr_request!
 
         config.per_page = (config.per_page & per_page) unless per_page.blank?
 

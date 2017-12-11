@@ -204,7 +204,9 @@
 
   <copyField source="id" dest="id_ng" maxChars="3000"/>
   <copyField source="full_title_tesim" dest="full_title_ng" maxChars="3000"/>
+  <copyField source="full_title_tesim" dest="title_sort" />
   <copyField source="*_tesim" dest="all_text_timv" maxChars="3000"/>
+  <copyField source="*_ssim" dest="all_text_timv" maxChars="3000" />
 
   <types>
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
