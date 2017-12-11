@@ -29,11 +29,11 @@ module Spotlight
     end
 
     def total
-      current_log_entry.items_reindexed_estimate
+      current_log_entry.job_items_estimate
     end
 
     def completed
-      current_log_entry.items_reindexed_count
+      current_log_entry.job_item_count
     end
 
     def errored?

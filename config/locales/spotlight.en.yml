@@ -339,11 +339,12 @@ en:
       show:
         header: Dashboard
       reindexing_activity:
-        no_reindexing_activity: There has been no reindexing activity
-        header: Recent Item Indexing Activity
+        no_reindexing_activity: There has been no recent job activity
+        header: Recent Item Job Activity
         field:
           date: Date
-          items_reindexed_count: Items Indexed
+          job_type: Job Type
+          items_reindexed_count: Items Completed
           duration: Elapsed Time
           job_status: Status
           user: Requested By

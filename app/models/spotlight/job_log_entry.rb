@@ -1,7 +1,7 @@
 module Spotlight
   ##
   # a log entry representing an attempt to reindex some number of records in an exhibit
-  class ReindexingLogEntry < ActiveRecord::Base
+  class JobLogEntry < ActiveRecord::Base
     enum job_status: { unstarted: 0, in_progress: 1, succeeded: 2, failed: 3 }
 
     belongs_to :exhibit, class_name: 'Spotlight::Exhibit'

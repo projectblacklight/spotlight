@@ -1,11 +1,12 @@
 describe Spotlight::Exhibit, type: :model do
-  subject(:exhibit) { FactoryBot.build(:exhibit, title: 'Sample') }
+  subject(:exhibit) { FactoryGirl.build(:exhibit, title: 'Sample') }
 
   it 'has a title' do
     subject.title = 'Test title'
     expect(subject.title).to eq 'Test title'
   end
-
+  
+  
   it 'has a subtitle' do
     subject.subtitle = 'Test subtitle'
     expect(subject.subtitle).to eq 'Test subtitle'
@@ -46,7 +47,7 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#main_navigations' do
-    subject { FactoryBot.create(:exhibit, title: 'Sample') }
+    subject { FactoryGirl.create(:exhibit, title: 'Sample') }
     it 'has main navigations' do
       expect(subject.main_navigations).to have(3).main_navigations
       expect(subject.main_navigations.map(&:label).compact).to be_blank
@@ -86,7 +87,7 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#blacklight_config' do
-    subject { FactoryBot.create(:exhibit) }
+    subject { FactoryGirl.create(:exhibit) }
     before do
       subject.blacklight_configuration.index = { timestamp_field: 'timestamp_field' }
       subject.save!
@@ -99,7 +100,7 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#solr_data' do
-    let(:exhibit) { FactoryBot.create(:exhibit) }
+    let(:exhibit) { FactoryGirl.create(:exhibit) }
     subject { exhibit.solr_data }
 
     context 'when not filtering by exhibit' do
@@ -133,7 +134,7 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#analytics' do
-    subject { FactoryBot.create(:exhibit) }
+    subject { FactoryGirl.create(:exhibit) }
     let(:ga_data) { OpenStruct.new(pageviews: 123) }
 
     before do
@@ -147,7 +148,7 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#page_analytics' do
-    subject { FactoryBot.create(:exhibit) }
+    subject { FactoryGirl.create(:exhibit) }
     let(:ga_data) { [OpenStruct.new(pageviews: 123)] }
 
     before do
@@ -162,14 +163,14 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#reindex_later' do
-    subject { FactoryBot.create(:exhibit) }
-    let(:log_entry) { Spotlight::ReindexingLogEntry.new(exhibit: subject, user: user, items_reindexed_count: 0) }
+    subject { FactoryGirl.create(:exhibit) }
+    let(:log_entry) { Spotlight::JobLogEntry.new(exhibit: subject, user: user, job_item_count: 0) }
 
     context 'user is omitted' do
       let(:user) { nil }
 
       it 'queues a reindex job for the exhibit, with nil user for the log entry' do
-        expect(subject).to receive(:new_reindexing_log_entry).with(nil).and_return(log_entry)
+        expect(subject).to receive(:new_job_log_entry).with(nil).and_return(log_entry)
         expect(Spotlight::ReindexJob).to receive(:perform_later).with(subject, log_entry)
         subject.reindex_later
         expect(log_entry.user).to be nil
@@ -177,10 +178,10 @@ describe Spotlight::Exhibit, type: :model do
     end
 
     context 'non-nil user is provided' do
-      let(:user) { FactoryBot.build(:user) }
+      let(:user) { FactoryGirl.build(:user) }
 
       it 'queues a reindex job for the exhibit, with actual user for the log entry' do
-        expect(subject).to receive(:new_reindexing_log_entry).with(user).and_return(log_entry)
+        expect(subject).to receive(:new_job_log_entry).with(user).and_return(log_entry)
         expect(Spotlight::ReindexJob).to receive(:perform_later).with(subject, log_entry)
         subject.reindex_later user
         expect(log_entry.user).to eq user
@@ -188,22 +189,22 @@ describe Spotlight::Exhibit, type: :model do
     end
   end
 
-  describe '#new_reindexing_log_entry' do
-    let(:user) { FactoryBot.build(:user) }
-    it 'returns a properly configured Spotlight::ReindexingLogEntry instance' do
-      reindexing_log_entry = subject.send(:new_reindexing_log_entry, user)
-      expect(reindexing_log_entry.exhibit).to eq subject
-      expect(reindexing_log_entry.user).to eq user
-      expect(reindexing_log_entry.items_reindexed_count).to eq 0
-      expect(reindexing_log_entry.unstarted?).to be true
+  describe '#new_job_log_entry' do
+    let(:user) { FactoryGirl.build(:user) }
+    it 'returns a properly configured Spotlight::JobLogEntry instance' do
+      job_log_entry = subject.send(:new_job_log_entry, user)
+      expect(job_log_entry.exhibit).to eq subject
+      expect(job_log_entry.user).to eq user
+      expect(job_log_entry.job_item_count).to eq 0
+      expect(job_log_entry.unstarted?).to be true
     end
 
     it 'does not require user the user parameter' do
-      reindexing_log_entry = subject.send(:new_reindexing_log_entry)
-      expect(reindexing_log_entry.exhibit).to eq subject
-      expect(reindexing_log_entry.user).to be nil
-      expect(reindexing_log_entry.items_reindexed_count).to eq 0
-      expect(reindexing_log_entry.unstarted?).to be true
+      job_log_entry = subject.send(:new_job_log_entry)
+      expect(job_log_entry.exhibit).to eq subject
+      expect(job_log_entry.user).to be nil
+      expect(job_log_entry.job_item_count).to eq 0
+      expect(job_log_entry.unstarted?).to be true
     end
   end
 
@@ -259,8 +260,8 @@ describe Spotlight::Exhibit, type: :model do
 
   describe '#requested_by' do
     context 'with multiple exhibit users' do
-      let!(:exhibit_admin) { FactoryBot.create(:exhibit_admin, exhibit: subject) }
-      let!(:another_exhibit_admin) { FactoryBot.create(:exhibit_admin, exhibit: subject) }
+      let!(:exhibit_admin) { FactoryGirl.create(:exhibit_admin, exhibit: subject) }
+      let!(:another_exhibit_admin) { FactoryGirl.create(:exhibit_admin, exhibit: subject) }
 
       it 'is the first listed user' do
         expect(subject.requested_by).to eq exhibit_admin
@@ -275,18 +276,18 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#reindex_progress' do
-    let!(:reindexing_log_entries) do
+    let!(:job_log_entries) do
       [
-        FactoryBot.create(:unstarted_reindexing_log_entry, exhibit: exhibit),
-        FactoryBot.create(:reindexing_log_entry, exhibit: exhibit),
+        FactoryGirl.create(:unstarted_reindexing_log_entry, exhibit: exhibit),
+        FactoryGirl.create(:job_log_entry, exhibit: exhibit),
         in_progress_entry,
-        FactoryBot.create(:failed_reindexing_log_entry, exhibit: exhibit),
-        FactoryBot.create(:unstarted_reindexing_log_entry, exhibit: exhibit)
+        FactoryGirl.create(:failed_reindexing_log_entry, exhibit: exhibit),
+        FactoryGirl.create(:unstarted_reindexing_log_entry, exhibit: exhibit)
       ]
     end
 
     let(:in_progress_entry) do
-      FactoryBot.create(:in_progress_reindexing_log_entry, exhibit: exhibit)
+      FactoryGirl.create(:in_progress_reindexing_log_entry, exhibit: exhibit)
     end
 
     it 'returns the latest log entry that is not unstarted' do
@@ -294,9 +295,5 @@ describe Spotlight::Exhibit, type: :model do
       expect(reindex_progress).to be_a Spotlight::ReindexProgress
       expect(reindex_progress.current_log_entry).to eq in_progress_entry
     end
-  end
-
-  it 'is expected to be versioned' do
-    is_expected.to be_versioned
   end
 end

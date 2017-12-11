@@ -18,8 +18,8 @@ module Spotlight
 
       @pages = @exhibit.pages.recent.limit(5)
       @solr_documents = load_recent_solr_documents 5
-      @recent_reindexing = @exhibit.reindexing_log_entries.recent
-
+      @recent_reindexing = @exhibit.job_log_entries.recent
+ 
       attach_dashboard_breadcrumbs
     end
 

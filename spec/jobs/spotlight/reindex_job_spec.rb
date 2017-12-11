@@ -1,9 +1,9 @@
 
 describe Spotlight::ReindexJob do
-  let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:resource) { FactoryBot.create(:resource) }
-  let(:user) { FactoryBot.create(:user) }
-  let(:log_entry) { Spotlight::ReindexingLogEntry.create(exhibit: exhibit, user: user) }
+  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:resource) { FactoryGirl.create(:resource) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:log_entry) { Spotlight::JobLogEntry.create(exhibit: exhibit, user: user) }
 
   before do
     allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
@@ -47,8 +47,8 @@ describe Spotlight::ReindexJob do
         expect { subject.perform_now }.to raise_error unexpected_error
       end
 
-      it 'updates the items_reindexed_estimate field on the log entry' do
-        expect(log_entry).to receive(:update).with(items_reindexed_estimate: 1)
+      it 'updates the job_items_estimate field on the log entry' do
+        expect(log_entry).to receive(:update).with(job_items_estimate: 1)
         subject.perform_now
       end
 

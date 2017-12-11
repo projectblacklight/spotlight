@@ -26,6 +26,7 @@ module Spotlight
     delegate :blacklight_config, to: :blacklight_configuration
     serialize :facets, Array
 
+    
     # Note: friendly id associations need to be 'destroy'ed to reap the slug history
     has_many :about_pages, extend: FriendlyId::FinderMethods
     has_many :attachments, dependent: :destroy
@@ -35,7 +36,7 @@ module Spotlight
     has_many :feature_pages, extend: FriendlyId::FinderMethods
     has_many :main_navigations, dependent: :delete_all
     has_many :owned_taggings, class_name: 'ActsAsTaggableOn::Tagging', as: :tagger
-    has_many :reindexing_log_entries, dependent: :destroy
+    has_many :job_log_entries, dependent: :destroy
     has_many :resources
     has_many :roles, as: :resource, dependent: :delete_all
     has_many :searches, dependent: :destroy, extend: FriendlyId::FinderMethods
@@ -84,7 +85,7 @@ module Spotlight
     end
 
     def reindex_later(user = nil)
-      Spotlight::ReindexJob.perform_later(self, new_reindexing_log_entry(user))
+      Spotlight::ReindexJob.perform_later(self, new_job_log_entry(user, 'Reindexing'))
     end
 
     def uploaded_resource_fields
@@ -100,7 +101,7 @@ module Spotlight
     end
 
     def reindex_progress
-      @reindex_progress ||= ReindexProgress.new(current_reindexing_log_entry)
+      @reindex_progress ||= ReindexProgress.new(current_job_log_entry)
     end
 
     protected
@@ -109,14 +110,14 @@ module Spotlight
       self.description = ::Rails::Html::FullSanitizer.new.sanitize(description)
     end
 
-    def new_reindexing_log_entry(user = nil)
-      Spotlight::ReindexingLogEntry.create(exhibit: self, user: user, items_reindexed_count: 0, job_status: 'unstarted')
+    def new_job_log_entry(user = nil, job_type = 'Reindexing')
+      Spotlight::JobLogEntry.create(exhibit: self, user: user, job_item_count: 0, job_status: 'unstarted', job_type: job_type)
     end
 
     private
 
-    def current_reindexing_log_entry
-      reindexing_log_entries.started_or_completed.first || reindexing_log_entries.build
+    def current_job_log_entry
+      job_log_entries.started_or_completed.first || job_log_entries.build
     end
   end
 end
