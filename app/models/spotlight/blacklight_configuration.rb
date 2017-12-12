@@ -319,7 +319,14 @@ module Spotlight
       return unless index_fields.blank?
 
       views = default_blacklight_config.view.keys | [:show, :enabled]
-      field.merge! Hash[views.map { |v| [v, true] }]
+      field.merge! Hash[views.map { |v| [v, !title_only_by_default?(v)] }]
+    end
+
+    # Check to see whether config.view.foobar.title_only_by_default is available
+    def title_only_by_default?(view)
+      return false if [:show, :enabled].include?(view)
+      title_only = default_blacklight_config.view.send(:[], view).try(:title_only_by_default)
+      title_only.nil? ? false : title_only
     end
 
     def set_show_field_defaults(field)
