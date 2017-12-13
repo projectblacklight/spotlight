@@ -1,6 +1,6 @@
 describe Spotlight::ContactFormsController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:honeypot_field_name) { Spotlight::Engine.config.spambot_honeypot_email_field }
 
   before do

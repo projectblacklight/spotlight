@@ -1,10 +1,10 @@
-describe Spotlight::AboutPagesController, type: :controller do
+describe Spotlight::AboutPagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { 'title' => 'MyString', thumbnail: { iiif_url: '' } } }
 
   describe 'when not logged in' do
     describe 'POST update_all' do
-      let(:exhibit) { FactoryGirl.create(:exhibit) }
+      let(:exhibit) { FactoryBot.create(:exhibit) }
       it 'is not allowed' do
         post :update_all, params: { exhibit_id: exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
@@ -13,13 +13,13 @@ describe Spotlight::AboutPagesController, type: :controller do
   end
 
   describe 'when signed in as a curator' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
-    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
     before { sign_in user }
 
     describe 'GET show' do
-      let(:page) { FactoryGirl.create(:about_page, weight: 0, exhibit: exhibit) }
-      let(:page2) { FactoryGirl.create(:about_page, weight: 5, exhibit: exhibit) }
+      let(:page) { FactoryBot.create(:about_page, weight: 0, exhibit: exhibit) }
+      let(:page2) { FactoryBot.create(:about_page, weight: 5, exhibit: exhibit) }
       describe 'on the main about page' do
         it 'is successful' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
@@ -42,8 +42,8 @@ describe Spotlight::AboutPagesController, type: :controller do
     end
 
     describe 'GET edit' do
-      let!(:page) { FactoryGirl.create(:about_page, weight: 0, exhibit: exhibit) }
-      let!(:page2) { FactoryGirl.create(:about_page, weight: 5, exhibit: exhibit) }
+      let!(:page) { FactoryBot.create(:about_page, weight: 0, exhibit: exhibit) }
+      let!(:page2) { FactoryBot.create(:about_page, weight: 5, exhibit: exhibit) }
       describe 'on the main about page' do
         it 'is successful' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
@@ -66,7 +66,7 @@ describe Spotlight::AboutPagesController, type: :controller do
     end
 
     describe 'GET index' do
-      let!(:page) { FactoryGirl.create(:about_page, exhibit: exhibit) }
+      let!(:page) { FactoryBot.create(:about_page, exhibit: exhibit) }
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
@@ -85,7 +85,7 @@ describe Spotlight::AboutPagesController, type: :controller do
       end
     end
     describe 'PUT update' do
-      let!(:page) { FactoryGirl.create(:about_page, exhibit: exhibit) }
+      let!(:page) { FactoryBot.create(:about_page, exhibit: exhibit) }
       it 'redirects to the about page' do
         put :update, params: { id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes }
         page.reload
@@ -94,9 +94,9 @@ describe Spotlight::AboutPagesController, type: :controller do
       end
     end
     describe 'POST update_all' do
-      let!(:page1) { FactoryGirl.create(:about_page, exhibit: exhibit) }
-      let!(:page2) { FactoryGirl.create(:about_page, exhibit: exhibit, published: true) }
-      let!(:page3) { FactoryGirl.create(:about_page, exhibit: exhibit, published: true) }
+      let!(:page1) { FactoryBot.create(:about_page, exhibit: exhibit) }
+      let!(:page2) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
+      let!(:page3) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
       before { request.env['HTTP_REFERER'] = 'http://example.com' }
       it 'updates whether they are on the landing page' do
         post :update_all, params: {
@@ -118,8 +118,8 @@ describe Spotlight::AboutPagesController, type: :controller do
     end
 
     describe 'PATCH update_contacts' do
-      let!(:contact1) { FactoryGirl.create(:contact, name: 'Aphra Behn', exhibit: exhibit) }
-      let!(:contact2) { FactoryGirl.create(:contact, exhibit: exhibit) }
+      let!(:contact1) { FactoryBot.create(:contact, name: 'Aphra Behn', exhibit: exhibit) }
+      let!(:contact2) { FactoryBot.create(:contact, exhibit: exhibit) }
       it 'updates contacts' do
         patch :update_contacts, params: {
           exhibit_id: exhibit,

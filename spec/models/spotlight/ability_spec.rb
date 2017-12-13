@@ -4,10 +4,10 @@ describe Spotlight::Ability, type: :model do
   before do
     allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
   end
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:search) { FactoryGirl.create(:published_search, exhibit: exhibit) }
-  let(:unpublished_search) { FactoryGirl.create(:search, exhibit: exhibit) }
-  let(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:search) { FactoryBot.create(:published_search, exhibit: exhibit) }
+  let(:unpublished_search) { FactoryBot.create(:search, exhibit: exhibit) }
+  let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
   subject { Ability.new(user) }
 
   describe 'a user with no roles' do
@@ -22,14 +22,14 @@ describe Spotlight::Ability, type: :model do
   end
 
   describe 'a superadmin' do
-    let(:user) { FactoryGirl.create(:site_admin) }
+    let(:user) { FactoryBot.create(:site_admin) }
 
     it { is_expected.to be_able_to(:create, Spotlight::Exhibit) }
   end
 
   describe 'a user with admin role' do
-    let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
-    let(:role) { FactoryGirl.create(:role, resource: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+    let(:role) { FactoryBot.create(:role, resource: exhibit) }
 
     it { is_expected.to be_able_to(:update, exhibit) }
 
@@ -46,7 +46,7 @@ describe Spotlight::Ability, type: :model do
   end
 
   describe 'a user with curate role' do
-    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
 
     it { is_expected.not_to be_able_to(:update, exhibit) }
     it { is_expected.to be_able_to(:curate, exhibit) }
@@ -64,7 +64,7 @@ describe Spotlight::Ability, type: :model do
 
     it { is_expected.to be_able_to(:tag, exhibit) }
 
-    let(:contact) { FactoryGirl.create(:contact, exhibit: exhibit) }
+    let(:contact) { FactoryBot.create(:contact, exhibit: exhibit) }
 
     it { is_expected.to be_able_to(:edit, contact) }
     it { is_expected.to be_able_to(:new, contact) }

@@ -5,6 +5,8 @@ module Spotlight
   # Exhibit-specific blacklight configuration model
   # rubocop:disable Metrics/ClassLength
   class BlacklightConfiguration < ActiveRecord::Base
+    has_paper_trail
+
     belongs_to :exhibit, touch: true, optional: true
     serialize :facet_fields, Hash
     serialize :index_fields, Hash
@@ -88,6 +90,7 @@ module Spotlight
 
         # Update with customizations
         config.index_fields.each do |k, v|
+          v.original = v.dup
           if index_fields[k]
             v.merge! index_fields[k].symbolize_keys
           elsif custom_index_fields[k]
@@ -99,7 +102,6 @@ module Spotlight
           v.immutable = Blacklight::OpenStructWithHashAccess.new(v.immutable)
           v.merge! v.immutable.to_h.symbolize_keys
 
-          v.upstream_if = v.if unless v.if.nil?
           v.if = :field_enabled? unless v.if == false
 
           v.normalize! config
@@ -109,6 +111,7 @@ module Spotlight
         config.show_fields.reject! { |_k, v| v.if == false }
 
         config.show_fields.reject { |k, _v| config.index_fields[k] }.each do |k, v|
+          v.original = v.dup
           config.index_fields[k] = v
 
           if index_fields[k]
@@ -120,7 +123,6 @@ module Spotlight
           v.immutable = Blacklight::OpenStructWithHashAccess.new(v.immutable)
           v.merge! v.immutable.to_h.symbolize_keys
 
-          v.upstream_if = v.if unless v.if.nil?
           v.if = :field_enabled? unless v.if == false
 
           v.normalize! config
@@ -133,7 +135,7 @@ module Spotlight
           config.search_fields = Hash[config.search_fields.sort_by { |k, _v| field_weight(search_fields, k) }]
 
           config.search_fields.each do |k, v|
-            v.upstream_if = v.if unless v.if.nil?
+            v.original = v.dup
             v.if = :field_enabled? unless v.if == false
             next if search_fields[k].blank?
 
@@ -147,7 +149,7 @@ module Spotlight
           config.sort_fields = Hash[config.sort_fields.sort_by { |k, _v| field_weight(sort_fields, k) }]
 
           config.sort_fields.each do |k, v|
-            v.upstream_if = v.if unless v.if.nil?
+            v.original = v.dup
             v.if = :field_enabled? unless v.if == false
             next if sort_fields[k].blank?
 
@@ -162,13 +164,12 @@ module Spotlight
           config.facet_fields = Hash[config.facet_fields.sort_by { |k, _v| field_weight(facet_fields, k) }]
 
           config.facet_fields.each do |k, v|
+            v.original = v.dup
             next if facet_fields[k].blank?
 
             v.merge! facet_fields[k].symbolize_keys
-            v.upstream_if = v.if unless v.if.nil?
             v.enabled = v.show
             v.if = :field_enabled? unless v.if == false
-            v.upstream_if = nil if v.upstream_if == v.if
             v.normalize! config
             v.validate!
           end
@@ -182,8 +183,8 @@ module Spotlight
         end
 
         config.view.each do |k, v|
+          v.original = v.dup
           v.key = k
-          v.upstream_if = v.if unless v.if.nil?
           v.if = :enabled_in_spotlight_view_type_configuration? unless v.if == false
         end unless document_index_view_types.blank?
 
@@ -318,7 +319,14 @@ module Spotlight
       return unless index_fields.blank?
 
       views = default_blacklight_config.view.keys | [:show, :enabled]
-      field.merge! Hash[views.map { |v| [v, true] }]
+      field.merge! Hash[views.map { |v| [v, !title_only_by_default?(v)] }]
+    end
+
+    # Check to see whether config.view.foobar.title_only_by_default is available
+    def title_only_by_default?(view)
+      return false if [:show, :enabled].include?(view)
+      title_only = default_blacklight_config.view.send(:[], view).try(:title_only_by_default)
+      title_only.nil? ? false : title_only
     end
 
     def set_show_field_defaults(field)

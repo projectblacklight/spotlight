@@ -1,6 +1,6 @@
-describe 'Home page', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+describe 'Home page', type: :feature, versioning: true do
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
   it 'exists by default on exhibits' do
     visit spotlight.exhibit_dashboard_path(exhibit)
@@ -58,7 +58,7 @@ describe 'Home page', type: :feature do
 
   describe 'page options on edit form' do
     describe 'show title' do
-      let(:home_page) { FactoryGirl.create(:home_page, display_title: false, exhibit: exhibit) }
+      let(:home_page) { FactoryBot.create(:home_page, display_title: false, exhibit: exhibit) }
       it 'is updatable from the edit page' do
         expect(home_page.display_title).to be_falsey
 

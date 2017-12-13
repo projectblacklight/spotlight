@@ -20,7 +20,7 @@ describe Spotlight::Resources::IiifManifest do
 
   describe '#to_solr' do
     let(:manifest) { Spotlight::Resources::IiifService.new(url).send(:object) }
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
     describe 'id' do
       it 'is an MD5 hexdigest of the exhibit id and the and the url' do
         expected = Digest::MD5.hexdigest("#{exhibit.id}-#{url}")

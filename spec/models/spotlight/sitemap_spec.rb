@@ -2,7 +2,7 @@ require 'sitemap_generator'
 
 describe Spotlight::Sitemap do
   let(:sitemap) { SitemapGenerator::Interpreter.new }
-  let(:exhibit) { FactoryGirl.create(:exhibit, published: true) }
+  let(:exhibit) { FactoryBot.create(:exhibit, published: true) }
   let(:blacklight_config) { Blacklight::Configuration.new }
   let(:sitemap_content) { sitemap.sitemap.sitemap.instance_variable_get(:@xml_content) }
   let(:url_helpers) { Spotlight::Engine.routes.url_helpers }
@@ -18,8 +18,8 @@ describe Spotlight::Sitemap do
   end
 
   describe '.add_all_exhibits' do
-    let!(:second_exhibit) { FactoryGirl.create(:exhibit, published: true) }
-    let!(:unpublished_exhibit) { FactoryGirl.create(:exhibit, published: false) }
+    let!(:second_exhibit) { FactoryBot.create(:exhibit, published: true) }
+    let!(:unpublished_exhibit) { FactoryBot.create(:exhibit, published: false) }
 
     it 'builds a sitemap for all published exhibits' do
       sitemaps = []
@@ -73,8 +73,8 @@ describe Spotlight::Sitemap do
   end
 
   describe '#add_pages' do
-    let!(:feature_page) { FactoryGirl.create(:feature_page, exhibit: exhibit, published: true) }
-    let!(:about_page) { FactoryGirl.create(:about_page, exhibit: exhibit, published: true) }
+    let!(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit, published: true) }
+    let!(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
 
     it 'adds feature pages' do
       subject.add_pages
@@ -101,7 +101,7 @@ describe Spotlight::Sitemap do
   end
 
   describe '#add_browse_categories' do
-    let!(:search) { FactoryGirl.create(:published_search, exhibit: exhibit) }
+    let!(:search) { FactoryBot.create(:published_search, exhibit: exhibit) }
 
     it 'adds browse categories to the sitemap' do
       subject.add_browse_categories

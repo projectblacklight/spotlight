@@ -1,9 +1,9 @@
 describe Spotlight::BrowseController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let!(:search) { FactoryGirl.create(:published_search, exhibit: exhibit) }
-  let!(:unpublished) { FactoryGirl.create(:search, exhibit: exhibit) }
-  let(:admin) { FactoryGirl.create(:site_admin) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let!(:search) { FactoryBot.create(:published_search, exhibit: exhibit) }
+  let!(:unpublished) { FactoryBot.create(:search, exhibit: exhibit) }
+  let(:admin) { FactoryBot.create(:site_admin) }
 
   describe 'when authenticated as an admin' do
     before { sign_in admin }

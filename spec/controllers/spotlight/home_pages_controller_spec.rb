@@ -1,11 +1,11 @@
-describe Spotlight::HomePagesController, type: :controller do
+describe Spotlight::HomePagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { 'title' => 'MyString', thumbnail: { iiif_url: '' } } }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:page) { exhibit.home_page }
 
   describe 'when signed in as a curator' do
-    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
     before do
       sign_in user
     end
@@ -76,7 +76,7 @@ describe Spotlight::HomePagesController, type: :controller do
       end
 
       it 'redirects an unauthorized user to the signin path' do
-        user = FactoryGirl.create(:exhibit_curator)
+        user = FactoryBot.create(:exhibit_curator)
         sign_in user
         expect do
           get :show, params: { exhibit_id: exhibit }
@@ -84,7 +84,7 @@ describe Spotlight::HomePagesController, type: :controller do
       end
 
       it 'redirects an authorized user to the signin path' do
-        user = FactoryGirl.create(:exhibit_curator, exhibit: exhibit)
+        user = FactoryBot.create(:exhibit_curator, exhibit: exhibit)
         sign_in user
         get :show, params: { exhibit_id: exhibit }
         expect(response).to be_successful

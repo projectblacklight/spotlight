@@ -1,6 +1,6 @@
 describe Spotlight::MainNavigation, type: :model do
   before do
-    subject.exhibit = FactoryGirl.create(:exhibit)
+    subject.exhibit = FactoryBot.create(:exhibit)
   end
 
   it 'has a default_label' do

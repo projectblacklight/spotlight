@@ -472,6 +472,10 @@ en:
           items:
             one: "%{count} item"
             other: "%{count} items"
+        link_to_search_block:
+          items:
+            one: "%{count} item"
+            other: "%{count} items"
     contacts:
       edit:
         header: "Edit Contact"

@@ -6,7 +6,7 @@ describe Spotlight::IiifResourceResolver do
   end
   let(:iiif_manifest_url) { 'https://purl.stanford.edu/gk446cj2442/manifest.json' }
   let(:resource) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :featured_image,
       iiif_manifest_url: iiif_manifest_url,
       iiif_image_id: 'https://purl.stanford.edu/gk446cj2442/iiif/annotation/gk446cj2442_1',

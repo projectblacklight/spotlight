@@ -28,7 +28,7 @@
       </thead>
       <tbody class="metadata_fields dd dd-list" data-behavior="nestable" data-max-depth="1" data-list-node-name="tbody" data-item-node-name="tr" data-expand-btn-HTML=" " data-collapse-btn-HTML=" ">
         <%= f.fields_for :index_fields do |idxf| %>
-          <% @blacklight_configuration.blacklight_config.index_fields.each do |key, config| %>
+          <% @blacklight_configuration.blacklight_config.index_fields.select { |k, v| blacklight_configuration_context.evaluate_if_unless_configuration(v.original) }.each do |key, config| %>
             <%= render partial: 'metadata_field', locals: { key: key, config: config, f: idxf } %>
           <% end %>
         <% end %>

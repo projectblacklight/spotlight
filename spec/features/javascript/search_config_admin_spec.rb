@@ -1,6 +1,6 @@
 feature 'Search Configuration Administration', js: true do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:user) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as user }
 
   describe 'search fields' do
@@ -13,7 +13,6 @@ feature 'Search Configuration Administration', js: true do
         click_link 'Exhibit dashboard'
       end
       click_link 'Search'
-      click_link 'Options'
 
       uncheck 'Display search box'
 

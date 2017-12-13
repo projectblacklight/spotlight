@@ -1,5 +1,5 @@
 describe 'Report a Problem', type: :feature do
-  let!(:exhibit) { FactoryGirl.create(:exhibit) }
+  let!(:exhibit) { FactoryBot.create(:exhibit) }
   let(:honeypot_field_name) { Spotlight::Engine.config.spambot_honeypot_email_field }
 
   it 'does not have a header link' do
@@ -47,7 +47,7 @@ describe 'Report a Problem', type: :feature do
       expect(find('#contact_form_current_url', visible: false).value).to end_with spotlight.exhibit_solr_document_path(exhibit, id: 'dq287tq6352')
       fill_in 'Name', with: 'Some Body'
       fill_in 'Email', with: 'test@example.com'
-      page.find("#contact_form_#{honeypot_field_name}", visible: false).set 'possible_spam@spam.com'
+      page.evaluate_script("$('#contact_form_#{honeypot_field_name}').val('possible_spam@spam.com')")
       fill_in 'Message', with: 'This is my problem report'
 
       expect do

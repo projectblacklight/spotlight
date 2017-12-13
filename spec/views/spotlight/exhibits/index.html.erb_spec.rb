@@ -12,9 +12,9 @@ describe 'spotlight/exhibits/index', type: :view do
   end
 
   context 'with published exhibits' do
-    let!(:exhibit_a) { FactoryGirl.create(:exhibit, published: true) }
-    let!(:exhibit_b) { FactoryGirl.create(:exhibit, published: true) }
-    let!(:exhibit_c) { FactoryGirl.create(:exhibit, published: false) }
+    let!(:exhibit_a) { FactoryBot.create(:exhibit, published: true) }
+    let!(:exhibit_b) { FactoryBot.create(:exhibit, published: true) }
+    let!(:exhibit_c) { FactoryBot.create(:exhibit, published: false) }
 
     let(:exhibits) { Spotlight::Exhibit.all }
 
@@ -79,7 +79,7 @@ describe 'spotlight/exhibits/index', type: :view do
     end
 
     context 'with an exhibit admin' do
-      let(:user) { FactoryGirl.create(:exhibit_admin) }
+      let(:user) { FactoryBot.create(:exhibit_admin) }
 
       it 'includes a tab with the exhibits curated by the user' do
         render
@@ -98,7 +98,7 @@ describe 'spotlight/exhibits/index', type: :view do
     end
 
     context 'with a site admin' do
-      let(:user) { FactoryGirl.create(:site_admin) }
+      let(:user) { FactoryBot.create(:site_admin) }
 
       before do
         allow(view).to receive_messages(can?: true, new_exhibit_path: '/exhibits/new')
@@ -115,7 +115,7 @@ describe 'spotlight/exhibits/index', type: :view do
   end
 
   context 'with an authorized user' do
-    let(:user) { FactoryGirl.build(:site_admin) }
+    let(:user) { FactoryBot.build(:site_admin) }
 
     before do
       allow(view).to receive_messages(can?: true,

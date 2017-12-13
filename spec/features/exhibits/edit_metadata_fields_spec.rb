@@ -1,7 +1,7 @@
 
 describe 'Editing metadata fields', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as(admin) }
 
   it 'works' do

@@ -1,8 +1,8 @@
 describe 'Site admin management', js: true do
-  let(:user) { FactoryGirl.create(:site_admin) }
-  let!(:existing_user) { FactoryGirl.create(:exhibit_visitor) }
-  let!(:exhibit_admin) { FactoryGirl.create(:exhibit_admin) }
-  let!(:exhibit_curator) { FactoryGirl.create(:exhibit_curator) }
+  let(:user) { FactoryBot.create(:site_admin) }
+  let!(:existing_user) { FactoryBot.create(:exhibit_visitor) }
+  let!(:exhibit_admin) { FactoryBot.create(:exhibit_admin) }
+  let!(:exhibit_curator) { FactoryBot.create(:exhibit_curator) }
 
   before do
     login_as(user)
@@ -62,6 +62,17 @@ describe 'Site admin management', js: true do
     expect(page).to have_css(:a, text: 'Remove from role', count: 1)
 
     expect(page).not_to have_css(:td, text: 'not-an-admin@example.com')
+  end
+
+  it 'sends an invitation email to users who do not exist' do
+    click_link 'Add new administrator'
+
+    fill_in 'user_email', with: 'a-user-that-did-not-exist@example.com'
+
+    expect do
+      click_button 'Add role'
+    end.to change { Devise::Mailer.deliveries.count }.by(1)
+    expect(User.where(email: 'a-user-that-did-not-exist@example.com').first.invitation_sent_at).to be_present
   end
 
   it 'does not provide a button for users to remove their own adminstrator privs' do

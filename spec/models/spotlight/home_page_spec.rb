@@ -1,5 +1,5 @@
 describe Spotlight::HomePage, type: :model do
-  let(:home_page) { FactoryGirl.create(:home_page) }
+  let(:home_page) { FactoryBot.create(:home_page) }
   it { is_expected.not_to be_feature_page }
   it { is_expected.not_to be_about_page }
   it 'displays the sidebar' do

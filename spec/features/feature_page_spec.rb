@@ -1,10 +1,10 @@
-describe 'Feature page', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+describe 'Feature page', type: :feature, versioning: true do
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
 
   describe 'viewing the page' do
     let!(:feature_page) do
-      FactoryGirl.create(:feature_page, title: 'Parent Page', exhibit: exhibit)
+      FactoryBot.create(:feature_page, title: 'Parent Page', exhibit: exhibit)
     end
     it 'has <meta> tags' do
       TopHat.current['twitter_card'] = nil
@@ -21,10 +21,10 @@ describe 'Feature page', type: :feature do
 
   describe 'sidebar' do
     let!(:parent_feature_page) do
-      FactoryGirl.create(:feature_page, title: 'Parent Page', exhibit: exhibit)
+      FactoryBot.create(:feature_page, title: 'Parent Page', exhibit: exhibit)
     end
     let!(:child_feature_page) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :feature_page,
         title: 'Child Page',
         parent_page: parent_feature_page, exhibit: exhibit
@@ -71,7 +71,7 @@ describe 'Feature page', type: :feature do
   describe 'page options' do
     before { login_as exhibit_curator }
     describe 'publish' do
-      let!(:unpublished_page) { FactoryGirl.create(:feature_page, published: false, exhibit: exhibit) }
+      let!(:unpublished_page) { FactoryBot.create(:feature_page, published: false, exhibit: exhibit) }
       it 'is updatable from the edit page' do
         expect(unpublished_page).not_to be_published
 
@@ -88,7 +88,7 @@ describe 'Feature page', type: :feature do
       end
     end
     describe 'display_sidebar' do
-      let!(:feature_page) { FactoryGirl.create(:feature_page, display_sidebar: false, exhibit: exhibit) }
+      let!(:feature_page) { FactoryBot.create(:feature_page, display_sidebar: false, exhibit: exhibit) }
       before { feature_page.update display_sidebar: false }
       it 'is updatable from the edit page' do
         expect(feature_page.display_sidebar?).to be_falsey
@@ -109,7 +109,7 @@ describe 'Feature page', type: :feature do
 
   describe 'page locking' do
     before { login_as exhibit_curator }
-    let!(:feature_page) { FactoryGirl.create(:feature_page, display_sidebar: false, exhibit: exhibit) }
+    let!(:feature_page) { FactoryBot.create(:feature_page, display_sidebar: false, exhibit: exhibit) }
 
     it 'shows a lock message if someone is currently editing the page' do
       # open the edit page

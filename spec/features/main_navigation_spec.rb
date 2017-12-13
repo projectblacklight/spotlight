@@ -1,6 +1,6 @@
 describe 'Main navigation labels are settable', type: :feature do
-  let!(:exhibit) { FactoryGirl.create(:exhibit) }
-  let!(:about) { FactoryGirl.create(:about_page, exhibit: exhibit, published: true) }
+  let!(:exhibit) { FactoryBot.create(:exhibit) }
+  let!(:about) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
   before do
     about_nav = exhibit.main_navigations.about
     about_nav.label = 'New About Label'

@@ -1,4 +1,4 @@
-describe Spotlight::VersionsController, type: :controller do
+describe Spotlight::VersionsController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
 
   describe 'when not logged in' do
@@ -11,9 +11,9 @@ describe Spotlight::VersionsController, type: :controller do
   end
 
   describe 'when not authorized for the exhibit resource' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
-    let(:user) { FactoryGirl.create(:exhibit_visitor) }
-    let!(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_visitor) }
+    let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
     before do
       sign_in user
     end
@@ -28,9 +28,9 @@ describe Spotlight::VersionsController, type: :controller do
   end
 
   describe 'when logged in as a curator' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
-    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-    let!(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
     before do
       sign_in user
     end

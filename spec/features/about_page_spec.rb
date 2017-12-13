@@ -1,9 +1,9 @@
-describe 'About page', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-  let!(:about_page1) { FactoryGirl.create(:about_page, title: 'First Page', exhibit: exhibit) }
-  let!(:about_page2) { FactoryGirl.create(:about_page, title: 'Second Page', exhibit: exhibit) }
-  let(:unpublished_page) { FactoryGirl.create(:about_page, title: 'Unpublished Page', published: false, exhibit: exhibit) }
+describe 'About page', type: :feature, versioning: true do
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let!(:about_page1) { FactoryBot.create(:about_page, title: 'First Page', exhibit: exhibit) }
+  let!(:about_page2) { FactoryBot.create(:about_page, title: 'Second Page', exhibit: exhibit) }
+  let(:unpublished_page) { FactoryBot.create(:about_page, title: 'Unpublished Page', published: false, exhibit: exhibit) }
   describe 'sidebar' do
     it 'displays' do
       visit spotlight.exhibit_about_page_path(about_page1.exhibit, about_page1)

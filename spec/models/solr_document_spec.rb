@@ -7,8 +7,8 @@ describe SolrDocument, type: :model do
     allow(subject).to receive_messages(reindex: nil)
   end
 
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_alt) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit_alt) { FactoryBot.create(:exhibit) }
 
   describe '.build_for_exhibit' do
     let(:id) { '123abc' }

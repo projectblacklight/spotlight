@@ -10,6 +10,7 @@ module Spotlight
 
     def create
       if update_roles
+        Spotlight::InviteUsersService.call(resource: @site)
         flash[:notice] = t('spotlight.admin_users.create.success')
       else
         flash[:error] = t('spotlight.admin_users.create.error')

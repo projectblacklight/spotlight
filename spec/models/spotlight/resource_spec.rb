@@ -2,7 +2,7 @@ describe Spotlight::Resource, type: :model do
   before do
     allow_any_instance_of(described_class).to receive(:update_index)
   end
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe '#reindex' do
     context 'with a provider that generates ids' do

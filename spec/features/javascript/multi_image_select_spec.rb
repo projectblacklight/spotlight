@@ -1,7 +1,7 @@
-describe 'Multi image selector', type: :feature, js: true do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-  let(:feature_page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+describe 'Multi image selector', type: :feature, js: true, versioning: true do
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
   before { login_as exhibit_curator }
 
   it 'allows the user to select which image in a multi image object to display' do
@@ -29,13 +29,13 @@ describe 'Multi image selector', type: :feature, js: true do
 
     within('.panel') do
       expect(page).to have_content(/Image \d of \d/)
-      find('a', text: 'Change').trigger('click')
+      find('a', text: 'Change').click
     end
 
     expect(page).to have_css('.thumbs-list ul', visible: true)
 
     within('.thumbs-list ul') do
-      all('li')[1].trigger('click')
+      all('li')[1].click
     end
 
     save_page

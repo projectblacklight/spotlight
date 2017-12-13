@@ -1,6 +1,6 @@
 describe Spotlight::ResourcesController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe 'when not logged in' do
     describe 'GET new' do
@@ -33,7 +33,7 @@ describe Spotlight::ResourcesController, type: :controller do
   end
 
   describe 'when signed in as a curator' do
-    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
     before { sign_in user }
 
     describe 'GET new' do

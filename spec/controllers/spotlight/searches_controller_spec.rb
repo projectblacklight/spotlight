@@ -1,6 +1,6 @@
 describe Spotlight::SearchesController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do
     allow(Spotlight::DefaultThumbnailJob).to receive(:perform_later)
@@ -8,7 +8,7 @@ describe Spotlight::SearchesController, type: :controller do
 
   describe 'when the user is not authorized' do
     before do
-      sign_in FactoryGirl.create(:exhibit_visitor)
+      sign_in FactoryBot.create(:exhibit_visitor)
     end
 
     describe 'POST create' do
@@ -30,9 +30,9 @@ describe Spotlight::SearchesController, type: :controller do
 
   describe 'when the user is a curator' do
     before do
-      sign_in FactoryGirl.create(:exhibit_curator, exhibit: exhibit)
+      sign_in FactoryBot.create(:exhibit_curator, exhibit: exhibit)
     end
-    let(:search) { FactoryGirl.create(:search, exhibit: exhibit) }
+    let(:search) { FactoryBot.create(:search, exhibit: exhibit) }
 
     it 'creates a saved search' do
       request.env['HTTP_REFERER'] = '/referring_url'
@@ -44,7 +44,7 @@ describe Spotlight::SearchesController, type: :controller do
     end
 
     describe 'GET index' do
-      let!(:search) { FactoryGirl.create(:search, exhibit: exhibit) }
+      let!(:search) { FactoryBot.create(:search, exhibit: exhibit) }
       it 'shows all the items' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
@@ -62,18 +62,17 @@ describe Spotlight::SearchesController, type: :controller do
         get :index, params: { exhibit_id: exhibit, format: 'json' }
         expect(response).to be_successful
         json = JSON.parse(response.body)
-        expect(json.size).to eq 1
         expect(json.last).to include('id' => search.id, 'title' => search.title)
       end
     end
 
     describe 'GET autocomplete' do
       let(:search) do
-        FactoryGirl.create(:search, exhibit: exhibit, title: 'New Mexico Maps', query_params: { q: 'New Mexico' })
+        FactoryBot.create(:search, exhibit: exhibit, title: 'New Mexico Maps', query_params: { q: 'New Mexico' })
       end
 
       let(:search_fq) do
-        FactoryGirl.create(:search, exhibit: exhibit, title: 'New Mexico Maps', query_params: { f: { subject_geographic_ssim: ['Pacific Ocean'] } })
+        FactoryBot.create(:search, exhibit: exhibit, title: 'New Mexico Maps', query_params: { f: { subject_geographic_ssim: ['Pacific Ocean'] } })
       end
 
       it "shows all the items returned search's query_params" do
@@ -144,7 +143,7 @@ describe Spotlight::SearchesController, type: :controller do
     end
 
     describe 'DELETE destroy' do
-      let!(:search) { FactoryGirl.create(:search, exhibit: exhibit) }
+      let!(:search) { FactoryBot.create(:search, exhibit: exhibit) }
       it 'removes it' do
         expect do
           delete :destroy, params: { id: search, exhibit_id: search.exhibit }
@@ -155,8 +154,8 @@ describe Spotlight::SearchesController, type: :controller do
     end
 
     describe 'POST update_all' do
-      let!(:search2) { FactoryGirl.create(:search, exhibit: exhibit, published: true) }
-      let!(:search3) { FactoryGirl.create(:search, exhibit: exhibit, published: true) }
+      let!(:search2) { FactoryBot.create(:search, exhibit: exhibit, published: true) }
+      let!(:search3) { FactoryBot.create(:search, exhibit: exhibit, published: true) }
       before { request.env['HTTP_REFERER'] = 'http://example.com' }
       it 'updates whether they are on the landing page' do
         post :update_all, params: {

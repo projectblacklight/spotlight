@@ -2,7 +2,7 @@
 describe Spotlight::RenameSidecarFieldJob do
   include ActiveJob::TestHelper
 
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:sidecar) { SolrDocument.new(id: 'test').sidecar(exhibit).tap(&:save!) }
 
   it 'updates the sidecar data and reindex affected documents' do

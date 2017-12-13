@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Spotlight::CarrierwaveFileResolver do
-  let(:masthead) { FactoryGirl.create(:masthead) }
+  let(:masthead) { FactoryBot.create(:masthead) }
   let(:resolver) { described_class.new }
 
   describe 'finding the file' do

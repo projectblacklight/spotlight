@@ -24,10 +24,10 @@ module Spotlight
     def click_add_widget
       unless all('.st-block-replacer').present?
         expect(page).to have_css('.st-block-addition')
-        first('.st-block-addition').trigger('click')
+        first('.st-block-addition').click
       end
       expect(page).to have_css('.st-block-replacer')
-      first('.st-block-replacer').trigger('click')
+      first('.st-block-replacer').click
     end
 
     def save_page

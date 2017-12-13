@@ -14,7 +14,7 @@ describe Spotlight::AccessControlsEnforcementSearchBuilder do
   end
 
   subject { MockSearchBuilder.new blacklight_params, scope }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:scope) { double(current_exhibit: exhibit) }
   let(:solr_request) { Blacklight::Solr::Request.new }
   let(:blacklight_params) { Hash.new }

@@ -1,5 +1,5 @@
 ENV['RAILS_ENV'] ||= 'test'
-require 'factory_girl'
+require 'factory_bot'
 require 'database_cleaner'
 require 'devise'
 require 'engine_cart'
@@ -12,6 +12,7 @@ require 'rspec/collection_matchers'
 require 'rspec/its'
 require 'rspec/rails'
 require 'rspec/active_model/mocks'
+require 'paper_trail/frameworks/rspec'
 
 require 'selenium-webdriver'
 
@@ -45,8 +46,8 @@ Spotlight::Engine.config.exhibit_themes = %w(default modern)
 
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 
-FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
-FactoryGirl.find_definitions
+FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+FactoryBot.find_definitions
 
 FIXTURES_PATH = File.expand_path('../fixtures', __FILE__)
 
@@ -71,8 +72,6 @@ RSpec.configure do |config|
   config.after do
     DatabaseCleaner.clean
   end
-
-  config.filter_run_excluding js: true if ENV['CI']
 
   if defined? Devise::Test::ControllerHelpers
     config.include Devise::Test::ControllerHelpers, type: :controller

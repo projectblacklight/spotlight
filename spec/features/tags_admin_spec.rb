@@ -1,7 +1,7 @@
 describe 'Tags Administration', type: :feature do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let!(:tagging) { FactoryGirl.create(:tagging, tagger: exhibit, taggable: exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let!(:tagging) { FactoryBot.create(:tagging, tagger: exhibit, taggable: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
 
   describe 'index' do

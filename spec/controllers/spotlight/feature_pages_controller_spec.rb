@@ -1,4 +1,4 @@
-describe Spotlight::FeaturePagesController, type: :controller do
+describe Spotlight::FeaturePagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
 
   # This should return the minimal set of attributes required to create a valid
@@ -6,12 +6,12 @@ describe Spotlight::FeaturePagesController, type: :controller do
   # adjust the attributes here as well.
   let(:valid_attributes) { { 'title' => 'MyString', thumbnail_attributes: { iiif_url: '' } } }
   describe 'when signed in as a curator' do
-    let(:exhibit) { FactoryGirl.create(:exhibit) }
-    let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
     before { sign_in user }
 
     describe 'GET index' do
-      let!(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+      let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
       it 'assigns all feature pages as @pages' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
@@ -24,7 +24,7 @@ describe Spotlight::FeaturePagesController, type: :controller do
 
     describe 'GET show' do
       describe 'on a top level page' do
-        let(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+        let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
         it 'assigns the requested page as @page' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with(page.title, [exhibit, page])
@@ -33,7 +33,7 @@ describe Spotlight::FeaturePagesController, type: :controller do
         end
       end
       describe 'on a sub-page' do
-        let(:page) { FactoryGirl.create(:feature_subpage, exhibit: exhibit) }
+        let(:page) { FactoryBot.create(:feature_subpage, exhibit: exhibit) }
         it 'assigns the requested page as @page' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with(page.parent_page.title, [exhibit, page.parent_page])
@@ -53,7 +53,7 @@ describe Spotlight::FeaturePagesController, type: :controller do
     end
 
     describe 'GET edit' do
-      let(:page) { FactoryGirl.create(:feature_subpage, exhibit: exhibit) }
+      let(:page) { FactoryBot.create(:feature_subpage, exhibit: exhibit) }
       it 'assigns the requested page as @page' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
@@ -101,7 +101,7 @@ describe Spotlight::FeaturePagesController, type: :controller do
     end
 
     describe 'PUT update' do
-      let(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+      let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
       describe 'with valid params' do
         it 'updates the requested page' do
           expect_any_instance_of(Spotlight::FeaturePage).to receive(:update)
@@ -139,9 +139,9 @@ describe Spotlight::FeaturePagesController, type: :controller do
     end
 
     describe 'POST update_all' do
-      let!(:page1) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
-      let!(:page2) { FactoryGirl.create(:feature_page, exhibit: page1.exhibit) }
-      let!(:page3) { FactoryGirl.create(:feature_page, exhibit: page1.exhibit, parent_page_id: page1.id) }
+      let!(:page1) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+      let!(:page2) { FactoryBot.create(:feature_page, exhibit: page1.exhibit) }
+      let!(:page3) { FactoryBot.create(:feature_page, exhibit: page1.exhibit, parent_page_id: page1.id) }
       before { request.env['HTTP_REFERER'] = 'http://example.com' }
       it 'updates the parent/child relationship' do
         post :update_all, params: { exhibit_id: page1.exhibit, exhibit: { feature_pages_attributes: [{ id: page2.id, parent_page_id: page1.id }] } }
@@ -154,7 +154,7 @@ describe Spotlight::FeaturePagesController, type: :controller do
     end
 
     describe 'DELETE destroy' do
-      let!(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+      let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
       it 'destroys the requested page' do
         expect do
           delete :destroy, params: { id: page, exhibit_id: page.exhibit.id }

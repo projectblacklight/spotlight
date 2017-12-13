@@ -1,7 +1,7 @@
 
 describe 'spotlight/browse/show', type: :view do
-  let(:search) { FactoryGirl.create(:published_search) }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:search) { FactoryBot.create(:published_search) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do
     allow(view).to receive_messages(resource_masthead?: false)

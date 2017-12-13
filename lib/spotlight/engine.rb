@@ -11,6 +11,7 @@ require 'friendly_id'
 require 'tophat'
 require 'paper_trail'
 require 'clipboard/rails'
+require 'leaflet-rails'
 
 module Spotlight
   ##
@@ -57,8 +58,8 @@ module Spotlight
       OEmbed::Providers.register_all
     end
 
-    initializer 'spotlight.factories', after: 'factory_girl.set_factory_paths' do
-      FactoryGirl.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryGirl)
+    initializer 'spotlight.factories', after: 'factory_bot.set_factory_paths' do
+      FactoryBot.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryBot)
     end
 
     initializer 'spotlight.assets.precompile' do |app|
@@ -201,7 +202,7 @@ module Spotlight
     config.exhibit_themes = ['default']
 
     config.sir_trevor_widgets = %w(
-      Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse
+      Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse LinkToSearch
       FeaturedPages SolrDocuments SolrDocumentsCarousel SolrDocumentsEmbed
       SolrDocumentsFeatures SolrDocumentsGrid SearchResults
     )

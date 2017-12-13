@@ -1,7 +1,7 @@
 describe Spotlight::CatalogController, type: :controller do
   include ActiveJob::TestHelper
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   it { is_expected.to be_a_kind_of ::CatalogController }
   it { is_expected.to be_a_kind_of Spotlight::Concerns::ApplicationController }
@@ -24,7 +24,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'GET show' do
       let(:document) { SolrDocument.new(id: 'dq287tq6352') }
-      let(:search) { FactoryGirl.create(:search, exhibit: exhibit) }
+      let(:search) { FactoryBot.create(:search, exhibit: exhibit) }
       it 'shows the item' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
@@ -44,7 +44,7 @@ describe Spotlight::CatalogController, type: :controller do
       end
 
       it 'shows the item with breadcrumbs to the feature page' do
-        feature_page = FactoryGirl.create(:feature_page, exhibit: exhibit)
+        feature_page = FactoryBot.create(:feature_page, exhibit: exhibit)
         allow(controller).to receive_messages(current_page_context: feature_page)
 
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
@@ -55,7 +55,7 @@ describe Spotlight::CatalogController, type: :controller do
       end
 
       it 'shows the item with breadcrumbs from the home page' do
-        home_page = FactoryGirl.create(:home_page)
+        home_page = FactoryBot.create(:home_page)
         allow(controller).to receive_messages(current_page_context: home_page)
 
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
@@ -116,7 +116,7 @@ describe Spotlight::CatalogController, type: :controller do
     describe 'GET manifest' do
       context 'document is an uploaded resource' do
         it 'returns the json manifest produced by Spotlight::IiifManifestPresenter, based on the retrieved document and the controller' do
-          uploaded_resource = FactoryGirl.create(:uploaded_resource)
+          uploaded_resource = FactoryBot.create(:uploaded_resource)
           compound_id = uploaded_resource.compound_id
           slug = uploaded_resource.exhibit.slug
 
@@ -158,7 +158,7 @@ describe Spotlight::CatalogController, type: :controller do
 
   describe 'when the user is not authorized' do
     before do
-      sign_in FactoryGirl.create(:exhibit_visitor)
+      sign_in FactoryBot.create(:exhibit_visitor)
     end
 
     describe 'GET admin' do
@@ -205,7 +205,7 @@ describe Spotlight::CatalogController, type: :controller do
   end
 
   describe 'when the user is a curator' do
-    before { sign_in FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+    before { sign_in FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
 
     it 'shows all the items' do
       expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
@@ -241,12 +241,12 @@ describe Spotlight::CatalogController, type: :controller do
         end.to change { exhibit.owned_taggings.count }.by(2)
       end
       it 'can update non-readonly fields' do
-        field = FactoryGirl.create(:custom_field, exhibit: exhibit)
+        field = FactoryBot.create(:custom_field, exhibit: exhibit)
         patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } } }
         expect(assigns[:document].sidecar(exhibit).data).to eq(field.field => 'no')
       end
       it "can't update readonly fields" do
-        field = FactoryGirl.create(:custom_field, exhibit: exhibit, readonly_field: true)
+        field = FactoryBot.create(:custom_field, exhibit: exhibit, readonly_field: true)
         patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } } }
         expect(assigns[:document].sidecar(exhibit).data).to eq({})
       end
@@ -282,7 +282,7 @@ describe Spotlight::CatalogController, type: :controller do
   end
 
   describe 'when the user is a site admin' do
-    before { sign_in FactoryGirl.create(:site_admin, exhibit: exhibit) }
+    before { sign_in FactoryBot.create(:site_admin, exhibit: exhibit) }
 
     describe 'GET show' do
       it 'has a solr_json serialization' do
@@ -374,7 +374,7 @@ describe Spotlight::CatalogController, type: :controller do
     end
 
     context 'when arriving from a feature page' do
-      let(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+      let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
       let(:search) do
         Search.new(query_params: { action: 'show', controller: 'spotlight/feature_pages', id: page.id }.with_indifferent_access)
       end
@@ -409,7 +409,7 @@ describe Spotlight::CatalogController, type: :controller do
   end
 
   describe '#field_enabled?' do
-    let(:field) { FactoryGirl.create(:custom_field) }
+    let(:field) { FactoryBot.create(:custom_field) }
     before do
       controller.extend(Blacklight::Catalog)
       allow(controller).to receive(:document_index_view_type).and_return(nil)
@@ -440,7 +440,7 @@ describe Spotlight::CatalogController, type: :controller do
       expect(controller.field_enabled?(field)).to eq :value
     end
     it 'returns the value of the original if condition' do
-      allow(field).to receive(:upstream_if).and_return false
+      allow(field).to receive(:original).and_return false
       expect(controller.field_enabled?(field)).to eq false
     end
   end
@@ -452,7 +452,7 @@ describe Spotlight::CatalogController, type: :controller do
     end
 
     it 'respects the original if condition' do
-      view.upstream_if = false
+      view.original = false
       expect(controller.enabled_in_spotlight_view_type_configuration?(view)).to eq false
     end
 
@@ -469,7 +469,7 @@ describe Spotlight::CatalogController, type: :controller do
   end
 
   describe 'save_search rendering' do
-    let(:current_exhibit) { FactoryGirl.create(:exhibit) }
+    let(:current_exhibit) { FactoryBot.create(:exhibit) }
     before { allow(controller).to receive_messages(current_exhibit: current_exhibit) }
     describe 'render_save_this_search?' do
       it 'returns false if we are on the items admin screen' do

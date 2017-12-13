@@ -1,5 +1,5 @@
 describe 'spotlight/search_configurations/_search_fields', type: :view do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:f) do
     form_helper = nil
     controller.view_context.bootstrap_form_for(exhibit.blacklight_configuration, url: '/update') do |f|
@@ -9,6 +9,9 @@ describe 'spotlight/search_configurations/_search_fields', type: :view do
   end
 
   before do
+    original_config = Spotlight::Engine.blacklight_config.deep_dup
+    allow(Spotlight::Engine).to receive(:blacklight_config).and_return(original_config)
+    original_config.add_search_field 'some_field_with_a_condition', if: ->(*_args) { false }
     assign(:exhibit, exhibit)
     assign(:blacklight_configuration, exhibit.blacklight_configuration)
     allow(view).to receive_messages(current_exhibit: exhibit)
@@ -39,7 +42,11 @@ describe 'spotlight/search_configurations/_search_fields', type: :view do
     expect(rendered).not_to have_selector "input[name='blacklight_configuration[search_fields][some_hidden_field][enabled]']"
   end
 
-  it 'parameterizes the data-id attribute for searcn field keh' do
+  it 'excludes search options that have if/unless configuration that causes them not to be displayed' do
+    expect(rendered).not_to have_selector "input[name='blacklight_configuration[search_fields][some_field_with_a_condition][enabled]']"
+  end
+
+  it 'parameterizes the data-id attribute for search field key' do
     expect(rendered).to have_selector '[data-id="some_field-with_a_space-id"]'
   end
 end

@@ -1,6 +1,6 @@
 describe 'Edit in place', type: :feature, js: true do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:admin) { FactoryGirl.create(:exhibit_admin, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as admin }
   describe 'Feature Pages' do
     it 'updates the label' do

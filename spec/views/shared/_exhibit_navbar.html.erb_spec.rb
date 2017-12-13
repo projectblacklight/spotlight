@@ -1,9 +1,9 @@
 describe 'shared/_exhibit_navbar', type: :view do
-  let(:current_exhibit) { FactoryGirl.create(:exhibit) }
-  let(:feature_page) { FactoryGirl.create(:feature_page, exhibit: current_exhibit) }
-  let(:unpublished_feature_page) { FactoryGirl.create(:feature_page, published: false, exhibit: current_exhibit) }
-  let(:about_page) { FactoryGirl.create(:about_page, exhibit: current_exhibit) }
-  let(:unpublished_about_page) { FactoryGirl.create(:about_page, published: false, exhibit: current_exhibit) }
+  let(:current_exhibit) { FactoryBot.create(:exhibit) }
+  let(:feature_page) { FactoryBot.create(:feature_page, exhibit: current_exhibit) }
+  let(:unpublished_feature_page) { FactoryBot.create(:feature_page, published: false, exhibit: current_exhibit) }
+  let(:about_page) { FactoryBot.create(:about_page, exhibit: current_exhibit) }
+  let(:unpublished_about_page) { FactoryBot.create(:about_page, published: false, exhibit: current_exhibit) }
 
   before do
     allow(view).to receive_messages(resource_masthead?: false)
@@ -38,7 +38,7 @@ describe 'shared/_exhibit_navbar', type: :view do
 
   it 'provides a dropdown of multiple feature pages' do
     feature_page
-    another_page = FactoryGirl.create(:feature_page, exhibit: current_exhibit)
+    another_page = FactoryBot.create(:feature_page, exhibit: current_exhibit)
     render
     expect(response).to have_selector '.dropdown .dropdown-toggle', text: 'Curated Features'
     expect(response).to have_link feature_page.title, visible: false, href: spotlight.exhibit_feature_page_path(current_exhibit, feature_page)
@@ -57,13 +57,13 @@ describe 'shared/_exhibit_navbar', type: :view do
   end
 
   it "links to the browse index if there's a published search" do
-    FactoryGirl.create :published_search, exhibit: current_exhibit
+    FactoryBot.create :published_search, exhibit: current_exhibit
     render
     expect(response).to have_link 'Browse', href: spotlight.exhibit_browse_index_path(current_exhibit)
   end
 
   it "marks the browse button as active if we're on a browse page" do
-    FactoryGirl.create :published_search, exhibit: current_exhibit
+    FactoryBot.create :published_search, exhibit: current_exhibit
     allow(view).to receive_messages(on_browse_page?: true)
     render
     expect(response).to have_selector 'li.active', text: 'Browse'
@@ -75,7 +75,7 @@ describe 'shared/_exhibit_navbar', type: :view do
   end
 
   it 'does not link to the browse index if only private categories are defined' do
-    FactoryGirl.create :search, exhibit: current_exhibit
+    FactoryBot.create :search, exhibit: current_exhibit
     render
     expect(response).not_to have_link 'Browse'
   end

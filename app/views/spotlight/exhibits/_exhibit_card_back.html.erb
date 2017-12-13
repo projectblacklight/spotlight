@@ -8,11 +8,11 @@
 
 <% if exhibit.description %>
   <p class="description">
-    <%= exhibit.description.truncate(168, omission: "") %>
+    <%= truncated_description = exhibit.description.truncate(168, omission: '', separator: ' ') %>
     <% if exhibit.description.length > 168 %>
       <%= content_tag(:span,"&hellip;".html_safe, class: "visible-sm visible-md") %>
       <span class="hidden-sm hidden-md">
-        <%= exhibit.description.slice(168, exhibit.description.length) %>
+        <%= exhibit.description.slice(truncated_description.length, exhibit.description.length) %>
       </span>
     <% end %>
   </p>

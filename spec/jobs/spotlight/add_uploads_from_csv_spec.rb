@@ -1,7 +1,7 @@
 describe Spotlight::AddUploadsFromCSV do
   subject(:job) { described_class.new(data, exhibit, user) }
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:user) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:data) do
     [
       { 'url' => 'x' },
@@ -26,7 +26,7 @@ describe Spotlight::AddUploadsFromCSV do
   end
 
   it 'creates uploaded resources for each row of data' do
-    upload = FactoryGirl.create(:uploaded_resource)
+    upload = FactoryBot.create(:uploaded_resource)
     expect(Spotlight::Resources::Upload).to receive(:new).at_least(:once).and_return(upload)
 
     expect(upload).to receive(:build_upload).with(remote_image_url: 'x').and_call_original

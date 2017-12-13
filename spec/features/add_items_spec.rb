@@ -1,9 +1,9 @@
 describe 'Uploading a non-repository item', type: :feature do
   include ActiveJob::TestHelper
 
-  let!(:exhibit) { FactoryGirl.create(:exhibit) }
-  let!(:custom_field) { FactoryGirl.create(:custom_field, exhibit: exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+  let!(:exhibit) { FactoryBot.create(:exhibit) }
+  let!(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:user) { exhibit_curator }
   before { login_as user }
 
@@ -64,7 +64,7 @@ describe 'Uploading a non-repository item', type: :feature do
     end
 
     context 'as an site administrator' do
-      let(:user) { FactoryGirl.create(:site_admin, exhibit: exhibit) }
+      let(:user) { FactoryBot.create(:site_admin, exhibit: exhibit) }
 
       it 'displays the JSON upload form' do
         visit spotlight.new_exhibit_resource_path(exhibit)

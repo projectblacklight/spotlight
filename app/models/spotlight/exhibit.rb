@@ -7,6 +7,8 @@ module Spotlight
     include Spotlight::ExhibitDefaults
     include Spotlight::ExhibitDocuments
 
+    has_paper_trail
+
     scope :published, -> { where(published: true) }
     scope :unpublished, -> { where(published: false) }
     scope :ordered_by_weight, -> { order('weight ASC') }

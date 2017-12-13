@@ -1,5 +1,5 @@
 describe Spotlight::Page, type: :model do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:parent_page) { Spotlight::FeaturePage.create! exhibit: exhibit, published: true }
   let!(:child_page) { Spotlight::FeaturePage.create! exhibit: exhibit, published: false, parent_page: parent_page }
 
@@ -13,6 +13,10 @@ describe Spotlight::Page, type: :model do
     it 'scopes results to only published pages' do
       expect(described_class.at_top_level).to_not include child_page
     end
+  end
+
+  it 'is expected to be versioned' do
+    is_expected.to be_versioned
   end
 
   describe '#top_level_page?' do
@@ -37,7 +41,7 @@ describe Spotlight::Page, type: :model do
     end
   end
   describe 'should_display_title?' do
-    let(:page) { FactoryGirl.create(:feature_page) }
+    let(:page) { FactoryBot.create(:feature_page) }
     it 'returns if the title is present or not' do
       expect(page.title).not_to be_blank
       expect(page.should_display_title?).to be_truthy
@@ -47,7 +51,7 @@ describe Spotlight::Page, type: :model do
   end
 
   describe '#content=' do
-    let(:page) { FactoryGirl.create(:feature_page) }
+    let(:page) { FactoryBot.create(:feature_page) }
 
     it 'works with a serialized JSON array' do
       page.content = [].to_json
@@ -60,7 +64,7 @@ describe Spotlight::Page, type: :model do
   end
 
   describe '#content?' do
-    let(:page) { FactoryGirl.create(:feature_page) }
+    let(:page) { FactoryBot.create(:feature_page) }
 
     it 'does not have content when the page is empty' do
       page.content = []
@@ -74,7 +78,7 @@ describe Spotlight::Page, type: :model do
   end
 
   describe '#slug' do
-    let(:page) { FactoryGirl.create(:feature_page) }
+    let(:page) { FactoryBot.create(:feature_page) }
 
     it 'gets a default slug' do
       expect(page.slug).not_to be_blank
@@ -86,7 +90,7 @@ describe Spotlight::Page, type: :model do
     end
 
     context 'with a custom slug' do
-      let(:page) { FactoryGirl.create(:feature_page, slug: 'xyz') }
+      let(:page) { FactoryBot.create(:feature_page, slug: 'xyz') }
 
       it 'gets a default slug' do
         expect(page.slug).to eq 'xyz'
@@ -95,8 +99,8 @@ describe Spotlight::Page, type: :model do
   end
 
   describe 'thumbnail_image_url' do
-    subject(:thumbnail) { FactoryGirl.create(:featured_image) }
-    subject(:page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+    subject(:thumbnail) { FactoryBot.create(:featured_image) }
+    subject(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
 
     it 'is nil when there is no thumbnail' do
       expect(page.thumbnail_image_url).to be_nil

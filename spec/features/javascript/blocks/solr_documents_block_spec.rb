@@ -1,9 +1,8 @@
-
-feature 'Solr Document Block', feature: true do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
+feature 'Solr Document Block', feature: true, versioning: true do
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:feature_page) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :feature_page,
       title: 'FeaturePage1',
       exhibit: exhibit
@@ -58,7 +57,7 @@ feature 'Solr Document Block', feature: true do
 
     # Select the last image
     click_link('Change')
-    all('.thumbs-list li').last.click
+    find('.thumbs-list li:last-child').click
 
     save_page
 

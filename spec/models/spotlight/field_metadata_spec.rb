@@ -1,5 +1,5 @@
 describe Spotlight::FieldMetadata do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:repository) { double }
   let(:blacklight_config) do
     Blacklight::Configuration.new do |config|

@@ -1,7 +1,7 @@
-describe 'Horizontal rule block', type: :feature, js: true do
-  let(:exhibit) { FactoryGirl.create(:exhibit) }
-  let(:exhibit_curator) { FactoryGirl.create(:exhibit_curator, exhibit: exhibit) }
-  let!(:feature_page) { FactoryGirl.create(:feature_page, exhibit: exhibit) }
+describe 'Horizontal rule block', type: :feature, js: true, versioning: true do
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let!(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
   before { login_as exhibit_curator }
 
   it 'allows the user to select which image in a multi image object to display' do
