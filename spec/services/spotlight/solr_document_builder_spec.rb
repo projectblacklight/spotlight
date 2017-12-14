@@ -35,6 +35,11 @@ describe Spotlight::SolrDocumentBuilder do
         expect(result).to include "spotlight_exhibit_slug_#{resource_alt.exhibit.slug}_bsi"
       end
 
+      it 'has a field with both exhibit slugs listed' do
+        result = resource.document_builder.documents_to_index.first
+        expect(result).to include 'spotlight_exhibit_slugs_ssim' => match_array([resource.exhibit.slug, resource_alt.exhibit.slug])
+      end
+
       it 'creates a sidecar resource for the document' do
         resource.document_builder.documents_to_index.first
 
