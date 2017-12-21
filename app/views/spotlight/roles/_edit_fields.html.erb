@@ -1,6 +1,6 @@
         <tr data-edit-for="<%= f.object.new_record? ? 'new' : f.object.id %>">
           <td>
-            <%= f.email_field :user_key, hide_label: true, disabled: f.object.persisted? %>
+            <%= f.email_field :user_key, hide_label: true, disabled: f.object.persisted?, help: (t('.help') if f.object.new_record?) %>
           </td>
           <td><%= f.select :role, roles_for_select, hide_label: true %></td>
           <td></td>
