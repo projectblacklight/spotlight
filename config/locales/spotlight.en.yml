@@ -589,6 +589,7 @@ en:
       edit_fields:
         invite_html: "This user does not yet exist. Would you like to send them an %{link}?"
         invite_link: invite
+        help: Enter a valid email address
       index:
         title: Site Configuration - Users
         invite_pending: pending
