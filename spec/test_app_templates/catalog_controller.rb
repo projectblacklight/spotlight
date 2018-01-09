@@ -87,8 +87,8 @@ class CatalogController < ApplicationController
     config.add_show_field 'corporate_name_ssm', label: 'Corporate Names'
 
     config.add_search_field 'all_fields', label: 'Everything'
-    config.add_search_field 'title', label: 'Title', solr_local_parameters: { qf: 'full_title_tesim', pf: 'full_title_tesim' }
-    config.add_search_field 'author', label: 'Author', solr_local_parameters: { qf: '$qf_author', pf: '$pf_author' }
+    config.add_search_field 'title', label: 'Title', solr_parameters: { qf: 'full_title_tesim', pf: 'full_title_tesim' }
+    config.add_search_field 'author', label: 'Author', solr_parameters: { qf: '${qf_author}', pf: '${pf_author}' }
 
     config.add_sort_field 'relevance', sort: 'score desc, sort_title_ssi asc', label: 'Relevance'
     config.add_sort_field 'title', sort: 'sort_title_ssi asc', label: 'Title'
