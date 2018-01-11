@@ -14,6 +14,7 @@ feature 'Search Configuration Administration', js: true do
       end
       click_link 'Search'
 
+      expect(page).to have_css 'input#enable_feature', visible: true
       uncheck 'Display search box'
 
       click_button 'Save changes'
