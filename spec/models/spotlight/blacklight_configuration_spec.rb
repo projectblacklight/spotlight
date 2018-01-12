@@ -140,6 +140,14 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.blacklight_config.index_fields['c'].list).to be_truthy
     end
 
+    it 'honors field specfic display settings set in the field configuration' do
+      blacklight_config.add_index_field 'a'
+      blacklight_config.add_index_field 'b', list: false
+
+      expect(subject.blacklight_config.index_fields['a'].list).to be_truthy
+      expect(subject.blacklight_config.index_fields['b'].list).to be_falsey
+    end
+
     it 'filters upstream fields that are always disabled' do
       blacklight_config.add_index_field 'a', if: false
       expect(subject.blacklight_config.index_fields).not_to have_key 'a'
