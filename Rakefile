@@ -32,7 +32,7 @@ require 'spotlight/version'
 task ci: ['engine_cart:generate'] do
   ENV['environment'] = 'test'
 
-  SolrWrapper.wrap(port: '8983', version: '7.1.0') do |solr|
+  SolrWrapper.wrap(port: '8983') do |solr|
     solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path(File.dirname(__FILE__)), 'solr_conf', 'conf')) do
       Rake::Task['spotlight:fixtures'].invoke
 
