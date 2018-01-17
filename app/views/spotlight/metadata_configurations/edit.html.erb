@@ -9,17 +9,17 @@
     <table id="nested-fields" class="table table-striped dd-table">
       <thead>
         <tr>
-          <th><%= t :'.fields.label' %></th>
+          <th><%= t :'.field.label' %></th>
           <th class="text-center">
             <div>
-              <%= t :'.view.show', default: t(:'blacklight.search.view.show') %>
+              <%= t :'.view.show' %>
             </div>
             <%= select_deselect_button %>
           </th>
           <% available_view_fields.keys.each do |type| %>
             <th class="text-center">
               <div>
-                <%= t :".view.#{type}", default: t(:".view.#{type}") %>
+                <%= t :".view.#{type}", default: t("blacklight.search.view.#{type}", default: type.to_s.humanize.titleize) %>
               </div>
               <%= select_deselect_button %>
             </th>
