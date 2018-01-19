@@ -646,6 +646,9 @@ en:
           other: "%{count} items"
         missing_description_html: "%{link} to add a description."
       form:
+        search_box:
+          label: Display search box
+          help_block: Displays a search box that enables users to search within the browse category results
         search_description: "Description"
         search_masthead: "Masthead"
         search_thumbnail: "Thumbnail"
@@ -668,6 +671,10 @@ en:
         item_count:
           one: "%{count} item"
           other: "%{count} items"
+      search_box:
+        placeholder: Search…
+        label: Search within these results
+        submit: Search within results
     tags:
       index:
         title: "Curation - Tags"
