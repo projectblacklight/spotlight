@@ -19,11 +19,12 @@
   <% end %>
   <% if params[:browse_q]%>
     <div class="browse-search-expand">
-      <% if search.documents.size > 0 %>
-        You can also <%= link_to "search all items for \"#{params[:browse_q]}\"", search_exhibit_catalog_path(current_exhibit, q: params[:browse_q]) %>
+      <% if search.count > 0 %>
+        <p>Your search matched <strong><%= search.count %> of <%= parent_search_count%> items in this result set.</p>
+        <p>You can also <%= link_to "search all items for \"#{params[:browse_q]}\"", search_exhibit_catalog_path(current_exhibit, q: params[:browse_q]) %>.</p>
       <% else %>
         <p>Your search did not match any items in this result set.</p>
-        <p>You can <%= link_to 'clear this search', exhibit_browse_path(current_exhibit, search)%> or try <%= link_to "searching all items for \"#{params[:browse_q]}\"", search_exhibit_catalog_path(current_exhibit, q: params[:browse_q]) %><p>
+        <p>You can <%= link_to 'clear this search', exhibit_browse_path(current_exhibit, search)%> or try <%= link_to "searching all items for \"#{params[:browse_q]}\"", search_exhibit_catalog_path(current_exhibit, q: params[:browse_q]) %>.<p>
       <% end %>
     </div>
   <% end %>
