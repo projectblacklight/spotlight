@@ -6,8 +6,8 @@
       <div class="col-sm-6">
         <div class="input-group">
           <%= text_field_tag :browse_q, params[:browse_q], placeholder: t('spotlight.browse.search_box.placeholder'), class: "form-control", id: "browse_q" %>
-          <a class="clear-input-text" style="visibility: visible; left: 671px; line-height: 34px;"><span class="sr-only">Clear search box</span><i class="fa fa-times-circle"></i></a>
             <span class="input-group-btn">
+              <button class="btn btn-reset" type="reset"><span class="sr-only">Clear search box</span><span class="glyphicon glyphicon-remove-circle"></span></button>
               <button type="submit" class="btn btn-primary search-btn" id="browse-search">
               <span class="submit-search-text"><%= t('spotlight.browse.search_box.submit') %></span>
               <span class="glyphicon glyphicon-search"></span>
@@ -20,7 +20,7 @@
   <% if params[:browse_q]%>
     <div class="browse-search-expand">
       <% if search.count > 0 %>
-        <p>Your search matched <strong><%= search.count %> of <%= parent_search_count%> items in this result set.</p>
+        <p>Your search matched <strong><%= search.count %> of <%= parent_search_count%> items</strong> in this result set.</p>
         <p>You can also <%= link_to "search all items for \"#{params[:browse_q]}\"", search_exhibit_catalog_path(current_exhibit, q: params[:browse_q]) %>.</p>
       <% else %>
         <p>Your search did not match any items in this result set.</p>
