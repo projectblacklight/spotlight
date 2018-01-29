@@ -94,8 +94,8 @@ feature 'Browse pages' do
         expect(page).to have_selector '.browse-search-form'
         expect(page).not_to have_css '.browse-search-expand'
 
-        fill_in 'Search within these results', with: 'SEPTENTRIONALE'
-        click_button 'Search within results'
+        fill_in 'Search within this browse category', with: 'SEPTENTRIONALE'
+        click_button 'Search within browse category'
 
         expect(page).to have_css '.browse-search-expand'
       end
