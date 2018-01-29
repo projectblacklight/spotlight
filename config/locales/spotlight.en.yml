@@ -673,8 +673,8 @@ en:
           other: "%{count} items"
       search_box:
         placeholder: Search…
-        label: Search within these results
-        submit: Search within results
+        label: Search within this browse category
+        submit: Search within browse category
     tags:
       index:
         title: "Curation - Tags"
