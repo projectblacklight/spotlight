@@ -13,7 +13,7 @@ module Spotlight
     scope :unpublished, -> { where(published: false) }
     scope :ordered_by_weight, -> { order('weight ASC') }
 
-    paginates_per 50
+    paginates_per 48
 
     extend FriendlyId
     friendly_id :title, use: [:slugged, :finders]
