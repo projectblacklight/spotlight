@@ -17,17 +17,19 @@ module Spotlight
       private
 
       def hash_for_solr_update(data)
-        Array.wrap(data).map { |doc| convert_document_to_atomic_update_hash(doc) }.reject { |x| x.length <= 1 }
+        Array.wrap(data).map { |doc| convert_document_to_atomic_update_hash(doc) }.reject { |x| x.length <= 2 }
       end
 
       def convert_document_to_atomic_update_hash(doc)
-        doc.each_with_object({}) do |(k, v), hash|
+        output = doc.each_with_object({}) do |(k, v), hash|
           hash[k] = if k.to_sym == self.class.unique_key.to_sym
                       v
                     else
                       { set: v }
                     end
         end
+        output[Blacklight::Configuration.default_values[:index].timestamp_field] ||= { set: nil }
+        output
       end
     end
   end

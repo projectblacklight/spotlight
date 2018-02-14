@@ -28,7 +28,7 @@ describe Spotlight::SolrDocument::AtomicUpdates, type: :model do
     it 'sends an atomic update request' do
       expected = {
         params: { commitWithin: 500 },
-        data: [{ id: 'doc_id', a: { set: 1 }, b: { set: 2 } }].to_json,
+        data: [{ id: 'doc_id', a: { set: 1 }, b: { set: 2 }, timestamp: { set: nil } }].to_json,
         headers: { 'Content-Type' => 'application/json' }
       }
       expect(blacklight_solr).to receive(:update).with(expected)
@@ -36,7 +36,7 @@ describe Spotlight::SolrDocument::AtomicUpdates, type: :model do
     end
 
     it 'cowardlies refuse to index a document if the only value is an id' do
-      allow(subject).to receive_messages(to_solr: { id: 'doc_id' })
+      allow(subject).to receive_messages(to_solr: { id: 'doc_id' }, timestamp: { set: nil })
       expect(blacklight_solr).not_to receive(:update)
       subject.reindex
     end
