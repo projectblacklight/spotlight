@@ -164,7 +164,7 @@ module Spotlight
           config.facet_fields = Hash[config.facet_fields.sort_by { |k, _v| field_weight(facet_fields, k) }]
 
           config.facet_fields.each do |k, v|
-            v.original = v.dup
+            v.original = v.dup unless v.custom_field
             next if facet_fields[k].blank?
 
             v.merge! facet_fields[k].symbolize_keys
