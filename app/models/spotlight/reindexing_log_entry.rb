@@ -12,6 +12,10 @@ module Spotlight
     scope :recent, -> { limit(5) }
     scope :started_or_completed, -> { where.not(job_status: 'unstarted') }
 
+    after_save do
+      Spotlight::ExhibitIndexingChannel.broadcast_to(exhibit, ReindexProgress.new(self))
+    end
+
     def duration
       end_time - start_time if end_time
     end

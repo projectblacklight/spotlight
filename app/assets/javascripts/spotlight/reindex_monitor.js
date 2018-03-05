@@ -3,34 +3,54 @@ Spotlight.onLoad(function() {
 });
 
 (function($) {
+  this.App || (this.App = {});
+
+  App.cable = ActionCable.createConsumer();
+
   $.fn.reindexMonitor = function() {
     var monitorElements = this;
-    var defaultRefreshRate = 3000;
     var panelContainer;
 
     $(monitorElements).each(function() {
       panelContainer = $(this);
-      var monitorUrl = panelContainer.data('monitorUrl');
-      var refreshRate = panelContainer.data('refreshRate') || defaultRefreshRate;
-      setInterval(function() {
-        checkMonitorUrl(monitorUrl);
-      }, refreshRate);
+      exhibitId = panelContainer.data('exhibit-id');
+      App.indexing = App.cable.subscriptions.create(
+        {
+          channel: "Spotlight::ExhibitIndexingChannel",
+          id: exhibitId
+        },
+        {
+          connected: function() {
+            // FIXME: While we wait for cable subscriptions to always be finalized before sending messages
+            setTimeout((function(_this) {
+             return function() {
+               _this.followCurrentExhibit();
+               _this.installPageChangeCallback();
+             };
+           })(this), 1000);
+          },
+          received: function(data) {
+            if (data.recently_in_progress) {
+              updateMonitorPanel(data);
+              monitorPanel().show();
+            } else {
+              monitorPanel().hide();
+            }
+          },
+          followCurrentExhibit: function() {
+            this.perform('update', { id: exhibitId });
+          },
+          installPageChangeCallback: function() {
+            if (!this.installedPageChangeCallback) {
+              this.installedPageChangeCallback = true;
+              return $(document).on('turbolinks:load', function() {
+                return App.indexing.followCurrentExhibit();
+              });
+            }
+          }
+        }
+    )
     });
-
-    function checkMonitorUrl(url) {
-      $.ajax(url).success(success).fail(fail);
-    }
-
-    function success(data) {
-      if (data.recently_in_progress) {
-        updateMonitorPanel(data);
-        monitorPanel().show();
-      } else {
-        monitorPanel().hide();
-      }
-    }
-
-    function fail() { monitorPanel().hide(); }
 
     function updateMonitorPanel(data) {
       panelStartDate().text(data.started_at);
