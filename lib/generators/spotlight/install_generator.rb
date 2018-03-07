@@ -137,5 +137,9 @@ module Spotlight
       generate 'devise_invitable:install'
       generate 'devise_invitable', 'User'
     end
+
+    def add_translations
+      copy_file 'config/initializers/translation.rb'
+    end
   end
 end
