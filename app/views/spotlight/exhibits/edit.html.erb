@@ -6,6 +6,11 @@
       <li role="presentation" class="active">
         <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
       </li>
+      <% if can? :manage, current_exhibit.languages.first_or_initialize %>
+        <li role="presentation">
+          <a href="#language" aria-controls="language" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.languages.heading') %></a>
+        </li>
+      <% end %>
       <% if can? :edit, current_exhibit.filters.first_or_initialize %>
         <li role="presentation">
           <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.filter.heading') %></a>
@@ -31,6 +36,7 @@
       <div role="tabpanel" class="tab-pane active" id="basic">
         <%= render 'form' %>
       </div>
+      <%= render 'languages' if can? :manage, current_exhibit.languages.first_or_initialize %>
       <%= render 'spotlight/filters/form' if can? :edit, current_exhibit.filters.first_or_initialize %>
       <%= render 'import' if can? :import, current_exhibit %>
       <%= render 'export' if can? :export, current_exhibit %>

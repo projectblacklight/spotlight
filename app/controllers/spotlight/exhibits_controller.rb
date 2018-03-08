@@ -89,7 +89,8 @@ module Spotlight
         :description,
         :published,
         :tag_list,
-        contact_emails_attributes: [:id, :email]
+        contact_emails_attributes: [:id, :email],
+        languages_attributes: [:id, :public]
       )
     end
 
