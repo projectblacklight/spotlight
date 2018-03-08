@@ -55,6 +55,10 @@ en:
         destroyed: "The %{model} was deleted."
       exhibit: *spotlight_default
       filter: *spotlight_default
+      language:
+        create: 'Add language'
+        created: 'The %{model} was created.'
+        destroyed: 'The %{model} was deleted.'
       search: *spotlight_default
       site: *spotlight_default
       contact_form:
@@ -96,6 +100,8 @@ en:
           avatar: "Photo"
       "spotlight/exhibit":
           published: "Published?"
+      "spotlight/language":
+        locale: Language
       "spotlight/page":
         display_sidebar?: "Show sidebar"
         display_title: "Show title"
@@ -109,6 +115,15 @@ en:
       fields:
         facet:
           exhibit_tag: Exhibit Tags
+  locales:
+    en: English
+    de: German
+    es: Spanish
+    fr: French
+    it: Italian
+    pt-br: Portugese - Brazil
+    sq: Albanian
+    zh: Chinese
   spotlight:
     application_name: "%{exhibit} - %{application_name}"
     html_title: "%{title} | %{application_name}"
@@ -423,6 +438,22 @@ en:
           You can create a backup of this exhibit by exporting the data that defines it to a JSON file.
           You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.
         download: Export data
+      languages:
+        heading: Languages
+        selection_instructions: >
+          You can make the content and user interface of this exhibit available to exhibit visitors in multiple languages.
+          Use the select box below to add a new language to the exhibit and then use the Curation > Translations page to provide translations for exhibit labels, browse categories, and curated page content.
+        current_instructions: >
+          Each language listed below is available for translations on the Curation > Translations page.
+          To enable exhibit visitors to change the language of the exhibit, enable the Public checkbox.
+          To hide translations from an available language from the exhibit, disable the Public checkbox.
+        modal:
+          confirm: "Are you sure you want to remove this language?"
+        no_languages_help_text: 'No languages have been added for translation. To add a language, make a selection above.'
+        table_heading:
+          language: Language
+          public: Public
+          action: Action
       confirmation_status:
         confirmed: Confirmed.
         confirmation_sent: Confirmation sent.
