@@ -43,6 +43,7 @@ module Spotlight
     has_many :users, through: :roles, class_name: Spotlight::Engine.config.user_class
     has_many :pages, dependent: :destroy
     has_many :filters, dependent: :delete_all
+    has_many :translations, class_name: 'I18n::Backend::ActiveRecord::Translation', dependent: :destroy, inverse_of: :exhibit
 
     has_one :blacklight_configuration, class_name: 'Spotlight::BlacklightConfiguration', dependent: :delete
     has_one :home_page
