@@ -36,6 +36,7 @@ Spotlight::Engine.routes.draw do
     resource :view_configuration, only: [:show]
 
     resources :filters, only: [:create, :update]
+    resources :languages, only: [:create, :destroy]
 
     concern :searchable, Blacklight::Routes::Searchable.new
 

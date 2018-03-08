@@ -43,6 +43,7 @@ module Spotlight
     has_many :users, through: :roles, class_name: Spotlight::Engine.config.user_class
     has_many :pages, dependent: :destroy
     has_many :filters, dependent: :delete_all
+    has_many :languages, dependent: :destroy
 
     has_one :blacklight_configuration, class_name: 'Spotlight::BlacklightConfiguration', dependent: :delete
     has_one :home_page
@@ -51,7 +52,7 @@ module Spotlight
     belongs_to :masthead, dependent: :destroy, optional: true
     belongs_to :thumbnail, class_name: 'Spotlight::ExhibitThumbnail', dependent: :destroy, optional: true
 
-    accepts_nested_attributes_for :about_pages, :attachments, :contacts, :custom_fields, :feature_pages,
+    accepts_nested_attributes_for :about_pages, :attachments, :contacts, :custom_fields, :feature_pages, :languages,
                                   :main_navigations, :owned_taggings, :resources, :searches, :solr_document_sidecars
     accepts_nested_attributes_for :blacklight_configuration, :home_page, :filters, update_only: true
     accepts_nested_attributes_for :masthead, :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
@@ -101,6 +102,10 @@ module Spotlight
 
     def reindex_progress
       @reindex_progress ||= ReindexProgress.new(current_reindexing_log_entry)
+    end
+
+    def available_locales
+      @available_locales ||= languages.pluck(:locale)
     end
 
     protected
