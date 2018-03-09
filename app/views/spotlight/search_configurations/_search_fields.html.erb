@@ -1,6 +1,6 @@
 <% default_field = @blacklight_configuration.blacklight_config.default_search_field %>
 <div class="checkbox">
-  <label>
+  <label for="enable_feature">
     <%= check_box_tag :enable_feature, '1', @blacklight_configuration.blacklight_config.search_fields.select { |_k, v| v.enabled && v.include_in_simple_select != false }.any?, data: { behavior: 'enable-feature', target: '#search_fields' } %> <%= t(:'.enable_feature') %>
   </label>
 </div>
