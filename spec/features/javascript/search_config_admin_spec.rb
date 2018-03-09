@@ -19,7 +19,7 @@ feature 'Search Configuration Administration', js: true do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
       expect(page).not_to have_css 'select#search_field'
     end
@@ -42,7 +42,7 @@ feature 'Search Configuration Administration', js: true do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
       expect(page).to have_select 'Search in', with_options: ['My Title Label']
     end
   end
@@ -69,7 +69,7 @@ feature 'Search Configuration Administration', js: true do
       click_button 'Save changes'
       click_link 'Facets'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
       expect(page).not_to have_content('Genre')
       expect(page).to have_content('Topic')
@@ -88,7 +88,7 @@ feature 'Search Configuration Administration', js: true do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
       exhibit.reload
       expect(exhibit.blacklight_config.facet_fields['genre_ssim'].sort).to eq 'index'
@@ -109,7 +109,7 @@ feature 'Search Configuration Administration', js: true do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
       click_link 'Results'
 
@@ -137,7 +137,7 @@ feature 'Search Configuration Administration', js: true do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
       click_link 'Results'
 

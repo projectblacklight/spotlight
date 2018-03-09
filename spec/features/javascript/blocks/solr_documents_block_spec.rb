@@ -34,7 +34,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
     save_page
 
     # verify that the item + image widget is displaying an image from the document.
-    within(:css, '.items-block') do
+    within(:css, '.items-block', visible: true) do
       expect(page).to have_css('.thumbnail')
       expect(page).to have_css('.thumbnail a img')
       expect(page).not_to have_css('.title')
@@ -47,7 +47,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
 
     save_page
 
-    expect(page).to have_selector '.items-block .box', count: 2
+    expect(page).to have_selector '.items-block .box', count: 2, visible: true
   end
 
   scenario 'it should allow you to choose from a multi-image solr document (and persist through edits)', js: true do
@@ -97,7 +97,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
 
     save_page
 
-    expect(page).to have_selector '.items-block .box', count: 1
+    expect(page).to have_selector '.items-block .box', count: 1, visible: true
     expect(page).to have_content '[World map]'
     expect(page).not_to have_content "L'AMERIQUE"
   end
@@ -119,7 +119,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
     save_page
 
     # verify that the item + image widget is displaying image and title from the requested document.
-    within(:css, '.items-block') do
+    within(:css, '.items-block', visible: true) do
       expect(page).to have_css('.thumbnail')
       expect(page).to have_css('.thumbnail a img')
       expect(page).to have_css('.primary-caption', text: '[World map]')
@@ -130,13 +130,16 @@ feature 'Solr Document Block', feature: true, versioning: true do
   scenario 'should allow you to optionally display a ZPR link with the image', js: true do
     fill_in_typeahead_field with: 'gk446cj2442'
 
-    check 'zpr_link'
-
+    check 'Display ZPR link'
     save_page
 
-    expect(page).to have_selector('.zpr-link[data-iiif-tilesource]')
-    click_on 'Show in ZPR viewer'
-    expect(page).to have_css('#osd-modal-container')
+    within '.contents' do
+      click_button 'Show in ZPR viewer'
+    end
+
+    within '.modal-content' do
+      expect(page).to have_css('#osd-modal-container')
+    end
   end
 
   scenario 'should allow you to add text to the image', js: true do
@@ -148,7 +151,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
 
     # visit the show page for the document we just saved
     # verify that the item + image widget is displaying image and title from the requested document.
-    within(:css, '.items-block') do
+    within(:css, '.items-block', visible: true) do
       expect(page).to have_content 'zzz'
     end
   end
@@ -166,9 +169,10 @@ feature 'Solr Document Block', feature: true, versioning: true do
 
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, '.items-block') do
-      expect(page).to have_content 'zzz'
+      within('.text-col') do
+        expect(page).to have_content 'zzz'
+      end
       expect(page).to have_css('.items-col.pull-left')
-      expect(page).to have_css('.text-col')
     end
   end
 
@@ -197,7 +201,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
 
     click_on 'Edit'
 
-    expect(page).to have_selector '.panel', count: 2
+    expect(page).to have_selector '.panel', count: 2, visible: true
 
     # for some reason, the text area above isn't getting filled in
     # expect(page).to have_selector ".st-text-block", text: "zzz"
