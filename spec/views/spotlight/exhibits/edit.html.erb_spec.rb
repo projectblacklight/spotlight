@@ -7,7 +7,9 @@ describe 'spotlight/exhibits/edit', type: :view do
       can?: true,
       import_exhibit_path:  '/',
       get_exhibit_path:     '/',
-      exhibit_filters_path: '/'
+      exhibit_filters_path: '/',
+      exhibit_languages_path: '/',
+      add_exhibit_language_dropdown_options: []
     )
   end
 
