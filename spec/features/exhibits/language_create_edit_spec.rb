@@ -8,6 +8,7 @@ describe 'Language', type: :feature do
   describe 'creation' do
     it 'successfully adds languages' do
       within '#language' do
+        select 'Albanian'
         click_button 'Add language'
       end
       expect(page).to have_css '.flash_messages', text: 'The language was created.'
@@ -20,6 +21,7 @@ describe 'Language', type: :feature do
   describe 'making public' do
     it 'successfully updates the language' do
       within '#language' do
+        select 'Albanian'
         click_button 'Add language'
       end
       expect(page).to have_css '.flash_messages', text: 'The language was created.'
@@ -33,6 +35,7 @@ describe 'Language', type: :feature do
   describe 'deleting' do
     it 'successfully updates the language' do
       within '#language' do
+        select 'Albanian'
         click_button 'Add language'
       end
       expect(page).to have_css '.flash_messages', text: 'The language was created.'
