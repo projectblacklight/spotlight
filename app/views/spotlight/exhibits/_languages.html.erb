@@ -3,7 +3,7 @@
 
   <%= bootstrap_form_for [current_exhibit, Spotlight::Language.new], layout: :horizontal do |f| %>
     <div class='col-md-6'>
-      <%= f.select('locale', add_exhibit_language_dropdown_options) %>
+      <%= f.select('locale', add_exhibit_language_dropdown_options, prompt: t('.selection_prompt')) %>
     </div>
     <%= f.submit nil, class: 'btn btn-primary' %>
   <% end %>
@@ -34,7 +34,7 @@
                         <%= languages.check_box_without_bootstrap :public %>
                       </div>
                       </td>
-                    <td class='text-center'><%= link_to 'Remove', exhibit_language_path(current_exhibit, language), method: :delete, data: { confirm: t('.modal.confirm') }, class: 'btn btn-sm btn-primary' %></td>
+                    <td class='text-center'><%= link_to t('.remove'), exhibit_language_path(current_exhibit, language), method: :delete, data: { confirm: t('.modal.confirm') }, class: 'btn btn-sm btn-primary' %></td>
                   </tr>
                 <% end %>
               <% end %>
