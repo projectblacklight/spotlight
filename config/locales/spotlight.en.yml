@@ -450,6 +450,8 @@ en:
         modal:
           confirm: "Are you sure you want to remove this language?"
         no_languages_help_text: 'No languages have been added for translation. To add a language, make a selection above.'
+        remove: 'Remove'
+        selection_prompt: 'Select language...' 
         table_heading:
           language: Language
           public: Public
