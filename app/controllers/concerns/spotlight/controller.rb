@@ -8,7 +8,7 @@ module Spotlight
 
     included do
       helper_method :current_site, :current_exhibit, :current_masthead, :exhibit_masthead?, :resource_masthead?
-      before_action :set_exhibit_locale_scope
+      before_action :set_exhibit_locale_scope, :set_locale
     end
 
     def set_exhibit_locale_scope
@@ -46,6 +46,17 @@ module Spotlight
 
     def exhibit_masthead?
       current_exhibit && current_exhibit.masthead && current_exhibit.masthead.display?
+    end
+
+    def set_locale
+      I18n.locale = params[:locale] || I18n.default_locale
+    end
+
+    def default_url_options
+      return super unless current_exhibit
+      return super if current_exhibit.languages.accessible_by(current_ability).none? || I18n.locale == I18n.default_locale
+
+      super.merge(locale: I18n.locale)
     end
 
     # overwrites Blacklight::Controller#blacklight_config

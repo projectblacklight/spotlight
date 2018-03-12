@@ -8,6 +8,8 @@ describe Spotlight::Ability, type: :model do
   let(:search) { FactoryBot.create(:published_search, exhibit: exhibit) }
   let(:unpublished_search) { FactoryBot.create(:search, exhibit: exhibit) }
   let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+  let(:language) { FactoryBot.create(:language, exhibit: exhibit) }
+  let(:public_language) { FactoryBot.create(:language, exhibit: exhibit, public: true) }
   subject { Ability.new(user) }
 
   describe 'a user with no roles' do
@@ -17,6 +19,8 @@ describe Spotlight::Ability, type: :model do
     it { is_expected.to be_able_to(:read, page) }
     it { is_expected.not_to be_able_to(:create, Spotlight::Page.new(exhibit: exhibit)) }
     it { is_expected.to be_able_to(:read, search) }
+    it { is_expected.to be_able_to(:read, public_language) }
+    it { is_expected.not_to be_able_to(:read, language) }
     it { is_expected.not_to be_able_to(:read, unpublished_search) }
     it { is_expected.not_to be_able_to(:tag, exhibit) }
   end
@@ -41,6 +45,7 @@ describe Spotlight::Ability, type: :model do
     it { is_expected.to be_able_to(:import, exhibit) }
     it { is_expected.to be_able_to(:process_import, exhibit) }
     it { is_expected.to be_able_to(:destroy, exhibit) }
+    it { is_expected.to be_able_to(:manage, language) }
 
     let(:blacklight_config) { exhibit.blacklight_configuration }
   end
@@ -70,6 +75,9 @@ describe Spotlight::Ability, type: :model do
     it { is_expected.to be_able_to(:new, contact) }
     it { is_expected.to be_able_to(:create, contact) }
     it { is_expected.to be_able_to(:destroy, contact) }
+
+    it { is_expected.not_to be_able_to(:manage, language) }
+    it { is_expected.to be_able_to(:read, language) }
 
     let(:blacklight_config) { exhibit.blacklight_configuration }
   end
