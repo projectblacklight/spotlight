@@ -13,5 +13,11 @@ module Spotlight
 
       non_default_or_current_exhibit_languages_with_labels.sort_by { |label, _locale| label }
     end
+
+    def locale_selecter_dropown_options
+      languages = current_exhibit.languages.accessible_by(current_ability).to_a << Spotlight::Language.default_instance
+
+      languages.reject { |language| language.locale.to_s.casecmp(I18n.locale.to_s).zero? }.sort_by(&:to_native)
+    end
   end
 end

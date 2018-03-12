@@ -1,0 +1,14 @@
+<% if current_exhibit && current_exhibit.languages.accessible_by(current_ability).any? %>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+      <%= Spotlight::Language.new(locale: I18n.locale).to_native %> <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <% locale_selecter_dropown_options.each do |language| %>
+        <li>
+          <%= link_to language.to_native, (spotlight.url_for(locale: lanaguage.locale) rescue url_for(locale: language.locale)), class: 'dropdown-item' %>
+        </li>
+      <% end %>
+    </ul>
+  </li>
+<% end %>

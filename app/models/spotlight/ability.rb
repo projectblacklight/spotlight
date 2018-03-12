@@ -31,6 +31,7 @@ module Spotlight
 
       can :manage, Spotlight::Lock, by: user
 
+      can :read, Spotlight::Language, exhibit_id: user.exhibit_roles.pluck(:resource_id)
       can [:read, :curate, :tag], Spotlight::Exhibit, id: user.exhibit_roles.pluck(:resource_id)
 
       # public
@@ -38,6 +39,7 @@ module Spotlight
       can :read, Spotlight::Exhibit, published: true
       can :read, Spotlight::Page, published: true
       can :read, Spotlight::Search, published: true
+      can :read, Spotlight::Language, public: true
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end

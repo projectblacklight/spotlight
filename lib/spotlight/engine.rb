@@ -176,6 +176,17 @@ module Spotlight
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
 
+    config.i18n_locales = {
+      de: 'Deutsch',
+      en: 'English',
+      es: 'Español',
+      fr: 'Français',
+      it: 'Italiano',
+      'pt-br': 'Português brasileiro',
+      sq: 'Shqip',
+      zh: '中文'
+    }
+
     # Query parameters for autocomplete requests
     config.autocomplete_search_field = 'autocomplete'
     config.default_autocomplete_params = { qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng',
