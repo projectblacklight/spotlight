@@ -12,6 +12,7 @@ require 'tophat'
 require 'paper_trail'
 require 'clipboard/rails'
 require 'leaflet-rails'
+require 'i18n/active_record'
 
 module Spotlight
   ##
