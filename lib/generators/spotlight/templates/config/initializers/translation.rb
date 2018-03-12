@@ -1,4 +1,5 @@
 require 'i18n/backend/active_record'
+require 'i18n/backend/fallbacks'
 
 Translation = I18n::Backend::ActiveRecord::Translation
 
@@ -12,6 +13,7 @@ if Translation.table_exists?
   Translation.send(:include, Spotlight::CustomTranslationExtension)
   I18n::Backend::Simple.send(:include, I18n::Backend::Memoize)
   I18n::Backend::Simple.send(:include, I18n::Backend::Pluralization)
+  I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
 
   # I18n.backend = I18n::Backend::Chain.new(I18n.backend, I18n::Backend::Simple.new)
 end
