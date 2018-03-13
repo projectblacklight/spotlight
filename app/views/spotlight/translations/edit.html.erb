@@ -1,0 +1,96 @@
+<%= render 'spotlight/shared/exhibit_sidebar' %>
+
+<div class='col-md-9 translation-edit-form'>
+  <%= curation_page_title t('spotlight.exhibits.translations.title') %>
+  
+  <div class='text-center'>
+    <ul class='nav nav-pills inline-block'>
+      <% current_exhibit.available_locales.each do |language| %>
+        <li role="presentation" class="<%= 'active' if @language == language %>">
+          <%= link_to spotlight.edit_exhibit_translations_path(current_exhibit, language: language) do %>
+            <%= t("locales.#{language.downcase}") %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <ul class='nav nav-tabs'>
+    <li>
+      <a href='#'>
+        <%= t('spotlight.exhibits.translations.general.label') %>
+      </a>
+    </li>
+  </ul>
+
+  <h2 class='translation-subheading'>
+    <%= t('spotlight.exhibits.translations.general.basic_settings.label') %>
+  </h2>
+  
+  <%= bootstrap_form_for current_exhibit, url: spotlight.exhibit_translations_path(current_exhibit), layout: :horizontal do |f| %>
+    <% # Add a hidden field for the language so the redirect knows how to come back here %>
+    <%= hidden_field_tag :language, @language %>
+    <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "#{current_exhibit.slug}.title", locale: @language) %>
+    <%= f.fields_for :translations, translation do |translation_fields| %>
+      <%= translation_fields.hidden_field :key %>
+      <%= translation_fields.hidden_field :locale %>
+      <div class='form-group translation-form'>
+        <%= translation_fields.label :value, t('spotlight.exhibits.translations.general.basic_settings.title'), class: 'control-label col-sm-2' %>
+        <div class='col-md-8 panel panel-body panel-translation'>
+          <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
+          <p class="help-block">
+            <%= current_exhibit.title %>
+          </p>
+        </div>
+        <div class='col-md-2'>
+          <% if translation.value.present? %>
+            <span class='glyphicon glyphicon-ok'></span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "#{current_exhibit.slug}.subtitle", locale: @language) %>
+    <%= f.fields_for :translations, translation do |translation_fields| %>
+      <%= translation_fields.hidden_field :key %>
+      <%= translation_fields.hidden_field :locale %>
+      <div class='form-group translation-form'>
+        <%= translation_fields.label :value, t('spotlight.exhibits.translations.general.basic_settings.subtitle'), class: 'control-label col-sm-2' %>
+        <div class='col-md-8 panel panel-body panel-translation'>
+          <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
+          <p class="help-block">
+            <%= current_exhibit.subtitle %>
+          </p>
+        </div>
+        <div class='col-md-2'>
+          <% if translation.value.present? %>
+            <span class='glyphicon glyphicon-ok'></span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "#{current_exhibit.slug}.description", locale: @language) %>
+    <%= f.fields_for :translations, translation do |translation_fields| %>
+      <%= translation_fields.hidden_field :key %>
+      <%= translation_fields.hidden_field :locale %>
+      <div class='form-group translation-form'>
+        <%= translation_fields.label :value, t('spotlight.exhibits.translations.general.basic_settings.description'), class: 'control-label col-sm-2' %>
+        <div class='col-md-8 panel panel-body panel-translation'>
+          <%= translation_fields.text_area_without_bootstrap :value, class: 'form-control' %>
+          <p class="help-block">
+            <%= current_exhibit.description %>
+          </p>
+        </div>
+        <div class='col-md-2'>
+          <% if translation.value.present? %>
+            <span class='glyphicon glyphicon-ok'></span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="form-actions">
+      <div class="primary-actions">
+        <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</div>

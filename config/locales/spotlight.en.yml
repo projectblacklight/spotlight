@@ -463,6 +463,15 @@ en:
         resend: Resend confirmation?
       tags:
         all: All
+      translations:
+        title: Translations
+        general:
+          label: General
+          basic_settings:
+            label: Basic Settings
+            title: Title
+            subtitle: Subtitle
+            description: Description
     main_navigation:
       about: "About"
       browse: "Browse"

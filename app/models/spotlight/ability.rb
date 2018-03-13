@@ -26,7 +26,8 @@ module Spotlight
         Spotlight::Resource,
         Spotlight::Page,
         Spotlight::Contact,
-        Spotlight::CustomField
+        Spotlight::CustomField,
+        Translation
       ], exhibit_id: user.exhibit_roles.pluck(:resource_id)
 
       can :manage, Spotlight::Lock, by: user
