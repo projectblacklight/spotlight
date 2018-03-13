@@ -1,0 +1,25 @@
+.translation-subheading {
+  border-bottom: 1px solid $navbar-default-border;
+  margin-bottom: 20px;
+}
+
+.form-group.translation-form {
+  .control-label {
+    padding-top: $panel-body-padding + $padding-base-vertical;
+  }
+
+  .glyphicon-ok {
+    color: $translation-available-color;
+    padding-top: $panel-body-padding + $padding-base-vertical;
+  }
+}
+
+.panel-translation {
+  background-color: $translation-panel-bg;
+  padding-bottom: 0;
+
+  .help-block {
+    color: $translation-help-color;
+    padding-left: 12px;
+  }
+}
