@@ -13,4 +13,9 @@
   <% if can? :manage, Spotlight::AboutPage.new(exhibit: current_exhibit) %>
   <li><%= link_to t(:'spotlight.curation.sidebar.about_pages'), spotlight.exhibit_about_pages_path(current_exhibit), 'data-no-turbolink' => true %></li>
   <% end %>
+  <% if (can? :manage, current_exhibit.translations.first_or_initialize) && current_exhibit.languages.any? %>
+    <li>
+      <%= link_to t(:'spotlight.curation.sidebar.translations'), spotlight.edit_exhibit_translations_path(current_exhibit), 'data-no-turbolink' => true %>
+    </li>
+  <% end %>
 </ul>

@@ -10,6 +10,7 @@ describe Spotlight::Ability, type: :model do
   let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
   let(:language) { FactoryBot.create(:language, exhibit: exhibit) }
   let(:public_language) { FactoryBot.create(:language, exhibit: exhibit, public: true) }
+  let(:translation) { FactoryBot.create(:translation, exhibit: exhibit) }
   subject { Ability.new(user) }
 
   describe 'a user with no roles' do
@@ -66,6 +67,11 @@ describe Spotlight::Ability, type: :model do
     it { is_expected.to be_able_to(:update_all, Spotlight::Page) }
     it { is_expected.to be_able_to(:update, page) }
     it { is_expected.to be_able_to(:destroy, page) }
+
+    it { is_expected.to be_able_to(:create, Translation) }
+    it { is_expected.to be_able_to(:update_all, Translation) }
+    it { is_expected.to be_able_to(:update, translation) }
+    it { is_expected.to be_able_to(:destroy, translation) }
 
     it { is_expected.to be_able_to(:tag, exhibit) }
 
