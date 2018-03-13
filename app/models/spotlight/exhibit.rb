@@ -6,6 +6,9 @@ module Spotlight
     include Spotlight::ExhibitAnalytics
     include Spotlight::ExhibitDefaults
     include Spotlight::ExhibitDocuments
+    include Spotlight::Translatables
+
+    translates :title, :subtitle
 
     has_paper_trail
 

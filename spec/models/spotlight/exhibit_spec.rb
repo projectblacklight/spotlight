@@ -299,4 +299,26 @@ describe Spotlight::Exhibit, type: :model do
   it 'is expected to be versioned' do
     is_expected.to be_versioned
   end
+  describe 'translatable fields' do
+    let(:persisted_exhibit) { FactoryBot.create(:exhibit, title: 'Sample', subtitle: 'SubSample') }
+    before do
+      FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.title", value: 'Titre français')
+      FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.subtitle", value: 'Sous-titre français')
+    end
+    after do
+      I18n.locale = 'en'
+    end
+    it 'has a translatable title' do
+      expect(persisted_exhibit.title).to eq 'Sample'
+      I18n.locale = 'fr'
+      persisted_exhibit.reload
+      expect(persisted_exhibit.title).to eq 'Titre français'
+    end
+    it 'has a translatable subtitle' do
+      expect(persisted_exhibit.subtitle).to eq 'SubSample'
+      I18n.locale = 'fr'
+      persisted_exhibit.reload
+      expect(persisted_exhibit.subtitle).to eq 'Sous-titre français'
+    end
+  end
 end
