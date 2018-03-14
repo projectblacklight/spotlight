@@ -15,6 +15,7 @@ require 'rspec/active_model/mocks'
 require 'paper_trail/frameworks/rspec'
 
 require 'selenium-webdriver'
+require 'webmock/rspec'
 
 Capybara.javascript_driver = :headless_chrome
 
@@ -56,7 +57,9 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.use_transactional_fixtures = false
-
+  config.before :all do
+    WebMock.disable_net_connect!(allow_localhost: true)
+  end
   config.before :each do
     DatabaseCleaner.strategy = if Capybara.current_driver == :rack_test
                                  :transaction
