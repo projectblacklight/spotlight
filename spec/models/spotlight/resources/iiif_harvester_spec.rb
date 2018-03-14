@@ -7,6 +7,9 @@ describe Spotlight::Resources::IiifHarvester do
   describe 'Validation' do
     subject { harvester }
     context 'when given an invalid URL' do
+      before do
+        stub_request(:head, 'http://example.com').to_return(status: 200, headers: { 'Content-Type' => 'text/html' })
+      end
       let(:url) { 'http://example.com' }
 
       it 'errors when the URL is not a IIIF URL' do
