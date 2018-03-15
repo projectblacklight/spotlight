@@ -17,14 +17,14 @@ describe Spotlight::LanguagesController do
 
       it 'is successful' do
         post :create, params: { exhibit_id: exhibit, language: { locale: 'es' } }
-        expect(response).to redirect_to edit_exhibit_path(exhibit, anchor: 'language')
+        expect(response).to redirect_to edit_exhibit_path(exhibit, tab: 'language')
         expect(assigns[:exhibit].languages.first.locale).to eq 'es'
         expect(flash[:notice]).to eq 'The language was created.'
       end
 
       it 'validates language params' do
         post :create, params: { exhibit_id: exhibit, language: { locale: nil } }
-        expect(response).to redirect_to edit_exhibit_path(exhibit, anchor: 'language')
+        expect(response).to redirect_to edit_exhibit_path(exhibit, tab: 'language')
         expect(flash[:alert]).to include "Language can't be blank"
       end
     end
@@ -47,7 +47,7 @@ describe Spotlight::LanguagesController do
 
       it 'is successful' do
         delete :destroy, params: { exhibit_id: exhibit, id: language }
-        expect(response).to redirect_to edit_exhibit_path(exhibit, anchor: 'language')
+        expect(response).to redirect_to edit_exhibit_path(exhibit, tab: 'language')
         expect(assigns[:exhibit].languages.count).to eq 0
         expect(flash[:notice]).to eq 'The language was deleted.'
       end
