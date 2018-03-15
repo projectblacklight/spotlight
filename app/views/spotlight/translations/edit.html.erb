@@ -22,10 +22,16 @@
           <%= t('spotlight.exhibits.translations.general.label') %>
         </a>
       </li>
+      <li>
+        <a href="#browse" aria-controls="browse" role="tab" data-toggle="tab">
+          <%= t('spotlight.exhibits.translations.browse_categories.label') %>
+        </a>
+      </li>
     </ul>
 
     <div class="tab-content">
       <%= render 'general' %>
+      <%= render 'browse_categories' %>
     </div>
   </div>
 </div>
