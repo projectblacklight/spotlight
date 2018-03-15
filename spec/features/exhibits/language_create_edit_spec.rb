@@ -30,6 +30,7 @@ describe 'Language', type: :feature do
         click_button 'Save changes'
       end
       expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
+      expect(exhibit.languages.last).to be_public
     end
   end
   describe 'deleting' do
