@@ -11,14 +11,14 @@ module Spotlight
       else
         flash[:alert] = @language.errors.full_messages.join('<br/>'.html_safe)
       end
-      redirect_to spotlight.edit_exhibit_path @exhibit, anchor: 'language'
+      redirect_to spotlight.edit_exhibit_path @exhibit, tab: 'language'
     end
 
     def destroy
       @language.destroy
 
       redirect_to(
-        spotlight.edit_exhibit_path(@exhibit, anchor: 'language'),
+        spotlight.edit_exhibit_path(@exhibit, tab: 'language'),
         notice: t(:'helpers.submit.language.destroyed', model: @language.model_name.human.downcase)
       )
     end

@@ -1,9 +1,10 @@
-<div role="tabpanel" class="tab-pane" id="filter">
+<div role="tabpanel" class="tab-pane <%= 'active' if @tab == 'filter' %>" id="filter">
   <%= bootstrap_form_for [@exhibit, @exhibit.filters.first_or_initialize], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10', html: {class: "row"} do |f| %>
     <p class="instructions"><%= t :'spotlight.exhibits.filter.instructions' %></p>
 
     <%= f.text_field :field %>
     <%= f.text_field :value %>
+    <%= hidden_field_tag :tab, 'filter' %>
 
     <div class="form-actions">
       <div class="primary-actions">
