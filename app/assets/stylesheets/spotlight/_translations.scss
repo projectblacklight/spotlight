@@ -1,3 +1,9 @@
+.translation-edit-form {
+  .glyphicon-ok {
+    color: $translation-available-color;
+  }
+}
+
 .translation-subheading {
   border-bottom: 1px solid $navbar-default-border;
   margin-bottom: 20px;
@@ -9,9 +15,21 @@
   }
 
   .glyphicon-ok {
-    color: $translation-available-color;
     padding-top: $panel-body-padding + $padding-base-vertical;
   }
+}
+
+.tanslation-description-toggle {
+  margin: 0;
+  padding: 0;
+
+  &.collapsed {
+    .caret {
+      transform: rotate(-90deg);
+    }
+  }
+
+  label { cursor: pointer; }
 }
 
 .panel-translation {
