@@ -34,7 +34,6 @@ module Spotlight
     has_many :custom_fields, dependent: :delete_all
     has_many :feature_pages, extend: FriendlyId::FinderMethods
     has_many :main_navigations, dependent: :delete_all
-    has_many :owned_taggings, class_name: 'ActsAsTaggableOn::Tagging', as: :tagger
     has_many :reindexing_log_entries, dependent: :destroy
     has_many :resources
     has_many :roles, as: :resource, dependent: :delete_all
