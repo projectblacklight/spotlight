@@ -7,6 +7,10 @@ module Spotlight
 
     included do
       belongs_to :exhibit, class_name: 'Spotlight::Exhibit', inverse_of: :translations
+
+      before_validation do
+        mark_for_destruction if value.blank?
+      end
     end
 
     class_methods do
