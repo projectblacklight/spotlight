@@ -57,11 +57,12 @@ module Spotlight
     belongs_to :thumbnail, class_name: 'Spotlight::ExhibitThumbnail', dependent: :destroy, optional: true
 
     accepts_nested_attributes_for :about_pages, :attachments, :contacts, :custom_fields, :feature_pages, :languages,
-                                  :main_navigations, :owned_taggings, :resources, :searches, :solr_document_sidecars, :translations
+                                  :main_navigations, :owned_taggings, :resources, :searches, :solr_document_sidecars
     accepts_nested_attributes_for :blacklight_configuration, :home_page, :filters, update_only: true
     accepts_nested_attributes_for :masthead, :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
     accepts_nested_attributes_for :contact_emails, reject_if: proc { |attr| attr['email'].blank? }
     accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc { |attr| attr['user_key'].blank? && attr['id'].blank? }
+    accepts_nested_attributes_for :translations, allow_destroy: true
 
     before_save :sanitize_description, if: :description_changed?
 
