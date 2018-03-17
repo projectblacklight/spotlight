@@ -56,7 +56,7 @@ describe 'Translation editing', type: :feature do
       within '#browse #browse_category_description_1' do
         expect(page).to have_css('textarea', count: 1)
 
-        expect(page).to have_css('.help-block', 'All items in this exhibit.')
+        expect(page).to have_css('.help-block', text: 'All items in this exhibit.')
       end
     end
 
