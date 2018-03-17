@@ -66,6 +66,88 @@
         </div>
       <% end %>
     </div>
+    <div class='translation-main-menu'>
+      <h2 class='translation-subheading'>
+        <%= t('spotlight.exhibits.translations.general.main_menu.label') %>
+      </h2>
+
+      <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "spotlight.curation.nav.home", locale: @language) %>
+      <%= f.fields_for :translations, translation do |translation_fields| %>
+        <%= translation_fields.hidden_field :key %>
+        <%= translation_fields.hidden_field :locale %>
+        <div class='form-group translation-form translation-main-menu-home'>
+          <%= translation_fields.label :value, t('spotlight.exhibits.translations.general.basic_settings.home'), class: 'control-label col-sm-2' %>
+          <div class='col-md-8 panel panel-body panel-translation'>
+            <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
+            <p class="help-block">
+              <%= t(:'spotlight.curation.nav.home') %>
+            </p>
+          </div>
+          <div class='col-md-2'>
+            <% if translation.value.present? %>
+              <span class='glyphicon glyphicon-ok'></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "main_navigation.browse.label", locale: @language) %>
+      <%= f.fields_for :translations, translation do |translation_fields| %>
+        <%= translation_fields.hidden_field :key %>
+        <%= translation_fields.hidden_field :locale %>
+        <div class='form-group translation-form translation-main-menu-browse'>
+          <%= translation_fields.label :value, t('spotlight.exhibits.translations.main_menu.browse'), class: 'control-label col-sm-2' %>
+          <div class='col-md-8 panel panel-body panel-translation'>
+            <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
+            <p class="help-block">
+              <%= current_exhibit.main_navigations.browse.label %>
+            </p>
+          </div>
+          <div class='col-md-2'>
+            <% if translation.value.present? %>
+              <span class='glyphicon glyphicon-ok'></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "main_navigation.curated_features.label", locale: @language) %>
+      <%= f.fields_for :translations, translation do |translation_fields| %>
+        <%= translation_fields.hidden_field :key %>
+        <%= translation_fields.hidden_field :locale %>
+        <div class='form-group translation-form translation-main-menu-curated-features'>
+          <%= translation_fields.label :value, t('spotlight.exhibits.translations.main_menu.curated_features'), class: 'control-label col-sm-2' %>
+          <div class='col-md-8 panel panel-body panel-translation'>
+            <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
+            <p class="help-block">
+              <%= current_exhibit.main_navigations.curated_features.label %>
+            </p>
+          </div>
+          <div class='col-md-2'>
+            <% if translation.value.present? %>
+              <span class='glyphicon glyphicon-ok'></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "main_navigation.about.label", locale: @language) %>
+      <%= f.fields_for :translations, translation do |translation_fields| %>
+        <%= translation_fields.hidden_field :key %>
+        <%= translation_fields.hidden_field :locale %>
+        <div class='form-group translation-form translation-main-menu-about'>
+          <%= translation_fields.label :value, t('spotlight.exhibits.translations.main_menu.about'), class: 'control-label col-sm-2' %>
+          <div class='col-md-8 panel panel-body panel-translation'>
+            <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
+            <p class="help-block">
+              <%= current_exhibit.main_navigations.about.label %>
+            </p>
+          </div>
+          <div class='col-md-2'>
+            <% if translation.value.present? %>
+              <span class='glyphicon glyphicon-ok'></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
     <div class="form-actions">
       <div class="primary-actions">
         <%= f.submit nil, class: 'btn btn-primary' %>
