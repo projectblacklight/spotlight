@@ -8,7 +8,7 @@ module Spotlight
     def edit; end
 
     def update
-      if current_exhibit.update(translations_attributes: translations_attributes_destroying_blanks)
+      if current_exhibit.update(exhibit_params)
         I18n.reload! # reload since we're memoizing
         notice = t(:'helpers.submit.spotlight_default.updated', model: current_exhibit.class.model_name.human.downcase)
         redirect_to edit_exhibit_translations_path(current_exhibit, params: { language: @language }), notice: notice
@@ -18,13 +18,6 @@ module Spotlight
     end
 
     private
-
-    def translations_attributes_destroying_blanks
-      exhibit_params.to_h[:translations_attributes].map do |index, attrs|
-        attrs['_destroy'] = true if attrs['value'].blank?
-        [index, attrs]
-      end.to_h
-    end
 
     def exhibit_params
       params.require(:exhibit).permit(translations_attributes: [:id, :locale, :key, :value])
