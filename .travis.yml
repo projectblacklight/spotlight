@@ -4,12 +4,12 @@ notifications:
   email: false
 
 rvm:
-  - 2.4.1
+  - 2.4.3
 
 matrix:
   include:
-    - rvm: 2.3.4
-      env: "RAILS_VERSION=5.0.5"
+    - rvm: 2.3.6
+      env: "RAILS_VERSION=5.0.6"
 
 before_install:
   - gem update --system
@@ -22,7 +22,7 @@ notifications:
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-    - RAILS_VERSION=5.1.2
+    - RAILS_VERSION=5.1.5
 
 # Workaround for https://github.com/travis-ci/travis-ci/issues/8836
 # sudo: false
