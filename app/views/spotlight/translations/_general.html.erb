@@ -80,7 +80,7 @@
           <div class='col-md-8 panel panel-body panel-translation'>
             <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
             <p class="help-block">
-              <%= t(:'spotlight.curation.nav.home') %>
+              <%= t(:'spotlight.curation.nav.home', locale: I18n.default_locale) %>
             </p>
           </div>
           <div class='col-md-2'>
@@ -99,7 +99,7 @@
           <div class='col-md-8 panel panel-body panel-translation'>
             <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
             <p class="help-block">
-              <%= current_exhibit.main_navigations.browse.label %>
+              <%= current_exhibit.main_navigations.browse[:label].presence || current_exhibit.main_navigations.browse.default_label %>
             </p>
           </div>
           <div class='col-md-2'>
@@ -118,7 +118,7 @@
           <div class='col-md-8 panel panel-body panel-translation'>
             <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
             <p class="help-block">
-              <%= current_exhibit.main_navigations.curated_features.label %>
+              <%= current_exhibit.main_navigations.curated_features[:label].presence || current_exhibit.main_navigations.curated_features.default_label %>
             </p>
           </div>
           <div class='col-md-2'>
@@ -137,7 +137,7 @@
           <div class='col-md-8 panel panel-body panel-translation'>
             <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
             <p class="help-block">
-              <%= current_exhibit.main_navigations.about.label %>
+              <%= current_exhibit.main_navigations.about[:label].presence || current_exhibit.main_navigations.about.default_label %>
             </p>
           </div>
           <div class='col-md-2'>
