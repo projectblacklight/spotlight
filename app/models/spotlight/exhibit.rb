@@ -20,7 +20,7 @@ module Spotlight
 
     extend FriendlyId
     friendly_id :title, use: [:slugged, :finders]
-    validates :title, presence: true
+    validates :title, presence: true, if: -> { I18n.locale == I18n.default_locale }
     validates :slug, uniqueness: true
     validates :theme, inclusion: { in: Spotlight::Engine.config.exhibit_themes }, allow_blank: true
 
