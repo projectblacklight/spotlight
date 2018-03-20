@@ -477,6 +477,12 @@ en:
             title: Title
             subtitle: Subtitle
             description: Description
+          main_menu:
+            label: Main Menu
+            home: Home
+            browse: Browse
+            curated_features: Curated Features
+            about: About
     main_navigation:
       about: "About"
       browse: "Browse"
