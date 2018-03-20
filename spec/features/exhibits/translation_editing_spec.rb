@@ -14,25 +14,56 @@ describe 'Translation editing', type: :feature do
     it 'selects the correct language' do
       expect(page).to have_css '.nav-pills li.active', text: 'French'
     end
-    it 'successfully adds translations' do
-      within '.translation-edit-form #general' do
-        expect(page).to have_css '.help-block', text: 'Sample'
-        expect(page).to have_css '.help-block', text: 'SubSample'
-        fill_in 'Title', with: 'Titre français'
-        fill_in 'Subtitle', with: 'Sous-titre français'
-        click_button 'Save changes'
+    describe 'basic settings' do
+      it 'successfully adds translations' do
+        within '.translation-edit-form #general' do
+          expect(page).to have_css '.help-block', text: 'Sample'
+          expect(page).to have_css '.help-block', text: 'SubSample'
+          fill_in 'Title', with: 'Titre français'
+          fill_in 'Subtitle', with: 'Sous-titre français'
+          click_button 'Save changes'
+        end
+        expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
+        within '.translation-basic-settings-title' do
+          expect(page).to have_css 'input[value="Titre français"]'
+          expect(page).to have_css 'span.glyphicon.glyphicon-ok'
+        end
+        within '.translation-basic-settings-subtitle' do
+          expect(page).to have_css 'input[value="Sous-titre français"]'
+          expect(page).to have_css 'span.glyphicon.glyphicon-ok'
+        end
+        within '.translation-basic-settings-description' do
+          expect(page).to_not have_css 'span.glyphicon.glyphicon-ok'
+        end
       end
-      expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
-      within '.translation-basic-settings-title' do
-        expect(page).to have_css 'input[value="Titre français"]'
-        expect(page).to have_css 'span.glyphicon.glyphicon-ok'
-      end
-      within '.translation-basic-settings-subtitle' do
-        expect(page).to have_css 'input[value="Sous-titre français"]'
-        expect(page).to have_css 'span.glyphicon.glyphicon-ok'
-      end
-      within '.translation-basic-settings-description' do
-        expect(page).to_not have_css 'span.glyphicon.glyphicon-ok'
+    end
+    describe 'main menu' do
+      it 'successfully adds translations' do
+        within '.translation-edit-form #general' do
+          expect(page).to have_css '.help-block', text: 'Home'
+          fill_in 'Home', with: 'Maison'
+          fill_in 'Browse', with: 'parcourir ceci!'
+          click_button 'Save changes'
+        end
+        expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
+        within '.translation-main-menu-home' do
+          expect(page).to have_css 'input[value="Maison"]'
+          expect(page).to have_css 'span.glyphicon.glyphicon-ok'
+        end
+        within '.translation-main-menu-browse' do
+          expect(page).to have_css 'input[value="parcourir ceci!"]'
+          expect(page).to have_css 'span.glyphicon.glyphicon-ok'
+        end
+        within '.translation-main-menu-curated-features' do
+          expect(page).to_not have_css 'span.glyphicon.glyphicon-ok'
+        end
+        within '.translation-main-menu-about' do
+          expect(page).to_not have_css 'span.glyphicon.glyphicon-ok'
+        end
+        I18n.locale = :fr
+        expect(exhibit.main_navigations.browse.label).to eq 'parcourir ceci!'
+        expect(I18n.t(:'spotlight.curation.nav.home')).to eq 'Maison'
+        I18n.locale = I18n.default_locale
       end
     end
   end

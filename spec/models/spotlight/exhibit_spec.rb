@@ -16,6 +16,24 @@ describe Spotlight::Exhibit, type: :model do
     subject.save!
     expect(subject.description).to eq 'Test description'
   end
+
+  describe 'validations' do
+    it 'validates the presence of the title' do
+      exhibit.title = ''
+      expect do
+        exhibit.save
+      end.to change { exhibit.errors[:title].count }.by(1)
+    end
+
+    it 'does not validate the presence of the title under a non-default locale' do
+      expect(I18n).to receive(:locale).and_return(:fr)
+      exhibit.title = ''
+      expect do
+        exhibit.save
+      end.not_to(change { exhibit.errors[:title].count })
+    end
+  end
+
   describe 'contact_emails' do
     before do
       subject.contact_emails_attributes = [{ 'email' => 'chris@example.com' }, { 'email' => 'jesse@stanford.edu' }]
