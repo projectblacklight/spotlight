@@ -38,7 +38,7 @@ describe 'Translation editing', type: :feature do
       end
     end
     describe 'main menu' do
-      it 'successfully adds translations' do
+      it 'successfully adds translations to exhibit navbar' do
         within '.translation-edit-form #general' do
           expect(page).to have_css '.help-block', text: 'Home'
           fill_in 'Home', with: 'Maison'
@@ -64,6 +64,28 @@ describe 'Translation editing', type: :feature do
         expect(exhibit.main_navigations.browse.label).to eq 'parcourir ceci!'
         expect(I18n.t(:'spotlight.curation.nav.home')).to eq 'Maison'
         I18n.locale = I18n.default_locale
+      end
+    end
+    describe 'breadcrumbs' do
+      describe 'browse categories' do
+        before do
+          exhibit.searches.first.update(published: true)
+          within '.translation-edit-form #general' do
+            fill_in 'Home', with: 'Maison'
+            fill_in 'Browse', with: 'parcourir ceci!'
+            click_button 'Save changes'
+          end
+        end
+
+        it 'adds translations to user-facing breadcrumbs' do
+          visit spotlight.exhibit_browse_index_path(exhibit, locale: 'fr')
+          expect(page).to have_breadcrumbs 'Maison', 'parcourir ceci!'
+        end
+
+        it 'does not translate admin breadcrumbs' do
+          visit spotlight.exhibit_searches_path(exhibit, locale: 'fr')
+          expect(page).to have_breadcrumbs 'Home', 'Curation', 'Browse'
+        end
       end
     end
   end
