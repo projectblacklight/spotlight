@@ -86,9 +86,9 @@ class CatalogController < ApplicationController
     config.add_show_field 'personal_name_ssm', label: 'Personal Names'
     config.add_show_field 'corporate_name_ssm', label: 'Corporate Names'
 
-    config.add_search_field 'all_fields', label: 'Everything'
-    config.add_search_field 'title', label: 'Title', solr_parameters: { qf: 'full_title_tesim', pf: 'full_title_tesim' }
-    config.add_search_field 'author', label: 'Author', solr_parameters: { qf: '${qf_author}', pf: '${pf_author}' }
+    config.add_search_field 'all_fields', label: I18n.t('spotlight.search.fields.search.all_fields')
+    config.add_search_field 'title', label: I18n.t('spotlight.search.fields.search.title'), solr_parameters: { qf: 'full_title_tesim', pf: 'full_title_tesim' }
+    config.add_search_field 'author', label: I18n.t('spotlight.search.fields.search.author'), solr_parameters: { qf: '${qf_author}', pf: '${pf_author}' }
 
     config.add_sort_field 'relevance', sort: 'score desc, sort_title_ssi asc', label: I18n.t('spotlight.search.fields.sort.relevance')
     config.add_sort_field 'title', sort: 'sort_title_ssi asc', label: I18n.t('spotlight.search.fields.sort.title')

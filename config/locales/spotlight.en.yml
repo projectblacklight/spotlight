@@ -259,6 +259,10 @@ en:
           id: id
     search:
       fields:
+        search:
+          all_fields: Everything
+          title: Title
+          author: Author
         sort:
           relevance: Relevance
           title: Title
@@ -494,6 +498,8 @@ en:
             about: About
         search_fields:
           label: Search field labels
+          field_based_search_fields:
+            label: Field-Based Search Fields
           sort_fields:
             label: Sort Fields
     main_navigation:

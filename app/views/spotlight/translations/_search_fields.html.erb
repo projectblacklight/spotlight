@@ -3,6 +3,34 @@
     <% # Add a hidden field for the language so the redirect knows how to come back here %>
     <%= hidden_field_tag :language, @language %>
 
+    <div class='translation-field-based-search-fields'>
+      <h2 class='translation-subheading'>
+        <%= t('spotlight.exhibits.translations.search_fields.field_based_search_fields.label') %>
+      </h2>
+
+      <% current_exhibit.blacklight_config.search_fields.select { |_, config| config.if }.each do |key, search_config| %>
+        <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "blacklight.search.fields.search.#{key}", locale: @language) %>
+        <%= f.fields_for :translations, translation do |translation_fields| %>
+          <%= translation_fields.hidden_field :key %>
+          <%= translation_fields.hidden_field :locale %>
+          <div class='form-group translation-form'>
+            <%= translation_fields.label :value, t("spotlight.search.fields.search.#{key}", locale: I18n.default_locale), class: 'control-label col-sm-2' %>
+            <div class='col-md-8 panel panel-body panel-translation'>
+              <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
+              <p class="help-block">
+                <%= search_config.label %>
+              </p>
+            </div>
+            <div class='col-md-2'>
+              <% if translation.value.present? %>
+                <span class='glyphicon glyphicon-ok'></span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
     <div class='translation-sort-fields'>
       <h2 class='translation-subheading'>
         <%= t('spotlight.exhibits.translations.search_fields.sort_fields.label') %>

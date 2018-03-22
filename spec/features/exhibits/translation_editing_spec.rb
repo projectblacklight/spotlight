@@ -71,6 +71,27 @@ describe 'Translation editing', type: :feature do
   describe 'Search field labels' do
     before { visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr') }
 
+    describe 'field-based search fields' do
+      it 'has a text input for each enabled search field' do
+        within '#search_fields .translation-field-based-search-fields' do
+          expect(page).to have_css('input[type="text"]', count: 3)
+        end
+      end
+
+      it 'allows users to translate field-based search fields', js: true do
+        click_link 'Search field labels'
+
+        within('#search_fields', visible: true) do
+          fill_in 'Everything', with: 'Tout'
+          click_button 'Save changes'
+        end
+
+        visit spotlight.exhibit_path(exhibit, locale: 'fr')
+
+        expect(page).to have_css('select#search_field option', text: 'Tout')
+      end
+    end
+
     describe 'sort fields' do
       it 'has a text input for each sort field' do
         within '#search_fields .translation-sort-fields' do
