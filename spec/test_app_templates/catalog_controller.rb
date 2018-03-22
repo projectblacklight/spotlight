@@ -90,11 +90,11 @@ class CatalogController < ApplicationController
     config.add_search_field 'title', label: 'Title', solr_parameters: { qf: 'full_title_tesim', pf: 'full_title_tesim' }
     config.add_search_field 'author', label: 'Author', solr_parameters: { qf: '${qf_author}', pf: '${pf_author}' }
 
-    config.add_sort_field 'relevance', sort: 'score desc, sort_title_ssi asc', label: 'Relevance'
-    config.add_sort_field 'title', sort: 'sort_title_ssi asc', label: 'Title'
-    config.add_sort_field 'type', sort: 'sort_type_ssi asc', label: 'Type'
-    config.add_sort_field 'source', sort: 'sort_source_ssi asc', label: 'Source'
-    config.add_sort_field 'identifier', sort: 'id asc', label: 'Identifier'
-    config.add_sort_field 'date', sort: 'sort_date_dtsi desc', label: 'Date (new to old)'
+    config.add_sort_field 'relevance', sort: 'score desc, sort_title_ssi asc', label: I18n.t('spotlight.search.fields.sort.relevance')
+    config.add_sort_field 'title', sort: 'sort_title_ssi asc', label: I18n.t('spotlight.search.fields.sort.title')
+    config.add_sort_field 'type', sort: 'sort_type_ssi asc', label: I18n.t('spotlight.search.fields.sort.type')
+    config.add_sort_field 'source', sort: 'sort_source_ssi asc', label: I18n.t('spotlight.search.fields.sort.source')
+    config.add_sort_field 'identifier', sort: 'id asc', label: I18n.t('spotlight.search.fields.sort.identifier')
+    config.add_sort_field 'date', sort: 'sort_date_dtsi desc', label: I18n.t('spotlight.search.fields.sort.date')
   end
 end

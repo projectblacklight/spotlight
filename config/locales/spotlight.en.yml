@@ -257,6 +257,15 @@ en:
           sort_type_ssi: type
           sort_source_ssi: source
           id: id
+    search:
+      fields:
+        sort:
+          relevance: Relevance
+          title: Title
+          type: Type
+          source: Source
+          identifier: Identifier
+          date: 'Date (new to old)'
     metadata_configurations:
       edit:
         field:
@@ -483,6 +492,10 @@ en:
             browse: Browse
             curated_features: Curated Features
             about: About
+        search_fields:
+          label: Search field labels
+          sort_fields:
+            label: Sort Fields
     main_navigation:
       about: "About"
       browse: "Browse"

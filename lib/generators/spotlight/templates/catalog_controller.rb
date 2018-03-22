@@ -19,7 +19,7 @@ class CatalogController < ApplicationController
 
     config.add_search_field 'all_fields', label: 'Everything'
 
-    config.add_sort_field 'relevance', sort: 'score desc', label: 'Relevance'
+    config.add_sort_field 'relevance', sort: 'score desc', label: I18n.t('spotlight.search.fields.sort.relevance')
 
     config.add_field_configuration_to_solr_request!
 

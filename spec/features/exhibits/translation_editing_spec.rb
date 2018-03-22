@@ -19,7 +19,7 @@ describe 'Translation editing', type: :feature do
         within '.translation-edit-form #general' do
           expect(page).to have_css '.help-block', text: 'Sample'
           expect(page).to have_css '.help-block', text: 'SubSample'
-          fill_in 'Title', with: 'Titre français'
+          fill_in 'Title', id: 'exhibit_translations_attributes_0_value', with: 'Titre français'
           fill_in 'Subtitle', with: 'Sous-titre français'
           click_button 'Save changes'
         end
@@ -64,6 +64,31 @@ describe 'Translation editing', type: :feature do
         expect(exhibit.main_navigations.browse.label).to eq 'parcourir ceci!'
         expect(I18n.t(:'spotlight.curation.nav.home')).to eq 'Maison'
         I18n.locale = I18n.default_locale
+      end
+    end
+  end
+
+  describe 'Search field labels' do
+    before { visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr') }
+
+    describe 'sort fields' do
+      it 'has a text input for each sort field' do
+        within '#search_fields .translation-sort-fields' do
+          expect(page).to have_css('input[type="text"]', count: 6)
+        end
+      end
+
+      it 'allows users to translation sort fields', js: true do
+        click_link 'Search field labels'
+
+        within('#search_fields', visible: true) do
+          fill_in 'Relevance', with: 'French Relevance'
+          click_button 'Save changes'
+        end
+
+        visit spotlight.search_exhibit_catalog_path(exhibit, q: '*', locale: 'fr')
+
+        expect(page).to have_css('.dropdown-toggle', text: 'Trier par French Relevance', visible: true)
       end
     end
   end
