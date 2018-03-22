@@ -259,6 +259,13 @@ en:
           id: id
     search:
       fields:
+        facet:
+          genre_ssim: Genre
+          personal_name_ssm: Personal Names
+          corporate_name_ssm: Corporate Names
+          subject_geographic_ssim: Geographic
+          subject_temporal_ssim: Era
+          language_ssim: Language
         search:
           all_fields: Everything
           title: Title
@@ -498,6 +505,8 @@ en:
             about: About
         search_fields:
           label: Search field labels
+          facet_fields:
+            label: Facet Fields
           field_based_search_fields:
             label: Field-Based Search Fields
           sort_fields:

@@ -92,6 +92,27 @@ describe 'Translation editing', type: :feature do
       end
     end
 
+    describe 'facet fields' do
+      it 'has a text input for each facet field' do
+        within '#search_fields .translation-facet-fields' do
+          expect(page).to have_css('input[type="text"]', count: 7)
+        end
+      end
+
+      it 'allows users to translate facet fields', js: true do
+        click_link 'Search field labels'
+
+        within('#search_fields', visible: true) do
+          fill_in 'Geographic', with: 'Géographique'
+          click_button 'Save changes'
+        end
+
+        visit spotlight.search_exhibit_catalog_path(exhibit, q: '*', locale: 'fr')
+
+        expect(page).to have_css('h3.facet-field-heading', text: 'Géographique')
+      end
+    end
+
     describe 'sort fields' do
       it 'has a text input for each sort field' do
         within '#search_fields .translation-sort-fields' do
