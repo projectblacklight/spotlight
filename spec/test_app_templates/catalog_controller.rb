@@ -66,25 +66,25 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-    config.add_index_field 'language_ssm', label: 'Language'
-    config.add_index_field 'abstract_tesim', label: 'Abstract'
-    config.add_index_field 'note_mapuse_tesim', label: 'Type'
-    config.add_index_field 'note_source_tesim', label: 'Source'
-    config.add_index_field 'subject_geographic_tesim', label: 'Geographic Subject'
-    config.add_index_field 'subject_temporal_tesim', label: 'Temporal Subject'
+    config.add_index_field 'language_ssm', label: I18n.t('spotlight.search.fields.language_ssm')
+    config.add_index_field 'abstract_tesim', label: I18n.t('spotlight.search.fields.abstract_tesim')
+    config.add_index_field 'note_mapuse_tesim', label: I18n.t('spotlight.search.fields.note_mapuse_tesim')
+    config.add_index_field 'note_source_tesim', label: I18n.t('spotlight.search.fields.note_source_tesim')
+    config.add_index_field 'subject_geographic_tesim', label: I18n.t('spotlight.search.fields.subject_geographic_tesim')
+    config.add_index_field 'subject_temporal_tesim', label: I18n.t('spotlight.search.fields.subject_temporal_tesim')
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field 'note_phys_desc_tesim', label: 'Note'
-    config.add_show_field 'note_source_tesim', label: 'Source'
-    config.add_show_field 'note_desc_note_tesim', label: 'Note'
-    config.add_show_field 'note_references_tesim', label: 'References'
-    config.add_show_field 'note_provenance_tesim', label: 'Provenance'
-    config.add_show_field 'note_page_num_tesim', label: 'Page Number'
-    config.add_show_field 'subject_geographic_tesim', label: 'Geographic Subject'
-    config.add_show_field 'subject_temporal_tesim', label: 'Temporal Subject'
-    config.add_show_field 'personal_name_ssm', label: 'Personal Names'
-    config.add_show_field 'corporate_name_ssm', label: 'Corporate Names'
+    config.add_show_field 'note_phys_desc_tesim', label: I18n.t('spotlight.search.fields.note_phys_desc_tesim')
+    config.add_show_field 'note_source_tesim', label: I18n.t('spotlight.search.fields.note_source_tesim')
+    config.add_show_field 'note_desc_note_tesim', label: I18n.t('spotlight.search.fields.note_desc_note_tesim')
+    config.add_show_field 'note_references_tesim', label: I18n.t('spotlight.search.fields.note_references_tesim')
+    config.add_show_field 'note_provenance_tesim', label: I18n.t('spotlight.search.fields.note_provenance_tesim')
+    config.add_show_field 'note_page_num_tesim', label: I18n.t('spotlight.search.fields.note_page_num_tesim')
+    config.add_show_field 'subject_geographic_tesim', label: I18n.t('spotlight.search.fields.subject_geographic_tesim')
+    config.add_show_field 'subject_temporal_tesim', label: I18n.t('spotlight.search.fields.subject_temporal_tesim')
+    config.add_show_field 'personal_name_ssm', label: I18n.t('spotlight.search.fields.personal_name_ssm')
+    config.add_show_field 'corporate_name_ssm', label: I18n.t('spotlight.search.fields.corporate_name_ssm')
 
     config.add_search_field 'all_fields', label: I18n.t('spotlight.search.fields.search.all_fields')
     config.add_search_field 'title', label: I18n.t('spotlight.search.fields.search.title'), solr_parameters: { qf: 'full_title_tesim', pf: 'full_title_tesim' }

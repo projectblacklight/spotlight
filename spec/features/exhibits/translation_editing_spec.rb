@@ -68,6 +68,37 @@ describe 'Translation editing', type: :feature do
     end
   end
 
+  describe 'Metadata field labels' do
+    before { visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr') }
+
+    describe 'configured fields' do
+      it 'has a text input for each metadata field' do
+        within '#metadata' do
+          expect(page).to have_css('input[type="text"]', count: 17)
+        end
+      end
+
+      it 'allows users to translate both index and show metadata field labels', js: true do
+        click_link 'Metadata field labels'
+
+        within('#metadata', visible: true) do
+          language_label = find('label', text: 'Language', visible: true)
+          language_input = find("##{language_label['for']}", visible: true)
+          language_input.set('Langue')
+          click_button 'Save changes'
+        end
+
+        visit spotlight.search_exhibit_catalog_path(exhibit, f: { language_ssim: ['Latin'] }, locale: 'fr')
+
+        expect(page).to have_css('dt.blacklight-language_ssm', text: 'Langue')
+
+        click_link 'Orbis terrarum tabula recens emendata et in lucem edita'
+
+        expect(page).to have_css('dt.blacklight-language_ssm', text: 'Langue')
+      end
+    end
+  end
+
   describe 'Search field labels' do
     before { visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr') }
 
