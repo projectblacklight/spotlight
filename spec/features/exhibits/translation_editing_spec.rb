@@ -183,4 +183,16 @@ describe 'Translation editing', type: :feature do
       I18n.locale = I18n.default_locale
     end
   end
+
+  describe 'translation progress counter', js: true do
+    before do
+      FactoryBot.create(:translation, exhibit: exhibit, locale: 'fr', key: "#{exhibit.slug}.title", value: 'Titre')
+    end
+    it 'counts existing and total available translations' do
+      visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
+      expect(page).to have_link('General 1/7')
+      expect(page).to have_link('Search field labels 0/16')
+      expect(page).to have_link('Browse categories 0/2')
+    end
+  end
 end
