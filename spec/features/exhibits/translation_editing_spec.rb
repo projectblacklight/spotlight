@@ -97,6 +97,41 @@ describe 'Translation editing', type: :feature do
         expect(page).to have_css('dt.blacklight-language_ssm', text: 'Langue')
       end
     end
+
+    describe 'Exhibit-specific fields' do
+      let!(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit) }
+
+      before do
+        visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
+      end
+
+      it 'has text inputs for the exhibit-specific fields' do
+        within '#metadata' do
+          expect(page).to have_css('input[type="text"]', count: 18)
+
+          within '.translation-exhibit-specific-fields' do
+            expect(page).to have_css('input[type="text"]', count: 1)
+          end
+        end
+      end
+
+      it 'allows users to translate exhibit-specific metadata fields' do
+        within '#metadata' do
+          fill_in custom_field.configuration['label'], with: 'French Custom Field Label'
+          click_button 'Save changes'
+        end
+
+        # Adding some data to our custom field
+        visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352', locale: :fr)
+        expect(page).to have_link 'Edit'
+        click_on 'Edit'
+        fill_in custom_field.configuration['label'], with: 'Custom Field Data'
+        click_on 'Save changes'
+
+        expect(page).to have_css('dt', text: 'French Custom Field Label')
+        expect(page).to have_css('dd', text: 'Custom Field Data')
+      end
+    end
   end
 
   describe 'Search field labels' do

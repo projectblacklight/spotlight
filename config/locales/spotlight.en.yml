@@ -523,6 +523,8 @@ en:
             about: About
         metadata:
           label: Metadata field labels
+          exhibit_specific_fields:
+            label: Exhibit-Specific Fields
         search_fields:
           label: Search field labels
           facet_fields:
