@@ -19,7 +19,7 @@ describe 'Translation editing', type: :feature do
         within '.translation-edit-form #general' do
           expect(page).to have_css '.help-block', text: 'Sample'
           expect(page).to have_css '.help-block', text: 'SubSample'
-          fill_in 'Title', with: 'Titre français'
+          fill_in 'Title', id: 'exhibit_translations_attributes_0_value', with: 'Titre français'
           fill_in 'Subtitle', with: 'Sous-titre français'
           click_button 'Save changes'
         end
@@ -64,6 +64,73 @@ describe 'Translation editing', type: :feature do
         expect(exhibit.main_navigations.browse.label).to eq 'parcourir ceci!'
         expect(I18n.t(:'spotlight.curation.nav.home')).to eq 'Maison'
         I18n.locale = I18n.default_locale
+      end
+    end
+  end
+
+  describe 'Search field labels' do
+    before { visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr') }
+
+    describe 'field-based search fields' do
+      it 'has a text input for each enabled search field' do
+        within '#search_fields .translation-field-based-search-fields' do
+          expect(page).to have_css('input[type="text"]', count: 3)
+        end
+      end
+
+      it 'allows users to translate field-based search fields', js: true do
+        click_link 'Search field labels'
+
+        within('#search_fields', visible: true) do
+          fill_in 'Everything', with: 'Tout'
+          click_button 'Save changes'
+        end
+
+        visit spotlight.exhibit_path(exhibit, locale: 'fr')
+
+        expect(page).to have_css('select#search_field option', text: 'Tout')
+      end
+    end
+
+    describe 'facet fields' do
+      it 'has a text input for each facet field' do
+        within '#search_fields .translation-facet-fields' do
+          expect(page).to have_css('input[type="text"]', count: 7)
+        end
+      end
+
+      it 'allows users to translate facet fields', js: true do
+        click_link 'Search field labels'
+
+        within('#search_fields', visible: true) do
+          fill_in 'Geographic', with: 'Géographique'
+          click_button 'Save changes'
+        end
+
+        visit spotlight.search_exhibit_catalog_path(exhibit, q: '*', locale: 'fr')
+
+        expect(page).to have_css('h3.facet-field-heading', text: 'Géographique')
+      end
+    end
+
+    describe 'sort fields' do
+      it 'has a text input for each sort field' do
+        within '#search_fields .translation-sort-fields' do
+          expect(page).to have_css('input[type="text"]', count: 6)
+        end
+      end
+
+      it 'allows users to translation sort fields', js: true do
+        click_link 'Search field labels'
+
+        within('#search_fields', visible: true) do
+          fill_in 'Relevance', with: 'French Relevance'
+          click_button 'Save changes'
+        end
+
+        visit spotlight.search_exhibit_catalog_path(exhibit, q: '*', locale: 'fr')
+
+        expect(page).to have_css('.dropdown-toggle', text: 'Trier par French Relevance', visible: true)
       end
     end
   end

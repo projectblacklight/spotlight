@@ -52,12 +52,12 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
-    config.add_facet_field 'genre_ssim', label: 'Genre', limit: true
-    config.add_facet_field 'personal_name_ssm', label: 'Personal Names', limit: true
-    config.add_facet_field 'corporate_name_ssm', label: 'Corporate Names', limit: true
-    config.add_facet_field 'subject_geographic_ssim', label: 'Geographic'
-    config.add_facet_field 'subject_temporal_ssim', label: 'Era'
-    config.add_facet_field 'language_ssim', label: 'Language'
+    config.add_facet_field 'genre_ssim', label: I18n.t('spotlight.search.fields.facet.genre_ssim'), limit: true
+    config.add_facet_field 'personal_name_ssm', label: I18n.t('spotlight.search.fields.facet.personal_name_ssm'), limit: true
+    config.add_facet_field 'corporate_name_ssm', label: I18n.t('spotlight.search.fields.facet.corporate_name_ssm'), limit: true
+    config.add_facet_field 'subject_geographic_ssim', label: I18n.t('spotlight.search.fields.facet.subject_geographic_ssim')
+    config.add_facet_field 'subject_temporal_ssim', label: I18n.t('spotlight.search.fields.facet.subject_temporal_ssim')
+    config.add_facet_field 'language_ssim', label: I18n.t('spotlight.search.fields.facet.language_ssim')
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -86,15 +86,15 @@ class CatalogController < ApplicationController
     config.add_show_field 'personal_name_ssm', label: 'Personal Names'
     config.add_show_field 'corporate_name_ssm', label: 'Corporate Names'
 
-    config.add_search_field 'all_fields', label: 'Everything'
-    config.add_search_field 'title', label: 'Title', solr_parameters: { qf: 'full_title_tesim', pf: 'full_title_tesim' }
-    config.add_search_field 'author', label: 'Author', solr_parameters: { qf: '${qf_author}', pf: '${pf_author}' }
+    config.add_search_field 'all_fields', label: I18n.t('spotlight.search.fields.search.all_fields')
+    config.add_search_field 'title', label: I18n.t('spotlight.search.fields.search.title'), solr_parameters: { qf: 'full_title_tesim', pf: 'full_title_tesim' }
+    config.add_search_field 'author', label: I18n.t('spotlight.search.fields.search.author'), solr_parameters: { qf: '${qf_author}', pf: '${pf_author}' }
 
-    config.add_sort_field 'relevance', sort: 'score desc, sort_title_ssi asc', label: 'Relevance'
-    config.add_sort_field 'title', sort: 'sort_title_ssi asc', label: 'Title'
-    config.add_sort_field 'type', sort: 'sort_type_ssi asc', label: 'Type'
-    config.add_sort_field 'source', sort: 'sort_source_ssi asc', label: 'Source'
-    config.add_sort_field 'identifier', sort: 'id asc', label: 'Identifier'
-    config.add_sort_field 'date', sort: 'sort_date_dtsi desc', label: 'Date (new to old)'
+    config.add_sort_field 'relevance', sort: 'score desc, sort_title_ssi asc', label: I18n.t('spotlight.search.fields.sort.relevance')
+    config.add_sort_field 'title', sort: 'sort_title_ssi asc', label: I18n.t('spotlight.search.fields.sort.title')
+    config.add_sort_field 'type', sort: 'sort_type_ssi asc', label: I18n.t('spotlight.search.fields.sort.type')
+    config.add_sort_field 'source', sort: 'sort_source_ssi asc', label: I18n.t('spotlight.search.fields.sort.source')
+    config.add_sort_field 'identifier', sort: 'id asc', label: I18n.t('spotlight.search.fields.sort.identifier')
+    config.add_sort_field 'date', sort: 'sort_date_dtsi desc', label: I18n.t('spotlight.search.fields.sort.date')
   end
 end
