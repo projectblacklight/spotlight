@@ -277,6 +277,24 @@ en:
           source: Source
           identifier: Identifier
           date: 'Date (new to old)'
+        language_ssm: Language
+        abstract_tesim: Abstract
+        note_mapuse_tesim: Type
+        note_source_tesim: Source
+        subject_geographic_tesim: Geographic Subject
+        subject_temporal_tesim: Temporal Subject
+        note_phys_desc_tesim: Note
+        note_desc_note_tesim: Note
+        note_references_tesim: References
+        note_provenance_tesim: Provenance
+        note_page_num_tesim: Page Number
+        subject_geographic_tesim: Geographic Subject
+        subject_temporal_tesim: Temporal Subject
+        personal_name_ssm: Personal Names
+        corporate_name_ssm: Corporate Names
+        spotlight_upload_description_tesim: Description
+        spotlight_upload_attribution_tesim: Attribution
+        spotlight_upload_date_tesim: Date
     metadata_configurations:
       edit:
         field:
@@ -503,6 +521,8 @@ en:
             browse: Browse
             curated_features: Curated Features
             about: About
+        metadata:
+          label: Metadata field labels
         search_fields:
           label: Search field labels
           facet_fields:
