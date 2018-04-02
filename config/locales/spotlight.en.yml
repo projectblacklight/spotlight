@@ -277,6 +277,7 @@ en:
           source: Source
           identifier: Identifier
           date: 'Date (new to old)'
+        full_title_tesim: Title
         language_ssm: Language
         abstract_tesim: Abstract
         note_mapuse_tesim: Type
