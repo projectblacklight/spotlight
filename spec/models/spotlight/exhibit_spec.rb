@@ -318,10 +318,11 @@ describe Spotlight::Exhibit, type: :model do
     is_expected.to be_versioned
   end
   describe 'translatable fields' do
-    let(:persisted_exhibit) { FactoryBot.create(:exhibit, title: 'Sample', subtitle: 'SubSample') }
+    let(:persisted_exhibit) { FactoryBot.create(:exhibit, title: 'Sample', subtitle: 'SubSample', description: 'Description') }
     before do
       FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.title", value: 'Titre français')
       FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.subtitle", value: 'Sous-titre français')
+      FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.description", value: 'Description français')
     end
     after do
       I18n.locale = 'en'
@@ -337,6 +338,13 @@ describe Spotlight::Exhibit, type: :model do
       I18n.locale = 'fr'
       persisted_exhibit.reload
       expect(persisted_exhibit.subtitle).to eq 'Sous-titre français'
+    end
+
+    it 'has a translatable description' do
+      expect(persisted_exhibit.description).to eq 'Description'
+      I18n.locale = 'fr'
+      persisted_exhibit.reload
+      expect(persisted_exhibit.description).to eq 'Description français'
     end
   end
 end
