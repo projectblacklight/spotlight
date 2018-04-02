@@ -34,29 +34,27 @@
       <% end %>
 
       <% description_translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "#{search.slug}.long_description", locale: @language) %>
-      <% if search[:long_description] || description_translation.persisted? %>
-        <div data-translation-progress-item="true" class="form-group">
-          <div class="col-xs-7 col-xs-offset-4">
-            <%= f.fields_for :translations, description_translation do |translation_fields| %>
-              <%= button_tag 'type' => 'button', class: 'btn btn-text collapsed tanslation-description-toggle', 'data-toggle': 'collapse', 'data-target': "#browse_category_description_#{search.id}", 'aria-expanded': 'false', 'aria-controls': "#browse_category_description_#{search.id}" do %>
-                <%= translation_fields.label :value, t(:'spotlight.exhibits.translations.browse_categories.description_label') %>
-                <span class="caret"></span>
-              <% end %>
-              <%= translation_fields.hidden_field :key %>
-              <%= translation_fields.hidden_field :locale %>
-              <div id="browse_category_description_<%= search.id %>" class="panel panel-body collapse panel-translation">
-                <%= translation_fields.text_area_without_bootstrap :value, class: 'form-control' %>
-                <p class="help-block"><%= search[:long_description] %></p>
-              </div>
+      <div data-translation-progress-item="true" class="form-group">
+        <div class="col-xs-7 col-xs-offset-4">
+          <%= f.fields_for :translations, description_translation do |translation_fields| %>
+            <%= button_tag 'type' => 'button', class: 'btn btn-text collapsed tanslation-description-toggle', 'data-toggle': 'collapse', 'data-target': "#browse_category_description_#{search.id}", 'aria-expanded': 'false', 'aria-controls': "#browse_category_description_#{search.id}" do %>
+              <%= translation_fields.label :value, t(:'spotlight.exhibits.translations.browse_categories.description_label') %>
+              <span class="caret"></span>
             <% end %>
-          </div>
-          <div class="col-xs-1">
-            <% if description_translation.value.present? %>
-              <span data-translation-present="true" class='glyphicon glyphicon-ok'></span>
-            <% end %>
-          </div>
+            <%= translation_fields.hidden_field :key %>
+            <%= translation_fields.hidden_field :locale %>
+            <div id="browse_category_description_<%= search.id %>" class="panel panel-body collapse panel-translation">
+              <%= translation_fields.text_area_without_bootstrap :value, class: 'form-control' %>
+              <p class="help-block"><%= search[:long_description] %></p>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+        <div class="col-xs-1">
+          <% if description_translation.value.present? %>
+            <span data-translation-present="true" class='glyphicon glyphicon-ok'></span>
+          <% end %>
+        </div>
+      </div>
     <% end %>
 
     <div class="form-actions">
