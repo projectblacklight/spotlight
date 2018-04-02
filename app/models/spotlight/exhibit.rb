@@ -8,7 +8,7 @@ module Spotlight
     include Spotlight::ExhibitDocuments
     include Spotlight::Translatables
 
-    translates :title, :subtitle
+    translates :title, :subtitle, :description
 
     has_paper_trail
 
