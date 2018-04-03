@@ -1,5 +1,6 @@
+---
 en:
   devise:
     mailer:
       invitation_instructions:
-        subject: 'Exhibit invitation instructions'
+        subject: Exhibit invitation instructions
