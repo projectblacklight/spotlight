@@ -7,7 +7,7 @@ EngineCart.load_application!
 
 Internal::Application.config.active_job.queue_adapter = :inline
 
-require 'rails-controller-testing' if Rails::VERSION::MAJOR >= 5
+require 'rails-controller-testing'
 require 'rspec/collection_matchers'
 require 'rspec/its'
 require 'rspec/rails'
