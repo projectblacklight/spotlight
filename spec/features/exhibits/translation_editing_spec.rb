@@ -71,6 +71,17 @@ describe 'Translation editing', type: :feature do
   describe 'Search field labels' do
     before { visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr') }
 
+    it 'redirects to the same form tab' do
+      click_link 'Search field labels'
+      within('#search_fields', visible: true) do
+        fill_in 'Everything', with: 'Tout'
+        click_button 'Save changes'
+      end
+
+      expect(page).to have_css '.nav-pills li.active', text: 'French'
+      expect(page).to have_css '.nav-tabs li.active', text: 'Search field labels'
+    end
+
     describe 'field-based search fields' do
       it 'has a text input for each enabled search field' do
         within '#search_fields .translation-field-based-search-fields' do
@@ -156,6 +167,17 @@ describe 'Translation editing', type: :feature do
 
         expect(page).to have_css('.help-block', text: 'All items in this exhibit.')
       end
+    end
+
+    it 'redirects to the same form tab' do
+      click_link 'Browse categories'
+      within('#browse', visible: true) do
+        fill_in 'All Exhibit Items', with: "Tous les objets d'exposition"
+        click_button 'Save changes'
+      end
+
+      expect(page).to have_css '.nav-pills li.active', text: 'French'
+      expect(page).to have_css '.nav-tabs li.active', text: 'Browse categories'
     end
 
     it 'persists changes', js: true do
