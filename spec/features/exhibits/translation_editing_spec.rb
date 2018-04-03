@@ -71,6 +71,17 @@ describe 'Translation editing', type: :feature do
   describe 'Metadata field labels' do
     before { visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr') }
 
+    it 'redirects to the same form tab' do
+      click_link 'Metadata field labels'
+      within('#metadata', visible: true) do
+        fill_in 'Everything', with: 'Tout'
+        click_button 'Save changes'
+      end
+
+      expect(page).to have_css '.nav-pills li.active', text: 'French'
+      expect(page).to have_css '.nav-tabs li.active', text: 'Metadata field labels'
+    end
+
     describe 'configured fields' do
       it 'has a text input for each metadata field' do
         within '#metadata' do
@@ -281,6 +292,7 @@ describe 'Translation editing', type: :feature do
       expect(page).to have_link('General 1/7')
       expect(page).to have_link('Search field labels 0/16')
       expect(page).to have_link('Browse categories 0/2')
+      expect(page).to have_link('Metadata field labels 0/17')
     end
   end
 end

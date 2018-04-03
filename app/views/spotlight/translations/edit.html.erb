@@ -22,7 +22,7 @@
           <%= t('spotlight.exhibits.translations.general.label') %> <span class="badge"></span>
         </a>
       </li>
-      <li>
+      <li class="<%= 'active' if @tab == 'metadata' %>">
         <a href="#metadata" aria-controls="metadata" role="tab" data-toggle="tab" data-behavior="translation-progress">
           <%= t('spotlight.exhibits.translations.metadata.label') %> <span class="badge"></span>
         </a>
