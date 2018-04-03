@@ -230,6 +230,8 @@ export default class Crop {
     tabs.on('shown.bs.tab', function() {
       if(self.cropArea.data('initiallyVisible') === false && self.cropArea.is(':visible')) {
         self.cropperMap.invalidateSize();
+        // Because the map size is 0,0 when image is loading (not visible) we need to refit the bounds of the layer
+        self.imageLayer._fitBounds();
         self.cropArea.data('initiallyVisible', null);
       }
     });
