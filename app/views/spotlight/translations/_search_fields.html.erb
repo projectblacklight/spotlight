@@ -1,7 +1,8 @@
-<div role="tabpanel" class="tab-pane" id="search_fields">
+<div role="tabpanel" class="tab-pane <%= 'active' if @tab == 'search_fields' %>" id="search_fields">
   <%= bootstrap_form_for current_exhibit, url: spotlight.exhibit_translations_path(current_exhibit), layout: :horizontal do |f| %>
-    <% # Add a hidden field for the language so the redirect knows how to come back here %>
+    <% # Add hidden fields for the language and tab so the redirect knows how to come back here %>
     <%= hidden_field_tag :language, @language %>
+    <%= hidden_field_tag :tab, 'search_fields' %>
 
     <div class='translation-field-based-search-fields'>
       <h2 class='translation-subheading'>
