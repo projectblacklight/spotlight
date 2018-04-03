@@ -88,3 +88,11 @@ $ rake
 ```
 
 This utilizes Solr and the testing rails app automatically.
+
+## Translations
+
+Spotlight ships with [`i18n-tasks`](https://github.com/glebm/i18n-tasks) to help manage translations. To run a translation health check:
+
+```sh
+$ bundle exec i18n-tasks health
+```
