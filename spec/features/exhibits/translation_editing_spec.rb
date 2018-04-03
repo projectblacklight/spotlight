@@ -230,18 +230,13 @@ describe 'Translation editing', type: :feature do
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
     end
 
-    it 'has a title for every browse category' do
+    it 'has a title and description for every browse category' do
       within '#browse' do
         expect(page).to have_css('input[type="text"]', count: 2)
+        expect(page).to have_css('textarea', count: 2)
+
         expect(page).to have_field 'All Exhibit Items'
         expect(page).to have_field 'Browse Category 1'
-      end
-    end
-
-    it 'only renders a description field if search has one' do
-      within '#browse #browse_category_description_1' do
-        expect(page).to have_css('textarea', count: 1)
-
         expect(page).to have_css('.help-block', text: 'All items in this exhibit.')
       end
     end
@@ -263,7 +258,7 @@ describe 'Translation editing', type: :feature do
       within('#browse', visible: true) do
         fill_in 'All Exhibit Items', with: "Tous les objets d'exposition"
 
-        click_button 'Description'
+        first('.tanslation-description-toggle').click
 
         textarea = page.find('textarea')
         textarea.set('Tous les articles de cette exposition.')
