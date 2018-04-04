@@ -1,4 +1,4 @@
-describe 'About page', type: :feature, versioning: true do
+describe 'About page', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let!(:about_page1) { FactoryBot.create(:about_page, title: 'First Page', exhibit: exhibit) }
