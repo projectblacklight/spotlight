@@ -134,6 +134,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
 
     save_page
 
+    expect(page).to have_css '.alert', text: 'The feature page was successfully updated. Undo changes'
     expect(page).to have_selector('.zpr-link[data-iiif-tilesource]')
     click_on 'Show in ZPR viewer'
     expect(page).to have_css('#osd-modal-container')
