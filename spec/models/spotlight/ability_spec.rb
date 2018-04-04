@@ -4,10 +4,10 @@ describe Spotlight::Ability, type: :model do
   before do
     allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
   end
-  let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:search) { FactoryBot.create(:published_search, exhibit: exhibit) }
-  let(:unpublished_search) { FactoryBot.create(:search, exhibit: exhibit) }
-  let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.build_stubbed(:exhibit) }
+  let(:search) { FactoryBot.build_stubbed(:published_search, exhibit: exhibit) }
+  let(:unpublished_search) { FactoryBot.build_stubbed(:search, exhibit: exhibit) }
+  let(:page) { FactoryBot.build_stubbed(:feature_page, exhibit: exhibit) }
   subject { Ability.new(user) }
 
   describe 'a user with no roles' do
@@ -30,6 +30,7 @@ describe Spotlight::Ability, type: :model do
   describe 'a user with admin role' do
     let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
     let(:role) { FactoryBot.create(:role, resource: exhibit) }
+    let(:blacklight_config) { exhibit.blacklight_configuration }
 
     it { is_expected.to be_able_to(:update, exhibit) }
 
@@ -41,12 +42,12 @@ describe Spotlight::Ability, type: :model do
     it { is_expected.to be_able_to(:import, exhibit) }
     it { is_expected.to be_able_to(:process_import, exhibit) }
     it { is_expected.to be_able_to(:destroy, exhibit) }
-
-    let(:blacklight_config) { exhibit.blacklight_configuration }
   end
 
   describe 'a user with curate role' do
     let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:contact) { FactoryBot.build_stubbed(:contact, exhibit: exhibit) }
+    let(:blacklight_config) { exhibit.blacklight_configuration }
 
     it { is_expected.not_to be_able_to(:update, exhibit) }
     it { is_expected.to be_able_to(:curate, exhibit) }
@@ -64,13 +65,9 @@ describe Spotlight::Ability, type: :model do
 
     it { is_expected.to be_able_to(:tag, exhibit) }
 
-    let(:contact) { FactoryBot.create(:contact, exhibit: exhibit) }
-
     it { is_expected.to be_able_to(:edit, contact) }
     it { is_expected.to be_able_to(:new, contact) }
     it { is_expected.to be_able_to(:create, contact) }
     it { is_expected.to be_able_to(:destroy, contact) }
-
-    let(:blacklight_config) { exhibit.blacklight_configuration }
   end
 end
