@@ -1,6 +1,6 @@
 describe Spotlight::ContactForm do
   subject { described_class.new(name: 'Root', email: 'user@example.com').tap { |c| c.current_exhibit = exhibit } }
-  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit) { FactoryBot.build_stubbed(:exhibit) }
   let(:honeypot_field_name) { Spotlight::Engine.config.spambot_honeypot_email_field }
 
   context 'with a site-wide contact email' do
