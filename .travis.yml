@@ -31,3 +31,12 @@ script:
   - bundle exec rake
 
 jdk: oraclejdk8
+
+cache:
+  ##
+  # Caching bundler here in a hope to reduce Travis test time
+  bundler: true
+  ##
+  # We don't really know how this will work, but lets see.
+  directories:
+    - .internal_test_app/tmp/cache/assets/sprockets
