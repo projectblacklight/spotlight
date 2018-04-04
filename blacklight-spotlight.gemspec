@@ -75,4 +75,5 @@ these collections.)
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'sitemap_generator'
   s.add_development_dependency 'webmock'
+  s.add_development_dependency 'i18n-tasks'
 end

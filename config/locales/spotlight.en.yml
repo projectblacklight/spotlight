@@ -1,471 +1,771 @@
+---
 en:
-  cancel: "Cancel"
-  drag: "Drag"
-  toggle_nav: "Toggle navigation"
-  helpers:
-    action:
-      new: Add a new %{model}
-      view: View
-      edit: Edit
-      edit_long: "Edit this %{model}"
-      destroy: Delete
-      cancel: Cancel
-      destroy_are_you_sure: "Are you sure you want to delete this %{model}?"
-      update_all: "Save changes"
-      spotlight/search:
-        destroy: "Delete"
-        edit_long: "Edit this saved search"
-      acts_as_taggable_on/tag:
-        destroy: "Delete tag"
-      spotlight/role:
-        create: "Add a new user"
-        destroy: "Remove from site"
-      spotlight/custom_field:
-        create: "Add new field"
-      spotlight/contact:
-        create: "Add contact"
-      spotlight/exhibit:
-        create: "Create Exhibit"
-        destroy: "Delete this exhibit"
-    submit:
-      spotlight_default: &spotlight_default
-        create: "Save"
-        submit: "Save changes"
-        update: "Save changes"
-        created: "The %{model} was created."
-        updated: "The %{model} was successfully updated."
-        batch_updated: "%{model} were successfully updated."
-        batch_error: "There was an error updating the requested %{model}."
-        destroyed: "The %{model} was deleted."
-      contact:
-        create: "Save"
-        created: "The %{model} was created."
-        destroyed: "The %{model} was destroyed."
-        update: "Save"
-        updated: "The %{model} was successfully updated."
-        batch_updated: "Contacts were successfully updated."
-      page: &spotlight_page
-        create: "Add new page"
-        submit: "Save changes"
-        update: "Save changes"
-        created: "The %{model} was created."
-        updated: "The %{model} was successfully updated."
-        batch_updated: "%{model} were successfully updated."
-        batch_error: "There was an error updating the requested pages."
-        destroyed: "The %{model} was deleted."
-      exhibit: *spotlight_default
-      filter: *spotlight_default
-      search: *spotlight_default
-      site: *spotlight_default
-      contact_form:
-        create: "Send"
-        created: "Thanks. Your feedback has been sent."
-      feature_page: *spotlight_page
-      about_page: *spotlight_page
-      home_page: *spotlight_page
-      blacklight_configuration:
-        create: "Save"
-        submit: "Save changes"
-        update: "Save changes"
-        updated: "The exhibit was successfully updated."
-      solr_document: *spotlight_default
-      users: *spotlight_default
-      custom_field: *spotlight_default
-      role:
-        updated: "User has been updated."
-        destroyed: "User has been removed."
-        batch_error:
-          one: "There was a problem saving the user."
-          other: "There was a problem saving the users."
-      invite:
-        invited: 'User has been invited.'
-    label:
-      solr_document:
-        exhibit_tag_list: "Tags"
-      spotlight/exhibit:
-        tag_list: 'Tags'
-      spotlight/filter:
-        field: 'Field'
-        value: 'Value'
   activerecord:
+    attributes:
+      spotlight/contact:
+        avatar: Photo
+      spotlight/exhibit:
+        published: Published?
+      spotlight/masthead:
+        display: Show background image in masthead
+      spotlight/page:
+        display_sidebar?: Show sidebar
+        display_title: Show title
+    help:
+      spotlight/exhibit:
+        tag_list: Enter tags separated by commas.
     models:
       spotlight:
         page: Page
-    attributes:
-      "spotlight/contact":
-          avatar: "Photo"
-      "spotlight/exhibit":
-          published: "Published?"
-      "spotlight/page":
-        display_sidebar?: "Show sidebar"
-        display_title: "Show title"
-      "spotlight/masthead":
-        display: "Show background image in masthead"
-    help:
-      spotlight/exhibit:
-        tag_list: "Enter tags separated by commas."
   blacklight:
     search:
       fields:
         facet:
           exhibit_tag: Exhibit Tags
+  cancel: Cancel
+  drag: Drag
+  helpers:
+    action:
+      acts_as_taggable_on/tag:
+        destroy: Delete tag
+      cancel: Cancel
+      destroy: Delete
+      destroy_are_you_sure: Are you sure you want to delete this %{model}?
+      edit: Edit
+      edit_long: Edit this %{model}
+      new: Add a new %{model}
+      spotlight/contact:
+        create: Add contact
+      spotlight/custom_field:
+        create: Add new field
+      spotlight/exhibit:
+        create: Create Exhibit
+        destroy: Delete this exhibit
+      spotlight/role:
+        create: Add a new user
+        destroy: Remove from site
+      spotlight/search:
+        destroy: Delete
+        edit_long: Edit this saved search
+      update_all: Save changes
+      view: View
+    label:
+      solr_document:
+        exhibit_tag_list: Tags
+      spotlight/exhibit:
+        tag_list: Tags
+      spotlight/filter:
+        field: Field
+        value: Value
+    submit:
+      about_page:
+        batch_error: There was an error updating the requested pages.
+        batch_updated: "%{model} were successfully updated."
+        create: Add new page
+        created: The %{model} was created.
+        destroyed: The %{model} was deleted.
+        submit: Save changes
+        update: Save changes
+        updated: The %{model} was successfully updated.
+      blacklight_configuration:
+        create: Save
+        submit: Save changes
+        update: Save changes
+        updated: The exhibit was successfully updated.
+      contact:
+        batch_updated: Contacts were successfully updated.
+        create: Save
+        created: The %{model} was created.
+        destroyed: The %{model} was destroyed.
+        update: Save
+        updated: The %{model} was successfully updated.
+      contact_form:
+        create: Send
+        created: Thanks. Your feedback has been sent.
+      custom_field:
+        batch_error: There was an error updating the requested %{model}.
+        batch_updated: "%{model} were successfully updated."
+        create: Save
+        created: The %{model} was created.
+        destroyed: The %{model} was deleted.
+        submit: Save changes
+        update: Save changes
+        updated: The %{model} was successfully updated.
+      exhibit:
+        batch_error: There was an error updating the requested %{model}.
+        batch_updated: "%{model} were successfully updated."
+        create: Save
+        created: The %{model} was created.
+        destroyed: The %{model} was deleted.
+        submit: Save changes
+        update: Save changes
+        updated: The %{model} was successfully updated.
+      feature_page:
+        batch_error: There was an error updating the requested pages.
+        batch_updated: "%{model} were successfully updated."
+        create: Add new page
+        created: The %{model} was created.
+        destroyed: The %{model} was deleted.
+        submit: Save changes
+        update: Save changes
+        updated: The %{model} was successfully updated.
+      filter:
+        batch_error: There was an error updating the requested %{model}.
+        batch_updated: "%{model} were successfully updated."
+        create: Save
+        created: The %{model} was created.
+        destroyed: The %{model} was deleted.
+        submit: Save changes
+        update: Save changes
+        updated: The %{model} was successfully updated.
+      home_page:
+        batch_error: There was an error updating the requested pages.
+        batch_updated: "%{model} were successfully updated."
+        create: Add new page
+        created: The %{model} was created.
+        destroyed: The %{model} was deleted.
+        submit: Save changes
+        update: Save changes
+        updated: The %{model} was successfully updated.
+      invite:
+        invited: User has been invited.
+      page:
+        batch_error: There was an error updating the requested pages.
+        batch_updated: "%{model} were successfully updated."
+        create: Add new page
+        created: The %{model} was created.
+        destroyed: The %{model} was deleted.
+        submit: Save changes
+        update: Save changes
+        updated: The %{model} was successfully updated.
+      role:
+        batch_error:
+          one: There was a problem saving the user.
+          other: There was a problem saving the users.
+        destroyed: User has been removed.
+        updated: User has been updated.
+      search:
+        batch_error: There was an error updating the requested %{model}.
+        batch_updated: "%{model} were successfully updated."
+        create: Save
+        created: The %{model} was created.
+        destroyed: The %{model} was deleted.
+        submit: Save changes
+        update: Save changes
+        updated: The %{model} was successfully updated.
+      site:
+        batch_error: There was an error updating the requested %{model}.
+        batch_updated: "%{model} were successfully updated."
+        create: Save
+        created: The %{model} was created.
+        destroyed: The %{model} was deleted.
+        submit: Save changes
+        update: Save changes
+        updated: The %{model} was successfully updated.
+      solr_document:
+        batch_error: There was an error updating the requested %{model}.
+        batch_updated: "%{model} were successfully updated."
+        create: Save
+        created: The %{model} was created.
+        destroyed: The %{model} was deleted.
+        submit: Save changes
+        update: Save changes
+        updated: The %{model} was successfully updated.
+      spotlight_default:
+        batch_error: There was an error updating the requested %{model}.
+        batch_updated: "%{model} were successfully updated."
+        create: Save
+        created: The %{model} was created.
+        destroyed: The %{model} was deleted.
+        submit: Save changes
+        update: Save changes
+        updated: The %{model} was successfully updated.
+      users:
+        batch_error: There was an error updating the requested %{model}.
+        batch_updated: "%{model} were successfully updated."
+        create: Save
+        created: The %{model} was created.
+        destroyed: The %{model} was deleted.
+        submit: Save changes
+        update: Save changes
+        updated: The %{model} was successfully updated.
+  reindexing_log:
+    status:
+      failed: Failed
+      in_progress: In Progress
+      succeeded: Successful
+      unstarted: Not Yet Started
+  shared:
+    share_follow:
+      share_follow: Share & Follow
+    site_sidebar:
+      create_exhibit: Create a new exhibit
+      documentation: Curator documentation
+      header: Actions
   spotlight:
-    application_name: "%{exhibit} - %{application_name}"
-    html_title: "%{title} | %{application_name}"
-    html_admin_title: "%{section} - %{title}"
-    configuration:
+    about_pages:
+      contacts:
+        header: Contacts
+      contacts_form:
+        contact:
+          legend: Contact Details
+        header: Contacts
+        instructions: 'Enter details for each librarian, curator or other contact person for this exhibit. Select the contacts you want to be show in the sidebar of the About Pages. Drag and drop contacts to specify the order in which they are shown in the sidebar.
+
+'
+      nav_link: About
+      page_options:
+        published: Publish
       sidebar:
-        header: Configuration
-        settings: General
-        appearance: Appearance
-        users: Users
-        metadata: Metadata
-        search_configuration: Search
-      header: "Configuration"
-      page_title: "Page title"
-      settings:
-        header: "Settings"
+        nav_link: About
     admin_users:
       create:
-        success: Added user as an exhibits adminstrator
         error: There was a problem adding the user as an exhibits adminstrator
+        success: Added user as an exhibits adminstrator
       destroy:
-        success: User removed from site adminstrator role
         error: There was a problem removing the user from the site adminstrator role
+        success: User removed from site adminstrator role
       index:
-        section: Manage exhibits
-        page_title: Manage administrators
-        instructions: Existing exhibits administrators
+        add: Add new administrator
         all_users: Administrators and curators of all exhibits
         copy: Copy
-        add: Add new administrator
         destroy: Remove from role
-        save: Add role
+        instructions: Existing exhibits administrators
+        page_title: Manage administrators
         pending: pending
+        save: Add role
+        section: Manage exhibits
     appearances:
       edit:
-        header: Appearance
         exhibit_style:
-          heading: "Exhibit style"
+          heading: Exhibit style
+        header: Appearance
         main_navigation:
+          help: 'Select the menu items you want to be displayed in the main navigation menu (menu items are only displayed when published pages exist for that item). Click a menu item to change its display label. Drag and drop a menu item to change their order in the menu.
+
+'
           menu: Main menu
-          help: >
-            Select the menu items you want to be displayed in the main navigation menu
-            (menu items are only displayed when published pages exist for that item).
-            Click a menu item to change its display label. Drag and drop a menu item
-            to change their order in the menu.
-        restore_default: "Restore default"
-        site_theme:
-          heading: Visual theme
-          help: ""
-          label: Exhibit theme
+        restore_default: Restore default
         site_masthead:
           heading: Exhibit masthead
-          help: >
-            You can select and crop an image to use as a background in your exhibit site's
-            masthead. To use an image as a masthead background, you should use an image that
-            is at least 120 pixels tall and 1200 pixels wide. For best results use an image at
-            least 1800 pixels wide. You can crop larger images using the cropping tool below.
+          help: 'You can select and crop an image to use as a background in your exhibit site''s masthead. To use an image as a masthead background, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.
+
+'
+        site_theme:
+          heading: Visual theme
+          help: ''
+          label: Exhibit theme
         site_thumbnail:
           heading: Exhibit thumbnail
-          help: "You can select and crop an image to visually represent this exhibit."
+          help: You can select and crop an image to visually represent this exhibit.
         thumbnail:
-          small: Small
-          medium: Medium
           large: Large
-    curation:
-      sidebar:
-        header: Curation
-        dashboard: Dashboard
-        analytics: Analytics
-        items: Items
-        tags: Tags
-        browse: Browse
-        feature_pages: Feature pages
-        about_pages: About pages
-      nav:
-        home: "Home"
-      header: "Curation"
-    search_configurations:
-      document_index_view_types:
-        label: Result page types
-      default_per_page:
-        label: Default per page
-      edit:
-        header: "Search"
-        tab:
-          options: "Options"
-          facets: "Facets"
-          results: "Results"
-      search_fields:
-        header: "Field-based search"
-        help: >
-          If the search box is displayed, you can also enable field-based search.
-          Field-based search adds a dropdown menu to your exhibit site's search box that
-          provides the user with an option to restrict a search query to a single metadata field.
-        instructions: >
-          If enabled, you can select below the metadata fields that are available for searching. Click
-          a field name to edit its display label.  Drag and drop fields to specify the order they
-          are displayed in the search box dropdown menu.
-        enable_feature: Display search box
-      facets:
-        help: >
-          If the sidebar is visible, users can use
-          the facets shown in the sidebar to limit a search.  You can select the facets
-          that are available for searching below. Click a facet field name to edit its display label.
-          Drag and drop facets to specify the order they are displayed in the sidebar.
-        sort_by:
-          label: "Sort by:"
-          count: Frequency
-          index: Value
-      facet_metadata:
-        document_count:
+          medium: Medium
+          small: Small
+    application_name: "%{exhibit} - %{application_name}"
+    browse:
+      index:
+        header: Browse Exhibit
+      nav_link: Browse
+      search:
+        item_count:
           one: "%{count} item"
-          other:  "%{count} items"
-        too_many_values_count: "%{count}+ unique values"
-        value_count:
-          one: "%{count} unique value"
-          other: "%{count} unique values"
-      sort:
-        header: "Sort fields"
-        help: >
-          Select the fields you want to be available to users for sorting results.
-          Click a field title to change its display label. Drag and drop fields to
-          change their order in the sort dropdown menu. The field listed first is
-          the default sort field.
-        keys:
-          asc: ascending
-          desc: descending
-          score: relevancy score
-          sort_date_dtsi: date
-          sort_title_ssi: title
-          sort_type_ssi: type
-          sort_source_ssi: source
-          id: id
-    metadata_configurations:
-      edit:
-        field:
-          label: "Field name"
-        deselect_all: "Deselect all"
-        select_all: "Select all"
-        header: "Metadata"
-        order_header: "Display and Order Metadata Fields"
-        exhibit_specific:
-          header: "Exhibit-Specific Fields"
-          instructions:
-            "You can add metadata fields to supplement the metadata fields that are part of the repository item record."
-        view:
-          show: "Item Details"
-        instructions: >
-          Select metadata fields to display on each type of page. Click a field name
-          to edit its display label. Drag and drop fields to specify the order in which they
-          are displayed.
+          other: "%{count} items"
+      search_box:
+        label: Search within this browse category
+        placeholder: Search…
+        reset: Clear search box
+        submit: Search within browse category
+        success:
+          expand_html: You can also <a href="%{expand_search_url}">search all exhibit items for "%{browse_query}"</a>.
+          result_number_html: Your search matched <strong> %{search_size} of %{parent_search_count} items</strong> in this browse category.
+        zero_results:
+          expand_html: You can <a href="%{clear_search_url}"> clear this search</a> or try <a href="%{expand_search_url}">searching all exhibit items for "%{browse_query}"</a>.
+          result_number: Your search did not match any items in this browse category.
     catalog:
+      admin:
+        header: Items
+        title: Curation - Items
+      admin_header:
+        new_resource: Add items
+        reindex: Reindex items
       breadcrumb:
-        index: 'Search Results'
+        index: Search Results
+      document_visibility_control:
+        inprogress:
+          label: ''
+        make_private:
+          button: Make Private
+          label: ''
+        make_public:
+          button: Make Public
+          label: ''
+        private: Private
       edit_default:
-        blank_field_warning_html: >
-          This field is currently hidden on all pages. You can make it visible on the Curation &gt; %{link} page.
-        full_title_tesim: "Title"
+        blank_field_warning_html: 'This field is currently hidden on all pages. You can make it visible on the Curation &gt; %{link} page.
+
+'
+        full_title_tesim: Title
         url-field:
-          help: "Valid file types: %{extensions}"
+          help: 'Valid file types: %{extensions}'
       facets:
         exhibit_visibility:
-          label: "Item Visibility"
-          private: "Private"
+          label: Item Visibility
+          private: Private
       fields:
-        title: "Title"
-        date_added: "Date Added"
+        date_added: Date Added
+        title: Title
         visibility: Public
-      document_visibility_control:
-        make_public:
-          label: ""
-          button: Make Public
-        make_private:
-          label: ""
-          button: Make Private
-        inprogress:
-          label: ""
-        private: "Private"
-      admin:
-        title: Curation - Items
-        header: Items
-      admin_header:
-        reindex: "Reindex items"
-        new_resource: "Add items"
       new:
         header: Import items
       reindex_progress_panel:
+        begin_html: Began reindexing a total of <span data-behavior='total'></span> items.
+        completed_html: Reindexed <span data-behavior='completed'></span> of <span data-behavior='total'></span> items.
+        error: An error occured while reindexing. Contact your exhibits administrator for more information.
         heading: Reindexing status
-        begin_html: "Began reindexing a total of <span data-behavior='total'></span> items."
-        completed_html: "Reindexed <span data-behavior='completed'></span> of <span data-behavior='total'></span> items."
-        error: 'An error occured while reindexing. Contact your exhibits administrator for more information.'
-    invitation_mailer:
-      invitation_instructions:
-        subject: 'Invitation to manage \"%{exhibit_name}\"'
-        hello: "Hello!"
-        someone_invited_you: "The Exhibits Administrator has invited you to help work on the \"%{exhibit_name}\" exhibit."
-        accept_invitation: "You can accept this invitation by clicking the link below."
-        accept_link: "Accept invitation"
-        ignore: "If you don't want to accept the invitation, please ignore this email. Your account won't be created until you access the link above."
-        visit: 'Visit exhibit'
-    exhibits_admin_invitation_mailer:
-      invitation_instructions:
-        subject: 'Invitation to manage \"%{exhibit_name}\"'
-        hello: "Hello!"
-        someone_invited_you: "The Exhibits Administrator has invited you to help manage exhibits."
-        accept_invitation: " You can accept this invitation by clicking the link below."
-        accept: "Accept invitation"
-        ignore: "If you don't want to accept the invitation, please ignore this email. Your exhibits administrator account won't be created until you access the link above."
+    configuration:
+      header: Configuration
+      page_title: Page title
+      settings:
+        header: Settings
+      sidebar:
+        appearance: Appearance
+        header: Configuration
+        metadata: Metadata
+        search_configuration: Search
+        settings: General
+        users: Users
     confirmation_mailer:
       confirmation_instructions:
-        welcome: "Welcome %{email}!"
-        instructions: "You can confirm your account email through the link below:"
         confirm: Confirm my account
+        instructions: 'You can confirm your account email through the link below:'
+        welcome: Welcome %{email}!
     contact_form:
       new:
-        header: "Feedback"
+        header: Feedback
+    contacts:
+      edit:
+        header: Edit Contact
+      form:
+        avatar:
+          header: Avatar
+        email:
+          placeholder: Valid email address
+        location:
+          placeholder: Name of library or other physical location
+        name:
+          placeholder: First and last name
+        source:
+          remote:
+            label: Upload an image
+        telephone:
+          placeholder: Telephone number (optional)
+        title:
+          placeholder: Job title most relevant to this exhibit
+      new:
+        header: Add Exhibit Contact
+    curation:
+      header: Curation
+      nav:
+        home: Home
+      sidebar:
+        about_pages: About pages
+        analytics: Analytics
+        browse: Browse
+        dashboard: Dashboard
+        feature_pages: Feature pages
+        header: Curation
+        items: Items
+        tags: Tags
     custom_fields:
       edit:
         header: Edit Exhibit-Specific Field
-      new:
-        header: Add Exhibit-Specific Field
       form:
         field_type:
-          label: "Type"
-          vocab: "Controlled vocabulary"
-          text: "Free text"
+          label: Type
+          text: Free text
+          vocab: Controlled vocabulary
+      new:
+        header: Add Exhibit-Specific Field
     dashboards:
-      show:
-        header: Dashboard
+      analytics:
+        header: Analytics
+        monthly_header: User Activity Over the Past Month
+        pages:
+          header: Most popular pages
+        pagetitle: page title
+        pageviews: page views
+        sessions: visitors
+        users: unique visits
+      page_activity:
+        field:
+          last_edited_by: User
+          title: Title
+          updated_at: Last Edited
+        header: Recent Site Building Activity
+        new_about_page: Add new About page
+        new_feature_page: Add new Feature page
       reindexing_activity:
-        no_reindexing_activity: There has been no reindexing activity
-        header: Recent Item Indexing Activity
         field:
           date: Date
-          items_reindexed_count: Items Indexed
           duration: Elapsed Time
+          items_reindexed_count: Items Indexed
           job_status: Status
           user: Requested By
-      page_activity:
-        header: Recent Site Building Activity
-        new_feature_page: "Add new Feature page"
-        new_about_page: "Add new About page"
-        field:
-          title: Title
-          last_edited_by: User
-          updated_at: Last Edited
+        header: Recent Item Indexing Activity
+        no_reindexing_activity: There has been no reindexing activity
+      show:
+        header: Dashboard
       solr_document_activity:
         header: Recently Updated Items
         no_documents: There are no documents in this exhibit
-      analytics:
-        header: "Analytics"
-        monthly_header: "User Activity Over the Past Month"
-        pageviews: "page views"
-        users: "unique visits"
-        sessions: "visitors"
-        pagetitle: "page title"
-        pages:
-          header: "Most popular pages"
     exhibits:
       breadcrumb: Home
-      index:
-        published: Published exhibits
-        user: Your exhibits
-        unpublished: Unpublished exhibits
-      delete:
-        heading: Delete exhibit
-        warning_html: >
-          This action is irreversible. Be sure to back up the exhibit settings and content using
-          the %{export_link} feature before proceeding.
-      edit:
-        header: General
-        basic_settings:
-          heading: Basic settings
+      confirmation_status:
+        confirmation_sent: Confirmation sent.
+        confirmed: Confirmed.
+        not_validated: Not validated.
+        resend: Resend confirmation?
       contact:
+        email_delete_button: Delete contact
         email_delete_confirmation: Delete contact email address?
         email_delete_error: 'Problem deleting contact email:'
-        email_delete_button: Delete contact
+      delete:
+        heading: Delete exhibit
+        warning_html: 'This action is irreversible. Be sure to back up the exhibit settings and content using the %{export_link} feature before proceeding.
+
+'
+      edit:
+        basic_settings:
+          heading: Basic settings
+        header: General
+      exhibit_card_back:
+        visit_exhibit: Visit exhibit
+      exhibit_card_front:
+        unpublished: Unpublished
+      export:
+        download: Export data
+        heading: Export data
+        instructions: 'You can create a backup of this exhibit by exporting the data that defines it to a JSON file. You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.
+
+'
+      filter:
+        heading: Filter items
+        instructions: 'You can limit the items included in this exhibit by applying a filter to your Solr index. When you apply a filter, only items with values that match the filter will be included in your exhibit. To apply a filter, enter both a field and a value that match the names used in your Solr index.
+
+'
       form:
         add_contact_email_button: Add new contact
         fields:
           contact_emails:
             help_block: Each contact email will receive feedback submissions
           published:
-            label: "Published"
-            help_block: ""
-      new_exhibit_form:
-        fields:
-          title:
-            label: Title
-            help_block: This can be changed later.
-          slug:
-            label: URL slug
-            help_block: A hyphenated name to be displayed in the URL for the exhibit (e.g., "maps-of-africa").
-      exhibit_card_front:
-        unpublished: Unpublished
-      exhibit_card_back:
-        visit_exhibit: "Visit exhibit"
-      new:
-        header: Create a new exhibit
-      filter:
-        heading: Filter items
-        instructions: >
-          You can limit the items included in this exhibit by applying a filter to your Solr index. When you apply a filter, only items with values that match the filter will be included in your exhibit.
-          To apply a filter, enter both a field and a value that match the names used in your Solr index.
+            help_block: ''
+            label: Published
       import:
+        button: Import data
         heading: Import data
         instructions: You can import an exhibit JSON file exported from this application to use that data file to define this exhibit.
-        button: Import data
-      export:
-        heading: Export data
-        instructions: >
-          You can create a backup of this exhibit by exporting the data that defines it to a JSON file.
-          You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.
-        download: Export data
-      confirmation_status:
-        confirmed: Confirmed.
-        confirmation_sent: Confirmation sent.
-        not_validated: Not validated.
-        resend: Resend confirmation?
+      index:
+        published: Published exhibits
+        unpublished: Unpublished exhibits
+        user: Your exhibits
+      new:
+        header: Create a new exhibit
+      new_exhibit_form:
+        fields:
+          slug:
+            help_block: A hyphenated name to be displayed in the URL for the exhibit (e.g., "maps-of-africa").
+            label: URL slug
+          title:
+            help_block: This can be changed later.
+            label: Title
       tags:
         all: All
+    exhibits_admin_invitation_mailer:
+      invitation_instructions:
+        accept: Accept invitation
+        accept_invitation: " You can accept this invitation by clicking the link below."
+        hello: Hello!
+        ignore: If you don't want to accept the invitation, please ignore this email. Your exhibits administrator account won't be created until you access the link above.
+        someone_invited_you: The Exhibits Administrator has invited you to help manage exhibits.
+        subject: Invitation to manage \"%{exhibit_name}\"
+    feature_pages:
+      nav_link: Curated Features
+      page_options:
+        published: Publish
+    featured_images:
+      form:
+        crop_area:
+          help: 'Adjust the image so that the rectangle contains the area you want to use as the %{thing}. Click "Save changes" to save the cropped area.
+
+'
+        non_iiif_alert_html: 'The image source must be a IIIF image. Contact your exhibits adminstrator or see the <a href="http://iiif.io">IIIF website</a> for more information about IIIF.
+
+'
+        source:
+          exhibit:
+            help: To find an image, start typing the title of an exhibit item.
+            label: From this exhibit
+          header: Image source
+          remote:
+            header: Cropped image
+            label: Upload an image
+      upload_form:
+        crop_area:
+          help: 'Adjust the image so that the rectangle contains the area you want to use as the %{thing}. Click "Save changes" to save the cropped area.
+
+'
+        non_iiif_alert_html: 'The image source must be a IIIF image. Contact your exhibits adminstrator or see the <a href="http://iiif.io">IIIF website</a> for more information about IIIF.
+
+'
+        source:
+          exhibit:
+            help: To find an image, start typing the title of an exhibit item.
+            label: From this exhibit
+          header: Image source
+          remote:
+            header: Cropped image
+            label: Upload an image
+    header_links:
+      contact: Feedback
+      create_exhibit: Create new exhibit
+      dashboard: Exhibit dashboard
+      edit_site: Site administration
+      login: Sign in
+      logout: Sign out
+    html_admin_title: "%{section} - %{title}"
+    html_title: "%{title} | %{application_name}"
+    indexing_complete_mailer:
+      documents_indexed:
+        body:
+          one: "%{count} document has been indexed from the CSV file and added to the exhibit %{title}."
+          other: "%{count} documents have been indexed from the CSV file and added to the exhibit %{title}."
+        title: Your CSV file has just finished being processed.
+    invitation_mailer:
+      invitation_instructions:
+        accept_invitation: You can accept this invitation by clicking the link below.
+        accept_link: Accept invitation
+        hello: Hello!
+        ignore: If you don't want to accept the invitation, please ignore this email. Your account won't be created until you access the link above.
+        someone_invited_you: The Exhibits Administrator has invited you to help work on the "%{exhibit_name}" exhibit.
+        subject: Invitation to manage \"%{exhibit_name}\"
+        visit: Visit exhibit
     main_navigation:
-      about: "About"
-      browse: "Browse"
-      curated_features: "Curated Features"
+      about: About
+      browse: Browse
+      curated_features: Curated Features
+    metadata_configurations:
+      edit:
+        deselect_all: Deselect all
+        exhibit_specific:
+          header: Exhibit-Specific Fields
+          instructions: You can add metadata fields to supplement the metadata fields that are part of the repository item record.
+        field:
+          label: Field name
+        header: Metadata
+        instructions: 'Select metadata fields to display on each type of page. Click a field name to edit its display label. Drag and drop fields to specify the order in which they are displayed.
+
+'
+        order_header: Display and Order Metadata Fields
+        select_all: Select all
+        view:
+          show: Item Details
     pages:
-      order_pages:
-        pages_header: Custom Pages
-        instructions: Add new pages below. Drag and drop pages to change the order in which they are displayed in the sidebar.
-        new_page: "Add new page"
-        save: "Save"
-        cancel: "Cancel"
-      index:
-        home_pages:
-          title: Exhibit Home
-          header: Exhibit Home
-        feature_pages:
-          title: Feature Pages
-          header: Feature Pages
-          home_pages_header: Homepage
-        about_pages:
-          title: About Pages
-          header: About Pages
-      new:
-        header: New page
       edit:
         header: Edit page
-        locked: "This page is currently being edited by %{user} (%{created_at})"
+        locked: This page is currently being edited by %{user} (%{created_at})
       form:
-        title_placeholder: "Title"
-        page_content: "Content"
-        page_options: "Options"
-        page_thumbnail: "Thumbnail"
+        page_content: Content
+        page_options: Options
+        page_thumbnail: Thumbnail
         thumbnail:
-          help: >
-            You can select and crop an image to visually represent this page. It will be
-            used as the thumbnail image if you include this page using the 'Highlight Featured Pages' widget.
+          help: 'You can select and crop an image to visually represent this page. It will be used as the thumbnail image if you include this page using the ''Highlight Featured Pages'' widget.
+
+'
+        title_placeholder: Title
+      index:
+        about_pages:
+          header: About Pages
+          title: About Pages
+        feature_pages:
+          header: Feature Pages
+          home_pages_header: Homepage
+          title: Feature Pages
+        home_pages:
+          header: Exhibit Home
+          title: Exhibit Home
+      new:
+        header: New page
+      order_pages:
+        cancel: Cancel
+        instructions: Add new pages below. Drag and drop pages to change the order in which they are displayed in the sidebar.
+        new_page: Add new page
+        pages_header: Custom Pages
+        save: Save
+    resources:
+      bookmarklet:
+        bookmarklet: "%{application_name} widget"
+        instructions: Drag this button to the bookmarks toolbar in your web browser
+      csv_upload:
+        form:
+          add_item: Add item
+          file_label: CSV File
+          help_html: "%{link}"
+          template: Download template
+          title: Upload multiple items
+      external_resources_form:
+        title: From external resource
+      form:
+        add_item: Add item
+        has_provider: Ready to import
+        needs_provider: Could not find an appropriate importer
+      iiif:
+        form:
+          add_item: Add IIIF items
+          manifest: URL
+          title: IIIF URL
+          url-field:
+            help: Add the URL of a IIIF manifest or collection.
+      json_upload:
+        form:
+          add_item: Add item
+          file_label: JSON File
+          title: Upload raw documents
+      new:
+        header: Add items
+      reindexing_in_progress: Reindexing all resources
+      upload:
+        csv:
+          anonymous_file: "(blank)"
+          success: "'%{file_name}' has been uploaded.  An email will be sent to you once indexing is complete."
+        error: There was a problem uploading your object.
+        form:
+          add_item: Add item
+          add_item_and_continue: Add item and continue adding
+          full_title_tesim: Title
+          title: Upload item
+          url-field:
+            help: 'Valid file types: %{extensions}'
+        new:
+          multi_item_form: Multiple items using CSV file
+          single_item_form: Single item
+        success: Object uploaded successfully.
+    role:
+      admin: Admin
+      curator: Curator
+    roles:
+      edit_fields:
+        help: Enter a valid email address
+        invite_html: This user does not yet exist. Would you like to send them an %{link}?
+        invite_link: invite
+      index:
+        actions: Actions
+        email: Email Address
+        header: Users
+        invite_pending: pending
+        name: Username
+        role: Role
+        title: Site Configuration - Users
+    saved_search:
+      id: Select a title to update a previously saved search
+      label: Save this search
+      title: Enter a title to create a new saved search
+    search_configurations:
+      default_per_page:
+        label: Default per page
+      document_index_view_types:
+        label: Result page types
+      edit:
+        header: Search
+        tab:
+          facets: Facets
+          options: Options
+          results: Results
+      facet_metadata:
+        document_count:
+          one: "%{count} item"
+          other: "%{count} items"
+        too_many_values_count: "%{count}+ unique values"
+        value_count:
+          one: "%{count} unique value"
+          other: "%{count} unique values"
+      facets:
+        help: 'If the sidebar is visible, users can use the facets shown in the sidebar to limit a search.  You can select the facets that are available for searching below. Click a facet field name to edit its display label. Drag and drop facets to specify the order they are displayed in the sidebar.
+
+'
+        sort_by:
+          count: Frequency
+          index: Value
+          label: 'Sort by:'
+      search_fields:
+        enable_feature: Display search box
+        header: Field-based search
+        help: 'If the search box is displayed, you can also enable field-based search. Field-based search adds a dropdown menu to your exhibit site''s search box that provides the user with an option to restrict a search query to a single metadata field.
+
+'
+        instructions: 'If enabled, you can select below the metadata fields that are available for searching. Click a field name to edit its display label.  Drag and drop fields to specify the order they are displayed in the search box dropdown menu.
+
+'
+      sort:
+        header: Sort fields
+        help: 'Select the fields you want to be available to users for sorting results. Click a field title to change its display label. Drag and drop fields to change their order in the sort dropdown menu. The field listed first is the default sort field.
+
+'
+        keys:
+          asc: ascending
+          desc: descending
+          id: id
+          score: relevancy score
+          sort_date_dtsi: date
+          sort_source_ssi: source
+          sort_title_ssi: title
+          sort_type_ssi: type
+    searches:
+      edit:
+        header: Edit Browse Category
+        query_params: Active search constraints
+        title: Curation - Browse
+      form:
+        default_index_view_type: Default view
+        masthead:
+          help: 'You can select and crop an image to use as a browse category-specific masthead, instead of the default site masthead, for this browse category''s detail page.
+
+'
+          help_secondary: 'To create a browse category-specific masthead, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.
+
+'
+        search_box:
+          help_block: Displays a search box that enables users to search within the browse category results
+          label: Display search box
+        search_description: Description
+        search_masthead: Masthead
+        search_thumbnail: Thumbnail
+        thumbnail:
+          help: You can select and crop an image to visually represent this search.
+      index:
+        categories_header: Browse Categories
+        header: Browse
+        instructions: 'Use the Save search button on a search results page to create a new browse category. Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page."
+
+'
+        no_saved_searches: 'You can save search results while in curation mode to create browse categories, which will be displayed here.
+
+'
+        not_searchable_html: 'This exhibit is not currently searchable. To perform searches that can be saved as additional browse categories, temporarily turn on the Display search box option in the Options section of the Configuration > %{href} page.
+
+'
+        title: Curation - Browse
+      nav_link: Browse
+      search:
+        item_count:
+          one: "%{count} item"
+          other: "%{count} items"
+        missing_description_html: "%{link} to add a description."
+    shared:
+      report_a_problem:
+        honeypot_field_explanation: Ignore this text box. It is used to detect spammers. If you enter anything into this text box, your message will not be sent.
+        title: Contact Us
     sir_trevor:
       blocks:
         browse_block:
@@ -476,259 +776,35 @@ en:
           items:
             one: "%{count} item"
             other: "%{count} items"
-    contacts:
-      edit:
-        header: "Edit Contact"
-      new:
-        header: "Add Exhibit Contact"
-      form:
-        name:
-          placeholder: First and last name
-        email:
-          placeholder: Valid email address
-        title:
-          placeholder: Job title most relevant to this exhibit
-        location:
-          placeholder: Name of library or other physical location
-        telephone:
-          placeholder: Telephone number (optional)
-        source:
-          remote:
-            label: "Upload an image"
-        avatar:
-          header: Avatar
-    about_pages:
-      contacts_form:
-        header: Contacts
-        contact:
-          legend: Contact Details
-        instructions: >
-          Enter details for each librarian, curator or other contact person for this exhibit.
-          Select the contacts you want to be show in the sidebar of the About Pages. Drag and
-          drop contacts to specify the order in which they are shown in the sidebar.
-      nav_link: About
-      page_options:
-        published: "Publish" # Possibly no longer used
-      sidebar:
-        nav_link: About
-      contacts:
-        header: "Contacts"
-    feature_pages:
-      nav_link: Curated Features
-      page_options:
-        published: "Publish"
-    featured_images:
-      form: &featured_images_form
-        crop_area:
-          help: >
-            Adjust the image so that the rectangle contains the area you want to use as the %{thing}.
-            Click "Save changes" to save the cropped area.
-        non_iiif_alert_html: >
-          The image source must be a IIIF image.
-          Contact your exhibits adminstrator or see the
-          <a href="http://iiif.io">IIIF website</a> for more information about IIIF.
-        source:
-          header: "Image source"
-          exhibit:
-            label: "From this exhibit"
-            help: "To find an image, start typing the title of an exhibit item."
-          remote:
-            label: "Upload an image"
-            header: "Cropped image"
-      upload_form: *featured_images_form
-
-    resources:
-      new:
-        header: "Add items"
-      form:
-        needs_provider: "Could not find an appropriate importer"
-        has_provider: "Ready to import"
-        add_item: "Add item"
-      upload:
-        csv:
-          success: "'%{file_name}' has been uploaded.  An email will be sent to you once indexing is complete."
-          anonymous_file: '(blank)'
-        new:
-          single_item_form: "Single item"
-          multi_item_form: "Multiple items using CSV file"
-        error: "There was a problem uploading your object."
-        success: "Object uploaded successfully."
-        form:
-          title: "Upload item"
-          add_item: "Add item"
-          add_item_and_continue: "Add item and continue adding"
-          full_title_tesim: "Title"
-          url-field:
-            help: "Valid file types: %{extensions}"
-      csv_upload:
-        form:
-          title: "Upload multiple items"
-          add_item: "Add item"
-          help_html: "%{link}"
-          template: "Download template"
-          file_label: "CSV File"
-      json_upload:
-        form:
-          title: "Upload raw documents"
-          add_item: "Add item"
-          file_label: "JSON File"
-      iiif:
-        form:
-          title: 'IIIF URL'
-          manifest: "URL"
-          add_item: "Add IIIF items"
-          url-field:
-            help: "Add the URL of a IIIF manifest or collection."
-      bookmarklet:
-        instructions:  "Drag this button to the bookmarks toolbar in your web browser"
-        bookmarklet: "%{application_name} widget"
-      reindexing_in_progress: "Reindexing all resources"
-      external_resources_form:
-        title: "From external resource"
-    roles:
-      edit_fields:
-        invite_html: "This user does not yet exist. Would you like to send them an %{link}?"
-        invite_link: invite
-        help: Enter a valid email address
-      index:
-        title: Site Configuration - Users
-        invite_pending: pending
-        header: Users
-        name: Username
-        email: "Email Address"
-        role: "Role"
-        actions: "Actions"
     sites:
-      new:
-        section: Manage exhibits
-        page_title: Create a new exhibit
       edit:
-        section: Manage exhibits
-        page_title: Customize appearance
         basic_settings:
           heading: Title
+        page_title: Customize appearance
+        section: Manage exhibits
         site_masthead:
           heading: Site masthead
-          help: >
-              You can select and crop an image to use as a background for your home page masthead.
-
-              To use an image as a masthead background, you should use an image that is at least
-              120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide.
-              You can crop larger images using the cropping tool below.
+          help: |
+            You can select and crop an image to use as a background for your home page masthead.
+            To use an image as a masthead background, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.
       edit_exhibits:
-        section: Manage exhibits
-        page_title: Order exhibits
         instructions: Drag and drop the exhibits below to specify the order in which they are displayed on the exhibits homepage.
-    searches: &search
-      nav_link: "Browse"
-      index:
-        header: "Browse"
-        title: "Curation - Browse"
-        categories_header: "Browse Categories"
-        instructions: >
-          Use the Save search button on a search results page to create a new browse category.
-          Select the categories you want to be displayed on the browse landing page. Drag and
-          drop categories to change the order in which they appear on that page."
-        no_saved_searches: >
-          You can save search results while in curation mode to create browse categories,
-          which will be displayed here.
-        not_searchable_html: >
-          This exhibit is not currently searchable. To perform searches that can be saved as
-          additional browse categories, temporarily turn on the Display search box
-          option in the Options section of the Configuration > %{href} page.
-      edit:
-        header: "Edit Browse Category"
-        title: "Curation - Browse"
-        query_params: "Active search constraints"
-      search:
-        item_count:
-          one: "%{count} item"
-          other: "%{count} items"
-        missing_description_html: "%{link} to add a description."
-      form:
-        search_box:
-          label: Display search box
-          help_block: Displays a search box that enables users to search within the browse category results
-        search_description: "Description"
-        search_masthead: "Masthead"
-        search_thumbnail: "Thumbnail"
-        default_index_view_type: Default view
-        masthead:
-          help: >
-            You can select and crop an image to use as a browse category-specific masthead, instead
-            of the default site masthead, for this browse category's detail page.
-          help_secondary: >
-            To create a browse category-specific masthead, you should use an image that is at least
-            120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide.
-            You can crop larger images using the cropping tool below.
-        thumbnail:
-          help: "You can select and crop an image to visually represent this search."
-    browse:
-      nav_link: "Browse"
-      index:
-        header: "Browse Exhibit"
-      search:
-        item_count:
-          one: "%{count} item"
-          other: "%{count} items"
-      search_box:
-        placeholder: Search…
-        label: Search within this browse category
-        submit: Search within browse category
-        reset: Clear search box
-        success:
-          result_number_html: Your search matched <strong> %{search_size} of %{parent_search_count} items</strong> in this browse category.
-          expand_html: You can also <a href="%{expand_search_url}">search all exhibit items for "%{browse_query}"</a>.
-        zero_results:
-          result_number: Your search did not match any items in this browse category.
-          expand_html: You can <a href="%{clear_search_url}"> clear this search</a> or try <a href="%{expand_search_url}">searching all exhibit items for "%{browse_query}"</a>.
+        page_title: Order exhibits
+        section: Manage exhibits
+      new:
+        page_title: Create a new exhibit
+        section: Manage exhibits
     tags:
       index:
-        title: "Curation - Tags"
-        header: "Tags"
-        name: "Tag name"
+        actions: Actions
+        header: Tags
+        name: Tag name
+        no_tags: No items in this exhibit have been tagged. You can add tags to an item on the Item Details page while in curation mode.
         taggings:
-          count: "Items tagged"
-        actions: "Actions"
-        no_tags: "No items in this exhibit have been tagged. You can add tags to an item on the Item Details page while in curation mode."
-    role:
-      admin: "Admin"
-      curator: "Curator"
-    header_links:
-      login: "Sign in"
-      logout: "Sign out"
-      edit_site: "Site administration"
-      create_exhibit: "Create new exhibit"
-      dashboard: "Exhibit dashboard"
-      contact: "Feedback"
-    saved_search:
-      label: "Save this search"
-      title: "Enter a title to create a new saved search"
-      id: "Select a title to update a previously saved search"
-    shared:
-      report_a_problem:
-        title: Contact Us
-        honeypot_field_explanation: 'Ignore this text box. It is used to detect spammers. If you enter anything into this text box, your message will not be sent.'
-    indexing_complete_mailer:
-      documents_indexed:
-        title: "Your CSV file has just finished being processed."
-        body:
-          one: "%{count} document has been indexed from the CSV file and added to the exhibit %{title}."
-          other: "%{count} documents have been indexed from the CSV file and added to the exhibit %{title}."
+          count: Items tagged
+        title: Curation - Tags
     versions:
-      undo: Undo changes
       redo: Redo changes
+      undo: Undo changes
       undo_error: Unable to undo changes
-  shared:
-    share_follow:
-      share_follow: "Share & Follow"
-    site_sidebar:
-      header: Actions
-      create_exhibit: 'Create a new exhibit'
-      documentation: 'Curator documentation'
-  reindexing_log:
-    status:
-      unstarted: Not Yet Started
-      in_progress: In Progress
-      succeeded: Successful
-      failed: Failed
+  toggle_nav: Toggle navigation
