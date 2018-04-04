@@ -19,9 +19,14 @@ require 'webmock/rspec'
 
 Capybara.javascript_driver = :headless_chrome
 
+# @note In January 2018, TravisCI disabled Chrome sandboxing in its Linux
+#       container build environments to mitigate Meltdown/Spectre
+#       vulnerabilities, at which point Spotlight needs to use the --no-sandbox
+#       flag. https://github.com/travis-ci/docs-travis-ci-com/blob/c1da4af0b7ee5de35fa4490fa8e0fc4b44881089/user/chrome.md
+#       h/t @mjgiarlo
 Capybara.register_driver :headless_chrome do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w[headless disable-gpu] }
+    chromeOptions: { args: %w[headless disable-gpu no-sandbox] }
   )
 
   Capybara::Selenium::Driver.new(app,
