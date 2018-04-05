@@ -83,5 +83,32 @@ module Spotlight
     def should_render_spotlight_search_bar?
       !resource_masthead?
     end
+
+    def document_index_view_type
+      return super if params[:view].present?
+      if @search && @search.default_index_view_type.present?
+        blacklight_config.view[@search.default_index_view_type].key
+      else
+        default_document_index_view_type
+      end
+    end
+
+    helper_method :document_index_view_type
+
+    def default_document_index_view_type
+      if view_available? default_browse_index_view_type
+        default_browse_index_view_type
+      else
+        super
+      end
+    end
+
+    def view_available?(view)
+      blacklight_config.view.key?(view) && blacklight_configuration_context.evaluate_if_unless_configuration(blacklight_config.view)
+    end
+
+    def default_browse_index_view_type
+      Spotlight::Engine.config.default_browse_index_view_type
+    end
   end
 end
