@@ -37,6 +37,11 @@
           <%= t('spotlight.exhibits.translations.browse_categories.label') %> <span class="badge"></span>
         </a>
       </li>
+      <li class="<%= 'active' if @tab == 'pages' %>">
+        <a href="#pages" aria-controls="pages" role="tab" data-toggle="tab" data-behavior="translation-progress">
+          <%= t('spotlight.exhibits.translations.pages.label') %> <span class="badge"></span>
+        </a>
+      </li>
     </ul>
 
     <div class="tab-content">
@@ -44,6 +49,7 @@
       <%= render 'metadata' %>
       <%= render 'search_fields' %>
       <%= render 'browse_categories' %>
+      <%= render 'pages' %>
     </div>
   </div>
 </div>
