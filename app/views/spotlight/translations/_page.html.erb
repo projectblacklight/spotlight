@@ -1,0 +1,14 @@
+<tr data-translation-progress-item="true">
+  <td>
+    <%= link_to page.title, polymorphic_path([spotlight, current_exhibit, page]) %>
+    <p><%= l(page.updated_at, format: :long) %></p>
+  </td>
+  <td class="text-center">
+    <% if page.published? %>
+      <span class="glyphicon glyphicon-ok"></span>
+    <% end %>
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
