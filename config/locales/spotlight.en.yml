@@ -423,6 +423,21 @@ en:
           exhibit_specific_fields:
             label: Exhibit-Specific Fields
           label: Metadata field labels
+        pages:
+          label: Pages
+          help_html: >
+            Before exhibit visitors can view translated pages you must create, edit, and publish each page translation. When you create a translated page, a copy of the default language version of the page is made to serve as the initial translated page. You can then edit that translated page to replace the page title and any text fields with translated text. A translated page will not be visible to exhibit visitors until you publish it.  To replace a translated page with a current copy of the default language version of the page, use the <i>Recreate</i> action.
+          about_pages:
+            label: About Pages
+          feature_pages:
+            label: Feature Pages
+          home_page:
+            label: Home Page
+          table_header:
+            last_updated: "%{language} title / Last update"
+            default_published: Published
+            language_published: Published
+            actions: Actions
         search_fields:
           facet_fields:
             label: Facet Fields
