@@ -19,5 +19,14 @@ module Spotlight
 
       languages.reject { |language| language.locale.to_s.casecmp(I18n.locale.to_s).zero? }.sort_by(&:to_native)
     end
+
+    ##
+    # Can determine whether the current page is using the application's default
+    # locale
+    # @return [Boolean]
+    def default_language?
+      return true unless params[:locale]
+      params[:locale].to_s == I18n.default_locale.to_s
+    end
   end
 end
