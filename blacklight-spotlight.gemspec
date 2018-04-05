@@ -49,7 +49,7 @@ these collections.)
   s.add_dependency 'clipboard-rails', '~> 1.5'
   s.add_dependency 'almond-rails', '~> 0.1'
   s.add_dependency 'sprockets-es6'
-  s.add_dependency 'riiif', '~> 1.0'
+  s.add_dependency 'riiif', '~> 2.0'
   s.add_dependency 'iiif-presentation'
   s.add_dependency 'iiif_manifest'
   s.add_dependency 'leaflet-rails'
