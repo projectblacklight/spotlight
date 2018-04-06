@@ -52,7 +52,7 @@
   <div id="all_users" class="well well-sm">
       <div class='btn-toolbar pull-right'>
           <button class="btn btn-xs btn-default copy-email-addresses" data-clipboard-target="#all_users">
-              Copy
+              <%= t('.copy') %>
           </button>
       </div>
       <%= Spotlight::Engine.user_class.with_roles.pluck(:email).sort.join(', ') %>
