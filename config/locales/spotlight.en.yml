@@ -159,7 +159,7 @@ en:
         header: Contacts
       contacts_form:
         header: Contacts
-        instructions: 'Enter details for each librarian, curator or other contact person for this exhibit. Select the contacts you want to be show in the sidebar of the About Pages. Drag and drop contacts to specify the order in which they are shown in the sidebar.'
+        instructions: Enter details for each librarian, curator or other contact person for this exhibit. Select the contacts you want to be show in the sidebar of the About Pages. Drag and drop contacts to specify the order in which they are shown in the sidebar.
       page_options:
         published: Publish
     admin_users:
@@ -183,12 +183,12 @@ en:
       edit:
         header: Appearance
         main_navigation:
-          help: 'Select the menu items you want to be displayed in the main navigation menu (menu items are only displayed when published pages exist for that item). Click a menu item to change its display label. Drag and drop a menu item to change their order in the menu.'
+          help: Select the menu items you want to be displayed in the main navigation menu (menu items are only displayed when published pages exist for that item). Click a menu item to change its display label. Drag and drop a menu item to change their order in the menu.
           menu: Main menu
         restore_default: Restore default
         site_masthead:
           heading: Exhibit masthead
-          help: 'You can select and crop an image to use as a background in your exhibit site''s masthead. To use an image as a masthead background, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.'
+          help: You can select and crop an image to use as a background in your exhibit site's masthead. To use an image as a masthead background, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.
         site_theme:
           heading: Visual theme
           help: ''
@@ -234,7 +234,7 @@ en:
           button: Make Public
           label: ''
       edit_default:
-        blank_field_warning_html: 'This field is currently hidden on all pages. You can make it visible on the Curation &gt; %{link} page.'
+        blank_field_warning_html: This field is currently hidden on all pages. You can make it visible on the Curation &gt; %{link} page.
         url-field:
           help: 'Valid file types: %{extensions}'
       facets:
@@ -351,7 +351,7 @@ en:
         email_delete_error: 'Problem deleting contact email:'
       delete:
         heading: Delete exhibit
-        warning_html: 'This action is irreversible. Be sure to back up the exhibit settings and content using the %{export_link} feature before proceeding.'
+        warning_html: This action is irreversible. Be sure to back up the exhibit settings and content using the %{export_link} feature before proceeding.
       edit:
         basic_settings:
           heading: Basic settings
@@ -363,10 +363,10 @@ en:
       export:
         download: Export data
         heading: Export data
-        instructions: 'You can create a backup of this exhibit by exporting the data that defines it to a JSON file. You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.'
+        instructions: You can create a backup of this exhibit by exporting the data that defines it to a JSON file. You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.
       filter:
         heading: Filter items
-        instructions: 'You can limit the items included in this exhibit by applying a filter to your Solr index. When you apply a filter, only items with values that match the filter will be included in your exhibit. To apply a filter, enter both a field and a value that match the names used in your Solr index.'
+        instructions: You can limit the items included in this exhibit by applying a filter to your Solr index. When you apply a filter, only items with values that match the filter will be included in your exhibit. To apply a filter, enter both a field and a value that match the names used in your Solr index.
       form:
         add_contact_email_button: Add new contact
         fields:
@@ -383,13 +383,13 @@ en:
         unpublished: Unpublished exhibits
         user: Your exhibits
       languages:
-        current_instructions: 'Each language listed below is available for translations on the Curation > Translations page. To enable exhibit visitors to change the language of the exhibit, enable the Public checkbox. To hide translations from an available language from the exhibit, disable the Public checkbox.'
+        current_instructions: Each language listed below is available for translations on the Curation > Translations page. To enable exhibit visitors to change the language of the exhibit, enable the Public checkbox. To hide translations from an available language from the exhibit, disable the Public checkbox.
         heading: Languages
         modal:
           confirm: Are you sure you want to remove this language?
         no_languages_help_text: No languages have been added for translation. To add a language, make a selection above.
         remove: Remove
-        selection_instructions: 'You can make the content and user interface of this exhibit available to exhibit visitors in multiple languages. Use the select box below to add a new language to the exhibit and then use the Curation > Translations page to provide translations for exhibit labels, browse categories, and curated page content.'
+        selection_instructions: You can make the content and user interface of this exhibit available to exhibit visitors in multiple languages. Use the select box below to add a new language to the exhibit and then use the Curation > Translations page to provide translations for exhibit labels, browse categories, and curated page content.
         selection_prompt: Select language...
         table_heading:
           action: Action
@@ -453,8 +453,8 @@ en:
     featured_images:
       form:
         crop_area:
-          help: 'Adjust the image so that the rectangle contains the area you want to use as the %{thing}. Click "Save changes" to save the cropped area.'
-        non_iiif_alert_html: 'The image source must be a IIIF image. Contact your exhibits adminstrator or see the <a href="http://iiif.io">IIIF website</a> for more information about IIIF.'
+          help: Adjust the image so that the rectangle contains the area you want to use as the %{thing}. Click "Save changes" to save the cropped area.
+        non_iiif_alert_html: The image source must be a IIIF image. Contact your exhibits adminstrator or see the <a href="http://iiif.io">IIIF website</a> for more information about IIIF.
         source:
           exhibit:
             help: To find an image, start typing the title of an exhibit item.
@@ -465,8 +465,8 @@ en:
             label: Upload an image
       upload_form:
         crop_area:
-          help: 'Adjust the image so that the rectangle contains the area you want to use as the %{thing}. Click "Save changes" to save the cropped area.'
-        non_iiif_alert_html: 'The image source must be a IIIF image. Contact your exhibits adminstrator or see the <a href="http://iiif.io">IIIF website</a> for more information about IIIF.'
+          help: Adjust the image so that the rectangle contains the area you want to use as the %{thing}. Click "Save changes" to save the cropped area.
+        non_iiif_alert_html: The image source must be a IIIF image. Contact your exhibits adminstrator or see the <a href="http://iiif.io">IIIF website</a> for more information about IIIF.
         source:
           exhibit:
             help: To find an image, start typing the title of an exhibit item.
@@ -511,7 +511,7 @@ en:
         field:
           label: Field name
         header: Metadata
-        instructions: 'Select metadata fields to display on each type of page. Click a field name to edit its display label. Drag and drop fields to specify the order in which they are displayed.'
+        instructions: Select metadata fields to display on each type of page. Click a field name to edit its display label. Drag and drop fields to specify the order in which they are displayed.
         order_header: Display and Order Metadata Fields
         select_all: Select all
         view:
@@ -525,7 +525,7 @@ en:
         page_options: Options
         page_thumbnail: Thumbnail
         thumbnail:
-          help: 'You can select and crop an image to visually represent this page. It will be used as the thumbnail image if you include this page using the ''Highlight Featured Pages'' widget.'
+          help: You can select and crop an image to visually represent this page. It will be used as the thumbnail image if you include this page using the 'Highlight Featured Pages' widget.
         title_placeholder: Title
       index:
         about_pages:
@@ -657,7 +657,7 @@ en:
           one: "%{count} unique value"
           other: "%{count} unique values"
       facets:
-        help: 'If the sidebar is visible, users can use the facets shown in the sidebar to limit a search.  You can select the facets that are available for searching below. Click a facet field name to edit its display label. Drag and drop facets to specify the order they are displayed in the sidebar.'
+        help: If the sidebar is visible, users can use the facets shown in the sidebar to limit a search.  You can select the facets that are available for searching below. Click a facet field name to edit its display label. Drag and drop facets to specify the order they are displayed in the sidebar.
         sort_by:
           count: Frequency
           index: Value
@@ -665,11 +665,11 @@ en:
       search_fields:
         enable_feature: Display search box
         header: Field-based search
-        help: 'If the search box is displayed, you can also enable field-based search. Field-based search adds a dropdown menu to your exhibit site''s search box that provides the user with an option to restrict a search query to a single metadata field.'
-        instructions: 'If enabled, you can select below the metadata fields that are available for searching. Click a field name to edit its display label.  Drag and drop fields to specify the order they are displayed in the search box dropdown menu.'
+        help: If the search box is displayed, you can also enable field-based search. Field-based search adds a dropdown menu to your exhibit site's search box that provides the user with an option to restrict a search query to a single metadata field.
+        instructions: If enabled, you can select below the metadata fields that are available for searching. Click a field name to edit its display label.  Drag and drop fields to specify the order they are displayed in the search box dropdown menu.
       sort:
         header: Sort fields
-        help: 'Select the fields you want to be available to users for sorting results. Click a field title to change its display label. Drag and drop fields to change their order in the sort dropdown menu. The field listed first is the default sort field.'
+        help: Select the fields you want to be available to users for sorting results. Click a field title to change its display label. Drag and drop fields to change their order in the sort dropdown menu. The field listed first is the default sort field.
         keys:
           asc: ascending
           desc: descending
@@ -686,8 +686,8 @@ en:
       form:
         default_index_view_type: Default view
         masthead:
-          help: 'You can select and crop an image to use as a browse category-specific masthead, instead of the default site masthead, for this browse category''s detail page.'
-          help_secondary: 'To create a browse category-specific masthead, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.'
+          help: You can select and crop an image to use as a browse category-specific masthead, instead of the default site masthead, for this browse category's detail page.
+          help_secondary: To create a browse category-specific masthead, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.
         search_box:
           help_block: Displays a search box that enables users to search within the browse category results
           label: Display search box
@@ -699,9 +699,9 @@ en:
       index:
         categories_header: Browse Categories
         header: Browse
-        instructions: 'Use the Save search button on a search results page to create a new browse category. Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page."'
-        no_saved_searches: 'You can save search results while in curation mode to create browse categories, which will be displayed here.'
-        not_searchable_html: 'This exhibit is not currently searchable. To perform searches that can be saved as additional browse categories, temporarily turn on the Display search box option in the Options section of the Configuration > %{href} page.'
+        instructions: Use the Save search button on a search results page to create a new browse category. Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page."
+        no_saved_searches: You can save search results while in curation mode to create browse categories, which will be displayed here.
+        not_searchable_html: This exhibit is not currently searchable. To perform searches that can be saved as additional browse categories, temporarily turn on the Display search box option in the Options section of the Configuration > %{href} page.
         title: Curation - Browse
       search:
         item_count:
