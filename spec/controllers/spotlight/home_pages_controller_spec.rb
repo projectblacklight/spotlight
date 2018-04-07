@@ -65,6 +65,16 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
       expect(assigns).not_to have_key :document_list
     end
 
+    context 'when a non-default locale version of the page exists' do
+      let!(:page) { exhibit.home_page }
+      let!(:page_es) { FactoryBot.create(:home_page, exhibit: exhibit, locale: 'es') }
+
+      it 'is loaded' do
+        get :show, params: { exhibit_id: exhibit, locale: 'es' }
+        expect(assigns[:page]).to eq page_es
+      end
+    end
+
     context 'when the exhibit is not published' do
       before do
         exhibit.update(published: false)
@@ -89,6 +99,33 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
         get :show, params: { exhibit_id: exhibit }
         expect(response).to be_successful
       end
+    end
+  end
+
+  describe 'GET clone' do
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:page) { exhibit.home_page }
+
+    before { sign_in user }
+
+    it 'clones page the given the language parameter' do
+      expect(Spotlight::Page.where(locale: 'es')).not_to be_present
+
+      expect do
+        get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
+      end.to change(Spotlight::Page, :count).by(1)
+
+      expect(Spotlight::Page.where(locale: 'es')).to be_present
+    end
+
+    it 'destroys the existing page for the given language if it exists (recreating the page)' do
+      page_es = FactoryBot.create(:home_page, exhibit: exhibit, default_locale_page: page, locale: 'es')
+
+      expect do
+        get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
+      end.not_to change(Spotlight::Page, :count)
+
+      expect(Spotlight::Page.exists?(page_es.id)).to be false
     end
   end
 end

@@ -5,6 +5,10 @@ module Spotlight
     load_and_authorize_resource through: :exhibit, instance_name: 'page'
     before_action :attach_breadcrumbs, except: [:update_contacts]
 
+    def clone
+      super
+    end
+
     def update_contacts
       if @exhibit.update(contact_params)
         redirect_to exhibit_about_pages_path(@exhibit), notice: t(:'helpers.submit.contact.batch_updated')
