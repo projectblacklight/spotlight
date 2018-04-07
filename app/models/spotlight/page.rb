@@ -5,12 +5,13 @@ module Spotlight
     MAX_PAGES = 50
 
     extend FriendlyId
-    friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: :exhibit
+    friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: [:exhibit, :locale]
 
     belongs_to :exhibit, touch: true
     belongs_to :created_by, class_name: Spotlight::Engine.config.user_class, optional: true
     belongs_to :last_edited_by, class_name: Spotlight::Engine.config.user_class, optional: true
     belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy, optional: true
+    belongs_to :default_locale_page, class_name: 'Spotlight::Page', optional: true
 
     validates :weight, inclusion: { in: proc { 0..Spotlight::Page::MAX_PAGES } }
 
@@ -18,6 +19,8 @@ module Spotlight
     scope :at_top_level, -> { where(parent_page_id: nil) }
     scope :published, -> { where(published: true) }
     scope :recent, -> { order('updated_at DESC').limit(10) }
+    scope :for_locale, ->(locale = I18n.locale) { where(locale: locale) }
+    scope :for_default_locale, -> { for_locale(I18n.default_locale) }
 
     has_one :lock, as: :on, dependent: :destroy
     sir_trevor_content :content
@@ -92,6 +95,26 @@ module Spotlight
 
     def lock!(user)
       create_lock(by: user).tap(&:current_session!) unless lock.present?
+    end
+
+    def translated_pages
+      self.class.where(exhibit: exhibit, default_locale_page_id: id)
+    end
+
+    def translated_page_for(locale)
+      translated_pages.for_locale(locale).first
+    end
+
+    def clone_for_locale(locale)
+      dup.tap do |np|
+        np.locale = locale
+        np.default_locale_page = self
+        np.published = false
+
+        if !top_level_page? && (parent_translation = parent_page.translated_page_for(locale)).present?
+          np.parent_page = parent_translation
+        end
+      end
     end
   end
 end

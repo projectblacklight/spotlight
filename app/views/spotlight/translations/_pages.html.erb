@@ -15,7 +15,7 @@
         <%= t('spotlight.exhibits.translations.pages.feature_pages.label') %>
       </h2>
 
-      <%= render 'pages_table', pages: current_exhibit.feature_pages  %>
+      <%= render 'pages_table', pages: current_exhibit.feature_pages.for_default_locale %>
     </div>
   <% end %>
 
@@ -25,7 +25,7 @@
         <%= t('spotlight.exhibits.translations.pages.about_pages.label') %>
       </h2>
 
-      <%= render 'pages_table', pages: current_exhibit.about_pages %>
+      <%= render 'pages_table', pages: current_exhibit.about_pages.for_default_locale %>
     </div>
   <% end %>
 </div>

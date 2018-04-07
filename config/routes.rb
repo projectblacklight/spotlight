@@ -97,6 +97,9 @@ Spotlight::Engine.routes.draw do
 
     resources :contacts, only: [:edit, :update, :destroy]
     resources :about_pages, path: 'about' do
+      member do
+        get :clone
+      end
       collection do
         patch 'contacts' => 'about_pages#update_contacts'
         resources :contacts, only: [:new, :create]
@@ -104,11 +107,18 @@ Spotlight::Engine.routes.draw do
       end
     end
     resources :feature_pages, path: 'feature' do
+      member do
+        get :clone
+      end
       collection do
         patch :update_all
       end
     end
-    resource :home_page, path: 'home', controller: 'home_pages'
+    resource :home_page, path: 'home', controller: 'home_pages' do
+      member do
+        get :clone
+      end
+    end
     post '/pages/:id/preview' => 'pages#preview', as: :preview_block
     get '/pages' => 'pages#index', constraints: { format: 'json' }
 

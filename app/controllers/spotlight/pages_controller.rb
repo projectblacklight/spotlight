@@ -1,8 +1,12 @@
 module Spotlight
   ##
   # Base CRUD controller for pages
+  # rubocop:disable Metrics/ClassLength
+  # Disableing class length because this is a base
+  # controller that gives other controllers their behavior
   class PagesController < Spotlight::ApplicationController
     before_action :authenticate_user!, except: [:show]
+    before_action :load_locale_specific_page, only: [:edit, :show, :update]
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
     load_and_authorize_resource through: :exhibit, instance_name: 'page', only: [:index]
 
@@ -85,6 +89,19 @@ module Spotlight
       redirect_back fallback_location: spotlight.exhibit_dashboard_path(@exhibit), notice: notice
     end
 
+    def clone
+      new_page = @page.clone_for_locale(clone_params)
+
+      if new_page.save
+        redirect_to(
+          edit_exhibit_translations_path(current_exhibit, new_page, language: params[:language], tab: 'pages'),
+          notice: t(:'helpers.submit.page.created', model: @page.class.model_name.human.downcase)
+        )
+      else
+        redirect_to :back, error: t(:'helpers.submit.page.clone_error', model: @page.class.model_name.human.downcase)
+      end
+    end
+
     protected
 
     def _prefixes
@@ -98,6 +115,10 @@ module Spotlight
 
     def undo_notice(key)
       view_context.safe_join([t(:"helpers.submit.page.#{key}", model: @page.class.model_name.human.downcase), undo_link], ' ')
+    end
+
+    def clone_params
+      params.require(:language)
     end
 
     ##
@@ -139,6 +160,11 @@ module Spotlight
       end
     end
 
+    def load_locale_specific_page
+      # Can we infer the resource name here via cancan?
+      @page = Spotlight::Page.for_locale.find(params[:id])
+    end
+
     private
 
     def breadcrumb_to_exhibit_root(key)
@@ -150,4 +176,5 @@ module Spotlight
       params.require(controller_name.singularize).permit(allowed_page_params)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
