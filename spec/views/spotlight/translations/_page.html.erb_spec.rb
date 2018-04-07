@@ -32,6 +32,16 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
       render
       expect(rendered).to have_css('[data-translation-present="true"]')
     end
+
+    context 'when the default locale page has been updated more recently than the translation' do
+      before { page_es.update(updated_at: 10.seconds.ago) }
+
+      it 'includes an alert icon' do
+        render
+
+        expect(rendered).to have_css('.glyphicon.glyphicon-alert')
+      end
+    end
   end
 
   context 'when there is no translated page' do

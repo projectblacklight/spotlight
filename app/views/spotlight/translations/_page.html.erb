@@ -2,7 +2,9 @@
 <tr data-translation-progress-item="true">
   <td>
     <%= link_to page.title, polymorphic_path([spotlight, current_exhibit, page]) %>
-    <p><%= l(page.updated_at, format: :long) %></p>
+    <p class="<%= 'default-page-outdated' if page.updated_after? translated_page %>">
+      <%= l(page.updated_at, format: :long) %>
+    </p>
   </td>
   <td class="text-center">
     <% if page.published? %>
@@ -12,7 +14,12 @@
   <td>
     <% if translated_page %>
       <%= link_to(translated_page.title, polymorphic_path([spotlight, current_exhibit, translated_page], locale: @language), data: { 'translation-present': 'true'}) %>
-      <p><%= l(translated_page.updated_at, format: :long) %></p>
+      <p>
+        <%= l(translated_page.updated_at, format: :long) %>
+        <% if page.updated_after? translated_page %>
+          <span class="glyphicon glyphicon-alert"></span>
+        <% end %>
+      </p>
     <% else %>
       <%= t('spotlight.exhibits.translations.pages.no_translated_page') %>
       <%= link_to(t('spotlight.exhibits.translations.pages.new'), polymorphic_path([:clone, current_exhibit, page], language: @language)) %>
