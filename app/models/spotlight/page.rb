@@ -97,6 +97,11 @@ module Spotlight
       create_lock(by: user).tap(&:current_session!) unless lock.present?
     end
 
+    def updated_after?(other_page)
+      return false unless other_page
+      updated_at > other_page.updated_at
+    end
+
     def translated_pages
       self.class.where(exhibit: exhibit, default_locale_page_id: id)
     end

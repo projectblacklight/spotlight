@@ -112,6 +112,15 @@ describe Spotlight::Page, type: :model do
     end
   end
 
+  describe 'updated_after?' do
+    let!(:old_page) { FactoryBot.create(:feature_page, updated_at: 10.seconds.ago) }
+    let!(:new_page) { FactoryBot.create(:feature_page) }
+
+    it 'compares the updated_at of the two objects' do
+      expect(new_page).to be_updated_after(old_page)
+    end
+  end
+
   describe 'translated_pages' do
     let!(:page_es) { FactoryBot.create(:feature_page, exhibit: exhibit, locale: 'es', default_locale_page: page) }
     subject!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
