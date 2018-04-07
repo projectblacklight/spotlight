@@ -1,6 +1,19 @@
 describe Spotlight::FeaturePagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
 
+  describe 'when not logged in' do
+    let(:exhibit) { FactoryBot.create(:exhibit) }
+    describe 'GET clone' do
+      let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+
+      it 'is not allowed' do
+        get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
+        expect(flash['alert']).to eq 'You need to sign in or sign up before continuing.'
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
+    end
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # Page. As you add validations to Page, be sure to
   # adjust the attributes here as well.
@@ -164,6 +177,20 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
       it 'redirects to the pages list' do
         delete :destroy, params: { id: page, exhibit_id: page.exhibit.id }
         expect(response).to redirect_to(exhibit_feature_pages_path(page.exhibit))
+      end
+    end
+
+    describe 'GET clone' do
+      let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+
+      it 'clones page the given the language parameter' do
+        expect(Spotlight::Page.where(locale: 'es')).not_to be_present
+
+        expect do
+          get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
+        end.to change(Spotlight::Page, :count).by(1)
+
+        expect(Spotlight::Page.where(locale: 'es')).to be_present
       end
     end
   end

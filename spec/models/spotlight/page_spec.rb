@@ -111,4 +111,52 @@ describe Spotlight::Page, type: :model do
       expect(page.thumbnail_image_url).to eq thumbnail.iiif_url
     end
   end
+
+  describe 'translated_pages' do
+    let!(:page_es) { FactoryBot.create(:feature_page, exhibit: exhibit, locale: 'es', default_locale_page: page) }
+    subject!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+
+    it 'is a relation of the other pages that indicate they belong to this page' do
+      expect(page.translated_pages.length).to eq 1
+      expect(page.translated_pages.first).to eq page_es
+    end
+  end
+
+  describe 'clone_for_locale' do
+    let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit, published: true) }
+    subject!(:cloned_page) { page.clone_for_locale('es') }
+
+    it 'creates a new page' do
+      expect do
+        cloned_page.save
+      end.to change(described_class, :count).by(1)
+    end
+
+    it 'has the given locale' do
+      expect(cloned_page.locale).to eq 'es'
+    end
+
+    it 'sets the default_locale_page to self' do
+      expect(cloned_page.default_locale_page).to eq page
+    end
+
+    it 'does not copy the published attribute to the cloned page' do
+      expect(page).to be_published
+      expect(cloned_page).not_to be_published
+    end
+
+    context 'when cloning a child page' do
+      let(:parent_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+      let(:parent_cloned_page) { parent_page.clone_for_locale('es') }
+
+      before do
+        parent_cloned_page.save
+        page.update(parent_page_id: parent_page.id)
+      end
+
+      it 'associates the page with the translated version (if present)' do
+        expect(page.clone_for_locale('es').parent_page.id).to eq parent_cloned_page.id
+      end
+    end
+  end
 end
