@@ -437,6 +437,8 @@ en:
             default_published: Published
             language_published: Published
             actions: Actions
+          new: Create one now.
+          no_translated_page: No translated page.
         search_fields:
           facet_fields:
             label: Facet Fields

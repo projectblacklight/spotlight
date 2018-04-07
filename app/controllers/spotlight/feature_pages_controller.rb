@@ -5,6 +5,10 @@ module Spotlight
     load_and_authorize_resource through: :exhibit, instance_name: 'page'
     before_action :attach_breadcrumbs
 
+    def clone
+      super
+    end
+
     protected
 
     def attach_breadcrumbs
