@@ -66,24 +66,21 @@ describe 'Translation editing', type: :feature do
         I18n.locale = I18n.default_locale
       end
 
-      before { exhibit.searches.first.update(published: true) }
-      it 'adds translations to user-facing breadcrumbs' do
+      before do
+        exhibit.searches.first.update(published: true)
         within '.translation-edit-form #general' do
           fill_in 'Home', with: 'Maison'
           fill_in 'Browse', with: 'parcourir ceci!'
           click_button 'Save changes'
         end
+      end
+      it 'adds translations to user-facing breadcrumbs' do
         expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
         visit spotlight.exhibit_browse_index_path(exhibit, locale: 'fr')
         expect(page).to have_breadcrumbs 'Maison', 'parcourir ceci!'
       end
 
       it 'does not translate admin breadcrumbs' do
-        within '.translation-edit-form #general' do
-          fill_in 'Home', with: 'Maison'
-          fill_in 'Browse', with: 'parcourir ceci!'
-          click_button 'Save changes'
-        end
         expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
         visit spotlight.exhibit_searches_path(exhibit, locale: 'fr')
         expect(page).to have_breadcrumbs 'Home', 'Curation', 'Browse'
@@ -130,6 +127,25 @@ describe 'Translation editing', type: :feature do
         it 'does not translate admin breadcrumbs' do
           visit spotlight.exhibit_about_pages_path(exhibit, locale: 'fr')
           expect(page).to have_breadcrumbs 'Home', 'Curation', 'About'
+        end
+      end
+
+      describe 'Catalog' do
+        before do
+          within '.translation-edit-form #general' do
+            fill_in 'Home', with: 'Maison'
+            fill_in 'Search Results', with: 'Résultats de la recherche'
+            click_button 'Save changes'
+          end
+        end
+        it 'adds breadcrumbs user facing catalog' do
+          visit spotlight.search_exhibit_catalog_path(exhibit, q: '*', locale: 'fr')
+          expect(page).to have_breadcrumbs 'Maison', 'Résultats de la recherche'
+        end
+
+        it 'does not translate admin catalog' do
+          visit spotlight.admin_exhibit_catalog_path(exhibit, locale: 'fr')
+          expect(page).to have_breadcrumbs 'Home', 'Curation', 'Items'
         end
       end
     end
@@ -351,7 +367,7 @@ describe 'Translation editing', type: :feature do
     end
     it 'counts existing and total available translations' do
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
-      expect(page).to have_link('General 1/7')
+      expect(page).to have_link('General 1/8')
       expect(page).to have_link('Search field labels 0/16')
       expect(page).to have_link('Browse categories 0/2')
       expect(page).to have_link('Metadata field labels 0/17')
