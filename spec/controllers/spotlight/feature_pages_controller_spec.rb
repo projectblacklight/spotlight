@@ -55,6 +55,31 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
           expect(assigns(:page)).to eq(page)
         end
       end
+
+      describe 'when "switching" locales for pages that have updated their title/slug' do
+        let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+        let!(:page_es) do
+          FactoryBot.create(
+            :feature_page,
+            exhibit: exhibit,
+            title: 'Page in spanish',
+            locale: 'es',
+            default_locale_page: page
+          )
+        end
+
+        it 'redirects from the spanish slug to the english page when the english locale is selected' do
+          expect(page_es.slug).not_to eq page.slug # Ensure the slugs are different
+          get :show, params: { exhibit_id: exhibit.id, id: page_es.slug, locale: 'en' }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page))
+        end
+
+        it 'redirects from the english slug to the spanish page when the spanish locale is selected' do
+          expect(page_es.slug).not_to eq page.slug # Ensure the slugs are different
+          get :show, params: { exhibit_id: exhibit.id, id: page.slug, locale: 'es' }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page_es))
+        end
+      end
     end
 
     describe 'GET new' do
