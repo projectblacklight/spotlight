@@ -161,8 +161,9 @@ module Spotlight
     end
 
     def load_locale_specific_page
-      # Can we infer the resource name here via cancan?
-      @page = Spotlight::Page.for_locale.find(params[:id])
+      @page = current_exhibit.pages.for_locale.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_page_to_related_locale_version
     end
 
     private
@@ -174,6 +175,17 @@ module Spotlight
     # Only allow a trusted parameter "white list" through.
     def page_params
       params.require(controller_name.singularize).permit(allowed_page_params)
+    end
+
+    def redirect_page_to_related_locale_version
+      pages_for_id = current_exhibit.pages.find(params[:id])
+      if pages_for_id.default_locale_page
+        redirect_to polymorphic_path([current_exhibit, pages_for_id.default_locale_page])
+      elsif pages_for_id.translated_page_for(I18n.locale)
+        redirect_to polymorphic_path([current_exhibit, pages_for_id.translated_page_for(I18n.locale)])
+      else
+        raise ActiveRecord::RecordNotFound
+      end
     end
   end
   # rubocop:enable Metrics/ClassLength
