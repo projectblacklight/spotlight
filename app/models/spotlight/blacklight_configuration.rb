@@ -314,7 +314,7 @@ module Spotlight
       ].flatten.join(' ')
     end
 
-    # rubocop:disable Style/AccessorMethodName
+    # rubocop:disable Naming/AccessorMethodName
     def set_index_field_defaults(field)
       return unless index_fields.blank?
 
@@ -341,7 +341,7 @@ module Spotlight
       field.show = true
       field.enabled = true
     end
-    # rubocop:enable Style/AccessorMethodName
+    # rubocop:enable Naming/AccessorMethodName
 
     # @return [Integer] the weight (sort order) for this field
     def field_weight(fields, index)
