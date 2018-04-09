@@ -134,13 +134,13 @@ describe 'Translation editing', type: :feature do
         before do
           within '.translation-edit-form #general' do
             fill_in 'Home', with: 'Maison'
-            fill_in 'About', with: 'Sur'
+            fill_in 'Search Results', with: 'Résultats de la recherche'
             click_button 'Save changes'
           end
         end
         it 'adds breadcrumbs user facing catalog' do
           visit spotlight.search_exhibit_catalog_path(exhibit, q: '*', locale: 'fr')
-          expect(page).to have_breadcrumbs 'Maison', 'Search Results'
+          expect(page).to have_breadcrumbs 'Maison', 'Résultats de la recherche'
         end
 
         it 'does not translate admin catalog' do
@@ -367,7 +367,7 @@ describe 'Translation editing', type: :feature do
     end
     it 'counts existing and total available translations' do
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
-      expect(page).to have_link('General 1/7')
+      expect(page).to have_link('General 1/8')
       expect(page).to have_link('Search field labels 0/16')
       expect(page).to have_link('Browse categories 0/2')
       expect(page).to have_link('Metadata field labels 0/17')
