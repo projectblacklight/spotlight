@@ -2,7 +2,7 @@
 <div id="sidebar" class="col-md-3" role="complementary">
   <h4 class="nav-heading"><%= current_exhibit.main_navigations.about.label_or_default %></h4>
   <ul class="nav sidenav">
-    <% current_exhibit.about_pages.published.each do |page| %>
+    <% current_exhibit.about_pages.for_locale.published.each do |page| %>
       <li class="<%= 'active' if current_page? [page.exhibit, page] %>">
         <%= link_to page.title, [page.exhibit, page] %>
       </li>
