@@ -8,6 +8,8 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
     allow(view).to receive_messages(
       clone_exhibit_feature_page_path: '/',
       current_exhibit: exhibit,
+      edit_exhibit_feature_page_path: '/',
+      exhibit_feature_page_path: '/',
       page: page
     )
     assign(:language, 'es')

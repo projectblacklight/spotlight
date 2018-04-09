@@ -6,7 +6,7 @@ module Spotlight
   # controller that gives other controllers their behavior
   class PagesController < Spotlight::ApplicationController
     before_action :authenticate_user!, except: [:show]
-    before_action :load_locale_specific_page, only: [:edit, :show, :update]
+    before_action :load_locale_specific_page, only: [:destroy, :edit, :show, :update]
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
     load_and_authorize_resource through: :exhibit, instance_name: 'page', only: [:index]
 

@@ -26,5 +26,10 @@
     <% end %>
   </td>
   <td></td>
-  <td></td>
+  <td>
+    <% if translated_page %>
+      <%= link_to(t('spotlight.exhibits.translations.pages.edit'), polymorphic_path([:edit, current_exhibit, translated_page], locale: @language)) %> &middot;
+      <%= link_to(t('spotlight.exhibits.translations.pages.destroy'), polymorphic_path([current_exhibit, translated_page], locale: @language), method: :delete, data: { confirm: t('spotlight.exhibits.translations.pages.destroy_are_you_sure') }) %>
+    <% end %>
+  </td>
 </tr>
