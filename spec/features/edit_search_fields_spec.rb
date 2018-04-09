@@ -50,7 +50,6 @@ describe 'Search Administration', type: :feature do
       it 'updates sort options' do
         visit spotlight.edit_exhibit_search_configuration_path(exhibit)
 
-        # #field_labeled doesn't appear to work for disabled inputs
         expect(page).to have_css("input[name='blacklight_configuration[sort_fields][relevance][enable]'][disabled='disabled']")
         expect(page).to have_css('#nested-sort-fields .dd-item:nth-child(5) h3', text: 'Date (new to old)')
 

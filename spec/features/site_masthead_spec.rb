@@ -24,7 +24,7 @@ describe 'Add and update the site masthead', type: :feature do
     click_link 'Site masthead'
 
     within '#site-masthead' do
-      expect(field_labeled('Show background image in masthead')).to be_checked
+      expect(page).to have_checked_field 'Show background image in masthead'
     end
   end
 
