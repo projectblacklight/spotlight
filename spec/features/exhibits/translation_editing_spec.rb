@@ -129,6 +129,25 @@ describe 'Translation editing', type: :feature do
           expect(page).to have_breadcrumbs 'Home', 'Curation', 'About'
         end
       end
+
+      describe 'Catalog' do
+        before do
+          within '.translation-edit-form #general' do
+            fill_in 'Home', with: 'Maison'
+            fill_in 'About', with: 'Sur'
+            click_button 'Save changes'
+          end
+        end
+        it 'adds breadcrumbs user facing catalog' do
+          visit spotlight.search_exhibit_catalog_path(exhibit, q: '*', locale: 'fr')
+          expect(page).to have_breadcrumbs 'Maison', 'Search Results'
+        end
+
+        it 'does not translate admin catalog' do
+          visit spotlight.admin_exhibit_catalog_path(exhibit, locale: 'fr')
+          expect(page).to have_breadcrumbs 'Home', 'Curation', 'Items'
+        end
+      end
     end
   end
 
