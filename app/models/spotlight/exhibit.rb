@@ -30,12 +30,12 @@ module Spotlight
     serialize :facets, Array
 
     # Note: friendly id associations need to be 'destroy'ed to reap the slug history
-    has_many :about_pages, extend: FriendlyId::FinderMethods
+    has_many :about_pages, -> { for_default_locale }, extend: FriendlyId::FinderMethods
     has_many :attachments, dependent: :destroy
     has_many :contact_emails, dependent: :delete_all # These are the contacts who get "Contact us" emails
     has_many :contacts, dependent: :delete_all # These are the contacts who appear in the sidebar
     has_many :custom_fields, dependent: :delete_all
-    has_many :feature_pages, extend: FriendlyId::FinderMethods
+    has_many :feature_pages, -> { for_default_locale }, extend: FriendlyId::FinderMethods
     has_many :main_navigations, dependent: :delete_all
     has_many :reindexing_log_entries, dependent: :destroy
     has_many :resources
@@ -49,7 +49,7 @@ module Spotlight
     has_many :languages, dependent: :destroy
 
     has_one :blacklight_configuration, class_name: 'Spotlight::BlacklightConfiguration', dependent: :delete
-    has_one :home_page
+    has_one :home_page, -> { for_default_locale }
 
     belongs_to :site, optional: true
     belongs_to :masthead, dependent: :destroy, optional: true

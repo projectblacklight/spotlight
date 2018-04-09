@@ -19,7 +19,7 @@ module Spotlight
     scope :at_top_level, -> { where(parent_page_id: nil) }
     scope :published, -> { where(published: true) }
     scope :recent, -> { order('updated_at DESC').limit(10) }
-    scope :for_locale, ->(locale = I18n.locale) { where(locale: locale) }
+    scope :for_locale, ->(locale = I18n.locale) { unscope(where: :locale).where(locale: locale) }
     scope :for_default_locale, -> { for_locale(I18n.default_locale) }
 
     has_one :lock, as: :on, dependent: :destroy
