@@ -113,11 +113,11 @@ feature 'Search Configuration Administration', js: true do
 
       click_link 'Results'
 
-      expect(field_labeled('List')).to_not be_checked
-      expect(field_labeled('Gallery')).to be_checked
+      expect(page).to have_unchecked_field 'List'
+      expect(page).to have_checked_field 'Gallery'
 
-      expect(field_labeled('20')).to be_checked
-      expect(field_labeled('10')).to_not be_checked
+      expect(page).to have_checked_field '20'
+      expect(page).to have_unchecked_field '10'
     end
     it 'updates Sort field result options' do
       visit spotlight.exhibit_dashboard_path(exhibit)
