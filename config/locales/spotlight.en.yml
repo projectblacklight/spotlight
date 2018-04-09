@@ -428,6 +428,9 @@ en:
             Before exhibit visitors can view translated pages you must create, edit, and publish each page translation. When you create a translated page, a copy of the default language version of the page is made to serve as the initial translated page. You can then edit that translated page to replace the page title and any text fields with translated text. A translated page will not be visible to exhibit visitors until you publish it.  To replace a translated page with a current copy of the default language version of the page, use the <i>Recreate</i> action.
           about_pages:
             label: About Pages
+          destroy: Delete
+          destroy_are_you_sure: Are you sure you want to delete this page? If you delete this page all content, including any existing translations you have made in it, will be lost.
+          edit: Edit
           feature_pages:
             label: Feature Pages
           home_page:
