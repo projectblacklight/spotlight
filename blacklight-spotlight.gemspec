@@ -62,7 +62,7 @@ these collections.)
   s.add_development_dependency 'rspec-activemodel-mocks'
   s.add_development_dependency 'rspec-collection_matchers'
   s.add_development_dependency 'rails-controller-testing'
-  s.add_development_dependency 'capybara', '>= 2.5.0'
+  s.add_development_dependency 'capybara', '~> 2.5' # 3.0 introduces some failed tests
   s.add_development_dependency 'rubocop', '~> 0.49.0'
   s.add_development_dependency 'rubocop-rspec', '~> 1.15.1'
   s.add_development_dependency 'chromedriver-helper'
