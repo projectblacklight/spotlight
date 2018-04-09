@@ -132,14 +132,18 @@ module Spotlight
         add_breadcrumb t(:'spotlight.curation.nav.home', title: current_exhibit.title), main_app.root_path
       elsif @page
         # Use curator-accessible i18n key for user-facing breadcrumb
-        add_breadcrumb t(:'spotlight.curation.nav.home', title: current_exhibit.title), spotlight.exhibit_root_path(current_exhibit)
+        breadcrumb_to_exhibit_root(:'spotlight.curation.nav.home')
       else
         # Use admin interface language for dashboard breadcrumb
-        add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: current_exhibit.title), spotlight.exhibit_root_path(current_exhibit)
+        breadcrumb_to_exhibit_root(:'spotlight.exhibits.breadcrumb')
       end
     end
 
     private
+
+    def breadcrumb_to_exhibit_root(key)
+      add_breadcrumb t(key, title: current_exhibit.title), spotlight.exhibit_root_path(current_exhibit)
+    end
 
     # Only allow a trusted parameter "white list" through.
     def page_params
