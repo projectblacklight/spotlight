@@ -10,7 +10,7 @@ describe Spotlight::LanguagesHelper, type: :helper do
           ['French', :fr],
           ['German', :de],
           ['Italian', :it],
-          ['Portugese - Brazil', :'pt-BR'],
+          ['Portugese - Brazil', :'pt-br'],
           ['Spanish', :es]
         ]
       )
