@@ -147,6 +147,25 @@
           </div>
         </div>
       <% end %>
+      <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: 'spotlight.catalog.breadcrumb.index', locale: @language) %>
+      <%= f.fields_for :translations, translation do |translation_fields| %>
+        <%= translation_fields.hidden_field :key %>
+        <%= translation_fields.hidden_field :locale %>
+        <div data-translation-progress-item='true' class='form-group translation-form translation-main-menu-search-results'>
+          <%= translation_fields.label :value, t('spotlight.catalog.breadcrumb.index'), class: 'control-label col-xs-12 col-sm-2' %>
+          <div class='col-xs-11 col-sm-9 panel panel-body panel-translation'>
+            <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
+            <p class="help-block">
+              <%= t(:'spotlight.catalog.breadcrumb.index', locale: I18n.default_locale) %>
+            </p>
+          </div>
+          <div class='col-xs-1'>
+            <% if translation.value.present? %>
+              <span data-translation-present="true" class='glyphicon glyphicon-ok'></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
     <div class="form-actions">
       <div class="primary-actions">
