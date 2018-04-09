@@ -198,6 +198,10 @@ module Spotlight
       zh: '中文'
     }
 
+    # Whitelisting the available_locales is necessary here, as any dependency we
+    # add could add an available locale which could break things if unexpected.
+    config.i18n.available_locales = config.i18n_locales.keys
+
     # Query parameters for autocomplete requests
     config.autocomplete_search_field = 'autocomplete'
     config.default_autocomplete_params = { qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng',
