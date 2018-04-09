@@ -28,6 +28,9 @@ en:
       destroy_are_you_sure: Are you sure you want to delete this %{model}?
       edit: Edit
       edit_long: Edit this %{model}
+      exhibit:
+        contact:
+          submit: Save changes
       new: Add a new %{model}
       spotlight/contact:
         create: Add contact
@@ -52,6 +55,7 @@ en:
         updated: The exhibit was successfully updated.
       contact:
         batch_updated: Contacts were successfully updated.
+        create: Save
         created: The %{model} was created.
         destroyed: The %{model} was destroyed.
         updated: The %{model} was successfully updated.
@@ -64,8 +68,6 @@ en:
         create: Save
         created: The %{model} was created.
         destroyed: The %{model} was deleted.
-        submit: Save changes
-        update: Save changes
         updated: The %{model} was successfully updated.
       exhibit:
         batch_error: There was an error updating the requested %{model}.
@@ -73,8 +75,6 @@ en:
         create: Save
         created: The %{model} was created.
         destroyed: The %{model} was deleted.
-        submit: Save changes
-        update: Save changes
         updated: The %{model} was successfully updated.
       filter:
         batch_error: There was an error updating the requested %{model}.
@@ -82,10 +82,9 @@ en:
         create: Save
         created: The %{model} was created.
         destroyed: The %{model} was deleted.
-        submit: Save changes
-        update: Save changes
         updated: The %{model} was successfully updated.
       language:
+        create: Add language
         created: The %{model} was created.
         destroyed: The %{model} was deleted.
       page:
@@ -94,8 +93,6 @@ en:
         create: Add new page
         created: The %{model} was created.
         destroyed: The %{model} was deleted.
-        submit: Save changes
-        update: Save changes
         updated: The %{model} was successfully updated.
       role:
         batch_error:
@@ -109,8 +106,6 @@ en:
         create: Save
         created: The %{model} was created.
         destroyed: The %{model} was deleted.
-        submit: Save changes
-        update: Save changes
         updated: The %{model} was successfully updated.
       site:
         batch_error: There was an error updating the requested %{model}.
@@ -118,8 +113,6 @@ en:
         create: Save
         created: The %{model} was created.
         destroyed: The %{model} was deleted.
-        submit: Save changes
-        update: Save changes
         updated: The %{model} was successfully updated.
       solr_document:
         batch_error: There was an error updating the requested %{model}.
@@ -127,11 +120,11 @@ en:
         create: Save
         created: The %{model} was created.
         destroyed: The %{model} was deleted.
-        submit: Save changes
-        update: Save changes
         updated: The %{model} was successfully updated.
       spotlight_default:
         updated: The %{model} was successfully updated.
+      submit: Save changes
+      update: Save changes
   locales:
     de: German
     en: English
@@ -148,8 +141,6 @@ en:
       succeeded: Successful
       unstarted: Not Yet Started
   shared:
-    share_follow:
-      share_follow: Share & Follow
     site_sidebar:
       documentation: Curator documentation
       header: Actions
@@ -298,6 +289,7 @@ en:
         header: Curation
         items: Items
         tags: Tags
+        translations: Translations
     custom_fields:
       edit:
         header: Edit Exhibit-Specific Field
@@ -606,6 +598,7 @@ en:
         corporate_name_ssm: Corporate Names
         facet:
           corporate_name_ssm: Corporate Names
+          exhibit_tags: Exhibit Tags
           genre_ssim: Genre
           language_ssim: Language
           personal_name_ssm: Personal Names
@@ -688,6 +681,7 @@ en:
         masthead:
           help: You can select and crop an image to use as a browse category-specific masthead, instead of the default site masthead, for this browse category's detail page.
           help_secondary: To create a browse category-specific masthead, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.
+        query_params: Search parameters
         search_box:
           help_block: Displays a search box that enables users to search within the browse category results
           label: Display search box
@@ -737,6 +731,8 @@ en:
         instructions: Drag and drop the exhibits below to specify the order in which they are displayed on the exhibits homepage.
         page_title: Order exhibits
         section: Manage exhibits
+      exhibit:
+        published: Published
       new:
         page_title: Create a new exhibit
         section: Manage exhibits
