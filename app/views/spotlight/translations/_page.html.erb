@@ -29,7 +29,11 @@
   <td>
     <% if translated_page %>
       <%= link_to(t('spotlight.exhibits.translations.pages.edit'), polymorphic_path([:edit, current_exhibit, translated_page], locale: @language)) %> &middot;
-      <%= link_to(t('spotlight.exhibits.translations.pages.destroy'), polymorphic_path([current_exhibit, translated_page], locale: @language), method: :delete, data: { confirm: t('spotlight.exhibits.translations.pages.destroy_are_you_sure') }) %>
+      <%= link_to(t('spotlight.exhibits.translations.pages.recreate'), polymorphic_path([:clone, current_exhibit, page], language: @language), data: { confirm: t('spotlight.exhibits.translations.pages.recrate_are_you_sure') }) %>
+      <% if page.feature_page? || page.about_page? %>
+        &middot;
+        <%= link_to(t('spotlight.exhibits.translations.pages.destroy'), polymorphic_path([current_exhibit, translated_page], locale: @language), method: :delete, data: { confirm: t('spotlight.exhibits.translations.pages.destroy_are_you_sure') }) %>
+      <% end %>
     <% end %>
   </td>
 </tr>
