@@ -11,7 +11,12 @@ module Spotlight
     belongs_to :created_by, class_name: Spotlight::Engine.config.user_class, optional: true
     belongs_to :last_edited_by, class_name: Spotlight::Engine.config.user_class, optional: true
     belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy, optional: true
-    belongs_to :default_locale_page, class_name: 'Spotlight::Page', optional: true
+    belongs_to :default_locale_page, class_name: 'Spotlight::Page', optional: true, inverse_of: :translated_pages
+    has_many :translated_pages,
+             class_name: 'Spotlight::Page',
+             foreign_key: :default_locale_page_id,
+             dependent: :destroy,
+             inverse_of: :default_locale_page
 
     validates :weight, inclusion: { in: proc { 0..Spotlight::Page::MAX_PAGES } }
 
@@ -100,10 +105,6 @@ module Spotlight
     def updated_after?(other_page)
       return false unless other_page
       updated_at > other_page.updated_at
-    end
-
-    def translated_pages
-      self.class.where(exhibit: exhibit, default_locale_page_id: id)
     end
 
     def translated_page_for(locale)
