@@ -127,7 +127,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
     end
   end
 
-  scenario 'should allow you to optionally display a ZPR link with the image', js: true do
+  scenario 'should allow you to optionally display a ZPR link with the image', js: true, flappy_spec: true do
     fill_in_typeahead_field with: 'gk446cj2442'
 
     check 'Display ZPR link'
@@ -156,7 +156,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
     end
   end
 
-  scenario 'should allow you to choose which side the text will be on', js: true do
+  scenario 'should allow you to choose which side the text will be on', js: true, flappy_spec: true do
     fill_in_typeahead_field with: 'dq287tq6352'
 
     # fill in the content editable div
@@ -166,6 +166,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
     choose 'Right'
     # create the page
     save_page
+    puts page.body
 
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, '.items-block') do

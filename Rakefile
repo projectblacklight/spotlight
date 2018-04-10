@@ -19,7 +19,9 @@ Bundler::GemHelper.install_tasks
 require 'solr_wrapper'
 
 require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec)
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_opts = '--tag flappy_spec'
+end
 
 require 'rubocop/rake_task'
 RuboCop::RakeTask.new(:rubocop)
