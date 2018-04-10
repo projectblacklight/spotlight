@@ -13,9 +13,23 @@ describe 'spotlight/contacts/edit.html.erb' do
     assign(:contact, contact)
     assign(:exhibit, exhibit)
     allow(view).to receive(:current_exhibit).and_return(exhibit)
+    # Assumes that the second backend is the "Simple"
+    I18n.backend.backends.second.store_translations(
+      :en,
+      spotlight: {
+        contacts: {
+          form: {
+            new_field: {
+              placeholder: 'place'
+            }
+          }
+        }
+      }
+    )
   end
 
   it 'has an IIIF crop' do
+    # byebug
     render
     expect(rendered).to have_content 'Upload an image'
     expect(rendered).to have_selector '#contact_avatar_attributes_iiif_cropper'
