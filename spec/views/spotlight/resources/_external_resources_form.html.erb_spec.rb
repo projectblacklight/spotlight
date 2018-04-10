@@ -7,6 +7,19 @@ describe 'spotlight/resources/_external_resources_form.html.erb', type: :view do
     allow(view).to receive_messages(blacklight_config: blacklight_config)
     allow(view).to receive(:current_exhibit).and_return(exhibit)
     allow(view).to receive_messages(current_page?: true)
+    # Assumes that the second backend is the "Simple"
+    I18n.backend.backends.second.store_translations(
+      :en,
+      a: {
+        title: 'a_title'
+      },
+      b: {
+        title: 'b_title'
+      },
+      c: {
+        title: 'c_title'
+      }
+    )
   end
 
   it 'renders the configured partials' do
