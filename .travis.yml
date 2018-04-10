@@ -21,6 +21,7 @@ notifications:
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    - BUNDLE_PATH=/home/travis/build/projectblacklight/spotlight/vendor/bundle
 
 sudo: false
 language: ruby
@@ -37,4 +38,4 @@ cache:
   ##
   # We don't really know how this will work, but lets see.
   directories:
-    - .internal_test_app/tmp/cache/assets/sprockets
+    - .internal_test_app
