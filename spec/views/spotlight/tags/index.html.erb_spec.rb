@@ -15,6 +15,7 @@ describe 'spotlight/tags/index.html.erb', type: :view do
       render
       [tag1.tag.name, tag2.tag.name].each do |name|
         expect(rendered).to have_css('td', text: name)
+        expect(rendered).to have_link(name, href: 't')
       end
     end
   end
