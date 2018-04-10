@@ -7,8 +7,10 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
   before do
     allow(view).to receive_messages(
       clone_exhibit_feature_page_path: '/',
+      clone_exhibit_home_page_path: '/',
       current_exhibit: exhibit,
       edit_exhibit_feature_page_path: '/',
+      edit_exhibit_home_page_path: '/',
       exhibit_feature_page_path: '/',
       page: page
     )
@@ -42,6 +44,17 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
         render
 
         expect(rendered).to have_css('.glyphicon.glyphicon-alert')
+      end
+    end
+
+    context 'when the page is a home page' do
+      let(:page) { exhibit.home_page }
+      before { page_es.update(type: 'Spotlight::HomePage') }
+
+      it 'does not render a delete link' do
+        render
+
+        expect(rendered).not_to have_link('Delete')
       end
     end
   end
