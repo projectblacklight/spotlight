@@ -90,11 +90,12 @@ module Spotlight
     end
 
     def clone
+      destroy_pre_existing_page_for_locale
       new_page = @page.clone_for_locale(clone_params)
 
       if new_page.save
         redirect_to(
-          edit_exhibit_translations_path(current_exhibit, new_page, language: params[:language], tab: 'pages'),
+          edit_exhibit_translations_path(current_exhibit, new_page, language: clone_params, tab: 'pages'),
           notice: t(:'helpers.submit.page.created', model: @page.class.model_name.human.downcase)
         )
       else
@@ -164,6 +165,10 @@ module Spotlight
       @page = current_exhibit.pages.for_locale.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_page_to_related_locale_version
+    end
+
+    def destroy_pre_existing_page_for_locale
+      @page.translated_page_for(clone_params).destroy if @page.translated_page_for(clone_params).present?
     end
 
     private
