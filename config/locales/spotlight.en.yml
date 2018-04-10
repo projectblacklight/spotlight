@@ -435,6 +435,11 @@ en:
             label: Feature Pages
           home_page:
             label: Home Page
+          label: Pages
+          new: Create one now.
+          no_translated_page: No translated page.
+          recreate: Recreate
+          recrate_are_you_sure: Are you sure you want to recreate this page? If you recreate this page all content, including any existing translations you have made, will be replaced with the content of the English version of the page.
           table_header:
             last_updated: "%{language} title / Last update"
             default_published: Published
@@ -442,6 +447,7 @@ en:
             actions: Actions
           new: Create one now.
           no_translated_page: No translated page.
+          recreate: Recreate
         search_fields:
           facet_fields:
             label: Facet Fields

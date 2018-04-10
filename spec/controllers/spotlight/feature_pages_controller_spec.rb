@@ -217,6 +217,16 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
 
         expect(Spotlight::Page.where(locale: 'es')).to be_present
       end
+
+      it 'destroys the existing page for the given language if it exists (recreating the page)' do
+        page_es = FactoryBot.create(:feature_page, exhibit: exhibit, default_locale_page: page, locale: 'es')
+
+        expect do
+          get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
+        end.not_to change(Spotlight::Page, :count)
+
+        expect(Spotlight::Page.exists?(page_es.id)).to be false
+      end
     end
   end
 end
