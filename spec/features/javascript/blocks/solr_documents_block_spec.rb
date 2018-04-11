@@ -128,10 +128,13 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
   end
 
   scenario 'should allow you to optionally display a ZPR link with the image', js: true, flappy_spec: true do
+    puts '=== should allow you to optionally display a ZPR link with the image ==='
+
     fill_in_typeahead_field with: 'gk446cj2442'
 
     check 'Display ZPR link'
     save_page
+    puts page.body
 
     within '.contents' do
       click_button 'Show in ZPR viewer'
@@ -140,6 +143,7 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
     within '.modal-content' do
       expect(page).to have_css('#osd-modal-container')
     end
+    puts '=== END ==='
   end
 
   scenario 'should allow you to add text to the image', js: true do
