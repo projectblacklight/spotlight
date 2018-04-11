@@ -168,4 +168,36 @@ describe Spotlight::Page, type: :model do
       end
     end
   end
+
+  describe 'syncing data between translated pages' do
+    let(:parent_page_es) do
+      FactoryBot.create(
+        :feature_page,
+        exhibit: exhibit,
+        locale: 'es',
+        default_locale_page: parent_page
+      )
+    end
+    let(:child_page_es) do
+      FactoryBot.create(
+        :feature_page,
+        exhibit: exhibit,
+        locale: 'es',
+        default_locale_page: child_page,
+        parent_page: parent_page_es
+      )
+    end
+
+    it 'updates the translated pages weight' do
+      expect(parent_page_es.weight).not_to be 5
+      parent_page.update(weight: 5)
+      expect(parent_page_es.reload.weight).to be 5
+    end
+
+    it 'updates the parent page id' do
+      expect(child_page_es.parent_page).to eq parent_page_es
+      child_page.update(parent_page: nil)
+      expect(child_page_es.reload.parent_page).to be_nil
+    end
+  end
 end
