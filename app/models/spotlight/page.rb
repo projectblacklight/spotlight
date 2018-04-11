@@ -37,6 +37,8 @@ module Spotlight
       self.display_sidebar = true
     end
 
+    after_update :update_translated_pages_weights_and_parent_page
+
     def content_changed!
       @content = nil
     end
@@ -121,6 +123,14 @@ module Spotlight
           np.parent_page = parent_translation
         end
       end
+    end
+
+    private
+
+    def update_translated_pages_weights_and_parent_page
+      return unless locale.to_sym == I18n.default_locale
+      return unless weight_changed? || parent_page_id_changed?
+      translated_pages.update(weight: weight, parent_page_id: parent_page_id)
     end
   end
 end
