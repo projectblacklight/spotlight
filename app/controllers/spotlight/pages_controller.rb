@@ -60,7 +60,7 @@ module Spotlight
 
     # PATCH/PUT /pages/1
     def update
-      puts @page.params
+      puts page_params
       @page.lock.delete if @page.lock
 
       if @page.update(page_params.merge(last_edited_by: current_user))
