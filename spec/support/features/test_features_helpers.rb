@@ -31,7 +31,9 @@ module Spotlight
     end
 
     def save_page
-      sleep 1
+      page.execute_script <<-EOF
+        SirTrevor.getInstance().onFormSubmit();
+      EOF
       click_button('Save changes')
       # verify that the page was created
       expect(page).to have_content('page was successfully updated')
