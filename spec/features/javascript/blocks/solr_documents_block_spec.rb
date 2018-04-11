@@ -157,6 +157,7 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
   end
 
   scenario 'should allow you to choose which side the text will be on', js: true, flappy_spec: true do
+    puts '=== should allow you to choose which side the text will be on ==='
     fill_in_typeahead_field with: 'dq287tq6352'
 
     # fill in the content editable div
@@ -175,6 +176,7 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
       end
       expect(page).to have_css('.items-col.pull-left')
     end
+    puts '=== END ==='
   end
 
   scenario 'round-trip data', js: true do
