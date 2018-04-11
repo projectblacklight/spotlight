@@ -115,4 +115,4 @@ namespace :spotlight do
   end
 end
 
-task default: [:rubocop, :ci]
+task default: [:ci]
