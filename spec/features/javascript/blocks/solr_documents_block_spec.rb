@@ -1,4 +1,4 @@
-feature 'Solr Document Block', feature: true, versioning: true do
+feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:feature_page) do
