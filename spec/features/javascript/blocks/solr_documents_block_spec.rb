@@ -164,12 +164,13 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
     puts '=== should allow you to choose which side the text will be on ==='
     fill_in_typeahead_field with: 'dq287tq6352'
 
-    # fill in the content editable div
-    content_editable = find('.st-text-block')
-    content_editable.set('zzz')
     # Select to align the text right
     choose 'Right'
     expect(find_field('Right')).to be_checked
+
+    # fill in the content editable div
+    content_editable = find('.st-text-block')
+    content_editable.set('zzz')
 
     # create the page
     save_page
