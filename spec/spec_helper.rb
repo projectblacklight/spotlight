@@ -105,6 +105,20 @@ RSpec.configure do |config|
   config.include ::Rails.application.routes.mounted_helpers
   config.include Spotlight::TestFeaturesHelpers, type: :feature
 
+  config.after(:each, js: true) do
+    errors = page.driver.browser.manage.logs.get(:browser)
+    if errors.present?
+      aggregate_failures 'javascript errrors' do
+        errors.each do |error|
+          expect(error.level).not_to eq('SEVERE'), error.message
+          next unless error.level == 'WARNING'
+          STDERR.puts 'WARN: javascript warning'
+          STDERR.puts error.message
+        end
+      end
+    end
+  end
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
