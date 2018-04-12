@@ -132,7 +132,9 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
 
     fill_in_typeahead_field with: 'gk446cj2442'
 
+    puts page.body
     check 'Display ZPR link'
+    puts page.body
     save_page
     puts page.body
 
@@ -162,6 +164,7 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
 
   scenario 'should allow you to choose which side the text will be on', js: true, flappy_spec: true do
     puts '=== should allow you to choose which side the text will be on ==='
+    puts page.body
     fill_in_typeahead_field with: 'dq287tq6352'
 
     # fill in the content editable div
@@ -169,6 +172,8 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
     content_editable.set('zzz')
     # Select to align the text right
     choose 'Right'
+
+    puts page.body
     # create the page
     save_page
     puts page.body
