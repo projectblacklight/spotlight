@@ -136,8 +136,14 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
     check 'Display ZPR link'
     # this seems silly, but also seems to help with the flappy-ness of this spec
     begin
+      f = find_field('Display ZPR link')
+      puts f.inspect
+      puts "Visible: #{f.visible?}"
+      puts "Disabled: #{f.disabled?}"
+      puts "Native: #{f.native.inspect}"
       expect(find_field('Display ZPR link', checked: true)).to be_checked
     rescue => e
+
       puts page.html
       puts page.driver.browser.manage.logs.get(:browser).inspect
       raise e
