@@ -132,10 +132,15 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
 
     fill_in_typeahead_field with: 'gk446cj2442'
 
+    expect(find_field('Display ZPR link')).not_to be_checked
     check 'Display ZPR link'
     # this seems silly, but also seems to help with the flappy-ness of this spec
-    expect(find_field('Display ZPR link', checked: true)).to be_checked
-
+    begin
+      expect(find_field('Display ZPR link', checked: true)).to be_checked
+    rescue => e
+      puts page.html
+      raise e
+    end
     save_page
 
     within '.contents' do
