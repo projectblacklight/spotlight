@@ -133,7 +133,9 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
     fill_in_typeahead_field with: 'gk446cj2442'
 
     check 'Display ZPR link'
-    expect(find_field('Display ZPR link')).to be_checked
+    # this seems silly, but also seems to help with the flappy-ness of this spec
+    expect(find_field('Display ZPR link', checked: true)).to be_checked
+
     save_page
 
     within '.contents' do
@@ -166,7 +168,8 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
 
     # Select to align the text right
     choose 'Right'
-    expect(find_field('Right')).to be_checked
+    # this seems silly, but also seems to help with the flappy-ness of this spec
+    expect(find_field('Right', checked: true)).to be_checked
 
     # fill in the content editable div
     content_editable = find('.st-text-block')
