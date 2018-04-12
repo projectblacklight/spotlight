@@ -132,11 +132,9 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
 
     fill_in_typeahead_field with: 'gk446cj2442'
 
-    puts page.html
     check 'Display ZPR link'
-    puts page.html
+    expect(find_field('Display ZPR link')).to be_checked
     save_page
-    puts page.html
 
     within '.contents' do
       click_button 'Show in ZPR viewer'
@@ -164,7 +162,6 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
 
   scenario 'should allow you to choose which side the text will be on', js: true, flappy_spec: true do
     puts '=== should allow you to choose which side the text will be on ==='
-    puts page.html
     fill_in_typeahead_field with: 'dq287tq6352'
 
     # fill in the content editable div
@@ -172,11 +169,10 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
     content_editable.set('zzz')
     # Select to align the text right
     choose 'Right'
+    expect(find_field('Right')).to be_checked
 
-    puts page.html
     # create the page
     save_page
-    puts page.html
 
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, '.items-block') do
