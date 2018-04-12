@@ -32,7 +32,7 @@ module Spotlight
 
     def save_page
       page.execute_script <<-EOF
-        SirTrevor.getInstance().onFormSubmit();
+        console.log("ST Errors:" + SirTrevor.getInstance().onFormSubmit());
       EOF
       click_button('Save changes')
       # verify that the page was created

@@ -139,6 +139,7 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
       expect(find_field('Display ZPR link', checked: true)).to be_checked
     rescue => e
       puts page.html
+      puts page.driver.browser.manage.logs.get(:browser).inspect
       raise e
     end
     save_page
