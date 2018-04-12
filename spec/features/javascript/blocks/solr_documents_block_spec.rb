@@ -58,6 +58,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
     # Select the last image
     click_link('Change')
     find('.thumbs-list li:last-child').click
+    expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/, visible: true)
 
     save_page
 
@@ -131,6 +132,9 @@ feature 'Solr Document Block', feature: true, versioning: true do
     fill_in_typeahead_field with: 'gk446cj2442'
 
     check 'Display ZPR link'
+    # this seems silly, but also seems to help with the flappy-ness of this spec
+    expect(find_field('Display ZPR link', checked: true)).to be_checked
+
     save_page
 
     within '.contents' do
@@ -159,11 +163,15 @@ feature 'Solr Document Block', feature: true, versioning: true do
   scenario 'should allow you to choose which side the text will be on', js: true do
     fill_in_typeahead_field with: 'dq287tq6352'
 
+    # Select to align the text right
+    choose 'Right'
+    # this seems silly, but also seems to help with the flappy-ness of this spec
+    expect(find_field('Right', checked: true)).to be_checked
+
     # fill in the content editable div
     content_editable = find('.st-text-block')
     content_editable.set('zzz')
-    # Select to align the text right
-    choose 'Right'
+
     # create the page
     save_page
 
