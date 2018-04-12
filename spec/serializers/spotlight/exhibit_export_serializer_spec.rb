@@ -293,6 +293,17 @@ describe Spotlight::ExhibitExportSerializer do
     end
   end
 
+  context 'with languages and translations' do
+    let!(:language) { FactoryBot.create(:language, exhibit: source_exhibit) }
+    let!(:translation) { FactoryBot.create(:translation, exhibit: source_exhibit, key: 'test', value: 'yolo', locale: 'es') }
+    it 'serializes the values' do
+      expect(subject['languages'].first['locale']).to eq 'es'
+      expect(subject['translations'].first['key']).to eq 'test'
+      expect(subject['translations'].first['value']).to eq 'yolo'
+      expect(subject['translations'].first['locale']).to eq 'es'
+    end
+  end
+
   it 'is idempotent-ish' do
     FactoryBot.create :feature_subpage, exhibit: source_exhibit
     export = described_class.new(source_exhibit).as_json

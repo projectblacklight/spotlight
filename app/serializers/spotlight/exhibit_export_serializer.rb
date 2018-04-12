@@ -153,5 +153,17 @@ module Spotlight
         FeaturedImageRepresenter.new(represented.build_upload).from_json(json)
       end
     end
+
+    collection :languages, class: Spotlight::Language do
+      (Spotlight::Language.attribute_names - %w(id exhibit_id)).each do |prop|
+        property prop
+      end
+    end
+
+    collection :translations, class: Translation do
+      (Translation.attribute_names - %w(id exhibit_id)).each do |prop|
+        property prop
+      end
+    end
   end
 end
