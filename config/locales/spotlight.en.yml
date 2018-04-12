@@ -733,6 +733,7 @@ en:
         section: Manage exhibits
       exhibit:
         published: Published
+        unpublished: Unpublished
       new:
         page_title: Create a new exhibit
         section: Manage exhibits
