@@ -67,6 +67,34 @@ feature 'Browse pages' do
       end
     end
 
+    context 'in an exhibit that is configured to not show metadata in the default view' do
+      let(:mock_documents) do
+        [SolrDocument.new(id: 'abc123', language_ssm: %w[English Flemish])]
+      end
+      before do
+        blacklight_config = exhibit.blacklight_config
+        blacklight_config.index_fields.each do |_, config|
+          config.gallery = false
+        end
+        blacklight_config.save
+
+        allow_any_instance_of(Spotlight::BrowseController).to receive(:blacklight_config).and_return(
+          blacklight_config
+        )
+      end
+
+      it 'uses the appropriate view config' do
+        visit spotlight.exhibit_browse_path(exhibit, search)
+
+        expect(page).to have_css('#documents.gallery .document', count: 1)
+
+        within '.document' do
+          expect(page).not_to have_css('dt')
+          expect(page).not_to have_css('dd')
+        end
+      end
+    end
+
     context 'without a curator-selected view' do
       it 'renders the gallery view' do
         visit spotlight.exhibit_browse_path(exhibit, search)
