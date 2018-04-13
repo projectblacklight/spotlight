@@ -58,6 +58,7 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
     # Select the last image
     click_link('Change')
     find('.thumbs-list li:last-child').click
+    expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/, visible: true)
 
     save_page
 
