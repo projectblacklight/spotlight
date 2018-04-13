@@ -51,6 +51,7 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
   end
 
   scenario 'it should allow you to choose from a multi-image solr document (and persist through edits)', js: true do
+puts "=== it should allow you to choose from a multi-image solr document ==="
     fill_in_typeahead_field with: 'xd327cm9378'
 
     expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
@@ -59,7 +60,7 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
     click_link('Change')
     find('.thumbs-list li:last-child').click
     expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/, visible: true)
-
+puts page.html
     save_page
 
     # The thumbnail on the rendered block should be correct
@@ -79,6 +80,7 @@ feature 'Solr Document Block', feature: true, versioning: true, flappy_spec: tru
     # Expect that the original image selection was retained
     thumb = find('.thumbnail img')
     expect(thumb['src']).to match(%r{xd327cm9378_05_0002/full})
+    puts "=== END ==="
   end
 
   scenario 'it should allow you toggle visibility of solr documents', js: true do
