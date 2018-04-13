@@ -167,6 +167,19 @@ describe Spotlight::Page, type: :model do
         expect(page.clone_for_locale('es').parent_page.id).to eq parent_cloned_page.id
       end
     end
+
+    context 'when cloning a parent page whose children pages have already been cloned' do
+      let(:parent_page_es) { parent_page.clone_for_locale('es') }
+      let(:child_page_es) { child_page.clone_for_locale('es') }
+
+      before { child_page_es.save }
+
+      it 'updates the translated child pages with the correct parent association' do
+        expect(child_page_es.parent_page).to eq parent_page
+        parent_page_es.save
+        expect(child_page_es.reload.parent_page).to eq parent_page_es
+      end
+    end
   end
 
   describe 'syncing data between translated pages' do

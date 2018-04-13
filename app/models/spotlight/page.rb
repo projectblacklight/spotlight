@@ -122,6 +122,8 @@ module Spotlight
         if !top_level_page? && (parent_translation = parent_page.translated_page_for(locale)).present?
           np.parent_page = parent_translation
         end
+
+        child_pages.for_locale(locale).update(parent_page: np) if top_level_page? && respond_to?(:child_pages)
       end
     end
 
