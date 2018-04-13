@@ -36,7 +36,7 @@ module Spotlight
       EOF
       click_button('Save changes')
       # verify that the page was created
-      expect(page).to have_content('page was successfully updated')
+      expect(page).to have_selector('.alert', text: 'page was successfully updated')
     end
 
     RSpec::Matchers.define :have_breadcrumbs do |*expected|
