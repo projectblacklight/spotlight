@@ -1,4 +1,4 @@
-feature 'Solr Document Block', feature: true, versioning: true do
+feature 'Solr Document Block', feature: true, versioning: true, default_max_wait_time: 15 do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:feature_page) do
@@ -50,7 +50,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
     expect(page).to have_selector '.items-block .box', count: 2, visible: true
   end
 
-  scenario 'it should allow you to choose from a multi-image solr document (and persist through edits)', js: true do
+  scenario 'it should allow you to choose from a multi-image solr document (and persist through edits)', js: true, default_max_wait_time: 30 do
     fill_in_typeahead_field with: 'xd327cm9378'
 
     expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)

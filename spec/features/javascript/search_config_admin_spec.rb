@@ -3,7 +3,7 @@ feature 'Search Configuration Administration', js: true do
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as user }
 
-  describe 'search fields' do
+  describe 'search fields', default_max_wait_time: 5 do
     it 'allows the curator to disable all search fields' do
       visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
       expect(page).to have_css 'select#search_field'

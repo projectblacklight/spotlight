@@ -1,4 +1,4 @@
-describe 'Multi image selector', type: :feature, js: true, versioning: true do
+describe 'Multi image selector', type: :feature, js: true, versioning: true, default_max_wait_time: 5 do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
