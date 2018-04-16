@@ -8,12 +8,7 @@ feature 'Search Configuration Administration', js: true do
       visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
       expect(page).to have_css 'select#search_field'
 
-      click_link user.email
-      within '#user-util-collapse .dropdown' do
-        click_link 'Exhibit dashboard'
-      end
-      click_link 'Search'
-
+      visit spotlight.edit_exhibit_search_configuration_path(exhibit)
       expect(page).to have_css 'input#enable_feature', visible: true
       uncheck 'Display search box'
 
@@ -25,9 +20,7 @@ feature 'Search Configuration Administration', js: true do
     end
 
     it 'allows the curator to update search field options' do
-      visit spotlight.exhibit_dashboard_path(exhibit)
-
-      click_link 'Search'
+      visit spotlight.edit_exhibit_search_configuration_path(exhibit)
 
       click_link 'Options'
 
@@ -50,9 +43,7 @@ feature 'Search Configuration Administration', js: true do
   describe 'facets' do
     it 'allows us to update the label with edit-in-place' do
       input_id = 'blacklight_configuration_facet_fields_genre_ssim_label'
-      visit spotlight.exhibit_dashboard_path(exhibit)
-
-      click_link 'Search'
+      visit spotlight.edit_exhibit_search_configuration_path(exhibit)
 
       click_link 'Facets'
 
@@ -97,9 +88,7 @@ feature 'Search Configuration Administration', js: true do
 
   describe 'results' do
     it 'updates search result options' do
-      visit spotlight.exhibit_dashboard_path(exhibit)
-
-      click_link 'Search'
+      visit spotlight.edit_exhibit_search_configuration_path(exhibit)
 
       click_link 'Results'
 
@@ -120,9 +109,7 @@ feature 'Search Configuration Administration', js: true do
       expect(page).to have_unchecked_field '10'
     end
     it 'updates Sort field result options' do
-      visit spotlight.exhibit_dashboard_path(exhibit)
-
-      click_link 'Search'
+      visit spotlight.edit_exhibit_search_configuration_path(exhibit)
 
       click_link 'Results'
 
