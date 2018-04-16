@@ -25,7 +25,6 @@ require 'rubocop/rake_task'
 RuboCop::RakeTask.new(:rubocop)
 
 require 'engine_cart/rake_task'
-EngineCart.fingerprint_proc = EngineCart.rails_fingerprint_proc
 
 require 'spotlight/version'
 
@@ -34,6 +33,10 @@ task ci: ['engine_cart:generate'] do
 
   SolrWrapper.wrap(port: '8983') do |solr|
     solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path(File.dirname(__FILE__)), 'solr_conf', 'conf')) do
+      within_test_app do
+        system 'bundle install'
+      end
+
       Rake::Task['spotlight:fixtures'].invoke
 
       # run the tests

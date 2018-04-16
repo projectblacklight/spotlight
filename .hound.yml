@@ -5,4 +5,4 @@ scss:
   config_file: .scss-lint.yml
 
 javascript:
-  config_file: .javascript-style.json
+  config_file: .jshintrc

@@ -23,7 +23,7 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
 
   oembed: {
     title: "Embed + Text",
-    description: 'This widget embeds a web resource and a text block to the left or right of it.',
+    description: "This widget embeds an oEmbed-supported web resource and a text block to the left or right of it. Examples of oEmbed-supported resources include those from YouTube, Twitter, Flickr, and SlideShare.",
     url: "URL",
   },
 

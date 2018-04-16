@@ -164,7 +164,7 @@ module Spotlight
           config.facet_fields = Hash[config.facet_fields.sort_by { |k, _v| field_weight(facet_fields, k) }]
 
           config.facet_fields.each do |k, v|
-            v.original = v.dup
+            v.original = v.dup unless v.custom_field
             next if facet_fields[k].blank?
 
             v.merge! facet_fields[k].symbolize_keys
@@ -314,12 +314,12 @@ module Spotlight
       ].flatten.join(' ')
     end
 
-    # rubocop:disable Style/AccessorMethodName
+    # rubocop:disable Naming/AccessorMethodName
     def set_index_field_defaults(field)
       return unless index_fields.blank?
 
       views = default_blacklight_config.view.keys | [:show, :enabled]
-      field.merge! Hash[views.map { |v| [v, !title_only_by_default?(v)] }]
+      field.merge!((views - field.keys).map { |v| [v, !title_only_by_default?(v)] }.to_h)
     end
 
     # Check to see whether config.view.foobar.title_only_by_default is available
@@ -341,7 +341,7 @@ module Spotlight
       field.show = true
       field.enabled = true
     end
-    # rubocop:enable Style/AccessorMethodName
+    # rubocop:enable Naming/AccessorMethodName
 
     # @return [Integer] the weight (sort order) for this field
     def field_weight(fields, index)

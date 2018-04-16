@@ -13,7 +13,7 @@ module Spotlight
     scope :unpublished, -> { where(published: false) }
     scope :ordered_by_weight, -> { order('weight ASC') }
 
-    paginates_per 50
+    paginates_per 48
 
     extend FriendlyId
     friendly_id :title, use: [:slugged, :finders]
@@ -34,7 +34,6 @@ module Spotlight
     has_many :custom_fields, dependent: :delete_all
     has_many :feature_pages, extend: FriendlyId::FinderMethods
     has_many :main_navigations, dependent: :delete_all
-    has_many :owned_taggings, class_name: 'ActsAsTaggableOn::Tagging', as: :tagger
     has_many :reindexing_log_entries, dependent: :destroy
     has_many :resources
     has_many :roles, as: :resource, dependent: :delete_all
@@ -43,6 +42,7 @@ module Spotlight
     has_many :users, through: :roles, class_name: Spotlight::Engine.config.user_class
     has_many :pages, dependent: :destroy
     has_many :filters, dependent: :delete_all
+    has_many :translations, class_name: 'I18n::Backend::ActiveRecord::Translation', dependent: :destroy, inverse_of: :exhibit
 
     has_one :blacklight_configuration, class_name: 'Spotlight::BlacklightConfiguration', dependent: :delete
     has_one :home_page

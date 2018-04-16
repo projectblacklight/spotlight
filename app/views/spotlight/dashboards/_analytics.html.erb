@@ -17,17 +17,17 @@
   <% page_analytics = current_exhibit.page_analytics(1.month, exhibit_root_path(current_exhibit)) %>
   <% unless page_analytics.empty? %>
   <h4><%= t :'.pages.header' %></h4>
-  <table class="table table-striped">
+  <table class="table table-striped popular-pages">
     <thead>
       <tr>
         <th><%= t(:".pagetitle") %></th>
-        <th><%= t(:".pageviews") %></th>
+        <th class="text-right"><%= t(:".pageviews") %></th>
       </tr>
     </thead>
     <% page_analytics.each do |p| %>
       <tr>
         <td><%= link_to p.pageTitle, p.pagePath %></td>
-        <td><%= p.pageviews %></td>
+        <td class="text-right"><%= p.pageviews %></td>
       </tr>
     <% end %>
   </table>

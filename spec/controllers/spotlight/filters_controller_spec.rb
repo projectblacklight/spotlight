@@ -3,7 +3,6 @@ describe Spotlight::FiltersController do
 
   describe '#create' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
-    let(:exhibit_filter) { exhibit.filters.first }
 
     before do
       allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(false)

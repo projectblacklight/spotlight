@@ -589,6 +589,7 @@ en:
       edit_fields:
         invite_html: "This user does not yet exist. Would you like to send them an %{link}?"
         invite_link: invite
+        help: Enter a valid email address
       index:
         title: Site Configuration - Users
         invite_pending: pending
@@ -645,6 +646,9 @@ en:
           other: "%{count} items"
         missing_description_html: "%{link} to add a description."
       form:
+        search_box:
+          label: Display search box
+          help_block: Displays a search box that enables users to search within the browse category results
         search_description: "Description"
         search_masthead: "Masthead"
         search_thumbnail: "Thumbnail"
@@ -667,6 +671,17 @@ en:
         item_count:
           one: "%{count} item"
           other: "%{count} items"
+      search_box:
+        placeholder: Search…
+        label: Search within this browse category
+        submit: Search within browse category
+        reset: Clear search box
+        success:
+          result_number_html: Your search matched <strong> %{search_size} of %{parent_search_count} items</strong> in this browse category.
+          expand_html: You can also <a href="%{expand_search_url}">search all exhibit items for "%{browse_query}"</a>.
+        zero_results:
+          result_number: Your search did not match any items in this browse category.
+          expand_html: You can <a href="%{clear_search_url}"> clear this search</a> or try <a href="%{expand_search_url}">searching all exhibit items for "%{browse_query}"</a>.
     tags:
       index:
         title: "Curation - Tags"

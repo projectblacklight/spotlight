@@ -14,11 +14,12 @@ feature 'Search Configuration Administration', js: true do
       end
       click_link 'Search'
 
+      expect(page).to have_css 'input#enable_feature', visible: true
       uncheck 'Display search box'
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
       expect(page).not_to have_css 'select#search_field'
     end
@@ -41,7 +42,7 @@ feature 'Search Configuration Administration', js: true do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
       expect(page).to have_select 'Search in', with_options: ['My Title Label']
     end
   end
@@ -68,7 +69,7 @@ feature 'Search Configuration Administration', js: true do
       click_button 'Save changes'
       click_link 'Facets'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
       expect(page).not_to have_content('Genre')
       expect(page).to have_content('Topic')
@@ -87,7 +88,7 @@ feature 'Search Configuration Administration', js: true do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
       exhibit.reload
       expect(exhibit.blacklight_config.facet_fields['genre_ssim'].sort).to eq 'index'
@@ -108,15 +109,15 @@ feature 'Search Configuration Administration', js: true do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
       click_link 'Results'
 
-      expect(field_labeled('List')).to_not be_checked
-      expect(field_labeled('Gallery')).to be_checked
+      expect(page).to have_unchecked_field 'List'
+      expect(page).to have_checked_field 'Gallery'
 
-      expect(field_labeled('20')).to be_checked
-      expect(field_labeled('10')).to_not be_checked
+      expect(page).to have_checked_field '20'
+      expect(page).to have_unchecked_field '10'
     end
     it 'updates Sort field result options' do
       visit spotlight.exhibit_dashboard_path(exhibit)
@@ -136,7 +137,7 @@ feature 'Search Configuration Administration', js: true do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
       click_link 'Results'
 

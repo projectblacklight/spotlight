@@ -83,6 +83,19 @@ describe 'Browse Category Administration', type: :feature do
       expect(search.thumbnail).not_to be nil
     end
 
+    it 'can configure a search box' do
+      visit spotlight.edit_exhibit_search_path exhibit, search
+      expect(search.search_box).to eq false
+
+      check 'Display search box'
+
+      click_button 'Save changes'
+      expect(page).to have_content('The search was successfully updated.')
+      search.reload
+
+      expect(search.search_box).to eq true
+    end
+
     it 'can select a default index view type' do
       visit spotlight.edit_exhibit_search_path exhibit, search
       choose 'List'

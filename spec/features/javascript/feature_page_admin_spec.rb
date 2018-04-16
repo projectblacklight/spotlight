@@ -53,7 +53,6 @@ feature 'Feature Pages Adminstration', js: true do
   end
 
   it 'stays in curation mode if a user has unsaved data' do
-    pending('Spec does not work with chromedriver')
     visit spotlight.edit_exhibit_feature_page_path(page1.exhibit, page1)
 
     # Hack to bypass alert about unsaved changes
@@ -68,7 +67,6 @@ feature 'Feature Pages Adminstration', js: true do
   end
 
   it 'stays in curation mode if a user has unsaved contenteditable data' do
-    pending('Spec does not work with chromedriver')
     visit spotlight.edit_exhibit_feature_page_path(page1.exhibit, page1)
 
     # Hack to bypass alert about unsaved changes

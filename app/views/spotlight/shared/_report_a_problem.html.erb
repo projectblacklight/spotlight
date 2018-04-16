@@ -7,8 +7,7 @@
       <%= f.text_field :name %>
       <span style="display:none;visibility:hidden;">
         <% honeypot_field_name = Spotlight::Engine.config.spambot_honeypot_email_field %>
-        <%= label_tag(honeypot_field_name, t(:'.honeypot_field_explanation')) %><br/>
-        <%= f.email_field honeypot_field_name %>
+        <%= f.email_field honeypot_field_name, label: t(:'.honeypot_field_explanation') %>
       </span>
       <%= f.email_field :email %>
       <%= f.text_area :message, rows: 7 %>

@@ -32,10 +32,6 @@ Style/DoubleNegation:
 Style/SpecialGlobalVars:
   Enabled: false
 
-# Temp. disable due to https://github.com/bbatsov/rubocop/issues/3514
-Style/VariableNumber:
-  Enabled: false
-
 RSpec/DescribeClass:
   Exclude:
     - 'spec/features/**/*'
@@ -68,7 +64,7 @@ Metrics/ClassLength:
     - 'app/models/spotlight/resources/iiif_manifest.rb'
     - 'lib/generators/spotlight/**/*' # Generators tend to have longer class lengths due to their lengthy public API
 
-Style/PredicateName:
+Naming/PredicateName:
   Exclude:
     - 'app/models/concerns/spotlight/ar_light.rb'
 

@@ -24,6 +24,12 @@ module Spotlight
       end
     end
 
+    ##
+    # Get parent results count of a browse category search
+    def parent_search_count
+      @parent_search_count ||= Spotlight::Search.find(@search.id).count
+    end
+
     private
 
     def view_available?(view)

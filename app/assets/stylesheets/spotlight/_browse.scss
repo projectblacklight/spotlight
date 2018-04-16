@@ -103,3 +103,27 @@ $image-overlay-bottom-margin: $padding-large-vertical * 3;
     .image-overlay {max-height: $image-overlay-max-height;}
   }
 }
+
+.search-box-container {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+
+  .browse-search-form {
+    .browse-search-expand {
+      text-align: center;
+    }
+
+    .btn-reset {
+      background-color: transparent;
+      display: none;
+      left: -40px;
+      z-index: 20;
+    }
+
+    .search-btn {
+      left: -40px;
+      z-index: 30;
+    }
+  }
+}

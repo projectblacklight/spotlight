@@ -3,9 +3,9 @@
   <!-- NOTE: various comments and unused configuration possibilities have been purged
      from this file.  Please refer to http://wiki.apache.org/solr/SolrConfigXml,
      as well as the default solrconfig file included with Solr -->
-  
+
   <abortOnConfigurationError>${solr.abortOnConfigurationError:true}</abortOnConfigurationError>
-  
+
   <luceneMatchVersion>6.1.0</luceneMatchVersion>
 
   <directoryFactory name="DirectoryFactory" class="${solr.directoryFactory:solr.StandardDirectoryFactory}"/>
@@ -16,7 +16,7 @@
     </updateLog>
   </updateHandler>
 
-  <!-- solr lib dirs -->  
+  <!-- solr lib dirs -->
   <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lib" />
   <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" />
 
@@ -36,7 +36,7 @@
        <float name="tie">0.01</float>
        <!-- this qf and pf are used by default, if not otherwise specified by
             client. The default blacklight_config will use these for the
-            "keywords" search. See the author_qf/author_pf, title_qf, etc 
+            "keywords" search. See the author_qf/author_pf, title_qf, etc
             below, which the default blacklight_config will specify for
             those searches. You may also be interested in:
             http://wiki.apache.org/solr/LocalParams
@@ -74,9 +74,9 @@
        </str>
        <str name="subject_pf">
        </str>
-       
+
        <str name="fl">
-         *, 
+         *,
          score
        </str>
 
@@ -85,7 +85,7 @@
        <str name="facet.limit">10</str>
        <str name="facet.field">active_fedora_model_ssi</str>
        <str name="facet.field">subject_ssim</str>
-       
+
        <str name="spellcheck">true</str>
        <str name="spellcheck.dictionary">default</str>
        <str name="spellcheck.onlyMorePopular">true</str>
@@ -121,7 +121,7 @@
       </str>
     </lst>
   </requestHandler>
-  
+
   <requestHandler name="standard" class="solr.SearchHandler">
      <lst name="defaults">
        <str name="echoParams">explicit</str>
@@ -135,6 +135,7 @@
       <str name="echoParams">all</str>
       <str name="fl">*</str>
       <str name="rows">1</str>
+      <str name="defType">lucene</str>
       <str name="q">{!raw f=id v=$id}</str> <!-- use id=666 instead of q=id:666 -->
     </lst>
   </requestHandler>
@@ -152,12 +153,12 @@
       <str name="buildOnOptimize">true</str>
     </lst>
   </searchComponent>
-  
-  <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy" /> 
-  
+
+  <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy" />
+
   <requestDispatcher handleSelect="true" >
     <requestParsers enableRemoteStreaming="true" multipartUploadLimitInKB="2048" />
   </requestDispatcher>
-  
+
   <requestHandler name="/analysis/field" startup="lazy" class="solr.FieldAnalysisRequestHandler" />
 </config>
