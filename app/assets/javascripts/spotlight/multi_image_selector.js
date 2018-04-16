@@ -117,6 +117,10 @@
           var imageid = $('img', $(this)).data('image-id');
           var src = $('img', $(this)).attr('src');
 
+          if (typeof clickCallback === 'function' ) {
+            clickCallback(image_versions[i]);
+          }
+
           // mark the current selection as active
           $('li.active', thumbList).removeClass('active');
           $(this).addClass('active');
@@ -128,9 +132,6 @@
             $('li', thumbList).index($(this)) + 1
           );
           scrollToActiveThumb();
-          if (typeof clickCallback === 'function' ) {
-            clickCallback(image_versions[i]);
-          }
         });
         $("img", listItem).on('load', function() {
           updateThumbListWidth();
