@@ -26,10 +26,14 @@ RuboCop::RakeTask.new(:rubocop)
 
 require 'engine_cart/rake_task'
 
+require 'parallel_tests/tasks'
+
 require 'spotlight/version'
 
 task ci: ['engine_cart:generate'] do
   ENV['environment'] = 'test'
+
+  Rake::Task['spotlight:parallel_setup'].invoke
 
   SolrWrapper.wrap(port: '8983') do |solr|
     solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path(File.dirname(__FILE__)), 'solr_conf', 'conf')) do
@@ -41,7 +45,7 @@ task ci: ['engine_cart:generate'] do
       Rake::Task['spotlight:fixtures'].invoke
 
       # run the tests
-      Rake::Task['spec'].invoke
+      Rake::Task['parallel:spec'].invoke
     end
   end
 end
@@ -70,6 +74,22 @@ namespace :spotlight do
           system 'bundle exec rails s'
         end
       end
+    end
+  end
+
+  task :parallel_setup do
+    system 'bundle binstubs rspec-core'
+
+    within_test_app do
+      database_config = File.open('config/database.yml')
+
+      lines = database_config.map do |line|
+        line.gsub(%r{db/test\.sqlite3$}, "db/test.sqlite3<%= ENV['TEST_ENV_NUMBER'] %>")
+      end
+
+      File.open('config/database.yml', 'w') { |f| f.write(lines.join) }
+      Rake::Task['parallel:drop'].invoke
+      Rake::Task['parallel:setup'].invoke
     end
   end
 
