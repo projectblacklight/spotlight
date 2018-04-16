@@ -13,6 +13,11 @@ before_install:
   - gem install bundler
   - google-chrome-stable --headless --disable-gpu --no-sandbox --blink-settings=imagesEnabled=false --remote-debugging-port=9222 http://localhost &
 
+before_cache:
+  - rm /home/travis/build/projectblacklight/spotlight/.internal_test_app/db/test.sqlite3
+  - rm /home/travis/build/projectblacklight/spotlight/.internal_test_app/log/test.log
+  - rm -rf /home/travis/build/projectblacklight/spotlight/.internal_test_app/public/uploads
+  - rm /home/travis/build/projectblacklight/spotlight/.internal_test_app/tmp/cache/*/*/riiif*
 notifications:
   irc: "irc.freenode.org#blacklight"
 
