@@ -44,6 +44,7 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
   scenario 'it should allow you to add multiple solr documents to the widget', js: true do
     fill_in_typeahead_field with: 'dq287tq6352'
     fill_in_typeahead_field with: 'gk446cj2442'
+    expect(page).to have_selector '.panels li', count: 2, visible: true
 
     save_page
 
