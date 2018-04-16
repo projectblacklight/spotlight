@@ -57,7 +57,7 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
 
     # Select the last image
     click_link('Change')
-    find('.thumbs-list li:last-child').click
+    find('.thumbs-list li[data-index="1"]').click
     expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/, visible: true)
 
     save_page
