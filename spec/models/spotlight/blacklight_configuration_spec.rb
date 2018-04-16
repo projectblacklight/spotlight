@@ -99,11 +99,13 @@ describe Spotlight::BlacklightConfiguration, type: :model do
           block.call(field)
         end
         allow(subject.exhibit).to receive(:custom_fields).and_return(custom_fields)
+        subject.facet_fields = { 'a' => { enabled: '1', label: 'Label' } }
         expect(subject.blacklight_config.facet_fields).to include('a')
         expect(subject.blacklight_config.facet_fields['a'].show).to be_falsey
         expect(subject.blacklight_config.facet_fields['a'].if).to eq :field_enabled?
         expect(subject.blacklight_config.facet_fields['a'].enabled).to eq false
         expect(subject.blacklight_config.facet_fields['a'].limit).to eq true
+        expect(subject.blacklight_config.facet_fields['a'].original).to be_blank
       end
     end
 
@@ -138,6 +140,14 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.blacklight_config.index_fields['b'].list).to be_truthy
       expect(subject.blacklight_config.index_fields['c'].enabled).to be_truthy
       expect(subject.blacklight_config.index_fields['c'].list).to be_truthy
+    end
+
+    it 'honors field specfic display settings set in the field configuration' do
+      blacklight_config.add_index_field 'a'
+      blacklight_config.add_index_field 'b', list: false
+
+      expect(subject.blacklight_config.index_fields['a'].list).to be_truthy
+      expect(subject.blacklight_config.index_fields['b'].list).to be_falsey
     end
 
     it 'filters upstream fields that are always disabled' do

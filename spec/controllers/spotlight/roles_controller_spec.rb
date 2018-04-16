@@ -39,6 +39,23 @@ describe Spotlight::RolesController, type: :controller do
 
         expect(exhibit.roles.last.role).to eq 'curator'
         expect(exhibit.roles.last.user.email).to eq user.email
+        expect(flash[:notice]).to eq 'User has been updated.'
+      end
+
+      it 'invites new users' do
+        expect do
+          patch :update_all, params: {
+            exhibit_id: exhibit,
+            'exhibit' => {
+              'roles_attributes' => {
+                '0' => { 'role' => 'curator', 'user_key' => 'something@example.com' }
+              }
+            }
+          }
+        end.to change { Devise::Mailer.deliveries.count }.by(1)
+
+        expect(exhibit.roles.last.user.email).to eq 'something@example.com'
+        expect(exhibit.roles.last.user.invitation_sent_at).to be_present
       end
 
       it 'updates roles' do

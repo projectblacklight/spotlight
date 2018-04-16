@@ -18,6 +18,7 @@ describe 'adding IIIF Manifest', type: :feature do
   it 'submits the form to create a new item' do
     expect_any_instance_of(Spotlight::Resource).to receive(:reindex_later).and_return(true)
     url = 'https://purl.stanford.edu/vw754mr2281/iiif/manifest'
+    stub_request(:head, url).to_return(status: 200, headers: { 'Content-Type' => 'application/json' })
     visit spotlight.admin_exhibit_catalog_path(exhibit)
 
     click_link 'Add items'
@@ -30,6 +31,7 @@ describe 'adding IIIF Manifest', type: :feature do
 
   it 'returns an error message if the URL returned in not a IIIF endpoint' do
     visit spotlight.admin_exhibit_catalog_path(exhibit)
+    stub_request(:head, 'http://example.com').to_return(status: 200, headers: { 'Content-Type' => 'text/html' })
 
     click_link 'Add items'
     fill_in 'URL', with: 'http://example.com'

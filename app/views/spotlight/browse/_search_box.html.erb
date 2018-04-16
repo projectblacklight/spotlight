@@ -1,0 +1,38 @@
+<div class="search-box-container">
+  <%= form_tag exhibit_browse_path(current_exhibit, search), method: :get, class: 'browse-search-form form-horizontal', role: 'browse-search' do %>
+    <%= render_hash_as_hidden_fields(search_state.params_for_search.except(:q, :search_field, :exhibit_id, :browse_q, :qt, :page, :utf8)) %>
+    <div class="form-group">
+        <label class="col-sm-4 control-label" for="browse_q"><%= t(:'.label') %></label>
+      <div class="col-sm-6">
+        <div class="input-group">
+          <%= text_field_tag :browse_q, params[:browse_q], placeholder: t(:'.placeholder'), class: "form-control", id: "browse_q" %>
+            <span class="input-group-btn">
+              <button class="btn btn-reset" type="reset"><span class="sr-only"><%= t(:'.reset') %></span><span class="glyphicon glyphicon-remove-circle"></span></button>
+              <button type="submit" class="btn btn-primary search-btn" id="browse-search">
+              <span class="submit-search-text"><%= t(:'.submit') %></span>
+              <span class="glyphicon glyphicon-search"></span>
+              </button>
+            </span>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <% if params[:browse_q]%>
+    <div class="browse-search-expand">
+      <% if search.count > 0 %>
+        <p><%= t(:'.success.result_number_html', search_size: search.count, parent_search_count: parent_search_count) %></p>
+        <p><%= t(:'.success.expand_html',
+                  expand_search_url: search_exhibit_catalog_path(current_exhibit, q: params[:browse_q]),
+                  browse_query: params[:browse_q]) %>
+        </p>
+      <% else %>
+        <p><%= t(:'.zero_results.result_number') %></p>
+        <p><%= t(:'.zero_results.expand_html',
+                  clear_search_url: exhibit_browse_path(current_exhibit, search),
+                  expand_search_url: search_exhibit_catalog_path(current_exhibit, q: params[:browse_q]),
+                  browse_query: params[:browse_q])%>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+</div>

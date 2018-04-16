@@ -19,7 +19,7 @@ describe 'Update the site theme', type: :feature do
 
     click_link 'Exhibit masthead'
 
-    expect(field_labeled('Modern')).to be_checked
+    expect(page).to have_checked_field 'Modern'
     expect(page).to have_xpath('//link[contains(@href, "/assets/application_modern")]', visible: false)
   end
 end

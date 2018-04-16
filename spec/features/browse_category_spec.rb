@@ -87,6 +87,20 @@ feature 'Browse pages' do
       end
     end
 
+    context 'with category search box enabled' do
+      let(:search) { FactoryBot.create(:default_search, exhibit: exhibit, published: true, search_box: true) }
+      it 'renders search box' do
+        visit spotlight.exhibit_browse_path(exhibit, search)
+        expect(page).to have_selector '.browse-search-form'
+        expect(page).not_to have_css '.browse-search-expand'
+
+        fill_in 'Search within this browse category', with: 'SEPTENTRIONALE'
+        click_button 'Search within browse category'
+
+        expect(page).to have_css '.browse-search-expand'
+      end
+    end
+
     it 'has <meta> tags' do
       TopHat.current['twitter_card'] = nil
       TopHat.current['opengraph'] = nil

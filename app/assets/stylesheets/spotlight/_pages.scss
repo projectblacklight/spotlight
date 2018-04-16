@@ -231,6 +231,12 @@
   @media (max-width: $screen-sm-max) {
     margin-bottom: $padding-base-horizontal;
   }
+
+  iframe {
+    @media (min-width: $screen-md-min) {
+      max-width: 100%;
+    }
+  }
 }
 
 .items-block {

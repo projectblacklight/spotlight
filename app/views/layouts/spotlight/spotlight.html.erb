@@ -27,6 +27,7 @@
     <%= description %>
     <%= twitter_card %>
     <%= opengraph %>
+    <%= javascript_tag '$.fx.off = true;' if Rails.env.test? %>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>

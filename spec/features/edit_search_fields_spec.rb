@@ -27,7 +27,7 @@ describe 'Search Administration', type: :feature do
       it 'allows curators to select and unselect facets for display' do
         visit spotlight.edit_exhibit_search_configuration_path exhibit
 
-        expect(page).to have_content 'Configuration Search Options Facets'
+        expect(page).to have_content "Configuration Search\nOptions Facets Results"
         expect(page).to have_button 'Save'
 
         uncheck 'blacklight_configuration_facet_fields_language_ssim_show' # Language
@@ -50,7 +50,6 @@ describe 'Search Administration', type: :feature do
       it 'updates sort options' do
         visit spotlight.edit_exhibit_search_configuration_path(exhibit)
 
-        # #field_labeled doesn't appear to work for disabled inputs
         expect(page).to have_css("input[name='blacklight_configuration[sort_fields][relevance][enable]'][disabled='disabled']")
         expect(page).to have_css('#nested-sort-fields .dd-item:nth-child(5) h3', text: 'Date (new to old)')
 

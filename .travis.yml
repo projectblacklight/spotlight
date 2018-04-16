@@ -1,21 +1,17 @@
-dist: trusty
 addons:
   chrome: stable
 notifications:
   email: false
 
-rvm:
-  - 2.4.1
-
 matrix:
   include:
-    - rvm: 2.3.4
-      env: "RAILS_VERSION=5.0.5"
-      
+    - rvm: 2.4.4
+      env: "RAILS_VERSION=5.1.6"
+
 before_install:
   - gem update --system
   - gem install bundler
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - google-chrome-stable --headless --disable-gpu --no-sandbox --blink-settings=imagesEnabled=false --remote-debugging-port=9222 http://localhost &
 
 notifications:
   irc: "irc.freenode.org#blacklight"
@@ -23,7 +19,7 @@ notifications:
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-    - RAILS_VERSION=5.1.2
+    - BUNDLE_PATH=/home/travis/build/projectblacklight/spotlight/vendor/bundle
 
 sudo: false
 language: ruby
@@ -32,3 +28,12 @@ script:
   - bundle exec rake
 
 jdk: oraclejdk8
+
+cache:
+  ##
+  # Caching bundler here in a hope to reduce Travis test time
+  bundler: true
+  ##
+  # We don't really know how this will work, but lets see.
+  directories:
+    - .internal_test_app

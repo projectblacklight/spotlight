@@ -8,6 +8,11 @@ module Spotlight
 
     included do
       helper_method :current_site, :current_exhibit, :current_masthead, :exhibit_masthead?, :resource_masthead?
+      before_action :set_exhibit_locale_scope
+    end
+
+    def set_exhibit_locale_scope
+      Translation.exhibit_default_scope(current_exhibit)
     end
 
     def current_site
@@ -15,7 +20,7 @@ module Spotlight
     end
 
     def current_exhibit
-      @exhibit
+      @exhibit || (Spotlight::Exhibit.find(params[:exhibit_id]) if params[:exhibit_id].present?)
     end
 
     def current_masthead

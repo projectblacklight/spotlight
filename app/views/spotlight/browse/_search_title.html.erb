@@ -1,2 +1,2 @@
 <%= search.title %>
-<small class="item-count"><%= t :'spotlight.browse.search.item_count', count: search.documents.size %></small>
+<small class="item-count"><%= t :'spotlight.browse.search.item_count', count: params[:browse_q] ? parent_search_count: search.documents.size %></small>

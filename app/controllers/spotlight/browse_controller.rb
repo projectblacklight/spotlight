@@ -39,6 +39,7 @@ module Spotlight
     end
 
     def search_query
+      @search.query_params['q'] = [@search.query_params['q'], params[:browse_q]].join(' ')
       @search.merge_params_for_search(params, blacklight_config)
     end
 

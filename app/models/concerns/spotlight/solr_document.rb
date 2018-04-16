@@ -84,7 +84,9 @@ module Spotlight
     end
 
     def to_solr
-      { self.class.unique_key.to_sym => id }.reverse_merge(sidecars.inject({}) { |acc, elem| acc.merge(elem.to_solr) }).merge(tags_to_solr)
+      { self.class.unique_key.to_sym => id }.reverse_merge(sidecars.inject({}) { |acc, elem| acc.merge(elem.to_solr) })
+                                            .merge(tags_to_solr)
+                                            .merge(exhibits_to_solr)
     end
 
     def make_public!(exhibit)
@@ -127,6 +129,14 @@ module Spotlight
         end
       end
       h
+    end
+
+    def exhibits_to_solr
+      slugs = sidecars.map(&:exhibit).map(&:slug)
+
+      {
+        "#{Spotlight::Engine.config.solr_fields.prefix}spotlight_exhibit_slugs#{Spotlight::Engine.config.solr_fields.string_suffix}" => slugs
+      }
     end
   end
 end

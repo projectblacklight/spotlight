@@ -7,14 +7,27 @@ Spotlight.onLoad(function() {
     var monitorElements = this;
     var defaultRefreshRate = 3000;
     var panelContainer;
+    var pollers = [];
 
     $(monitorElements).each(function() {
       panelContainer = $(this);
       var monitorUrl = panelContainer.data('monitorUrl');
       var refreshRate = panelContainer.data('refreshRate') || defaultRefreshRate;
-      setInterval(function() {
-        checkMonitorUrl(monitorUrl);
-      }, refreshRate);
+      pollers.push(
+        setInterval(function() {
+          checkMonitorUrl(monitorUrl);
+        }, refreshRate)
+      );
+    });
+
+    // Clear the intervals on turbolink:click event (e.g. when the user navigates away from the page)
+    $(document).on('turbolinks:click', function() {
+      if (pollers.length > 0) {
+        $.each(pollers, function() {
+          clearInterval(this);
+        });
+        pollers = [];
+      }
     });
 
     function checkMonitorUrl(url) {
