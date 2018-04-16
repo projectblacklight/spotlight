@@ -26,7 +26,7 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
   end
 
   scenario 'it should allow you to add a solr document to the widget', js: true do
-    fill_in_typeahead_field with: 'dq287tq6352'
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
     within(:css, '.panel') do
       expect(page).to have_content "L'AMERIQUE"
     end
@@ -42,8 +42,8 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
   end
 
   scenario 'it should allow you to add multiple solr documents to the widget', js: true do
-    fill_in_typeahead_field with: 'dq287tq6352'
-    fill_in_typeahead_field with: 'gk446cj2442'
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
+    fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
     expect(page).to have_selector '.panels li', count: 2, visible: true
 
     save_page
@@ -52,7 +52,7 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
   end
 
   scenario 'it should allow you to choose from a multi-image solr document (and persist through edits)', js: true, default_max_wait_time: 30 do
-    fill_in_typeahead_field with: 'xd327cm9378'
+    fill_in_solr_document_block_typeahead_field with: 'xd327cm9378'
 
     expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
 
@@ -83,13 +83,13 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
   end
 
   scenario 'it should allow you toggle visibility of solr documents', js: true do
-    fill_in_typeahead_field with: 'dq287tq6352'
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     within(:css, '.panel') do
       uncheck 'Display?'
     end
 
-    fill_in_typeahead_field with: 'gk446cj2442'
+    fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     # display the title as the primary caption
     within('.primary-caption') do
@@ -105,7 +105,7 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
   end
 
   scenario 'should allow you to optionally display captions with the image', js: true do
-    fill_in_typeahead_field with: 'gk446cj2442'
+    fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     # display the title as the primary caption
     within('.primary-caption') do
@@ -130,7 +130,7 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
   end
 
   scenario 'should allow you to optionally display a ZPR link with the image', js: true do
-    fill_in_typeahead_field with: 'gk446cj2442'
+    fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     check 'Display ZPR link'
     # this seems silly, but also seems to help with the flappy-ness of this spec
@@ -162,7 +162,7 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
   end
 
   scenario 'should allow you to choose which side the text will be on', js: true do
-    fill_in_typeahead_field with: 'dq287tq6352'
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     # Select to align the text right
     choose 'Right'
@@ -186,13 +186,13 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
   end
 
   scenario 'round-trip data', js: true do
-    fill_in_typeahead_field with: 'dq287tq6352'
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     within(:css, '.panel') do
       uncheck 'Display?'
     end
 
-    fill_in_typeahead_field with: 'gk446cj2442'
+    fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     # display the title as the primary caption
     within('.primary-caption') do
