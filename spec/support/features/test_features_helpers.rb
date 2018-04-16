@@ -13,6 +13,13 @@ module Spotlight
       find('.tt-suggestion', text: opts[:with], match: :first).click
     end
 
+    # just like #fill_in_typeahead_field, but wait for the
+    # form fields to show up on the page too
+    def fill_in_solr_document_block_typeahead_field(opts)
+      fill_in_typeahead_field(opts)
+      expect(page).to have_css('li[data-resource-id="' + opts[:with] + '"]')
+    end
+
     def add_widget(type)
       click_add_widget
 
