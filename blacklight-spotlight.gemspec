@@ -67,7 +67,7 @@ these collections.)
   s.add_development_dependency 'chromedriver-helper'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'factory_bot', '~> 4.5'
-  s.add_development_dependency 'engine_cart', '~> 1.0'
+  s.add_development_dependency 'engine_cart', '~> 2.0'
   s.add_development_dependency 'database_cleaner', '~> 1.3'
   s.add_development_dependency 'solr_wrapper'
   s.add_development_dependency 'simplecov', '~> 0.12'
