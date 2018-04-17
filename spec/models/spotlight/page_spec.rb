@@ -212,5 +212,12 @@ describe Spotlight::Page, type: :model do
       child_page.update(parent_page: nil)
       expect(child_page_es.reload.parent_page).to be_nil
     end
+
+    it 'updates the attributes separately' do
+      expect(child_page_es.parent_page).to eq parent_page_es
+      child_page.update(weight: 5)
+      expect(child_page_es.reload.weight).to eq 5
+      expect(child_page_es.reload.parent_page).to eq parent_page_es
+    end
   end
 end

@@ -1,6 +1,7 @@
 module Spotlight
   ##
   # Base page class. See {Spotlight::AboutPage}, {Spotlight::FeaturePage}, {Spotlight::HomePage}
+  # rubocop:disable Metrics/ClassLength
   class Page < ActiveRecord::Base
     MAX_PAGES = 50
 
@@ -132,7 +133,11 @@ module Spotlight
     def update_translated_pages_weights_and_parent_page
       return unless locale.to_sym == I18n.default_locale
       return unless weight_changed? || parent_page_id_changed?
-      translated_pages.update(weight: weight, parent_page_id: parent_page_id)
+      update_params = {}
+      update_params[:weight] = weight if weight_changed?
+      update_params[:parent_page_id] = parent_page_id if parent_page_id_changed?
+      translated_pages.update(update_params)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
