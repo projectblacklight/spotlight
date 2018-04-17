@@ -173,6 +173,12 @@ module Spotlight
 
     private
 
+    def update_all_page_params
+      params.require(:exhibit).permit(
+        'pages_attributes' => [:id, :published]
+      )
+    end
+
     def breadcrumb_to_exhibit_root(key)
       add_breadcrumb t(key, title: current_exhibit.title), spotlight.exhibit_root_path(current_exhibit)
     end
