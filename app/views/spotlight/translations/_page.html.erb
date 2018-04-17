@@ -1,3 +1,4 @@
+<% page = p.object %>
 <% translated_page = page.translated_page_for(@language.downcase) %>
 <tr data-translation-progress-item="true">
   <td>
@@ -25,7 +26,9 @@
       <%= link_to(t('spotlight.exhibits.translations.pages.new'), polymorphic_path([:clone, current_exhibit, page], language: @language)) %>
     <% end %>
   </td>
-  <td></td>
+  <td>
+      <%= p.check_box :published if translated_page %>
+  </td>
   <td>
     <% if translated_page %>
       <%= link_to(t('spotlight.exhibits.translations.pages.edit'), polymorphic_path([:edit, current_exhibit, translated_page], locale: @language)) %> &middot;
