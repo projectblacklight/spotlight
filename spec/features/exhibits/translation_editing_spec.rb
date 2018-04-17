@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Translation editing', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit, title: 'Sample', subtitle: 'SubSample') }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
@@ -358,6 +360,25 @@ describe 'Translation editing', type: :feature do
       expect(exhibit.searches.first.title).to eq "Tous les objets d'exposition"
       expect(exhibit.searches.first.long_description).to eq 'Tous les articles de cette exposition.'
       I18n.locale = I18n.default_locale
+    end
+  end
+
+  describe 'home page translation table entry' do
+    let(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+    let(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+    before do
+      exhibit.home_page.clone_for_locale('fr').save
+      about_page.clone_for_locale('fr').tap { |p| p.published = true }.save
+      visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr', tab: 'pages')
+    end
+
+    it 'renders a disabled checkbox in the table' do
+      # home page should have a disabled checkbox
+      expect(page).to have_css('.translation-home-page-settings input[type="checkbox"][disabled]')
+      # feature page does not have a translation, so don't use checkbox
+      expect(page).not_to have_css('.translation-feature-page-settings input[type="checkbox"]')
+      # about page should have a checked checkbox
+      expect(page).to have_css('.translation-about-page-settings input[type="checkbox"][checked]')
     end
   end
 
