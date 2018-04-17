@@ -96,6 +96,12 @@ Spotlight::Engine.routes.draw do
     resources :tags, only: [:index, :destroy]
 
     resources :contacts, only: [:edit, :update, :destroy]
+
+    resources :pages, only: [:update_all] do
+      collection do
+        patch :update_all
+      end
+    end
     resources :about_pages, path: 'about' do
       member do
         get :clone

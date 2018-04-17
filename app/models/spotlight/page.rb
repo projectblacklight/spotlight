@@ -85,6 +85,10 @@ module Spotlight
       is_a? AboutPage
     end
 
+    def home_page?
+      is_a? HomePage
+    end
+
     def top_level_page?
       try(:parent_page).blank?
     end
