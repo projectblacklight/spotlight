@@ -437,8 +437,8 @@ en:
           label: Pages
           new: Create one now.
           no_translated_page: No translated page.
-          recrate_are_you_sure: Are you sure you want to recreate this page? If you recreate this page all content, including any existing translations you have made, will be replaced with the content of the English version of the page.
           recreate: Recreate
+          recreate_are_you_sure: Are you sure you want to recreate this page? If you recreate this page all content, including any existing translations you have made, will be replaced with the content of the English version of the page.
           table_header:
             actions: Actions
             default_published: Published
