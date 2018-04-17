@@ -1,5 +1,6 @@
 <table class="table table-striped">
-  <thead>
+    <thead>
+
     <tr>
       <th><%= t('spotlight.exhibits.translations.pages.table_header.last_updated', language: t(:"locales.#{I18n.default_locale.downcase}")) %></th>
       <th class="text-center"><%= t('spotlight.exhibits.translations.pages.table_header.default_published') %></th>
@@ -10,6 +11,8 @@
   </thead>
 
   <tbody>
-    <%= render partial: 'page', collection: pages %>
+      <%= f.fields_for :feature_pages do |p| %>
+          <%= render partial: 'page', locals: { p: p} %>
+      <% end %>
   </tbody>
 </table>
