@@ -366,6 +366,7 @@ en:
             help_block: Each contact email will receive feedback submissions
           published:
             help_block: ''
+        uneditable_non_default_language: This field is not editable in the current language. Switch to the default language to edit it.
       import:
         button: Import data
         heading: Import data

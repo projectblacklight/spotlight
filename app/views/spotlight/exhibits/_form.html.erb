@@ -1,6 +1,6 @@
 <%= bootstrap_form_for @exhibit, url: ((spotlight.exhibit_path(@exhibit) if @exhibit.persisted?) || spotlight.exhibits_path), layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10', html: {class: "row"} do |f| %>
 <div class="row col-md-12">
-  <%= f.text_field :title %>
+  <%= f.text_field :title, disabled: !default_language?, help: !default_language? ? t('.uneditable_non_default_language') : '' %>
   <%= f.text_field :subtitle %>
   <%= f.text_area :description %>
   <%= f.text_field :tag_list, value: f.object.tag_list.to_s %>

@@ -50,4 +50,22 @@ describe Spotlight::LanguagesHelper, type: :helper do
       ).to eq %w[Deutsch English Español]
     end
   end
+
+  describe '#default_language?' do
+    context 'when using default locale' do
+      it do
+        expect(helper.default_language?).to eq true
+      end
+      it do
+        expect(helper).to receive_messages(params: { locale: :en })
+        expect(helper.default_language?).to eq true
+      end
+    end
+    context 'when using a different locale' do
+      it do
+        expect(helper).to receive_messages(params: { locale: :it })
+        expect(helper.default_language?).to eq false
+      end
+    end
+  end
 end
