@@ -1,6 +1,5 @@
 ENV['RAILS_ENV'] ||= 'test'
 require 'factory_bot'
-require 'database_cleaner'
 require 'devise'
 require 'engine_cart'
 EngineCart.load_application!
@@ -60,24 +59,13 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
-  config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = true
   config.before :all do
     WebMock.disable_net_connect!(allow_localhost: true)
   end
   config.before :each do
-    DatabaseCleaner.strategy = if Capybara.current_driver == :rack_test
-                                 :transaction
-                               else
-                                 :truncation
-                               end
-    DatabaseCleaner.start
-
     # The first user is automatically granted admin privileges; we don't want that behavior for many of our tests
     Spotlight::Engine.user_class.create email: 'initial+admin@example.com', password: 'password', password_confirmation: 'password'
-  end
-
-  config.after do
-    DatabaseCleaner.clean
   end
 
   if defined? Devise::Test::ControllerHelpers
