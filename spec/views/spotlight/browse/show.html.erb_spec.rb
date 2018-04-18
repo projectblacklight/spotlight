@@ -6,7 +6,6 @@ describe 'spotlight/browse/show', type: :view do
   before do
     allow(view).to receive_messages(resource_masthead?: false)
     allow(view).to receive_messages(blacklight_config: Blacklight::Configuration.new)
-    view.blacklight_config.view.gallery = true
     allow(search).to receive_messages(documents: double(size: 15))
     allow(view).to receive_messages(render_document_index_with_view: '')
     stub_template('_results_pagination.html.erb' => '')
@@ -61,11 +60,5 @@ describe 'spotlight/browse/show', type: :view do
   it 'displays search results actions' do
     render
     expect(response).to have_content 'Sort and Per Page actions'
-  end
-
-  it 'displays the search results' do
-    expect(view).to receive(:render_document_index_with_view).with(:gallery, anything, anything).and_return 'Gallery View'
-    render
-    expect(response).to include 'Gallery View'
   end
 end

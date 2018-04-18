@@ -5,6 +5,38 @@ describe Spotlight::BrowseController, type: :controller do
   let!(:unpublished) { FactoryBot.create(:search, exhibit: exhibit) }
   let(:admin) { FactoryBot.create(:site_admin) }
 
+  describe 'protected methods' do
+    it 'uses the blacklight.browse configuration for the document actions when additional configuration layers are not defined' do
+      expect(controller).to receive(:view_available?).and_return true
+      expect(controller.send(:document_index_view_type)).to equal :gallery
+    end
+
+    it 'uses the blacklight_config view configuration when there are no params' do
+      allow(controller).to receive(:current_exhibit).and_return exhibit
+      expect(controller).to receive(:view_available?).and_return false
+      expect(controller.send(:document_index_view_type)).to equal :list
+    end
+
+    it 'returns document_index_view_type from a search object' do
+      allow(controller).to receive(:current_exhibit).and_return exhibit
+      expect(controller).to receive(:view_available?).and_return true
+      search.default_index_view_type = 'gallery'
+      controller.instance_variable_set(:@search, search)
+      expect(controller.send(:default_document_index_view_type)).to equal :gallery
+    end
+
+    it 'returns default_document_index_view_type from super when there is no view available' do
+      allow(controller).to receive(:current_exhibit).and_return exhibit
+      expect(controller).to receive(:view_available?).and_return false
+      expect(controller.send(:default_document_index_view_type)).to equal :list
+    end
+
+    it 'returns the default_browse_index_view_type from exhibit configuration' do
+      allow(controller).to receive(:current_exhibit).and_return exhibit
+      expect(controller.send(:default_browse_index_view_type)).to equal :gallery
+    end
+  end
+
   describe 'when authenticated as an admin' do
     before { sign_in admin }
     describe 'GET index' do

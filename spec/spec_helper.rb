@@ -26,14 +26,13 @@ Capybara.javascript_driver = :headless_chrome
 #       h/t @mjgiarlo
 Capybara.register_driver :headless_chrome do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w[headless disable-gpu no-sandbox] }
+    chromeOptions: { args: %w[headless disable-gpu no-sandbox window-size=1280,1696] }
   )
 
   Capybara::Selenium::Driver.new(app,
                                  browser: :chrome,
                                  desired_capabilities: capabilities)
 end
-Capybara.default_max_wait_time = 10
 
 if ENV['COVERAGE'] || ENV['CI']
   require 'simplecov'
@@ -104,6 +103,7 @@ RSpec.configure do |config|
   config.include ::Rails.application.routes.url_helpers
   config.include ::Rails.application.routes.mounted_helpers
   config.include Spotlight::TestFeaturesHelpers, type: :feature
+  config.include CapybaraDefaultMaxWaitMetadataHelper, type: :feature
 
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true

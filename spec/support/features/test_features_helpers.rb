@@ -13,6 +13,13 @@ module Spotlight
       find('.tt-suggestion', text: opts[:with], match: :first).click
     end
 
+    # just like #fill_in_typeahead_field, but wait for the
+    # form fields to show up on the page too
+    def fill_in_solr_document_block_typeahead_field(opts)
+      fill_in_typeahead_field(opts)
+      expect(page).to have_css('li[data-resource-id="' + opts[:with] + '"]')
+    end
+
     def add_widget(type)
       click_add_widget
 
@@ -31,10 +38,13 @@ module Spotlight
     end
 
     def save_page
-      sleep 1
+      page.execute_script <<-EOF
+        SirTrevor.getInstance().onFormSubmit();
+      EOF
       click_button('Save changes')
       # verify that the page was created
-      expect(page).to have_content('page was successfully updated')
+      expect(page).to_not have_selector('.alert-danger')
+      expect(page).to have_selector('.alert-info', text: 'page was successfully updated')
     end
 
     RSpec::Matchers.define :have_breadcrumbs do |*expected|

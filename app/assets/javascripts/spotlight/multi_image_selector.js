@@ -111,11 +111,15 @@
 
     function addThumbsToList(){
       $.each(image_versions, function(i){
-        var listItem = $('<li><a href="javascript:;"><img src="' + image_versions[i]['thumb'] +'" data-image-id="' + image_versions[i]['imageId'] +'" /></a></li>');
+        var listItem = $('<li data-index="' + i + '"><a href="javascript:;"><img src="' + image_versions[i]['thumb'] +'" data-image-id="' + image_versions[i]['imageId'] +'" /></a></li>');
         listItem.on('click', function(){
           // get the current image id
           var imageid = $('img', $(this)).data('image-id');
           var src = $('img', $(this)).attr('src');
+
+          if (typeof clickCallback === 'function' ) {
+            clickCallback(image_versions[i]);
+          }
 
           // mark the current selection as active
           $('li.active', thumbList).removeClass('active');
@@ -128,9 +132,6 @@
             $('li', thumbList).index($(this)) + 1
           );
           scrollToActiveThumb();
-          if (typeof clickCallback === 'function' ) {
-            clickCallback(image_versions[i]);
-          }
         });
         $("img", listItem).on('load', function() {
           updateThumbListWidth();

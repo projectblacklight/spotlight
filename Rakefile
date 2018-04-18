@@ -35,6 +35,7 @@ task ci: ['engine_cart:generate'] do
     solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path(File.dirname(__FILE__)), 'solr_conf', 'conf')) do
       within_test_app do
         system 'bundle install'
+        system 'bundle exec rake db:migrate'
       end
 
       Rake::Task['spotlight:fixtures'].invoke
