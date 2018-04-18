@@ -1,4 +1,4 @@
-feature 'Reindex Monitor', js: true do
+feature 'Reindex Monitor', js: true, default_max_wait_time: 10 do
   let(:resources) do
     [FactoryBot.create(:resource)]
   end

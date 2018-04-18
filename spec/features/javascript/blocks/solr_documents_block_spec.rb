@@ -1,4 +1,4 @@
-feature 'Solr Document Block', feature: true, versioning: true do
+feature 'Solr Document Block', feature: true, versioning: true, default_max_wait_time: 15 do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:feature_page) do
@@ -26,7 +26,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
   end
 
   scenario 'it should allow you to add a solr document to the widget', js: true do
-    fill_in_typeahead_field with: 'dq287tq6352'
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
     within(:css, '.panel') do
       expect(page).to have_content "L'AMERIQUE"
     end
@@ -42,22 +42,24 @@ feature 'Solr Document Block', feature: true, versioning: true do
   end
 
   scenario 'it should allow you to add multiple solr documents to the widget', js: true do
-    fill_in_typeahead_field with: 'dq287tq6352'
-    fill_in_typeahead_field with: 'gk446cj2442'
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
+    fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
+    expect(page).to have_selector '.panels li', count: 2, visible: true
 
     save_page
 
     expect(page).to have_selector '.items-block .box', count: 2, visible: true
   end
 
-  scenario 'it should allow you to choose from a multi-image solr document (and persist through edits)', js: true do
-    fill_in_typeahead_field with: 'xd327cm9378'
+  scenario 'it should allow you to choose from a multi-image solr document (and persist through edits)', js: true, default_max_wait_time: 30 do
+    fill_in_solr_document_block_typeahead_field with: 'xd327cm9378'
 
     expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
 
     # Select the last image
     click_link('Change')
-    find('.thumbs-list li:last-child').click
+    find('.thumbs-list li[data-index="1"]').click
+    expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/, visible: true)
 
     save_page
 
@@ -81,13 +83,13 @@ feature 'Solr Document Block', feature: true, versioning: true do
   end
 
   scenario 'it should allow you toggle visibility of solr documents', js: true do
-    fill_in_typeahead_field with: 'dq287tq6352'
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     within(:css, '.panel') do
       uncheck 'Display?'
     end
 
-    fill_in_typeahead_field with: 'gk446cj2442'
+    fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     # display the title as the primary caption
     within('.primary-caption') do
@@ -103,7 +105,7 @@ feature 'Solr Document Block', feature: true, versioning: true do
   end
 
   scenario 'should allow you to optionally display captions with the image', js: true do
-    fill_in_typeahead_field with: 'gk446cj2442'
+    fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     # display the title as the primary caption
     within('.primary-caption') do
@@ -128,9 +130,12 @@ feature 'Solr Document Block', feature: true, versioning: true do
   end
 
   scenario 'should allow you to optionally display a ZPR link with the image', js: true do
-    fill_in_typeahead_field with: 'gk446cj2442'
+    fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     check 'Display ZPR link'
+    # this seems silly, but also seems to help with the flappy-ness of this spec
+    expect(find_field('Display ZPR link', checked: true)).to be_checked
+
     save_page
 
     within '.contents' do
@@ -157,13 +162,17 @@ feature 'Solr Document Block', feature: true, versioning: true do
   end
 
   scenario 'should allow you to choose which side the text will be on', js: true do
-    fill_in_typeahead_field with: 'dq287tq6352'
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
+
+    # Select to align the text right
+    choose 'Right'
+    # this seems silly, but also seems to help with the flappy-ness of this spec
+    expect(find_field('Right', checked: true)).to be_checked
 
     # fill in the content editable div
     content_editable = find('.st-text-block')
     content_editable.set('zzz')
-    # Select to align the text right
-    choose 'Right'
+
     # create the page
     save_page
 
@@ -177,13 +186,13 @@ feature 'Solr Document Block', feature: true, versioning: true do
   end
 
   scenario 'round-trip data', js: true do
-    fill_in_typeahead_field with: 'dq287tq6352'
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     within(:css, '.panel') do
       uncheck 'Display?'
     end
 
-    fill_in_typeahead_field with: 'gk446cj2442'
+    fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     # display the title as the primary caption
     within('.primary-caption') do
