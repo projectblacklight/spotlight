@@ -7,8 +7,10 @@ describe Spotlight::LanguagesHelper, type: :helper do
         [
           ['Albanian', :sq],
           ['Chinese', :zh],
+          ['Dutch', :nl],
           ['French', :fr],
           ['German', :de],
+          ['Hungarian', :hu],
           ['Italian', :it],
           ['Portugese - Brazil', :'pt-br'],
           ['Spanish', :es]
