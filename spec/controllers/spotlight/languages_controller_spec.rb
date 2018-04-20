@@ -27,6 +27,16 @@ describe Spotlight::LanguagesController do
         expect(response).to redirect_to edit_exhibit_path(exhibit, tab: 'language')
         expect(flash[:alert]).to include "Language can't be blank"
       end
+
+      it 'creates a published home page for the language' do
+        expect(Spotlight::HomePage.for_locale('es')).to be_blank
+
+        post :create, params: { exhibit_id: exhibit, language: { locale: 'es' } }
+        locale_pages = Spotlight::HomePage.for_locale('es')
+        expect(locale_pages.length).to eq 1
+        expect(locale_pages.first.exhibit).to eq exhibit
+        expect(locale_pages.first).to be_published
+      end
     end
   end
 
