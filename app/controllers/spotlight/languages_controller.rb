@@ -5,11 +5,22 @@ module Spotlight
     load_and_authorize_resource :exhibit, class: 'Spotlight::Exhibit'
     load_and_authorize_resource through: :exhibit
 
+    before_action only: :create do
+      @cloned_home_page = CloneTranslatedPageFromLocale.call(
+        locale: @language.locale,
+        page: @language.exhibit.home_page
+      )
+      @cloned_home_page.published = true
+    end
+
     def create
-      if @language.save
+      if @language.save && @cloned_home_page.save
         flash[:notice] = t('helpers.submit.language.created', model: @language.model_name.human.downcase)
       else
-        flash[:alert] = @language.errors.full_messages.join('<br/>'.html_safe)
+        flash[:alert] = [
+          @language.errors.full_messages,
+          @cloned_home_page.errors.full_messages
+        ].join('<br/>'.html_safe)
       end
       redirect_to spotlight.edit_exhibit_path @exhibit, tab: 'language'
     end
