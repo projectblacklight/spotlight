@@ -12,7 +12,7 @@ module Spotlight
     end
 
     def set_exhibit_locale_scope
-      Translation.exhibit_default_scope(current_exhibit)
+      Translation.current_exhibit = current_exhibit
     end
 
     def current_site
