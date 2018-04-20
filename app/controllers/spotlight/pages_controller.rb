@@ -90,16 +90,16 @@ module Spotlight
     end
 
     def clone
-      destroy_pre_existing_page_for_locale
-      new_page = @page.clone_for_locale(clone_params)
+      new_page = CloneTranslatedPageFromLocale.call(locale: clone_params, page: @page)
 
+      model_name = @page.class.model_name.human.downcase
       if new_page.save
         redirect_to(
           edit_exhibit_translations_path(current_exhibit, new_page, language: clone_params, tab: 'pages'),
-          notice: t(:'helpers.submit.page.created', model: @page.class.model_name.human.downcase)
+          notice: t(:'helpers.submit.page.created', model: model_name)
         )
       else
-        redirect_to :back, error: t(:'helpers.submit.page.clone_error', model: @page.class.model_name.human.downcase)
+        redirect_to :back, error: t(:'helpers.submit.page.clone_error', model: model_name)
       end
     end
 
