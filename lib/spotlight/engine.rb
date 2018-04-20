@@ -193,6 +193,8 @@ module Spotlight
       es: 'Español',
       fr: 'Français',
       it: 'Italiano',
+      hu: 'Magyar',
+      nl: 'Nederlands',
       'pt-br': 'Português brasileiro',
       sq: 'Shqip',
       zh: '中文'
