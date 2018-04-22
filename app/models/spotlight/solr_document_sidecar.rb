@@ -21,6 +21,10 @@ module Spotlight
         .merge(exhibit.solr_data)
     end
 
+    def compound?
+      true if (data.key? 'configured_fields') && (data['configured_fields'].key? 'items') && !data['configured_fields']['items'].empty?
+    end
+
     def private!
       update public: false
     end

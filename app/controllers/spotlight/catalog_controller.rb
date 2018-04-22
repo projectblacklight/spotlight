@@ -39,11 +39,10 @@ module Spotlight
 
     def show
       super
-
+      compound_documents
       if @document.private? current_exhibit
         authenticate_user! && authorize!(:curate, current_exhibit)
       end
-
       add_document_breadcrumbs(@document)
     end
 
@@ -85,6 +84,7 @@ module Spotlight
 
     def edit
       @response, @document = fetch params[:id]
+      compound_documents
     end
 
     def make_private
@@ -120,6 +120,18 @@ module Spotlight
     end
 
     protected
+
+    def compound_documents
+      @docs = []
+      if !@document.sidecars.empty? && @document.sidecar(current_exhibit).compound?
+        @document.sidecar(current_exhibit).data['configured_fields']['items'].each do |cur_id|
+          _resp, doc = fetch cur_id
+          @docs << doc
+        end
+      else
+        @docs << @document
+      end
+    end
 
     # TODO: move this out of app/helpers/blacklight/catalog_helper_behavior.rb and into blacklight/catalog.rb
     # rubocop:disable Naming/PredicateName

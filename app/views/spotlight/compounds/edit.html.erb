@@ -1,0 +1,8 @@
+<% content_for(:body_attributes) do %>data-no-turbolink="true"<% end %>
+<%= render 'spotlight/shared/exhibit_sidebar' %>
+<div id="content" class="col-md-9">
+
+	<%= curation_page_title("Edit Compound Object") %>
+	
+	<%= render 'edit_form' %>
+</div>

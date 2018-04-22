@@ -179,6 +179,7 @@ en:
         dashboard: Dashboard
         analytics: Analytics
         items: Items
+        compounds: Compounds
         tags: Tags
         browse: Browse
         feature_pages: Feature pages
@@ -557,6 +558,8 @@ en:
           title: "Upload item"
           add_item: "Add item"
           add_item_and_continue: "Add item and continue adding"
+          add_compound: "Add Compound Object"
+          update_compound: "Update Compound Object"
           full_title_tesim: "Title"
           url-field:
             help: "Valid file types: %{extensions}"

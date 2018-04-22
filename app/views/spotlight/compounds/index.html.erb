@@ -1,0 +1,18 @@
+<%= render 'spotlight/shared/exhibit_sidebar' %>
+<div id="content" class="col-md-9">
+
+	<%= curation_page_title("Compound Objects") %>
+	<% if can? :manage, Spotlight::Resource.new(exhibit: current_exhibit) %>
+	  <div class="add-items-nav clearfix">
+		<div class="pull-right">
+		  <%= link_to t('.new_resource'), new_exhibit_compound_path(current_exhibit), class: 'btn btn-primary' %>
+		</div>
+	  </div>
+	<% end %>
+    <% if @resources.nil? %>
+	  No Compound objects found
+    <% else %>
+	  <%= render partial: 'spotlight/compounds/document_admin_table', collection: [@documents], as: :documents %>
+    <% end %>
+</div>
+

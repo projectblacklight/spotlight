@@ -1,0 +1,136 @@
+<style>
+.column {
+  height: 150px;
+  width: 100%;
+  border: 2px solid #666666;
+  background-color: #ccc;
+  margin-right: 5px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  -ms-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 3px #000;
+  -moz-box-shadow: inset 0 0 3px #000;
+  -ms-box-shadow: inset 0 0 3px #000;
+  -o-box-shadow: inset 0 0 3px #000;
+  box-shadow: inset 0 0 3px #000;
+  text-align: center;
+  margin-bottom: 3px;
+}
+.dd-compound {
+		height: 145px;
+		border-radius: 10px 0 0 10px;
+		cursor: move;
+}
+.col-content {
+	width: 100%;
+	padding-left: 30px;
+}
+.col-image {
+	margin-top: 5px;
+	height: 135px;
+	width: 175px;
+	float: left;
+}
+.col-content img {
+	max-height: 100%;
+	max-width: 100%;
+}
+.col-content p {
+	width: 450px;
+	text-align: left;
+	padding-left: 20px;
+	float: left;
+}
+</style>
+<%	@sidecar = Spotlight::SolrDocumentSidecar.where(document_id: params[:id]).first %>
+<%= bootstrap_form_tag(url: spotlight.exhibit_compound_path(@exhibit), method: "patch", layout: :horizontal, label_col: 'col-md-2', control_col: 'col-sm-6 col-md-6', html: { class: 'item-upload-form', multipart: true,
+				data: {
+                :'autocomplete-exhibit-catalog-path'=> spotlight.autocomplete_exhibit_catalog_path(@exhibit, q: "%QUERY", format: "json")
+              }
+} ) do |f| %>
+  <input type="hidden" class="form-control" name="id" id="id" value="<%= params[:id] %>" />
+  <input type="hidden" class="form-control" name="[data][spotlight_upload_compound_object_is]" id="_data_spotlight_upload_compound_object_is" value="1" />
+  <%= f.fields_for :data do |d| %>
+    <% Spotlight::Resources::Upload.fields(current_exhibit).each do |config| %>
+      <% next if config.field_name.to_s.include? "annotation" %>
+      <%= d.send((config.form_field_type || :text_field), config.field_name, label: uploaded_field_label(config), wrapper: { class: "blacklight-"+config.field_name.to_s }, value: (@sidecar[:data]["configured_fields"].key?(config.field_name) ? @sidecar[:data]["configured_fields"][config.field_name] : "")) %>
+    <% end %>
+    <% current_exhibit.custom_fields.each do |custom_field| %>
+      <%= d.text_field custom_field.field, label: custom_field.label %>
+    <% end %>
+  <% end %>
+  
+  
+  <div id="remote">
+	  <div id="columns-full">
+	  </div>
+	  <input class="typeahead" type="text" placeholder="Enter Title Here...">
+  </div>
+  <script type="text/javascript">
+  var items_list = [];
+  function makeNewCol(id, image, title) {
+  	  columns = document.getElementById('columns-full');
+  	  elt = document.createElement('LI');
+  	  elt.className = 'column dd-item dd3-item';
+  	  dragElt = document.createElement('DIV');
+  	  dragElt.className = 'dd-compound dd3-handle dd-handle';
+  	  dragElt.innerHTML = "Drag";
+  	  contentElt = document.createElement('DIV');
+  	  contentElt.className = 'col-content';
+  	  contentElt.id = id; 
+  	  imageElt = document.createElement('DIV');
+  	  imageElt.className = 'col-image';
+  	  thumbElt = document.createElement('IMG');
+  	  thumbElt.src = image;
+  	  imageElt.appendChild(thumbElt);
+  	  contentElt.appendChild(imageElt);
+  	  titleElt = document.createElement('P');
+  	  titleElt.innerHTML = title + "<br>" + id;
+  	  contentElt.appendChild(titleElt);
+  	  hiddenElt = document.createElement('INPUT');
+  	  hiddenElt.type = "hidden";
+  	  hiddenElt.className = "form-control";
+  	  hiddenElt.id = "_data_items_"+columns.children.length;
+  	  hiddenElt.name = "[data][items][]";
+  	  hiddenElt.value = id;
+  	  elt.appendChild(dragElt);
+  	  elt.appendChild(contentElt);
+  	  elt.appendChild(hiddenElt);
+  	  columns.appendChild(elt);
+  } 
+
+  $('.dd').nestable({maxDepth: 1});
+
+<%	if @sidecar.data["configured_fields"].key? "items"
+		@sidecar.data["configured_fields"]["items"].each do |item_id|
+			item = Spotlight::Resource.find(item_id.split('-')[1].to_i) %>
+			if(items_list.indexOf('<%=item_id%>') == -1) {
+				items_list.push('<%=item_id%>');
+				<% 	if item.type.include? "Video"
+						format = (item[:url].ends_with?(".mp3") ? "audio" : "") %>
+							makeNewCol('<%=item_id%>', '<%="/uploads/spotlight/resources/videoupload/url/stock"+format+".jpg"%>', '<%=item.data["full_title_tesim"]%>');
+				<% 	else %>
+					makeNewCol('<%=item_id%>', '<%=item.url.thumb.file.file.to_s.gsub(Rails.root.to_s+"/public", "")%>', '<%=item.data["full_title_tesim"]%>');
+				<% 	end %>
+			} 
+<%		end
+	end %>	
+  $('#remote .typeahead').spotlightSearchTypeAhead({ bloodhound: itemsBloodhound(), template: itemsTemplate() }).on('click', function() {
+      $(this).select();
+    }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
+    	if(items_list.indexOf(data["id"]) == -1) {
+    		items_list.push(data["id"]);
+    		makeNewCol(data["id"], data["thumbnail"], data["title"]);
+    	} 
+    	$(this).val("");
+    });
+
+  </script>
+  <div class="form-actions">
+    <div class="primary-actions">
+      <%= f.submit t('spotlight.resources.upload.form.update_compound'), class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>
