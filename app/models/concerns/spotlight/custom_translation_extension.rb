@@ -6,12 +6,17 @@ module Spotlight
     extend ActiveSupport::Concern
 
     included do
+      default_scope { where(exhibit: current_exhibit) }
       belongs_to :exhibit, class_name: 'Spotlight::Exhibit', inverse_of: :translations
     end
 
     class_methods do
-      def exhibit_default_scope(exhibit)
-        default_scope { where(exhibit: exhibit) }
+      def current_exhibit
+        Thread.current[:current_exhibit]
+      end
+
+      def current_exhibit=(exhibit)
+        Thread.current[:current_exhibit] = exhibit
       end
     end
   end
