@@ -9,7 +9,7 @@ Read more about what Spotlight is, our motivations for creating it, and how to i
 
 ## Requirements
 
-1. Ruby (2.2.0 or greater)
+1. Ruby (2.3.0 or greater)
 2. Rails (5.1 or greater)
 3. Java (7 or greater) *for Solr*
 4. ImageMagick (http://www.imagemagick.org/script/index.php) due to [carrierwave](https://github.com/carrierwaveuploader/carrierwave#adding-versions)
@@ -45,7 +45,7 @@ $ rake db:migrate
 Start Solr (possibly using `solr_wrapper` in development or testing):
 
 ```
-$ solr_wrapper 
+$ solr_wrapper
 ```
 
 and the Rails development server:
