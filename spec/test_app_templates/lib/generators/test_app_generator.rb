@@ -3,6 +3,10 @@ require 'rails/generators'
 class TestAppGenerator < Rails::Generators::Base
   source_root '../spec/test_app_templates'
 
+  def use_capybara3
+    gsub_file 'Gemfile', /gem 'capybara'/, '# gem \'capybara\''
+  end
+
   def add_gems
     gem 'blacklight', '~> 6.0'
     gem 'blacklight-gallery', '>= 0.3.0'
