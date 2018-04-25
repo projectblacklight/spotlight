@@ -8,8 +8,6 @@ module Spotlight
     before_save :publish
     before_create :default_content
 
-    accepts_nested_attributes_for :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
-
     class << self
       def default_title_text
         I18n.t('spotlight.pages.index.home_pages.title')
