@@ -132,10 +132,10 @@ module Spotlight
 
     def update_translated_pages_weights_and_parent_page
       return unless locale.to_sym == I18n.default_locale
-      return unless weight_changed? || parent_page_id_changed?
+      return unless saved_change_to_weight? || saved_change_to_parent_page_id?
       update_params = {}
-      update_params[:weight] = weight if weight_changed?
-      update_params[:parent_page_id] = parent_page_id if parent_page_id_changed?
+      update_params[:weight] = weight if saved_change_to_weight?
+      update_params[:parent_page_id] = parent_page_id if saved_change_to_parent_page_id?
       translated_pages.update(update_params)
     end
   end
