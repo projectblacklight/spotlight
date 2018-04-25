@@ -17,6 +17,7 @@ module Spotlight
     def locale_selecter_dropown_options
       languages = current_exhibit.languages.accessible_by(current_ability).to_a << Spotlight::Language.default_instance
 
+      # String#casecmp returns 0 when the two strings compared are identical (ignoring case)
       languages.reject { |language| language.locale.to_s.casecmp(I18n.locale.to_s).zero? }.sort_by(&:to_native)
     end
 

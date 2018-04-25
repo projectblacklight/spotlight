@@ -5,6 +5,9 @@ module Spotlight
     load_and_authorize_resource :exhibit, class: 'Spotlight::Exhibit'
     load_and_authorize_resource through: :exhibit
 
+    # This is being done in a before action to de-couple the Page creation from Language creation.
+    # A language can be created in tests, console, etc. w/o necessarily requiring an associated page is created.
+    # This ties the home page creation explicitly to the action in the dashboard.
     before_action only: :create do
       @cloned_home_page = CloneTranslatedPageFromLocale.call(
         locale: @language.locale,

@@ -29,7 +29,6 @@ describe 'spotlight/contacts/edit.html.erb' do
   end
 
   it 'has an IIIF crop' do
-    # byebug
     render
     expect(rendered).to have_content 'Upload an image'
     expect(rendered).to have_selector '#contact_avatar_attributes_iiif_cropper'

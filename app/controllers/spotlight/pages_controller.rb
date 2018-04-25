@@ -167,15 +167,11 @@ module Spotlight
       redirect_page_to_related_locale_version
     end
 
-    def destroy_pre_existing_page_for_locale
-      @page.translated_page_for(clone_params).destroy if @page.translated_page_for(clone_params).present?
-    end
-
     private
 
     def update_all_page_params
       params.require(:exhibit).permit(
-        'pages_attributes' => [:id, :published]
+        pages_attributes: [:id, :published]
       )
     end
 

@@ -98,7 +98,7 @@ module Spotlight
     end
 
     def set_tab
-      @tab = params[:tab] || nil
+      @tab = params[:tab]
     end
 
     def create_params

@@ -378,6 +378,7 @@ en:
         unpublished: Unpublished exhibits
         user: Your exhibits
       languages:
+        current_header: Current Languages
         current_instructions: Each language listed below is available for translations on the Curation > Translations page. To enable exhibit visitors to change the language of the exhibit, enable the Public checkbox. To hide translations from an available language from the exhibit, disable the Public checkbox.
         heading: Languages
         modal:
