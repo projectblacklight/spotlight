@@ -2,8 +2,8 @@ module Spotlight
   # A language for an exhibit
   class Language < ActiveRecord::Base
     belongs_to :exhibit
-    has_many :pages, ->(page) { where('locale = ?', page.locale) }, through: :exhibit
-    has_many :translations, ->(translation) { where('locale = ?', translation.locale) }, through: :exhibit
+    has_many :pages, ->(page) { where(locale: page.locale) }, through: :exhibit
+    has_many :translations, ->(translation) { where(locale: translation.locale) }, through: :exhibit
     validates :locale, presence: true
 
     # Doing this instead of dependent: :destroy because

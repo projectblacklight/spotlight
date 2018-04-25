@@ -14,6 +14,8 @@ RSpec.describe Spotlight::Language do
   describe 'when being destroyed' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:language) { described_class.create(locale: 'es', exhibit: exhibit) }
+    before { Translation.current_exhibit = exhibit }
+
     it 'also destroys its locale related pages' do
       page_es = exhibit.home_page.clone_for_locale('es').tap(&:save)
 
