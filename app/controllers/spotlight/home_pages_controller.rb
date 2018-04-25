@@ -29,6 +29,8 @@ module Spotlight
       end
     end
 
+    # We're oddly getting an unknown action
+    # error w/o explicitly defining this here
     def clone
       super
     end

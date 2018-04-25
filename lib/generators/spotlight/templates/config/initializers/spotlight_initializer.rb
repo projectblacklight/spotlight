@@ -51,7 +51,7 @@
 #     label: -> { I18n.t(:'spotlight.search.fields.spotlight_upload_date_tesim') }
 #   )
 # ]
-# Spotlight::Engine.config.upload_title_field = nil # OpenStruct.new(...)
+# Spotlight::Engine.config.upload_title_field = nil # UploadFieldConfig.new(...)
 # Spotlight::Engine.config.uploader_storage = :file
 # Spotlight::Engine.config.allowed_upload_extensions = %w(jpg jpeg png)
 
