@@ -1,0 +1,47 @@
+.translation-edit-form {
+  .glyphicon-ok {
+    color: $translation-available-color;
+  }
+}
+
+.translation-subheading {
+  border-bottom: 1px solid $navbar-default-border;
+  margin-bottom: 20px;
+}
+
+.form-group.translation-form {
+  .control-label {
+    padding-top: $panel-body-padding + $padding-base-vertical;
+  }
+
+  .glyphicon-ok {
+    padding-top: $panel-body-padding + $padding-base-vertical;
+  }
+}
+
+.tanslation-description-toggle {
+  margin: 0;
+  padding: 0;
+
+  &.collapsed {
+    .caret {
+      transform: rotate(-90deg);
+    }
+  }
+
+  label { cursor: pointer; }
+}
+
+.panel-translation {
+  background-color: $translation-panel-bg;
+  padding-bottom: 0;
+
+  .help-block {
+    color: $translation-help-color;
+    padding-left: 12px;
+  }
+}
+
+.default-page-outdated {
+  font-weight: 700;
+}

@@ -3,21 +3,26 @@
   <%= configuration_page_title %>
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active">
+      <li role="presentation" class="<%= 'active' if @tab.blank? %>">
         <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
       </li>
+      <% if can? :manage, current_exhibit.languages.first_or_initialize %>
+        <li role="presentation" class="<%= 'active' if @tab == 'language' %>">
+          <a href="#language" aria-controls="language" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.languages.heading') %></a>
+        </li>
+      <% end %>
       <% if can? :edit, current_exhibit.filters.first_or_initialize %>
-        <li role="presentation">
+        <li role="presentation" class="<%= 'active' if @tab == 'filter' %>">
           <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.filter.heading') %></a>
         </li>
       <% end %>
       <% if can? :import, current_exhibit %>
-        <li role="presentation">
+        <li role="presentation" class="<%= 'active' if @tab == 'import' %>">
           <a href="#import" aria-controls="import" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.import.heading') %></a>
         </li>
       <% end %>
       <% if can? :export, current_exhibit %>
-        <li role="presentation">
+        <li role="presentation" class="<%= 'active' if @tab == 'export' %>">
           <a href="#export" aria-controls="export" role="tab" data-toggle="tab"><%= t(:'spotlight.exhibits.export.heading') %></a>
         </li>
       <% end %>
@@ -28,9 +33,10 @@
       <% end %>
     </ul>
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="basic">
+      <div role="tabpanel" class="tab-pane <%= 'active' if @tab.blank? %>" id="basic">
         <%= render 'form' %>
       </div>
+      <%= render 'languages' if can? :manage, current_exhibit.languages.first_or_initialize %>
       <%= render 'spotlight/filters/form' if can? :edit, current_exhibit.filters.first_or_initialize %>
       <%= render 'import' if can? :import, current_exhibit %>
       <%= render 'export' if can? :export, current_exhibit %>

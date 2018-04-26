@@ -5,6 +5,12 @@ module Spotlight
     load_and_authorize_resource through: :exhibit, instance_name: 'page'
     before_action :attach_breadcrumbs
 
+    # We're oddly getting an unknown action
+    # error w/o explicitly defining this here
+    def clone
+      super
+    end
+
     protected
 
     def attach_breadcrumbs

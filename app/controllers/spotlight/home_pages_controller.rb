@@ -29,10 +29,20 @@ module Spotlight
       end
     end
 
+    # We're oddly getting an unknown action
+    # error w/o explicitly defining this here
+    def clone
+      super
+    end
+
     private
 
     alias search_action_url exhibit_search_action_url
     alias search_facet_url exhibit_search_facet_url
+
+    def load_locale_specific_page
+      @page = Spotlight::HomePage.for_locale.find_by(exhibit: current_exhibit)
+    end
 
     def allowed_page_params
       super.concat [:display_title, :display_sidebar]

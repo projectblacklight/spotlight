@@ -1,0 +1,67 @@
+<div role="tabpanel" class="tab-pane <%= 'active' if @tab == 'metadata' %>" id="metadata">
+  <%= bootstrap_form_for current_exhibit, url: spotlight.exhibit_translations_path(current_exhibit), layout: :horizontal do |f| %>
+    <% # Add a hidden field for the language so the redirect knows how to come back here %>
+    <%= hidden_field_tag :language, @language %>
+    <%= hidden_field_tag :tab, 'metadata' %>
+
+    <% non_custom_metadata_fields.each do |key, field_config| %>
+      <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "blacklight.search.fields.#{key}", locale: @language) %>
+      <%= f.fields_for :translations, translation do |translation_fields| %>
+        <%= translation_fields.hidden_field :key %>
+        <%= translation_fields.hidden_field :locale %>
+
+        <div data-translation-progress-item='true' class='form-group translation-form'>
+          <%= translation_fields.label :value, t("spotlight.search.fields.#{key}", default: field_config.label, locale: I18n.default_locale), class: 'control-label col-xs-12 col-sm-2' %>
+          <div class='col-xs-11 col-sm-9 panel panel-body panel-translation'>
+            <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
+            <p class="help-block">
+              <%= field_config.label %>
+            </p>
+          </div>
+          <div class='col-xs-1'>
+            <% if translation.value.present? %>
+              <span data-translation-present="true" class='glyphicon glyphicon-ok'></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if current_exhibit.custom_fields.any? %>
+      <div class='translation-exhibit-specific-fields'>
+        <h2 class='translation-subheading'>
+          <%= t('spotlight.exhibits.translations.metadata.exhibit_specific_fields.label') %>
+        </h2>
+
+        <% current_exhibit.custom_fields.each do |custom_field| %>
+          <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "blacklight.search.fields.#{custom_field.field}", locale: @language) %>
+          <%= f.fields_for :translations, translation do |translation_fields| %>
+            <%= translation_fields.hidden_field :key %>
+            <%= translation_fields.hidden_field :locale %>
+
+            <div data-translation-progress-item='true' class='form-group translation-form'>
+              <%= translation_fields.label :value, t("spotlight.search.fields.#{custom_field.field}", default: custom_field.configuration['label'], locale: I18n.default_locale), class: 'control-label col-xs-12 col-sm-2' %>
+              <div class='col-xs-11 col-sm-9 panel panel-body panel-translation'>
+                <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
+                <p class="help-block">
+                  <%= custom_field.configuration['label'] %>
+                </p>
+              </div>
+              <div class='col-xs-1'>
+                <% if translation.value.present? %>
+                  <span data-translation-present="true" class='glyphicon glyphicon-ok'></span>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="form-actions">
+      <div class="primary-actions">
+        <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</div>

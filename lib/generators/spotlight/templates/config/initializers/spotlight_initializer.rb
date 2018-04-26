@@ -37,11 +37,21 @@
 
 # ==> Uploaded item configuration
 # Spotlight::Engine.config.upload_fields = [
-#   OpenStruct.new(field_name: :spotlight_upload_description_tesim, label: 'Description', form_field_type: :text_area),
-#   OpenStruct.new(field_name: :spotlight_upload_attribution_tesim, label: 'Attribution'),
-#   OpenStruct.new(field_name: :spotlight_upload_date_tesim, label: 'Date')
+#   UploadFieldConfig.new(
+#     field_name: config.upload_description_field,
+#     label: -> { I18n.t(:"spotlight.search.fields.#{config.upload_description_field}") },
+#     form_field_type: :text_area
+#   ),
+#   UploadFieldConfig.new(
+#     field_name: :spotlight_upload_attribution_tesim,
+#     label: -> { I18n.t(:'spotlight.search.fields.spotlight_upload_attribution_tesim') }
+#   ),
+#   UploadFieldConfig.new(
+#     field_name: :spotlight_upload_date_tesim,
+#     label: -> { I18n.t(:'spotlight.search.fields.spotlight_upload_date_tesim') }
+#   )
 # ]
-# Spotlight::Engine.config.upload_title_field = nil # OpenStruct.new(...)
+# Spotlight::Engine.config.upload_title_field = nil # UploadFieldConfig.new(...)
 # Spotlight::Engine.config.uploader_storage = :file
 # Spotlight::Engine.config.allowed_upload_extensions = %w(jpg jpeg png)
 

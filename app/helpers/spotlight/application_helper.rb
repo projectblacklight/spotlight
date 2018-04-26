@@ -6,6 +6,7 @@ module Spotlight
     include TitleHelper
     include MetaHelper
     include CropHelper
+    include LanguagesHelper
 
     ##
     # Give the application name a chance to include the exhibit title

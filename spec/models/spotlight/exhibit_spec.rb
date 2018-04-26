@@ -16,6 +16,24 @@ describe Spotlight::Exhibit, type: :model do
     subject.save!
     expect(subject.description).to eq 'Test description'
   end
+
+  describe 'validations' do
+    it 'validates the presence of the title' do
+      exhibit.title = ''
+      expect do
+        exhibit.save
+      end.to change { exhibit.errors[:title].count }.by(1)
+    end
+
+    it 'does not validate the presence of the title under a non-default locale' do
+      expect(I18n).to receive(:locale).and_return(:fr)
+      exhibit.title = ''
+      expect do
+        exhibit.save
+      end.not_to(change { exhibit.errors[:title].count })
+    end
+  end
+
   describe 'contact_emails' do
     before do
       subject.contact_emails_attributes = [{ 'email' => 'chris@example.com' }, { 'email' => 'jesse@stanford.edu' }]
@@ -298,5 +316,36 @@ describe Spotlight::Exhibit, type: :model do
 
   it 'is expected to be versioned' do
     is_expected.to be_versioned
+  end
+  describe 'translatable fields' do
+    let(:persisted_exhibit) { FactoryBot.create(:exhibit, title: 'Sample', subtitle: 'SubSample', description: 'Description') }
+    before do
+      FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.title", value: 'Titre français')
+      FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.subtitle", value: 'Sous-titre français')
+      FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.description", value: 'Description français')
+      Translation.current_exhibit = persisted_exhibit
+    end
+    after do
+      I18n.locale = 'en'
+    end
+    it 'has a translatable title' do
+      expect(persisted_exhibit.title).to eq 'Sample'
+      I18n.locale = 'fr'
+      persisted_exhibit.reload
+      expect(persisted_exhibit.title).to eq 'Titre français'
+    end
+    it 'has a translatable subtitle' do
+      expect(persisted_exhibit.subtitle).to eq 'SubSample'
+      I18n.locale = 'fr'
+      persisted_exhibit.reload
+      expect(persisted_exhibit.subtitle).to eq 'Sous-titre français'
+    end
+
+    it 'has a translatable description' do
+      expect(persisted_exhibit.description).to eq 'Description'
+      I18n.locale = 'fr'
+      persisted_exhibit.reload
+      expect(persisted_exhibit.description).to eq 'Description français'
+    end
   end
 end

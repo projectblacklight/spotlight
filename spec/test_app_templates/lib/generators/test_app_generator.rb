@@ -59,4 +59,9 @@ class TestAppGenerator < Rails::Generators::Base
 EOF
     end
   end
+
+  def raise_on_missing_translation
+    uncomment_lines 'config/environments/development.rb', /config.action_view.raise_on_missing_translations/
+    uncomment_lines 'config/environments/test.rb', /config.action_view.raise_on_missing_translations/
+  end
 end
