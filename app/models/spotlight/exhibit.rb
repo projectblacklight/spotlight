@@ -6,6 +6,9 @@ module Spotlight
     include Spotlight::ExhibitAnalytics
     include Spotlight::ExhibitDefaults
     include Spotlight::ExhibitDocuments
+    include Spotlight::Translatables
+
+    translates :title, :subtitle, :description
 
     has_paper_trail
 
@@ -17,7 +20,7 @@ module Spotlight
 
     extend FriendlyId
     friendly_id :title, use: [:slugged, :finders]
-    validates :title, presence: true
+    validates :title, presence: true, if: -> { I18n.locale == I18n.default_locale }
     validates :slug, uniqueness: true
     validates :theme, inclusion: { in: Spotlight::Engine.config.exhibit_themes }, allow_blank: true
 
@@ -27,12 +30,12 @@ module Spotlight
     serialize :facets, Array
 
     # Note: friendly id associations need to be 'destroy'ed to reap the slug history
-    has_many :about_pages, extend: FriendlyId::FinderMethods
+    has_many :about_pages, -> { for_default_locale }, extend: FriendlyId::FinderMethods
     has_many :attachments, dependent: :destroy
     has_many :contact_emails, dependent: :delete_all # These are the contacts who get "Contact us" emails
     has_many :contacts, dependent: :delete_all # These are the contacts who appear in the sidebar
     has_many :custom_fields, dependent: :delete_all
-    has_many :feature_pages, extend: FriendlyId::FinderMethods
+    has_many :feature_pages, -> { for_default_locale }, extend: FriendlyId::FinderMethods
     has_many :main_navigations, dependent: :delete_all
     has_many :reindexing_log_entries, dependent: :destroy
     has_many :resources
@@ -43,16 +46,17 @@ module Spotlight
     has_many :pages, dependent: :destroy
     has_many :filters, dependent: :delete_all
     has_many :translations, class_name: 'I18n::Backend::ActiveRecord::Translation', dependent: :destroy, inverse_of: :exhibit
+    has_many :languages, dependent: :destroy
 
     has_one :blacklight_configuration, class_name: 'Spotlight::BlacklightConfiguration', dependent: :delete
-    has_one :home_page
+    has_one :home_page, -> { for_default_locale }
 
     belongs_to :site, optional: true
     belongs_to :masthead, dependent: :destroy, optional: true
     belongs_to :thumbnail, class_name: 'Spotlight::ExhibitThumbnail', dependent: :destroy, optional: true
 
-    accepts_nested_attributes_for :about_pages, :attachments, :contacts, :custom_fields, :feature_pages,
-                                  :main_navigations, :owned_taggings, :resources, :searches, :solr_document_sidecars
+    accepts_nested_attributes_for :about_pages, :attachments, :contacts, :custom_fields, :feature_pages, :languages,
+                                  :main_navigations, :owned_taggings, :pages, :resources, :searches, :solr_document_sidecars, :translations
     accepts_nested_attributes_for :blacklight_configuration, :home_page, :filters, update_only: true
     accepts_nested_attributes_for :masthead, :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
     accepts_nested_attributes_for :contact_emails, reject_if: proc { |attr| attr['email'].blank? }
@@ -101,6 +105,10 @@ module Spotlight
 
     def reindex_progress
       @reindex_progress ||= ReindexProgress.new(current_reindexing_log_entry)
+    end
+
+    def available_locales
+      @available_locales ||= languages.pluck(:locale)
     end
 
     protected

@@ -36,6 +36,7 @@ Spotlight::Engine.routes.draw do
     resource :view_configuration, only: [:show]
 
     resources :filters, only: [:create, :update]
+    resources :languages, only: [:create, :destroy]
 
     concern :searchable, Blacklight::Routes::Searchable.new
 
@@ -95,7 +96,16 @@ Spotlight::Engine.routes.draw do
     resources :tags, only: [:index, :destroy]
 
     resources :contacts, only: [:edit, :update, :destroy]
+
+    resources :pages, only: [:update_all] do
+      collection do
+        patch :update_all
+      end
+    end
     resources :about_pages, path: 'about' do
+      member do
+        get :clone
+      end
       collection do
         patch 'contacts' => 'about_pages#update_contacts'
         resources :contacts, only: [:new, :create]
@@ -103,11 +113,18 @@ Spotlight::Engine.routes.draw do
       end
     end
     resources :feature_pages, path: 'feature' do
+      member do
+        get :clone
+      end
       collection do
         patch :update_all
       end
     end
-    resource :home_page, path: 'home', controller: 'home_pages'
+    resource :home_page, path: 'home', controller: 'home_pages' do
+      member do
+        get :clone
+      end
+    end
     post '/pages/:id/preview' => 'pages#preview', as: :preview_block
     get '/pages' => 'pages#index', constraints: { format: 'json' }
 
@@ -119,6 +136,7 @@ Spotlight::Engine.routes.draw do
       end
     end
     post 'solr/update' => 'solr#update'
+    resource :translations, only: [:edit, :update]
   end
 
   get '/:exhibit_id' => 'home_pages#show', as: :exhibit_root

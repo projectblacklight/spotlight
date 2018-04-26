@@ -14,7 +14,7 @@
       <% if document.uploaded_resource? %>
         <%= d.fields_for :configured_fields do |e| %>
           <% Spotlight::Resources::Upload.fields(current_exhibit).each do |config| %>
-            <%= e.send((config.form_field_type || :text_field), config.field_name, value: (document.sidecar(current_exhibit).data["configured_fields"] || {})[config.field_name.to_s], label: uploaded_field_label(config)) %>
+            <%= e.send(config.form_field_type, config.field_name, value: (document.sidecar(current_exhibit).data["configured_fields"] || {})[config.field_name.to_s], label: uploaded_field_label(config)) %>
           <% end %>
         <% end %>
       <% end %>

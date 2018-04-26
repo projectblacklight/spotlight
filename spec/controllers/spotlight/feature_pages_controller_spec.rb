@@ -1,6 +1,19 @@
 describe Spotlight::FeaturePagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
 
+  describe 'when not logged in' do
+    let(:exhibit) { FactoryBot.create(:exhibit) }
+    describe 'GET clone' do
+      let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+
+      it 'is not allowed' do
+        get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
+        expect(flash['alert']).to eq 'You need to sign in or sign up before continuing.'
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
+    end
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # Page. As you add validations to Page, be sure to
   # adjust the attributes here as well.
@@ -40,6 +53,31 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
           expect(controller).to receive(:add_breadcrumb).with(page.title, [exhibit, page])
           get :show, params: { exhibit_id: page.exhibit, id: page }
           expect(assigns(:page)).to eq(page)
+        end
+      end
+
+      describe 'when "switching" locales for pages that have updated their title/slug' do
+        let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+        let!(:page_es) do
+          FactoryBot.create(
+            :feature_page,
+            exhibit: exhibit,
+            title: 'Page in spanish',
+            locale: 'es',
+            default_locale_page: page
+          )
+        end
+
+        it 'redirects from the spanish slug to the english page when the english locale is selected' do
+          expect(page_es.slug).not_to eq page.slug # Ensure the slugs are different
+          get :show, params: { exhibit_id: exhibit.id, id: page_es.slug, locale: 'en' }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page))
+        end
+
+        it 'redirects from the english slug to the spanish page when the spanish locale is selected' do
+          expect(page_es.slug).not_to eq page.slug # Ensure the slugs are different
+          get :show, params: { exhibit_id: exhibit.id, id: page.slug, locale: 'es' }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page_es))
         end
       end
     end
@@ -164,6 +202,18 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
       it 'redirects to the pages list' do
         delete :destroy, params: { id: page, exhibit_id: page.exhibit.id }
         expect(response).to redirect_to(exhibit_feature_pages_path(page.exhibit))
+      end
+    end
+
+    describe 'GET clone' do
+      let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+
+      it 'calls the CloneTranslatedPageFromLocale service' do
+        expect(
+          Spotlight::CloneTranslatedPageFromLocale
+        ).to receive(:call).with(locale: 'es', page: page).and_call_original
+
+        get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
       end
     end
   end

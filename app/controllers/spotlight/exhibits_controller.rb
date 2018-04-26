@@ -3,6 +3,7 @@ module Spotlight
   # Administrative CRUD actions for an exhibit
   class ExhibitsController < Spotlight::ApplicationController
     before_action :authenticate_user!, except: [:index]
+    before_action :set_tab, only: [:edit, :update]
     include Blacklight::SearchHelper
 
     load_and_authorize_resource
@@ -63,7 +64,9 @@ module Spotlight
 
     def update
       if @exhibit.update(exhibit_params)
-        redirect_to edit_exhibit_path(@exhibit), notice: t(:'helpers.submit.exhibit.updated', model: @exhibit.class.model_name.human.downcase)
+        redirect_to edit_exhibit_path(@exhibit, tab: @tab),
+                    notice: t(:'helpers.submit.exhibit.updated',
+                              model: @exhibit.class.model_name.human.downcase)
       else
         flash[:alert] = @exhibit.errors.full_messages.join('<br>'.html_safe)
         render action: :edit
@@ -89,8 +92,13 @@ module Spotlight
         :description,
         :published,
         :tag_list,
-        contact_emails_attributes: [:id, :email]
+        contact_emails_attributes: [:id, :email],
+        languages_attributes: [:id, :public]
       )
+    end
+
+    def set_tab
+      @tab = params[:tab]
     end
 
     def create_params

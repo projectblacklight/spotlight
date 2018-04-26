@@ -1,8 +1,12 @@
 module Spotlight
   ##
   # Base CRUD controller for pages
+  # rubocop:disable Metrics/ClassLength
+  # Disableing class length because this is a base
+  # controller that gives other controllers their behavior
   class PagesController < Spotlight::ApplicationController
     before_action :authenticate_user!, except: [:show]
+    before_action :load_locale_specific_page, only: [:destroy, :edit, :show, :update]
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
     load_and_authorize_resource through: :exhibit, instance_name: 'page', only: [:index]
 
@@ -19,7 +23,7 @@ module Spotlight
 
       respond_to do |format|
         format.html
-        format.json { render json: @pages.published.to_json(methods: [:thumbnail_image_url]) }
+        format.json { render json: @pages.for_locale.published.to_json(methods: [:thumbnail_image_url]) }
       end
     end
 
@@ -85,6 +89,20 @@ module Spotlight
       redirect_back fallback_location: spotlight.exhibit_dashboard_path(@exhibit), notice: notice
     end
 
+    def clone
+      new_page = CloneTranslatedPageFromLocale.call(locale: clone_params, page: @page)
+
+      model_name = @page.class.model_name.human.downcase
+      if new_page.save
+        redirect_to(
+          edit_exhibit_translations_path(current_exhibit, new_page, language: clone_params, tab: 'pages'),
+          notice: t(:'helpers.submit.page.created', model: model_name)
+        )
+      else
+        redirect_to :back, error: t(:'helpers.submit.page.clone_error', model: model_name)
+      end
+    end
+
     protected
 
     def _prefixes
@@ -98,6 +116,10 @@ module Spotlight
 
     def undo_notice(key)
       view_context.safe_join([t(:"helpers.submit.page.#{key}", model: @page.class.model_name.human.downcase), undo_link], ' ')
+    end
+
+    def clone_params
+      params.require(:language)
     end
 
     ##
@@ -129,17 +151,49 @@ module Spotlight
 
     def attach_breadcrumbs
       if view_context.current_page? '/'
-        add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: current_exhibit.title), main_app.root_path
+        add_breadcrumb t(:'spotlight.curation.nav.home', title: current_exhibit.title), main_app.root_path
+      elsif @page
+        # Use curator-accessible i18n key for user-facing breadcrumb
+        breadcrumb_to_exhibit_root(:'spotlight.curation.nav.home')
       else
-        add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: current_exhibit.title), spotlight.exhibit_root_path(current_exhibit)
+        # Use admin interface language for dashboard breadcrumb
+        breadcrumb_to_exhibit_root(:'spotlight.exhibits.breadcrumb')
       end
     end
 
+    def load_locale_specific_page
+      @page = current_exhibit.pages.for_locale.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_page_to_related_locale_version
+    end
+
     private
+
+    def update_all_page_params
+      params.require(:exhibit).permit(
+        pages_attributes: [:id, :published]
+      )
+    end
+
+    def breadcrumb_to_exhibit_root(key)
+      add_breadcrumb t(key, title: current_exhibit.title), spotlight.exhibit_root_path(current_exhibit)
+    end
 
     # Only allow a trusted parameter "white list" through.
     def page_params
       params.require(controller_name.singularize).permit(allowed_page_params)
     end
+
+    def redirect_page_to_related_locale_version
+      pages_for_id = current_exhibit.pages.find(params[:id])
+      if pages_for_id.default_locale_page
+        redirect_to polymorphic_path([current_exhibit, pages_for_id.default_locale_page])
+      elsif pages_for_id.translated_page_for(I18n.locale)
+        redirect_to polymorphic_path([current_exhibit, pages_for_id.translated_page_for(I18n.locale)])
+      else
+        raise ActiveRecord::RecordNotFound
+      end
+    end
   end
+  # rubocop:enable Metrics/ClassLength
 end

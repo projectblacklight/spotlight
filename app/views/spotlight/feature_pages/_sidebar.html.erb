@@ -1,7 +1,7 @@
 <% cache_unless current_user, [current_exhibit, @page] do %>
 <div id="sidebar" class="col-md-3" role="complementary">
   <ol class="nav sidenav">
-    <% @exhibit.feature_pages.published.at_top_level.each do |feature_section| %>
+    <% @exhibit.feature_pages.for_locale.published.at_top_level.each do |feature_section| %>
       <li class="<%= 'active' if current_page? [spotlight, @exhibit, feature_section] %>">
         <h4><%= link_to_unless_current feature_section.title, [spotlight, @exhibit, feature_section] %></h4>
         <ol class="subsection">
