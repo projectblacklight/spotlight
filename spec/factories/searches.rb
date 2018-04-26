@@ -12,6 +12,7 @@ FactoryBot.define do
   end
 
   factory :default_search, class: Spotlight::Search do
+    exhibit
     title 'All Exhibit Items'
     long_description 'All items in this exhibit.'
 
