@@ -42,12 +42,6 @@ class TestAppGenerator < Rails::Generators::Base
     copy_file 'carrierwave.rb', 'config/initializers/carrierwave.rb'
   end
 
-  def fix_up_migration_versions
-    Dir.glob('db/migrate/*.rb') do |f|
-      gsub_file f, /< ActiveRecord::Migration$/, '< ActiveRecord::Migration[4.2]'
-    end
-  end
-
   def add_theme_assets
     copy_file 'fixture.png', 'app/assets/images/spotlight/themes/default_preview.png'
     copy_file 'fixture.png', 'app/assets/images/spotlight/themes/modern_preview.png'
