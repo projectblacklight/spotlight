@@ -21,10 +21,10 @@ module Spotlight
 
       repository.connection.update params: { commitWithin: 500 }, data: data.to_json, headers: { 'Content-Type' => 'application/json' } unless data.empty?
 
-      if respond_to? :head
-        head :ok
+      if params[:resources_json_upload]
+        redirect_back fallback_location: exhibit_resources_path(@exhibit)
       else
-        render nothing: true
+        head :ok
       end
     end
 

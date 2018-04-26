@@ -32,6 +32,8 @@ module Spotlight
     sir_trevor_content :content
     has_paper_trail
 
+    accepts_nested_attributes_for :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
+
     # display_sidebar should be set to true by default
     before_create do
       self.content ||= [].to_json
