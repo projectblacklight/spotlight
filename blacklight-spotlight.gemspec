@@ -71,7 +71,7 @@ these collections.)
   s.add_development_dependency 'database_cleaner', '~> 1.3'
   s.add_development_dependency 'solr_wrapper'
   s.add_development_dependency 'simplecov', '~> 0.12'
-  s.add_development_dependency 'coveralls'
+  s.add_development_dependency 'coveralls', '~> 0.8'
   s.add_development_dependency 'sitemap_generator'
   s.add_development_dependency 'webmock'
 end
