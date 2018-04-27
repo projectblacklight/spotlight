@@ -1,4 +1,4 @@
-<% translated_page = page.translated_page_for(@language.downcase) %>
+<% translated_page = page.translated_page_for(@language) %>
 <tr data-translation-progress-item="true">
   <td>
     <%= link_to page.title, polymorphic_path([spotlight, current_exhibit, page]) %>

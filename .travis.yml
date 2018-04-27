@@ -27,12 +27,21 @@ env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
     - BUNDLE_PATH=/home/travis/build/projectblacklight/spotlight/vendor/bundle
+    - CC_TEST_REPORTER_ID=4e87a4c0e19dcb18cbeea96e91fb8993154c999aa116a6638761c3daf4d3981b
 
 sudo: false
 language: ruby
 
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
 script:
   - bundle exec rake
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 jdk: oraclejdk8
 

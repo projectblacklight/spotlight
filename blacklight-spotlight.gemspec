@@ -70,7 +70,6 @@ these collections.)
   s.add_development_dependency 'engine_cart', '~> 2.0'
   s.add_development_dependency 'solr_wrapper'
   s.add_development_dependency 'simplecov', '~> 0.12'
-  s.add_development_dependency 'coveralls', '~> 0.8'
   s.add_development_dependency 'sitemap_generator'
   s.add_development_dependency 'webmock'
   s.add_development_dependency 'i18n-tasks'

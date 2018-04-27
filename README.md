@@ -1,7 +1,7 @@
 spotlight
 =========
 
-[![Build Status](https://travis-ci.org/projectblacklight/spotlight.png?branch=master)](https://travis-ci.org/projectblacklight/spotlight) | [![Coverage Status](https://coveralls.io/repos/projectblacklight/spotlight/badge.png?branch=master)](https://coveralls.io/r/projectblacklight/spotlight) | [![Gem Version](https://badge.fury.io/rb/blacklight-spotlight.png)](http://badge.fury.io/rb/blacklight-spotlight) | [Release Notes](https://github.com/projectblacklight/spotlight/releases) | [Design Documents](https://github.com/projectblacklight/spotlight/releases/tag/v0.0.0)
+[![Build Status](https://travis-ci.org/projectblacklight/spotlight.png?branch=master)](https://travis-ci.org/projectblacklight/spotlight) | [![Gem Version](https://badge.fury.io/rb/blacklight-spotlight.png)](http://badge.fury.io/rb/blacklight-spotlight) | [Release Notes](https://github.com/projectblacklight/spotlight/releases) | [Design Documents](https://github.com/projectblacklight/spotlight/releases/tag/v0.0.0)
 
 Spotlight is open source software that enables librarians, curators, and other content experts to easily build feature-rich websites that showcase collections and objects from a digital repository, uploaded items, or a combination of the two. Spotlight is a plug-in for [Blacklight](https://github.com/projectblacklight/blacklight), an open source, Ruby on Rails Engine that provides a basic discovery interface for searching an Apache Solr index.
 
