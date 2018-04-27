@@ -95,7 +95,7 @@ module Spotlight
       model_name = @page.class.model_name.human.downcase
       if new_page.save
         redirect_to(
-          edit_exhibit_translations_path(current_exhibit, new_page, language: clone_params, tab: 'pages'),
+          edit_exhibit_translations_path(current_exhibit, language: clone_params, tab: 'pages'),
           notice: t(:'helpers.submit.page.created', model: model_name)
         )
       else
