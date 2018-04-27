@@ -10,9 +10,10 @@
   <% end %>
 
   <h3><%= t :'spotlight.exhibits.languages.current_header' %></h3>
-  <p class="instructions"><%= t :'spotlight.exhibits.languages.current_instructions' %></p>
 
   <% if current_exhibit.languages.any? && current_exhibit.languages.last.persisted? %>
+    <p class="instructions"><%= t :'spotlight.exhibits.languages.current_instructions' %></p>
+
     <%= bootstrap_form_for current_exhibit, layout: :horizontal do |f| %>
       <div class="row">
         <div class="col-md-8">
