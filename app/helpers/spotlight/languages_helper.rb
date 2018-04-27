@@ -8,7 +8,7 @@ module Spotlight
       end
 
       non_default_or_current_exhibit_languages_with_labels = non_default_or_current_exhibit_languages.map do |locale|
-        [t("locales.#{locale.downcase}"), locale]
+        [t("locales.#{locale}"), locale]
       end
 
       non_default_or_current_exhibit_languages_with_labels.sort_by { |label, _locale| label }

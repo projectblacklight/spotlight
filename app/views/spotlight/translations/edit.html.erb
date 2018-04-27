@@ -8,7 +8,7 @@
       <% current_exhibit.available_locales.each do |language| %>
         <li role="presentation" class="<%= 'active' if @language == language %>">
           <%= link_to spotlight.edit_exhibit_translations_path(current_exhibit, language: language) do %>
-            <%= t("locales.#{language.downcase}") %>
+            <%= t("locales.#{language}") %>
           <% end %>
         </li>
       <% end %>
