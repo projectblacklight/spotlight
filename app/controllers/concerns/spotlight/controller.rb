@@ -54,9 +54,7 @@ module Spotlight
 
     def default_url_options
       return super unless current_exhibit
-      return super if current_exhibit.languages.accessible_by(current_ability).none? || I18n.locale == I18n.default_locale
-
-      super.merge(locale: I18n.locale)
+      super.merge(locale: (I18n.locale if I18n.locale != I18n.default_locale))
     end
 
     # overwrites Blacklight::Controller#blacklight_config
