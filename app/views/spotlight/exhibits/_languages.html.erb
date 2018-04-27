@@ -28,7 +28,7 @@
               <% current_exhibit.languages.each do |language| %>
                 <%= f.fields_for :languages, language do |languages| %>
                   <tr>
-                    <td><%= t("locales.#{language.locale.downcase}") %></td>
+                    <td><%= t("locales.#{language.locale}") %></td>
                     <td class='text-center'>
                       <div class='checkbox'>
                         <%= languages.label :public, class: 'sr-only' %>

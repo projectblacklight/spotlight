@@ -195,7 +195,7 @@ module Spotlight
       it: 'Italiano',
       hu: 'Magyar',
       nl: 'Nederlands',
-      'pt-br': 'Português brasileiro',
+      'pt-BR': 'Português brasileiro',
       sq: 'Shqip',
       zh: '中文'
     }
