@@ -48,7 +48,6 @@ module Spotlight
 
     def assets
       copy_file 'spotlight.scss', 'app/assets/stylesheets/spotlight.scss'
-      copy_file 'viewer.css', 'app/assets/stylesheets/viewer.css'
       copy_file 'spotlight.js', 'app/assets/javascripts/spotlight.js'
     end
 
@@ -111,9 +110,6 @@ module Spotlight
       generate 'blacklight_oembed:install'
     end
     
-    def update_catalog_controller
-      gsub_file('app/controllers/catalog_controller.rb', /:openseadragon/, ':viewer')
-    end
 
     def add_mailer_defaults
       if options[:mailer_default_url_host].present?
