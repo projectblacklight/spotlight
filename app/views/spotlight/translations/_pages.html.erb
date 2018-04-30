@@ -1,5 +1,5 @@
 <div role="tabpanel" class="tab-pane <%= 'active' if @tab == 'pages' %>" id="pages">
-  <p class="help-block"><%= t('spotlight.exhibits.translations.pages.help_html') %></p>
+  <p class="instructions"><%= t('spotlight.exhibits.translations.pages.help_html') %></p>
 
   <%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, :pages]), layout: :horizontal, control_col: 'col-sm-10', html: {:'data-form-observer' => true} do |f| %>
     <div class="translation-home-page-settings">

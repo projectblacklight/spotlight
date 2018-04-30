@@ -21,8 +21,10 @@
         <% end %>
       </p>
     <% else %>
-      <%= t('spotlight.exhibits.translations.pages.no_translated_page') %>
-      <%= link_to(t('spotlight.exhibits.translations.pages.new'), polymorphic_path([:clone, current_exhibit, page], language: @language)) %>
+      <span class="new-translated-page">
+        <%= t('spotlight.exhibits.translations.pages.no_translated_page') %>
+        <%= link_to(t('spotlight.exhibits.translations.pages.new'), polymorphic_path([:clone, current_exhibit, page], language: @language)) %>
+      <span>
     <% end %>
   </td>
   <td class="text-center">
