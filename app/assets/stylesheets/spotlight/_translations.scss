@@ -2,6 +2,18 @@
   .glyphicon-ok {
     color: $translation-available-color;
   }
+
+  .browse-category-title {
+    margin-bottom: $padding-base-vertical;
+
+    label {
+      font-weight: normal;
+    }
+  }
+
+  .browse-category-description {
+    margin-bottom: $padding-large-vertical * 2;
+  }
 }
 
 .translation-subheading {
@@ -44,4 +56,15 @@
 
 .default-page-outdated {
   font-weight: 700;
+}
+
+.browse-translations-header {
+  border-bottom: 1px solid $navbar-default-border;
+  color: $gray-light;
+  display: block;
+  font-size: $font-size-h4;
+  font-weight: bold;
+  margin-bottom: $padding-large-vertical * 2;
+  margin-top: $padding-large-vertical;
+  padding-bottom: 3px;
 }
