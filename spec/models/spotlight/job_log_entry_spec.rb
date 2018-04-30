@@ -44,6 +44,22 @@ describe Spotlight::JobLogEntry, type: :model do
       end
     end
   end
+  
+  describe '#job_type' do
+    context 'when reindexing' do
+      it 'sets the job type to Reindexing' do
+        expect(subject.job_type).to eq 'Reindexing'
+      end
+    end
+
+    context 'when not reindexing' do
+      subject { FactoryGirl.build(:in_progress_alternative_log_entry) }
+
+      it 'sets the job type to a user defined type' do
+        expect(subject.job_type).to eq 'alternative'
+      end
+    end
+  end
 
   describe 'state updating methods' do
     describe '#in_progress!' do

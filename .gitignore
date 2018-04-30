@@ -26,3 +26,4 @@ _site/
 pkg/
 /spec/examples.txt
 **/.DS_Store
+.internal_test_app/*
