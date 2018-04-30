@@ -1,6 +1,9 @@
 describe Spotlight::AboutPagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { 'title' => 'MyString', thumbnail: { iiif_url: '' } } }
+  after do
+    I18n.locale = I18n.default_locale
+  end
 
   describe 'when not logged in' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
