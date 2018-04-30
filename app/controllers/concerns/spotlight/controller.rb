@@ -53,7 +53,6 @@ module Spotlight
     end
 
     def default_url_options
-      return super unless current_exhibit
       super.merge(locale: (I18n.locale if I18n.locale != I18n.default_locale))
     end
 
