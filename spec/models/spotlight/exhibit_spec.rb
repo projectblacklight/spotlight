@@ -89,6 +89,33 @@ describe Spotlight::Exhibit, type: :model do
     end
   end
 
+  describe '#main_about_page' do
+    let!(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit, published: false) }
+    let!(:about_page2) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
+    let(:about_page2_es) { about_page2.clone_for_locale('es') }
+
+    it 'is the first published about page' do
+      expect(exhibit.main_about_page).to eq about_page2
+    end
+
+    describe 'when under a non-default locale' do
+      before { I18n.locale = 'es' }
+      after { I18n.locale = 'en' }
+
+      it 'loads the first published about page for that locale' do
+        about_page2_es.published = true
+        about_page2_es.save
+        expect(exhibit.main_about_page).to eq about_page2_es
+      end
+
+      it 'is nil when there is no locale specific page published' do
+        about_page2_es.published = false
+        about_page2_es.save
+        expect(exhibit.main_about_page).to be_nil
+      end
+    end
+  end
+
   describe 'import' do
     it 'removes the default browse category' do
       subject.save
