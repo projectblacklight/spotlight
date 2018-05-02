@@ -65,7 +65,7 @@ module Spotlight
     before_save :sanitize_description, if: :description_changed?
 
     def main_about_page
-      @main_about_page ||= about_pages.published.first
+      @main_about_page ||= about_pages.for_locale.published.first
     end
 
     def browse_categories?

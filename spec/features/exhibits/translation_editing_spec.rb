@@ -113,6 +113,7 @@ describe 'Translation editing', type: :feature do
 
       describe 'pages' do
         let!(:about_page1) { FactoryBot.create(:about_page, title: 'First Page', exhibit: exhibit, locale: 'fr') }
+        let(:about_page2) { FactoryBot.create(:about_page, title: 'Second Page', exhibit: exhibit, locale: 'fr') }
 
         before do
           within '.translation-edit-form #general' do
@@ -122,8 +123,8 @@ describe 'Translation editing', type: :feature do
           end
         end
         it 'adds breadcrumbs to pages' do
-          visit spotlight.exhibit_about_page_path(about_page1.exhibit, about_page1, locale: 'fr')
-          expect(page).to have_breadcrumbs 'Maison', 'Sur', about_page1.title
+          visit spotlight.exhibit_about_page_path(about_page2.exhibit, about_page2, locale: 'fr')
+          expect(page).to have_breadcrumbs 'Maison', 'Sur', about_page2.title
         end
 
         it 'does not translate admin breadcrumbs' do
