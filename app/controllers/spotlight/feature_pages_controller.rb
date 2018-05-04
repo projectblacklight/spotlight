@@ -28,8 +28,8 @@ module Spotlight
         add_breadcrumb t(:'spotlight.curation.sidebar.feature_pages'), exhibit_feature_pages_path(@exhibit)
       end
 
-      add_breadcrumb @page.parent_page.title, [@page.exhibit, @page.parent_page] unless @page.top_level_page?
-      add_breadcrumb @page.title, action_name == 'edit' ? [:edit, @page.exhibit, @page] : [@page.exhibit, @page]
+      add_breadcrumb @page.parent_page.title, [spotlight, @page.exhibit, @page.parent_page] unless @page.top_level_page?
+      add_breadcrumb @page.title, action_name == 'edit' ? [:edit, @page.exhibit, @page] : [spotlight, @page.exhibit, @page]
     end
 
     def attach_index_breadcrumbs

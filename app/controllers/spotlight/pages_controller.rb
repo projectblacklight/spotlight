@@ -56,7 +56,7 @@ module Spotlight
       @page.last_edited_by = @page.created_by = current_user
 
       if @page.save
-        redirect_to [@page.exhibit, page_collection_name], notice: t(:'helpers.submit.page.created', model: @page.class.model_name.human.downcase)
+        redirect_to [spotlight, @page.exhibit, page_collection_name], notice: t(:'helpers.submit.page.created', model: @page.class.model_name.human.downcase)
       else
         render action: 'new'
       end
@@ -67,7 +67,7 @@ module Spotlight
       @page.lock.delete if @page.lock
 
       if @page.update(page_params.merge(last_edited_by: current_user))
-        redirect_to [@page.exhibit, @page], flash: { html_safe: true }, notice: undo_notice(:updated)
+        redirect_to [spotlight, @page.exhibit, @page], flash: { html_safe: true }, notice: undo_notice(:updated)
       else
         render action: 'edit'
       end
@@ -77,7 +77,7 @@ module Spotlight
     def destroy
       @page.destroy
 
-      redirect_to [@page.exhibit, page_collection_name], flash: { html_safe: true }, notice: undo_notice(:destroyed)
+      redirect_to [spotlight, @page.exhibit, page_collection_name], flash: { html_safe: true }, notice: undo_notice(:destroyed)
     end
 
     def update_all
