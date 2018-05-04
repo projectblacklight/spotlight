@@ -99,4 +99,6 @@ $ bundle exec i18n-tasks health
 - Join us on the [code4lib Slack](https://code4lib.org/irc)
   - **#blacklight** - a developer-focused channel for discussing implementation, customization, and other software concerns in the larger [Blacklight community](http://projectblacklight.org/)
   - **#spotlight-service** - a service-focused channel for people who support exhibit-builders at institutions already using Spotlight
-- [Blacklight Development Google group](https://groups.google.com/forum/#!forum/blacklight-development)
+- Google Groups
+  - [Blacklight Development Google group](https://groups.google.com/forum/#!forum/blacklight-development)
+  - [Spotlight Community Group](https://groups.google.com/forum/#!forum/spotlight-community) (equivalent to #spotlight-service)
