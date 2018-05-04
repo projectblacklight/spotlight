@@ -36,7 +36,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
       describe 'on the main about page' do
         it 'is successful' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('About', [exhibit, page])
+          expect(controller).to receive(:add_breadcrumb).with('About', [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
           get :show, params: { id: page, exhibit_id: exhibit }
           expect(assigns(:page)).to eq page
           expect(assigns(:exhibit)).to eq exhibit
@@ -45,7 +45,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
       describe 'on a different about page' do
         it 'is successful' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('About', [exhibit, page])
+          expect(controller).to receive(:add_breadcrumb).with('About', [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
           expect(controller).to receive(:add_breadcrumb).with(page2.title, [exhibit, page2])
           get :show, params: { id: page2, exhibit_id: exhibit }
           expect(assigns(:page)).to eq page2

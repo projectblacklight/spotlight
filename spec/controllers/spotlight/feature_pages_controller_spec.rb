@@ -40,7 +40,7 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
         let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
         it 'assigns the requested page as @page' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with(page.title, [exhibit, page])
+          expect(controller).to receive(:add_breadcrumb).with(page.title, [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
           get :show, params: { exhibit_id: page.exhibit.id, id: page }
           expect(assigns(:page)).to eq(page)
         end
@@ -49,8 +49,10 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
         let(:page) { FactoryBot.create(:feature_subpage, exhibit: exhibit) }
         it 'assigns the requested page as @page' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with(page.parent_page.title, [exhibit, page.parent_page])
-          expect(controller).to receive(:add_breadcrumb).with(page.title, [exhibit, page])
+          expect(controller).to receive(:add_breadcrumb).with(
+            page.parent_page.title, [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page.parent_page]
+          )
+          expect(controller).to receive(:add_breadcrumb).with(page.title, [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
           get :show, params: { exhibit_id: page.exhibit, id: page }
           expect(assigns(:page)).to eq(page)
         end
@@ -95,7 +97,9 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
       it 'assigns the requested page as @page' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with(page.parent_page.title, [exhibit, page.parent_page])
+        expect(controller).to receive(:add_breadcrumb).with(
+          page.parent_page.title, [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page.parent_page]
+        )
         expect(controller).to receive(:add_breadcrumb).with(page.title, [:edit, exhibit, page])
         get :edit, params: { exhibit_id: page.exhibit.id, id: page.id }
         expect(assigns(:page)).to eq page
