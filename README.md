@@ -93,6 +93,8 @@ Spotlight ships with [`i18n-tasks`](https://github.com/glebm/i18n-tasks) to help
 $ bundle exec i18n-tasks health
 ```
 
+See [developer-facing instructions for enabling translation](https://github.com/projectblacklight/spotlight/wiki/Translations) on the wiki. 
+
 ## Community
 
 
