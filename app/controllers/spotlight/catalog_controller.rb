@@ -156,13 +156,13 @@ module Spotlight
 
     def setup_next_and_previous_documents_from_browse_category
       index = search_session['counter'].to_i - 1
-      response, _docs = get_previous_and_next_documents_for_search index, current_browse_category.query_params.with_indifferent_access
+      response, documents = get_previous_and_next_documents_for_search index, current_browse_category.query_params.with_indifferent_access
 
       return unless response
 
       search_session['total'] = response.total
-      @previous_document = response.documents.first
-      @next_document = response.documents.last
+      @previous_document = documents.first
+      @next_document = documents.last
     end
 
     def _prefixes
