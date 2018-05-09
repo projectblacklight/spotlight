@@ -54,7 +54,7 @@ FactoryBot.define do
     exhibit
     user
   end
-  
+
   factory :in_progress_alternative_log_entry, class: Spotlight::JobLogEntry do
     job_item_count 1000
     start_time { Time.zone.now - 300 }
@@ -64,5 +64,4 @@ FactoryBot.define do
     exhibit
     user
   end
-  
 end

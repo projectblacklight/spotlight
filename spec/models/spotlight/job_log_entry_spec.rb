@@ -44,7 +44,7 @@ describe Spotlight::JobLogEntry, type: :model do
       end
     end
   end
-  
+
   describe '#job_type' do
     context 'when reindexing' do
       it 'sets the job type to Reindexing' do
@@ -80,7 +80,7 @@ describe Spotlight::JobLogEntry, type: :model do
         it "traps the exception and logs an error so that the caller doesn't have to deal with it" do
           expect(subject).to receive(:'start_time=').and_raise StandardError.new # try to blow up the in_progress! call
           expect(Rails.logger).to receive(:error) do |arg|
-            expect(arg).to start_with("unexpected error updating log entry to :in_progress from")
+            expect(arg).to start_with('unexpected error updating log entry to :in_progress from')
           end
 
           expect { subject.in_progress! }.not_to raise_error
@@ -106,7 +106,7 @@ describe Spotlight::JobLogEntry, type: :model do
         it "traps the exception and logs an error so that the caller doesn't have to deal with it" do
           expect(subject).to receive(:'end_time=').and_raise StandardError.new # try to blow up the succeeded! call
           expect(Rails.logger).to receive(:error) do |arg|
-            expect(arg).to start_with("unexpected error updating log entry to :succeeded from")
+            expect(arg).to start_with('unexpected error updating log entry to :succeeded from')
           end
 
           expect { subject.succeeded! }.not_to raise_error
@@ -132,7 +132,7 @@ describe Spotlight::JobLogEntry, type: :model do
         it "traps the exception and logs an error so that the caller doesn't have to deal with it" do
           expect(subject).to receive(:'end_time=').and_raise StandardError.new # try to blow up the failed! call
           expect(Rails.logger).to receive(:error) do |arg|
-            expect(arg).to start_with("unexpected error updating log entry to :failed from")
+            expect(arg).to start_with('unexpected error updating log entry to :failed from')
           end
 
           expect { subject.failed! }.not_to raise_error
