@@ -1,11 +1,11 @@
 describe Spotlight::JobLogEntry, type: :model do
-  subject { FactoryGirl.build(:job_log_entry) }
+  subject { FactoryBot.build(:job_log_entry) }
 
   describe 'scope' do
     before do
-      (0..10).to_a.each { FactoryGirl.create(:recent_reindexing_log_entry) }
-      FactoryGirl.create(:unstarted_job_log_entry)
-      (0..10)job_log_entryGirl.create(:recent_reindexing_log_entry) }
+      (0..10).to_a.each { FactoryBot.create(:recent_job_log_entry) }
+      FactoryBot.create(:unstarted_job_log_entry)
+      (0..10).to_a.each { FactoryBot.create(:recent_job_log_entry) }
     end
 
     let(:sorted_log_entry_list) do
@@ -37,7 +37,7 @@ describe Spotlight::JobLogEntry, type: :model do
     end
 
     context 'when end_time is not present' do
-      subject { FactoryGirl.build(:in_progress_reindexing_log_entry) }
+      subject { FactoryBot.build(:in_progress_job_log_entry) }
 
       it 'is nil' do
         expect(subject.duration).to be nil
@@ -53,7 +53,7 @@ describe Spotlight::JobLogEntry, type: :model do
     end
 
     context 'when not reindexing' do
-      subject { FactoryGirl.build(:in_progress_alternative_log_entry) }
+      subject { FactoryBot.build(:in_progress_alternative_log_entry) }
 
       it 'sets the job type to a user defined type' do
         expect(subject.job_type).to eq 'alternative'
@@ -63,7 +63,7 @@ describe Spotlight::JobLogEntry, type: :model do
 
   describe 'state updating methods' do
     describe '#in_progress!' do
-      subject { FactoryGirl.build(:unstarted_reindexing_log_entry) }
+      subject { FactoryBot.build(:unstarted_job_log_entry) }
 
       context 'executes normally' do
         it 'sets start_time and job_status' do
@@ -80,7 +80,7 @@ describe Spotlight::JobLogEntry, type: :model do
         it "traps the exception and logs an error so that the caller doesn't have to deal with it" do
           expect(subject).to receive(:'start_time=').and_raise StandardError.new # try to blow up the in_progress! call
           expect(Rails.logger).to receive(:error) do |arg|
-            expect(arg).to match(/^unexpected error updating log entry to :in_progress from \[".*job_log_entry.rb/)
+            expect(arg).to start_with("unexpected error updating log entry to :in_progress from")
           end
 
           expect { subject.in_progress! }.not_to raise_error
@@ -89,7 +89,7 @@ describe Spotlight::JobLogEntry, type: :model do
     end
 
     describe '#succeeded!' do
-      subject { FactoryGirl.build(:in_progress_reindexing_log_entry) }
+      subject { FactoryBot.build(:in_progress_job_log_entry) }
 
       context 'executes normally' do
         it 'sets end_time and job_status' do
@@ -106,7 +106,7 @@ describe Spotlight::JobLogEntry, type: :model do
         it "traps the exception and logs an error so that the caller doesn't have to deal with it" do
           expect(subject).to receive(:'end_time=').and_raise StandardError.new # try to blow up the succeeded! call
           expect(Rails.logger).to receive(:error) do |arg|
-            expect(arg).to match(/^unexpected error updating log entry to :succeeded from \[".*job_log_entry.rb/)
+            expect(arg).to start_with("unexpected error updating log entry to :succeeded from")
           end
 
           expect { subject.succeeded! }.not_to raise_error
@@ -115,7 +115,7 @@ describe Spotlight::JobLogEntry, type: :model do
     end
 
     describe '#failed!' do
-      subject { FactoryGirl.build(:in_progress_reindexing_log_entry) }
+      subject { FactoryBot.build(:in_progress_job_log_entry) }
 
       context 'executes normally' do
         it 'sets end_time and job_status' do
@@ -132,7 +132,7 @@ describe Spotlight::JobLogEntry, type: :model do
         it "traps the exception and logs an error so that the caller doesn't have to deal with it" do
           expect(subject).to receive(:'end_time=').and_raise StandardError.new # try to blow up the failed! call
           expect(Rails.logger).to receive(:error) do |arg|
-            expect(arg).to match(/^unexpected error updating log entry to :failed from \[".*job_log_entry.rb/)
+            expect(arg).to start_with("unexpected error updating log entry to :failed from")
           end
 
           expect { subject.failed! }.not_to raise_error

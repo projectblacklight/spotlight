@@ -15,7 +15,6 @@
     <field name="lng" type="tdouble" stored="true" indexed="true" multiValued="false"/>
     <field name="original_pid_tesim" type="pid_text" stored="true" indexed="true" multiValued="true"/>
 
-	<field name="title_sort" type="string" indexed="true" stored="false"/>
     <field name="full_title_ng" type="text_en_ng" stored="false" indexed="true" multiValued="true"/>
     <field name="id_ng"         type="text_en_ng" stored="false" indexed="true" multiValued="false"/>
 
@@ -205,9 +204,7 @@
 
   <copyField source="id" dest="id_ng" maxChars="3000"/>
   <copyField source="full_title_tesim" dest="full_title_ng" maxChars="3000"/>
-  <copyField source="full_title_tesim" dest="title_sort" />
   <copyField source="*_tesim" dest="all_text_timv" maxChars="3000"/>
-  <copyField source="*_ssim" dest="all_text_timv" maxChars="3000" />
 
   <types>
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
