@@ -2,6 +2,7 @@ module Spotlight
   ##
   # Exhibit saved searches
   class Search < ActiveRecord::Base
+    include Spotlight::Translatables
     extend FriendlyId
     friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: :exhibit
 
@@ -11,6 +12,9 @@ module Spotlight
     default_scope { order('weight ASC') }
     scope :published, -> { where(published: true) }
     validates :title, presence: true
+
+    translates :title, :long_description
+
     has_paper_trail
 
     belongs_to :masthead, dependent: :destroy, optional: true

@@ -1,4 +1,4 @@
-<%= cache [@exhibit, search] do %>
+<%= cache [@exhibit, search, I18n.locale] do %>
   <div class="col-sm-4 col-xs-12 category">
     <%= link_to spotlight.exhibit_browse_path(@exhibit, search) do %>
       <div class="image-overlay">

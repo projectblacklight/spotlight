@@ -1,0 +1,15 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= t('spotlight.exhibits.translations.pages.table_header.last_updated', language: t(:"locales.#{I18n.default_locale}")) %></th>
+      <th class="text-center"><%= t('spotlight.exhibits.translations.pages.table_header.default_published') %></th>
+      <th><%= t('spotlight.exhibits.translations.pages.table_header.last_updated', language: t(:"locales.#{@language}")) %></th>
+      <th class='text-center'><%= t('spotlight.exhibits.translations.pages.table_header.language_published') %></th>
+      <th class='text-center'><%= t('spotlight.exhibits.translations.pages.table_header.actions') %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render partial: 'page', collection: pages, locals: { f: f } %>
+  </tbody>
+</table>

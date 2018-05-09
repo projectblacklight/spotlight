@@ -1,0 +1,55 @@
+<%= render 'spotlight/shared/exhibit_sidebar' %>
+
+<div class='col-md-9 translation-edit-form'>
+  <%= curation_page_title t('spotlight.exhibits.translations.title') %>
+
+  <div class='text-center'>
+    <ul class='nav nav-pills inline-block'>
+      <% current_exhibit.available_locales.each do |language| %>
+        <li role="presentation" class="<%= 'active' if @language == language %>">
+          <%= link_to spotlight.edit_exhibit_translations_path(current_exhibit, language: language) do %>
+            <%= t("locales.#{language}") %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div role="tabpanel">
+    <ul class='nav nav-tabs' role="tablist">
+      <li role="presentation" class="<%= 'active' if @tab.blank? %>">
+        <a href='#general' aria-controls="general" role="tab" data-toggle="tab" data-behavior="translation-progress">
+          <%= t('spotlight.exhibits.translations.general.label') %> <span class="badge"></span>
+        </a>
+      </li>
+      <li class="<%= 'active' if @tab == 'metadata' %>">
+        <a href="#metadata" aria-controls="metadata" role="tab" data-toggle="tab" data-behavior="translation-progress">
+          <%= t('spotlight.exhibits.translations.metadata.label') %> <span class="badge"></span>
+        </a>
+      </li>
+      <li class="<%= 'active' if @tab == 'search_fields' %>">
+        <a href="#search_fields" aria-controls="search_fields" role="tab" data-toggle="tab" data-behavior="translation-progress">
+          <%= t('spotlight.exhibits.translations.search_fields.label') %> <span class="badge"></span>
+        </a>
+      </li>
+      <li class="<%= 'active' if @tab == 'browse' %>">
+        <a href="#browse" aria-controls="browse" role="tab" data-toggle="tab" data-behavior="translation-progress">
+          <%= t('spotlight.exhibits.translations.browse_categories.label') %> <span class="badge"></span>
+        </a>
+      </li>
+      <li class="<%= 'active' if @tab == 'pages' %>">
+        <a href="#pages" aria-controls="pages" role="tab" data-toggle="tab" data-behavior="translation-progress">
+          <%= t('spotlight.exhibits.translations.pages.label') %> <span class="badge"></span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <%= render 'general' %>
+      <%= render 'metadata' %>
+      <%= render 'search_fields' %>
+      <%= render 'browse_categories' %>
+      <%= render 'pages' %>
+    </div>
+  </div>
+</div>

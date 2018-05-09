@@ -3,6 +3,10 @@ require 'rails/generators'
 class TestAppGenerator < Rails::Generators::Base
   source_root '../spec/test_app_templates'
 
+  def use_capybara3
+    gsub_file 'Gemfile', /gem 'capybara'/, '# gem \'capybara\''
+  end
+
   def add_gems
     gem 'blacklight', '~> 6.0'
     gem 'blacklight-gallery', '>= 0.3.0'
@@ -38,12 +42,6 @@ class TestAppGenerator < Rails::Generators::Base
     copy_file 'carrierwave.rb', 'config/initializers/carrierwave.rb'
   end
 
-  def fix_up_migration_versions
-    Dir.glob('db/migrate/*.rb') do |f|
-      gsub_file f, /< ActiveRecord::Migration$/, '< ActiveRecord::Migration[4.2]'
-    end
-  end
-
   def add_theme_assets
     copy_file 'fixture.png', 'app/assets/images/spotlight/themes/default_preview.png'
     copy_file 'fixture.png', 'app/assets/images/spotlight/themes/modern_preview.png'
@@ -60,5 +58,10 @@ class TestAppGenerator < Rails::Generators::Base
       Spotlight::Engine.config.filter_resources_by_exhibit = false
 EOF
     end
+  end
+
+  def raise_on_missing_translation
+    uncomment_lines 'config/environments/development.rb', /config.action_view.raise_on_missing_translations/
+    uncomment_lines 'config/environments/test.rb', /config.action_view.raise_on_missing_translations/
   end
 end

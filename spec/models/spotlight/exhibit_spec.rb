@@ -17,6 +17,24 @@ describe Spotlight::Exhibit, type: :model do
     subject.save!
     expect(subject.description).to eq 'Test description'
   end
+
+  describe 'validations' do
+    it 'validates the presence of the title' do
+      exhibit.title = ''
+      expect do
+        exhibit.save
+      end.to change { exhibit.errors[:title].count }.by(1)
+    end
+
+    it 'does not validate the presence of the title under a non-default locale' do
+      expect(I18n).to receive(:locale).and_return(:fr)
+      exhibit.title = ''
+      expect do
+        exhibit.save
+      end.not_to(change { exhibit.errors[:title].count })
+    end
+  end
+
   describe 'contact_emails' do
     before do
       subject.contact_emails_attributes = [{ 'email' => 'chris@example.com' }, { 'email' => 'jesse@stanford.edu' }]
@@ -69,6 +87,33 @@ describe Spotlight::Exhibit, type: :model do
     end
     it 'accepts nested contacts' do
       expect(subject.contacts.size).to eq 2
+    end
+  end
+
+  describe '#main_about_page' do
+    let!(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit, published: false) }
+    let!(:about_page2) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
+    let(:about_page2_es) { about_page2.clone_for_locale('es') }
+
+    it 'is the first published about page' do
+      expect(exhibit.main_about_page).to eq about_page2
+    end
+
+    describe 'when under a non-default locale' do
+      before { I18n.locale = 'es' }
+      after { I18n.locale = 'en' }
+
+      it 'loads the first published about page for that locale' do
+        about_page2_es.published = true
+        about_page2_es.save
+        expect(exhibit.main_about_page).to eq about_page2_es
+      end
+
+      it 'is nil when there is no locale specific page published' do
+        about_page2_es.published = false
+        about_page2_es.save
+        expect(exhibit.main_about_page).to be_nil
+      end
     end
   end
 
@@ -294,6 +339,37 @@ describe Spotlight::Exhibit, type: :model do
       reindex_progress = subject.reindex_progress
       expect(reindex_progress).to be_a Spotlight::ReindexProgress
       expect(reindex_progress.current_log_entry).to eq in_progress_entry
+    end
+  end
+  describe 'translatable fields' do
+    let(:persisted_exhibit) { FactoryBot.create(:exhibit, title: 'Sample', subtitle: 'SubSample', description: 'Description') }
+    before do
+      FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.title", value: 'Titre français')
+      FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.subtitle", value: 'Sous-titre français')
+      FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.description", value: 'Description français')
+      Translation.current_exhibit = persisted_exhibit
+    end
+    after do
+      I18n.locale = 'en'
+    end
+    it 'has a translatable title' do
+      expect(persisted_exhibit.title).to eq 'Sample'
+      I18n.locale = 'fr'
+      persisted_exhibit.reload
+      expect(persisted_exhibit.title).to eq 'Titre français'
+    end
+    it 'has a translatable subtitle' do
+      expect(persisted_exhibit.subtitle).to eq 'SubSample'
+      I18n.locale = 'fr'
+      persisted_exhibit.reload
+      expect(persisted_exhibit.subtitle).to eq 'Sous-titre français'
+    end
+
+    it 'has a translatable description' do
+      expect(persisted_exhibit.description).to eq 'Description'
+      I18n.locale = 'fr'
+      persisted_exhibit.reload
+      expect(persisted_exhibit.description).to eq 'Description français'
     end
   end
 end

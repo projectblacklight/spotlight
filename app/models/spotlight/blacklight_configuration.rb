@@ -79,9 +79,9 @@ module Spotlight
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
-        config.view.embed.partials ||= ['viewer']
+        config.view.embed.partials ||= ['openseadragon']
         config.view.embed.if = false
-        config.view.embed.locals ||= { viewer_container_class: '' }
+        config.view.embed.locals ||= { osd_container_class: '' }
 
         # Add any custom fields
         config.index_fields.merge! custom_index_fields
@@ -174,8 +174,6 @@ module Spotlight
             v.validate!
           end
         end
-        
-        config.add_facet_fields_to_solr_request!
 
         config.per_page = (config.per_page & per_page) unless per_page.blank?
 

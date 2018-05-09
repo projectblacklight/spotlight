@@ -17,7 +17,7 @@ these collections.)
   s.files = Dir['{app,config,db,lib,vendor}/**/*', 'Rakefile', 'README.md', 'LICENSE']
   s.test_files = Dir['spec/**/*']
 
-  s.required_ruby_version = '~> 2.2'
+  s.required_ruby_version = '~> 2.3'
 
   s.add_dependency 'rails', '~> 5.1'
   s.add_dependency 'blacklight', '~> 6.3'
@@ -44,7 +44,7 @@ these collections.)
   s.add_dependency 'legato'
   s.add_dependency 'signet'
   s.add_dependency 'oauth2'
-  s.add_dependency 'paper_trail', '~> 7.0'
+  s.add_dependency 'paper_trail', '>= 7.0'
   s.add_dependency 'openseadragon'
   s.add_dependency 'clipboard-rails', '~> 1.5'
   s.add_dependency 'almond-rails', '~> 0.1'
@@ -70,7 +70,7 @@ these collections.)
   s.add_development_dependency 'engine_cart', '~> 2.0'
   s.add_development_dependency 'solr_wrapper'
   s.add_development_dependency 'simplecov', '~> 0.12'
-  s.add_development_dependency 'coveralls'
   s.add_development_dependency 'sitemap_generator'
   s.add_development_dependency 'webmock'
+  s.add_development_dependency 'i18n-tasks'
 end

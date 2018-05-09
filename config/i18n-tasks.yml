@@ -1,0 +1,81 @@
+# i18n-tasks finds and manages missing and unused translations: https://github.com/glebm/i18n-tasks
+
+base_locale: en
+data:
+  read:
+    - config/locales/%{locale}.yml
+    - config/locales/**/*.%{locale}.yml
+  write:
+  external:
+    ## An example of looking at our dependencies
+    - "<%= %x[bundle show blacklight-gallery].chomp %>/config/locales/*.%{locale}.yml"
+  yaml:
+    write:
+      line_width: -1
+search:
+  strict: false
+  paths:
+   - app/
+  relative_roots:
+    - app/controllers
+    - app/helpers
+    - app/mailers
+    - app/presenters
+    - app/views
+  exclude:
+    - app/assets/images
+    - app/assets/fonts
+    - app/assets/videos
+
+# When adding an unused here, make sure to document where it is used.
+ignore_unused:
+  - spotlight.resources.external_resources_form.title # app/views/spotlight/resources/new.html.erb
+  - spotlight.resources.{upload,csv_upload,json_upload,iiif}.form.title # app/views/spotlight/resources/new.html.erb
+  - activerecord.attributes.spotlight/page.{display_sidebar\?,display_title} # app/views/spotlight/home_pages/_page_options.html.erb
+  - activerecord.attributes.spotlight/language.locale # app/views/spotlight/exhibits/_languages.html.erb
+  - activerecord.attributes.spotlight/contact.avatar # app/views/spotlight/contacts/_form.html.erb
+  - activerecord.attributes.spotlight/exhibit.published # app/views/spotlight/sites/_exhibit.html.erb
+  - activerecord.attributes.spotlight/masthead.display # app/views/spotlight/appearances/edit.html.erb
+  - helpers.label.spotlight/filter.{field,value} # app/views/spotlight/filters/_form.html.erb
+  - spotlight.catalog.admin.{title,header} # app/helpers/spotlight/title_helper.rb
+  - spotlight.{contacts,pages,searches}.edit.{title,header} # app/helpers/spotlight/title_helper.rb
+  - spotlight.{resources,contacts,pages}.new.{title,header} # app/helpers/spotlight/title_helper.rb
+  - spotlight.{searches,roles}.index.{title,header} # app/helpers/spotlight/title_helper.rb
+  - spotlight.{appearances,search_configurations}.edit.header # app/helpers/spotlight.title_helper.rb
+  - spotlight.metadata_configurations.edit.{select_all,deselect_all} # app/helpers/spotlight/application_helper.rb
+  - spotlight.featured_images.upload_form.{non_iiif_alert_html,source.exhibit.help,source.exhibit.label} # app/views/spotlight/featured_images/_form.html.erb
+  - spotlight.feature_pages.page_options.published # app/views/spotlight/feature_pages/_page_options.html.erb
+  - spotlight.{exhibits,custom_fields}.{new,edit}.header # configuration_page_title
+  - helpers.submit.custom_field.{batch_error,batch_updated,create,submit,update} # Generic repeated template
+  - helpers.submit.exhibit.{batch_error,batch_updated,create,submit,update} # Generic repeated template
+  - helpers.submit.search.{create,submit,update} # Generic repeated template
+  - helpers.submit.site.{batch_error,batch_updated,create,created,destroyed,submit,update} # Generic repeated template
+  - helpers.submit.filter.{batch_error,batch_updated,create,created,destroyed,submit,update} # Generic repeated template
+  - helpers.action.destroy_are_you_sure # app/helpers/spotlight/crud_link_helpers.rb
+  - helpers.action.spotlight/role.{create,destroy} # app/views/spotlight/roles/index.html.erb
+  - helpers.action.{edit,edit_long,new,view} # app/helpers/spotlight/crud_link_helpers.rb
+  - helpers.action.spotlight/search.edit_long # app/views/spotlight/searches/_search.html.erb
+  - spotlight.about_pages.page_options.published # app/views/spotlight/about_pages/_page_options.html.erb
+  - helpers.submit.contact_form.create # app/views/spotlight/shared/_report_a_problem.html.erb
+  - activerecord.help.spotlight/exhibit.tag_list # app/views/spotlight/exhibits/_form.html.erb
+  - helpers.label.solr_document.exhibit_tag_list # app/views/spotlight/catalog/_edit_default.html.erb
+  - helpers.submit.language.create # app/views/spotlight/exhibits/_languages.html.erb
+  - helpers.submit.{submit,update} # Generically used set defaults
+  - helpers.submit.contact.create # app/views/spotlight/contacts/_form.html.erb
+  - helpers.action.exhibit.contact.submit # helpers.action.exhibit.contact.submit
+
+  # TODO Look into these as its unclear
+  - activerecord.models.spotlight.page
+  #- # perhaps removed here? https://github.com/projectblacklight/spotlight/commit/d4fdf04565ab3d648f0cb2a1238d84f262509fcd
+  - devise.mailer.invitation_instructions.subject # Does this even work? https://github.com/projectblacklight/spotlight/blob/master/app/mailers/spotlight/invitation_mailer.rb#L16
+  - helpers.submit.solr_document.{batch_error,batch_updated,create,created,destroyed,submit,update,updated} # Do we need this?
+  - helpers.submit.user.{batch_error,batch_updated,create,created,destroyed,submit,update,updated} # Do we need this?
+  - helpers.action.destroy # no idea here
+  - helpers.action.spotlight/search.destroy # I think it might be used by #action_default_value
+  - helpers.submit.contact_form.create # /shrug
+
+<% I18n::Tasks.add_scanner 'I18n::Tasks::Scanners::PatternMapper',
+      patterns: [
+        # See app/controllers/spotlight/versions_controller.rb
+        ['view_context.t\(%{key}\)', '%{key}']
+      ] %>

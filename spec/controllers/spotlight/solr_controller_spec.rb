@@ -84,7 +84,7 @@ describe Spotlight::SolrController, type: :controller do
           end
           post :update, params: { resources_json_upload: { json: json }, exhibit_id: exhibit }
 
-          expect(response).to be_successful
+          expect(response).to redirect_to exhibit_resources_path(exhibit)
           expect(doc.first).to include a: 1
         end
       end

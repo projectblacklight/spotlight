@@ -13,6 +13,7 @@ require 'paper_trail'
 require 'clipboard/rails'
 require 'leaflet-rails'
 require 'i18n/active_record'
+require 'spotlight/upload_field_config'
 
 module Spotlight
   ##
@@ -126,13 +127,23 @@ module Spotlight
     config.thumbnail_field = :thumbnail_url_ssm
 
     # Defaults to the blacklight_config.index.title_field:
-    config.upload_title_field = nil # OpenStruct.new(...)
+    config.upload_title_field = nil # UploadFieldConfig.new(...)
     config.upload_description_field = :spotlight_upload_description_tesim
 
     config.upload_fields = [
-      OpenStruct.new(field_name: config.upload_description_field, label: 'Description', form_field_type: :text_area),
-      OpenStruct.new(field_name: :spotlight_upload_attribution_tesim, label: 'Attribution'),
-      OpenStruct.new(field_name: :spotlight_upload_date_tesim, label: 'Date')
+      UploadFieldConfig.new(
+        field_name: config.upload_description_field,
+        label: -> { I18n.t(:"spotlight.search.fields.#{config.upload_description_field}") },
+        form_field_type: :text_area
+      ),
+      UploadFieldConfig.new(
+        field_name: :spotlight_upload_attribution_tesim,
+        label: -> { I18n.t(:'spotlight.search.fields.spotlight_upload_attribution_tesim') }
+      ),
+      UploadFieldConfig.new(
+        field_name: :spotlight_upload_date_tesim,
+        label: -> { I18n.t(:'spotlight.search.fields.spotlight_upload_date_tesim') }
+      )
     ]
 
     config.iiif_manifest_field = :iiif_manifest_url_ssi
@@ -175,6 +186,23 @@ module Spotlight
     config.ga_page_analytics_options = config.ga_analytics_options.merge(limit: 5)
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
+
+    config.i18n_locales = {
+      de: 'Deutsch',
+      en: 'English',
+      es: 'Español',
+      fr: 'Français',
+      it: 'Italiano',
+      hu: 'Magyar',
+      nl: 'Nederlands',
+      'pt-BR': 'Português brasileiro',
+      sq: 'Shqip',
+      zh: '中文'
+    }
+
+    # Whitelisting the available_locales is necessary here, as any dependency we
+    # add could add an available locale which could break things if unexpected.
+    config.i18n.available_locales = config.i18n_locales.keys
 
     # Query parameters for autocomplete requests
     config.autocomplete_search_field = 'autocomplete'

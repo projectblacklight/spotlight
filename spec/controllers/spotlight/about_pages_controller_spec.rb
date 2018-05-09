@@ -1,12 +1,25 @@
 describe Spotlight::AboutPagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { 'title' => 'MyString', thumbnail: { iiif_url: '' } } }
+  after do
+    I18n.locale = I18n.default_locale
+  end
 
   describe 'when not logged in' do
+    let(:exhibit) { FactoryBot.create(:exhibit) }
     describe 'POST update_all' do
-      let(:exhibit) { FactoryBot.create(:exhibit) }
       it 'is not allowed' do
         post :update_all, params: { exhibit_id: exhibit }
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
+    end
+
+    describe 'GET clone' do
+      let(:page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+
+      it 'is not allowed' do
+        get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
+        expect(flash['alert']).to eq 'You need to sign in or sign up before continuing.'
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
@@ -23,7 +36,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
       describe 'on the main about page' do
         it 'is successful' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('About', [exhibit, page])
+          expect(controller).to receive(:add_breadcrumb).with('About', [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
           get :show, params: { id: page, exhibit_id: exhibit }
           expect(assigns(:page)).to eq page
           expect(assigns(:exhibit)).to eq exhibit
@@ -32,11 +45,55 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
       describe 'on a different about page' do
         it 'is successful' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('About', [exhibit, page])
+          expect(controller).to receive(:add_breadcrumb).with('About', [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
           expect(controller).to receive(:add_breadcrumb).with(page2.title, [exhibit, page2])
           get :show, params: { id: page2, exhibit_id: exhibit }
           expect(assigns(:page)).to eq page2
           expect(assigns(:exhibit)).to eq exhibit
+        end
+      end
+
+      describe 'under a non-default locale' do
+        let!(:page_es) do
+          FactoryBot.create(
+            :about_page,
+            title: page.title,
+            weight: 0,
+            exhibit: exhibit,
+            locale: 'es',
+            default_locale_page: page
+          )
+        end
+
+        it 'renders the locale specific page' do
+          get :show, params: { exhibit_id: exhibit.id, id: page.slug, locale: 'es' }
+
+          expect(assigns[:page]).to eq page_es
+        end
+      end
+
+      describe 'when "switching" locales for pages that have updated their title/slug' do
+        let(:page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+        let!(:page_es) do
+          FactoryBot.create(
+            :about_page,
+            exhibit: exhibit,
+            title: 'Page in spanish',
+            locale: 'es',
+            default_locale_page: page
+          )
+        end
+
+        it 'redirects from the spanish slug to the english page when the english locale is selected' do
+          expect(page_es.slug).not_to eq page.slug # Ensure the slugs are different
+          get :show, params: { exhibit_id: exhibit.id, id: page_es.slug, locale: 'en' }
+          expect(response).to redirect_to(exhibit_about_page_path(exhibit, page))
+        end
+
+        it 'redirects from the english slug to the spanish page when the spanish locale is selected' do
+          expect(page_es.slug).not_to eq page.slug # Ensure the slugs are different
+          get :show, params: { exhibit_id: exhibit.id, id: page.slug, locale: 'es' }
+          expect(response).to redirect_to(exhibit_about_page_path(exhibit, page_es))
         end
       end
     end
@@ -148,6 +205,18 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
           ] }
         }
         expect(response).to render_template('index')
+      end
+    end
+
+    describe 'GET clone' do
+      let(:page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+
+      it 'calls the CloneTranslatedPageFromLocale service' do
+        expect(
+          Spotlight::CloneTranslatedPageFromLocale
+        ).to receive(:call).with(locale: 'es', page: page).and_call_original
+
+        get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
       end
     end
   end

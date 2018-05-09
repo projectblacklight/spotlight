@@ -1,0 +1,47 @@
+<% translated_page = page.translated_page_for(@language) %>
+<tr data-translation-progress-item="true">
+  <td>
+    <%= link_to page.title, polymorphic_path([spotlight, current_exhibit, page]) %>
+    <p class="<%= 'default-page-outdated' if page.updated_after? translated_page %>">
+      <%= l(page.updated_at, format: :long) %>
+    </p>
+  </td>
+  <td class="text-center">
+    <% if page.published? %>
+      <span class="glyphicon glyphicon-ok"></span>
+    <% end %>
+  </td>
+  <td>
+    <% if translated_page %>
+      <%= link_to(translated_page.title, polymorphic_path([spotlight, current_exhibit, translated_page], locale: @language), data: { 'translation-present': 'true'}) %>
+      <p>
+        <%= l(translated_page.updated_at, format: :long) %>
+        <% if page.updated_after? translated_page %>
+          <span class="glyphicon glyphicon-alert"></span>
+        <% end %>
+      </p>
+    <% else %>
+      <span class="new-translated-page">
+        <%= t('spotlight.exhibits.translations.pages.no_translated_page') %>
+        <%= link_to(t('spotlight.exhibits.translations.pages.new'), polymorphic_path([:clone, current_exhibit, page], language: @language)) %>
+      <span>
+    <% end %>
+  </td>
+  <td class="text-center">
+    <%= f.fields_for :pages, translated_page do |p| %>
+      <%= p.hidden_field :id %>
+      <%= p.label :published, class: 'sr-only' %>
+      <%= p.check_box_without_bootstrap :published, disabled: p.object.home_page? %>
+    <% end if translated_page %>
+  </td>
+  <td class="text-center">
+    <% if translated_page %>
+      <%= link_to(t('spotlight.exhibits.translations.pages.edit'), polymorphic_path([:edit, current_exhibit, translated_page], locale: @language)) %> &middot;
+      <%= link_to(t('spotlight.exhibits.translations.pages.recreate'), polymorphic_path([:clone, current_exhibit, page], language: @language), data: { confirm: t('spotlight.exhibits.translations.pages.recreate_are_you_sure') }) %>
+      <% if page.feature_page? || page.about_page? %>
+        &middot;
+        <%= link_to(t('spotlight.exhibits.translations.pages.destroy'), polymorphic_path([current_exhibit, translated_page], locale: @language), method: :delete, data: { confirm: t('spotlight.exhibits.translations.pages.destroy_are_you_sure') }) %>
+      <% end %>
+    <% end %>
+  </td>
+</tr>

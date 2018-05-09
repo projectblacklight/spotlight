@@ -1,0 +1,57 @@
+<div role="tabpanel" class="tab-pane <%= 'active' if @tab == 'language' %>" id="language">
+  <p class="instructions"><%= t :'spotlight.exhibits.languages.selection_instructions' %></p>
+
+  <%= bootstrap_form_for [current_exhibit, Spotlight::Language.new], layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-9" do |f| %>
+    <div class='col-md-6'>
+      <%= f.select('locale', add_exhibit_language_dropdown_options, prompt: t('.selection_prompt')) %>
+      <%= hidden_field_tag :tab, 'language' %>
+    </div>
+    <%= f.submit nil, class: 'btn btn-primary' %>
+  <% end %>
+
+  <h3><%= t :'spotlight.exhibits.languages.current_header' %></h3>
+
+  <% if current_exhibit.languages.any? && current_exhibit.languages.last.persisted? %>
+    <p class="instructions"><%= t :'spotlight.exhibits.languages.current_instructions' %></p>
+
+    <%= bootstrap_form_for current_exhibit, layout: :horizontal do |f| %>
+      <div class="row">
+        <div class="col-md-8">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col"><%= t('.table_heading.language') %></th>
+                <th scope="col" class='text-center'><%= t('.table_heading.public') %></th>
+                <th scope="col" class='text-center'><%= t('.table_heading.action') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% current_exhibit.languages.each do |language| %>
+                <%= f.fields_for :languages, language do |languages| %>
+                  <tr>
+                    <td><%= t("locales.#{language.locale}") %></td>
+                    <td class='text-center'>
+                      <div class='checkbox'>
+                        <%= languages.label :public, class: 'sr-only' %>
+                        <%= languages.check_box_without_bootstrap :public %>
+                      </div>
+                      </td>
+                    <td class='text-center'><%= link_to t('.remove'), exhibit_language_path(current_exhibit, language), method: :delete, data: { confirm: t('.modal.confirm') }, class: 'btn btn-sm btn-primary' %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="form-actions">
+        <div class="primary-actions">
+          <%= hidden_field_tag :tab, 'language' %>
+          <%= f.submit nil, class: 'btn btn-primary' %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p><%= t('.no_languages_help_text') %></p>
+  <% end %>
+</div>

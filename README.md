@@ -1,7 +1,7 @@
 spotlight
 =========
 
-[![Build Status](https://travis-ci.org/projectblacklight/spotlight.png?branch=master)](https://travis-ci.org/projectblacklight/spotlight) | [![Coverage Status](https://coveralls.io/repos/projectblacklight/spotlight/badge.png?branch=master)](https://coveralls.io/r/projectblacklight/spotlight) | [![Gem Version](https://badge.fury.io/rb/blacklight-spotlight.png)](http://badge.fury.io/rb/blacklight-spotlight) | [Release Notes](https://github.com/projectblacklight/spotlight/releases) | [Design Documents](https://github.com/projectblacklight/spotlight/releases/tag/v0.0.0)
+[![Build Status](https://travis-ci.org/projectblacklight/spotlight.png?branch=master)](https://travis-ci.org/projectblacklight/spotlight) | [![Gem Version](https://badge.fury.io/rb/blacklight-spotlight.png)](http://badge.fury.io/rb/blacklight-spotlight) | [Release Notes](https://github.com/projectblacklight/spotlight/releases) | [Design Documents](https://github.com/projectblacklight/spotlight/releases/tag/v0.0.0)
 
 Spotlight is open source software that enables librarians, curators, and other content experts to easily build feature-rich websites that showcase collections and objects from a digital repository, uploaded items, or a combination of the two. Spotlight is a plug-in for [Blacklight](https://github.com/projectblacklight/blacklight), an open source, Ruby on Rails Engine that provides a basic discovery interface for searching an Apache Solr index.
 
@@ -9,7 +9,7 @@ Read more about what Spotlight is, our motivations for creating it, and how to i
 
 ## Requirements
 
-1. Ruby (2.2.0 or greater)
+1. Ruby (2.3.0 or greater)
 2. Rails (5.1 or greater)
 3. Java (7 or greater) *for Solr*
 4. ImageMagick (http://www.imagemagick.org/script/index.php) due to [carrierwave](https://github.com/carrierwaveuploader/carrierwave#adding-versions)
@@ -45,7 +45,7 @@ $ rake db:migrate
 Start Solr (possibly using `solr_wrapper` in development or testing):
 
 ```
-$ solr_wrapper 
+$ solr_wrapper
 ```
 
 and the Rails development server:
@@ -62,8 +62,6 @@ Go to http://localhost:3000 in your browser.
 
 Spotlight introduces functionality that depends on being able to send emails to exhibit curators and contacts. Be sure to configure your application's environments appropriately (see the Rails Guide for [Action Mailer Configuration](http://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration)).
 
-### More
-
 See the [Spotlight wiki](https://github.com/projectblacklight/spotlight/wiki) for more detailed information on configuring Spotlight.
 
 # Developing Spotlight
@@ -75,9 +73,7 @@ Spotlight:
 
 Our `$ rake ci` and `$ rake spotlight:server` tasks utilize Solr and the testing rails app automatically.
 
-##  More Information for Developers
-
-* [Contributing to Spotlight](https://github.com/projectblacklight/spotlight/wiki/Contributing-to-Spotlight)
+See more detailed instructions for development environment setup at ["Contributing to Spotlight"](https://github.com/projectblacklight/spotlight/wiki/Contributing-to-Spotlight)
 
 ## Tests
 
@@ -88,3 +84,23 @@ $ rake
 ```
 
 This utilizes Solr and the testing rails app automatically.
+
+## Translations
+
+Spotlight ships with [`i18n-tasks`](https://github.com/glebm/i18n-tasks) to help manage translations. To run a translation health check:
+
+```sh
+$ bundle exec i18n-tasks health
+```
+
+See [developer-facing instructions for enabling translation](https://github.com/projectblacklight/spotlight/wiki/Translations) on the wiki. 
+
+## Community
+
+
+- Join us on the [code4lib Slack](https://code4lib.org/irc)
+  - **#blacklight** - a developer-focused channel for discussing implementation, customization, and other software concerns in the larger [Blacklight community](http://projectblacklight.org/)
+  - **#spotlight-service** - a service-focused channel for people who support exhibit-builders at institutions already using Spotlight
+- Google Groups
+  - [Blacklight Development Google group](https://groups.google.com/forum/#!forum/blacklight-development)
+  - [Spotlight Community Group](https://groups.google.com/forum/#!forum/spotlight-community) (equivalent to #spotlight-service)

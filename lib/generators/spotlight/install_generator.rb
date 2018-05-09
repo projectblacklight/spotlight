@@ -109,7 +109,6 @@ module Spotlight
       gem 'blacklight-oembed', '>= 0.1.0'
       generate 'blacklight_oembed:install'
     end
-    
 
     def add_mailer_defaults
       if options[:mailer_default_url_host].present?

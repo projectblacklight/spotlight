@@ -1,4 +1,4 @@
-<% published_top_level_feature_pages = current_exhibit.feature_pages.published.at_top_level -%>
+<% published_top_level_feature_pages = current_exhibit.feature_pages.for_locale.published.at_top_level -%>
 <% if published_top_level_feature_pages.present? %>
   <% if published_top_level_feature_pages.many? %>
     <li class="dropdown">
