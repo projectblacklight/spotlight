@@ -6,7 +6,7 @@ feature 'Reindex Monitor', js: true, default_max_wait_time: 10 do
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
 
   before do
-    FactoryBot.create(:in_progress_reindexing_log_entry, exhibit: exhibit, items_reindexed_estimate: 5)
+    FactoryBot.create(:in_progress_job_log_entry, exhibit: exhibit, job_item_count: 5)
     login_as exhibit_curator
     visit spotlight.admin_exhibit_catalog_path(exhibit)
   end
