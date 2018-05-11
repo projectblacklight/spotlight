@@ -93,10 +93,14 @@ Spotlight ships with [`i18n-tasks`](https://github.com/glebm/i18n-tasks) to help
 $ bundle exec i18n-tasks health
 ```
 
+See [developer-facing instructions for enabling translation](https://github.com/projectblacklight/spotlight/wiki/Translations) on the wiki. 
+
 ## Community
 
 
 - Join us on the [code4lib Slack](https://code4lib.org/irc)
   - **#blacklight** - a developer-focused channel for discussing implementation, customization, and other software concerns in the larger [Blacklight community](http://projectblacklight.org/)
   - **#spotlight-service** - a service-focused channel for people who support exhibit-builders at institutions already using Spotlight
-- [Blacklight Development Google group](https://groups.google.com/forum/#!forum/blacklight-development)
+- Google Groups
+  - [Blacklight Development Google group](https://groups.google.com/forum/#!forum/blacklight-development)
+  - [Spotlight Community Group](https://groups.google.com/forum/#!forum/spotlight-community) (equivalent to #spotlight-service)
