@@ -18,6 +18,18 @@ describe Spotlight::Resources::IiifHarvester do
         expect(subject.errors[:url]).to eq ['Invalid IIIF URL']
       end
     end
+    context 'when not responding to a HEAD request' do
+      before do
+        stub_request(:head, 'http://example.com').to_return(status: 405, headers: { 'Content-Type' => 'text/html' })
+        stub_request(:get, 'http://example.com').to_return(status: 200, headers: { 'Content-Type' => ' application/ld+json' })
+      end
+      let(:url) { 'http://example.com' }
+
+      it 'no errors when the URL responds to the GET request' do
+        expect(subject).to be_valid
+        expect(subject.errors).not_to be_present
+      end
+    end
   end
 
   describe '#documents_to_index' do
