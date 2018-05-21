@@ -62,7 +62,7 @@ module Spotlight
       def document_index_view_type
         view_param = params[:view]
         view_param ||= session[:preferred_view]
-        if view_param && document_index_views.keys.include?(view_param.to_sym)
+        if view_param && document_index_views.key?(view_param.to_sym)
           view_param.to_sym
         else
           default_document_index_view_type
