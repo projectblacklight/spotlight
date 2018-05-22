@@ -14,7 +14,7 @@ SirTrevor.Blocks.Wysiwyg = (function() {
     },
 
     blockGroup: function() {
-      return i18n.t("blocks:group:tamu")
+      return i18n.t("blocks:group:undefined")
     },
 
     formattable: true,
