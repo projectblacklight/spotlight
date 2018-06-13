@@ -1,4 +1,3 @@
-
 describe SirTrevorRails::Blocks::SolrDocumentsBlock do
   let(:page) { FactoryBot.create(:feature_page) }
   let(:block_data) { {} }

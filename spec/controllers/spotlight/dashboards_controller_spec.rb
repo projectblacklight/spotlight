@@ -1,4 +1,3 @@
-
 describe Spotlight::DashboardsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }

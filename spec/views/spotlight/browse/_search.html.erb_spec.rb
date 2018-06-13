@@ -1,4 +1,3 @@
-
 describe 'spotlight/browse/search', type: :view do
   let(:search) { FactoryBot.create(:search) }
   let(:exhibit) { FactoryBot.create(:exhibit) }

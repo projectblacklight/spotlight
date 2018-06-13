@@ -1,4 +1,3 @@
-
 describe SirTrevorRails::Blocks::Textable do
   class TextableTestClass
     include SirTrevorRails::Blocks::Textable

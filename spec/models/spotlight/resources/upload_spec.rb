@@ -1,4 +1,3 @@
-
 describe Spotlight::Resources::Upload, type: :model do
   let!(:exhibit) { FactoryBot.create :exhibit }
   let!(:custom_field) { FactoryBot.create :custom_field, exhibit: exhibit }
