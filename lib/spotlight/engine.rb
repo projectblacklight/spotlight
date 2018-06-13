@@ -119,6 +119,7 @@ module Spotlight
     config.solr_fields.boolean_suffix = '_bsi'.freeze
     config.solr_fields.string_suffix = '_ssim'.freeze
     config.solr_fields.text_suffix = '_tesim'.freeze
+    config.solr_fields.custom_field_suffixes = [config.solr_fields.string_suffix, config.solr_fields.text_suffix]
 
     config.resource_global_id_field = :"#{config.solr_fields.prefix}spotlight_resource_id#{config.solr_fields.string_suffix}"
 

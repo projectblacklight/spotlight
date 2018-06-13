@@ -12,12 +12,12 @@ module Spotlight
     scope :writeable, -> { where(readonly_field: false) }
 
     before_create do
-      self.field ||= field_name
+      self.field ||= CustomFieldName.new(self).to_s
       self.field_type ||= 'text'
     end
 
     before_save do
-      update_field_name(field_name) if update_field_name?
+      update_field_name(field) if update_field_name?
     end
 
     def label=(label)
@@ -52,11 +52,15 @@ module Spotlight
     end
 
     def solr_field
-      if field && field.starts_with?(solr_field_prefix)
+      field_name = if field && field.starts_with?(solr_field_prefix)
         # backwards compatibility with pre-0.9 custom fields
         field
       else
         "#{solr_field_prefix}#{field || field_name}"
+      end
+
+      Spotlight::Engine.config.solr_fields.custom_field_suffixes.map do |suffix|
+        "#{field_name}#{suffix}"
       end
     end
 
@@ -71,10 +75,6 @@ module Spotlight
 
       blacklight_configuration.index_fields[field]['label'] = label
       blacklight_configuration.save
-    end
-
-    def field_name
-      CustomFieldName.new(self).to_s
     end
 
     def solr_field_prefix
@@ -107,7 +107,7 @@ module Spotlight
     # @param [String] the new name for the field
     def update_field_name(new_field)
       old_field = field
-      self.field = new_field
+      self.field = CustomFieldName.new(self).to_s
 
       if blacklight_configuration && blacklight_configuration.index_fields.key?(old_field)
         blacklight_configuration.index_fields_will_change!
@@ -124,7 +124,7 @@ module Spotlight
     end
 
     def update_field_name?
-      persisted? && (field_type_changed? || readonly_field_changed?)
+      persisted? && readonly_field_changed?
     end
   end
 end

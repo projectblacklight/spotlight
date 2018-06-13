@@ -89,7 +89,7 @@ describe Spotlight::Resources::Upload, type: :model do
       expect(subject[:spotlight_full_image_width_ssm]).to eq 800
     end
     it 'has fields representing exhibit specific custom fields' do
-      expect(subject[custom_field.solr_field]).to eq 'Custom Field Data'
+      expect(subject[Array(custom_field.solr_field).first]).to eq 'Custom Field Data'
     end
     it 'has a field for the iiif manifest url' do
       manifest_path = Spotlight::Engine.routes.url_helpers.manifest_exhibit_solr_document_path(exhibit, resource.compound_id)

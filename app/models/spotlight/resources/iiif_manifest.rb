@@ -75,8 +75,8 @@ module Spotlight
       end
 
       def add_metadata
-        solr_hash.merge!(manifest_metadata)
         sidecar.update(data: sidecar.data.merge(manifest_metadata))
+        solr_hash.merge!(sidecar.to_solr)
       end
 
       def manifest_metadata

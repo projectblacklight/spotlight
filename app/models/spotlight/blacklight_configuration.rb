@@ -201,7 +201,7 @@ module Spotlight
     def custom_index_fields
       Hash[exhibit.custom_fields.reject(&:new_record?).map do |x|
         field = Blacklight::Configuration::IndexField.new x.configuration.merge(
-          key: x.field, field: x.solr_field, custom_field: true
+          key: x.field, field: x.solr_field.first, custom_field: true
         )
         [x.field, field]
       end]
@@ -210,7 +210,7 @@ module Spotlight
     def custom_facet_fields
       Hash[exhibit.custom_fields.vocab.reject(&:new_record?).map do |x|
         field = Blacklight::Configuration::FacetField.new x.configuration.merge(
-          key: x.field, field: x.solr_field, show: false, custom_field: true
+          key: x.field, field: x.solr_field.first, show: false, custom_field: true
         )
         field.if = :field_enabled?
         field.enabled = false

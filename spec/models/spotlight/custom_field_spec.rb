@@ -62,18 +62,6 @@ describe Spotlight::CustomField, type: :model do
       expect(subject.field).to start_with 'xyz'
     end
 
-    it 'ends in the text suffix if it is a text field' do
-      subject.field_type = 'text'
-      subject.save
-      expect(subject.field).to end_with Spotlight::Engine.config.solr_fields.text_suffix
-    end
-
-    it 'ends in a string suffix if it is a vocab field' do
-      subject.field_type = 'vocab'
-      subject.save
-      expect(subject.field).to end_with Spotlight::Engine.config.solr_fields.string_suffix
-    end
-
     it 'begins with readonly if it is readonly' do
       subject.readonly_field = true
       subject.save
@@ -90,7 +78,8 @@ describe Spotlight::CustomField, type: :model do
     subject { custom_field.solr_field }
 
     it 'is auto-generated from the field label' do
-      expect(subject).to eq "exhibit_#{exhibit.to_param}_xyz_tesim"
+      expect(subject).to match_array ["exhibit_#{exhibit.to_param}_xyz_tesim",
+                                      "exhibit_#{exhibit.to_param}_xyz_ssim"]
     end
 
     context 'with a solr field prefix configured' do
@@ -99,17 +88,18 @@ describe Spotlight::CustomField, type: :model do
       end
 
       it 'uses the solr field prefix' do
-        expect(subject).to eq "prefix_exhibit_#{exhibit.to_param}_xyz_tesim"
+        expect(subject).to match_array ["prefix_exhibit_#{exhibit.to_param}_xyz_tesim",
+                                       "prefix_exhibit_#{exhibit.to_param}_xyz_ssim"]
       end
     end
 
     context 'for a legacy solr field name' do
       before do
-        custom_field.field = "exhibit_#{exhibit.to_param}_xyz_tesim"
+        custom_field.field = "exhibit_#{exhibit.to_param}_xyz"
       end
 
       it 'returns the original field name' do
-        expect(subject).to eq "exhibit_#{exhibit.to_param}_xyz_tesim"
+        expect(subject).to match_array ["exhibit_#{exhibit.to_param}_xyz_tesim", "exhibit_#{exhibit.to_param}_xyz_ssim"]
       end
     end
   end
@@ -160,13 +150,6 @@ describe Spotlight::CustomField, type: :model do
       subject.save!
     end
 
-    it 'changes the field name for the field' do
-      expect(subject.field).to end_with 'tesim'
-      subject.field_type = 'vocab'
-      subject.save
-      expect(subject.field).to end_with 'ssim'
-    end
-
     it 'copies index field configuration to the new field name' do
       subject.exhibit.blacklight_configuration.index_fields_will_change!
       subject.exhibit.blacklight_configuration.index_fields[subject.field] = { value: true }
@@ -180,9 +163,10 @@ describe Spotlight::CustomField, type: :model do
     end
 
     it 'queues a job to reindex any documents with data in the old field' do
-      expect(Spotlight::RenameSidecarFieldJob).to receive(:perform_later).with(exhibit, subject.field, subject.field.sub('tesim', 'ssim'))
-      subject.field_type = 'vocab'
+      expect(Spotlight::RenameSidecarFieldJob).to receive(:perform_later).with(exhibit, subject.field, "readonly_#{subject.field}")
+      subject.readonly_field = true
       subject.save
+      expect(subject.field).to start_with 'readonly_'
     end
   end
 end

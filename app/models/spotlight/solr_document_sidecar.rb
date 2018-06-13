@@ -61,7 +61,9 @@ module Spotlight
         custom_field = custom_fields[key]
         field_name = custom_field.solr_field if custom_field
         field_name ||= key
-        solr_hash[field_name] = value
+        Array(field_name).each do |field|
+          solr_hash[field] = value
+        end
       end
     end
 
