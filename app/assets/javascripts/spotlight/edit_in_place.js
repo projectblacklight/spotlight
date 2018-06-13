@@ -29,7 +29,14 @@ Spotlight.onLoad(function() {
         });
 
         $input.on('blur.inplaceedit', function() {
-          $label.text($input.val());
+          var value = $input.val();
+
+          if ($.trim(value).length == 0) {
+            $input.val($label.text());
+          } else {
+            $label.text(value);
+          }
+
           $label.show();
           $input.attr('type', 'hidden');
           // when leaving edit mode, should no longer hide edit-in-place affordance icon

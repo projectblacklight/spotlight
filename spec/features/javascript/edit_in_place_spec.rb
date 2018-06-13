@@ -26,6 +26,32 @@ describe 'Edit in place', type: :feature, js: true do
       expect(page).to have_css('h3', text: 'My Newer Feature Page')
       expect(page).to_not have_css('h3', text: 'My New Feature Page')
     end
+
+    it 'rejects blank values' do
+      visit spotlight.exhibit_dashboard_path(exhibit)
+
+      click_link 'Feature pages'
+
+      add_new_page_via_button('My New Feature Page')
+
+      expect(page).to have_css('h3', text: 'My New Feature Page')
+
+      within('.feature_pages_admin') do
+        expect(page).to have_css('#exhibit_feature_pages_attributes_0_title[type="hidden"]', visible: false)
+        expect(page).not_to have_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
+        click_link('My New Feature Page')
+        expect(page).not_to have_css('#exhibit_feature_pages_attributes_0_title[type="hidden"]')
+        expect(page).to have_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
+        fill_in 'exhibit_feature_pages_attributes_0_title', with: ''
+        # blur out of the now-emptytitle field
+        field = page.find_field('exhibit_feature_pages_attributes_0_title')
+        field.native.send_keys :tab
+
+        expect(page).to have_css('#exhibit_feature_pages_attributes_0_title[type="hidden"]', visible: false)
+        expect(page).not_to have_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
+        expect(page).to have_css('h3', text: 'My New Feature Page')
+      end
+    end
   end
   describe 'Main navigation' do
     it 'updates the label' do
