@@ -33,16 +33,6 @@ module Spotlight
       generate 'paper_trail:install'
     end
 
-    # Overriding paper trail initializer to turn track_associations off
-    # This was off by default prior to paper trail 9.1.0 but is now generated as on
-    def override_paper_trail_initializer
-      gsub_file(
-        'config/initializers/paper_trail.rb',
-        'PaperTrail.config.track_associations = true',
-        'PaperTrail.config.track_associations = false'
-      )
-    end
-
     def sitemaps
       gem 'sitemap_generator'
 
