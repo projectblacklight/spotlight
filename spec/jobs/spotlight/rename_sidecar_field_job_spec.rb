@@ -1,4 +1,3 @@
-
 describe Spotlight::RenameSidecarFieldJob do
   include ActiveJob::TestHelper
 

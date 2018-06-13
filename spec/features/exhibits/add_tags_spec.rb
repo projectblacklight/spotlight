@@ -1,4 +1,3 @@
-
 describe 'Add tags to an item in an exhibit', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }

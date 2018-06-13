@@ -1,4 +1,3 @@
-
 describe Spotlight::DefaultThumbnailJob do
   let(:thumbnailable) { double('Thumbnailable') }
   subject { described_class.new(thumbnailable) }

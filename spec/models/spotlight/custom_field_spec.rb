@@ -1,4 +1,3 @@
-
 describe Spotlight::CustomField, type: :model do
   describe '#label' do
     subject { described_class.new configuration: { 'label' => 'the configured label' }, field: 'foo_tesim' }
