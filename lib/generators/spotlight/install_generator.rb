@@ -126,7 +126,7 @@ module Spotlight
         insert_into_file 'config/application.rb', after: "< Rails::Application\n" do
           <<-EOF
           config.action_mailer.default_url_options = { host: "#{options[:mailer_default_url_host]}", from: "noreply@example.com" }
-        EOF
+          EOF
         end
       else
         say 'Please add a default configuration config.action_mailer.default_url_options for your environment', :red

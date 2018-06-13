@@ -15,7 +15,7 @@ module Spotlight
             # yield { id: resource.id }
           end
         end
-    FILE
+      FILE
     end
 
     def create_model
