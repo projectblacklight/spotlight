@@ -3,12 +3,14 @@ describe 'Browse Category Administration', type: :feature do
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let!(:search) { FactoryBot.create(:search, exhibit: exhibit, query_params: { f: { 'genre_ssim' => ['Value'] } }) }
   before { login_as curator }
+
   describe 'index' do
     it 'has searches' do
       visit spotlight.exhibit_searches_path(exhibit)
       expect(page).to have_css('.panel .search .title', text: search.title)
     end
   end
+
   describe 'create' do
     it 'creates a new browse category with the current search parameters', js: true do
       visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
@@ -30,6 +32,7 @@ describe 'Browse Category Administration', type: :feature do
       expect(search.reload.query_params).to eq 'q' => 'xyz'
     end
   end
+
   describe 'edit' do
     it 'displays an edit form' do
       visit spotlight.edit_exhibit_search_path(exhibit, search)
@@ -109,6 +112,7 @@ describe 'Browse Category Administration', type: :feature do
       expect(search.default_index_view_type).to eq 'list'
     end
   end
+
   describe 'destroy' do
     it 'destroys a tag' do
       skip('TODO: Allow searches to be destroyed without javascript')

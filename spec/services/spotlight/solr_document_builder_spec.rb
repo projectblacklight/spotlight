@@ -10,6 +10,7 @@ describe Spotlight::SolrDocumentBuilder do
       allow(resource).to receive(:exhibit).and_return(exhibit)
       allow(resource).to receive_messages(type: 'Spotlight::Resource::Something', id: 15, persisted?: true)
     end
+
     it 'includes a reference to the resource' do
       expect(subject).to include spotlight_resource_id_ssim: resource.to_global_id.to_s
     end

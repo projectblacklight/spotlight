@@ -23,6 +23,7 @@ describe Spotlight::ConfirmationsController, type: :controller do
         expect(response).to be_successful
       end
     end
+
     describe 'when the token is valid' do
       it 'updates the user' do
         get :show, params: { confirmation_token: raw_token }

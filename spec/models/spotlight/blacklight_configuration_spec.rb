@@ -115,6 +115,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
         allow(subject).to receive(:default_blacklight_config).and_call_original
         allow(Spotlight::Engine).to receive_messages blacklight_config: blacklight_config
       end
+
       it 'injects a tags facet' do
         expect(subject.blacklight_config.facet_fields).to include 'exhibit_tags'
       end
@@ -307,6 +308,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
           config.add_index_field 'a'
         end
       end
+
       it 'only shows titles (i.e., no metadata) for gallery view' do
         expect(subject.blacklight_config.index_fields['a'][:list]).to eq true
         expect(subject.blacklight_config.index_fields['a'][:gallery]).to eq false
@@ -318,6 +320,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     before do
       subject.save!
     end
+
     describe 'should have default values' do
       its(:sort_fields) do
         should eq('identifier' => { enabled: true },

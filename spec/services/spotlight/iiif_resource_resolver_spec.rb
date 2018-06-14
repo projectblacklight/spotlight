@@ -27,6 +27,7 @@ describe Spotlight::IiifResourceResolver do
         resource.iiif_tilesource = 'a-tilesource-that-no-longer-exists'
         resource.save
       end
+
       it 'the resource is updated and saved' do
         expect(resource).to receive(:save).and_call_original
         resolver.resolve!

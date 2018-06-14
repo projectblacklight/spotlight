@@ -2,6 +2,7 @@ feature 'Metadata Administration', js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as admin }
+
   describe 'Select/Deselect all button' do
     it 'deselects all checkboxes when all are selected' do
       visit spotlight.edit_exhibit_metadata_configuration_path exhibit

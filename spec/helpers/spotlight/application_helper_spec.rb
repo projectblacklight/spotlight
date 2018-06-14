@@ -78,6 +78,7 @@ describe Spotlight::ApplicationHelper, type: :helper do
         expect(helper.selected_search_block_views(block)).to eq %w(a d)
       end
     end
+
     describe 'blacklight_view_config_for_search_block' do
       let(:sir_trevor_block) do
         SirTrevorRails::Block.new({ type: 'xyz', data: { view: %w(list gallery) } }, 'parent')
@@ -93,6 +94,7 @@ describe Spotlight::ApplicationHelper, type: :helper do
       before do
         allow(helper).to receive_messages(blacklight_config: config)
       end
+
       it 'returns a blacklight configuration object that has reduced the views to those that are configured in the block' do
         new_config = helper.blacklight_view_config_for_search_block(sir_trevor_block)
         expect(new_config.keys).to eq [:list, :gallery]
@@ -109,6 +111,7 @@ describe Spotlight::ApplicationHelper, type: :helper do
         config.index.display_type_field = :some_field
       end)
     end
+
     it 'returns blacklight-private when the document is private' do
       allow(document).to receive(:private?).with(current_exhibit).and_return(true)
       expect(helper.render_document_class(document)).to include 'blacklight-private'

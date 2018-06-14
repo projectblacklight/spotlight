@@ -4,6 +4,7 @@ describe Spotlight::RolesController, type: :controller do
 
   describe 'when user does not have access' do
     before { sign_in FactoryBot.create(:exhibit_visitor) }
+
     describe 'GET index' do
       it 'denies access' do
         get :index, params: { exhibit_id: exhibit }
@@ -17,6 +18,7 @@ describe Spotlight::RolesController, type: :controller do
     let(:user) { FactoryBot.create(:user) }
     let(:role) { admin.roles.first }
     before { sign_in admin }
+
     it 'allows index' do
       expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
       expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))

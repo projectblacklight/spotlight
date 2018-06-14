@@ -8,6 +8,7 @@ describe 'Translation editing', type: :feature do
     FactoryBot.create(:language, exhibit: exhibit, locale: 'fr')
     login_as admin
   end
+
   describe 'general' do
     before do
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
@@ -39,6 +40,7 @@ describe 'Translation editing', type: :feature do
         end
       end
     end
+
     describe 'main menu' do
       it 'adds translations to exhibit navbar' do
         within '.translation-edit-form #general' do
@@ -76,6 +78,7 @@ describe 'Translation editing', type: :feature do
           click_button 'Save changes'
         end
       end
+
       it 'adds translations to user-facing breadcrumbs' do
         expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
         visit spotlight.exhibit_browse_index_path(exhibit, locale: 'fr')
@@ -122,6 +125,7 @@ describe 'Translation editing', type: :feature do
             click_button 'Save changes'
           end
         end
+
         it 'adds breadcrumbs to pages' do
           visit spotlight.exhibit_about_page_path(about_page2.exhibit, about_page2, locale: 'fr')
           expect(page).to have_breadcrumbs 'Maison', 'Sur', about_page2.title
@@ -141,6 +145,7 @@ describe 'Translation editing', type: :feature do
             click_button 'Save changes'
           end
         end
+
         it 'adds breadcrumbs user facing catalog' do
           visit spotlight.search_exhibit_catalog_path(exhibit, q: '*', locale: 'fr')
           expect(page).to have_breadcrumbs 'Maison', 'Résultats de la recherche'
@@ -387,6 +392,7 @@ describe 'Translation editing', type: :feature do
     before do
       FactoryBot.create(:translation, exhibit: exhibit, locale: 'fr', key: "#{exhibit.slug}.title", value: 'Titre')
     end
+
     it 'counts existing and total available translations' do
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
       expect(page).to have_link('General 1/8')

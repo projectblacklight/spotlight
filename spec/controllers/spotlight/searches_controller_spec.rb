@@ -32,6 +32,7 @@ describe Spotlight::SearchesController, type: :controller do
     before do
       sign_in FactoryBot.create(:exhibit_curator, exhibit: exhibit)
     end
+
     let(:search) { FactoryBot.create(:search, exhibit: exhibit) }
 
     it 'creates a saved search' do
@@ -157,6 +158,7 @@ describe Spotlight::SearchesController, type: :controller do
       let!(:search2) { FactoryBot.create(:search, exhibit: exhibit, published: true) }
       let!(:search3) { FactoryBot.create(:search, exhibit: exhibit, published: true) }
       before { request.env['HTTP_REFERER'] = 'http://example.com' }
+
       it 'updates whether they are on the landing page' do
         post :update_all, params: {
           exhibit_id: exhibit,

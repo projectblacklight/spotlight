@@ -35,11 +35,13 @@ describe Spotlight::Page, type: :model do
       expect(parent_page.top_level_page_or_self).to be parent_page
     end
   end
+
   describe '.display_sidebar' do
     it 'is set to true by default' do
       expect(parent_page.display_sidebar?).to be_truthy
     end
   end
+
   describe 'should_display_title?' do
     let(:page) { FactoryBot.create(:feature_page) }
     it 'returns if the title is present or not' do

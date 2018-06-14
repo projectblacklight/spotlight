@@ -9,6 +9,7 @@ describe 'Translations scope setting', type: :feature do
       FactoryBot.create(:translation, exhibit: exhibit)
       FactoryBot.create(:translation, exhibit: other_exhibit)
     end
+
     it 'default scope of Translation should be limited to current exhibit' do
       visit spotlight.exhibit_path(exhibit)
       expect(Translation.all.count).to eq 1

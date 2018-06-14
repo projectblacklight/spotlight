@@ -18,6 +18,7 @@ describe Spotlight::Masthead, type: :model do
 
     context 'when the cropped image is not present' do
       before { masthead.display = true }
+
       it { is_expected.to be_falsey }
     end
 
@@ -33,6 +34,7 @@ describe Spotlight::Masthead, type: :model do
 
       context 'and the masthead is set to display' do
         before { masthead.display = true }
+
         it { is_expected.to be_truthy }
       end
     end

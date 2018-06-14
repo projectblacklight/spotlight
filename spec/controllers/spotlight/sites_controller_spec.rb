@@ -3,6 +3,7 @@ describe Spotlight::SitesController, type: :controller do
 
   describe 'when user does not have access' do
     before { sign_in FactoryBot.create(:exhibit_visitor) }
+
     describe 'GET edit' do
       it 'denies access' do
         get :edit

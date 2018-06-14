@@ -15,6 +15,7 @@ describe Spotlight::FeaturePage, type: :model do
     let!(:unpublished_parent) { FactoryBot.create(:feature_page, published: false, exhibit: exhibit) }
     let!(:unpublished_child) { FactoryBot.create(:feature_page, parent_page: unpublished_parent, published: false, exhibit: exhibit) }
     before { unpublished_parent.display_sidebar = false }
+
     it 'is set to true if the page has a published child' do
       expect(parent.display_sidebar?).to be_truthy
     end

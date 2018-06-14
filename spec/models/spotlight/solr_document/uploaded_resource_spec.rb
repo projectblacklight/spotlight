@@ -15,6 +15,7 @@ describe Spotlight::SolrDocument::UploadedResource, type: :model do
       expect(valid_resource).to be_a_kind_of(described_class)
     end
   end
+
   describe 'to_openseadragon' do
     subject(:osd) { valid_resource.to_openseadragon }
     let(:uploaded_resource) { instance_double(Spotlight::Resources::Upload, upload: upload) }

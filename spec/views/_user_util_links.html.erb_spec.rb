@@ -21,6 +21,7 @@ describe '_user_util_links', type: :view do
     before do
       allow(view).to receive_messages(show_contact_form?: false)
     end
+
     it 'does not render the feedback link' do
       render
       expect(rendered).to_not have_link 'Feedback'
@@ -45,6 +46,7 @@ describe '_user_util_links', type: :view do
       allow(view).to receive(:can?).with(:create, Spotlight::Exhibit).and_return(false)
       allow(view).to receive(:can?).with(:curate, current_exhibit).and_return(true)
     end
+
     it 'renders the links' do
       render
       expect(rendered).to have_link 'Feedback'
@@ -61,6 +63,7 @@ describe '_user_util_links', type: :view do
       allow(view).to receive(:can?).with(:create, Spotlight::Exhibit).and_return(false)
       allow(view).to receive(:can?).with(:curate, current_exhibit).and_return(true)
     end
+
     it 'renders the links' do
       render
       expect(rendered).to have_link 'Feedback'
@@ -77,6 +80,7 @@ describe '_user_util_links', type: :view do
       allow(view).to receive(:can?).with(:create, Spotlight::Exhibit).and_return(true)
       allow(view).to receive(:can?).with(:curate, current_exhibit).and_return(true)
     end
+
     it 'renders the links' do
       render
       expect(rendered).to have_link 'Feedback'

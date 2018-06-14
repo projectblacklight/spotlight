@@ -45,6 +45,7 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
           expect(assigns(:page)).to eq(page)
         end
       end
+
       describe 'on a sub-page' do
         let(:page) { FactoryBot.create(:feature_subpage, exhibit: exhibit) }
         it 'assigns the requested page as @page' do
@@ -185,6 +186,7 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
       let!(:page2) { FactoryBot.create(:feature_page, exhibit: page1.exhibit) }
       let!(:page3) { FactoryBot.create(:feature_page, exhibit: page1.exhibit, parent_page_id: page1.id) }
       before { request.env['HTTP_REFERER'] = 'http://example.com' }
+
       it 'updates the parent/child relationship' do
         post :update_all, params: { exhibit_id: page1.exhibit, exhibit: { feature_pages_attributes: [{ id: page2.id, parent_page_id: page1.id }] } }
         expect(response).to redirect_to 'http://example.com'

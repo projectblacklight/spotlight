@@ -6,6 +6,7 @@ describe 'Slideshow', type: :feature, js: true do
     login_as user
     exhibit.blacklight_configuration.update(document_index_view_types: %w(list gallery slideshow))
   end
+
   it 'has slideshow' do
     visit spotlight.search_exhibit_catalog_path(exhibit, f: { genre_ssim: ['map'] })
     expect(page).to have_content 'You searched for:'

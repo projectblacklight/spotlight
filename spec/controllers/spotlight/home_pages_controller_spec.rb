@@ -24,6 +24,7 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
           expect(response).to be_successful
         end
       end
+
       it 'shows breadcrumbs' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
@@ -32,6 +33,7 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
         expect(response).to be_successful
       end
     end
+
     describe 'PUT update' do
       it 'redirects to the feature page index action' do
         put :update, params: { id: page, exhibit_id: page.exhibit.id, home_page: valid_attributes }
