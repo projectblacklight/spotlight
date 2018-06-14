@@ -19,6 +19,7 @@ describe Spotlight::FeaturedImage do
 
     describe 'region' do
       before { subject.iiif_tilesource = iiif_tilesource }
+
       it 'is included when present' do
         subject.iiif_region = iiif_region
         expect(subject.iiif_url).to match(%r{/abc123/#{iiif_region}/})
@@ -32,6 +33,7 @@ describe Spotlight::FeaturedImage do
 
   describe '#document' do
     before { subject.source = 'exhibit' }
+
     it 'fetches the document given the stored GlobalID' do
       subject.document_global_id = 'gid://internal/SolrDocument/yn959jw9550'
 

@@ -2,6 +2,7 @@ describe 'Edit in place', type: :feature, js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   before { login_as admin }
+
   describe 'Feature Pages' do
     it 'updates the label' do
       visit spotlight.exhibit_dashboard_path(exhibit)
@@ -53,6 +54,7 @@ describe 'Edit in place', type: :feature, js: true do
       end
     end
   end
+
   describe 'Main navigation' do
     it 'updates the label' do
       visit spotlight.exhibit_dashboard_path(exhibit)

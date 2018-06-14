@@ -3,6 +3,7 @@ describe 'spotlight/exhibits/_form', type: :view do
   before do
     assign(:exhibit, exhibit)
   end
+
   context 'when using default language' do
     before do
       allow(view).to receive_messages(
@@ -17,6 +18,7 @@ describe 'spotlight/exhibits/_form', type: :view do
       expect(rendered).not_to have_content 'This field is not editable in the current language. Switch to the default language to edit it.'
     end
   end
+
   context 'when using non-default language' do
     before do
       allow(view).to receive_messages(

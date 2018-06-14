@@ -26,6 +26,7 @@ describe Spotlight::ContactsController, type: :controller do
         expect(response).to be_successful
       end
     end
+
     describe 'PATCH update' do
       it 'is successful' do
         patch :update, params: { id: contact, contact: { name: 'Chester' }, exhibit_id: contact.exhibit }
@@ -56,6 +57,7 @@ describe Spotlight::ContactsController, type: :controller do
         expect(response).to render_template 'edit'
       end
     end
+
     describe 'DELETE destroy' do
       it 'is successful' do
         contact # force contact to be created
@@ -65,6 +67,7 @@ describe Spotlight::ContactsController, type: :controller do
         expect(response).to redirect_to exhibit_about_pages_path(exhibit)
       end
     end
+
     describe 'GET new' do
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
@@ -75,6 +78,7 @@ describe Spotlight::ContactsController, type: :controller do
         expect(response).to be_successful
       end
     end
+
     describe 'POST create' do
       it 'fails by rendering new' do
         expect_any_instance_of(Spotlight::Contact).to receive(:update).and_return(false)

@@ -2,6 +2,7 @@ describe 'Home page', type: :feature, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   before { login_as exhibit_curator }
+
   it 'exists by default on exhibits' do
     visit spotlight.exhibit_dashboard_path(exhibit)
     click_link 'Feature pages'
@@ -79,6 +80,7 @@ describe 'Home page', type: :feature, versioning: true do
       exhibit.home_page.display_sidebar = false
       exhibit.home_page.save
     end
+
     it 'does not display the facet sidebar' do
       visit spotlight.exhibit_home_page_path(exhibit)
       expect(page).not_to have_css('#sidebar')

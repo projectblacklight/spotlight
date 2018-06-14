@@ -16,6 +16,7 @@ describe Spotlight::Contact, type: :model do
       expect(subject.show_in_sidebar).to be_truthy
     end
   end
+
   context '#fields' do
     it 'show allow new fields to be configured' do
       expect(subject.class.fields).to_not have_key(:new_field)
