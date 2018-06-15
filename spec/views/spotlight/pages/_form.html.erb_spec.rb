@@ -11,6 +11,7 @@ describe 'spotlight/pages/edit', type: :view do
                                     available_view_fields: [],
                                     featured_images_path: '/foo')
   end
+
   it 'contains data-block-types attribute needed for SirTrevor instantiation' do
     render
     expect(rendered).to have_css '.js-st-instance[data-block-types]'

@@ -19,8 +19,10 @@ describe 'About page', type: :feature, versioning: true do
       end
     end
   end
+
   describe 'page options' do
     before { login_as exhibit_curator }
+
     describe 'publish' do
       it 'is updatable from the edit page' do
         expect(unpublished_page).not_to be_published

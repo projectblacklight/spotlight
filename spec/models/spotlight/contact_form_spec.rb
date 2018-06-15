@@ -21,6 +21,7 @@ describe Spotlight::ContactForm do
 
   context 'with exhibit-specific contacts' do
     before { exhibit.contact_emails.create(email: 'curator@example.com', confirmed_at: Time.zone.now) }
+
     before { exhibit.contact_emails.create(email: 'addl_curator@example.com', confirmed_at: Time.zone.now) }
 
     it 'sends the email to the first contact' do

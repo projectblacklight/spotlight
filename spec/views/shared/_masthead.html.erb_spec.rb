@@ -19,6 +19,7 @@ describe 'shared/_masthead', type: :view do
     before do
       exhibit.update(subtitle: nil)
     end
+
     it 'does not include the subtitle' do
       render
       expect(rendered).not_to have_selector 'small'

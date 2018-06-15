@@ -13,6 +13,7 @@ describe Spotlight::LanguagesController do
 
     context 'when signed in as a site admin' do
       before { sign_in user }
+
       let(:user) { FactoryBot.create(:site_admin) }
 
       it 'is successful' do
@@ -53,6 +54,7 @@ describe Spotlight::LanguagesController do
 
     context 'when signed in as a site admin' do
       before { sign_in user }
+
       let(:user) { FactoryBot.create(:site_admin) }
 
       it 'is successful' do

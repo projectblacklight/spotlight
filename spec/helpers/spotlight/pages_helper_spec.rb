@@ -77,6 +77,7 @@ describe Spotlight::PagesHelper, type: :helper do
         expect(helper.nestable_data_attributes('something_else')).to eq ''
       end
     end
+
     describe 'nestable data attributes hash' do
       it 'returns the appropriate hash for feature pages' do
         expect(helper.nestable_data_attributes_hash('feature_pages')).to eq('data-max-depth' => '2',

@@ -14,12 +14,14 @@ describe SirTrevorRails::Blocks::Textable do
       expect(subject.text?).to be_truthy
     end
   end
+
   describe '#text_align' do
     it 'proxies the sir-trevor text-align attribute' do
       allow(subject).to receive_messages('text-align' => 'text-align-value')
       expect(subject.text_align).to eq 'text-align-value'
     end
   end
+
   describe '#content_align' do
     it 'is the reverse of text-align' do
       allow(subject).to receive_messages(text: 'TextContent')

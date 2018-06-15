@@ -17,10 +17,8 @@ module Spotlight
     end
 
     def clone
-      @clone ||= begin
-        destroy
-        page.clone_for_locale(locale)
-      end
+      destroy
+      page.clone_for_locale(locale)
     end
 
     private

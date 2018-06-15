@@ -2,6 +2,7 @@ describe Spotlight::AdminUsersController, type: :controller do
   routes { Spotlight::Engine.routes }
 
   before { sign_in(user) }
+
   context 'by a non-admin' do
     let(:user) { FactoryBot.create(:exhibit_visitor) }
     it 'redirects with an error message' do
@@ -13,6 +14,7 @@ describe Spotlight::AdminUsersController, type: :controller do
 
   context 'by an admin user' do
     before { request.env['HTTP_REFERER'] = 'http://example.com' }
+
     let(:user) { FactoryBot.create(:site_admin) }
     describe 'GET index' do
       it 'is successful' do

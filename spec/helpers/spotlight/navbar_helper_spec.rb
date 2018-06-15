@@ -4,6 +4,7 @@ describe Spotlight::NavbarHelper, type: :helper do
       allow(helper).to receive_messages(current_exhibit: nil)
       allow(helper).to receive_messages(exhibit_masthead?: true)
     end
+
     it 'returns false when there is no exhibit context' do
       expect(helper.should_render_spotlight_search_bar?).to be_falsey
     end

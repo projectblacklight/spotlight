@@ -33,6 +33,7 @@ describe Spotlight::PagesController, type: :controller do
       expect(Spotlight::Page.find(about_page.id)).to be_published
     end
   end
+
   describe 'when user is not authenticated' do
     it 'does not allow publishing pages' do
       put :update_all, params: update_all_params.merge(exhibit_id: exhibit.id)

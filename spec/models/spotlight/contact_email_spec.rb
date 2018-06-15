@@ -6,6 +6,7 @@ describe Spotlight::ContactEmail, type: :model do
 
   describe 'with an invalid email set' do
     before { subject.email = '@-foo' }
+
     it 'does not be valid' do
       expect(subject).to_not be_valid
       expect(subject.errors[:email]).to eq ['is not valid']
@@ -14,6 +15,7 @@ describe Spotlight::ContactEmail, type: :model do
 
   describe 'with a valid email set' do
     before { subject.email = 'foo@example.com' }
+
     it { is_expected.to be_valid }
 
     describe '#send_devise_notification' do

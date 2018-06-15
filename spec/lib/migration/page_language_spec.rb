@@ -11,6 +11,7 @@ RSpec.describe Migration::PageLanguage do
       slug.save
       slug.reload
     end
+
     it 'sets the scope to the default locale' do
       expect(slug.scope).not_to include(',locale:en')
       subject.run

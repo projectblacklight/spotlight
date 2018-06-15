@@ -4,6 +4,7 @@ describe Spotlight::Ability, type: :model do
   before do
     allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
   end
+
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:search) { FactoryBot.create(:published_search, exhibit: exhibit) }
   let(:unpublished_search) { FactoryBot.create(:search, exhibit: exhibit) }

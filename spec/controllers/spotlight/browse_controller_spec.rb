@@ -39,6 +39,7 @@ describe Spotlight::BrowseController, type: :controller do
 
   describe 'when authenticated as an admin' do
     before { sign_in admin }
+
     describe 'GET index' do
       it 'does not show unpublished categories' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
@@ -73,6 +74,7 @@ describe Spotlight::BrowseController, type: :controller do
       before do
         allow(controller).to receive_messages(search_results: [mock_response, document_list])
       end
+
       it 'shows the items in the category' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))

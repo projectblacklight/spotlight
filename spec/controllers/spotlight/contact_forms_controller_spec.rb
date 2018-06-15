@@ -15,6 +15,7 @@ describe Spotlight::ContactFormsController, type: :controller do
       end
     end
   end
+
   describe 'POST create' do
     it 'sends an email' do
       expect do
