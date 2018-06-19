@@ -27,7 +27,7 @@ these collections.)
   s.add_dependency 'carrierwave'
   s.add_dependency 'mini_magick'
   s.add_dependency 'bootstrap_form', '~> 2.2'
-  s.add_dependency 'acts-as-taggable-on', '~> 5.0'
+  s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 7'
   s.add_dependency 'friendly_id', '~> 5.2'
   s.add_dependency 'breadcrumbs_on_rails', '~> 3.0'
   s.add_dependency 'blacklight-oembed', '>= 0.0.3'
