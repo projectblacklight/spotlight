@@ -3,9 +3,8 @@ describe 'spotlight/pages/edit', type: :view do
   let(:page) { stub_model(Spotlight::FeaturePage, exhibit: exhibit) }
   before do
     assign(:page, page)
-    allow(view).to receive_messages(featured_images_path: '/foo',
-                                    available_index_fields: [],
-                                    available_view_fields: [])
+    allow(view).to receive_messages(configurations_for_current_page: {},
+                                    featured_images_path: '/foo')
   end
 
   it 'renders the edit page form' do
