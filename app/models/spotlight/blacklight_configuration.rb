@@ -84,7 +84,7 @@ module Spotlight
         config.view.embed.locals ||= { osd_container_class: '' }
 
         # Add any custom fields
-        config.index_fields.merge! custom_index_fields
+        config.index_fields.merge! custom_index_fields(config)
         config.index_fields = Hash[config.index_fields.sort_by { |k, _v| field_weight(index_fields, k) }]
         config.index_fields.reject! { |_k, v| v.if == false }
 
@@ -93,7 +93,7 @@ module Spotlight
           v.original = v.dup
           if index_fields[k]
             v.merge! index_fields[k].symbolize_keys
-          elsif custom_index_fields[k]
+          elsif v.custom_field
             set_custom_field_defaults(v)
           else
             set_index_field_defaults(v)
@@ -198,12 +198,15 @@ module Spotlight
     end
     # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
-    def custom_index_fields
-      Hash[exhibit.custom_fields.reject(&:new_record?).map do |x|
-        field = Blacklight::Configuration::IndexField.new x.configuration.merge(
-          key: x.field, field: x.solr_field, custom_field: true
+    def custom_index_fields(blacklight_config)
+      Hash[exhibit.custom_fields.reject(&:new_record?).map do |custom_field|
+        original_config = blacklight_config.index_fields[custom_field.field] || {}
+        field = Blacklight::Configuration::IndexField.new original_config.merge(
+          custom_field.configuration.merge(
+            key: custom_field.field, field: custom_field.solr_field, custom_field: true
+          )
         )
-        [x.field, field]
+        [custom_field.field, field]
       end]
     end
 
@@ -338,8 +341,8 @@ module Spotlight
     end
 
     def set_custom_field_defaults(field)
-      field.show = true
-      field.enabled = true
+      field.show = true if field.show.nil?
+      field.enabled = true if field.enabled.nil?
     end
     # rubocop:enable Naming/AccessorMethodName
 
