@@ -107,6 +107,15 @@ describe Spotlight::BlacklightConfiguration, type: :model do
         expect(subject.blacklight_config.facet_fields['a'].limit).to eq true
         expect(subject.blacklight_config.facet_fields['a'].original).to be_blank
       end
+
+      it 'allows the application configuration to override custom field configuration' do
+        blacklight_config.add_index_field 'a', some_param: true, enabled: false
+        subject.exhibit.custom_fields.create! field: 'a'
+
+        expect(subject.blacklight_config.index_fields['a'].custom_field).to eq true
+        expect(subject.blacklight_config.index_fields['a'].some_param).to eq true
+        expect(subject.blacklight_config.index_fields['a'].enabled).to eq false
+      end
     end
 
     context 'exhibit fields' do
@@ -532,11 +541,11 @@ describe Spotlight::BlacklightConfiguration, type: :model do
                                                    stub_model(Spotlight::CustomField, field: 'abc', configuration: { a: 1 }, exhibit: subject.exhibit),
                                                    stub_model(Spotlight::CustomField, field: 'xyz', configuration: { x: 2 }, exhibit: subject.exhibit)
                                                  ])
-
-      expect(subject.custom_index_fields).to include 'abc', 'xyz'
-      expect(subject.custom_index_fields['abc']).to be_a_kind_of Blacklight::Configuration::Field
-      expect(subject.custom_index_fields['abc'].a).to eq 1
-      expect(subject.custom_index_fields['abc'].custom_field).to eq true
+      custom_index_fields = subject.custom_index_fields(blacklight_config)
+      expect(custom_index_fields).to include 'abc', 'xyz'
+      expect(custom_index_fields['abc']).to be_a_kind_of Blacklight::Configuration::Field
+      expect(custom_index_fields['abc'].a).to eq 1
+      expect(custom_index_fields['abc'].custom_field).to eq true
     end
   end
 
