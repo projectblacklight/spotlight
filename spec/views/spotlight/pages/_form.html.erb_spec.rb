@@ -6,9 +6,7 @@ describe 'spotlight/pages/edit', type: :view do
   end
   before do
     assign(:page, page)
-    allow(view).to receive_messages(blacklight_config: blacklight_config,
-                                    available_index_fields: [],
-                                    available_view_fields: [],
+    allow(view).to receive_messages(configurations_for_current_page: {},
                                     featured_images_path: '/foo')
   end
 

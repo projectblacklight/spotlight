@@ -161,6 +161,10 @@ module Spotlight
     config.featured_image_square_size = [400, 400]
     config.contact_square_size = [70, 70]
 
+    # Additional page configurations to be made available to page editing widgets
+    # See Spotlight::PageConfigurations
+    config.page_configurations = {}
+
     # To present curators with analytics reports on the exhibit dashboard, you need to configure
     # an Analytics provider. Google Analytics support is provided out-of-the-box.
     config.analytics_provider = nil
