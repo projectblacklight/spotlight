@@ -1,5 +1,8 @@
 <% solr_documents_grid_block.with_solr_helper(self) %>
 <div class="content-block item-grid-block row">
+  <% if solr_documents_grid_block.title.present? %>
+    <h3 class="col-md-12"><%= solr_documents_grid_block.title %></h3>
+  <% end %>
   <div class="items-col <%= solr_documents_grid_block.text? ? 'col-md-9' : 'col-md-12' %> pull-<%= solr_documents_grid_block.content_align %>">
     <% if solr_documents_grid_block.documents? %>
         <% solr_documents_grid_block.each_document.each_with_index do |(block_options, document), index| %>
@@ -19,9 +22,6 @@
 
   <% if solr_documents_grid_block.text? %>
     <div class="text-col col-md-3">
-      <% unless solr_documents_grid_block.title.blank? %>
-        <h3><%= solr_documents_grid_block.title %></h3>
-      <% end %>
       <%= sir_trevor_markdown solr_documents_grid_block.text %>
     </div>
   <% end %>

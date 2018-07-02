@@ -2,7 +2,7 @@
   Sir Trevor ItemText Block.
   This block takes an ID,
   fetches the record from solr,
-  displays the image, title, 
+  displays the image, title,
   and any provided text
   and displays them.
 */
@@ -15,12 +15,11 @@ SirTrevor.Blocks.Oembed =  (function(){
     id_key:"url",
 
     type: "oembed",
-    
+
     title: function() { return i18n.t('blocks:oembed:title'); },
     description: function() { return i18n.t('blocks:oembed:description'); },
 
     icon_name: "oembed",
-    show_heading: false,
 
     template: [
     '<div class="form oembed-text-admin clearfix">',

@@ -1,6 +1,9 @@
 <% solr_documents_embed_block.with_solr_helper(self) %>
 
 <div class="content-block items-block row">
+  <% if solr_documents_embed_block.title.present? %>
+    <h3 class="col-md-12"><%= solr_documents_embed_block.title %></h3>
+  <% end %>
 
   <% if solr_documents_embed_block.documents? %>
 
@@ -15,9 +18,6 @@
 
   <% if solr_documents_embed_block.text? %>
     <div class="text-col col-md-6">
-      <% unless solr_documents_embed_block.title.blank? %>
-        <h3><%= solr_documents_embed_block.title %></h3>
-      <% end %>
       <%= sir_trevor_markdown solr_documents_embed_block.text %>
     </div>
   <% end %>
