@@ -7,7 +7,8 @@ describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
 
   let(:document) { stub_model(::SolrDocument) }
 
-  let(:exhibit) { stub_model(Spotlight::Exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit) }
 
   before do
     allow(exhibit).to receive_messages(blacklight_config: blacklight_config)
@@ -41,5 +42,21 @@ describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
     expect(rendered).to have_field 'spotlight_upload_description_tesim label'
     expect(rendered).to have_field 'spotlight_upload_attribution_tesim label'
     expect(rendered).to have_field 'spotlight_upload_date_tesim label'
+  end
+
+  it 'has an input for the custom field' do
+    custom_field.update(field_type: 'text')
+
+    render
+
+    expect(rendered).to have_field 'Some Field', type: 'textarea'
+  end
+
+  it 'has an single-line input for a vocab custom field' do
+    custom_field.update(field_type: 'vocab')
+
+    render
+
+    expect(rendered).to have_field 'Some Field', type: 'text'
   end
 end
