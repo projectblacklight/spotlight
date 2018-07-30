@@ -1,0 +1,40 @@
+it:
+  activemodel:
+    attributes:
+      spotlight/contact_form:
+        email: Email
+        message: Messaggio
+        name: Nome
+  helpers:
+    action:
+      cancel: Cancella
+    submit:
+      contact_form:
+        create: Invia
+        created: Grazie. Il tuo feedback è stato inviato.
+  spotlight:
+    about_pages:
+      contacts:
+        header: Contatti
+    header_links:
+      contact: Feedback
+    shared:
+      report_a_problem:
+        honeypot_field_explanation: Ignora questa casella di testo. E' impiegata per individuare chi agisce come spammer. Se si inserisci qualcosa in questa casella, il tuo messaggio non verrà inviato.
+        title: Contattaci
+    browse:
+      search:
+        item_count:
+          one: "%{count} elemento"
+          other: "%{count} elementi"
+      search_box:
+        label: Ricerca all'interno di questo indice
+        placeholder: Ricerca…
+        reset: Cancella la casella di ricerca
+        submit: Ricerca all'interno dell'indice
+        success:
+          expand_html: Puoi anche cercare tutti gli elementi del percorso per <a href="%{expand_search_url}">"%{browse_query}"</a>.
+          result_number_html: La tua ricerca ha trovato <strong> %{search_size} di %{parent_search_count} elementi</strong> in questo indice di ricerca.
+        zero_results:
+          expand_html: Puoi <a href="%{clear_search_url}">cancellare questa ricerca</a> o <a href="%{expand_search_url}">provare a cercare tutti gli elementi del percorso per "%{browse_query}"</a>.
+          result_number: La tua ricerca in questo indice non ha prodotto alcun risultato.
