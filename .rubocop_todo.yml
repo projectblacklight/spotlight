@@ -80,6 +80,10 @@ Naming/MemoizedInstanceVariableName:
   Exclude:
     - 'app/controllers/concerns/spotlight/controller.rb'
     - 'app/controllers/spotlight/admin_users_controller.rb'
+    - 'app/controllers/spotlight/browse_controller.rb'
+    - 'app/controllers/spotlight/catalog_controller.rb'
+    - 'app/controllers/spotlight/dashboards_controller.rb'
+    - 'app/controllers/spotlight/pages_controller.rb'
     - 'app/controllers/spotlight/resources/csv_upload_controller.rb'
     - 'app/controllers/spotlight/resources/upload_controller.rb'
     - 'app/controllers/spotlight/sites_controller.rb'
