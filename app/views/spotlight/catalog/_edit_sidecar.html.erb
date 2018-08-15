@@ -1,0 +1,29 @@
+<%= f.fields_for :sidecar, document.sidecar(current_exhibit) do |c| %>
+  <%= c.fields_for :data do |d| %>
+    <% if document.uploaded_resource? %>
+      <%= d.fields_for :configured_fields do |e| %>
+        <% Spotlight::Resources::Upload.fields(current_exhibit).each do |config| %>
+          <%= e.send(config.form_field_type, config.field_name, value: (document.sidecar(current_exhibit).data["configured_fields"] || {})[config.field_name.to_s], label: uploaded_field_label(config)) %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%# Using `includes(:exhibit)` to ensure all fields are using the same exhibit object to take advantage of memoization %>
+    <% current_exhibit.custom_fields.includes(:exhibit).each do |field| %>
+      <div class="form-group">
+        <%= d.label field.field, field.label %>
+        <% if field.field_type == 'vocab' %>
+          <%= d.text_field_without_bootstrap field.field, value: document.sidecar(current_exhibit).data[field.field.to_s], class: "form-control field-#{field.slug}", readonly: field.readonly_field? %>
+        <% else %>
+          <%= d.text_area_without_bootstrap field.field, value: document.sidecar(current_exhibit).data[field.field.to_s], class: "form-control field-#{field.slug}", readonly: field.readonly_field? %>
+        <% end %>
+        <% unless field.configured_to_display? %>
+          <p class="bg-warning help-block">
+            <%= t(:'.blank_field_warning_html',
+                  link: link_to(t(:'spotlight.configuration.sidebar.metadata'), spotlight.edit_exhibit_metadata_configuration_path(current_exhibit))) %>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

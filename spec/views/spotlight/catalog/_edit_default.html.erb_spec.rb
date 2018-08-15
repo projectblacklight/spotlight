@@ -7,19 +7,18 @@ describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
 
   let(:document) { stub_model(::SolrDocument) }
 
-  let(:exhibit) { stub_model(Spotlight::Exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit) }
 
   before do
-    allow(exhibit).to receive_messages(blacklight_config: blacklight_config)
 
     allow(view).to receive(:uploaded_field_label) do |config|
       "#{config.field_name} label"
     end
-    allow(view).to receive_messages(exhibit_tags_path: 'autocomplete-path.json')
-    allow(view).to receive_messages(blacklight_config: blacklight_config)
-    allow(view).to receive_messages(current_exhibit: exhibit)
-    allow(view).to receive_messages(document: document)
-    allow(view).to receive(:can?).and_return(true)
+    expect(view).to receive_messages(exhibit_tags_path: 'autocomplete-path.json')
+    expect(view).to receive_messages(current_exhibit: exhibit)
+    expect(view).to receive_messages(document: document)
+    expect(view).to receive(:can?).at_least(:once).and_return(true)
   end
 
   it 'has a edit tag form' do
@@ -29,17 +28,33 @@ describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
   end
   it 'does not have special metadata editing fields for non-uploaded resources' do
     render
-    expect(rendered).to_not have_field 'title_field label'
+    expect(rendered).to_not have_field 'full_title_tesim label'
     expect(rendered).to_not have_field 'spotlight_upload_description_tesim label'
     expect(rendered).to_not have_field 'spotlight_upload_attribution_tesim label'
     expect(rendered).to_not have_field 'spotlight_upload_date_tesim label'
   end
   it 'has special metadata fields for an uploaded resource' do
-    allow(document).to receive_messages(uploaded_resource?: true)
+    expect(document).to receive_messages(uploaded_resource?: true)
     render
-    expect(rendered).to have_field 'title_field label'
+    expect(rendered).to have_field 'full_title_tesim label'
     expect(rendered).to have_field 'spotlight_upload_description_tesim label'
     expect(rendered).to have_field 'spotlight_upload_attribution_tesim label'
     expect(rendered).to have_field 'spotlight_upload_date_tesim label'
+  end
+
+  it 'has an input for the custom field' do
+    custom_field.update(field_type: 'text')
+
+    render
+
+    expect(rendered).to have_field 'Some Field', type: 'textarea'
+  end
+
+  it 'has an single-line input for a vocab custom field' do
+    custom_field.update(field_type: 'vocab')
+
+    render
+
+    expect(rendered).to have_field 'Some Field', type: 'text'
   end
 end

@@ -37,7 +37,7 @@ describe 'Adding custom metadata field data', type: :feature do
 
       click_on 'Edit'
 
-      expect(page).to have_selector 'input[type=text][readonly]'
+      expect(page).to have_selector 'textarea[readonly]'
     end
   end
 

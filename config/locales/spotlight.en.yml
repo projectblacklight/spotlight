@@ -227,9 +227,10 @@ en:
           button: Make Public
           label: ''
       edit_default:
-        blank_field_warning_html: This field is currently hidden on all pages. You can make it visible on the Curation &gt; %{link} page.
         url-field:
           help: 'Valid file types: %{extensions}'
+      edit_sidecar:
+        blank_field_warning_html: This field is currently hidden on all pages. You can make it visible on the Curation &gt; %{link} page.
       facets:
         exhibit_visibility:
           label: Item Visibility
