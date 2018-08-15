@@ -1,0 +1,40 @@
+zh:
+  activemodel:
+    attributes:
+      spotlight/contact_form:
+        email: 电邮地址
+        message: 邮件
+        name: 姓名
+  helpers:
+    action:
+      cancel: 取消
+    submit:
+      contact_form:
+        create: 发送
+        created: 谢谢。您的信息已经发送。
+  spotlight:
+    about_pages:
+      contacts:
+        header: 联系人
+    header_links:
+      contact: 反馈
+    shared:
+      report_a_problem:
+        honeypot_field_explanation: 请勿使用这个对话框。此为防范垃圾邮件设置。如填入信息，该邮件将不会被发送。
+        title: 联系我们
+    browse:
+      search:
+        item_count:
+          one: "%{count} 资料"
+          other: "%{count} 资料"
+      search_box:
+        label: 检索该类资料
+        placeholder: 检索
+        reset: 清除
+        submit: 检索所有资料
+        success:
+          expand_html: <a href="%{expand_search_url}">您也可检索所有资料 "%{browse_query}"</a>.
+          result_number_html: 您的检索在本专题 <strong> %{search_size} of %{parent_search_count} 条资料中检索到</strong> 条.
+        zero_results:
+          expand_html: <a href="%{clear_search_url}">您可取消本次专题检索</a> 或检索所有资料 <a href="%{expand_search_url}">"%{browse_query}"</a>.
+          result_number: 找到0条结果
