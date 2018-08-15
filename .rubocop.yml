@@ -92,3 +92,6 @@ Rails/ApplicationRecord:
 
 Rails/ApplicationJob:
   Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
