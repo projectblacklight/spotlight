@@ -8,7 +8,7 @@ module Spotlight
     belongs_to :user, class_name: '::User', optional: true
 
     # null start times sort to the top, to more easily surface pending reindexing
-    default_scope { order('start_time IS NOT NULL, start_time DESC') }
+    default_scope { order(Arel.sql('start_time IS NOT NULL, start_time DESC')) }
     scope :recent, -> { limit(5) }
     scope :started_or_completed, -> { where.not(job_status: 'unstarted') }
 
