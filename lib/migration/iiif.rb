@@ -51,7 +51,9 @@ module Migration
       return unless Spotlight::Exhibit.where(thumbnail_id: image.id).any?
 
       filename = image.read_attribute_before_type_cast('image')
-      filepath = "public/#{image.image.store_dir}/#{filename}"
+      # if store_dir is an absolute path, `public` is ignored
+      filepath = Pathname.new('public').join(image.image.store_dir, filename)
+
       image.becomes!(Spotlight::ExhibitThumbnail)
       image.save
       return unless filename.present? && File.exist?(filepath)

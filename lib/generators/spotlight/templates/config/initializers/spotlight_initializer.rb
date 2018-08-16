@@ -55,6 +55,12 @@
 # Spotlight::Engine.config.uploader_storage = :file
 # Spotlight::Engine.config.allowed_upload_extensions = %w(jpg jpeg png)
 
+# The directory to save uploaded image files
+#
+# If this is not an absolute path, CarrierWave will append it to Rails' public directory:
+# https://github.com/carrierwaveuploader/carrierwave/blob/master/lib/carrierwave.rb#L42
+# Spotlight::Engine.config.upload_dir = config.root.join('public', 'uploads')
+
 # Spotlight::Engine.config.featured_image_thumb_size = [400, 300]
 # Spotlight::Engine.config.featured_image_square_size = [400, 400]
 

@@ -12,7 +12,7 @@ describe Spotlight::FeaturedImageUploader do
     let(:store_dir) { featured_image_uploader.store_dir }
 
     it 'is prefixed with "uploads/spotlight"' do
-      expect(store_dir).to start_with 'uploads/spotlight/'
+      expect(store_dir).to start_with Spotlight::Engine.config.upload_dir.to_s
     end
 
     it "includes the mounter's class name" do
