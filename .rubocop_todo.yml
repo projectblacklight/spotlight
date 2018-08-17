@@ -123,6 +123,10 @@ RSpec/AnyInstance:
 RSpec/ContextWording:
   Enabled: false
 
+RSpec/EmptyExampleGroup:
+  Exclude:
+    - 'spec/factories/tags.rb'
+
 # Offense count: 197
 # Cop supports --auto-correct.
 RSpec/EmptyLineAfterFinalLet:
@@ -213,7 +217,9 @@ RSpec/MessageSpies:
 # Offense count: 1
 RSpec/MissingExampleGroupArgument:
   Exclude:
+    - 'spec/factories/tags.rb'
     - 'spec/views/spotlight/search_configurations/_facets.html.erb_spec.rb'
+
 
 # Offense count: 1
 # Cop supports --auto-correct.
