@@ -7,6 +7,6 @@ FactoryBot.define do
     sequence(:tag) { |n| FactoryBot.create(:tag, name: "tagging#{n}") }
     tagger { FactoryBot.create(:exhibit) }
     taggable { FactoryBot.create(:exhibit) }
-    context :tags
+    context { :tags }
   end
 end
