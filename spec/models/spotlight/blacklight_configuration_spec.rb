@@ -291,7 +291,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       subject.index_fields['b'] = { enabled: true, weight: 5, list: true }
       subject.index_fields['c'] = { enabled: true, weight: 1, list: true }
 
-      blacklight_config.add_index_field 'a'
+      blacklight_config.add_show_field 'a'
       blacklight_config.add_index_field 'b'
       blacklight_config.add_index_field 'c'
 

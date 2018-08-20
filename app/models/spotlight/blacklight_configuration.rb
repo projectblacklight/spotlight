@@ -85,7 +85,6 @@ module Spotlight
 
         # Add any custom fields
         config.index_fields.merge! custom_index_fields(config)
-        config.index_fields = Hash[config.index_fields.sort_by { |k, _v| field_weight(index_fields, k) }]
         config.index_fields.reject! { |_k, v| v.if == false }
 
         # Update with customizations
@@ -128,6 +127,10 @@ module Spotlight
           v.normalize! config
           v.validate!
         end
+
+        ##
+        # Sort after the show fields have also been added
+        config.index_fields = Hash[config.index_fields.sort_by { |k, _v| field_weight(index_fields, k) }]
 
         config.show_fields = config.index_fields
 
