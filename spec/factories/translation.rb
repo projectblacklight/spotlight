@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :translation do
-    locale 'en'
+    locale { 'en' }
     exhibit
   end
 end

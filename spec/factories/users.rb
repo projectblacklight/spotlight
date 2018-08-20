@@ -4,7 +4,7 @@ FactoryBot.define do
       exhibit { FactoryBot.create(:exhibit) }
     end
     sequence(:email) { |n| "user#{n}@example.com" }
-    password 'insecure'
+    password { 'insecure' }
 
     factory :site_admin do
       after(:create) do |user, _evaluator|
