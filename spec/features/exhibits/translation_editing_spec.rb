@@ -42,6 +42,15 @@ describe 'Translation editing', type: :feature do
     end
 
     describe 'main menu' do
+      before do
+        exhibit.searches.first.update(published: true)
+        within '.translation-edit-form #general' do
+          fill_in 'Home', with: 'Maison'
+          fill_in 'Browse', with: 'parcourir ceci!'
+          click_button 'Save changes'
+        end
+      end
+
       it 'adds translations to exhibit navbar' do
         within '.translation-edit-form #general' do
           expect(page).to have_css '.help-block', text: 'Home'
@@ -68,15 +77,6 @@ describe 'Translation editing', type: :feature do
         expect(exhibit.main_navigations.browse.label).to eq 'parcourir ceci!'
         expect(I18n.t(:'spotlight.curation.nav.home')).to eq 'Maison'
         I18n.locale = I18n.default_locale
-      end
-
-      before do
-        exhibit.searches.first.update(published: true)
-        within '.translation-edit-form #general' do
-          fill_in 'Home', with: 'Maison'
-          fill_in 'Browse', with: 'parcourir ceci!'
-          click_button 'Save changes'
-        end
       end
 
       it 'adds translations to user-facing breadcrumbs' do

@@ -24,6 +24,7 @@ module Spotlight
 
     def thumbnail_image_url
       return unless thumbnail && thumbnail.iiif_url
+
       thumbnail.iiif_url
     end
 

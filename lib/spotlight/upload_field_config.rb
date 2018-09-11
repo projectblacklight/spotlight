@@ -21,6 +21,7 @@ module Spotlight
     # Allows a proc to be set as the label
     def label
       return @label.call if @label.is_a?(Proc)
+
       @label
     end
   end

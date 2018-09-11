@@ -54,11 +54,13 @@ module Spotlight
 
       def add_thumbnail_url
         return unless thumbnail_field && manifest['thumbnail'].present?
+
         solr_hash[thumbnail_field] = manifest['thumbnail']['@id']
       end
 
       def add_full_image_urls
         return unless full_image_field && full_image_url
+
         solr_hash[full_image_field] = full_image_url
       end
 
@@ -82,10 +84,12 @@ module Spotlight
       def manifest_metadata
         metadata = metadata_class.new(manifest).to_solr
         return {} unless metadata.present?
+
         create_sidecars_for(*metadata.keys)
 
         metadata.each_with_object({}) do |(key, value), hash|
           next unless (field = exhibit_custom_fields[key])
+
           hash[field.field] = value
         end
       end
@@ -93,6 +97,7 @@ module Spotlight
       def json_ld_value(value)
         return value['@value'] if value.is_a?(Hash)
         return value.find { |v| v['@language'] == default_json_ld_language }.try(:[], '@value') if value.is_a?(Array)
+
         value
       end
 
@@ -119,6 +124,7 @@ module Spotlight
       def image_urls
         @image_urls ||= resources.map do |resource|
           next unless resource && !resource.service.empty?
+
           image_url = resource.service['@id']
           image_url << '/info.json' unless image_url.downcase.ends_with?('/info.json')
           image_url
@@ -201,6 +207,7 @@ module Spotlight
 
           metadata.each_with_object({}) do |md, hash|
             next unless md['label'] && md['value']
+
             hash[md['label']] ||= []
             hash[md['label']] += Array(md['value'])
           end
@@ -210,6 +217,7 @@ module Spotlight
           manifest_fields.each_with_object({}) do |field, hash|
             next unless manifest.respond_to?(field) &&
                         manifest.send(field).present?
+
             hash[field.capitalize] ||= []
             hash[field.capitalize] += Array(manifest.send(field))
           end

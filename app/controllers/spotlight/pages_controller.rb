@@ -111,6 +111,7 @@ module Spotlight
 
     def undo_link
       return unless can? :manage, @page
+
       view_context.link_to(t(:'spotlight.versions.undo'), revert_version_path(@page.versions.last), method: :post)
     end
 

@@ -346,7 +346,7 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   it 'is expected to be versioned' do
-    is_expected.to be_versioned
+    expect(subject).to be_versioned
   end
   describe 'translatable fields' do
     let(:persisted_exhibit) { FactoryBot.create(:exhibit, title: 'Sample', subtitle: 'SubSample', description: 'Description') }

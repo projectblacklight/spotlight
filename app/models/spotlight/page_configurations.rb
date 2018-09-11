@@ -73,6 +73,7 @@ module Spotlight
 
     def page_preview_url
       return unless page.persisted?
+
       spotlight.exhibit_preview_block_path(current_exhibit, page)
     end
 

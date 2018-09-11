@@ -86,6 +86,7 @@ module Spotlight
 
     def document_index_view_type
       return super if params[:view].present?
+
       if @search && @search.default_index_view_type.present?
         blacklight_config.view[@search.default_index_view_type].key
       else

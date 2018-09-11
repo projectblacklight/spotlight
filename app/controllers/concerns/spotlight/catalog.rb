@@ -14,6 +14,7 @@ module Spotlight
     # if the user is a curator
     def add_facet_visibility_field
       return unless current_exhibit && can?(:curate, current_exhibit)
+
       blacklight_config.add_facet_field 'exhibit_visibility',
                                         label: I18n.t(:'spotlight.catalog.facets.exhibit_visibility.label'),
                                         query: {

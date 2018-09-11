@@ -90,6 +90,7 @@ module Spotlight
 
       def commit
         return unless write?
+
         blacklight_solr.commit
       rescue => e
         Rails.logger.warn "Unable to commit to solr: #{e}"

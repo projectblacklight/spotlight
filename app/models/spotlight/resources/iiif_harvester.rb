@@ -25,6 +25,7 @@ module Spotlight
         req = Faraday.head(url)
         req = Faraday.get(url) if req.status == 405
         return unless req.success?
+
         valid_content_types.any? do |valid_type|
           req.headers['content-type'].include?(valid_type)
         end
