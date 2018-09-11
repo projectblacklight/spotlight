@@ -49,11 +49,13 @@ module Migration
     # as copy the file over to the correct directory given the new class name
     def copy_exhibit_thumbnail_from_featured_image(image)
       return unless Spotlight::Exhibit.where(thumbnail_id: image.id).any?
+
       filename = image.read_attribute_before_type_cast('image')
       filepath = "public/#{image.image.store_dir}/#{filename}"
       image.becomes!(Spotlight::ExhibitThumbnail)
       image.save
       return unless filename.present? && File.exist?(filepath)
+
       old_file = File.new(filepath)
       # AR + STI seems to require that we re-query for this
       # otherwise we get an association miss-match
@@ -66,6 +68,7 @@ module Migration
       filename = contact.read_attribute_before_type_cast('avatar')
       filepath = "public/uploads/spotlight/contact/avatar/#{contact.id}/#{filename}"
       return unless filename.present? && File.exist?(filepath)
+
       old_file = File.new(filepath)
       image = contact.create_avatar { |i| i.image.store!(old_file) }
       iiif_tilesource = riiif.info_path(image.id)
@@ -75,9 +78,11 @@ module Migration
 
     def copy_upload_to_featured_image(upload)
       return unless upload.exhibit # We need exhibit context to re-index, and you can't find an item not in an exhibit
+
       filename = upload.read_attribute_before_type_cast('url')
       filepath = "public/uploads/spotlight/resources/upload/url/#{upload.id}/#{filename}"
       return unless filename.present? && File.exist?(filepath)
+
       old_file = File.new(filepath)
       image = upload.create_upload { |i| i.image.store!(old_file) }
       iiif_tilesource = riiif.info_path(image.id)
@@ -95,6 +100,7 @@ module Migration
 
     def coordinates(image)
       return unless image.image_crop_x.present?
+
       [image.image_crop_x, image.image_crop_y, image.image_crop_w, image.image_crop_h].join(',')
     end
 

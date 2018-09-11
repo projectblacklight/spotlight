@@ -16,7 +16,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
   end
 
   it 'is expected to be versioned' do
-    is_expected.to be_versioned
+    expect(subject).to be_versioned
   end
 
   it 'touches the exhibit' do

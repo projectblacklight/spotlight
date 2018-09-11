@@ -15,6 +15,7 @@ module Spotlight
 
     def iiif_url
       return unless iiif_service_base.present?
+
       [iiif_service_base, iiif_region || 'full', image_size.join(','), '0', 'default.jpg'].join('/')
     end
 
@@ -49,6 +50,7 @@ module Spotlight
 
     def set_tilesource_from_uploaded_resource
       return if iiif_tilesource
+
       riiif = Riiif::Engine.routes.url_helpers
       self.iiif_tilesource = riiif.info_path(id)
       save
@@ -60,6 +62,7 @@ module Spotlight
 
     def iiif_service_base
       return unless iiif_tilesource
+
       iiif_tilesource.sub('/info.json', '')
     end
   end

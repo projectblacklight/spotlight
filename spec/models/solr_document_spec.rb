@@ -1,11 +1,12 @@
 describe SolrDocument, type: :model do
   let(:document) { described_class.new(id: 'abcd123') }
   subject { document }
-  its(:to_key) { should == ['abcd123'] }
-  its(:persisted?) { should be_truthy }
   before do
     allow(subject).to receive_messages(reindex: nil)
   end
+
+  its(:to_key) { should == ['abcd123'] }
+  its(:persisted?) { should be_truthy }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_alt) { FactoryBot.create(:exhibit) }

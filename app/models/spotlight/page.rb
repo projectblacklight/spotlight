@@ -70,6 +70,7 @@ module Spotlight
 
     def thumbnail_image_url
       return unless thumbnail && thumbnail.iiif_url
+
       thumbnail.iiif_url
     end
 
@@ -113,6 +114,7 @@ module Spotlight
 
     def updated_after?(other_page)
       return false unless other_page
+
       updated_at > other_page.updated_at
     end
 
@@ -139,6 +141,7 @@ module Spotlight
     def update_translated_pages_weights_and_parent_page
       return unless locale.to_sym == I18n.default_locale
       return unless saved_change_to_weight? || saved_change_to_parent_page_id?
+
       update_params = {}
       update_params[:weight] = weight if saved_change_to_weight?
       update_params[:parent_page_id] = parent_page_id if saved_change_to_parent_page_id?

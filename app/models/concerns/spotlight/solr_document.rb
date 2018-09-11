@@ -68,6 +68,7 @@ module Spotlight
 
     def update_exhibit_resource(resource_attributes)
       return unless resource_attributes && resource_attributes['url']
+
       uploaded_resource.upload.update image: resource_attributes['url']
     end
 

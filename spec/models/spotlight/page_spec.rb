@@ -16,7 +16,7 @@ describe Spotlight::Page, type: :model do
   end
 
   it 'is expected to be versioned' do
-    is_expected.to be_versioned
+    expect(subject).to be_versioned
   end
 
   describe '#top_level_page?' do
