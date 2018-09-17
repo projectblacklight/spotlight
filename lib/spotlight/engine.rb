@@ -1,9 +1,8 @@
-# Load blacklight which will give spotlight views a higher preference than those in blacklight
-
 # devise must be required to first to ensure we can override devise and invitable views in spotlight correctly
 require 'devise'
 require 'devise_invitable'
 
+# Load blacklight which will give spotlight views a higher preference than those in blacklight
 require 'blacklight'
 require 'blacklight/oembed'
 require 'autoprefixer-rails'
@@ -112,6 +111,7 @@ module Spotlight
 
     # The allowed file extensions for uploading non-repository items.
     config.allowed_upload_extensions = %w(jpg jpeg png)
+    config.upload_dir = config.root.join('public', 'uploads')
 
     # Suffixes for exhibit-specific solr fields
     config.solr_fields = OpenStruct.new
