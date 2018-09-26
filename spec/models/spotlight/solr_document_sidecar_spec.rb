@@ -13,5 +13,18 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
     its(:to_solr) { should include id: 'doc_id' }
     its(:to_solr) { should include "exhibit_#{exhibit.slug}_public_bsi".to_sym => true }
     its(:to_solr) { should include 'a_tesim', 'b_tesim', 'c_tesim' }
+
+    context 'with an uploaded item' do
+      before do
+        subject.data = { 'configured_fields' => { 'some_configured_field' => 'some value' } }
+        allow(Spotlight::Resources::Upload).to receive(:fields).with(exhibit).and_return([uploaded_field_config])
+      end
+
+      let(:uploaded_field_config) do
+        Spotlight::UploadFieldConfig.new(field_name: 'some_configured_field', additional_solr_fields: ['an_additional_field'])
+      end
+
+      its(:to_solr) { should include 'some_configured_field' => 'some value', 'an_additional_field' => 'some value' }
+    end
   end
 end

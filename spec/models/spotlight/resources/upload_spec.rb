@@ -5,7 +5,7 @@ describe Spotlight::Resources::Upload, type: :model do
   let(:doc_builder) { resource.document_builder }
 
   let(:configured_fields) { [title_field] + described_class.fields(exhibit) }
-  let(:title_field) { OpenStruct.new(field_name: 'configured_title_field') }
+  let(:title_field) { Spotlight::UploadFieldConfig.new(field_name: 'configured_title_field') }
   let(:upload_data) do
     {
       title_field.field_name => 'Title Data',
