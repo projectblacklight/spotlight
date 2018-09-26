@@ -72,7 +72,7 @@ module Spotlight
         field_name = field.field_name.to_s
         next unless configured_fields && configured_fields[field_name].present?
 
-        solr_fields = Array(field.solr_field || field.field_name)
+        solr_fields = field.solr_fields || Array(field.solr_field || field.field_name)
 
         solr_fields.each do |solr_field|
           solr_hash[solr_field] = configured_fields[field_name]
