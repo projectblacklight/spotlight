@@ -30,7 +30,7 @@ describe Spotlight::Resources::Upload, type: :model do
   end
 
   context 'with a custom upload title field' do
-    let(:title_field) { Spotlight::UploadFieldConfig.new(field_name: 'configured_title_field', solr_field: :some_other_field) }
+    let(:title_field) { Spotlight::UploadFieldConfig.new(field_name: 'configured_title_field', solr_fields: [:some_other_field]) }
     subject { doc_builder.to_solr }
 
     describe '#to_solr' do

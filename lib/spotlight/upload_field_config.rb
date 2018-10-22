@@ -8,7 +8,7 @@ module Spotlight
   # We should look into changing this to a standard blacklight field config in Blacklight 7
   class UploadFieldConfig
     attr_reader :blacklight_options, :field_name, :form_field_type, :solr_fields
-    def initialize(blacklight_options: {}, field_name:, form_field_type: :text_field, label: nil, solr_fields: [])
+    def initialize(blacklight_options: {}, field_name:, form_field_type: :text_field, label: nil, solr_fields: nil)
       @blacklight_options = blacklight_options
       @field_name = field_name
       @form_field_type = form_field_type
