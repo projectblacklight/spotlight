@@ -5,7 +5,7 @@ describe Spotlight::Resources::Upload, type: :model do
   let(:doc_builder) { resource.document_builder }
 
   let(:configured_fields) { [title_field] + described_class.fields(exhibit) }
-  let(:title_field) { OpenStruct.new(field_name: 'configured_title_field') }
+  let(:title_field) { Spotlight::UploadFieldConfig.new(field_name: 'configured_title_field') }
   let(:upload_data) do
     {
       title_field.field_name => 'Title Data',
@@ -30,7 +30,7 @@ describe Spotlight::Resources::Upload, type: :model do
   end
 
   context 'with a custom upload title field' do
-    let(:title_field) { OpenStruct.new(field_name: 'configured_title_field', solr_field: :some_other_field) }
+    let(:title_field) { Spotlight::UploadFieldConfig.new(field_name: 'configured_title_field', solr_fields: [:some_other_field]) }
     subject { doc_builder.to_solr }
 
     describe '#to_solr' do
@@ -43,7 +43,7 @@ describe Spotlight::Resources::Upload, type: :model do
   context 'multiple solr field mappings' do
     let :configured_fields do
       [
-        OpenStruct.new(field_name: 'some_field', solr_field: %w(a b))
+        Spotlight::UploadFieldConfig.new(field_name: 'some_field', solr_fields: %w(a b))
       ]
     end
 
@@ -55,6 +55,7 @@ describe Spotlight::Resources::Upload, type: :model do
       subject { doc_builder.to_solr }
 
       it 'maps a single uploaded field to multiple solr fields' do
+        expect(subject).not_to include 'some_field'
         expect(subject['a']).to eq 'value'
         expect(subject['b']).to eq 'value'
       end

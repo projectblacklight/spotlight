@@ -44,7 +44,7 @@ these collections.)
   s.add_dependency 'legato'
   s.add_dependency 'signet'
   s.add_dependency 'oauth2'
-  s.add_dependency 'paper_trail', '>= 7.0'
+  s.add_dependency 'paper_trail', '~> 10.0'
   s.add_dependency 'openseadragon'
   s.add_dependency 'clipboard-rails', '~> 1.5'
   s.add_dependency 'almond-rails', '~> 0.1'
@@ -65,7 +65,7 @@ these collections.)
   s.add_development_dependency 'capybara', '~> 3'
   s.add_development_dependency 'rubocop', '~> 0.54'
   s.add_development_dependency 'rubocop-rspec', '~> 1.25'
-  s.add_development_dependency 'chromedriver-helper'
+  s.add_development_dependency 'chromedriver-helper', '< 2.0.0' # 2.1.0 is causing "Unable to find chromedriver" on Travis
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'factory_bot', '~> 4.5'
   s.add_development_dependency 'engine_cart', '~> 2.0'
