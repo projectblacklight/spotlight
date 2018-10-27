@@ -5,8 +5,8 @@ describe 'spotlight/exhibits/edit', type: :view do
     allow(view).to receive_messages(
       current_exhibit: exhibit,
       can?: true,
-      import_exhibit_path:  '/',
-      get_exhibit_path:     '/',
+      import_exhibit_path: '/',
+      get_exhibit_path: '/',
       exhibit_filters_path: '/',
       exhibit_languages_path: '/',
       add_exhibit_language_dropdown_options: [],
