@@ -3,7 +3,7 @@ module Spotlight
   # Base page class. See {Spotlight::AboutPage}, {Spotlight::FeaturePage}, {Spotlight::HomePage}
   # rubocop:disable Metrics/ClassLength
   class Page < ActiveRecord::Base
-    MAX_PAGES = 50
+    MAX_PAGES = 1000
 
     extend FriendlyId
     friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: [:exhibit, :locale]

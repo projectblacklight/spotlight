@@ -35,9 +35,9 @@ describe Spotlight::FeaturePage, type: :model do
   describe 'weight' do
     let(:good_weight) { FactoryBot.build(:feature_page, weight: 10, exhibit: exhibit) }
     let(:low_weight) { FactoryBot.build(:feature_page, weight: -1, exhibit: exhibit) }
-    let(:high_weight) { FactoryBot.build(:feature_page, weight: 51, exhibit: exhibit) }
-    it 'defaults to 50' do
-      expect(described_class.new.weight).to eq 50
+    let(:high_weight) { FactoryBot.build(:feature_page, weight: 1200, exhibit: exhibit) }
+    it 'defaults to 1000' do
+      expect(described_class.new.weight).to eq 1000
     end
     it 'validates when in the 0 to 50 range' do
       expect(good_weight).to be_valid
@@ -48,7 +48,7 @@ describe Spotlight::FeaturePage, type: :model do
       expect(high_weight).to_not be_valid
     end
     it 'settable valid maximum' do
-      stub_const('Spotlight::Page::MAX_PAGES', 51)
+      stub_const('Spotlight::Page::MAX_PAGES', 2000)
       expect(high_weight).to be_valid
     end
   end
