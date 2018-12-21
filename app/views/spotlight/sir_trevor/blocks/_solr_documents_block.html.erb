@@ -17,12 +17,12 @@
             <% end %>
             <% if solr_documents_block.primary_caption? %>
               <div class="caption primary-caption">
-                <%= doc_presenter.field_value solr_documents_block.primary_caption_field %>
+                <%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_block.primary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_block.primary_caption_field)) %>
               </div>
             <% end %>
             <% if solr_documents_block.secondary_caption? %>
               <div class="caption secondary-caption">
-                <%= doc_presenter.field_value solr_documents_block.secondary_caption_field %>
+                <%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_block.secondary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_block.secondary_caption_field)) %>
               </div>
             <% end %>
             <% if solr_documents_block.zpr_link? && block_options[:iiif_tilesource].present? %>

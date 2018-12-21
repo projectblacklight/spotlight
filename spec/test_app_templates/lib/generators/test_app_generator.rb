@@ -10,8 +10,8 @@ class TestAppGenerator < Rails::Generators::Base
   end
 
   def add_gems
-    gem 'blacklight', '~> 6.0'
-    gem 'blacklight-gallery', '>= 0.3.0'
+    gem 'blacklight', '~> 7.0', github: 'projectblacklight/blacklight'
+    gem 'blacklight-gallery', '>= 0.3.0', github: 'projectblacklight/blacklight-gallery'
     Bundler.with_clean_env do
       run 'bundle install'
     end

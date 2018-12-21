@@ -18,12 +18,12 @@
         <div class="carousel-caption">
           <% if solr_documents_carousel_block.primary_caption? %>
             <h3 class="primary">
-              <%= doc_presenter.field_value solr_documents_carousel_block.primary_caption_field %>
+              <%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_block.primary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_block.primary_caption_field)) %>
             </h3>
           <% end %>
           <% if solr_documents_carousel_block.secondary_caption? %>
             <div class="secondary">
-              <%= doc_presenter.field_value solr_documents_carousel_block.secondary_caption_field %>
+              <%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_block.secondary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_block.secondary_caption_field)) %>
             </div>
           <% end %>
         </div>

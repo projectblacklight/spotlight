@@ -21,11 +21,11 @@
 
             <% indicators << capture do %>
               <li data-target="#<%= html_id %>" data-slide-to="<%= index %>" class="list-group-item <%= 'active' if index == 0 %>">
-                <a href="#" title="<%= (caption_text = doc_presenter.field_value(solr_documents_features_block.primary_caption? ? solr_documents_features_block.primary_caption_field : document_show_link_field(document))) %>">
+                <a href="#" title="<%= (caption_text = doc_presenter.field_value(blacklight_config.index_fields[solr_documents_features_block.primary_caption? ? solr_documents_features_block.primary_caption_field : document_show_link_field(document)] || Blacklight::Configuration::NullField.new(solr_documents_features_block.primary_caption? ? solr_documents_features_block.primary_caption_field : document_show_link_field(document)))) %>">
                   <%= truncate(caption_text, length: 95) %>
                 </a>
                 <% if solr_documents_features_block.secondary_caption? %>
-                  <p><%= doc_presenter.field_value solr_documents_features_block.secondary_caption_field %></p>
+                  <p><%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_features_block.secondary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_features_block.secondary_caption_field)) %></p>
                 <% end %>
               </li>
             <% end %>

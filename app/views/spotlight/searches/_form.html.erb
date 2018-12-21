@@ -38,11 +38,16 @@
             <%= f.radio_button :default_index_view_type, view, label: view_label(view) %>
           <% end %>
         <% end %>
-        <%= f.static_control label: t(:".query_params") do %>
-          <div class="well well-sm">
-            <%= render_constraints(@search.query_params) %>
+        <% unless @search.query_params.blank? %>
+          <div class="form-group">
+            <label class="col-md-2 col-sm-2 form-control-label"><%= t(:".query_params") %></label>
+            <div class="col-md-7 col-sm-7">
+              <div class="appliedParams well well-sm">
+                <%= render_constraints(@search.query_params) %>
+              </div>
+            </div>
           </div>
-        <% end unless @search.query_params.blank? %>
+        <% end %>
       </div>
       <div role="tabpanel" class="tab-pane" id="search-masthead">
         <%= f.fields_for :masthead, (@search.masthead || @search.build_masthead) do |m| %>
