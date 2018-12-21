@@ -2,6 +2,7 @@ ENV['RAILS_ENV'] ||= 'test'
 require 'factory_bot'
 require 'devise'
 require 'engine_cart'
+require 'chromedriver-helper'
 EngineCart.load_application!
 
 Internal::Application.config.active_job.queue_adapter = :inline

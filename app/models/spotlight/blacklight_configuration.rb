@@ -1,4 +1,4 @@
-require 'blacklight/utils'
+require 'blacklight/open_struct_with_hash_access'
 
 module Spotlight
   ##
@@ -68,7 +68,7 @@ module Spotlight
     def blacklight_config
       @blacklight_config ||= begin
         # Create a new config based on the defaults
-        config = default_blacklight_config.inheritable_copy
+        config = default_blacklight_config.inheritable_copy(self.class)
 
         config.show.merge! show unless show.blank?
         config.index.merge! index unless index.blank?

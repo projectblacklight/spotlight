@@ -6,8 +6,7 @@ module Spotlight
   # This is an example of how you could integrate external indexing
   # workflows with exhibit-specific content
   class SolrController < Spotlight::ApplicationController
-    include Blacklight::SearchHelper
-
+    include Spotlight::SearchHelper
     before_action :authenticate_user!
     before_action :validate_writable_index!
 

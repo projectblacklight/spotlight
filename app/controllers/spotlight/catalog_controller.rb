@@ -53,7 +53,7 @@ module Spotlight
     # results when a partial match is passed in the "q" parameter.
     def autocomplete
       search_params = params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field)
-      (_, @document_list) = search_results(search_params.merge(public: true, rows: 100))
+      (_, @document_list) = search_service.search_results(search_params.merge(public: true, rows: 100))
 
       respond_to do |format|
         format.json do
@@ -65,7 +65,7 @@ module Spotlight
     def admin
       add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
       add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_path(@exhibit)
-      (@response, @document_list) = search_results(params)
+      (@response, @document_list) = search_service.search_results(params)
       @filters = params[:f] || []
 
       respond_to do |format|
@@ -74,7 +74,7 @@ module Spotlight
     end
 
     def update
-      @response, @document = fetch params[:id]
+      @response, @document = search_service.fetch params[:id]
       @document.update(current_exhibit, solr_document_params)
       @document.save
 
@@ -84,11 +84,11 @@ module Spotlight
     end
 
     def edit
-      @response, @document = fetch params[:id]
+      @response, @document = search_service.fetch params[:id]
     end
 
     def make_private
-      @response, @document = fetch params[:id]
+      @response, @document = search_service.fetch params[:id]
       @document.make_private!(current_exhibit)
       @document.save
 
@@ -99,7 +99,7 @@ module Spotlight
     end
 
     def make_public
-      @response, @document = fetch params[:id]
+      @response, @document = search_service.fetch params[:id]
       @document.make_public!(current_exhibit)
       @document.save
 
@@ -110,7 +110,7 @@ module Spotlight
     end
 
     def manifest
-      _, document = fetch params[:id]
+      _, document = search_service.fetch params[:id]
 
       if document.uploaded_resource?
         render json: Spotlight::IiifManifestPresenter.new(document, self).iiif_manifest_json

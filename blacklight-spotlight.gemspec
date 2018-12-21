@@ -20,7 +20,7 @@ these collections.)
   s.required_ruby_version = '~> 2.3'
 
   s.add_dependency 'rails', '~> 5.1'
-  s.add_dependency 'blacklight', '~> 6.3'
+  s.add_dependency 'blacklight', '~> 7.0'
   s.add_dependency 'autoprefixer-rails'
   s.add_dependency 'cancancan'
   s.add_dependency 'sir_trevor_rails', '~> 0.5'
@@ -30,7 +30,7 @@ these collections.)
   s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 7'
   s.add_dependency 'friendly_id', '~> 5.2'
   s.add_dependency 'breadcrumbs_on_rails', '~> 3.0'
-  s.add_dependency 'blacklight-oembed', '>= 0.0.3'
+  # s.add_dependency 'blacklight-oembed', '>= 0.1'
   s.add_dependency 'devise', '>= 3.0'
   s.add_dependency 'devise_invitable', '~> 1.6'
   s.add_dependency 'roar', '~> 1.1'
@@ -54,7 +54,7 @@ these collections.)
   s.add_dependency 'iiif_manifest'
   s.add_dependency 'leaflet-rails'
   s.add_dependency 'i18n-active_record'
-  s.add_dependency 'i18n', '< 1.1' # pinned until Rails and i18n sort our compatibility https://github.com/rails/rails/pull/33574
+  s.add_dependency 'i18n'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.1'
@@ -65,7 +65,7 @@ these collections.)
   s.add_development_dependency 'capybara', '~> 3'
   s.add_development_dependency 'rubocop', '~> 0.54'
   s.add_development_dependency 'rubocop-rspec', '~> 1.25'
-  s.add_development_dependency 'chromedriver-helper', '< 2.0.0' # 2.1.0 is causing "Unable to find chromedriver" on Travis
+  s.add_development_dependency 'chromedriver-helper'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'factory_bot', '~> 4.5'
   s.add_development_dependency 'engine_cart', '~> 2.0'

@@ -11,6 +11,7 @@ module Spotlight
     load_and_authorize_resource through: :exhibit, instance_name: 'page', only: [:index]
 
     helper Openseadragon::OpenseadragonHelper
+    include Spotlight::SearchHelper
     include Spotlight::Base
     include Blacklight::SearchContext
 

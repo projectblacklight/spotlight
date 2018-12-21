@@ -1,2 +1,2 @@
 gem 'thor', '~> 0.20'
-gem 'i18n', '< 1.1' # pinned until Rails and i18n sort our compatibility https://github.com/rails/rails/pull/33574
+gem 'blacklight-oembed', '>= 0.1', github: 'sul-dlss/blacklight-oembed', branch: 'blacklight_7'

@@ -2,11 +2,11 @@ module Spotlight
   ##
   # CRUD actions for Blacklight search configuration
   class SearchConfigurationsController < Spotlight::ApplicationController
+    include Spotlight::SearchHelper
+
     before_action :authenticate_user!
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
     load_and_authorize_resource :blacklight_configuration, through: :exhibit, singleton: true, parent: false
-
-    include Blacklight::SearchHelper
 
     def show
       respond_to do |format|

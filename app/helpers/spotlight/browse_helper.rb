@@ -2,7 +2,7 @@ module Spotlight
   ##
   # Helper for browse views
   module BrowseHelper
-    include ::BlacklightConfigurationHelper
+    include Blacklight::ConfigurationHelperBehavior
     include Spotlight::RenderingHelper
 
     ##
