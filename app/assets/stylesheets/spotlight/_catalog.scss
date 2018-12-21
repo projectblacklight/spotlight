@@ -8,7 +8,7 @@
   }
 
   .document-thumbnail a > img {
-    border: 1px solid $gray-light;
+    border: 1px solid $gray-600;
     width: 60px;
     height: 60px;
     object-fit: cover;
@@ -30,8 +30,8 @@
   ul.tags {
     text-align: center;
     li {
-      @extend .label;
-      @extend .label-default;
+      @extend .badge;
+      @extend .badge-secondary;
       a {
         color: #fff;
       }
@@ -114,7 +114,7 @@ form.edit_solr_document {
   }
 
   .blacklight-exhibit_tags a {
-    @extend .label;
-    @extend .label-default;
+    @extend .badge;
+    @extend .badge-secondary;
   }
 }

@@ -31,7 +31,7 @@
   .callout {
     margin: 40px 0;
     padding: 2 * $padding-large-vertical;
-    border-left: 3px solid $gray-lighter;
+    border-left: 3px solid $gray-700;
     > p {
       padding-left: 0;
     }
@@ -41,15 +41,13 @@
     }
   }
   .callout-danger {
-    background-color: lighten($brand-danger, 40%);
-    border-color: $brand-danger;
+    background-color: lighten(theme-color("danger"), 40%);
+    border-color: theme-color("danger");
     h4 {
-      color: $brand-danger;
+      color: theme-color("danger");
     }
     a:hover, a:focus {
-      color: $btn-danger-color;
-      background-color: $btn-danger-bg;
-      border-color: $btn-danger-border;
+      @include button-variant(theme-color("danger"), theme-color("danger"))
     }
   }
 }
@@ -60,7 +58,7 @@
   }
 
   .constraint-value {
-     @include border-right-radius($border-radius-small);
+     @include border-right-radius($border-radius-sm);
   }
 
   .form-control-static { display: none; }

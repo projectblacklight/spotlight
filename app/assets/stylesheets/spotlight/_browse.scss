@@ -1,5 +1,5 @@
 $image-overlay-max-height: 300px;
-$image-overlay-bottom-margin: $padding-large-vertical * 3;
+$image-overlay-bottom-margin: 36px;
 
 @function category-min-height($overlay-max-height) {
   @return $overlay-max-height + $image-overlay-bottom-margin;
@@ -13,7 +13,7 @@ $image-overlay-bottom-margin: $padding-large-vertical * 3;
 .very-long-description-text {
   width: auto;
 
-  @media (min-width: $screen-sm-max) {
+  @media (min-width: grid-breakpoints("md")) {
     column-gap: 3em;
     column-width: 20em;
   }
@@ -33,8 +33,8 @@ $image-overlay-bottom-margin: $padding-large-vertical * 3;
   }
 
   .image-overlay {
-    border: 2px solid $gray-light;
-    border-radius: $border-radius-large;
+    border: 2px solid $gray-600;
+    border-radius: $border-radius-lg;
     margin-bottom: $image-overlay-bottom-margin;
     max-height: 240px;
     min-height: 140px;
@@ -61,7 +61,7 @@ $image-overlay-bottom-margin: $padding-large-vertical * 3;
     transform-style: preserve-3d;
 
     .browse-category-title {
-      font-size: $font-size-h3;
+      font-size: $h3-font-size;
       @extend %vertical-align;
 
       small {
@@ -77,28 +77,28 @@ $image-overlay-bottom-margin: $padding-large-vertical * 3;
     }
   }
 
-  @media screen and (max-width: $screen-xs-max) {
+  @media screen and (max-width: grid-breakpoints("sm")) {
     .image-overlay {
       margin: 10px auto;
       max-width: 350px;
     }
-    .text-overlay .browse-category-title {font-size: $font-size-h3;}
+    .text-overlay .browse-category-title {font-size: $h3-font-size;}
   }
-  @media screen and (min-width: $screen-sm-min) and (max-width: $screen-md-max) {
+  @media screen and (min-width: grid-breakpoints("sm")) and (max-width: grid-breakpoints("lg")) {
     $image-overlay-max-height: 250px;
     .category {min-height: category-min-height($image-overlay-max-height);}
-    .text-overlay .browse-category-title {font-size: $font-size-h4;}
+    .text-overlay .browse-category-title {font-size: $h4-font-size;}
   }
-  @media screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  @media screen and (min-width: grid-breakpoints("sm")) and (max-width: grid-breakpoints("md")) {
     $image-overlay-max-height: 180px;
     .category {min-height: category-min-height($image-overlay-max-height);}
     .image-overlay {max-height: $image-overlay-max-height;}
   }
-  @media screen and (max-width: $screen-sm-min) {
+  @media screen and (max-width: grid-breakpoints("sm")) {
     $image-overlay-max-height: 180px;
     .category {min-height: category-min-height($image-overlay-max-height);}
   }
-  @media screen and (min-width: $screen-lg-min) {
+  @media screen and (min-width: grid-breakpoints("lg")) {
     .category {min-height: category-min-height($image-overlay-max-height);}
     .image-overlay {max-height: $image-overlay-max-height;}
   }

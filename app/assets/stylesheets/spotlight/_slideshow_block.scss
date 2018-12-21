@@ -1,5 +1,5 @@
 .carousel-block {
-  
+
   .carousel-inner > .item > a > img {
     // center the image
     margin-left: auto;
@@ -15,13 +15,13 @@
     // fill left + right
     left: 0;
     right: 0;
-    
+
     // and add a nice background gradient to the captions
-    @include gradient-vertical($start-color: rgba(0,0,0,.0001), $end-color: rgba(0,0,0,.5));
+    @include gradient-y($start-color: rgba(0,0,0,.0001), $end-color: rgba(0,0,0,.5));
   }
 
   // Scale up controls for tablets and up
-  @media screen and (min-width: $screen-sm-min) {
+  @media screen and (min-width: grid-breakpoints("sm")) {
     // Show and left align the captions
     .carousel-caption {
       left: 0;
@@ -61,7 +61,7 @@
     }
 
     li {
-      display: relative; 
+      display: relative;
       width: 100%;
       height: auto;
       text-indent: 0;

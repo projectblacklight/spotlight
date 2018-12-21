@@ -34,12 +34,10 @@
 
 .masthead {
   background-color: $masthead-bg;
-  border-bottom: 1px solid $navbar-default-border;
+  border-bottom: 1px solid $border-color;
   margin-bottom: $padding-large-vertical * 2.5;
   padding: 0;
   position: relative;
-  // allow dropdowns in the top nav to stack above the masthead
-  z-index: $zindex-navbar - 1;
 
 
   .site-title {
@@ -49,7 +47,7 @@
   }
 
   small {
-    @extend .hidden-xs;
+    @extend .d-none;
 
     display: block;
     padding-bottom: $padding-base-vertical;
@@ -88,7 +86,7 @@
 }
 
 .site-title-container {
-  max-height: $masthead-height - $navbar-height;
+  max-height: $masthead-height - $navbar-brand-height;
   padding-bottom: $padding-large-vertical;
   padding-top: $padding-large-vertical;
 }
@@ -161,6 +159,6 @@
   }
 
   .glyphicon-search {
-    line-height: $line-height-computed;
+    line-height: $line-height-lg;
   }
 }
