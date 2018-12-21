@@ -6,10 +6,10 @@
       <div class="panel-heading page">
         <div class="main row">
           <div class="col-sm-8">
-            <%= p.hidden_field :id, value: page.id , class: 'form-control input-sm' %>
+            <%= p.hidden_field :id, value: page.id , class: 'form-control form-control-sm' %>
             <h3 class="panel-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
               <a href="#edit-in-place" class="field-label edit-in-place"><%= page.title %></a>
-              <%= p.hidden_field :title, value: page.title , class: 'form-control input-sm', data: {:"edit-field-target" => 'true'} %>
+              <%= p.hidden_field :title, value: page.title , class: 'form-control form-control-sm', data: {:"edit-field-target" => 'true'} %>
             </h3>
           </div>
           <div class="col-sm-4 page-links">
