@@ -315,7 +315,7 @@ describe 'Translation editing', type: :feature do
 
         visit spotlight.search_exhibit_catalog_path(exhibit, q: '*', locale: 'fr')
 
-        expect(page).to have_css('.dropdown-toggle', text: 'Trier par French Relevance', visible: true)
+        expect(page).to have_css('#sort-dropdown', text: 'Trier par French Relevance', visible: true)
       end
     end
   end

@@ -102,12 +102,12 @@ module Spotlight
     end
 
     def add_osd_viewer
-      gem 'blacklight-gallery', '>= 0.3.0'
+      gem 'blacklight-gallery', '>= 0.3.0', github: 'projectblacklight/blacklight-gallery'
       generate 'blacklight_gallery:install'
     end
 
     def add_oembed
-      gem 'blacklight-oembed', '>= 0.1.0'
+      gem 'blacklight-oembed', '>= 0.1', github: 'sul-dlss/blacklight-oembed', branch: 'blacklight_7'
       generate 'blacklight_oembed:install'
     end
 

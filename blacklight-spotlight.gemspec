@@ -22,7 +22,7 @@ these collections.)
   s.required_ruby_version = '~> 2.3'
 
   s.add_dependency 'rails', '~> 5.1'
-  s.add_dependency 'blacklight', '~> 6.20'
+  s.add_dependency 'blacklight', '~> 7.0'
   s.add_dependency 'autoprefixer-rails'
   s.add_dependency 'cancancan'
   s.add_dependency 'sir_trevor_rails', '~> 0.5'
@@ -32,7 +32,7 @@ these collections.)
   s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 7'
   s.add_dependency 'friendly_id', '~> 5.2'
   s.add_dependency 'breadcrumbs_on_rails', '~> 3.0'
-  s.add_dependency 'blacklight-oembed', '>= 0.0.3'
+  # s.add_dependency 'blacklight-oembed', '>= 0.1'
   s.add_dependency 'devise', '>= 3.0'
   s.add_dependency 'devise_invitable', '~> 1.6'
   s.add_dependency 'roar', '~> 1.1'

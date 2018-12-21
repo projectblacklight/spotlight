@@ -35,6 +35,10 @@ class CatalogController < ApplicationController
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
     config.show.partials.insert(1, :openseadragon)
 
+    config.add_results_collection_tool(:sort_widget)
+    config.add_results_collection_tool(:per_page_widget)
+    config.add_results_collection_tool(:view_type_group)
+
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
     #
