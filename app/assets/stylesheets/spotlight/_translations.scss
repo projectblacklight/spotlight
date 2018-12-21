@@ -17,17 +17,17 @@
 }
 
 .translation-subheading {
-  border-bottom: 1px solid $navbar-default-border;
+  border-bottom: 1px solid $border-color;
   margin-bottom: 20px;
 }
 
 .form-group.translation-form {
   .control-label {
-    padding-top: $panel-body-padding + $padding-base-vertical;
+    padding-top: $card-spacer-y + $padding-base-vertical;
   }
 
   .glyphicon-ok {
-    padding-top: $panel-body-padding + $padding-base-vertical;
+    padding-top: $card-spacer-y + $padding-base-vertical;
   }
 }
 
@@ -63,10 +63,10 @@
 }
 
 .browse-translations-header {
-  border-bottom: 1px solid $navbar-default-border;
-  color: $gray-light;
+  border-bottom: 1px solid $border-color;
+  color: $gray-600;
   display: block;
-  font-size: $font-size-h4;
+  font-size: $h4-font-size;
   font-weight: bold;
   margin-bottom: $padding-large-vertical * 2;
   margin-top: $padding-large-vertical;

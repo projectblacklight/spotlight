@@ -24,8 +24,8 @@
 }
 
 .st-block__inner {
-  border: 1px solid $gray-lighter;
-  box-shadow: 3px 3px 15px $gray-lighter;
+  border: 1px solid $gray-700;
+  box-shadow: 3px 3px 15px $gray-700;
   margin: 1em 20px;
   padding: 1.875em 1.875em 2.8em;
 }
@@ -66,20 +66,20 @@
 }
 
 .spotlight-block-controls {
-  border: 1px solid $gray-lighter;
+  border: 1px solid $gray-700;
   border-radius: 4px;
-  box-shadow: 3px 3px 15px $gray-lighter;
+  box-shadow: 3px 3px 15px $gray-700;
   margin: 1em 20px;
   padding: 1.875em 1.875em 2.8em 70px;
 }
 
 .st-block-controls__button {
   @extend .btn;
-  @extend .btn-default;
+  @extend .btn-secondary;
 
-  background-color: $btn-default-bg;
-  border: 1px solid $gray-lighter;
-  color: $btn-default-color;
+  background-color: theme-colors("secondary");
+  border: 1px solid $gray-700;
+  color: theme-colors("light");
 
   .st-icon {
     margin-left: auto;

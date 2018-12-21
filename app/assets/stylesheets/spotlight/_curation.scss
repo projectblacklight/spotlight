@@ -10,7 +10,7 @@
   display: inline-block;
   .input-field {
     input[type='text'] {
-      @extend .input-sm;
+      @extend .form-control-sm;
       height: auto;
       padding: 0 5px;
       width: 195px;
@@ -19,8 +19,8 @@
     }
     input[type='submit'] {
       @extend .btn;
-      @extend .btn-default;
-      @extend .btn-xs;
+      @extend .btn-secondary;
+      @extend .btn-sm;
     }
     display: none;
   }
@@ -171,7 +171,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 .spotlight-admin-thumbnail {
   position: relative;
-  .label {
+  .badge {
     position: absolute;
     top: 0;
     left: 0;
@@ -189,7 +189,7 @@ table#exhibit-specific-fields {
   margin-top: 1em;
   .field-label {
     min-width: 10em;
-    font-size: $font-size-h4;
+    font-size: $h4-font-size;
   }
   .field-description {
     font-size: $font-size-base;

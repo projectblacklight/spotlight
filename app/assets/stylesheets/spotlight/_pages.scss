@@ -23,9 +23,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: $panel-info-heading-bg;
+  background-color: theme-colors("secondary");
   padding: 3px 8px;
-  color: $panel-info-text;
+  color: $body-color;
   font-weight: bold;
 }
 
@@ -36,7 +36,7 @@
 
   .field-select {
     margin-bottom: $padding-large-vertical;
-    @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+    @media (min-width: grid-breakpoints("md")) and (max-width: grid-breakpoints("lg")) {
       margin-bottom: 2 * $padding-large-vertical;
 
       > select {
@@ -51,7 +51,7 @@
     margin-top: $padding-small-vertical;
   }
   h4 {
-    line-height: $line-height-large;
+    line-height: $line-height-lg;
   }
   .contacts-header {
     margin-top: 4 * $padding-large-vertical;
@@ -68,7 +68,7 @@
 
   ol.sidenav {
     li {
-      color: $gray-darker;
+      color: $gray-300;
       a {
         &:hover, &:focus {
           @include link-highlighting();
@@ -104,7 +104,7 @@
 
 .contact-photo {
   border: 1px solid #ccc;
-  border-radius: $border-radius-base;
+  border-radius: $border-radius;
   float: left;
   margin-right: 15px;
   margin-top: 3px;
@@ -132,8 +132,8 @@
     justify-content: space-between;
     align-content: stretch;
 
-    @media (max-width: $screen-sm-max) {
-      margin-bottom: $line-height-computed;
+    @media (max-width: grid-breakpoints("md")) {
+      margin-bottom: $line-height-lg;
     }
   }
 
@@ -145,25 +145,25 @@
     order: 1;
     padding: 5px;
 
-    @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+    @media (min-width: grid-breakpoints("md")) and (max-width: grid-breakpoints("lg")) {
       min-width: 128px;
     }
   }
 
   .thumbnail {
-    border: 1px solid $gray-lighter;
+    border: 1px solid $gray-700;
     border-radius: 0;
     margin: 0;
     padding: 0;
 
     img {
-      border: 1px solid $gray-light;
+      border: 1px solid $gray-600;
       width: 100%;
       height: 110px;
       object-fit: cover;
       overflow: hidden;
 
-      @media (min-width: $screen-lg-min) {
+      @media (min-width: grid-breakpoints("lg")) {
         height: 160px; // default: no sidebar, no text column
         // reduce height if on a page with a sidebar or text column, because will be less wide
         .col-md-9 & {
@@ -188,7 +188,7 @@
 
     .thumbnail img {
       height: 210px;
-      @media (min-width: $screen-lg-min) {
+      @media (min-width: grid-breakpoints("lg")) {
         height: 270px; // default: no sidebar, no text column
         // reduce height if on a page with a sidebar or text column, because will be less wide
         .col-md-9 & {
@@ -228,12 +228,12 @@
 }
 
 .oembed-block {
-  @media (max-width: $screen-sm-max) {
+  @media (max-width: grid-breakpoints("md")) {
     margin-bottom: $padding-base-horizontal;
   }
 
   iframe {
-    @media (min-width: $screen-md-min) {
+    @media (min-width: grid-breakpoints("md")) {
       max-width: 100%;
     }
   }
@@ -248,7 +248,7 @@
   .items-col {
     z-index: 1;
 
-    @media (max-width: $screen-sm-max) {
+    @media (max-width: grid-breakpoints("md")) {
       margin-bottom: 0;
     }
 
@@ -271,12 +271,12 @@
         img {
           max-height: 250px;
           object-fit: cover;
-          @media (max-width: $screen-sm-max) {
+          @media (max-width: grid-breakpoints("md")) {
             max-height: 175px;
           }
         }
 
-        @media (max-width: $screen-sm-max) {
+        @media (max-width: grid-breakpoints("md")) {
           -webkit-flex: 1 1 175px;
         }
       }
@@ -285,7 +285,7 @@
 }
 
 .item-features .carousel-indicators {
-  @media (max-width: $screen-xs-max) {
+  @media (max-width: grid-breakpoints("sm")) {
     width: 100%;
     margin-top: 2 * $padding-large-vertical;
   }

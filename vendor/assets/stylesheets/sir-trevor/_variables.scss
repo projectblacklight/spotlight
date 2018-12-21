@@ -1,23 +1,30 @@
 // Adjusted from upstream to use bootstrap's colors.
 
 $text-block-font-size: 1.275em;
-
+$text-color: $body-color;
 $text-block-font-color: $text-color;
-$accent-color: $btn-primary-bg;
-$base-ui-color: $gray;
-$light-ui-color: $gray-light;
-$blocks-control-bg-color: $panel-default-heading-bg;
-$blocks-control-border-color: $panel-default-border;
-$error-color: $brand-danger;
+$accent-color: theme-color("primary");
+$base-ui-color: theme-color("secondary");
+$light-ui-color: $gray-400;
+$blocks-control-bg-color: $card-cap-bg;
+$blocks-control-border-color: $card-border-color;
+$error-color: theme-color("danger");
 $selection-color: #B4D5FE;
 
 $inner-block-padding: $grid-gutter-width $grid-gutter-width $grid-gutter-width + 18px $grid-gutter-width;
 
 $block-controls-height: 164px;
-$block-add-height: $line-height-computed * 2;
+$block-add-height: $line-height-lg * 2;
 $block-controls-color:#9B9B9B;
 
 $border-size: 2px;
 $border-style: solid;
 $default-border: $border-size $border-style $accent-color;
 
+$padding-base-horizontal: $spacer;
+$padding-large-horizontal: $spacer;
+$padding-large-vertical: $spacer;
+$padding-base-vertical: $spacer;
+$padding-small-vertical: $spacer * 0.5;
+$padding-small-horizontal: $spacer * 0.25;
+$padding-xs-horizontal: $spacer * 0.1;

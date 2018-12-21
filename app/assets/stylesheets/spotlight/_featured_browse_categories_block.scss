@@ -1,6 +1,8 @@
-$featured-browse-category-border-color: $legend-border-color;
-$featured-browse-category-caption-color: $gray-lighter;
-
+$featured-browse-category-border-color: $border-color;
+$featured-browse-category-caption-color: $gray-700;
+$container-tablet: 720px;
+$container-desktop: 960px;
+$container-large-desktop: 1140px;
 // Large desktop
 $featured-browse-category-margin-large-desktop: 15px;
 $no-sidebar-large-desktop-large-image-width: floor(($container-large-desktop)/ 3) - $featured-browse-category-margin-large-desktop;
@@ -35,23 +37,23 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
   background-size: cover;
   background-position: center;
   border: 2px solid $featured-browse-category-border-color;
-  border-radius: $border-radius-large;
+  border-radius: $border-radius-lg;
   position: relative;
   float: left;
   background-repeat: no-repeat;
   .category-caption {
     color: $featured-browse-category-caption-color;
     position: absolute;
-    bottom: $line-height-computed;
+    bottom: $line-height-lg;
     text-align: center;
     text-shadow: 0 1px 0 #000000;
     width: 100%;
   }
   .category-title {
-    font-size: $font-size-large;
+    font-size: $font-size-lg;
     line-height: 1.2;
     margin: 0;
-    padding: $table-condensed-cell-padding;
+    padding: spacers(1);
   }
   .item-count {
     font-size: $font-size-base;
@@ -64,15 +66,15 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
     .browse-category {
       width: $no-sidebar-xs-image-width;
       height: $no-sidebar-xs-image-width * $aspect-ratio-factor-large-image;
-      @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+      @media (min-width: grid-breakpoints("sm")) and (max-width: grid-breakpoints("md")) {
         width: $no-sidebar-tablet-large-image-width;
         height: $no-sidebar-tablet-large-image-width * $aspect-ratio-factor-large-image;
       }
-      @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+      @media (min-width: grid-breakpoints("md")) and (max-width: grid-breakpoints("lg")) {
         width: $no-sidebar-desktop-large-image-width;
         height: $no-sidebar-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
-      @media (min-width: $screen-lg-min) {
+      @media (min-width: grid-breakpoints("lg")) {
         width: $no-sidebar-large-desktop-large-image-width;
         height: $no-sidebar-large-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
@@ -82,17 +84,17 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
     .browse-category {
       width: $no-sidebar-large-desktop-medium-image-width;
       height: $no-sidebar-large-desktop-medium-image-width * $aspect-ratio-factor-medium-image;
-      @media (max-width: $screen-xs-max) {
+      @media (max-width: grid-breakpoints("sm")) {
         width: $no-sidebar-xs-image-width;
         height: $no-sidebar-xs-image-width * $aspect-ratio-factor-medium-image;
       }
     }
     .category-4 {
-      @extend .hidden-sm;
+      @extend .d-sm-none;
     }
     .category-5 {
-      @extend .hidden-md;
-      @extend .hidden-sm;
+      @extend .d-md-none;
+      @extend .d-sm-none;
     }
   }
 }
@@ -102,15 +104,15 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
     .browse-category {
       width: $with-sidebar-xs-image-width;
       height: $with-sidebar-xs-image-width * $aspect-ratio-factor-large-image;
-      @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+      @media (min-width: grid-breakpoints("sm")) and (max-width: grid-breakpoints("md")) {
         width: $with-sidebar-tablet-large-image-width;
         height: $with-sidebar-tablet-large-image-width * $aspect-ratio-factor-large-image;
       }
-      @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+      @media (min-width: grid-breakpoints("md")) and (max-width: grid-breakpoints("lg")) {
         width: $with-sidebar-desktop-large-image-width;
         height: $with-sidebar-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
-      @media (min-width: $screen-lg-min) {
+      @media (min-width: grid-breakpoints("lg")) {
         width: $with-sidebar-large-desktop-large-image-width;
         height: $with-sidebar-large-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
@@ -120,11 +122,11 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
    .browse-category {
     width: $with-sidebar-desktop-medium-image-width;
     height: $with-sidebar-desktop-medium-image-width * $aspect-ratio-factor-medium-image;
-      @media (max-width: $screen-xs-max) {
+      @media (max-width: grid-breakpoints("sm")) {
         width: $with-sidebar-xs-image-width;
         height: $with-sidebar-xs-image-width * $aspect-ratio-factor-medium-image;
       }
-      @media (min-width: $screen-lg-min) {
+      @media (min-width: grid-breakpoints("lg")) {
         width: $with-sidebar-large-desktop-medium-image-width;
         height: $with-sidebar-large-desktop-medium-image-width * $aspect-ratio-factor-medium-image;
       }
