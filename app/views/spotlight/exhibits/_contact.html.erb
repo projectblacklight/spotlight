@@ -12,7 +12,7 @@
           <div class="col-md-4">
             <% if contact.object.id %>
               <span class="contact-email-delete-wrapper">
-                <%= link_to exhibit_contact_email_path(exhibit_id: exhibit.id, id: contact.object.id), class: 'contact-email-delete btn btn-xs btn-danger', method: :delete, data: { confirm: t('.email_delete_confirmation'), remote: true } do %>
+                <%= link_to exhibit_contact_email_path(exhibit_id: exhibit.id, id: contact.object.id), class: 'contact-email-delete btn btn-sm btn-danger', method: :delete, data: { confirm: t('.email_delete_confirmation'), remote: true } do %>
                   <%= t('.email_delete_button') %>
                 <% end %>
               </span>
