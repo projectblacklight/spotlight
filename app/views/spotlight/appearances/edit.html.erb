@@ -87,7 +87,7 @@
                               </div>
                             </div>
                             <div class="col-sm-4">
-                              <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn restore-default btn-default btn-sm pull-right #{'hidden' if label.object.label.blank? || label.object.label == label.object.default_label}" %>
+                              <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn restore-default btn-secondary btn-sm pull-right #{'hidden' if label.object.label.blank? || label.object.label == label.object.default_label}" %>
                             </div>
                           </div>
                           <%= label.hidden_field :weight, data: {property: "weight"} %>

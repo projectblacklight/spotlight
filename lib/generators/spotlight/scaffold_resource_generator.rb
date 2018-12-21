@@ -44,7 +44,7 @@ module Spotlight
         <%= f.text_field :url  %>
         <div class="form-actions">
           <div class="primary-actions">
-            <%= cancel_link @resource, :back, class: 'btn btn-default' %>
+            <%= cancel_link @resource, :back, class: 'btn btn-secondary' %>
             <%= f.submit t('.add_item'), class: 'btn btn-primary' %>
           </div>
         </div>

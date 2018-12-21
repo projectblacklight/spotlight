@@ -115,7 +115,7 @@ module Spotlight
     def select_deselect_button
       button_tag(
         t(:".deselect_all"),
-        class: 'btn btn-default btn-xs metadata-select',
+        class: 'btn btn-secondary btn-sm metadata-select',
         data: {
           behavior: 'metadata-select',
           'deselect-text' => t(:".deselect_all"),

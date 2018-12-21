@@ -43,7 +43,7 @@
 
     <div class="form-actions">
       <div class="primary-actions">
-        <%= link_to(t('.add'), 'javascript:;', class: 'btn btn-default', data: { behavior: 'new-user' }) %>
+        <%= link_to(t('.add'), 'javascript:;', class: 'btn btn-secondary', data: { behavior: 'new-user' }) %>
       </div>
     </div>
   <% end %>
@@ -51,7 +51,7 @@
   <p class="instructions"><%= t :'.all_users' %></p>
   <div id="all_users" class="well well-sm">
       <div class='btn-toolbar pull-right'>
-          <button class="btn btn-xs btn-default copy-email-addresses" data-clipboard-target="#all_users">
+          <button class="btn btn-sm btn-secondary copy-email-addresses" data-clipboard-target="#all_users">
               <%= t('.copy') %>
           </button>
       </div>
