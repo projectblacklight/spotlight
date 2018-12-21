@@ -5,7 +5,7 @@
 .page-header {
   border-bottom: none;
   small {
-    font-size: $font-size-h2;
+    font-size: $h2-font-size;
     display: block;
     margin-top: $padding-base-vertical;
   }
@@ -36,15 +36,15 @@
 
 .nav-heading {
   margin: 0;
-  padding: $nav-link-padding;
+  padding:$nav-link-padding-x $nav-link-padding-y;
 }
 
 .btn-nav {
-  margin: $nav-link-padding;
+  margin:$nav-link-padding-x $nav-link-padding-y;
 }
 
 h1,h2,h3,h4,h5,h6 {
-  .label {
+  .badge {
     font-size: $font-size-base;
     vertical-align: super;
   }
@@ -59,7 +59,7 @@ label.radio {
 }
 
 #main-container .nav {
-  margin-bottom: $line-height-computed;
+  margin-bottom: $line-height-lg;
 }
 
 .tab-pane {
@@ -78,7 +78,7 @@ label.radio {
   }
 }
 
-@media (max-width: $screen-sm-max) {
+@media (max-width: grid-breakpoints("md")) {
   aside.col-md-3 {
     padding-left: 0;
   }

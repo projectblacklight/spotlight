@@ -40,7 +40,7 @@
   @extend .h5;
   @extend .text-center;
 
-  font-size: $font-size-h4;
+  font-size: $h4-font-size;
   line-height: 1.2;
 }
 
@@ -61,7 +61,7 @@
   }
 
   .unpublished {
-    @extend .center-block;
+    @extend .mx-auto;
 
     font-size: $font-size-base;
     margin-top: -1em;
@@ -93,7 +93,7 @@
   }
 
   .description {
-    font-size: $font-size-h6;
+    font-size: $h6-font-size;
   }
 
   .visit-exhibit {
@@ -106,8 +106,11 @@
   display: inline-block;
 }
 
+$container-sm: 540px;
+$container-md: 720px;
+
 // between the small and medium breakpoints, reduce the size of the image by a little bit
-@media (min-width: $screen-sm-min) and (max-width: $screen-md-max) {
+@media (min-width: grid-breakpoints("sm")) and (max-width: grid-breakpoints("lg")) {
 
   // calculate the size of one full grid column
   $reduce-exhibit-card-image-size: ((($container-sm - $grid-gutter-width) / $grid-columns) - ($grid-gutter-width / 2));
@@ -136,19 +139,19 @@
 }
 
 // For the medium breakpoint, reduce the max width of the .exhibit-card to align right-edge of row correctly
-@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+@media (min-width: grid-breakpoints("md")) and (max-width: grid-breakpoints("lg")) {
   .exhibit-card {
 
     // each card is 3 columns wide
-    max-width: 3 * ($container-md / $grid-columns) - $padding-xs-horizontal;
+    max-width: 3 * ($container-md / $grid-columns) - 5px;
   }
 }
 
 // For the small breakpoint, reduce the max width of the .exhibit-card to align right-edge of row correctly
-@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+@media (min-width: grid-breakpoints("sm")) and (max-width: grid-breakpoints("md")) {
   .exhibit-card {
 
     // each card is 4 columns wide
-    max-width: 4 * ($container-sm / $grid-columns) - $padding-xs-horizontal;
+    max-width: 4 * ($container-sm / $grid-columns) - 5px;
   }
 }

@@ -1,5 +1,5 @@
 @mixin link-highlighting() {
-  background-color: $nav-link-hover-bg;
+  // background-color: $nav-link-hover-bg;
   text-decoration: none;
 }
 
@@ -9,13 +9,13 @@
 }
 
 @mixin panel-hover-highlighting() {
-  background-color: $gray-lighter;
+  background-color: $gray-700;
 }
 
 @mixin private-label() {
   &:after {
-    @extend .label;
-    @extend .label-warning;
+    @extend .badge;
+    @extend .badge-warning;
     content: 'Private';
     margin-left: 3px;
   }

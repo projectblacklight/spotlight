@@ -41,7 +41,7 @@
     padding: 1em;
     min-width: 125px;
 
-    @media (max-width: $screen-xs-max) {
+    @media (max-width: grid-breakpoints("sm")) {
       min-width: 200px;
       -webkit-flex: 1 1 200px;
     }
