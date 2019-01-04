@@ -25,3 +25,13 @@ _site/
 .internal_test_app
 pkg/
 /spec/examples.txt
+
+# Don't check in JS from yarn
+/node_modules
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity
+/public/universalviewer
+yarn-error.log

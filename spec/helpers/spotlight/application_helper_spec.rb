@@ -1,6 +1,7 @@
 describe Spotlight::ApplicationHelper, type: :helper do
   describe '#application_name' do
     let(:site) { Spotlight::Site.instance }
+
     before do
       allow(helper).to receive(:current_site).and_return(site)
     end
@@ -184,6 +185,18 @@ describe Spotlight::ApplicationHelper, type: :helper do
     it 'falls back to the original default view' do
       allow(helper).to receive(:document_index_view_type).and_return(:value_not_present)
       expect(helper.block_document_index_view_type(block_with_bad_or_missing_data)).to eq :a
+    end
+  end
+
+  describe '#iiif_manifest' do
+    let(:document) { SolrDocument.new }
+    let(:manifest_url) { 'https://example.com/manifest' }
+    let(:response) { { docs: [iiif_manifest_url_ssi: manifest_url] } }
+    let(:manifest_service) { Spotlight::ManifestService.new(document: document) }
+
+    it 'returns the iiif_manifest for a document' do
+      allow(manifest_service).to receive(:url).and_return(manifest_url)
+      expect(helper.iiif_manifest(manifest_service: manifest_service)).to eq(manifest_url)
     end
   end
 end

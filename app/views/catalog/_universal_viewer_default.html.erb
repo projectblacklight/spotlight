@@ -1,0 +1,11 @@
+<iframe
+    class="universal-viewer-iframe"
+    src="<%= request&.base_url %>/universalviewer/uv/uv.html#?manifest=<%=
+                                                                       iiif_manifest(manifest_service:
+                                                                                     Spotlight::ManifestService.new(document: document))
+                                                                       %>&config=examples-config.json"
+    width="560"
+    height="420"
+    allowfullscreen
+    frameborder="0">
+</iframe>

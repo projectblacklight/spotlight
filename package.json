@@ -1,0 +1,11 @@
+{
+  "name": "spotlight",
+  "private": true,
+  "repository": "git@github.com:projectblacklight/spotlight.git",
+  "scripts": {
+    "install-uv": "yarn install --modules-folder ./public"
+  },
+  "dependencies": {
+    "universalviewer": "^3.0.16"
+  }
+}
