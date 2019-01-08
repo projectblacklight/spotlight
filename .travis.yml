@@ -5,8 +5,10 @@ notifications:
 
 matrix:
   include:
-    - rvm: 2.5.1
-      env: "RAILS_VERSION=5.2.1"
+    - rvm: 2.6.0
+      env: "RAILS_VERSION=5.2.2"
+    - rvm: 2.5.3
+      env: "RAILS_VERSION=5.2.2"
     - rvm: 2.4.4
       env: "RAILS_VERSION=5.1.6"
 
@@ -29,7 +31,6 @@ env:
     - BUNDLE_PATH=/home/travis/build/projectblacklight/spotlight/vendor/bundle
     - CC_TEST_REPORTER_ID=4e87a4c0e19dcb18cbeea96e91fb8993154c999aa116a6638761c3daf4d3981b
 
-sudo: false
 language: ruby
 
 before_script:
