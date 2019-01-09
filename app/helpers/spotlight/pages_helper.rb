@@ -58,5 +58,9 @@ module Spotlight
     def render_contact_email_address(address)
       mail_to address, address
     end
+
+    def configurations_for_current_page
+      Spotlight::PageConfigurations.new(context: self, page: @page).as_json
+    end
   end
 end

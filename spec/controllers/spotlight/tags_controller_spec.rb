@@ -14,8 +14,10 @@ describe Spotlight::TagsController, type: :controller do
       end
     end
   end
+
   describe 'when signed in as a curator' do
     before { sign_in FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+
     describe 'GET index' do
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)

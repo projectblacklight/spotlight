@@ -146,6 +146,7 @@ describe Spotlight::CatalogController, type: :controller do
           Blacklight.default_index.connection.commit
         end
       end
+
       context 'document is not an uploaded resource' do
         it 'returns a 404 when called on something other than an uploaded resource' do
           get :manifest, params: { exhibit_id: exhibit, id: 'dx157dh4345' }
@@ -234,6 +235,7 @@ describe Spotlight::CatalogController, type: :controller do
         expect(assigns[:document]).to be_kind_of SolrDocument
       end
     end
+
     describe 'PATCH update' do
       it 'is successful' do
         expect do
@@ -348,7 +350,9 @@ describe Spotlight::CatalogController, type: :controller do
       context 'when published' do
         before do
           exhibit.searches.first.update(published: true)
-          allow(controller).to receive(:get_previous_and_next_documents_for_search).with(1, exhibit.searches.first.query_params).and_return(response)
+          allow(controller).to receive(:get_previous_and_next_documents_for_search).with(
+            1, exhibit.searches.first.query_params
+          ).and_return([response, [first_doc, last_doc]])
         end
 
         it 'uses the saved search context' do
@@ -415,6 +419,7 @@ describe Spotlight::CatalogController, type: :controller do
       allow(controller).to receive(:document_index_view_type).and_return(nil)
       allow(field).to receive(:enabled).and_return(true)
     end
+
     context 'for sort fields' do
       let(:field) { Blacklight::Configuration::SortField.new enabled: true }
       it 'uses the enabled property for sort fields' do
@@ -471,6 +476,7 @@ describe Spotlight::CatalogController, type: :controller do
   describe 'save_search rendering' do
     let(:current_exhibit) { FactoryBot.create(:exhibit) }
     before { allow(controller).to receive_messages(current_exhibit: current_exhibit) }
+
     describe 'render_save_this_search?' do
       it 'returns false if we are on the items admin screen' do
         allow(controller).to receive(:can?).with(:curate, current_exhibit).and_return(true)
@@ -486,6 +492,37 @@ describe Spotlight::CatalogController, type: :controller do
         allow(controller).to receive(:can?).with(:curate, current_exhibit).and_return(false)
         expect(controller.render_save_this_search?).to be_falsey
       end
+    end
+  end
+
+  describe '#setup_next_and_previous_documents_from_browse_category' do
+    let(:search_session) { { 'counter' => '1' } }
+    let(:current_browse_category) { FactoryBot.create(:search, exhibit: exhibit, query_params: { q: 'Search String' }) }
+
+    before do
+      allow(controller).to receive_messages(
+        current_exhibit: exhibit,
+        search_session: search_session,
+        current_browse_category: current_browse_category
+      )
+    end
+
+    it 'sends the current browse category\'s query params to #get_previous_and_next_documents_for_search' do
+      expect(controller).to receive(:get_previous_and_next_documents_for_search).with(
+        0, current_browse_category.query_params
+      )
+
+      controller.send(:setup_next_and_previous_documents_from_browse_category)
+    end
+
+    it 'sets instance variables for the previous and next documents based on the return of get_previous_and_next_documents_for_search' do
+      expect(controller).to receive(:get_previous_and_next_documents_for_search).with(
+        0, current_browse_category.query_params
+      ).and_return([instance_double('SolrResponse', total: '100'), [nil, SolrDocument.new]])
+
+      controller.send(:setup_next_and_previous_documents_from_browse_category)
+      expect(controller.instance_variable_get(:@previous_document)).to be_nil
+      expect(controller.instance_variable_get(:@next_document)).to an_instance_of SolrDocument
     end
   end
 end

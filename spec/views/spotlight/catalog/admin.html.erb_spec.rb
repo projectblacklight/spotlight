@@ -16,6 +16,7 @@ describe 'spotlight/catalog/admin.html.erb', type: :view do
     stub_template '_results_pagination.html.erb' => '0'
     allow(view).to receive(:can?).and_return(true)
   end
+
   it 'renders the sidebar' do
     render
     expect(rendered).to have_link 'Browse'

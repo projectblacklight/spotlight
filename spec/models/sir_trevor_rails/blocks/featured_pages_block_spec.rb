@@ -17,6 +17,7 @@ describe SirTrevorRails::Blocks::FeaturedPagesBlock do
       expect(subject.items).to eq([])
     end
   end
+
   describe '#as_json' do
     context 'when no items are present' do
       it 'returns an empty items value' do

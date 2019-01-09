@@ -1,4 +1,3 @@
-
 describe 'Featured Pages Blocks', type: :feature, js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:feature_page1) do

@@ -12,6 +12,7 @@ module Spotlight
     def resolve!
       resource.iiif_tilesource = updated_tilesource
       return resource.save if resource.changed?
+
       Rails.logger.info("#{self.class.name} resolved #{iiif_manifest_url}, but nothing changed.")
     end
 
@@ -29,6 +30,7 @@ module Spotlight
       end
 
       raise(ManifestError, "No image with @id #{iiif_image_id} found in #{iiif_manifest_url}") unless new_image
+
       new_image
     end
 
@@ -38,6 +40,7 @@ module Spotlight
       end
 
       raise(ManifestError, "No canvas with @id #{iiif_canvas_id} found in #{iiif_manifest_url}") unless new_canvas
+
       new_canvas
     end
 
@@ -52,20 +55,20 @@ module Spotlight
 
     def response
       @response ||= begin
-        Faraday.get(iiif_manifest_url).body
-      rescue Faraday::Error => e
-        Rails.logger.warn("#{self.class.name} failed to fetch #{iiif_manifest_url} with: #{e}")
-        '{}'
-      end
+                      Faraday.get(iiif_manifest_url).body
+                    rescue Faraday::Error => e
+                      Rails.logger.warn("#{self.class.name} failed to fetch #{iiif_manifest_url} with: #{e}")
+                      '{}'
+                    end
     end
 
     def manifest
       @manifest ||= begin
-        JSON.parse(response)
-      rescue JSON::ParserError => e
-        Rails.logger.warn("#{self.class.name} failed to parse #{iiif_manifest_url} with: #{e}")
-        {}
-      end
+                      JSON.parse(response)
+                    rescue JSON::ParserError => e
+                      Rails.logger.warn("#{self.class.name} failed to parse #{iiif_manifest_url} with: #{e}")
+                      {}
+                    end
     end
 
     class ManifestError < RuntimeError; end

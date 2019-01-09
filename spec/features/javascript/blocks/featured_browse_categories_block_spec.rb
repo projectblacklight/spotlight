@@ -1,4 +1,3 @@
-
 describe 'Featured Browse Category Block', type: :feature, js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }

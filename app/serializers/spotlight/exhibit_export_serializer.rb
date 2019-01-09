@@ -150,6 +150,7 @@ module Spotlight
 
       def upload=(json)
         return unless represented.is_a? Spotlight::Resources::Upload
+
         FeaturedImageRepresenter.new(represented.build_upload).from_json(json)
       end
     end

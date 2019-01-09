@@ -72,3 +72,8 @@
 #   FeaturedPages SolrDocuments SolrDocumentsCarousel SolrDocumentsEmbed
 #   SolrDocumentsFeatures SolrDocumentsGrid SearchResults
 # )
+#
+# Page configurations made available to widgets
+# Spotlight::Engine.config.page_configurations = {
+#   'my-local-config': ->(context) { context.my_custom_data_path(context.current_exhibit) }
+# }

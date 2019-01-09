@@ -3,6 +3,7 @@ describe 'Add and update the site masthead', type: :feature do
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
 
   before { login_as user }
+
   it 'updates exhibit masthead options' do
     visit spotlight.exhibit_dashboard_path(exhibit)
 

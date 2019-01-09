@@ -1,4 +1,3 @@
-
 describe Spotlight::ReindexJob do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:resource) { FactoryBot.create(:resource) }

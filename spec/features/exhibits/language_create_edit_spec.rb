@@ -5,6 +5,7 @@ describe 'Language', type: :feature do
     login_as admin
     visit spotlight.edit_exhibit_path(exhibit)
   end
+
   describe 'creation' do
     it 'successfully adds languages' do
       within '#language' do
@@ -18,6 +19,7 @@ describe 'Language', type: :feature do
       end
     end
   end
+
   describe 'making public' do
     it 'successfully updates the language' do
       within '#language' do
@@ -33,6 +35,7 @@ describe 'Language', type: :feature do
       expect(exhibit.languages.last).to be_public
     end
   end
+
   describe 'deleting' do
     it 'successfully updates the language' do
       within '#language' do

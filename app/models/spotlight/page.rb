@@ -3,7 +3,7 @@ module Spotlight
   # Base page class. See {Spotlight::AboutPage}, {Spotlight::FeaturePage}, {Spotlight::HomePage}
   # rubocop:disable Metrics/ClassLength
   class Page < ActiveRecord::Base
-    MAX_PAGES = 50
+    MAX_PAGES = 1000
 
     extend FriendlyId
     friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: [:exhibit, :locale]
@@ -70,6 +70,7 @@ module Spotlight
 
     def thumbnail_image_url
       return unless thumbnail && thumbnail.iiif_url
+
       thumbnail.iiif_url
     end
 
@@ -113,6 +114,7 @@ module Spotlight
 
     def updated_after?(other_page)
       return false unless other_page
+
       updated_at > other_page.updated_at
     end
 
@@ -139,6 +141,7 @@ module Spotlight
     def update_translated_pages_weights_and_parent_page
       return unless locale.to_sym == I18n.default_locale
       return unless saved_change_to_weight? || saved_change_to_parent_page_id?
+
       update_params = {}
       update_params[:weight] = weight if saved_change_to_weight?
       update_params[:parent_page_id] = parent_page_id if saved_change_to_parent_page_id?

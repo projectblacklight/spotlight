@@ -3,6 +3,7 @@ describe 'Update the site theme', type: :feature do
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
 
   before { login_as user }
+
   it 'updates the exhibit theme' do
     visit spotlight.edit_exhibit_appearance_path(exhibit)
 

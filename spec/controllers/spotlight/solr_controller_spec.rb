@@ -19,6 +19,7 @@ describe Spotlight::SolrController, type: :controller do
     let(:connection) { instance_double(RSolr::Client) }
     let(:repository) { instance_double(Blacklight::Solr::Repository, connection: connection) }
     before { sign_in admin }
+
     before do
       allow(controller).to receive(:repository).and_return(repository)
     end

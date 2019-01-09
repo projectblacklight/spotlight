@@ -3,6 +3,7 @@ describe 'Add a contact to an exhibit', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit) }
   before { login_as curator }
+
   it 'displays a newly added contact in the sidebar' do
     visit spotlight.exhibit_about_pages_path(exhibit)
     click_link 'Add contact'

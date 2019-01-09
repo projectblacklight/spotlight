@@ -1,4 +1,3 @@
-
 describe Spotlight::DashboardsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
@@ -11,6 +10,7 @@ describe Spotlight::DashboardsController, type: :controller do
   describe 'when logged in' do
     let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
     before { sign_in curator }
+
     describe 'GET show' do
       it 'loads the exhibit' do
         exhibit.blacklight_configuration.index = { timestamp_field: 'timestamp_field' }
@@ -39,6 +39,7 @@ describe Spotlight::DashboardsController, type: :controller do
 
   describe 'when user does not have access' do
     before { sign_in FactoryBot.create(:exhibit_visitor) }
+
     it 'does not allow show' do
       get :show, params: { exhibit_id: exhibit.id }
       expect(response).to redirect_to main_app.root_path

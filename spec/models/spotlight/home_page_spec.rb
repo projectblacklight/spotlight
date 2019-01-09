@@ -13,6 +13,7 @@ describe Spotlight::HomePage, type: :model do
       expect(home_page.title).to eq described_class.default_title_text
     end
   end
+
   describe 'should_display_title?' do
     it 'returns the display_title attribute' do
       home_page.display_title = true
@@ -21,6 +22,7 @@ describe Spotlight::HomePage, type: :model do
       expect(home_page.should_display_title?).to be_falsey
     end
   end
+
   describe 'display_sidebar?' do
     it 'is false when the page disabled the display_sidebar' do
       home_page.display_sidebar = false

@@ -1,4 +1,3 @@
-
 describe 'spotlight/about_pages/index.html.erb', type: :view do
   let(:pages) do
     [

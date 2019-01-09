@@ -16,7 +16,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
   end
 
   it 'is expected to be versioned' do
-    is_expected.to be_versioned
+    expect(subject).to be_versioned
   end
 
   it 'touches the exhibit' do
@@ -107,6 +107,15 @@ describe Spotlight::BlacklightConfiguration, type: :model do
         expect(subject.blacklight_config.facet_fields['a'].limit).to eq true
         expect(subject.blacklight_config.facet_fields['a'].original).to be_blank
       end
+
+      it 'allows the application configuration to override custom field configuration' do
+        blacklight_config.add_index_field 'a', some_param: true, enabled: false
+        subject.exhibit.custom_fields.create! field: 'a'
+
+        expect(subject.blacklight_config.index_fields['a'].custom_field).to eq true
+        expect(subject.blacklight_config.index_fields['a'].some_param).to eq true
+        expect(subject.blacklight_config.index_fields['a'].enabled).to eq false
+      end
     end
 
     context 'exhibit fields' do
@@ -115,6 +124,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
         allow(subject).to receive(:default_blacklight_config).and_call_original
         allow(Spotlight::Engine).to receive_messages blacklight_config: blacklight_config
       end
+
       it 'injects a tags facet' do
         expect(subject.blacklight_config.facet_fields).to include 'exhibit_tags'
       end
@@ -281,7 +291,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       subject.index_fields['b'] = { enabled: true, weight: 5, list: true }
       subject.index_fields['c'] = { enabled: true, weight: 1, list: true }
 
-      blacklight_config.add_index_field 'a'
+      blacklight_config.add_show_field 'a'
       blacklight_config.add_index_field 'b'
       blacklight_config.add_index_field 'c'
 
@@ -307,6 +317,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
           config.add_index_field 'a'
         end
       end
+
       it 'only shows titles (i.e., no metadata) for gallery view' do
         expect(subject.blacklight_config.index_fields['a'][:list]).to eq true
         expect(subject.blacklight_config.index_fields['a'][:gallery]).to eq false
@@ -318,6 +329,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     before do
       subject.save!
     end
+
     describe 'should have default values' do
       its(:sort_fields) do
         should eq('identifier' => { enabled: true },
@@ -529,11 +541,11 @@ describe Spotlight::BlacklightConfiguration, type: :model do
                                                    stub_model(Spotlight::CustomField, field: 'abc', configuration: { a: 1 }, exhibit: subject.exhibit),
                                                    stub_model(Spotlight::CustomField, field: 'xyz', configuration: { x: 2 }, exhibit: subject.exhibit)
                                                  ])
-
-      expect(subject.custom_index_fields).to include 'abc', 'xyz'
-      expect(subject.custom_index_fields['abc']).to be_a_kind_of Blacklight::Configuration::Field
-      expect(subject.custom_index_fields['abc'].a).to eq 1
-      expect(subject.custom_index_fields['abc'].custom_field).to eq true
+      custom_index_fields = subject.custom_index_fields(blacklight_config)
+      expect(custom_index_fields).to include 'abc', 'xyz'
+      expect(custom_index_fields['abc']).to be_a_kind_of Blacklight::Configuration::Field
+      expect(custom_index_fields['abc'].a).to eq 1
+      expect(custom_index_fields['abc'].custom_field).to eq true
     end
   end
 

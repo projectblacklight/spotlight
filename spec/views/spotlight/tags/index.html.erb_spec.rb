@@ -1,4 +1,3 @@
-
 describe 'spotlight/tags/index.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:tag1) { FactoryBot.create(:tagging, tagger: exhibit, taggable: exhibit) }
@@ -10,6 +9,7 @@ describe 'spotlight/tags/index.html.erb', type: :view do
     allow(view).to receive(:current_exhibit).and_return(exhibit)
     allow(view).to receive(:url_to_tag_facet, &:first)
   end
+
   describe 'Tags' do
     it 'is displayed' do
       render

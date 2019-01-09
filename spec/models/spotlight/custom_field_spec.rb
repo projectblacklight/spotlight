@@ -1,4 +1,3 @@
-
 describe Spotlight::CustomField, type: :model do
   describe '#label' do
     subject { described_class.new configuration: { 'label' => 'the configured label' }, field: 'foo_tesim' }
@@ -9,12 +8,15 @@ describe Spotlight::CustomField, type: :model do
     describe 'when the exhibit has a config' do
       let(:exhibit) { FactoryBot.create(:exhibit) }
       before { subject.exhibit = exhibit }
+
       describe 'that overrides the label' do
         before do
           exhibit.blacklight_configuration.index_fields['foo_tesim'] = { 'label' => 'overridden' }
         end
+
         its(:label) { should eq 'overridden' }
       end
+
       describe "that doesn't override the label" do
         its(:label) { should eq 'the configured label' }
       end
@@ -25,17 +27,20 @@ describe Spotlight::CustomField, type: :model do
     subject { described_class.new field: 'foo_tesim' }
     describe "when the exhibit doesn't have a config" do
       before { subject.label = 'the configured label' }
+
       its(:configuration) { should eq('label' => 'the configured label') }
     end
 
     describe 'when the exhibit has a config' do
       let(:exhibit) { FactoryBot.create(:exhibit) }
       before { subject.exhibit = exhibit }
+
       describe 'that overrides the label' do
         before do
           exhibit.blacklight_configuration.index_fields['foo_tesim'] = { 'label' => 'overridden' }
           subject.label = 'edited'
         end
+
         it 'has updated the exhibit' do
           expect(subject.exhibit.blacklight_configuration.index_fields['foo_tesim']['label']).to eq 'edited'
         end
@@ -117,6 +122,7 @@ describe Spotlight::CustomField, type: :model do
       subject.label = 'Label'
       subject.field = 'foo_tesim'
     end
+
     it 'is truthy when a view has been configured true' do
       exhibit.blacklight_configuration.blacklight_config.index_fields['foo_tesim'] =
         Blacklight::Configuration::IndexField.new(label: 'Label', enabled: true, view_name: true)

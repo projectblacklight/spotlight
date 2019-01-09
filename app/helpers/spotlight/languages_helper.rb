@@ -27,6 +27,7 @@ module Spotlight
     # @return [Boolean]
     def default_language?
       return true unless params[:locale]
+
       params[:locale].to_s == I18n.default_locale.to_s
     end
   end

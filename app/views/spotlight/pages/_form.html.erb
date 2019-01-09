@@ -2,18 +2,7 @@
   # TODO: the "if @page.persisted?" business below could possibly be done w/ some clever polymorphic routing.
   # Leaving as-is for now since technically you can't get to the new page form anyway.
 %>
-<%= bootstrap_form_for([spotlight, @page.exhibit, @page], role: 'form', html: {
-              data: {
-                :'form-observer' => true,
-                :'blacklight-configuration-index-fields' => available_index_fields,
-                :'blacklight-configuration-search-views' => available_view_fields.map { |k,v| { key: k, label: view_label(k) }},
-                :'attachment-endpoint' => spotlight.exhibit_attachments_path(@page.exhibit),
-                :'autocomplete-exhibit-catalog-path'=> spotlight.autocomplete_exhibit_catalog_path(@page.exhibit, q: "%QUERY", format: "json"),
-                :'autocomplete-exhibit-pages-path' => spotlight.exhibit_pages_path(@page.exhibit, format: "json"),
-                :'autocomplete-exhibit-searches-path' => spotlight.exhibit_searches_path(@page.exhibit, format: "json"),
-                :'preview-url' => (spotlight.exhibit_preview_block_url(@page.exhibit, @page) if @page.persisted?)
-              }
-            }) do |f| %>
+<%= bootstrap_form_for([spotlight, @page.exhibit, @page], role: 'form', html: { data: configurations_for_current_page.merge('form-observer': true)}) do |f| %>
   <%= render @page.lock if @page.lock and not @page.lock.stale? and not @page.lock.current_session? %>
   <% if @page.errors.any? %>
     <div id="error_explanation">

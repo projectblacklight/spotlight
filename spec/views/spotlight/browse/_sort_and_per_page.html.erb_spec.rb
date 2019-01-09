@@ -1,4 +1,3 @@
-
 describe 'spotlight/browse/_sort_and_per_page', type: :view do
   let :blacklight_config do
     Blacklight::Configuration.new

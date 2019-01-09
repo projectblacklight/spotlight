@@ -2,9 +2,8 @@ describe 'spotlight/pages/new', type: :view do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   before do
     assign(:page, stub_model(Spotlight::FeaturePage, exhibit: exhibit).as_new_record)
-    allow(view).to receive_messages(featured_images_path: '/foo',
-                                    available_index_fields: [],
-                                    available_view_fields: [])
+    allow(view).to receive_messages(configurations_for_current_page: {},
+                                    featured_images_path: '/foo')
   end
 
   it 'renders new page form' do

@@ -1,15 +1,16 @@
-
 describe 'spotlight/feature_pages/_empty.html.erb', type: :view do
   let(:can?) { false }
   before do
     allow(view).to receive_messages(can?: can?)
     render
   end
+
   describe 'when a user cannot edit' do
     it 'does not render an ordered list of steps' do
       expect(rendered).to_not have_css('ol')
     end
   end
+
   describe 'when a user can edit' do
     let(:can?) { true }
 

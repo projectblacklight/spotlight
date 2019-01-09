@@ -1,4 +1,3 @@
-
 describe Spotlight::Resources::UploadController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
@@ -23,6 +22,7 @@ describe Spotlight::Resources::UploadController, type: :controller do
         allow_any_instance_of(Spotlight::Resource).to receive(:reindex).and_return(true)
         allow_any_instance_of(Spotlight::Resource).to receive(:blacklight_solr).and_return blacklight_solr
       end
+
       it 'create a Spotlight::Resources::Upload resource' do
         expect_any_instance_of(Spotlight::Resource).to receive(:reindex_later)
         post :create, params: { exhibit_id: exhibit, resources_upload: { url: 'url-data' } }

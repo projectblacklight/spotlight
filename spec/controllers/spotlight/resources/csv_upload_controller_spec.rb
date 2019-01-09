@@ -1,4 +1,3 @@
-
 describe Spotlight::Resources::CsvUploadController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
@@ -46,6 +45,7 @@ describe Spotlight::Resources::CsvUploadController, type: :controller do
       before do
         request.env['HTTP_REFERER'] = 'http://test.host/'
       end
+
       it 'starts an AddUploadsFromCSV job with the serialized CSV' do
         expect(Spotlight::AddUploadsFromCSV).to receive(:perform_later).with(serialized_csv, exhibit, user).and_return(nil)
         post :create, params: { exhibit_id: exhibit, resources_csv_upload: { url: csv } }

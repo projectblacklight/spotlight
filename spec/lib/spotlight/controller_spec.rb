@@ -1,4 +1,3 @@
-
 describe Spotlight::Controller do
   class MockController < ActionController::Base
     include Spotlight::Controller
@@ -92,6 +91,7 @@ describe Spotlight::Controller do
     before do
       allow(subject).to receive(:current_exhibit).and_return(exhibit)
     end
+
     it 'adds the current exhibit context to the route' do
       expect(subject.spotlight).to receive(:facet_exhibit_catalog_url).with(exhibit, id: 'some_field', q: 'xyz')
       subject.exhibit_search_facet_url(id: 'some_field')

@@ -1,4 +1,3 @@
-
 describe 'spotlight/sir_trevor/blocks/_iframe_block.html.erb', type: :view do
   let(:p) { 'spotlight/sir_trevor/blocks/iframe_block.html.erb' }
   let(:block) do

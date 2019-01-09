@@ -1,4 +1,3 @@
-
 describe SirTrevorRails::Blocks::BrowseBlock do
   let(:page) { FactoryBot.create(:feature_page) }
   let(:block_data) { {} }
@@ -18,6 +17,7 @@ describe SirTrevorRails::Blocks::BrowseBlock do
       expect(subject.items).to eq([])
     end
   end
+
   describe '#as_json' do
     context 'when no items are present' do
       it 'returns an empty items value' do

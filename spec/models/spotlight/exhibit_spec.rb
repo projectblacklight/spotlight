@@ -341,6 +341,11 @@ describe Spotlight::Exhibit, type: :model do
       expect(reindex_progress.current_log_entry).to eq in_progress_entry
     end
   end
+
+
+  it 'is expected to be versioned' do
+    expect(subject).to be_versioned
+  end
   describe 'translatable fields' do
     let(:persisted_exhibit) { FactoryBot.create(:exhibit, title: 'Sample', subtitle: 'SubSample', description: 'Description') }
     before do
