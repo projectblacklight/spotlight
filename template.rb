@@ -7,7 +7,7 @@ spotlight_options = ENV.fetch('SPOTLIGHT_INSTALL_OPTIONS', DEFAULT_SPOTLIGHT_OPT
 
 # Add gem dependencies to the application
 gem 'blacklight', ' ~> 6.0'
-gem 'blacklight-spotlight', ENV['SPOTLIGHT_GEM'] ? { path: ENV['SPOTLIGHT_GEM'] } : { github: 'projectblacklight/spotlight' }
+gem 'blacklight-spotlight', ENV['SPOTLIGHT_GEM'] ? { path: ENV['SPOTLIGHT_GEM'] } : { github: 'harvard-library/spotlight', :branch => 'log_entries_without_iframe_viewer' }
 
 Bundler.with_clean_env do
   run 'bundle install'
