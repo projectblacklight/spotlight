@@ -84,6 +84,8 @@ module Spotlight
     end
 
     def should_generate_new_friendly_id?
+      return false if new_record? && slug.present?
+
       super || (title_changed? && persisted?)
     end
 
