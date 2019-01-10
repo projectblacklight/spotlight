@@ -14,7 +14,7 @@
           </div>
           <div class="col-sm-4 page-links">
             <%= exhibit_view_link page, exhibit_root_path(page.exhibit), class: 'btn btn-link' %> &middot;
-            <%= exhibit_edit_link page, edit_exhibit_home_page_path(page.exhibit), class: 'btn btn-link' %>
+            <%= exhibit_edit_link page, edit_exhibit_home_page_path(page.exhibit), class: 'btn btn-link', data: { turbolinks: false } %>
           </div>
         </div>
       </div>
