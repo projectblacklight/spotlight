@@ -18,7 +18,7 @@
 
         <div class="page-links col-sm-4">
           <%= exhibit_view_link page, :class => 'btn btn-link' %> &middot;
-          <%= exhibit_edit_link page, :class => 'btn btn-link' %> &middot;
+          <%= exhibit_edit_link page, :class => 'btn btn-link', data: { turbolinks: false } %> &middot;
           <%= exhibit_delete_link page, :class => 'btn btn-link' %>
         </div>
         <%- if page.feature_page? -%>
