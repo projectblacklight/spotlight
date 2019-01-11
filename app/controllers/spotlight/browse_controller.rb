@@ -80,8 +80,11 @@ module Spotlight
       @search && @search.masthead && @search.masthead.display?
     end
 
+    # This is overidden for the browse controller context from where it is defined in a helper
+    # (which just checks if the current exhibit is searchable) in order to also prevent showing the search bar
+    # if the current browse category is configured to display its masthead
     def should_render_spotlight_search_bar?
-      !resource_masthead?
+      current_exhibit&.searchable? && !resource_masthead?
     end
 
     def document_index_view_type

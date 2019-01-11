@@ -32,6 +32,16 @@ feature 'Browse pages' do
 
         expect(page).to have_selector '.breadcrumbs-container'
       end
+
+      context 'when the exhibit is configured to not display the search bar' do
+        it 'does not show the search bar' do
+          expect_any_instance_of(Spotlight::Exhibit).to receive(:searchable?).at_least(:once).and_return(false)
+
+          visit spotlight.exhibit_browse_path(exhibit, search)
+
+          expect(page).not_to have_selector '.search-query-form'
+        end
+      end
     end
 
     context 'with a custom masthead' do
