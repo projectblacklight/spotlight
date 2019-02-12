@@ -63,7 +63,7 @@ these collections.)
   s.add_development_dependency 'rspec-collection_matchers'
   s.add_development_dependency 'rails-controller-testing'
   s.add_development_dependency 'capybara', '~> 3'
-  s.add_development_dependency 'rubocop', '~> 0.54'
+  s.add_development_dependency 'rubocop', '~> 0.64.0'
   s.add_development_dependency 'rubocop-rspec', '~> 1.25'
   s.add_development_dependency 'chromedriver-helper', '< 2.0.0' # 2.1.0 is causing "Unable to find chromedriver" on Travis
   s.add_development_dependency 'selenium-webdriver'

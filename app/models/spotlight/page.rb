@@ -9,8 +9,12 @@ module Spotlight
     friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: [:exhibit, :locale]
 
     belongs_to :exhibit, touch: true
+    # Ignoring for https://github.com/rubocop-hq/rubocop/issues/6764
+    # rubocop:disable Rails/ReflectionClassName
     belongs_to :created_by, class_name: Spotlight::Engine.config.user_class, optional: true
     belongs_to :last_edited_by, class_name: Spotlight::Engine.config.user_class, optional: true
+    # rubocop:enable Rails/ReflectionClassName
+
     belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy, optional: true
     belongs_to :default_locale_page, class_name: 'Spotlight::Page', optional: true, inverse_of: :translated_pages
     has_many :translated_pages,
