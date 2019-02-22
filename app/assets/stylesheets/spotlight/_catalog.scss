@@ -41,7 +41,7 @@
 
 .document, tr.doc-row, li.dd-item, .autocomplete-item {
   &.blacklight-private {
-    .index_title, h1, .panel-title, .autocomplete-title {
+    .index_title, h1, .card-title, .autocomplete-title {
       @include private-label;
     }
   }

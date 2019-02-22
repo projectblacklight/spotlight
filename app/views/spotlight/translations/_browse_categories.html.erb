@@ -44,7 +44,7 @@
             <% end %>
             <%= translation_fields.hidden_field :key %>
             <%= translation_fields.hidden_field :locale %>
-            <div id="browse_category_description_<%= search.id %>" class="panel panel-body collapse panel-translation">
+            <div id="browse_category_description_<%= search.id %>" class="card card-body collapse panel-translation">
               <%= translation_fields.text_area_without_bootstrap :value, class: 'form-control' %>
               <p class="help-block"><%= search[:long_description] %></p>
             </div>

@@ -120,7 +120,7 @@ feature 'Feature Pages Adminstration', js: true do
     click_link 'Feature pages'
 
     within('.home_page') do
-      within('h3.panel-title') do
+      within('h3.card-title') do
         expect(page).to have_content(exhibit.home_page.title)
         expect(page).to have_css('input', visible: false)
         click_link(exhibit.home_page.title)
@@ -132,7 +132,7 @@ feature 'Feature Pages Adminstration', js: true do
     click_button('Save changes')
 
     within('.home_page') do
-      within('h3.panel-title') do
+      within('h3.card-title') do
         expect(page).to have_content('New Home Page Title')
       end
     end

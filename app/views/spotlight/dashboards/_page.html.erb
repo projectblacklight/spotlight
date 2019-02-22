@@ -1,6 +1,6 @@
 <tr>
   <td>
-    <h4 class="panel-title"><%= page.title %></h4>
+    <h4 class="card-title"><%= page.title %></h4>
     <div class="page-links">
       <% if page.is_a?(Spotlight::HomePage) %>
           <%= link_to action_default_value(page, :view), current_exhibit, :class => 'btn btn-link' %> &middot;

@@ -1,7 +1,7 @@
 .dd-item td {
   &:first-child {
     padding: 0;
-    
+
     .edit-in-place {
       cursor: text;
       color: inherit;
@@ -18,7 +18,7 @@
       padding: 8px 8px 8px 40px;
       margin: 0;
       margin-top: -1px;
-      
+
     }
 
     .dd3-handle:before {
@@ -66,11 +66,11 @@
 }
 
 .disabled-sort-option, .disabled-search-option {
-  .panel {margin-bottom: 0;}
+  .card {margin-bottom: 0;}
 }
 
 .sort_fields_admin, .search_fields_admin {
-  .panel-title {
+  .card-title {
     display: inline;
   }
 }

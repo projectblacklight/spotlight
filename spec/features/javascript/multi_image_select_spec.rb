@@ -13,9 +13,9 @@ describe 'Multi image selector', type: :feature, js: true, versioning: true, def
 
     fill_in_typeahead_field with: 'xd327cm9378'
 
-    expect(page).to have_selector '.panel'
+    expect(page).to have_selector '.card'
 
-    within('.panel') do
+    within('.card') do
       expect(page).to have_content(/Image \d of \d/)
       expect(page).to have_link 'Change'
     end
@@ -29,7 +29,7 @@ describe 'Multi image selector', type: :feature, js: true, versioning: true, def
 
     click_link('Edit')
 
-    within('.panel') do
+    within('.card') do
       expect(page).to have_content(/Image \d of \d/)
       find('a', text: 'Change').click
     end

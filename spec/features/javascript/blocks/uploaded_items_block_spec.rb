@@ -24,7 +24,7 @@ feature 'Uploaded Items Block', feature: true, js: true, versioning: true do
 
     expect(page).to have_css('.dd-list li', count: 1)
     within('.dd-list') do
-      expect(page).to have_css('.panel-title', text: '800x600.png')
+      expect(page).to have_css('.card-title', text: '800x600.png')
       fill_in 'Caption', with: 'Some caption text'
     end
 
@@ -32,7 +32,7 @@ feature 'Uploaded Items Block', feature: true, js: true, versioning: true do
 
     expect(page).to have_css('.dd-list li', count: 2)
     within('.dd-list') do
-      expect(page).to have_css('.panel-title', text: 'avatar.png')
+      expect(page).to have_css('.card-title', text: 'avatar.png')
     end
 
     save_page

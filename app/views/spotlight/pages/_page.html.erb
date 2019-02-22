@@ -1,8 +1,8 @@
 <% page = f.object %>
 <li class="dd-item dd3-item" data-id="<%= page.id %>">
-  <div class="dd3-content panel panel-default page-admin">
+  <div class="dd3-content card page-admin">
     <div class="dd-handle dd3-handle"><%= t :drag %></div>
-    <div class="panel-heading page">
+    <div class="card-header page">
       <div class="publish-control">
         <%= f.check_box :published, label: '' %>
       </div>
@@ -10,7 +10,7 @@
         <div class="col-sm-8">
           <%= f.hidden_field :id %>
           <%= f.hidden_field :weight, data: {property: "weight"} %>
-          <h3 class="panel-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+          <h3 class="card-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
             <a href="#edit-in-place" class="field-label edit-in-place"><%= page.title %></a>
             <%= f.hidden_field :title, value: page.title , class: 'form-control form-control-sm', data: {:"edit-field-target" => 'true'} %>
           </h3>

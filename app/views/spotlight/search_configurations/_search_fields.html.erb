@@ -12,10 +12,10 @@
   <%= f.fields_for :search_fields, @blacklight_configuration.blacklight_config.search_fields.keys do |vt| %>
     <ol class="dd-list col-md-7 disabled-search-option search_fields_admin">
       <li>
-        <div class="panel panel-default">
+        <div class="card">
           <div class="panel-content">
-            <div class="panel-heading">
-              <h3 class="panel-title">
+            <div class="card-header">
+              <h3 class="card-title">
                 <%= vt.fields_for default_field.key, default_field do |field| %>
                   <%= field.check_box_without_bootstrap :enabled, data: { readonly: true }, class: 'disabled' %>
                   <%= field.hidden_field :label, readonly: true %>
@@ -32,14 +32,14 @@
       <ol class="dd-list">
         <% @blacklight_configuration.blacklight_config.search_fields.select { |_k, v| blacklight_configuration_context.evaluate_if_unless_configuration(v.original) && v.include_in_simple_select != false }.except(default_field.key).each_with_index do |(k, config), index| %>
             <li class="dd-item dd3-item" data-id="<%= k.parameterize %>-id">
-              <div class="dd3-content panel panel-default">
+              <div class="dd3-content card">
                 <div class="dd-handle dd3-handle"><%= t(:drag) %></div>
-                <div class="panel-heading" data-behavior="restore-default">
+                <div class="card-header" data-behavior="restore-default">
                   <div class="row">
                     <div class="col-sm-12">
                       <%= vt.fields_for k, config do |field| %>
                         <%= field.check_box_without_bootstrap :enabled %>
-                        <h3 class="panel-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+                        <h3 class="card-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
                           <a href="#edit-in-place" class="field-label edit-in-place"><%= config.label %></a>
                           <%= field.hidden_field :label, {data: {:"edit-field-target" => "true"}} %>
                         </h3>

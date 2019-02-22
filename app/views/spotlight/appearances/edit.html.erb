@@ -66,13 +66,13 @@
       <div role="tabpanel" class="tab-pane" id="main-menu">
         <%= field_set_tag do %>
           <p class="instructions"><%= t(:'.main_navigation.help') %></p>
-          <div class="panel-group dd main_navigation_admin col-sm-7" id="nested-navigation" data-behavior="nestable" data-max-depth="1">
+          <div class="card-group dd main_navigation_admin col-sm-7" id="nested-navigation" data-behavior="nestable" data-max-depth="1">
             <ol class="dd-list">
               <%= f.fields_for :main_navigations do |label| %>
                     <li class="dd-item dd3-item" data-id="<%= label.object.id %>">
-                      <div class="dd3-content panel panel-default">
+                      <div class="dd3-content card">
                         <div class="dd-handle dd3-handle"><%= t :drag %></div>
-                        <div class="panel-heading" data-behavior="restore-default">
+                        <div class="card-body container" data-behavior="restore-default">
                           <%= label.hidden_field :id %>
                           <div class="row">
                             <div class="col-sm-8">
@@ -80,7 +80,7 @@
                                 <%= label.check_box_without_bootstrap :display %>
                               </div>
                               <div class="main">
-                                <h3 class="panel-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+                                <h3 class="card-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
                                   <a href="#edit-in-place" class="field-label edit-in-place"><%= label.object.label_or_default %></a>
                                   <%= label.hidden_field :label, data: {:"default-value" => label.object.default_label, :"edit-field-target" => 'true'} %>
                                 </h3>

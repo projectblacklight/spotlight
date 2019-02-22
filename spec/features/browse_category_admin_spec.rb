@@ -9,7 +9,7 @@ describe 'Browse Category Administration', type: :feature do
   describe 'index' do
     it 'has searches' do
       visit spotlight.exhibit_searches_path(exhibit)
-      expect(page).to have_css('.panel .search .title', text: search.title)
+      expect(page).to have_css('.card .search .title', text: search.title)
     end
   end
 
@@ -119,7 +119,7 @@ describe 'Browse Category Administration', type: :feature do
     it 'destroys a tag' do
       skip('TODO: Allow searches to be destroyed without javascript')
       visit spotlight.exhibit_searches_path(exhibit)
-      within('.panel .search') do
+      within('.card .search') do
         click_link('Delete')
       end
       expect(page).to have_content('Search was deleted')
