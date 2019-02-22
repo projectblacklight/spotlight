@@ -39,6 +39,8 @@ RSpec/DescribeClass:
 
 Metrics/AbcSize:
   Max: 20
+  Exclude:
+    - 'app/controllers/spotlight/home_pages_controller.rb'
 
 Metrics/ModuleLength:
   Max: 120
@@ -70,8 +72,17 @@ Naming/PredicateName:
 
 Metrics/MethodLength:
   Exclude:
+    - 'app/controllers/spotlight/home_pages_controller.rb'
     - 'lib/generators/spotlight/**/*'
     - 'spec/fixtures/**/*'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'app/controllers/spotlight/home_pages_controller.rb'
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'app/controllers/spotlight/home_pages_controller.rb'
 
 RSpec/NestedGroups:
   Max: 4
