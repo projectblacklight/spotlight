@@ -4,8 +4,8 @@
       <%= field.hidden_field :weight, 'data-property' => 'weight' %>
       <div class="handle-wrap" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
         <div class="dd-handle dd3-handle"><%= t :drag %></div>
-        <a href="#edit-in-place" class="field-label edit-in-place"><%= index_field_label(nil, key) %></a>
-        <%= field.hidden_field :label, value: index_field_label(nil, key), class: 'form-control form-control-sm', data: {:"edit-field-target" => 'true'} %>
+        <a href="#edit-in-place" class="field-label edit-in-place"><%= index_field_label(blacklight_config.document_model.new, key) %></a>
+        <%= field.hidden_field :label, value: index_field_label(blacklight_config.document_model.new, key), class: 'form-control form-control-sm', data: {:"edit-field-target" => 'true'} %>
        </div>
     </td>
     <td class="checkbox-cell text-center"><%= field.check_box :show, inline: true, checked: config.show, disabled: !config.immutable.show.nil?, hide_label: true %></td>

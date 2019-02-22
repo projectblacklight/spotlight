@@ -36,7 +36,7 @@ describe 'spotlight/exhibits/_exhibit_card_front.html.erb', type: :view do
     it 'has an unpublished banner' do
       render p, exhibit: exhibit
 
-      expect(rendered).to have_selector '.label.unpublished', text: 'Unpublished'
+      expect(rendered).to have_selector '.badge.unpublished', text: 'Unpublished'
     end
   end
 end
