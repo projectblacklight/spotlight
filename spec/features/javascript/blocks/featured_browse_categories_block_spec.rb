@@ -21,7 +21,7 @@ describe 'Featured Browse Category Block', type: :feature, js: true do
 
     fill_in_typeahead_field with: 'Title1'
 
-    within(:css, '.panel') do
+    within(:css, '.card') do
       uncheck 'Display?'
     end
 

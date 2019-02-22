@@ -9,7 +9,7 @@ describe 'Home page', type: :feature, versioning: true do
     visit spotlight.exhibit_dashboard_path(exhibit)
     click_link 'Feature pages'
     expect(page).to have_selector 'h3', text: 'Homepage'
-    expect(page).to have_selector 'h3.panel-title', text: 'Exhibit Home'
+    expect(page).to have_selector 'h3.card-title', text: 'Exhibit Home'
   end
 
   it 'allows users to edit the home page title' do
@@ -27,7 +27,7 @@ describe 'Home page', type: :feature, versioning: true do
     end
     click_link 'Feature pages'
     expect(page).to have_content 'New Home Page Title'
-    expect(page).to have_selector '.panel-title a', text: 'New Home Page Title'
+    expect(page).to have_selector '.card-title a', text: 'New Home Page Title'
   end
 
   it 'has working facet links' do

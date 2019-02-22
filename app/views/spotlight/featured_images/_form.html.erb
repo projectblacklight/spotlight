@@ -13,7 +13,7 @@
       </div>
       <%= text_field_tag(:document_title, (presenter(f.object.document).document_show_html_title if f.object.document), class: "form-control", data: { input_select_target: "##{form_prefix(f)}_source_exhibit", 'behavior': 'autocomplete', featured_image_typeahead: true, target_panel: "##{form_prefix(f)}-target-panel", :'id-field' => "##{form_prefix(f)}_document_global_id" }) %>
       <div id="<%= form_prefix(f) %>-target-panel" style="display:none">
-        <div class="panel-heading">
+        <div class="card-header">
           <div data-item-title="true"></div>
           <div data-panel-image-pagination="true"></div>
         </div>

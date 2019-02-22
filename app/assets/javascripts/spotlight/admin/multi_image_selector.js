@@ -89,7 +89,7 @@
     function addThumbsList() {
       addThumbsToList();
       updateActiveThumb();
-      $('.panel-heading', panel).append(
+      $('.card-header', panel).append(
         thumbsListContainer.append(
           thumbList
         )

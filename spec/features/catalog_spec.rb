@@ -23,7 +23,7 @@ describe 'Catalog', type: :feature do
 
     it "has a 'Item Visiblity' facet" do
       visit spotlight.search_exhibit_catalog_path(exhibit)
-      expect(page).to have_selector '.panel-title', text: 'Item Visibility'
+      expect(page).to have_selector '.card-title', text: 'Item Visibility'
     end
   end
 

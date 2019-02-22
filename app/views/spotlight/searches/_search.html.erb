@@ -1,15 +1,15 @@
 <% search = f.object %>
 <li class="dd-item dd3-item" data-id="<%= search.id %>">
   <div class="dd-handle dd3-handle"><%= t :drag %></div>
-  <div class="dd3-content panel panel-default">
-    <div class="panel-heading search">
+  <div class="dd3-content panel">
+    <div class="card-header search">
       <%= f.check_box :published, label: '' %>
 
       <div class="pic thumbnail">
         <%= image_tag(search.thumbnail_image_url || 'spotlight/default_browse_thumbnail.jpg', class: 'img-responsive') %>
       </div>
       <div class="main">
-        <div class="title panel-title"><%= search.title %></div>
+        <div class="title card-title"><%= search.title %></div>
         <div class="count"><%= t :'.item_count', count: search.documents.size %></div>
         <div class="actions"><%= exhibit_view_link(search) %> &bull; <%= exhibit_edit_link(search) %> &bull; <%= exhibit_delete_link(search) %></div>
         <%= f.hidden_field :id %>

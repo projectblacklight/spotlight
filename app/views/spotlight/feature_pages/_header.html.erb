@@ -2,12 +2,12 @@
   <% page = p.object %>
   <div class="home_page">
     <h3><%= t('spotlight.pages.index.feature_pages.home_pages_header') %></h3>
-    <div class="panel panel-default">
-      <div class="panel-heading page">
+    <div class="card">
+      <div class="card-header page">
         <div class="main row">
           <div class="col-sm-8">
             <%= p.hidden_field :id, value: page.id , class: 'form-control form-control-sm' %>
-            <h3 class="panel-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+            <h3 class="card-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
               <a href="#edit-in-place" class="field-label edit-in-place"><%= page.title %></a>
               <%= p.hidden_field :title, value: page.title , class: 'form-control form-control-sm', data: {:"edit-field-target" => 'true'} %>
             </h3>

@@ -40,8 +40,8 @@ describe 'spotlight/about_pages/index.html.erb', type: :view do
     assign(:pages, pages)
     allow(exhibit).to receive(:about_pages).and_return pages
     render
-    expect(rendered).to have_selector '.panel-title', text: 'Title1'
-    expect(rendered).to have_selector '.panel-title', text: 'Title2'
+    expect(rendered).to have_selector '.card-title', text: 'Title1'
+    expect(rendered).to have_selector '.card-title', text: 'Title2'
 
     expect(rendered).to have_selector '.contacts_admin ol.dd-list li[data-id]', count: 2
     expect(rendered).to have_selector '.contacts_admin ol.dd-list li input[data-property=weight]', visible: false, count: 2
