@@ -26,7 +26,7 @@ module SirTrevorRails
       def documents
         @documents ||= begin
           doc_ids = items.map { |v| v[:id] }
-          _, documents = solr_helper.fetch(doc_ids)
+          _, documents = solr_helper.controller.send(:search_service).fetch(doc_ids)
           documents
         end
       end

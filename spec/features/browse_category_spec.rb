@@ -9,7 +9,7 @@ feature 'Browse pages' do
     let(:mock_response) { Blacklight::Solr::Response.new({ response: { numFound: 10, docs: mock_documents } }, {}) }
     let(:mock_documents) { [] }
     before do
-      allow_any_instance_of(Spotlight::BrowseController).to receive(:search_results).and_return([mock_response, mock_documents])
+      allow_any_instance_of(Blacklight::SearchService).to receive(:search_results).and_return([mock_response, mock_documents])
     end
 
     context 'with the standard exhibit masthead' do

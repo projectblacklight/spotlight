@@ -13,6 +13,7 @@ module Spotlight
     before_action :attach_breadcrumbs, only: [:index, :edit], unless: -> { request.format.json? }
 
     include Spotlight::Base
+    include Spotlight::SearchHelper
 
     def create
       @search.assign_attributes(search_params.except((:title unless @search.new_record?)))
@@ -37,7 +38,9 @@ module Spotlight
 
     def autocomplete
       search_params = autocomplete_params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field)
-      (_, document_list) = search_results(search_params)
+      (_, document_list) = search_service.search_results do |builder|
+        builder.with(search_params)
+      end
 
       respond_to do |format|
         format.json do

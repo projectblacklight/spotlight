@@ -8,6 +8,7 @@ module Spotlight
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
     include Spotlight::Base
+    include Spotlight::SearchHelper
 
     before_action only: [:show] do
       blacklight_config.view.reject! { |_k, _v| true }
@@ -35,6 +36,11 @@ module Spotlight
       @_prefixes ||= super + ['spotlight/catalog', 'catalog']
     end
 
+    helper_method :session_tracking_path
+    def session_tracking_path(document, params = {})
+      {}
+    end
+
     protected
 
     def attach_analytics_breadcrumbs
@@ -49,7 +55,9 @@ module Spotlight
 
     def load_recent_solr_documents(count)
       solr_params = { sort: "#{blacklight_config.index.timestamp_field} desc" }
-      @response, docs = search_results(solr_params)
+      @response, docs = search_service.search_results do |builder|
+        builder.merge(solr_params)
+      end
       docs.take(count)
     end
   end

@@ -5,6 +5,8 @@ module Spotlight
   # Exhibit saved searches
   class Search < ActiveRecord::Base
     include Spotlight::Translatables
+    include Spotlight::SearchHelper
+
     extend FriendlyId
     friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: :exhibit
 
@@ -54,7 +56,7 @@ module Spotlight
     end
 
     def search_params
-      search_builder.with(query_params.with_indifferent_access).merge(facet: false, fl: default_search_fields)
+      search_service.search_builder.with(query_params.with_indifferent_access).merge(facet: false, fl: default_search_fields)
     end
 
     def merge_params_for_search(params, blacklight_config)
@@ -64,14 +66,6 @@ module Spotlight
     end
 
     private
-
-    def search_builder_class
-      blacklight_config.search_builder_class
-    end
-
-    def search_builder
-      search_builder_class.new(self)
-    end
 
     def repository
       @repository ||= Blacklight::Solr::Repository.new(blacklight_config)
