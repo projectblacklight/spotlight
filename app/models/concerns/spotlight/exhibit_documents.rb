@@ -30,7 +30,7 @@ module Spotlight
     end
 
     def exhibit_search_builder_context
-      OpenStruct.new(blacklight_config: blacklight_config, current_exhibit: self)
+      OpenStruct.new(blacklight_config: blacklight_config.tap { |x| x.current_exhibit = self })
     end
 
     def repository

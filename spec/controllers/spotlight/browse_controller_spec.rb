@@ -74,7 +74,7 @@ describe Spotlight::BrowseController, type: :controller do
       let(:mock_response) { double aggregations: {} }
       let(:document_list) { double }
       before do
-        allow(controller).to receive_messages(search_results: [mock_response, document_list])
+        allow(controller).to receive_messages(search_service: double(search_results: [mock_response, document_list]))
       end
 
       it 'shows the items in the category' do

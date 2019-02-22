@@ -6,6 +6,8 @@ module Spotlight
   class FieldMetadata
     FACET_LIMIT = 20
 
+    include Spotlight::SearchHelper
+
     attr_reader :exhibit, :repository, :blacklight_config
 
     def initialize(exhibit, repository, blacklight_config)
@@ -23,7 +25,7 @@ module Spotlight
     end
 
     def search_params
-      search_builder.merge(rows: 0, 'facet.limit' => FACET_LIMIT + 1)
+      search_service.search_builder.merge(rows: 0, 'facet.limit' => FACET_LIMIT + 1)
     end
 
     private
@@ -34,14 +36,6 @@ module Spotlight
       else
         key
       end
-    end
-
-    def search_builder_class
-      blacklight_config.search_builder_class
-    end
-
-    def search_builder
-      search_builder_class.new(self)
     end
 
     def solr_response

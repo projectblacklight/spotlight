@@ -17,19 +17,20 @@ describe Spotlight::AccessControlsEnforcementSearchBuilder do
 
   subject { MockSearchBuilder.new blacklight_params, scope }
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:scope) { double(current_exhibit: exhibit) }
+  let(:scope) { double(current_exhibit: exhibit, context: { current_ability: current_ability }) }
+  let(:current_ability) { instance_double(Ability) }
   let(:solr_request) { Blacklight::Solr::Request.new }
   let(:blacklight_params) { Hash.new }
 
   describe '#apply_permissive_visibility_filter' do
     it 'allows curators to view everything' do
-      allow(scope).to receive(:can?).and_return(true)
+      allow(current_ability).to receive(:can?).and_return(true)
       subject.apply_permissive_visibility_filter(solr_request)
       expect(solr_request.to_hash).to be_empty
     end
 
     it 'restricts searches to public items' do
-      allow(scope).to receive(:can?).and_return(false)
+      allow(current_ability).to receive(:can?).and_return(false)
 
       subject.apply_permissive_visibility_filter(solr_request)
       expect(solr_request).to include :fq
@@ -37,7 +38,7 @@ describe Spotlight::AccessControlsEnforcementSearchBuilder do
     end
 
     it 'does not filter resources to just those created by the exhibit' do
-      allow(subject).to receive(:can?).and_return(true)
+      allow(current_ability).to receive(:can?).and_return(true)
       subject.apply_permissive_visibility_filter(solr_request)
       expect(solr_request).to include :fq
       expect(solr_request[:fq]).not_to include "{!term f=spotlight_exhibit_slug_#{exhibit.slug}_bsi}true"
@@ -51,7 +52,7 @@ describe Spotlight::AccessControlsEnforcementSearchBuilder do
       end
 
       it 'filters resources to just those created by the exhibit' do
-        allow(scope).to receive(:can?).and_return(true)
+        allow(current_ability).to receive(:can?).and_return(true)
 
         subject.apply_exhibit_resources_filter(solr_request)
 
@@ -68,7 +69,7 @@ describe Spotlight::AccessControlsEnforcementSearchBuilder do
       end
 
       it 'filters resources to just those identified by the exhibit filter' do
-        allow(scope).to receive(:can?).and_return(true)
+        allow(current_ability).to receive(:can?).and_return(true)
 
         subject.apply_exhibit_resources_filter(solr_request)
 

@@ -7,7 +7,7 @@ describe 'spotlight/metadata_configurations/edit', type: :view do
     assign(:blacklight_configuration, exhibit.blacklight_configuration)
     allow(view).to receive_messages(
       current_exhibit: exhibit,
-      blacklight_config: exhibit.blacklight_configuration,
+      blacklight_config: exhibit.blacklight_configuration.blacklight_config,
       available_view_fields: { some_view_type: 1, another_view_type: 2 },
       select_deselect_button: nil
     )
