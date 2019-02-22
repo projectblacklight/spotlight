@@ -1,21 +1,21 @@
 <h4 class="nav-heading"><%=t(:'spotlight.curation.sidebar.header') %></h4>
-<ul class="nav sidenav">
-  <li><%= link_to t(:'spotlight.curation.sidebar.items'), spotlight.admin_exhibit_catalog_path(current_exhibit) %></li>
+<ul class="nav sidenav flex-column">
+  <li class="nav-item"><%= link_to t(:'spotlight.curation.sidebar.items'), spotlight.admin_exhibit_catalog_path(current_exhibit), class: 'nav-link' %></li>
   <% if can? :tag, current_exhibit %>
-  <li><%= link_to t(:'spotlight.curation.sidebar.tags'), spotlight.exhibit_tags_path(current_exhibit) %></li>
+  <li class="nav-item"><%= link_to t(:'spotlight.curation.sidebar.tags'), spotlight.exhibit_tags_path(current_exhibit), class: 'nav-link' %></li>
   <% end %>
   <% if can? :manage, Spotlight::Search.new(exhibit: current_exhibit) %>
-  <li><%= link_to t(:'spotlight.curation.sidebar.browse'), spotlight.exhibit_searches_path(current_exhibit) %></li>
+  <li class="nav-item"><%= link_to t(:'spotlight.curation.sidebar.browse'), spotlight.exhibit_searches_path(current_exhibit), class: 'nav-link' %></li>
   <% end %>
   <% if can? :manage, Spotlight::FeaturePage.new(exhibit: current_exhibit) or can? :manage, current_exhibit.home_page %>
-  <li><%= link_to t(:'spotlight.curation.sidebar.feature_pages'), spotlight.exhibit_feature_pages_path(current_exhibit), 'data-no-turbolink' => true %></li>
+  <li class="nav-item"><%= link_to t(:'spotlight.curation.sidebar.feature_pages'), spotlight.exhibit_feature_pages_path(current_exhibit), class: 'nav-link', 'data-no-turbolink' => true %></li>
   <% end %>
   <% if can? :manage, Spotlight::AboutPage.new(exhibit: current_exhibit) %>
-  <li><%= link_to t(:'spotlight.curation.sidebar.about_pages'), spotlight.exhibit_about_pages_path(current_exhibit), 'data-no-turbolink' => true %></li>
+  <li class="nav-item"><%= link_to t(:'spotlight.curation.sidebar.about_pages'), spotlight.exhibit_about_pages_path(current_exhibit), class: 'nav-link', 'data-no-turbolink' => true %></li>
   <% end %>
   <% if (can? :manage, current_exhibit.translations.first_or_initialize) && current_exhibit.languages.any? %>
-    <li>
-      <%= link_to t(:'spotlight.curation.sidebar.translations'), spotlight.edit_exhibit_translations_path(current_exhibit), 'data-no-turbolink' => true %>
+    <li class="nav-item">
+      <%= link_to t(:'spotlight.curation.sidebar.translations'), spotlight.edit_exhibit_translations_path(current_exhibit), class: 'nav-link', 'data-no-turbolink' => true %>
     </li>
   <% end %>
 </ul>
