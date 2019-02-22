@@ -19,7 +19,7 @@ describe 'Uploading a non-repository item', type: :feature do
 
       within('form#new_resources_upload') do
         expect(page).to have_css('#resources_upload_url[type="file"]')
-        expect(page).to have_css('.help-block', text: 'Valid file types: jpg jpeg png')
+        expect(page).to have_css('.form-text', text: 'Valid file types: jpg jpeg png')
         expect(page).to have_css('#resources_upload_data_full_title_tesim[type="text"]')
         expect(page).to have_css('textarea#resources_upload_data_spotlight_upload_description_tesim')
         expect(page).to have_css('#resources_upload_data_spotlight_upload_attribution_tesim[type="text"]')
@@ -72,7 +72,7 @@ describe 'Uploading a non-repository item', type: :feature do
 
       within('form#new_resources_csv_upload') do
         expect(page).to have_css('#resources_csv_upload_url[type="file"]')
-        expect(page).to have_css('.help-block a', text: 'Download template')
+        expect(page).to have_css('.form-text a', text: 'Download template')
       end
     end
 

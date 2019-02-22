@@ -1,14 +1,14 @@
 <h4 class="nav-heading"><%=t(:'spotlight.configuration.sidebar.header') %></h4>
-<ul class="nav sidenav">
+<ul class="nav sidenav flex-column">
   <% if can? :update, current_exhibit %>
-    <li><%= link_to t(:'spotlight.configuration.sidebar.settings'), spotlight.edit_exhibit_path(current_exhibit) %></li>
-    <li><%= link_to t(:'spotlight.configuration.sidebar.appearance'), spotlight.edit_exhibit_appearance_path(current_exhibit) %></li>
+    <li class="nav-item"><%= link_to t(:'spotlight.configuration.sidebar.settings'), spotlight.edit_exhibit_path(current_exhibit), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to t(:'spotlight.configuration.sidebar.appearance'), spotlight.edit_exhibit_appearance_path(current_exhibit), class: 'nav-link' %></li>
   <% end %>
   <% if can? :manage, Spotlight::Role.new(resource: current_exhibit) %>
-    <li><%= link_to t(:'spotlight.configuration.sidebar.users'), spotlight.exhibit_roles_path(current_exhibit) %></li>
+    <li class="nav-item"><%= link_to t(:'spotlight.configuration.sidebar.users'), spotlight.exhibit_roles_path(current_exhibit), class: 'nav-link' %></li>
   <% end %>
   <% if can? :update, current_exhibit.blacklight_configuration %>
-    <li><%= link_to t(:'spotlight.configuration.sidebar.metadata'), spotlight.edit_exhibit_metadata_configuration_path(current_exhibit) %></li>
-    <li><%= link_to t(:'spotlight.configuration.sidebar.search_configuration'), spotlight.edit_exhibit_search_configuration_path(current_exhibit) %></li>
+    <li class="nav-item"><%= link_to t(:'spotlight.configuration.sidebar.metadata'), spotlight.edit_exhibit_metadata_configuration_path(current_exhibit), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to t(:'spotlight.configuration.sidebar.search_configuration'), spotlight.edit_exhibit_search_configuration_path(current_exhibit), class: 'nav-link' %></li>
   <% end %>
 </ul>

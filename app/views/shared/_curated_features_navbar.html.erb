@@ -5,11 +5,11 @@
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= navigation.label_or_default %> <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <% published_top_level_feature_pages.each do |page| %>
-          <li><%= link_to page.title, [spotlight, page.exhibit, page] %></li>
+          <li class="downdown-item"><%= link_to page.title, [spotlight, page.exhibit, page] %></li>
         <% end %>
       </ul>
     </li>
   <% else %>
-    <li class="<%= "active" if current_page?(url_for([spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first])) %>"><%= link_to published_top_level_feature_pages.first.title, [spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first] %></li>
+    <li class="nav-item <%= "active" if current_page?(url_for([spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first])) %>"><%= link_to published_top_level_feature_pages.first.title, [spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first], class: 'nav-link' %></li>
   <% end %>
 <% end %>

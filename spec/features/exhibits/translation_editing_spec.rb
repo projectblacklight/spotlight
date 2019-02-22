@@ -26,8 +26,8 @@ describe 'Translation editing', type: :feature do
     describe 'basic settings' do
       it 'successfully adds translations' do
         within '.translation-edit-form #general' do
-          expect(page).to have_css '.help-block', text: 'Sample'
-          expect(page).to have_css '.help-block', text: 'SubSample'
+          expect(page).to have_css '.form-text', text: 'Sample'
+          expect(page).to have_css '.form-text', text: 'SubSample'
           fill_in 'Title', id: 'exhibit_translations_attributes_0_value', with: 'Titre français'
           fill_in 'Subtitle', with: 'Sous-titre français'
           click_button 'Save changes'
@@ -59,7 +59,7 @@ describe 'Translation editing', type: :feature do
 
       it 'adds translations to exhibit navbar' do
         within '.translation-edit-form #general' do
-          expect(page).to have_css '.help-block', text: 'Home'
+          expect(page).to have_css '.form-text', text: 'Home'
           fill_in 'Home', with: 'Maison'
           fill_in 'Browse', with: 'parcourir ceci!'
           click_button 'Save changes'
@@ -334,7 +334,7 @@ describe 'Translation editing', type: :feature do
 
         expect(page).to have_field 'All Exhibit Items'
         expect(page).to have_field 'Browse Category 1'
-        expect(page).to have_css('.help-block', text: 'All items in this exhibit.')
+        expect(page).to have_css('.form-text', text: 'All items in this exhibit.')
       end
     end
 
