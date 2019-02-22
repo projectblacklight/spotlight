@@ -14,8 +14,8 @@ feature 'Reindex Monitor', js: true, default_max_wait_time: 10 do
   end
 
   it 'is rendered on the item admin page' do
-    expect(page).to have_css('.panel.index-status', visible: true)
-    within('.panel.index-status') do
+    expect(page).to have_css('.card.index-status', visible: true)
+    within('.card.index-status') do
       expect(page).to have_css('p', text: /Began reindexing a total of \d+ items/)
       expect(page).to have_css('p', text: /Reindexed \d+ of \d+ items/)
     end

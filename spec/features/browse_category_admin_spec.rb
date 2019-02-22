@@ -40,7 +40,7 @@ describe 'Browse Category Administration', type: :feature do
       visit spotlight.edit_exhibit_search_path(exhibit, search)
       expect(page).to have_css('h1 small', text: 'Edit Browse Category')
       expect(find_field('search_title').value).to eq search.title
-      within '.appliedFilter' do
+      within '.appliedParams' do
         expect(page).to have_content 'Genre'
         expect(page).to have_content 'Value'
       end

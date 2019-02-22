@@ -45,7 +45,7 @@ describe 'Site users management', js: true do
     expect(page).to have_css(:td, text: 'not-an-admin@example.com')
 
     expect(page).to have_css(:a, text: 'Remove from admin role', count: 4)
-    within(all('table tbody tr').last) do
+    within(all('table tbody tr:not([data-edit-for])').last) do
       click_link 'Remove from admin role'
     end
 

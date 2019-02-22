@@ -33,8 +33,8 @@ describe 'spotlight/searches/edit.html.erb', type: :view do
 
   it 'renders active search constraints' do
     render
-    expect(rendered).to have_selector '.appliedFilter .constraint-value'
-    expect(rendered).to have_selector '.appliedFilter .constraint-value .filterName', text: 'Some Field'
-    expect(rendered).to have_selector '.appliedFilter .constraint-value .filterValue', text: 'xyz'
+    expect(rendered).to have_selector '.appliedParams .constraint-value'
+    expect(rendered).to have_selector '.appliedParams .constraint-value .filter-name', text: 'Some Field'
+    expect(rendered).to have_selector '.appliedParams .constraint-value .filter-value', text: 'xyz'
   end
 end

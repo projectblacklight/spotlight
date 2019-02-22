@@ -18,7 +18,7 @@ describe 'spotlight/metadata_configurations/_metadata_field', type: :view do
   let(:builder) { ActionView::Helpers::FormBuilder.new 'z', nil, view, {} }
 
   it 'uses the index_field_label helper to render the label' do
-    allow(view).to receive(:index_field_label).with(nil, 'some_key').and_return 'Some label'
+    allow(view).to receive(:index_field_label).with(anything, 'some_key').and_return 'Some label'
     render partial: p, locals: { key: 'some_key', config: field, f: builder }
     expect(rendered).to have_selector '.field-label', text: 'Some label'
   end
