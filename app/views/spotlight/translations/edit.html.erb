@@ -6,8 +6,8 @@
   <div class='text-center'>
     <ul class='nav nav-pills inline-block'>
       <% current_exhibit.available_locales.each do |language| %>
-        <li role="presentation" class="<%= 'active' if @language == language %>">
-          <%= link_to spotlight.edit_exhibit_translations_path(current_exhibit, language: language) do %>
+        <li role="presentation" class="nav-item">
+          <%= link_to spotlight.edit_exhibit_translations_path(current_exhibit, language: language), class: "nav-link #{'active' if @language == language}" do %>
             <%= t("locales.#{language}") %>
           <% end %>
         </li>
@@ -17,28 +17,28 @@
 
   <div role="tabpanel">
     <ul class='nav nav-tabs' role="tablist">
-      <li role="presentation" class="<%= 'active' if @tab.blank? %>">
-        <a href='#general' aria-controls="general" role="tab" data-toggle="tab" data-behavior="translation-progress">
+      <li role="presentation" class="nav-item">
+        <a href='#general' class="nav-link <%= 'active' if @tab.blank? %>" aria-controls="general" role="tab" data-toggle="tab" data-behavior="translation-progress">
           <%= t('spotlight.exhibits.translations.general.label') %> <span class="badge"></span>
         </a>
       </li>
-      <li class="<%= 'active' if @tab == 'metadata' %>">
-        <a href="#metadata" aria-controls="metadata" role="tab" data-toggle="tab" data-behavior="translation-progress">
+      <li class="nav-item">
+        <a href="#metadata" class="nav-link <%= 'active' if @tab == 'metadata' %>" aria-controls="metadata" role="tab" data-toggle="tab" data-behavior="translation-progress">
           <%= t('spotlight.exhibits.translations.metadata.label') %> <span class="badge"></span>
         </a>
       </li>
-      <li class="<%= 'active' if @tab == 'search_fields' %>">
-        <a href="#search_fields" aria-controls="search_fields" role="tab" data-toggle="tab" data-behavior="translation-progress">
+      <li class="nav-item" >
+        <a href="#search_fields" class="nav-link <%= 'active' if @tab == 'search_fields' %>" aria-controls="search_fields" role="tab" data-toggle="tab" data-behavior="translation-progress">
           <%= t('spotlight.exhibits.translations.search_fields.label') %> <span class="badge"></span>
         </a>
       </li>
-      <li class="<%= 'active' if @tab == 'browse' %>">
-        <a href="#browse" aria-controls="browse" role="tab" data-toggle="tab" data-behavior="translation-progress">
+      <li class="nav-item">
+        <a href="#browse" class="nav-link <%= 'active' if @tab == 'browse' %>" aria-controls="browse" role="tab" data-toggle="tab" data-behavior="translation-progress">
           <%= t('spotlight.exhibits.translations.browse_categories.label') %> <span class="badge"></span>
         </a>
       </li>
-      <li class="<%= 'active' if @tab == 'pages' %>">
-        <a href="#pages" aria-controls="pages" role="tab" data-toggle="tab" data-behavior="translation-progress">
+      <li class="nav-item">
+        <a href="#pages" class="nav-link <%= 'active' if @tab == 'pages' %>" aria-controls="pages" role="tab" data-toggle="tab" data-behavior="translation-progress">
           <%= t('spotlight.exhibits.translations.pages.label') %> <span class="badge"></span>
         </a>
       </li>

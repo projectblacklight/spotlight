@@ -17,21 +17,21 @@
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
       <% if Spotlight::Engine.config.exhibit_themes.many? %>
-        <li role="presentation" class="active">
-          <a href="#site-theme" aria-controls="site-theme" role="tab" data-toggle="tab"><%= t(:'.site_theme.heading') %></a>
+        <li role="presentation" class="nav-item">
+          <a href="#site-theme" aria-controls="site-theme" role="tab" data-toggle="tab" class="nav-link active"><%= t(:'.site_theme.heading') %></a>
         </li>
       <% end %>
 
-      <li role="presentation" <%= 'class="active"'.html_safe unless Spotlight::Engine.config.exhibit_themes.many? %>>
-        <a href="#site-masthead" aria-controls="site-masthead" role="tab" data-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
+      <li role="presentation" class="nav-item">
+        <a href="#site-masthead" aria-controls="site-masthead" role="tab" data-toggle="tab" class="nav-link <%= 'active' unless Spotlight::Engine.config.exhibit_themes.many? %>"><%= t(:'.site_masthead.heading') %></a>
       </li>
 
-      <li role="presentation">
-        <a href="#site-thumbnail" aria-controls="site-thumbnail" role="tab" data-toggle="tab"><%= t(:'.site_thumbnail.heading') %></a>
+      <li role="presentation" class="nav-item">
+        <a href="#site-thumbnail" aria-controls="site-thumbnail" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.site_thumbnail.heading') %></a>
       </li>
 
-      <li role="presentation">
-        <a href="#main-menu" aria-controls="main-menu" role="tab" data-toggle="tab"><%= t(:'.main_navigation.menu') %></a>
+      <li role="presentation" class="nav-item">
+        <a href="#main-menu" aria-controls="main-menu" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.main_navigation.menu') %></a>
       </li>
     </ul>
     <div class="tab-content">

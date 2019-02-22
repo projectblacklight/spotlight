@@ -21,7 +21,7 @@ describe 'Translation editing', type: :feature do
     end
 
     it 'selects the correct language' do
-      expect(page).to have_css '.nav-pills li.active', text: 'French'
+      expect(page).to have_css '.nav-pills .nav-link.active', text: 'French'
     end
     describe 'basic settings' do
       it 'successfully adds translations' do
@@ -175,8 +175,8 @@ describe 'Translation editing', type: :feature do
         click_button 'Save changes'
       end
 
-      expect(page).to have_css '.nav-pills li.active', text: 'French'
-      expect(page).to have_css '.nav-tabs li.active', text: 'Metadata field labels'
+      expect(page).to have_css '.nav-pills .nav-link.active', text: 'French'
+      expect(page).to have_css '.nav-tabs .nav-link.active', text: 'Metadata field labels'
     end
 
     describe 'configured fields' do
@@ -252,8 +252,8 @@ describe 'Translation editing', type: :feature do
         click_button 'Save changes'
       end
 
-      expect(page).to have_css '.nav-pills li.active', text: 'French'
-      expect(page).to have_css '.nav-tabs li.active', text: 'Search field labels'
+      expect(page).to have_css '.nav-pills .nav-link.active', text: 'French'
+      expect(page).to have_css '.nav-tabs .nav-link.active', text: 'Search field labels'
     end
 
     describe 'field-based search fields' do
@@ -345,8 +345,8 @@ describe 'Translation editing', type: :feature do
         click_button 'Save changes'
       end
 
-      expect(page).to have_css '.nav-pills li.active', text: 'French'
-      expect(page).to have_css '.nav-tabs li.active', text: 'Browse categories'
+      expect(page).to have_css '.nav-pills .nav-link.active', text: 'French'
+      expect(page).to have_css '.nav-tabs .nav-link.active', text: 'Browse categories'
     end
 
     it 'persists changes', js: true do
