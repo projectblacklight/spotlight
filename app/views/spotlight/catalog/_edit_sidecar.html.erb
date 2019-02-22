@@ -14,7 +14,7 @@
       <%= render partial: "spotlight/custom_fields/form_group/#{field.field_type}", locals: { f: d, field: field, value: data[field.slug.to_s] || data[field.field.to_s] }  %>
 
       <% unless field.configured_to_display? %>
-        <p class="bg-warning help-block">
+        <p class="bg-warning form-text">
           <%= t(:'.blank_field_warning_html',
                 link: link_to(t(:'spotlight.configuration.sidebar.metadata'), spotlight.edit_exhibit_metadata_configuration_path(current_exhibit))) %>
         </p>

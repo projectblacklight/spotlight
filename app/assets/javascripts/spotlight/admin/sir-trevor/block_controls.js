@@ -42,7 +42,7 @@
 
     return Object.keys(groups).reduce(function(memo, groupKey) {
       var group   = groups[groupKey];
-      var groupEl = $("<div class='st-controls-group'><div class='st-group-control-label'>" + groupKey + "</div></div>");
+      var groupEl = $("<div class='st-controls-group'><div class='st-group-col-form-label'>" + groupKey + "</div></div>");
       var buttons = group.reduce(function(memo, btn) {
         return memo += btn;
       }, "");
