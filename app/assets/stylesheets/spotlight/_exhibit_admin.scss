@@ -61,7 +61,7 @@
      @include border-right-radius($border-radius-sm);
   }
 
-  .form-control-static { display: none; }
+  .form-control-plaintext { display: none; }
 }
 
 .analytics {

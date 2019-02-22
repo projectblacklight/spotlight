@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body">
         <%= f.text_field :title, label: t(:'spotlight.saved_search.title') %>
-        <%= label_tag :id, t(:'spotlight.saved_search.id'), class: 'control-label' %>
+        <%= label_tag :id, t(:'spotlight.saved_search.id'), class: 'col-form-label' %>
         <%= select_tag :id, options_for_select(current_exhibit.searches.map { |s| [s.title, s.id] }), include_blank: true, class: 'form-control' %>
         <%= render_hash_as_hidden_fields(search_state.params_for_search.except(:qt, :page, :utf8)) %>
       </div>

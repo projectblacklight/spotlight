@@ -29,7 +29,7 @@
     function clear_errors(element) {
       element.find('.has-error')
              .removeClass('has-error')
-             .find('.help-block')
+             .find('.form-text')
              .remove(); // Remove the error messages
     }
 

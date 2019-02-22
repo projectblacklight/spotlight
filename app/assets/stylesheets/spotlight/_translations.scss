@@ -22,7 +22,7 @@
 }
 
 .form-group.translation-form {
-  .control-label {
+  .col-form-label {
     padding-top: $card-spacer-y + $padding-base-vertical;
   }
 
@@ -48,7 +48,7 @@
   background-color: $translation-panel-bg;
   padding-bottom: 0;
 
-  .help-block {
+  .form-text {
     color: $translation-help-color;
     padding-left: 12px;
   }

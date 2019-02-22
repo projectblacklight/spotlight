@@ -24,7 +24,7 @@
         '<div class="form-group">',
           this.heading(),
           '<div class="field">',
-            '<label for="<%= formId(text_key) %>" class="control-label"><%= i18n.t("blocks:textable:text") %></label>',
+            '<label for="<%= formId(text_key) %>" class="col-form-label"><%= i18n.t("blocks:textable:text") %></label>',
             '<div id="<%= formId(text_key) %>" class="st-text-block form-control" contenteditable="true"></div>',
           '</div>',
         '</div>',
@@ -43,7 +43,7 @@
     heading: function() {
       if(this.show_heading) {
         return ['<div class="field">',
-          '<label for="<%= formId(heading_key) %>" class="control-label"><%= i18n.t("blocks:textable:heading") %></label>',
+          '<label for="<%= formId(heading_key) %>" class="col-form-label"><%= i18n.t("blocks:textable:heading") %></label>',
           '<input type="text" class="form-control" id="<%= formId(heading_key) %>" name="<%= heading_key %>" />',
         '</div>'].join("\n");
       } else {

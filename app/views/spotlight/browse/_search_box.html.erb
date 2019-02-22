@@ -2,7 +2,7 @@
   <%= form_tag exhibit_browse_path(current_exhibit, search), method: :get, class: 'browse-search-form form-horizontal', role: 'browse-search' do %>
     <%= render_hash_as_hidden_fields(search_state.params_for_search.except(:q, :search_field, :exhibit_id, :browse_q, :qt, :page, :utf8)) %>
     <div class="form-group">
-        <label class="col-sm-4 control-label" for="browse_q"><%= t(:'.label') %></label>
+        <label class="col-sm-4 col-form-label" for="browse_q"><%= t(:'.label') %></label>
       <div class="col-sm-6">
         <div class="input-group">
           <%= text_field_tag :browse_q, params[:browse_q], placeholder: t(:'.placeholder'), class: "form-control", id: "browse_q" %>

@@ -86,7 +86,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
                   '<div class="main form-horizontal">',
                     '<div class="title card-title">' + dataTitle + '</div>',
                     '<div class="field">',
-                      '<label for="' + this.formId('caption_' + dataId) + '" class="control-label col-md-3"><%= i18n.t("blocks:uploaded_items:caption") %></label>',
+                      '<label for="' + this.formId('caption_' + dataId) + '" class="col-form-label col-md-3"><%= i18n.t("blocks:uploaded_items:caption") %></label>',
                       '<input type="text" class="form-control" id="' + this.formId('caption_' + dataId) + '" name="item[' + index + '][caption]" data-field="caption"/>',
                     '</div>',
                   '</div>',

@@ -13,36 +13,36 @@
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=current_user%> <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <% if can? :manage, Spotlight::Site.instance %>
-            <li><%= link_to t(:'spotlight.header_links.edit_site'), spotlight.edit_site_path %></li>
+            <li class="dropdown-item"><%= link_to t(:'spotlight.header_links.edit_site'), spotlight.edit_site_path %></li>
           <% end %>
           <% if can? :create, Spotlight::Exhibit %>
-            <li>
+            <li class="dropdown-item">
               <%= link_to t(:'spotlight.header_links.create_exhibit'), spotlight.new_exhibit_path %>
             </li>
-            <li class="divider"></li>
+            <li class="dropdown-divider"></li>
           <% end %>
           <% if current_exhibit && can?(:curate, current_exhibit) %>
-            <li>
+            <li class="dropdown-item">
               <%= link_to t('spotlight.header_links.dashboard'), spotlight.exhibit_dashboard_path(current_exhibit) %>
             </li>
-            <li class="divider"></li>
+            <li class="dropdown-divider"></li>
           <% end %>
 
-          <li>
+          <li class="dropdown-item">
             <%= link_to "Change Password", main_app.edit_user_registration_path %>
           </li>
-          <li>
+          <li class="dropdown-item">
             <%= link_to t('spotlight.header_links.logout'), main_app.destroy_user_session_path %>
           </li>
         </ul>
       </li>
     <% else %>
-      <li>
+      <li class="dropdown-item">
         <%= link_to t('spotlight.header_links.login'), main_app.new_user_session_path %>
       </li>
     <% end %>
     <% if current_exhibit and show_contact_form? %>
-      <li>
+      <li class="dropdown-item">
         <%= link_to t('spotlight.header_links.contact'), spotlight.new_exhibit_contact_form_path(current_exhibit), data: {behavior: 'contact-link', target: 'report-problem-form' } %>
       </li>
     <% end %>
