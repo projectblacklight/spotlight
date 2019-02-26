@@ -19,6 +19,10 @@ module Spotlight
 
     before_action :swap_actions_configuration, only: :show
 
+    before_action do
+      blacklight_config.track_search_session = false
+    end
+
     def index
       @searches = @exhibit.searches.published
     end
