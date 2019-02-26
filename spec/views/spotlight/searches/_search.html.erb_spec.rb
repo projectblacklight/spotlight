@@ -30,7 +30,7 @@ describe 'spotlight/searches/_search.html.erb', type: :view do
     render partial: 'spotlight/searches/search', locals: { f: @f }
     # rubocop:enable RSpec/InstanceVariable
     expect(rendered).to have_selector "li[data-id='99']"
-    expect(rendered).to have_selector '.card-header .main .title', text: 'Title1'
+    expect(rendered).to have_selector '.card-title', text: 'Title1'
     expect(rendered).to have_selector 'img[src="/images/7777/full/400,300/0/default.jpg"]'
     expect(rendered).to have_selector 'input[type=hidden][data-property=weight]', visible: false
   end
