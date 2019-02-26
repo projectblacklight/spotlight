@@ -25,7 +25,7 @@ describe 'spotlight/exhibits/_exhibit_card_front.html.erb', type: :view do
   it 'has a title' do
     render p, exhibit: exhibit
 
-    expect(rendered).to have_selector '.card-title', text: exhibit.title
+    expect(rendered).to have_selector '.exhibit-card-title', text: exhibit.title
   end
 
   context 'for an unpublished exhibit' do
