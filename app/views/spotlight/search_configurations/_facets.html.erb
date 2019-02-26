@@ -9,7 +9,7 @@
           <div class="dd-handle dd3-handle"><%= t :drag %></div>
           <%= idxf.fields_for key do |facet| %>
             <div class="dd3-content card facet-config-<%= key.parameterize %>">
-              <div class="card-header page">
+              <div class="card-body page">
                 <%= facet.hidden_field :weight, 'data-property' => 'weight' %>
                 <%= facet.check_box :show, checked: config.show, label: "", title: key %>
                 <div class="main row">
@@ -28,16 +28,14 @@
                     </a>
                   </div>
                 </div>
-                <div id="<%= key.parameterize %>_facet_options" class="options row collapse">
-                  <div class="col-sm-12">
-                    <%= facet.form_group :terms, label_col: 'col-md-2', label: { text: t(:'.sort_by.label') } do %>
-                      <%= facet.radio_button :sort, 'count', label: t(:'.sort_by.count'), inline: true, checked: (config.sort.to_s == 'count' || config.sort.nil?) %>
-                      <%= facet.radio_button :sort, 'index', label: t(:'.sort_by.index'), inline: true, checked: (config.sort.to_s == 'index') %>
-                    <% end %>
-                  </div>
+              </div>
+                <div id="<%= key.parameterize %>_facet_options" class="options card-footer bg-light collapse">
+                  <%= facet.form_group :terms, label_col: 'col-md-2', label: { text: t(:'.sort_by.label') } do %>
+                    <%= facet.radio_button :sort, 'count', label: t(:'.sort_by.count'), inline: true, checked: (config.sort.to_s == 'count' || config.sort.nil?) %>
+                    <%= facet.radio_button :sort, 'index', label: t(:'.sort_by.index'), inline: true, checked: (config.sort.to_s == 'index') %>
+                  <% end %>
                 </div>
               </div>
-            </div>
           <% end %>
         </li>
       <% end %>
