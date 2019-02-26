@@ -1,46 +1,47 @@
-<%= render 'spotlight/shared/exhibit_sidebar' %>
-<div id="content" class="col-md-9 exhibit-admin">
-  <%= configuration_page_title %>
-  <div role="tabpanel">
-    <ul class="nav nav-tabs" role="tablist">
+<% content_for(:sidebar) do %>
+  <%= render 'spotlight/shared/exhibit_sidebar' %>
+<% end %>
+
+<%= configuration_page_title %>
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="nav-item">
+      <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab" class="nav-link <%= 'active' if @tab.blank? %>"><%= t(:'.basic_settings.heading') %></a>
+    </li>
+    <% if can? :manage, current_exhibit.languages.first_or_initialize %>
       <li role="presentation" class="nav-item">
-        <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab" class="nav-link <%= 'active' if @tab.blank? %>"><%= t(:'.basic_settings.heading') %></a>
+        <a href="#language" aria-controls="language" role="tab" data-toggle="tab" class="nav-link <%= 'active' if @tab == 'language' %>"><%= t(:'spotlight.exhibits.languages.heading') %></a>
       </li>
-      <% if can? :manage, current_exhibit.languages.first_or_initialize %>
-        <li role="presentation" class="nav-item">
-          <a href="#language" aria-controls="language" role="tab" data-toggle="tab" class="nav-link <%= 'active' if @tab == 'language' %>"><%= t(:'spotlight.exhibits.languages.heading') %></a>
-        </li>
-      <% end %>
-      <% if can? :edit, current_exhibit.filters.first_or_initialize %>
-        <li role="presentation" class="nav-item">
-          <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab" class="nav-link <%= 'active' if @tab == 'filter' %>"><%= t(:'spotlight.exhibits.filter.heading') %></a>
-        </li>
-      <% end %>
-      <% if can? :import, current_exhibit %>
-        <li role="presentation" class="nav-item">
-          <a href="#import" aria-controls="import" role="tab" data-toggle="tab" class="nav-link <%= 'active' if @tab == 'import' %>"><%= t(:'spotlight.exhibits.import.heading') %></a>
-        </li>
-      <% end %>
-      <% if can? :export, current_exhibit %>
-        <li role="presentation" class="nav-item">
-          <a href="#export" aria-controls="export" role="tab" data-toggle="tab" class="nav-link <%= 'active' if @tab == 'import' %>"><%= t(:'spotlight.exhibits.export.heading') %></a>
-        </li>
-      <% end %>
-      <% if can? :destroy, current_exhibit %>
-        <li role="presentation" class="nav-item">
-          <a href="#delete" aria-controls="delete" role="tab" data-toggle="tab" class="nav-link"><%= t(:'spotlight.exhibits.delete.heading') %></a>
-        </li>
-      <% end %>
-    </ul>
-    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane <%= 'active' if @tab.blank? %>" id="basic">
-        <%= render 'form' %>
-      </div>
-      <%= render 'languages' if can? :manage, current_exhibit.languages.first_or_initialize %>
-      <%= render 'spotlight/filters/form' if can? :edit, current_exhibit.filters.first_or_initialize %>
-      <%= render 'import' if can? :import, current_exhibit %>
-      <%= render 'export' if can? :export, current_exhibit %>
-      <%= render 'delete' if can? :destroy, current_exhibit %>
+    <% end %>
+    <% if can? :edit, current_exhibit.filters.first_or_initialize %>
+      <li role="presentation" class="nav-item">
+        <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab" class="nav-link <%= 'active' if @tab == 'filter' %>"><%= t(:'spotlight.exhibits.filter.heading') %></a>
+      </li>
+    <% end %>
+    <% if can? :import, current_exhibit %>
+      <li role="presentation" class="nav-item">
+        <a href="#import" aria-controls="import" role="tab" data-toggle="tab" class="nav-link <%= 'active' if @tab == 'import' %>"><%= t(:'spotlight.exhibits.import.heading') %></a>
+      </li>
+    <% end %>
+    <% if can? :export, current_exhibit %>
+      <li role="presentation" class="nav-item">
+        <a href="#export" aria-controls="export" role="tab" data-toggle="tab" class="nav-link <%= 'active' if @tab == 'import' %>"><%= t(:'spotlight.exhibits.export.heading') %></a>
+      </li>
+    <% end %>
+    <% if can? :destroy, current_exhibit %>
+      <li role="presentation" class="nav-item">
+        <a href="#delete" aria-controls="delete" role="tab" data-toggle="tab" class="nav-link"><%= t(:'spotlight.exhibits.delete.heading') %></a>
+      </li>
+    <% end %>
+  </ul>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane <%= 'active' if @tab.blank? %>" id="basic">
+      <%= render 'form' %>
     </div>
+    <%= render 'languages' if can? :manage, current_exhibit.languages.first_or_initialize %>
+    <%= render 'spotlight/filters/form' if can? :edit, current_exhibit.filters.first_or_initialize %>
+    <%= render 'import' if can? :import, current_exhibit %>
+    <%= render 'export' if can? :export, current_exhibit %>
+    <%= render 'delete' if can? :destroy, current_exhibit %>
   </div>
 </div>

@@ -21,7 +21,7 @@ describe 'spotlight/catalog/admin.html.erb', type: :view do
 
   it 'renders the sidebar' do
     render
-    expect(rendered).to have_link 'Browse'
+    expect(view.content_for(:sidebar)).to have_link 'Browse'
   end
 
   it "renders the 'add items' link if any repository sources are configured" do

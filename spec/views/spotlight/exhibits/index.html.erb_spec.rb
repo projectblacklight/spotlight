@@ -134,7 +134,7 @@ describe 'spotlight/exhibits/index', type: :view do
     it 'has a sidebar with a button to create a new exhibit' do
       render
 
-      expect(rendered).to have_selector 'aside .btn', text: 'Create a new exhibit'
+      expect(view.content_for(:sidebar)).to have_selector '.btn', text: 'Create a new exhibit'
     end
   end
 end

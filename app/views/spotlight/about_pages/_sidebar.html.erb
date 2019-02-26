@@ -1,5 +1,4 @@
 <% cache_unless current_user, [current_exhibit, @page] do %>
-<div id="sidebar" class="col-md-3" role="complementary">
   <h4 class="nav-heading"><%= current_exhibit.main_navigations.about.label_or_default %></h4>
   <ul class="nav sidenav">
     <% current_exhibit.about_pages.for_locale.published.each do |page| %>
@@ -11,5 +10,4 @@
   <%= cache current_exhibit do %>
     <%= render 'contacts' if current_exhibit.contacts.published.present? %>
   <% end %>
-</div>
 <% end %>

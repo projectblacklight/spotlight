@@ -1,16 +1,16 @@
-<%= render 'spotlight/shared/exhibit_sidebar' %>
-<div id="content" class="col-md-9">
+<% content_for(:sidebar) do %>
+  <%= render 'spotlight/shared/exhibit_sidebar' %>
+<% end %>
 
-  <%= curation_page_title %>
+<%= curation_page_title %>
 
-      <%= render 'admin_header' %>
-      <%= render 'search_header' %>
+<%= render 'admin_header' %>
+<%= render 'search_header' %>
 
-      <%- if @response.empty? %>
-        <%= render "zero_results" %>
-      <%- else %>
-        <%= render_document_index %>
-      <%- end %>
+<%- if @response.empty? %>
+  <%= render "zero_results" %>
+<%- else %>
+  <%= render_document_index %>
+<%- end %>
 
-	    <%= render 'results_pagination' %>
-</div>
+<%= render 'results_pagination' %>

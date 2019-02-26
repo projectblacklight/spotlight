@@ -1,6 +1,8 @@
-<%= render 'spotlight/shared/exhibit_sidebar' %>
-<div id="content" class="col-md-9">
-  <%= configuration_page_title %>
+<% content_for(:sidebar) do %>
+  <%= render 'spotlight/shared/exhibit_sidebar' %>
+<% end %>
+
+<%= configuration_page_title %>
 
 <%= bootstrap_form_for @exhibit, url: spotlight.exhibit_appearance_path(@exhibit), layout: :horizontal, label_col: 'col-md-3 col-sm-3', control_col: 'col-md-5 col-sm-5', html: {data: { autocomplete_exhibit_catalog_path: spotlight.autocomplete_exhibit_catalog_path(current_exhibit, q: "%QUERY", format: "json") } } do |f| %>
   <% if @exhibit.errors.any? %>
@@ -108,4 +110,3 @@
     </div>
   </div>
 <% end %>
-</div>

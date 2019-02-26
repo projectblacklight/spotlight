@@ -1,6 +1,8 @@
-<%= render 'spotlight/shared/exhibit_sidebar' %>
+<% content_for(:sidebar) do %>
+  <%= render 'spotlight/shared/exhibit_sidebar' %>
+<% end %>
 
-<div class='col-md-9 translation-edit-form'>
+<div class='translation-edit-form'>
   <%= curation_page_title t('spotlight.exhibits.translations.title') %>
 
   <div class='text-center'>

@@ -53,13 +53,13 @@ describe 'spotlight/pages/show', type: :view do
   it 'renders the sidebar' do
     page.display_sidebar = true
     render
-    expect(rendered).to match('Sidebar')
+    expect(view.content_for(:sidebar)).to match('Sidebar')
   end
 
   it 'does not render the sidebar if the page has it disabled' do
     allow(page).to receive_messages(display_sidebar?: false)
     render
-    expect(rendered).to_not match('Sidebar')
+    expect(view.content_for(:sidebar)).to_not match('Sidebar')
   end
 
   it 'renders an empty partial if the page has no content' do

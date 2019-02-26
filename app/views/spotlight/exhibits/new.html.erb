@@ -1,8 +1,7 @@
-<div id="content" class="col-md-9 exhibit-admin">
 <%= page_title t(:'spotlight.sites.new.section') %>
 <%= render 'new_exhibit_form' %>
-</div>
 
-<aside class="col-md-3">
-  <%= render "shared/site_sidebar" %>
-</aside>
+<% content_for(:sidebar_position) { 'order-last' } %>
+<% content_for(:sidebar) do %>
+  <%= render 'shared/site_sidebar' %>
+<% end %>

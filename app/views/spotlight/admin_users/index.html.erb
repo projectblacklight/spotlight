@@ -1,94 +1,93 @@
-<div id="content" class="col-md-9 admin-users">
-  <%= page_title(t('.section'), t('.page_title')) %>
-  <%= bootstrap_form_for Spotlight::Engine.user_class.new, url: spotlight.admin_users_path do |f| %>
-    <h3 class="instructions"><%= t :'.instructions' %></h3>
-    <table class="table table-striped ">
-      <thead>
+<%= page_title(t('.section'), t('.page_title')) %>
+<%= bootstrap_form_for Spotlight::Engine.user_class.new, html: { class: 'admin-users' }, url: spotlight.admin_users_path do |f| %>
+  <h3 class="instructions"><%= t :'.instructions' %></h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= Spotlight::Engine.user_class.human_attribute_name(:email)  %></th>
+      </tr>
+    </thead>
+    <tbody class="table">
+      <% @site.roles.map(&:user).each do |user| %>
         <tr>
-          <th><%= Spotlight::Engine.user_class.human_attribute_name(:email)  %></th>
-        </tr>
-      </thead>
-      <tbody class="table">
-        <% @site.roles.map(&:user).each do |user| %>
-          <tr>
-            <td class="<%= 'invite-pending' if user.invite_pending? %>">
-              <%= user.email %>
-              <span class='label label-warning pending-label'><%= t('.pending') %></span>
-            </td>
-            <td>
-              <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-danger pull-right') unless user == current_user %>
-            </td>
-          </tr>
-        <% end %>
-        <tr data-edit-for='new'>
-          <td>
-            <%= f.email_field :email, hide_label: true %>
-            <span data-user-role='admin'></span>
+          <td class="<%= 'invite-pending' if user.invite_pending? %>">
+            <%= user.email %>
+            <span class='badge badge-warning pending-label'><%= t('.pending') %></span>
           </td>
           <td>
-            <div class="form-actions">
-              <div class="primary-actions">
-              <%= cancel_link f.object, '#', class: 'btn btn-link', data: { behavior: 'cancel-edit' } %>
-              <%= f.submit t('.save'), class: 'btn btn-primary'%>
-              </div>
+            <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-danger pull-right') unless user == current_user %>
+          </td>
+        </tr>
+      <% end %>
+      <tr data-edit-for='new'>
+        <td>
+          <%= f.email_field :email, hide_label: true %>
+          <span data-user-role='admin'></span>
+        </td>
+        <td>
+          <div class="form-actions">
+            <div class="primary-actions">
+            <%= cancel_link f.object, '#', class: 'btn btn-link', data: { behavior: 'cancel-edit' } %>
+            <%= f.submit t('.save'), class: 'btn btn-primary'%>
             </div>
-          </td>
-        </tr>
-        <tr data-edit-for='new'>
-          <td colspan='2'>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </td>
+      </tr>
+      <tr data-edit-for='new'>
+        <td colspan='2'>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-    <div class="form-actions">
-      <div class="primary-actions">
-        <%= link_to(t('.create'), 'javascript:;', class: 'btn btn-secondary', data: { behavior: 'new-user' }) %>
-      </div>
+  <div class="form-actions">
+    <div class="primary-actions">
+      <%= link_to(t('.create'), 'javascript:;', class: 'btn btn-secondary', data: { behavior: 'new-user' }) %>
     </div>
+  </div>
 
-    <h3 class="instructions"><%= t :'.admins_curators' %></h3>
-    <div id="admins_curators" class="well well-sm">
-      <div class='btn-toolbar pull-right'>
-        <button class="btn btn-sm btn-secondary copy-email-addresses" data-clipboard-target="#admins_curators">
-          <%= t('.copy') %>
-        </button>
-      </div>
-      <%= Spotlight::Engine.user_class.with_roles.pluck(:email).sort.join(', ') %>
+  <h3 class="instructions"><%= t :'.admins_curators' %></h3>
+  <div id="admins_curators" class="well well-sm">
+    <div class='btn-toolbar pull-right'>
+      <button class="btn btn-sm btn-secondary copy-email-addresses" data-clipboard-target="#admins_curators">
+        <%= t('.copy') %>
+      </button>
     </div>
+    <%= Spotlight::Engine.user_class.with_roles.pluck(:email).sort.join(', ') %>
+  </div>
 
-    <h3 class="instructions"><%= t :'.all_users' %></h3>
-    <table class="table table-striped ">
-      <thead>
+  <h3 class="instructions"><%= t :'.all_users' %></h3>
+  <table class="table table-striped ">
+    <thead>
+      <tr>
+        <th><%= Spotlight::Engine.user_class.human_attribute_name(:email)  %></th>
+        <th><%= Spotlight::Engine.user_class.human_attribute_name(:role)  %></th>
+      </tr>
+    </thead>
+    <tbody class="table">
+      <% @users.each do |user| %>
         <tr>
-          <th><%= Spotlight::Engine.user_class.human_attribute_name(:email)  %></th>
-          <th><%= Spotlight::Engine.user_class.human_attribute_name(:role)  %></th>
+          <td class="<%= 'invite-pending' if user.invite_pending? %>">
+            <%= user.email %>
+            <span class='label label-warning pending-label'><%= t('.pending') %></span>
+          </td>
+          <td class="role">
+            <%= user.roles.map { |r| r.role.titleize }.uniq.join(", ") %>
+          </td>
+          <td>
+            <% if user.superadmin? %>
+              <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-danger pull-right') unless user == current_user %>
+            <% else %>
+              <%= link_to(t('.update'), admin_user_path(user), method: :patch, class: 'btn btn-default pull-right') %>
+            <% end %>
+          </td>
         </tr>
-      </thead>
-      <tbody class="table">
-        <% @users.each do |user| %>
-          <tr>
-            <td class="<%= 'invite-pending' if user.invite_pending? %>">
-              <%= user.email %>
-              <span class='label label-warning pending-label'><%= t('.pending') %></span>
-            </td>
-            <td class="role">
-              <%= user.roles.map { |r| r.role.titleize }.uniq.join(", ") %>
-            </td>
-            <td>
-              <% if user.superadmin? %>
-                <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-danger pull-right') unless user == current_user %>
-              <% else %>
-                <%= link_to(t('.update'), admin_user_path(user), method: :patch, class: 'btn btn-default pull-right') %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-</div>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 
-<aside class="col-md-3">
+<% content_for(:sidebar_position) { 'order-last' } %>
+<% content_for(:sidebar) do %>
   <%= render "shared/site_sidebar" %>
-</aside>
+<% end %>
