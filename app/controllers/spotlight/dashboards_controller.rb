@@ -14,6 +14,7 @@ module Spotlight
       blacklight_config.view.reject! { |_k, _v| true }
       blacklight_config.view.admin_table.partials = ['index_compact']
       blacklight_config.view.admin_table.document_actions = []
+      blacklight_config.track_search_session = false
     end
 
     def show
@@ -34,11 +35,6 @@ module Spotlight
 
     def _prefixes
       @_prefixes ||= super + ['spotlight/catalog', 'catalog']
-    end
-
-    helper_method :session_tracking_path
-    def session_tracking_path(document, params = {})
-      {}
     end
 
     protected

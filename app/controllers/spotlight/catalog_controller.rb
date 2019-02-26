@@ -28,6 +28,7 @@ module Spotlight
       blacklight_config.view.select! { |k, _v| k == :admin_table }
       blacklight_config.view.admin_table.partials = [:index_compact]
       blacklight_config.view.admin_table.document_actions = []
+      blacklight_config.track_search_session = false
 
       unless blacklight_config.sort_fields.key? :timestamp
         blacklight_config.add_sort_field :timestamp, sort: "#{blacklight_config.index.timestamp_field} desc"
