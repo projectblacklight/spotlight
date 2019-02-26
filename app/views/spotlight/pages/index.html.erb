@@ -1,4 +1,5 @@
-<%= render 'spotlight/shared/exhibit_sidebar' %>
-<div id="content" class="col-md-9">
-  <%= render 'order_pages' %>
-</div>
+<% content_for(:sidebar) do %>
+  <%= render 'spotlight/shared/exhibit_sidebar' %>
+<% end %>
+
+<%= render 'order_pages' %>

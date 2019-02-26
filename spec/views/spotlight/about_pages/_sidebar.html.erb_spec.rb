@@ -15,8 +15,8 @@ describe 'spotlight/about_pages/_sidebar.html.erb', type: :view do
   it 'renders a list of pages' do
     render
     # Checking that they are sorted accoding to weight
-    expect(rendered).to have_selector '#sidebar ul.sidenav li:nth-child(1) a', text: 'Three'
-    expect(rendered).to have_selector '#sidebar ul.sidenav li:nth-child(2) a', text: 'One'
+    expect(rendered).to have_selector 'ul.sidenav li:nth-child(1) a', text: 'Three'
+    expect(rendered).to have_selector 'ul.sidenav li:nth-child(2) a', text: 'One'
     expect(rendered).to have_link 'Three', href: "/spotlight/#{exhibit.slug}/about/three"
     expect(rendered).to have_link 'One', href: "/spotlight/#{exhibit.slug}/about/one"
     expect(rendered).not_to have_link 'Two'

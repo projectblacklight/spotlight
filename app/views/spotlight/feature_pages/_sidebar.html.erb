@@ -1,5 +1,4 @@
 <% cache_unless current_user, [current_exhibit, @page] do %>
-<div id="sidebar" class="col-md-3" role="complementary">
   <ol class="nav sidenav">
     <% @exhibit.feature_pages.for_locale.published.at_top_level.each do |feature_section| %>
       <li class="<%= 'active' if current_page? [spotlight, @exhibit, feature_section] %>">
@@ -12,5 +11,4 @@
       </li>
     <% end %>
   </ol>
-</div>
 <% end %>

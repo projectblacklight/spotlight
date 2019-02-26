@@ -1,35 +1,36 @@
-<%= render 'spotlight/shared/exhibit_sidebar' %>
-<div id="content" class="col-md-9">
-  <%= curation_page_title %>
-  <h3><%= t(:'.categories_header') %></h3>
+<% content_for(:sidebar) do %>
+  <%= render 'spotlight/shared/exhibit_sidebar' %>
+<% end %>
 
-  <% if @searches.empty? %>
-    <%= t :'.no_saved_searches' %>
-    <% unless @exhibit.searchable? %>
-      <p class="instructions alert-warning">
-        <%= t(:'.not_searchable_html', href: link_to(t(:'spotlight.configuration.sidebar.search_configuration'), spotlight.edit_exhibit_search_configuration_path(@exhibit))) %>
-      </p>
-    <% end %>
-  <% else %>
-    <p class="instructions"><%= t(:'.instructions') %></p>
-    <% unless @exhibit.searchable? %>
-      <p class="instructions alert-warning">
-        <%= t(:'.not_searchable_html', href: link_to(t(:'spotlight.configuration.sidebar.search_configuration'), spotlight.edit_exhibit_search_configuration_path(@exhibit))) %>
-      </p>
-    <% end %>
-    <%= bootstrap_form_for @exhibit, url: update_all_exhibit_searches_path(@exhibit), layout: :horizontal, control_col: 'col-sm-10' do |f| %>
+<%= curation_page_title %>
+<h3><%= t(:'.categories_header') %></h3>
 
-      <div class="panel-group dd search_admin" id="nested-pages" data-behavior="nestable" data-max-depth="1">
-        <ol class="dd-list">
-          <%= f.fields_for :searches do |p| %>
-            <%= render partial: 'search', locals: { f: p} %>
-          <% end %>
-        </ol>
-      </div>
-
-      <div class="pull-right">
-        <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-primary" %>
-      </div>
-    <% end %>
+<% if @searches.empty? %>
+  <%= t :'.no_saved_searches' %>
+  <% unless @exhibit.searchable? %>
+    <p class="instructions alert-warning">
+      <%= t(:'.not_searchable_html', href: link_to(t(:'spotlight.configuration.sidebar.search_configuration'), spotlight.edit_exhibit_search_configuration_path(@exhibit))) %>
+    </p>
   <% end %>
-</div>
+<% else %>
+  <p class="instructions"><%= t(:'.instructions') %></p>
+  <% unless @exhibit.searchable? %>
+    <p class="instructions alert-warning">
+      <%= t(:'.not_searchable_html', href: link_to(t(:'spotlight.configuration.sidebar.search_configuration'), spotlight.edit_exhibit_search_configuration_path(@exhibit))) %>
+    </p>
+  <% end %>
+  <%= bootstrap_form_for @exhibit, url: update_all_exhibit_searches_path(@exhibit), layout: :horizontal, control_col: 'col-sm-10' do |f| %>
+
+    <div class="panel-group dd search_admin" id="nested-pages" data-behavior="nestable" data-max-depth="1">
+      <ol class="dd-list">
+        <%= f.fields_for :searches do |p| %>
+          <%= render partial: 'search', locals: { f: p} %>
+        <% end %>
+      </ol>
+    </div>
+
+    <div class="pull-right">
+      <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% end %>

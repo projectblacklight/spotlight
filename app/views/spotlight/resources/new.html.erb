@@ -1,26 +1,27 @@
-<%= render 'spotlight/shared/exhibit_sidebar' %>
-<div id="content" class="col-md-9">
-  <%= curation_page_title %>
-  <div role="tabpanel">
-    <ul class="nav nav-tabs" role="tablist">
-      <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
-        <% tab_name = p.split('/')[2] %>
-        <li role="presentation" class="<%= "active" if @tab == tab_name %>">
-          <%= link_to t("#{p.gsub('/', '.')}.title"),
-                      "##{tab_name}",
-                      role: 'tab',
-                      'data-toggle' => 'tab',
-                      'aria-controls' => "#{tab_name}" %>
-        </li>
+<% content_for(:sidebar) do %>
+  <%= render 'spotlight/shared/exhibit_sidebar' %>
+<% end %>
+
+<%= curation_page_title %>
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
+      <% tab_name = p.split('/')[2] %>
+      <li role="presentation" class="<%= "active" if @tab == tab_name %>">
+        <%= link_to t("#{p.gsub('/', '.')}.title"),
+                    "##{tab_name}",
+                    role: 'tab',
+                    'data-toggle' => 'tab',
+                    'aria-controls' => "#{tab_name}" %>
+      </li>
+    <% end %>
+  </ul>
+  <div class="tab-content">
+    <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
+      <% tab_name = p.split('/')[2] %>
+      <%= content_tag :div, id: "#{tab_name}", role: 'tabpanel', class: "tab-pane #{"active" if @tab == tab_name}" do %>
+        <%= render p %>
       <% end %>
-    </ul>
-    <div class="tab-content">
-      <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
-        <% tab_name = p.split('/')[2] %>
-        <%= content_tag :div, id: "#{tab_name}", role: 'tabpanel', class: "tab-pane #{"active" if @tab == tab_name}" do %>
-          <%= render p %>
-        <% end %>
-      <% end %>
-    </div>
+    <% end %>
   </div>
 </div>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <!-- Mobile viewport optimization h5bp.com/ad -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <!--[if IEMobile]>
+      <meta http-equiv="cleartype" content="on">
+    <![endif]-->
+
+    <title><%= h(@page_title || application_name.to_s) %></title>
+    <link href="<%= current_exhibit ? spotlight.opensearch_exhibit_catalog_url(current_exhibit, format: 'xml') : main_app.opensearch_catalog_url(format: 'xml') %>" title="<%= h(@page_title || application_name.to_str) %>" type="application/opensearchdescription+xml" rel="search"/>
+    <%= favicon_link_tag 'favicon.ico' %>
+    <% if current_exhibit %>
+      <%= exhibit_stylesheet_link_tag "application" %>
+    <% else %>
+      <%= stylesheet_link_tag "application" %>
+    <% end %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <%= content_for(:head) %>
+    <%= description %>
+    <%= twitter_card %>
+    <%= opengraph %>
+    <%= javascript_tag '$.fx.off = true;' if Rails.env.test? %>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+  <body class="<%= render_body_class %>">
+  <%= render partial: 'shared/header_navbar' %>
+  <%= render partial: 'shared/masthead' %>
+  <%= content_for?(:header_content) ? yield(:header_content) : "" %>
+
+  <%= render partial: 'shared/modal' %>
+
+  <div id="main-container" class="container">
+    <%= content_for(:container_header) %>
+
+    <%= render partial: 'shared/flash_msg', layout: 'shared/flash_messages' %>
+
+    <div class="row">
+      <%= content_for?(:content) ? yield(:content) : yield %>
+    </div>
+  </div>
+
+  <%= render :partial => 'shared/footer' %>
+  </body>
+</html>

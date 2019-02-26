@@ -1,17 +1,17 @@
-<%= render 'spotlight/shared/exhibit_sidebar' %>
+<% content_for(:sidebar) do %>
+  <%= render 'spotlight/shared/exhibit_sidebar' %>
+<% end %>
 
-<div id="content" class="col-md-9">
-  <%= curation_page_title %>
+<%= curation_page_title %>
 
-  <div class="reindexingHistory clearfix">
-    <%= render 'reindexing_activity' %>
-  </div>
+<div class="reindexingHistory clearfix">
+  <%= render 'reindexing_activity' %>
+</div>
 
-  <div class="pageHistory clearfix">
-    <%= render 'page_activity' %>
-  </div>
-  
-  <div class="updatedItems clearfix">
-    <%= render 'solr_document_activity' %>
-  </div>
+<div class="pageHistory clearfix">
+  <%= render 'page_activity' %>
+</div>
+
+<div class="updatedItems clearfix">
+  <%= render 'solr_document_activity' %>
 </div>

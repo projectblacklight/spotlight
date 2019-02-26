@@ -1,40 +1,39 @@
-<div id="content" class="col-md-9 exhibit-admin">
-  <%= page_title(t('.section'), t('.page_title')) %>
-  <div role="tabpanel">
-    <%= bootstrap_form_for @site, url: spotlight.site_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10' do |f| %>
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-          <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
-        </li>
-        <li role="presentation">
-          <a href="#site-masthead" aria-controls="site-masthead" role="tab" data-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="basic">
-          <div class="row col-md-12">
-            <%= f.text_field :title %>
-            <%= f.text_field :subtitle %>
-          </div>
-        </div>
-
-        <div role="tabpanel" class="tab-pane" id="site-masthead">
-          <p class="instructions"><%= t(:'.site_masthead.help') %></p>
-          <%= f.fields_for(:masthead, @site.masthead || @site.build_masthead) do |m| %>
-            <%= render '/spotlight/featured_images/upload_form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection, crop_type: :masthead %>
-          <% end %>
+<%= page_title(t('.section'), t('.page_title')) %>
+<div role="tabpanel">
+  <%= bootstrap_form_for @site, url: spotlight.site_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10' do |f| %>
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
+      </li>
+      <li role="presentation">
+        <a href="#site-masthead" aria-controls="site-masthead" role="tab" data-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="basic">
+        <div class="row col-md-12">
+          <%= f.text_field :title %>
+          <%= f.text_field :subtitle %>
         </div>
       </div>
 
-      <div class="form-actions">
-        <div class="primary-actions">
-          <%= f.submit nil, class: 'btn btn-primary' %>
-        </div>
+      <div role="tabpanel" class="tab-pane" id="site-masthead">
+        <p class="instructions"><%= t(:'.site_masthead.help') %></p>
+        <%= f.fields_for(:masthead, @site.masthead || @site.build_masthead) do |m| %>
+          <%= render '/spotlight/featured_images/upload_form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection, crop_type: :masthead %>
+        <% end %>
       </div>
     </div>
-  <% end %>
-</div>
 
-<aside class="col-md-3">
-  <%= render "shared/site_sidebar" %>
-</aside>
+    <div class="form-actions">
+      <div class="primary-actions">
+        <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% content_for(:sidebar_position) { 'order-last' } %>
+<% content_for(:sidebar) do %>
+  <%= render 'shared/site_sidebar' %>
+<% end %>

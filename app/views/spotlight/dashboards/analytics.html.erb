@@ -1,13 +1,13 @@
-<%= render 'spotlight/shared/exhibit_sidebar' %>
+<% content_for(:sidebar) do %>
+  <%= render 'spotlight/shared/exhibit_sidebar' %>
+<% end %>
 
-<div id="content" class="col-md-9">
-  <%= curation_page_title %>
+<%= curation_page_title %>
 
-  <% if Spotlight::Engine.config.analytics_provider and Spotlight::Engine.config.analytics_provider.enabled? %>
-    <%= render 'analytics' %>
-  <% else %>
-    <div class="empty-page-block">
-      <p>In order to view exhibit analytics, the site administrator must <a href="https://github.com/projectblacklight/spotlight/wiki/Installation">configure an analytics provider.</a></p>
-    </div>
-  <% end %>
-</div>
+<% if Spotlight::Engine.config.analytics_provider and Spotlight::Engine.config.analytics_provider.enabled? %>
+  <%= render 'analytics' %>
+<% else %>
+  <div class="empty-page-block">
+    <p>In order to view exhibit analytics, the site administrator must <a href="https://github.com/projectblacklight/spotlight/wiki/Installation">configure an analytics provider.</a></p>
+  </div>
+<% end %>
