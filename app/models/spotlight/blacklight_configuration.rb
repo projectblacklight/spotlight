@@ -293,7 +293,7 @@ module Spotlight
       # rubocop:disable Style/GuardClause
       unless config.show_fields.include? :exhibit_tags
         config.add_show_field :exhibit_tags, field: config.document_model.solr_field_for_tagger(exhibit),
-                                             link_to_search: true,
+                                             link_to_facet: true,
                                              separator_options: { words_connector: nil, two_words_connector: nil, last_word_connector: nil }
       end
 
