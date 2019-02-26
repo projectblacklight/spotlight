@@ -2,19 +2,17 @@
 <div role="tabpanel">
   <%= bootstrap_form_for @site, url: spotlight.site_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10' do |f| %>
     <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active">
-        <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
+      <li role="presentation" class="nav-item">
+        <a href="#basic" class="active nav-link" aria-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
       </li>
-      <li role="presentation">
-        <a href="#site-masthead" aria-controls="site-masthead" role="tab" data-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
+      <li role="presentation" class="nav-item">
+        <a href="#site-masthead" class="nav-link" aria-controls="site-masthead" role="tab" data-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
       </li>
     </ul>
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="basic">
-        <div class="row col-md-12">
-          <%= f.text_field :title %>
-          <%= f.text_field :subtitle %>
-        </div>
+        <%= f.text_field :title %>
+        <%= f.text_field :subtitle %>
       </div>
 
       <div role="tabpanel" class="tab-pane" id="site-masthead">
