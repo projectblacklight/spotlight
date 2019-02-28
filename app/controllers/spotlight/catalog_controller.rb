@@ -9,6 +9,7 @@ module Spotlight
   class CatalogController < ::CatalogController
     include Spotlight::Concerns::ApplicationController
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit, prepend: true
+    include Blacklight::Catalog
     include Spotlight::Catalog
     include Spotlight::Concerns::CatalogSearchContext
 
