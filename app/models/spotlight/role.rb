@@ -6,11 +6,7 @@ module Spotlight
   class Role < ActiveRecord::Base
     ROLES = %w(admin curator).freeze
     belongs_to :resource, polymorphic: true, optional: true
-
-    # Ignoring for https://github.com/rubocop-hq/rubocop/issues/6764
-    # rubocop:disable Rails/ReflectionClassName
     belongs_to :user, class_name: Spotlight::Engine.config.user_class, autosave: true, optional: false
-    # rubocop:enable Rails/ReflectionClassName
 
     validates :role, inclusion: { in: ROLES }
     validate :user_must_be_unique, if: :user

@@ -55,11 +55,7 @@ module Spotlight
     has_many :roles, as: :resource, dependent: :delete_all
     has_many :searches, dependent: :destroy, extend: FriendlyId::FinderMethods
     has_many :solr_document_sidecars, dependent: :delete_all
-
-    # Ignoring for https://github.com/rubocop-hq/rubocop/issues/6764
-    # rubocop:disable Rails/ReflectionClassName
     has_many :users, through: :roles, class_name: Spotlight::Engine.config.user_class
-    # rubocop:enable Rails/ReflectionClassName
 
     has_many :pages, dependent: :destroy
     has_many :filters, dependent: :delete_all
