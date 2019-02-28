@@ -5,8 +5,8 @@ module Spotlight
   # Spotlight catalog mixins
   module Catalog
     extend ActiveSupport::Concern
-    include Blacklight::Catalog
     include Spotlight::Base
+    include Spotlight::SearchHelper
 
     included do
       before_action :add_facet_visibility_field
