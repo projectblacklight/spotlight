@@ -12,7 +12,6 @@ RSpec.describe 'Locale Selector', js: true do
     I18n.fallbacks[:es] = [:es, I18n.default_locale]
   end
 
-
   context 'with an anonymous user' do
     let(:user) { FactoryBot.create(:exhibit_visitor) }
 
