@@ -4,7 +4,7 @@ module Spotlight
   class ContactForm
     include ActiveModel::Model
 
-    attr_accessor :current_exhibit, :name, :email, Spotlight::Engine.config.spambot_honeypot_email_field, :message, :current_url, :request
+    attr_accessor :current_exhibit, :name, :email, Spotlight::Engine.config.spotlight.spambot_honeypot_email_field, :message, :current_url, :request
 
     validates :email, format: { with: /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i }
 
@@ -13,7 +13,7 @@ module Spotlight
     # browser wouldn't, allowing us to differentiate and reject likely spam messages.
     # the field must be present, since we expect real users to just submit the form as-is w/o
     # hacking what fields are present.
-    validates Spotlight::Engine.config.spambot_honeypot_email_field, length: { is: 0 }
+    validates Spotlight::Engine.config.spotlight.spambot_honeypot_email_field, length: { is: 0 }
 
     def headers
       {
@@ -27,7 +27,7 @@ module Spotlight
     private
 
     def to
-      Spotlight::Engine.config.default_contact_email || current_exhibit.contact_emails.first.to_s
+      Spotlight::Engine.config.spotlight.default_contact_email || current_exhibit.contact_emails.first.to_s
     end
   end
 end

@@ -112,7 +112,7 @@ namespace :spotlight do
       print ' - atomic updates:'
       begin
         id = 'test123'
-        field = "test_#{Spotlight::Engine.config.solr_fields.string_suffix}"
+        field = "test_#{Spotlight::Engine.config.spotlight.solr_fields.string_suffix}"
         sample_doc = { Spotlight::Engine.blacklight_config.document_model.unique_key => id, field => { set: 'a-new-string' } }
         Blacklight.default_index.connection.add Spotlight::Engine.blacklight_config.document_model.unique_key.to_sym => id, field => 'some-string'
         Blacklight.default_index.connection.update data: [sample_doc].to_json, headers: { 'Content-Type' => 'application/json' }

@@ -3,13 +3,13 @@ module Spotlight
   # PageConfigurations is a simple class to gather and return all
   # configurations needed for the various SirTrevor widgets.
   # A downstream application (or gem) can inject its own data through the Spotlight's engine config like so
-  # Spotlight::Engine.config.page_configurations = {
+  # Spotlight::Engine.config.spotlight.page_configurations = {
   #   'my-key': 'my_val'
   # }
   # You can also pass anything that responds to #call (eg. a lambda or custom ruby class)
   # as the value and it will be evaluted within the PageConfiguration context
   # (which has access to the view context).
-  # Spotlight::Engine.config.page_configurations = {
+  # Spotlight::Engine.config.spotlight.page_configurations = {
   #   'exhibit-path': ->(context) { context.spotlight.exhibit_path(context.current_exhibit) }
   # }
   class PageConfigurations
@@ -88,7 +88,7 @@ module Spotlight
     end
 
     def configured_params
-      Spotlight::Engine.config.page_configurations || {}
+      Spotlight::Engine.config.spotlight.page_configurations || {}
     end
   end
 end

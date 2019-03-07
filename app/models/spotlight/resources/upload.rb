@@ -15,7 +15,7 @@ module Spotlight
         @fields ||= {}
         @fields[exhibit] ||= begin
           index_title_field = exhibit.blacklight_config.index.title_field
-          title_field = Spotlight::Engine.config.upload_title_field ||
+          title_field = Spotlight::Engine.config.spotlight.upload_title_field ||
                         Spotlight::UploadFieldConfig.new(
                           field_name: index_title_field,
                           label: I18n.t(:"spotlight.search.fields.#{index_title_field}")

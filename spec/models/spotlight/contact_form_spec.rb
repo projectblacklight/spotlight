@@ -1,13 +1,13 @@
 describe Spotlight::ContactForm do
   subject { described_class.new(name: 'Root', email: 'user@example.com').tap { |c| c.current_exhibit = exhibit } }
   let(:exhibit) { FactoryBot.build_stubbed(:exhibit) }
-  let(:honeypot_field_name) { Spotlight::Engine.config.spambot_honeypot_email_field }
+  let(:honeypot_field_name) { Spotlight::Engine.config.spotlight.spambot_honeypot_email_field }
 
   context 'with a site-wide contact email' do
-    before { allow(Spotlight::Engine.config).to receive_messages default_contact_email: 'root@localhost' }
+    before { allow(Spotlight::Engine.config.spotlight).to receive_messages default_contact_email: 'root@localhost' }
 
     it 'sends the email to the configured contact' do
-      expect(subject.headers[:to]).to eq Spotlight::Engine.config.default_contact_email
+      expect(subject.headers[:to]).to eq Spotlight::Engine.config.spotlight.default_contact_email
     end
 
     context 'with exhibit-specific contacts' do

@@ -32,11 +32,11 @@ module Spotlight
       end
 
       def self.site
-        @site ||= user.accounts.first.profiles.first { |x| x.web_property_id = Spotlight::Engine.config.ga_web_property_id }
+        @site ||= user.accounts.first.profiles.first { |x| x.web_property_id = Spotlight::Engine.config.spotlight.ga_web_property_id }
       end
 
       def self.exhibit_data(exhibit, options)
-        context(exhibit).results(site, Spotlight::Engine.config.ga_analytics_options.merge(options)).to_a.first || exhibit_data_unavailable
+        context(exhibit).results(site, Spotlight::Engine.config.spotlight.ga_analytics_options.merge(options)).to_a.first || exhibit_data_unavailable
       end
 
       def self.exhibit_data_unavailable
@@ -45,7 +45,7 @@ module Spotlight
 
       def self.page_data(exhibit, options)
         options[:sort] ||= '-pageviews'
-        query = context(exhibit).results(site, Spotlight::Engine.config.ga_page_analytics_options.merge(options))
+        query = context(exhibit).results(site, Spotlight::Engine.config.spotlight.ga_page_analytics_options.merge(options))
         query.dimensions << :page_path
         query.dimensions << :page_title
 
@@ -73,16 +73,16 @@ module Spotlight
       end
 
       def self.signing_key
-        @signing_key ||= OpenSSL::PKCS12.new(File.read(Spotlight::Engine.config.ga_pkcs12_key_path), 'notasecret').key
+        @signing_key ||= OpenSSL::PKCS12.new(File.read(Spotlight::Engine.config.spotlight.ga_pkcs12_key_path), 'notasecret').key
       end
 
       def self.auth_client(scope)
         Signet::OAuth2::Client.new token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
                                    audience: 'https://accounts.google.com/o/oauth2/token',
                                    scope: scope,
-                                   issuer: Spotlight::Engine.config.ga_email,
+                                   issuer: Spotlight::Engine.config.spotlight.ga_email,
                                    signing_key: signing_key,
-                                   sub: Spotlight::Engine.config.ga_email
+                                   sub: Spotlight::Engine.config.spotlight.ga_email
       end
     end
   end

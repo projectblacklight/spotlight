@@ -4,7 +4,7 @@ module Spotlight
   ##
   # A class to model the configuration required to build the Document Upload form.
   # This configuration is also used in other places around the application (e.g. Metadata Field Config)
-  # See Spotlight::Engine.config.upload_fields for where this is consumed
+  # See Spotlight::Engine.config.spotlight.upload_fields for where this is consumed
   # We should look into changing this to a standard blacklight field config in Blacklight 7
   class UploadFieldConfig
     attr_reader :blacklight_options, :field_name, :form_field_type, :solr_fields

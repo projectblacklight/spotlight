@@ -55,7 +55,7 @@ describe Spotlight::Search, type: :model do
 
     context 'with filter_resources_by_exhibit configured' do
       before do
-        allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(true)
+        allow(Spotlight::Engine.config.spotlight).to receive(:filter_resources_by_exhibit).and_return(true)
       end
 
       it 'includes the exhibit context' do

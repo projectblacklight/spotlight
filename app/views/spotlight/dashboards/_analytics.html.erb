@@ -2,13 +2,13 @@
   <h3><%= t :'.monthly_header' %></h3>
   <table class="table analytics">
     <tr>
-    <% Spotlight::Engine.config.analytics_provider.metrics.elements.each do |e| %>
+    <% Spotlight::Engine.config.spotlight.analytics_provider.metrics.elements.each do |e| %>
         <td class="value col-md-3 <%= e %>"><%= current_exhibit.analytics(1.month, exhibit_root_path(current_exhibit)).send(e) %></td>
     <% end %>
     </tr>
     <tfoot>
       <tr>
-      <% Spotlight::Engine.config.analytics_provider.metrics.elements.each do |e| %>
+      <% Spotlight::Engine.config.spotlight.analytics_provider.metrics.elements.each do |e| %>
         <th><%= t(:".#{e}") %></th>
       <% end %>
       </tr>

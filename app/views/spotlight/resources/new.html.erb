@@ -3,14 +3,14 @@
   <%= curation_page_title %>
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
-      <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
+      <% Spotlight::Engine.config.spotlight.resource_partials.each_with_index do |p, i| %>
         <li role="presentation" class="<%= "active" if i == 0 %>">
           <%= link_to t("#{p.gsub('/', '.')}.title"), "#tab_#{i}", role: 'tab', 'data-toggle' => 'tab', 'aria-controls' => "tab_#{i}" %>
         </li>
       <% end %>
     </ul>
     <div class="tab-content">
-      <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
+      <% Spotlight::Engine.config.spotlight.resource_partials.each_with_index do |p, i| %>
         <%= content_tag :div, id: "tab_#{i}", role: 'tabpanel', class: "tab-pane #{"active" if i == 0}" do %>
           <%= render p %>
         <% end %>

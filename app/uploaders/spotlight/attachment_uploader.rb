@@ -3,7 +3,7 @@ module Spotlight
   ##
   # Sir-trevor image widget uploads
   class AttachmentUploader < CarrierWave::Uploader::Base
-    storage Spotlight::Engine.config.uploader_storage
+    storage Spotlight::Engine.config.spotlight.uploader_storage
 
     # Override the directory where uploaded files will be stored.
     # This is a sensible default for uploaders that are meant to be mounted:

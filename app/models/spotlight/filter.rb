@@ -16,7 +16,7 @@ module Spotlight
     def cast_value
       return value unless field
 
-      if field.ends_with? Spotlight::Engine.config.solr_fields.boolean_suffix
+      if field.ends_with? Spotlight::Engine.config.spotlight.solr_fields.boolean_suffix
         value_to_boolean(value)
       else
         value

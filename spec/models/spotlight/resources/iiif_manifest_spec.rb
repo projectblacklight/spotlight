@@ -34,7 +34,7 @@ describe Spotlight::Resources::IiifManifest do
       end
 
       it 'indexes to multiple fields when configured' do
-        allow(Spotlight::Engine.config).to receive(:iiif_title_fields).at_least(:once).and_return(%w(title_field1 title_field2))
+        allow(Spotlight::Engine.config.spotlight).to receive(:iiif_title_fields).at_least(:once).and_return(%w(title_field1 title_field2))
 
         expect(subject.to_solr['title_field1']).to eq 'Test Manifest 1'
         expect(subject.to_solr['title_field2']).to eq 'Test Manifest 1'
@@ -48,7 +48,7 @@ describe Spotlight::Resources::IiifManifest do
         it 'uses the configured language to find a value' do
           expect(subject.to_solr['full_title_tesim']).to eq 'Test Manifest 3'
 
-          allow(Spotlight::Engine.config).to receive(:default_json_ld_language).and_return('fr')
+          allow(Spotlight::Engine.config.spotlight).to receive(:default_json_ld_language).and_return('fr')
           expect(subject.to_solr['full_title_tesim']).to eq "Manifeste d'essai 3"
         end
       end
@@ -124,7 +124,7 @@ describe Spotlight::Resources::IiifManifest do
 
       context 'custom class' do
         before do
-          Spotlight::Engine.config.iiif_metadata_class = -> { TestMetadataClass }
+          Spotlight::Engine.config.spotlight.iiif_metadata_class = -> { TestMetadataClass }
         end
 
         it 'merges the solr hash from the configured custom metadata class' do

@@ -23,7 +23,7 @@ describe Spotlight::Resources::Upload, type: :model do
     allow(described_class).to receive(:fields).and_return configured_fields
 
     allow(resource.send(:blacklight_solr)).to receive(:update)
-    allow(Spotlight::Engine.config).to receive(:upload_title_field).and_return(title_field)
+    allow(Spotlight::Engine.config.spotlight).to receive(:upload_title_field).and_return(title_field)
     resource.data = upload_data
     resource.upload = featured_image
     resource.save
@@ -83,7 +83,7 @@ describe Spotlight::Resources::Upload, type: :model do
       expect(subject[:spotlight_resource_type_ssim]).to eq 'spotlight/resources/uploads'
     end
     it 'has the various image fields' do
-      expect(subject).to have_key Spotlight::Engine.config.thumbnail_field
+      expect(subject).to have_key Spotlight::Engine.config.spotlight.thumbnail_field
     end
     it 'has the full image dimensions fields' do
       expect(subject[:spotlight_full_image_height_ssm]).to eq 600
@@ -94,7 +94,7 @@ describe Spotlight::Resources::Upload, type: :model do
     end
     it 'has a field for the iiif manifest url' do
       manifest_path = Spotlight::Engine.routes.url_helpers.manifest_exhibit_solr_document_path(exhibit, resource.compound_id)
-      expect(subject[Spotlight::Engine.config.iiif_manifest_field]).to eq(manifest_path)
+      expect(subject[Spotlight::Engine.config.spotlight.iiif_manifest_field]).to eq(manifest_path)
     end
   end
 end

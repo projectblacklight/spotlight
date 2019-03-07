@@ -44,7 +44,7 @@ end
 require 'spotlight'
 
 # configure spotlight with all the settings necessary to test functionality
-Spotlight::Engine.config.exhibit_themes = %w(default modern)
+Spotlight::Engine.config.spotlight.exhibit_themes = %w(default modern)
 
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 

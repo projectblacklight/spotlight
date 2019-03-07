@@ -14,7 +14,7 @@ module Spotlight
     end
 
     def to_native
-      Spotlight::Engine.config.i18n_locales[locale.to_sym] || ''
+      Spotlight::Engine.config.spotlight.i18n_locales[locale.to_sym] || ''
     end
 
     def self.default_instance

@@ -25,7 +25,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
   end
 
   it 'adds a default thumbnail field' do
-    expect(subject.blacklight_config.index.thumbnail_field).to eq Spotlight::Engine.config.thumbnail_field
+    expect(subject.blacklight_config.index.thumbnail_field).to eq Spotlight::Engine.config.spotlight.thumbnail_field
   end
 
   describe 'facet fields' do
@@ -557,7 +557,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
 
     context 'with the default search field' do
       let(:search_field) do
-        subject.blacklight_config.search_fields[Spotlight::Engine.config.autocomplete_search_field]
+        subject.blacklight_config.search_fields[Spotlight::Engine.config.spotlight.autocomplete_search_field]
       end
 
       it 'is hidden from the search field selector' do
@@ -565,7 +565,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       end
 
       it "uses the engine's autocomplete parameters" do
-        expect(search_field.solr_parameters).to include Spotlight::Engine.config.default_autocomplete_params
+        expect(search_field.solr_parameters).to include Spotlight::Engine.config.spotlight.default_autocomplete_params
       end
 
       it 'includes the relevant fields' do

@@ -45,7 +45,7 @@ describe Spotlight::AccessControlsEnforcementSearchBuilder do
   describe '#apply_exhibit_resources_filter' do
     context 'with filter_resources_by_exhibit' do
       before do
-        allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(true)
+        allow(Spotlight::Engine.config.spotlight).to receive(:filter_resources_by_exhibit).and_return(true)
       end
 
       it 'filters resources to just those created by the exhibit' do

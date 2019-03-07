@@ -3,7 +3,7 @@
 <div id="content" class="col-md-9">
   <%= curation_page_title %>
 
-  <% if Spotlight::Engine.config.analytics_provider and Spotlight::Engine.config.analytics_provider.enabled? %>
+  <% if Spotlight::Engine.config.spotlight.analytics_provider and Spotlight::Engine.config.spotlight.analytics_provider.enabled? %>
     <%= render 'analytics' %>
   <% else %>
     <div class="empty-page-block">

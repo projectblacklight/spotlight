@@ -55,7 +55,7 @@ module Spotlight
 
   def inject_configuration
     inject_into_file 'config/initializers/spotlight_initializer.rb' do
-      "\n  Spotlight::Engine.config.external_resources_partials += ['#{file_name}_resources/form']\n"
+      "\n  Spotlight::Engine.config.spotlight.external_resources_partials += ['#{file_name}_resources/form']\n"
     end
   end
 

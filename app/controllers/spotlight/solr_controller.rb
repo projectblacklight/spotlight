@@ -47,7 +47,7 @@ module Spotlight
     end
 
     def validate_writable_index!
-      return if Spotlight::Engine.config.writable_index
+      return if Spotlight::Engine.config.spotlight.writable_index
 
       render plain: 'Spotlight is unable to write to solr', status: 409
     end

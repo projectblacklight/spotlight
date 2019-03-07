@@ -26,7 +26,7 @@ module Spotlight
     end
 
     def add_file_versions(solr_hash)
-      solr_hash[Spotlight::Engine.config.thumbnail_field] = riiif.image_path(resource.upload_id, size: '!400,400')
+      solr_hash[Spotlight::Engine.config.spotlight.thumbnail_field] = riiif.image_path(resource.upload_id, size: '!400,400')
     end
 
     def add_sidecar_fields(solr_hash)
@@ -34,7 +34,7 @@ module Spotlight
     end
 
     def add_manifest_path(solr_hash)
-      solr_hash[Spotlight::Engine.config.iiif_manifest_field] = spotlight_routes.manifest_exhibit_solr_document_path(exhibit, resource.compound_id)
+      solr_hash[Spotlight::Engine.config.spotlight.iiif_manifest_field] = spotlight_routes.manifest_exhibit_solr_document_path(exhibit, resource.compound_id)
     end
 
     def spotlight_routes
