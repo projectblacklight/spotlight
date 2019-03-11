@@ -20,7 +20,7 @@ these collections.)
   s.required_ruby_version = '~> 2.3'
 
   s.add_dependency 'rails', '~> 5.1'
-  s.add_dependency 'blacklight', '~> 6.3'
+  s.add_dependency 'blacklight', '~> 6.20'
   s.add_dependency 'autoprefixer-rails'
   s.add_dependency 'cancancan'
   s.add_dependency 'sir_trevor_rails', '~> 0.5'
