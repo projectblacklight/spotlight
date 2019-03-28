@@ -236,7 +236,9 @@ module Spotlight
     # make blacklight configuration play nice with bootstrap_form
     Blacklight::OpenStructWithHashAccess.send(:extend, ActiveModel::Translation)
 
-    config.exhibit_themes = ['default']
+    config.exhibit_themes =
+      %w[default] +
+      ENV.fetch('SPOTLIGHT_THEMES') { '' }.split(',')
 
     config.sir_trevor_widgets = %w(
       Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse LinkToSearch

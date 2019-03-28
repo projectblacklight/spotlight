@@ -37,17 +37,24 @@ module Spotlight
       end
     end
 
-    def exhibit_stylesheet_link_tag(tag)
-      if current_exhibit_theme && current_exhibit.theme != 'default'
-        stylesheet_link_tag "#{tag}_#{current_exhibit_theme}"
+    def themed_stylesheet_link_tag(tag)
+      return stylesheet_link_tag(tag) if current_theme.nil?
+
+      if Spotlight::Engine.config.exhibit_themes.include?(current_theme)
+        stylesheet_link_tag "#{tag}_#{current_theme}"
       else
-        Rails.logger.warn "Exhibit theme '#{current_exhibit_theme}' not in white-list of available themes: #{Spotlight::Engine.config.exhibit_themes}"
+        Rails.logger.warn "Exhibit theme '#{current_theme}' not in white-list of available themes: #{Spotlight::Engine.config.exhibit_themes}"
         stylesheet_link_tag(tag)
       end
     end
 
-    def current_exhibit_theme
-      current_exhibit.theme if current_exhibit && current_exhibit.theme.present? && Spotlight::Engine.config.exhibit_themes.include?(current_exhibit.theme)
+    def current_theme
+      # prioritize exhibit themes over site-wide themes
+      if current_exhibit && current_exhibit.theme.present?
+        current_exhibit.theme
+      elsif current_site.theme.present?
+        current_site.theme
+      end
     end
   end
 end

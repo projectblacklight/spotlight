@@ -45,11 +45,14 @@ class TestAppGenerator < Rails::Generators::Base
   end
 
   def add_theme_assets
-    copy_file 'fixture.png', 'app/assets/images/spotlight/themes/default_preview.png'
     copy_file 'fixture.png', 'app/assets/images/spotlight/themes/modern_preview.png'
+    copy_file 'fixture.png', 'app/assets/images/spotlight/themes/fancy_preview.png'
 
     copy_file 'fixture.css', 'app/assets/stylesheets/application_modern.css'
-    append_to_file 'config/initializers/assets.rb', 'Rails.application.config.assets.precompile += %w( application_modern.css )'
+    copy_file 'fixture.css', 'app/assets/stylesheets/application_fancy.css'
+
+    append_to_file 'config/initializers/assets.rb',
+                   'Rails.application.config.assets.precompile += %w( application_modern application_fancy.css )'
   end
 
   def disable_filter_resources_by_exhibit
