@@ -66,6 +66,10 @@ Metrics/ClassLength:
     - 'app/services/spotlight/exhibit_import_export_service.rb'
     - 'lib/generators/spotlight/**/*' # Generators tend to have longer class lengths due to their lengthy public API
 
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/fixtures/**/*'
+
 Naming/PredicateName:
   Exclude:
     - 'app/models/concerns/spotlight/ar_light.rb'

@@ -45,6 +45,7 @@ module Spotlight
       params.require(:site).permit(
         :title,
         :subtitle,
+        :theme,
         masthead_attributes: masthead_params,
         exhibits_attributes: %i[id weight]
       )

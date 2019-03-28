@@ -6,6 +6,7 @@ module Spotlight
   module MainAppHelpers
     include Spotlight::NavbarHelper
     include Spotlight::MastheadHelper
+    include Spotlight::ThemeHelper
 
     def cache_key_for_spotlight_exhibits
       "#{Spotlight::Exhibit.count}/#{Spotlight::Exhibit.maximum(:updated_at).try(:utc)}"
@@ -35,19 +36,6 @@ module Spotlight
       else
         show_presenter(document)
       end
-    end
-
-    def exhibit_stylesheet_link_tag(tag)
-      if current_exhibit_theme && current_exhibit&.theme != 'default'
-        stylesheet_link_tag "#{tag}_#{current_exhibit_theme}"
-      else
-        Rails.logger.warn "Exhibit theme '#{current_exhibit_theme}' not in white-list of available themes: #{current_exhibit&.themes}"
-        stylesheet_link_tag(tag)
-      end
-    end
-
-    def current_exhibit_theme
-      current_exhibit.theme if current_exhibit && current_exhibit.theme.present? && current_exhibit.themes.include?(current_exhibit.theme)
     end
   end
 end

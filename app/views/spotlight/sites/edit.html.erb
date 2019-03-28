@@ -1,19 +1,33 @@
-<%= page_title(t('.page_title')) %>
-<div role="tabpanel">
-  <%= bootstrap_form_for @site, url: spotlight.site_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10' do |f| %>
-    <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="nav-item">
-        <a href="#basic" class="active nav-link" aria-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
-      </li>
-      <li role="presentation" class="nav-item">
-        <a href="#site-masthead" class="nav-link" aria-controls="site-masthead" role="tab" data-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
-      </li>
-    </ul>
-    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="basic">
-        <%= f.text_field :title %>
-        <%= f.text_field :subtitle %>
-      </div>
+<div id="content" class="col-md-9 exhibit-admin">
+  <%= page_title(t('.section'), t('.page_title')) %>
+  <div role="tabpanel">
+    <%= bootstrap_form_for @site, url: spotlight.site_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10' do |f| %>
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
+        </li>
+        <li role="presentation">
+          <a href="#site-masthead" aria-controls="site-masthead" role="tab" data-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="basic">
+          <div class="row col-md-12">
+            <%= f.text_field :title %>
+            <%= f.text_field :subtitle %>
+            <% if Spotlight::Engine.config.exhibit_themes.many? %>
+              <p class="instructions"><%= t(:'.site_theme.help') %></p>
+              <%= f.form_group :theme, label: { text: t(:'.site_theme.label') } do %>
+                <% Spotlight::Engine.config.exhibit_themes.each do |theme| %>
+                  <div class="col-md-6">
+                    <%= image_tag "spotlight/themes/#{theme}_preview.png", width: 100, height: 100 %>
+                    <%= f.radio_button :theme, theme, label: t(:".site_theme.#{theme}", default: theme.to_s.titleize), inline: true %>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
 
       <div role="tabpanel" class="tab-pane" id="site-masthead">
         <p class="instructions"><%= t(:'.site_masthead.help') %></p>

@@ -9,6 +9,7 @@ module Spotlight
     include MetaHelper
     include CropHelper
     include LanguagesHelper
+    include ThemeHelper
 
     ##
     # Give the application name a chance to include the exhibit title
@@ -27,7 +28,7 @@ module Spotlight
     end
 
     def site_title
-      current_site.title if current_site.title.present?
+      current_site.title.presence
     end
 
     # Returns the url for the current page in the new locale. This may be
@@ -110,7 +111,7 @@ module Spotlight
     # Return a copy of the blacklight configuration
     # that only includes views conifgured by our block
     def blacklight_view_config_for_search_block(block)
-      return {} unless block.view.present?
+      return {} if block.view.blank?
 
       # Reject any views that aren't configured to display for this block
       blacklight_config.view.select do |view, _|
@@ -156,19 +157,6 @@ module Spotlight
 
     def available_view_fields
       current_exhibit.blacklight_configuration.default_blacklight_config.view.to_h.reject { |_k, v| v.if == false }
-    end
-
-    def exhibit_stylesheet_link_tag(tag)
-      if current_exhibit_theme && current_exhibit.theme != 'default'
-        stylesheet_link_tag "#{tag}_#{current_exhibit_theme}"
-      else
-        Rails.logger.warn "Exhibit theme '#{current_exhibit_theme}' not in white-list of available themes: #{current_exhibit.themes}"
-        stylesheet_link_tag(tag)
-      end
-    end
-
-    def current_exhibit_theme
-      current_exhibit.theme if current_exhibit && current_exhibit.theme.present? && current_exhibit.themes.include?(current_exhibit.theme)
     end
 
     private

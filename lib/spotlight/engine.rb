@@ -265,7 +265,9 @@ module Spotlight
     Blacklight::OpenStructWithHashAccess.send(:extend, ActiveModel::Translation)
     # rubocop:enable Lint/SendWithMixinArgument
 
-    config.exhibit_themes = ['default']
+    config.exhibit_themes =
+      %w[default] +
+      ENV.fetch('SPOTLIGHT_THEMES') { '' }.split(',')
 
     config.default_page_content_type = 'SirTrevor'
 

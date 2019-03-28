@@ -10,7 +10,7 @@ describe 'Update the site theme', type: :feature do
     visit spotlight.edit_exhibit_appearance_path(exhibit)
 
     expect(page).to have_content('Visual theme')
-    choose 'Modern'
+    choose 'Fancy'
 
     click_button 'Save changes'
 
@@ -22,7 +22,7 @@ describe 'Update the site theme', type: :feature do
 
     click_link 'Exhibit masthead'
 
-    expect(page).to have_checked_field 'Modern'
-    expect(page).to have_xpath('//link[contains(@href, "/assets/application_modern")]', visible: false)
+    expect(page).to have_checked_field 'Fancy'
+    expect(page).to have_xpath('//link[contains(@href, "/assets/application_fancy")]', visible: false)
   end
 end

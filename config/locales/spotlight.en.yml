@@ -213,7 +213,7 @@ en:
           help: You can select and crop an image to use as a background in your exhibit site's masthead. To use an image as a masthead background, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.
         site_theme:
           heading: Visual theme
-          help: ''
+          help: The theme is applied to this exhibit only.  It takes precedence over the site-wide theme.
           label: Exhibit theme
         site_thumbnail:
           heading: Exhibit thumbnail
@@ -901,6 +901,10 @@ en:
           help: |
             You can select and crop an image to use as a background for your home page masthead.
             To use an image as a masthead background, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.
+        site_theme:
+          heading: Visual theme
+          help: The selected theme is applied site-wide.  It does not override exhibit-specific theme selections.
+          label: Site theme
       edit_exhibits:
         instructions: Drag and drop the exhibits below to specify the order in which they are displayed on the exhibits homepage.
         page_title: Order exhibits
