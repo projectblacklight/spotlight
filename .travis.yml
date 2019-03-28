@@ -1,5 +1,5 @@
 addons:
-  chrome: stable
+  chrome: beta
 notifications:
   email: false
 
