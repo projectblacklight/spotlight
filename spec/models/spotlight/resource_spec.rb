@@ -123,6 +123,21 @@ describe Spotlight::Resource, type: :model do
     end
   end
 
+  describe '#destroy' do
+    let(:solr) { subject.send(:blacklight_solr) }
+    before do
+      subject.id = '12345'
+      allow(solr).to receive(:delete_by_query)
+      allow(solr).to receive(:commit)
+    end
+
+    it 'removes the object from the index' do
+      subject.destroy
+      expect(solr).to have_received(:delete_by_query).with('spotlight_resource_id_ssim:gid://internal/Spotlight::Resource/12345')
+      expect(solr).to have_received(:commit)
+    end
+  end
+
   it 'stores arbitrary data' do
     subject.data[:a] = 1
     subject.data[:b] = 2

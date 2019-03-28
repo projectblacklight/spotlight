@@ -17,6 +17,8 @@ module Spotlight
 
     serialize :data, Hash
 
+    before_destroy :remove_from_index
+
     after_index :commit
     after_index :touch_exhibit!
 
@@ -94,6 +96,18 @@ module Spotlight
         blacklight_solr.commit
       rescue => e
         Rails.logger.warn "Unable to commit to solr: #{e}"
+      end
+
+      # Called when the record is destroyed.
+      def remove_from_index
+        return unless write?
+
+        blacklight_solr.delete_by_query(
+          "#{Spotlight::Engine.config.resource_global_id_field}:#{to_global_id}"
+        )
+        blacklight_solr.commit
+      rescue => e
+        Rails.logger.warn "Unable to remove record from solr: #{e}"
       end
 
       def touch_exhibit!
