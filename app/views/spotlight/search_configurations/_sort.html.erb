@@ -8,7 +8,7 @@
         <div class="panel">
           <div class="panel-content">
             <div class="card-header">
-              <h3 class="card-title">
+              <h3 class="h6 card-title">
                 <%= vt.fields_for default_field.key, default_field do |sort| %>
                   <%= sort.check_box_without_bootstrap :enable, checked: true, disabled: true, data: { readonly: true } %>
                   <%= sort.hidden_field :enabled, value: '1', readonly: true %>
@@ -34,7 +34,7 @@
                     <div class="col-sm-12">
                       <%= vt.fields_for k, config do |sort| %>
                         <%= sort.check_box_without_bootstrap :enabled  %>
-                        <h3 class="card-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+                        <h3 class="h6 card-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
                           <a href="#edit-in-place" class="field-label edit-in-place"><%= config.label %></a>
                           <%= sort.hidden_field :label, {data: {:"edit-field-target" => "true"}} %>
                         </h3>

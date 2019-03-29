@@ -9,7 +9,7 @@ describe 'Browse Category Administration', type: :feature do
   describe 'index' do
     it 'has searches' do
       visit spotlight.exhibit_searches_path(exhibit)
-      expect(page).to have_css('.card .search .title', text: search.title)
+      expect(page).to have_css('.card-title', text: search.title)
     end
   end
 

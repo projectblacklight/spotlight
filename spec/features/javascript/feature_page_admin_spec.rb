@@ -40,10 +40,10 @@ feature 'Feature Pages Adminstration', js: true do
     within("[data-id='#{page1.id}']") do
       within('h3') do
         expect(page).to have_content('FeaturePage1')
-        expect(page).to have_css('input', visible: false)
+        expect(page).to have_css('.title-field', visible: false)
         click_link('FeaturePage1')
-        expect(page).to have_css('input', visible: true)
-        find('input').set('NewFeaturePage1')
+        expect(page).to have_css('.title-field', visible: true)
+        find('.title-field').set('NewFeaturePage1')
       end
     end
     click_button('Save changes')
@@ -85,10 +85,10 @@ feature 'Feature Pages Adminstration', js: true do
     within("[data-id='#{page1.id}']") do
       within('h3') do
         expect(page).to have_content('FeaturePage1')
-        expect(page).to have_css('input', visible: false)
+        expect(page).to have_css('.title-field', visible: false)
         click_link('FeaturePage1')
-        expect(page).to have_css('input', visible: true)
-        find('input').set('NewFancyTitle')
+        expect(page).to have_css('.title-field', visible: true)
+        find('.title-field').set('NewFancyTitle')
       end
     end
 
@@ -122,10 +122,10 @@ feature 'Feature Pages Adminstration', js: true do
     within('.home_page') do
       within('h3.card-title') do
         expect(page).to have_content(exhibit.home_page.title)
-        expect(page).to have_css('input', visible: false)
+        expect(page).to have_css('.title-field', visible: false)
         click_link(exhibit.home_page.title)
-        expect(page).to have_css('input', visible: true)
-        find('input').set('New Home Page Title')
+        expect(page).to have_css('.title-field', visible: true)
+        find('.title-field').set('New Home Page Title')
       end
     end
 
