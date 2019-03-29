@@ -15,7 +15,7 @@
             <span class='badge badge-warning pending-label'><%= t('.pending') %></span>
           </td>
           <td>
-            <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-danger pull-right') unless user == current_user %>
+            <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-danger float-right') unless user == current_user %>
           </td>
         </tr>
       <% end %>
@@ -48,9 +48,9 @@
 
   <h3 class="instructions"><%= t :'.admins_curators' %></h3>
   <div id="admins_curators" class="card card-body bg-light">
-    <div class='btn-toolbar pull-right'>
+    <div class='btn-toolbar float-right'>
       <button class="btn btn-sm btn-secondary copy-email-addresses" data-clipboard-target="#admins_curators">
-        <%= t('.copy') %>
+          <%= t('.copy') %>
       </button>
     </div>
     <%= Spotlight::Engine.user_class.with_roles.pluck(:email).sort.join(', ') %>

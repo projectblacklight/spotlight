@@ -3,7 +3,7 @@
     <%= render 'reindex_progress_panel' %>
   </div>
   <div class="add-items-nav clearfix">
-    <div class="pull-right">
+    <div class="float-right">
       <%= link_to t('.reindex'), reindex_all_exhibit_resources_path(current_exhibit), method: :post, class: 'btn btn-secondary' %>
       <% if Spotlight::Engine.config.resource_partials.any? %>
         <%= link_to t('.new_resource'), new_exhibit_resource_path(current_exhibit), class: 'btn btn-primary' %>

@@ -1,7 +1,7 @@
 <% set_html_page_title @search.title %>
 <% render partial: 'tophat' %>
 <div class="col-md-12">
-  <%= exhibit_edit_link @search, class: 'edit-button pull-right btn btn-primary' if can? :edit, @search %>
+  <%= exhibit_edit_link @search, class: 'edit-button float-right btn btn-primary' if can? :edit, @search %>
   <% if resource_masthead? %>
     <% content_for :masthead do %>
       <%= render 'search_title', search: @search %>
