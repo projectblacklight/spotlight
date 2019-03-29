@@ -1,4 +1,4 @@
-describe Spotlight::AdminUsersController, type: :controller do
+RSpec.describe Spotlight::AdminUsersController, type: :controller do
   routes { Spotlight::Engine.routes }
 
   before { sign_in(user) }
@@ -19,7 +19,7 @@ describe Spotlight::AdminUsersController, type: :controller do
     describe 'GET index' do
       it 'is successful' do
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
 
