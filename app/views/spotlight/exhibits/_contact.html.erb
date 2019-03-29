@@ -6,7 +6,7 @@
               <span class="form-text"><%=contact.object.errors[:email].join(", ".html_safe) %></span>
             <% end %>
             <p>
-              <span class="contact-email-delete-error text-danger callout-danger" style="display: none;"><%= t('.email_delete_error') %> <span class="error-msg"></span></span>
+              <span class="contact-email-delete-error text-danger bg-danger" style="display: none;"><%= t('.email_delete_error') %> <span class="error-msg"></span></span>
             </p>
           </div>
           <div class="col-md-4">

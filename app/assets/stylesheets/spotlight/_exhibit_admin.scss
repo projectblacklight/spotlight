@@ -27,19 +27,6 @@
       white-space: nowrap;
     }
   }
-
-  .callout {
-    margin: 40px 0;
-    padding: 2 * $padding-large-vertical;
-    border-left: 3px solid $gray-700;
-    > p {
-      padding-left: 0;
-    }
-    h4 {
-      margin-top: 0;
-      margin-bottom: $padding-base-vertical;
-    }
-  }
 }
 
 #edit-search {
