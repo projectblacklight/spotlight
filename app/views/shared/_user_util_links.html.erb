@@ -1,6 +1,6 @@
 <ul class="navbar-nav mr-auto">
   <%= render_nav_actions do |config, action|%>
-    <li><%= action %></li>
+    <li class="nav-item"><%= action %></li>
   <% end %>
 </ul>
 
@@ -35,13 +35,13 @@
       </ul>
     </li>
   <% else %>
-    <li class="dropdown-item">
-      <%= link_to t('spotlight.header_links.login'), main_app.new_user_session_path %>
+    <li class="nav-item">
+      <%= link_to t('spotlight.header_links.login'), main_app.new_user_session_path, class: 'nav-link' %>
     </li>
   <% end %>
   <% if current_exhibit and show_contact_form? %>
-    <li class="dropdown-item">
-      <%= link_to t('spotlight.header_links.contact'), spotlight.new_exhibit_contact_form_path(current_exhibit), data: {behavior: 'contact-link', target: 'report-problem-form' } %>
+    <li class="nav-item">
+      <%= link_to t('spotlight.header_links.contact'), spotlight.new_exhibit_contact_form_path(current_exhibit), data: {behavior: 'contact-link', target: 'report-problem-form' }, class: 'nav-link' %>
     </li>
   <% end %>
 </ul>
