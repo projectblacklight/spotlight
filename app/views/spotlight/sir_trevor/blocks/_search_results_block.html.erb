@@ -11,7 +11,7 @@
       <% views = blacklight_view_config_for_search_block(search_results_block) %>
       <% if views.length > 1 -%>
       <div id="sortAndPerPage" class="clearfix">
-        <div class="search-widgets pull-right">
+        <div class="search-widgets float-right">
           <%= render partial: 'view_type_group', locals: { block: search_results_block } %>
         </div>
       </div>

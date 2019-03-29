@@ -90,7 +90,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
                       '<input type="text" class="form-control" id="' + this.formId('caption_' + dataId) + '" name="item[' + index + '][caption]" data-field="caption"/>',
                     '</div>',
                   '</div>',
-                  '<div class="remove pull-right">',
+                  '<div class="remove float-right">',
                     '<a data-item-grid-panel-remove="true" href="#"><%= i18n.t("blocks:resources:panel:remove") %></a>',
                   '</div>',
                 '</div>',
