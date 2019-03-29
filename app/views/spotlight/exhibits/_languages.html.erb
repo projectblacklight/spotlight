@@ -9,7 +9,7 @@
     <%= f.submit nil, class: 'btn btn-primary' %>
   <% end %>
 
-  <h3><%= t :'spotlight.exhibits.languages.current_header' %></h3>
+  <h3 class="mt-4"><%= t :'spotlight.exhibits.languages.current_header' %></h3>
 
   <% if current_exhibit.languages.any? && current_exhibit.languages.last.persisted? %>
     <p class="instructions"><%= t :'spotlight.exhibits.languages.current_instructions' %></p>
