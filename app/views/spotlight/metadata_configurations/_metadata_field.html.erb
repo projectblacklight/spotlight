@@ -8,9 +8,9 @@
         <%= field.hidden_field :label, value: index_field_label(nil, key), class: 'form-control input-sm', data: {:"edit-field-target" => 'true'} %>
        </div>
     </td>
-    <td class="checkbox-cell text-center"><%= field.check_box :show, inline: true, checked: config.show, disabled: !config.immutable.show.nil?, label: "" %></td>
+    <td class="checkbox-cell text-center"><%= field.check_box :show, inline: true, checked: config.show, disabled: !config.immutable.show.nil?, hide_label: true %></td>
     <% available_view_fields.keys.each do |type| %>
-    <td class="checkbox-cell text-center"><%= field.check_box type, inline: true, checked: config.send(type), disabled: !config.immutable.send(type).nil?, label: "" %></td>
+    <td class="checkbox-cell text-center"><%= field.check_box type, inline: true, checked: config.send(type), disabled: !config.immutable.send(type).nil?, hide_label: true %></td>
     <% end %>
   <% end %>
 </tr>
