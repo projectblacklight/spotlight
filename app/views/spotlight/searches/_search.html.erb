@@ -7,27 +7,28 @@
         <%= image_tag(search.thumbnail_image_url || 'spotlight/default_browse_thumbnail.jpg', class: 'card-img') %>
       </div>
       <div class="col-md-7">
-        <div class="card-body">
-          <%= f.check_box :published, label: '' %>
-          <h4 class="title card-title"><%= search.title %></h4>
-        </div>
-       </div>
-       <div class="col-md-3">
-         <div class="card-body">
-            <div class="main">
-              <div class="count"><%= t :'.item_count', count: search.documents.size %></div>
-              <div class="actions"><%= exhibit_view_link(search) %> &bull; <%= exhibit_edit_link(search) %> &bull; <%= exhibit_delete_link(search) %></div>
-              <%= f.hidden_field :id %>
-              <%= f.hidden_field :weight, data: {property: "weight"} %>
-            </div>
+        <div class="card-body pb-0">
+          <h4 class="card-title h6">
+            <%= f.check_box :published, inline: true, hide_label: true %>
+            <%= search.title %>
+          </h4>
 
-            <div class="description">
-              <% if search.long_description.present? %>
-                <%= truncate(search.long_description, length: 89) %>
-              <% else %>
-                <span class="missing-description"><%= t(:'.missing_description_html', link: (link_to action_label(search, :edit_long), [spotlight, :edit, search.exhibit, search])) %></span>
-              <% end %>
-            </div>
+          <div class="card-text main">
+            <div class="count"><%= t :'.item_count', count: search.documents.size %></div>
+            <div class="actions"><%= exhibit_view_link(search) %> &bull; <%= exhibit_edit_link(search) %> &bull; <%= exhibit_delete_link(search) %></div>
+            <%= f.hidden_field :id %>
+            <%= f.hidden_field :weight, data: {property: "weight"} %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card-body">
+          <div class="card-text description">
+            <% if search.long_description.present? %>
+              <%= truncate(search.long_description, length: 89) %>
+            <% else %>
+              <span class="missing-description"><%= t(:'.missing_description_html', link: (link_to action_label(search, :edit_long), [spotlight, :edit, search.exhibit, search])) %></span>
+            <% end %>
           </div>
         </div>
       </div>

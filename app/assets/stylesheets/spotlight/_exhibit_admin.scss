@@ -40,16 +40,6 @@
       margin-bottom: $padding-base-vertical;
     }
   }
-  .callout-danger {
-    background-color: lighten(theme-color("danger"), 40%);
-    border-color: theme-color("danger");
-    h4 {
-      color: theme-color("danger");
-    }
-    a:hover, a:focus {
-      @include button-variant(theme-color("danger"), theme-color("danger"))
-    }
-  }
 }
 
 #edit-search {
