@@ -14,6 +14,6 @@
 </ul>
 
 <ul class="nav sidenav nav-pills nav-stacked">
-  <li class="nav-item"><%= link_to t(:'spotlight.sites.new.page_title'), spotlight.new_exhibit_path, class: 'btn btn-secondary btn-nav nav-link', role: 'button' if can? :create, Spotlight::Exhibit %></li>
+  <li class="nav-item"><%= link_to t(:'spotlight.sites.new.page_title'), spotlight.new_exhibit_path, class: 'btn btn-outline-secondary btn-nav nav-link', role: 'button' if can? :create, Spotlight::Exhibit %></li>
 </ul>
 <% end %>
