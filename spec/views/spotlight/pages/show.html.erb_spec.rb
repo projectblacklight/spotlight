@@ -33,7 +33,7 @@ describe 'spotlight/pages/show', type: :view do
 
   it 'does not double-escape HTML entities in the HTML title' do
     allow(page).to receive_messages(title: 'Abbott & Costello')
-    stub_template '_user_util_links.html.erb' => ''
+    stub_template 'shared/_user_util_links.html.erb' => ''
     stub_template 'shared/_masthead.html.erb' => ''
     render template: 'spotlight/pages/show', layout: 'layouts/spotlight/spotlight'
     expect(rendered).to have_content('Abbott & Costello | Blacklight')
