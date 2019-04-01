@@ -24,9 +24,26 @@ describe Spotlight::ExhibitsController, type: :controller do
 
   describe 'when not logged in' do
     describe 'GET index' do
-      it 'is allowed' do
-        get :index
-        expect(response).to be_success
+      context 'where there are no exhibits' do
+        it 'is allowed' do
+          get :index
+          expect(response).to be_successful
+        end
+      end
+
+      context 'when there is one exhibit' do
+        let!(:exhibit) do
+          FactoryBot.create(:exhibit)
+        end
+
+        before do
+          allow(controller).to receive(:redirect_to)
+        end
+
+        it 'is allowed' do
+          get :index
+          expect(controller).to have_received(:redirect_to).with(exhibit, flash: {})
+        end
       end
     end
 

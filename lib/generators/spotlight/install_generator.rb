@@ -24,7 +24,6 @@ module Spotlight
     end
 
     def riiif
-      gem 'riiif', '~> 1.0'
       route "mount Riiif::Engine => '/images', as: 'riiif'"
       copy_file 'config/initializers/riiif.rb'
     end

@@ -51,7 +51,11 @@ Spotlight::Engine.routes.draw do
 
     concern :exportable, Blacklight::Routes::Exportable.new
 
-    resources :solr_documents, except: [:index], path: '/catalog', controller: 'catalog' do
+    resources :solr_documents,
+              except: [:index],
+              path: '/catalog',
+              controller: 'catalog',
+              id: Blacklight::Engine.config.routes.identifier_constraint do
       concerns :exportable
 
       member do
