@@ -28,9 +28,9 @@ class CustomFieldName
   def field_suffix
     case field_type
     when 'vocab'
-      Spotlight::Engine.config.solr_fields.string_suffix
+      Spotlight::Engine.config.spotlight.solr_fields.string_suffix
     else
-      Spotlight::Engine.config.solr_fields.text_suffix
+      Spotlight::Engine.config.spotlight.solr_fields.text_suffix
     end
   end
 end

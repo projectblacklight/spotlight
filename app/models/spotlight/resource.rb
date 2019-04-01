@@ -76,7 +76,7 @@ module Spotlight
       end
 
       def batch_size
-        Spotlight::Engine.config.solr_batch_size
+        Spotlight::Engine.config.spotlight.solr_batch_size
       end
 
       def write_to_index(batch)
@@ -101,7 +101,7 @@ module Spotlight
       end
 
       def write?
-        Spotlight::Engine.config.writable_index
+        Spotlight::Engine.config.spotlight.writable_index
       end
 
       def documents_that_have_ids(document_list)

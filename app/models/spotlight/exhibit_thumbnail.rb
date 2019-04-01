@@ -6,7 +6,7 @@ module Spotlight
     private
 
     def image_size
-      Spotlight::Engine.config.featured_image_square_size
+      Spotlight::Engine.config.spotlight.featured_image_square_size
     end
   end
 end

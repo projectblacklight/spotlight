@@ -73,7 +73,7 @@ module Spotlight
         config.show.merge! show unless show.blank?
         config.index.merge! index unless index.blank?
 
-        config.index.thumbnail_field ||= Spotlight::Engine.config.thumbnail_field
+        config.index.thumbnail_field ||= Spotlight::Engine.config.spotlight.thumbnail_field
 
         config.add_results_collection_tool 'save_search', if: :render_save_this_search?
 
@@ -302,11 +302,12 @@ module Spotlight
     end
 
     def add_autocomplete_field(config)
-      return unless Spotlight::Engine.config.autocomplete_search_field && !config.search_fields[Spotlight::Engine.config.autocomplete_search_field]
+      return unless Spotlight::Engine.config.spotlight.autocomplete_search_field &&
+                    !config.search_fields[Spotlight::Engine.config.spotlight.autocomplete_search_field]
 
-      config.add_search_field(Spotlight::Engine.config.autocomplete_search_field) do |field|
+      config.add_search_field(Spotlight::Engine.config.spotlight.autocomplete_search_field) do |field|
         field.include_in_simple_select = false
-        field.solr_parameters = Spotlight::Engine.config.default_autocomplete_params.deep_dup
+        field.solr_parameters = Spotlight::Engine.config.spotlight.default_autocomplete_params.deep_dup
         field.solr_parameters[:fl] ||= default_autocomplete_field_list(config)
       end
     end
@@ -315,8 +316,8 @@ module Spotlight
       [
         config.document_model.unique_key,
         config.view_config(:show).title_field,
-        config.index.thumbnail_field || Spotlight::Engine.config.thumbnail_field,
-        Spotlight::Engine.config.iiif_manifest_field
+        config.index.thumbnail_field || Spotlight::Engine.config.spotlight.thumbnail_field,
+        Spotlight::Engine.config.spotlight.iiif_manifest_field
       ].flatten.join(' ')
     end
 

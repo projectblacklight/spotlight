@@ -10,7 +10,7 @@ describe 'spotlight/resources/new.html.erb', type: :view do
   end
 
   it 'renders the configured partials' do
-    allow(Spotlight::Engine.config).to receive(:resource_partials).and_return(
+    allow(Spotlight::Engine.config.spotlight).to receive(:resource_partials).and_return(
       %w(
         spotlight/resources/external_resources_form
         spotlight/resources/upload/form

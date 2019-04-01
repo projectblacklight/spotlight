@@ -11,8 +11,8 @@ module Spotlight
     belongs_to :exhibit, touch: true
     # Ignoring for https://github.com/rubocop-hq/rubocop/issues/6764
     # rubocop:disable Rails/ReflectionClassName
-    belongs_to :created_by, class_name: Spotlight::Engine.config.user_class, optional: true
-    belongs_to :last_edited_by, class_name: Spotlight::Engine.config.user_class, optional: true
+    belongs_to :created_by, class_name: Spotlight::Engine.config.spotlight.user_class, optional: true
+    belongs_to :last_edited_by, class_name: Spotlight::Engine.config.spotlight.user_class, optional: true
     # rubocop:enable Rails/ReflectionClassName
 
     belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy, optional: true

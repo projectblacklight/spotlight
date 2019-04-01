@@ -24,7 +24,7 @@ describe Spotlight::SolrDocumentBuilder do
       subject { resource.document_builder }
 
       before do
-        allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(true)
+        allow(Spotlight::Engine.config.spotlight).to receive(:filter_resources_by_exhibit).and_return(true)
         allow(resource.document_builder).to receive(:to_solr).and_return(id: 'abc123')
         allow(resource_alt.document_builder).to receive(:to_solr).and_return(id: 'abc123')
         resource_alt.document_builder.documents_to_index.first

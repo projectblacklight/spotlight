@@ -60,7 +60,7 @@ describe Spotlight::Resource, type: :model do
 
       context 'when the index is not writable' do
         before do
-          allow(Spotlight::Engine.config).to receive_messages(writable_index: false)
+          allow(Spotlight::Engine.config.spotlight).to receive_messages(writable_index: false)
         end
 
         it "doesn't write" do

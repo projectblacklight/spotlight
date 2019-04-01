@@ -6,7 +6,7 @@
       <h2><%= t(:'.title') %></h2>
       <%= f.text_field :name %>
       <span style="display:none;visibility:hidden;">
-        <% honeypot_field_name = Spotlight::Engine.config.spambot_honeypot_email_field %>
+        <% honeypot_field_name = Spotlight::Engine.config.spotlight.spambot_honeypot_email_field %>
         <%= f.email_field honeypot_field_name, label: t(:'.honeypot_field_explanation') %>
       </span>
       <%= f.email_field :email %>

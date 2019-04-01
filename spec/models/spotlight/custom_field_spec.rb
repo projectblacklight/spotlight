@@ -65,13 +65,13 @@ describe Spotlight::CustomField, type: :model do
     it 'ends in the text suffix if it is a text field' do
       subject.field_type = 'text'
       subject.save
-      expect(subject.field).to end_with Spotlight::Engine.config.solr_fields.text_suffix
+      expect(subject.field).to end_with Spotlight::Engine.config.spotlight.solr_fields.text_suffix
     end
 
     it 'ends in a string suffix if it is a vocab field' do
       subject.field_type = 'vocab'
       subject.save
-      expect(subject.field).to end_with Spotlight::Engine.config.solr_fields.string_suffix
+      expect(subject.field).to end_with Spotlight::Engine.config.spotlight.solr_fields.string_suffix
     end
 
     it 'begins with readonly if it is readonly' do
@@ -95,7 +95,7 @@ describe Spotlight::CustomField, type: :model do
 
     context 'with a solr field prefix configured' do
       before do
-        allow(Spotlight::Engine.config.solr_fields).to receive(:prefix).and_return 'prefix_'
+        allow(Spotlight::Engine.config.spotlight.solr_fields).to receive(:prefix).and_return 'prefix_'
       end
 
       it 'uses the solr field prefix' do

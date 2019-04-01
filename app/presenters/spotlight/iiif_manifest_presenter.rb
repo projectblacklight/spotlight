@@ -49,7 +49,7 @@ module Spotlight
 
     # a description of the manifest
     def description
-      resource.first(Spotlight::Engine.config.upload_description_field)
+      resource.first(Spotlight::Engine.config.spotlight.upload_description_field)
     end
 
     # IIIFManifest will call #to_s on each leaf node to get its respective label (not called out in README).

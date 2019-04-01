@@ -5,7 +5,7 @@
   <div class="add-items-nav clearfix">
     <div class="pull-right">
       <%= link_to t('.reindex'), reindex_all_exhibit_resources_path(current_exhibit), method: :post, class: 'btn btn-default' %>
-      <% if Spotlight::Engine.config.resource_partials.any? %>
+      <% if Spotlight::Engine.config.spotlight.resource_partials.any? %>
         <%= link_to t('.new_resource'), new_exhibit_resource_path(current_exhibit), class: 'btn btn-primary' %>
       <% end %>
     </div>

@@ -15,7 +15,7 @@ module Spotlight
     protected
 
     def initialize_filter
-      return unless Spotlight::Engine.config.filter_resources_by_exhibit
+      return unless Spotlight::Engine.config.spotlight.filter_resources_by_exhibit
 
       filters.create field: default_filter_field, value: default_filter_value
     end
@@ -42,7 +42,7 @@ module Spotlight
     end
 
     def default_filter_field
-      "#{Spotlight::Engine.config.solr_fields.prefix}spotlight_exhibit_slug_#{slug}#{Spotlight::Engine.config.solr_fields.boolean_suffix}"
+      "#{Spotlight::Engine.config.spotlight.solr_fields.prefix}spotlight_exhibit_slug_#{slug}#{Spotlight::Engine.config.spotlight.solr_fields.boolean_suffix}"
     end
 
     # Return a string to work around any ActiveRecord type-casting
@@ -53,7 +53,7 @@ module Spotlight
     private
 
     def default_main_navigations
-      Spotlight::Engine.config.exhibit_main_navigation.dup
+      Spotlight::Engine.config.spotlight.exhibit_main_navigation.dup
     end
   end
 end

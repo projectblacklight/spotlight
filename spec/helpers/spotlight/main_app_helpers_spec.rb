@@ -40,7 +40,7 @@ describe Spotlight::MainAppHelpers, type: :helper do
     end
 
     context 'with a default contact address' do
-      before { allow(Spotlight::Engine.config).to receive_messages default_contact_email: 'root@localhost' }
+      before { allow(Spotlight::Engine.config.spotlight).to receive_messages default_contact_email: 'root@localhost' }
 
       before { allow(helper).to receive_messages current_exhibit: exhibit }
 
@@ -83,7 +83,7 @@ describe Spotlight::MainAppHelpers, type: :helper do
 
     context 'for a themed exhibit' do
       before do
-        allow(Spotlight::Engine.config).to receive(:exhibit_themes).and_return(%w(default modern))
+        allow(Spotlight::Engine.config.spotlight).to receive(:exhibit_themes).and_return(%w(default modern))
         exhibit.update(theme: 'modern')
       end
 

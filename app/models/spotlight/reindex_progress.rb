@@ -13,7 +13,7 @@ module Spotlight
     def recently_in_progress?
       return true if current_log_entry.in_progress?
 
-      current_log_entry.end_time.present? && (current_log_entry.end_time > Spotlight::Engine.config.reindex_progress_window.minutes.ago)
+      current_log_entry.end_time.present? && (current_log_entry.end_time > Spotlight::Engine.config.spotlight.reindex_progress_window.minutes.ago)
     end
 
     def started_at

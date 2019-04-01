@@ -31,19 +31,19 @@ module Spotlight
       end
 
       def solr_field_for_tagger(tagger)
-        :"#{solr_field_prefix(tagger)}tags#{Spotlight::Engine.config.solr_fields.string_suffix}"
+        :"#{solr_field_prefix(tagger)}tags#{Spotlight::Engine.config.spotlight.solr_fields.string_suffix}"
       end
 
       def visibility_field(exhibit)
-        :"#{solr_field_prefix(exhibit)}public#{Spotlight::Engine.config.solr_fields.boolean_suffix}"
+        :"#{solr_field_prefix(exhibit)}public#{Spotlight::Engine.config.spotlight.solr_fields.boolean_suffix}"
       end
 
       def resource_type_field
-        :"#{Spotlight::Engine.config.solr_fields.prefix}spotlight_resource_type#{Spotlight::Engine.config.solr_fields.string_suffix}"
+        :"#{Spotlight::Engine.config.spotlight.solr_fields.prefix}spotlight_resource_type#{Spotlight::Engine.config.spotlight.solr_fields.string_suffix}"
       end
 
       def solr_field_prefix(exhibit)
-        "#{Spotlight::Engine.config.solr_fields.prefix}#{exhibit.class.model_name.param_key}_#{exhibit.to_param}_"
+        "#{Spotlight::Engine.config.spotlight.solr_fields.prefix}#{exhibit.class.model_name.param_key}_#{exhibit.to_param}_"
       end
     end
 
@@ -134,9 +134,9 @@ module Spotlight
 
     def exhibits_to_solr
       slugs = sidecars.map(&:exhibit).map(&:slug)
-
+      solr_fields = Spotlight::Engine.config.spotlight.solr_fields
       {
-        "#{Spotlight::Engine.config.solr_fields.prefix}spotlight_exhibit_slugs#{Spotlight::Engine.config.solr_fields.string_suffix}" => slugs
+        "#{solr_fields.prefix}spotlight_exhibit_slugs#{solr_fields.string_suffix}" => slugs
       }
     end
   end

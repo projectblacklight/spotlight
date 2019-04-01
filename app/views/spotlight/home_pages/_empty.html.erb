@@ -19,7 +19,7 @@
         <li>If you want help building the exhibit, use the <%= link_to "Configuration > Users", exhibit_roles_path(current_exhibit) %> page to add other user accounts.</li>
       <% end %>
 
-      <% if Spotlight::Engine.config.resource_partials.any? %>
+      <% if Spotlight::Engine.config.spotlight.resource_partials.any? %>
         <li>Add items to the exhibit. Go to the <%= link_to "Curation > Items", admin_exhibit_catalog_path(current_exhibit) %> page and click <strong>Add items</strong>. You can add items individually or in bulk via a CSV file.</li>
       <% end %>
 

@@ -71,7 +71,7 @@ describe Spotlight::ReindexProgress, type: :model do
       end
     end
 
-    context 'current_log_entry has an end_time less than Spotlight::Engine.config.reindex_progress_window.minutes.ago' do
+    context 'current_log_entry has an end_time less than Spotlight::Engine.config.spotlight.reindex_progress_window.minutes.ago' do
       let(:reindexing_log_entry) { FactoryBot.create(:recent_reindexing_log_entry, end_time: Time.zone.now) }
 
       it 'returns true' do

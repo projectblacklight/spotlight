@@ -5,7 +5,7 @@ module Spotlight
     private
 
     def image_size
-      Spotlight::Engine.config.contact_square_size
+      Spotlight::Engine.config.spotlight.contact_square_size
     end
   end
 end

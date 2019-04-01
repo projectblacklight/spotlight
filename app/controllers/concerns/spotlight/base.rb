@@ -24,12 +24,12 @@ module Spotlight
         id: doc.id,
         title: CGI.unescapeHTML(view_context.presenter(doc).heading.to_str),
         thumbnail: doc.first(blacklight_config.index.thumbnail_field),
-        full_image_url: doc.first(Spotlight::Engine.config.full_image_field),
+        full_image_url: doc.first(Spotlight::Engine.config.spotlight.full_image_field),
         description: doc.id,
         url: polymorphic_path([current_exhibit, doc]),
         private: doc.private?(current_exhibit),
         global_id: doc.to_global_id.to_s,
-        iiif_manifest: doc[Spotlight::Engine.config.iiif_manifest_field]
+        iiif_manifest: doc[Spotlight::Engine.config.spotlight.iiif_manifest_field]
       }
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize

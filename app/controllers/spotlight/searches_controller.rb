@@ -35,7 +35,7 @@ module Spotlight
     end
 
     def autocomplete
-      search_params = autocomplete_params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field)
+      search_params = autocomplete_params.merge(search_field: Spotlight::Engine.config.spotlight.autocomplete_search_field)
       (_, document_list) = search_results(search_params)
 
       respond_to do |format|

@@ -35,7 +35,7 @@ describe Spotlight::IiifManifestPresenter do
       allow(controller).to receive(:blacklight_config).and_return(blacklight_config)
 
       allow(resource).to receive(:first).with(title_field_name).and_return(title_field_value)
-      allow(resource).to receive(:first).with(Spotlight::Engine.config.upload_description_field).and_return(description_field_value)
+      allow(resource).to receive(:first).with(Spotlight::Engine.config.spotlight.upload_description_field).and_return(description_field_value)
       allow(resource).to receive(:first).with(:spotlight_full_image_width_ssm).and_return(img_width)
       allow(resource).to receive(:first).with(:spotlight_full_image_height_ssm).and_return(img_height)
 

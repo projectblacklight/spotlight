@@ -22,7 +22,7 @@ module Spotlight
     friendly_id :title, use: [:slugged, :finders]
     validates :title, presence: true, if: -> { I18n.locale == I18n.default_locale }
     validates :slug, uniqueness: true
-    validates :theme, inclusion: { in: Spotlight::Engine.config.exhibit_themes }, allow_blank: true
+    validates :theme, inclusion: { in: Spotlight::Engine.config.spotlight.exhibit_themes }, allow_blank: true
 
     acts_as_tagger
     acts_as_taggable
@@ -45,7 +45,7 @@ module Spotlight
 
     # Ignoring for https://github.com/rubocop-hq/rubocop/issues/6764
     # rubocop:disable Rails/ReflectionClassName
-    has_many :users, through: :roles, class_name: Spotlight::Engine.config.user_class
+    has_many :users, through: :roles, class_name: Spotlight::Engine.config.spotlight.user_class
     # rubocop:enable Rails/ReflectionClassName
 
     has_many :pages, dependent: :destroy
@@ -97,7 +97,7 @@ module Spotlight
     end
 
     def uploaded_resource_fields
-      Spotlight::Engine.config.upload_fields
+      Spotlight::Engine.config.spotlight.upload_fields
     end
 
     def searchable?

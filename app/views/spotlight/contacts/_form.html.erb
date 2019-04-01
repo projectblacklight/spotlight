@@ -16,7 +16,7 @@
         <%= iiif_upload_tag(af) %>
       </div>
 
-      <%= iiif_cropper_tags af, initial_crop_selection: Spotlight::Engine.config.contact_square_size %>
+      <%= iiif_cropper_tags af, initial_crop_selection: Spotlight::Engine.config.spotlight.contact_square_size %>
     <% end %>
     </div>
   <% end %>

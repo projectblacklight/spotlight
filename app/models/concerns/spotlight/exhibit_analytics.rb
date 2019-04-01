@@ -23,7 +23,7 @@ module Spotlight
     private
 
     def analytics_provider
-      Spotlight::Engine.config.analytics_provider
+      Spotlight::Engine.config.spotlight.analytics_provider
     end
   end
 end

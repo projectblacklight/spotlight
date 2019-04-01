@@ -7,7 +7,7 @@ module Spotlight
 
     # Ignoring for https://github.com/rubocop-hq/rubocop/issues/6764
     # rubocop:disable Rails/ReflectionClassName
-    belongs_to :user, class_name: Spotlight::Engine.config.user_class, autosave: true, optional: false
+    belongs_to :user, class_name: Spotlight::Engine.config.spotlight.user_class, autosave: true, optional: false
     # rubocop:enable Rails/ReflectionClassName
 
     validates :role, inclusion: { in: ROLES }

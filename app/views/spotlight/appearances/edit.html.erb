@@ -16,13 +16,13 @@
   <% end %>
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
-      <% if Spotlight::Engine.config.exhibit_themes.many? %>
+      <% if Spotlight::Engine.config.spotlight.exhibit_themes.many? %>
         <li role="presentation" class="active">
           <a href="#site-theme" aria-controls="site-theme" role="tab" data-toggle="tab"><%= t(:'.site_theme.heading') %></a>
         </li>
       <% end %>
 
-      <li role="presentation" <%= 'class="active"'.html_safe unless Spotlight::Engine.config.exhibit_themes.many? %>>
+      <li role="presentation" <%= 'class="active"'.html_safe unless Spotlight::Engine.config.spotlight.exhibit_themes.many? %>>
         <a href="#site-masthead" aria-controls="site-masthead" role="tab" data-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
       </li>
 
@@ -35,11 +35,11 @@
       </li>
     </ul>
     <div class="tab-content">
-      <% if Spotlight::Engine.config.exhibit_themes.many? %>
+      <% if Spotlight::Engine.config.spotlight.exhibit_themes.many? %>
       <div role="tabpanel" class="tab-pane active" id="site-theme">
         <p class="instructions"><%= t(:'.site_theme.help') %></p>
         <%= f.form_group :theme, label: { text: t(:'.site_theme.label') } do %>
-          <% Spotlight::Engine.config.exhibit_themes.each do |theme| %>
+          <% Spotlight::Engine.config.spotlight.exhibit_themes.each do |theme| %>
             <div class="col-md-6">
               <%= image_tag "spotlight/themes/#{theme}_preview.png", width: 100, height: 100 %>
               <%= f.radio_button :theme, theme, label: t(:".site_theme.#{theme}", default: theme.to_s.titleize), inline: true %>
@@ -49,17 +49,17 @@
       </div>
       <% end %>
 
-      <div role="tabpanel" class="tab-pane <%= 'active' unless Spotlight::Engine.config.exhibit_themes.many? %>" id="site-masthead">
+      <div role="tabpanel" class="tab-pane <%= 'active' unless Spotlight::Engine.config.spotlight.exhibit_themes.many? %>" id="site-masthead">
         <p class="instructions"><%= t(:'.site_masthead.help') %></p>
         <%= f.fields_for(:masthead, current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection, crop_type: :masthead %>
+          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.spotlight.masthead_initial_crop_selection, crop_type: :masthead %>
         <% end %>
       </div>
 
       <div role="tabpanel" class="tab-pane" id="site-thumbnail">
         <p class="instructions"><%= t(:'.site_thumbnail.help') %></p>
         <%= f.fields_for(:thumbnail, current_exhibit.thumbnail || current_exhibit.build_thumbnail) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.thumbnail_initial_crop_selection, crop_type: :thumbnail %>
+          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.spotlight.thumbnail_initial_crop_selection, crop_type: :thumbnail %>
         <% end %>
       </div>
 
