@@ -46,7 +46,7 @@ describe Spotlight::ResourcesController, type: :controller do
     describe 'GET monitor' do
       it 'succesfully renders json' do
         get :monitor, params: { exhibit_id: exhibit }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
 

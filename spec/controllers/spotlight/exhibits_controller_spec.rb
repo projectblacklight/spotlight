@@ -27,7 +27,7 @@ describe Spotlight::ExhibitsController, type: :controller do
       context 'where there are no exhibits' do
         it 'is allowed' do
           get :index
-          expect(response).to be_success
+          expect(response).to be_successful
         end
       end
 
