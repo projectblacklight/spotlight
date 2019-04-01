@@ -65,6 +65,7 @@
 # Spotlight::Engine.config.ga_email = nil
 # Spotlight::Engine.config.ga_analytics_options = {}
 # Spotlight::Engine.config.ga_page_analytics_options = config.ga_analytics_options.merge(limit: 5)
+# Spotlight::Engine.config.ga_anonymize_ip = false # false for backwards compatibility
 
 # ==> Sir Trevor Widget Configuration
 # Spotlight::Engine.config.sir_trevor_widgets = %w(
