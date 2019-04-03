@@ -59,7 +59,7 @@
 # Spotlight::Engine.config.featured_image_square_size = [400, 400]
 
 # ==> Google Analytics integration
-# Spotlight::Engine.config.analytics_provider = nil
+# Spotlight::Engine.config.analytics_provider = Spotlight::Analytics::Ga
 # Spotlight::Engine.config.ga_pkcs12_key_path = nil
 # Spotlight::Engine.config.ga_web_property_id = nil
 # Spotlight::Engine.config.ga_email = nil
