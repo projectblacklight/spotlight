@@ -59,12 +59,13 @@
 # Spotlight::Engine.config.featured_image_square_size = [400, 400]
 
 # ==> Google Analytics integration
-# Spotlight::Engine.config.analytics_provider = nil
+# Spotlight::Engine.config.analytics_provider = Spotlight::Analytics::Ga
 # Spotlight::Engine.config.ga_pkcs12_key_path = nil
 # Spotlight::Engine.config.ga_web_property_id = nil
 # Spotlight::Engine.config.ga_email = nil
 # Spotlight::Engine.config.ga_analytics_options = {}
 # Spotlight::Engine.config.ga_page_analytics_options = config.ga_analytics_options.merge(limit: 5)
+# Spotlight::Engine.config.ga_anonymize_ip = false # false for backwards compatibility
 
 # ==> Sir Trevor Widget Configuration
 # Spotlight::Engine.config.sir_trevor_widgets = %w(

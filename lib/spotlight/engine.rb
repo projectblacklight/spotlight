@@ -189,6 +189,7 @@ module Spotlight
     config.ga_email = nil
     config.ga_analytics_options = {}
     config.ga_page_analytics_options = config.ga_analytics_options.merge(limit: 5)
+    config.ga_anonymize_ip = false # false for backwards compatibility
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
 
