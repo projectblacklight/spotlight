@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::ConfirmationsController, type: :controller do
   routes { Spotlight::Engine.routes }
   before do

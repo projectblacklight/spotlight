@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # Spotlight's catalog controller. Note that this subclasses

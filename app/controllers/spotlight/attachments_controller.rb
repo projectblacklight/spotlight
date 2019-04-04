@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # Create image attachments for the sir-trevor image widget

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::SolrDocument::UploadedResource, type: :model do
   let(:valid_resource) do
     SolrDocument.new(id: '123',

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::IiifManifestPresenter do
   require 'iiif_manifest'
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::SitesController, type: :controller do
   routes { Spotlight::Engine.routes }
 

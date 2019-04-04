@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # A simple service to invite any users who where created by an invitation but it was never sent.

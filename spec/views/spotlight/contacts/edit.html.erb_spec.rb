@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/contacts/edit.html.erb' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 

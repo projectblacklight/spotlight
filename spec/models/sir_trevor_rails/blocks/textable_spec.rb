@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe SirTrevorRails::Blocks::Textable do
   class TextableTestClass
     include SirTrevorRails::Blocks::Textable

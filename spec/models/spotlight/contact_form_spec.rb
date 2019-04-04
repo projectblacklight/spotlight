@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::ContactForm do
   subject { described_class.new(name: 'Root', email: 'user@example.com').tap { |c| c.current_exhibit = exhibit } }
   let(:exhibit) { FactoryBot.build_stubbed(:exhibit) }

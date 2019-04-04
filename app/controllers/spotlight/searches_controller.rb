@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # CRUD actions for curating browse categories (see

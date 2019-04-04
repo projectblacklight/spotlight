@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'shared/_footer', type: :view do
   let(:current_exhibit) { double(title: 'Some title', subtitle: 'Subtitle') }
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # Base page class. See {Spotlight::AboutPage}, {Spotlight::FeaturePage}, {Spotlight::HomePage}

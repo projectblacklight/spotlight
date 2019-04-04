@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'migration/page_language'
 
 RSpec.describe Migration::PageLanguage do

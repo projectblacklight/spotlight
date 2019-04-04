@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::Resources::OpenGraph, type: :model do
   class TestDocBuilder < Spotlight::SolrDocumentBuilder
     def to_solr

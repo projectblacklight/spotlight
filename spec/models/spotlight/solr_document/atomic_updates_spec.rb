@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::SolrDocument::AtomicUpdates, type: :model do
   let(:blacklight_solr) { double }
   subject do

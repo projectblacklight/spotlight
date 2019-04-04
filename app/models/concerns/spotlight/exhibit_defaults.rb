@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # Mixin for adding default configuration to exhibits
   module ExhibitDefaults

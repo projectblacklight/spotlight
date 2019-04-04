@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Catalog', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 

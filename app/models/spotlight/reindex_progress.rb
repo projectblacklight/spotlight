@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # ReindexProgress is a class that models the progress of reindexing a list of resources

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ##
 # Value object for calculating a custom field name.
 class CustomFieldName

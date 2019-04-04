@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Adding custom metadata field data', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }

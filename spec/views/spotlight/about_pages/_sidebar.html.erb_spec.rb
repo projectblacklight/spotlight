@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/about_pages/_sidebar.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:page1) { FactoryBot.create(:about_page, title: 'One', weight: 4, exhibit: exhibit) }

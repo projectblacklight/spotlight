@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'shared/_exhibit_navbar', type: :view do
   let(:current_exhibit) { FactoryBot.create(:exhibit) }
   let(:feature_page) { FactoryBot.create(:feature_page, exhibit: current_exhibit) }

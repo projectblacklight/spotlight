@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # Controller for reverting to historical versions of e.g. pages

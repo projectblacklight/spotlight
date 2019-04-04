@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # A configurable solr filter for the exhibit
   class Filter < ActiveRecord::Base

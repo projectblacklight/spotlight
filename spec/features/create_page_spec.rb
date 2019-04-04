@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Creating a page', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }

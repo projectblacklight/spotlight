@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Spotlight::AdminUsersController, type: :controller do
   routes { Spotlight::Engine.routes }
 

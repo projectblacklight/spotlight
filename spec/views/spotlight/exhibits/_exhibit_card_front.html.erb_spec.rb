@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/exhibits/_exhibit_card_front.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:p) { 'spotlight/exhibits/exhibit_card_front' }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::FeaturedImage do
   subject(:featured_image) { described_class.new }
 

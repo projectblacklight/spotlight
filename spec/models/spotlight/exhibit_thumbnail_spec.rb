@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::ExhibitThumbnail do
   subject(:exhibit_thumbnail) { described_class.new }
 

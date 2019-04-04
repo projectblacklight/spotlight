@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 feature 'Solr Document Block', feature: true, versioning: true, default_max_wait_time: 15 do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }

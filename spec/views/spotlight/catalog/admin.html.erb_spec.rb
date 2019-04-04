@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/catalog/admin.html.erb', type: :view do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   let(:blacklight_config) { CatalogController.blacklight_config }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # Mixin for adding translatable ActiveRecord accessors
   module Translatables

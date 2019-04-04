@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/pages/new', type: :view do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   before do

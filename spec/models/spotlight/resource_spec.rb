@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::Resource, type: :model do
   before do
     allow_any_instance_of(described_class).to receive(:update_index)

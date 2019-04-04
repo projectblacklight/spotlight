@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # Handles requests to upload images for exhibit thumbnails
   class FeaturedImagesController < Spotlight::ApplicationController

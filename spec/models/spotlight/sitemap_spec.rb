@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sitemap_generator'
 
 describe Spotlight::Sitemap do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Item Administration', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::ReindexingLogEntry, type: :model do
   subject { FactoryBot.build(:reindexing_log_entry) }
 

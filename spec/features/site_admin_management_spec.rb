@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Site admin management', js: true do
   let(:user) { FactoryBot.create(:site_admin) }
   let!(:existing_user) { FactoryBot.create(:exhibit_visitor) }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :feature_page, class: 'Spotlight::FeaturePage' do
     exhibit

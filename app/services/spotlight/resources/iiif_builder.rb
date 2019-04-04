@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   module Resources
     # transforms a IiifHarvester into solr documents

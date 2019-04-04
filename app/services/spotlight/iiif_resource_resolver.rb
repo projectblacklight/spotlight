@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ###
   # Update an ActiveRecord resource that containes identifiers for all the

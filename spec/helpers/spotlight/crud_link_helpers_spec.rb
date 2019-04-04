@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::CrudLinkHelpers, type: :helper do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:some_model) { Spotlight::FeaturePage.create! exhibit: exhibit }

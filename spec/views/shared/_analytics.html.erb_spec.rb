@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'shared/_analytics', type: :view do
   it 'is empty without Google Analytics configured' do
     render

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CapybaraDefaultMaxWaitMetadataHelper
   extend ActiveSupport::Concern
 

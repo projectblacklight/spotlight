@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fixtures/iiif_responses'
 module StubIiifResponse
   def stub_iiif_response_for_url(url, response)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::Resources::Web, type: :model do
   class TestResource < Spotlight::Resource
     include Spotlight::Resources::Web

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::RenameSidecarFieldJob do
   include ActiveJob::TestHelper
 

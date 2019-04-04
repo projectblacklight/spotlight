@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/sir_trevor/blocks/_link_to_search_block.html.erb', type: :view do
   let(:p) { 'spotlight/sir_trevor/blocks/link_to_search_block.html.erb' }
   let(:page) { double('Page', display_sidebar?: true) }

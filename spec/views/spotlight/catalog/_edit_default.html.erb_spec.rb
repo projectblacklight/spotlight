@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
   let(:blacklight_config) do
     Blacklight::Configuration.new do |config|

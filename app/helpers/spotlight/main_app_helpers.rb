@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # Helpers that are injected into the main application (because they used in layouts)

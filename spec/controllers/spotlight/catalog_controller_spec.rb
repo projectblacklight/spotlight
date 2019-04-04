@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::CatalogController, type: :controller do
   include ActiveJob::TestHelper
   routes { Spotlight::Engine.routes }

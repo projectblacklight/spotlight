@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::ContactsController, type: :controller do
   routes { Spotlight::Engine.routes }
   describe 'when not logged in' do

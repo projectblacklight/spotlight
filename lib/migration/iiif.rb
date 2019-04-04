@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Migration
   # This migrates FeaturedImages with crop coordinates into IIIF urls which
   # are stored in the `iiif_url' field.

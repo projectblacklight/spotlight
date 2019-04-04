@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/pages/edit', type: :view do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   let(:page) { stub_model(Spotlight::FeaturePage, exhibit: exhibit) }

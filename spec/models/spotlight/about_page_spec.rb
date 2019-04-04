@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::AboutPage, type: :model do
   let(:page) { described_class.create! exhibit: FactoryBot.create(:exhibit) }
   it { is_expected.not_to be_feature_page }

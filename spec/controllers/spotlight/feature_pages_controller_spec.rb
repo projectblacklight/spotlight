@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::FeaturePagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
 

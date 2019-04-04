@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/metadata_configurations/_metadata_field', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:p) { 'spotlight/metadata_configurations/metadata_field.html.erb' }

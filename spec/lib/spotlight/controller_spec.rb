@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::Controller do
   class MockController < ActionController::Base
     include Spotlight::Controller

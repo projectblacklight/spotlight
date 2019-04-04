@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 feature 'Metadata Administration', js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }

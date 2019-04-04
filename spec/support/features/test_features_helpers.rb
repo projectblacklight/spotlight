@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   module TestFeaturesHelpers
     def fill_in_typeahead_field(opts = {})

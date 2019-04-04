@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::IndexingCompleteMailer do
   let(:user) { double(email: 'test@example.com') }
   let(:exhibit) { double(title: 'Exhibit title') }

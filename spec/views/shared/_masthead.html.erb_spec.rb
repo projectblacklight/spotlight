@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'shared/_masthead', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit, subtitle: 'Some exhibit') }
   let(:masthead) { nil }
