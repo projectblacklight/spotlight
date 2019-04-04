@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sitemap_generator'
 
 # TODO: Update the default host to match your deployment environment

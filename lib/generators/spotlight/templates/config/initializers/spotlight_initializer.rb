@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ==> User model
 # Note that your chosen model must include Spotlight::User mixin
 # Spotlight::Engine.config.user_class = '::User'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/exhibits/index', type: :view do
   let(:exhibits) { Spotlight::Exhibit.none }
   let(:published_exhibits) { exhibits.published.page(1) }

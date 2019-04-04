@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::SolrDocumentBuilder do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:doc_builder) { described_class.new(resource) }

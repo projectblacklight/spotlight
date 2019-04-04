@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::FeaturedImageUploader do
   let(:mounter) { FactoryBot.create(:featured_image) }
   subject(:featured_image_uploader) { described_class.new(mounter, 'mounted_as') }

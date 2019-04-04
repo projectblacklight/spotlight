@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/roles/index', type: :view do
   let(:user) { stub_model(Spotlight::Engine.user_class, email: 'jane@example.com') }
   let(:exhibit) { FactoryBot.create(:exhibit) }

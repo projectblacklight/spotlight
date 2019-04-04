@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::AttachmentUploader do
   let(:mounter) { Spotlight::Attachment.new(id: '5') }
   subject(:attachment_uploader) { described_class.new(mounter, 'mounted_as') }

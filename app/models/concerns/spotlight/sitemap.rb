@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # Generate a sitemap for the Spotlight exhibit content
   class Sitemap

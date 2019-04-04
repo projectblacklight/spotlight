@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # Index and read actions for browse (see {Spotlight::SearchesController}

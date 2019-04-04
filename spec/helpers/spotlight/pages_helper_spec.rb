@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::PagesHelper, type: :helper do
   let(:blacklight_config) { Blacklight::Configuration.new { |config| config.show.title_field = :abc } }
   let(:titled_document) { blacklight_config.document_model.new(abc: 'value') }

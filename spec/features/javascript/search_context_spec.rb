@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 feature 'Search contexts' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }

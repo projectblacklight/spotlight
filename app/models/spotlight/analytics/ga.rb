@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'signet/oauth_2/client'
 require 'legato'
 

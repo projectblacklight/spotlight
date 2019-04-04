@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'shared/_header_navbar', type: :view do
   before do
     stub_template '_user_util_links.html.erb' => 'links'

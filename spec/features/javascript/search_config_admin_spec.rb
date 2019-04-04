@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 feature 'Search Configuration Administration', js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }

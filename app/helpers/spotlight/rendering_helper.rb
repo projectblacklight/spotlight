@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   module RenderingHelper # :nodoc:
     def render_markdown(text)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # Enforce exhibit visibility for index queries
   module AccessControlsEnforcementSearchBuilder

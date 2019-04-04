@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ###
   # Calls the #set_default_thumbnail method

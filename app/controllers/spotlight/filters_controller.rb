@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # Create and update filters for an exhibit
   class FiltersController < ApplicationController

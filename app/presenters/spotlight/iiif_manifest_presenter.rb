@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # A presenter class that provides the methods that IIIFManifest expects, as well as convenience methods

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Exhibits index page', type: :feature do
   context 'with multiple exhibits' do
     let!(:exhibit) { FactoryBot.create(:exhibit, title: 'Some Exhibit Title') }

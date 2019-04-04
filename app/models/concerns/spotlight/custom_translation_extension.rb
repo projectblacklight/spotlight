@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # Module that extends I18n::Backend::ActiveRecord::Translation to provide

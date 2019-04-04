@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 feature 'Browse pages' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 

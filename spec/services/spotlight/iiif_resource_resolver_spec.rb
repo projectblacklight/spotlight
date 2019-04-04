@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::IiifResourceResolver do
   let(:fixture_json) do
     File.open(

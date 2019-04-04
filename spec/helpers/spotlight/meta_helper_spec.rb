@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::MetaHelper, type: :helper do
   describe '#add_exhibit_meta_content' do
     let(:current_exhibit) { FactoryBot.create(:exhibit) }

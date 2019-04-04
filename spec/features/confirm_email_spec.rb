@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Confirming an email', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:contact_email) { Spotlight::ContactEmail.create!(email: 'justin@example.com', exhibit: exhibit) }

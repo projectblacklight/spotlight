@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::FeaturePage, type: :model do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   describe 'default_scope' do

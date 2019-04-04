@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Update the site theme', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }

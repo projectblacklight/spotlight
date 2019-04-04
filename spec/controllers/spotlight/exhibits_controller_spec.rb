@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rack/test'
 
 describe Spotlight::ExhibitsController, type: :controller do

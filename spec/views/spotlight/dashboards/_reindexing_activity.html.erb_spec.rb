@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
   # recent reindexing entries should be sorted by start_time in descending order, so mock that behavior
   let(:recent_reindexing) do

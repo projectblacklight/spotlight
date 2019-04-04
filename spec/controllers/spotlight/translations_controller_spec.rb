@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::TranslationsController do
   routes { Spotlight::Engine.routes }
 

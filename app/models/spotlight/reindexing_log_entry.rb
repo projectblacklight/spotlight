@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # a log entry representing an attempt to reindex some number of records in an exhibit

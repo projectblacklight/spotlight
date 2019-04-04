@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # SolrDocument mixins to add ActiveModel shims and indexing methods

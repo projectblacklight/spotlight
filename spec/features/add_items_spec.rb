@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Uploading a non-repository item', type: :feature do
   include ActiveJob::TestHelper
 

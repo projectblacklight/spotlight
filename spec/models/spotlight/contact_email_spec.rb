@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::ContactEmail, type: :model do
   let(:exhibit) { FactoryBot.build_stubbed(:exhibit) }
   subject { described_class.new(exhibit: exhibit) }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # Mailer for contacting new exhibit curators or administrators
   class InvitationMailer < ActionMailer::Base

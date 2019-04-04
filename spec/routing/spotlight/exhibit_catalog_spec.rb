@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe 'Catalog controller', type: :routing do
   describe 'routing' do
     routes { Spotlight::Engine.routes }

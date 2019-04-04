@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::ContactEmailController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:contact_email) { FactoryBot.create(:contact_email) }

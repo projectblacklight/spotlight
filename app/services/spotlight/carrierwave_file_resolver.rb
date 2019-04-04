@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # Used by RIIIF to find files uploaded by carrierwave
   class CarrierwaveFileResolver < Riiif::AbstractFileSystemResolver

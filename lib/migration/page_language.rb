@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Migration
   ##
   # This migration sets the Spotlight::Page locale to the I18n.default_locale.

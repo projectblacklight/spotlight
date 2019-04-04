@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::Site do
   describe '.instance' do
     it 'is a singleton' do

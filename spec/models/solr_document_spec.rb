@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe SolrDocument, type: :model do
   let(:document) { described_class.new(id: 'abcd123') }
   subject { document }

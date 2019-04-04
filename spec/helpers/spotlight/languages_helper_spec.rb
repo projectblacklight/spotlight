@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::LanguagesHelper, type: :helper do
   let(:current_exhibit) { FactoryBot.create(:exhibit) }
   describe '#add_exhibit_language_dropdown_options' do

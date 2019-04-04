@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # HTML <meta> tag helpers
   module MetaHelper

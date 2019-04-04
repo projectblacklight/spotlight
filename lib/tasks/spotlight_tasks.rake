@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :spotlight do
   desc 'Create an initial admin user'
   task initialize: :environment do

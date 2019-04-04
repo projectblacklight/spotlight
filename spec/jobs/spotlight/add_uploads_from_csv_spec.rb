@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::AddUploadsFromCSV do
   subject(:job) { described_class.new(data, exhibit, user) }
   let(:exhibit) { FactoryBot.create(:exhibit) }

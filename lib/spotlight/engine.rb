@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Load blacklight which will give spotlight views a higher preference than those in blacklight
 
 # devise must be required to first to ensure we can override devise and invitable views in spotlight correctly
@@ -116,10 +118,10 @@ module Spotlight
 
     # Suffixes for exhibit-specific solr fields
     config.solr_fields = OpenStruct.new
-    config.solr_fields.prefix = ''.freeze
-    config.solr_fields.boolean_suffix = '_bsi'.freeze
-    config.solr_fields.string_suffix = '_ssim'.freeze
-    config.solr_fields.text_suffix = '_tesim'.freeze
+    config.solr_fields.prefix = ''
+    config.solr_fields.boolean_suffix = '_bsi'
+    config.solr_fields.string_suffix = '_ssim'
+    config.solr_fields.text_suffix = '_tesim'
 
     config.resource_global_id_field = :"#{config.solr_fields.prefix}spotlight_resource_id#{config.solr_fields.string_suffix}"
 

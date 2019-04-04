@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # Create and update languages for an exhibit
   class LanguagesController < ApplicationController

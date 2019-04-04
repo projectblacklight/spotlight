@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/search_configurations/_facet_metadata', type: :view do
   before do
     render partial: 'spotlight/search_configurations/facet_metadata', locals: { metadata: metadata }

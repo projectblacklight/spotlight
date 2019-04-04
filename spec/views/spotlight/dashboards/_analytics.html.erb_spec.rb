@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/dashboards/_analytics.html.erb', type: :view do
   let(:current_exhibit) { FactoryBot.create(:exhibit) }
   let(:ga_data) { OpenStruct.new(pageviews: 1, users: 2, sessions: 3) }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if Rails::VERSION::MAJOR == 5 && Rails::VERSION::MINOR <= 1
   default_deprecation_behaviours = ActiveSupport::Deprecation.behavior
   ActiveSupport::Deprecation.behavior = lambda do |message, callstack|

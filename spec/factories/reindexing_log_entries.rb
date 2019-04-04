@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :unstarted_reindexing_log_entry, class: Spotlight::ReindexingLogEntry do
     items_reindexed_count { 15 }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::ExhibitExportSerializer do
   let!(:source_exhibit) { FactoryBot.create(:exhibit) }
 

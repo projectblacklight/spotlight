@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::NavbarHelper, type: :helper do
   describe '#should_render_search_bar?' do
     before do

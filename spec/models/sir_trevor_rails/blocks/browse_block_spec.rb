@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe SirTrevorRails::Blocks::BrowseBlock do
   let(:page) { FactoryBot.create(:feature_page) }
   let(:block_data) { {} }

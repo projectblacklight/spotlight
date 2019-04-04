@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # Creates solr documents for the uploaded documents in a resource
   class UploadSolrDocumentBuilder < SolrDocumentBuilder

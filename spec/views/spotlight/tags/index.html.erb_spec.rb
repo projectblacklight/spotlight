@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/tags/index.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:tag1) { FactoryBot.create(:tagging, tagger: exhibit, taggable: exhibit) }

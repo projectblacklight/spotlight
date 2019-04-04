@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/searches/edit.html.erb', type: :view do
   let(:blacklight_config) do
     Blacklight::Configuration.new do |config|

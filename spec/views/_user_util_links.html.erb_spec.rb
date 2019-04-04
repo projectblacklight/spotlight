@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe '_user_util_links', type: :view do
   let(:current_exhibit) { FactoryBot.create(:exhibit) }
   before do

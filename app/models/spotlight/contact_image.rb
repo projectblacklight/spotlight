@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ###
   # A simple sub class of FeaturedImage to set a small square size for contacts

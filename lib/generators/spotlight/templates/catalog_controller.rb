@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ##
 # Simplified catalog controller
 class CatalogController < ApplicationController

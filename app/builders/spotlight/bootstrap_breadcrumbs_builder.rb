@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # The BootstrapBreadcrumbsBuilder is a Bootstrap compatible breadcrumb builder.
   # It provides basic functionalities to render a breadcrumb navigation according to Bootstrap's conventions.

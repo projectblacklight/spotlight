@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # Serialize the Spotlight::BlacklightConfiguration

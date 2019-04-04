@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   # Mixin for retrieving solr documents for a specific exhibit
   module ExhibitDocuments

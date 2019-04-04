@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'spotlight/feature_pages/_sidebar.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:parent1) { FactoryBot.create(:feature_page, exhibit: exhibit, title: 'Parent Page') }

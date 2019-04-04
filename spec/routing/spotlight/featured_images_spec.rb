@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Featured Images Controller', type: :routing do
   describe 'routing' do
     routes { Spotlight::Engine.routes }

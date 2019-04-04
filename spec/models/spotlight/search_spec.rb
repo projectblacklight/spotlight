@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::Search, type: :model do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 

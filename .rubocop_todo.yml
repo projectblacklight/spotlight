@@ -453,13 +453,6 @@ Style/ExpandPathArguments:
     - 'lib/spotlight/engine.rb'
     - 'spec/spec_helper.rb'
 
-# Offense count: 413
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: when_needed, always, never
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 # Offense count: 8
 # Cop supports --auto-correct.
 Style/IfUnlessModifier:

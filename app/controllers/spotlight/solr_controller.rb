@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   ##
   # Proxy update requests to Solr and inject spotlight's exhibit

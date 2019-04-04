@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::MainAppHelpers, type: :helper do
   describe '#show_contact_form?' do
     subject { helper }

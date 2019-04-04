@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spotlight::SearchConfigurationsHelper, type: :helper do
   describe '#translate_sort_fields' do
     let(:sort_config) do

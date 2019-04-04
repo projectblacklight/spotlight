@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Spotlight::Engine.routes.draw do
   devise_for :contact_email, class_name: 'Spotlight::ContactEmail', only: [:confirmations]
 
