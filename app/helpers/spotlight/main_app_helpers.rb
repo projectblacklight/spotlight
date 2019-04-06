@@ -37,6 +37,12 @@ module Spotlight
       end
     end
 
+    def exhibit_stylesheet_link_tag(tag)
+      Deprecation.warn self, 'exhibit_stylesheet_link_tag has been deprecated and will be removed in Spotlight 3.0.  '\
+                             'Use themed_stylesheet_link_tag instead.'
+      themed_stylesheet_link_tag(tag)
+    end
+
     def themed_stylesheet_link_tag(tag)
       return stylesheet_link_tag(tag) if current_theme.nil?
 
@@ -46,6 +52,12 @@ module Spotlight
         Rails.logger.warn "Exhibit theme '#{current_theme}' not in white-list of available themes: #{Spotlight::Engine.config.exhibit_themes}"
         stylesheet_link_tag(tag)
       end
+    end
+
+    def current_exhibit_theme
+      Deprecation.warn self, 'current_exhibit_theme has been deprecated and will be removed in Spotlight 3.0.  '\
+                             'Use current_theme instead.'
+      current_theme
     end
 
     def current_theme
