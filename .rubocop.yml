@@ -15,9 +15,6 @@ AllCops:
 Rails:
   Enabled: true
 
-# Metrics/LineLength:
-#   Max: 120
-
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: single_quotes
@@ -40,11 +37,6 @@ RSpec/DescribeClass:
 Metrics/AbcSize:
   Max: 20
 
-Metrics/ModuleLength:
-  Max: 120
-  Exclude:
-    - 'spec/fixtures/**/*'
-
 Metrics/LineLength:
   Max: 160
 
@@ -63,6 +55,10 @@ Metrics/ClassLength:
     - 'app/models/spotlight/resource.rb'
     - 'app/models/spotlight/resources/iiif_manifest.rb'
     - 'lib/generators/spotlight/**/*' # Generators tend to have longer class lengths due to their lengthy public API
+
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/fixtures/**/*'
 
 Naming/PredicateName:
   Exclude:
