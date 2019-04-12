@@ -84,7 +84,8 @@ module Spotlight
                                    scope: scope,
                                    issuer: Spotlight::Engine.config.ga_email,
                                    signing_key: signing_key,
-                                   sub: Spotlight::Engine.config.ga_email
+                                   sub: Spotlight::Engine.config.ga_email,
+                                   access_type: 'offline'
       end
     end
   end
