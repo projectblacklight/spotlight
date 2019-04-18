@@ -29,8 +29,10 @@
       /* Simple to start. Add conditions later */
       if (this.hasTextBlock()) {
         data.text = this.getTextBlockHTML();
+        data.format = 'html';
         if (data.text.length > 0 && this.options.convertToMarkdown) {
           data.text = stToMarkdown(data.text, this.type);
+          data.format = 'markdown';
         }
       }
 
@@ -38,8 +40,10 @@
     },
     
     loadData: function(data){
-      if (this.hasTextBlock()) {
-        $(this.getTextBlock()).html(SirTrevor.toHTML(data.text, this.type));
+      if (this.options.convertFromMarkdown && data.format !== "html") {
+        this.setTextBlockHTML(SirTrevor.toHTML(data.text, this.type));
+      } else {
+        this.setTextBlockHTML(data.text);
       }
       this.loadFormDataByKey(data);
       this.afterLoadData(data);
