@@ -148,12 +148,15 @@ module Spotlight
 
     def update_translated_pages_weights_and_parent_page
       return unless locale.to_sym == I18n.default_locale
-      return unless saved_change_to_weight? || saved_change_to_parent_page_id?
 
-      update_params = {}
-      update_params[:weight] = weight if saved_change_to_weight?
-      update_params[:parent_page_id] = parent_page_id if saved_change_to_parent_page_id?
-      translated_pages.update(update_params)
+      if saved_change_to_parent_page_id?
+        translated_pages.find_each do |translated_page|
+          parent_translation = parent_page&.translated_page_for(translated_page.locale)
+          translated_page.update(parent_page_id: parent_translation&.id)
+        end
+      end
+
+      translated_pages.update(weight: weight) if saved_change_to_weight?
     end
   end
   # rubocop:enable Metrics/ClassLength
