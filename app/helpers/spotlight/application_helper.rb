@@ -79,9 +79,10 @@ module Spotlight
     ##
     # Override Blacklight's #render_document_class to inject a private class
     def render_document_class(document = @document)
-      types = super || ''
-      types << " #{document_class_prefix}private" if document.private?(current_exhibit)
-      types
+      [
+        super,
+        ("#{document_class_prefix}private" if document.private?(current_exhibit))
+      ].join(' ')
     end
 
     # Return a copy of the blacklight configuration
