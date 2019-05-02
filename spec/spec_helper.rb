@@ -15,7 +15,7 @@ require 'rspec/rails'
 require 'rspec/active_model/mocks'
 require 'paper_trail/frameworks/rspec'
 
-require 'chromedriver-helper'
+require 'webdrivers'
 require 'selenium-webdriver'
 require 'webmock/rspec'
 
