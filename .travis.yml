@@ -10,14 +10,12 @@ matrix:
       env: "RAILS_VERSION=5.2.2"
     - rvm: 2.5.3
       env: "RAILS_VERSION=5.2.2"
-    - rvm: 2.4.4
+    - rvm: 2.4.6
       env: "RAILS_VERSION=5.1.6"
 
 before_install:
   - gem update --system
   - gem install --no-document bundler
-  - gem install --no-document chromedriver-helper
-  - chromedriver-update 73.0.3683.68
   - google-chrome-stable --headless --disable-gpu --no-sandbox --blink-settings=imagesEnabled=false --remote-debugging-port=9222 http://localhost &
 
 before_cache:
