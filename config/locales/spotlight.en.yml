@@ -272,6 +272,7 @@ en:
           placeholder: First and last name
         source:
           remote:
+            help: ''
             label: Upload an image
         telephone:
           placeholder: Telephone number (optional)
@@ -480,6 +481,7 @@ en:
           header: Image source
           remote:
             header: Cropped image
+            help: ''
             label: Upload an image
       upload_form:
         crop_area:
@@ -492,6 +494,7 @@ en:
           header: Image source
           remote:
             header: Cropped image
+            help: ''
             label: Upload an image
     header_links:
       contact: Feedback

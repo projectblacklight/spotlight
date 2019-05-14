@@ -24,6 +24,9 @@
   <div>
     <%= f.radio_button(:source, :remote, label: t(:'.source.remote.label')) %>
     <%= iiif_upload_tag(f) %>
+    <span class="help-block">
+      <%= t(:'.source.remote.help') %>
+    </span>
   </div>
 <% end %>
 <%= field_set_tag(t(:'.source.remote.header')) do %>

@@ -14,6 +14,9 @@
       <div>
         <%= af.radio_button(:source, :remote, label: t(:'.source.remote.label')) %>
         <%= iiif_upload_tag(af) %>
+        <span class="help-block">
+          <%= t(:'.source.remote.help') %>
+        </span>
       </div>
 
       <%= iiif_cropper_tags af, initial_crop_selection: Spotlight::Engine.config.contact_square_size %>
