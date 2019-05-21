@@ -40,7 +40,7 @@
     },
     
     loadData: function(data){
-      if (this.options.convertFromMarkdown && data.format !== "html") {
+      if (data.text.length > 0 && this.options.convertFromMarkdown && data.format !== "html") {
         this.setTextBlockHTML(SirTrevor.toHTML(data.text, this.type));
       } else {
         this.setTextBlockHTML(data.text);
