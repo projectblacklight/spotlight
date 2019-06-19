@@ -281,7 +281,7 @@ module Spotlight
       end
 
       unless config.facet_fields.include? :exhibit_tags
-        config.add_facet_field :exhibit_tags, field: config.document_model.solr_field_for_tagger(exhibit)
+        config.add_facet_field :exhibit_tags, field: config.document_model.solr_field_for_tagger(exhibit), limit: true
       end
       # rubocop:enable Style/GuardClause
     end
