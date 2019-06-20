@@ -245,6 +245,8 @@ export default class Crop {
   }
 
   uploadFile() {
+    // Set a ujs adapter to support both rails-ujs and jquery-ujs
+    var ujs = typeof Rails === 'undefined' ? $.rails : Rails;
     var url = this.fileInput.data('endpoint')
     // Every post creates a new image/masthead.
     // Because they create IIIF urls which are heavily cached.
@@ -255,6 +257,9 @@ export default class Crop {
       // error: errorHandler,
       // Form data
       data: this.getData(),
+      headers: {
+        'X-CSRF-Token': ujs.csrfToken() || ''
+      },
       //Options to tell jQuery not to process data or worry about content-type.
       cache: false,
       contentType: false,
