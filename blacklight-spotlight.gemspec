@@ -66,7 +66,7 @@ these collections.)
   s.add_development_dependency 'capybara', '~> 3'
   s.add_development_dependency 'rubocop', '~> 0.64.0'
   s.add_development_dependency 'rubocop-rspec', '~> 1.25'
-  s.add_development_dependency 'chromedriver-helper'
+  s.add_development_dependency 'webdrivers'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'factory_bot', '~> 4.5'
   s.add_development_dependency 'engine_cart', '~> 2.0'
