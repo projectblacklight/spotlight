@@ -5,6 +5,8 @@ notifications:
   email: false
 
 matrix:
+  allow_failures:
+    - rvm: 2.4.6 # This is in security maintenance only and causing issues w/ chrome on travis
   include:
     - rvm: 2.6.0
       env: "RAILS_VERSION=5.2.2"
