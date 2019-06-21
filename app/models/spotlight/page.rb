@@ -135,6 +135,7 @@ module Spotlight
         np.locale = locale
         np.default_locale_page = self
         np.published = false
+        np.slug = slug
 
         if !top_level_page? && (parent_translation = parent_page.translated_page_for(locale)).present?
           np.parent_page = parent_translation
