@@ -22,6 +22,8 @@ module Spotlight
       end
 
       def current_exhibit=(exhibit)
+        I18n.backend.reload! if Thread.current[:current_exhibit] != exhibit
+
         Thread.current[:current_exhibit] = exhibit
       end
     end
