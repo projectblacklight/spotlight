@@ -7,6 +7,12 @@ FactoryBot.define do
     published { true }
     content { '[]' }
   end
+  factory :feature_page_static_title, class: 'Spotlight::FeaturePage' do
+    exhibit
+    title { 'FeaturePage' }
+    published { true }
+    content { '[]' }
+  end
   factory :feature_subpage, parent: :feature_page do
     transient do
       exhibit

@@ -172,6 +172,16 @@ describe Spotlight::Page, type: :model do
       end
     end
 
+    context 'when cloning a page that has been deleted with a FriendlyId UUID added' do
+      let(:feature_page_static_title) { FactoryBot.create(:feature_page_static_title, exhibit: exhibit) }
+      let(:feature_page_static_title_two) { FactoryBot.create(:feature_page_static_title, exhibit: exhibit) }
+      it 'translated page has the same UUID' do
+        expect(feature_page_static_title.slug).to eq 'featurepage'
+        expect(feature_page_static_title_two.slug).not_to eq feature_page_static_title.slug
+        expect(feature_page_static_title_two.clone_for_locale('es').slug).to eq feature_page_static_title_two.slug
+      end
+    end
+
     context 'when cloning a parent page whose children pages have already been cloned' do
       let(:parent_page_es) { parent_page.clone_for_locale('es') }
       let(:child_page_es) { child_page.clone_for_locale('es') }
