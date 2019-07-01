@@ -48,6 +48,7 @@ module Spotlight
     end
 
     def assets
+      copy_file 'masked_role.css', 'app/assets/stylesheets/masked_role.css'
       copy_file 'spotlight.scss', 'app/assets/stylesheets/spotlight.scss'
       copy_file 'spotlight.js', 'app/assets/javascripts/spotlight.js'
     end

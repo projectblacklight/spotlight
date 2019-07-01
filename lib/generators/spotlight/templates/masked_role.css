@@ -1,0 +1,31 @@
+
+#admin_role_toggle {
+  width: 100%;
+  margin-top: -25px;
+  padding-bottom: 25px;
+}
+#admin_role_toggle li.dropdown {
+    list-style: none;
+}
+#admin_role_toggle .dropdown-toggle {
+  padding: 10px 20px;
+}
+#admin_role_toggle .navbar-nav {
+  width: 75%;
+}
+#admin_role_toggle .dropdown-menu {
+  left: 0;
+}
+#admin_role_toggle .navbar-nav > li {
+  float: right;
+}
+
+#admin_role_toggle .btn.btn-primary {
+    font-size: 10px;
+    padding: 2px 5px;
+}
+
+#mask_label {
+    margin-right: 20px;
+    margin-left: 10px;
+}

@@ -32,5 +32,7 @@
 
   <%= render 'shared/exhibit_navbar' if current_exhibit && !resource_masthead? %>
 </div>
-
+  <% if (current_user && (current_user.superadmin? || current_user.is_masked?)) %>
+  	<%= render partial: 'shared/role_mask' %>
+  <% end %>
 <%= render 'shared/breadcrumbs' unless resource_masthead? %>
