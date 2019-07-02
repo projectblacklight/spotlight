@@ -86,4 +86,57 @@ describe Spotlight::Ability, type: :model do
     it { is_expected.not_to be_able_to(:manage, language) }
     it { is_expected.to be_able_to(:read, language) }
   end
+  
+  describe 'a superadmin with an exhibit admin mask' do
+    let(:user) { FactoryBot.create(:site_admin_exhibit_admin_mask) }
+    let(:role) { FactoryBot.create(:role, resource: exhibit) }
+    let(:blacklight_config) { exhibit.blacklight_configuration }
+    
+    it { is_expected.to be_able_to(:update, exhibit) }
+
+    it { is_expected.to be_able_to(:index, role) }
+    it { is_expected.to be_able_to(:destroy, role) }
+    it { is_expected.to be_able_to(:update, role) }
+    it { is_expected.to be_able_to(:create, Spotlight::Role) }
+    it { is_expected.not_to be_able_to(:create, Spotlight::Exhibit) }
+    it { is_expected.to be_able_to(:import, exhibit) }
+    it { is_expected.to be_able_to(:process_import, exhibit) }
+    it { is_expected.to be_able_to(:destroy, exhibit) }
+    it { is_expected.to be_able_to(:manage, language) }
+  end
+ 
+  describe 'a superadmin with curate mask' do
+    let(:user) { FactoryBot.create(:site_admin_curator_mask) }
+    let(:contact) { FactoryBot.build_stubbed(:contact, exhibit: exhibit) }
+    let(:blacklight_config) { exhibit.blacklight_configuration }
+
+    it { is_expected.not_to be_able_to(:update, exhibit) }
+    it { is_expected.to be_able_to(:curate, exhibit) }
+    it { is_expected.to be_able_to(:read, exhibit) }
+
+    it { is_expected.to be_able_to(:create, Spotlight::Search) }
+    it { is_expected.to be_able_to(:update_all, Spotlight::Search) }
+    it { is_expected.to be_able_to(:update, search) }
+    it { is_expected.to be_able_to(:destroy, search) }
+
+    it { is_expected.to be_able_to(:create, Spotlight::Page) }
+    it { is_expected.to be_able_to(:update_all, Spotlight::Page) }
+    it { is_expected.to be_able_to(:update, page) }
+    it { is_expected.to be_able_to(:destroy, page) }
+
+    it { is_expected.to be_able_to(:create, Translation) }
+    it { is_expected.to be_able_to(:update_all, Translation) }
+    it { is_expected.to be_able_to(:update, translation) }
+    it { is_expected.to be_able_to(:destroy, translation) }
+
+    it { is_expected.to be_able_to(:tag, exhibit) }
+
+    it { is_expected.to be_able_to(:edit, contact) }
+    it { is_expected.to be_able_to(:new, contact) }
+    it { is_expected.to be_able_to(:create, contact) }
+    it { is_expected.to be_able_to(:destroy, contact) }
+    it { is_expected.not_to be_able_to(:manage, language) }
+    it { is_expected.to be_able_to(:read, language) }
+  end 
+ 
 end

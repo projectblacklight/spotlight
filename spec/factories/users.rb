@@ -27,5 +27,17 @@ FactoryBot.define do
 
     factory :exhibit_visitor do
     end
+    
+    factory :site_admin_exhibit_admin_mask do
+      after(:create) do |user, _evaluator|
+        user.roles.create role: 'admin', resource: Spotlight::Site.instance, role_mask: 'admin'
+      end
+    end
+
+    factory :site_admin_curator_mask do
+      after(:create) do |user, _evaluator|
+        user.roles.create role: 'admin', resource: Spotlight::Site.instance, role_mask: 'curator'
+      end
+    end        
   end
 end
