@@ -13,7 +13,9 @@
           <tr>
             <td class="<%= 'invite-pending' if user.invite_pending? %>">
               <%= user.email %>
-              <span class='label label-warning pending-label'><%= t('.pending') %></span>
+              <% if user.invite_pending? %>
+                <span class='label label-warning pending-label'><%= t('.pending') %></span>
+              <% end %>
             </td>
             <td>
               <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-danger pull-right') unless user == current_user %>

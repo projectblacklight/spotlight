@@ -27,7 +27,9 @@
           <tr data-show-for="<%= r.object.id %>" class="<%= 'invite-pending' if r.object.user.invite_pending? %>">
             <td>
               <%= r.object.user.to_s %>
-              <span class='label label-warning pending-label'><%= t('.invite_pending') %></span>
+              <% if r.object.user.invite_pending? %>
+                <span class='label label-warning pending-label'><%= t('.invite_pending') %></span>
+              <% end %>
             </td>
             <td><%= r.object.role.humanize %></td>
             <td><%= link_to "#", data: {behavior: 'edit-user', target: r.object.id } do %>
