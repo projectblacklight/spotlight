@@ -55,7 +55,7 @@ module Spotlight
     def exhibit_solr_doc(id)
       return NilSolrDocument unless document_model || id.present?
 
-      document_model.build_for_exhibit(id, exhibit, resource: resource)
+      document_model.build_for_exhibit(id, exhibit, resource: (resource if resource.persisted?))
     end
 
     def unique_key
