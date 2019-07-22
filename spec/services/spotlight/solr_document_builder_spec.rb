@@ -51,6 +51,15 @@ describe Spotlight::SolrDocumentBuilder do
         expect(sidecar.exhibit).to eq resource.exhibit
         expect(sidecar.resource).to eq resource
       end
+
+      context 'without a persisted resource' do
+        let(:resource) { FactoryBot.build(:resource) }
+
+        it 'does not implicitly persist the resource' do
+          resource.document_builder.documents_to_index.first
+          expect(resource).not_to be_persisted
+        end
+      end
     end
   end
 end
