@@ -83,7 +83,7 @@ module Spotlight
     end
 
     collection :contact_emails, class: Spotlight::ContactEmail do
-      (Spotlight::ContactEmail.attribute_names - %w(id exhibit_id)).each do |prop|
+      (Spotlight::ContactEmail.attribute_names - %w(id exhibit_id confirmation_token)).each do |prop|
         property prop
       end
     end
