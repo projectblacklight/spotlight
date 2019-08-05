@@ -10,6 +10,7 @@ describe 'Exhibit Administration', type: :feature do
   let(:hidden_input_val_1) { '2' }
   let(:email_id_1) { 'exhibit_contact_emails_attributes_1_email' }
   let(:email_address_1) { 'admin2@example.com' }
+
   before { login_as admin }
 
   describe 'Contact Emails' do

@@ -54,7 +54,7 @@ module Spotlight
 
           thing.manifests.each(&block)
 
-          return unless thing.collections.present?
+          return if thing.collections.blank?
 
           thing.collections.each do |collection|
             recursive_manifests(collection, &block)

@@ -41,6 +41,7 @@ describe 'Catalog', type: :feature do
 
   describe 'viewing the page' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
+
     it 'has <meta> tags' do
       TopHat.current['twitter_card'] = nil
       TopHat.current['opengraph'] = nil

@@ -82,7 +82,7 @@ namespace :spotlight do
       puts 'User not found. Enter a password to create the user.'
       u.password = prompt_for_password
     end
-  rescue => e
+  rescue StandardError => e
     puts e
     retry
   end

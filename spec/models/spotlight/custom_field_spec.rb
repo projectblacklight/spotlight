@@ -3,12 +3,14 @@
 describe Spotlight::CustomField, type: :model do
   describe '#label' do
     subject { described_class.new configuration: { 'label' => 'the configured label' }, field: 'foo_tesim' }
+
     describe "when the exhibit doesn't have a config" do
-      its(:label) { should eq 'the configured label' }
+      its(:label) { is_expected.to eq 'the configured label' }
     end
 
     describe 'when the exhibit has a config' do
       let(:exhibit) { FactoryBot.create(:exhibit) }
+
       before { subject.exhibit = exhibit }
 
       describe 'that overrides the label' do
@@ -16,25 +18,27 @@ describe Spotlight::CustomField, type: :model do
           exhibit.blacklight_configuration.index_fields['foo_tesim'] = { 'label' => 'overridden' }
         end
 
-        its(:label) { should eq 'overridden' }
+        its(:label) { is_expected.to eq 'overridden' }
       end
 
       describe "that doesn't override the label" do
-        its(:label) { should eq 'the configured label' }
+        its(:label) { is_expected.to eq 'the configured label' }
       end
     end
   end
 
   describe '#label=' do
     subject { described_class.new field: 'foo_tesim' }
+
     describe "when the exhibit doesn't have a config" do
       before { subject.label = 'the configured label' }
 
-      its(:configuration) { should eq('label' => 'the configured label') }
+      its(:configuration) { is_expected.to eq('label' => 'the configured label') }
     end
 
     describe 'when the exhibit has a config' do
       let(:exhibit) { FactoryBot.create(:exhibit) }
+
       before { subject.exhibit = exhibit }
 
       describe 'that overrides the label' do
@@ -84,12 +88,12 @@ describe Spotlight::CustomField, type: :model do
   end
 
   describe '#solr_field' do
+    subject { custom_field.solr_field }
+
     let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:custom_field) do
       described_class.create(exhibit: exhibit, configuration: { 'label' => 'xyz' })
     end
-
-    subject { custom_field.solr_field }
 
     it 'is auto-generated from the field label' do
       expect(subject).to eq "exhibit_#{exhibit.to_param}_xyz_tesim"
@@ -118,6 +122,7 @@ describe Spotlight::CustomField, type: :model do
 
   describe '#configured_to_display?' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
+
     before do
       exhibit.blacklight_configuration.blacklight_config.view = { view_name: {} }
       subject.exhibit = exhibit
@@ -144,18 +149,19 @@ describe Spotlight::CustomField, type: :model do
         Blacklight::Configuration::IndexField.new(label: 'Label', enabled: true, view_name: false)
       subject.save
 
-      expect(subject).to_not be_configured_to_display
+      expect(subject).not_to be_configured_to_display
     end
     it 'is falsey when the field is not enabled' do
       exhibit.blacklight_configuration.index_fields['foo_tesim'] = { 'label' => 'overridden', enabled: false, view_name: false }
       subject.save
 
-      expect(subject).to_not be_configured_to_display
+      expect(subject).not_to be_configured_to_display
     end
   end
 
   describe 'changing the field type' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
+
     before do
       subject.label = 'xyz'
       subject.exhibit = exhibit

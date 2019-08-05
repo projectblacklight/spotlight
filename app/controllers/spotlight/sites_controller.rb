@@ -40,15 +40,15 @@ module Spotlight
         :title,
         :subtitle,
         masthead_attributes: masthead_params,
-        exhibits_attributes: [:id, :weight]
+        exhibits_attributes: %i[id weight]
       )
     end
 
     def masthead_params
-      [
-        :display,
-        :iiif_region,
-        :iiif_tilesource
+      %i[
+        display
+        iiif_region
+        iiif_tilesource
       ]
     end
   end

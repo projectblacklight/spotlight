@@ -24,7 +24,7 @@ describe 'spotlight/resources/_external_resources_form.html.erb', type: :view do
   end
 
   it 'renders the configured partials' do
-    allow(Spotlight::Engine.config).to receive(:external_resources_partials).and_return(%w(a b c))
+    allow(Spotlight::Engine.config).to receive(:external_resources_partials).and_return(%w[a b c])
     stub_template '_a.html.erb' => 'a_template'
     stub_template '_b.html.erb' => 'b_template'
     stub_template '_c.html.erb' => 'c_template'

@@ -9,7 +9,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
   let(:doc) { blacklight_config.document_model.new(id: 1) }
   let(:blacklight_config) do
     Blacklight::Configuration.new do |config|
-      config.view.embed.partials = %w(a b c)
+      config.view.embed.partials = %w[a b c]
       config.view.embed.locals = { a: 1 }
     end
   end
@@ -25,7 +25,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
   end
 
   it 'has a slideshow block' do
-    expect(view).to receive(:render_document_partials).with(doc, %w(a b c), hash_including(a: 1, block: block)).and_return('OSD')
+    expect(view).to receive(:render_document_partials).with(doc, %w[a b c], hash_including(a: 1, block: block)).and_return('OSD')
     render partial: p, locals: { solr_documents_embed_block: block }
     expect(rendered).to have_selector 'h3', text: 'Some title'
     expect(rendered).to have_content 'Some text'

@@ -1,21 +1,24 @@
 # frozen_string_literal: true
 
 describe SolrDocument, type: :model do
-  let(:document) { described_class.new(id: 'abcd123') }
   subject { document }
+
+  let(:document) { described_class.new(id: 'abcd123') }
+
   before do
     allow(subject).to receive_messages(reindex: nil)
   end
 
-  its(:to_key) { should == ['abcd123'] }
-  its(:persisted?) { should be_truthy }
-
-  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_alt) { FactoryBot.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+
+  its(:to_key) { is_expected.to == ['abcd123'] }
+  its(:persisted?) { is_expected.to be_truthy }
 
   describe '.build_for_exhibit' do
-    let(:id) { '123abc' }
     subject { described_class.build_for_exhibit(id, exhibit) }
+
+    let(:id) { '123abc' }
 
     it 'has a persisted sidecar' do
       expect(subject.sidecars.first).to be_persisted
@@ -31,7 +34,7 @@ describe SolrDocument, type: :model do
     expect do
       exhibit.tag(subject.sidecar(exhibit), with: 'paris, normandy', on: :tags)
     end.to change { ActsAsTaggableOn::Tag.count }.by(2)
-    expect(subject.sidecar(exhibit).tags_from(exhibit)).to eq %w(paris normandy)
+    expect(subject.sidecar(exhibit).tags_from(exhibit)).to eq %w[paris normandy]
   end
 
   it 'has find' do
@@ -44,6 +47,7 @@ describe SolrDocument, type: :model do
 
   describe 'GlobalID' do
     let(:doc_id) { 'dq287tq6352' }
+
     it 'responds to #to_global_id' do
       expect(described_class.find(doc_id).to_global_id.to_s).to eq "gid://internal/SolrDocument/#{doc_id}"
     end
@@ -75,7 +79,7 @@ describe SolrDocument, type: :model do
     end
     it 'stores tags' do
       subject.update exhibit, exhibit_tag_list: 'paris, normandy'
-      expect(subject.sidecar(exhibit).tags_from(exhibit)).to eq %w(paris normandy)
+      expect(subject.sidecar(exhibit).tags_from(exhibit)).to eq %w[paris normandy]
     end
   end
 
@@ -148,15 +152,16 @@ describe SolrDocument, type: :model do
         spotlight_resource_type_ssim: 'spotlight/resources/uploads'
       )
     end
+
     it 'does not include Spotlight::SolrDocument::UploadedResource when the correct fields are present' do
-      expect(subject).to_not be_kind_of Spotlight::SolrDocument::UploadedResource
+      expect(subject).not_to be_kind_of Spotlight::SolrDocument::UploadedResource
     end
     it 'includes Spotlight::SolrDocument::UploadedResource when the correct fields are present' do
       expect(uploaded_resource).to be_kind_of Spotlight::SolrDocument::UploadedResource
     end
     describe '#uploaded_resource?' do
       it 'returns false if the correct fields are not present' do
-        expect(subject).to_not be_uploaded_resource
+        expect(subject).not_to be_uploaded_resource
       end
       it 'returns true when the correct fields are present' do
         expect(uploaded_resource).to be_uploaded_resource

@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 describe Spotlight::Search, type: :model do
+  subject { exhibit.searches.build(title: 'Search', query_params: query_params) }
+
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   let(:query_params) { { 'f' => { 'genre_sim' => ['map'] } } }
-  subject { exhibit.searches.build(title: 'Search', query_params: query_params) }
 
   let(:blacklight_config) { ::CatalogController.blacklight_config }
   let(:document) do
@@ -24,6 +25,7 @@ describe Spotlight::Search, type: :model do
     let!(:page1) { FactoryBot.create(:search, weight: 5, published: true) }
     let!(:page2) { FactoryBot.create(:search, weight: 1, published: true) }
     let!(:page3) { FactoryBot.create(:search, weight: 10, published: true) }
+
     it 'orders by weight' do
       expect(described_class.published.map(&:weight)).to eq [1, 5, 10]
     end
@@ -68,6 +70,7 @@ describe Spotlight::Search, type: :model do
 
   describe '#repository' do
     let(:search) { FactoryBot.create(:search) }
+
     before do
       allow(search).to receive(:blacklight_config).and_return blacklight_config
     end

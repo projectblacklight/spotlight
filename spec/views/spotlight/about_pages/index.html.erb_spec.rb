@@ -22,6 +22,7 @@ describe 'spotlight/about_pages/index.html.erb', type: :view do
     ]
   end
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
+
   before do
     allow(view).to receive(:disable_save_pages_button?).and_return(false)
     allow(view).to receive(:page_collection_name).and_return(:about_pages)

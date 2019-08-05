@@ -29,7 +29,7 @@ class CatalogController < ApplicationController
     config.index.display_type_field = 'content_metadata_type_ssm'
     config.index.thumbnail_field = Spotlight::Engine.config.thumbnail_field
 
-    config.view.gallery.partials = [:index_header, :index]
+    config.view.gallery.partials = %i[index_header index]
     config.view.slideshow.partials = [:index]
 
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm

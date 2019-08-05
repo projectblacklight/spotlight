@@ -2,6 +2,7 @@
 
 describe 'Create a new exhibit', type: :feature do
   let(:user) { FactoryBot.create(:site_admin) }
+
   before do
     allow(Spotlight::DefaultThumbnailJob).to receive(:perform_later)
     login_as user

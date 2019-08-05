@@ -20,10 +20,11 @@ describe Spotlight::SolrDocumentBuilder do
 
   describe '#documents_to_index' do
     context 'when the document belongs to more than one exhibit' do
+      subject { resource.document_builder }
+
       let(:doc) { SolrDocument.new(id: 'abc123') }
       let(:resource) { FactoryBot.create(:resource) }
       let(:resource_alt) { FactoryBot.create(:resource) }
-      subject { resource.document_builder }
 
       before do
         allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(true)

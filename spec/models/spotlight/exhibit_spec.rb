@@ -68,15 +68,16 @@ describe Spotlight::Exhibit, type: :model do
 
   describe '#main_navigations' do
     subject { FactoryBot.create(:exhibit, title: 'Sample') }
+
     it 'has main navigations' do
       expect(subject.main_navigations).to have(3).main_navigations
       expect(subject.main_navigations.map(&:label).compact).to be_blank
       expect(subject.main_navigations.map(&:weight)).to eq [0, 1, 2]
     end
     it "uses the engine's configuration for default navigations" do
-      expect(Spotlight::Engine.config).to receive(:exhibit_main_navigation).and_return([:a, :b])
+      expect(Spotlight::Engine.config).to receive(:exhibit_main_navigation).and_return(%i[a b])
       expect(subject.main_navigations).to have(2).main_navigations
-      expect(subject.main_navigations.map(&:nav_type).compact).to match_array %w(a b)
+      expect(subject.main_navigations.map(&:nav_type).compact).to match_array %w[a b]
     end
   end
 
@@ -137,6 +138,7 @@ describe Spotlight::Exhibit, type: :model do
 
   describe '#blacklight_config' do
     subject { FactoryBot.create(:exhibit) }
+
     before do
       subject.blacklight_configuration.index = { timestamp_field: 'timestamp_field' }
       subject.save!
@@ -149,8 +151,9 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#solr_data' do
-    let(:exhibit) { FactoryBot.create(:exhibit) }
     subject { exhibit.solr_data }
+
+    let(:exhibit) { FactoryBot.create(:exhibit) }
 
     context 'when not filtering by exhibit' do
       before do
@@ -185,6 +188,7 @@ describe Spotlight::Exhibit, type: :model do
 
   describe '#analytics' do
     subject { FactoryBot.create(:exhibit) }
+
     let(:ga_data) { OpenStruct.new(pageviews: 123) }
 
     before do
@@ -199,6 +203,7 @@ describe Spotlight::Exhibit, type: :model do
 
   describe '#page_analytics' do
     subject { FactoryBot.create(:exhibit) }
+
     let(:ga_data) { [OpenStruct.new(pageviews: 123)] }
 
     before do
@@ -214,6 +219,7 @@ describe Spotlight::Exhibit, type: :model do
 
   describe '#reindex_later' do
     subject { FactoryBot.create(:exhibit) }
+
     let(:log_entry) { Spotlight::ReindexingLogEntry.new(exhibit: subject, user: user, items_reindexed_count: 0) }
 
     context 'user is omitted' do
@@ -241,6 +247,7 @@ describe Spotlight::Exhibit, type: :model do
 
   describe '#new_reindexing_log_entry' do
     let(:user) { FactoryBot.build(:user) }
+
     it 'returns a properly configured Spotlight::ReindexingLogEntry instance' do
       reindexing_log_entry = subject.send(:new_reindexing_log_entry, user)
       expect(reindexing_log_entry.exhibit).to eq subject
@@ -352,6 +359,7 @@ describe Spotlight::Exhibit, type: :model do
   end
   describe 'translatable fields' do
     let(:persisted_exhibit) { FactoryBot.create(:exhibit, title: 'Sample', subtitle: 'SubSample', description: 'Description') }
+
     before do
       FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.title", value: 'Titre français')
       FactoryBot.create(:translation, locale: 'fr', exhibit: persisted_exhibit, key: "#{persisted_exhibit.slug}.subtitle", value: 'Sous-titre français')

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-feature 'Browse pages' do
+describe 'Browse pages' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   context 'a browse page' do
@@ -8,6 +8,7 @@ feature 'Browse pages' do
 
     let(:mock_response) { Blacklight::Solr::Response.new({ response: { numFound: 10, docs: mock_documents } }, {}) }
     let(:mock_documents) { [] }
+
     before do
       allow_any_instance_of(Spotlight::BrowseController).to receive(:search_results).and_return([mock_response, mock_documents])
     end
@@ -83,6 +84,7 @@ feature 'Browse pages' do
       let(:mock_documents) do
         [SolrDocument.new(id: 'abc123', language_ssm: %w[English Flemish])]
       end
+
       before do
         blacklight_config = exhibit.blacklight_config
         blacklight_config.index_fields.each do |_, config|
@@ -129,6 +131,7 @@ feature 'Browse pages' do
 
     context 'with category search box enabled' do
       let(:search) { FactoryBot.create(:default_search, exhibit: exhibit, published: true, search_box: true) }
+
       it 'renders search box' do
         visit spotlight.exhibit_browse_path(exhibit, search)
         expect(page).to have_selector '.browse-search-form'

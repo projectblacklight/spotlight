@@ -3,6 +3,7 @@
 describe 'Search Administration', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
   before { login_as exhibit_admin }
 
   describe 'edit' do
@@ -39,7 +40,7 @@ describe 'Search Administration', type: :feature do
         click_on 'Save changes'
 
         expect(exhibit.reload.blacklight_config.facet_fields.select { |_k, v| v.show }.keys).to include('subject_temporal_ssim')
-        expect(exhibit.blacklight_config.facet_fields.select { |_k, v| v.show }.keys).to_not include('language_ssim', 'genre_ssim')
+        expect(exhibit.blacklight_config.facet_fields.select { |_k, v| v.show }.keys).not_to include('language_ssim', 'genre_ssim')
       end
     end
 
@@ -67,8 +68,8 @@ describe 'Search Administration', type: :feature do
         expect(page).to have_css("input[name='blacklight_configuration[sort_fields][relevance][enable]'][disabled='disabled']")
         expect(find('#blacklight_configuration_sort_fields_type_enabled')).to be_checked
         expect(find('#blacklight_configuration_sort_fields_date_enabled')).to be_checked
-        expect(find('#blacklight_configuration_sort_fields_title_enabled')).to_not be_checked
-        expect(find('#blacklight_configuration_sort_fields_identifier_enabled')).to_not be_checked
+        expect(find('#blacklight_configuration_sort_fields_title_enabled')).not_to be_checked
+        expect(find('#blacklight_configuration_sort_fields_identifier_enabled')).not_to be_checked
 
         # Type is now sorted last
         expect(page).to have_css('#nested-sort-fields .dd-item:nth-child(5) h3', text: 'Type')

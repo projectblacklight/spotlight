@@ -20,6 +20,7 @@ describe Spotlight::SolrController, type: :controller do
     let(:role) { admin.roles.first }
     let(:connection) { instance_double(RSolr::Client) }
     let(:repository) { instance_double(Blacklight::Solr::Repository, connection: connection) }
+
     before { sign_in admin }
 
     before do

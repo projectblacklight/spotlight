@@ -31,17 +31,17 @@ describe Spotlight::PagesHelper, type: :helper do
     it 'returns true if there are no pages and we are on the about pages page' do
       expect(helper).to receive(:page_collection_name).and_return('about_pages')
       assign(:pages, [])
-      expect(helper.disable_save_pages_button?).to be_truthy
+      expect(helper).to be_disable_save_pages_button
     end
     it 'returns false if there are about pages' do
       expect(helper).to receive(:page_collection_name).and_return('about_pages')
       assign(:pages, [{}])
-      expect(helper.disable_save_pages_button?).to be_falsey
+      expect(helper).not_to be_disable_save_pages_button
     end
     it 'returns false if on the feature pages page' do
       expect(helper).to receive(:page_collection_name).and_return('feature_pages')
       assign(:pages, [])
-      expect(helper.disable_save_pages_button?).to be_falsey
+      expect(helper).not_to be_disable_save_pages_button
     end
   end
 

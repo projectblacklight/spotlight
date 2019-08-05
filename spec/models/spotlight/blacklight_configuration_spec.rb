@@ -2,6 +2,7 @@
 
 describe Spotlight::BlacklightConfiguration, type: :model do
   subject { described_class.new }
+
   let(:blacklight_config) { Blacklight::Configuration.new }
 
   before do
@@ -35,13 +36,13 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.facet_fields).to be_empty
       subject.facet_fields['title_facet'] = {}
       subject.facet_fields['author_facet'] = {}
-      expect(subject.facet_fields.keys).to eq %w(title_facet author_facet)
+      expect(subject.facet_fields.keys).to eq %w[title_facet author_facet]
     end
 
     it 'filters blank values' do
       subject.facet_fields['title_facet'] = { something: '' }
       subject.valid?
-      expect(subject.facet_fields['title_facet'].keys).to_not include :something
+      expect(subject.facet_fields['title_facet'].keys).not_to include :something
     end
 
     it 'filters the upstream blacklight config' do
@@ -69,7 +70,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       blacklight_config.add_facet_field 'b'
       blacklight_config.add_facet_field 'c'
 
-      expect(subject.blacklight_config.facet_fields.keys).to eq %w(c a b)
+      expect(subject.blacklight_config.facet_fields.keys).to eq %w[c a b]
     end
 
     it 'allows the facet sort to be configured' do
@@ -136,7 +137,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.index_fields).to be_empty
       subject.index_fields['title'] = {}
       subject.index_fields['author'] = {}
-      expect(subject.index_fields.keys).to eq %w(title author)
+      expect(subject.index_fields.keys).to eq %w[title author]
     end
 
     it 'defaults to displaying all index fields if no exhibit-specific configuration is set' do
@@ -168,7 +169,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     it 'filters blank values' do
       subject.index_fields['title'] = { something: '' }
       subject.valid?
-      expect(subject.index_fields['title'].keys).to_not include :something
+      expect(subject.index_fields['title'].keys).not_to include :something
     end
 
     it 'filters the upstream blacklight config' do
@@ -257,8 +258,8 @@ describe Spotlight::BlacklightConfiguration, type: :model do
 
       expect(subject.blacklight_config.index_fields.select { |_k, x| x.list }).to include('a')
       expect(subject.blacklight_config.index_fields.select { |_k, x| x.gallery }).to include('b', 'd')
-      expect(subject.blacklight_config.index_fields.select { |_k, x| x.list }).to_not include('b', 'd')
-      expect(subject.blacklight_config.index_fields.select { |_k, x| x.gallery }).to_not include('a', 'c')
+      expect(subject.blacklight_config.index_fields.select { |_k, x| x.list }).not_to include('b', 'd')
+      expect(subject.blacklight_config.index_fields.select { |_k, x| x.gallery }).not_to include('a', 'c')
       expect(subject.blacklight_config.index_fields.select { |_k, x| x.list }).to have(2).fields
       expect(subject.blacklight_config.index_fields.select { |_k, x| x.list && x.enabled }).to have(1).fields
       expect(subject.blacklight_config.index_fields.select { |_k, x| x.gallery }).to have(2).fields
@@ -274,7 +275,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       blacklight_config.add_index_field 'c'
 
       expect(subject.blacklight_config.show_fields.select { |_k, x| x.show && x.enabled }).to include('a')
-      expect(subject.blacklight_config.show_fields.select { |_k, x| x.show && x.enabled }).to_not include('b', 'd')
+      expect(subject.blacklight_config.show_fields.select { |_k, x| x.show && x.enabled }).not_to include('b', 'd')
       expect(subject.blacklight_config.show_fields.select { |_k, x| x.show && x.enabled }).to have(1).fields
     end
 
@@ -295,7 +296,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       blacklight_config.add_index_field 'b'
       blacklight_config.add_index_field 'c'
 
-      expect(subject.blacklight_config.index_fields.keys).to eq %w(c a b)
+      expect(subject.blacklight_config.index_fields.keys).to eq %w[c a b]
     end
 
     it 'orders the fields by weight' do
@@ -307,7 +308,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       blacklight_config.add_index_field 'b'
       blacklight_config.add_index_field 'c'
 
-      expect(subject.blacklight_config.show_fields.keys).to eq %w(c a b)
+      expect(subject.blacklight_config.show_fields.keys).to eq %w[c a b]
     end
 
     context 'title only configuration' do
@@ -332,20 +333,20 @@ describe Spotlight::BlacklightConfiguration, type: :model do
 
     describe 'should have default values' do
       its(:sort_fields) do
-        should eq('identifier' => { enabled: true },
-                  'relevance' => { enabled: true },
-                  'date' => { enabled: true },
-                  'source' => { enabled: true },
-                  'title' => { enabled: true },
-                  'type' => { enabled: true })
+        is_expected.to eq('identifier' => { enabled: true },
+                          'relevance' => { enabled: true },
+                          'date' => { enabled: true },
+                          'source' => { enabled: true },
+                          'title' => { enabled: true },
+                          'type' => { enabled: true })
       end
       its(:search_fields) do
-        should eq('all_fields' => { enabled: true },
-                  'title' => { enabled: true },
-                  'author' => { enabled: true })
+        is_expected.to eq('all_fields' => { enabled: true },
+                          'title' => { enabled: true },
+                          'author' => { enabled: true })
       end
-      its(:default_per_page) { should eq 10 }
-      its(:document_index_view_types) { should match_array ::CatalogController.blacklight_config.view.keys.map(&:to_s) }
+      its(:default_per_page) { is_expected.to eq 10 }
+      its(:document_index_view_types) { is_expected.to match_array ::CatalogController.blacklight_config.view.keys.map(&:to_s) }
     end
   end
 
@@ -354,13 +355,13 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.sort_fields).to be_empty
       subject.sort_fields['title'] = {}
       subject.sort_fields['author'] = {}
-      expect(subject.sort_fields.keys).to eq %w(title author)
+      expect(subject.sort_fields.keys).to eq %w[title author]
     end
 
     it 'filters blank values' do
       subject.sort_fields['title'] = { something: '' }
       subject.valid?
-      expect(subject.sort_fields['title'].keys).to_not include :something
+      expect(subject.sort_fields['title'].keys).not_to include :something
     end
 
     it 'filters the upstream blacklight config' do
@@ -387,13 +388,13 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.search_fields).to be_empty
       subject.search_fields['title'] = {}
       subject.search_fields['author'] = {}
-      expect(subject.search_fields.keys).to eq %w(title author)
+      expect(subject.search_fields.keys).to eq %w[title author]
     end
 
     it 'filters blank values' do
       subject.search_fields['title'] = { something: '' }
       subject.valid?
-      expect(subject.search_fields['title'].keys).to_not include :something
+      expect(subject.search_fields['title'].keys).not_to include :something
     end
 
     it 'filters the upstream blacklight config' do
@@ -430,7 +431,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     it 'filters blank values' do
       subject.per_page << ''
       subject.valid?
-      expect(subject.per_page).to_not include ''
+      expect(subject.per_page).not_to include ''
     end
 
     it 'filters the upstream blacklight config' do
@@ -451,23 +452,23 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     it 'has index view configuration' do
       expect(subject.document_index_view_types).to be_empty
       subject.document_index_view_types << 'list' << 'gallery'
-      expect(subject.document_index_view_types).to eq %w(list gallery)
+      expect(subject.document_index_view_types).to eq %w[list gallery]
     end
 
     it 'filters blank values' do
       subject.document_index_view_types << ''
       subject.valid?
-      expect(subject.document_index_view_types).to_not include ''
+      expect(subject.document_index_view_types).not_to include ''
     end
 
     it 'filters the upstream blacklight config' do
-      subject.document_index_view_types = %w(list gallery unknown)
+      subject.document_index_view_types = %w[list gallery unknown]
       blacklight_config.view.list
       blacklight_config.view.gallery
       blacklight_config.view.something
 
       expect(subject.blacklight_config.view.keys).to include :list, :gallery, :something
-      expect(subject.blacklight_config.view.all? { |k, v| v.key == k && v.if == :enabled_in_spotlight_view_type_configuration? }).to be_truthy
+      expect(subject.blacklight_config.view).to be_all { |k, v| v.key == k && v.if == :enabled_in_spotlight_view_type_configuration? }
     end
 
     it 'passes through the blacklight configuration when not set' do
@@ -590,7 +591,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     it 'is simplified from a hash to an array' do
       checkboxes_from_form = { 'list' => '1', 'gallery' => '1', 'map' => '0' }
       subject.document_index_view_types = checkboxes_from_form
-      expect(subject.document_index_view_types).to match_array %w(list gallery)
+      expect(subject.document_index_view_types).to match_array %w[list gallery]
     end
   end
 
@@ -600,7 +601,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       subject.default_blacklight_config.view.gallery
       subject.default_blacklight_config.view.map
       subject.default_blacklight_config.view.rss.if = false
-      subject.document_index_view_types = %w(list gallery rss)
+      subject.document_index_view_types = %w[list gallery rss]
     end
 
     it 'includes selected view types as the value true' do

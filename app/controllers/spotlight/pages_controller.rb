@@ -8,7 +8,7 @@ module Spotlight
   # controller that gives other controllers their behavior
   class PagesController < Spotlight::ApplicationController
     before_action :authenticate_user!, except: [:show]
-    before_action :load_locale_specific_page, only: [:destroy, :edit, :show, :update]
+    before_action :load_locale_specific_page, only: %i[destroy edit show update]
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
     load_and_authorize_resource through: :exhibit, instance_name: 'page', only: [:index]
 
@@ -66,7 +66,7 @@ module Spotlight
 
     # PATCH/PUT /pages/1
     def update
-      @page.lock.delete if @page.lock
+      @page.lock&.delete
 
       if @page.update(page_params.merge(last_edited_by: current_user))
         redirect_to [spotlight, @page.exhibit, @page], flash: { html_safe: true }, notice: undo_notice(:updated)
@@ -132,7 +132,7 @@ module Spotlight
     end
 
     def page_attributes
-      [:id, :published, :title, :weight, :display_sidebar, :parent_page_id]
+      %i[id published title weight display_sidebar parent_page_id]
     end
 
     def allowed_page_params
@@ -140,9 +140,9 @@ module Spotlight
     end
 
     def featured_image_attributes
-      [
-        :source, :image, :document_global_id, :iiif_region, :iiif_tilesource,
-        :iiif_manifest_url, :iiif_canvas_id, :iiif_image_id
+      %i[
+        source image document_global_id iiif_region iiif_tilesource
+        iiif_manifest_url iiif_canvas_id iiif_image_id
       ]
     end
 
@@ -174,7 +174,7 @@ module Spotlight
 
     def update_all_page_params
       params.require(:exhibit).permit(
-        pages_attributes: [:id, :published]
+        pages_attributes: %i[id published]
       )
     end
 

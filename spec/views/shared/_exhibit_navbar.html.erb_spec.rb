@@ -49,13 +49,13 @@ describe 'shared/_exhibit_navbar', type: :view do
 
   it 'does not display links to feature pages if none are defined' do
     render
-    expect(response).to_not have_link 'Curated Features'
+    expect(response).not_to have_link 'Curated Features'
   end
 
   it 'does not display links to feature pages that are not published' do
     unpublished_feature_page
     render
-    expect(response).to_not have_link 'Curated Features'
+    expect(response).not_to have_link 'Curated Features'
   end
 
   it "links to the browse index if there's a published search" do
@@ -90,13 +90,13 @@ describe 'shared/_exhibit_navbar', type: :view do
 
   it 'does not link to the about page if no about page exists' do
     render
-    expect(response).to_not have_link 'About'
+    expect(response).not_to have_link 'About'
   end
 
   it 'does not to the about page if none are published' do
     unpublished_about_page
     render
-    expect(response).to_not have_link 'About'
+    expect(response).not_to have_link 'About'
   end
 
   it "marks the about button as active if we're on an about page" do
@@ -115,7 +115,7 @@ describe 'shared/_exhibit_navbar', type: :view do
   it 'does not include the search bar when the exhibit is not searchable' do
     expect(current_exhibit).to receive(:searchable?).and_return(false)
     render
-    expect(response).to_not have_content 'Search Bar'
+    expect(response).not_to have_content 'Search Bar'
   end
 
   it 'does not include any navigation menu items that are not configured' do

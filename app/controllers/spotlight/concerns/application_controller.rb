@@ -38,7 +38,7 @@ module Spotlight
         end
       end
 
-      # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
+      # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
       def field_enabled?(field, *args)
         if !field.enabled
           false
@@ -46,13 +46,13 @@ module Spotlight
           false
         elsif field.is_a?(Blacklight::Configuration::SortField) || field.is_a?(Blacklight::Configuration::SearchField)
           field.enabled
-        elsif field.is_a?(Blacklight::Configuration::FacetField) || (is_a?(Blacklight::Catalog) && %w(edit show).include?(action_name))
+        elsif field.is_a?(Blacklight::Configuration::FacetField) || (is_a?(Blacklight::Catalog) && %w[edit show].include?(action_name))
           field.show
         else
           field.send(document_index_view_type)
         end
       end
-      # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
+      # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
       private
 

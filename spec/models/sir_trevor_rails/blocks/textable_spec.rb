@@ -7,13 +7,14 @@ describe SirTrevorRails::Blocks::Textable do
   end
   let(:subject) { TextableTestClass.new }
   let(:st_blank_text) { '<p><br></p>' }
+
   describe '#text?' do
     it 'returns false when there is no text' do
-      expect(subject.text?).to be_falsey
+      expect(subject).not_to be_text
     end
     it 'returns true false when the text is the default sir-trevor text' do
       allow(subject).to receive_messages(text: st_blank_text)
-      expect(subject.text?).to be_truthy
+      expect(subject).to be_text
     end
   end
 

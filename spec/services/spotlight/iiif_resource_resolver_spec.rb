@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 describe Spotlight::IiifResourceResolver do
+  subject(:resolver) { described_class.new(resource) }
+
   let(:fixture_json) do
     File.open(
       File.expand_path(File.join('..', 'spec', 'fixtures', 'gk446cj2442-manifest.json'), Rails.root)
@@ -16,8 +18,6 @@ describe Spotlight::IiifResourceResolver do
       iiif_tilesource: 'https://stacks.stanford.edu/image/iiif/gk446cj2442%2Fgk446cj2442_05_0001/info.json'
     )
   end
-
-  subject(:resolver) { described_class.new(resource) }
 
   before do
     expect(resolver).to receive(:response).and_return(fixture_json)
@@ -81,6 +81,7 @@ describe Spotlight::IiifResourceResolver do
 
     context 'when the JSON is unparsable' do
       let(:fixture_json) { 'Some sort of html error!' }
+
       it 'logs that the JSON was unparsable and falls through to an no-canvas error' do
         klass = described_class.name
         expect(Rails.logger).to receive(:warn).with(

@@ -5,6 +5,7 @@ describe Spotlight::ContactsController, type: :controller do
   describe 'when not logged in' do
     describe 'GET edit' do
       let(:contact) { FactoryBot.create(:contact) }
+
       it 'is successful' do
         get :edit, params: { id: contact, exhibit_id: contact.exhibit }
         expect(response).to redirect_to main_app.new_user_session_path
@@ -16,6 +17,7 @@ describe Spotlight::ContactsController, type: :controller do
     let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
     let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:contact) { FactoryBot.create(:contact, exhibit: exhibit, name: 'Andrew Carnegie') }
+
     before { sign_in user }
 
     describe 'GET edit' do

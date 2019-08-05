@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 
 module Spotlight
@@ -15,7 +14,7 @@ module Spotlight
     def perform(csv_data, exhibit, _user)
       encoded_csv(csv_data).each do |row|
         url = row.delete('url')
-        next unless url.present?
+        next if url.blank?
 
         resource = Spotlight::Resources::Upload.new(
           data: row,

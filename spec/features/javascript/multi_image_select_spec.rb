@@ -4,6 +4,7 @@ describe 'Multi image selector', type: :feature, js: true, versioning: true, def
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+
   before { login_as exhibit_curator }
 
   it 'allows the user to select which image in a multi image object to display' do
@@ -25,7 +26,7 @@ describe 'Multi image selector', type: :feature, js: true, versioning: true, def
     visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
     expect(page).to have_css("[data-id='xd327cm9378']")
     expect(page).to have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0001/full/!400,400/0/default.jpg']")
-    expect(page).to_not have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0002/full/!400,400/0/default.jpg']")
+    expect(page).not_to have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0002/full/!400,400/0/default.jpg']")
 
     click_link('Edit')
 
@@ -43,7 +44,7 @@ describe 'Multi image selector', type: :feature, js: true, versioning: true, def
     save_page
 
     expect(page).to have_css("[data-id='xd327cm9378']")
-    expect(page).to_not have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0001/full/!400,400/0/default.jpg']")
+    expect(page).not_to have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0001/full/!400,400/0/default.jpg']")
     expect(page).to have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0002/full/!400,400/0/default.jpg']")
   end
 end

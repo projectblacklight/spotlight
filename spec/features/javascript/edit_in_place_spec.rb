@@ -3,6 +3,7 @@
 describe 'Edit in place', type: :feature, js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
   before { login_as admin }
 
   describe 'Feature Pages' do
@@ -27,7 +28,7 @@ describe 'Edit in place', type: :feature, js: true do
 
       expect(page).to have_content('Feature pages were successfully updated.')
       expect(page).to have_css('h3', text: 'My Newer Feature Page')
-      expect(page).to_not have_css('h3', text: 'My New Feature Page')
+      expect(page).not_to have_css('h3', text: 'My New Feature Page')
     end
 
     it 'rejects blank values' do

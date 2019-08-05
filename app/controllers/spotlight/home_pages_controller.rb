@@ -47,7 +47,7 @@ module Spotlight
     end
 
     def allowed_page_params
-      super.concat [:display_title, :display_sidebar]
+      super.concat %i[display_title display_sidebar]
     end
   end
 end

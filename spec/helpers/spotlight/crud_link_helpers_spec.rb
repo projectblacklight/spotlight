@@ -3,6 +3,7 @@
 describe Spotlight::CrudLinkHelpers, type: :helper do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:some_model) { Spotlight::FeaturePage.create! exhibit: exhibit }
+
   describe '#cancel_link' do
     it 'is a model-specific cancel link' do
       expect(helper).to receive(:action_default_value).with(:my_model, :cancel).and_return 'Cancel'
@@ -31,6 +32,7 @@ describe Spotlight::CrudLinkHelpers, type: :helper do
 
   describe '#exhibit_create_link' do
     let(:some_model) { Spotlight::FeaturePage.new }
+
     before do
       allow(helper).to receive_messages(current_exhibit: exhibit)
       allow(helper).to receive_messages action_default_value: 'Create'
@@ -52,6 +54,7 @@ describe Spotlight::CrudLinkHelpers, type: :helper do
 
   describe '#exhibit_edit_link' do
     let(:some_model) { Spotlight::FeaturePage.create! exhibit: exhibit }
+
     before do
       allow(helper).to receive_messages(current_exhibit: exhibit)
       allow(helper).to receive_messages action_default_value: 'Edit'

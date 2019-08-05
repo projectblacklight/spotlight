@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-feature 'Search contexts' do
+describe 'Search contexts' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:feature_page) do
@@ -10,9 +10,10 @@ feature 'Search contexts' do
       exhibit: exhibit
     )
   end
+
   before { login_as exhibit_curator }
 
-  scenario 'should add context breadcrumbs back to the home page when navigating to an item from the home page', js: true do
+  it 'adds context breadcrumbs back to the home page when navigating to an item from the home page', js: true do
     exhibit.home_page.content = [
       {
         type: 'solr_documents',
@@ -42,7 +43,7 @@ feature 'Search contexts' do
     expect(page).to have_selector '.breadcrumb a', text: 'Home'
   end
 
-  scenario 'should add context breadcrumb back to the feature page when navigating to an item from a feature page', js: true do
+  it 'adds context breadcrumb back to the feature page when navigating to an item from a feature page', js: true do
     feature_page.content = [
       {
         type: 'solr_documents',
@@ -76,7 +77,7 @@ feature 'Search contexts' do
   context 'from a browse page' do
     let!(:search) { FactoryBot.create(:search, title: 'Some Saved Search', exhibit: exhibit, published: true) }
 
-    scenario 'should add context breadcrumbs back to the browse page when navigating to an item', js: true do
+    it 'adds context breadcrumbs back to the browse page when navigating to an item', js: true do
       visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
       click_link 'Browse'
       click_link 'Some Saved Search'

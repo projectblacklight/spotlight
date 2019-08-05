@@ -32,8 +32,9 @@ describe Spotlight::Resources::Upload, type: :model do
   end
 
   context 'with a custom upload title field' do
-    let(:title_field) { Spotlight::UploadFieldConfig.new(field_name: 'configured_title_field', solr_fields: [:some_other_field]) }
     subject { doc_builder.to_solr }
+
+    let(:title_field) { Spotlight::UploadFieldConfig.new(field_name: 'configured_title_field', solr_fields: [:some_other_field]) }
 
     describe '#to_solr' do
       it 'stores the title field in the provided solr field' do
@@ -45,7 +46,7 @@ describe Spotlight::Resources::Upload, type: :model do
   context 'multiple solr field mappings' do
     let :configured_fields do
       [
-        Spotlight::UploadFieldConfig.new(field_name: 'some_field', solr_fields: %w(a b))
+        Spotlight::UploadFieldConfig.new(field_name: 'some_field', solr_fields: %w[a b])
       ]
     end
 

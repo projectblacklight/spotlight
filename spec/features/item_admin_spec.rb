@@ -3,6 +3,7 @@
 describe 'Item Administration', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+
   before { login_as curator }
 
   before do
@@ -39,7 +40,7 @@ describe 'Item Administration', type: :feature do
     it "toggles the 'blacklight-private' label", js: true, default_max_wait_time: 5 do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
       # The label should be toggled when the checkbox is clicked
-      expect(page).to_not have_css('tr.blacklight-private')
+      expect(page).not_to have_css('tr.blacklight-private')
       within 'tr[itemscope]:first-child' do
         find("input.toggle_visibility[type='checkbox']").click
       end
@@ -51,7 +52,7 @@ describe 'Item Administration', type: :feature do
       within 'tr[itemscope]:first-child' do
         find("input.toggle_visibility[type='checkbox']").click
       end
-      expect(page).to_not have_css('tr.blacklight-private')
+      expect(page).not_to have_css('tr.blacklight-private')
     end
   end
 end

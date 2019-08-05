@@ -3,6 +3,7 @@
 describe 'spotlight/catalog/admin.html.erb', type: :view do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   let(:blacklight_config) { CatalogController.blacklight_config }
+
   before do
     allow(view).to receive(:blacklight_config).and_return(blacklight_config)
     allow(exhibit).to receive(:blacklight_config).and_return(blacklight_config)

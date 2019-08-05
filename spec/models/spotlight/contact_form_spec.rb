@@ -2,6 +2,7 @@
 
 describe Spotlight::ContactForm do
   subject { described_class.new(name: 'Root', email: 'user@example.com').tap { |c| c.current_exhibit = exhibit } }
+
   let(:exhibit) { FactoryBot.build_stubbed(:exhibit) }
   let(:honeypot_field_name) { Spotlight::Engine.config.spambot_honeypot_email_field }
 
@@ -45,7 +46,7 @@ describe Spotlight::ContactForm do
     it 'rejects submissions that set an invalid email address' do
       subject.email = 'user'
       subject.send("#{honeypot_field_name}=", '')
-      expect(subject).to_not be_valid
+      expect(subject).not_to be_valid
     end
 
     it 'allows submissions that leave the spammer honeypot field blank' do
@@ -55,7 +56,7 @@ describe Spotlight::ContactForm do
 
     it 'rejects submissions that set the spammer honeypot field' do
       subject.send("#{honeypot_field_name}=", 'spam@spam.com')
-      expect(subject).to_not be_valid
+      expect(subject).not_to be_valid
     end
   end
 end

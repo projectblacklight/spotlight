@@ -36,6 +36,7 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
 
   describe 'when signed in' do
     let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
     before { sign_in user }
 
     describe 'GET edit' do
@@ -131,7 +132,7 @@ describe Spotlight::SearchConfigurationsController, type: :controller do
         expect(flash[:notice]).to eq 'The exhibit was successfully updated.'
         expect(response).to redirect_to edit_exhibit_search_configuration_path(exhibit)
         assigns[:exhibit].tap do |saved|
-          expect(saved.blacklight_configuration.document_index_view_types).to eq %w(list gallery)
+          expect(saved.blacklight_configuration.document_index_view_types).to eq %w[list gallery]
           expect(saved.blacklight_configuration.default_per_page).to eq 50
         end
       end

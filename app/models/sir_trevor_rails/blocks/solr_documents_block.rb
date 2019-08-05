@@ -49,12 +49,12 @@ module SirTrevorRails
 
       def primary_caption_field
         val = send(:'primary-caption-field')
-        val unless val.blank?
+        val.presence
       end
 
       def secondary_caption_field
         val = send(:'secondary-caption-field')
-        val unless val.blank?
+        val.presence
       end
     end
   end

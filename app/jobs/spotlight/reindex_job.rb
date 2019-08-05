@@ -18,16 +18,16 @@ module Spotlight
 
     around_perform do |job, block|
       job_log_entry = log_entry(job)
-      job_log_entry.in_progress! if job_log_entry
+      job_log_entry&.in_progress!
 
       begin
         block.call
-      rescue
-        job_log_entry.failed! if job_log_entry
+      rescue StandardError
+        job_log_entry&.failed!
         raise
       end
 
-      job_log_entry.succeeded! if job_log_entry
+      job_log_entry&.succeeded!
     end
 
     def perform(exhibit_or_resources, log_entry = nil)

@@ -33,7 +33,7 @@ module Spotlight
                       nil
                     elsif current_exhibit
                       current_exhibit.masthead if exhibit_masthead?
-                    elsif current_site.masthead && current_site.masthead.display?
+                    elsif current_site.masthead&.display?
                       current_site.masthead
                     end
     end
@@ -47,7 +47,7 @@ module Spotlight
     end
 
     def exhibit_masthead?
-      current_exhibit && current_exhibit.masthead && current_exhibit.masthead.display?
+      current_exhibit&.masthead && current_exhibit.masthead.display?
     end
 
     def set_locale

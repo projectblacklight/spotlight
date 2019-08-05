@@ -85,7 +85,7 @@ module Spotlight
 
       def manifest_metadata
         metadata = metadata_class.new(manifest).to_solr
-        return {} unless metadata.present?
+        return {} if metadata.blank?
 
         create_sidecars_for(*metadata.keys)
 
@@ -204,7 +204,7 @@ module Spotlight
         end
 
         def metadata_hash
-          return {} unless metadata.present?
+          return {} if metadata.blank?
           return {} unless metadata.is_a?(Array)
 
           metadata.each_with_object({}) do |md, hash|
@@ -226,7 +226,7 @@ module Spotlight
         end
 
         def manifest_fields
-          %w(attribution description license)
+          %w[attribution description license]
         end
       end
     end
