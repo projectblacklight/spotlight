@@ -77,7 +77,7 @@ SirTrevor.Blocks.SolrDocumentsBase = (function(){
       var manifestUrl = data.iiif_manifest || data.iiif_manifest_url;
 
       if (!manifestUrl) {
-        $(panel).find('[name$="[thumbnail_image_url]"]').val(data.thumbnail);
+        $(panel).find('[name$="[thumbnail_image_url]"]').val(data.thumbnail_image_url || data.thumbnail);
         $(panel).find('[name$="[full_image_url]"]').val(data.full_image_url);
 
         return;
