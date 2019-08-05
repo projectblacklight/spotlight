@@ -8,6 +8,7 @@ describe 'Feature page', type: :feature, versioning: true do
     let!(:feature_page) do
       FactoryBot.create(:feature_page, title: 'Parent Page', exhibit: exhibit)
     end
+
     it 'has <meta> tags' do
       TopHat.current['twitter_card'] = nil
       TopHat.current['opengraph'] = nil
@@ -32,6 +33,7 @@ describe 'Feature page', type: :feature, versioning: true do
         parent_page: parent_feature_page, exhibit: exhibit
       )
     end
+
     describe 'when configured to display' do
       before { parent_feature_page.update display_sidebar: true }
 
@@ -80,6 +82,7 @@ describe 'Feature page', type: :feature, versioning: true do
 
     describe 'publish' do
       let!(:unpublished_page) { FactoryBot.create(:feature_page, published: false, exhibit: exhibit) }
+
       it 'is updatable from the edit page' do
         expect(unpublished_page).not_to be_published
 
@@ -98,10 +101,11 @@ describe 'Feature page', type: :feature, versioning: true do
 
     describe 'display_sidebar' do
       let!(:feature_page) { FactoryBot.create(:feature_page, display_sidebar: false, exhibit: exhibit) }
+
       before { feature_page.update display_sidebar: false }
 
       it 'is updatable from the edit page' do
-        expect(feature_page.display_sidebar?).to be_falsey
+        expect(feature_page).not_to be_display_sidebar
 
         visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
         expect(find('#feature_page_display_sidebar')).not_to be_checked
@@ -109,7 +113,7 @@ describe 'Feature page', type: :feature, versioning: true do
         check 'Show sidebar'
         click_button 'Save changes'
 
-        expect(feature_page.reload.display_sidebar?).to be_truthy
+        expect(feature_page.reload).to be_display_sidebar
 
         visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
         expect(find('#feature_page_display_sidebar')).to be_checked

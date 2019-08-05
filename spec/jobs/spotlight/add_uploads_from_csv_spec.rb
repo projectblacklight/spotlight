@@ -2,6 +2,7 @@
 
 describe Spotlight::AddUploadsFromCSV do
   subject(:job) { described_class.new(data, exhibit, user) }
+
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:data) do

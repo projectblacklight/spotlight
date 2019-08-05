@@ -17,9 +17,7 @@ module Spotlight
     end
 
     def update
-      unless @filter.update(filter_params)
-        flash[:alert] = @filter.errors.full_messages.join('<br/>'.html_safe)
-      end
+      flash[:alert] = @filter.errors.full_messages.join('<br/>'.html_safe) unless @filter.update(filter_params)
       redirect_to spotlight.edit_exhibit_path @exhibit, tab: 'filter'
     end
 

@@ -16,7 +16,7 @@ module Spotlight
     after_create :set_tilesource_from_uploaded_resource
 
     def iiif_url
-      return unless iiif_service_base.present?
+      return if iiif_service_base.blank?
 
       [iiif_service_base, iiif_region || 'full', image_size.join(','), '0', 'default.jpg'].join('/')
     end
@@ -31,12 +31,9 @@ module Spotlight
     def document
       return unless document_global_id && source == 'exhibit'
 
-      if @document && document_global_id != @document.to_global_id.to_s
-        @document = nil
-      end
+      @document = nil if @document && document_global_id != @document.to_global_id.to_s
 
       @document ||= GlobalID::Locator.locate document_global_id
-
     rescue Blacklight::Exceptions::RecordNotFound => e
       Rails.logger.info("Exception fetching record by id: #{document_global_id}")
       Rails.logger.info(e)

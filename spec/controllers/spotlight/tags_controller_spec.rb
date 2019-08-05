@@ -40,6 +40,7 @@ describe Spotlight::TagsController, type: :controller do
 
     describe 'DELETE destroy' do
       let!(:tagging) { FactoryBot.create(:tagging, tagger: exhibit, taggable: exhibit) }
+
       it 'is successful' do
         expect do
           delete :destroy, params: { exhibit_id: exhibit, id: tagging.tag }

@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-feature 'Block controls' do
+describe 'Block controls' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+
   before { login_as exhibit_curator }
 
-  scenario 'should be split into separate sections', js: true do
+  it 'is split into separate sections', js: true do
     # create page
     visit spotlight.exhibit_dashboard_path(exhibit)
 

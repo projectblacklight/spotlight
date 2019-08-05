@@ -79,7 +79,7 @@ module Spotlight
     end
 
     def resource_masthead?
-      @search && @search.masthead && @search.masthead.display?
+      @search&.masthead && @search.masthead.display?
     end
 
     # This is overidden for the browse controller context from where it is defined in a helper

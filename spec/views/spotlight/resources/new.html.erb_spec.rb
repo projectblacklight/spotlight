@@ -13,11 +13,11 @@ describe 'spotlight/resources/new.html.erb', type: :view do
 
   it 'renders the configured partials' do
     allow(Spotlight::Engine.config).to receive(:resource_partials).and_return(
-      %w(
+      %w[
         spotlight/resources/external_resources_form
         spotlight/resources/upload/form
         spotlight/resources/csv_upload/form
-      )
+      ]
     )
     stub_template 'spotlight/resources/_external_resources_form.html.erb' => 'a_template'
     stub_template 'spotlight/resources/upload/_form.html.erb' => 'b_template'

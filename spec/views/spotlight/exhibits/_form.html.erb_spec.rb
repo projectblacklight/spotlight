@@ -2,6 +2,7 @@
 
 describe 'spotlight/exhibits/_form', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
+
   before do
     assign(:exhibit, exhibit)
   end

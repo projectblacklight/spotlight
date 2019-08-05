@@ -8,7 +8,7 @@ module Spotlight
     MAX_PAGES = 1000
 
     extend FriendlyId
-    friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: [:exhibit, :locale]
+    friendly_id :title, use: %i[slugged scoped finders history], scope: %i[exhibit locale]
 
     belongs_to :exhibit, touch: true
     # Ignoring for https://github.com/rubocop-hq/rubocop/issues/6764
@@ -75,7 +75,7 @@ module Spotlight
     end
 
     def thumbnail_image_url
-      return unless thumbnail && thumbnail.iiif_url
+      return unless thumbnail&.iiif_url
 
       thumbnail.iiif_url
     end
@@ -117,7 +117,7 @@ module Spotlight
     end
 
     def lock!(user)
-      create_lock(by: user).tap(&:current_session!) unless lock.present?
+      create_lock(by: user).tap(&:current_session!) if lock.blank?
     end
 
     def updated_after?(other_page)

@@ -22,7 +22,7 @@ module Spotlight
     private
 
     def exhibit_params
-      params.require(:exhibit).permit(translations_attributes: [:id, :locale, :key, :value])
+      params.require(:exhibit).permit(translations_attributes: %i[id locale key value])
     end
 
     def set_language

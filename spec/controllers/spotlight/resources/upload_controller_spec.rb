@@ -15,6 +15,7 @@ describe Spotlight::Resources::UploadController, type: :controller do
 
   describe 'when signed in as a curator' do
     let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+
     before { sign_in user }
 
     describe 'POST create' do

@@ -3,6 +3,7 @@
 describe 'Translation editing', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit, title: 'Sample', subtitle: 'SubSample') }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
   before do
     FactoryBot.create(:language, exhibit: exhibit, locale: 'sq')
     FactoryBot.create(:language, exhibit: exhibit, locale: 'fr')
@@ -36,7 +37,7 @@ describe 'Translation editing', type: :feature do
           expect(page).to have_css 'span.glyphicon.glyphicon-ok'
         end
         within '.translation-basic-settings-description' do
-          expect(page).to_not have_css 'span.glyphicon.glyphicon-ok'
+          expect(page).not_to have_css 'span.glyphicon.glyphicon-ok'
         end
       end
     end
@@ -68,10 +69,10 @@ describe 'Translation editing', type: :feature do
           expect(page).to have_css 'span.glyphicon.glyphicon-ok'
         end
         within '.translation-main-menu-curated-features' do
-          expect(page).to_not have_css 'span.glyphicon.glyphicon-ok'
+          expect(page).not_to have_css 'span.glyphicon.glyphicon-ok'
         end
         within '.translation-main-menu-about' do
-          expect(page).to_not have_css 'span.glyphicon.glyphicon-ok'
+          expect(page).not_to have_css 'span.glyphicon.glyphicon-ok'
         end
         I18n.locale = :fr
         expect(exhibit.main_navigations.browse.label).to eq 'parcourir ceci!'
@@ -372,6 +373,7 @@ describe 'Translation editing', type: :feature do
   describe 'home page translation table entry' do
     let(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
     let(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+
     before do
       exhibit.home_page.clone_for_locale('fr').save
       about_page.clone_for_locale('fr').tap { |p| p.published = true }.save

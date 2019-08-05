@@ -6,7 +6,7 @@ require 'rails/generators'
 module Spotlight
   # spotlight:scaffold_resource generator
   class ScaffoldResource < Rails::Generators::NamedBase
-    source_root File.expand_path('../templates', __FILE__)
+    source_root File.expand_path('templates', __dir__)
     def create_document_builder
       create_file "app/services/#{file_name}_builder.rb", <<-FILE.strip_heredoc
         class #{class_name}Builder < Spotlight::SolrDocumentBuilder

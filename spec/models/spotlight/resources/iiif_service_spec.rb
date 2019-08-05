@@ -3,8 +3,10 @@
 require 'spec_helper'
 
 describe Spotlight::Resources::IiifService do
-  let(:url) { 'uri://for-top-level-collection' }
   subject { described_class.new(url) }
+
+  let(:url) { 'uri://for-top-level-collection' }
+
   before { stub_default_collection }
 
   describe '#collections' do

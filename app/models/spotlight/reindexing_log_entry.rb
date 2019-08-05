@@ -21,21 +21,21 @@ module Spotlight
     def in_progress!
       self.start_time = Time.zone.now
       super
-    rescue
+    rescue StandardError
       Rails.logger.error "unexpected error updating log entry to :in_progress from #{caller}"
     end
 
     def succeeded!
       self.end_time = Time.zone.now
       super
-    rescue
+    rescue StandardError
       Rails.logger.error "unexpected error updating log entry to :succeeded from #{caller}"
     end
 
     def failed!
       self.end_time = Time.zone.now
       super
-    rescue
+    rescue StandardError
       Rails.logger.error "unexpected error updating log entry to :failed from #{caller}"
     end
   end

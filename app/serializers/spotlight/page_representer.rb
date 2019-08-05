@@ -7,7 +7,7 @@ module Spotlight
   # Serialize an exhibit page
   class PageRepresenter < Roar::Decorator
     include Roar::JSON
-    (Spotlight::Page.attribute_names - %w(id scope exhibit_id parent_page_id content thumbnail_id)).each do |prop|
+    (Spotlight::Page.attribute_names - %w[id scope exhibit_id parent_page_id content thumbnail_id]).each do |prop|
       property prop
     end
 

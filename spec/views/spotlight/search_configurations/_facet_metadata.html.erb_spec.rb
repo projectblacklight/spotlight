@@ -14,7 +14,7 @@ describe 'spotlight/search_configurations/_facet_metadata', type: :view do
   end
 
   context 'with a facet with a small number of values' do
-    let(:metadata) { { document_count: 1, value_count: 3, terms: %w(a b c) } }
+    let(:metadata) { { document_count: 1, value_count: 3, terms: %w[a b c] } }
 
     it 'shows the number of unique values' do
       expect(rendered).to have_content '1 item'
@@ -24,7 +24,7 @@ describe 'spotlight/search_configurations/_facet_metadata', type: :view do
   end
 
   context 'with a facet with a large number of values' do
-    let(:metadata) { { document_count: 1, value_count: 21, terms: %w() } }
+    let(:metadata) { { document_count: 1, value_count: 21, terms: %w[] } }
 
     it 'shows there are many unique values' do
       expect(rendered).to have_content '20+ unique values'

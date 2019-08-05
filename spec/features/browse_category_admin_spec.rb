@@ -4,6 +4,7 @@ describe 'Browse Category Administration', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let!(:search) { FactoryBot.create(:search, exhibit: exhibit, query_params: { f: { 'genre_ssim' => ['Value'] } }) }
+
   before { login_as curator }
 
   describe 'index' do

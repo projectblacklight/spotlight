@@ -11,7 +11,7 @@ describe Spotlight::SolrDocument::UploadedResource, type: :model do
 
   describe 'SolrDocument.use_extension' do
     it 'does not include the uploaded resource extension when the spotlight resource type is not correct' do
-      expect(SolrDocument.new(id: '123', spotlight_resource_type_ssim: ['not-correct'])).to_not be_a_kind_of(described_class)
+      expect(SolrDocument.new(id: '123', spotlight_resource_type_ssim: ['not-correct'])).not_to be_a_kind_of(described_class)
     end
     it 'includes the uploaded resource extension when the correct fields are present with the correct data' do
       expect(valid_resource).to be_a_kind_of(described_class)
@@ -20,6 +20,7 @@ describe Spotlight::SolrDocument::UploadedResource, type: :model do
 
   describe 'to_openseadragon' do
     subject(:osd) { valid_resource.to_openseadragon }
+
     let(:uploaded_resource) { instance_double(Spotlight::Resources::Upload, upload: upload) }
     let(:upload) { instance_double(Spotlight::FeaturedImage, iiif_tilesource: '/whatever/info.json') }
 

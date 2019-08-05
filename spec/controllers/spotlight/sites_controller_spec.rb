@@ -16,6 +16,7 @@ describe Spotlight::SitesController, type: :controller do
 
   describe 'when user is an admin' do
     let(:admin) { FactoryBot.create(:site_admin) }
+
     before { sign_in admin }
 
     describe 'GET edit' do

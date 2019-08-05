@@ -3,6 +3,7 @@
 describe ApplicationController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
+
   it { is_expected.to be_a_kind_of Spotlight::Controller }
 
   describe 'exhibit-specific routing' do

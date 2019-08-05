@@ -42,14 +42,14 @@ end
 require 'spotlight'
 
 # configure spotlight with all the settings necessary to test functionality
-Spotlight::Engine.config.exhibit_themes = %w(default modern)
+Spotlight::Engine.config.exhibit_themes = %w[default modern]
 
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 
-FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+FactoryBot.definition_file_paths = [File.expand_path('factories', __dir__)]
 FactoryBot.find_definitions
 
-FIXTURES_PATH = File.expand_path('../fixtures', __FILE__)
+FIXTURES_PATH = File.expand_path('fixtures', __dir__)
 
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
@@ -59,7 +59,7 @@ RSpec.configure do |config|
   config.before :all do
     WebMock.disable_net_connect!(allow_localhost: true)
   end
-  config.before :each do
+  config.before do
     # The first user is automatically granted admin privileges; we don't want that behavior for many of our tests
     Spotlight::Engine.user_class.create email: 'initial+admin@example.com', password: 'password', password_confirmation: 'password'
   end

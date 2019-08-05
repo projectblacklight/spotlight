@@ -3,6 +3,7 @@
 describe 'Main navigation labels are settable', type: :feature do
   let!(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:about) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
+
   before do
     about_nav = exhibit.main_navigations.about
     about_nav.label = 'New About Label'
@@ -44,7 +45,7 @@ describe 'Main navigation labels are settable', type: :feature do
     about_nav.display = false
     about_nav.save
     visit spotlight.exhibit_path(exhibit)
-    expect(page).to_not have_css('.navbar-nav li', text: 'New About Label')
+    expect(page).not_to have_css('.navbar-nav li', text: 'New About Label')
     about_nav = exhibit.main_navigations.about
     about_nav.display = true
     about_nav.save

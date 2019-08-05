@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 describe Spotlight::FieldMetadata do
+  subject { described_class.new(exhibit, repository, blacklight_config) }
+
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:repository) { double }
   let(:blacklight_config) do
@@ -29,8 +31,6 @@ describe Spotlight::FieldMetadata do
     }.with_indifferent_access
   end
 
-  subject { described_class.new(exhibit, repository, blacklight_config) }
-
   before do
     allow(repository).to receive(:search).with(an_instance_of(SearchBuilder)).and_return(Blacklight::Solr::Response.new(facet_response, {}))
   end
@@ -49,8 +49,8 @@ describe Spotlight::FieldMetadata do
     end
 
     it 'gets a list of top terms' do
-      expect(subject.field('a')[:terms]).to match_array %w(a b c)
-      expect(subject.field('b')[:terms]).to match_array %w(b)
+      expect(subject.field('a')[:terms]).to match_array %w[a b c]
+      expect(subject.field('b')[:terms]).to match_array %w[b]
       expect(subject.field('some_key')[:terms]).to match_array [7, 8, 9]
     end
 

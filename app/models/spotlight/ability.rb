@@ -15,7 +15,7 @@ module Spotlight
       can :manage, :all if user.superadmin?
 
       # exhibit admin
-      can [:update, :import, :export, :destroy], Spotlight::Exhibit, id: user.admin_roles.pluck(:resource_id)
+      can %i[update import export destroy], Spotlight::Exhibit, id: user.admin_roles.pluck(:resource_id)
       can :manage, [Spotlight::BlacklightConfiguration, Spotlight::ContactEmail, Spotlight::Language], exhibit_id: user.admin_roles.pluck(:resource_id)
       can :manage, Spotlight::Role, resource_id: user.admin_roles.pluck(:resource_id), resource_type: 'Spotlight::Exhibit'
 
@@ -35,7 +35,7 @@ module Spotlight
       can :manage, Spotlight::Lock, by: user
 
       can :read, Spotlight::Language, exhibit_id: user.exhibit_roles.pluck(:resource_id)
-      can [:read, :curate, :tag], Spotlight::Exhibit, id: user.exhibit_roles.pluck(:resource_id)
+      can %i[read curate tag], Spotlight::Exhibit, id: user.exhibit_roles.pluck(:resource_id)
 
       # public
       can :read, Spotlight::HomePage

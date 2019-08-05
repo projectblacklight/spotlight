@@ -2,6 +2,6 @@
 
 describe Spotlight::Analytics::Ga do
   it 'does not be enabled without configuration' do
-    expect(described_class.enabled?).to be_falsey
+    expect(described_class).not_to be_enabled
   end
 end

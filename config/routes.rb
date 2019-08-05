@@ -8,7 +8,7 @@ Spotlight::Engine.routes.draw do
   resources :mastheads, controller: :featured_images, only: :create
   resources :featured_images, only: :create
 
-  resource :site, only: [:edit, :update] do
+  resource :site, only: %i[edit update] do
     collection do
       get '/tags', to: 'sites#tags'
     end
@@ -16,7 +16,7 @@ Spotlight::Engine.routes.draw do
 
   get '/exhibits/edit', to: 'sites#edit_exhibits', as: 'edit_site_exhibits'
 
-  resources :admin_users, only: [:index, :create, :destroy]
+  resources :admin_users, only: %i[index create destroy]
 
   resources :exhibits, path: '/', except: [:show] do
     member do
@@ -28,17 +28,17 @@ Spotlight::Engine.routes.draw do
 
     resources :contact_email, only: [:destroy], defaults: { format: :json }
     resources :attachments, only: :create
-    resource :contact_form, path: 'contact', only: [:new, :create]
+    resource :contact_form, path: 'contact', only: %i[new create]
     resource :blacklight_configuration, only: [:update]
 
-    resource :appearance, only: [:edit, :update]
+    resource :appearance, only: %i[edit update]
 
-    resource :metadata_configuration, only: [:show, :edit, :update]
-    resource :search_configuration, only: [:show, :edit, :update]
+    resource :metadata_configuration, only: %i[show edit update]
+    resource :search_configuration, only: %i[show edit update]
     resource :view_configuration, only: [:show]
 
-    resources :filters, only: [:create, :update]
-    resources :languages, only: [:create, :destroy]
+    resources :filters, only: %i[create update]
+    resources :languages, only: %i[create destroy]
 
     concern :searchable, Blacklight::Routes::Searchable.new
 
@@ -98,10 +98,10 @@ Spotlight::Engine.routes.draw do
         get :autocomplete
       end
     end
-    resources :browse, only: [:index, :show]
-    resources :tags, only: [:index, :destroy]
+    resources :browse, only: %i[index show]
+    resources :tags, only: %i[index destroy]
 
-    resources :contacts, only: [:edit, :update, :destroy]
+    resources :contacts, only: %i[edit update destroy]
 
     resources :pages, only: [:update_all] do
       collection do
@@ -114,7 +114,7 @@ Spotlight::Engine.routes.draw do
       end
       collection do
         patch 'contacts' => 'about_pages#update_contacts'
-        resources :contacts, only: [:new, :create]
+        resources :contacts, only: %i[new create]
         patch :update_all
       end
     end
@@ -136,13 +136,13 @@ Spotlight::Engine.routes.draw do
 
     resources :lock, only: [:destroy]
 
-    resources :roles, path: 'users', only: [:index, :create, :destroy] do
+    resources :roles, path: 'users', only: %i[index create destroy] do
       collection do
         patch :update_all
       end
     end
     post 'solr/update' => 'solr#update'
-    resource :translations, only: [:edit, :update]
+    resource :translations, only: %i[edit update]
   end
 
   get '/:exhibit_id' => 'home_pages#show', as: :exhibit_root

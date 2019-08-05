@@ -5,6 +5,7 @@ describe 'Adding custom metadata field data', type: :feature do
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   let(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit) }
   let(:config) { exhibit.blacklight_configuration }
+
   before do
     login_as(admin)
     config.index_fields[custom_field.field] = { enabled: true, show: true, 'label' => 'Some Field' }
@@ -32,6 +33,7 @@ describe 'Adding custom metadata field data', type: :feature do
 
   context 'when given a read-only field' do
     let(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit, readonly_field: true) }
+
     it 'can not be edited' do
       visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
 

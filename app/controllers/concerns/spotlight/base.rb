@@ -20,7 +20,7 @@ module Spotlight
       end
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize
     def autocomplete_json_response_for_document(doc)
       {
         id: doc.id,
@@ -34,6 +34,6 @@ module Spotlight
         iiif_manifest: doc[Spotlight::Engine.config.iiif_manifest_field]
       }
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize
   end
 end

@@ -26,8 +26,8 @@ module Spotlight
 
     # get rid of empty values
     before_validation do |model|
-      model.index_fields.each do |_k, v|
-        v[:enabled] ||= v.any? { |_k1, v1| !v1.blank? }
+      model.index_fields&.each do |_k, v|
+        v[:enabled] ||= v.any? { |_k1, v1| v1.present? }
 
         default_blacklight_config.view.keys.each do |view|
           v[view] &&= value_to_boolean(v[view])
@@ -35,30 +35,30 @@ module Spotlight
 
         v[:show] &&= value_to_boolean(v[:show])
         v.reject! { |_k, v1| v1.blank? && v1 != false }
-      end if model.index_fields
+      end
 
-      model.facet_fields.each do |_k, v|
+      model.facet_fields&.each do |_k, v|
         v[:show] &&= value_to_boolean(v[:show])
         v[:show] ||= true if v[:show].nil?
         v.reject! { |_k, v1| v1.blank? && v1 != false }
-      end if model.facet_fields
+      end
 
-      model.search_fields.each do |k, v|
+      model.search_fields&.each do |k, v|
         v[:enabled] &&= value_to_boolean(v[:enabled])
         v[:enabled] ||= true if v[:enabled].nil?
-        v[:label] = default_blacklight_config.search_fields[k][:label] if default_blacklight_config.search_fields[k] && !v[:label].present?
+        v[:label] = default_blacklight_config.search_fields[k][:label] if default_blacklight_config.search_fields[k] && v[:label].blank?
         v.reject! { |_k, v1| v1.blank? && v1 != false }
-      end if model.search_fields
+      end
 
-      model.sort_fields.each do |k, v|
+      model.sort_fields&.each do |k, v|
         v[:enabled] &&= value_to_boolean(v[:enabled])
         v[:enabled] ||= true if v[:enabled].nil?
-        v[:label] = default_blacklight_config.sort_fields[k][:label] if default_blacklight_config.sort_fields[k] && !v[:label].present?
+        v[:label] = default_blacklight_config.sort_fields[k][:label] if default_blacklight_config.sort_fields[k] && v[:label].blank?
         v.reject! { |_k, v1| v1.blank? && v1 != false }
-      end if model.sort_fields
+      end
 
-      model.per_page.reject!(&:blank?) if model.per_page
-      model.document_index_view_types.reject!(&:blank?) if model.document_index_view_types
+      model.per_page&.reject!(&:blank?)
+      model.document_index_view_types&.reject!(&:blank?)
     end
 
     ##
@@ -72,8 +72,8 @@ module Spotlight
         # Create a new config based on the defaults
         config = default_blacklight_config.inheritable_copy
 
-        config.show.merge! show unless show.blank?
-        config.index.merge! index unless index.blank?
+        config.show.merge! show if show.present?
+        config.index.merge! index if index.present?
 
         config.index.thumbnail_field ||= Spotlight::Engine.config.thumbnail_field
 
@@ -136,7 +136,7 @@ module Spotlight
 
         config.show_fields = config.index_fields
 
-        unless search_fields.blank?
+        if search_fields.present?
           config.search_fields = Hash[config.search_fields.sort_by { |k, _v| field_weight(search_fields, k) }]
 
           config.search_fields.each do |k, v|
@@ -150,7 +150,7 @@ module Spotlight
           end
         end
 
-        unless sort_fields.blank?
+        if sort_fields.present?
           config.sort_fields = Hash[config.sort_fields.sort_by { |k, _v| field_weight(sort_fields, k) }]
 
           config.sort_fields.each do |k, v|
@@ -165,7 +165,7 @@ module Spotlight
         end
 
         config.facet_fields.merge! custom_facet_fields
-        unless facet_fields.blank?
+        if facet_fields.present?
           config.facet_fields = Hash[config.facet_fields.sort_by { |k, _v| field_weight(facet_fields, k) }]
 
           config.facet_fields.each do |k, v|
@@ -180,18 +180,20 @@ module Spotlight
           end
         end
 
-        config.per_page = (config.per_page & per_page) unless per_page.blank?
+        config.per_page = (config.per_page & per_page) if per_page.present?
 
         if default_per_page
           config.per_page.delete(default_per_page)
           config.per_page.unshift(default_per_page)
         end
 
-        config.view.each do |k, v|
-          v.original = v.dup
-          v.key = k
-          v.if = :enabled_in_spotlight_view_type_configuration? unless v.if == false
-        end unless document_index_view_types.blank?
+        if document_index_view_types.present?
+          config.view.each do |k, v|
+            v.original = v.dup
+            v.key = k
+            v.if = :enabled_in_spotlight_view_type_configuration? unless v.if == false
+          end
+        end
 
         if config.search_fields.blank?
           config.navbar.partials[:saved_searches].if = false if config.navbar.partials.key? :saved_searches
@@ -258,7 +260,7 @@ module Spotlight
     # takes ["list", "gallery"] and turns it into the above.
     def document_index_view_types_selected_hash
       selected_view_types = document_index_view_types
-      avail_view_types = default_blacklight_config.view.select { |_k, v| v.if != false }.keys
+      avail_view_types = default_blacklight_config.view.reject { |_k, v| v.if == false }.keys
       Blacklight::OpenStructWithHashAccess.new.tap do |s|
         avail_view_types.each do |k|
           s[k] = selected_view_types.include?(k.to_s)
@@ -324,22 +326,22 @@ module Spotlight
 
     # rubocop:disable Naming/AccessorMethodName
     def set_index_field_defaults(field)
-      return unless index_fields.blank?
+      return if index_fields.present?
 
-      views = default_blacklight_config.view.keys | [:show, :enabled]
+      views = default_blacklight_config.view.keys | %i[show enabled]
       field.merge!((views - field.keys).map { |v| [v, !title_only_by_default?(v)] }.to_h)
     end
 
     # Check to see whether config.view.foobar.title_only_by_default is available
     def title_only_by_default?(view)
-      return false if [:show, :enabled].include?(view)
+      return false if %i[show enabled].include?(view)
 
       title_only = default_blacklight_config.view.send(:[], view).try(:title_only_by_default)
       title_only.nil? ? false : title_only
     end
 
     def set_show_field_defaults(field)
-      return unless index_fields.blank?
+      return if index_fields.present?
 
       views = default_blacklight_config.view.keys
       field.merge! Hash[views.map { |v| [v, false] }]

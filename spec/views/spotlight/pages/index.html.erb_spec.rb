@@ -14,6 +14,7 @@ describe 'spotlight/pages/index.html.erb', type: :view do
     ]
   end
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
+
   before do
     allow(view).to receive(:page_collection_name).and_return(:feature_pages)
     allow(view).to receive(:update_all_exhibit_feature_pages_path).and_return('/exhibit/features/update_all')

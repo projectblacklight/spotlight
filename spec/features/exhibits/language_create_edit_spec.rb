@@ -3,6 +3,7 @@
 describe 'Language', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
   before do
     login_as admin
     visit spotlight.edit_exhibit_path(exhibit)

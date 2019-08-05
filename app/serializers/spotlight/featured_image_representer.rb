@@ -7,7 +7,7 @@ module Spotlight
   # Serialize mastheads and thumbnails
   class FeaturedImageRepresenter < Roar::Decorator
     include Roar::JSON
-    (Spotlight::FeaturedImage.attribute_names - %w(id image)).each do |prop|
+    (Spotlight::FeaturedImage.attribute_names - %w[id image]).each do |prop|
       property prop
     end
 

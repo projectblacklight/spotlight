@@ -37,7 +37,7 @@ module Spotlight
     end
 
     def document_model
-      exhibit.blacklight_config.document_model if exhibit
+      exhibit&.blacklight_config&.document_model
     end
 
     concerning :Indexing do
@@ -45,7 +45,6 @@ module Spotlight
       # Index the result of {#to_solr} into the index in batches of {#batch_size}
       #
       # @return [Integer] number of records indexed
-      # rubocop:disable Metrics/MethodLength
       def reindex(reindexing_log_entry = nil)
         benchmark "Reindexing #{self} (batch size: #{batch_size})" do
           count = 0
@@ -54,14 +53,13 @@ module Spotlight
             document_builder.documents_to_index.each_slice(batch_size) do |batch|
               write_to_index(batch)
               count += batch.length
-              reindexing_log_entry.update(items_reindexed_count: count) if reindexing_log_entry
+              reindexing_log_entry&.update(items_reindexed_count: count)
             end
 
             count
           end
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       def document_builder
         @document_builder ||= document_builder_class.new(self)
@@ -94,7 +92,7 @@ module Spotlight
         return unless write?
 
         blacklight_solr.commit
-      rescue => e
+      rescue StandardError => e
         Rails.logger.warn "Unable to commit to solr: #{e}"
       end
 

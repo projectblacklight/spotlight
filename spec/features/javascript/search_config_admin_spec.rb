@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-feature 'Search Configuration Administration', js: true do
+describe 'Search Configuration Administration', js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
   before { login_as user }
 
   describe 'search fields', default_max_wait_time: 5 do

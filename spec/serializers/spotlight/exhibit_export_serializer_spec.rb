@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 describe Spotlight::ExhibitExportSerializer do
+  subject { JSON.parse(described_class.new(source_exhibit).to_json) }
+
   let!(:source_exhibit) { FactoryBot.create(:exhibit) }
 
   before do
@@ -9,15 +11,13 @@ describe Spotlight::ExhibitExportSerializer do
     allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
   end
 
-  subject { JSON.parse(described_class.new(source_exhibit).to_json) }
-
   it 'does not include unique identifiers' do
-    expect(subject).to_not have_key 'id'
-    expect(subject).to_not have_key 'slug'
-    expect(subject).to_not have_key 'name'
-    expect(subject).to_not have_key 'default'
-    expect(subject).to_not have_key 'masthead_id'
-    expect(subject).to_not have_key 'thumbnail_id'
+    expect(subject).not_to have_key 'id'
+    expect(subject).not_to have_key 'slug'
+    expect(subject).not_to have_key 'name'
+    expect(subject).not_to have_key 'default'
+    expect(subject).not_to have_key 'masthead_id'
+    expect(subject).not_to have_key 'thumbnail_id'
   end
 
   it 'has search attributes' do
@@ -26,9 +26,9 @@ describe Spotlight::ExhibitExportSerializer do
 
   it 'has home page attributes' do
     expect(subject).to have_key 'home_page'
-    expect(subject['home_page']).to_not have_key 'id'
-    expect(subject['home_page']).to_not have_key 'scope'
-    expect(subject['home_page']).to_not have_key 'exhibit_id'
+    expect(subject['home_page']).not_to have_key 'id'
+    expect(subject['home_page']).not_to have_key 'scope'
+    expect(subject['home_page']).not_to have_key 'exhibit_id'
   end
 
   it 'has about pages' do
@@ -57,7 +57,7 @@ describe Spotlight::ExhibitExportSerializer do
     expect(subject['solr_document_sidecars']).to have(source_exhibit.solr_document_sidecars.count).items
 
     expect(subject['solr_document_sidecars'].first).to include('document_id', 'public')
-    expect(subject['solr_document_sidecars'].first).to_not include 'id'
+    expect(subject['solr_document_sidecars'].first).not_to include 'id'
   end
 
   it 'has attachments' do
@@ -74,6 +74,11 @@ describe Spotlight::ExhibitExportSerializer do
   end
 
   describe 'should round-trip data' do
+    subject do
+      e = FactoryBot.create(:exhibit)
+      e.import(export).tap(&:save)
+    end
+
     before do
       sidecar = source_exhibit.solr_document_sidecars.create! document: SolrDocument.new(id: 1), public: false
       source_exhibit.tag(sidecar, with: 'xyz', on: :tags)
@@ -81,11 +86,6 @@ describe Spotlight::ExhibitExportSerializer do
 
     let :export do
       described_class.new(source_exhibit).as_json
-    end
-
-    subject do
-      e = FactoryBot.create(:exhibit)
-      e.import(export).tap(&:save)
     end
 
     it 'has exhibit properties' do
@@ -120,7 +120,7 @@ describe Spotlight::ExhibitExportSerializer do
     end
 
     it 'has sidecars' do
-      expect(SolrDocument.new(id: 1).public?(subject)).to be_falsey
+      expect(SolrDocument.new(id: 1)).not_to be_public(subject)
     end
 
     context 'for an exhibit with contacts' do
@@ -130,6 +130,7 @@ describe Spotlight::ExhibitExportSerializer do
                             exhibit: source_exhibit,
                             contact_info: { title: 'xyz' })
         end
+
         it 'has contacts' do
           expect(subject.contacts.count).to eq 1
           contact = subject.contacts.first
@@ -304,6 +305,11 @@ describe Spotlight::ExhibitExportSerializer do
   end
 
   describe 'should export saved searches with query parameters that can be re-generated' do
+    subject do
+      e = FactoryBot.create(:exhibit)
+      e.import(export).tap(&:save)
+    end
+
     before do
       source_exhibit.feature_pages.create content: [{
         type: 'search_results',
@@ -314,11 +320,6 @@ describe Spotlight::ExhibitExportSerializer do
           view: ['list']
         }
       }].to_json
-    end
-
-    subject do
-      e = FactoryBot.create(:exhibit)
-      e.import(export).tap(&:save)
     end
 
     let :export do

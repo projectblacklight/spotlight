@@ -11,7 +11,7 @@ module Spotlight
   class ConfigurationRepresenter < Roar::Decorator
     include Roar::JSON
 
-    (Spotlight::BlacklightConfiguration.attribute_names - %w(id exhibit_id)).each do |prop|
+    (Spotlight::BlacklightConfiguration.attribute_names - %w[id exhibit_id]).each do |prop|
       property prop
     end
 
@@ -30,13 +30,13 @@ module Spotlight
   class ExhibitExportSerializer < Roar::Decorator
     include Roar::JSON
 
-    (Spotlight::Exhibit.attribute_names - %w(id slug masthead_id thumbnail_id)).each do |prop|
+    (Spotlight::Exhibit.attribute_names - %w[id slug masthead_id thumbnail_id]).each do |prop|
       property prop
     end
 
     collection :searches, populator: ->(fragment, options) { options[:represented].searches.find_or_initialize_by(slug: fragment['slug']) },
                           class: Spotlight::Search do
-      (Spotlight::Search.attribute_names - %w(id scope exhibit_id masthead_id thumbnail_id)).each do |prop|
+      (Spotlight::Search.attribute_names - %w[id scope exhibit_id masthead_id thumbnail_id]).each do |prop|
         property prop
       end
 
@@ -68,14 +68,14 @@ module Spotlight
 
     collection :custom_fields, populator: ->(fragment, options) { options[:represented].custom_fields.find_or_initialize_by(slug: fragment['slug']) },
                                class: Spotlight::CustomField do
-      (Spotlight::CustomField.attribute_names - %w(id exhibit_id)).each do |prop|
+      (Spotlight::CustomField.attribute_names - %w[id exhibit_id]).each do |prop|
         property prop
       end
     end
 
     collection :contacts, populator: ->(fragment, options) { options[:represented].contacts.find_or_initialize_by(slug: fragment['slug']) },
                           class: Spotlight::Contact do
-      (Spotlight::Contact.attribute_names - %w(id exhibit_id)).each do |prop|
+      (Spotlight::Contact.attribute_names - %w[id exhibit_id]).each do |prop|
         property prop
       end
 
@@ -83,13 +83,13 @@ module Spotlight
     end
 
     collection :contact_emails, class: Spotlight::ContactEmail do
-      (Spotlight::ContactEmail.attribute_names - %w(id exhibit_id)).each do |prop|
+      (Spotlight::ContactEmail.attribute_names - %w[id exhibit_id]).each do |prop|
         property prop
       end
     end
 
     collection :solr_document_sidecars, class: Spotlight::SolrDocumentSidecar do
-      (Spotlight::SolrDocumentSidecar.attribute_names - %w(id document_type exhibit_id)).each do |prop|
+      (Spotlight::SolrDocumentSidecar.attribute_names - %w[id document_type exhibit_id]).each do |prop|
         property prop
       end
 
@@ -118,7 +118,7 @@ module Spotlight
     end
 
     collection :attachments, class: Spotlight::Attachment do
-      (Spotlight::Attachment.attribute_names - %w(id exhibit_id file)).each do |prop|
+      (Spotlight::Attachment.attribute_names - %w[id exhibit_id file]).each do |prop|
         property prop
       end
 
@@ -138,7 +138,7 @@ module Spotlight
     end
 
     collection :resources, class: ->(options) { options[:fragment].key?('type') ? options[:fragment]['type'].constantize : Spotlight::Resource } do
-      (Spotlight::Resource.attribute_names - %w(id upload_id exhibit_id)).each do |prop|
+      (Spotlight::Resource.attribute_names - %w[id upload_id exhibit_id]).each do |prop|
         property prop
       end
 

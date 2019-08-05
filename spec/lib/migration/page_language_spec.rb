@@ -7,6 +7,7 @@ RSpec.describe Migration::PageLanguage do
     let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
     let(:slug) { FriendlyId::Slug.find(page.id) }
+
     before do
       # Remove the locale scope (anticipating pre translation state of scope)
       slug.scope = slug.scope.sub(',locale:en', '')

@@ -48,6 +48,7 @@ describe Spotlight::SearchesController, type: :controller do
 
     describe 'GET index' do
       let!(:search) { FactoryBot.create(:search, exhibit: exhibit) }
+
       it 'shows all the items' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
@@ -147,6 +148,7 @@ describe Spotlight::SearchesController, type: :controller do
 
     describe 'DELETE destroy' do
       let!(:search) { FactoryBot.create(:search, exhibit: exhibit) }
+
       it 'removes it' do
         expect do
           delete :destroy, params: { id: search, exhibit_id: search.exhibit }
@@ -159,6 +161,7 @@ describe Spotlight::SearchesController, type: :controller do
     describe 'POST update_all' do
       let!(:search2) { FactoryBot.create(:search, exhibit: exhibit, published: true) }
       let!(:search3) { FactoryBot.create(:search, exhibit: exhibit, published: true) }
+
       before { request.env['HTTP_REFERER'] = 'http://example.com' }
 
       it 'updates whether they are on the landing page' do

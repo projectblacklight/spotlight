@@ -31,7 +31,7 @@ module Spotlight
     end
 
     def click_add_widget
-      unless all('.st-block-replacer').present?
+      if all('.st-block-replacer').blank?
         expect(page).to have_css('.st-block-addition')
         first('.st-block-addition').click
       end
@@ -45,7 +45,7 @@ module Spotlight
       EOF
       click_button('Save changes')
       # verify that the page was created
-      expect(page).to_not have_selector('.alert-danger')
+      expect(page).not_to have_selector('.alert-danger')
       expect(page).to have_selector('.alert-info', text: 'page was successfully updated')
     end
 

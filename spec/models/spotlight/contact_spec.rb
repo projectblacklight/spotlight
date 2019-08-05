@@ -21,7 +21,7 @@ describe Spotlight::Contact, type: :model do
 
   context '#fields' do
     it 'show allow new fields to be configured' do
-      expect(subject.class.fields).to_not have_key(:new_field)
+      expect(subject.class.fields).not_to have_key(:new_field)
       described_class.fields[:new_field] = {}
       expect(subject.class.fields).to have_key(:new_field)
     end

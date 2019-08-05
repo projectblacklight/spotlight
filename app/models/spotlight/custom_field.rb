@@ -8,7 +8,7 @@ module Spotlight
     belongs_to :exhibit, optional: true
 
     extend FriendlyId
-    friendly_id :slug_candidates, use: [:slugged, :scoped, :finders], scope: :exhibit
+    friendly_id :slug_candidates, use: %i[slugged scoped finders], scope: :exhibit
 
     scope :vocab, -> { where(field_type: 'vocab') }
     scope :writeable, -> { where(readonly_field: false) }
@@ -54,7 +54,7 @@ module Spotlight
     end
 
     def solr_field
-      if field && field.starts_with?(solr_field_prefix)
+      if field&.starts_with?(solr_field_prefix)
         # backwards compatibility with pre-0.9 custom fields
         field
       else
@@ -65,7 +65,7 @@ module Spotlight
     protected
 
     def blacklight_configuration
-      exhibit.blacklight_configuration if exhibit
+      exhibit&.blacklight_configuration
     end
 
     def update_blacklight_configuration_label(label)
@@ -98,9 +98,9 @@ module Spotlight
     # Try building a slug based on the following fields in
     # increasing order of specificity.
     def slug_candidates
-      [
-        :label,
-        :field
+      %i[
+        label
+        field
       ]
     end
 
@@ -111,7 +111,7 @@ module Spotlight
       old_field = field
       self.field = new_field
 
-      if blacklight_configuration && blacklight_configuration.index_fields.key?(old_field)
+      if blacklight_configuration&.index_fields&.key?(old_field)
         blacklight_configuration.index_fields_will_change!
         f = blacklight_configuration.index_fields.delete(old_field)
         blacklight_configuration.index_fields[field] = f
