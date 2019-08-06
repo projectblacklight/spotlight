@@ -18,12 +18,15 @@ matrix:
 before_install:
   - gem update --system
   - gem install --no-document bundler
+  - cp /home/travis/build/projectblacklight/spotlight/.internal_test_app/Gemfile.lock.gem /home/travis/build/projectblacklight/spotlight/Gemfile.lock || true
 
 before_cache:
   - rm /home/travis/build/projectblacklight/spotlight/.internal_test_app/db/test.sqlite3
   - rm /home/travis/build/projectblacklight/spotlight/.internal_test_app/log/test.log
   - rm -rf /home/travis/build/projectblacklight/spotlight/.internal_test_app/public/uploads
   - rm /home/travis/build/projectblacklight/spotlight/.internal_test_app/tmp/cache/*/*/riiif*
+  - cp /home/travis/build/projectblacklight/spotlight/Gemfile.lock /home/travis/build/projectblacklight/spotlight/.internal_test_app/Gemfile.lock.gem
+
 notifications:
   irc: "irc.freenode.org#blacklight"
 
