@@ -16,6 +16,7 @@ require 'rspec/active_model/mocks'
 require 'paper_trail/frameworks/rspec'
 
 require 'selenium-webdriver'
+require 'webdrivers'
 require 'webmock/rspec'
 
 Capybara.javascript_driver = :headless_chrome
