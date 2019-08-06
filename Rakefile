@@ -28,6 +28,8 @@ RuboCop::RakeTask.new(:rubocop)
 
 require 'engine_cart/rake_task'
 
+EngineCart.debug = true
+
 require 'spotlight/version'
 
 task ci: ['engine_cart:generate'] do
