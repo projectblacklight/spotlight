@@ -17,7 +17,10 @@ module Spotlight
       name ||= super
 
       if current_exhibit
-        t :'spotlight.application_name', exhibit: current_exhibit.title, application_name: name
+        t :'spotlight.application_name',
+          exhibit: current_exhibit.title,
+          application_name: name,
+          default: t('spotlight.application_name', locale: I18n.default_locale, exhibit: current_exhibit.title, application_name: name)
       else
         name
       end

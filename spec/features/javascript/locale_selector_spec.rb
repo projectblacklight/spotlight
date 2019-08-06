@@ -7,6 +7,12 @@ RSpec.describe 'Locale Selector', js: true do
 
   before { login_as user }
 
+  before(:all) do
+    # mimics setting config.i18n.fallbacks = [I18n.default_locale] in the rails environment
+    I18n.fallbacks[:es] = [:es, I18n.default_locale]
+  end
+
+
   context 'with an anonymous user' do
     let(:user) { FactoryBot.create(:exhibit_visitor) }
 

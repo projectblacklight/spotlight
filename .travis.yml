@@ -53,7 +53,7 @@ script:
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
-jdk: oraclejdk8
+jdk: openjdk11
 
 cache:
   ##
