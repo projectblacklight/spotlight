@@ -16,6 +16,7 @@ require 'rspec/active_model/mocks'
 require 'paper_trail/frameworks/rspec'
 
 require 'selenium-webdriver'
+require 'webdrivers'
 require 'webmock/rspec'
 
 Capybara.javascript_driver = :headless_chrome
@@ -30,6 +31,10 @@ Capybara.register_driver :headless_chrome do |app|
   end
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
+require 'webmock/rspec'
+allowed_sites = ['chromedriver.storage.googleapis.com']
+
+WebMock.disable_net_connect!(allow_localhost: true, allow: allowed_sites)
 
 if ENV['COVERAGE'] || ENV['CI']
   require 'simplecov'
@@ -56,9 +61,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.use_transactional_fixtures = true
-  config.before :all do
-    WebMock.disable_net_connect!(allow_localhost: true)
-  end
+
   config.before :each do
     # The first user is automatically granted admin privileges; we don't want that behavior for many of our tests
     Spotlight::Engine.user_class.create email: 'initial+admin@example.com', password: 'password', password_confirmation: 'password'
