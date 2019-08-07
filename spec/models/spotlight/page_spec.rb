@@ -65,6 +65,28 @@ describe Spotlight::Page, type: :model do
       page.content = []
       expect(page.content).to be_a_kind_of SirTrevorRails::BlockArray
     end
+
+    context 'with an alternate page content type' do
+      let(:page) { FactoryBot.create(:feature_page, content_type: 'Static') }
+      let(:fake_class) do
+        Class.new do
+          def self.parse(*_args)
+            'xyz'
+          end
+        end
+      end
+
+      before do
+        # needed so we don't accidentally stub Spotlight::PageContent below
+        require 'spotlight/page_content'
+        stub_const('Spotlight::PageContent::Static', fake_class)
+      end
+
+      it 'works' do
+        page.content = [].to_json
+        expect(page.content).to eq 'xyz'
+      end
+    end
   end
 
   describe '#content?' do
@@ -78,6 +100,19 @@ describe Spotlight::Page, type: :model do
     it 'has content when the page has a widget' do
       page.content = [{ type: 'rule' }]
       expect(page).to have_content
+    end
+  end
+
+  describe '#content_type' do
+    let(:page) { FactoryBot.create(:feature_page) }
+
+    it 'can be set as an attribute' do
+      page.content_type = 'Xyz'
+      expect(page.content_type).to eq 'Xyz'
+    end
+
+    it 'defauts to SirTrevor' do
+      expect(page.content_type).to eq 'SirTrevor'
     end
   end
 
