@@ -6,6 +6,16 @@ module Spotlight
   module PagesHelper
     include Spotlight::RenderingHelper
 
+    def content_editor_class(page)
+      page_content = page.content_type
+
+      if page_content == 'SirTrevor'
+        'js-st-instance'
+      else
+        "js-#{page_content.parameterize}-instance"
+      end
+    end
+
     ##
     # Override the default #sir_trevor_markdown so we can use
     # a more complete markdown rendered
