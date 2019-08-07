@@ -15,6 +15,8 @@ gemspec
 # To use debugger
 # gem 'byebug'
 
+gem 'engine_cart', github: 'cbeer/engine_cart', branch: 'caching-debug'
+
 # BEGIN ENGINE_CART BLOCK
 # engine_cart: 1.0.1
 # engine_cart stanza: 0.10.0
