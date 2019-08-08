@@ -40,7 +40,6 @@ module Spotlight
 
     # display_sidebar should be set to true by default
     before_create do
-      self.content ||= [].to_json
       self.display_sidebar = true
     end
 

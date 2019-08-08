@@ -6,6 +6,8 @@ module Spotlight
     class SirTrevor
       def self.parse(page, attribute)
         content = page.read_attribute(attribute)
+        content ||= [].to_json
+
         return SirTrevorRails::BlockArray.new if content.blank?
 
         SirTrevorRails::BlockArray.from_json(content, page)
