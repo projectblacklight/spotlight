@@ -19,11 +19,35 @@ require 'spotlight/upload_field_config'
 require 'riiif'
 
 module Spotlight
+  ROOT_PATH = Pathname.new(File.join(__dir__, '..', '..'))
+
   ##
   # Spotlight::Engine
   # rubocop:disable ClassLength
   class Engine < ::Rails::Engine
     isolate_namespace Spotlight
+
+    def webpacker
+      @webpacker ||= ::Webpacker::Instance.new(
+        root_path: ROOT_PATH,
+        config_path: ROOT_PATH.join('config/webpacker.yml')
+      )
+    end
+
+    initializer "webpacker.proxy" do |app|
+      insert_middleware = begin
+                          Spotlight::Engine.webpacker.config.dev_server.present?
+                        rescue
+                          nil
+                        end
+      next unless insert_middleware
+
+      app.middleware.insert_before(
+        0, Webpacker::DevServerProxy, # "Webpacker::DevServerProxy" if Rails version < 5
+        ssl_verify_none: true,
+        webpacker: Spotlight::Engine.webpacker
+      )
+    end
     # Breadcrumbs on rails must be required outside of an initializer or it doesn't get loaded.
     require 'breadcrumbs_on_rails/breadcrumbs'
     require 'breadcrumbs_on_rails/action_controller'

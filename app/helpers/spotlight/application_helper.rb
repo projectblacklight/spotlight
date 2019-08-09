@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'webpacker/helper'
 
 module Spotlight
   ##
@@ -9,6 +10,12 @@ module Spotlight
     include MetaHelper
     include CropHelper
     include LanguagesHelper
+
+    include ::Webpacker::Helper
+
+    def current_webpacker_instance
+      Spotlight::Engine.webpacker
+    end
 
     ##
     # Give the application name a chance to include the exhibit title
