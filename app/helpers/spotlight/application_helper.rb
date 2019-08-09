@@ -14,7 +14,7 @@ module Spotlight
     include ::Webpacker::Helper
 
     def current_webpacker_instance
-      MyEngine.webpacker
+      Spotlight::Engine.webpacker
     end
 
     ##
