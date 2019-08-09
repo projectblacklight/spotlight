@@ -73,7 +73,7 @@ function addImageSelector(input, panel, manifestUrl, initialize) {
   var cropper = input.data('iiifCropper');
   $.ajax(manifestUrl).success(
     function(manifest) {
-      var Iiif = require('spotlight/iiif');
+      var Iiif = require('spotlight/admin/iiif');
       var iiifManifest = new Iiif(manifestUrl, manifest);
 
       var thumbs = iiifManifest.imagesArray();

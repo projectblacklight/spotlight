@@ -1,4 +1,4 @@
-//= require spotlight/blocks/browse_block
+//= require spotlight/admin/blocks/browse_block
 
 SirTrevor.Blocks.LinkToSearch = (function(){
 
