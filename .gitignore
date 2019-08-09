@@ -25,3 +25,7 @@ _site/
 .internal_test_app
 pkg/
 /spec/examples.txt
+/node_modules
+/yarn-error.log
+/yarn.lock
+/package-lock.json
