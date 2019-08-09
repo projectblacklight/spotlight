@@ -1,4 +1,4 @@
-//= require spotlight/blocks/browse_block
+//= require spotlight/admin/blocks/browse_block
 
 SirTrevor.Blocks.SearchResults =  (function(){
 
@@ -15,7 +15,7 @@ SirTrevor.Blocks.SearchResults =  (function(){
     content: function() {
       return _.template([this.items_selector()].join("<hr />\n"))(this);
     },
-    
+
     item_options: function() {
       var block = this;
       var fields = $('[data-blacklight-configuration-search-views]').data('blacklight-configuration-search-views');

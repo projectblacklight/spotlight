@@ -1,4 +1,4 @@
-//= require spotlight/blocks/solr_documents_base_block
+//= require spotlight/admin/blocks/solr_documents_base_block
 
 SirTrevor.Blocks.SolrDocumentsGrid = (function(){
 

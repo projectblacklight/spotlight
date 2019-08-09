@@ -10,25 +10,5 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require underscore
-//= require eventable
-//= require sir-trevor
-//= require nestable
-//= require parameterize
-//= require spotlight/spotlight
-//= require bootstrap/tab
-//= require bootstrap/tooltip
-//= require bootstrap/popover
-//= require bootstrap/carousel
-//= require bootstrap-tagsinput
-//= require jquery.serializejson
-//= require clipboard
-//= require leaflet
-//= require leaflet-iiif
-//= require Leaflet.Editable
-//= require Path.Drag
-//= require MutationObserver
-// Provide AMD module support
-//= require almond
-//= require polyfill.min.js
-//= require_tree .
+//= require spotlight/user/index
+//= require spotlight/admin/index

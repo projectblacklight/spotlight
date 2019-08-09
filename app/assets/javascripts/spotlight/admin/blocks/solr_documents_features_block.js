@@ -1,4 +1,4 @@
-//= require spotlight/blocks/solr_documents_base_block
+//= require spotlight/admin/blocks/solr_documents_base_block
 
 SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
 
@@ -7,7 +7,7 @@ SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
     type: "solr_documents_features",
 
     icon_name: "item_features",
-    
+
     afterPreviewLoad: function(options) {
       $(this.inner).find('.carousel').carousel();
 

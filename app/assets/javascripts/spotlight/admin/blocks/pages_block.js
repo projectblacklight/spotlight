@@ -1,4 +1,4 @@
-//= require spotlight/blocks/resources_block
+//= require spotlight/admin/blocks/resources_block
 
 SirTrevor.Blocks.FeaturedPages = (function(){
 
