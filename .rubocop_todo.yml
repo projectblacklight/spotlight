@@ -370,12 +370,13 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/spotlight/resource.rb'
     - 'app/models/spotlight/site.rb'
 
-# Offense count: 3
+# Offense count: 4
 # Configuration parameters: Include.
 # Include: app/controllers/**/*.rb
 Rails/LexicallyScopedActionFilter:
   Exclude:
     - 'app/controllers/spotlight/catalog_controller.rb'
+    - 'app/controllers/spotlight/resources/upload_controller.rb'
     - 'app/controllers/spotlight/resources_controller.rb'
 
 # Offense count: 3
@@ -534,7 +535,7 @@ Style/SafeNavigation:
     - 'app/models/spotlight/resource.rb'
     - 'app/models/spotlight/search.rb'
 
-# Offense count: 70
+# Offense count: 72
 # Cop supports --auto-correct.
 # Configuration parameters: MinSize.
 # SupportedStyles: percent, brackets
