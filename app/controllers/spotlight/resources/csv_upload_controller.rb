@@ -18,7 +18,7 @@ module Spotlight
         csv = CSV.parse(csv_io_param, headers: true, return_headers: false).map(&:to_hash)
         Spotlight::AddUploadsFromCSV.perform_later(csv, current_exhibit, current_user)
         flash[:notice] = t('spotlight.resources.upload.csv.success', file_name: csv_io_name)
-        redirect_back(fallback_location: spotlight.exhibit_resources_path(current_exhibit))
+        redirect_to spotlight.admin_exhibit_catalog_path(current_exhibit)
       end
 
       def template
