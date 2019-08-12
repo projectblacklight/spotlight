@@ -23,13 +23,13 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
 
   oembed: {
     title: "Embed + Text",
-    description: "This widget embeds an oEmbed-supported web resource and a text block to the left or right of it. Examples of oEmbed-supported resources include those from YouTube, Twitter, Flickr, and SlideShare.",
+    description: "This widget embeds an oEmbed-supported web resource. Examples of oEmbed-supported resources include those from YouTube, Twitter, Flickr, and SlideShare. Optionally, you can add a heading to be displayed above the resource and/or text to be displayed adjacent to the resource.",
     url: "URL",
   },
 
   uploaded_items: {
     title: "Uploaded Item Row",
-    description: "This widget displays uploaded items in a horizontal row. Optionally, you can add a heading and/or text to be displayed adjacent to the items.",
+    description: "This widget displays uploaded items in a horizontal row. Optionally, you can add a heading to be displayed above the items and/or text to be displayed adjacent to the items.",
     caption: 'Caption'
   },
 
@@ -57,7 +57,7 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
 
   solr_documents: {
     title: "Item Row",
-    description: "This widget displays exhibit items in a horizontal row. Optionally, you can add a heading and/or text to be displayed adjacent to the items.",
+    description: "This widget displays exhibit items in a horizontal row. Optionally, you can add a heading to be displayed above the items and/or text to be displayed adjacent to the items.",
     caption: {
       placeholder: "Select...",
       primary: "Primary caption",
@@ -82,7 +82,7 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
 
   solr_documents_embed: {
     title: "Item Embed",
-    description: "This widget embeds exhibit items on a page. Optionally, you can add a heading and/or text to be displayed adjacent to the items.",
+    description: "This widget embeds an exhibit item in a viewer on a page. Optionally, you can add a heading to be displayed above the viewer and/or text to be displayed adjacent to the viewer."
   },
 
   solr_documents_features: {
@@ -92,7 +92,7 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
 
   solr_documents_grid: {
     title: "Item Grid",
-    description: "This widget displays exhibit items in a multi-row grid. Optionally, you can add a heading and/or text to be displayed adjacent to the items."
+    description: "This widget displays exhibit items in a multi-row grid. Optionally, you can add a heading to be displayed above the items and/or text to be displayed adjacent to the items."
   },
 
   textable: {
