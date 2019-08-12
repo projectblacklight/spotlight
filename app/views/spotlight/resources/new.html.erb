@@ -4,14 +4,20 @@
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
       <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
-        <li role="presentation" class="<%= "active" if i == 0 %>">
-          <%= link_to t("#{p.gsub('/', '.')}.title"), "#tab_#{i}", role: 'tab', 'data-toggle' => 'tab', 'aria-controls' => "tab_#{i}" %>
+        <% tab_name = p.split('/')[2] %>
+        <li role="presentation" class="<%= "active" if @tab == tab_name %>">
+          <%= link_to t("#{p.gsub('/', '.')}.title"),
+                      "##{tab_name}",
+                      role: 'tab',
+                      'data-toggle' => 'tab',
+                      'aria-controls' => "#{tab_name}" %>
         </li>
       <% end %>
     </ul>
     <div class="tab-content">
       <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
-        <%= content_tag :div, id: "tab_#{i}", role: 'tabpanel', class: "tab-pane #{"active" if i == 0}" do %>
+        <% tab_name = p.split('/')[2] %>
+        <%= content_tag :div, id: "#{tab_name}", role: 'tabpanel', class: "tab-pane #{"active" if @tab == tab_name}" do %>
           <%= render p %>
         <% end %>
       <% end %>

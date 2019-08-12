@@ -5,6 +5,7 @@ module Spotlight
   # CRUD actions for exhibit resources
   class ResourcesController < Spotlight::ApplicationController
     before_action :authenticate_user!, except: [:show]
+    before_action :set_tab, only: [:new, :create]
 
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
@@ -43,6 +44,10 @@ module Spotlight
     end
 
     protected
+
+    def set_tab
+      @tab = params[:tab] || 'external_resources_form'
+    end
 
     def resource_class
       Spotlight::Resource
