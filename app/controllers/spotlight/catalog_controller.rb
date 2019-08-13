@@ -197,8 +197,10 @@ module Spotlight
     end
 
     def custom_field_params
-      current_exhibit.custom_fields.writeable.pluck(:slug) +
-        current_exhibit.custom_fields.writeable.pluck(:field) # for backwards compatibility
+      current_exhibit.custom_fields.writeable.reject(&:is_multiple?).pluck(:slug) +
+        [current_exhibit.custom_fields.writeable.select(&:is_multiple?).each_with_object({}) { |f, h| h[f.slug] = [] }] +
+        current_exhibit.custom_fields.writeable.reject(&:is_multiple?).pluck(:field) + # for backwards compatibility..
+        [current_exhibit.custom_fields.writeable.select(&:is_multiple?).each_with_object({}) { |f, h| h[f.field] = [] }]
     end
 
     def check_authorization

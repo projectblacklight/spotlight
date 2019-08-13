@@ -9,6 +9,10 @@
     <% end %>
   <% end %>
 
+  <%= f.form_group :field_type, label: { text: t(:'.is_multiple.label') } do %>
+    <%= f.check_box :is_multiple, disabled: @custom_field.persisted? %>
+  <% end %>
+
   <div class="form-actions">
     <div class="primary-actions">
       <%= link_to t(:"cancel"), edit_exhibit_metadata_configuration_path(current_exhibit), class: "btn btn-link" %>

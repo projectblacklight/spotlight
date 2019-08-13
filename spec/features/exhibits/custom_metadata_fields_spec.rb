@@ -71,4 +71,27 @@ describe 'Adding custom metadata fields', type: :feature do
     visit spotlight.edit_exhibit_search_configuration_path exhibit
     expect(page).to have_content 'My new custom field'
   end
+
+  it 'can be multivalued' do
+    visit spotlight.edit_exhibit_metadata_configuration_path exhibit
+    click_on 'Add new field'
+    fill_in 'Label', with: 'My multivalued custom field'
+
+    choose 'Controlled vocabulary'
+    check 'custom_field_is_multiple'
+    click_on 'Save'
+
+    expect(page).to have_content 'The custom field was created.'
+    within '#exhibit-specific-fields' do
+      # Edit
+      click_link 'Edit'
+    end
+
+    expect(page).to have_checked_field 'Controlled vocabulary'
+    expect(page).to have_unchecked_field 'Free text'
+    expect(page).to have_checked_field 'custom_field_is_multiple', disabled: true
+
+    visit spotlight.edit_exhibit_search_configuration_path exhibit
+    expect(page).to have_content 'My multivalued custom field'
+  end
 end

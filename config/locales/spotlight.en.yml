@@ -4,6 +4,8 @@ en:
     attributes:
       spotlight/contact:
         avatar: Photo
+      spotlight/custom_field:
+        is_multiple: Is the field data multi-valued? (cannot be changed)
       spotlight/exhibit:
         published: Published?
       spotlight/language:
@@ -23,6 +25,7 @@ en:
   drag: Drag
   helpers:
     action:
+      add_another: Add another
       cancel: Cancel
       destroy: Delete
       destroy_are_you_sure: Are you sure you want to delete this %{model}?
@@ -302,6 +305,8 @@ en:
           label: Type
           text: Free text
           vocab: Controlled vocabulary
+        is_multiple:
+          label: Multi-valued?
       new:
         header: Add Exhibit-Specific Field
     dashboards:
