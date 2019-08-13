@@ -4,8 +4,9 @@
     <% Spotlight::Resources::Upload.fields(current_exhibit).each do |config| %>
       <%= d.send(config.form_field_type, config.field_name, label: uploaded_field_label(config)) %>
     <% end %>
+
     <% current_exhibit.custom_fields.each do |custom_field| %>
-      <%= d.text_field custom_field.slug, label: custom_field.label %>
+      <%= render partial: "spotlight/custom_fields/form_group/#{custom_field.field_type}", locals: { f: d, field: custom_field, value: nil }  %>
     <% end %>
   <% end %>
   <div class="form-actions">

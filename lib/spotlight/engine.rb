@@ -116,12 +116,18 @@ module Spotlight
     # The allowed file extensions for uploading non-repository items.
     config.allowed_upload_extensions = %w(jpg jpeg png)
 
-    # Suffixes for exhibit-specific solr fields
+    # Suffixes for spotlight-created solr fields
     config.solr_fields = OpenStruct.new
     config.solr_fields.prefix = ''
     config.solr_fields.boolean_suffix = '_bsi'
     config.solr_fields.string_suffix = '_ssim'
     config.solr_fields.text_suffix = '_tesim'
+
+    # Suffixes for exhibit-specific solr fields
+    config.custom_field_types = {
+      vocab: { suffix: '_ssim' },
+      text: { suffix: '_tesim' }
+    }
 
     config.resource_global_id_field = :"#{config.solr_fields.prefix}spotlight_resource_id#{config.solr_fields.string_suffix}"
 
