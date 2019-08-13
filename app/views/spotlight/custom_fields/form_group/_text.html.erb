@@ -1,0 +1,4 @@
+<div class="form-group">
+  <%= f.label field.slug, field.label %>
+  <%= f.text_area_without_bootstrap field.slug, value: value, class: "form-control field-#{field.slug}", readonly: field.readonly_field? %>
+</div>

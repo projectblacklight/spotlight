@@ -67,13 +67,13 @@ describe Spotlight::CustomField, type: :model do
     it 'ends in the text suffix if it is a text field' do
       subject.field_type = 'text'
       subject.save
-      expect(subject.field).to end_with Spotlight::Engine.config.solr_fields.text_suffix
+      expect(subject.field).to end_with '_tesim'
     end
 
     it 'ends in a string suffix if it is a vocab field' do
       subject.field_type = 'vocab'
       subject.save
-      expect(subject.field).to end_with Spotlight::Engine.config.solr_fields.string_suffix
+      expect(subject.field).to end_with '_ssim'
     end
 
     it 'begins with readonly if it is readonly' do
