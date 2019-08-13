@@ -254,6 +254,12 @@ describe Spotlight::CatalogController, type: :controller do
         patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } } }
         expect(assigns[:document].sidecar(exhibit).data).to eq({})
       end
+
+      it 'can update multivalued fields' do
+        field = FactoryBot.create(:custom_field, exhibit: exhibit, is_multiple: true)
+        patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => %w[1 2 3] } } } }
+        expect(assigns[:document].sidecar(exhibit).data).to eq(field.field => %w[1 2 3])
+      end
     end
 
     describe 'PUT make_public' do

@@ -43,6 +43,12 @@ describe Spotlight::Resources::UploadController, type: :controller do
         expect(flash[:notice]).to eq 'Object uploaded successfully.'
         expect(response).to redirect_to new_exhibit_resource_path(exhibit, tab: 'upload')
       end
+
+      it 'can add multivalued fields' do
+        field = FactoryBot.create(:custom_field, exhibit: exhibit, is_multiple: true)
+        post :create, params: { exhibit_id: exhibit, resources_upload: { data: { field.field => %w[1 2 3] } } }
+        expect(assigns[:resource].sidecar.data).to include(field.field => %w[1 2 3])
+      end
     end
   end
 end

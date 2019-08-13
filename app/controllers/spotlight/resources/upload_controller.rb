@@ -49,8 +49,10 @@ module Spotlight
 
       def data_param_keys
         Spotlight::Resources::Upload.fields(current_exhibit).map(&:field_name) +
-          current_exhibit.custom_fields.map(&:field) +
-          current_exhibit.custom_fields.map(&:field) # for backwards compatibility
+          current_exhibit.custom_fields.reject(&:is_multiple?).map(&:slug) +
+          [current_exhibit.custom_fields.select(&:is_multiple?).each_with_object({}) { |f, h| h[f.slug] = [] }] +
+          current_exhibit.custom_fields.reject(&:is_multiple?).map(&:field) + # for backwards compatibility
+          [current_exhibit.custom_fields.select(&:is_multiple?).each_with_object({}) { |f, h| h[f.field] = [] }]
       end
     end
   end

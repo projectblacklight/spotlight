@@ -43,6 +43,24 @@ describe 'Adding custom metadata field data', type: :feature do
     end
   end
 
+  context 'with a multivalued field', js: true do
+    let(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit, is_multiple: true) }
+    it 'can add multiple values' do
+      visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
+
+      expect(page).to have_link 'Edit'
+
+      click_on 'Edit'
+      fill_in 'Some Field', with: 'value 1'
+      click_on 'Add another'
+      fill_in 'solr_document_sidecar_data_some-field_2', with: 'value 2'
+
+      click_on 'Save changes'
+
+      expect(::SolrDocument.new(id: 'dq287tq6352').sidecar(exhibit).data).to include 'some-field' => ['value 1', 'value 2']
+    end
+  end
+
   it 'has a public toggle' do
     visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
 

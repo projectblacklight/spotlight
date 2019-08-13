@@ -24,7 +24,7 @@ describe 'Uploading a non-repository item', type: :feature do
         expect(page).to have_css('textarea#resources_upload_data_spotlight_upload_description_tesim')
         expect(page).to have_css('#resources_upload_data_spotlight_upload_attribution_tesim[type="text"]')
         expect(page).to have_css('#resources_upload_data_spotlight_upload_date_tesim[type="text"]')
-        expect(page).to have_css("#resources_upload_data_#{custom_field.slug}[type='text']")
+        expect(page).to have_css("#f0_resources_upload_data_#{custom_field.slug}[type='text']")
       end
     end
 

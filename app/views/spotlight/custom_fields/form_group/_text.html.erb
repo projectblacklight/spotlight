@@ -1,4 +1,14 @@
 <div class="form-group">
-  <%= f.label field.slug, field.label %>
-  <%= f.text_area_without_bootstrap field.slug, value: value, class: "form-control field-#{field.slug}", readonly: field.readonly_field? %>
+  <% Array(value || '').each_with_index do |v, index| %>
+    <%= f.label field.slug, field.label, namespace: "f#{index}",class: "control-label #{'sr-only' if index > 0}" %>
+    <%= f.text_area_without_bootstrap field.slug, namespace: "f#{index}",multiple: field.is_multiple?, value: v, class: "form-control field-#{field.slug}", readonly: field.readonly_field? %>
+  <% end %>
+
+  <% if field.is_multiple? && !field.readonly_field? %>
+    <%= content_tag :template, id: "spotlight-field-template-#{field.slug}" do %>
+      <%= f.label field.slug, field.label, class: 'control-label sr-only' %>
+      <%= f.text_area_without_bootstrap field.slug, multiple: field.is_multiple?, value: nil, class: "form-control field-#{field.slug}" %>
+    <% end %>
+    <%= content_tag :button, t('helpers.action.add_another'), class: 'btn btn-info', data: { action: 'add-another', template_id: "spotlight-field-template-#{field.slug}" } %>
+  <% end %>
 </div>
