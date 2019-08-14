@@ -7,7 +7,8 @@ describe Spotlight::AddUploadsFromCSV do
   let(:data) do
     [
       { 'url' => 'x' },
-      { 'url' => 'y' }
+      { 'url' => 'y' },
+      { 'url' => '~' }
     ]
   end
 
@@ -29,10 +30,11 @@ describe Spotlight::AddUploadsFromCSV do
 
   it 'creates uploaded resources for each row of data' do
     upload = FactoryBot.create(:uploaded_resource)
-    expect(Spotlight::Resources::Upload).to receive(:new).at_least(:once).and_return(upload)
+    expect(Spotlight::Resources::Upload).to receive(:new).exactly(3).times.and_return(upload)
 
     expect(upload).to receive(:build_upload).with(remote_image_url: 'x').and_call_original
     expect(upload).to receive(:build_upload).with(remote_image_url: 'y').and_call_original
+    expect(upload).not_to receive(:build_upload).with(remote_image_url: '~')
     expect(upload).to receive(:save_and_index).at_least(:once)
 
     job.perform_now
