@@ -20,6 +20,8 @@ describe Spotlight::SolrController, type: :controller do
     let(:role) { admin.roles.first }
     let(:connection) { instance_double(RSolr::Client) }
     let(:repository) { instance_double(Blacklight::Solr::Repository, connection: connection) }
+    let!(:custom_field) { FactoryBot.create :custom_field, exhibit: exhibit, slug: 'custom_field' }
+
     before { sign_in admin }
 
     before do
@@ -75,6 +77,20 @@ describe Spotlight::SolrController, type: :controller do
 
         expect(response).to be_successful
         expect(doc.first).to include b: 1
+      end
+
+      it 'creates sidecars for data that matches custom field slugs' do
+        doc = {}
+        expect(connection).to receive(:update) do |params|
+          doc = JSON.parse(params[:data], symbolize_names: true)
+        end
+
+        expect do
+          post_update_with_json_body(exhibit, a: 1, custom_field: 'abc')
+        end.to change { Spotlight::SolrDocumentSidecar.count }.by(1)
+
+        expect(response).to be_successful
+        expect(doc.first).to include a: 1
       end
 
       context 'with a file upload' do
