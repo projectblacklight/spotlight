@@ -216,7 +216,7 @@ module Spotlight
     end
 
     def custom_facet_fields
-      Hash[exhibit.custom_fields.vocab.reject(&:new_record?).map do |x|
+      Hash[exhibit.custom_fields.facetable.reject(&:new_record?).map do |x|
         field = Blacklight::Configuration::FacetField.new x.configuration.merge(
           key: x.field, field: x.solr_field, show: false, custom_field: true
         )

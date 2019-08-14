@@ -10,7 +10,7 @@ module Spotlight
     extend FriendlyId
     friendly_id :slug_candidates, use: [:slugged, :scoped, :finders], scope: :exhibit
 
-    scope :vocab, -> { where(field_type: 'vocab') }
+    scope :facetable, -> { where(field_type: Spotlight::Engine.config.custom_field_types.select { |_k, v| v[:facetable] }.keys) }
     scope :writeable, -> { where(readonly_field: false) }
 
     before_create do

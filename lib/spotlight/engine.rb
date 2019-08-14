@@ -125,7 +125,7 @@ module Spotlight
 
     # Suffixes for exhibit-specific solr fields
     config.custom_field_types = {
-      vocab: { suffix: '_ssim' },
+      vocab: { suffix: '_ssim', facetable: true },
       text: { suffix: '_tesim' }
     }
 

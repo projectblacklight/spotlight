@@ -96,7 +96,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
 
       it 'defaults to not showing a custom field in the facets' do
         field = double('field', new_record?: false, field: 'a', solr_field: 'a', configuration: {})
-        custom_fields = double('custom_fields', vocab: [field], reject: [])
+        custom_fields = double('custom_fields', facetable: [field], reject: [])
         allow(custom_fields).to receive(:map).and_yield(field)
         allow(subject.exhibit).to receive(:custom_fields).and_return(custom_fields)
         subject.facet_fields = { 'a' => { enabled: '1', label: 'Label' } }
@@ -523,7 +523,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
 
   describe '#custom_facet_fields' do
     it 'converts exhibit-specific fields to Blacklight configurations' do
-      allow(subject.exhibit).to receive_message_chain(:custom_fields, vocab: [
+      allow(subject.exhibit).to receive_message_chain(:custom_fields, facetable: [
                                                         stub_model(Spotlight::CustomField, field: 'abc', configuration: { a: 1 }, exhibit: subject.exhibit),
                                                         stub_model(Spotlight::CustomField, field: 'xyz', configuration: { x: 2 }, exhibit: subject.exhibit)
                                                       ])
