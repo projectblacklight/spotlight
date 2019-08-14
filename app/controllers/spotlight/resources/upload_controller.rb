@@ -17,9 +17,6 @@ module Spotlight
       load_and_authorize_resource class: 'Spotlight::Resources::Upload', through_association: 'exhibit.resources', instance_name: 'resource'
 
       def create
-        @resource.attributes = resource_params
-        @resource.build_upload(image: params[:resources_upload][:url])
-
         if @resource.save_and_index
           flash[:notice] = t('spotlight.resources.upload.success')
           return redirect_to new_exhibit_resource_path(@resource.exhibit, tab: :upload) if params['add-and-continue']
@@ -37,7 +34,13 @@ module Spotlight
       end
 
       def build_resource
-        @resource ||= Spotlight::Resources::Upload.new exhibit: current_exhibit
+        @resource ||= begin
+          resource = Spotlight::Resources::Upload.new exhibit: current_exhibit
+          resource.attributes = resource_params
+          resource.build_upload(image: params[:resources_upload][:url]) if params[:resources_upload][:url]
+
+          resource
+        end
       end
 
       def resource_params

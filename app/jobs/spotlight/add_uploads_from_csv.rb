@@ -21,7 +21,7 @@ module Spotlight
           data: row,
           exhibit: exhibit
         )
-        resource.build_upload(remote_image_url: url)
+        resource.build_upload(remote_image_url: url) unless url == '~'
         resource.save_and_index
       end
     end

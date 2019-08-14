@@ -46,6 +46,23 @@ describe 'Uploading a non-repository item', type: :feature do
       Blacklight.default_index.connection.commit
     end
 
+    it 'creates a new item event without an attached file' do
+      visit spotlight.new_exhibit_resource_path(exhibit)
+
+      click_link 'Upload item'
+
+      fill_in 'Title', with: 'no-image'
+
+      within '#new_resources_upload' do
+        click_button 'Add item'
+      end
+      expect(page).to have_content 'Object uploaded successfully.'
+      expect(Spotlight::Resource.last.data['full_title_tesim']).to eq 'no-image'
+
+      Blacklight.default_index.connection.delete_by_id Spotlight::Resource.last.send(:compound_id)
+      Blacklight.default_index.connection.commit
+    end
+
     it 'displays the multi-item CSV upload form' do
       visit spotlight.new_exhibit_resource_path(exhibit)
       expect(page).to have_css('h1', text: /Curation/)
