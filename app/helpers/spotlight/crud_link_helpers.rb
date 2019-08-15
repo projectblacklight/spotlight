@@ -62,6 +62,25 @@ module Spotlight
       action_default_value model, action
     end
 
+    def nav_link(name = nil, options = nil, html_options = nil, &block)
+      # rubocop:disable Style/ParallelAssignment
+      # (Note: this is copied from upstream in Rails)
+      html_options, options, name = options, name, block if block_given?
+      # rubocop:enable Style/ParallelAssignment
+
+      html_options ||= {}
+
+      nav_link_html_options = html_options.merge(class: [html_options[:class], 'nav-link', ('active' if current_page?(options))].join(' '))
+
+      content_tag(:li, class: 'nav-item') do
+        if block_given?
+          link_to(options, nav_link_html_options, &block)
+        else
+          link_to(name, options, nav_link_html_options, &block)
+        end
+      end
+    end
+
     private
 
     # rubocop:disable Metrics/MethodLength

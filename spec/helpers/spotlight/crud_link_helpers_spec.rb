@@ -128,4 +128,23 @@ describe Spotlight::CrudLinkHelpers, type: :helper do
       expect(helper.send(:action_default_value, :my_thing, :custom_action))
     end
   end
+
+  describe '#nav_link' do
+    it 'renders a bootstrap nav link' do
+      rendered = Capybara.string(helper.nav_link('Some link', root_url))
+      expect(rendered).to have_css('li').and(have_link('Some link', href: root_url))
+    end
+
+    it 'renders a bootstrap nav link using the block style' do
+      rendered = Capybara.string(helper.nav_link(root_url) { 'Some link' })
+      expect(rendered).to have_css('li').and(have_link('Some link', href: root_url))
+    end
+
+    it 'adds an active class if it is the current page' do
+      allow(helper).to receive(:current_page?).with(root_url).and_return(true)
+
+      rendered = Capybara.string(helper.nav_link('Some link', root_url))
+      expect(rendered).to have_css('.nav-link.active')
+    end
+  end
 end
