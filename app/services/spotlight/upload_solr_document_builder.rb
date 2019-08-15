@@ -31,7 +31,8 @@ module Spotlight
     end
 
     def add_file_versions(solr_hash)
-      solr_hash[Spotlight::Engine.config.thumbnail_field] = riiif.image_path(resource.upload_id, size: '!400,400')
+      solr_hash[Spotlight::Engine.config.thumbnail_field] =
+        Spotlight::Engine.config.iiif_url_helpers.image_path(resource.upload_id, size: '!400,400')
     end
 
     def add_sidecar_fields(solr_hash)
@@ -47,7 +48,7 @@ module Spotlight
     end
 
     def riiif
-      Riiif::Engine.routes.url_helpers
+      Spotlight::Engine.config.iiif_url_helpers
     end
 
     def attached_file?
