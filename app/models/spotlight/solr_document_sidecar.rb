@@ -88,6 +88,9 @@ module Spotlight
 
     def custom_fields
       exhibit.custom_fields.each_with_object({}) do |custom_field, hash|
+        hash[custom_field.slug] = custom_field
+
+        # for backwards compatibility
         hash[custom_field.field] = custom_field
       end
     end

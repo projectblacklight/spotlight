@@ -5,7 +5,7 @@
       <%= d.send(config.form_field_type, config.field_name, label: uploaded_field_label(config)) %>
     <% end %>
     <% current_exhibit.custom_fields.each do |custom_field| %>
-      <%= d.text_field custom_field.field, label: custom_field.label %>
+      <%= d.text_field custom_field.slug, label: custom_field.label %>
     <% end %>
   <% end %>
   <div class="form-actions">

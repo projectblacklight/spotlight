@@ -45,7 +45,9 @@ module Spotlight
       end
 
       def data_param_keys
-        Spotlight::Resources::Upload.fields(current_exhibit).map(&:field_name) + current_exhibit.custom_fields.map(&:field)
+        Spotlight::Resources::Upload.fields(current_exhibit).map(&:field_name) +
+          current_exhibit.custom_fields.map(&:field) +
+          current_exhibit.custom_fields.map(&:field) # for backwards compatibility
       end
     end
   end
