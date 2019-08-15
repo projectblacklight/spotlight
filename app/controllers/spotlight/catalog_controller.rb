@@ -197,7 +197,8 @@ module Spotlight
     end
 
     def custom_field_params
-      current_exhibit.custom_fields.writeable.pluck(:field)
+      current_exhibit.custom_fields.writeable.pluck(:slug) +
+        current_exhibit.custom_fields.writeable.pluck(:field) # for backwards compatibility
     end
 
     def check_authorization

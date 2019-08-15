@@ -18,9 +18,10 @@ module Spotlight
       self.field_type ||= 'text'
     end
 
-    before_save do
-      update_field_name(field_name) if update_field_name?
-    end
+    before_save :update_field_name, on: :update, if: -> { field_type_changed? || readonly_field_changed? }
+
+    after_commit :update_blacklight_configuration_after_field_name_change, on: :update, if: -> { saved_change_to_field? || saved_change_to_slug? }
+    after_commit :update_sidecar_data_after_field_name_change, on: :update, if: -> { saved_change_to_field? || saved_change_to_slug? }
 
     def label=(label)
       configuration['label'] = label
@@ -92,7 +93,7 @@ module Spotlight
     end
 
     def should_generate_new_friendly_id?
-      super || persisted?
+      new_record? && slug.blank?
     end
 
     # Try building a slug based on the following fields in
@@ -107,26 +108,25 @@ module Spotlight
     ##
     # Rename this custom field to new_name
     # @param [String] the new name for the field
-    def update_field_name(new_field)
-      old_field = field
-      self.field = new_field
+    def update_field_name
+      self.field = field_name
+    end
 
-      if blacklight_configuration && blacklight_configuration.index_fields.key?(old_field)
-        blacklight_configuration.index_fields_will_change!
-        f = blacklight_configuration.index_fields.delete(old_field)
-        blacklight_configuration.index_fields[field] = f
-        blacklight_configuration.save
-      end
+    def update_blacklight_configuration_after_field_name_change
+      return unless blacklight_configuration && blacklight_configuration.index_fields.key?(field_before_last_save)
 
-      Spotlight::RenameSidecarFieldJob.perform_later(exhibit, old_field, self.field)
+      blacklight_configuration.index_fields_will_change!
+      f = blacklight_configuration.index_fields.delete(field_before_last_save)
+      blacklight_configuration.index_fields[field] = f
+      blacklight_configuration.save
+    end
+
+    def update_sidecar_data_after_field_name_change
+      Spotlight::RenameSidecarFieldJob.perform_later(exhibit, field_before_last_save, self.field, slug_before_last_save, slug)
     end
 
     def document_model
       blacklight_configuration.document_model
-    end
-
-    def update_field_name?
-      persisted? && (field_type_changed? || readonly_field_changed?)
     end
   end
 end
