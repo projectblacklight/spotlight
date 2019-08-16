@@ -182,7 +182,12 @@ describe Spotlight::CustomField, type: :model do
     end
 
     it 'queues a job to reindex any documents with data in the old field' do
-      expect(Spotlight::RenameSidecarFieldJob).to receive(:perform_later).with(exhibit, subject.field, subject.field.sub('tesim', 'ssim'))
+      expect(Spotlight::RenameSidecarFieldJob).to receive(:perform_later).with(
+        exhibit,
+        subject.field, subject.field.sub('tesim', 'ssim'),
+        subject.slug, subject.slug
+      )
+
       subject.field_type = 'vocab'
       subject.save
     end
