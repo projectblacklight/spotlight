@@ -3,7 +3,6 @@
 module Spotlight
   ##
   # Base page class. See {Spotlight::AboutPage}, {Spotlight::FeaturePage}, {Spotlight::HomePage}
-  # rubocop:disable Metrics/ClassLength
   class Page < ActiveRecord::Base
     MAX_PAGES = 1000
 
@@ -160,5 +159,4 @@ module Spotlight
       translated_pages.update(weight: weight) if saved_change_to_weight?
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end
