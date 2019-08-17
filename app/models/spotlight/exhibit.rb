@@ -36,7 +36,17 @@ module Spotlight
     has_many :attachments, dependent: :destroy
     has_many :contact_emails, dependent: :delete_all # These are the contacts who get "Contact us" emails
     has_many :contacts, dependent: :delete_all # These are the contacts who appear in the sidebar
-    has_many :custom_fields, dependent: :delete_all
+    has_many :custom_fields, dependent: :delete_all do
+      def as_strong_params
+        multivalued_params, single_valued_params = writeable.partition(&:is_multiple?)
+        single_valued_params.pluck(:slug, :field).flatten +
+          [multivalued_params.each_with_object({}) do |f, h|
+            h[f.slug] = []
+            h[f.field] = []
+          end]
+      end
+    end
+
     has_many :feature_pages, -> { for_default_locale }, extend: FriendlyId::FinderMethods
     has_many :main_navigations, dependent: :delete_all
     has_many :reindexing_log_entries, dependent: :destroy
