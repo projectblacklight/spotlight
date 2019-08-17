@@ -4,7 +4,6 @@ module Spotlight
   ##
   # CRUD actions for curating browse categories (see
   # {Spotlight::BrowseController} for the end-user read and index actions)
-  # rubocop:disable Metrics/ClassLength
   class SearchesController < Spotlight::ApplicationController
     load_resource :exhibit, class: 'Spotlight::Exhibit'
     before_action :authenticate_user!
@@ -142,5 +141,4 @@ module Spotlight
       @search = current_exhibit.searches.find(params[:id]) if params[:id].present?
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end

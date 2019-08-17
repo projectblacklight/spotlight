@@ -59,8 +59,8 @@ Metrics/BlockLength:
     - 'app/models/spotlight/resource.rb'
 
 Metrics/ClassLength:
+  Max: 120
   Exclude:
-    - 'app/models/spotlight/resource.rb'
     - 'app/models/spotlight/resources/iiif_manifest.rb'
     - 'lib/generators/spotlight/**/*' # Generators tend to have longer class lengths due to their lengthy public API
 
