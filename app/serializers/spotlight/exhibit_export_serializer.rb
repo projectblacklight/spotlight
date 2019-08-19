@@ -34,6 +34,10 @@ module Spotlight
       property prop
     end
 
+    property :theme, setter: lambda { |fragment:, represented:, **|
+      represented.theme = fragment if Spotlight::Engine.config.exhibit_themes.include? fragment
+    }
+
     collection :searches, populator: ->(fragment, options) { options[:represented].searches.find_or_initialize_by(slug: fragment['slug']) },
                           class: Spotlight::Search do
       (Spotlight::Search.attribute_names - %w(id scope exhibit_id masthead_id thumbnail_id)).each do |prop|
