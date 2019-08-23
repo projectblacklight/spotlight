@@ -34,14 +34,12 @@ module Spotlight
     scope :for_default_locale, -> { for_locale(I18n.default_locale) }
 
     has_one :lock, as: :on, dependent: :destroy
-    sir_trevor_content :content
     has_paper_trail
 
     accepts_nested_attributes_for :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
 
     # display_sidebar should be set to true by default
     before_create do
-      self.content ||= [].to_json
       self.display_sidebar = true
     end
 
@@ -49,6 +47,16 @@ module Spotlight
 
     def content_changed!
       @content = nil
+    end
+
+    def content
+      @content ||= begin
+        Spotlight::PageContent.for(self, :content)
+      end
+    end
+
+    def content_type
+      self[:content_type] || Spotlight::Engine.config.default_page_content_type
     end
 
     def content=(content)
