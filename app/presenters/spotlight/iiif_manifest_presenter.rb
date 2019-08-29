@@ -27,8 +27,8 @@ module Spotlight
     # IIIFManifest expects leaf nodes to implement #display_image, which returns an instance of IIIFManifest::DisplayImage.
     def display_image
       IIIFManifest::DisplayImage.new(id,
-                                     width: resource.first(:spotlight_full_image_width_ssm),
-                                     height: resource.first(:spotlight_full_image_height_ssm),
+                                     width: resource.first(:spotlight_full_image_width_ssm)&.to_i,
+                                     height: resource.first(:spotlight_full_image_height_ssm)&.to_i,
                                      format: 'image/jpeg',
                                      iiif_endpoint: endpoint)
     end
