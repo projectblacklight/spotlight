@@ -68,6 +68,7 @@ Spotlight::Engine.routes.draw do
     end
 
     resources :custom_fields
+    resources :custom_search_fields
 
     resource :dashboard, only: [:show] do
       get :analytics

@@ -136,6 +136,7 @@ module Spotlight
 
         config.show_fields = config.index_fields
 
+        config.search_fields.merge! custom_search_fields(config)
         unless search_fields.blank?
           config.search_fields = Hash[config.search_fields.sort_by { |k, _v| field_weight(search_fields, k) }]
 
@@ -224,6 +225,18 @@ module Spotlight
         field.enabled = false
         field.limit = true
         [x.field, field]
+      end]
+    end
+
+    def custom_search_fields(blacklight_config)
+      Hash[exhibit.custom_search_fields.reject(&:new_record?).map do |custom_field|
+        original_config = blacklight_config.search_fields[custom_field.field] || {}
+        field = Blacklight::Configuration::SearchField.new original_config.merge(
+          custom_field.configuration.merge(
+            key: custom_field.slug, solr_parameters: { qf: custom_field.field }, custom_field: true
+          )
+        )
+        [custom_field.slug, field]
       end]
     end
 
