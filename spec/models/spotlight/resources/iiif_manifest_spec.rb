@@ -8,6 +8,8 @@ class TestMetadataClass
   def to_solr
     { 'test_field' => 'metadata-to-solr' }
   end
+
+  def label; end
 end
 
 describe Spotlight::Resources::IiifManifest do
@@ -31,7 +33,7 @@ describe Spotlight::Resources::IiifManifest do
     end
 
     describe 'label' do
-      it 'is inlcuded in the solr document when present' do
+      it 'is included in the solr document when present' do
         expect(subject.to_solr['full_title_tesim']).to eq 'Test Manifest 1'
       end
 
@@ -131,6 +133,40 @@ describe Spotlight::Resources::IiifManifest do
 
         it 'merges the solr hash from the configured custom metadata class' do
           expect(subject.to_solr['readonly_test_field_tesim']).to eq 'metadata-to-solr'
+        end
+      end
+    end
+  end
+
+  context 'with a multilingual manifest' do
+    let(:manifest_fixture) { test_multilingual_manifest_like_bsb }
+
+    describe '#to_solr' do
+      let(:manifest) { Spotlight::Resources::IiifService.new(url).send(:object) }
+      let(:exhibit) { FactoryBot.create(:exhibit) }
+
+      describe 'label' do
+        it 'is included in the solr document when present' do
+          expect(subject.to_solr['full_title_tesim']).to eq 'Murasaki Shikibu: Genji monogatari - BSB Cod.jap. 18(53'
+        end
+      end
+
+      describe 'metadata' do
+        it 'extracts labels and values out of multivalued data and removes HTML markup' do
+          expect(subject.to_solr).to include 'readonly_author_tesim' => ['Murasaki Shikibu -- (GND: 118985655)'],
+                                             'readonly_language_tesim' => ['Japanese']
+        end
+
+        it 'extracts data using the configured default language' do
+          allow(Spotlight::Engine.config).to receive(:default_json_ld_language).and_return('de')
+          expect(subject.to_solr).to include 'readonly_verfasser_tesim' => ['Murasaki Shikibu -- (GND: 118985655)'],
+                                             'readonly_sprache_tesim' => ['Japanisch']
+        end
+
+        it 'falls back to a language from the manifest using the IIIF rules' do
+          allow(Spotlight::Engine.config).to receive(:default_json_ld_language).and_return('fr')
+          expect(subject.to_solr).to include 'readonly_verfasser_tesim' => ['Murasaki Shikibu -- (GND: 118985655)'],
+                                             'readonly_sprache_tesim' => ['Japanisch']
         end
       end
     end
