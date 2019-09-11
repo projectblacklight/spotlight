@@ -128,7 +128,7 @@ describe Spotlight::Resources::IiifManifest do
 
       context 'custom class' do
         before do
-          Spotlight::Engine.config.iiif_metadata_class = -> { TestMetadataClass }
+          allow(Spotlight::Engine.config).to receive(:iiif_metadata_class).and_return(-> { TestMetadataClass })
         end
 
         it 'merges the solr hash from the configured custom metadata class' do
