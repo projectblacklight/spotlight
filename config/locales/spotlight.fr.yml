@@ -1,0 +1,40 @@
+fr:
+  activemodel:
+    attributes:
+      spotlight/contact_form:
+        email: Email
+        message: Message
+        name: Nom
+  helpers:
+    action:
+      cancel: Annuler
+    submit:
+      contact_form:
+        create: Envoyer
+        created: Merci. Votre commentaire a bien été envoyé.
+  spotlight:
+    about_pages:
+      contacts:
+        header: Contacts
+    header_links:
+      contact: Votre avis
+    shared:
+      report_a_problem:
+        honeypot_field_explanation: Ignorez cette zone de texte. Celle-ci est utilisée pour détecter les spammeurs. Si vous tapez quelque chose dans cette zone de texte, votre message ne sera pas envoyé.
+        title: Contactez-nous
+    browse:
+      search:
+        item_count:
+          one: "%{count} élément"
+          other: "%{count} éléments"
+      search_box:
+        label: Chercher dans cette catégorie
+        placeholder: Rechercher…
+        reset: Effacer les recherches récentes de la barre de recherche
+        submit: Chercher dans cette catégorie
+        success:
+          expand_html: Vous pouvez aussi chercher tous les éléments correspondant à <a href="%{expand_search_url}">"%{browse_query}"</a>.
+          result_number_html: Votre recherche renvoie à <strong> %{search_size} éléments sur %{parent_search_count} de cette catégorie</strong>.
+        zero_results:
+          expand_html: Vous pouvez <a href="%{clear_search_url}">effacer cette recherche</a> ou <a href="%{expand_search_url}"> essayer de chercher tous les éléments correspondant à "%{browse_query}"</a>.
+          result_number: Votre recherche n'a donné aucun résultat dans cette catégorie.
