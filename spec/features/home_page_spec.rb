@@ -32,7 +32,7 @@ describe 'Home page', type: :feature, versioning: true do
 
   it 'has working facet links' do
     visit spotlight.exhibit_home_page_path(exhibit.home_page)
-    click_link 'Genre'
+    click_button 'Genre'
     click_link 'map'
     expect(page).to have_content exhibit.title
     expect(page).to have_content 'You searched for: Genre map'
