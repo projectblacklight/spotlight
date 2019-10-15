@@ -31,7 +31,7 @@ Spotlight.onLoad(function() {
     });
 
     function checkMonitorUrl(url) {
-      $.ajax(url).success(success).fail(fail);
+      $.ajax(url).done(success).fail(fail);
     }
 
     function success(data) {
