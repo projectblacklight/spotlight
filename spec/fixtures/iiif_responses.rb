@@ -285,4 +285,28 @@ module IiifResponses
       ]
     }.to_json
   end
+
+  # inspired by https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb00017921/manifest
+  def test_multilingual_manifest_like_bsb
+    { '@context' => 'http://iiif.io/api/presentation/2/context.json',
+      '@type' => 'sc:Manifest',
+      '@id' => 'https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb00017921/manifest',
+      'label' => 'Murasaki Shikibu: Genji monogatari - BSB Cod.jap. 18(53',
+      'metadata' => [
+        { 'label' =>
+         [{ '@language' => 'de', '@value' => 'Verfasser' },
+          { '@language' => 'zh', '@value' => '作者' },
+          { '@language' => 'en', '@value' => 'Author' }],
+          'value' =>
+         "<span>Murasaki Shikibu -- (GND: <a href='http://d-nb.info/gnd/118985655/'>118985655</a>)</span>" },
+        { 'label' =>
+         [{ '@language' => 'de', '@value' => 'Sprache' },
+          { '@language' => 'zh', '@value' => '語言' },
+          { '@language' => 'en', '@value' => 'Language' }],
+          'value' =>
+         [{ '@language' => 'de', '@value' => 'Japanisch' },
+          { '@language' => 'zh', '@value' => '日语' },
+          { '@language' => 'en', '@value' => 'Japanese' }] }
+      ] }.to_json
+  end
 end
