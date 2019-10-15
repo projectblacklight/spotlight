@@ -70,7 +70,7 @@ module Spotlight
         return unless title_fields.present? && manifest.try(:label)
 
         Array.wrap(title_fields).each do |field|
-          solr_hash[field] = json_ld_value(manifest.label)
+          solr_hash[field] = metadata_class.new(manifest).label
         end
       end
 
@@ -94,13 +94,6 @@ module Spotlight
 
           hash[field.field] = value
         end
-      end
-
-      def json_ld_value(value)
-        return value['@value'] if value.is_a?(Hash)
-        return value.find { |v| v['@language'] == default_json_ld_language }.try(:[], '@value') if value.is_a?(Array)
-
-        value
       end
 
       def create_sidecars_for(*keys)
@@ -164,10 +157,6 @@ module Spotlight
         Spotlight::Engine.config.iiif_title_fields || blacklight_config.index.try(:title_field)
       end
 
-      def default_json_ld_language
-        Spotlight::Engine.config.default_json_ld_language
-      end
-
       def sidecar
         @sidecar ||= document_model.new(id: compound_id).sidecar(exhibit)
       end
@@ -195,6 +184,12 @@ module Spotlight
           metadata_hash.merge(manifest_level_metadata)
         end
 
+        def label
+          return unless manifest.try(:label)
+
+          Array(json_ld_value(manifest.label)).map { |v| html_sanitize(v) }.first
+        end
+
         private
 
         attr_reader :manifest
@@ -210,8 +205,10 @@ module Spotlight
           metadata.each_with_object({}) do |md, hash|
             next unless md['label'] && md['value']
 
-            hash[md['label']] ||= []
-            hash[md['label']] += Array(md['value'])
+            label = Array(json_ld_value(md['label'])).first
+
+            hash[label] ||= []
+            hash[label] += Array(json_ld_value(md['value'])).map { |v| html_sanitize(v) }
           end
         end
 
@@ -221,12 +218,80 @@ module Spotlight
                         manifest.send(field).present?
 
             hash[field.capitalize] ||= []
-            hash[field.capitalize] += Array(manifest.send(field))
+            hash[field.capitalize] += Array(json_ld_value(manifest.send(field))).map { |v| html_sanitize(v) }
           end
         end
 
         def manifest_fields
           %w(attribution description license)
+        end
+
+        # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
+        def json_ld_value(value)
+          case value
+          # In the case where multiple values are supplied, clients must use the following algorithm to determine which values to display to the user.
+          when Array
+            # IIIF v2, multivalued monolingual, or multivalued multilingual values
+
+            # If none of the values have a language associated with them, the client must display all of the values.
+            if value.none? { |v| v.is_a?(Hash) && v.key?('@language') }
+              value.map { |v| json_ld_value(v) }
+            # If any of the values have a language associated with them, the client must display all of the values associated with the language that best
+            # matches the language preference.
+            elsif value.any? { |v| v.is_a?(Hash) && v['@language'] == default_json_ld_language }
+              value.select { |v| v.is_a?(Hash) && v['@language'] == default_json_ld_language }.map { |v| v['@value'] }
+            # If all of the values have a language associated with them, and none match the language preference, the client must select a language
+            # and display all of the values associated with that language.
+            elsif value.all? { |v| v.is_a?(Hash) && v.key?('@language') }
+              selected_json_ld_language = value.find { |v| v.is_a?(Hash) && v.key?('@language') }
+
+              value.select { |v| v.is_a?(Hash) && v['@language'] == selected_json_ld_language['@language'] }
+                   .map { |v| v['@value'] }
+            # If some of the values have a language associated with them, but none match the language preference, the client must display all of the values
+            # that do not have a language associated with them.
+            else
+              value.select { |v| !v.is_a?(Hash) || !v.key?('@language') }.map { |v| json_ld_value(v) }
+            end
+          when Hash
+            # IIIF v2 single-valued value
+            if value.key? '@value'
+              value['@value']
+            # IIIF v3 multilingual(?), multivalued(?) values
+            # If all of the values are associated with the none key, the client must display all of those values.
+            elsif value.keys == ['none']
+              value['none']
+            # If any of the values have a language associated with them, the client must display all of the values associated with the language
+            # that best matches the language preference.
+            elsif value.key? default_json_ld_language
+              value[default_json_ld_language]
+            # If some of the values have a language associated with them, but none match the language preference, the client must display all
+            # of the values that do not have a language associated with them.
+            elsif value.key? 'none'
+              value['none']
+            # If all of the values have a language associated with them, and none match the language preference, the client must select a
+            # language and display all of the values associated with that language.
+            else
+              value.values.first
+            end
+          else
+            # plain old string/number/boolean
+            value
+          end
+        end
+        # rubocop:enable Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
+
+        def html_sanitize(value)
+          return value unless value.is_a? String
+
+          html_sanitizer.sanitize(value)
+        end
+
+        def html_sanitizer
+          @html_sanitizer ||= Rails::Html::FullSanitizer.new
+        end
+
+        def default_json_ld_language
+          Spotlight::Engine.config.default_json_ld_language
         end
       end
     end

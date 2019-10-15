@@ -21,17 +21,24 @@ module SirTrevorRails
         !pages.empty?
       end
 
+      # rubocop:disable Metrics/MethodLength
       def as_json
         result = super
-
         result[:data][:item] ||= {}
 
-        result[:data][:item].each_value do |v|
-          v['thumbnail_image_url'] = parent.exhibit.pages.find(v['id']).thumbnail_image_url
+        result[:data][:item].transform_values! do |v|
+          begin
+            v['thumbnail_image_url'] = parent.exhibit.pages.find(v['id']).thumbnail_image_url
+          rescue ActiveRecord::RecordNotFound
+            v = nil
+          end
+          v
         end
 
+        result[:data][:item].compact!
         result
       end
+      # rubocop:enable Metrics/MethodLength
     end
   end
 end
