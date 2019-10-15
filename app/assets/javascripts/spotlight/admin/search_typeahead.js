@@ -71,7 +71,7 @@ function addImageSelector(input, panel, manifestUrl, initialize) {
     return;
   }
   var cropper = input.data('iiifCropper');
-  $.ajax(manifestUrl).success(
+  $.ajax(manifestUrl).done(
     function(manifest) {
       var Iiif = require('spotlight/admin/iiif');
       var iiifManifest = new Iiif(manifestUrl, manifest);

@@ -83,7 +83,7 @@ SirTrevor.Blocks.SolrDocumentsBase = (function(){
         return;
       }
 
-      $.ajax(manifestUrl).success(
+      $.ajax(manifestUrl).done(
         function(manifest) {
           var Iiif = require('spotlight/admin/iiif');
           var iiifManifest = new Iiif(manifestUrl, manifest);
