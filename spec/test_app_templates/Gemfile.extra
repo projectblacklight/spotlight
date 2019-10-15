@@ -1,3 +1,4 @@
 gem 'thor', '~> 0.20'
-gem 'blacklight', '~> 7.0', github: 'projectblacklight/blacklight'
+gem 'blacklight', '~> 7.0'
 gem 'blacklight-oembed', '>= 0.1', github: 'sul-dlss/blacklight-oembed', branch: 'blacklight_7'
+gem 'sprockets', '< 4'
