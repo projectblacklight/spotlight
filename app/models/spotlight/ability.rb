@@ -29,6 +29,7 @@ module Spotlight
         Spotlight::Page,
         Spotlight::Contact,
         Spotlight::CustomField,
+        Spotlight::CustomSearchField,
         Translation
       ], exhibit_id: user.exhibit_roles.pluck(:resource_id)
 
