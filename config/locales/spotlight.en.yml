@@ -323,6 +323,9 @@ en:
     custom_search_fields:
       edit:
         header: Edit Exhibit-Specific Field
+      form:
+        field:
+          help: Specify fields to be searched and their boost values (e.g., full_title_tesim^100 personal_name_tesim^50).
       new:
         header: Add Exhibit-Specific Field
     dashboards:
