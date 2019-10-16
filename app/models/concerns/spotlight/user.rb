@@ -16,15 +16,35 @@ module Spotlight
     end
 
     def superadmin?
-      roles.where(role: 'admin', resource: Spotlight::Site.instance).any?
+      if (!masked_role.nil?)
+        false
+      else
+        roles.where(role: 'admin', resource: Spotlight::Site.instance).any?
+      end
     end
 
     def exhibit_roles
-      roles.where(resource_type: 'Spotlight::Exhibit')
+      role = masked_role
+      if (!role.nil? && !role.empty?)
+        maskedroles = Array.new
+        if (!role.eql?('public'))
+          maskedroles << role
+        end
+      else
+        roles.where(resource_type: 'Spotlight::Exhibit')
+      end
     end
 
     def admin_roles
-      exhibit_roles.where(role: 'admin')
+      role = masked_role
+      if (!role.nil? && !role.empty?)
+        maskedroles = Array.new
+        if (role.eql?('admin'))
+          maskedroles << role
+        end
+      else
+        exhibit_roles.where(role: 'admin')
+      end
     end
 
     def add_default_roles
@@ -33,6 +53,22 @@ module Spotlight
 
     def invite_pending?
       invited_to_sign_up? && !invitation_accepted?
+    end
+    
+    def is_masked?
+      role = masked_role
+      !role.nil? && !role.empty?
+    end
+    
+    def get_formatted_mask
+      role = masked_role
+      formatted = 'Public (Read Only)'
+      if (role.eql?('admin'))
+        formatted = 'Exhibit Admin'
+      elsif (role.eql?('curator'))
+        formatted = 'Curator'
+      end
+        
     end
 
     alias_attribute :user_key, :email
@@ -43,6 +79,10 @@ module Spotlight
       def find_by_user_key(key)
         find_by email: key
       end
+    end
+    
+    def masked_role
+      masked_role = roles.where.not(role_mask: [nil, '']).pluck(:role_mask).first
     end
   end
 end

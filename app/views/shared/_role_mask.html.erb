@@ -1,0 +1,14 @@
+<div id="admin_role_toggle">
+<!-- check to see if the user is already using a masked role-->
+<% if (current_user.is_masked?) %>
+  	<span id="mask_label"><label>Current role mask: <%=current_user.get_formatted_mask %></label></span><%= link_to "Clear Role", "/admin_users/clear_mask_role" , class: "btn btn-primary", role: "button" %>	
+<% else %>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">View As <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li><%= link_to "Exhibit Admin", '/admin_users/mask_role/admin' %></li>
+			  	<li><%= link_to "Curator", '/admin_users/mask_role/curator'  %></li>
+			</ul>
+	</li>
+ <% end %>
+ </div>

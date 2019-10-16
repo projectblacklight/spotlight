@@ -29,9 +29,45 @@ module Spotlight
       end
       redirect_to spotlight.admin_users_path
     end
+    
+    def mask_role
+       url = request.referrer
+       role = site_admin_role
+       if (params[:role] && !role.nil?)
+         #Set the role in the db
+         #First role since the only people that mask are Site Admins
+         if (Spotlight::Role::ROLES.include?(params[:role]))
+           role.update ({:role_mask => params[:role]})
+         end   
+       end
+       if (!url.nil?)
+         #Redirect to the previous url
+         redirect_to url
+       else
+         redirect_to main_app.root_url
+       end
+     end
+     
+     def clear_mask_role
+       url = request.referrer
+       role = site_admin_role
+       if (!role.nil?)
+         role.update({:role_mask => nil})
+       end
+       if (!url.nil?)
+         #Redirect to the previous url
+         redirect_to url
+       else
+         redirect_to main_app.root_url
+       end
+     end
 
     private
-
+    
+    def site_admin_role
+      current_user.roles.where(role: 'admin', resource: Spotlight::Site.instance).first
+    end
+    
     def load_site
       @site ||= Spotlight::Site.instance
     end

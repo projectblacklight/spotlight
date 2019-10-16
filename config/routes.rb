@@ -17,7 +17,10 @@ Spotlight::Engine.routes.draw do
   get '/exhibits/edit', to: 'sites#edit_exhibits', as: 'edit_site_exhibits'
 
   resources :admin_users, only: [:index, :create, :destroy]
-
+    
+  get '/admin_users/clear_mask_role', to: 'admin_users#clear_mask_role'
+  get '/admin_users/mask_role/:role', to: 'admin_users#mask_role'
+  
   resources :exhibits, path: '/', except: [:show] do
     member do
       get 'exhibit', to: 'exhibits#show', as: 'get'
