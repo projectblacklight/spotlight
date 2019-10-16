@@ -16,7 +16,10 @@ module Spotlight
     private
 
     def tilesource
-      riiif.info_url(@featured_image.id)
+      Spotlight::Engine.config.iiif_url_helpers.info_url(
+        @featured_image.id,
+        host: request.host_with_port
+      )
     end
 
     # The create action can be called from a number of different forms, so
