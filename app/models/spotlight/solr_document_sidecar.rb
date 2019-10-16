@@ -74,11 +74,11 @@ module Spotlight
         field_name = field.field_name.to_s
         next unless configured_fields && configured_fields[field_name].present?
 
-        solr_fields = field.solr_fields || Array(field.solr_field || field.field_name)
+        value = configured_fields[field_name]
+        field_data = field.data_to_solr(value)
 
-        solr_fields.each do |solr_field|
-          solr_hash[solr_field] = configured_fields[field_name]
-        end
+        # merge duplicate field mappings into a multivalued field
+        solr_hash.merge!(field_data) { |_key, v1, v2| Array(v1) + Array(v2) }
       end
     end
 
