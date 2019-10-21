@@ -17,10 +17,10 @@ describe 'Site admin management', js: true do
 
   describe 'copy email addresses' do
     it 'displays only email addresses of users w/ roles' do
-      expect(page).to have_css('div#all_users', text: user.email)
-      expect(page).to have_css('div#all_users', text: exhibit_admin.email)
-      expect(page).to have_css('div#all_users', text: exhibit_curator.email)
-      expect(page).not_to have_css('div#all_users', text: existing_user.email)
+      expect(page).to have_css('div#admins_curators', text: user.email)
+      expect(page).to have_css('div#admins_curators', text: exhibit_admin.email)
+      expect(page).to have_css('div#admins_curators', text: exhibit_curator.email)
+      expect(page).not_to have_css('div#admins_curators', text: existing_user.email)
       expect(page).to have_css('button.copy-email-addresses')
     end
   end

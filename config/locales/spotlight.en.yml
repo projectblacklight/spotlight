@@ -178,7 +178,7 @@ en:
         success: User removed from site adminstrator role
       index:
         add: Add new administrator
-        all_users: Administrators and curators of all exhibits
+        admins_curators: Administrators and curators of all exhibits
         copy: Copy
         destroy: Remove from role
         instructions: Existing exhibits administrators
