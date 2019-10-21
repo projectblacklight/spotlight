@@ -14,7 +14,7 @@ describe 'Uploading a non-repository item', type: :feature do
     it 'displays the single item upload form' do
       visit spotlight.new_exhibit_resource_path(exhibit)
       expect(page).to have_css('h1', text: /Curation/)
-      expect(page).to have_css 'h1 small', text: 'Add items'
+      expect(page).to have_css 'h2', text: 'Add items'
 
       click_link 'Upload item'
 
@@ -67,7 +67,7 @@ describe 'Uploading a non-repository item', type: :feature do
     it 'displays the multi-item CSV upload form' do
       visit spotlight.new_exhibit_resource_path(exhibit)
       expect(page).to have_css('h1', text: /Curation/)
-      expect(page).to have_css 'h1 small', text: 'Add items'
+      expect(page).to have_css 'h2', text: 'Add items'
 
       click_link 'Upload multiple items'
 

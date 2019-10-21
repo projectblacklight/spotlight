@@ -5,12 +5,7 @@
 .page-header {
   @extend .mb-4;
 
-  border-bottom: none;
-  small {
-    @extend .text-muted;
-    font-size: $h2-font-size;
-    display: block;
-  }
+  border-bottom: 0;
 }
 
 .navbar-sm {

@@ -10,7 +10,7 @@ describe 'spotlight/dashboards/analytics.html.erb', type: :view do
   it 'has a header' do
     render
     expect(rendered).to have_selector '.page-header', text: 'Curation'
-    expect(rendered).to have_selector '.page-header small', text: 'Analytics'
+    expect(rendered).to have_selector '.page-header h2', text: 'Analytics'
   end
 
   it 'has directions for configuring analytics' do

@@ -9,7 +9,7 @@ describe 'Search Administration', type: :feature do
   describe 'edit' do
     it 'displays the search configuration edit screen' do
       visit spotlight.edit_exhibit_search_configuration_path(exhibit)
-      expect(page).to have_css('h1 small', text: 'Search')
+      expect(page).to have_css('h2', text: 'Search')
     end
 
     it 'has breadcrumbs' do
@@ -30,7 +30,7 @@ describe 'Search Administration', type: :feature do
       it 'allows curators to select and unselect facets for display' do
         visit spotlight.edit_exhibit_search_configuration_path exhibit
 
-        expect(page).to have_content "Configuration Search\nOptions Facets Results"
+        expect(page).to have_content "Configuration\nSearch\nOptions Facets Results"
         expect(page).to have_button 'Save'
 
         uncheck 'blacklight_configuration_facet_fields_language_ssim_show' # Language
