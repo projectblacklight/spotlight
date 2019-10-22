@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Site admin management', js: true do
+describe 'Site users management', js: true do
   let(:user) { FactoryBot.create(:site_admin) }
   let!(:existing_user) { FactoryBot.create(:exhibit_visitor) }
   let!(:exhibit_admin) { FactoryBot.create(:exhibit_admin) }
@@ -25,17 +25,6 @@ describe 'Site admin management', js: true do
     end
   end
 
-  it 'allows for existing users to be added as site adminstrators' do
-    expect(page).not_to have_css('td', text: existing_user.email)
-    click_link 'Add new administrator'
-
-    fill_in 'user_email', with: existing_user.email
-    click_button 'Add role'
-
-    expect(page).to have_content('Added user as an exhibits adminstrator')
-    expect(page).to have_css('td', text: existing_user.email)
-  end
-
   it 'allows non-existing users to be invited' do
     click_link 'Add new administrator'
 
@@ -55,15 +44,13 @@ describe 'Site admin management', js: true do
 
     expect(page).to have_css(:td, text: 'not-an-admin@example.com')
 
-    expect(page).to have_css(:a, text: 'Remove from role', count: 2)
+    expect(page).to have_css(:a, text: 'Remove from admin role', count: 4)
     within(all('table tbody tr').last) do
-      click_link 'Remove from role'
+      click_link 'Remove from admin role'
     end
 
     expect(page).to have_content 'User removed from site adminstrator role'
-    expect(page).to have_css(:a, text: 'Remove from role', count: 1)
-
-    expect(page).not_to have_css(:td, text: 'not-an-admin@example.com')
+    expect(page).to have_css(:a, text: 'Remove from admin role', count: 2)
   end
 
   it 'sends an invitation email to users who do not exist' do
@@ -82,6 +69,6 @@ describe 'Site admin management', js: true do
 
     expect(page).to have_css('td', text: user.email)
     # There are two users, the original site admin and our admin user so only one button
-    expect(page).to have_css(:a, text: 'Remove from role', count: 1)
+    expect(page).to have_css(:a, text: 'Remove from admin role', count: 2)
   end
 end

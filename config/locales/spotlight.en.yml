@@ -172,20 +172,22 @@ en:
     admin_users:
       create:
         error: There was a problem adding the user as an exhibits adminstrator
-        success: Added user as an exhibits adminstrator
+        success: Added user as an adminstrator
       destroy:
         error: There was a problem removing the user from the site adminstrator role
         success: User removed from site adminstrator role
       index:
-        add: Add new administrator
         admins_curators: Administrators and curators of all exhibits
+        all_users: All registered users
         copy: Copy
-        destroy: Remove from role
+        create: Add new administrator
+        destroy: Remove from admin role
         instructions: Existing exhibits administrators
-        page_title: Manage administrators
+        page_title: Manage users
         pending: pending
         save: Add role
         section: Manage exhibits
+        update: Make user an administrator
     appearances:
       edit:
         header: Appearance

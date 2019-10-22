@@ -35,5 +35,15 @@ RSpec.describe Spotlight::AdminUsersController, type: :controller do
         expect(Spotlight::Site.instance.roles.where(user_id: user.id)).to be_none
       end
     end
+
+    describe 'PATCH update' do
+      let(:non_admin) { FactoryBot.create(:exhibit_visitor) }
+      it 'adds the site admin role to the given user' do
+        patch :update, params: { id: non_admin.id }
+        expect(response).to redirect_to(admin_users_path)
+        expect(flash[:notice]).to eq 'Added user as an adminstrator'
+        expect(non_admin.roles.map(&:role)).to eq ['admin']
+      end
+    end
   end
 end

@@ -16,7 +16,7 @@ Spotlight::Engine.routes.draw do
 
   get '/exhibits/edit', to: 'sites#edit_exhibits', as: 'edit_site_exhibits'
 
-  resources :admin_users, only: [:index, :create, :destroy]
+  resources :admin_users, only: [:index, :create, :update, :destroy]
 
   resources :exhibits, path: '/', except: [:show] do
     member do
