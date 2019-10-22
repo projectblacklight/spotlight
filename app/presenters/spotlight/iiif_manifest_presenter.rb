@@ -76,7 +76,8 @@ module Spotlight
     def iiif_url
       Spotlight::Engine.config.iiif_url_helpers.info_url(
         uploaded_resource.upload.id,
-        host: controller.request.host_with_port
+        host: controller.request.host_with_port,
+        protocol: controller.request.protocol
       ).sub(%r{/info\.json\Z}, '')
     end
   end
