@@ -1,7 +1,7 @@
 <div id="content" class="col-md-9 admin-users">
   <%= page_title(t('.section'), t('.page_title')) %>
   <%= bootstrap_form_for Spotlight::Engine.user_class.new, url: spotlight.admin_users_path do |f| %>
-    <p class="instructions"><%= t :'.instructions' %></p>
+    <h3 class="instructions"><%= t :'.instructions' %></h3>
     <table class="table table-striped ">
       <thead>
         <tr>
@@ -43,20 +43,50 @@
 
     <div class="form-actions">
       <div class="primary-actions">
-        <%= link_to(t('.add'), 'javascript:;', class: 'btn btn-default', data: { behavior: 'new-user' }) %>
+        <%= link_to(t('.create'), 'javascript:;', class: 'btn btn-default', data: { behavior: 'new-user' }) %>
       </div>
     </div>
-  <% end %>
 
-  <p class="instructions"><%= t :'.admins_curators' %></p>
-  <div id="admins_curators" class="well well-sm">
+    <h3 class="instructions"><%= t :'.admins_curators' %></h3>
+    <div id="admins_curators" class="well well-sm">
       <div class='btn-toolbar pull-right'>
-          <button class="btn btn-xs btn-default copy-email-addresses" data-clipboard-target="#admins_curators">
-              <%= t('.copy') %>
-          </button>
+        <button class="btn btn-xs btn-default copy-email-addresses" data-clipboard-target="#admins_curators">
+          <%= t('.copy') %>
+        </button>
       </div>
       <%= Spotlight::Engine.user_class.with_roles.pluck(:email).sort.join(', ') %>
-  </div>
+    </div>
+
+    <h3 class="instructions"><%= t :'.all_users' %></h3>
+    <table class="table table-striped ">
+      <thead>
+        <tr>
+          <th><%= Spotlight::Engine.user_class.human_attribute_name(:email)  %></th>
+          <th><%= Spotlight::Engine.user_class.human_attribute_name(:role)  %></th>
+        </tr>
+      </thead>
+      <tbody class="table">
+        <% @users.each do |user| %>
+          <tr>
+            <td class="<%= 'invite-pending' if user.invite_pending? %>">
+              <%= user.email %>
+              <span class='label label-warning pending-label'><%= t('.pending') %></span>
+            </td>
+            <td class="role">
+              <%= user.roles.map { |r| r.role.titleize }.uniq.join(", ") %>
+            </td>
+            <td>
+              <% if user.superadmin? %>
+                <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-danger pull-right') unless user == current_user %>
+              <% else %>
+                <%= link_to(t('.update'), admin_user_path(user), method: :patch, class: 'btn btn-default pull-right') %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
 </div>
 
 <aside class="col-md-3">

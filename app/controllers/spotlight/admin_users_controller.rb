@@ -6,6 +6,8 @@ module Spotlight
   class AdminUsersController < Spotlight::ApplicationController
     before_action :authenticate_user!
     before_action :load_site
+    before_action :load_users
+
     load_and_authorize_resource :site, class: 'Spotlight::Site'
 
     def index; end
@@ -17,6 +19,19 @@ module Spotlight
       else
         flash[:error] = t('spotlight.admin_users.create.error')
       end
+
+      redirect_to spotlight.admin_users_path
+    end
+
+    def update
+      user = Spotlight::Engine.user_class.find(params[:id])
+      if user
+        Spotlight::Role.create(user_key: user.email, role: 'admin', resource: @site).save
+        flash[:notice] = t('spotlight.admin_users.create.success')
+      else
+        flash[:error] = t('spotlight.admin_users.create.error')
+      end
+
       redirect_to spotlight.admin_users_path
     end
 
@@ -31,6 +46,10 @@ module Spotlight
     end
 
     private
+
+    def load_users
+      @users ||= ::User.all.reject(&:guest?)
+    end
 
     def load_site
       @site ||= Spotlight::Site.instance
