@@ -202,6 +202,7 @@ module Spotlight
     Blacklight::Engine.config.inject_blacklight_helpers = false
 
     config.i18n_locales = {
+      ar: 'العربية',
       de: 'Deutsch',
       en: 'English',
       es: 'Español',

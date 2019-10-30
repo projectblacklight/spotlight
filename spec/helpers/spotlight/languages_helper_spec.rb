@@ -8,6 +8,7 @@ describe Spotlight::LanguagesHelper, type: :helper do
       expect(helper.add_exhibit_language_dropdown_options).to match_array(
         [
           ['Albanian', :sq],
+          ['Arabic', :ar],
           ['Chinese', :zh],
           ['Dutch', :nl],
           ['French', :fr],

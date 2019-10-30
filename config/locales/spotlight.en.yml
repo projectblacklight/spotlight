@@ -140,6 +140,7 @@ en:
       submit: Save changes
       update: Save changes
   locales:
+    ar: Arabic
     de: German
     en: English
     es: Spanish
