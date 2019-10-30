@@ -19,7 +19,7 @@ these collections.)
   s.files = Dir['{app,config,db,lib,vendor}/**/*', 'Rakefile', 'README.md', 'LICENSE']
   s.test_files = Dir['spec/**/*']
 
-  s.required_ruby_version = '~> 2.3'
+  s.required_ruby_version = '~> 2.4'
 
   s.add_dependency 'rails', '>= 5.1', '< 7'
   s.add_dependency 'blacklight', '~> 7.0'
