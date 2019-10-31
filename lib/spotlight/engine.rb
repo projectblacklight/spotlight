@@ -39,8 +39,11 @@ module Spotlight
     require 'github/markup'
     require 'sir_trevor_rails'
     require 'openseadragon'
-    require 'sprockets/es6'
-    require 'almond-rails'
+
+    if Gem.loaded_specs['sprockets'].version < Gem::Version.new(4)
+      require 'sprockets/es6'
+      require 'almond-rails'
+    end
 
     config.assets.precompile += %w(spotlight/fallback/*.png)
 

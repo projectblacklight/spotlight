@@ -1,6 +1,6 @@
 gem 'thor', '~> 0.20'
 gem 'blacklight', '~> 7.0'
 gem 'blacklight-oembed', '>= 0.1', github: 'sul-dlss/blacklight-oembed', branch: 'blacklight_7'
-gem 'sprockets', '< 4'
+gem 'sprockets', '< 4' if ENV['RAILS_VERSION'] && ENV['RAILS_VERSION'] =~ /^5\./
 gem 'acts-as-taggable-on', github: 'mbleigh/acts-as-taggable-on'
 gem 'riiif', github: 'curationexperts/riiif', branch: 'rails6'
