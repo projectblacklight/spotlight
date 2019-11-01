@@ -1,18 +1,18 @@
-<div id="exhibit-navbar" class="exhibit-navbar navbar navbar-light" role="navigation">
+<div id="exhibit-navbar" class="exhibit-navbar navbar navbar-light navbar-expand-sm" role="navigation">
   <div class="container">
     <% if resource_masthead? %>
       <%= link_to(current_exhibit.title, spotlight.exhibit_path(current_exhibit), class: 'navbar-brand') %>
     <% end %>
 
-    <ul class="nav navbar-nav">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item <%= "active" if current_page?([spotlight, current_exhibit]) %>"><%= link_to t(:'spotlight.curation.nav.home'), [spotlight, current_exhibit], class: 'nav-link' %></li>
       <% current_exhibit.main_navigations.displayable.each do |navigation| %>
         <%= render partial: "shared/#{navigation.nav_type}_navbar", locals: { navigation: navigation } %>
       <% end %>
     </ul>
     <% if should_render_spotlight_search_bar? %>
-      <div class="navbar-right navbar-nav nav">
-        <%= render_search_bar  %>
+      <div class="navbar-right navbar-nav">
+        <%= render_search_bar %>
       </div>
     <% end %>
   </div>
