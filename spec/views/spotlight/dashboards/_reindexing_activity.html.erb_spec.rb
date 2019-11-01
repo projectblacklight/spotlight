@@ -35,11 +35,11 @@ describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
     end
 
     it 'displays the correct localized column headings when there are reindexing attempts in the log' do
-      expect(rendered).to have_css('table.table-striped th.col-md-3', text: 'Date', count: 1)
-      expect(rendered).to have_css('table.table-striped th.col-md-2', text: 'Requested By', count: 1)
-      expect(rendered).to have_css('table.table-striped th.col-md-1', text: 'Items Indexed', count: 1)
-      expect(rendered).to have_css('table.table-striped th.col-md-2', text: 'Elapsed Time', count: 1)
-      expect(rendered).to have_css('table.table-striped th.col-md-2', text: 'Status', count: 1)
+      expect(rendered).to have_css('table.table-striped th.col-3', text: 'Date', count: 1)
+      expect(rendered).to have_css('table.table-striped th.col-3', text: 'Requested By', count: 1)
+      expect(rendered).to have_css('table.table-striped th.col-1', text: 'Items Indexed', count: 1)
+      expect(rendered).to have_css('table.table-striped th.col-3', text: 'Elapsed Time', count: 1)
+      expect(rendered).to have_css('table.table-striped th.col-2', text: 'Status', count: 1)
     end
 
     it 'formats the start time correctly' do

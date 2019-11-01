@@ -3,11 +3,12 @@
 }
 
 .page-header {
+  @extend .mb-3;
+
   border-bottom: none;
   small {
     font-size: $h2-font-size;
     display: block;
-    margin-top: $padding-base-vertical;
   }
 }
 
