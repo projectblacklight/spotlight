@@ -30,7 +30,7 @@
 }
 
 
-.card-header {
+.card-body {
   .pic.thumbnail {
     width: 70px;
     display: inline-block;
@@ -45,6 +45,7 @@
 
   .publish-control {
     display: inline;
+
     .checkbox {
       padding-top: 0;
     }
@@ -63,12 +64,13 @@
   }
 }
 
-.card-header.page {
+.card-body.page {
   &:hover {
     @include panel-hover-highlighting;
   }
   .card-title {
-    font-size: 15px;
+    @extend .mb-0;
+    @extend .py-2;
     &[data-in-place-edit-target]:hover:after {
       content: "\270f";
       font-family: "Glyphicons Halflings";
