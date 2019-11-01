@@ -86,6 +86,8 @@
 }
 
 .site-title-container {
+  @extend .px-4;
+
   max-height: $masthead-height - $navbar-brand-height;
   padding-bottom: $padding-large-vertical;
   padding-top: $padding-large-vertical;
