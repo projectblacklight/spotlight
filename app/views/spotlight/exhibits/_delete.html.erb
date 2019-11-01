@@ -1,9 +1,11 @@
 <div role="tabpanel" class="tab-pane" id="delete">
-  <div class="alert alert-danger row">
-    <h4 class="alert-heading col-md-12"><%= t(:".heading") %></h4>
-    <p class='col-md-9'><%= t(:".warning_html", export_link: link_to(t(:'spotlight.exhibits.export.download'), spotlight.import_exhibit_path(current_exhibit))) %></p>
-    <div class='col-md-3'>
-      <%= delete_link current_exhibit, class: 'btn btn-secondary' %>
+  <div class="alert alert-danger">
+    <h4 class="alert-heading"><%= t(:".heading") %></h4>
+    <div class="row">
+      <p class='col-9'><%= t(:".warning_html", export_link: link_to(t(:'spotlight.exhibits.export.download'), spotlight.import_exhibit_path(current_exhibit))) %></p>
+      <div class='col-3'>
+        <%= delete_link current_exhibit, class: 'btn btn-secondary' %>
+      </div>
     </div>
   </div>
 </div>
