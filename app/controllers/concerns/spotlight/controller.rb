@@ -75,9 +75,9 @@ module Spotlight
       end
     end
 
-    def search_facet_url(*args)
+    def search_facet_path(*args)
       if current_exhibit
-        exhibit_search_facet_url(*args)
+        exhibit_search_facet_path(*args)
       else
         main_app.catalog_facet_url(*args)
       end
@@ -95,7 +95,7 @@ module Spotlight
       end
     end
 
-    def exhibit_search_facet_url(*args)
+    def exhibit_search_facet_path(*args)
       options = args.extract_options!
       options = Blacklight::Parameters.sanitize(params.to_unsafe_h.with_indifferent_access).merge(options).except(:exhibit_id, :only_path)
       spotlight.facet_exhibit_catalog_url(current_exhibit, *args, options)

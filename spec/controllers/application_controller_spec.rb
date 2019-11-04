@@ -18,10 +18,10 @@ describe ApplicationController, type: :controller do
         end
       end
 
-      describe '#search_facets_url' do
+      describe '#search_facet_path' do
         it 'is a path within the current exhibit' do
           expected = { controller: 'spotlight/catalog', action: 'facet', id: 'some-facet', exhibit_id: exhibit.slug }
-          expect(get: controller.search_facet_url(id: 'some-facet', only_path: true).gsub('/spotlight', '')).to route_to expected
+          expect(get: controller.search_facet_path(id: 'some-facet', only_path: true).gsub('/spotlight', '')).to route_to expected
         end
       end
     end
