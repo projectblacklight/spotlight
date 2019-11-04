@@ -69,7 +69,7 @@ module Spotlight
     private
 
     alias search_action_url exhibit_search_action_url
-    alias search_facet_url exhibit_search_facet_url
+    alias search_facet_path exhibit_search_facet_path
 
     def load_locale_specific_page
       @page = Spotlight::HomePage.for_locale.find_by(exhibit: current_exhibit)
