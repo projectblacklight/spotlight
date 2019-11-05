@@ -119,8 +119,7 @@ describe Spotlight::IiifManifestPresenter do
 
     describe '#iiif_url' do
       it 'returns the info_url from the Riiif engine routes, minus the trailing .json' do
-        controller.request.stub(:protocol).and_return('https')
-        expect(subject.send(:iiif_url)).to eq('https://localhost:3000/images/2')
+        expect(subject.send(:iiif_url)).to eq('http://localhost:3000/images/2')
       end
     end
   end
