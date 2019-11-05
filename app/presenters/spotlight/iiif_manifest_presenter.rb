@@ -74,10 +74,8 @@ module Spotlight
     end
 
     def iiif_url
-      Spotlight::Engine.config.iiif_url_helpers.info_url(
-        uploaded_resource.upload.id,
-        host: controller.request.host_with_port
-      ).sub(%r{/info\.json\Z}, '')
+      # yes this is hacky, and we are appropriately ashamed.
+      controller.riiif.info_url(uploaded_resource.upload.id).sub(%r{/info\.json\Z}, '')
     end
   end
 end
