@@ -245,38 +245,6 @@ module Spotlight
 
     config.exhibit_themes = ['default']
 
-    # Overriding the riiif url_helpers requires a module with at least the
-    # following methods:
-    #
-    # @param [String] id
-    # @param [Hash] options
-    # @option options [String] format
-    # @option options [String] host
-    #
-    # @return [String]
-    # def info_url(id, options)
-    #
-    #
-    # @param [String] id
-    # @param [Hash] options
-    # @option options [String] format
-    #
-    # @return [String]
-    # def info_path(id, options)
-    #
-    #
-    # @param [String] id
-    # @param [Hash] options
-    # @option options [String] region
-    # @option options [String] size
-    # @option options [String] rotation
-    # @option options [String] quality
-    # @option options [String] format
-    #
-    # @return [String]
-    # def image_path(id, options)
-    config.iiif_url_helpers = Riiif::Engine.routes.url_helpers
-
     config.default_page_content_type = 'SirTrevor'
     config.sir_trevor_widgets = %w(
       Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse LinkToSearch
