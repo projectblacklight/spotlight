@@ -53,7 +53,8 @@ module Spotlight
     def set_tilesource_from_uploaded_resource
       return if iiif_tilesource
 
-      self.iiif_tilesource = Spotlight::Engine.config.iiif_url_helpers.info_path(id)
+      riiif = Riiif::Engine.routes.url_helpers
+      self.iiif_tilesource = riiif.info_path(id)
       save
     end
 
