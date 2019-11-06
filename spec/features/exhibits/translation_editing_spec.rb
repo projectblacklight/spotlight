@@ -35,14 +35,14 @@ describe 'Translation editing', type: :feature do
         expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
         within '.translation-basic-settings-title' do
           expect(page).to have_css 'input[value="Titre français"]'
-          expect(page).to have_css 'span.glyphicon.glyphicon-ok'
+          expect(page).to have_css '.translation-complete'
         end
         within '.translation-basic-settings-subtitle' do
           expect(page).to have_css 'input[value="Sous-titre français"]'
-          expect(page).to have_css 'span.glyphicon.glyphicon-ok'
+          expect(page).to have_css '.translation-complete'
         end
         within '.translation-basic-settings-description' do
-          expect(page).to_not have_css 'span.glyphicon.glyphicon-ok'
+          expect(page).to_not have_css '.translation-complete'
         end
       end
     end
@@ -67,17 +67,17 @@ describe 'Translation editing', type: :feature do
         expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
         within '.translation-main-menu-home' do
           expect(page).to have_css 'input[value="Maison"]'
-          expect(page).to have_css 'span.glyphicon.glyphicon-ok'
+          expect(page).to have_css '.translation-complete'
         end
         within '.translation-main-menu-browse' do
           expect(page).to have_css 'input[value="parcourir ceci!"]'
-          expect(page).to have_css 'span.glyphicon.glyphicon-ok'
+          expect(page).to have_css '.translation-complete'
         end
         within '.translation-main-menu-curated-features' do
-          expect(page).to_not have_css 'span.glyphicon.glyphicon-ok'
+          expect(page).to_not have_css '.translation-complete'
         end
         within '.translation-main-menu-about' do
-          expect(page).to_not have_css 'span.glyphicon.glyphicon-ok'
+          expect(page).to_not have_css '.translation-complete'
         end
         I18n.locale = :fr
         expect(exhibit.main_navigations.browse.label).to eq 'parcourir ceci!'

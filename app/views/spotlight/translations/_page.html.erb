@@ -8,7 +8,7 @@
   </td>
   <td class="text-center">
     <% if page.published? %>
-      <span class="glyphicon glyphicon-ok"></span>
+      <%= blacklight_icon('check', classes: 'translation-complete') %>
     <% end %>
   </td>
   <td>
@@ -17,7 +17,7 @@
       <p>
         <%= l(translated_page.updated_at, format: :long) %>
         <% if page.updated_after? translated_page %>
-          <span class="glyphicon glyphicon-alert"></span>
+          <%= blacklight_icon('warning', classes: 'translation-warning') %>
         <% end %>
       </p>
     <% else %>

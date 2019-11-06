@@ -22,7 +22,7 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
     page.published = true
     render
 
-    expect(rendered).to have_css('.glyphicon.glyphicon-ok')
+    expect(rendered).to have_css('.translation-complete')
   end
 
   context 'when there is a translated page' do
@@ -44,7 +44,7 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
       it 'includes an alert icon' do
         render
 
-        expect(rendered).to have_css('.glyphicon.glyphicon-alert')
+        expect(rendered).to have_css('.translation-warning')
       end
     end
 

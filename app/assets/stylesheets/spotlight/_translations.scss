@@ -1,6 +1,6 @@
 .translation-edit-form {
-  .glyphicon-ok {
-    color: $translation-available-color;
+  .translation-complete {
+    svg { fill: $translation-available-color }
   }
 
   .browse-category-title {
@@ -26,7 +26,7 @@
     padding-top: $card-spacer-y + $padding-base-vertical;
   }
 
-  .glyphicon-ok {
+  .translation-complete {
     padding-top: $card-spacer-y + $padding-base-vertical;
   }
 }

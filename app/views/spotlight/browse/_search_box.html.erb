@@ -6,11 +6,14 @@
       <div class="col-sm-6">
         <div class="input-group">
           <%= text_field_tag :browse_q, params[:browse_q], placeholder: t(:'.placeholder'), class: "form-control", id: "browse_q" %>
-            <span class="input-group-btn">
-              <button class="btn btn-reset" type="reset"><span class="sr-only"><%= t(:'.reset') %></span><span class="glyphicon glyphicon-remove-circle"></span></button>
+            <span class="input-group-btn input-group-append">
+              <button class="btn btn-reset" type="reset">
+                <span class="sr-only"><%= t(:'.reset') %></span>
+                <%= blacklight_icon('remove_circle_outline') %>
+              </button>
               <button type="submit" class="btn btn-primary search-btn" id="browse-search">
-              <span class="submit-search-text"><%= t(:'.submit') %></span>
-              <span class="glyphicon glyphicon-search"></span>
+                <span class="submit-search-text"><%= t(:'.submit') %></span>
+                <%= blacklight_icon('search', aria_hidden: true) %>
               </button>
             </span>
         </div>

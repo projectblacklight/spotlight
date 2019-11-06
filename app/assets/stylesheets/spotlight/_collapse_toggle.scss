@@ -1,18 +1,14 @@
+// Rotate collapse-chevron element (has a ❯ in it)
+// with the previous siblings collapsed status
 .btn.collapse-toggle {
-  // adjust as needed, taken from bootstrap.css glyphicons
-  &:after {
-    // symbol for "opening" panels
-    color: $text-muted;
-    content: "\e114"; // chevron down
-    float: right;
-    font-family: "Glyphicons Halflings";
-    font-size: 0.8em;
-    line-height: 2em;
-    padding-left: 1ch;
+  & + .collapse-chevron {
+    display: inline-block;
+    text-align: right;
+    transform: rotate(90deg);
+    width: 16px;
   }
-
-  &.collapsed:after {
-    // symbol for "collapsed" panels
-    content: "\e080"; //chevron right
+  &.collapsed + .collapse-chevron {
+    text-align: left;
+    transform: none;
   }
 }
