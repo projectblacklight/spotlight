@@ -283,5 +283,8 @@ module Spotlight
       FeaturedPages SolrDocuments SolrDocumentsCarousel SolrDocumentsEmbed
       SolrDocumentsFeatures SolrDocumentsGrid SearchResults
     )
+
+    config.routes = OpenStruct.new
+    config.routes.solr_documents = {}
   end
 end

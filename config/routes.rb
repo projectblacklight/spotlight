@@ -56,7 +56,8 @@ Spotlight::Engine.routes.draw do
     resources :solr_documents,
               except: [:index],
               path: '/catalog',
-              controller: 'catalog' do
+              controller: 'catalog',
+              **Spotlight::Engine.config.routes.solr_documents do
       concerns :exportable
 
       member do

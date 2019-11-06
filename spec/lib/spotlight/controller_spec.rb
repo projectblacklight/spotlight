@@ -86,7 +86,7 @@ describe Spotlight::Controller do
     end
   end
 
-  describe '#exhibit_search_facet_url' do
+  describe '#exhibit_search_facet_path' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:params) { { action: 'index', q: 'xyz' } }
 
@@ -96,7 +96,7 @@ describe Spotlight::Controller do
 
     it 'adds the current exhibit context to the route' do
       expect(subject.spotlight).to receive(:facet_exhibit_catalog_url).with(exhibit, id: 'some_field', q: 'xyz')
-      subject.exhibit_search_facet_url(id: 'some_field')
+      subject.exhibit_search_facet_path(id: 'some_field')
     end
   end
 end
