@@ -77,7 +77,6 @@
     @extend .py-2;
     &[data-in-place-edit-target]:hover:after {
       content: "\270f";
-      font-family: "Glyphicons Halflings";
       line-height: 1;
       margin-left: 6px;
       display: inline-block;

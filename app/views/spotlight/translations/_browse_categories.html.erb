@@ -28,7 +28,9 @@
           </div>
           <div class="col-xs-1">
             <% if title_translation.value.present? %>
-              <span data-translation-present="true" class='glyphicon glyphicon-ok'></span>
+              <span data-translation-present="true">
+                <%= blacklight_icon('check', classes: 'translation-complete') %>
+              </span>
             <% end %>
           </div>
         </div>
@@ -52,7 +54,9 @@
         </div>
         <div class="col-xs-1">
           <% if description_translation.value.present? %>
-            <span data-translation-present="true" class='glyphicon glyphicon-ok'></span>
+            <span data-translation-present="true">
+              <%= blacklight_icon('check', classes: 'translation-complete') %>
+            </span>
           <% end %>
         </div>
       </div>

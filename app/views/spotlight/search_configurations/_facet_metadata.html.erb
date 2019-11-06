@@ -7,6 +7,8 @@
     <%= content_tag :span, t(:'.value_count', count: metadata[:value_count]) %>
   <% end %>
   <% if metadata[:terms].any? %>
-    <%= tag("span", class: 'btn-with-tooltip glyphicon glyphicon-info-sign', data: {container: 'body', toggle: 'tooltip', placement: 'top', title: metadata[:terms].join(" • ")}) %>
+    <%= content_tag("span", class: 'btn-with-tooltip', data: {container: 'body', toggle: 'tooltip', placement: 'top', title: metadata[:terms].join(" • ")}) do %>
+      <%= blacklight_icon('info') %>
+    <% end %>
   <% end %>
 <% end %>
