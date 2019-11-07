@@ -1,6 +1,6 @@
 Spotlight.onLoad(function(){
   $('.zpr-link').on('click', function() {
-    $('#ajax-modal .modal-content').html('<div id="osd-modal-container"></div>');
+    $('#blacklight-modal .modal-content').html('<div id="osd-modal-container"></div>');
     var controls = [
       '<div class="controls">',
       '  <a id="osd-zoom-in"><%= Blacklight::Icon.new('add_circle').file_source %></a>',
@@ -14,7 +14,7 @@ Spotlight.onLoad(function(){
     $('#osd-modal-container').append('<div id="osd-div"></div>');
     $('#osd-div').css('height', '400px');
 
-    $('#ajax-modal').modal('show');
+    $('#blacklight-modal').modal('show');
 
     OpenSeadragon({
       id: 'osd-div',
