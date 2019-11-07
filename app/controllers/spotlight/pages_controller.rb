@@ -17,7 +17,7 @@ module Spotlight
     include Spotlight::Base
     include Blacklight::SearchContext
 
-    helper_method :get_search_results, :search_results, :fetch, :page_collection_name
+    helper_method :get_search_results, :search_results, :fetch, :page_collection_name, :presenter
 
     before_action do
       blacklight_config.track_search_session = false
@@ -201,6 +201,10 @@ module Spotlight
       else
         raise ActiveRecord::RecordNotFound
       end
+    end
+
+    def presenter(document)
+      view_context.index_presenter(document)
     end
   end
   # rubocop:enable Metrics/ClassLength
