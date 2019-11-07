@@ -74,3 +74,37 @@
     display: inline;
   }
 }
+
+.facet_fields {
+
+  .dd3-content {
+    border: 1px solid $card-border-color;
+    border-radius: .25rem;
+  }
+
+  .options {
+    padding-left: $table-cell-padding;
+
+    .col-form-label {
+      font-weight: 700;
+    }
+
+    .form-group {
+      align-items: center;
+    }
+  }
+
+  .page {
+    padding: $table-cell-padding 0 $table-cell-padding $table-cell-padding;
+
+    .main {
+      align-items: center;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .form-check {
+      float: left;
+    }
+  }
+}
