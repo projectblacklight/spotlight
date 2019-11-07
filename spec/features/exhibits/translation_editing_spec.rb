@@ -73,7 +73,7 @@ describe 'Translation editing', type: :feature do
           expect(page).to have_css 'input[value="parcourir ceci!"]'
           expect(page).to have_css '.translation-complete'
         end
-        within '.translation-main-menu-curated-features' do
+        within '.translation-main-menu-curated_features' do
           expect(page).to_not have_css '.translation-complete'
         end
         within '.translation-main-menu-about' do
