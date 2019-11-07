@@ -32,9 +32,11 @@
             <span class='badge badge-warning pending-label'><%= t('.invite_pending') %></span>
           </td>
           <td><%= r.object.role.humanize %></td>
-          <td><%= link_to "#", data: {behavior: 'edit-user', target: r.object.id } do %>
-            <span class="glyphicon glyphicon-edit"></span>
-          <% end %></td>
+          <td>
+            <%= link_to "#", data: {behavior: 'edit-user', target: r.object.id } do %>
+              <%= blacklight_icon('edit') %>
+            <% end %>
+          </td>
         </tr>
         <%= render partial: 'edit_fields', locals: {f: r} %>
         <tr data-edit-for="<%= r.object.id %>">
