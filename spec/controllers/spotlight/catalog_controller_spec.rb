@@ -29,7 +29,7 @@ describe Spotlight::CatalogController, type: :controller do
       let(:search) { FactoryBot.create(:search, exhibit: exhibit) }
       it 'shows the item' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
-        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
+        expect(controller).to receive(:add_breadcrumb).with('L&#39;AMERIQUE', exhibit_solr_document_path(exhibit, document))
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to be_successful
       end
@@ -40,7 +40,7 @@ describe Spotlight::CatalogController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(search.title, exhibit_browse_path(exhibit, search))
-        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
+        expect(controller).to receive(:add_breadcrumb).with('L&#39;AMERIQUE', exhibit_solr_document_path(exhibit, document))
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to be_successful
       end
@@ -51,7 +51,7 @@ describe Spotlight::CatalogController, type: :controller do
 
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with(feature_page.title, [exhibit, feature_page])
-        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
+        expect(controller).to receive(:add_breadcrumb).with('L&#39;AMERIQUE', exhibit_solr_document_path(exhibit, document))
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to be_successful
       end
@@ -61,7 +61,7 @@ describe Spotlight::CatalogController, type: :controller do
         allow(controller).to receive_messages(current_page_context: home_page)
 
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
-        expect(controller).to receive(:add_breadcrumb).with("L'AMERIQUE", exhibit_solr_document_path(exhibit, document))
+        expect(controller).to receive(:add_breadcrumb).with('L&#39;AMERIQUE', exhibit_solr_document_path(exhibit, document))
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to be_successful
       end

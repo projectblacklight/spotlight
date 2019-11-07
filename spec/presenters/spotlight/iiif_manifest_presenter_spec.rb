@@ -16,6 +16,9 @@ describe Spotlight::IiifManifestPresenter do
   end
 
   describe 'public methods' do
+    let(:helpers) { double(show_presenter: presenter) }
+    let(:presenter) { instance_double(Blacklight::ShowPresenter, heading: title_field_value) }
+
     let(:iiif_url) { 'https://iiif.test/images/1-1' }
     let(:endpoint) { IIIFManifest::IIIFEndpoint.new(iiif_url, profile: profile_url) }
     let(:manifest_url) { 'https://iiif.test/spotlight/test/catalog/1-1/manifest' }
@@ -43,6 +46,7 @@ describe Spotlight::IiifManifestPresenter do
 
       allow(subject).to receive(:endpoint).and_return(endpoint)
       allow(subject).to receive(:id).and_return(id)
+      allow(controller).to receive(:view_context).and_return(helpers)
     end
 
     describe '#display_image' do

@@ -31,7 +31,8 @@ module Spotlight
     private
 
     def element_label(element)
-      @context.truncate(compute_name(element), length: 30, separator: ' ')
+      label = compute_name(element)
+      @context.truncate(label, escape: !label.html_safe?, length: 30, separator: ' ')
     end
   end
 end
