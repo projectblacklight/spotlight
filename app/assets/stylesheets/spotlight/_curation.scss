@@ -68,6 +68,17 @@
   }
 }
 
+[data-in-place-edit-target]:hover:after {
+  content: "\270f";
+  line-height: 1;
+  margin-left: 6px;
+  display: inline-block;
+  color: #777;
+}
+[data-in-place-edit-target].hide-edit-icon:after {
+  display: none;
+}
+
 .card-body.page {
   &:hover {
     @include panel-hover-highlighting;
@@ -75,16 +86,6 @@
   .card-title {
     @extend .mb-0;
     @extend .py-2;
-    &[data-in-place-edit-target]:hover:after {
-      content: "\270f";
-      line-height: 1;
-      margin-left: 6px;
-      display: inline-block;
-      color: #777;
-    }
-    &[data-in-place-edit-target].hide-edit-icon:after {
-      display: none;
-    }
   }
 
   .page-links, .contact-links {
