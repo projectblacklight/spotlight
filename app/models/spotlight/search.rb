@@ -76,7 +76,7 @@ module Spotlight
         blacklight_config.document_model.unique_key,
         blacklight_config.index.title_field,
         blacklight_config.index.thumbnail_field
-      ].compact
+      ].flatten.compact
     end
 
     def should_generate_new_friendly_id?
