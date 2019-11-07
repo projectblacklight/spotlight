@@ -56,7 +56,7 @@ module Spotlight
 
     # IIIFManifest will call #to_s on each leaf node to get its respective label (not called out in README).
     def to_s
-      resource.first(blacklight_config.view_config(:show).title_field)
+      presenter.heading
     end
 
     def iiif_manifest
@@ -68,6 +68,10 @@ module Spotlight
     end
 
     private
+
+    def presenter
+      controller.view_context.show_presenter(resource)
+    end
 
     def endpoint
       IIIFManifest::IIIFEndpoint.new(iiif_url, profile: 'http://iiif.io/api/image/2/level2.json')
