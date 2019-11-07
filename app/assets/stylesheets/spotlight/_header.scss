@@ -7,27 +7,6 @@
   height: inherit;
 }
 
-@mixin transparent-masthead-navigation-menu() {
-  @extend .navbar-transparent;
-
-  border: 0;
-  border-radius: 0;
-
-  ul.nav.navbar-nav {
-    > li {
-      text-transform: uppercase;
-
-      a {
-        letter-spacing: 1.2px;
-      }
-    }
-
-    .dropdown-menu {
-      text-transform: none;
-    }
-  }
-}
-
 .navbar-static-top {
   margin-bottom: 0;
 }
@@ -95,7 +74,7 @@
 
 .image-masthead {
   .navbar {
-    @include transparent-masthead-navigation-menu();
+    @extend .navbar-dark;
     background-color: $navbar-transparent-page-bg;
   }
 
