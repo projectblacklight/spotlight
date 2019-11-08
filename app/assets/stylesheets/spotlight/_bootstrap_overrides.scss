@@ -21,16 +21,31 @@
   margin-top: -10px;
 }
 
-.sidenav {
+.page-sidebar {
   margin-bottom: 24px;
 
-  .active {
-    a {
-      color: $black;
+  .nav-heading {
+    @extend .h5;
+    @extend .border-bottom;
+    @extend .border-secondary;
 
-      &:hover {
-        background-color: inherit;
-      }
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.25rem;
+    margin-left: 0.5rem;
+    padding-left: 0;
+    padding-top: 0;
+  }
+
+  .nav-link {
+    padding: 0rem 1rem;
+    padding-left: 0.5rem;
+  }
+
+  .nav-link.active {
+    color: $black;
+
+    &:hover {
+      background-color: inherit;
     }
   }
 }
