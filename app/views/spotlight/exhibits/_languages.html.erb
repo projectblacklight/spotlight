@@ -36,7 +36,7 @@
                         <%= languages.check_box_without_bootstrap :public %>
                       </div>
                       </td>
-                    <td class='text-center'><%= link_to t('.remove'), exhibit_language_path(current_exhibit, language), method: :delete, data: { confirm: t('.modal.confirm') }, class: 'btn btn-sm btn-primary' %></td>
+                    <td class='text-center'><%= link_to t('.remove'), exhibit_language_path(current_exhibit, language), method: :delete, data: { confirm: t('.modal.confirm') }, class: 'btn btn-sm btn-danger' %></td>
                   </tr>
                 <% end %>
               <% end %>
