@@ -1,11 +1,11 @@
 <% published_top_level_feature_pages = current_exhibit.feature_pages.for_locale.published.at_top_level -%>
 <% if published_top_level_feature_pages.present? %>
   <% if published_top_level_feature_pages.many? %>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= navigation.label_or_default %> <b class="caret"></b></a>
+    <li class="nav-item dropdown">
+      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><%= navigation.label_or_default %> <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <% published_top_level_feature_pages.each do |page| %>
-          <li class="downdown-item"><%= link_to page.title, [spotlight, page.exhibit, page] %></li>
+          <li class="dropdown-item"><%= link_to page.title, [spotlight, page.exhibit, page] %></li>
         <% end %>
       </ul>
     </li>
