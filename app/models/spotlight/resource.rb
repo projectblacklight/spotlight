@@ -27,6 +27,11 @@ module Spotlight
 
     serialize :data, Hash
 
+    after_index :commit
+    after_index :touch_exhibit!
+
+    after_destroy :cleanup_solr
+
     ##
     # Persist the record to the database, and trigger a reindex to solr
     #
@@ -62,6 +67,18 @@ module Spotlight
         touch_exhibit! if touch
 
         i
+      end
+
+      def cleanup_solr
+        blacklight_solr.delete_by_id(document_ids, params: { softCommit: true })
+      end
+
+      def document_ids
+        document_builder.documents_to_index.to_a.map { |y| y[:id] }
+      end
+
+      def batch_size
+        Spotlight::Engine.config.solr_batch_size
       end
 
       def estimated_size(**args)

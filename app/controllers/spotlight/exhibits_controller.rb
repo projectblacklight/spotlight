@@ -76,6 +76,7 @@ module Spotlight
     end
 
     def destroy
+      @exhibit.resources.destroy_all
       @exhibit.destroy
 
       redirect_to main_app.root_url, notice: t(:'helpers.submit.exhibit.destroyed', model: @exhibit.class.model_name.human.downcase)

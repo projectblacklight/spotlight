@@ -105,7 +105,7 @@ Metrics/MethodLength:
 # Offense count: 2
 # Configuration parameters: CountComments, CountAsOne.
 Metrics/ModuleLength:
-  Max: 139
+  Max: 114
 
 # Offense count: 2
 # Configuration parameters: IgnoredMethods.
@@ -156,7 +156,7 @@ Naming/VariableNumber:
     - 'spec/models/sir_trevor_rails/blocks/browse_block_spec.rb'
     - 'spec/services/spotlight/exhibit_import_export_service_spec.rb'
 
-# Offense count: 63
+# Offense count: 61
 RSpec/AnyInstance:
   Enabled: false
 
@@ -166,7 +166,7 @@ RSpec/BeforeAfterAll:
     - 'spec/features/exhibits/translation_editing_spec.rb'
     - 'spec/features/javascript/locale_selector_spec.rb'
 
-# Offense count: 58
+# Offense count: 57
 # Configuration parameters: Prefixes.
 # Prefixes: when, with, without
 RSpec/ContextWording:
@@ -177,7 +177,7 @@ RSpec/EmptyExampleGroup:
   Exclude:
     - 'spec/factories/tags.rb'
 
-# Offense count: 328
+# Offense count: 325
 # Configuration parameters: Max.
 RSpec/ExampleLength:
   Enabled: false
@@ -209,7 +209,7 @@ RSpec/MessageChain:
     - 'spec/models/spotlight/blacklight_configuration_spec.rb'
     - 'spec/views/spotlight/browse/_search.html.erb_spec.rb'
 
-# Offense count: 204
+# Offense count: 201
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: have_received, receive
 RSpec/MessageSpies:
@@ -230,6 +230,14 @@ RSpec/MultipleMemoizedHelpers:
 # Configuration parameters: IgnoreSharedExamples.
 RSpec/NamedSubject:
   Enabled: false
+
+# Offense count: 2
+# Cop supports --auto-correct.
+# Configuration parameters: Strict, EnforcedStyle, AllowedExplicitMatchers.
+# SupportedStyles: inflected, explicit
+RSpec/PredicateMatcher:
+  Exclude:
+    - 'spec/features/exhibit_deletion_spec.rb'
 
 # Offense count: 8
 RSpec/RepeatedDescription:
@@ -254,7 +262,7 @@ RSpec/ScatteredSetup:
     - 'spec/views/spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb_spec.rb'
     - 'spec/views/spotlight/sir_trevor/blocks/_solr_documents_grid_block.html.erb_spec.rb'
 
-# Offense count: 59
+# Offense count: 58
 RSpec/StubbedMock:
   Enabled: false
 
@@ -286,12 +294,12 @@ Rails/ApplicationMailer:
     - 'app/mailers/spotlight/indexing_complete_mailer.rb'
     - 'app/mailers/spotlight/invitation_mailer.rb'
 
-# Offense count: 23
+# Offense count: 22
 # Cop supports --auto-correct.
 Rails/ApplicationRecord:
   Enabled: false
 
-# Offense count: 6
+# Offense count: 4
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
 Rails/HasManyOrHasOneDependent:
@@ -299,7 +307,6 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/spotlight/exhibit.rb'
     - 'app/models/spotlight/feature_page.rb'
     - 'app/models/spotlight/group.rb'
-    - 'app/models/spotlight/resource.rb'
     - 'app/models/spotlight/site.rb'
 
 # Offense count: 5
@@ -360,13 +367,6 @@ Rails/ReflectionClassName:
     - 'app/models/spotlight/exhibit.rb'
     - 'app/models/spotlight/page.rb'
     - 'app/models/spotlight/role.rb'
-
-# Offense count: 1
-# Configuration parameters: ForbiddenMethods, AllowedMethods.
-# ForbiddenMethods: decrement!, decrement_counter, increment!, increment_counter, insert, insert!, insert_all, insert_all!, toggle!, touch, touch_all, update_all, update_attribute, update_column, update_columns, update_counters, upsert, upsert_all
-Rails/SkipsModelValidations:
-  Exclude:
-    - 'app/models/spotlight/resource.rb'
 
 # Offense count: 1
 # Configuration parameters: Environments.
