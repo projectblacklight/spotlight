@@ -11,6 +11,7 @@ describe 'spotlight/metadata_configurations/edit', type: :view do
       available_view_fields: { some_view_type: 1, another_view_type: 2 },
       select_deselect_button: nil
     )
+    allow(controller).to receive(:enabled_in_spotlight_view_type_configuration?).and_return(true)
   end
 
   it 'has columns for the available view types' do

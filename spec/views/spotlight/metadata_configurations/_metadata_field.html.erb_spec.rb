@@ -24,6 +24,7 @@ describe 'spotlight/metadata_configurations/_metadata_field', type: :view do
   end
 
   it 'marks views as disabled if they are immutable' do
+    allow(controller).to receive(:enabled_in_spotlight_view_type_configuration?).and_return(true)
     render partial: p, locals: { key: 'some_key', config: field, f: builder }
     expect(rendered).to have_selector 'input[disabled][name="z[some_key][another_view_type]"]'
   end
