@@ -110,7 +110,8 @@ describe Spotlight::ApplicationHelper, type: :helper do
     before do
       allow(helper).to receive_messages(current_exhibit: current_exhibit)
       allow(helper).to receive_messages(blacklight_config: Blacklight::Configuration.new do |config|
-        config.index.display_type_field = :some_field
+        config.show.display_type_field = :some_field # Blacklight 7.4+
+        config.index.display_type_field = :some_field # pre Blacklight 7.4
       end)
     end
 
