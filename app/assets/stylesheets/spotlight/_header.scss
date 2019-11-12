@@ -27,8 +27,8 @@
 
   small {
     @extend .d-none;
+    @extend .d-sm-block;
 
-    display: block;
     padding-bottom: $padding-base-vertical;
     padding-top: $padding-base-vertical;
   }
