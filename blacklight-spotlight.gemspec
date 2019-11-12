@@ -32,7 +32,7 @@ these collections.)
   s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 7'
   s.add_dependency 'friendly_id', '~> 5.2'
   s.add_dependency 'breadcrumbs_on_rails', '~> 3.0'
-  s.add_dependency 'blacklight-oembed', '>= 0.0.3'
+  s.add_dependency 'blacklight-oembed', '~> 0.3'
   s.add_dependency 'devise', '>= 3.0'
   s.add_dependency 'devise_invitable', '~> 1.6'
   s.add_dependency 'roar', '~> 1.1'
