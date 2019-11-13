@@ -1,5 +1,5 @@
 <h4 class='contacts-header'><%= t :'.header' %></h4>
-<ol class="nav sidenav contacts">
+<ol class="nav sidenav contacts flex-column">
   <% current_exhibit.contacts.published.each do |contact| %>
     <li itemscope itemtype="http://schema.org/Person">
       <%= render partial: "contact_properties", locals: {contact: contact} %>
