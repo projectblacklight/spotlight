@@ -1,5 +1,5 @@
 <div class="content-block item-text row">
-  <div class="items-col spotlight-flexbox <%= 'col-md-6' if uploaded_items_block.text? %> col-xs-12 uploaded-items-block pull-<%= uploaded_items_block.content_align %>">
+  <div class="items-col spotlight-flexbox <%= 'col-md-6' if uploaded_items_block.text? %> col-12 uploaded-items-block pull-<%= uploaded_items_block.content_align %>">
     <% if uploaded_items_block.files.present? %>
       <% uploaded_items_block.files.each do |file| %>
         <div class="box" data-id="<%= file[:id] %>">
