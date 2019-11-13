@@ -38,6 +38,8 @@ else
       gem 'rails', ENV['RAILS_VERSION']
     end
   end
+
+  gem 'sass-rails', '~> 5.0'
 end
 # END ENGINE_CART BLOCK
 
