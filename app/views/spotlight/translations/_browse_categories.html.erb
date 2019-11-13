@@ -4,12 +4,12 @@
     <%= hidden_field_tag :language, @language %>
     <%= hidden_field_tag :tab, 'browse' %>
     <div class="row">
-      <div class="col-xs-4 text-right">
+      <div class="col-4 text-right">
         <span class="browse-translations-header">
           <%= t :'spotlight.exhibits.translations.browse_categories.default_language_column_label' %>
         </span>
       </div>
-      <div class="col-xs-7">
+      <div class="col-7">
         <span class="browse-translations-header">
           <%= t :'spotlight.exhibits.translations.browse_categories.translation_column_label', language: t("locales.#{@language}")  %>
         </span>
@@ -23,10 +23,10 @@
         <%= translation_fields.hidden_field :locale %>
         <div data-translation-progress-item="true" class="form-group browse-category-title">
           <%= translation_fields.label :value, search[:title], class: 'col-form-label col-xs-4' %>
-          <div class="col-xs-7">
+          <div class="col-7">
             <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
           </div>
-          <div class="col-xs-1">
+          <div class="col-1">
             <% if title_translation.value.present? %>
               <span data-translation-present="true">
                 <%= blacklight_icon('check', classes: 'translation-complete') %>
@@ -38,7 +38,7 @@
 
       <% description_translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "#{search.slug}.long_description", locale: @language) %>
       <div data-translation-progress-item="true" class="form-group browse-category-description">
-        <div class="col-xs-7 col-xs-offset-4">
+        <div class="col-7 offset-4">
           <%= f.fields_for :translations, description_translation do |translation_fields| %>
             <%= button_tag 'type' => 'button', class: 'btn btn-text collapsed tanslation-description-toggle', 'data-toggle': 'collapse', 'data-target': "#browse_category_description_#{search.id}", 'aria-expanded': 'false', 'aria-controls': "#browse_category_description_#{search.id}" do %>
               <%= translation_fields.label :value, t(:'spotlight.exhibits.translations.browse_categories.description_label') %>
@@ -52,7 +52,7 @@
             </div>
           <% end %>
         </div>
-        <div class="col-xs-1">
+        <div class="col-1">
           <% if description_translation.value.present? %>
             <span data-translation-present="true">
               <%= blacklight_icon('check', classes: 'translation-complete') %>
