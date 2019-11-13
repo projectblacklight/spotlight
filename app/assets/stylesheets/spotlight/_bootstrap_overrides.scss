@@ -94,7 +94,7 @@ label.radio {
   }
 }
 
-@media (max-width: grid-breakpoints("md")) {
+@media (max-width: breakpoint-max("md")) {
   aside.col-md-3 {
     padding-left: 0;
   }

@@ -36,7 +36,7 @@
 
   .field-select {
     margin-bottom: $padding-large-vertical;
-    @media (min-width: grid-breakpoints("md")) and (max-width: grid-breakpoints("lg")) {
+    @media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
       margin-bottom: 2 * $padding-large-vertical;
 
       > select {
@@ -132,7 +132,7 @@
     justify-content: space-between;
     align-content: stretch;
 
-    @media (max-width: grid-breakpoints("md")) {
+    @media (max-width: breakpoint-max("md")) {
       margin-bottom: $line-height-lg;
     }
   }
@@ -145,7 +145,7 @@
     order: 1;
     padding: 5px;
 
-    @media (min-width: grid-breakpoints("md")) and (max-width: grid-breakpoints("lg")) {
+    @media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
       min-width: 128px;
     }
   }
@@ -163,7 +163,7 @@
       object-fit: cover;
       overflow: hidden;
 
-      @media (min-width: grid-breakpoints("lg")) {
+      @media (min-width: breakpoint-min("lg")) {
         height: 160px; // default: no sidebar, no text column
         // reduce height if on a page with a sidebar or text column, because will be less wide
         .col-md-9 & {
@@ -188,7 +188,7 @@
 
     .thumbnail img {
       height: 210px;
-      @media (min-width: grid-breakpoints("lg")) {
+      @media (min-width: breakpoint-min("lg")) {
         height: 270px; // default: no sidebar, no text column
         // reduce height if on a page with a sidebar or text column, because will be less wide
         .col-md-9 & {
@@ -228,12 +228,12 @@
 }
 
 .oembed-block {
-  @media (max-width: grid-breakpoints("md")) {
+  @media (max-width: breakpoint-max("md")) {
     margin-bottom: $padding-base-horizontal;
   }
 
   iframe {
-    @media (min-width: grid-breakpoints("md")) {
+    @media (min-width: breakpoint-min("md")) {
       max-width: 100%;
     }
   }
@@ -248,7 +248,7 @@
   .items-col {
     z-index: 1;
 
-    @media (max-width: grid-breakpoints("md")) {
+    @media (max-width: breakpoint-max("md")) {
       margin-bottom: 0;
     }
 
@@ -271,12 +271,12 @@
         img {
           max-height: 250px;
           object-fit: cover;
-          @media (max-width: grid-breakpoints("md")) {
+          @media (max-width: breakpoint-max("md")) {
             max-height: 175px;
           }
         }
 
-        @media (max-width: grid-breakpoints("md")) {
+        @media (max-width: breakpoint-max("md")) {
           -webkit-flex: 1 1 175px;
         }
       }
@@ -285,7 +285,7 @@
 }
 
 .item-features .carousel-indicators {
-  @media (max-width: grid-breakpoints("sm")) {
+  @media (max-width: breakpoint-max("sm")) {
     width: 100%;
     margin-top: 2 * $padding-large-vertical;
   }
