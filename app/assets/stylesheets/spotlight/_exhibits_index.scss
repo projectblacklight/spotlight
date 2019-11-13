@@ -110,7 +110,7 @@ $container-sm: 540px;
 $container-md: 720px;
 
 // between the small and medium breakpoints, reduce the size of the image by a little bit
-@media (min-width: grid-breakpoints("sm")) and (max-width: grid-breakpoints("lg")) {
+@media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("lg")) {
 
   // calculate the size of one full grid column
   $reduce-exhibit-card-image-size: ((($container-sm - $grid-gutter-width) / $grid-columns) - ($grid-gutter-width / 2));
@@ -139,7 +139,7 @@ $container-md: 720px;
 }
 
 // For the medium breakpoint, reduce the max width of the .exhibit-card to align right-edge of row correctly
-@media (min-width: grid-breakpoints("md")) and (max-width: grid-breakpoints("lg")) {
+@media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
   .exhibit-card {
 
     // each card is 3 columns wide
@@ -148,7 +148,7 @@ $container-md: 720px;
 }
 
 // For the small breakpoint, reduce the max width of the .exhibit-card to align right-edge of row correctly
-@media (min-width: grid-breakpoints("sm")) and (max-width: grid-breakpoints("md")) {
+@media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("md")) {
   .exhibit-card {
 
     // each card is 4 columns wide

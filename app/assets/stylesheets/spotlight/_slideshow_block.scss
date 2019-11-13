@@ -21,7 +21,7 @@
   }
 
   // Scale up controls for tablets and up
-  @media screen and (min-width: grid-breakpoints("sm")) {
+  @media screen and (min-width: breakpoint-min("sm")) {
     // Show and left align the captions
     .carousel-caption {
       left: 0;

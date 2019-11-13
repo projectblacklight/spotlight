@@ -66,15 +66,15 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
     .browse-category {
       width: $no-sidebar-xs-image-width;
       height: $no-sidebar-xs-image-width * $aspect-ratio-factor-large-image;
-      @media (min-width: grid-breakpoints("sm")) and (max-width: grid-breakpoints("md")) {
+      @media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("md")) {
         width: $no-sidebar-tablet-large-image-width;
         height: $no-sidebar-tablet-large-image-width * $aspect-ratio-factor-large-image;
       }
-      @media (min-width: grid-breakpoints("md")) and (max-width: grid-breakpoints("lg")) {
+      @media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
         width: $no-sidebar-desktop-large-image-width;
         height: $no-sidebar-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
-      @media (min-width: grid-breakpoints("lg")) {
+      @media (min-width: breakpoint-min("lg")) {
         width: $no-sidebar-large-desktop-large-image-width;
         height: $no-sidebar-large-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
@@ -84,7 +84,7 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
     .browse-category {
       width: $no-sidebar-large-desktop-medium-image-width;
       height: $no-sidebar-large-desktop-medium-image-width * $aspect-ratio-factor-medium-image;
-      @media (max-width: grid-breakpoints("sm")) {
+      @media (max-width: breakpoint-max("sm")) {
         width: $no-sidebar-xs-image-width;
         height: $no-sidebar-xs-image-width * $aspect-ratio-factor-medium-image;
       }
@@ -104,15 +104,15 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
     .browse-category {
       width: $with-sidebar-xs-image-width;
       height: $with-sidebar-xs-image-width * $aspect-ratio-factor-large-image;
-      @media (min-width: grid-breakpoints("sm")) and (max-width: grid-breakpoints("md")) {
+      @media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("md")) {
         width: $with-sidebar-tablet-large-image-width;
         height: $with-sidebar-tablet-large-image-width * $aspect-ratio-factor-large-image;
       }
-      @media (min-width: grid-breakpoints("md")) and (max-width: grid-breakpoints("lg")) {
+      @media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
         width: $with-sidebar-desktop-large-image-width;
         height: $with-sidebar-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
-      @media (min-width: grid-breakpoints("lg")) {
+      @media (min-width: breakpoint-min("lg")) {
         width: $with-sidebar-large-desktop-large-image-width;
         height: $with-sidebar-large-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
@@ -122,11 +122,11 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
    .browse-category {
     width: $with-sidebar-desktop-medium-image-width;
     height: $with-sidebar-desktop-medium-image-width * $aspect-ratio-factor-medium-image;
-      @media (max-width: grid-breakpoints("sm")) {
+      @media (max-width: breakpoint-max("sm")) {
         width: $with-sidebar-xs-image-width;
         height: $with-sidebar-xs-image-width * $aspect-ratio-factor-medium-image;
       }
-      @media (min-width: grid-breakpoints("lg")) {
+      @media (min-width: breakpoint-min("lg")) {
         width: $with-sidebar-large-desktop-medium-image-width;
         height: $with-sidebar-large-desktop-medium-image-width * $aspect-ratio-factor-medium-image;
       }
