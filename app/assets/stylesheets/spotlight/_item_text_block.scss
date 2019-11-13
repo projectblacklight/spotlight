@@ -7,16 +7,16 @@
   .image-block {
     max-width: 30%;
 
-    .thumbnail {
+    .img-thumbnail {
       margin-bottom: 5;
     }
     &.pull-left {
-      .thumbnail {
+      .img-thumbnail {
         margin-right: 15px;
       }
     }
     &.float-right {
-      .thumbnail {
+      .img-thumbnail {
         margin-left: 15px;
       }
     }

@@ -37,8 +37,7 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
 
     # verify that the item + image widget is displaying an image from the document.
     within(:css, '.items-block', visible: true) do
-      expect(page).to have_css('.thumbnail')
-      expect(page).to have_css('.thumbnail a img')
+      expect(page).to have_css('.img-thumbnail')
       expect(page).not_to have_css('.title')
     end
   end
@@ -66,7 +65,7 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
     save_page
 
     # The thumbnail on the rendered block should be correct
-    thumb = find('.thumbnail img')
+    thumb = find('.img-thumbnail')
     expect(thumb['src']).to match(%r{xd327cm9378_05_0002/full})
 
     # revisit the edit page
@@ -74,13 +73,13 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
 
     # Expect the image on the rendered edit screen to be correct
     expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/, visible: true)
-    thumb = find('.pic.thumbnail img')
+    thumb = find('.pic .img-thumbnail')
     expect(thumb['src']).to match(%r{xd327cm9378_05_0002/full})
 
     save_page
 
     # Expect that the original image selection was retained
-    thumb = find('.thumbnail img')
+    thumb = find('.img-thumbnail')
     expect(thumb['src']).to match(%r{xd327cm9378_05_0002/full})
   end
 
@@ -124,8 +123,7 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
 
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, '.items-block', visible: true) do
-      expect(page).to have_css('.thumbnail')
-      expect(page).to have_css('.thumbnail a img')
+      expect(page).to have_css('.img-thumbnail')
       expect(page).to have_css('.primary-caption', text: '[World map]')
       expect(page).to have_css('.secondary-caption', text: 'Latin')
     end

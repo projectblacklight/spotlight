@@ -9,11 +9,11 @@
         <div class="box" data-id="<%= document.id %>">
           <div class="contents">
             <% if block_options[:thumbnail_image_url].present? %>
-              <div class="thumbnail"><%= link_to_document(document, image_tag(block_options[:thumbnail_image_url]), counter: -1) %></div>
+              <%= link_to_document(document, image_tag(block_options[:thumbnail_image_url], class: 'img-thumbnail'), counter: -1) %>
             <% elsif block_options[:iiif_tilesource_base].present?  %>
-              <div class="thumbnail"><%= link_to_document(document, image_tag(block_options[:iiif_tilesource_base] + '/full/!400,400/0/default.jpg'), counter: -1) %></div>
+              <%= link_to_document(document, image_tag(block_options[:iiif_tilesource_base] + '/full/!400,400/0/default.jpg', class: 'img-thumbnail'), counter: -1) %>
             <% elsif has_thumbnail? document %>
-              <div class="thumbnail"><%= render_thumbnail_tag(document, {}, document_counter: -1) %></div>
+              <%= render_thumbnail_tag(document, { class: 'img-thumbnail' }, document_counter: -1) %>
             <% end %>
             <% if solr_documents_block.primary_caption? %>
               <div class="caption primary-caption">
