@@ -40,10 +40,11 @@
       <div data-translation-progress-item="true" class="row form-group browse-category-description">
         <div class="col-7 offset-4">
           <%= f.fields_for :translations, description_translation do |translation_fields| %>
-            <%= button_tag 'type' => 'button', class: 'btn btn-text collapsed tanslation-description-toggle', 'data-toggle': 'collapse', 'data-target': "#browse_category_description_#{search.id}", 'aria-expanded': 'false', 'aria-controls': "#browse_category_description_#{search.id}" do %>
+            <%= button_tag 'type' => 'button', class: 'btn btn-text collapse-toggle collapsed translation-description-toggle', 'data-toggle': 'collapse', 'data-target': "#browse_category_description_#{search.id}", 'aria-expanded': 'false', 'aria-controls': "#browse_category_description_#{search.id}" do %>
               <%= translation_fields.label :value, t(:'spotlight.exhibits.translations.browse_categories.description_label') %>
-              <span class="caret"></span>
             <% end %>
+            <span class="collapse-chevron">❯</span>
+
             <%= translation_fields.hidden_field :key %>
             <%= translation_fields.hidden_field :locale %>
             <div id="browse_category_description_<%= search.id %>" class="card card-body collapse panel-translation">
