@@ -355,7 +355,7 @@ describe 'Translation editing', type: :feature do
       within('#browse', visible: true) do
         fill_in 'All Exhibit Items', with: "Tous les objets d'exposition"
 
-        first('.tanslation-description-toggle').click
+        first('.translation-description-toggle').click
 
         textarea = page.find('textarea')
         textarea.set('Tous les articles de cette exposition.')
