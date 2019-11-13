@@ -39,10 +39,10 @@
           <% end %>
         <% end %>
         <% unless @search.query_params.blank? %>
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-md-2 col-sm-2 form-control-label"><%= t(:".query_params") %></label>
             <div class="col-md-7 col-sm-7">
-              <div class="appliedParams card card-body bg-light">
+              <div class="appliedParams card card-body bg-light d-block">
                 <%= render_constraints(@search.query_params) %>
               </div>
             </div>
