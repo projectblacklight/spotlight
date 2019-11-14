@@ -4,14 +4,12 @@
       <% uploaded_items_block.files.each do |file| %>
         <div class="box" data-id="<%= file[:id] %>">
           <div class="contents">
-            <div class="thumbnail">
-              <img src='<%= file[:url] %>' alt='<%= file[:title] %>' />
-              <% if file[:caption].present? %>
-                <div class="caption">
-                  <%= file[:caption] %>
-                </div>
-              <% end %>
-            </div>
+            <img class="img-thumbnail" src='<%= file[:url] %>' alt='<%= file[:title] %>' />
+            <% if file[:caption].present? %>
+              <div class="caption">
+                <%= file[:caption] %>
+              </div>
+            <% end %>
           </div>
         </div>
       <% end %>

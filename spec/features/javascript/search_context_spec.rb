@@ -32,12 +32,11 @@ feature 'Search contexts' do
 
     # verify that the item + image widget is displaying an image from the document.
     within(:css, '.items-block') do
-      expect(page).to have_css('.thumbnail')
-      expect(page).to have_css('.thumbnail a img')
+      expect(page).to have_css('.img-thumbnail')
       expect(page).not_to have_css('.title')
     end
 
-    find('.thumbnail a').click
+    find('.items-block a').click
 
     expect(page).to have_selector '.breadcrumb a', text: 'Home'
   end
@@ -62,12 +61,11 @@ feature 'Search contexts' do
 
     # verify that the item + image widget is displaying an image from the document.
     within(:css, '.items-block') do
-      expect(page).to have_css('.thumbnail')
-      expect(page).to have_css('.thumbnail a img')
+      expect(page).to have_css('.img-thumbnail')
       expect(page).not_to have_css('.title')
     end
 
-    find('.thumbnail a').click
+    find('.items-block a').click
 
     expect(page).to have_selector '.breadcrumb a', text: 'Home'
     expect(page).to have_link 'FeaturePage1', href: spotlight.exhibit_feature_page_path(exhibit, feature_page)
