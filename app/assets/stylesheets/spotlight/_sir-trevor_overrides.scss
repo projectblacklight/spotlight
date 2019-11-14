@@ -45,7 +45,7 @@
 
 .form-group .st-text-block {
   @extend .form-control;
-  height: auto;
+  height: auto !important;
   min-height: 6em;
 }
 
