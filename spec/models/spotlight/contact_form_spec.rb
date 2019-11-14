@@ -1,9 +1,36 @@
 # frozen_string_literal: true
 
 describe Spotlight::ContactForm do
-  subject { described_class.new(name: 'Root', email: 'user@example.com').tap { |c| c.current_exhibit = exhibit } }
+  subject { described_class.new(name: 'Root', email: 'user@example.com') }
   let(:exhibit) { FactoryBot.build_stubbed(:exhibit) }
   let(:honeypot_field_name) { Spotlight::Engine.config.spambot_honeypot_email_field }
+
+  describe 'the email subject' do
+    it 'has a subject' do
+      expect(subject.headers[:subject]).to eq 'Blacklight exhibit feedback'
+    end
+
+    context 'with a current exhibit' do
+      before do
+        subject.current_exhibit = exhibit
+        exhibit.title = 'My exhibit'
+      end
+
+      it 'uses the site title in the email' do
+        expect(subject.headers[:subject]).to eq 'My exhibit exhibit feedback'
+      end
+    end
+
+    context 'with a site title' do
+      before do
+        Spotlight::Site.instance.update(title: 'Exhibits')
+      end
+
+      it 'uses the site title in the email' do
+        expect(subject.headers[:subject]).to eq 'Exhibits exhibit feedback'
+      end
+    end
+  end
 
   context 'with a site-wide contact email' do
     before { allow(Spotlight::Engine.config).to receive_messages default_contact_email: 'root@localhost' }
@@ -13,7 +40,10 @@ describe Spotlight::ContactForm do
     end
 
     context 'with exhibit-specific contacts' do
-      before { exhibit.contact_emails.create(email: 'curator@example.com', confirmed_at: Time.zone.now) }
+      before do
+        subject.current_exhibit = exhibit
+        exhibit.contact_emails.create(email: 'curator@example.com', confirmed_at: Time.zone.now)
+      end
 
       it 'appends exhibit-specific contacts as cc recipients' do
         expect(subject.headers[:cc]).to eq 'curator@example.com'
@@ -22,9 +52,11 @@ describe Spotlight::ContactForm do
   end
 
   context 'with exhibit-specific contacts' do
-    before { exhibit.contact_emails.create(email: 'curator@example.com', confirmed_at: Time.zone.now) }
-
-    before { exhibit.contact_emails.create(email: 'addl_curator@example.com', confirmed_at: Time.zone.now) }
+    before do
+      subject.current_exhibit = exhibit
+      exhibit.contact_emails.create(email: 'curator@example.com', confirmed_at: Time.zone.now)
+      exhibit.contact_emails.create(email: 'addl_curator@example.com', confirmed_at: Time.zone.now)
+    end
 
     it 'sends the email to the first contact' do
       expect(subject.headers[:to]).to eq 'curator@example.com'

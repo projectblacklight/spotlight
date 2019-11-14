@@ -20,16 +20,24 @@ module Spotlight
     def headers
       {
         to: to,
-        subject: "#{I18n.t(:'blacklight.application_name')} Contact Form",
+        subject: I18n.t(:'spotlight.contact_form.subject', application_name: application_name),
         from: %("#{name}" <#{email}>),
-        cc: current_exhibit.contact_emails.join(', ')
+        cc: contact_emails.join(', ')
       }
     end
 
     private
 
+    def application_name
+      current_exhibit&.title || Spotlight::Site.instance.title || I18n.t(:'blacklight.application_name')
+    end
+
     def to
-      Spotlight::Engine.config.default_contact_email || current_exhibit.contact_emails.first.to_s
+      Spotlight::Engine.config.default_contact_email || contact_emails.first.to_s
+    end
+
+    def contact_emails
+      current_exhibit&.contact_emails || []
     end
   end
 end
