@@ -36,11 +36,19 @@ module SirTrevorRails
       end
 
       def primary_caption?
-        primary_caption_field.present? && send(:'show-primary-caption')
+        primary_caption_field.present? && show_primary_caption?
+      end
+
+      def show_primary_caption?
+        ActiveModel::Type::Boolean.new.cast(send(:'show-primary-caption'))
       end
 
       def secondary_caption?
-        secondary_caption_field.present? && send(:'show-secondary-caption')
+        secondary_caption_field.present? && show_secondary_caption?
+      end
+
+      def show_secondary_caption?
+        ActiveModel::Type::Boolean.new.cast(send(:'show-secondary-caption'))
       end
 
       def zpr_link?
