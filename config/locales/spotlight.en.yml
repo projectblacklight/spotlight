@@ -275,6 +275,8 @@ en:
         confirm: Confirm my account
         instructions: 'You can confirm your account email through the link below:'
         welcome: Welcome %{email}!
+    contact_form:
+      subject: "%{application_name} exhibit feedback"
     contacts:
       edit:
         header: Edit Contact
