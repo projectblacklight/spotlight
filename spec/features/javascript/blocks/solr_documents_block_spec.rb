@@ -103,6 +103,16 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
     expect(page).to have_selector '.items-block .box', count: 1, visible: true
     expect(page).to have_content '[World map]'
     expect(page).not_to have_content "L'AMERIQUE"
+
+    visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
+    # display the title as the primary caption
+    within('.primary-caption') do
+      uncheck('Primary caption')
+    end
+
+    save_page
+    expect(page).to have_selector '.items-block .box', count: 1, visible: true
+    expect(page).not_to have_content '[World map]'
   end
 
   scenario 'should allow you to optionally display captions with the image', js: true do
