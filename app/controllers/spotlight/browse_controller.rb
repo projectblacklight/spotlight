@@ -6,8 +6,7 @@ module Spotlight
   # for the curator's create-update-delete actions)
   class BrowseController < Spotlight::ApplicationController
     load_and_authorize_resource :exhibit, class: 'Spotlight::Exhibit'
-    include Spotlight::Base
-    include Spotlight::SearchHelper
+    include Spotlight::Catalog
     include Blacklight::Facet
 
     load_and_authorize_resource :search, except: :index, through: :exhibit, parent: false
@@ -126,6 +125,10 @@ module Spotlight
 
     def presenter(document)
       view_context.index_presenter(document)
+    end
+
+    def render_save_this_search?
+      false
     end
   end
 end
