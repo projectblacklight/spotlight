@@ -16,9 +16,9 @@
           <%= translation_fields.label :value, t('spotlight.exhibits.translations.general.basic_settings.title'), class: 'col-form-label col-12 col-sm-2' %>
           <div class='col-11 col-sm-9 card card-body panel-translation'>
             <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
-            <p class="form-text">
+            <small class="form-text text-muted">
               <%= current_exhibit[:title] %>
-            </p>
+            </small>
           </div>
           <div class='col-1'>
             <% if translation.value.present? %>
@@ -37,9 +37,9 @@
           <%= translation_fields.label :value, t('spotlight.exhibits.translations.general.basic_settings.subtitle'), class: 'col-form-label col-12 col-sm-2' %>
           <div class='col-11 col-sm-9 card card-body panel-translation'>
             <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
-            <p class="form-text">
+            <small class="form-text text-muted">
               <%= current_exhibit[:subtitle] %>
-            </p>
+            </small>
           </div>
           <div class='col-1'>
             <% if translation.value.present? %>
@@ -58,9 +58,9 @@
           <%= translation_fields.label :value, t('spotlight.exhibits.translations.general.basic_settings.description'), class: 'col-form-label col-12 col-sm-2' %>
           <div class='col-11 col-sm-9 card card-body panel-translation'>
             <%= translation_fields.text_area_without_bootstrap :value, class: 'form-control' %>
-            <p class="form-text">
+            <small class="form-text text-muted">
               <%= current_exhibit.description %>
-            </p>
+            </small>
           </div>
           <div class='col-1'>
             <% if translation.value.present? %>
@@ -85,9 +85,9 @@
           <%= translation_fields.label :value, t('spotlight.exhibits.translations.general.main_menu.home'), class: 'col-form-label col-12 col-sm-2' %>
           <div class='col-11 col-sm-9 card card-body panel-translation'>
             <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
-            <p class="form-text">
+            <small class="form-text text-muted">
               <%= t(:'spotlight.curation.nav.home', locale: I18n.default_locale) %>
-            </p>
+            </small>
           </div>
           <div class='col-1'>
             <% if translation.value.present? %>
@@ -108,9 +108,9 @@
             <%= translation_fields.label :value, t("spotlight.exhibits.translations.general.main_menu.#{navigation.nav_type}", default: navigation.default_label), class: 'col-form-label col-12 col-sm-2' %>
             <div class='col-11 col-sm-9 card card-body panel-translation'>
               <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
-              <p class="form-text">
+              <small class="form-text text-muted">
                 <%= navigation[:label].presence || navigation.default_label %>
-              </p>
+              </small>
             </div>
             <div class='col-1'>
               <% if translation.value.present? %>
@@ -131,9 +131,9 @@
           <%= translation_fields.label :value, t('spotlight.catalog.breadcrumb.index'), class: 'col-form-label col-12 col-sm-2' %>
           <div class='col-11 col-sm-9 card card-body panel-translation'>
             <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
-            <p class="form-text">
+            <small class="form-text text-muted">
               <%= t(:'spotlight.catalog.breadcrumb.index', locale: I18n.default_locale) %>
-            </p>
+            </small>
           </div>
           <div class='col-1'>
             <% if translation.value.present? %>
