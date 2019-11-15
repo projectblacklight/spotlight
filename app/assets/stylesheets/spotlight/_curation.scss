@@ -79,7 +79,7 @@
   display: none;
 }
 
-.card-body.page {
+.card.page-admin {
   &:hover {
     @include panel-hover-highlighting;
   }
