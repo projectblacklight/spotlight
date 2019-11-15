@@ -106,8 +106,11 @@ $image-overlay-bottom-margin: 36px;
 
 .search-box-container {
   margin: 0 auto;
-  text-align: center;
   width: 100%;
+
+  .col-form-label {
+    text-align: right;
+  }
 
   .browse-search-form {
     .browse-search-expand {
