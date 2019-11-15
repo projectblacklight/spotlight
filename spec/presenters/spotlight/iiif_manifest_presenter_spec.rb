@@ -13,7 +13,6 @@ describe Spotlight::IiifManifestPresenter do
 
   before do
     allow(resource).to receive(:uploaded_resource).and_return(uploaded_resource)
-    allow(controller).to receive(:request).and_return(double(host_with_port: 'localhost:3000'))
   end
 
   describe 'public methods' do
@@ -119,8 +118,10 @@ describe Spotlight::IiifManifestPresenter do
 
     describe '#iiif_url' do
       it 'returns the info_url from the Riiif engine routes, minus the trailing .json' do
-        controller.request.stub(:protocol).and_return('https')
-        expect(subject.send(:iiif_url)).to eq('https://localhost:3000/images/2')
+        riiif_route_helper = double(info_url: 'https://iiif.test/path/info.json')
+        allow(controller).to receive(:riiif).and_return(riiif_route_helper)
+
+        expect(subject.send(:iiif_url)).to eq('https://iiif.test/path')
       end
     end
   end
