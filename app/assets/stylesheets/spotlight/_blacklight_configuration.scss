@@ -59,6 +59,12 @@
 #nested-fields {
   margin-bottom: 1em;
 
+  .metadata_fields {
+    .checkbox-cell {
+      vertical-align: middle;
+    }
+  }
+
   .metadata-select {
     display: inline-block;
     min-width: 72px;
