@@ -74,11 +74,11 @@
           <td class="role">
             <%= user.roles.map { |r| r.role.titleize }.uniq.join(", ") %>
           </td>
-          <td>
+          <td class="text-right">
             <% if user.superadmin? %>
-              <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-danger pull-right') unless user == current_user %>
+              <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-danger') unless user == current_user %>
             <% else %>
-              <%= link_to(t('.update'), admin_user_path(user), method: :patch, class: 'btn btn-default pull-right') %>
+              <%= link_to(t('.update'), admin_user_path(user), method: :patch, class: 'btn btn-default') %>
             <% end %>
           </td>
         </tr>
