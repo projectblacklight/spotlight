@@ -1,7 +1,7 @@
 <div class="container">
-  <div class="row">
+  <div class="row justify-content-center">
     <% contact_form ||= Spotlight::ContactForm.new current_url: request.original_url %>
-    <%= bootstrap_form_for contact_form, url: spotlight.exhibit_contact_form_path(current_exhibit, contact_form), layout: :horizontal, label_col: 'col-sm-3', control_col: 'col-sm-9', html: { class: 'col-md-offset-2 col-md-8 '} do |f| %>
+    <%= bootstrap_form_for contact_form, url: spotlight.exhibit_contact_form_path(current_exhibit, contact_form), layout: :horizontal, label_col: 'col-sm-3', control_col: 'col-sm-9', html: { class: 'col-md-offset-2 col-md-8 my-3 '} do |f| %>
 
       <h2><%= t(:'.title') %></h2>
       <%= f.text_field :name %>
