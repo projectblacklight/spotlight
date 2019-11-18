@@ -26,6 +26,12 @@
   }
 }
 
+#documents.documents-list {
+  .document-thumbnail a > img {
+    max-width: 100px;
+  }
+}
+
 #document {
   ul.tags {
     text-align: center;
