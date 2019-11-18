@@ -1,5 +1,5 @@
 <%= cache [@exhibit, search, I18n.locale] do %>
-  <div class="col-sm-4 col-12 category">
+  <div class="col-md-4 col-12 category">
     <%= link_to spotlight.exhibit_browse_path(@exhibit, search) do %>
       <div class="image-overlay">
         <%= image_tag(search.thumbnail_image_url || 'spotlight/default_browse_thumbnail.jpg', class: 'img-responsive') %>
