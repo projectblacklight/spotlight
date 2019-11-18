@@ -24,7 +24,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_grid_block.html.erb', type
     expect(rendered).to have_selector 'h3', text: 'Some title'
     expect(rendered).to have_content 'Some text'
     expect(rendered).to have_selector '.box', text: 'thumb', count: 3
-    expect(rendered).to have_selector '.items-col.pull-left'
+    expect(rendered).to have_selector '.items-col'
     expect(rendered).to have_selector '.text-col'
   end
 end

@@ -1,5 +1,5 @@
-<div class="content-block item-text row">
-  <div class="<%= 'col-md-6' if oembed_block.text? %> col-12 oembed-block pull-<%= oembed_block.content_align %>">
+<div class="content-block item-text row <%= 'flex-row-reverse' if oembed_block.content_align == 'right' %>">
+  <div class="<%= 'col-md-6' if oembed_block.text? %> col-12 oembed-block">
     <%= render_oembed_tag oembed_block.url %>
   </div>
 
