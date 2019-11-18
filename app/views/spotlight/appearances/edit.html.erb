@@ -78,13 +78,15 @@
                           <%= label.hidden_field :id %>
                           <div class="row">
                             <div class="col-sm-8">
-                              <div class='publish-control h6'>
-                                <%= label.check_box_without_bootstrap :display %>
-                              </div>
                               <div class="main">
-                                <h3 class="card-title h6 mb-0" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
-                                  <a href="#edit-in-place" class="field-label edit-in-place"><%= label.object.label_or_default %></a>
-                                  <%= label.hidden_field :label, data: {:"default-value" => label.object.default_label, :"edit-field-target" => 'true'} %>
+                                <h3 class="card-title h6 mb-0">
+                                  <span class='publish-control h6'>
+                                    <%= label.check_box_without_bootstrap :display %>
+                                  </span>
+                                  <span class="d-inline-block w-75" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+                                    <a href="#edit-in-place" class="field-label edit-in-place"><%= label.object.label_or_default %></a>
+                                    <%= label.hidden_field :label, data: {:"default-value" => label.object.default_label, :"edit-field-target" => 'true'} %>
+                                  </span>
                                 </h3>
                               </div>
                             </div>
