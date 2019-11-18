@@ -1,11 +1,9 @@
 .exhibit-card {
   box-sizing: border-box;
-  float: left;
   height: $exhibit-card-height;
-  margin: 0 -1 * $exhibit-card-gutter $exhibit-card-gutter $exhibit-card-gutter;
+  margin-bottom: 2rem;
   //               image width        +       gutter         + border (x2)
   max-width: $exhibit-card-image-size + $exhibit-card-gutter + 2px;
-  padding: 0 $exhibit-card-gutter 0 0;
   perspective: 1000; // for flip animation
   position: relative;
 
@@ -81,6 +79,7 @@
   transform: rotateY(-180deg);
 
   .card-title {
+    @extend .text-center;
     border-bottom: 1px dotted $exhibit-card-border;
     line-height: $headings-line-height;
     margin-bottom: $padding-base-vertical;
@@ -107,14 +106,11 @@
   display: inline-block;
 }
 
-$container-sm: 540px;
-$container-md: 720px;
-
 // between the small and medium breakpoints, reduce the size of the image by a little bit
 @media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("lg")) {
 
   // calculate the size of one full grid column
-  $reduce-exhibit-card-image-size: ((($container-sm - $grid-gutter-width) / $grid-columns) - ($grid-gutter-width / 2));
+  $reduce-exhibit-card-image-size: (((map-get($container-max-widths, "md") - $grid-gutter-width) / $grid-columns) - ($grid-gutter-width / 2));
 
   .exhibit-card,
   .card-face {
@@ -144,7 +140,7 @@ $container-md: 720px;
   .exhibit-card {
 
     // each card is 3 columns wide
-    max-width: 3 * ($container-md / $grid-columns) - 5px;
+    max-width: 3 * (map-get($container-max-widths, "lg") / $grid-columns) - 5px;
   }
 }
 
@@ -152,7 +148,7 @@ $container-md: 720px;
 @media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("md")) {
   .exhibit-card {
 
-    // each card is 4 columns wide
-    max-width: 4 * ($container-sm / $grid-columns) - 5px;
+    // each card is 6 columns wide
+    max-width: 6 * (map-get($container-max-widths, "md") / $grid-columns) - 5px;
   }
 }
