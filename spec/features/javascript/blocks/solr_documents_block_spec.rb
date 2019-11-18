@@ -176,9 +176,9 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     # Select to align the text right
-    choose 'Right'
+    choose 'Left'
     # this seems silly, but also seems to help with the flappy-ness of this spec
-    expect(find_field('Right', checked: true)).to be_checked
+    expect(find_field('Left', checked: true)).to be_checked
 
     # fill in the content editable div
     content_editable = find('.st-text-block')
@@ -188,11 +188,11 @@ feature 'Solr Document Block', feature: true, versioning: true, default_max_wait
     save_page
 
     # verify that the item + image widget is displaying image and title from the requested document.
-    within(:css, '.items-block') do
+    within(:css, '.items-block.flex-row-reverse') do
       within('.text-col') do
         expect(page).to have_content 'zzz'
       end
-      expect(page).to have_css('.items-col.pull-left')
+      expect(page).to have_css('.items-col')
     end
   end
 
