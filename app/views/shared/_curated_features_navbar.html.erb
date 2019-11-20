@@ -5,7 +5,7 @@
       <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><%= navigation.label_or_default %> <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <% published_top_level_feature_pages.each do |page| %>
-          <li class="dropdown-item"><%= link_to page.title, [spotlight, page.exhibit, page] %></li>
+          <li><%= link_to page.title, [spotlight, page.exhibit, page], class: 'dropdown-item' %></li>
         <% end %>
       </ul>
     </li>
