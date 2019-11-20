@@ -28,6 +28,6 @@ module Spotlight
                              class: Spotlight::FeaturePage,
                              extend: NestedPageRepresenter
 
-    property :thumbnail, class: Spotlight::FeaturedImage, decorator: FeaturedImageRepresenter
+    property :thumbnail, class: Spotlight::FeaturedImage, decorator: FeaturedImageRepresenter, if: Spotlight::ExhibitExportSerializer.config?(:attachments)
   end
 end

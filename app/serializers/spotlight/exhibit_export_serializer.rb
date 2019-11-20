@@ -28,57 +28,64 @@ module Spotlight
   # Serialize an exhibit with all the data needed to reconstruct it
   # in a different environment
   class ExhibitExportSerializer < Roar::Decorator
+    def self.config?(config)
+      lambda do |**_args|
+        Spotlight::Engine.config.exports[config]
+      end
+    end
+
     include Roar::JSON
 
     (Spotlight::Exhibit.attribute_names - %w(id slug masthead_id thumbnail_id)).each do |prop|
-      property prop
+      property prop, if: config?(:config)
     end
 
-    property :theme, setter: lambda { |fragment:, represented:, **|
+    property :theme, if: config?(:config), setter: lambda { |fragment:, represented:, **|
       represented.theme = fragment if Spotlight::Engine.config.exhibit_themes.include? fragment
     }
 
+    collection :main_navigations, class: Spotlight::MainNavigation, decorator: MainNavigationRepresenter, if: config?(:config)
+    collection :contact_emails, class: Spotlight::ContactEmail, if: config?(:config) do
+      (Spotlight::ContactEmail.attribute_names - %w(id exhibit_id confirmation_token)).each do |prop|
+        property prop
+      end
+    end
+
     collection :searches, populator: ->(fragment, options) { options[:represented].searches.find_or_initialize_by(slug: fragment['slug']) },
+                          if: config?(:pages),
                           class: Spotlight::Search do
       (Spotlight::Search.attribute_names - %w(id scope exhibit_id masthead_id thumbnail_id)).each do |prop|
         property prop
       end
 
-      property :masthead, class: Spotlight::Masthead, decorator: FeaturedImageRepresenter
+      property :masthead, class: Spotlight::Masthead,
+                          decorator: FeaturedImageRepresenter,
+                          if: Spotlight::ExhibitExportSerializer.config?(:attachments)
 
-      property :thumbnail, class: Spotlight::FeaturedImage, decorator: FeaturedImageRepresenter
+      property :thumbnail, class: Spotlight::FeaturedImage,
+                           decorator: FeaturedImageRepresenter,
+                           if: Spotlight::ExhibitExportSerializer.config?(:attachments)
     end
 
     collection :about_pages, populator: ->(fragment, options) { options[:represented].about_pages.find_or_initialize_by(slug: fragment['slug']) },
+                             if: config?(:pages),
                              class: Spotlight::AboutPage,
                              decorator: PageRepresenter
 
     collection :feature_pages, populator: ->(fragment, options) { options[:represented].feature_pages.find_or_initialize_by(slug: fragment['slug']) },
                                getter: ->(_opts) { feature_pages.at_top_level },
                                class: Spotlight::FeaturePage,
-                               decorator: NestedPageRepresenter
+                               decorator: NestedPageRepresenter,
+                               if: config?(:pages)
 
     property :home_page, populator: ->(_fragment, options) { options[:represented].home_page },
                          class: Spotlight::HomePage,
-                         decorator: PageRepresenter
-
-    property :masthead, class: Spotlight::Masthead, decorator: FeaturedImageRepresenter
-
-    property :thumbnail, class: Spotlight::ExhibitThumbnail, decorator: FeaturedImageRepresenter
-
-    collection :main_navigations, class: Spotlight::MainNavigation, decorator: MainNavigationRepresenter
-
-    property :blacklight_configuration, class: Spotlight::BlacklightConfiguration, decorator: ConfigurationRepresenter
-
-    collection :custom_fields, populator: ->(fragment, options) { options[:represented].custom_fields.find_or_initialize_by(slug: fragment['slug']) },
-                               class: Spotlight::CustomField do
-      (Spotlight::CustomField.attribute_names - %w(id exhibit_id)).each do |prop|
-        property prop
-      end
-    end
+                         decorator: PageRepresenter,
+                         if: config?(:pages)
 
     collection :contacts, populator: ->(fragment, options) { options[:represented].contacts.find_or_initialize_by(slug: fragment['slug']) },
-                          class: Spotlight::Contact do
+                          class: Spotlight::Contact,
+                          if: config?(:pages) do
       (Spotlight::Contact.attribute_names - %w(id exhibit_id)).each do |prop|
         property prop
       end
@@ -86,13 +93,22 @@ module Spotlight
       property :avatar, class: Spotlight::ContactImage, decorator: FeaturedImageRepresenter
     end
 
-    collection :contact_emails, class: Spotlight::ContactEmail do
-      (Spotlight::ContactEmail.attribute_names - %w(id exhibit_id confirmation_token)).each do |prop|
+    property :masthead, class: Spotlight::Masthead, decorator: FeaturedImageRepresenter, if: config?(:attachments)
+
+    property :thumbnail, class: Spotlight::ExhibitThumbnail, decorator: FeaturedImageRepresenter, if: config?(:attachments)
+
+    property :blacklight_configuration, class: Spotlight::BlacklightConfiguration, decorator: ConfigurationRepresenter, if: config?(:blacklight_configuration)
+
+    collection :custom_fields, populator: ->(fragment, options) { options[:represented].custom_fields.find_or_initialize_by(slug: fragment['slug']) },
+                               class: Spotlight::CustomField,
+                               if: config?(:blacklight_configuration) do
+      (Spotlight::CustomField.attribute_names - %w(id exhibit_id)).each do |prop|
         property prop
       end
     end
 
-    collection :solr_document_sidecars, class: Spotlight::SolrDocumentSidecar do
+    collection :solr_document_sidecars, class: Spotlight::SolrDocumentSidecar,
+                                        if: config?(:resources) do
       (Spotlight::SolrDocumentSidecar.attribute_names - %w(id document_type exhibit_id)).each do |prop|
         property prop
       end
@@ -106,7 +122,8 @@ module Spotlight
       delegate :document_type=, to: :represented
     end
 
-    collection :owned_taggings, class: ActsAsTaggableOn::Tagging do
+    collection :owned_taggings, class: ActsAsTaggableOn::Tagging,
+                                if: config?(:resources) do
       property :taggable_id
       property :taggable_type
       property :context
@@ -121,7 +138,7 @@ module Spotlight
       end
     end
 
-    collection :attachments, class: Spotlight::Attachment do
+    collection :attachments, class: Spotlight::Attachment, if: config?(:attachments) do
       (Spotlight::Attachment.attribute_names - %w(id exhibit_id file)).each do |prop|
         property prop
       end
@@ -141,7 +158,8 @@ module Spotlight
       end
     end
 
-    collection :resources, class: ->(options) { options[:fragment].key?('type') ? options[:fragment]['type'].constantize : Spotlight::Resource } do
+    collection :resources, class: ->(options) { options[:fragment].key?('type') ? options[:fragment]['type'].constantize : Spotlight::Resource },
+                           if: config?(:resources) do
       (Spotlight::Resource.attribute_names - %w(id upload_id exhibit_id)).each do |prop|
         property prop
       end

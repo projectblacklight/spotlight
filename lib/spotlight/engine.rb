@@ -254,5 +254,13 @@ module Spotlight
 
     config.routes = OpenStruct.new
     config.routes.solr_documents = {}
+
+    config.exports = {
+      attachments: true,
+      blacklight_configuration: true,
+      config: true,
+      pages: true,
+      resources: true
+    }
   end
 end
