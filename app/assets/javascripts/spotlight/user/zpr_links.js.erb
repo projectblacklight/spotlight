@@ -3,10 +3,10 @@ Spotlight.onLoad(function(){
     $('#blacklight-modal .modal-content').html('<div id="osd-modal-container"></div>');
     var controls = [
       '<div class="controls">',
-      '  <a id="osd-zoom-in"><%= Blacklight::Icon.new('add_circle').file_source %></a>',
-      '  <a id="osd-zoom-out"><%= Blacklight::Icon.new('remove_circle').file_source %></a>',
-      '  <a id="osd-home"><%= Blacklight::Icon.new('resize_small').file_source %></a>',
-      '  <a id="osd-full-page"><%= Blacklight::Icon.new('custom_fullscreen').file_source %></a>',
+      '  <a id="osd-zoom-in"><%= Blacklight::Icon.new('add_circle').file_source.strip %></a>',
+      '  <a id="osd-zoom-out"><%= Blacklight::Icon.new('remove_circle').file_source.strip %></a>',
+      '  <a id="osd-home"><%= Blacklight::Icon.new('resize_small').file_source.strip %></a>',
+      '  <a id="osd-full-page"><%= Blacklight::Icon.new('custom_fullscreen').file_source.strip %></a>',
       '</div>'
     ].join("\n");
 
