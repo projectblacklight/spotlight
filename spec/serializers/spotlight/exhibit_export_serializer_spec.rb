@@ -360,4 +360,32 @@ describe Spotlight::ExhibitExportSerializer do
       end
     end
   end
+
+  context 'with engine configuration disabling all export types' do
+    let(:exports) do
+      {}
+    end
+
+    before do
+      allow(Spotlight::Engine.config).to receive(:exports).and_return(exports)
+    end
+
+    it 'includes nothing' do
+      expect(subject).to be_blank
+    end
+  end
+
+  context 'with engine configuration enabling only pages' do
+    let(:exports) do
+      { pages: true }
+    end
+
+    before do
+      allow(Spotlight::Engine.config).to receive(:exports).and_return(exports)
+    end
+
+    it 'includes only the page-related data' do
+      expect(subject.keys).to match_array %w[searches about_pages feature_pages home_page contacts]
+    end
+  end
 end
