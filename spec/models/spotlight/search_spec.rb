@@ -64,16 +64,6 @@ describe Spotlight::Search, type: :model do
         expect(subject.search_params.to_hash).to include 'fq' => array_including("{!term f=spotlight_exhibit_slug_#{exhibit.slug}_bsi}true")
       end
     end
-
-    context 'with a multivalued title field' do
-      before do
-        blacklight_config.index.title_field = %w[full_title_tesim title_ssim]
-      end
-
-      it 'flattens the fields' do
-        expect(subject.search_params.to_hash['fl']).to include 'full_title_tesim', 'title_ssim'
-      end
-    end
   end
 
   describe '#repository' do
