@@ -24,6 +24,6 @@ describe 'spotlight/browse/search', type: :view do
 
   it 'displays the item count' do
     render partial: 'spotlight/browse/search', locals: { search: search }
-    expect(response).to have_selector 'small', text: /#{search.documents.size} items/i
+    expect(response).to have_selector 'small', text: /#{search.count} items/i
   end
 end

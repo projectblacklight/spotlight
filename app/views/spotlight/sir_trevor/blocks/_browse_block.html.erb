@@ -12,7 +12,7 @@
               </p>
 
               <% if browse_block.display_item_counts? %>
-                <span class="item-count"><%= t(:'.items', count: search.documents.size) %></span>
+                <span class="item-count"><%= t(:'.items', count: search.count) %></span>
               <% end %>
             </div>
           </div>
