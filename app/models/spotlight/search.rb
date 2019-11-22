@@ -56,7 +56,7 @@ module Spotlight
     end
 
     def search_params
-      search_service.search_builder.with(query_params.with_indifferent_access).merge(facet: false, fl: default_search_fields)
+      search_service.search_builder.with(query_params.with_indifferent_access).merge(facet: false)
     end
 
     def merge_params_for_search(params, blacklight_config)
@@ -69,14 +69,6 @@ module Spotlight
 
     def repository
       @repository ||= Blacklight::Solr::Repository.new(blacklight_config)
-    end
-
-    def default_search_fields
-      [
-        blacklight_config.document_model.unique_key,
-        blacklight_config.index.title_field,
-        blacklight_config.index.thumbnail_field
-      ].flatten.compact
     end
 
     def should_generate_new_friendly_id?
