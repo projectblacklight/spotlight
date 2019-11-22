@@ -23,14 +23,14 @@ describe 'spotlight/browse/show', type: :view do
   it 'has a heading and item count when there is no current search masthead' do
     render
     expect(response).to have_selector 'h1', text: search.title
-    expect(response).to have_selector '.item-count', text: "#{search.documents.size} items"
+    expect(response).to have_selector '.item-count', text: "#{search.count} items"
   end
 
   it 'does not have the heading and item count when there is a current search masthead' do
     allow(view).to receive_messages(resource_masthead?: true)
     render
     expect(response).to_not have_selector 'h1', text: search.title
-    expect(response).to_not have_selector '.item-count', text: "#{search.documents.size} items"
+    expect(response).to_not have_selector '.item-count', text: "#{search.count} items"
   end
 
   it 'has an edit button' do
