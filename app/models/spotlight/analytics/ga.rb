@@ -34,7 +34,7 @@ module Spotlight
       end
 
       def self.site
-        @site ||= user.accounts.first.profiles.first { |x| x.web_property_id = Spotlight::Engine.config.ga_web_property_id }
+        @site ||= user.accounts.first.profiles.find { |x| x.web_property_id == Spotlight::Engine.config.ga_web_property_id }
       end
 
       def self.exhibit_data(exhibit, options)
