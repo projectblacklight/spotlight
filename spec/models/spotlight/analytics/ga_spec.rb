@@ -2,13 +2,13 @@
 
 describe Spotlight::Analytics::Ga do
   it 'does not be enabled without configuration' do
-    expect(described_class.enabled?).to be_falsey
+    expect(subject.enabled?).to be_falsey
   end
 
-  describe '.site' do
+  describe '#site' do
     it 'selects the correct profile based on the web property id' do
       allow(Spotlight::Engine.config).to receive_messages(ga_web_property_id: 'bar')
-      allow(described_class).to receive_message_chain(
+      allow(subject).to receive_message_chain(
         :user,
         :accounts,
         :first,
@@ -16,7 +16,7 @@ describe Spotlight::Analytics::Ga do
           double('profile1', web_property_id: 'foo'), double('profile2', web_property_id: 'bar')
         ]
       )
-      expect(described_class.site.web_property_id).to eq 'bar'
+      expect(subject.site.web_property_id).to eq 'bar'
     end
   end
 end

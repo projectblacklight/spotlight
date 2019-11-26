@@ -186,10 +186,12 @@ describe Spotlight::Exhibit, type: :model do
   describe '#analytics' do
     subject { FactoryBot.create(:exhibit) }
     let(:ga_data) { OpenStruct.new(pageviews: 123) }
+    let(:mock_analytics) { double(Spotlight::Analytics::Ga) }
 
     before do
-      allow(Spotlight::Analytics::Ga).to receive(:enabled?).and_return(true)
-      allow(Spotlight::Analytics::Ga).to receive(:exhibit_data).with(subject, hash_including(:start_date)).and_return(ga_data)
+      allow(Spotlight::Analytics::Ga).to receive(:new).and_return(mock_analytics)
+      allow(mock_analytics).to receive(:enabled?).and_return(true)
+      allow(mock_analytics).to receive(:exhibit_data).with(subject, hash_including(:start_date)).and_return(ga_data)
     end
 
     it 'requests analytics data' do
@@ -200,10 +202,12 @@ describe Spotlight::Exhibit, type: :model do
   describe '#page_analytics' do
     subject { FactoryBot.create(:exhibit) }
     let(:ga_data) { [OpenStruct.new(pageviews: 123)] }
+    let(:mock_analytics) { double(Spotlight::Analytics::Ga) }
 
     before do
-      allow(Spotlight::Analytics::Ga).to receive(:enabled?).and_return(true)
-      allow(Spotlight::Analytics::Ga).to receive(:page_data).with(subject, hash_including(:start_date)).and_return(ga_data)
+      allow(Spotlight::Analytics::Ga).to receive(:new).and_return(mock_analytics)
+      allow(mock_analytics).to receive(:enabled?).and_return(true)
+      allow(mock_analytics).to receive(:page_data).with(subject, hash_including(:start_date)).and_return(ga_data)
     end
 
     it 'requests analytics data' do

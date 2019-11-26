@@ -20,7 +20,7 @@ describe 'spotlight/dashboards/analytics.html.erb', type: :view do
 
   context 'with a configured analytics integration' do
     before do
-      allow(Spotlight::Analytics::Ga).to receive(:enabled?).and_return(true)
+      allow(current_exhibit).to receive(:analytics_provider).and_return(double(Spotlight::Analytics::Ga, enabled?: true))
       stub_template 'spotlight/dashboards/_analytics.html.erb' => 'Analytics data'
     end
 

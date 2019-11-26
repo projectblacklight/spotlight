@@ -4,7 +4,7 @@
 
 <%= curation_page_title %>
 
-<% if Spotlight::Engine.config.analytics_provider and Spotlight::Engine.config.analytics_provider.enabled? %>
+<% if current_exhibit.analytics_provider&.enabled? %>
   <%= render 'analytics' %>
 <% else %>
   <div class="empty-page-block">
