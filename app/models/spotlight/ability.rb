@@ -19,7 +19,7 @@ module Spotlight
       can :manage, [Spotlight::BlacklightConfiguration, Spotlight::ContactEmail, Spotlight::Language], exhibit_id: user.admin_roles.pluck(:resource_id)
       can :manage, Spotlight::Role, resource_id: user.admin_roles.pluck(:resource_id), resource_type: 'Spotlight::Exhibit'
 
-      can :manage, PaperTrail::Version if user.roles.any?
+      can :manage, [PaperTrail::Version, Spotlight::FeaturedImage] if user.roles.any?
 
       # exhibit curator
       can :manage, [
