@@ -22,10 +22,8 @@ module Spotlight
       end
     end
 
-    private
-
     def analytics_provider
-      Spotlight::Engine.config.analytics_provider
+      @analytics_provider ||= Spotlight::Engine.config.analytics_provider.new
     end
   end
 end
