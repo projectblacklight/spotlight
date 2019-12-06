@@ -3,10 +3,11 @@
 }
 
 .page-header {
-  @extend .mb-3;
+  @extend .mb-4;
 
   border-bottom: none;
   small {
+    @extend .text-muted;
     font-size: $h2-font-size;
     display: block;
   }
