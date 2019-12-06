@@ -20,7 +20,7 @@ feature 'Browse pages' do
           expect(page).to have_selector 'h1', text: 'Some Saved Search'
         end
 
-        expect(page).not_to have_selector '.masthead .h1', text: 'Some Saved Search'
+        expect(page).not_to have_selector '.masthead .h2', text: 'Some Saved Search'
       end
 
       it 'shows the search bar' do
@@ -57,7 +57,7 @@ feature 'Browse pages' do
       it 'has a contextual masthead with the title and resource count' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
-        expect(page).to have_selector '.masthead .h1', text: 'Some Saved Search'
+        expect(page).to have_selector '.masthead .h2', text: 'Some Saved Search'
 
         within '#main-container' do
           expect(page).not_to have_selector 'h1', text: 'Some Saved Search'

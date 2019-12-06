@@ -20,7 +20,8 @@
 
 
   .site-title {
-    padding-bottom: $padding-base-vertical;
+    margin-top: $padding-large-vertical;
+    padding-bottom: $padding-base-vertical / 2;
     position: relative;
     white-space: nowrap;
   }
@@ -28,9 +29,9 @@
   small {
     @extend .d-none;
     @extend .d-sm-block;
+    @extend .py-2;
 
-    padding-bottom: $padding-base-vertical;
-    padding-top: $padding-base-vertical;
+    font-size: $h4-font-size;
   }
 
   .navbar {
@@ -66,10 +67,9 @@
 
 .site-title-container {
   @extend .px-4;
+  @extend .py-2;
 
   max-height: $masthead-height - $navbar-brand-height;
-  padding-bottom: $padding-large-vertical;
-  padding-top: $padding-large-vertical;
 }
 
 .image-masthead {
@@ -78,9 +78,9 @@
     background-color: $navbar-transparent-page-bg;
   }
 
-  .h1 {
+  .h2 {
     color: $white;
-    text-shadow: 1px 1px 0 $black;
+    text-shadow: 1px 1px 0 $gray-900;
   }
 
   small {

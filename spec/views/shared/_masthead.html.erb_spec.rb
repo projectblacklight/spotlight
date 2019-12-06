@@ -13,7 +13,7 @@ describe 'shared/_masthead', type: :view do
 
   it 'has the site title and subtitle' do
     render
-    expect(rendered).to have_selector '.h1', text: exhibit.title
+    expect(rendered).to have_selector '.h2', text: exhibit.title
     expect(rendered).to have_selector 'small', text: exhibit.subtitle
   end
 
