@@ -6,6 +6,11 @@ module Spotlight
   class ReindexJob < ActiveJob::Base
     queue_as :default
 
+    # The validity checker is a seam for implementations to expire unnecessary
+    # indexing tasks if it becomes redundant while waiting in the job queue.
+    class_attribute :validity_checker, default: Spotlight::ValidityChecker.new
+    self.validity_checker ||= Spotlight::ValidityChecker.new if Rails.version < '5.2'
+
     before_perform do |job|
       job_log_entry = log_entry(job)
       next unless job_log_entry
@@ -30,7 +35,15 @@ module Spotlight
       job_log_entry.succeeded! if job_log_entry
     end
 
-    def perform(exhibit_or_resources, log_entry = nil)
+    def self.perform_later(exhibit_or_resources, log_entry = nil)
+      validity_token = validity_checker.mint(exhibit_or_resources)
+
+      super(exhibit_or_resources, log_entry, validity_token)
+    end
+
+    def perform(exhibit_or_resources, log_entry = nil, validity_token = nil)
+      return unless still_valid?(exhibit_or_resources, validity_token)
+
       resource_list(exhibit_or_resources).each do |resource|
         resource.reindex(log_entry)
       end
@@ -50,6 +63,12 @@ module Spotlight
 
     def log_entry(job)
       job.arguments.second if job.arguments.second.is_a?(Spotlight::ReindexingLogEntry)
+    end
+
+    def still_valid?(exhibit_or_resources, validity_token)
+      return true unless validity_token
+
+      validity_checker.check exhibit_or_resources, validity_token
     end
   end
 end
