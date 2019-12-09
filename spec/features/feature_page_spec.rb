@@ -42,7 +42,7 @@ describe 'Feature page', type: :feature, versioning: true do
         # the sidebar should display
         within('#sidebar') do
           # the current page should be the sidebar header
-          expect(page).to have_css('h4', text: parent_feature_page.title)
+          expect(page).to have_css('li', text: parent_feature_page.title)
           # within the sidebar navigation
           within('ol.sidenav') do
             # there should be a link to the child page

@@ -1,8 +1,3 @@
-@mixin link-highlighting() {
-  // background-color: $nav-link-hover-bg;
-  text-decoration: none;
-}
-
 @mixin edit-in-place-highlighting() {
   background: #F7F7D0;
   cursor: text;
