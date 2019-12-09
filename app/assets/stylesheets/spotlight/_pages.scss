@@ -69,29 +69,15 @@
   ol.sidenav {
     li {
       color: $gray-900;
-      a {
-        &:hover, &:focus {
-          @include link-highlighting();
-        }
-      }
-      > h4 {
-        font-size: ceil(($font-size-base * 1.05));
-        margin-top: 3 * $padding-large-vertical;
-        > a {
-          color: $text-color;
-          display: block;
-          font-weight: 400;
-        }
-      }
+      margin-top: $padding-large-vertical;
     }
+
     ol.subsection {
       padding-left: 0;
       li {
         list-style: square;
         margin-left: 18px;
-        > a {
-          display: block;
-        }
+        margin-top: $padding-small-vertical;
       }
     }
   }

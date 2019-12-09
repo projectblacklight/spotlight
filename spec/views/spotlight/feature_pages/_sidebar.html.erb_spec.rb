@@ -21,10 +21,10 @@ describe 'spotlight/feature_pages/_sidebar.html.erb', type: :view do
     allow(view).to receive(:current_page?).and_return(true, false)
     render
     # Checking that they are sorted accoding to weight
-    expect(rendered).to have_selector 'li.active h4', text: 'Parent Page'
+    expect(rendered).to have_selector 'li.active', text: 'Parent Page'
     expect(rendered).to have_selector 'ol.sidenav li:nth-child(1) a', text: 'Five'
     expect(rendered).to have_selector 'ol.sidenav li:nth-child(2) a', text: 'Three'
-    expect(rendered).to have_selector 'li h4 a', text: 'Two' # a different parent page
+    expect(rendered).to have_selector 'li a', text: 'Two' # a different parent page
     expect(rendered).to have_link 'Four' # different parent
     expect(rendered).not_to have_link 'Six' # not published
     expect(rendered).not_to have_link 'Seven' # different exhibit
@@ -34,7 +34,7 @@ describe 'spotlight/feature_pages/_sidebar.html.erb', type: :view do
     assign(:page, child1)
     render
     # Checking that they are sorted accoding to weight
-    expect(rendered).to have_selector 'h4', text: 'Parent Page'
+    expect(rendered).to have_selector 'li', text: 'Parent Page'
     expect(rendered).to have_selector 'ol.sidenav li:nth-child(1) a', text: 'Five'
     expect(rendered).to have_selector 'ol.sidenav li:nth-child(2) a', text: 'Three'
     expect(rendered).to have_content 'Two' # not selected page
