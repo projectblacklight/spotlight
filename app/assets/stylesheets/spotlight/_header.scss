@@ -28,7 +28,7 @@
 
   small {
     @extend .d-none;
-    @extend .d-sm-block;
+    @extend .d-md-block;
     @extend .py-2;
 
     font-size: $h4-font-size;
