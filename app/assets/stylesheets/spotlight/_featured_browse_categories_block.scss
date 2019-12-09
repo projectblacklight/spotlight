@@ -1,5 +1,5 @@
 $featured-browse-category-border-color: $border-color;
-$featured-browse-category-caption-color: $gray-700;
+$featured-browse-category-caption-color: $white;
 $container-tablet: 720px;
 $container-desktop: 960px;
 $container-large-desktop: 1140px;
@@ -44,7 +44,7 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
   .category-caption {
     color: $featured-browse-category-caption-color;
     position: absolute;
-    bottom: $line-height-lg;
+    bottom: 16px; // assumes default font-size of 16px, using browser default of 1 rem == 16px
     text-align: center;
     text-shadow: 0 1px 0 #000000;
     width: 100%;
@@ -53,7 +53,7 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
     font-size: $font-size-lg;
     line-height: 1.2;
     margin: 0;
-    padding: spacers(1);
+    padding: $spacer / 4;
   }
   .item-count {
     font-size: $font-size-base;
