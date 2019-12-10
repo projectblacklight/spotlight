@@ -11,14 +11,19 @@ describe 'Search Result Block', type: :feature, js: true do
     login_as exhibit_curator
 
     exhibit.searches.each { |x| x.update published: true }
-
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
     add_widget 'search_results'
   end
 
-  pending 'allows a curator to select from existing browse categories' do
-    pending('Prefetched autocomplete does not work the same way as solr-backed autocompletes')
-    fill_in_typeahead_field with: 'All Exhibit Items'
+  it 'allows a curator to select from existing browse categories' do
+    # Manually inject the inputs to the widget that the autocomplete would.
+    # fill_in_typeahead_field does not work here for us for some reason.
+    page.execute_script <<-JS
+      $("[data-twitter-typeahead]:visible").after(
+        "<input type='hidden' name='item[item_0][id]' value='all-exhibit-items' />" +
+        "<input type='hidden' name='item[item_0][display]' value='true' />"
+      );
+    JS
 
     check 'Gallery'
     check 'Slideshow'
