@@ -1,8 +1,8 @@
 module Spotlight
   # ...
   module SearchHelper
-    def search_service
-      search_service_class.new(config: blacklight_config, user_params: (respond_to?(:search_state, true) ? search_state.to_h : {}), **search_service_context)
+    def search_service(user_params = respond_to?(:search_state, true) ? search_state.to_h : {})
+      search_service_class.new(config: blacklight_config, user_params: user_params, **search_service_context)
     end
 
     def search_service_class
