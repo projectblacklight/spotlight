@@ -25,7 +25,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.erb', 
   it 'has a slideshow block' do
     render partial: p, locals: { item_carousel_block: block }
     expect(rendered).to have_selector '.item-features'
-    expect(rendered).to have_selector '.item', text: 'thumb', count: 3
+    expect(rendered).to have_selector '.carousel-item', text: 'thumb', count: 3
     expect(rendered).to have_selector '.carousel-indicators'
     expect(rendered).to have_selector '.carousel-indicators li', count: 3
   end
@@ -33,7 +33,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.erb', 
   it 'truncates long titles' do
     render partial: p, locals: { item_carousel_block: block }
     expect(rendered).to have_selector '.item-features'
-    expect(rendered).to have_selector '.item', text: 'thumb', count: 3
+    expect(rendered).to have_selector '.carousel-item', text: 'thumb', count: 3
     expect(rendered).to have_selector '.carousel-indicators'
     expect(rendered).to have_selector '.carousel-indicators li', count: 3
     expect(rendered).to have_selector '.carousel-indicators li', text: 'a' * 92 + '...'
