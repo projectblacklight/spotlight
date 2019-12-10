@@ -7,7 +7,7 @@
     <div class="carousel-inner">
     <% solr_documents_carousel_block.each_document.each_with_index do |(block_options, document), index| %>
       <% doc_presenter = index_presenter(document) %>
-      <div class="item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
+      <div class="carousel-item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
         <% if block_options[:full_image_url].present? %>
           <%= link_to_document(document, image_tag(block_options[:full_image_url]), counter: -1) %>
         <% elsif block_options[:iiif_tilesource_base].present?  %>
@@ -40,10 +40,10 @@
     </ol>
 
     <!-- Controls -->
-    <a class="left carousel-control prev" href="#<%= html_id %>" data-slide="prev">
+    <a class="left carousel-control-prev" href="#<%= html_id %>" data-slide="prev">
       <%= blacklight_icon('chevron_left') %>
     </a>
-    <a class="right carousel-control next" href="#<%= html_id %>" data-slide="next">
+    <a class="right carousel-control-next" href="#<%= html_id %>" data-slide="next">
       <%= blacklight_icon('chevron_right') %>
     </a>
   </div>
