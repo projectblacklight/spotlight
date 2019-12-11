@@ -2,7 +2,7 @@
 
 module Spotlight
   # Mailer for reporting problems to the application contact and/or exhibit administrator
-  class ContactMailer < ActionMailer::Base
+  class ContactMailer < ApplicationMailer
     def report_problem(contact_form)
       @contact_form = contact_form
       mail(@contact_form.headers)
