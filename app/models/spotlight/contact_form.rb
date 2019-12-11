@@ -21,7 +21,6 @@ module Spotlight
       {
         to: to,
         subject: I18n.t(:'spotlight.contact_form.subject', application_name: application_name),
-        from: %("#{name}" <#{email}>),
         cc: contact_emails.join(', ')
       }
     end
