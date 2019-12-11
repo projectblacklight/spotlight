@@ -4,7 +4,7 @@
 <div class="content-block carousel-block carousel-height-<%= solr_documents_carousel_block.max_height %>">
 <% if solr_documents_carousel_block.documents? %>
   <div id="<%= html_id %>" class="carousel slide" data-ride="carousel"  data-interval="<%= solr_documents_carousel_block.interval %>">
-    <div class="carousel-inner">
+    <div class="carousel-inner text-center">
     <% solr_documents_carousel_block.each_document.each_with_index do |(block_options, document), index| %>
       <% doc_presenter = index_presenter(document) %>
       <div class="carousel-item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
