@@ -1,9 +1,10 @@
 .carousel-block {
 
-  .carousel-inner > .item > a > img {
-    // center the image
+  .carousel-inner > .carousel-item > a > img {
+    // center and fill the image
     margin-left: auto;
     margin-right: auto;
+    max-width: 100%;
   }
 
   .carousel-caption {
@@ -31,19 +32,19 @@
   }
 
   &.carousel-height-small {
-    .carousel-inner > .item > a > img {
+    .carousel-inner > .carousel-item > a > img {
       height: 350px;
     }
   }
 
   &.carousel-height-medium {
-    .carousel-inner > .item > a > img {
+    .carousel-inner > .carousel-item > a > img {
       height: 500px;
     }
   }
 
   &.carousel-height-large {
-    .carousel-inner > .item > a > img {
+    .carousel-inner > .carousel-item > a > img {
       height: 800px;
     }
   }
@@ -54,6 +55,7 @@
     bottom: initial;
     left: initial;
     margin-left: 0;
+    margin-right: 0;
     text-align: left;
 
     &.col-sm-6 {

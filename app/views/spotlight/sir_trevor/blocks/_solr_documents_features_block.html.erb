@@ -2,42 +2,43 @@
 <% indicators = [] %>
 <% html_id = "carousel-#{solr_documents_features_block.object_id}" %>
 
-<div class="content-block item-features">
+<div class="content-block carousel-block item-features">
   <% if solr_documents_features_block.documents? %>
-  <div id="<%= html_id %>" class="row carousel" data-ride="carousel"  data-interval="false">
-      <div class="col-sm-6">
-        <div class="carousel-inner">
-          <% solr_documents_features_block.each_document.each_with_index do |(block_options, document), index| %>
-            <% doc_presenter = index_presenter(document) %>
-            <div class="item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
-              <% if block_options[:full_image_url].present? %>
-                <%= link_to_document(document, image_tag(block_options[:full_image_url]), counter: -1) %>
-              <% elsif block_options[:iiif_tilesource_base].present?  %>
-                <%= link_to_document(document, image_tag(block_options[:iiif_tilesource_base] + '/full/!800,800/0/default.jpg'), counter: -1) %>
-              <% elsif has_thumbnail? document %>
-                <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
-              <% end %>
-            </div>
-
-            <% indicators << capture do %>
-              <li data-target="#<%= html_id %>" data-slide-to="<%= index %>" class="list-group-item <%= 'active' if index == 0 %>">
-                <a href="#" title="<%= (caption_text = doc_presenter.field_value(blacklight_config.index_fields[solr_documents_features_block.primary_caption? ? solr_documents_features_block.primary_caption_field : document_show_link_field(document)] || Blacklight::Configuration::NullField.new(solr_documents_features_block.primary_caption? ? solr_documents_features_block.primary_caption_field : document_show_link_field(document)))) %>">
-                  <%= truncate(caption_text, length: 95) %>
-                </a>
-                <% if solr_documents_features_block.secondary_caption? %>
-                  <p><%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_features_block.secondary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_features_block.secondary_caption_field)) %></p>
+    <div id="<%= html_id %>" class="carousel" data-ride="carousel"  data-interval="false">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="carousel-inner">
+            <% solr_documents_features_block.each_document.each_with_index do |(block_options, document), index| %>
+              <% doc_presenter = index_presenter(document) %>
+              <div class="carousel-item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
+                <% if block_options[:full_image_url].present? %>
+                  <%= link_to_document(document, image_tag(block_options[:full_image_url]), counter: -1) %>
+                <% elsif block_options[:iiif_tilesource_base].present?  %>
+                  <%= link_to_document(document, image_tag(block_options[:iiif_tilesource_base] + '/full/!800,800/0/default.jpg'), counter: -1) %>
+                <% elsif has_thumbnail? document %>
+                  <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
                 <% end %>
-              </li>
+              </div>
+
+              <% indicators << capture do %>
+                <li data-target="#<%= html_id %>" data-slide-to="<%= index %>" class="list-group-item <%= 'active' if index == 0 %>">
+                  <a href="#" title="<%= (caption_text = doc_presenter.field_value(blacklight_config.index_fields[solr_documents_features_block.primary_caption? ? solr_documents_features_block.primary_caption_field : document_show_link_field(document)] || Blacklight::Configuration::NullField.new(solr_documents_features_block.primary_caption? ? solr_documents_features_block.primary_caption_field : document_show_link_field(document)))) %>">
+                    <%= truncate(caption_text, length: 95) %>
+                  </a>
+                  <% if solr_documents_features_block.secondary_caption? %>
+                    <p><%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_features_block.secondary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_features_block.secondary_caption_field)) %></p>
+                  <% end %>
+                </li>
+              <% end %>
             <% end %>
-
-          <% end %>
+          </div>
         </div>
-      </div>
 
-      <!-- Indicators -->
-      <ol class="carousel-indicators col-sm-6 list-group list-striped">
-        <%= safe_join(indicators, "\n") %>
-      </ol>
+        <!-- Indicators -->
+        <ol class="carousel-indicators justify-content-start col-sm-6 list-group list-striped">
+          <%= safe_join(indicators, "\n") %>
+        </ol>
+      </div>
     </div>
   <% end %>
 </div>
