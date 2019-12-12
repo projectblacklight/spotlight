@@ -178,5 +178,28 @@ module Spotlight
         FeaturedImageRepresenter.new(represented.build_upload).from_json(json)
       end
     end
+
+    collection :languages, class: Spotlight::Language,
+                           populator: ->(fragment, options) { options[:represented].languages.find_or_initialize_by(locale: fragment['locale']) },
+                           if: config?(:config) do
+      (Spotlight::Language.attribute_names - %w(id exhibit_id)).each do |prop|
+        property prop
+      end
+    end
+
+    collection :translations, getter: ->(represented:, **) { represented.translations.unscope(where: :locale) },
+                              populator: (lambda do |fragment, options|
+                                            options[:represented].translations
+                                                                 .unscope(where: :locale)
+                                                                 .find_or_initialize_by(locale: fragment['locale'], key: fragment['key'])
+                                          end),
+                              class: I18n::Backend::ActiveRecord::Translation,
+                              if: config?(:config) do
+      property :locale
+      property :key
+      property :value
+      property :interpolations
+      property :is_proc
+    end
   end
 end

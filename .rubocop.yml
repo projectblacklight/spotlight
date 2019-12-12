@@ -64,6 +64,7 @@ Metrics/ClassLength:
   Max: 120
   Exclude:
     - 'app/models/spotlight/resources/iiif_manifest.rb'
+    - 'app/serializers/**/*'
     - 'lib/generators/spotlight/**/*' # Generators tend to have longer class lengths due to their lengthy public API
 
 Naming/PredicateName:

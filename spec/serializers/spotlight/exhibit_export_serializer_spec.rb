@@ -64,6 +64,14 @@ describe Spotlight::ExhibitExportSerializer do
     expect(subject['attachments']).to have(source_exhibit.attachments.count).items
   end
 
+  it 'has languages' do
+    expect(subject['languages']).to have(source_exhibit.languages.count).items
+  end
+
+  it 'has translations' do
+    expect(subject['translations']).to have(source_exhibit.translations.count).items
+  end
+
   it 'has resources' do
     expect(subject['resources']).to have(source_exhibit.resources.count).items
   end
@@ -146,6 +154,30 @@ describe Spotlight::ExhibitExportSerializer do
         it 'has contacts' do
           expect(subject.contacts.count).to eq 1
         end
+      end
+    end
+
+    context 'for exhibits with languages and translations' do
+      let!(:language) do
+        source_exhibit.languages.create!(locale: 'zz', public: true, text: 'abc')
+      end
+
+      let!(:translation) do
+        source_exhibit.translations.create!(locale: 'zz', key: 'abc', value: '123')
+      end
+
+      it 'has the language' do
+        expect(subject.languages.count).to eq 1
+
+        language = subject.languages.first
+        expect(language).to have_attributes(locale: 'zz', public: true, text: 'abc')
+      end
+
+      it 'has translations' do
+        expect(subject.translations.count).to eq 1
+
+        translation = subject.translations.unscope(where: :locale).first
+        expect(translation).to have_attributes(locale: 'zz', key: 'abc', value: '123')
       end
     end
 
