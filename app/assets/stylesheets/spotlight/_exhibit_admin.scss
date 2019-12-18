@@ -42,6 +42,7 @@
 }
 
 .analytics {
+  border-bottom: 1px solid $table-border-color;
   text-align: center;
 
   & > tfoot > tr > th {
@@ -57,8 +58,6 @@
 
     border-left: 1px solid $table-border-color;
   }
-
-  border-bottom: 1px solid $table-border-color;
 }
 
 .pending-label {
