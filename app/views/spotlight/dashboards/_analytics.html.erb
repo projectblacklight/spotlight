@@ -3,7 +3,7 @@
   <table class="table analytics">
     <tr>
     <% current_exhibit.analytics_provider.metrics.elements.each do |e| %>
-        <td class="value col-md-3 <%= e %>"><%= current_exhibit.analytics(1.month, exhibit_root_path(current_exhibit)).send(e) %></td>
+        <td class="value <%= e %>"><%= current_exhibit.analytics(1.month, exhibit_root_path(current_exhibit)).send(e) %></td>
     <% end %>
     </tr>
     <tfoot>
