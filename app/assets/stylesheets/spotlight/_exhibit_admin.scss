@@ -43,6 +43,7 @@
 
 .analytics {
   border-bottom: 1px solid $table-border-color;
+  table-layout: fixed;
   text-align: center;
 
   & > tfoot > tr > th {
