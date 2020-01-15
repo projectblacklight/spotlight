@@ -76,6 +76,10 @@
   .navbar {
     @extend .navbar-dark;
     background-color: $navbar-transparent-page-bg;
+    text-transform: uppercase;
+    .dropdown-menu {
+      text-transform: none;
+    }
   }
 
   .h2 {
