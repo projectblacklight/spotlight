@@ -126,7 +126,7 @@
           $(this).addClass('active');
 
           // update the multi-image selector image
-          $(".pic.thumbnail img", panel).attr("src", src);
+          $(".pic img.img-thumbnail", panel).attr("src", src);
 
           $('[data-panel-image-pagination] [data-current-image]', panel).text(
             $('li', thumbList).index($(this)) + 1
