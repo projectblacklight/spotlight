@@ -9,14 +9,6 @@
     width: 100%;
   }
 
-  .input-group-addon {
-    &.for-search-field {
-      background-color: $input-bg;
-      border-radius: $border-radius 0 0 $border-radius;
-      width: 15ch;
-    }
-  }
-
   .search_field {
     background: transparent;
     border: none;
