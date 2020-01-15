@@ -70,7 +70,7 @@ SirTrevor.Blocks.SolrDocumentsBase = (function(){
       $(panel).find('[name$="[iiif_tilesource]"]').val(data.tilesource);
       $(panel).find('[name$="[iiif_manifest_url]"]').val(data.manifest);
       $(panel).find('[name$="[iiif_canvas_id]"]').val(data.canvasId);
-      $(panel).find('.thumbnail img').attr('src', data.thumbnail_image_url || data.tilesource.replace("/info.json", "/full/100,100/0/default.jpg"));
+      $(panel).find('img.img-thumbnail').attr('src', data.thumbnail_image_url || data.tilesource.replace("/info.json", "/full/100,100/0/default.jpg"));
     },
     afterPanelRender: function(data, panel) {
       var context = this;
