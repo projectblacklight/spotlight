@@ -13,6 +13,6 @@
   </td>
   <td class="text-right"><%= exhibit.published? ? t(:'.published') : t(:'.unpublished') %></td>
   <td class="text-right"><%= exhibit.requested_by %></td>
-  <td class="text-right"><%= l exhibit.created_at, format: :short %></td>
-  <td class="text-right"><%= l exhibit.updated_at, format: :short %></td>
+  <td class="text-right"><%= l exhibit.created_at, format: :long %></td>
+  <td class="text-right"><%= l exhibit.updated_at, format: :long %></td>
 </tr>
