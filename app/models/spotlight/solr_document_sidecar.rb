@@ -44,7 +44,7 @@ module Spotlight
       blacklight_config.document_model
     end
 
-    protected
+    private
 
     def visibility_field
       blacklight_config.document_model.visibility_field(exhibit)
@@ -63,7 +63,7 @@ module Spotlight
         custom_field = custom_fields[key]
         field_name = custom_field.solr_field if custom_field
         field_name ||= key
-        solr_hash[field_name] = value
+        solr_hash[field_name] = convert_stored_value_to_solr(value)
       end
     end
 
@@ -75,10 +75,10 @@ module Spotlight
         next unless configured_fields && configured_fields[field_name].present?
 
         value = configured_fields[field_name]
-        field_data = field.data_to_solr(value)
+        field_data = field.data_to_solr(convert_stored_value_to_solr(value))
 
         # merge duplicate field mappings into a multivalued field
-        solr_hash.merge!(field_data) { |_key, v1, v2| Array(v1) + Array(v2) }
+        solr_hash.merge!(field_data) { |_key, v1, v2| (Array(v1) + Array(v2)).reject(&:blank?) }
       end
     end
 
@@ -92,6 +92,16 @@ module Spotlight
 
         # for backwards compatibility
         hash[custom_field.field] = custom_field
+      end
+    end
+
+    def convert_stored_value_to_solr(value)
+      if value.blank?
+        nil
+      elsif value.is_a? Enumerable
+        value.reject(&:blank?)
+      else
+        value
       end
     end
   end
