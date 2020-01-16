@@ -53,9 +53,9 @@ describe Spotlight::ReindexProgress, type: :model do
     it 'returns a hash with values for current_log_entry via the various helper methods' do
       expect(subject.as_json).to eq(
         recently_in_progress: subject.recently_in_progress?,
-        started_at: I18n.l(reindexing_log_entry.start_time, format: :short),
-        finished_at: I18n.l(reindexing_log_entry.end_time, format: :short),
-        updated_at: I18n.l(reindexing_log_entry.updated_at, format: :short),
+        started_at: I18n.l(reindexing_log_entry.start_time, format: :long),
+        finished_at: I18n.l(reindexing_log_entry.end_time, format: :long),
+        updated_at: I18n.l(reindexing_log_entry.updated_at, format: :long),
         total: subject.total,
         completed: subject.completed,
         errored: subject.errored?,

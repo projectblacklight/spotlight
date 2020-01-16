@@ -14,7 +14,7 @@
   <tbody>
     <% @recent_reindexing.each do |log_entry| %>
       <tr class="d-flex">
-        <td class="col-3"><%= l log_entry.start_time, format: :short if log_entry.start_time %></td>
+        <td class="col-3"><%= l log_entry.start_time, format: :long if log_entry.start_time %></td>
         <td class="col-3"><%= log_entry.user.email if log_entry.user %></td>
         <td class="col-1"><%= log_entry.items_reindexed_count %></td>
         <td class="col-3"><%= distance_of_time_in_words log_entry.duration, 0, include_seconds: true if log_entry.duration %></td>

@@ -60,19 +60,19 @@ module Spotlight
     def localized_start_time
       return unless started_at
 
-      I18n.l(started_at, format: :short)
+      I18n.l(started_at, format: :long)
     end
 
     def localized_finish_time
       return unless finished_at
 
-      I18n.l(finished_at, format: :short)
+      I18n.l(finished_at, format: :long)
     end
 
     def localized_updated_time
       return unless updated_at
 
-      I18n.l(updated_at, format: :short)
+      I18n.l(updated_at, format: :long)
     end
   end
 end

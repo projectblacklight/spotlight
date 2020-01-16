@@ -43,8 +43,8 @@ describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
     end
 
     it 'formats the start time correctly' do
-      expect(rendered).to have_css('table.table-striped td', text: '05 Jan 23:00', count: 1)
-      expect(rendered).to have_css('table.table-striped td', text: '10 Jan 23:00', count: 1)
+      expect(rendered).to have_css('table.table-striped td', text: 'January 05, 2017 23:00', count: 1)
+      expect(rendered).to have_css('table.table-striped td', text: 'January 10, 2017 23:00', count: 1)
     end
 
     it 'displays the user that initiated the reindexing' do
@@ -80,7 +80,7 @@ describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
 
       # we expect one blank table cell for the user, and values for everything else
       expect(rendered).to have_css('table.table-striped td', text: /^$/, count: 1)
-      expect(rendered).to have_css('table.table-striped td', text: '05 Jan 23:00', count: 1)
+      expect(rendered).to have_css('table.table-striped td', text: 'January 05, 2017 23:00', count: 1)
       expect(rendered).to have_css('table.table-striped td', text: /^10$/, count: 1)
       expect(rendered).to have_css('table.table-striped td', text: '5 minutes', count: 1)
       expect(rendered).to have_css('table.table-striped td', text: 'Successful', count: 1)
