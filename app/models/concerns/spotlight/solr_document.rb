@@ -50,7 +50,7 @@ module Spotlight
     end
 
     def update(current_exhibit, new_attributes)
-      attributes = new_attributes.stringify_keys
+      attributes = convert_incoming_attributes(new_attributes)
 
       custom_data = attributes.delete('sidecar')
       tags = attributes.delete('exhibit_tag_list')
@@ -140,6 +140,48 @@ module Spotlight
       {
         "#{Spotlight::Engine.config.solr_fields.prefix}spotlight_exhibit_slugs#{Spotlight::Engine.config.solr_fields.string_suffix}" => slugs
       }
+    end
+
+    def convert_incoming_attributes(attributes)
+      attributes = attributes.stringify_keys
+
+      # convert blank strings to nil
+      attributes = deep_transform_values(attributes, &:presence)
+
+      # trim excess nils from arrays
+      deep_compact(attributes)
+    end
+
+    def deep_transform_values(object, &block)
+      # Available in Rails 6
+      if object.respond_to?(:deep_transform_values)
+        object.deep_transform_values(&block)
+      else
+        _deep_transform_values(object, &block)
+      end
+    end
+
+    # Shimmed from Rails 6
+    def _deep_transform_values(object, &block)
+      case object
+      when Hash
+        object.transform_values { |value| deep_transform_values(value, &block) }
+      when Array
+        object.map { |e| deep_transform_values(e, &block) }
+      else
+        yield(object)
+      end
+    end
+
+    def deep_compact(object)
+      case object
+      when Hash
+        object.transform_values { |value| deep_compact(value) }
+      when Array
+        object.compact
+      else
+        object
+      end
     end
   end
 end

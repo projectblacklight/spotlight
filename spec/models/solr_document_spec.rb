@@ -73,9 +73,24 @@ describe SolrDocument, type: :model do
       expect(mock_sidecar).to receive(:update).with(data: { 'a' => 1 })
       subject.update exhibit, sidecar: { data: { 'a' => 1 } }
     end
+
     it 'stores tags' do
       subject.update exhibit, exhibit_tag_list: 'paris, normandy'
       expect(subject.sidecar(exhibit).tags_from(exhibit)).to eq %w(paris normandy)
+    end
+
+    it 'converts empty strings to nil' do
+      mock_sidecar = double
+      allow(subject).to receive_messages(sidecar: mock_sidecar)
+      expect(mock_sidecar).to receive(:update).with(data: { 'a' => nil })
+      subject.update exhibit, sidecar: { data: { 'a' => '' } }
+    end
+
+    it 'compacts arrays of empty or nil values' do
+      mock_sidecar = double
+      allow(subject).to receive_messages(sidecar: mock_sidecar)
+      expect(mock_sidecar).to receive(:update).with(data: { 'a' => ['a'] })
+      subject.update exhibit, sidecar: { data: { 'a' => ['', nil, 'a'] } }
     end
   end
 
