@@ -70,18 +70,21 @@ module Spotlight
 
       html_options ||= {}
 
-      nav_link_html_options = html_options.merge(class: [html_options[:class], 'nav-link', ('active' if current_page?(options))].join(' '))
-
       content_tag(:li, class: 'nav-item') do
         if block_given?
-          link_to(options, nav_link_html_options, &block)
+          link_to(options, nav_link_html_options(options, html_options), &block)
         else
-          link_to(name, options, nav_link_html_options, &block)
+          link_to(name, options, nav_link_html_options(options, html_options), &block)
         end
       end
     end
 
     private
+
+    def nav_link_html_options(options, html_options)
+      active = html_options.key?(:active) ? html_options[:active] : current_page?(options)
+      html_options.merge(class: [html_options[:class], 'nav-link', ('active' if active)].join(' '))
+    end
 
     # rubocop:disable Metrics/MethodLength
     def action_default_value(object, key = nil)
