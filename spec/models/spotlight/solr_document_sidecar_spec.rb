@@ -28,5 +28,19 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
 
       its(:to_solr) { should include 'the_solr_field' => 'some value' }
     end
+
+    context 'with blank fields' do
+      before do
+        subject.data = {
+          'a_blank_field' => '',
+          'a_blank_multivalued_field' => ['', ''],
+          'a_multivalued_field_with_some_blanks' => ['', 'a']
+        }
+      end
+
+      its(:to_solr) { should include 'a_blank_field' => nil }
+      its(:to_solr) { should include 'a_blank_multivalued_field' => [] }
+      its(:to_solr) { should include 'a_multivalued_field_with_some_blanks' => ['a'] }
+    end
   end
 end
