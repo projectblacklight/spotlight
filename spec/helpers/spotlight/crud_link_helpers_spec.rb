@@ -146,5 +146,15 @@ describe Spotlight::CrudLinkHelpers, type: :helper do
       rendered = Capybara.string(helper.nav_link('Some link', root_url))
       expect(rendered).to have_css('.nav-link.active')
     end
+
+    it 'accepts an active argument to toggle the active class without regard for the current page' do
+      rendered = Capybara.string(helper.nav_link('Some link', root_url, active: true))
+      expect(rendered).to have_css('.nav-link.active')
+
+      allow(helper).to receive(:current_page?).with(root_url).and_return(true)
+
+      rendered = Capybara.string(helper.nav_link('Some link', root_url, active: false))
+      expect(rendered).not_to have_css('.nav-link.active')
+    end
   end
 end

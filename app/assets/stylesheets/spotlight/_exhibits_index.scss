@@ -104,10 +104,6 @@
   }
 }
 
-.nav.tags {
-  display: inline-block;
-}
-
 // between the small and medium breakpoints, reduce the size of the image by a little bit
 @media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("lg")) {
 
