@@ -6,7 +6,12 @@
       init: function(selector){
 
         $(selector || nestableSelector).each(function(){
-          $(this).nestable($(this).data());
+          // Because the Rails helper will not maintain the case that Nestable
+          // expects, we just need to do this manual conversion. :(
+          var data = $(this).data();
+          data.expandBtnHTML = data.expandBtnHtml;
+          data.collapseBtnHTML = data.collapseBtnHtml;
+          $(this).nestable(data);
           updateWeightsAndRelationships($(this));
         });
       }
