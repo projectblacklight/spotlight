@@ -61,6 +61,10 @@
   .add-items-nav {
     margin-bottom: $padding-large-vertical;
   }
+
+  .sort-pagination {
+    border-bottom: 0;
+  }
 }
 
 form.edit_solr_document {
