@@ -1,9 +1,10 @@
 <% page = f.object %>
 <li class="dd-item dd3-item" data-id="<%= page.id %>">
-  <div class="dd3-content card page-admin">
-    <div class="dd-handle dd3-handle"><%= t :drag %></div>
-      <div class="card-body main row page">
-        <div class="col-sm-8">
+  <div class="dd3-content">
+    <div class="card page-admin d-flex">
+      <div class="dd-handle dd3-handle"><%= t :drag %></div>
+      <div class="card-body page d-flex justify-content-between">
+        <div class="flex-grow-1">
           <%= f.hidden_field :id %>
           <%= f.hidden_field :weight, data: {property: "weight"} %>
           <h3 class="h6 card-title">
@@ -17,7 +18,7 @@
           </h3>
         </div>
 
-        <div class="page-links col-sm-4">
+        <div class="page-links">
           <%= exhibit_view_link page, :class => 'btn btn-link' %> &middot;
           <%= exhibit_edit_link page, :class => 'btn btn-link', data: { turbolinks: false } %> &middot;
           <%= exhibit_delete_link page, :class => 'btn btn-link' %>
@@ -25,6 +26,7 @@
         <%- if page.feature_page? -%>
           <%= f.hidden_field :parent_page_id, data: {property: "parent_page"} %>
         <% end %>
+      </div>
     </div>
   </div>
 

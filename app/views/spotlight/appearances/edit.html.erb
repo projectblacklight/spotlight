@@ -72,29 +72,27 @@
             <ol class="dd-list">
               <%= f.fields_for :main_navigations do |label| %>
                     <li class="dd-item dd3-item" data-id="<%= label.object.id %>">
-                      <div class="dd3-content card">
-                        <div class="dd-handle dd3-handle"><%= t :drag %></div>
-                        <div class="card-body container" data-behavior="restore-default">
-                          <%= label.hidden_field :id %>
-                          <div class="row">
-                            <div class="col-sm-8">
-                              <div class="main">
-                                <h3 class="card-title h6 mb-0">
-                                  <span class='publish-control h6'>
-                                    <%= label.check_box_without_bootstrap :display %>
-                                  </span>
-                                  <span class="d-inline-block w-75" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
-                                    <a href="#edit-in-place" class="field-label edit-in-place"><%= label.object.label_or_default %></a>
-                                    <%= label.hidden_field :label, data: {:"default-value" => label.object.default_label, :"edit-field-target" => 'true'} %>
-                                  </span>
-                                </h3>
-                              </div>
+                      <div class="dd3-content">
+                        <div class="card d-flex">
+                          <div class="dd-handle dd3-handle"><%= t :drag %></div>
+                          <div class="card-body d-flex" data-behavior="restore-default">
+                            <%= label.hidden_field :id %>
+                            <div class="flex-grow-1">
+                              <h3 class="card-title h6 mb-0">
+                                <span class='publish-control h6'>
+                                  <%= label.check_box_without_bootstrap :display %>
+                                </span>
+                                <span class="d-inline-block w-75" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+                                  <a href="#edit-in-place" class="field-label edit-in-place"><%= label.object.label_or_default %></a>
+                                  <%= label.hidden_field :label, data: {:"default-value" => label.object.default_label, :"edit-field-target" => 'true'} %>
+                                </span>
+                              </h3>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="">
                               <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn restore-default btn-secondary btn-sm float-right #{'hidden' if label.object.label.blank? || label.object.label == label.object.default_label}" %>
                             </div>
+                            <%= label.hidden_field :weight, data: {property: "weight"} %>
                           </div>
-                          <%= label.hidden_field :weight, data: {property: "weight"} %>
                         </div>
                       </div>
                     </li>
