@@ -1,6 +1,10 @@
 #documents.table {
   font-size: $font-size-base;
 
+  .thumbnail-column {
+    min-width: 60px;
+  }
+
   .document-thumbnail {
     border: none;
     margin-bottom: 0;
