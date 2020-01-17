@@ -74,11 +74,17 @@ tr.dd-item {
  * Nestable Draggable Handles
  */
 
-.dd3-content { display: block; margin: 5px 0; padding: 0 0 0 30px;
+.dd3-content {
+    display: block;
+    margin: 5px 0;
     background: #fafafa;
     background:         linear-gradient(to bottom, #fafafa 0%, #eee 100%);
     border-radius: 3px;
     box-sizing: border-box;
+
+  .card {
+    padding: 0 0 0 30px;
+  }
 }
 .dd3-content.page-admin {
   position: relative;
