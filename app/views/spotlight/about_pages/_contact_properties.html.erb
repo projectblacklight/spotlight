@@ -1,13 +1,17 @@
-<%= image_tag contact.avatar.iiif_url, class: 'contact-photo' if contact.avatar && contact.avatar.iiif_url.present? %>
-<div itemprop="name" class="name"><%= contact.name %></div>
-<% Spotlight::Contact.fields.each do |field, options| %>
-  <% if (value = contact.contact_info[field]).present? %>
-    <div itemprop="<%= options[:itemprop] || field %>">
-      <% if options[:helper] %>
-        <%= send(options[:helper], value) %>
-      <% else %>
-        <%= value %>
+<div class="d-flex">
+  <%= image_tag contact.avatar.iiif_url, class: 'contact-photo' if contact.avatar && contact.avatar.iiif_url.present? %>
+  <div>
+    <div itemprop="name" class="name"><%= contact.name %></div>
+    <% Spotlight::Contact.fields.each do |field, options| %>
+      <% if (value = contact.contact_info[field]).present? %>
+        <div itemprop="<%= options[:itemprop] || field %>">
+          <% if options[:helper] %>
+            <%= send(options[:helper], value) %>
+          <% else %>
+            <%= value %>
+          <% end %>
+        </div>
       <% end %>
-    </div>
-  <% end %>
-<% end %>
+    <% end %>
+  </div>
+</div>
