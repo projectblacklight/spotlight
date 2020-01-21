@@ -13,6 +13,10 @@ module Spotlight
       use_extension(Spotlight::SolrDocument::UploadedResource, &:uploaded_resource?)
     end
 
+    def self.exhibit_slug_field
+      "#{Spotlight::Engine.config.solr_fields.prefix}spotlight_exhibit_slugs#{Spotlight::Engine.config.solr_fields.string_suffix}"
+    end
+
     ##
     # Class-level methods
     module ClassMethods
@@ -138,7 +142,7 @@ module Spotlight
       slugs = sidecars.map(&:exhibit).map(&:slug)
 
       {
-        "#{Spotlight::Engine.config.solr_fields.prefix}spotlight_exhibit_slugs#{Spotlight::Engine.config.solr_fields.string_suffix}" => slugs
+        self.class.exhibit_slug_field => slugs
       }
     end
 
