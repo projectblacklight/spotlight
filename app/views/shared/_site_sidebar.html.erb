@@ -1,3 +1,8 @@
+<%= render 'catalog/search_form', presenter: Blacklight::SearchBarPresenter.new(controller, Spotlight::SearchAcrossController.blacklight_config) %>
+<% if defined? @response %>
+  <%= render 'catalog/search_sidebar' %>
+<% end %>
+
 <% if can?(:manage, Spotlight::Site.instance) || can?(:create, Spotlight::Exhibit) %>
 <h4 class="nav-heading"><%=t(:'.header') %></h4>
 <ul class="nav sidenav flex-column">

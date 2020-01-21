@@ -1,0 +1,7 @@
+<% content_for(:sidebar) do %>
+  <%= render "shared/site_sidebar" %>
+<% end %>
+
+<% content_for(:sidebar_position) { 'order-last' } %>
+
+<%= render 'search_results' %>

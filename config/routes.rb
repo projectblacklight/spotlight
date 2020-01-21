@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Spotlight::Engine.routes.draw do
+  concern :searchable, Blacklight::Routes::Searchable.new
+
   devise_for :contact_email, class_name: 'Spotlight::ContactEmail', only: [:confirmations]
 
   resources :contact_images, controller: :featured_images, only: :create
@@ -17,6 +19,10 @@ Spotlight::Engine.routes.draw do
   get '/exhibits/edit', to: 'sites#edit_exhibits', as: 'edit_site_exhibits'
 
   resources :admin_users, only: %i[index create update destroy]
+
+  resource :search_across, only: [:index], path: '/search', controller: 'search_across' do
+    concerns :searchable
+  end
 
   resources :exhibits, path: '/', except: [:show] do
     member do
@@ -39,8 +45,6 @@ Spotlight::Engine.routes.draw do
 
     resources :filters, only: %i[create update]
     resources :languages, only: %i[create destroy]
-
-    concern :searchable, Blacklight::Routes::Searchable.new
 
     resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
       concerns :searchable
