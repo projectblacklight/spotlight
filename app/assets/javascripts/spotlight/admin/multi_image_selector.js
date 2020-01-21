@@ -4,7 +4,7 @@
   $.fn.multiImageSelector = function(image_versions, clickCallback, activeImageId) {
     var changeLink          = $("<a href='javascript:;'>Change</a>"),
         thumbsListContainer = $("<div class='thumbs-list' style='display:none'></div>"),
-        thumbList           = $("<ul class='pagination'></ul>"),
+        thumbList           = $("<ul></ul>"),
         panel;
 
     var imageIds = $.map(image_versions, function(e) { return e['imageId']; });
