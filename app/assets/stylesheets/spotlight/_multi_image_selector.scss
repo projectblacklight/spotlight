@@ -1,22 +1,21 @@
 .thumbs-list {
-  overflow-y: hidden;
   overflow-x: scroll;
   height: 150px;
   padding-bottom: 10px;
   position: relative;
   ul {
+    background: white;
     padding-left: 0;
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
     position: absolute;
     li {
-      float: left;
+      flex: 0 0 auto;
       min-width: 60px;
+      padding: $padding-base-vertical $padding-base-horizontal;
       &.active {
         background-color: #999999;
-      }
-      img {
-        margin: 2px 5px;
-        max-height: 100px;
-        max-width: 100px;
       }
     }
   }
