@@ -10,6 +10,10 @@ module Spotlight
 
     load_and_authorize_resource
 
+    def search_action_url(*args)
+      search_search_across_url(*args)
+    end
+
     def index
       @published_exhibits = @exhibits.includes(:thumbnail).published.ordered_by_weight.page(params[:page])
       @published_exhibits = @published_exhibits.tagged_with(params[:tag]) if params[:tag]
