@@ -34,11 +34,15 @@ module Spotlight
 
     # TODO: Limit just to the exhibits we care about
     def exhibit_metadata
-      @exhibit_metadata ||= Spotlight::Exhibit.all.as_json(only: [:slug, :title, :description]).index_by { |x| x['slug'] }
+      @exhibit_metadata ||= Spotlight::Exhibit.all.as_json(only: [:slug, :title, :description, :id]).index_by { |x| x['slug'] }
     end
 
-    def exhibit_title(value:, **)
-      exhibit_metadata.slice(*value).values.map { |x| x['title'] || x['slug'] }.join(', ')
+    def exhibit_title(document:, value:, **)
+      exhibit_links = exhibit_metadata.slice(*value).values.map do |x|
+        view_context.link_to x['title'] || x['slug'], spotlight.exhibit_solr_document_path(x['slug'], document.id)
+      end
+
+      view_context.safe_join exhibit_links, ', '
     end
 
     def exhibit_title_facet(value)
