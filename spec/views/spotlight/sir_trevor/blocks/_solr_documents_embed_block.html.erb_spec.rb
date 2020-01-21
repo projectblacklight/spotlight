@@ -24,7 +24,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
     allow(view).to receive_messages(has_thumbnail?: true, render_thumbnail_tag: 'thumb')
   end
 
-  it 'has a slideshow block' do
+  it 'has a embed block' do
     expect(view).to receive(:render_document_partials).with(doc, %w[a b c], hash_including(a: 1, block: block)).and_return('OSD')
     render partial: p, locals: { solr_documents_embed_block: block }
     expect(rendered).to have_selector 'h3', text: 'Some title'
@@ -32,5 +32,19 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
     expect(rendered).to have_selector '.box', text: 'OSD'
     expect(rendered).to have_selector '.items-col'
     expect(rendered).to have_selector '.text-col'
+    expect(rendered).not_to have_selector '.col-md-12'
+  end
+
+  context 'with a block with no text' do
+    let(:block) do
+      SirTrevorRails::Blocks::SolrDocumentsEmbedBlock.new({ type: 'block', data: { title: 'Some title', 'text-align' => 'right' } }, page)
+    end
+
+    it 'does not have a two column layout' do
+      expect(view).to receive(:render_document_partials).with(doc, %w[a b c], hash_including(a: 1, block: block)).and_return('OSD')
+      render partial: p, locals: { solr_documents_embed_block: block }
+      expect(rendered).to have_selector '.col-md-12'
+      expect(rendered).to have_selector '.items-col h3', text: 'Some title'
+    end
   end
 end
