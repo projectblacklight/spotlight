@@ -82,7 +82,7 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
 
   solr_documents_embed: {
     title: "Item Embed",
-    description: "This widget embeds exhibit items on a page. Optionally, you can add a heading and/or text to be displayed adjacent to the items.",
+    description: "This widget embeds an exhibit item in a viewer on a page. Optionally, you can add a heading to be displayed above the viewer and/or text to be displayed adjacent to the viewer.",
   },
 
   solr_documents_features: {
