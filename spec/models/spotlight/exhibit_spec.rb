@@ -121,6 +121,12 @@ describe Spotlight::Exhibit, type: :model do
     end
   end
 
+  describe '#themes' do
+    it 'is the configured themes' do
+      expect(subject.themes).to eq Spotlight::Engine.config.exhibit_themes
+    end
+  end
+
   describe 'import' do
     it 'removes the default browse category' do
       subject.save

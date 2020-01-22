@@ -86,6 +86,10 @@ module Spotlight
       searches.published.any?
     end
 
+    def themes
+      Spotlight::Engine.config.exhibit_themes
+    end
+
     def to_s
       title
     end
