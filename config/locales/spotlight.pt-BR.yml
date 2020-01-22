@@ -1,0 +1,25 @@
+pt-BR:
+  activemodel:
+    attributes:
+      spotlight/contact_form:
+        email: Email
+        message: Mensagem
+        name: Nome
+  cancel: Cancelar
+  helpers:
+    action:
+      cancel: Cancelar
+    submit:
+      contact_form:
+        create: Enviar
+        created: Obrigado. Seu comentário foi enviado.
+  spotlight:
+    about_pages:
+      contacts:
+        header: Contatos
+    header_links:
+      contact: Comentários
+    shared:
+      report_a_problem:
+        honeypot_field_explanation: Ignore esta caixa de texto. É usado para detectar spammer. Se você digitar algo nessa caixa de texto, sua mensagem não será enviada.
+        title: Contate-Nos
