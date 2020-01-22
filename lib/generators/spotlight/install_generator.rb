@@ -53,7 +53,9 @@ module Spotlight
     end
 
     def add_roles_to_user
-      inject_into_class 'app/models/user.rb', User, '  include Spotlight::User'
+      inject_into_file 'app/models/user.rb', after: 'include Blacklight::User' do
+        "\n  include Spotlight::User\n"
+      end
     end
 
     def add_controller_mixin
