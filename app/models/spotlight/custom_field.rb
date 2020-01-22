@@ -18,10 +18,10 @@ module Spotlight
       self.field_type ||= 'text'
     end
 
-    before_save :update_field_name, on: :update, if: -> { field_type_changed? || readonly_field_changed? }
+    before_update :update_field_name, if: -> { field_type_changed? || readonly_field_changed? }
 
-    after_commit :update_blacklight_configuration_after_field_name_change, on: :update, if: -> { saved_change_to_field? || saved_change_to_slug? }
-    after_commit :update_sidecar_data_after_field_name_change, on: :update, if: -> { saved_change_to_field? || saved_change_to_slug? }
+    after_update_commit :update_blacklight_configuration_after_field_name_change, if: -> { saved_change_to_field? || saved_change_to_slug? }
+    after_update_commit :update_sidecar_data_after_field_name_change, if: -> { saved_change_to_field? || saved_change_to_slug? }
 
     def label=(label)
       configuration['label'] = label

@@ -19,7 +19,7 @@ module Spotlight
       self.contact_info = contact_info.symbolize_keys
     end
 
-    before_save on: :create do
+    before_create do
       self.show_in_sidebar = true if show_in_sidebar.nil?
     end
 
