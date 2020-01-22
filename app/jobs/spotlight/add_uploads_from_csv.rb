@@ -3,7 +3,7 @@
 module Spotlight
   ##
   # Process a CSV upload into new Spotlight::Resource::Upload objects
-  class AddUploadsFromCSV < ActiveJob::Base
+  class AddUploadsFromCsv < ActiveJob::Base
     queue_as :default
 
     after_perform do |job|
