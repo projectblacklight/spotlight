@@ -1,5 +1,11 @@
+dist: xenial
+language: ruby
+jdk: openjdk11
 addons:
   chrome: stable
+  apt:
+    packages:
+      - libgconf-2-4
 
 notifications:
   email: false
@@ -15,6 +21,15 @@ matrix:
     - rvm: 2.6.6
       env: "RAILS_VERSION=5.2.4.2"
 
+cache:
+  ##
+  # Caching bundler here in a hope to reduce Travis test time
+  bundler: true
+  ##
+  # We don't really know how this will work, but lets see.
+  directories:
+    - .internal_test_app
+
 before_cache:
   - rm /home/travis/build/projectblacklight/spotlight/.internal_test_app/db/test.sqlite3
   - rm /home/travis/build/projectblacklight/spotlight/.internal_test_app/log/test.log
@@ -29,14 +44,8 @@ env:
     - BUNDLE_PATH=/home/travis/build/projectblacklight/spotlight/vendor/bundle
     - CC_TEST_REPORTER_ID=4e87a4c0e19dcb18cbeea96e91fb8993154c999aa116a6638761c3daf4d3981b
 
-language: ruby
-
-addons:
-  apt:
-    packages:
-      - chromium-browser
-      - libgconf-2-4
-  chrome: stable
+before_install:
+  - google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -48,14 +57,3 @@ script:
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-
-jdk: openjdk11
-
-cache:
-  ##
-  # Caching bundler here in a hope to reduce Travis test time
-  bundler: true
-  ##
-  # We don't really know how this will work, but lets see.
-  directories:
-    - .internal_test_app
