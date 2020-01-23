@@ -67,7 +67,7 @@ namespace :spotlight do
       require 'migration/iiif'
       Migration::IIIF.run args[:hostname]
     else
-      STDERR.puts "\nUsage: rake spotlight:migrate_to_iiif[hostname]\n\n  Example: rake spotlight:migrate_to_iiif[https://exhibits.stanford.edu]\n\n"
+      warn "\nUsage: rake spotlight:migrate_to_iiif[hostname]\n\n  Example: rake spotlight:migrate_to_iiif[https://exhibits.stanford.edu]\n\n"
     end
   end
 
@@ -82,7 +82,7 @@ namespace :spotlight do
       puts 'User not found. Enter a password to create the user.'
       u.password = prompt_for_password
     end
-  rescue => e
+  rescue StandardError => e
     puts e
     retry
   end

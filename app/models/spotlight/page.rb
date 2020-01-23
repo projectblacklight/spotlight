@@ -7,7 +7,7 @@ module Spotlight
     MAX_PAGES = 1000
 
     extend FriendlyId
-    friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: [:exhibit, :locale]
+    friendly_id :title, use: %i[slugged scoped finders history], scope: %i[exhibit locale]
 
     belongs_to :exhibit, touch: true
     belongs_to :created_by, class_name: Spotlight::Engine.config.user_class, optional: true
@@ -79,7 +79,7 @@ module Spotlight
     end
 
     def thumbnail_image_url
-      return unless thumbnail && thumbnail.iiif_url
+      return unless thumbnail&.iiif_url
 
       thumbnail.iiif_url
     end

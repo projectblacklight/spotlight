@@ -17,6 +17,7 @@ describe Spotlight::TranslationsController do
       before { sign_in user }
 
       let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+
       it 'is successful' do
         get :edit, params: { exhibit_id: exhibit }
         expect(response).to render_template(:edit)
@@ -40,6 +41,7 @@ describe Spotlight::TranslationsController do
 
       let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
       let(:translation) { FactoryBot.create(:translation, exhibit: exhibit, value: 'foo') }
+
       it 'updates successfully' do
         patch :update, params: {
           exhibit_id: exhibit,

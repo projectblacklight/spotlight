@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-feature 'Search Configuration Administration', js: true do
+describe 'Search Configuration Administration', js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
   before { login_as user }
 
   describe 'search fields', default_max_wait_time: 5 do
@@ -110,6 +111,7 @@ feature 'Search Configuration Administration', js: true do
       expect(page).to have_checked_field '20'
       expect(page).to have_unchecked_field '10'
     end
+
     it 'updates Sort field result options' do
       visit spotlight.edit_exhibit_search_configuration_path(exhibit)
 

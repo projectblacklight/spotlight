@@ -13,8 +13,8 @@ module Spotlight
     include Spotlight::Catalog
     include Spotlight::Concerns::CatalogSearchContext
 
-    before_action :authenticate_user!, only: [:admin, :edit, :make_public, :make_private]
-    before_action :check_authorization, only: [:admin, :edit, :make_public, :make_private]
+    before_action :authenticate_user!, only: %i[admin edit make_public make_private]
+    before_action :check_authorization, only: %i[admin edit make_public make_private]
     before_action :redirect_to_exhibit_home_without_search_params!, only: :index
 
     before_action :attach_breadcrumbs
@@ -31,9 +31,7 @@ module Spotlight
       blacklight_config.view.admin_table.document_actions = []
       blacklight_config.track_search_session = false
 
-      unless blacklight_config.sort_fields.key? :timestamp
-        blacklight_config.add_sort_field :timestamp, sort: "#{blacklight_config.index.timestamp_field} desc"
-      end
+      blacklight_config.add_sort_field :timestamp, sort: "#{blacklight_config.index.timestamp_field} desc" unless blacklight_config.sort_fields.key? :timestamp
     end
 
     before_action only: :edit do
@@ -44,9 +42,7 @@ module Spotlight
     def show
       super
 
-      if @document.private? current_exhibit
-        authenticate_user! && authorize!(:curate, current_exhibit)
-      end
+      authenticate_user! && authorize!(:curate, current_exhibit) if @document.private? current_exhibit
 
       add_document_breadcrumbs(@document)
     end
@@ -234,7 +230,7 @@ module Spotlight
 
     def try_solr_commit!
       repository.connection.commit
-    rescue => e
+    rescue StandardError => e
       Rails.logger.info "Failed to commit document updates: #{e}"
     end
   end

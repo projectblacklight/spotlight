@@ -3,6 +3,7 @@
 describe Spotlight::ApplicationHelper, type: :helper do
   describe '#application_name' do
     let(:site) { Spotlight::Site.instance }
+
     before do
       allow(helper).to receive(:current_site).and_return(site)
     end
@@ -31,6 +32,7 @@ describe Spotlight::ApplicationHelper, type: :helper do
 
   describe '#site_title' do
     let(:site) { Spotlight::Site.instance }
+
     before do
       allow(helper).to receive(:current_site).and_return(site)
     end
@@ -77,13 +79,13 @@ describe Spotlight::ApplicationHelper, type: :helper do
       end
 
       it "returns keys with a value of 'on'" do
-        expect(helper.selected_search_block_views(block)).to eq %w(a d)
+        expect(helper.selected_search_block_views(block)).to eq %w[a d]
       end
     end
 
     describe 'blacklight_view_config_for_search_block' do
       let(:sir_trevor_block) do
-        SirTrevorRails::Block.new({ type: 'xyz', data: { view: %w(list gallery) } }, 'parent')
+        SirTrevorRails::Block.new({ type: 'xyz', data: { view: %w[list gallery] } }, 'parent')
       end
 
       let(:config) do
@@ -93,13 +95,14 @@ describe Spotlight::ApplicationHelper, type: :helper do
           config.view.slideshow = {}
         end
       end
+
       before do
         allow(helper).to receive_messages(blacklight_config: config)
       end
 
       it 'returns a blacklight configuration object that has reduced the views to those that are configured in the block' do
         new_config = helper.blacklight_view_config_for_search_block(sir_trevor_block)
-        expect(new_config.keys).to eq [:list, :gallery]
+        expect(new_config.keys).to eq %i[list gallery]
       end
     end
   end
@@ -107,6 +110,7 @@ describe Spotlight::ApplicationHelper, type: :helper do
   describe 'render_document_class' do
     let(:current_exhibit) { FactoryBot.create(:exhibit) }
     let(:document) { SolrDocument.new(some_field: 'Some data') }
+
     before do
       allow(helper).to receive_messages(current_exhibit: current_exhibit)
       allow(helper).to receive_messages(blacklight_config: Blacklight::Configuration.new do |config|
@@ -119,6 +123,7 @@ describe Spotlight::ApplicationHelper, type: :helper do
       allow(document).to receive(:private?).with(current_exhibit).and_return(true)
       expect(helper.render_document_class(document)).to include 'blacklight-private'
     end
+
     it 'prefixs "blacklight-" to the configured type' do
       expect(helper.render_document_class(document)).to include 'blacklight-some-data'
     end
@@ -155,13 +160,13 @@ describe Spotlight::ApplicationHelper, type: :helper do
       blacklight_config.view.b.if = false
 
       expect(helper.available_view_fields).to include :a
-      expect(helper.available_view_fields).to_not include :b
+      expect(helper.available_view_fields).not_to include :b
     end
   end
 
   describe '#block_document_index_view_type' do
     let(:blacklight_config) { Blacklight::Configuration.new }
-    let(:block) { double(view: %w(b c)) }
+    let(:block) { double(view: %w[b c]) }
     let(:block_with_bad_or_missing_data) { double(view: []) }
 
     before do

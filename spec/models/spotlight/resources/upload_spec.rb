@@ -32,8 +32,9 @@ describe Spotlight::Resources::Upload, type: :model do
   end
 
   context 'with a custom upload title field' do
-    let(:title_field) { Spotlight::UploadFieldConfig.new(field_name: 'configured_title_field', solr_fields: [:some_other_field]) }
     subject { doc_builder.to_solr }
+
+    let(:title_field) { Spotlight::UploadFieldConfig.new(field_name: 'configured_title_field', solr_fields: [:some_other_field]) }
 
     describe '#to_solr' do
       it 'stores the title field in the provided solr field' do
@@ -45,7 +46,7 @@ describe Spotlight::Resources::Upload, type: :model do
   context 'multiple solr field mappings' do
     let :configured_fields do
       [
-        Spotlight::UploadFieldConfig.new(field_name: 'some_field', solr_fields: %w(a b))
+        Spotlight::UploadFieldConfig.new(field_name: 'some_field', solr_fields: %w[a b])
       ]
     end
 
@@ -84,16 +85,20 @@ describe Spotlight::Resources::Upload, type: :model do
     it 'has a spotlight_resource_type field' do
       expect(subject[:spotlight_resource_type_ssim]).to eq 'spotlight/resources/uploads'
     end
+
     it 'has the various image fields' do
       expect(subject).to have_key Spotlight::Engine.config.thumbnail_field
     end
+
     it 'has the full image dimensions fields' do
       expect(subject[:spotlight_full_image_height_ssm]).to eq 600
       expect(subject[:spotlight_full_image_width_ssm]).to eq 800
     end
+
     it 'has fields representing exhibit specific custom fields' do
       expect(subject[custom_field.solr_field]).to eq 'Custom Field Data'
     end
+
     it 'has a field for the iiif manifest url' do
       manifest_path = Spotlight::Engine.routes.url_helpers.manifest_exhibit_solr_document_path(exhibit, resource.compound_id)
       expect(subject[Spotlight::Engine.config.iiif_manifest_field]).to eq(manifest_path)

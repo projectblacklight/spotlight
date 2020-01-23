@@ -42,13 +42,13 @@ module Spotlight
     require 'sprockets/es6'
     require 'almond-rails'
 
-    config.assets.precompile += %w(spotlight/fallback/*.png)
+    config.assets.precompile += %w[spotlight/fallback/*.png]
 
-    config.autoload_paths += %W(
+    config.autoload_paths += %W[
       #{config.root}/app/builders
       #{config.root}/app/controllers/concerns
       #{config.root}/app/models/concerns
-    )
+    ]
 
     initializer 'spotlight.initialize' do
       require 'cancan'
@@ -64,11 +64,11 @@ module Spotlight
     end
 
     initializer 'spotlight.factories', after: 'factory_bot.set_factory_paths' do
-      FactoryBot.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryBot)
+      FactoryBot.definition_file_paths << File.expand_path('../../spec/factories', __dir__) if defined?(FactoryBot)
     end
 
     initializer 'spotlight.assets.precompile' do |app|
-      app.config.assets.precompile += %w(spotlight/default_thumbnail.jpg spotlight/default_browse_thumbnail.jpg)
+      app.config.assets.precompile += %w[spotlight/default_thumbnail.jpg spotlight/default_browse_thumbnail.jpg]
 
       Sprockets::ES6.configuration = { 'modules' => 'amd', 'moduleIds' => true }
       # When we upgrade to Sprockets 4, we can ditch sprockets-es6 and config AMD
@@ -93,7 +93,7 @@ module Spotlight
     config.catalog_controller_class = '::CatalogController'
     config.default_blacklight_config = nil
 
-    config.exhibit_main_navigation = [:curated_features, :browse, :about]
+    config.exhibit_main_navigation = %i[curated_features browse about]
 
     config.resource_partials = [
       'spotlight/resources/external_resources_form',
@@ -114,7 +114,7 @@ module Spotlight
     config.writable_index = true
 
     # The allowed file extensions for uploading non-repository items.
-    config.allowed_upload_extensions = %w(jpg jpeg png)
+    config.allowed_upload_extensions = %w[jpg jpeg png]
 
     # Suffixes for spotlight-created solr fields
     config.solr_fields = OpenStruct.new
@@ -241,16 +241,16 @@ module Spotlight
     end
 
     # make blacklight configuration play nice with bootstrap_form
-    Blacklight::OpenStructWithHashAccess.send(:extend, ActiveModel::Translation)
+    Blacklight::OpenStructWithHashAccess.extend ActiveModel::Translation
 
     config.exhibit_themes = ['default']
 
     config.default_page_content_type = 'SirTrevor'
-    config.sir_trevor_widgets = %w(
+    config.sir_trevor_widgets = %w[
       Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse LinkToSearch
       FeaturedPages SolrDocuments SolrDocumentsCarousel SolrDocumentsEmbed
       SolrDocumentsFeatures SolrDocumentsGrid SearchResults
-    )
+    ]
 
     config.routes = OpenStruct.new
     config.routes.solr_documents = {}

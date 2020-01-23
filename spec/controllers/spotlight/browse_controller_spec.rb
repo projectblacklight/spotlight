@@ -49,7 +49,7 @@ describe Spotlight::BrowseController, type: :controller do
         get :index, params: { exhibit_id: exhibit }
         expect(response).to be_successful
         expect(assigns[:searches]).to eq [search]
-        expect(assigns[:searches]).to_not include unpublished
+        expect(assigns[:searches]).not_to include unpublished
         expect(assigns[:exhibit]).to eq exhibit
         expect(response).to render_template 'spotlight/browse/index'
       end
@@ -64,7 +64,7 @@ describe Spotlight::BrowseController, type: :controller do
         get :index, params: { exhibit_id: exhibit }
         expect(response).to be_successful
         expect(assigns[:searches]).to eq [search]
-        expect(assigns[:searches]).to_not include unpublished
+        expect(assigns[:searches]).not_to include unpublished
         expect(assigns[:exhibit]).to eq exhibit
         expect(response).to render_template 'spotlight/browse/index'
       end
@@ -73,6 +73,7 @@ describe Spotlight::BrowseController, type: :controller do
     describe 'GET show' do
       let(:mock_response) { double aggregations: {} }
       let(:document_list) { double }
+
       before do
         allow(controller).to receive_messages(search_service: double(search_results: [mock_response, document_list]))
       end
@@ -96,13 +97,13 @@ describe Spotlight::BrowseController, type: :controller do
 
       it 'uses the blacklight.browse configuration for the document actions' do
         config = Blacklight::Configuration.new do |c|
-          c.browse.document_actions = [:a, :b, :c]
+          c.browse.document_actions = %i[a b c]
         end
 
         allow(controller). to receive(:blacklight_config).and_return(config)
 
         get :show, params: { id: search, exhibit_id: exhibit }
-        expect(controller.blacklight_config.index.document_actions).to match_array [:a, :b, :c]
+        expect(controller.blacklight_config.index.document_actions).to match_array %i[a b c]
       end
 
       it 'has a json response' do

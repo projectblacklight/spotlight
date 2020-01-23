@@ -36,6 +36,7 @@ describe Spotlight::ResourcesController, type: :controller do
 
   describe 'when signed in as a curator' do
     let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+
     before { sign_in user }
 
     describe 'GET new' do
@@ -55,6 +56,7 @@ describe Spotlight::ResourcesController, type: :controller do
     describe 'POST create' do
       let(:blacklight_solr) { double }
       let(:invalid_resource) { Spotlight::Resource.new.tap { |x| x.errors.add(:url, 'is invalid') } }
+
       it 'create a resource' do
         expect_any_instance_of(Spotlight::Resource).to receive(:reindex_later).and_return(true)
         allow_any_instance_of(Spotlight::Resource).to receive(:blacklight_solr).and_return blacklight_solr

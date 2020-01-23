@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-feature 'Feature Pages Adminstration', js: true do
+describe 'Feature Pages Adminstration', js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let!(:page1) do

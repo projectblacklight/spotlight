@@ -8,15 +8,17 @@ describe Spotlight::NavbarHelper, type: :helper do
     end
 
     it 'returns false when there is no exhibit context' do
-      expect(helper.should_render_spotlight_search_bar?).to be_falsey
+      expect(helper).not_to be_should_render_spotlight_search_bar
     end
+
     it 'returns true if searchable' do
       allow(helper).to receive_messages(current_exhibit: double(searchable?: true))
-      expect(helper.should_render_spotlight_search_bar?).to be_truthy
+      expect(helper).to be_should_render_spotlight_search_bar
     end
+
     it 'returns false if currently under an "Exhibity" browse category' do
       allow(helper).to receive_messages(exhibit_masthead?: false)
-      expect(helper.should_render_spotlight_search_bar?).to be_falsey
+      expect(helper).not_to be_should_render_spotlight_search_bar
     end
   end
 end

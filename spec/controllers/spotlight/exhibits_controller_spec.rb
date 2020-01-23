@@ -87,6 +87,7 @@ describe Spotlight::ExhibitsController, type: :controller do
 
   describe 'when signed in as a site admin' do
     let(:user) { FactoryBot.create(:site_admin) }
+
     before { sign_in user }
 
     describe 'GET new' do
@@ -121,12 +122,13 @@ describe Spotlight::ExhibitsController, type: :controller do
 
   describe 'when signed in as an exhibit admin' do
     let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
     before { sign_in user }
 
     describe 'GET new' do
       it 'is not allowed' do
         get :new
-        expect(response).to_not be_successful
+        expect(response).not_to be_successful
       end
     end
 
@@ -205,7 +207,7 @@ describe Spotlight::ExhibitsController, type: :controller do
     describe '#destroy' do
       it 'is successful' do
         delete :destroy, params: { id: exhibit }
-        expect(Spotlight::Exhibit.exists?(exhibit.id)).to be_falsey
+        expect(Spotlight::Exhibit).not_to exist(exhibit.id)
         expect(flash[:notice]).to eq 'The exhibit was deleted.'
         expect(response).to redirect_to main_app.root_path
       end

@@ -6,7 +6,7 @@ module Spotlight
   ##
   # spotlight:install generator
   class Install < Rails::Generators::Base
-    source_root File.expand_path('../templates', __FILE__)
+    source_root File.expand_path('templates', __dir__)
     class_option :solr_update_class, type: :string, default: 'Spotlight::SolrDocument::AtomicUpdates'
     class_option :mailer_default_url_host, type: :string, default: '' # e.g. localhost:3000
 

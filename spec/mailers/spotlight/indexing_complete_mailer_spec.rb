@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 describe Spotlight::IndexingCompleteMailer do
+  subject { described_class.documents_indexed [1, 2, 3], exhibit, user }
+
   let(:user) { double(email: 'test@example.com') }
   let(:exhibit) { double(title: 'Exhibit title') }
-  subject { described_class.documents_indexed [1, 2, 3], exhibit, user }
 
   it 'renders the receiver email' do
     expect(subject.to).to eql([user.email])

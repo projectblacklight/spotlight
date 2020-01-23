@@ -19,6 +19,7 @@ describe Spotlight::RolesController, type: :controller do
     let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
     let(:user) { FactoryBot.create(:user) }
     let(:role) { admin.roles.first }
+
     before { sign_in admin }
 
     it 'allows index' do

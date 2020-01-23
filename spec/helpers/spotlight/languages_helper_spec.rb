@@ -2,6 +2,7 @@
 
 describe Spotlight::LanguagesHelper, type: :helper do
   let(:current_exhibit) { FactoryBot.create(:exhibit) }
+
   describe '#add_exhibit_language_dropdown_options' do
     it 'returns a sorted Array of locales and their names' do
       allow(helper).to receive_messages(current_exhibit: current_exhibit)
@@ -61,6 +62,7 @@ describe Spotlight::LanguagesHelper, type: :helper do
       it do
         expect(helper.default_language?).to eq true
       end
+
       it do
         expect(helper).to receive_messages(params: { locale: :en })
         expect(helper.default_language?).to eq true

@@ -7,7 +7,7 @@ module Spotlight
 
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
     load_and_authorize_resource through: :exhibit
-    before_action :attach_breadcrumbs, only: [:new, :edit]
+    before_action :attach_breadcrumbs, only: %i[new edit]
 
     # GET /custom_search_fields/new
     def new

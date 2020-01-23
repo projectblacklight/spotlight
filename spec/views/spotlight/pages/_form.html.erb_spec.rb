@@ -6,6 +6,7 @@ describe 'spotlight/pages/edit', type: :view do
   let :blacklight_config do
     Blacklight::Configuration.new
   end
+
   before do
     assign(:page, page)
     allow(view).to receive_messages(configurations_for_current_page: {},

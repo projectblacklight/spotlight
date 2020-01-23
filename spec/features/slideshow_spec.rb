@@ -6,7 +6,7 @@ describe 'Slideshow', type: :feature, js: true do
 
   before do
     login_as user
-    exhibit.blacklight_configuration.update(document_index_view_types: %w(list gallery slideshow))
+    exhibit.blacklight_configuration.update(document_index_view_types: %w[list gallery slideshow])
   end
 
   it 'has slideshow' do

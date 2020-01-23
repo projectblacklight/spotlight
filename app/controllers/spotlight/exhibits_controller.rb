@@ -6,7 +6,7 @@ module Spotlight
   class ExhibitsController < Spotlight::ApplicationController
     include Spotlight::SearchHelper
     before_action :authenticate_user!, except: [:index]
-    before_action :set_tab, only: [:edit, :update]
+    before_action :set_tab, only: %i[edit update]
 
     load_and_authorize_resource
 
@@ -83,7 +83,7 @@ module Spotlight
     protected
 
     def current_exhibit
-      @exhibit if @exhibit && @exhibit.persisted?
+      @exhibit if @exhibit&.persisted?
     end
 
     def exhibit_params
@@ -93,8 +93,8 @@ module Spotlight
         :description,
         :published,
         :tag_list,
-        contact_emails_attributes: [:id, :email],
-        languages_attributes: [:id, :public]
+        contact_emails_attributes: %i[id email],
+        languages_attributes: %i[id public]
       )
     end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :search, class: Spotlight::Search do
+  factory :search, class: 'Spotlight::Search' do
     exhibit
     sequence(:title) { |n| "Exhibit Search #{n}" }
     sequence(:slug) { |n| "Search#{n}" }
@@ -13,7 +13,7 @@ FactoryBot.define do
     published { true }
   end
 
-  factory :default_search, class: Spotlight::Search do
+  factory :default_search, class: 'Spotlight::Search' do
     exhibit
     title { 'All Exhibit Items' }
     long_description { 'All items in this exhibit.' }

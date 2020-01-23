@@ -11,21 +11,21 @@ describe Spotlight::ReindexingLogEntry, type: :model do
     end
 
     let(:sorted_log_entry_list) do
-      unstarted_entries = Spotlight::ReindexingLogEntry.where(start_time: nil).to_a
-      started_entries = Spotlight::ReindexingLogEntry.where.not(start_time: nil).to_a.sort_by(&:start_time).reverse
+      unstarted_entries = described_class.where(start_time: nil).to_a
+      started_entries = described_class.where.not(start_time: nil).to_a.sort_by(&:start_time).reverse
       unstarted_entries + started_entries # null start times should be first
     end
 
     context 'default' do
       it 'sorts by start_time in descending order' do
-        default_log_entry_list = Spotlight::ReindexingLogEntry.all.to_a
+        default_log_entry_list = described_class.all.to_a
         expect(default_log_entry_list).to eq sorted_log_entry_list
       end
     end
 
     context 'recent' do
       it 'returns the most recent 5 entries (sorted by start_time descending)' do
-        recent_log_entry_list = Spotlight::ReindexingLogEntry.recent.to_a
+        recent_log_entry_list = described_class.recent.to_a
         expect(recent_log_entry_list).to eq sorted_log_entry_list[0..4]
       end
     end

@@ -8,6 +8,7 @@ describe Spotlight::Resources::IiifHarvester do
 
   describe 'Validation' do
     subject { harvester }
+
     context 'when given an invalid URL' do
       before do
         stub_request(:head, 'http://example.com').to_return(status: 200, headers: { 'Content-Type' => 'text/html' })
@@ -16,7 +17,7 @@ describe Spotlight::Resources::IiifHarvester do
       let(:url) { 'http://example.com' }
 
       it 'errors when the URL is not a IIIF URL' do
-        expect(subject).to_not be_valid
+        expect(subject).not_to be_valid
         expect(subject.errors).to be_present
         expect(subject.errors[:url]).to eq ['Invalid IIIF URL']
       end
@@ -38,10 +39,11 @@ describe Spotlight::Resources::IiifHarvester do
   end
 
   describe '#documents_to_index' do
-    let(:url) { 'uri://for-top-level-collection' }
-    before { stub_default_collection }
-
     subject { harvester.document_builder }
+
+    let(:url) { 'uri://for-top-level-collection' }
+
+    before { stub_default_collection }
 
     it 'returns an Enumerator of all the solr documents' do
       expect(subject.documents_to_index).to be_a(Enumerator)

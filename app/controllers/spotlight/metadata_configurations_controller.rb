@@ -44,7 +44,7 @@ module Spotlight
       views = @blacklight_configuration.default_blacklight_config.view.keys | [:show]
 
       @blacklight_configuration.blacklight_config.index_fields.keys.each_with_object({}) do |element, result|
-        result[element] = ([:enabled, :label, :weight] | views)
+        result[element] = (%i[enabled label weight] | views)
       end
     end
   end

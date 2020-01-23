@@ -68,6 +68,7 @@ describe 'shared/_masthead', type: :view do
       render
       expect(rendered).to have_selector '.masthead.resource-masthead'
     end
+
     it 'puts the navbar before the title' do
       render
       expect(rendered.index('navbar')).to be < rendered.index(exhibit.title)

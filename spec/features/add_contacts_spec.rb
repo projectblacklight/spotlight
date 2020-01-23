@@ -4,6 +4,7 @@ describe 'Add a contact to an exhibit', type: :feature do
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+
   before { login_as curator }
 
   it 'displays a newly added contact in the sidebar' do
@@ -39,7 +40,7 @@ describe 'Add a contact to an exhibit', type: :feature do
       expect(page).to have_selector 'div', text: 'Emperor'
       expect(page).to have_selector 'div', text: 'Rome'
       expect(page).to have_selector 'div', text: '(555) 555-5555 ext. 12345 (mobile)'
-      expect(page).to_not have_selector 'img.contact-photo'
+      expect(page).not_to have_selector 'img.contact-photo'
     end
   end
 

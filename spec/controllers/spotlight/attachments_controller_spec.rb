@@ -3,6 +3,7 @@
 describe Spotlight::AttachmentsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
+
   describe 'when not logged in' do
     describe 'GET edit' do
       it 'is successful' do
@@ -14,6 +15,7 @@ describe Spotlight::AttachmentsController, type: :controller do
 
   describe 'when signed in as a curator' do
     let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+
     before { sign_in user }
 
     describe 'POST create' do

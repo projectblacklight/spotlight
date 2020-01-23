@@ -5,7 +5,7 @@ require 'migration/iiif'
 RSpec.describe Migration::IIIF do
   let(:instance) { described_class.new('http://test.host') }
 
-  context '#migrate_featured_images' do
+  describe '#migrate_featured_images' do
     let!(:old_exhibit_thumbnail) { FactoryBot.create(:featured_image, type: nil, iiif_tilesource: nil) }
     let!(:exhibit) { FactoryBot.create(:exhibit, thumbnail_id: old_exhibit_thumbnail.id) }
     let(:updated_thumb) { Spotlight::FeaturedImage.find(old_exhibit_thumbnail.id) }

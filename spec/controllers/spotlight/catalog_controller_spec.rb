@@ -7,7 +7,7 @@ describe Spotlight::CatalogController, type: :controller do
 
   it { is_expected.to be_a_kind_of ::CatalogController }
   it { is_expected.to be_a_kind_of Spotlight::Concerns::ApplicationController }
-  its(:view_context) { should be_a_kind_of Spotlight::ApplicationHelper }
+  its(:view_context) { is_expected.to be_a_kind_of Spotlight::ApplicationHelper }
 
   describe 'when the user is not authenticated' do
     describe 'GET admin' do
@@ -27,6 +27,7 @@ describe Spotlight::CatalogController, type: :controller do
     describe 'GET show' do
       let(:document) { SolrDocument.new(id: 'dq287tq6352') }
       let(:search) { FactoryBot.create(:search, exhibit: exhibit) }
+
       it 'shows the item' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
         expect(controller).to receive(:add_breadcrumb).with('L&#39;AMERIQUE', exhibit_solr_document_path(exhibit, document))
@@ -84,6 +85,7 @@ describe Spotlight::CatalogController, type: :controller do
         get :index, params: { exhibit_id: exhibit, q: 'map' }
         expect(response).to be_successful
       end
+
       it 'redirects to the exhibit home page when there are no parameters' do
         get :index, params: { exhibit_id: exhibit }
         expect(response).to redirect_to(exhibit_root_path(exhibit))
@@ -105,6 +107,7 @@ describe Spotlight::CatalogController, type: :controller do
         expect(doc['thumbnail']).to eq assigns[:document_list].first.first(:thumbnail_url_ssm)
         expect(doc['url']).to eq exhibit_solr_document_path(exhibit, id: 'ps921pn8250')
       end
+
       it 'has partial matches for id' do
         get :autocomplete, params: { exhibit_id: exhibit, q: 'dx157', format: 'json' }
         expect(assigns[:document_list].first.id).to eq 'dx157dh4345'
@@ -244,11 +247,13 @@ describe Spotlight::CatalogController, type: :controller do
           patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { exhibit_tag_list: 'one, two' } }
         end.to change { exhibit.owned_taggings.count }.by(2)
       end
+
       it 'can update non-readonly fields' do
         field = FactoryBot.create(:custom_field, exhibit: exhibit)
         patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } } }
         expect(assigns[:document].sidecar(exhibit).data).to eq(field.field => 'no')
       end
+
       it "can't update readonly fields" do
         field = FactoryBot.create(:custom_field, exhibit: exhibit, readonly_field: true)
         patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } } }
@@ -422,6 +427,7 @@ describe Spotlight::CatalogController, type: :controller do
 
   describe '#field_enabled?' do
     let(:field) { FactoryBot.create(:custom_field) }
+
     before do
       controller.extend(Blacklight::Catalog)
       allow(controller).to receive(:document_index_view_type).and_return(nil)
@@ -430,6 +436,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     context 'for sort fields' do
       let(:field) { Blacklight::Configuration::SortField.new enabled: true }
+
       it 'uses the enabled property for sort fields' do
         expect(controller.field_enabled?(field)).to eq true
       end
@@ -437,6 +444,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     context 'for search fields' do
       let(:field) { Blacklight::Configuration::SearchField.new enabled: true }
+
       it 'uses the enabled property for search fields' do
         expect(controller.field_enabled?(field)).to eq true
       end
@@ -447,11 +455,13 @@ describe Spotlight::CatalogController, type: :controller do
       allow(controller).to receive(:action_name).and_return('show')
       expect(controller.field_enabled?(field)).to eq :value
     end
+
     it 'returns the value of field#show if the action_name is "edit"' do
       allow(field).to receive(:show).and_return(:value)
       allow(controller).to receive(:action_name).and_return('edit')
       expect(controller.field_enabled?(field)).to eq :value
     end
+
     it 'returns the value of the original if condition' do
       allow(field).to receive(:original).and_return false
       expect(controller.field_enabled?(field)).to eq false
@@ -460,6 +470,7 @@ describe Spotlight::CatalogController, type: :controller do
 
   describe '#enabled_in_spotlight_view_type_configuration?' do
     let(:view) { OpenStruct.new }
+
     before do
       controller.extend(Blacklight::Catalog)
     end
@@ -483,22 +494,25 @@ describe Spotlight::CatalogController, type: :controller do
 
   describe 'save_search rendering' do
     let(:current_exhibit) { FactoryBot.create(:exhibit) }
+
     before { allow(controller).to receive_messages(current_exhibit: current_exhibit) }
 
     describe 'render_save_this_search?' do
       it 'returns false if we are on the items admin screen' do
         allow(controller).to receive(:can?).with(:curate, current_exhibit).and_return(true)
         allow(controller).to receive(:params).and_return(controller: 'spotlight/catalog', action: 'admin')
-        expect(controller.render_save_this_search?).to be_falsey
+        expect(controller).not_to be_render_save_this_search
       end
+
       it 'returns true if we are not on the items admin screen' do
         allow(controller).to receive(:can?).with(:curate, current_exhibit).and_return(true)
         allow(controller).to receive(:params).and_return(controller: 'spotlight/catalog', action: 'index')
-        expect(controller.render_save_this_search?).to be_truthy
+        expect(controller).to be_render_save_this_search
       end
+
       it 'returns false if a user cannot curate the object' do
         allow(controller).to receive(:can?).with(:curate, current_exhibit).and_return(false)
-        expect(controller.render_save_this_search?).to be_falsey
+        expect(controller).not_to be_render_save_this_search
       end
     end
   end

@@ -26,6 +26,7 @@ describe Spotlight::TitleHelper, type: :helper do
       title = helper.instance_variable_get(:@page_title)
       expect(title).to eq 'A | B'
     end
+
     it 'strips out any HTML tags' do
       allow(helper).to receive_messages(application_name: 'B')
       expect(helper.set_html_page_title('<b>text</b> should not include HTML')).to eq 'text should not include HTML | B'

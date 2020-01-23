@@ -11,7 +11,7 @@ module Spotlight
   class ConfigurationRepresenter < Roar::Decorator
     include Roar::JSON
 
-    (Spotlight::BlacklightConfiguration.attribute_names - %w(id exhibit_id)).each do |prop|
+    (Spotlight::BlacklightConfiguration.attribute_names - %w[id exhibit_id]).each do |prop|
       property prop
     end
 
@@ -36,7 +36,7 @@ module Spotlight
 
     include Roar::JSON
 
-    (Spotlight::Exhibit.attribute_names - %w(id slug masthead_id thumbnail_id)).each do |prop|
+    (Spotlight::Exhibit.attribute_names - %w[id slug masthead_id thumbnail_id]).each do |prop|
       property prop, if: config?(:config)
     end
 
@@ -46,7 +46,7 @@ module Spotlight
 
     collection :main_navigations, class: Spotlight::MainNavigation, decorator: MainNavigationRepresenter, if: config?(:config)
     collection :contact_emails, class: Spotlight::ContactEmail, if: config?(:config) do
-      (Spotlight::ContactEmail.attribute_names - %w(id exhibit_id confirmation_token)).each do |prop|
+      (Spotlight::ContactEmail.attribute_names - %w[id exhibit_id confirmation_token]).each do |prop|
         property prop
       end
     end
@@ -54,7 +54,7 @@ module Spotlight
     collection :searches, populator: ->(fragment, options) { options[:represented].searches.find_or_initialize_by(slug: fragment['slug']) },
                           if: config?(:pages),
                           class: Spotlight::Search do
-      (Spotlight::Search.attribute_names - %w(id scope exhibit_id masthead_id thumbnail_id)).each do |prop|
+      (Spotlight::Search.attribute_names - %w[id scope exhibit_id masthead_id thumbnail_id]).each do |prop|
         property prop
       end
 
@@ -86,7 +86,7 @@ module Spotlight
     collection :contacts, populator: ->(fragment, options) { options[:represented].contacts.find_or_initialize_by(slug: fragment['slug']) },
                           class: Spotlight::Contact,
                           if: config?(:pages) do
-      (Spotlight::Contact.attribute_names - %w(id exhibit_id)).each do |prop|
+      (Spotlight::Contact.attribute_names - %w[id exhibit_id]).each do |prop|
         property prop
       end
 
@@ -102,14 +102,14 @@ module Spotlight
     collection :custom_fields, populator: ->(fragment, options) { options[:represented].custom_fields.find_or_initialize_by(slug: fragment['slug']) },
                                class: Spotlight::CustomField,
                                if: config?(:blacklight_configuration) do
-      (Spotlight::CustomField.attribute_names - %w(id exhibit_id)).each do |prop|
+      (Spotlight::CustomField.attribute_names - %w[id exhibit_id]).each do |prop|
         property prop
       end
     end
 
     collection :solr_document_sidecars, class: Spotlight::SolrDocumentSidecar,
                                         if: config?(:resources) do
-      (Spotlight::SolrDocumentSidecar.attribute_names - %w(id document_type exhibit_id)).each do |prop|
+      (Spotlight::SolrDocumentSidecar.attribute_names - %w[id document_type exhibit_id]).each do |prop|
         property prop
       end
 
@@ -139,7 +139,7 @@ module Spotlight
     end
 
     collection :attachments, class: Spotlight::Attachment, if: config?(:attachments) do
-      (Spotlight::Attachment.attribute_names - %w(id exhibit_id file)).each do |prop|
+      (Spotlight::Attachment.attribute_names - %w[id exhibit_id file]).each do |prop|
         property prop
       end
 
@@ -160,7 +160,7 @@ module Spotlight
 
     collection :resources, class: ->(options) { options[:fragment].key?('type') ? options[:fragment]['type'].constantize : Spotlight::Resource },
                            if: config?(:resources) do
-      (Spotlight::Resource.attribute_names - %w(id upload_id exhibit_id)).each do |prop|
+      (Spotlight::Resource.attribute_names - %w[id upload_id exhibit_id]).each do |prop|
         property prop
       end
 
@@ -182,7 +182,7 @@ module Spotlight
     collection :languages, class: Spotlight::Language,
                            populator: ->(fragment, options) { options[:represented].languages.find_or_initialize_by(locale: fragment['locale']) },
                            if: config?(:config) do
-      (Spotlight::Language.attribute_names - %w(id exhibit_id)).each do |prop|
+      (Spotlight::Language.attribute_names - %w[id exhibit_id]).each do |prop|
         property prop
       end
     end

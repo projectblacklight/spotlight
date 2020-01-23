@@ -50,6 +50,7 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
 
     context 'when the page is a home page' do
       let(:page) { exhibit.home_page }
+
       before { page_es.update(type: 'Spotlight::HomePage') }
 
       it 'does not render a delete link' do

@@ -4,7 +4,7 @@ module Spotlight
   # Saved search helpers
   module SearchesHelper
     def available_document_index_views
-      blacklight_config.view.select { |_k, v| v.if != false }.keys
+      blacklight_config.view.reject { |_k, v| v.if == false }.keys
     end
   end
 end

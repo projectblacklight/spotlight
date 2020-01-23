@@ -22,9 +22,7 @@ module Spotlight
     end
 
     def link_back_to_catalog(opts = { label: nil })
-      if (current_search_session.try(:query_params) || {}).fetch(:controller, '').starts_with? 'spotlight'
-        opts[:route_set] ||= spotlight
-      end
+      opts[:route_set] ||= spotlight if (current_search_session.try(:query_params) || {}).fetch(:controller, '').starts_with? 'spotlight'
       super
     end
 

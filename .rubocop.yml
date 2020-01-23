@@ -1,6 +1,6 @@
-require: rubocop-rspec
-
 inherit_from: .rubocop_todo.yml
+
+require: rubocop-rspec
 
 AllCops:
   Exclude:
@@ -12,30 +12,14 @@ AllCops:
   TargetRubyVersion: 2.3
   DisplayCopNames: true
 
-Rails:
-  Enabled: true
-
-# Metrics/LineLength:
-#   Max: 120
-
-Style/StringLiterals:
-  Enabled: true
-  EnforcedStyle: single_quotes
-
-Style/Documentation:
-  Exclude:
-  - 'spec/**/*'
-
-Style/DoubleNegation:
+Bundler/DuplicatedGem:
   Enabled: false
 
-Style/SpecialGlobalVars:
+Bundler/OrderedGems:
   Enabled: false
 
-RSpec/DescribeClass:
-  Exclude:
-    - 'spec/features/**/*'
-    - 'spec/views/**/*'
+Layout/LineLength:
+  Max: 160
 
 Metrics/AbcSize:
   Max: 20
@@ -46,9 +30,6 @@ Metrics/ModuleLength:
   Max: 120
   Exclude:
     - 'spec/fixtures/**/*'
-
-Metrics/LineLength:
-  Max: 160
 
 Metrics/BlockLength:
   Exclude:
@@ -85,6 +66,14 @@ Metrics/PerceivedComplexity:
   Exclude:
     - 'app/controllers/spotlight/home_pages_controller.rb'
 
+Rails:
+  Enabled: true
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/features/**/*'
+    - 'spec/views/**/*'
+
 RSpec/NestedGroups:
   Max: 4
 
@@ -93,17 +82,16 @@ RSpec/MultipleExpectations:
   Exclude:
     - 'spec/features/**/*'
 
-Bundler/DuplicatedGem:
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: single_quotes
+
+Style/Documentation:
+  Exclude:
+  - 'spec/**/*'
+
+Style/DoubleNegation:
   Enabled: false
 
-Bundler/OrderedGems:
-  Enabled: false
-
-Rails/ApplicationRecord:
-  Enabled: false
-
-Rails/ApplicationJob:
-  Enabled: false
-
-Rails/InverseOf:
+Style/SpecialGlobalVars:
   Enabled: false

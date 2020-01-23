@@ -16,6 +16,7 @@ describe Spotlight::VersionsController, type: :controller, versioning: true do
     let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:user) { FactoryBot.create(:exhibit_visitor) }
     let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+
     before do
       sign_in user
     end
@@ -33,6 +34,7 @@ describe Spotlight::VersionsController, type: :controller, versioning: true do
     let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
     let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+
     before do
       sign_in user
     end

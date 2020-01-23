@@ -2,7 +2,7 @@
 
 describe Spotlight::Analytics::Ga do
   it 'does not be enabled without configuration' do
-    expect(subject.enabled?).to be_falsey
+    expect(subject).not_to be_enabled
   end
 
   describe '#site' do

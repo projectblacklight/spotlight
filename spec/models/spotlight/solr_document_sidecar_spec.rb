@@ -2,6 +2,7 @@
 
 describe Spotlight::SolrDocumentSidecar, type: :model do
   let(:exhibit) { FactoryBot.create(:exhibit) }
+
   before do
     allow(subject).to receive_messages exhibit: exhibit
     allow(subject).to receive_messages document: SolrDocument.new(id: 'doc_id')
@@ -12,9 +13,9 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
       subject.data = { 'a_tesim' => 1, 'b_tesim' => 2, 'c_tesim' => 3 }
     end
 
-    its(:to_solr) { should include id: 'doc_id' }
-    its(:to_solr) { should include "exhibit_#{exhibit.slug}_public_bsi".to_sym => true }
-    its(:to_solr) { should include 'a_tesim', 'b_tesim', 'c_tesim' }
+    its(:to_solr) { is_expected.to include id: 'doc_id' }
+    its(:to_solr) { is_expected.to include "exhibit_#{exhibit.slug}_public_bsi".to_sym => true }
+    its(:to_solr) { is_expected.to include 'a_tesim', 'b_tesim', 'c_tesim' }
 
     context 'with an uploaded item' do
       before do
@@ -26,7 +27,7 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
         Spotlight::UploadFieldConfig.new(field_name: 'some_configured_field', solr_fields: ['the_solr_field'])
       end
 
-      its(:to_solr) { should include 'the_solr_field' => 'some value' }
+      its(:to_solr) { is_expected.to include 'the_solr_field' => 'some value' }
     end
 
     context 'with blank fields' do
@@ -38,9 +39,9 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
         }
       end
 
-      its(:to_solr) { should include 'a_blank_field' => nil }
-      its(:to_solr) { should include 'a_blank_multivalued_field' => [] }
-      its(:to_solr) { should include 'a_multivalued_field_with_some_blanks' => ['a'] }
+      its(:to_solr) { is_expected.to include 'a_blank_field' => nil }
+      its(:to_solr) { is_expected.to include 'a_blank_multivalued_field' => [] }
+      its(:to_solr) { is_expected.to include 'a_multivalued_field_with_some_blanks' => ['a'] }
     end
   end
 end

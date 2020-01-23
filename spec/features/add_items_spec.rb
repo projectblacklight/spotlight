@@ -7,6 +7,7 @@ describe 'Uploading a non-repository item', type: :feature do
   let!(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit, field_type: :vocab) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:user) { exhibit_curator }
+
   before { login_as user }
 
   describe 'forms' do

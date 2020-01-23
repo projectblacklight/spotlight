@@ -8,6 +8,7 @@ describe 'spotlight/pages/show', type: :view do
                title: 'Title',
                content: '[]')
   end
+
   before do
     allow(view).to receive(:current_exhibit).and_return(exhibit)
     assign(:page, page)
@@ -23,7 +24,7 @@ describe 'spotlight/pages/show', type: :view do
   it 'does not render an empty heading' do
     allow(page).to receive_messages(title: nil)
     render
-    expect(rendered).to_not have_css('.page-title')
+    expect(rendered).not_to have_css('.page-title')
   end
 
   it 'injects the page title into the html title' do
@@ -41,7 +42,7 @@ describe 'spotlight/pages/show', type: :view do
 
   it 'does not include the page title' do
     allow(page).to receive_messages(should_display_title?: false)
-    expect(view).to_not receive(:set_html_page_title)
+    expect(view).not_to receive(:set_html_page_title)
     render
   end
 
@@ -59,7 +60,7 @@ describe 'spotlight/pages/show', type: :view do
   it 'does not render the sidebar if the page has it disabled' do
     allow(page).to receive_messages(display_sidebar?: false)
     render
-    expect(view.content_for(:sidebar)).to_not match('Sidebar')
+    expect(view.content_for(:sidebar)).not_to match('Sidebar')
   end
 
   it 'renders an empty partial if the page has no content' do

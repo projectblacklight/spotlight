@@ -50,7 +50,7 @@ module Spotlight
     def contact_params
       params.require(:contact).permit(:name,
                                       contact_info: Spotlight::Contact.fields.keys,
-                                      avatar_attributes: [:iiif_tilesource, :iiif_region])
+                                      avatar_attributes: %i[iiif_tilesource iiif_region])
     end
   end
 end

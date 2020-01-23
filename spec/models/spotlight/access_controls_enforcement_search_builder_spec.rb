@@ -16,11 +16,12 @@ describe Spotlight::AccessControlsEnforcementSearchBuilder do
   end
 
   subject { MockSearchBuilder.new blacklight_params, scope }
+
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:scope) { double(current_exhibit: exhibit, context: { current_ability: current_ability }) }
   let(:current_ability) { instance_double(Ability) }
   let(:solr_request) { Blacklight::Solr::Request.new }
-  let(:blacklight_params) { Hash.new }
+  let(:blacklight_params) { {} }
 
   describe '#apply_permissive_visibility_filter' do
     it 'allows curators to view everything' do
