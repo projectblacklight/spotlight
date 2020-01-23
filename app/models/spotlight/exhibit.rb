@@ -5,6 +5,7 @@ module Spotlight
   ##
   # Spotlight exhibit
   class Exhibit < ActiveRecord::Base
+    class_attribute :themes_selector
     include Spotlight::ExhibitAnalytics
     include Spotlight::ExhibitDefaults
     include Spotlight::ExhibitDocuments
@@ -87,7 +88,11 @@ module Spotlight
     end
 
     def themes
-      Spotlight::Engine.config.exhibit_themes
+      @themes ||= begin
+        return Spotlight::Engine.config.exhibit_themes unless self.class.themes_selector
+
+        self.class.themes_selector.call(self)
+      end
     end
 
     def to_s

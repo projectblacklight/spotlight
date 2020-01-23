@@ -122,8 +122,22 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#themes' do
-    it 'is the configured themes' do
-      expect(subject.themes).to eq Spotlight::Engine.config.exhibit_themes
+    context 'when no themes_selector proc is set' do
+      it 'is the configured themes' do
+        expect(subject.themes).to eq Spotlight::Engine.config.exhibit_themes
+      end
+    end
+
+    context 'when a themes_selector proc is set' do
+      before do
+        allow(described_class).to receive(:themes_selector).and_return(
+          ->(*) { %w[default coolCustomTheme] }
+        )
+      end
+
+      it 'is the array of themes returned by the proc' do
+        expect(subject.themes).to eq(%w[default coolCustomTheme])
+      end
     end
   end
 
