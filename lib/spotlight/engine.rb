@@ -241,7 +241,9 @@ module Spotlight
     end
 
     # make blacklight configuration play nice with bootstrap_form
-    Blacklight::OpenStructWithHashAccess.extend ActiveModel::Translation
+    # rubocop:disable Lint/SendWithMixinArgument
+    Blacklight::OpenStructWithHashAccess.send(:extend, ActiveModel::Translation)
+    # rubocop:enable Lint/SendWithMixinArgument
 
     config.exhibit_themes = ['default']
 
