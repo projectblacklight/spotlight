@@ -275,7 +275,7 @@ module Spotlight
     # takes ["list", "gallery"] and turns it into the above.
     def document_index_view_types_selected_hash
       selected_view_types = document_index_view_types
-      avail_view_types = default_blacklight_config.view.reject { |_k, v| v.if == false }.keys
+      avail_view_types = default_blacklight_config.view.to_h.reject { |_k, v| v.if == false }.keys
       Blacklight::OpenStructWithHashAccess.new.tap do |s|
         avail_view_types.each do |k|
           s[k] = selected_view_types.include?(k.to_s)

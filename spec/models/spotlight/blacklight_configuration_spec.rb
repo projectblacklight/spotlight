@@ -470,6 +470,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.document_index_view_types).not_to include ''
     end
 
+    # rubocop:disable RSpec/PredicateMatcher
     it 'filters the upstream blacklight config' do
       subject.document_index_view_types = %w[list gallery unknown]
       blacklight_config.view.list
@@ -477,8 +478,9 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       blacklight_config.view.something
 
       expect(subject.blacklight_config.view.keys).to include :list, :gallery, :something
-      expect(subject.blacklight_config.view).to be_all { |k, v| v.key == k && v.if == :enabled_in_spotlight_view_type_configuration? }
+      expect(subject.blacklight_config.view.all? { |k, v| v.key == k && v.if == :enabled_in_spotlight_view_type_configuration? }).to be_truthy
     end
+    # rubocop:enable RSpec/PredicateMatcher
 
     it 'passes through the blacklight configuration when not set' do
       blacklight_config.view.list
