@@ -12,7 +12,7 @@ describe SolrDocument, type: :model do
   let(:exhibit_alt) { FactoryBot.create(:exhibit) }
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
-  its(:to_key) { is_expected.to == ['abcd123'] }
+  its(:to_key) { is_expected.to eq ['abcd123'] }
   its(:persisted?) { is_expected.to be_truthy }
 
   describe '.build_for_exhibit' do
