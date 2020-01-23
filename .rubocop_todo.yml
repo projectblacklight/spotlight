@@ -190,6 +190,14 @@ RSpec/VoidExpect:
   Exclude:
     - 'spec/helpers/spotlight/crud_link_helpers_spec.rb'
 
+# Offense count: 1
+# Cop supports --auto-correct.
+# Configuration parameters: AutoCorrect, EnforcedStyle.
+# SupportedStyles: nested, compact
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'lib/generators/spotlight/templates/config/initializers/sir_trevor_rails.rb'
+
 # Offense count: 2
 Style/CommentedKeyword:
   Exclude:
