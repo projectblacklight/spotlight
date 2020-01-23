@@ -69,13 +69,6 @@
 # Spotlight::Engine.config.ga_page_analytics_options = config.ga_analytics_options.merge(limit: 5)
 # Spotlight::Engine.config.ga_anonymize_ip = false # false for backwards compatibility
 
-# ==> Sir Trevor Widget Configuration
-# Spotlight::Engine.config.sir_trevor_widgets = %w(
-#   Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse
-#   FeaturedPages SolrDocuments SolrDocumentsCarousel SolrDocumentsEmbed
-#   SolrDocumentsFeatures SolrDocumentsGrid SearchResults
-# )
-#
 # Page configurations made available to widgets
 # Spotlight::Engine.config.page_configurations = {
 #   'my-local-config': ->(context) { context.my_custom_data_path(context.current_exhibit) }

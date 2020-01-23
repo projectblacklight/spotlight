@@ -27,12 +27,14 @@ describe 'Block controls' do
 
     within('.spotlight-block-controls') do
       expect(page).to have_css('.st-controls-group', count: 2)
+
       within(first('.st-controls-group')) do
-        expect(page).to have_content 'Standard widgets'
+        expect(page).to have_content 'Exhibit item widgets'
         expect(page).to have_css('.st-block-controls__button')
       end
+
       within(all('.st-controls-group').last) do
-        expect(page).to have_content 'Exhibit item widgets'
+        expect(page).to have_content 'Standard widgets'
         expect(page).to have_css('.st-block-controls__button')
       end
     end
