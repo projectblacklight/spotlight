@@ -32,9 +32,19 @@ module Spotlight
       '#'
     end
 
-    # TODO: Limit just to the exhibits we care about
+    # TODO: this will require that the slug facet returns all values
+    def exhibit_slugs
+      @exhibit_slugs ||= (@response.dig('facet_counts', 'facet_fields', Spotlight::SolrDocument.exhibit_slug_field) || []).select do |facet|
+        facet.is_a?(String) # we should find a better way to do this
+      end
+    end
+
+    def accessible_exhibits_from_search_results
+      Spotlight::Exhibit.where(slug: exhibit_slugs).accessible_by(current_ability)
+    end
+
     def exhibit_metadata
-      @exhibit_metadata ||= Spotlight::Exhibit.all.as_json(only: [:slug, :title, :description, :id]).index_by { |x| x['slug'] }
+      @exhibit_metadata ||= accessible_exhibits_from_search_results.as_json(only: %i[slug title description id]).index_by { |x| x['slug'] }
     end
 
     def exhibit_title(document:, value:, **)
@@ -48,7 +58,5 @@ module Spotlight
     def exhibit_title_facet(value)
       exhibit_metadata.slice(*value).values.map { |x| x['title'] || x['slug'] }.join(', ')
     end
-
-    # todo: scope to published exhibits only
   end
 end
