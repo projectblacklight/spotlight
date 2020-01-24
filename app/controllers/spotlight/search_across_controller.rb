@@ -17,6 +17,7 @@ module Spotlight
     end
 
     configure_blacklight do
+      blacklight_config.search_builder_class = SearchAcrossSearchBuilder
       blacklight_config.track_search_session = false
       blacklight_config.add_index_field Spotlight::SolrDocument.exhibit_slug_field, helper_method: :exhibit_title
       blacklight_config.add_facet_field Spotlight::SolrDocument.exhibit_slug_field, helper_method: :exhibit_title_facet
