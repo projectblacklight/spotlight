@@ -142,7 +142,7 @@ module Spotlight
       slugs = sidecars.map(&:exhibit).map(&:slug)
 
       {
-        self.class.exhibit_slug_field => slugs
+        Spotlight::SolrDocument.exhibit_slug_field => slugs
       }
     end
 
