@@ -2,6 +2,7 @@
   <%= render "shared/site_sidebar" %>
 <% end %>
 
-<% content_for(:sidebar_position) { 'order-last' } %>
+<% content_for(:content_position) { 'order-12 order-lg-0' } %>
+<% content_for(:sidebar_position) { 'order-0 order-lg-12' } %>
 
 <%= render 'search_results' %>
