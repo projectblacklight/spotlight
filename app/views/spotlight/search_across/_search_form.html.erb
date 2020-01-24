@@ -1,0 +1,33 @@
+<div class="facets-header">
+  <h2 class="facets-heading"><%= t('spotlight.search_across.results.heading') %></h2>
+</div>
+
+<div class="d-lg-none">
+  <%= render 'catalog/search_form', presenter: presenter %>
+</div>
+<div class="d-none d-lg-block">
+  <%= form_tag search_action_url, method: :get, class: 'search-query-form', role: 'search' do %>
+    <%= render_hash_as_hidden_fields(search_state.params_for_search.except(:q, :search_field, :qt, :page, :utf8)) %>
+    <% if search_fields.length > 1 %>
+      <label for="search_field" class="sr-only"><%= t('blacklight.search.form.search_field.label') %></label>
+    <% end %>
+    <label for="q" class="sr-only"><%= t('blacklight.search.form.search.label') %></label>
+    <%= text_field_tag :q, params[:q], placeholder: t('blacklight.search.form.search.placeholder'), class: "search-q q form-control rounded mb-2", id: "q", autofocus: presenter.autofocus?, data: { autocomplete_enabled: presenter.autocomplete_enabled?, autocomplete_path: search_action_path(action: :suggest) }  %>
+    <div class="d-flex">
+      <% if search_fields.length > 1 %>
+          <%= select_tag(:search_field,
+                         options_for_select(search_fields, h(params[:search_field])),
+                         title: t('blacklight.search.form.search_field.title'),
+                         id: "search_field",
+                         class: "custom-select search-field") %>
+      <% elsif search_fields.length == 1 %>
+        <%= hidden_field_tag :search_field, search_fields.first.last %>
+      <% end %>
+
+      <button type="submit" class="btn btn-primary search-btn ml-2 d-flex" id="search">
+        <%= t('blacklight.search.form.submit') %>
+        <%= blacklight_icon :search, aria_hidden: true %>
+      </button>
+    </div>
+  <% end %>
+</div>
