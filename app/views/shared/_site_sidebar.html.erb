@@ -1,4 +1,4 @@
-<%= render 'catalog/search_form', presenter: Blacklight::SearchBarPresenter.new(controller, Spotlight::SearchAcrossController.blacklight_config) %>
+<%= render 'spotlight/search_across/search_form', presenter: Blacklight::SearchBarPresenter.new(controller, Spotlight::SearchAcrossController.blacklight_config) %>
 <% if defined? @response %>
   <%= render 'catalog/search_sidebar' %>
 <% end %>

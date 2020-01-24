@@ -688,6 +688,9 @@ en:
         spotlight_upload_description_tesim: Description
         subject_geographic_tesim: Geographic Subject
         subject_temporal_tesim: Temporal Subject
+    search_across:
+      results:
+        heading: Search all exhibits
     search_configurations:
       default_per_page:
         label: Default per page
