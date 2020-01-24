@@ -38,7 +38,7 @@ module Spotlight
     end
 
     def exhibit_title(document:, value:, **)
-      view_context.safe_join exhibit_metadata.slice(*value).values.map { |x| view_context.link_to x['title'] || x['slug'], spotlight.exhibit_solr_document_path(x['id'], document.id) }, ','
+      view_context.safe_join exhibit_metadata.slice(*value).values.map { |x| view_context.link_to x['title'] || x['slug'], spotlight.exhibit_solr_document_path(x['slug'], document.id) }, ', '
     end
 
     def exhibit_title_facet(value)
