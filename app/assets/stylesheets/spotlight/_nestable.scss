@@ -105,3 +105,8 @@ tr.dd-item {
 }
 .dd3-handle:before { content: '≡'; display: block; position: absolute; left: 0; top: 9px; width: 100%; text-align: center; text-indent: 0; color: #fff; font-size: 20px; font-weight: normal; }
 .dd3-handle:hover { background: #ddd; }
+
+.dd3-content .card-body,
+.dd3-content .card-header {
+  padding: .5rem 1rem
+}
