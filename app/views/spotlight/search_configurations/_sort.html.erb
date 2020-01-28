@@ -3,10 +3,10 @@
   <p class="instructions"><%= t(:'.help') %></p>
 
   <%= f.fields_for :sort_fields, @blacklight_configuration.blacklight_config.sort_fields.keys do |vt| %>
-    <ol class="dd-list col-md-7 disabled-sort-option sort_fields_admin">
+    <ol class="dd-list col-10 disabled-sort-option sort_fields_admin">
       <li>
         <div class="panel">
-          <div class="panel-content">
+          <div class="card">
             <div class="card-header">
               <h3 class="h6 card-title">
                 <%= vt.fields_for default_field.key, default_field do |sort| %>
@@ -17,13 +17,15 @@
                   <%= default_field.label %>
                 <% end %>
               </h3>
-              (<%= translate_sort_fields(default_field) %>)
+            </div>
+            <div class="card-body">
+              <p class="card-text"><%= translate_sort_fields(default_field) %></p>
             </div>
           </div>
         </div>
       </li>
     </ol>
-    <div class="panel-group dd sort_fields_admin col-sm-7" id="nested-sort-fields" data-behavior="nestable" data-max-depth="1">
+    <div class="panel-group dd sort_fields_admin col-10" id="nested-sort-fields" data-behavior="nestable" data-max-depth="1">
       <ol class="dd-list">
         <% @blacklight_configuration.blacklight_config.sort_fields.select { |k, v| blacklight_configuration_context.evaluate_if_unless_configuration(v.original) }.except(default_field.key).each_with_index do |(k, config), index| %>
             <li class="dd-item dd3-item" data-id="<%= k.parameterize %>-id">
@@ -36,9 +38,11 @@
                       <a href="#edit-in-place" class="field-label edit-in-place"><%= config.label %></a>
                       <%= sort.hidden_field :label, {data: {:"edit-field-target" => "true"}} %>
                     </h3>
-                    (<%= translate_sort_fields(config) %>)
                     <%= sort.hidden_field :weight, {value: index, data: {property: "weight"}} %>
                   <% end %>
+                </div>
+                <div class="card-body bg-white">
+                  <p class="card-text"><%= translate_sort_fields(config) %></p>
                 </div>
               </div>
             </li>
