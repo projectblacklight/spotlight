@@ -13,13 +13,13 @@ module Spotlight
 
       def uploaded_resource
         @uploaded_resource ||= GlobalID::Locator.locate first(Spotlight::Engine.config.resource_global_id_field)
-      rescue => e
+      rescue StandardError => e
         Rails.logger.info("Unable to locate uploaded resource: #{e}")
         nil
       end
 
       def to_openseadragon(*_args)
-        [uploaded_resource.upload.iiif_tilesource] if uploaded_resource && uploaded_resource.upload
+        [uploaded_resource.upload.iiif_tilesource] if uploaded_resource&.upload
       end
     end
   end

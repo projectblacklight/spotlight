@@ -13,10 +13,13 @@ class TestMetadataClass
 end
 
 describe Spotlight::Resources::IiifManifest do
-  let(:url) { 'uri://to-manifest' }
   subject { described_class.new(url: url, manifest: manifest, collection: collection) }
+
+  let(:url) { 'uri://to-manifest' }
+
   let(:collection) { double(compound_id: '1') }
   let(:manifest_fixture) { test_manifest1 }
+
   before do
     stub_iiif_response_for_url(url, manifest_fixture)
     subject.with_exhibit(exhibit)
@@ -25,6 +28,7 @@ describe Spotlight::Resources::IiifManifest do
   describe '#to_solr' do
     let(:manifest) { Spotlight::Resources::IiifService.new(url).send(:object) }
     let(:exhibit) { FactoryBot.create(:exhibit) }
+
     describe 'id' do
       it 'is an MD5 hexdigest of the exhibit id and the and the url' do
         expected = Digest::MD5.hexdigest("#{exhibit.id}-#{url}")
@@ -38,7 +42,7 @@ describe Spotlight::Resources::IiifManifest do
       end
 
       it 'indexes to multiple fields when configured' do
-        allow(Spotlight::Engine.config).to receive(:iiif_title_fields).at_least(:once).and_return(%w(title_field1 title_field2))
+        allow(Spotlight::Engine.config).to receive(:iiif_title_fields).at_least(:once).and_return(%w[title_field1 title_field2])
 
         expect(subject.to_solr['title_field1']).to eq 'Test Manifest 1'
         expect(subject.to_solr['title_field2']).to eq 'Test Manifest 1'

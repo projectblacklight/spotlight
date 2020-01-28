@@ -11,6 +11,7 @@ describe Spotlight::DashboardsController, type: :controller do
 
   describe 'when logged in' do
     let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+
     before { sign_in curator }
 
     describe 'GET show' do

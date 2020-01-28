@@ -4,7 +4,7 @@ module Spotlight
   ##
   # Exhibit authorization roles
   class Role < ActiveRecord::Base
-    ROLES = %w(admin curator).freeze
+    ROLES = %w[admin curator].freeze
     belongs_to :resource, polymorphic: true, optional: true
     belongs_to :user, class_name: Spotlight::Engine.config.user_class, autosave: true, optional: false
 

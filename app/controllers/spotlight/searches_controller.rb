@@ -10,7 +10,7 @@ module Spotlight
     before_action :only_curators!
     before_action :create_or_load_resource, only: [:create]
     load_and_authorize_resource through: :exhibit
-    before_action :attach_breadcrumbs, only: [:index, :edit], unless: -> { request.format.json? }
+    before_action :attach_breadcrumbs, only: %i[index edit], unless: -> { request.format.json? }
 
     include Spotlight::Base
     include Spotlight::SearchHelper
@@ -31,7 +31,7 @@ module Spotlight
       respond_to do |format|
         format.html
         format.json do
-          render json: @searches.as_json(methods: [:count, :thumbnail_image_url]), root: false
+          render json: @searches.as_json(methods: %i[count thumbnail_image_url]), root: false
         end
       end
     end
@@ -92,14 +92,14 @@ module Spotlight
     end
 
     def attach_breadcrumbs
-      e = @exhibit || (@search.exhibit if @search)
+      e = @exhibit || @search&.exhibit
       add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: e.title), e
       add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(e)
       add_breadcrumb t(:'spotlight.curation.sidebar.browse'), exhibit_searches_path(e)
     end
 
     def batch_search_params
-      params.require(:exhibit).permit('searches_attributes' => [:id, :published, :weight])
+      params.require(:exhibit).permit('searches_attributes' => %i[id published weight])
     end
 
     def search_params
@@ -118,13 +118,13 @@ module Spotlight
     end
 
     def featured_image_params
-      [
-        :iiif_region, :iiif_tilesource,
-        :iiif_manifest_url, :iiif_canvas_id, :iiif_image_id,
-        :display,
-        :source,
-        :image,
-        :document_global_id
+      %i[
+        iiif_region iiif_tilesource
+        iiif_manifest_url iiif_canvas_id iiif_image_id
+        display
+        source
+        image
+        document_global_id
       ]
     end
 
@@ -133,7 +133,7 @@ module Spotlight
     end
 
     def blacklisted_search_session_params
-      [:id, :commit, :counter, :total, :search_id, :page, :per_page, :authenticity_token, :utf8, :action, :controller]
+      %i[id commit counter total search_id page per_page authenticity_token utf8 action controller]
     end
 
     def fallback_url

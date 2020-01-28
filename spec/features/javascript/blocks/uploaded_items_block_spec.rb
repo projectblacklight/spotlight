@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-feature 'Uploaded Items Block', feature: true, js: true, versioning: true do
+describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let(:fixture_file1) { File.join(FIXTURES_PATH, '800x600.png') }
@@ -12,7 +12,7 @@ feature 'Uploaded Items Block', feature: true, js: true, versioning: true do
     add_widget 'uploaded_items'
   end
 
-  scenario 'users can upload images with text' do
+  it 'users can upload images with text' do
     heading = 'Some Uploaded Images'
     text = 'Take a look at these images I just uploaded!'
     fill_in 'Heading', with: heading
@@ -47,7 +47,7 @@ feature 'Uploaded Items Block', feature: true, js: true, versioning: true do
     end
   end
 
-  scenario 'users can toggle individual images to not display' do
+  it 'users can toggle individual images to not display' do
     attach_file('uploaded_item_url', fixture_file1)
     attach_file('uploaded_item_url', fixture_file2)
 

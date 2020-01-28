@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 describe Spotlight::PageConfigurations, type: :model do
+  subject(:page_config) { described_class.new(context: view_context, page: page) }
+
   let(:view_context) do
     double(
       'ViewContext',
@@ -17,7 +19,6 @@ describe Spotlight::PageConfigurations, type: :model do
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
-  subject(:page_config) { described_class.new(context: view_context, page: page) }
 
   describe '#as_json' do
     it 'is a json-able object (hash)' do

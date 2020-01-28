@@ -7,6 +7,7 @@ RSpec.describe Spotlight::AdminUsersController, type: :controller do
 
   context 'by a non-admin' do
     let(:user) { FactoryBot.create(:exhibit_visitor) }
+
     it 'redirects with an error message' do
       get :index
       expect(response).to redirect_to '/'
@@ -18,6 +19,7 @@ RSpec.describe Spotlight::AdminUsersController, type: :controller do
     before { request.env['HTTP_REFERER'] = 'http://example.com' }
 
     let(:user) { FactoryBot.create(:site_admin) }
+
     describe 'GET index' do
       it 'is successful' do
         get :index
@@ -28,6 +30,7 @@ RSpec.describe Spotlight::AdminUsersController, type: :controller do
     describe 'DELETE destroy' do
       let(:user) { FactoryBot.create(:user) }
       let!(:admin_role) { FactoryBot.create(:role, role: 'admin', user: user, resource: Spotlight::Site.instance) }
+
       it 'removes the site admin role from the given user' do
         delete :destroy, params: { id: user.id }
         expect(response).to redirect_to(admin_users_path)
@@ -38,6 +41,7 @@ RSpec.describe Spotlight::AdminUsersController, type: :controller do
 
     describe 'PATCH update' do
       let(:non_admin) { FactoryBot.create(:exhibit_visitor) }
+
       it 'adds the site admin role to the given user' do
         patch :update, params: { id: non_admin.id }
         expect(response).to redirect_to(admin_users_path)

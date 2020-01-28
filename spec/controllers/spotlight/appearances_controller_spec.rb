@@ -29,6 +29,7 @@ describe Spotlight::AppearancesController, type: :controller do
 
   describe 'when signed in' do
     let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
     before { sign_in user }
 
     describe 'GET edit' do
@@ -67,6 +68,7 @@ describe Spotlight::AppearancesController, type: :controller do
           1 => { id: last_nav.id, display: false }
         }
       end
+
       it 'updates the navigation' do
         patch :update, params: submitted
         expect(flash[:notice]).to eq 'The exhibit was successfully updated.'

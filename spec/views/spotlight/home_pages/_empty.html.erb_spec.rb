@@ -18,10 +18,11 @@ describe 'spotlight/home_pages/_empty.html.erb', type: :view do
       render
       expect(rendered).to have_css('li a', text: 'Curation > Items')
     end
+
     it 'does not have a list item with a link to add items when there are no resource partials configured' do
       allow(Spotlight::Engine.config).to receive_messages(resource_partials: [])
       render
-      expect(rendered).to_not have_css('li a', text: 'Curation > Items')
+      expect(rendered).not_to have_css('li a', text: 'Curation > Items')
     end
   end
 end

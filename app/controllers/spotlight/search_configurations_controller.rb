@@ -49,19 +49,19 @@ module Spotlight
 
     def exhibit_configuration_facet_params
       @blacklight_configuration.blacklight_config.facet_fields.keys.each_with_object({}) do |element, result|
-        result[element] = [:show, :label, :weight, :sort]
+        result[element] = %i[show label weight sort]
       end
     end
 
     def exhibit_configuration_search_params
       @blacklight_configuration.blacklight_config.search_fields.keys.each_with_object({}) do |element, result|
-        result[element] = [:enabled, :label, :weight]
+        result[element] = %i[enabled label weight]
       end
     end
 
     def exhibit_configuration_sort_params
       @blacklight_configuration.blacklight_config.sort_fields.keys.each_with_object({}) do |element, result|
-        result[element] = [:enabled, :label, :weight]
+        result[element] = %i[enabled label weight]
       end
     end
   end

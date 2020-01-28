@@ -7,13 +7,13 @@ describe Spotlight::Page, type: :model do
 
   describe '.at_top_level' do
     it 'scopes results to only top level pages' do
-      expect(described_class.at_top_level).to_not include child_page
+      expect(described_class.at_top_level).not_to include child_page
     end
   end
 
   describe '.published' do
     it 'scopes results to only published pages' do
-      expect(described_class.at_top_level).to_not include child_page
+      expect(described_class.at_top_level).not_to include child_page
     end
   end
 
@@ -40,17 +40,18 @@ describe Spotlight::Page, type: :model do
 
   describe '.display_sidebar' do
     it 'is set to true by default' do
-      expect(parent_page.display_sidebar?).to be_truthy
+      expect(parent_page).to be_display_sidebar
     end
   end
 
   describe 'should_display_title?' do
     let(:page) { FactoryBot.create(:feature_page) }
+
     it 'returns if the title is present or not' do
       expect(page.title).not_to be_blank
-      expect(page.should_display_title?).to be_truthy
+      expect(page).to be_should_display_title
       page.title = ''
-      expect(page.should_display_title?).to be_falsey
+      expect(page).not_to be_should_display_title
     end
   end
 
@@ -61,6 +62,7 @@ describe Spotlight::Page, type: :model do
       page.content = [].to_json
       expect(page.content).to be_a_kind_of SirTrevorRails::BlockArray
     end
+
     it 'works with an array' do
       page.content = []
       expect(page.content).to be_a_kind_of SirTrevorRails::BlockArray
@@ -138,8 +140,9 @@ describe Spotlight::Page, type: :model do
   end
 
   describe 'thumbnail_image_url' do
-    subject(:thumbnail) { FactoryBot.create(:featured_image) }
     subject(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+
+    let(:thumbnail) { FactoryBot.create(:featured_image) }
 
     it 'is nil when there is no thumbnail' do
       expect(page.thumbnail_image_url).to be_nil
@@ -161,8 +164,9 @@ describe Spotlight::Page, type: :model do
   end
 
   describe 'translated_pages' do
-    let!(:page_es) { FactoryBot.create(:feature_page, exhibit: exhibit, locale: 'es', default_locale_page: page) }
     subject!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+
+    let!(:page_es) { FactoryBot.create(:feature_page, exhibit: exhibit, locale: 'es', default_locale_page: page) }
 
     it 'is a relation of the other pages that indicate they belong to this page' do
       expect(page.translated_pages.length).to eq 1
@@ -171,8 +175,9 @@ describe Spotlight::Page, type: :model do
   end
 
   describe 'clone_for_locale' do
-    let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit, published: true) }
     subject!(:cloned_page) { page.clone_for_locale('es') }
+
+    let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit, published: true) }
 
     it 'creates a new page' do
       expect do
@@ -210,6 +215,7 @@ describe Spotlight::Page, type: :model do
     context 'when cloning a page that has been deleted with a FriendlyId UUID added' do
       let(:feature_page_static_title) { FactoryBot.create(:feature_page_static_title, exhibit: exhibit) }
       let(:feature_page_static_title_two) { FactoryBot.create(:feature_page_static_title, exhibit: exhibit) }
+
       it 'translated page has the same UUID' do
         expect(feature_page_static_title.slug).to eq 'featurepage'
         expect(feature_page_static_title_two.slug).not_to eq feature_page_static_title.slug

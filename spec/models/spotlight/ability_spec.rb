@@ -3,6 +3,8 @@
 require 'cancan/matchers'
 
 describe Spotlight::Ability, type: :model do
+  subject { Ability.new(user) }
+
   before do
     allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
   end
@@ -14,10 +16,10 @@ describe Spotlight::Ability, type: :model do
   let(:language) { FactoryBot.create(:language, exhibit: exhibit) }
   let(:public_language) { FactoryBot.create(:language, exhibit: exhibit, public: true) }
   let(:translation) { FactoryBot.create(:translation, exhibit: exhibit) }
-  subject { Ability.new(user) }
 
   describe 'a user with no roles' do
     let(:user) { nil }
+
     it { is_expected.not_to be_able_to(:create, exhibit) }
     it { is_expected.to be_able_to(:read, exhibit) }
     it { is_expected.to be_able_to(:read, page) }

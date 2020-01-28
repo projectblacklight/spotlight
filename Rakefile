@@ -34,7 +34,7 @@ task ci: ['engine_cart:generate'] do
   ENV['environment'] = 'test'
 
   SolrWrapper.wrap(port: '8983') do |solr|
-    solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path(File.dirname(__FILE__)), 'solr_conf', 'conf')) do
+    solr.with_collection(name: 'blacklight-core', dir: File.join(__dir__, 'solr_conf', 'conf')) do
       within_test_app do
         system 'bundle install'
         system 'bundle exec rake db:migrate'
@@ -62,7 +62,7 @@ namespace :spotlight do
     Rake::Task['engine_cart:generate'].invoke
 
     SolrWrapper.wrap(port: '8983') do |solr|
-      solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path(File.dirname(__FILE__)), 'solr_conf', 'conf')) do
+      solr.with_collection(name: 'blacklight-core', dir: File.join(__dir__, 'solr_conf', 'conf')) do
         within_test_app do
           unless File.exist? '.initialized'
             system 'bundle exec rake spotlight:initialize'
@@ -90,7 +90,7 @@ namespace :spotlight do
             Bundler.with_clean_env do
               IO.popen({ 'SPOTLIGHT_GEM' => File.dirname(__FILE__) },
                        ['rails', version, 'new', 'internal', '--skip-spring', '-m', template_path] +
-                          [err: [:child, :out]]) do |io|
+                          [err: %i[child out]]) do |io|
                 IO.copy_stream(io, $stderr)
 
                 _, exit_status = Process.wait2(io.pid)
@@ -116,4 +116,4 @@ namespace :spotlight do
   end
 end
 
-task default: [:rubocop, :ci]
+task default: %i[rubocop ci]

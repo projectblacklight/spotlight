@@ -53,7 +53,7 @@ module Spotlight
     end
 
     def contact_params
-      params.require(:exhibit).permit('contacts_attributes' => [:id, :show_in_sidebar, :weight])
+      params.require(:exhibit).permit('contacts_attributes' => %i[id show_in_sidebar weight])
     end
 
     def update_all_page_params

@@ -11,8 +11,9 @@ describe Spotlight::Masthead, type: :model do
   end
 
   describe '#display?' do
-    let(:image) { OpenStruct.new }
     subject { masthead.display? }
+
+    let(:image) { OpenStruct.new }
 
     context 'when the masthead is set to not display' do
       it { is_expected.to be_falsey }

@@ -26,6 +26,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
 
   describe 'when signed in as a site admin' do
     let(:user) { FactoryBot.create(:site_admin) }
+
     before { sign_in user }
 
     describe 'POST create a thumbnail' do

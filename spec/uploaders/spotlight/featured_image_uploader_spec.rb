@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 describe Spotlight::FeaturedImageUploader do
-  let(:mounter) { FactoryBot.create(:featured_image) }
   subject(:featured_image_uploader) { described_class.new(mounter, 'mounted_as') }
+
+  let(:mounter) { FactoryBot.create(:featured_image) }
 
   describe '#extension_whitelist' do
     it 'is the configured array of approved extension to be uploaded' do

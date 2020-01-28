@@ -10,7 +10,7 @@ module Spotlight
     serialize :contact_info, Hash
 
     extend FriendlyId
-    friendly_id :name, use: [:slugged, :scoped, :finders], scope: :exhibit
+    friendly_id :name, use: %i[slugged scoped finders], scope: :exhibit
 
     belongs_to :avatar, class_name: 'Spotlight::ContactImage', dependent: :destroy, optional: true
     accepts_nested_attributes_for :avatar, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }

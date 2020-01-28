@@ -3,8 +3,10 @@
 require 'spec_helper'
 
 describe Spotlight::Resources::IiifService do
-  let(:url) { 'uri://for-top-level-collection' }
   subject { described_class.new(url) }
+
+  let(:url) { 'uri://for-top-level-collection' }
+
   before { stub_default_collection }
 
   describe '#collections' do
@@ -46,6 +48,7 @@ describe Spotlight::Resources::IiifService do
     it 'returns manifests representing collection documents' do
       expect(manifests.count).to eq 8
     end
+
     it 'keeps track of the parent collection' do
       arr = manifests.to_a
       expect(arr[1].collection).to eq arr[0]

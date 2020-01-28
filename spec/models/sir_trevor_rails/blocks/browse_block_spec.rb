@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 describe SirTrevorRails::Blocks::BrowseBlock do
+  subject { described_class.new({ type: '', data: block_data }, page) }
+
   let(:page) { FactoryBot.create(:feature_page) }
   let(:block_data) { {} }
-  subject { described_class.new({ type: '', data: block_data }, page) }
 
   describe '#items' do
     it 'is the array of items with display set to true' do

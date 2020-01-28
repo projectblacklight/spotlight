@@ -6,7 +6,7 @@ describe 'Report a Problem', type: :feature do
 
   it 'does not have a header link' do
     visit root_path
-    expect(page).to_not have_content 'Feedback'
+    expect(page).not_to have_content 'Feedback'
   end
 
   describe 'when emails are setup' do

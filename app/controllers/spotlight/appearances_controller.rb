@@ -26,20 +26,20 @@ module Spotlight
 
     def exhibit_params
       params.require(:exhibit).permit(:theme,
-                                      main_navigations_attributes: [:id, :display, :label, :weight],
+                                      main_navigations_attributes: %i[id display label weight],
                                       masthead_attributes: featured_image_params,
                                       thumbnail_attributes: featured_image_params)
     end
 
     def featured_image_params
-      [
-        :iiif_region, :iiif_tilesource,
-        :iiif_manifest_url, :iiif_canvas_id,
-        :iiif_image_id,
-        :display,
-        :source,
-        :image,
-        :document_global_id
+      %i[
+        iiif_region iiif_tilesource
+        iiif_manifest_url iiif_canvas_id
+        iiif_image_id
+        display
+        source
+        image
+        document_global_id
       ]
     end
   end

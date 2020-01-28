@@ -223,7 +223,7 @@ module Spotlight
         end
 
         def manifest_fields
-          %w(attribution description license)
+          %w[attribution description license]
         end
 
         # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity

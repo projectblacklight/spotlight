@@ -5,6 +5,7 @@ describe 'shared/_analytics', type: :view do
     render
     expect(rendered).to be_empty
   end
+
   it 'renders the GA script tag if the web property id is configured' do
     allow(Spotlight::Engine.config).to receive(:ga_web_property_id).and_return('XYZ-234')
     allow(Spotlight::Engine.config).to receive(:ga_anonymize_ip).and_return(true)

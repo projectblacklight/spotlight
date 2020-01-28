@@ -6,6 +6,7 @@ describe Spotlight::CustomSearchFieldsController, type: :controller do
 
   describe 'when signed in as an exhibit admin' do
     let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
     before { sign_in user }
 
     describe 'GET new' do
@@ -21,6 +22,7 @@ describe Spotlight::CustomSearchFieldsController, type: :controller do
 
     describe 'GET edit' do
       let(:field) { FactoryBot.create(:custom_search_field, exhibit: exhibit) }
+
       it 'assigns the requested custom_field' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))

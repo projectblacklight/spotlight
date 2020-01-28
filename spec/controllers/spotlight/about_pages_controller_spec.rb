@@ -3,12 +3,14 @@
 describe Spotlight::AboutPagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { 'title' => 'MyString', thumbnail: { iiif_url: '' } } }
+
   after do
     I18n.locale = I18n.default_locale
   end
 
   describe 'when not logged in' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
+
     describe 'POST update_all' do
       it 'is not allowed' do
         post :update_all, params: { exhibit_id: exhibit }
@@ -30,11 +32,13 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
   describe 'when signed in as a curator' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+
     before { sign_in user }
 
     describe 'GET show' do
       let(:page) { FactoryBot.create(:about_page, weight: 0, exhibit: exhibit) }
       let(:page2) { FactoryBot.create(:about_page, weight: 5, exhibit: exhibit) }
+
       describe 'on the main about page' do
         it 'is successful' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
@@ -104,6 +108,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
     describe 'GET edit' do
       let!(:page) { FactoryBot.create(:about_page, weight: 0, exhibit: exhibit) }
       let!(:page2) { FactoryBot.create(:about_page, weight: 5, exhibit: exhibit) }
+
       describe 'on the main about page' do
         it 'is successful' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
@@ -128,6 +133,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
 
     describe 'GET index' do
       let!(:page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
@@ -149,6 +155,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
 
     describe 'PUT update' do
       let!(:page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+
       it 'redirects to the about page' do
         put :update, params: { id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes }
         page.reload
@@ -161,6 +168,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
       let!(:page1) { FactoryBot.create(:about_page, exhibit: exhibit) }
       let!(:page2) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
       let!(:page3) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
+
       before { request.env['HTTP_REFERER'] = 'http://example.com' }
 
       it 'updates whether they are on the landing page' do
@@ -185,6 +193,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
     describe 'PATCH update_contacts' do
       let!(:contact1) { FactoryBot.create(:contact, name: 'Aphra Behn', exhibit: exhibit) }
       let!(:contact2) { FactoryBot.create(:contact, exhibit: exhibit) }
+
       it 'updates contacts' do
         patch :update_contacts, params: {
           exhibit_id: exhibit,
@@ -202,6 +211,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
         expect(contact1.reload.weight).to eq 1
         expect(contact2.reload.weight).to eq 2
       end
+
       it 'shows index on failure' do
         expect_any_instance_of(Spotlight::Exhibit).to receive(:update).and_return(false)
         patch :update_contacts, params: {

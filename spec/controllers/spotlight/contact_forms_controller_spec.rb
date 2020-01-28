@@ -24,10 +24,12 @@ describe Spotlight::ContactFormsController, type: :controller do
         post :create, params: { exhibit_id: exhibit.id, contact_form: { name: 'Joe Doe', email: 'jdoe@example.com', honeypot_field_name => '' } }
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
+
     it 'redirects back' do
       post :create, params: { exhibit_id: exhibit.id, contact_form: { name: 'Joe Doe', email: 'jdoe@example.com', honeypot_field_name => '' } }
       expect(response).to redirect_to 'http://example.com'
     end
+
     it 'sets a flash message' do
       post :create, params: { exhibit_id: exhibit.id, contact_form: { name: 'Joe Doe', email: 'jdoe@example.com', honeypot_field_name => '' } }
       expect(flash[:notice]).to eq 'Thanks. Your feedback has been sent.'

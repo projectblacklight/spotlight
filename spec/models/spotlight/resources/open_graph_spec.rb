@@ -12,9 +12,9 @@ describe Spotlight::Resources::OpenGraph, type: :model do
     include Spotlight::Resources::OpenGraph
   end
 
-  let(:exhibit) { double(solr_data: {}, blacklight_config: Blacklight::Configuration.new) }
-
   subject { TestResource.new url: 'info:url' }
+
+  let(:exhibit) { double(solr_data: {}, blacklight_config: Blacklight::Configuration.new) }
 
   describe '#to_solr' do
     before do
@@ -55,6 +55,7 @@ describe Spotlight::Resources::OpenGraph, type: :model do
         </head></html>
       EOF
     end
+
     it 'extracts opengraph <meta> tags' do
       allow(subject).to receive_messages(body: body)
       expect(subject.opengraph).to include 'og:title', 'og:description', 'og:type', 'og:type', 'og:site_name', 'og:video', 'og:video:width', 'og:video:height'

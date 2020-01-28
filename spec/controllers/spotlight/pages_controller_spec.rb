@@ -21,8 +21,10 @@ describe Spotlight::PagesController, type: :controller do
       }
     }
   end
+
   describe 'when signed in as a curator' do
     let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+
     before do
       sign_in user
     end

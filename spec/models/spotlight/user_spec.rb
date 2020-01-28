@@ -2,6 +2,7 @@
 
 describe Spotlight::User do
   subject { Class.new }
+
   before { subject.extend described_class }
 
   describe '#invite_pending?' do

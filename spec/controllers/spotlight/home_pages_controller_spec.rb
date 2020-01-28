@@ -8,6 +8,7 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
 
   describe 'when signed in as a curator' do
     let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+
     before do
       sign_in user
     end
@@ -50,16 +51,18 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
     it 'gets search results for display facets' do
       allow(controller).to receive_messages(search_results: [double, double])
       get :show, params: { exhibit_id: exhibit }
-      expect(assigns[:response]).to_not be_blank
-      expect(assigns[:document_list]).to_not be_blank
+      expect(assigns[:response]).not_to be_blank
+      expect(assigns[:document_list]).not_to be_blank
       expect(assigns[:page]).to eq exhibit.home_page
     end
+
     it 'does not render breadcrumbs' do
       expect(controller).not_to receive(:add_breadcrumb)
       allow(controller).to receive_messages(search_results: [double, double])
       get :show, params: { exhibit_id: exhibit }
       expect(response).to be_successful
     end
+
     it 'does not do the search when the sidebar is hidden' do
       page.display_sidebar = false
       page.save

@@ -8,7 +8,7 @@ module Spotlight
     include Spotlight::SearchHelper
 
     extend FriendlyId
-    friendly_id :title, use: [:slugged, :scoped, :finders, :history], scope: :exhibit
+    friendly_id :title, use: %i[slugged scoped finders history], scope: :exhibit
 
     self.table_name = 'spotlight_searches'
     belongs_to :exhibit
@@ -27,7 +27,7 @@ module Spotlight
     accepts_nested_attributes_for :masthead, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
 
     def thumbnail_image_url
-      return unless thumbnail && thumbnail.iiif_url
+      return unless thumbnail&.iiif_url
 
       thumbnail.iiif_url
     end
@@ -52,7 +52,7 @@ module Spotlight
     delegate :blacklight_config, to: :exhibit
 
     def display_masthead?
-      masthead && masthead.display?
+      masthead&.display?
     end
 
     def search_params

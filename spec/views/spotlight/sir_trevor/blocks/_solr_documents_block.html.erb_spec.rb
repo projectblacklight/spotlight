@@ -9,7 +9,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_block.html.erb', type: :vi
   let(:doc) { blacklight_config.document_model.new(id: 1) }
   let(:blacklight_config) do
     Blacklight::Configuration.new do |config|
-      config.view.embed.partials = %w(a b c)
+      config.view.embed.partials = %w[a b c]
       config.view.embed.locals = { a: 1 }
     end
   end
@@ -26,6 +26,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_block.html.erb', type: :vi
 
   context 'with a multi-image object' do
     let(:block_options) { { thumbnail_image_url: 'http://example.com' } }
+
     before do
       allow(block).to receive(:each_document).and_yield(block_options, doc)
     end

@@ -15,6 +15,7 @@ describe Spotlight::Resources::CsvUploadController, type: :controller do
 
   describe 'when signed in as a curator' do
     let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+
     before { sign_in user }
 
     describe 'POST create' do
@@ -44,6 +45,7 @@ describe Spotlight::Resources::CsvUploadController, type: :controller do
           }
         ]
       end
+
       before do
         request.env['HTTP_REFERER'] = 'http://test.host/'
       end
@@ -52,11 +54,13 @@ describe Spotlight::Resources::CsvUploadController, type: :controller do
         expect(Spotlight::AddUploadsFromCSV).to receive(:perform_later).with(serialized_csv, exhibit, user).and_return(nil)
         post :create, params: { exhibit_id: exhibit, resources_csv_upload: { url: csv } }
       end
+
       it 'sets the flash message' do
         expect(Spotlight::AddUploadsFromCSV).to receive(:perform_later).and_return(nil)
         post :create, params: { exhibit_id: exhibit, resources_csv_upload: { url: csv } }
         expect(flash[:notice]).to eq "'csv-upload-fixture.csv' has been uploaded.  An email will be sent to you once indexing is complete."
       end
+
       it 'redirects back' do
         expect(Spotlight::AddUploadsFromCSV).to receive(:perform_later).and_return(nil)
         post :create, params: { exhibit_id: exhibit, resources_csv_upload: { url: csv } }

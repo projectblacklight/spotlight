@@ -27,22 +27,22 @@ describe Spotlight::Controller do
     end
 
     it 'is false if there is no exhibit' do
-      expect(subject.exhibit_masthead?).to be_falsey
+      expect(subject).not_to be_exhibit_masthead
     end
 
     it 'is false if there is no custom exhibit masthead' do
       allow(subject).to receive_messages(current_exhibit: double(masthead: nil), current_masthead: nil)
-      expect(subject.exhibit_masthead?).to be_falsey
+      expect(subject).not_to be_exhibit_masthead
     end
 
     it 'is true if there is an exhibit masthead, but it is not set to display' do
       allow(subject).to receive_messages(current_exhibit: double(masthead: double(display?: false)))
-      expect(subject.exhibit_masthead?).to be_falsey
+      expect(subject).not_to be_exhibit_masthead
     end
 
     it 'is true if there is an exhibit masthead' do
       allow(subject).to receive_messages(current_exhibit: double(masthead: double(display?: true)))
-      expect(subject.exhibit_masthead?).to be_truthy
+      expect(subject).to be_exhibit_masthead
     end
   end
 

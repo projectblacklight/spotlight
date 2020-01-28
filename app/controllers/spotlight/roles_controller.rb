@@ -34,7 +34,7 @@ module Spotlight
     protected
 
     def exhibit_params
-      params.require(:exhibit).permit(roles_attributes: [:id, :user_key, :role, :_destroy])
+      params.require(:exhibit).permit(roles_attributes: %i[id user_key role _destroy])
     end
 
     def any_deleted

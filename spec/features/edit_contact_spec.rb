@@ -5,6 +5,7 @@ describe 'Add a contact to an exhibit', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit) }
   let!(:contact) { FactoryBot.create(:contact, name: 'Marcus Aurelius', exhibit: exhibit) }
+
   before { login_as curator }
 
   it 'displays a newly added contact in the sidebar' do

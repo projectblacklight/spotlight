@@ -15,8 +15,8 @@ describe 'Exhibits index page', type: :feature do
 
     context 'with tagged exhibits' do
       before do
-        exhibit.tag_list = %w(a)
-        other_exhibit.tag_list = %w(a b)
+        exhibit.tag_list = %w[a]
+        other_exhibit.tag_list = %w[a b]
 
         exhibit.save
         other_exhibit.save

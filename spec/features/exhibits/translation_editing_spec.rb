@@ -23,6 +23,7 @@ describe 'Translation editing', type: :feature do
     it 'selects the correct language' do
       expect(page).to have_css '.nav-pills .nav-link.active', text: 'French'
     end
+
     describe 'basic settings' do
       it 'successfully adds translations' do
         within '.translation-edit-form #general' do
@@ -42,7 +43,7 @@ describe 'Translation editing', type: :feature do
           expect(page).to have_css '.translation-complete'
         end
         within '.translation-basic-settings-description' do
-          expect(page).to_not have_css '.translation-complete'
+          expect(page).not_to have_css '.translation-complete'
         end
       end
     end
@@ -74,10 +75,10 @@ describe 'Translation editing', type: :feature do
           expect(page).to have_css '.translation-complete'
         end
         within '.translation-main-menu-curated_features' do
-          expect(page).to_not have_css '.translation-complete'
+          expect(page).not_to have_css '.translation-complete'
         end
         within '.translation-main-menu-about' do
-          expect(page).to_not have_css '.translation-complete'
+          expect(page).not_to have_css '.translation-complete'
         end
         I18n.locale = :fr
         expect(exhibit.main_navigations.browse.label).to eq 'parcourir ceci!'
@@ -380,6 +381,7 @@ describe 'Translation editing', type: :feature do
   describe 'home page translation table entry' do
     let(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
     let(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+
     before do
       exhibit.home_page.clone_for_locale('fr').save
       about_page.clone_for_locale('fr').tap { |p| p.published = true }.save

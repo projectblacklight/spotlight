@@ -11,11 +11,11 @@ if Translation.table_exists?
   # turn on the ActiveRecord backend, uncomment the following lines.
 
   I18n.backend = I18n::Backend::ActiveRecord.new
-  I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Memoize)
-  Translation.send(:include, Spotlight::CustomTranslationExtension)
-  I18n::Backend::Simple.send(:include, I18n::Backend::Memoize)
-  I18n::Backend::Simple.send(:include, I18n::Backend::Pluralization)
-  I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
+  I18n::Backend::ActiveRecord.include I18n::Backend::Memoize
+  Translation.include Spotlight::CustomTranslationExtension
+  I18n::Backend::Simple.include I18n::Backend::Memoize
+  I18n::Backend::Simple.include I18n::Backend::Pluralization
+  I18n::Backend::Simple.include I18n::Backend::Fallbacks
 
   I18n.backend = I18n::Backend::Chain.new(I18n.backend, I18n::Backend::Simple.new)
 end

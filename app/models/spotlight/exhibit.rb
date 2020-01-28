@@ -22,7 +22,7 @@ module Spotlight
     paginates_per 48
 
     extend FriendlyId
-    friendly_id :title, use: [:slugged, :finders]
+    friendly_id :title, use: %i[slugged finders]
     validates :title, presence: true, if: -> { I18n.locale == I18n.default_locale }
     validates :slug, uniqueness: true
     validates :theme, inclusion: { in: Spotlight::Engine.config.exhibit_themes }, allow_blank: true
@@ -123,7 +123,7 @@ module Spotlight
     end
 
     def requested_by
-      roles.first.user if roles.first
+      roles.first&.user
     end
 
     def reindex_progress

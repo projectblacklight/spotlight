@@ -10,6 +10,7 @@ describe Spotlight::CustomSearchField, type: :model do
 
     describe 'when the exhibit has a config' do
       let(:exhibit) { FactoryBot.create(:exhibit) }
+
       before { subject.exhibit = exhibit }
 
       describe 'that overrides the label' do
@@ -37,6 +38,7 @@ describe Spotlight::CustomSearchField, type: :model do
 
     describe 'when the exhibit has a config' do
       let(:exhibit) { FactoryBot.create(:exhibit) }
+
       before { subject.exhibit = exhibit }
 
       describe 'that overrides the label' do

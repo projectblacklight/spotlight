@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 describe Spotlight::ContactEmail, type: :model do
-  let(:exhibit) { FactoryBot.build_stubbed(:exhibit) }
   subject { described_class.new(exhibit: exhibit) }
+
+  let(:exhibit) { FactoryBot.build_stubbed(:exhibit) }
 
   it { is_expected.not_to be_valid }
 
@@ -10,7 +11,7 @@ describe Spotlight::ContactEmail, type: :model do
     before { subject.email = '@-foo' }
 
     it 'does not be valid' do
-      expect(subject).to_not be_valid
+      expect(subject).not_to be_valid
       expect(subject.errors[:email]).to eq ['is not valid']
     end
   end
@@ -41,7 +42,7 @@ describe Spotlight::ContactEmail, type: :model do
       b = exhibit.contact_emails.create(email: 'b@example.com')
 
       expect(described_class.confirmed.to_a).to include a
-      expect(described_class.confirmed.to_a).to_not include b
+      expect(described_class.confirmed.to_a).not_to include b
     end
   end
 end

@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-feature 'Metadata Administration', js: true do
+describe 'Metadata Administration', js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
   before { login_as admin }
 
   describe 'Select/Deselect all button' do
@@ -17,6 +18,7 @@ feature 'Metadata Administration', js: true do
       # No checkboxes should be checked
       expect(page).not_to have_css("tr td:nth-child(2) input[type='checkbox']:checked")
     end
+
     it 'selects all checkboxes when any are unselected' do
       visit spotlight.edit_exhibit_metadata_configuration_path exhibit
       # No checkboxes should be unchecked

@@ -3,13 +3,13 @@
 require 'sitemap_generator'
 
 describe Spotlight::Sitemap do
+  subject { described_class.new(sitemap, exhibit) }
+
   let(:sitemap) { SitemapGenerator::Interpreter.new }
   let(:exhibit) { FactoryBot.create(:exhibit, published: true) }
   let(:blacklight_config) { Blacklight::Configuration.new }
   let(:sitemap_content) { sitemap.sitemap.sitemap.instance_variable_get(:@xml_content) }
   let(:url_helpers) { Spotlight::Engine.routes.url_helpers }
-
-  subject { described_class.new(sitemap, exhibit) }
 
   before do
     allow(exhibit).to receive(:blacklight_config).and_return(blacklight_config)

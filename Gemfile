@@ -41,6 +41,4 @@ else
 end
 # END ENGINE_CART BLOCK
 
-unless File.exist?(file)
-  eval_gemfile File.expand_path('spec/test_app_templates/Gemfile.extra', File.dirname(__FILE__))
-end
+eval_gemfile File.expand_path('spec/test_app_templates/Gemfile.extra', File.dirname(__FILE__)) unless File.exist?(file)

@@ -6,7 +6,7 @@ module Spotlight
     extend ActiveSupport::Concern
 
     included do
-      self.default_processor_chain += [:apply_permissive_visibility_filter, :apply_exhibit_resources_filter]
+      self.default_processor_chain += %i[apply_permissive_visibility_filter apply_exhibit_resources_filter]
     end
 
     # Adds a filter that excludes resources that have been marked as not-visible
