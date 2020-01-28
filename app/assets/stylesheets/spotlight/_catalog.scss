@@ -2,7 +2,9 @@
   font-size: $font-size-base;
 
   .thumbnail-column {
+    box-sizing: content-box;
     min-width: 60px;
+    
   }
 
   .document-thumbnail {
