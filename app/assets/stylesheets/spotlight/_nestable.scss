@@ -82,7 +82,7 @@ tr.dd-item {
     border-radius: 3px;
     box-sizing: border-box;
 
-  .card {
+  &.card, .card {
     padding: 0 0 0 30px;
   }
 }
