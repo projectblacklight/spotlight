@@ -1,23 +1,25 @@
-<h2 class="card-title">
-  <%= exhibit.title %>
-</h2>
+<div class="card-body">
+  <h2 class="card-title h5 text-center">
+    <%= exhibit.title %>
+  </h2>
 
-<p class="subtitle">
-  <%= exhibit.subtitle %>
-</p>
-
-<% if exhibit.description %>
-  <p class="description">
-    <%= truncated_description = exhibit.description.truncate(168, omission: '', separator: ' ') %>
-    <% if exhibit.description.length > 168 %>
-      <%= content_tag(:span,"&hellip;".html_safe, class: "d-sm-block d-md-block") %>
-      <span class="d-sm-none d-md-none">
-        <%= exhibit.description.slice(truncated_description.length, exhibit.description.length) %>
-      </span>
-    <% end %>
+  <p class="subtitle">
+    <%= exhibit.subtitle %>
   </p>
-<% end %>
 
-<div class="visit-exhibit center-btn">
-  <%= link_to t(:'.visit_exhibit'), exhibit, class: "btn btn-primary", role: "button" %>
+  <% if exhibit.description %>
+    <p class="description">
+      <%= truncated_description = exhibit.description.truncate(168, omission: '', separator: ' ') %>
+      <% if exhibit.description.length > 168 %>
+        <%= content_tag(:span,"&hellip;".html_safe, class: "d-sm-block d-md-block") %>
+        <span class="d-sm-none d-md-none">
+          <%= exhibit.description.slice(truncated_description.length, exhibit.description.length) %>
+        </span>
+      <% end %>
+    </p>
+  <% end %>
+
+  <div class="visit-exhibit center-btn">
+    <%= link_to t(:'.visit_exhibit'), exhibit, class: "btn btn-primary", role: "button" %>
+  </div>
 </div>

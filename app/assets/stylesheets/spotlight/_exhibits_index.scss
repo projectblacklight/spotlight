@@ -38,32 +38,14 @@
 .exhibit-card-title {
   @extend .h5;
   @extend .text-center;
-
-  font-size: $h4-font-size;
-  line-height: 1.2;
-  margin-bottom: 10px;
-  margin-top: 10px;
 }
 
 .card-front {
   transform: rotateY(0deg);
   z-index: 2;
 
-  img {
-    height: $exhibit-card-image-size;
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .exhibit-card-title {
-    @extend .h5;
-    padding-left: $padding-small-horizontal;
-    padding-right: $padding-small-horizontal;
-  }
-
   .unpublished {
     @extend .mx-auto;
-
     display: block;
     font-size: $font-size-base;
     margin-top: -1em;
@@ -74,17 +56,11 @@
 
 .card-back {
   box-shadow: $exhibit-card-shadow;
-  padding: 0 $exhibit-card-gutter;
   transform: rotateY(-180deg);
 
   .card-title {
-    @extend .h5;
-    @extend .text-center;
     border-bottom: 1px dotted $exhibit-card-border;
-    line-height: $headings-line-height;
-    margin-bottom: $padding-base-vertical;
     padding-bottom: $padding-base-vertical;
-    padding-top: $padding-base-vertical;
   }
 
   .subtitle {
@@ -99,7 +75,7 @@
   }
 
   .visit-exhibit {
-    bottom: $exhibit-card-gutter;
+    bottom: 1rem;
     position: absolute;
   }
 }
@@ -115,11 +91,9 @@
     height: $exhibit-card-height - $reduce-exhibit-card-image-size;
   }
 
-  .card-front,
-  .card-back {
-    img {
-      height: $exhibit-card-image-size - $reduce-exhibit-card-image-size;
-    }
+  // Cannot extend .btn-sm within a @media query
+  .center-btn .btn {
+    @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-line-height-sm, $btn-border-radius-sm);
   }
 }
 
@@ -130,23 +104,5 @@
   .btn {
     left: -50%;
     position: relative;
-  }
-}
-
-// For the medium breakpoint, reduce the max width of the .exhibit-card to align right-edge of row correctly
-@media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
-  .exhibit-card {
-
-    // each card is 3 columns wide
-    max-width: 3 * (map-get($container-max-widths, "lg") / $grid-columns) - 5px;
-  }
-}
-
-// For the small breakpoint, reduce the max width of the .exhibit-card to align right-edge of row correctly
-@media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("md")) {
-  .exhibit-card {
-
-    // each card is 6 columns wide
-    max-width: 6 * (map-get($container-max-widths, "md") / $grid-columns) - 5px;
   }
 }
