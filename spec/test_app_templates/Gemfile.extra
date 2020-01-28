@@ -1,3 +1,4 @@
 gem 'blacklight', '~> 7.0'
+gem 'sir_trevor_rails', '>= 0.6.1'
 gem 'sprockets', '< 4'
 gem 'thor', '~> 0.20'

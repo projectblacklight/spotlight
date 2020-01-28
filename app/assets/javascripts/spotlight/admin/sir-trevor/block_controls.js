@@ -10,7 +10,9 @@
     img.setAttribute('role', 'img');
 
     var use = document.createElement('use');
-    use.setAttributeNS('https://www.w3.org/1999/xlink', 'href', SirTrevor.config.defaults.iconUrl + "#" + block.icon_name);
+    use.setAttributeNS('https://www.w3.org/1999/xlink',
+                       'href',
+                       SirTrevor.config.defaults.iconUrl + "#" + block.icon_name);
     img.appendChild(use);
     el.appendChild(img);
     el.appendChild(document.createTextNode(block.title()));
@@ -40,9 +42,11 @@
       }
     }
 
-    return Object.keys(groups).reduce(function(memo, groupKey) {
+    return Object.keys(groups).reverse().reduce(function(memo, groupKey) {
       var group   = groups[groupKey];
-      var groupEl = $("<div class='st-controls-group'><div class='st-group-col-form-label'>" + groupKey + "</div></div>");
+      var groupEl = $("<div class='st-controls-group'><div class='st-group-col-form-label'>" +
+                      groupKey +
+                      "</div></div>");
       var buttons = group.reduce(function(memo, btn) {
         return memo += btn;
       }, "");
@@ -65,7 +69,7 @@
     elButtons.appendChild(el);
     return elButtons;
   }
-  
+
   global.Spotlight.BlockControls = function() { };
   global.Spotlight.BlockControls.create = function(editor) {
     // REFACTOR - should probably not know about blockManager
@@ -83,10 +87,10 @@
       SirTrevor = null;
       el = null;
     }
-    
+
     function insert(e) {
       e.stopPropagation();
-      
+
       var parent = this.parentNode;
       if (!parent || hide() === parent) { return; }
       $('.st-block__inner', parent).after(el);
@@ -101,7 +105,7 @@
 
     $(editor.wrapper).delegate(".st-block-replacer", "click", insert);
     $(editor.wrapper).delegate(".st-block-controls__button", "click", insert);
-    
+
     return {
       el: el,
       hide: hide,

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'spotlight/page_content/sir_trevor'
+
 module Spotlight
   # Factory for picking the right page content renderer
   module PageContent

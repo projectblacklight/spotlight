@@ -52,7 +52,6 @@ these collections.)
   s.add_dependency 'roar', '~> 1.1'
   s.add_dependency 'roar-rails'
   s.add_dependency 'signet'
-  s.add_dependency 'sir_trevor_rails', '~> 0.5'
   s.add_dependency 'sprockets-es6'
   s.add_dependency 'tophat'
   s.add_dependency 'underscore-rails', '~> 1.6'
