@@ -32,19 +32,17 @@
       <ol class="dd-list">
         <% @blacklight_configuration.blacklight_config.search_fields.select { |_k, v| blacklight_configuration_context.evaluate_if_unless_configuration(v.original) && v.include_in_simple_select != false }.except(default_field.key).each_with_index do |(k, config), index| %>
             <li class="dd-item dd3-item" data-id="<%= k.parameterize %>-id">
-              <div class="dd3-content">
-                <div class="card d-flex">
-                  <div class="dd-handle dd3-handle"><%= t(:drag) %></div>
-                  <div class="card-header d-flex" data-behavior="restore-default">
-                    <h3 class="h6 card-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
-                      <%= vt.fields_for k, config do |field| %>
-                        <%= field.check_box_without_bootstrap :enabled %>
-                          <a href="#edit-in-place" class="field-label edit-in-place"><%= config.label %></a>
-                          <%= field.hidden_field :label, {data: {:"edit-field-target" => "true"}} %>
-                        <%= field.hidden_field :weight, {value: index, data: {property: "weight"}} %>
-                      <% end %>
-                    </h3>
-                  </div>
+              <div class="card d-flex dd3-content">
+                <div class="dd-handle dd3-handle"><%= t(:drag) %></div>
+                <div class="card-header d-flex" data-behavior="restore-default">
+                  <h3 class="h6 card-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+                    <%= vt.fields_for k, config do |field| %>
+                      <%= field.check_box_without_bootstrap :enabled %>
+                        <a href="#edit-in-place" class="field-label edit-in-place"><%= config.label %></a>
+                        <%= field.hidden_field :label, {data: {:"edit-field-target" => "true"}} %>
+                      <%= field.hidden_field :weight, {value: index, data: {property: "weight"}} %>
+                    <% end %>
+                  </h3>
                 </div>
               </div>
             </li>

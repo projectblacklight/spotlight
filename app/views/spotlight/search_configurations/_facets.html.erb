@@ -7,42 +7,38 @@
         <% next unless metadata[:document_count] > 0 || config.custom_field %>
         <li class="dd-item" data-id="<%= key.parameterize %>">
           <%= idxf.fields_for key do |facet| %>
-            <div class="dd3-content">
-              <div class="facet-config-<%= key.parameterize %>">
-                <div class="page card d-flex">
-                  <div class="dd-handle dd3-handle"><%= t :drag %></div>
-                  <div class="card-header d-flex">
-                    <div class="flex-grow-1">
-                      <h3 class="h6 card-title">
-                        <%= facet.hidden_field :weight, 'data-property' => 'weight' %>
-                        <%= facet.check_box :show, inline: true, checked: config.show, hide_label: true, title: key %>
-                        <span class="d-inline-block w-75" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
-                          <a href="#edit-in-place" class="field-label edit-in-place"><%= facet_field_label(key) %></a>
-                          <%= facet.hidden_field :label, value: facet_field_label(key), class: 'form-control form-control-sm', data: {:"edit-field-target" => 'true'} %>
-                        </span>
-                      </h3>
-                    </div>
-                    <div class="d-flex">
-                      <div class="facet-metadata">
-                        <%= render partial: 'facet_metadata', locals: { metadata: metadata } %>
-                      </div>
-                      <div class="">
-                        <a class="btn btn-link collapse-toggle collapsed" role="button" data-toggle="collapse" href="#<%= key.parameterize %>_facet_options" aria-expanded="false" aria-controls="<%= key.parameterize %>_facet_options">
-                          Options
-                        </a>
-                        <span class="collapse-chevron">❯</span>
-                      </div>
-                    </div>
-                  </div>
+            <div class="dd3-content facet-config-<%= key.parameterize %> page card d-flex">
+              <div class="dd-handle dd3-handle"><%= t :drag %></div>
+              <div class="card-header d-flex">
+                <div class="flex-grow-1">
+                  <h3 class="h6 card-title">
+                    <%= facet.hidden_field :weight, 'data-property' => 'weight' %>
+                    <%= facet.check_box :show, inline: true, checked: config.show, hide_label: true, title: key %>
+                    <span class="d-inline-block w-75" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+                      <a href="#edit-in-place" class="field-label edit-in-place"><%= facet_field_label(key) %></a>
+                      <%= facet.hidden_field :label, value: facet_field_label(key), class: 'form-control form-control-sm', data: {:"edit-field-target" => 'true'} %>
+                    </span>
+                  </h3>
                 </div>
-                  <div id="<%= key.parameterize %>_facet_options" class="options collapse">
-                    <%= facet.form_group :terms, label_col: 'col-md-2 offset-md-1', label: { text: t(:'.sort_by.label') } do %>
-                      <%= facet.radio_button :sort, 'count', label: t(:'.sort_by.count'), inline: true, checked: (config.sort.to_s == 'count' || config.sort.nil?) %>
-                      <%= facet.radio_button :sort, 'index', label: t(:'.sort_by.index'), inline: true, checked: (config.sort.to_s == 'index') %>
-                    <% end %>
+                <div class="d-flex">
+                  <div class="facet-metadata">
+                    <%= render partial: 'facet_metadata', locals: { metadata: metadata } %>
+                  </div>
+                  <div class="">
+                    <a class="btn btn-link collapse-toggle collapsed" role="button" data-toggle="collapse" href="#<%= key.parameterize %>_facet_options" aria-expanded="false" aria-controls="<%= key.parameterize %>_facet_options">
+                      Options
+                    </a>
+                    <span class="collapse-chevron">❯</span>
                   </div>
                 </div>
               </div>
+              <div id="<%= key.parameterize %>_facet_options" class="options collapse mt-2">
+                <%= facet.form_group :terms, label_col: 'col-md-2 offset-md-1', label: { text: t(:'.sort_by.label') } do %>
+                  <%= facet.radio_button :sort, 'count', label: t(:'.sort_by.count'), checked: (config.sort.to_s == 'count' || config.sort.nil?) %>
+                  <%= facet.radio_button :sort, 'index', label: t(:'.sort_by.index'), checked: (config.sort.to_s == 'index') %>
+                <% end %>
+              </div>
+            </div>
           <% end %>
         </li>
       <% end %>

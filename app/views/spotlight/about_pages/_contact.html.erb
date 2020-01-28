@@ -1,21 +1,18 @@
 <li class="dd-item dd3-item" data-id="<%= f.object.id %>" itemscope itemtype="http://schema.org/Person">
-  <div class="dd3-content">
-    <div class="card d-flex">
-      <div class="dd-handle dd3-handle"><%= t :drag %></div>
-      <div class="card-body page d-flex">
-        <div class="flex-grow-1 d-flex">
-          
-          <%= f.check_box :show_in_sidebar, hide_label: true, inline: true %>
-          <%= f.hidden_field :id %>
-          <%= f.hidden_field :weight, data: {property: "weight"} %>
-          <%= render partial: "contact_properties", locals: {contact: f.object} %>
-        </div>
-        <div class="contact-links">
-          <%= exhibit_edit_link f.object, :class => 'btn btn-link' %> &middot;
-          <%= exhibit_delete_link f.object, :class => 'btn btn-link' %>
-        </div>
+  <div class="card d-flex dd3-content">
+    <div class="dd-handle dd3-handle"><%= t :drag %></div>
+    <div class="card-body page d-flex">
+      <div class="flex-grow-1 d-flex">
+
+        <%= f.check_box :show_in_sidebar, hide_label: true, inline: true %>
+        <%= f.hidden_field :id %>
+        <%= f.hidden_field :weight, data: {property: "weight"} %>
+        <%= render partial: "contact_properties", locals: {contact: f.object} %>
+      </div>
+      <div class="contact-links">
+        <%= exhibit_edit_link f.object, :class => 'btn btn-link' %> &middot;
+        <%= exhibit_delete_link f.object, :class => 'btn btn-link' %>
       </div>
     </div>
   </div>
-
 </li>
