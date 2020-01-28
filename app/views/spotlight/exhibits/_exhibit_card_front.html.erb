@@ -1,11 +1,13 @@
 <% if exhibit.thumbnail.present? && exhibit.thumbnail.iiif_url %>
-  <%= image_tag(exhibit.thumbnail.iiif_url) %>
+  <%= image_tag(exhibit.thumbnail.iiif_url, class: 'card-img-top') %>
 <% else %>
-  <%= image_tag 'spotlight/default_thumbnail.jpg', class: 'default-thumbnail' %>
+  <%= image_tag 'spotlight/default_thumbnail.jpg', class: 'card-img-top default-thumbnail' %>
 <% end %>
 
 <% unless exhibit.published? %>
   <div class="badge badge-warning unpublished"><%= t('.unpublished') %></div>
 <% end %>
 
-<h2 class="exhibit-card-title"><%= exhibit.title %></h2>
+<div class="card-body">
+  <h2 class="card-title h5 text-center"><%= exhibit.title %></h2>
+</div>
