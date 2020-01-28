@@ -1,9 +1,4 @@
 $image-overlay-max-height: 300px;
-$image-overlay-bottom-margin: 36px;
-
-@function category-min-height($overlay-max-height) {
-  @return $overlay-max-height + $image-overlay-bottom-margin;
-}
 
 .long-description-text {
   margin: ($padding-base-vertical * 2) 0;
@@ -29,13 +24,12 @@ $image-overlay-bottom-margin: 36px;
   }
 
   .category {
-    min-height: category-min-height($image-overlay-max-height);
+    margin-bottom: $spacer * 2;
   }
 
   .image-overlay {
     border: 2px solid $gray-600;
     border-radius: $border-radius-lg;
-    margin-bottom: $image-overlay-bottom-margin;
     max-height: 240px;
     min-height: 140px;
     overflow: hidden;
@@ -78,28 +72,27 @@ $image-overlay-bottom-margin: 36px;
   }
 
   @media screen and (max-width: breakpoint-max("sm")) {
-    .image-overlay {
+    $image-overlay-max-height: 180px;
+    .category {
       margin: 10px auto;
+    }
+
+    .image-overlay {
+      max-height: $image-overlay-max-height;
       max-width: 350px;
     }
     .text-overlay .browse-category-title {font-size: $h3-font-size;}
   }
-  @media screen and (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("lg")) {
-    $image-overlay-max-height: 250px;
-    .category {min-height: category-min-height($image-overlay-max-height);}
-    .text-overlay .browse-category-title {font-size: $h4-font-size;}
-  }
   @media screen and (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("md")) {
     $image-overlay-max-height: 180px;
-    .category {min-height: category-min-height($image-overlay-max-height);}
     .image-overlay {max-height: $image-overlay-max-height;}
   }
-  @media screen and (max-width: breakpoint-max("sm")) {
-    $image-overlay-max-height: 180px;
-    .category {min-height: category-min-height($image-overlay-max-height);}
+  @media screen and (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
+    $image-overlay-max-height: 250px;
+    .text-overlay .browse-category-title {font-size: $h4-font-size;}
+    .image-overlay {max-height: $image-overlay-max-height;}
   }
   @media screen and (min-width: breakpoint-min("lg")) {
-    .category {min-height: category-min-height($image-overlay-max-height);}
     .image-overlay {max-height: $image-overlay-max-height;}
   }
 }
