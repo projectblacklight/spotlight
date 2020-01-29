@@ -1,11 +1,12 @@
 <% solr_documents_carousel_block.with_solr_helper(self) %>
+<% block = solr_documents_carousel_block %>
 <% indicators = [] %>
-<% html_id = "carousel-#{solr_documents_carousel_block.object_id}" %>
-<div class="content-block carousel-block carousel-height-<%= solr_documents_carousel_block.max_height %>">
-<% if solr_documents_carousel_block.documents? %>
-  <div id="<%= html_id %>" class="carousel slide" data-ride="carousel"  data-interval="<%= solr_documents_carousel_block.interval %>">
+<% html_id = "carousel-#{block.object_id}" %>
+<div class="content-block carousel-block carousel-height-<%= block.max_height %>">
+<% if block.documents? %>
+  <div id="<%= html_id %>" class="carousel slide" data-ride="carousel"  data-interval="<%= block.interval %>">
     <div class="carousel-inner text-center">
-    <% solr_documents_carousel_block.each_document.each_with_index do |(block_options, document), index| %>
+    <% block.each_document.each_with_index do |(block_options, document), index| %>
       <% doc_presenter = index_presenter(document) %>
       <div class="carousel-item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
         <% if block_options[:full_image_url].present? %>
@@ -16,14 +17,14 @@
           <%= render_thumbnail_tag(document, {}, document_counter: -1) %>
         <% end %>
         <div class="carousel-caption">
-          <% if solr_documents_carousel_block.primary_caption? %>
+          <% if block.primary_caption? %>
             <h3 class="primary">
-              <%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_carousel_block.primary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_carousel_block.primary_caption_field)) %>
+              <%= doc_presenter.field_value(blacklight_config.index_fields[block.primary_caption_field] || Blacklight::Configuration::NullField.new(block.primary_caption_field)) %>
             </h3>
           <% end %>
-          <% if solr_documents_carousel_block.secondary_caption? %>
+          <% if block.secondary_caption? %>
             <div class="secondary">
-              <%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_carousel_block.secondary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_carousel_block.secondary_caption_field)) %>
+              <%= doc_presenter.field_value(blacklight_config.index_fields[block.secondary_caption_field] || Blacklight::Configuration::NullField.new(block.secondary_caption_field)) %>
             </div>
           <% end %>
         </div>

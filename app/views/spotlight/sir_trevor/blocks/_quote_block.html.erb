@@ -1,17 +1,18 @@
+<% block = quote_block %>
 <div class="st__content-block st__content-block--quote">
   <div class="quote">
     <blockquote>
       <div class="quote__content">
-        <% if quote_block.format == :html %>
-            <%= sir_trevor_format quote_block.text, format: quote_block.format %>
+        <% if block.format == :html %>
+            <%= sir_trevor_format block.text, format: block.format %>
         <% else %>
-          <%= sir_trevor_markdown quote_block.text %>
+          <%= sir_trevor_markdown block.text %>
         <% end %>
       </div>
 
-      <% if quote_block.cite.present? %>
+      <% if block.cite.present? %>
         <div class="quote__cite">
-          <cite class="quote__cite-text">&ndash; <%= quote_block.cite %></cite>
+          <cite class="quote__cite-text">&ndash; <%= block.cite %></cite>
         </div>
       <% end %>
     </blockquote>

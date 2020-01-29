@@ -1,8 +1,9 @@
 <% browse_block.with_solr_helper(self) %>
+<% block = browse_block %>
 
-<% if browse_block.searches? %>
-  <div class="spotlight-flexbox browse-categories categories-<%= browse_block.searches.length %>" data-sidebar='<%= @page.display_sidebar? %>'>
-    <% browse_block.searches.each_with_index do |search, index| %>
+<% if block.searches? %>
+  <div class="spotlight-flexbox browse-categories categories-<%= block.searches.length %>" data-sidebar='<%= @page.display_sidebar? %>'>
+    <% block.searches.each_with_index do |search, index| %>
       <div class="box category-<%= (index + 1) %>">
         <%= link_to spotlight.exhibit_browse_path(search.exhibit, search) do %>
           <div class="browse-category" style='background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url("<%= search.thumbnail.iiif_url if search.thumbnail %>")'>
@@ -11,7 +12,7 @@
                 <%= search.title %>
               </p>
 
-              <% if browse_block.display_item_counts? %>
+              <% if block.display_item_counts? %>
                 <span class="item-count"><%= t(:'.items', count: search.count) %></span>
               <% end %>
             </div>

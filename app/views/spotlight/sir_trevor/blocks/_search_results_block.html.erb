@@ -1,6 +1,7 @@
-<% if search_results_block.searches? %>
+<% block = search_results_block %>
+<% if block.searches? %>
 <div class="content-block documents">
-  <% response, document_list = get_search_widget_search_results(search_results_block) %>
+  <% response, document_list = get_search_widget_search_results(block) %>
   <%- unless document_list.present? %>
     <div class="alert alert-warning">
       <strong>No items to display.</strong> There are currently no items in this exhibit that match the curator's search criteria.
@@ -8,16 +9,16 @@
   <%- else %>
       <% @response, @document_list = [response, document_list] %>
 
-      <% views = blacklight_view_config_for_search_block(search_results_block) %>
+      <% views = blacklight_view_config_for_search_block(block) %>
       <% if views.length > 1 -%>
       <div id="sortAndPerPage" class="clearfix">
         <div class="search-widgets float-right">
-          <%= render partial: 'view_type_group', locals: { block: search_results_block } %>
+          <%= render partial: 'view_type_group', locals: { block: block } %>
         </div>
       </div>
       <% end %>
 
-      <%= render_document_index_with_view(block_document_index_view_type(search_results_block), document_list) %>
+      <%= render_document_index_with_view(block_document_index_view_type(block), document_list) %>
       <%= render 'results_pagination' %>
     </div>
   <%- end %>

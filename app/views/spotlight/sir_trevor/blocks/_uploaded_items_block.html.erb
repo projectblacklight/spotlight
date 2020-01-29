@@ -1,7 +1,8 @@
-<div class="content-block item-text row <%= 'flex-row-reverse' if uploaded_items_block.content_align == 'right' %>">
-  <div class="items-col spotlight-flexbox <%= 'col-md-6' if uploaded_items_block.text? %> col-12 uploaded-items-block">
-    <% if uploaded_items_block.files.present? %>
-      <% uploaded_items_block.files.each do |file| %>
+<% block = uploaded_items_block %>
+<div class="content-block item-text row <%= 'flex-row-reverse' if block.content_align == 'right' %>">
+  <div class="items-col spotlight-flexbox <%= 'col-md-6' if block.text? %> col-12 uploaded-items-block">
+    <% if block.files.present? %>
+      <% block.files.each do |file| %>
         <div class="box" data-id="<%= file[:id] %>">
           <div class="contents">
             <img class="img-thumbnail" src='<%= file[:url] %>' alt='<%= file[:title] %>' />
@@ -16,10 +17,10 @@
     <% end %>
   </div>
 
-  <% if uploaded_items_block.text? %>
+  <% if block.text? %>
     <div class="text-col col-md-6">
-      <%= content_tag(:h3, uploaded_items_block.title) if uploaded_items_block.title.present? %>
-      <%= sir_trevor_markdown uploaded_items_block.text %>
+      <%= content_tag(:h3, block.title) if block.title.present? %>
+      <%= sir_trevor_markdown block.text %>
     </div>
   <% end %>
 </div>

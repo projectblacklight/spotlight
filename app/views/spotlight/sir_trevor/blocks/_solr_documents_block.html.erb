@@ -1,10 +1,11 @@
 <% solr_documents_block.with_solr_helper(self) %>
+<% block = solr_documents_block %>
 
-<div class="content-block items-block row <%= 'flex-row-reverse' if solr_documents_block.content_align == 'right' %>">
-  <% if solr_documents_block.documents? %>
+<div class="content-block items-block row <%= 'flex-row-reverse' if block.content_align == 'right' %>">
+  <% if block.documents? %>
 
-    <div class="items-col spotlight-flexbox <%= solr_documents_block.text? ? "col-md-6" : "col-md-12" %> ">
-      <% solr_documents_block.each_document do |block_options, document| %>
+    <div class="items-col spotlight-flexbox <%= block.text? ? "col-md-6" : "col-md-12" %> ">
+      <% block.each_document do |block_options, document| %>
         <% doc_presenter = index_presenter(document) %>
         <div class="box" data-id="<%= document.id %>">
           <div class="contents">
@@ -15,17 +16,17 @@
             <% elsif has_thumbnail? document %>
               <%= render_thumbnail_tag(document, { class: 'img-thumbnail' }, document_counter: -1) %>
             <% end %>
-            <% if solr_documents_block.primary_caption? %>
+            <% if block.primary_caption? %>
               <div class="caption primary-caption">
-                <%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_block.primary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_block.primary_caption_field)) %>
+                <%= doc_presenter.field_value(blacklight_config.index_fields[block.primary_caption_field] || Blacklight::Configuration::NullField.new(block.primary_caption_field)) %>
               </div>
             <% end %>
-            <% if solr_documents_block.secondary_caption? %>
+            <% if block.secondary_caption? %>
               <div class="caption secondary-caption">
-                <%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_block.secondary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_block.secondary_caption_field)) %>
+                <%= doc_presenter.field_value(blacklight_config.index_fields[block.secondary_caption_field] || Blacklight::Configuration::NullField.new(block.secondary_caption_field)) %>
               </div>
             <% end %>
-            <% if solr_documents_block.zpr_link? && block_options[:iiif_tilesource].present? %>
+            <% if block.zpr_link? && block_options[:iiif_tilesource].present? %>
               <button class="btn btn-secondary zpr-link" data-iiif-tilesource="<%= block_options[:iiif_tilesource] %>">Show in ZPR viewer</button>
             <% end %>
           </div>
@@ -34,12 +35,12 @@
     </div>
   <% end %>
 
-  <% if solr_documents_block.text? %>
+  <% if block.text? %>
     <div class="text-col col-md-6">
-      <% unless solr_documents_block.title.blank? %>
-        <h3><%= solr_documents_block.title %></h3>
+      <% unless block.title.blank? %>
+        <h3><%= block.title %></h3>
       <% end %>
-      <%= sir_trevor_markdown solr_documents_block.text %>
+      <%= sir_trevor_markdown block.text %>
     </div>
   <% end %>
 </div>
