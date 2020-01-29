@@ -1,4 +1,4 @@
-@mixin record-thubmnail-textarea {
+@mixin record-thumbnail-textarea {
   color: #42474b;
   border: 0.1em solid #d4d4d4;
   padding: 0 .6em;
@@ -36,9 +36,9 @@
     min-height: 7em;
 
     &:hover, &:active {
-      @include record-thubmnail-textarea;
+      @include record-thumbnail-textarea;
     }
-    @include record-thubmnail-textarea;
+    @include record-thumbnail-textarea;
 
   }
 }
