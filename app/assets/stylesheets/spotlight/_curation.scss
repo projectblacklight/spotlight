@@ -122,24 +122,17 @@
   }
 }
 
-.card-header.search {
-  &:hover {
-    @include panel-hover-highlighting;
+.search_admin {
+  .pic {
+    flex-basis: 70px;
   }
-  /* widths don't add up to 100% because of padding of the container. */
+
   .main {
-    width: 40%;
-    vertical-align: top;
-    display: inline-block;
-    margin-left: $padding-base-horizontal;
+    flex-basis: 40%;
   }
+
   .description {
-    width: 30%;
-    vertical-align: top;
-    display: inline-block;
-  }
-  .card-title {
-    font-size: 15px;
+    flex-basis: 30%;
   }
 }
 
