@@ -163,17 +163,6 @@
   .item-1,
   .item-2 {
     order: 0;
-
-    .thumbnail img {
-      height: 210px;
-      @media (min-width: breakpoint-min("lg")) {
-        height: 270px; // default: no sidebar, no text column
-        // reduce height if on a page with a sidebar or text column, because will be less wide
-        .col-md-9 & {
-          height: 230px;
-        }
-      }
-    }
   }
 }
 
