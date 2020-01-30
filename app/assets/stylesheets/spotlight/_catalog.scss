@@ -4,7 +4,7 @@
   .thumbnail-column {
     box-sizing: content-box;
     min-width: 60px;
-    
+
   }
 
   .document-thumbnail {
@@ -13,7 +13,7 @@
     padding: 0;
   }
 
-  .document-thumbnail a > img {
+  .document-thumbnail img {
     border: 1px solid $gray-600;
     width: 60px;
     height: 60px;
@@ -33,7 +33,7 @@
 }
 
 #documents.documents-list {
-  .document-thumbnail a > img {
+  .document-thumbnail img {
     max-width: 100px;
   }
 }

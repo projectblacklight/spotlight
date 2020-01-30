@@ -16,22 +16,53 @@ module Spotlight
     end
 
     configure_blacklight do
+      blacklight_config.index.document_presenter_clas = SearchAcrossIndexPresenter
       blacklight_config.search_builder_class = SearchAcrossSearchBuilder
       blacklight_config.track_search_session = false
       blacklight_config.add_index_field Spotlight::SolrDocument.exhibit_slug_field, helper_method: :render_exhibit_title
       blacklight_config.add_facet_field Spotlight::SolrDocument.exhibit_slug_field, helper_method: :render_exhibit_title_facet
     end
 
-    helper_method :opensearch_catalog_url, :url_for_document, :exhibit_metadata, :render_exhibit_title, :render_exhibit_title_facet
+    helper_method :opensearch_catalog_url, :link_to_document, :url_for_document, :exhibit_metadata, :render_exhibit_title, :render_exhibit_title_facet
 
     def opensearch_catalog_url(*args)
       spotlight.opensearch_search_across_url(*args)
     end
 
     # TODO
-    def url_for_document(_)
-      '#'
+    def url_for_document(doc)
+      if doc[Spotlight::SolrDocument.exhibit_slug_field].many?
+        '#'
+      else
+        exhibit_id = doc.first(Spotlight::SolrDocument.exhibit_slug_field)
+        spotlight.exhibit_solr_document_path(exhibit_id, document.id)
+      end
     end
+
+    # rubocop:disable Metrics/MethodLength
+    def link_to_document(doc, field_or_opts, opts = { counter: nil })
+      label = case field_or_opts
+              when NilClass
+                view_context.index_presenter(doc).heading
+              when Hash
+                opts = field_or_opts
+                view_context.index_presenter(doc).heading
+              when Proc, Symbol
+                Deprecation.warn(self, "passing a #{field_or_opts.class} to link_to_document is deprecated and will be removed in Blacklight 8")
+                Deprecation.silence(Blacklight::IndexPresenter) do
+                  view_context.index_presenter(doc).label field_or_opts, opts
+                end
+              else # String
+                field_or_opts
+              end
+
+      if doc[Spotlight::SolrDocument.exhibit_slug_field].many?
+        label
+      else
+        link_to label, url_for_document(doc), document_link_params(doc, opts)
+      end
+    end
+    # rubocop:enable Metrics/MethodLength
 
     def exhibit_slugs
       @response.documents.flat_map { |x| x[Spotlight::SolrDocument.exhibit_slug_field] }.uniq
