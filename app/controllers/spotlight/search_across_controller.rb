@@ -18,11 +18,11 @@ module Spotlight
     configure_blacklight do
       blacklight_config.search_builder_class = SearchAcrossSearchBuilder
       blacklight_config.track_search_session = false
-      blacklight_config.add_index_field Spotlight::SolrDocument.exhibit_slug_field, helper_method: :exhibit_title
-      blacklight_config.add_facet_field Spotlight::SolrDocument.exhibit_slug_field, helper_method: :exhibit_title_facet
+      blacklight_config.add_index_field Spotlight::SolrDocument.exhibit_slug_field, helper_method: :render_exhibit_title
+      blacklight_config.add_facet_field Spotlight::SolrDocument.exhibit_slug_field, helper_method: :render_exhibit_title_facet
     end
 
-    helper_method :opensearch_catalog_url, :url_for_document, :exhibit_metadata, :exhibit_title, :exhibit_title_facet
+    helper_method :opensearch_catalog_url, :url_for_document, :exhibit_metadata, :render_exhibit_title, :render_exhibit_title_facet
 
     def opensearch_catalog_url(*args)
       spotlight.opensearch_search_across_url(*args)
@@ -48,7 +48,7 @@ module Spotlight
       @exhibit_metadata ||= accessible_exhibits_from_search_results.as_json(only: %i[slug title description id]).index_by { |x| x['slug'] }
     end
 
-    def exhibit_title(document:, value:, **)
+    def render_exhibit_title(document:, value:, **)
       exhibit_links = exhibit_metadata.slice(*value).values.map do |x|
         view_context.link_to x['title'] || x['slug'], spotlight.exhibit_solr_document_path(x['slug'], document.id)
       end
@@ -56,7 +56,7 @@ module Spotlight
       view_context.safe_join exhibit_links, ', '
     end
 
-    def exhibit_title_facet(value)
+    def render_exhibit_title_facet(value)
       exhibit_metadata.slice(*value).values.map { |x| x['title'] || x['slug'] }.join(', ')
     end
   end
