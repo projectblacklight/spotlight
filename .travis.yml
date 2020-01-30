@@ -25,10 +25,6 @@ cache:
   ##
   # Caching bundler here in a hope to reduce Travis test time
   bundler: true
-  ##
-  # We don't really know how this will work, but lets see.
-  directories:
-    - .internal_test_app
 
 before_cache:
   - rm /home/travis/build/projectblacklight/spotlight/.internal_test_app/db/test.sqlite3
