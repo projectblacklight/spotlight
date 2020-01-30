@@ -14,7 +14,7 @@ module Spotlight
         solr_params[:fq] = 'id:does-not-exist'
       else
         solr_params[:fq] = fq.append(accessible_documents_query) unless fq.include?(accessible_documents_query)
-        solr_params[:"f.#{exhibit_slug_field}.facet.matches"] = Regexp.union(accessible_exhibit_slugs)
+        solr_params[:"f.#{exhibit_slug_field}.facet.matches"] = Regexp.union(accessible_exhibit_slugs.map(&:slug))
       end
 
       solr_params
@@ -27,12 +27,16 @@ module Spotlight
     end
 
     def accessible_exhibit_slugs
-      @accessible_exhibit_slugs ||= Spotlight::Exhibit.accessible_by(current_ability).pluck(:slug)
+      @accessible_exhibit_slugs ||= Spotlight::Exhibit.accessible_by(current_ability).select(:id, :slug)
     end
 
     def accessible_documents_query
-      accessible_exhibit_slugs.collect do |slug|
-        "(#{exhibit_slug_field}:#{slug} AND exhibit_#{slug}_public_bsi:true)"
+      accessible_exhibit_slugs.collect do |exhibit|
+        filter = []
+        filter << "#{exhibit_slug_field}:#{exhibit.slug}"
+        filter << "#{blacklight_config.document_model.visibility_field(exhibit)}:true" unless current_ability&.can?(:curate, exhibit)
+
+        "(#{filter.join(' AND ')})"
       end.join(' OR ')
     end
 
