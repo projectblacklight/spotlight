@@ -1,0 +1,20 @@
+.exhibit-list {
+  .card {
+    flex-direction: row;
+  }
+
+  .card-body {
+    flex-direction: column;
+  }
+
+  .exhibit-thumb {
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    width: auto;
+
+    img {
+      object-fit: contain;
+    }
+  }
+}

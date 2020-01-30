@@ -19,11 +19,44 @@ module Spotlight
       blacklight_config.index.document_presenter_clas = SearchAcrossIndexPresenter
       blacklight_config.search_builder_class = SearchAcrossSearchBuilder
       blacklight_config.track_search_session = false
+      blacklight_config.default_solr_params["f.#{Spotlight::SolrDocument.exhibit_slug_field}.facet.limit"] = -1
       blacklight_config.add_index_field Spotlight::SolrDocument.exhibit_slug_field, helper_method: :render_exhibit_title
       blacklight_config.add_facet_field Spotlight::SolrDocument.exhibit_slug_field, helper_method: :render_exhibit_title_facet
+
     end
 
-    helper_method :opensearch_catalog_url, :link_to_document, :url_for_document, :exhibit_metadata, :render_exhibit_title, :render_exhibit_title_facet
+    before_action do
+      if render_grouped_response?
+        blacklight_config.index.collection_actions.delete(:sort_widget)
+        blacklight_config.index.collection_actions.delete(:per_page_widget)
+      end
+    end
+
+    helper_method :show_pagination?, :document_index_path_templates, :render_grouped_response?, :render_grouped_document_index, :opensearch_catalog_url, :link_to_document, :url_for_document, :exhibit_metadata, :render_exhibit_title, :render_exhibit_title_facet
+
+    def show_pagination?
+      return false if render_grouped_response?
+
+      @response.limit_value > 0
+    end
+
+    def document_index_path_templates
+      [
+        ("exhibit_%{index_view_type}" if render_grouped_response?),
+        "document_%{index_view_type}",
+        "catalog/document_%{index_view_type}",
+        "catalog/document_list"
+      ].compact
+    end
+
+    def render_grouped_response?(*args)
+      params[:group]
+    end
+
+    def render_grouped_document_index
+      exhibits = Spotlight::Exhibit.where(slug: @response.aggregations[Spotlight::SolrDocument.exhibit_slug_field].items.map(&:value))
+      view_context.render_document_index(exhibits)
+    end
 
     def opensearch_catalog_url(*args)
       spotlight.opensearch_search_across_url(*args)

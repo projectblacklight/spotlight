@@ -689,6 +689,10 @@ en:
         subject_geographic_tesim: Geographic Subject
         subject_temporal_tesim: Temporal Subject
     search_across:
+      exhibit:
+        results_count:
+          one: "%{count} result"
+          other: "%{count} results"
       results:
         heading: Search all exhibits
     search_configurations:
