@@ -1,0 +1,4 @@
+<div class="btn-group" role="group" aria-label="Basic example">
+  <%= link_to 'All results', url_for(group: nil), class: "btn btn-sm btn-secondary #{'active' unless render_grouped_response?}" %>
+  <%= link_to 'Grouped by exhibit', url_for(group: true), class: "btn btn-sm btn-secondary #{'active' if render_grouped_response?}" %>
+</div>

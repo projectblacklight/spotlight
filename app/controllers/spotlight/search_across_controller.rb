@@ -22,7 +22,11 @@ module Spotlight
       blacklight_config.default_solr_params["f.#{Spotlight::SolrDocument.exhibit_slug_field}.facet.limit"] = -1
       blacklight_config.add_index_field Spotlight::SolrDocument.exhibit_slug_field, helper_method: :render_exhibit_title
       blacklight_config.add_facet_field Spotlight::SolrDocument.exhibit_slug_field, helper_method: :render_exhibit_title_facet
+      previous_actions = blacklight_config.index.collection_actions.to_h.dup
+      blacklight_config.index.collection_actions.clear
 
+      blacklight_config.add_results_collection_tool('group_toggle')
+      blacklight_config.index.collection_actions = blacklight_config.index.collection_actions.merge(previous_actions)
     end
 
     before_action do
@@ -34,7 +38,7 @@ module Spotlight
 
     helper_method :show_pagination?, :document_index_path_templates, :render_grouped_response?, :render_grouped_document_index, :opensearch_catalog_url, :link_to_document, :url_for_document, :exhibit_metadata, :render_exhibit_title, :render_exhibit_title_facet
 
-    def show_pagination?
+    def show_pagination?(*args)
       return false if render_grouped_response?
 
       @response.limit_value > 0
