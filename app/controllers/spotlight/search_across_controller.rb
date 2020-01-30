@@ -33,11 +33,8 @@ module Spotlight
       '#'
     end
 
-    # TODO: this will require that the slug facet returns all values
     def exhibit_slugs
-      @exhibit_slugs ||= (@response.dig('facet_counts', 'facet_fields', Spotlight::SolrDocument.exhibit_slug_field) || []).select do |facet|
-        facet.is_a?(String) # we should find a better way to do this
-      end
+      @response.documents.flat_map { |x| x[Spotlight::SolrDocument.exhibit_slug_field] }.uniq
     end
 
     def accessible_exhibits_from_search_results
