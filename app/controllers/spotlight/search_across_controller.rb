@@ -82,7 +82,7 @@ module Spotlight
         '#'
       else
         exhibit_id = doc.first(Spotlight::SolrDocument.exhibit_slug_field)
-        spotlight.exhibit_solr_document_path(exhibit_id, document.id)
+        spotlight.exhibit_solr_document_path(exhibit_id, doc.id)
       end
     end
 
@@ -106,7 +106,7 @@ module Spotlight
       if doc[Spotlight::SolrDocument.exhibit_slug_field].many?
         label
       else
-        link_to label, url_for_document(doc), document_link_params(doc, opts)
+        view_context.link_to label, url_for_document(doc), view_context.send(:document_link_params, doc, opts)
       end
     end
     # rubocop:enable Metrics/MethodLength
