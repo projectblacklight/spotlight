@@ -100,3 +100,8 @@ label.radio {
     padding-left: 0;
   }
 }
+
+.form-group .col-form-label {
+  @extend .text-right;
+  @extend .font-weight-bold;
+}
