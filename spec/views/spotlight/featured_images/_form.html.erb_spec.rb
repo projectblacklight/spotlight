@@ -27,6 +27,6 @@ describe 'spotlight/featured_images/_form', type: :view do
   it 'has help block' do
     render partial: 'spotlight/featured_images/form',
            locals: { f: builder, initial_crop_selection: [], crop_type: :thumbnail }
-    expect(rendered).to have_css '.help-block', text: 'Help!'
+    expect(rendered).to have_css '.form-text', text: 'Help!'
   end
 end
