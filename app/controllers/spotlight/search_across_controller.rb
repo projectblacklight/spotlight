@@ -30,6 +30,13 @@ module Spotlight
     end
 
     before_action do
+
+      tags = Spotlight::Exhibit.accessible_by(current_ability).tag_counts_on(:tags).pluck(:name)
+      blacklight_config.add_facet_field 'exhibit_tags', query: (tags.reduce({}) do |h, v|
+        h[v] = { label: v, fq: "#{Spotlight::SolrDocument.exhibit_slug_field}:(#{Spotlight::Exhibit.accessible_by(current_ability).tagged_with(v).pluck(:slug).join(' OR ')})" }
+        h
+      end)
+
       if render_grouped_response?
         blacklight_config.index.collection_actions.delete(:per_page_widget)
 
