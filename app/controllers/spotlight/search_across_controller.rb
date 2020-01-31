@@ -31,8 +31,17 @@ module Spotlight
 
     before_action do
       if render_grouped_response?
-        blacklight_config.index.collection_actions.delete(:sort_widget)
         blacklight_config.index.collection_actions.delete(:per_page_widget)
+
+        blacklight_config.sort_fields.clear
+        blacklight_config.add_sort_field(key: 'index', sort: '')
+        blacklight_config.add_sort_field(key: 'count', sort: '')
+
+        if params[:sort] == 'index'
+          blacklight_config.facet_fields[Spotlight::SolrDocument.exhibit_slug_field].sort = 'index'
+        else
+          blacklight_config.facet_fields[Spotlight::SolrDocument.exhibit_slug_field].sort = 'count'
+        end
       end
     end
 
@@ -58,7 +67,8 @@ module Spotlight
     end
 
     def render_grouped_document_index
-      exhibits = Spotlight::Exhibit.where(slug: @response.aggregations[Spotlight::SolrDocument.exhibit_slug_field].items.map(&:value))
+      slugs = @response.aggregations[Spotlight::SolrDocument.exhibit_slug_field].items.map(&:value)
+      exhibits = Spotlight::Exhibit.where(slug: slugs).sort_by { |e| slugs.index e.slug }
       view_context.render_document_index(exhibits)
     end
 
