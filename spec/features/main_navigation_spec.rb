@@ -55,4 +55,42 @@ describe 'Main navigation labels are settable', type: :feature do
     about_nav.display = true
     about_nav.save
   end
+
+  describe 'Restore default button functionality', js: true do
+    let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
+    before { login_as user }
+
+    it 'is present when the navigation label is not the default value' do
+      visit spotlight.edit_exhibit_appearance_path(exhibit)
+
+      click_link 'Main menu'
+
+      within '.main_navigation_admin' do
+        within all('li').first do
+          expect(page).not_to have_css('button.restore-default', visible: true)
+        end
+
+        within all('li').last do
+          expect(page).to have_css('button.restore-default', visible: true)
+        end
+      end
+    end
+
+    context 'when the navigation label is not the default value' do
+      it 'restores the default value' do
+        visit spotlight.edit_exhibit_appearance_path(exhibit)
+
+        click_link 'Main menu'
+
+        within '.main_navigation_admin' do
+          within all('li').last do
+            expect(page).to have_css('a', text: 'New About Label')
+            click_button 'Restore default'
+            expect(page).to have_css('a', text: 'About')
+          end
+        end
+      end
+    end
+  end
 end

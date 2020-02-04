@@ -88,7 +88,7 @@
                         </h3>
                       </div>
                       <div class="">
-                        <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn restore-default btn-secondary btn-sm float-right #{'hidden' if label.object.label.blank? || label.object.label == label.object.default_label}" %>
+                        <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn restore-default btn-secondary btn-sm float-right #{'d-none' if label.object.label.blank? || label.object.label == label.object.default_label}" %>
                       </div>
                       <%= label.hidden_field :weight, data: {property: "weight"} %>
                     </div>
