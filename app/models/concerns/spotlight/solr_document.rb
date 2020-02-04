@@ -32,6 +32,10 @@ module Spotlight
         find_each(&:reindex)
       end
 
+      def exhibit_slug_field
+        "#{Spotlight::Engine.config.solr_fields.prefix}spotlight_exhibit_slugs#{Spotlight::Engine.config.solr_fields.string_suffix}"
+      end
+
       def solr_field_for_tagger(tagger)
         :"#{solr_field_prefix(tagger)}tags#{Spotlight::Engine.config.solr_fields.string_suffix}"
       end
@@ -138,7 +142,7 @@ module Spotlight
       slugs = sidecars.map(&:exhibit).map(&:slug)
 
       {
-        "#{Spotlight::Engine.config.solr_fields.prefix}spotlight_exhibit_slugs#{Spotlight::Engine.config.solr_fields.string_suffix}" => slugs
+        self.class.exhibit_slug_field => slugs
       }
     end
 
