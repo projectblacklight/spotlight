@@ -9,9 +9,9 @@ function addRestoreDefaultBehavior(){
     var button = $("[data-restore-default]", $(this));
     hidden.on('blur', function(){
       if( $(this).val() == $(this).data('default-value') ) {
-        button.addClass('hidden');
+        button.addClass('d-none');
       } else {
-        button.removeClass('hidden');
+        button.removeClass('d-none');
       }
     });
     button.on('click', function(e){
