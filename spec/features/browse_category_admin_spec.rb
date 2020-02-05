@@ -94,7 +94,7 @@ describe 'Browse Category Administration', type: :feature do
       visit spotlight.edit_exhibit_search_path exhibit, search
       expect(search.search_box).to eq false
 
-      check 'Display search box'
+      check 'Search box'
 
       click_button 'Save changes'
       expect(page).to have_content('The search was successfully updated.')
