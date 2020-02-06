@@ -27,7 +27,7 @@ en:
   drag: Drag
   helpers:
     action:
-      add_another: Add another
+      add_another: Add another value
       cancel: Cancel
       destroy: Delete
       destroy_are_you_sure: Are you sure you want to delete this %{model}?
