@@ -132,7 +132,7 @@ module Spotlight
 
     def uploaded_field_label(config)
       solr_field = Array(config.solr_field || config.field_name).first.to_s
-      config.label || blacklight_config.index_fields[solr_field].try(:label) || t(".#{solr_field}")
+      blacklight_config.index_fields[solr_field].try(:label) || config.label || t(".#{solr_field}")
     end
 
     def available_view_fields
