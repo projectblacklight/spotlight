@@ -6,9 +6,9 @@
   <div>
     <%= f.hidden_field(:source, value: :remote, label: t(:'.source.remote.label')) %>
     <%= iiif_upload_tag(f) %>
-    <span class="form-text">
+    <small class="form-text text-muted">
       <%= t(:'.source.remote.help') %>
-    </span>
+    </small>
   </div>
 <% end %>
 <%= field_set_tag(t(:'.source.remote.header')) do %>
