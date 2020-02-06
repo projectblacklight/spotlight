@@ -1,12 +1,14 @@
 <div role="tabpanel" class="tab-pane <%= 'active' if @tab == 'language' %>" id="language">
   <p class="instructions"><%= t :'spotlight.exhibits.languages.selection_instructions' %></p>
 
-  <%= bootstrap_form_for [current_exhibit, Spotlight::Language.new], layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-9" do |f| %>
-    <div class='col-md-6'>
+  <%= bootstrap_form_for [current_exhibit, Spotlight::Language.new], layout: :horizontal, html: { class: 'row' }, label_col: "col-sm-3", control_col: "col-sm-9" do |f| %>
+    <div class='col-sm-6'>
       <%= f.select('locale', add_exhibit_language_dropdown_options, prompt: t('.selection_prompt')) %>
       <%= hidden_field_tag :tab, 'language' %>
     </div>
-    <%= f.submit nil, class: 'btn btn-primary' %>
+    <div class='col-sm-6'>
+      <%= f.submit nil, class: 'btn btn-primary' %>
+    </div>
   <% end %>
 
   <h3 class="mt-4"><%= t :'spotlight.exhibits.languages.current_header' %></h3>
