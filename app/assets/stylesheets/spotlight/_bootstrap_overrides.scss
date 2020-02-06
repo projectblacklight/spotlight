@@ -79,6 +79,12 @@ label.radio {
   margin-bottom: $line-height-lg * 1rem;
 }
 
+.nav-tabs {
+  .nav-link.active {
+    font-weight: 600;
+  }
+}
+
 .tab-pane {
   > p.instructions:first-child, > fieldset:first-child {
     margin-top: -$padding-base-vertical;
