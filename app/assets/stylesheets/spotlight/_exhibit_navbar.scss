@@ -1,0 +1,10 @@
+.exhibit-navbar {
+  .navbar-nav,
+  .exhibit-search-form {
+    width: 100%;
+
+    @media (min-width: breakpoint-min("md")) {
+      width: auto;
+    }
+  }
+}

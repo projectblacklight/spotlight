@@ -1,5 +1,5 @@
 <div id="exhibit-navbar" class="exhibit-navbar navbar navbar-light navbar-expand-md" role="navigation">
-  <div class="container">
+  <div class="container flex-column flex-md-row">
     <% if resource_masthead? %>
       <%= link_to(current_exhibit.title, spotlight.exhibit_path(current_exhibit), class: 'navbar-brand') %>
     <% end %>
@@ -11,7 +11,7 @@
       <% end %>
     </ul>
     <% if should_render_spotlight_search_bar? %>
-      <div class="navbar-right navbar-nav">
+      <div class="navbar-right navbar-nav exhibit-search-form mt-3 mt-md-0">
         <%= render_search_bar %>
       </div>
     <% end %>
