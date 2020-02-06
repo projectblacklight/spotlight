@@ -1,14 +1,23 @@
-<div class="form-group">
+<% inline = local_assigns[:inline].presence %>
+<% label_col = f&.label_col %>
+<% control_col = f&.control_col %>
+<% offset_col = label_col.sub('col', 'offset') %>
+
+<div class="form-group <%= "row" if inline %>">
   <% Array(value || '').each_with_index do |v, index| %>
-    <%= f.label field.slug, field.label, namespace: "f#{index}", class: "control-label #{'sr-only' if index > 0}" %>
-    <%= f.text_field_without_bootstrap field.slug, namespace: "f#{index}", multiple: field.is_multiple?, value: v, class: "form-control field-#{field.slug}", readonly: field.readonly_field? %>
+    <%= f.label field.slug, field.label, namespace: "f#{index}", class: "control-label #{label_col if inline} #{'sr-only' if index > 0}" %>
+    <div class="mb-3 <%= control_col if inline %>">
+      <%= f.text_field_without_bootstrap field.slug, namespace: "f#{index}", multiple: field.is_multiple?, value: v, class: "form-control field-#{field.slug}", readonly: field.readonly_field? %>
+    </div>
   <% end %>
 
   <% if field.is_multiple? && !field.readonly_field? %>
     <%= content_tag :template, id: "spotlight-field-template-#{field.slug}" do %>
-      <%= f.label field.slug, field.label, class: 'control-label sr-only' %>
-      <%= f.text_field_without_bootstrap field.slug, multiple: field.is_multiple?, value: nil, class: "form-control field-#{field.slug}" %>
+      <%= f.label field.slug, field.label, class: "control-label #{label_col if inline} sr-only" %>
+      <div class="mb-3 <%= "#{offset_col} #{control_col}" if inline %>">
+        <%= f.text_field_without_bootstrap field.slug, multiple: field.is_multiple?, value: nil, class: "form-control field-#{field.slug}" %>
+      </div>
     <% end %>
-    <%= content_tag :button, t('helpers.action.add_another'), class: 'btn btn-info', data: { action: 'add-another', template_id: "spotlight-field-template-#{field.slug}" } %>
+    <%= content_tag :button, t('helpers.action.add_another'), class: 'btn btn-info btn-sm h-100', data: { action: 'add-another', template_id: "spotlight-field-template-#{field.slug}" } %>
   <% end %>
 </div>

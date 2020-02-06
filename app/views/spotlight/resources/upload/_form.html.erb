@@ -6,7 +6,7 @@
     <% end %>
 
     <% current_exhibit.custom_fields.each do |custom_field| %>
-      <%= render partial: "spotlight/custom_fields/form_group/#{custom_field.field_type}", locals: { f: d, field: custom_field, value: nil }  %>
+      <%= render partial: "spotlight/custom_fields/form_group/#{custom_field.field_type}", locals: { inline: true, f: d, field: custom_field, value: nil }  %>
     <% end %>
   <% end %>
   <div class="form-actions">
