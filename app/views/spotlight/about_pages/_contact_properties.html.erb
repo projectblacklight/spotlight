@@ -1,5 +1,5 @@
 <div class="d-flex">
-  <%= image_tag contact.avatar.iiif_url, class: 'contact-photo' if contact.avatar && contact.avatar.iiif_url.present? %>
+  <%= image_tag contact.avatar.iiif_url, class: 'contact-photo', alt: '' if contact.avatar && contact.avatar.iiif_url.present? %>
   <div>
     <div itemprop="name" class="name"><%= contact.name %></div>
     <% Spotlight::Contact.fields.each do |field, options| %>
