@@ -102,6 +102,9 @@
 }
 
 .item-grid-block {
+  margin-left: -($grid-gutter-width / 2);
+  margin-right: -($grid-gutter-width / 2);
+
   h3 { margin-top: 0; }
 
   .text-col {
