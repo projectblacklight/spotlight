@@ -41,9 +41,8 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     expect(page).to have_css('p', text: text)
 
     within('.uploaded-items-block') do
-      expect(page).to have_css('img[alt="800x600.png"]')
+      expect(page).to have_css('img[alt=""]', count: 2)
       expect(page).to have_css '.caption', text: 'Some caption text'
-      expect(page).to have_css('img[alt="avatar.png"]')
     end
   end
 
@@ -60,8 +59,7 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     save_page
 
     within('.uploaded-items-block') do
-      expect(page).not_to have_css('img[alt="800x600.png"]')
-      expect(page).to have_css('img[alt="avatar.png"]')
+      expect(page).to have_css('img[alt=""]', count: 1)
     end
   end
 end
