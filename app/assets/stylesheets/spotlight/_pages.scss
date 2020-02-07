@@ -110,12 +110,9 @@
   }
 
   .items-col {
+    display: flex;
     margin-bottom: 1em;
     z-index: 1;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    align-content: stretch;
 
     @media (max-width: breakpoint-max("md")) {
       margin-bottom: $line-height-lg;
@@ -137,10 +134,12 @@
 
   .img-thumbnail {
     border: 1px solid $gray-600;
-    width: 100%;
+    border-radius: 0;
     height: 110px;
     object-fit: cover;
     overflow: hidden;
+    padding: 0;
+    width: 100%;
 
     @media (min-width: breakpoint-min("lg")) {
       height: 160px; // default: no sidebar, no text column

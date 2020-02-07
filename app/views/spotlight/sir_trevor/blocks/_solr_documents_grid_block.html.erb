@@ -1,6 +1,6 @@
 <% solr_documents_grid_block.with_solr_helper(self) %>
 <div class="content-block item-grid-block row <%= 'flex-row-reverse' if solr_documents_grid_block.content_align == 'right' %>">
-  <div class="items-col <%= solr_documents_grid_block.text? ? 'col-md-9' : 'col-md-12' %>">
+  <div class="items-col align-content-start justify-content-between flex-wrap <%= solr_documents_grid_block.text? ? 'col-md-9' : 'col-md-12' %>">
     <% if solr_documents_grid_block.documents? %>
         <% solr_documents_grid_block.each_document.each_with_index do |(block_options, document), index| %>
           <div class="box item-<%= index %>" data-id="<%= document.id %>">
