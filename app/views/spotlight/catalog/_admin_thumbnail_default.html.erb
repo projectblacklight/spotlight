@@ -1,4 +1,4 @@
-<%- if has_thumbnail?(document) && tn = render_thumbnail_tag(document, {}, :counter => document_counter_with_offset(document_counter)) %>
+<%- if has_thumbnail?(document) && tn = render_thumbnail_tag(document, { alt: '' }, :counter => document_counter_with_offset(document_counter)) %>
   <div class="document-thumbnail spotlight-admin-thumbnail">
     <%= tn %>
   </div>
