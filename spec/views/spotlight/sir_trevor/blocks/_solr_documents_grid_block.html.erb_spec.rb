@@ -6,6 +6,9 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_grid_block.html.erb', type
   let(:block) do
     SirTrevorRails::Blocks::SolrDocumentsGridBlock.new({ type: 'block', data: { title: 'Some title', text: 'Some text', 'text-align' => 'right' } }, page)
   end
+  let(:blacklight_config) do
+    Blacklight::Configuration.new
+  end
 
   before do
     allow(block).to receive(:each_document).and_return([
@@ -16,7 +19,11 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_grid_block.html.erb', type
   end
 
   before do
-    allow(view).to receive_messages(has_thumbnail?: true, render_thumbnail_tag: 'thumb')
+    allow(view).to receive_messages(
+      blacklight_config: blacklight_config,
+      has_thumbnail?: true,
+      render_thumbnail_tag: 'thumb'
+    )
   end
 
   it 'has a slideshow block' do
