@@ -8,7 +8,7 @@
     <%= f.fields_for :contact_emails do |contact| %>
       <%= render partial: 'contact', locals: {exhibit: @exhibit, contact: contact} %>
     <% end %>
-    <span id='another-email' class="btn btn-sm btn-info"><%= t('.add_contact_email_button') %></span>
+    <button id='another-email' class="btn btn-sm btn-info"><%= t('.add_contact_email_button') %></button>
     <small class="form-text text-muted"><%= t(:'.fields.contact_emails.help_block') %></small>
   <% end %>
   <%= f.form_group :published, label: { text: nil, class: 'pt-0' }, help: nil do %>
