@@ -1,6 +1,6 @@
 <%= bootstrap_form_for @exhibit, url: exhibit_contacts_path(@exhibit),
     style: :horizontal, html: {class: 'exhibit-contacts'} do |f| %>
-  <h3><%= t :".header" %></h3>
+  <h3 class="mt-4"><%= t :".header" %></h3>
   <p class="instructions"><%= t :'.instructions' %></p>
   <div class="panel-group dd contacts_admin" data-behavior="nestable" data-max-depth="1">
     <ol class="dd-list">

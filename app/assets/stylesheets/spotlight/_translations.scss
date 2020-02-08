@@ -23,6 +23,7 @@
 .translation-subheading {
   border-bottom: 1px solid $border-color;
   margin-bottom: 20px;
+  @extend .mt-4;
 }
 
 .form-group.translation-form {
