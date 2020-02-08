@@ -129,10 +129,6 @@
     min-width: 25%;
     order: 1;
     padding: 5px;
-
-    @media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
-      min-width: 128px;
-    }
   }
 
   .img-thumbnail {
@@ -165,6 +161,10 @@
   .item-1,
   .item-2 {
     order: 0;
+
+    .img-thumbnail {
+      height: 270px;
+    }
   }
 }
 
