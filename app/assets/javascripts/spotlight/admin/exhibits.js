@@ -13,7 +13,9 @@ Spotlight.onLoad(function() {
     });
   });
 
-  $("#another-email").on("click", function() {
+  $("#another-email").on("click", function(e) {
+    e.preventDefault();
+
     var container = $(this).closest('.form-group');
     var contacts = container.find('.contact');
     var inputContainer = contacts.first().clone();
