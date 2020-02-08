@@ -23,6 +23,9 @@ Spotlight.onLoad(function() {
       $(this).val('');
       $(this).attr('id', $(this).attr('id').replace('0', contacts.length));
       $(this).attr('name', $(this).attr('name').replace('0', contacts.length));
+      if ($(this).attr('aria-label')) {
+        $(this).attr('aria-label', $(this).attr('aria-label').replace('1', contacts.length + 1));
+      }
     });
 
     inputContainer.find('.contact-email-delete-wrapper').remove();

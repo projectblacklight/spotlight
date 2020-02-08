@@ -4,11 +4,11 @@ describe 'Exhibit Administration', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
   let(:hidden_input_id_0) { 'exhibit_contact_emails_attributes_0_id' }
-  let(:email_id_0) { 'exhibit_contact_emails_attributes_0_email' }
+  let(:email_id_0) { 'exhibit_contact_email_0' }
   let(:email_address_0) { 'admin@example.com' }
   let(:hidden_input_id_1) { 'exhibit_contact_emails_attributes_1_id' }
   let(:hidden_input_val_1) { '2' }
-  let(:email_id_1) { 'exhibit_contact_emails_attributes_1_email' }
+  let(:email_id_1) { 'exhibit_contact_email_1' }
   let(:email_address_1) { 'admin2@example.com' }
 
   before { login_as admin }
@@ -58,6 +58,14 @@ describe 'Exhibit Administration', type: :feature do
 
       expect(find_field(email_id_0).value).to eq email_address_0
       expect(find_field(email_id_1).value).to eq email_address_1
+    end
+
+    it 'updates the aria-labels properly', js: true do
+      visit spotlight.edit_exhibit_path(exhibit)
+
+      expect(find_field(email_id_0)['aria-label']).to eq 'Contact email 1'
+      find('#another-email').click
+      expect(find_field(email_id_1)['aria-label']).to eq 'Contact email 2'
     end
 
     it 'allows deletion of contact email addresses', js: true do

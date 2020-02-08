@@ -374,6 +374,7 @@ en:
         email_delete_button: Delete contact
         email_delete_confirmation: Delete contact email address?
         email_delete_error: 'Problem deleting contact email:'
+        email_input_aria_label: Contact email %{index}
       delete:
         heading: Delete exhibit
         warning_html: This action is irreversible. Be sure to back up the exhibit settings and content using the %{export_link} feature before proceeding.
