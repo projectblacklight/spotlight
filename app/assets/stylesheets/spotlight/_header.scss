@@ -73,6 +73,8 @@
 }
 
 .image-masthead {
+  background-color: $black;
+
   .navbar {
     @extend .navbar-dark;
     background-color: $navbar-transparent-page-bg;
