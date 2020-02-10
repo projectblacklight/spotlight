@@ -756,7 +756,7 @@ en:
       index:
         categories_header: Browse Categories
         header: Browse
-        instructions: Use the Save search button on a search results page to create a new browse category. Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page."
+        instructions: Use the Save search button on a search results page to create a new browse category. Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page.
         no_saved_searches: You can save search results while in curation mode to create browse categories, which will be displayed here.
         not_searchable_html: This exhibit is not currently searchable. To perform searches that can be saved as additional browse categories, temporarily turn on the Display search box option in the Options section of the Configuration > %{href} page.
         title: Curation - Browse
