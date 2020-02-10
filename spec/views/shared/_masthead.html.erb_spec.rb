@@ -8,6 +8,8 @@ describe 'shared/_masthead', type: :view do
     stub_template 'shared/_exhibit_navbar.html.erb' => 'navbar'
     allow(view).to receive_messages(current_exhibit: exhibit,
                                     current_masthead: masthead,
+                                    masthead_heading_content: exhibit.title,
+                                    masthead_subheading_content: exhibit.subtitle,
                                     resource_masthead?: false)
   end
 
@@ -19,7 +21,7 @@ describe 'shared/_masthead', type: :view do
 
   context 'for an exhibit without a subtitle' do
     before do
-      exhibit.update(subtitle: nil)
+      allow(view).to receive_messages(masthead_subheading_content: nil)
     end
 
     it 'does not include the subtitle' do

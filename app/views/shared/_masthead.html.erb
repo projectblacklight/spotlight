@@ -13,21 +13,18 @@
   <%= render 'shared/exhibit_navbar' if current_exhibit && resource_masthead? %>
 
   <div class="container site-title-container">
-    <div class="site-title h2">
-      <% if content_for? :masthead %>
+    <% if content_for? :masthead %>
+      <h1 class="site-title h2">
         <%= content_for :masthead %>
-      <% elsif current_exhibit %>
-        <%= current_exhibit.title %>
-        <% if current_exhibit.subtitle.present? %>
-          <small><%= current_exhibit.subtitle %></small>
-        <% end %>
-      <% else %>
-        <%= application_name %>
-        <% if current_site.subtitle.present? %>
-          <small><%= current_site.subtitle %></small>
-        <% end %>
+      </h1>
+    <% else %>
+      <h1 class="site-title h2">
+        <%= masthead_heading_content %>
+      </h1>
+      <% if masthead_subheading_content %>
+        <small><%= masthead_subheading_content %></small>
       <% end %>
-    </div>
+    <% end %>
   </div>
 
   <%= render 'shared/exhibit_navbar' if current_exhibit && !resource_masthead? %>
