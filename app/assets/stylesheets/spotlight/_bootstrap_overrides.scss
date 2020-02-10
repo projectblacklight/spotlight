@@ -93,7 +93,7 @@ label.radio {
   legend {
     margin-bottom: $padding-large-vertical;
   }
-  div.radio + input[type="file"] {
+  div.form-check + input[type="file"] {
     margin-top: $padding-large-vertical;
   }
 }
