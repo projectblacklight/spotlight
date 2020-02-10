@@ -25,7 +25,7 @@ describe 'Main navigation labels are settable', type: :feature do
 
   it 'has the configured about page label in the sidebar' do
     visit spotlight.exhibit_about_page_path(exhibit, about)
-    expect(page).to have_css('#sidebar h4', text: 'New About Label')
+    expect(page).to have_css('#sidebar h2', text: 'New About Label')
   end
 
   it 'has the configured about page label visible in the breadcrumb' do
