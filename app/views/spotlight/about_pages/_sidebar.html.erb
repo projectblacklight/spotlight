@@ -1,5 +1,5 @@
 <% cache_unless current_user, [current_exhibit, @page] do %>
-  <h4 class="nav-heading"><%= current_exhibit.main_navigations.about.label_or_default %></h4>
+  <h2 class="nav-heading h4"><%= current_exhibit.main_navigations.about.label_or_default %></h2>
   <ul class="nav sidenav flex-column">
     <% current_exhibit.about_pages.for_locale.published.each do |page| %>
       <li class="nav-item <%= 'active' if current_page? [spotlight, current_exhibit, page] %>">
