@@ -89,6 +89,10 @@ h1,h2,h3,h4,h5,h6 {
   legend {
     margin-bottom: $padding-large-vertical;
   }
+  small.form-text {
+    margin-bottom: $spacer;
+    margin-top: $spacer * 0.3125;
+  }
   div.form-check + input[type="file"] {
     margin-top: $padding-large-vertical;
   }
