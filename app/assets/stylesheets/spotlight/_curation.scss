@@ -79,6 +79,19 @@
   display: none;
 }
 
+.home_page .card {
+  .card-body {
+    @extend .py-2;
+    @extend .px-3;
+  }
+
+  .card-title {
+    @extend .mb-0;
+    @extend .py-2;
+  }
+}
+
+
 .card.page-admin {
   &:hover {
     @include panel-hover-highlighting;
