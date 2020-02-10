@@ -86,9 +86,6 @@ label.radio {
 }
 
 .tab-pane {
-  > p.instructions:first-child, > fieldset:first-child {
-    margin-top: -$padding-base-vertical;
-  }
   fieldset {
     margin-bottom: $padding-large-vertical * 2;
     margin-top: $padding-large-vertical * 1;
