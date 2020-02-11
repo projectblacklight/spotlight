@@ -764,6 +764,8 @@ en:
           other: "%{count} items"
         missing_description_html: "%{link} to add a description."
     shared:
+      exhibit_sidebar:
+        header: Administration menu
       report_a_problem:
         honeypot_field_explanation: Ignore this text box. It is used to detect spammers. If you enter anything into this text box, your message will not be sent.
         title: Contact Us
