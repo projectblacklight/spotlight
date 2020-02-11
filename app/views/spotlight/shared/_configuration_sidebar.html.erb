@@ -1,4 +1,5 @@
-<h4 class="nav-heading"><%=t(:'spotlight.configuration.sidebar.header') %></h4>
+<h3 class="nav-heading h4"><%=t(:'spotlight.configuration.sidebar.header') %></h3>
+
 <ul class="nav sidenav flex-column">
   <% if can? :update, current_exhibit %>
     <%= nav_link t(:'spotlight.configuration.sidebar.settings'), spotlight.edit_exhibit_path(current_exhibit) %>
