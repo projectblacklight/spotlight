@@ -808,6 +808,8 @@ en:
         no_tags: No items in this exhibit have been tagged. You can add tags to an item on the Item Details page while in curation mode.
         taggings:
           count: Items tagged
+    topbar:
+      label: Utilities
     versions:
       redo: Redo changes
       undo: Undo changes
