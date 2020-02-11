@@ -107,7 +107,6 @@ module Spotlight
     end
 
     def add_oembed
-      gem 'blacklight-oembed', '>= 0.1', github: 'sul-dlss/blacklight-oembed'
       generate 'blacklight_oembed:install'
     end
 
