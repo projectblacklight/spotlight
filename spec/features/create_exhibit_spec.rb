@@ -24,7 +24,7 @@ describe 'Create a new exhibit', type: :feature do
 
     fill_in 'Title', with: 'My exhibit title'
 
-    click_button 'Save'
+    find('input[name="commit"]').click
 
     expect(page).to have_content 'The exhibit was created.'
     expect(Spotlight::Exhibit.last.slug).to eq 'my-exhibit-title'
@@ -39,7 +39,7 @@ describe 'Create a new exhibit', type: :feature do
     fill_in 'Title', with: 'My exhibit title'
     fill_in 'URL slug', with: 'custom-slug'
 
-    click_button 'Save'
+    find('input[name="commit"]').click
 
     expect(page).to have_content 'The exhibit was created.'
     expect(Spotlight::Exhibit.last.slug).to eq 'custom-slug'
@@ -51,14 +51,15 @@ describe 'Create a new exhibit', type: :feature do
     fill_in 'Title', with: 'My exhibit title'
     fill_in 'URL slug', with: 'custom-slug'
 
-    click_button 'Save'
+    find('input[name="commit"]').click
 
     visit spotlight.new_exhibit_path
 
     fill_in 'Title', with: 'My exhibit title'
     fill_in 'URL slug', with: 'custom-slug'
 
-    click_button 'Save'
+    find('input[name="commit"]').click
+
     expect(page).to have_content 'has already been taken'
   end
 end
