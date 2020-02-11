@@ -1,5 +1,5 @@
 <%= cache current_exhibit, expires_in: 1.hour do %>
-  <h3><%= t :'.monthly_header' %></h3>
+  <h2><%= t :'.monthly_header' %></h2>
   <table class="table analytics">
     <tr>
     <% current_exhibit.analytics_provider.metrics.elements.each do |e| %>

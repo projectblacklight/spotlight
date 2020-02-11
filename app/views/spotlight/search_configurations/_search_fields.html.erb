@@ -53,7 +53,7 @@
 <% end %>
 
 <% if can? :manage, Spotlight::CustomSearchField.new(exhibit: current_exhibit) %>
-  <h3><%= t(:'.exhibit_specific.header') %></h3>
+  <h2><%= t(:'.exhibit_specific.header') %></h2>
   <p class="instructions"><%= t(:'.exhibit_specific.instructions') %></p>
 
   <table class="table table-striped" id="exhibit-specific-fields">
