@@ -17,7 +17,7 @@ describe 'Add a contact to an exhibit', type: :feature do
       fill_in 'Location', with: 'Rome'
       fill_in 'Telephone', with: '(555) 555-5555 ext. 12345 (mobile)'
 
-      click_button 'Save'
+      find('input[name="commit"]').click
     end
     expect(page).to have_content 'The contact was created.'
 

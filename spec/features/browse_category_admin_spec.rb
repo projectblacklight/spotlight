@@ -21,7 +21,7 @@ describe 'Browse Category Administration', type: :feature do
       expect(page).to have_css('#save-modal')
       fill_in 'search_title', with: 'Some search'
       expect do
-        click_button 'Save'
+        find('input[name="commit"]').click
         exhibit.searches.reload
       end.to change { exhibit.searches.count }.by 1
       expect(exhibit.searches.last.query_params).to eq 'q' => 'xyz'
@@ -32,7 +32,7 @@ describe 'Browse Category Administration', type: :feature do
       click_button 'Save this search'
       expect(page).to have_css('#save-modal')
       select search.title, from: 'id'
-      click_button 'Save'
+      find('input[name="commit"]').click
       expect(search.reload.query_params).to eq 'q' => 'xyz'
     end
   end
