@@ -68,7 +68,7 @@ describe Spotlight::IiifResourceResolver do
       end
     end
 
-    context 'when the stored canvas ID is not present' do
+    context 'when the stored image ID is not present' do
       it 'raises a ManifestError' do
         resource.iiif_image_id = 'not-a-real-image-id'
 
