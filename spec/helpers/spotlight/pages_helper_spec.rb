@@ -109,13 +109,13 @@ describe Spotlight::PagesHelper, type: :helper do
   end
 
   describe '#content_editor_class' do
-    context 'with a sir-trevor backed page' do
+    context 'a sir-trevor backed page with a custom class' do
       it 'has a custom class' do
         expect(helper.content_editor_class(Spotlight::Page.new)).to eq 'js-st-instance'
       end
     end
 
-    context 'with a sir-trevor backed page' do
+    context 'a sir-trevor backed page with a derived class' do
       it 'derives a css class name from the editor type' do
         expect(helper.content_editor_class(Spotlight::Page.new(content_type: 'Something::Custom'))).to eq 'js-something-custom-instance'
       end
