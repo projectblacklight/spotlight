@@ -17,11 +17,9 @@
         <tr data-edit-for="new">
           <td></td>
           <td colspan=2>
-            <div class="form-actions">
-              <div class="primary-actions">
+            <div class="form-actions d-flex justify-content-end">
               <%= cancel_link r.object, '#', class: 'btn btn-link', data: {behavior: 'cancel-edit' } %>
               <%=f.submit nil, class: 'btn btn-primary'%>
-              </div>
             </div>
           </td>
         </tr>
@@ -44,11 +42,9 @@
           <%= r.hidden_field :_destroy, data: {'destroy-for' => r.object.id} %>
           </td>
           <td colspan=2>
-            <div class="form-actions">
-              <div class="primary-actions">
+            <div class="form-actions d-flex justify-content-end">
               <%= cancel_link r.object, '#', class: 'btn btn-link', data: {behavior: 'cancel-edit' } %>
               <%=f.submit nil, class: 'btn btn-primary'%>
-              </div>
             </div>
           </td>
         </tr>
