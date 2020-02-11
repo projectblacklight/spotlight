@@ -21,7 +21,7 @@ require 'riiif'
 module Spotlight
   ##
   # Spotlight::Engine
-  # rubocop:disable ClassLength
+  # rubocop:disable Metrics/ClassLength
   class Engine < ::Rails::Engine
     isolate_namespace Spotlight
     # Breadcrumbs on rails must be required outside of an initializer or it doesn't get loaded.
