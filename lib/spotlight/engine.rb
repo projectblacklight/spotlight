@@ -7,7 +7,6 @@ require 'devise'
 require 'devise_invitable'
 
 require 'blacklight'
-require 'blacklight/oembed'
 require 'autoprefixer-rails'
 require 'friendly_id'
 require 'tophat'
