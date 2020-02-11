@@ -1,5 +1,6 @@
-<% set_html_page_title %>
-<h1 class="sr-only"><%= t :'.header' %></h1>
+<% title = current_exhibit.main_navigations.browse.label_or_default %>
+<% set_html_page_title(title) %>
+<h1 class="sr-only"><%= title %></h1>
 
 <div class="browse-landing row">
   <%= render collection: @searches, partial: 'spotlight/browse/search' %>
