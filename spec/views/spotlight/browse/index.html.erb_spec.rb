@@ -4,9 +4,11 @@ describe 'spotlight/browse/index', type: :view do
   let(:search) { FactoryBot.create(:search) }
   let(:another_search) { FactoryBot.create(:search) }
 
+  before { allow(view).to receive(:current_exhibit).and_return(search.exhibit) }
+
   it 'has a title' do
     render
-    expect(response).to have_selector 'h1', text: 'Browse Exhibit'
+    expect(response).to have_selector 'h1', text: 'Browse'
   end
 
   it 'renders the collection of searches' do

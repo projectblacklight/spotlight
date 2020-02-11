@@ -208,8 +208,6 @@ en:
           help: You can select and crop an image to visually represent this exhibit.
     application_name: "%{exhibit} - %{application_name}"
     browse:
-      index:
-        header: Browse Exhibit
       search:
         item_count:
           one: "%{count} item"
