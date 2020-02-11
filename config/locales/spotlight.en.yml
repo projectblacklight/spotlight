@@ -207,6 +207,8 @@ en:
           heading: Exhibit thumbnail
           help: You can select and crop an image to visually represent this exhibit.
     application_name: "%{exhibit} - %{application_name}"
+    breadcrumb:
+      label: Breadcrumb
     browse:
       index:
         header: Browse Exhibit
