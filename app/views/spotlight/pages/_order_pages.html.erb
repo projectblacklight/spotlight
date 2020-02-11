@@ -2,7 +2,7 @@
 <%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, page_collection_name]), layout: :horizontal, control_col: 'col-sm-10', html: {:'data-form-observer' => true} do |f| %>
 
     <%= render partial: 'header', locals: {f: f} %>
-    <h3 class="mt-4"><%= t :'.pages_header' %></h3>
+    <h2 class="mt-4"><%= t :'.pages_header' %></h2>
     <p class="instructions"><%= t :'.instructions' %></p>
     <div class="panel-group dd <%= page_collection_name %>_admin" id="nested-pages" data-behavior="nestable" <%= nestable_data_attributes(page_collection_name).html_safe %> >
       <ol class="dd-list">

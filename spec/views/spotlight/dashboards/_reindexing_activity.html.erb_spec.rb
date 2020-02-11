@@ -20,7 +20,7 @@ describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
     end
 
     it 'displays the section header' do
-      expect(rendered).to have_css('h3', text: 'Recent Item Indexing Activity')
+      expect(rendered).to have_css('h2', text: 'Recent Item Indexing Activity')
     end
 
     it 'displays an explanatory message when there are no reindexing attempts in the log' do

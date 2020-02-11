@@ -4,7 +4,7 @@
 
 <%= configuration_page_title %>
 <%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_metadata_configuration_path(@exhibit), layout: :horizontal, label_col: 'col-md-3 col-sm-3', control_col: 'col-md-5 col-sm-5' do |f| %>
-    <h3><%= t(:'.order_header') %></h3>
+    <h2><%= t(:'.order_header') %></h2>
 
     <p class="instructions"><%= t :'.instructions' %></p>
 
@@ -45,7 +45,7 @@
 <% end %>
 
 
-    <h3 class="mt-4"><%= t(:'.exhibit_specific.header') %></h3>
+    <h2 class="mt-4"><%= t(:'.exhibit_specific.header') %></h2>
     <p class="instructions"><%= t(:'.exhibit_specific.instructions') %></p>
 
     <table class="table table-striped" id="exhibit-specific-fields">
