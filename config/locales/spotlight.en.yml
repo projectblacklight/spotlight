@@ -363,6 +363,8 @@ en:
       solr_document_activity:
         header: Recently Updated Items
         no_documents: There are no documents in this exhibit
+    exhibitnavbar:
+      label: Exhibit navigation
     exhibits:
       breadcrumb: Home
       confirmation_status:
