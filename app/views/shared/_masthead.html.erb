@@ -13,18 +13,20 @@
   <%= render 'shared/exhibit_navbar' if current_exhibit && resource_masthead? %>
 
   <div class="container site-title-container">
-    <% if content_for? :masthead %>
-      <h1 class="site-title h2">
-        <%= content_for :masthead %>
-      </h1>
-    <% else %>
-      <h1 class="site-title h2">
-        <%= masthead_heading_content %>
-      </h1>
-      <% if masthead_subheading_content %>
-        <small><%= masthead_subheading_content %></small>
+    <div class="site-title-wrapper">
+      <% if content_for? :masthead %>
+        <h1 class="site-title h2">
+          <%= content_for :masthead %>
+        </h1>
+      <% else %>
+        <h1 class="site-title h2">
+          <%= masthead_heading_content %>
+        </h1>
+        <% if masthead_subheading_content %>
+          <small><%= masthead_subheading_content %></small>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 
   <%= render 'shared/exhibit_navbar' if current_exhibit && !resource_masthead? %>

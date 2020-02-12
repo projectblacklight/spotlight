@@ -20,8 +20,12 @@
 
 
   .site-title {
-    margin-top: $padding-large-vertical;
-    padding-bottom: $padding-base-vertical / 2;
+    margin-bottom: 0;
+  }
+
+  .site-title-wrapper {
+    margin-top: $spacer * 1.25;
+    padding-bottom: $spacer * 0.75;
     position: relative;
     white-space: nowrap;
   }
