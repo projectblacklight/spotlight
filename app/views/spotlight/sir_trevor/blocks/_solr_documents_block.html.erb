@@ -1,9 +1,9 @@
 <% solr_documents_block.with_solr_helper(self) %>
 
-<div class="content-block items-block row <%= 'flex-row-reverse' if solr_documents_block.content_align == 'right' %>">
+<div class="content-block items-block row d-block">
   <% if solr_documents_block.documents? %>
 
-    <div class="items-col spotlight-flexbox <%= solr_documents_block.text? ? "col-md-6" : "col-md-12" %> ">
+    <div class="items-col spotlight-flexbox <%= solr_documents_block.text? ? "col-md-6" : "col-md-12" %> <%= solr_documents_block.content_align == 'right' ? 'float-right' : 'float-left' %>">
       <% solr_documents_block.each_document do |block_options, document| %>
         <% doc_presenter = index_presenter(document) %>
         <div class="box" data-id="<%= document.id %>">
@@ -35,7 +35,7 @@
   <% end %>
 
   <% if solr_documents_block.text? %>
-    <div class="text-col col-md-6">
+    <div class="text-col col-md-6 mw-100">
       <% unless solr_documents_block.title.blank? %>
         <h3><%= solr_documents_block.title %></h3>
       <% end %>

@@ -1,10 +1,10 @@
-<div class="content-block item-text row <%= 'flex-row-reverse' if oembed_block.content_align == 'right' %>">
-  <div class="<%= 'col-md-6' if oembed_block.text? %> col-12 oembed-block">
+<div class="content-block item-text row d-block">
+  <div class="<%= 'col-md-6' if oembed_block.text? %> col-12 <%= oembed_block.content_align == 'right' ? 'float-right' : 'float-left' %> oembed-block">
     <%= render_oembed_tag oembed_block.url %>
   </div>
 
   <% if oembed_block.text? %>
-    <div class="text-col col-md-6">
+    <div class="text-col col-md-6 mw-100">
       <% unless oembed_block.title.blank? %>
         <h3><%= oembed_block.title %></h3>
       <% end %>
