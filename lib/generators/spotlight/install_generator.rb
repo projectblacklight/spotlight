@@ -109,8 +109,10 @@ module Spotlight
     end
 
     def add_oembed
-      gem 'blacklight-oembed', '>= 0.1', github: 'sul-dlss/blacklight-oembed'
+      gem 'blacklight-oembed', '~> 1.0'
+      Bundler.with_clean_env { run 'bundle install' }
       generate 'blacklight_oembed:install'
+      copy_file 'config/initializers/oembed.rb'
     end
 
     def add_mailer_defaults

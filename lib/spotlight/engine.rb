@@ -53,13 +53,8 @@ module Spotlight
       require 'cancan'
       require 'bootstrap_form'
       require 'acts-as-taggable-on'
-      require 'oembed'
 
       Mime::Type.register 'application/solr+json', :solr_json
-    end
-
-    initializer 'oembed.initialize' do
-      OEmbed::Providers.register_all
     end
 
     initializer 'spotlight.factories', after: 'factory_bot.set_factory_paths' do

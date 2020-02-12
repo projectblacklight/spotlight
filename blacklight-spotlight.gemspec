@@ -25,7 +25,6 @@ these collections.)
   s.add_dependency 'almond-rails', '~> 0.1'
   s.add_dependency 'autoprefixer-rails'
   s.add_dependency 'blacklight', '~> 7.0'
-  # s.add_dependency 'blacklight-oembed', '>= 0.1'
   s.add_dependency 'bootstrap_form', '~> 4.1'
   s.add_dependency 'breadcrumbs_on_rails', '~> 3.0'
   s.add_dependency 'cancancan'
