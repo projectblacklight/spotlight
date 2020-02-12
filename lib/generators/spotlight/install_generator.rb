@@ -64,7 +64,9 @@ module Spotlight
 
     def add_helper
       copy_file 'spotlight_helper.rb', 'app/helpers/spotlight_helper.rb'
-      inject_into_class 'app/helpers/application_helper.rb', ApplicationHelper, '  include SpotlightHelper'
+      inject_into_file 'app/helpers/application_helper.rb', after: 'module ApplicationHelper' do
+        "\n  include SpotlightHelper"
+      end
     end
 
     def add_model_mixin
