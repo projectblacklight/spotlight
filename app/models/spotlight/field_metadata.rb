@@ -19,8 +19,7 @@ module Spotlight
     def field(key)
       {
         document_count: document_counts.fetch(field_name(key), 0),
-        value_count: terms.fetch(field_name(key), []).length,
-        terms: terms.fetch(field_name(key), [])
+        value_count: terms.fetch(field_name(key), []).length
       }
     end
 
