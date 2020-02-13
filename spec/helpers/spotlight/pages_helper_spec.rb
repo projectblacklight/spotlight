@@ -121,4 +121,10 @@ describe Spotlight::PagesHelper, type: :helper do
       end
     end
   end
+
+  describe '#render_contact_email_address' do
+    it 'adds soft breaks in appropriate places' do
+      expect(helper.render_contact_email_address('local.part@example.com')).to have_css 'wbr', count: 3, visible: false
+    end
+  end
 end
