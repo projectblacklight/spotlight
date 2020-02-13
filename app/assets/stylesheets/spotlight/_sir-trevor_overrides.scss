@@ -76,10 +76,9 @@
 .st-block-controls__button {
   @extend .btn;
   @extend .btn-secondary;
+  @extend .btn-outline-secondary;
 
-  background-color: theme-colors("secondary");
   border: 1px solid $gray-700;
-  color: theme-colors("light");
 
   .st-icon {
     margin-left: auto;
