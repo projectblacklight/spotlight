@@ -1,6 +1,6 @@
 <div class="st__content-block st__content-block--quote">
   <div class="quote">
-    <blockquote>
+    <blockquote class="blockquote">
       <div class="quote__content">
         <% if quote_block.format == :html %>
             <%= sir_trevor_format quote_block.text, format: quote_block.format %>
@@ -10,9 +10,9 @@
       </div>
 
       <% if quote_block.cite.present? %>
-        <div class="quote__cite">
-          <cite class="quote__cite-text">&ndash; <%= quote_block.cite %></cite>
-        </div>
+        <footer class="quote__cite blockquote-footer">
+          <cite class="quote__cite-text"><%= quote_block.cite %></cite>
+        </footer>
       <% end %>
     </blockquote>
   </div>
