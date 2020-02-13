@@ -1,6 +1,6 @@
 <div class="d-flex w-100">
   <%= image_tag contact.avatar.iiif_url, class: 'contact-photo', alt: '' if contact.avatar && contact.avatar.iiif_url.present? %>
-  <div>
+  <div class="contact-properties">
     <div itemprop="name" class="name"><%= contact.name %></div>
     <% Spotlight::Contact.fields.each do |field, options| %>
       <% if (value = contact.contact_info[field]).present? %>
