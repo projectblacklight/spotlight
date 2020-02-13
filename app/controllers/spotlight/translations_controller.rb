@@ -7,7 +7,9 @@ module Spotlight
     before_action :authenticate_user!, :set_language, :set_tab
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
-    def edit; end
+    def edit
+      attach_breadcrumbs
+    end
 
     def update
       if current_exhibit.update(exhibit_params)
@@ -20,6 +22,12 @@ module Spotlight
     end
 
     private
+
+    def attach_breadcrumbs
+      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
+      add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
+      add_breadcrumb t(:'spotlight.curation.sidebar.translations')
+    end
 
     def exhibit_params
       params.require(:exhibit).permit(translations_attributes: %i[id locale key value])

@@ -23,6 +23,14 @@ describe Spotlight::TranslationsController do
         expect(response).to render_template(:edit)
         expect(response).to be_successful
       end
+
+      it 'shows the breadcrumbs' do
+        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with('Translations')
+        get :edit, params: { exhibit_id: exhibit }
+        expect(response).to be_successful
+      end
     end
   end
 
