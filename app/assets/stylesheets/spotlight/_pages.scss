@@ -56,6 +56,12 @@
   .contacts-header {
     margin-top: 4 * $padding-large-vertical;
   }
+
+  .contact-properties {
+    padding-left: 1rem;
+    text-indent: -1rem;
+  }
+
   ol.contacts {
     li {
       margin-bottom: 2 * $padding-large-vertical;
