@@ -106,10 +106,6 @@ $image-overlay-max-height: 300px;
   }
 
   .browse-search-form {
-    .browse-search-expand {
-      text-align: center;
-    }
-
     .btn-reset {
       background-color: transparent;
       display: none;
@@ -121,5 +117,9 @@ $image-overlay-max-height: 300px;
       left: -40px;
       z-index: 30;
     }
+  }
+
+  .browse-search-expand {
+    text-align: center;
   }
 }
