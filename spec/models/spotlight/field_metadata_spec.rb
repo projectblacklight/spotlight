@@ -48,17 +48,10 @@ describe Spotlight::FieldMetadata do
       expect(subject.field('some_key')[:value_count]).to eq 3
     end
 
-    it 'gets a list of top terms' do
-      expect(subject.field('a')[:terms]).to match_array %w[a b c]
-      expect(subject.field('b')[:terms]).to match_array %w[b]
-      expect(subject.field('some_key')[:terms]).to match_array [7, 8, 9]
-    end
-
     context 'for a missing field' do
       it 'has reasonable default values' do
         expect(subject.field('d')[:document_count]).to eq 0
         expect(subject.field('d')[:value_count]).to eq 0
-        expect(subject.field('d')[:terms]).to be_empty
       end
     end
   end

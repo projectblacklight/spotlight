@@ -19,7 +19,6 @@ describe 'spotlight/search_configurations/_facet_metadata', type: :view do
     it 'shows the number of unique values' do
       expect(rendered).to have_content '1 item'
       expect(rendered).to have_content '3 unique values'
-      expect(rendered).to have_selector '.btn-with-tooltip'
     end
   end
 
