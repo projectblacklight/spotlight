@@ -14,6 +14,18 @@ $image-overlay-max-height: 300px;
   }
 }
 
+.blacklight-browse {
+  .sort-pagination {
+    .page-links {
+      display: none;
+    }
+
+    .search-widgets {
+      margin-left: auto;
+    }
+  }
+}
+
 .browse-landing {
   text-align: center;
   // Placeholder for vertically alignment - might already be available from use in another feature
