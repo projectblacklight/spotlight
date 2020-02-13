@@ -60,6 +60,7 @@
     li {
       margin-bottom: 2 * $padding-large-vertical;
       margin-top: $padding-small-vertical;
+      word-break: break-word;
       .name {
         font-weight: bold;
       }
