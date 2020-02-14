@@ -1,6 +1,8 @@
 .page-links a {
   padding-left: 0;
   padding-right: 0;
+  line-height: $btn-line-height;
+  @include font-size($btn-font-size);
 }
 
 .missing-description {
