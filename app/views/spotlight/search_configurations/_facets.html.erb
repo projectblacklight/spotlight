@@ -25,9 +25,9 @@
                     <%= render partial: 'facet_metadata', locals: { metadata: metadata } %>
                   </div>
                   <div class="">
-                    <a class="btn btn-link collapse-toggle collapsed" role="button" data-toggle="collapse" href="#<%= key.parameterize %>_facet_options" aria-expanded="false" aria-controls="<%= key.parameterize %>_facet_options">
+                    <button class="btn btn-link collapse-toggle collapsed" type="button" data-toggle="collapse" data-target="#<%= key.parameterize %>_facet_options" aria-expanded="false" aria-controls="<%= key.parameterize %>_facet_options">
                       Options
-                    </a>
+                    </button>
                     <span class="collapse-chevron">❯</span>
                   </div>
                 </div>
