@@ -31,8 +31,8 @@
     padding-bottom: 0;
 
     label {
-      margin-left: $padding-base-horizontal;
-      margin-right: $padding-base-horizontal;
+      margin-left: $spacer;
+      margin-right: $spacer;
       padding-left: 0px;
       padding-bottom: $table-cell-padding;
       padding-top: 1 + $table-cell-padding;
@@ -47,7 +47,7 @@
 }
 
 .dd-table {
-  margin-top: 2 * $padding-large-vertical;
+  margin-top: 2 * $spacer;
 
   th {
     &:first-child {

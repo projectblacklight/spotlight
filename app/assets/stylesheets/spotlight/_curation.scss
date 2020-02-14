@@ -125,13 +125,13 @@
     width: 65%;
     vertical-align: top;
     display: inline-block;
-    margin-left: $padding-base-horizontal;
+    margin-left: $spacer;
   }
   .remove {
     width: 10%;
     vertical-align: top;
     display: inline-block;
-    margin-left: $padding-base-horizontal;
+    margin-left: $spacer;
   }
 }
 
@@ -210,7 +210,7 @@ table#exhibit-specific-fields {
 }
 
 #nested-navigation {
-  margin-bottom: 2 * $padding-large-vertical;
+  margin-bottom: 2 * $spacer;
 }
 
 table.users {

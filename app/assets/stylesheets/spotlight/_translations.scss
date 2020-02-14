@@ -4,7 +4,7 @@
   }
 
   .browse-category-title {
-    margin-bottom: $padding-base-vertical;
+    margin-bottom: $spacer;
 
     label {
       font-weight: normal;
@@ -12,7 +12,7 @@
   }
 
   .browse-category-description {
-    margin-bottom: $padding-large-vertical * 2;
+    margin-bottom: $spacer * 2;
   }
 
   .table.table-striped th {
@@ -28,11 +28,11 @@
 
 .form-group.translation-form {
   .col-form-label {
-    padding-top: $card-spacer-y + $padding-base-vertical;
+    padding-top: $card-spacer-y + $spacer;
   }
 
   .translation-complete {
-    padding-top: $card-spacer-y + $padding-base-vertical;
+    padding-top: $card-spacer-y + $spacer;
   }
 }
 
@@ -73,7 +73,7 @@
   display: block;
   font-size: $h4-font-size;
   font-weight: bold;
-  margin-bottom: $padding-large-vertical * 2;
-  margin-top: $padding-large-vertical;
+  margin-bottom: $spacer * 2;
+  margin-top: $spacer;
   padding-bottom: 3px;
 }

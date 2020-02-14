@@ -61,7 +61,7 @@
 
 .blacklight-catalog-admin {
   .add-items-nav {
-    margin-bottom: $padding-large-vertical;
+    margin-bottom: $spacer;
   }
 
   .sort-pagination {
@@ -119,7 +119,7 @@ form.edit_solr_document {
 
 #save-this-search {
   float:left;
-  margin-right: $padding-xs-horizontal;
+  margin-right: $spacer * 0.1;
 }
 
 #document {

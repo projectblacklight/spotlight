@@ -1,7 +1,7 @@
 $image-overlay-max-height: 300px;
 
 .long-description-text {
-  margin: ($padding-base-vertical * 2) 0;
+  margin: ($spacer * 2) 0;
   width: 40em;
 }
 
@@ -73,7 +73,7 @@ $image-overlay-max-height: 300px;
       small {
         display: block;
         color: $white;
-        margin-top: $padding-large-vertical;
+        margin-top: $spacer;
         text-transform: uppercase;
       }
     }

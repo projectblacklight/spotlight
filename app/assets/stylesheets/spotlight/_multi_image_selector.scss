@@ -13,7 +13,7 @@
     li {
       flex: 0 0 auto;
       min-width: 60px;
-      padding: $padding-base-vertical $padding-base-horizontal;
+      padding: $spacer $spacer;
       &.active {
         background-color: #999999;
       }
