@@ -80,21 +80,22 @@ h1,h2,h3,h4,h5,h6 {
   }
 }
 
-.tab-pane {
-  fieldset {
-    margin-bottom: $spacer * 2;
-    margin-top: $spacer * 1;
-  }
-  legend {
-    margin-bottom: $spacer;
-  }
-  small.form-text {
-    margin-bottom: $spacer;
-    margin-top: $spacer * 0.3125;
-  }
-  div.form-check + input[type="file"] {
-    margin-top: $spacer;
-  }
+fieldset {
+  margin-bottom: $spacer * 2;
+  margin-top: $spacer * 1;
+}
+
+legend {
+  margin-bottom: $spacer;
+}
+
+small.form-text {
+  margin-bottom: $spacer;
+  margin-top: $spacer * 0.3125;
+}
+
+div.form-check + input[type="file"] {
+  margin-top: $spacer;
 }
 
 @media (max-width: breakpoint-max("md")) {
