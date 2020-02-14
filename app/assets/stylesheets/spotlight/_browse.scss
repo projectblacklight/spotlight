@@ -36,7 +36,7 @@ $image-overlay-max-height: 300px;
   }
 
   .category {
-    margin-bottom: $spacer * 2;
+    margin-bottom: $spacer;
   }
 
   .image-overlay {
@@ -84,19 +84,16 @@ $image-overlay-max-height: 300px;
   }
 
   @media screen and (max-width: breakpoint-max("sm")) {
-    $image-overlay-max-height: 180px;
-    .category {
-      margin: 10px auto;
-    }
-
+    $image-overlay-max-height: 240px;
     .image-overlay {
+      margin: 10px auto;
       max-height: $image-overlay-max-height;
       max-width: 350px;
     }
     .text-overlay .browse-category-title {font-size: $h3-font-size;}
   }
   @media screen and (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("md")) {
-    $image-overlay-max-height: 180px;
+    $image-overlay-max-height: 240px;
     .image-overlay {max-height: $image-overlay-max-height;}
   }
   @media screen and (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
