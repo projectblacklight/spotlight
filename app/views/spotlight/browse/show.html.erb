@@ -1,30 +1,27 @@
 <% set_html_page_title @search.title %>
 <% render partial: 'tophat' %>
-<div class="col-md-12">
-  <%= exhibit_edit_link @search, class: 'edit-button float-right btn btn-primary' if can? :edit, @search %>
-  <% if resource_masthead? %>
-    <% content_for :masthead do %>
-      <%= render 'search_title', search: @search %>
-    <% end %>
-  <% else %>
-    <h1><%= render 'search_title', search: @search %></h1>
-  <% end %>
-  <% if @search.long_description.present? %>
-    <div class="long-description-text <%= 'very-long-description-text' if @search.long_description.length > 600 %>">
-      <%= render_markdown @search.long_description %>
-    </div>
-  <% end %>
-</div>
 
-<div class="col-md-12">
-  <%= render 'sort_and_per_page' %>
-  <% if @search.search_box? %>
-    <%= render partial: 'search_box', locals: {search: @search} %>
+<%= exhibit_edit_link @search, class: 'edit-button float-right btn btn-primary' if can? :edit, @search %>
+<% if resource_masthead? %>
+  <% content_for :masthead do %>
+    <%= render 'search_title', search: @search %>
   <% end %>
-  <% if @search.default_index_view_type && params[:view].blank? %>
-    <%= render_document_index_with_view(@search.default_index_view_type, @document_list) %>
-  <% else %>
-    <%= render_document_index(@document_list) %>
-  <% end %>
-  <%= render 'results_pagination' %>
-</div>
+<% else %>
+  <h1><%= render 'search_title', search: @search %></h1>
+<% end %>
+<% if @search.long_description.present? %>
+  <div class="long-description-text <%= 'very-long-description-text' if @search.long_description.length > 600 %>">
+    <%= render_markdown @search.long_description %>
+  </div>
+<% end %>
+
+<%= render 'sort_and_per_page' %>
+<% if @search.search_box? %>
+  <%= render partial: 'search_box', locals: {search: @search} %>
+<% end %>
+<% if @search.default_index_view_type && params[:view].blank? %>
+  <%= render_document_index_with_view(@search.default_index_view_type, @document_list) %>
+<% else %>
+  <%= render_document_index(@document_list) %>
+<% end %>
+<%= render 'results_pagination' %>
