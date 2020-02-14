@@ -15,8 +15,8 @@
 
 .navbar-sm {
   li > a {
-    padding-top:$padding-base-vertical !important;
-    padding-bottom:$padding-base-vertical !important;
+    padding-top:$spacer !important;
+    padding-bottom:$spacer !important;
   }
 
   margin-top: -10px;
@@ -82,18 +82,18 @@ h1,h2,h3,h4,h5,h6 {
 
 .tab-pane {
   fieldset {
-    margin-bottom: $padding-large-vertical * 2;
-    margin-top: $padding-large-vertical * 1;
+    margin-bottom: $spacer * 2;
+    margin-top: $spacer * 1;
   }
   legend {
-    margin-bottom: $padding-large-vertical;
+    margin-bottom: $spacer;
   }
   small.form-text {
     margin-bottom: $spacer;
     margin-top: $spacer * 0.3125;
   }
   div.form-check + input[type="file"] {
-    margin-top: $padding-large-vertical;
+    margin-top: $spacer;
   }
 }
 

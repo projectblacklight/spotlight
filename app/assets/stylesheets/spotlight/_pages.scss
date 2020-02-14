@@ -31,16 +31,16 @@
 
 .st-block__inner {
   div.field + div.field {
-    margin-top: 2 * $padding-large-vertical;
+    margin-top: 2 * $spacer;
   }
 
   .field-select {
-    margin-bottom: $padding-large-vertical;
+    margin-bottom: $spacer;
     @media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
-      margin-bottom: 2 * $padding-large-vertical;
+      margin-bottom: 2 * $spacer;
 
       > select {
-        margin-left: 2 * $padding-small-horizontal;
+        margin-left: 2 * $spacer * 0.25;
       }
     }
   }
@@ -48,13 +48,13 @@
 
 #sidebar {
   li {
-    margin-top: $padding-small-vertical;
+    margin-top: $spacer * 0.5;
   }
   h4 {
     line-height: $line-height-lg;
   }
   .contacts-header {
-    margin-top: 4 * $padding-large-vertical;
+    margin-top: 4 * $spacer;
   }
 
   .contact-properties {
@@ -64,8 +64,8 @@
 
   ol.contacts {
     li {
-      margin-bottom: 2 * $padding-large-vertical;
-      margin-top: $padding-small-vertical;
+      margin-bottom: 2 * $spacer;
+      margin-top: $spacer * 0.5;
       word-break: break-word;
       .name {
         font-weight: bold;
@@ -76,7 +76,7 @@
   ol.sidenav {
     li {
       color: $gray-900;
-      margin-top: $padding-large-vertical;
+      margin-top: $spacer;
     }
 
     ol.subsection {
@@ -84,7 +84,7 @@
       li {
         list-style: square;
         margin-left: 18px;
-        margin-top: $padding-small-vertical;
+        margin-top: $spacer * 0.5;
       }
     }
   }
@@ -188,12 +188,12 @@
 .empty-page-block {
   @extend .alert;
   @extend .alert-info;
-  margin-top: $padding-large-vertical;
+  margin-top: $spacer;
   h2 {
     margin-top: 0;
   }
   p, ol > li {
-    padding: $padding-small-vertical;
+    padding: $spacer * 0.5;
   }
   ol > li:last-child {
     padding-bottom: 0;
@@ -202,7 +202,7 @@
 
 .oembed-block {
   @media (max-width: breakpoint-max("md")) {
-    margin-bottom: $padding-base-horizontal;
+    margin-bottom: $spacer;
   }
 
   iframe {
@@ -260,13 +260,13 @@
 .item-features .carousel-indicators {
   @media (max-width: breakpoint-max("sm")) {
     width: 100%;
-    margin-top: 2 * $padding-large-vertical;
+    margin-top: 2 * $spacer;
   }
 }
 
 .carousel-block .carousel-caption h3 {
-  padding-left: 2 * $padding-large-horizontal;
-  padding-right: 2 * $padding-large-horizontal;
+  padding-left: 2 * $spacer;
+  padding-right: 2 * $spacer;
 }
 
 .zpr-link {

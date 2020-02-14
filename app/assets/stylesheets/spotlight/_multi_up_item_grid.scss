@@ -5,18 +5,18 @@
     }
 
     .twitter-typeahead {  
-      margin-bottom: 2*$padding-base-vertical;
+      margin-bottom: 2*$spacer;
     }
   }
   .field-select {
-    margin-top: 2*$padding-base-vertical;
+    margin-top: 2*$spacer;
     select {
       display: inline;
       width: auto;
     }
   }
   .dd3-item {
-    margin-bottom: 2*$padding-base-vertical;
+    margin-bottom: 2*$spacer;
   }
 }
 // Hide the secondary caption field
