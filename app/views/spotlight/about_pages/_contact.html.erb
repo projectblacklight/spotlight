@@ -9,9 +9,9 @@
         <%= f.hidden_field :weight, data: {property: "weight"} %>
         <%= render partial: "contact_properties", locals: {contact: f.object} %>
       </div>
-      <div class="contact-links">
-        <%= exhibit_edit_link f.object, :class => 'btn btn-link' %> &middot;
-        <%= exhibit_delete_link f.object, :class => 'btn btn-link' %>
+      <div class="contact-links page-links">
+        <%= exhibit_edit_link f.object %> &middot;
+        <%= exhibit_delete_link f.object %>
       </div>
     </div>
   </div>
