@@ -70,11 +70,11 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
         width: $no-sidebar-tablet-large-image-width;
         height: $no-sidebar-tablet-large-image-width * $aspect-ratio-factor-large-image;
       }
-      @media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
+      @media (min-width: breakpoint-min("md")) and (min-width: breakpoint-min("lg")) {
         width: $no-sidebar-desktop-large-image-width;
         height: $no-sidebar-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
-      @media (min-width: breakpoint-min("lg")) {
+      @media (min-width: breakpoint-min("xl")) {
         width: $no-sidebar-large-desktop-large-image-width;
         height: $no-sidebar-large-desktop-large-image-width * $aspect-ratio-factor-large-image;
       }
