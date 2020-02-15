@@ -52,6 +52,12 @@
     position: relative;
     width: 15ch;
   }
+
+  img {
+    height: $exhibit-card-image-size;
+    object-fit: cover;
+    width: 100%;
+  }
 }
 
 .card-back {
@@ -89,6 +95,13 @@
   .exhibit-card,
   .card-face {
     height: $exhibit-card-height - $reduce-exhibit-card-image-size;
+  }
+
+  .card-front,
+  .card-back {
+    img {
+      height: $exhibit-card-image-size - $reduce-exhibit-card-image-size;
+    }
   }
 
   // Cannot extend .btn-sm within a @media query
