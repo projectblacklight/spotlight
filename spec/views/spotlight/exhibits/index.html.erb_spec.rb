@@ -75,7 +75,7 @@ describe 'spotlight/exhibits/index', type: :view do
       it 'renders pagination controls' do
         render
 
-        expect(rendered).to have_selector '.pager'
+        expect(rendered).to have_selector '.pagination'
         expect(rendered).to have_link 'Next', href: '/?page=2'
       end
     end
