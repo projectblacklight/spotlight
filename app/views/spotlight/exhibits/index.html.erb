@@ -20,9 +20,9 @@
 
       <% if @published_exhibits.total_count > @published_exhibits.size %>
         <nav>
-          <ul class="pager">
-            <li><%= link_to_previous_page @published_exhibits, t('views.pagination.previous').html_safe %></li>
-            <li><%= link_to_next_page @published_exhibits, t('views.pagination.next').html_safe %></li>
+          <ul class="pagination">
+            <li class="page-link"><%= link_to_previous_page @published_exhibits, t('views.pagination.previous').html_safe %></li>
+            <li class="page-link"><%= link_to_next_page @published_exhibits, t('views.pagination.next').html_safe %></li>
           </ul>
         </nav>
       <% end %>
