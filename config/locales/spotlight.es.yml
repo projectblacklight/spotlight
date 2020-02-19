@@ -1,32 +1,11 @@
 ---
 es:
-  about_pages:
-    contacts:
-      header: Contacto
   activemodel:
     attributes:
       spotlight/contact_form:
         email: Correo electrónico
         message: Mensage
         name: Nombre
-  browse:
-    search:
-      item_count:
-        one: "%{count} registros"
-        other: "%{count} registros"
-    search_box:
-      label: Buscar en esta categoría
-      placeholder: Buscar
-      reset: Limpiar
-      submit: Buscar en esta categoría
-      success:
-        expand_html: También puede buscar todos los elementos recuperados %{browse_query}.
-        result_number_html: Su búsqueda coincide con %{search_size} de elementos de las %{parent_search_count} en esta  categoría.
-      zero_results:
-        expand_html: Puede %{clear_search_url} borrar su búsqueda o interntar otra que busque en todos los elementos %{browse_query}.
-        result_number: No se encuentran registos con esta búsqueda.
-  header_links:
-    contact: Comentarios
   helpers:
     action:
       cancel: Cancelar
@@ -34,7 +13,29 @@ es:
       contact_form:
         create: Enviar
         created: Gracias. Hemos recibido sus comentarios.
-  shared:
-    report_a_problem:
-      honeypot_field_explanation: No escribir en espacio. Es para detectar "spam." Si escribe algo el mensaje no se enviará.
-      title: Contacto
+  spotlight:
+    about_pages:
+      contacts:
+        header: Contacto
+    browse:
+      search:
+        item_count:
+          one: "%{count} registros"
+          other: "%{count} registros"
+      search_box:
+        label: Buscar en esta categoría
+        placeholder: Buscar
+        reset: Limpiar
+        submit: Buscar en esta categoría
+        success:
+          expand_html: También puede buscar todos los elementos recuperados %{browse_query}.
+          result_number_html: Su búsqueda coincide con %{search_size} de elementos de las %{parent_search_count} en esta  categoría.
+        zero_results:
+          expand_html: Puede %{clear_search_url} borrar su búsqueda o interntar otra que busque en todos los elementos %{browse_query}.
+          result_number: No se encuentran registos con esta búsqueda.
+    header_links:
+      contact: Comentarios
+    shared:
+      report_a_problem:
+        honeypot_field_explanation: No escribir en espacio. Es para detectar "spam." Si escribe algo el mensaje no se enviará.
+        title: Contacto
