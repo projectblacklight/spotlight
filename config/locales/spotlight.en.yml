@@ -384,9 +384,7 @@ en:
         basic_settings:
           heading: Basic settings
         header: General
-      exhibit_card_back:
-        visit_exhibit: Visit exhibit
-      exhibit_card_front:
+      exhibit_card:
         unpublished: Unpublished
       export:
         download: Export data

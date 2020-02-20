@@ -1,121 +1,67 @@
+$exhibit-card-overlay-padding: $card-img-overlay-padding / 2 !default;
+$exhibit-card-overlay-opacity: 0.85 !default;
+$exhibit-card-bg: $card-bg !default;
+$exhibit-card-max-height: 255px !default;
+
 .exhibit-card {
-  box-sizing: border-box;
-  height: $exhibit-card-height;
-  margin-bottom: 2rem;
-  //               image width        +       gutter         + border (x2)
-  max-width: $exhibit-card-image-size + $exhibit-card-gutter + 2px;
-  padding-right: ($exhibit-card-gutter / 2) !important;
-  perspective: 1000; // for flip animation
-  position: relative;
-
-  .flipper {
-    position: relative;
-    transform-style: preserve-3d;
-    transition: 0.6s;
-  }
-
-  &.hover .flipper,
-  &:hover .flipper {
-    -ms-filter: "FlipH"; // autoprefixer doesn't handle this case.
-    filter: FlipH;
-    transform: rotateY(180deg);
-  }
-}
-
-.card-face {
-  backface-visibility: hidden;
-  background-color: $exhibit-card-bg;
-  border: 1px solid $exhibit-card-border;
-  height: $exhibit-card-height;
-  left: 0;
-  position: absolute;
-  top: 0;
-  transform-style: preserve-3d;
-  transition: 0.6s;
-  width: 100%;
-}
-
-.exhibit-card-title {
-  @extend .h5;
-  @extend .text-center;
-}
-
-.card-front {
-  transform: rotateY(0deg);
-  z-index: 2;
+  background: $exhibit-card-bg;
+  padding-bottom: 3rem;
 
   .unpublished {
     @extend .mx-auto;
     display: block;
-    font-size: $font-size-base;
-    margin-top: -1em;
-    position: relative;
+    font-size: $font-size-sm;
+    margin-top: -1.5rem;
+    position: absolute;
+    left: 0;
+    right: 0;
     width: 15ch;
   }
 
-  img {
-    height: $exhibit-card-image-size;
-    object-fit: cover;
-    width: 100%;
+  .card-title .stretched-link {
+    outline: none;
   }
-}
 
-.card-back {
-  box-shadow: $exhibit-card-shadow;
-  transform: rotateY(-180deg);
+  .card-img {
+    margin-top: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 
-  .card-title {
-    border-bottom: 1px dotted $exhibit-card-border;
-    padding-bottom: $spacer;
+  .card-img-overlay {
+    background: rgba($exhibit-card-bg, $exhibit-card-overlay-opacity);
+    border-bottom-left-radius: calc(0.25rem - 1px);
+    border-bottom-right-radius: calc(0.25rem - 1px);
+    padding: $exhibit-card-overlay-padding;
+    top: inherit;
+  }
+
+  .exhibit-description {
+    max-height: 0;
+    outline: none;
+    overflow-y: hidden;
+    transition: $transition-base;
   }
 
   .subtitle {
-    @extend .h5;
-    @extend .text-center;
-    font-size: 0.875rem;
-    line-height: $headings-line-height;
+    text-align: center;
   }
 
   .description {
-    font-size: 0.75rem;
+    font-size: $font-size-sm;
   }
 
-  .visit-exhibit {
-    bottom: 1rem;
-    position: absolute;
-  }
-}
-
-// between the small and medium breakpoints, reduce the size of the image by a little bit
-@media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("lg")) {
-
-  // calculate the size of one full grid column
-  $reduce-exhibit-card-image-size: (((map-get($container-max-widths, "md") - $grid-gutter-width) / $grid-columns) - ($grid-gutter-width / 2));
-
-  .exhibit-card,
-  .card-face {
-    height: $exhibit-card-height - $reduce-exhibit-card-image-size;
-  }
-
-  .card-front,
-  .card-back {
-    img {
-      height: $exhibit-card-image-size - $reduce-exhibit-card-image-size;
+  &:hover {
+    .exhibit-description {
+      max-height: $exhibit-card-max-height;
     }
   }
 
-  // Cannot extend .btn-sm within a @media query
-  .center-btn .btn {
-    @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-line-height-sm, $btn-border-radius-sm);
-  }
-}
+  &:focus-within {
+    outline: auto;
 
-.center-btn {
-  left: 50%;
-  position: absolute;
-
-  .btn {
-    left: -50%;
-    position: relative;
+    .exhibit-description {
+      max-height: $exhibit-card-max-height;
+    }
   }
 }

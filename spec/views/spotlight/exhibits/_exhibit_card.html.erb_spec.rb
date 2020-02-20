@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
-describe 'spotlight/exhibits/_exhibit_card_front.html.erb', type: :view do
+describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:p) { 'spotlight/exhibits/exhibit_card_front' }
+  let(:p) { 'spotlight/exhibits/exhibit_card' }
+
+  before do
+    allow(view).to receive_messages(exhibit_path: '/')
+  end
 
   context 'for an exhibit without a thumbnail' do
     before do
@@ -25,7 +29,7 @@ describe 'spotlight/exhibits/_exhibit_card_front.html.erb', type: :view do
   it 'has a title' do
     render p, exhibit: exhibit
 
-    expect(rendered).to have_selector '.card-body .card-title', text: exhibit.title
+    expect(rendered).to have_selector '.card-title', text: exhibit.title
   end
 
   context 'for an unpublished exhibit' do
