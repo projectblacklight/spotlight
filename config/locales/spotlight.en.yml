@@ -195,7 +195,6 @@ en:
         main_navigation:
           help: Select the menu items you want to be displayed in the main navigation menu (menu items are only displayed when published pages exist for that item). Click a menu item to change its display label. Drag and drop a menu item to change their order in the menu.
           menu: Main menu
-        restore_default: Restore default
         site_masthead:
           heading: Exhibit masthead
           help: You can select and crop an image to use as a background in your exhibit site's masthead. To use an image as a masthead background, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.
@@ -766,6 +765,8 @@ en:
           other: "%{count} items"
         missing_description_html: "%{link} to add a description."
     shared:
+      dd3_item:
+        restore_default: Restore default
       exhibit_sidebar:
         header: Administration menu
       report_a_problem:

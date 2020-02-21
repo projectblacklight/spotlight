@@ -38,23 +38,10 @@
     display: inline-block;
     margin-bottom: 0;
   }
-  .checkbox {
-    width: 3%;
-    vertical-align: top;
-    display: inline-block;
-    padding-top: 0;
-  }
 
-  .publish-control {
-    display: inline;
-
-    .checkbox {
-      padding-top: 0;
-    }
-
-    .form-check-inline {
-      vertical-align: middle;
-    }
+  .form-check-inline {
+    margin-top: -3px;
+    vertical-align: middle;
   }
 
   .main {

@@ -31,11 +31,11 @@ describe 'spotlight/search_configurations/_sort', type: :view do
 
   it 'parameterizes the data-id attribute for sort fields (e.g. when no key is supplied and the sort is used as the key)' do
     render partial: 'spotlight/search_configurations/sort', locals: { f: f }
-    expect(rendered).to have_css('[data-id="sort_title_ssi-asc-plus_another_field-desc-id"]')
+    expect(rendered).to have_css('[data-id="sort_title_ssi-asc-plus_another_field-desc"]')
   end
 
   it 'hides fields that are configured not to display' do
     render partial: 'spotlight/search_configurations/sort', locals: { f: f }
-    expect(rendered).not_to have_css('[data-id="some_disabled_field-id"]')
+    expect(rendered).not_to have_css('[data-id="some_disabled_field"]')
   end
 end

@@ -85,6 +85,10 @@ tr.dd-item {
   &.card, .card {
     padding: 0 0 0 30px;
   }
+
+  .card-header[data-behavior="restore-default"] {
+    min-height: 3rem;
+  }
 }
 .dd3-content.page-admin {
   position: relative;
