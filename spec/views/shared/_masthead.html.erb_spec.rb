@@ -76,4 +76,16 @@ describe 'shared/_masthead', type: :view do
       expect(rendered.index('navbar')).to be < rendered.index(exhibit.title)
     end
   end
+
+  context 'with a site masthead' do
+    before do
+      allow(view).to receive_messages(current_exhibit: nil)
+      stub_template 'shared/_site_navbar.html.erb' => 'site navbar'
+    end
+
+    it 'adds a class to the masthead' do
+      render
+      expect(rendered).to have_text 'site navbar'
+    end
+  end
 end
