@@ -57,11 +57,6 @@ describe Spotlight::FeaturePage, type: :model do
       expect(low_weight).not_to be_valid
       expect(high_weight).not_to be_valid
     end
-
-    it 'settable valid maximum' do
-      stub_const('Spotlight::Page::MAX_PAGES', 2000)
-      expect(high_weight).to be_valid
-    end
   end
 
   it { is_expected.to be_feature_page }
