@@ -13,24 +13,24 @@
       <% end %>
 
       <%= content_tag :h2, class: 'card-title h5 text-center', aria: { describedby: "exhibit-description-#{exhibit.to_param}" } do %>
-        <%= link_to exhibit.title, exhibit, class: 'stretched-link' %>
+        <%= link_to exhibit, class: 'stretched-link' do %>
+          <span><%= exhibit.title %></span>
+        <% end %>
       <% end %>
 
-      <%= content_tag :div, id: "exhibit-description-#{exhibit.to_param}", class: 'card-text exhibit-description' do %>
-        <p class="subtitle">
-          <%= exhibit.subtitle %>
-        </p>
+      <% if exhibit.subtitle || exhibit.description  %>
+        <%= content_tag :div, id: "exhibit-description-#{exhibit.to_param}", class: 'card-text exhibit-description' do %>
+          <% if exhibit.subtitle %>
+            <p class="subtitle">
+              <%= exhibit.subtitle %>
+            </p>
+          <% end %>
 
-        <% if exhibit.description %>
-          <p class="description">
-            <%= truncated_description = exhibit.description.truncate(168, omission: '', separator: ' ') %>
-            <% if exhibit.description.length > 168 %>
-              <%= content_tag(:span,"&hellip;".html_safe, class: "d-none d-sm-inline d-xl-none") %>
-              <span class="d-inline d-sm-none d-xl-inline">
-                <%= exhibit.description.slice(truncated_description.length, exhibit.description.length) %>
-              </span>
-            <% end %>
-          </p>
+          <% if exhibit.description %>
+            <p class="description">
+              <%= exhibit.description %>
+            </p>
+          <% end %>
         <% end %>
       <% end %>
     </div>

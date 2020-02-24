@@ -1,7 +1,6 @@
 $exhibit-card-overlay-padding: $card-img-overlay-padding / 2 !default;
 $exhibit-card-overlay-opacity: 0.85 !default;
 $exhibit-card-bg: $card-bg !default;
-$exhibit-card-max-height: 255px !default;
 
 .exhibit-card {
   background: $exhibit-card-bg;
@@ -20,7 +19,10 @@ $exhibit-card-max-height: 255px !default;
   }
 
   .card-title {
-    flex: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
 
   .card-title .stretched-link {
@@ -54,20 +56,24 @@ $exhibit-card-max-height: 255px !default;
   }
 
   .subtitle {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
     text-align: center;
   }
 
   .description {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
     font-size: $font-size-sm;
-    overflow-y: hidden;
+    -webkit-line-clamp: 15;
+    overflow: hidden;
   }
 
   &:hover {
     .exhibit-description {
-      max-height: $exhibit-card-max-height;
+      max-height: 450px;
     }
   }
 
@@ -75,7 +81,61 @@ $exhibit-card-max-height: 255px !default;
     outline: auto;
 
     .exhibit-description {
-      max-height: $exhibit-card-max-height;
+      max-height: 450px;
+    }
+  }
+
+  @media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("sm")) {
+    &:hover {
+      .exhibit-description {
+        max-height: 215px;
+      }
+    }
+
+    &:focus-within {
+      .exhibit-description {
+        max-height: 215px;
+      }
+    }
+
+    .description {
+      -webkit-line-clamp: 5;
+    }
+
+    .subtitle {
+      -webkit-line-clamp: 2;
+    }
+  }
+
+  @media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
+    .description {
+      -webkit-line-clamp: 4;
+    }
+
+    .subtitle {
+      -webkit-line-clamp: 2;
+    }
+  }
+
+  @media (min-width: breakpoint-max("lg")) {
+    &:hover {
+      .exhibit-description {
+        max-height: 230px;
+      }
+    }
+
+    &:focus-within {
+      .exhibit-description {
+        max-height: 230px;
+      }
+    }
+
+    .description {
+      -webkit-line-clamp: 6;
+    }
+
+    .subtitle {
+      -webkit-line-clamp: 2;
     }
   }
 }
