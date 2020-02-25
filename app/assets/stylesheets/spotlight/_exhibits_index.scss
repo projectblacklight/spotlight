@@ -72,7 +72,13 @@ $exhibit-card-max-height: 255px !default;
   }
 
   &:focus-within {
-    outline: auto;
+    // Use Bootstrap focus style
+    outline: $input-focus-border-color auto 5px;
+
+    // Use WebKit focus styles if available
+    @supports (-webkit-appearance:none) {
+      outline-color: -webkit-focus-ring-color;
+    }
 
     .exhibit-description {
       max-height: $exhibit-card-max-height;
