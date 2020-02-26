@@ -1,0 +1,8 @@
+// Global accessibility overrides
+
+// Increase visibility of Firefox focus indicator
+@-moz-document url-prefix() {
+  &:focus {
+    outline: $input-focus-border-color auto 5px;
+  }
+}
