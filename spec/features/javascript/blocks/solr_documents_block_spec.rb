@@ -188,11 +188,11 @@ describe 'Solr Document Block', feature: true, versioning: true, default_max_wai
     save_page
 
     # verify that the item + image widget is displaying image and title from the requested document.
-    within(:css, '.items-block.flex-row-reverse') do
+    within(:css, '.items-block') do
       within('.text-col') do
         expect(page).to have_content 'zzz'
       end
-      expect(page).to have_css('.items-col')
+      expect(page).to have_css('.items-col.float-right')
     end
   end
 
