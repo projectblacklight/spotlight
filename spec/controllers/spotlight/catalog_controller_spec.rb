@@ -57,6 +57,17 @@ describe Spotlight::CatalogController, type: :controller do
         expect(response).to be_successful
       end
 
+      it 'shows the item with breadcrumbs to the feature page without a showpage search session' do
+        feature_page = FactoryBot.create(:feature_page, exhibit: exhibit)
+        allow(controller).to receive_messages(page_referrer: { action: 'show', controller: 'feature_pages', id: feature_page.id })
+
+        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit, q: ''))
+        expect(controller).to receive(:add_breadcrumb).with(feature_page.title, [exhibit, feature_page])
+        expect(controller).to receive(:add_breadcrumb).with('L&#39;AMERIQUE', exhibit_solr_document_path(exhibit, document))
+        get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
+        expect(response).to be_successful
+      end
+
       it 'shows the item with breadcrumbs from the home page' do
         home_page = FactoryBot.create(:home_page)
         allow(controller).to receive_messages(current_page_context: home_page)

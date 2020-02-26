@@ -7,12 +7,10 @@ module Spotlight
     module CatalogSearchContext
       protected
 
+      ##
+      # Represents the current page referrer or from a search context
       def current_page_context
-        @current_page_context ||= if current_search_session_from_home_page?
-                                    current_exhibit.home_page if can? :read, current_exhibit.home_page
-                                  elsif current_search_session_from_page?
-                                    current_search_session_page_context
-                                  end
+        @current_page_context ||= current_page_from_page_context if current_page_from_page?
       rescue ActiveRecord::RecordNotFound => e
         Rails.logger.debug "Unable to get current page context from #{current_search_session.inspect}: #{e}"
         nil
@@ -35,24 +33,21 @@ module Spotlight
           current_search_session.query_params['id']
       end
 
-      def current_search_session_from_page?
-        current_search_session &&
-          current_search_session.query_params['action'] == 'show' &&
-          current_search_session.query_params['controller'].ends_with?('_pages')
+      def current_page_from_page?
+        page_referrer &&
+          page_referrer[:action] == 'show' &&
+          page_referrer[:controller].ends_with?('_pages')
       end
 
-      def current_search_session_from_home_page?
-        current_search_session &&
-          current_search_session.query_params['action'] == 'show' &&
-          current_search_session.query_params['controller'] == 'spotlight/home_pages'
+      def page_referrer
+        Rails.application.routes.recognize_path(request.referrer)
+      rescue ActionController::RoutingError => e
+        Rails.logger.debug "Unable to build routing information. #{e.message}"
+        nil
       end
 
-      def current_search_session_page_context
-        page_id = current_search_session.query_params['id']
-
-        return unless page_id
-
-        current_exhibit.pages.accessible_by(current_ability).find(page_id)
+      def current_page_from_page_context
+        current_exhibit.pages.accessible_by(current_ability).find(page_referrer[:id])
       end
     end
   end

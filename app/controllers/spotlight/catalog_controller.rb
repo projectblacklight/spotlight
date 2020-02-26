@@ -141,7 +141,7 @@ module Spotlight
     def setup_next_and_previous_documents
       if current_search_session_from_browse_category?
         setup_next_and_previous_documents_from_browse_category if current_browse_category
-      elsif current_search_session_from_page? || current_search_session_from_home_page?
+      elsif current_page_from_page?
         # TODO: figure out how to construct previous/next documents
       else
         super
