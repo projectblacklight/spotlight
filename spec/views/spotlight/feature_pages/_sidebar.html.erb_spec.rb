@@ -34,6 +34,7 @@ describe 'spotlight/feature_pages/_sidebar.html.erb', type: :view do
     assign(:page, child1)
     render
     # Checking that they are sorted accoding to weight
+    expect(rendered).to have_selector 'ol.sidenav', count: 1
     expect(rendered).to have_selector 'li', text: 'Parent Page'
     expect(rendered).to have_selector 'ol.sidenav li:nth-child(1) a', text: 'Five'
     expect(rendered).to have_selector 'ol.sidenav li:nth-child(2) a', text: 'Three'
