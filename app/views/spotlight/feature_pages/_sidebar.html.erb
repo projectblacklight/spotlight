@@ -3,11 +3,15 @@
     <% @exhibit.feature_pages.for_locale.published.at_top_level.each do |feature_section| %>
       <li class="<%= 'active' if current_page? [spotlight, @exhibit, feature_section] %>">
         <h2 class="h6"><%= link_to_unless_current feature_section.title, [spotlight, @exhibit, feature_section] %></h2>
-        <ol class="subsection">
-          <% feature_section.child_pages.published.each do |page| %>
-            <li class="<%= 'active' if current_page? [spotlight, @exhibit, page] %>"><%= link_to_unless_current page.title, [spotlight, @exhibit, page] %></li>
-          <% end %>
-        </ol>
+        <% child_pages = feature_section.child_pages.published %>
+
+        <% if child_pages.any? %>
+          <ol class="subsection">
+            <% child_pages.each do |page| %>
+              <li class="<%= 'active' if current_page? [spotlight, @exhibit, page] %>"><%= link_to_unless_current page.title, [spotlight, @exhibit, page] %></li>
+            <% end %>
+          </ol>
+        <% end %>
       </li>
     <% end %>
   </ol>
