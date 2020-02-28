@@ -98,9 +98,10 @@
 .contact-photo {
   border: 1px solid #ccc;
   border-radius: $border-radius;
+  height: 70px;
   margin-right: 15px;
   margin-top: 3px;
-  max-height: 70px;
+  width: 70px;
 }
 
 // Indent contact fields so they align evenly, only when there is a contact photo
