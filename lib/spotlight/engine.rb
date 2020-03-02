@@ -251,6 +251,8 @@ module Spotlight
     config.routes = OpenStruct.new
     config.routes.solr_documents = {}
 
+    config.controller_tracking_method = 'track_catalog_path'
+
     config.exports = {
       attachments: true,
       blacklight_configuration: true,

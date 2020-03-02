@@ -9,6 +9,14 @@ module Spotlight
     include Blacklight::Base
     include Spotlight::Config
 
+    included do
+      helper_method :controller_tracking_method
+    end
+
+    def controller_tracking_method
+      Spotlight::Engine.config.controller_tracking_method
+    end
+
     # This overwrites Blacklight::Configurable#blacklight_config
     def blacklight_config
       exhibit_specific_blacklight_config
