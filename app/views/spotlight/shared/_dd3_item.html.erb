@@ -1,0 +1,56 @@
+<% main_content = yield %>
+<% additional_options = yield nil, :additional_options %>
+<% additional_content = yield nil, :additional_content %>
+<% card_body = yield nil, :card_body %>
+<% dd3_content_classes = local_assigns[:dd3_content_classes].presence %>
+<% card_data = local_assigns[:card_data].presence || {} %>
+<% enabled_method = local_assigns[:enabled_method].presence || :enabled %>
+<% label_method = local_assigns[:label_method].presence || :label %>
+<% label = local_assigns[:label].presence || field.object.public_send(label_method) %>
+<% default_value = local_assigns[:default_value].presence %>
+<% index = local_assigns[:index].presence %>
+<% card_data[:behavior] ||= 'restore-default' if default_value %>
+
+<li class="dd-item" data-id="<%= id.parameterize %>">
+  <div class="dd3-content <%= dd3_content_classes %> card d-flex">
+    <div class="dd-handle dd3-handle"><%= t :drag %></div>
+    <%= content_tag :div, class: "d-flex card-header", data: card_data do %>
+      <%= field.hidden_field :id %>
+        <% if main_content.present?  %>
+          <%= main_content %>
+        <% else %>
+          <div class="flex-grow-1 align-self-center">
+            <h3 class="h6 card-title mb-0">
+              <%= field.hidden_field :weight, value: index, 'data-property' => 'weight' %>
+              <%= field.check_box enabled_method, inline: true, checked: field.object.public_send(enabled_method), hide_label: true, title: label %>
+              <span class="d-inline-block w-75" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+                <a href="#edit-in-place" class="field-label edit-in-place"><%= label %></a>
+                <%= field.hidden_field label_method, value: label, class: 'form-control form-control-sm title-field', data: {:"edit-field-target" => 'true', default_value: default_value } %>
+              </span>
+            </h3>
+          </div>
+        <% end %>
+
+      <% if default_value %>
+        <div class="">
+          <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn restore-default btn-secondary btn-sm #{'d-none' if label.blank? || label == default_value}" %>
+        </div>
+      <% end %>
+
+      <%= content_tag :div, additional_options, class: 'd-flex' if additional_options.present? %>
+
+
+      <% if additional_content.present? %>
+        <div class="d-flex">
+          <button class="btn btn-link collapse-toggle collapsed" type="button" data-toggle="collapse" data-target="#<%= id.parameterize %>_options" aria-expanded="false" aria-controls="<%= id.parameterize %>_options">
+            Options
+          </button>
+          <span class="collapse-chevron">❯</span>
+        </div>
+      <% end %>
+    <% end %>
+    <%= content_tag :div, additional_content, id: "#{id.parameterize}_options", class: 'options collapse' if additional_content.present? %>
+    <%= content_tag :div, card_body, class: 'card-body bg-white' if card_body.present? %>
+  </div>
+  <%= yield nil, :nested_components %>
+</li>

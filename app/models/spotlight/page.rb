@@ -4,7 +4,7 @@ module Spotlight
   ##
   # Base page class. See {Spotlight::AboutPage}, {Spotlight::FeaturePage}, {Spotlight::HomePage}
   class Page < ActiveRecord::Base
-    MAX_PAGES = 1000
+    MAX_PAGES = Spotlight::Engine.config.max_pages
 
     extend FriendlyId
     friendly_id :title, use: %i[slugged scoped finders history], scope: %i[exhibit locale]
@@ -21,7 +21,7 @@ module Spotlight
              dependent: :destroy,
              inverse_of: :default_locale_page
 
-    validates :weight, inclusion: { in: proc { 0..Spotlight::Page::MAX_PAGES } }
+    validates :weight, allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: Spotlight::Page::MAX_PAGES }
 
     default_scope { order('weight ASC') }
     scope :at_top_level, -> { where(parent_page_id: nil) }

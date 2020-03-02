@@ -1,40 +1,24 @@
 <% page = f.object %>
-<li class="dd-item dd3-item" data-id="<%= page.id %>">
-  <div class="dd3-content card page-admin d-flex">
-    <div class="dd-handle dd3-handle"><%= t :drag %></div>
-    <div class="card-body page d-flex justify-content-between">
-      <div class="flex-grow-1">
-        <%= f.hidden_field :id %>
-        <%= f.hidden_field :weight, data: {property: "weight"} %>
-        <h3 class="h6 card-title">
-          <span class="publish-control">
-            <%= f.check_box :published, inline: true, hide_label: true %>
-          </span>
-          <span class="d-inline-block w-75" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
-            <a href="#edit-in-place" class="field-label edit-in-place"><%= page.title %></a>
-            <%= f.hidden_field :title, value: page.title , class: 'form-control form-control-sm title-field', data: {:"edit-field-target" => 'true'} %>
-          </span>
-        </h3>
-      </div>
-
-      <div class="page-links">
-        <%= exhibit_view_link page %> &middot;
-        <%= exhibit_edit_link page, data: { turbolinks: false } %> &middot;
-        <%= exhibit_delete_link page %>
-      </div>
-      <%- if page.feature_page? -%>
-        <%= f.hidden_field :parent_page_id, data: {property: "parent_page"} %>
-      <% end %>
+<%= render layout: 'spotlight/shared/dd3_item', locals: { id: page.id.to_s, field: f, label: page.title, label_method: :title, enabled_method: :published } do |_, section| %>
+  <% case section when :additional_options %>
+    <div class="page-links">
+      <%= exhibit_view_link page %> &middot;
+      <%= exhibit_edit_link page, data: { turbolinks: false } %> &middot;
+      <%= exhibit_delete_link page %>
     </div>
-  </div>
-
-  <% if page.feature_page? and page.child_pages.present? %>
-    <ol class="dd-list">
-      <% page.child_pages.each do |child_page| %>
-        <%= parent_form.fields_for page_collection_name, child_page do |p| %>
-          <%= render partial: 'page', locals: {f: p, parent_form: parent_form} %>
+    <%- if page.feature_page? -%>
+      <%= f.hidden_field :parent_page_id, data: {property: "parent_page"} %>
+    <% end %>
+  <% when :nested_components %>
+    <% if page.feature_page? and page.child_pages.present? %>
+      <ol class="dd-list">
+        <% page.child_pages.each do |child_page| %>
+          <%= parent_form.fields_for page_collection_name, child_page do |p| %>
+            <%= render partial: 'page', locals: {f: p, parent_form: parent_form} %>
+          <% end %>
         <% end %>
-      <% end %>
-    </ol>
+      </ol>
+    <% end %>
   <% end %>
+<% end %>
 </li>

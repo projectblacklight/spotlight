@@ -49,6 +49,6 @@ describe 'spotlight/search_configurations/_search_fields', type: :view do
   end
 
   it 'parameterizes the data-id attribute for search field key' do
-    expect(rendered).to have_selector '[data-id="some_field-with_a_space-id"]'
+    expect(rendered).to have_selector '[data-id="some_field-with_a_space"]'
   end
 end
