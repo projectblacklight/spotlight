@@ -10,7 +10,10 @@ module Spotlight
 
     load_and_authorize_resource :site, class: 'Spotlight::Site'
 
-    def index; end
+    def index
+      add_breadcrumb t(:'spotlight.sites.home'), root_url
+      add_breadcrumb t(:'spotlight.admin_users.index.page_title')
+    end
 
     def create
       if update_roles
