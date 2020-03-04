@@ -1,4 +1,4 @@
-<%= page_title(t('.section'), t('.page_title')) %>
+<%= page_title(t('.page_title')) %>
 <%= bootstrap_form_for Spotlight::Engine.user_class.new, html: { class: 'admin-users' }, url: spotlight.admin_users_path do |f| %>
   <div class="mb-4">
     <h3 class="instructions"><%= t :'.instructions' %></h3>

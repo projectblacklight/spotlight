@@ -187,7 +187,6 @@ en:
         page_title: Manage users
         pending: pending
         save: Add role
-        section: Manage exhibits
         update: Make user an administrator
     appearances:
       edit:
@@ -423,7 +422,7 @@ en:
           language: Language
           public: Public
       new:
-        header: Create a new exhibit
+        page_title: Create a new exhibit
       new_exhibit_form:
         fields:
           slug:
@@ -787,7 +786,6 @@ en:
         basic_settings:
           heading: Title
         page_title: Customize appearance
-        section: Manage exhibits
         site_masthead:
           heading: Site masthead
           help: |
@@ -796,13 +794,10 @@ en:
       edit_exhibits:
         instructions: Drag and drop the exhibits below to specify the order in which they are displayed on the exhibits homepage.
         page_title: Order exhibits
-        section: Manage exhibits
       exhibit:
         published: Published
         unpublished: Unpublished
-      new:
-        page_title: Create a new exhibit
-        section: Manage exhibits
+      home: Exhibits
     tags:
       index:
         actions: Actions

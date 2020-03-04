@@ -17,6 +17,19 @@ describe Spotlight::TitleHelper, type: :helper do
       expect(title).to have_selector 'h1', text: 'Section'
       expect(title).to have_selector 'h1 small', text: 'Title'
     end
+
+    it 'renders just the section title if that was all that was provided' do
+      allow(helper).to receive(:t).and_call_original
+      allow(helper).to receive(:t).with(:'.header', default: '').and_return('')
+
+      title = helper.page_title('Section')
+
+      expect(title).to have_selector 'h1', text: 'Section'
+      expect(title).not_to have_selector 'h1 small'
+
+      title = helper.instance_variable_get(:@page_title)
+      expect(title).to eq 'Section | Application'
+    end
   end
 
   describe '#set_html_page_title' do

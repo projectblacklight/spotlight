@@ -22,6 +22,8 @@ module Spotlight
 
     def new
       build_initial_exhibit_contact_emails
+      add_breadcrumb t(:'spotlight.sites.home'), root_url
+      add_breadcrumb t(:'spotlight.exhibits.new.page_title')
     end
 
     def process_import

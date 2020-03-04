@@ -13,8 +13,18 @@ module Spotlight
     end
 
     def page_title(section, title = nil)
-      set_html_page_title(t(:'spotlight.html_admin_title', section: section, title: title || t(:'.title', default: :'.header')))
-      content_tag(:h1, safe_join([section, content_tag(:small, title || t(:'.header'))], "\n"), class: 'page-header')
+      title ||= t(:'.header', default: '').presence
+
+      head_content = t(:'spotlight.html_admin_title', section: section, title: title) if section && title
+      head_content ||= section || title
+      set_html_page_title(head_content)
+
+      html_content = safe_join([
+        (section if section.present?),
+        (content_tag(:small, title) if title.present?)
+      ].compact, "\n")
+
+      content_tag(:h1, html_content, class: 'page-header')
     end
 
     # rubocop:disable Naming/AccessorMethodName
