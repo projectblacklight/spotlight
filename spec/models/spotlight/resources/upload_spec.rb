@@ -14,7 +14,7 @@ describe Spotlight::Resources::Upload, type: :model do
       'spotlight_upload_description_tesim' => 'Description Data',
       'spotlight_upload_attribution_tesim' => 'Attribution Data',
       'spotlight_upload_date_tesim' => 'Date Data',
-      custom_field.field => 'Custom Field Data'
+      custom_field.slug => 'Custom Field Data'
     }
   end
   let(:featured_image) { FactoryBot.create(:featured_image, image: File.open(File.join(FIXTURES_PATH, '800x600.png'))) }
