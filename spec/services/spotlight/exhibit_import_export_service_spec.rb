@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::ExhibitExportSerializer do
+describe Spotlight::ExhibitImportExportService do
   subject { JSON.parse(described_class.new(source_exhibit).to_json) }
 
   let!(:source_exhibit) { FactoryBot.create(:exhibit) }
@@ -83,17 +83,18 @@ describe Spotlight::ExhibitExportSerializer do
 
   describe 'should round-trip data' do
     subject do
-      e = FactoryBot.create(:exhibit)
-      e.import(export).tap(&:save)
+      destination_exhibit.import(export).tap(&:save)
+    end
+
+    let(:destination_exhibit) { FactoryBot.create(:exhibit) }
+
+    let :export do
+      described_class.new(source_exhibit).as_json
     end
 
     before do
       sidecar = source_exhibit.solr_document_sidecars.create! document: SolrDocument.new(id: 1), public: false
       source_exhibit.tag(sidecar, with: 'xyz', on: :tags)
-    end
-
-    let :export do
-      described_class.new(source_exhibit).as_json
     end
 
     it 'has exhibit properties' do
@@ -221,7 +222,7 @@ describe Spotlight::ExhibitExportSerializer do
       before do
         feature_page.content = { data: [{ type: 'text', data: { text: 'xyz' } }] }.to_json
         feature_page.thumbnail = thumbnail
-        feature_page.save
+        feature_page.save!
       end
 
       it 'copies the masthead' do
@@ -259,19 +260,31 @@ describe Spotlight::ExhibitExportSerializer do
       let(:masthead) { FactoryBot.create(:masthead) }
       let(:thumbnail) { FactoryBot.create(:featured_image) }
       let!(:search) { FactoryBot.create(:search, exhibit: source_exhibit, masthead: masthead, thumbnail: thumbnail) }
+      let!(:existing_search) { FactoryBot.create(:search, slug: search.slug, exhibit: destination_exhibit) }
 
       before do
         source_exhibit.reload
+        destination_exhibit.reload
+      end
+
+      it 'copies the title' do
+        subject
+        existing_search.reload
+        expect(existing_search.title).to eq search.title
       end
 
       it 'copies the masthead' do
-        expect(subject.searches.last.masthead).not_to be_blank
-        expect(subject.searches.last.masthead.image.file.path).not_to eq search.masthead.image.file.path
+        subject
+        existing_search.reload
+        expect(existing_search.masthead).not_to be_blank
+        expect(existing_search.masthead.image.file.path).not_to eq search.masthead.image.file.path
       end
 
       it 'copies the thumbnail' do
-        expect(subject.searches.first.thumbnail).not_to be_blank
-        expect(subject.searches.first.thumbnail.image.file.path).not_to eq search.thumbnail.image.file.path
+        subject
+        existing_search.reload
+        expect(existing_search.thumbnail).not_to be_blank
+        expect(existing_search.thumbnail.image.file.path).not_to eq search.thumbnail.image.file.path
       end
 
       context 'without an attached image' do
@@ -281,8 +294,10 @@ describe Spotlight::ExhibitExportSerializer do
         end
 
         it 'copies the masthead without an image' do
-          expect(subject.searches.last.masthead).not_to be_blank
-          expect(subject.searches.last.masthead.image).to be_blank
+          subject
+          existing_search.reload
+          expect(existing_search.masthead).not_to be_blank
+          expect(existing_search.masthead.image).to be_blank
         end
       end
 
@@ -296,7 +311,9 @@ describe Spotlight::ExhibitExportSerializer do
         end
 
         it 'copies the resource' do
-          expect(subject.searches.last.masthead).not_to be_blank
+          subject
+          existing_search.reload
+          expect(existing_search.masthead).not_to be_blank
         end
       end
     end

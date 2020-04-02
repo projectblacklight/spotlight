@@ -50,7 +50,7 @@ module Spotlight
       respond_to do |format|
         format.json do
           authorize! :export, @exhibit
-          send_data JSON.pretty_generate(Spotlight::ExhibitExportSerializer.new(@exhibit).as_json),
+          send_data JSON.pretty_generate(Spotlight::ExhibitImportExportService.new(@exhibit).as_json),
                     type: 'application/json',
                     disposition: 'attachment',
                     filename: "#{@exhibit.friendly_id}-export.json"
