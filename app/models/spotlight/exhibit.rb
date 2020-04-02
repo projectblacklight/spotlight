@@ -100,7 +100,7 @@ module Spotlight
     end
 
     def import(hash)
-      Spotlight::ExhibitExportSerializer.prepare(self).from_hash(hash)
+      Spotlight::ExhibitImportExportService.new(self).from_hash!(hash)
       self
     end
 

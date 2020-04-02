@@ -25,6 +25,7 @@ Metrics/AbcSize:
   Max: 20
   Exclude:
     - 'app/controllers/spotlight/home_pages_controller.rb'
+    - 'app/services/spotlight/exhibit_import_export_service.rb'
 
 Metrics/ModuleLength:
   Max: 120
@@ -45,7 +46,7 @@ Metrics/ClassLength:
   Max: 120
   Exclude:
     - 'app/models/spotlight/resources/iiif_manifest.rb'
-    - 'app/serializers/**/*'
+    - 'app/services/spotlight/exhibit_import_export_service.rb'
     - 'lib/generators/spotlight/**/*' # Generators tend to have longer class lengths due to their lengthy public API
 
 Naming/PredicateName:
@@ -55,16 +56,19 @@ Naming/PredicateName:
 Metrics/MethodLength:
   Exclude:
     - 'app/controllers/spotlight/home_pages_controller.rb'
+    - 'app/services/spotlight/exhibit_import_export_service.rb'
     - 'lib/generators/spotlight/**/*'
     - 'spec/fixtures/**/*'
 
 Metrics/CyclomaticComplexity:
   Exclude:
     - 'app/controllers/spotlight/home_pages_controller.rb'
+    - 'app/services/spotlight/exhibit_import_export_service.rb'
 
 Metrics/PerceivedComplexity:
   Exclude:
     - 'app/controllers/spotlight/home_pages_controller.rb'
+    - 'app/services/spotlight/exhibit_import_export_service.rb'
 
 Rails:
   Enabled: true
