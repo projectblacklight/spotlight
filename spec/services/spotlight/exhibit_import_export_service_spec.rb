@@ -101,6 +101,13 @@ describe Spotlight::ExhibitImportExportService do
       expect(subject.title).to eq source_exhibit.title
     end
 
+    context 'with a theme that does not exist in the destination' do
+      it 'ignores the invalid theme' do
+        source_exhibit.theme = 'xyz'
+        expect(subject.theme).to eq nil
+      end
+    end
+
     it 'does not duplicate saved searches' do
       expect(subject.searches).to have(1).item
     end

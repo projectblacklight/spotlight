@@ -42,7 +42,8 @@ module Spotlight
       )
 
       exhibit_attributes = hash.reject { |_k, v| v.is_a?(Array) || v.is_a?(Hash) }
-      exhibit.update_attributes(exhibit_attributes)
+      exhibit.update_attributes(exhibit_attributes.except(:theme))
+      exhibit.theme = exhibit_attributes[:theme] if exhibit.themes.include? exhibit_attributes[:theme]
 
       deserialize_featured_image(exhibit, :masthead, hash[:masthead]) if hash[:masthead]
       deserialize_featured_image(exhibit, :thumbnail, hash[:thumbnail]) if hash[:thumbnail]
