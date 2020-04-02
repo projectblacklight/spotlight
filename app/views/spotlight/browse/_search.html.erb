@@ -5,8 +5,8 @@
         <%= image_tag(search.thumbnail_image_url || 'spotlight/default_browse_thumbnail.jpg', class: 'img-responsive', alt: '') %>
         <div class="text-overlay">
            <h2 class="browse-category-title">
-             <%= search.title%>
-             <small><%= t :'spotlight.browse.search.item_count', count: search.count %></small>
+             <span class="title"><%= search.title%></span>
+             <small class="item-count"><%= t :'spotlight.browse.search.item_count', count: search.count %></small>
            </h2>
          </div>
       </div>
