@@ -216,3 +216,9 @@ table.tags {
     text-align: center;
   }
 }
+
+.card-title .subtitle::before {
+  content: " \000B7 ";
+  color: $text-muted;
+  padding-right: 3px;
+}

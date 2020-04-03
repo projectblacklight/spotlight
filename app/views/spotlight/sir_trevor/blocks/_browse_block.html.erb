@@ -9,6 +9,7 @@
             <div class="category-caption">
               <p class="category-title">
                 <%= search.title %>
+                <% if search.subtitle.present? %><span class="category-subtitle"><%= search.subtitle %></span><% end %>
               </p>
 
               <% if browse_block.display_item_counts? %>

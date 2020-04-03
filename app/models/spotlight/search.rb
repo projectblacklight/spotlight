@@ -17,7 +17,7 @@ module Spotlight
     scope :published, -> { where(published: true) }
     validates :title, presence: true
 
-    translates :title, :long_description
+    translates :title, :subtitle, :long_description
 
     has_paper_trail
 
@@ -25,6 +25,10 @@ module Spotlight
     belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy, optional: true
     accepts_nested_attributes_for :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
     accepts_nested_attributes_for :masthead, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
+
+    def full_title
+      [title, subtitle.presence].compact.join(' · ')
+    end
 
     def thumbnail_image_url
       return unless thumbnail&.iiif_url

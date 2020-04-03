@@ -330,7 +330,7 @@ describe 'Translation editing', type: :feature do
 
     it 'has a title and description for every browse category' do
       within '#browse' do
-        expect(page).to have_css('input[type="text"]', count: 2)
+        expect(page).to have_css('input[type="text"]', count: 4)
         expect(page).to have_css('textarea', count: 2)
 
         expect(page).to have_field 'All Exhibit Items'
@@ -407,7 +407,7 @@ describe 'Translation editing', type: :feature do
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
       expect(page).to have_link('General 1/8')
       expect(page).to have_link('Search field labels 0/16')
-      expect(page).to have_link('Browse categories 0/2')
+      expect(page).to have_link('Browse categories 0/3')
       expect(page).to have_link('Metadata field labels 0/17')
     end
   end

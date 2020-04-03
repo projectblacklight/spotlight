@@ -36,6 +36,25 @@
         </div>
       <% end %>
 
+      <% subtitle_translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "#{search.slug}.subtitle", locale: @language) %>
+      <%= f.fields_for :translations, subtitle_translation do |translation_fields| %>
+        <%= translation_fields.hidden_field :key %>
+        <%= translation_fields.hidden_field :locale %>
+        <div data-translation-progress-item="true" class="row form-group browse-category-subtitle">
+          <%= translation_fields.label :value, search[:subtitle], class: 'col-form-label col-4' %>
+          <div class="col-7">
+            <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
+          </div>
+          <div class="col-1">
+            <% if title_translation.value.present? %>
+              <span data-translation-present="true">
+                <%= blacklight_icon('check', classes: 'translation-complete') %>
+              </span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
       <% description_translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "#{search.slug}.long_description", locale: @language) %>
       <div data-translation-progress-item="true" class="row form-group browse-category-description">
         <div class="col-7 offset-4">
