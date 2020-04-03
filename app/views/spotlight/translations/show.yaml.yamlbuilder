@@ -1,0 +1,60 @@
+json.set!(I18n.locale) do
+  json.set!(current_exhibit.slug) do
+    json.title(current_exhibit[:title])
+    json.subtitle(current_exhibit[:subtitle])
+    json.description(current_exhibit[:description])
+  end
+
+  json.spotlight do
+    json.curation do
+      json.nav do
+        json.home(t(:'spotlight.curation.nav.home', locale: I18n.default_locale))
+      end
+    end
+
+    json.catalog do
+      json.breadcrumb do
+        json.index(t(:'spotlight.catalog.breadcrumb.index', locale: I18n.default_locale))
+      end
+    end
+  end
+
+  json.main_navigation do
+    current_exhibit.main_navigations.each do |navigation|
+      json.set!(navigation.nav_type) do
+        json.label(navigation[:label].presence || navigation.default_label)
+      end
+    end
+  end
+
+  json.blacklight do
+    json.search do
+      json.fields do
+        json.search do
+          current_exhibit.blacklight_config.search_fields.select { |_, config| config.if }.each do |key, search_config|
+            json.set!(key, search_config.label)
+          end
+        end
+
+        json.sort do
+          current_exhibit.blacklight_config.sort_fields.each do |key, sort_config|
+            json.set!(key, sort_config.label)
+          end
+        end
+
+        json.facet do
+          current_exhibit.blacklight_config.facet_fields.each do |key, facet_config|
+            json.set!(key, facet_config.label)
+          end
+        end
+      end
+    end
+  end
+
+  current_exhibit.searches.each do |search|
+    json.set!(search.slug) do
+      json.title search[:title]
+      json.long_description search[:long_description]
+    end
+  end
+end

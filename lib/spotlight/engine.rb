@@ -214,6 +214,25 @@ module Spotlight
     # add could add an available locale which could break things if unexpected.
     config.i18n.available_locales = config.i18n_locales.keys
 
+    # Copy of JbuilderHandler tweaked to spit out YAML for translation exports
+    class TranslationYamlHandler
+      cattr_accessor :default_format
+      self.default_format = :yaml
+
+      def self.call(template, source = nil)
+        source ||= template.source
+        # this juggling is required to keep line numbers right in the error
+        %{__already_defined = defined?(json); json||=JbuilderTemplate.new(self); #{source}
+          json.attributes!.to_yaml unless (__already_defined && __already_defined != "method")}
+      end
+    end
+
+    initializer :yamlbuilder do
+      ActiveSupport.on_load :action_view do
+        ActionView::Template.register_template_handler :yamlbuilder, TranslationYamlHandler
+      end
+    end
+
     # Query parameters for autocomplete requests
     config.autocomplete_search_field = 'autocomplete'
     config.default_autocomplete_params = { qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng',
