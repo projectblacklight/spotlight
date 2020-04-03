@@ -1,0 +1,23 @@
+<% if can? :import_translations, Spotlight::Exhibit %>
+  <div class="row col-md-12 mb-4">
+    <h2><%= t(:'.header') %></h2>
+    <p class="instructions"><%= t(:'.description') %></p>
+
+    <%= bootstrap_form_for current_exhibit, url: spotlight.import_exhibit_translations_path(current_exhibit), html: { class: 'row col-md-12 clearfix mb-3', multipart: true } do |f| %>
+      <%= f.label :value, t(".import_label"), class: 'col-form-label col-12 col-sm-3 text-right' %>
+
+      <div class="input-group col px-0">
+        <%= file_field_tag :file, class: 'form-control' %>
+        <%= hidden_field_tag :tab, 'import' %>
+        <div class="input-group-append">
+          <%= f.submit t(:'.import_submit'), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    <% end %>
+    <div class="row col-md-12">
+      <%= content_tag :span, t(".export_label"), class: 'col-form-label col-12 col-sm-3 text-right' %>
+
+      <%= link_to t(:'.export_submit'), spotlight.exhibit_translations_path(current_exhibit, format: "yaml"), class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

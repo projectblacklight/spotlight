@@ -2,10 +2,9 @@
 
 describe Spotlight::TranslationsController do
   routes { Spotlight::Engine.routes }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe '#edit' do
-    let(:exhibit) { FactoryBot.create(:exhibit) }
-
     context 'when not signed in' do
       it 'is not successful' do
         get :edit, params: { exhibit_id: exhibit }
@@ -75,6 +74,45 @@ describe Spotlight::TranslationsController do
             }
           end.to change(Translation, :count).by(-1)
         end
+      end
+    end
+  end
+
+  describe '#show' do
+    render_views
+    before { sign_in user }
+
+    let(:user) { FactoryBot.create(:site_admin) }
+
+    it 'provides a YML dump of the default language translations' do
+      get :show, params: { exhibit_id: exhibit, format: 'yaml' }
+      expect(response).to be_successful
+      translations = YAML.safe_load(response.body).with_indifferent_access
+
+      expect(translations).to include :en
+      expect(translations[:en]).to include :blacklight, :spotlight, exhibit.slug
+    end
+  end
+
+  describe '#import' do
+    before { sign_in user }
+
+    let(:user) { FactoryBot.create(:site_admin) }
+
+    it 'is successful' do
+      f = Tempfile.new('foo')
+      begin
+        f.write({ en: { exhibit.slug => { title: 'Imported title' } } }.deep_stringify_keys.to_yaml)
+        f.rewind
+        file = Rack::Test::UploadedFile.new(f.path, 'text/plain')
+        patch :import, params: { exhibit_id: exhibit, file: file }
+      ensure
+        f.close
+        f.unlink
+      end
+      expect(response).to be_redirect
+      assigns[:exhibit].tap do |saved|
+        expect(saved.title).to eq 'Imported title'
       end
     end
   end
