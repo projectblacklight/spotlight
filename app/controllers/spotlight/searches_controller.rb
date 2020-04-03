@@ -31,7 +31,7 @@ module Spotlight
       respond_to do |format|
         format.html
         format.json do
-          render json: @searches.as_json(methods: %i[count thumbnail_image_url]), root: false
+          render json: @searches.as_json(methods: %i[full_title count thumbnail_image_url]), root: false
         end
       end
     end
@@ -50,7 +50,7 @@ module Spotlight
     end
 
     def edit
-      add_breadcrumb @search.title, edit_exhibit_search_path(@search.exhibit, @search)
+      add_breadcrumb @search.full_title, edit_exhibit_search_path(@search.exhibit, @search)
       @exhibit = @search.exhibit
     end
 
@@ -105,6 +105,7 @@ module Spotlight
     def search_params
       params.require(:search).permit(
         :title,
+        :subtitle,
         :long_description,
         :search_box,
         :default_index_view_type,

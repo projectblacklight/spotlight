@@ -26,6 +26,18 @@ $image-overlay-max-height: 300px;
   }
 }
 
+.blacklight-browse-show {
+  .subtitle {
+    padding-right: $spacer;
+
+    &::before {
+      content: " \000B7 ";
+      color: $text-muted;
+      padding-right: $spacer / 2;
+    }
+  }
+}
+
 .browse-landing {
   text-align: center;
   // Placeholder for vertically alignment - might already be available from use in another feature
@@ -69,6 +81,10 @@ $image-overlay-max-height: 300px;
     .browse-category-title {
       font-size: $h3-font-size;
       @extend %vertical-align;
+
+      .category-subtitle {
+        display: block;
+      }
 
       small {
         display: block;

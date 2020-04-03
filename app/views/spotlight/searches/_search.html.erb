@@ -13,6 +13,7 @@
     <div class="flex-grow-1 mx-2 main">
       <h4 class="card-title h6 mb-0">
         <%= search.title %>
+        <% if search.subtitle.present? %><span class="subtitle"><%= search.subtitle %></span><% end %>
       </h4>
 
       <div class="card-text">

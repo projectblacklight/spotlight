@@ -55,6 +55,9 @@ $aspect-ratio-factor-medium-image: 1; // 1:1 width: height
     margin: 0;
     padding: $spacer / 4;
   }
+  .category-subtitle {
+    display: block;
+  }
   .item-count {
     font-size: $font-size-base;
     text-transform: uppercase;

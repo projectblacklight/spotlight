@@ -69,7 +69,7 @@ module Spotlight
     end
 
     def attach_search_breadcrumb
-      add_breadcrumb @search.title, exhibit_browse_path(@exhibit, @search)
+      add_breadcrumb @search.full_title, exhibit_browse_path(@exhibit, @search)
     end
 
     def _prefixes
