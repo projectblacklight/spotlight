@@ -22,8 +22,8 @@
       </p>
     <% else %>
       <span class="new-translated-page">
-        <%= t('spotlight.exhibits.translations.pages.no_translated_page') %>
-        <%= link_to(t('spotlight.exhibits.translations.pages.new'), polymorphic_path([:clone, current_exhibit, page], language: @language)) %>
+        <%= t('.no_translated_page') %>
+        <%= link_to(t('.new'), polymorphic_path([:clone, current_exhibit, page], language: @language)) %>
       <span>
     <% end %>
   </td>
@@ -36,11 +36,11 @@
   </td>
   <td class="text-center">
     <% if translated_page %>
-      <%= link_to(t('spotlight.exhibits.translations.pages.edit'), polymorphic_path([:edit, current_exhibit, translated_page], locale: @language)) %> &middot;
-      <%= link_to(t('spotlight.exhibits.translations.pages.recreate'), polymorphic_path([:clone, current_exhibit, page], language: @language), data: { confirm: t('spotlight.exhibits.translations.pages.recreate_are_you_sure') }) %>
+      <%= link_to(t('.edit'), polymorphic_path([:edit, current_exhibit, translated_page], locale: @language)) %> &middot;
+      <%= link_to(t('.recreate'), polymorphic_path([:clone, current_exhibit, page], language: @language), data: { confirm: t('.recreate_are_you_sure') }) %>
       <% if page.feature_page? || page.about_page? %>
         &middot;
-        <%= link_to(t('spotlight.exhibits.translations.pages.destroy'), polymorphic_path([current_exhibit, translated_page], locale: @language), method: :delete, data: { confirm: t('spotlight.exhibits.translations.pages.destroy_are_you_sure') }) %>
+        <%= link_to(t('.destroy'), polymorphic_path([current_exhibit, translated_page], locale: @language), method: :delete, data: { confirm: t('.destroy_are_you_sure') }) %>
       <% end %>
     <% end %>
   </td>
