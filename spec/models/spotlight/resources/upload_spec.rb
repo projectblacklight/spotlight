@@ -1,107 +1,71 @@
 # frozen_string_literal: true
 
 describe Spotlight::Resources::Upload, type: :model do
-  let!(:exhibit) { FactoryBot.create :exhibit }
-  let!(:custom_field) { FactoryBot.create :custom_field, exhibit: exhibit }
-  let(:resource) { described_class.new(exhibit: exhibit) }
-  let(:doc_builder) { resource.document_builder }
+  subject(:upload) { described_class.new(id: 42, exhibit: exhibit) }
 
-  let(:configured_fields) { [title_field] + described_class.fields(exhibit) }
-  let(:title_field) { Spotlight::UploadFieldConfig.new(field_name: 'configured_title_field') }
-  let(:upload_data) do
-    {
-      title_field.field_name => 'Title Data',
-      'spotlight_upload_description_tesim' => 'Description Data',
-      'spotlight_upload_attribution_tesim' => 'Attribution Data',
-      'spotlight_upload_date_tesim' => 'Date Data',
-      custom_field.slug => 'Custom Field Data'
-    }
-  end
-  let(:featured_image) { FactoryBot.create(:featured_image, image: File.open(File.join(FIXTURES_PATH, '800x600.png'))) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
-  before do
-    Rails.cache.clear # wipes out any cached image info.
-    allow(resource).to receive(:configured_fields).and_return configured_fields
-    allow(described_class).to receive(:fields).and_return configured_fields
+  describe '.fields' do
+    it "includes the exhibit's uploaded resource fields" do
+      expect(described_class.fields(exhibit)).to include(*exhibit.uploaded_resource_fields)
+    end
 
-    allow(resource.send(:blacklight_solr)).to receive(:update)
-    allow(Spotlight::Engine.config).to receive(:upload_title_field).and_return(title_field)
-    resource.data = upload_data
-    resource.upload = featured_image
-    resource.save
-  end
-
-  context 'with a custom upload title field' do
-    subject { doc_builder.to_solr }
-
-    let(:title_field) { Spotlight::UploadFieldConfig.new(field_name: 'configured_title_field', solr_fields: [:some_other_field]) }
-
-    describe '#to_solr' do
-      it 'stores the title field in the provided solr field' do
-        expect(subject[:some_other_field]).to eq 'Title Data'
+    context 'title field' do
+      it 'is an UploadFieldConfig object for the configured index title_field' do
+        upload_config = described_class.fields(exhibit).first
+        expect(upload_config).to be_a Spotlight::UploadFieldConfig
+        expect(upload_config.field_name).to eq exhibit.blacklight_config.index.title_field
       end
     end
   end
 
-  context 'multiple solr field mappings' do
-    let :configured_fields do
-      [
-        Spotlight::UploadFieldConfig.new(field_name: 'some_field', solr_fields: %w[a b])
-      ]
-    end
-
-    let :upload_data do
-      { 'some_field' => 'value' }
-    end
-
-    describe '#to_solr' do
-      subject { doc_builder.to_solr }
-
-      it 'maps a single uploaded field to multiple solr fields' do
-        expect(subject).not_to include 'some_field'
-        expect(subject['a']).to eq 'value'
-        expect(subject['b']).to eq 'value'
-      end
+  describe '#compound_id' do
+    it 'appends the object ID w/ the exhibit ID' do
+      expect(upload.compound_id).to eq "#{exhibit.id}-42"
     end
   end
 
-  describe '#to_solr' do
-    subject { doc_builder.to_solr }
+  describe '#sidecar' do
+    it 'is a SolrDocumentSidecar with the correct relationships' do
+      sidecar = upload.sidecar
 
-    it 'has the exhibit id and the upload id as the solr id' do
-      expect(subject[:id]).to eq "#{resource.exhibit.id}-#{resource.id}"
+      expect(sidecar).to be_a Spotlight::SolrDocumentSidecar
+      expect(sidecar.exhibit_id).to eq exhibit.id
+      expect(sidecar.document_id).to eq "#{exhibit.id}-42"
+    end
+  end
+
+  context 'when creating' do
+    before do
+      allow(upload).to receive(:write?).and_return(false)
     end
 
-    it 'has a title field using the exhibit specific blacklight_config' do
-      expect(subject['configured_title_field']).to eq 'Title Data'
+    it 'the sidecar is updated with the apporpriate data from configured fields' do
+      expect(upload.sidecar).to receive(:update).with(
+        data: {
+          'configured_fields' => {
+            'full_title_tesim' => 'My Upload Title',
+            'spotlight_upload_date_tesim' => 'My Upload Date'
+          }
+        }
+      )
+
+      upload.data = { 'full_title_tesim' => 'My Upload Title', 'spotlight_upload_date_tesim' => 'My Upload Date' }
+
+      upload.save
     end
 
-    it 'has the other additional configured fields' do
-      expect(subject[:spotlight_upload_description_tesim]).to eq 'Description Data'
-      expect(subject[:spotlight_upload_attribution_tesim]).to eq 'Attribution Data'
-      expect(subject[:spotlight_upload_date_tesim]).to eq 'Date Data'
-    end
+    it 'the sidecar is updated with the appropriate data from custom fields' do
+      FactoryBot.create(:custom_field, exhibit: exhibit, slug: 'custom_field_1')
+      FactoryBot.create(:custom_field, exhibit: exhibit, slug: 'custom_field_2')
 
-    it 'has a spotlight_resource_type field' do
-      expect(subject[:spotlight_resource_type_ssim]).to eq 'spotlight/resources/uploads'
-    end
+      expect(upload.sidecar).to receive(:update).with(
+        data: hash_including('custom_field_1' => 'Custom Field 1 Data', 'custom_field_2' => 'Custom Field 2 Data')
+      )
 
-    it 'has the various image fields' do
-      expect(subject).to have_key Spotlight::Engine.config.thumbnail_field
-    end
+      upload.data = { 'custom_field_1' => 'Custom Field 1 Data', 'custom_field_2' => 'Custom Field 2 Data' }
 
-    it 'has the full image dimensions fields' do
-      expect(subject[:spotlight_full_image_height_ssm]).to eq 600
-      expect(subject[:spotlight_full_image_width_ssm]).to eq 800
-    end
-
-    it 'has fields representing exhibit specific custom fields' do
-      expect(subject[custom_field.solr_field]).to eq 'Custom Field Data'
-    end
-
-    it 'has a field for the iiif manifest url' do
-      manifest_path = Spotlight::Engine.routes.url_helpers.manifest_exhibit_solr_document_path(exhibit, resource.compound_id)
-      expect(subject[Spotlight::Engine.config.iiif_manifest_field]).to eq(manifest_path)
+      upload.save
     end
   end
 end
