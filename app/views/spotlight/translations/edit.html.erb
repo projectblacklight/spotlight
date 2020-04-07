@@ -3,7 +3,7 @@
 <% end %>
 
 <div class='translation-edit-form'>
-  <%= curation_page_title t('spotlight.exhibits.translations.title') %>
+  <%= curation_page_title t('.title') %>
 
   <div class='text-center'>
     <ul class='nav nav-pills'>
@@ -21,27 +21,27 @@
     <ul class='nav nav-tabs' role="tablist">
       <li role="presentation" class="nav-item">
         <a href='#general' class="nav-link <%= 'active' if @tab.blank? %>" aria-controls="general" role="tab" data-toggle="tab" data-behavior="translation-progress">
-          <%= t('spotlight.exhibits.translations.general.label') %> <span class="badge"></span>
+          <%= t('spotlight.translations.general.label') %> <span class="badge"></span>
         </a>
       </li>
       <li class="nav-item">
         <a href="#metadata" class="nav-link <%= 'active' if @tab == 'metadata' %>" aria-controls="metadata" role="tab" data-toggle="tab" data-behavior="translation-progress">
-          <%= t('spotlight.exhibits.translations.metadata.label') %> <span class="badge"></span>
+          <%= t('spotlight.translations.metadata.label') %> <span class="badge"></span>
         </a>
       </li>
       <li class="nav-item" >
         <a href="#search_fields" class="nav-link <%= 'active' if @tab == 'search_fields' %>" aria-controls="search_fields" role="tab" data-toggle="tab" data-behavior="translation-progress">
-          <%= t('spotlight.exhibits.translations.search_fields.label') %> <span class="badge"></span>
+          <%= t('spotlight.translations.search_fields.label') %> <span class="badge"></span>
         </a>
       </li>
       <li class="nav-item">
         <a href="#browse" class="nav-link <%= 'active' if @tab == 'browse' %>" aria-controls="browse" role="tab" data-toggle="tab" data-behavior="translation-progress">
-          <%= t('spotlight.exhibits.translations.browse_categories.label') %> <span class="badge"></span>
+          <%= t('spotlight.translations.browse_categories.label') %> <span class="badge"></span>
         </a>
       </li>
       <li class="nav-item">
         <a href="#pages" class="nav-link <%= 'active' if @tab == 'pages' %>" aria-controls="pages" role="tab" data-toggle="tab" data-behavior="translation-progress">
-          <%= t('spotlight.exhibits.translations.pages.label') %> <span class="badge"></span>
+          <%= t('spotlight.translations.pages.label') %> <span class="badge"></span>
         </a>
       </li>
     </ul>

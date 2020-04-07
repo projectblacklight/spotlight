@@ -433,59 +433,6 @@ en:
             label: Title
       tags:
         all: All
-      translations:
-        browse_categories:
-          default_language_column_label: English language title
-          description_label: Description
-          label: Browse categories
-          translation_column_label: "%{language} translation"
-        general:
-          basic_settings:
-            description: Description
-            label: Basic Settings
-            subtitle: Subtitle
-            title: Title
-          label: General
-          main_menu:
-            about: About
-            browse: Browse
-            curated_features: Curated Features
-            home: Home
-            label: Main Menu
-        metadata:
-          exhibit_specific_fields:
-            label: Exhibit-Specific Fields
-          label: Metadata field labels
-        pages:
-          about_pages:
-            label: About Pages
-          destroy: Delete
-          destroy_are_you_sure: Are you sure you want to delete this page? If you delete this page all content, including any existing translations you have made in it, will be lost.
-          edit: Edit
-          feature_pages:
-            label: Feature Pages
-          help_html: Before exhibit visitors can view translated pages you must create, edit, and publish each page translation. When you create a translated page, a copy of the default language version of the page is made to serve as the initial translated page. You can then edit that translated page to replace the page title and any text fields with translated text. A translated page will not be visible to exhibit visitors until you publish it.  To replace a translated page with a current copy of the default language version of the page, use the <i>Recreate</i> action.
-          home_page:
-            label: Home Page
-          label: Pages
-          new: Create one now.
-          no_translated_page: No translated page.
-          recreate: Recreate
-          recreate_are_you_sure: Are you sure you want to recreate this page? If you recreate this page all content, including any existing translations you have made, will be replaced with the content of the English version of the page.
-          table_header:
-            actions: Actions
-            default_published: Published
-            language_published: Published
-            last_updated: "%{language} title / Last update"
-        search_fields:
-          facet_fields:
-            label: Facet Fields
-          field_based_search_fields:
-            label: Field-Based Search Fields
-          label: Search field labels
-          sort_fields:
-            label: Sort Fields
-        title: Translations
     exhibits_admin_invitation_mailer:
       invitation_instructions:
         accept: Accept invitation
@@ -808,6 +755,62 @@ en:
           count: Items tagged
     topbar:
       label: Utilities
+    translations:
+      browse_categories:
+        default_language_column_label: English language title
+        description_label: Description
+        label: Browse categories
+        translation_column_label: "%{language} translation"
+      edit:
+        title: Translations
+      general:
+        basic_settings:
+          description: Description
+          label: Basic Settings
+          subtitle: Subtitle
+          title: Title
+        label: General
+        main_menu:
+          about: About
+          browse: Browse
+          curated_features: Curated Features
+          home: Home
+          label: Main Menu
+      metadata:
+        exhibit_specific_fields:
+          label: Exhibit-Specific Fields
+        label: Metadata field labels
+      page:
+        destroy: Delete
+        destroy_are_you_sure: Are you sure you want to delete this page? If you delete this page all content, including any existing translations you have made in it, will be lost.
+        edit: Edit
+        new: Create one now.
+        no_translated_page: No translated page.
+        recreate: Recreate
+        recreate_are_you_sure: Are you sure you want to recreate this page? If you recreate this page all content, including any existing translations you have made, will be replaced with the content of the English version of the page.
+      pages:
+        about_pages:
+          label: About Pages
+        feature_pages:
+          label: Feature Pages
+        help_html: Before exhibit visitors can view translated pages you must create, edit, and publish each page translation. When you create a translated page, a copy of the default language version of the page is made to serve as the initial translated page. You can then edit that translated page to replace the page title and any text fields with translated text. A translated page will not be visible to exhibit visitors until you publish it.  To replace a translated page with a current copy of the default language version of the page, use the <i>Recreate</i> action.
+        home_page:
+          label: Home Page
+        label: Pages
+      pages_table:
+        header:
+          actions: Actions
+          default_published: Published
+          language_published: Published
+          last_updated: "%{language} title / Last update"
+      search_fields:
+        facet_fields:
+          label: Facet Fields
+        field_based_search_fields:
+          label: Field-Based Search Fields
+        label: Search field labels
+        sort_fields:
+          label: Sort Fields
     versions:
       redo: Redo changes
       undo: Undo changes

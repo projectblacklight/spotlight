@@ -6,7 +6,7 @@
 
     <div class='translation-field-based-search-fields'>
       <h2 class='translation-subheading'>
-        <%= t('spotlight.exhibits.translations.search_fields.field_based_search_fields.label') %>
+        <%= t('.field_based_search_fields.label') %>
       </h2>
 
       <% current_exhibit.blacklight_config.search_fields.select { |_, config| config.if }.each do |key, search_config| %>
@@ -36,7 +36,7 @@
 
     <div class='translation-facet-fields'>
       <h2 class='translation-subheading'>
-        <%= t('spotlight.exhibits.translations.search_fields.facet_fields.label') %>
+        <%= t('.facet_fields.label') %>
       </h2>
 
       <% current_exhibit.blacklight_config.facet_fields.each do |key, facet_config| %>
@@ -66,7 +66,7 @@
 
     <div class='translation-sort-fields'>
       <h2 class='translation-subheading'>
-        <%= t('spotlight.exhibits.translations.search_fields.sort_fields.label') %>
+        <%= t('.sort_fields.label') %>
       </h2>
 
       <% current_exhibit.blacklight_config.sort_fields.each do |key, sort_config| %>
