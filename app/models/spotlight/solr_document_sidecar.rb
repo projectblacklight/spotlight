@@ -33,11 +33,7 @@ module Spotlight
 
     # Roll our own polymorphism because our documents are not AREL-able
     def document
-      document_type.new document_type.unique_key => document_id
-    end
-
-    def document_type
-      (super.constantize if defined?(super)) || default_document_type
+      document_type_class.new document_type_class.unique_key => document_id
     end
 
     def default_document_type
@@ -45,6 +41,12 @@ module Spotlight
     end
 
     private
+
+    def document_type_class
+      return default_document_type unless document_type.is_a?(String)
+
+      document_type.constantize
+    end
 
     def visibility_field
       blacklight_config.document_model.visibility_field(exhibit)
