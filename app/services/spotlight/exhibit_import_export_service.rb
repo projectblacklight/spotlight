@@ -14,7 +14,6 @@ module Spotlight
       add_page_content
       attach_featured_images
       attach_attachments
-      stringify_classes
     ]
 
     attr_reader :exhibit, :include
@@ -285,16 +284,6 @@ module Spotlight
       end
 
       json[:home_page][:content] = exhibit.home_page.read_attribute(:content) if json[:home_page]
-
-      json
-    end
-
-    def stringify_classes(json)
-      return json unless json[:solr_document_sidecars]
-
-      json[:solr_document_sidecars].each do |obj|
-        obj[:document_type] = obj[:document_type].to_s
-      end
 
       json
     end
