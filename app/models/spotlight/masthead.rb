@@ -11,7 +11,7 @@ module Spotlight
     private
 
     def image_size
-      [1800, 180]
+      Spotlight::Engine.config.featured_image_masthead_size
     end
   end
 end
