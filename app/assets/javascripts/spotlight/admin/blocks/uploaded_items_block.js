@@ -85,9 +85,13 @@ SirTrevor.Blocks.UploadedItems = (function(){
                 '</div>',
                 '<div class="main form-horizontal">',
                   '<div class="title card-title">' + dataTitle + '</div>',
-                  '<div class="field">',
+                  '<div class="field row mr-3">',
                     '<label for="' + this.formId('caption_' + dataId) + '" class="col-form-label col-md-3"><%= i18n.t("blocks:uploaded_items:caption") %></label>',
-                    '<input type="text" class="form-control" id="' + this.formId('caption_' + dataId) + '" name="item[' + index + '][caption]" data-field="caption"/>',
+                    '<input type="text" class="form-control col" id="' + this.formId('caption_' + dataId) + '" name="item[' + index + '][caption]" data-field="caption"/>',
+                  '</div>',
+                  '<div class="field row mr-3">',
+                    '<label for="' + this.formId('link_' + dataId) + '" class="col-form-label col-md-3"><%= i18n.t("blocks:uploaded_items:link") %></label>',
+                    '<input type="text" class="form-control col" id="' + this.formId('link_' + dataId) + '" name="item[' + index + '][link]" data-field="link"/>',
                   '</div>',
                 '</div>',
                 '<div class="remove float-right">',
@@ -99,6 +103,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
 
       var panel = $(_.template(markup)(this));
       panel.find('[data-field="caption"]').val(data.caption);
+      panel.find('[data-field="link"]').val(data.link);
       var context = this;
 
       $('.remove a', panel).on('click', function(e) {
