@@ -29,8 +29,9 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
 
   uploaded_items: {
     title: "Uploaded Item Row",
-    description: "This widget displays uploaded items in a horizontal row. Optionally, you can add a heading and/or text to be displayed adjacent to the items.",
-    caption: 'Caption'
+    description: "This widget displays uploaded items in a horizontal row. Optionally, you can add a heading and/or text to be displayed adjacent to the items. The item caption and link URL fields are also optional.",
+    caption: 'Caption',
+    link: 'Link URL'
   },
 
   featured_pages: {

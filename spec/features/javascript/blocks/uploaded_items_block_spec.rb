@@ -26,6 +26,7 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     within('.dd-list') do
       expect(page).to have_css('.card-title', text: '800x600.png')
       fill_in 'Caption', with: 'Some caption text'
+      fill_in 'Link URL', with: 'https://example.com/'
     end
 
     attach_file('uploaded_item_url', fixture_file2)
@@ -41,8 +42,10 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     expect(page).to have_css('p', text: text)
 
     within('.uploaded-items-block') do
-      expect(page).to have_css('img[alt=""]', count: 2)
+      expect(page).to have_css('img[alt=""]', count: 1)
+      expect(page).to have_css('img[alt="Some caption text"]', count: 1)
       expect(page).to have_css '.caption', text: 'Some caption text'
+      expect(page).to have_link 'Some caption text', href: 'https://example.com/'
     end
   end
 
