@@ -779,8 +779,9 @@ en:
           label: Main Menu
       import:
         description: You can import and export Rails-based YAML files containing the translated label values for the currently selected language for use in internationalization tools such as Transifex and i18n-tools. This feature does not include importing or exporting translations for Pages.
+        export_current_locale: Export %{language}
+        export_default_locale: Export %{language}
         export_label: Export a YAML file
-        export_submit: Export translations
         header: Import and export translations
         import_label: Import a YAML file
         import_submit: Import translations

@@ -26,8 +26,8 @@ module Spotlight
       end
     end
 
-    def default_label
-      I18n.t(:"spotlight.main_navigation.#{nav_type}")
+    def default_label(**options)
+      I18n.t(:"spotlight.main_navigation.#{nav_type}", **options)
     end
 
     private

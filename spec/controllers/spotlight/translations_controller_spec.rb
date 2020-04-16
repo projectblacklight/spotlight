@@ -80,7 +80,10 @@ describe Spotlight::TranslationsController do
 
   describe '#show' do
     render_views
-    before { sign_in user }
+    before do
+      sign_in user
+      FactoryBot.create(:translation, exhibit: exhibit, locale: 'es', key: "#{exhibit.slug}.title", value: 'Titulo')
+    end
 
     let(:user) { FactoryBot.create(:site_admin) }
 
@@ -91,6 +94,16 @@ describe Spotlight::TranslationsController do
 
       expect(translations).to include :en
       expect(translations[:en]).to include :blacklight, :spotlight, exhibit.slug
+    end
+
+    it 'provides a YML dump of the requested language translations' do
+      get :show, params: { exhibit_id: exhibit, format: 'yaml', locale: 'es' }
+      expect(response).to be_successful
+      translations = YAML.safe_load(response.body).with_indifferent_access
+
+      expect(translations).to include :es
+      expect(translations[:es]).to include :blacklight, :spotlight, exhibit.slug
+      expect(translations[:es][exhibit.slug]).to include title: 'Titulo', subtitle: nil
     end
   end
 
