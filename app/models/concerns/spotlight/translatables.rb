@@ -15,8 +15,24 @@ module Spotlight
       # Set up a reader for the specified attribute that uses the I18n backend,
       # and defaults to the ActiveRecord value
       def define_translated_attr_reader(attr_name)
+        # Define a dynamic method for translating database-backed attributes,
+        # falling back to the database information as needed.
+        #
+        # Note: the empty string is provided as the final fallback to avoid i18n blowing
+        # up on nil attributes.
         define_method(:"#{attr_name}") do
-          I18n.translate(attr_name, scope: slug, default: attr_translation(attr_name))
+          send("translated_#{attr_name}", default: [attr_translation(attr_name), ''])
+        end
+
+        # Define an accessor that gets the value of the attribute in a given locale,
+        # returning `nil` for untranslated values.
+        #
+        # Note: For the default locale, we actually want to dig into the database,
+        # because that is the source of truth for the data.
+        define_method(:"translated_#{attr_name}") do |default: [], **options|
+          default = Array.wrap(default)
+          default.prepend(attr_translation(attr_name)) if I18n.locale == I18n.default_locale
+          I18n.translate(attr_name, scope: slug, default: default, **options).presence
         end
       end
     end

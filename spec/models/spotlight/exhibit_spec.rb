@@ -28,7 +28,7 @@ describe Spotlight::Exhibit, type: :model do
     end
 
     it 'does not validate the presence of the title under a non-default locale' do
-      expect(I18n).to receive(:locale).and_return(:fr)
+      allow(I18n).to receive(:locale).and_return(:fr)
       exhibit.title = ''
       expect do
         exhibit.save
@@ -402,6 +402,7 @@ describe Spotlight::Exhibit, type: :model do
       I18n.locale = 'fr'
       persisted_exhibit.reload
       expect(persisted_exhibit.title).to eq 'Titre français'
+      expect(persisted_exhibit.translated_title).to eq 'Titre français'
     end
 
     it 'has a translatable subtitle' do
@@ -416,6 +417,13 @@ describe Spotlight::Exhibit, type: :model do
       I18n.locale = 'fr'
       persisted_exhibit.reload
       expect(persisted_exhibit.description).to eq 'Description français'
+    end
+
+    it 'is nil if no translation has been prrovided' do
+      expect(persisted_exhibit.title).to eq 'Sample'
+      I18n.locale = 'es'
+      persisted_exhibit.reload
+      expect(persisted_exhibit.translated_title(default: '')).to eq nil
     end
   end
 end
