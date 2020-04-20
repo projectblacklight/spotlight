@@ -2,7 +2,7 @@
 
 // Increase visibility of Firefox focus indicator
 @-moz-document url-prefix() {
-  &:focus {
+  #{if(&, "&", "*")}:focus {
     outline: $input-focus-border-color auto 5px;
   }
 }
