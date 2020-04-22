@@ -31,6 +31,15 @@ describe 'Home page', type: :feature, versioning: true do
     expect(page).to have_selector '.card-title a', text: 'New Home Page Title'
   end
 
+  it 'redirects back to the correct home page URL after updating (no format param to interfere w/ faceting)' do
+    visit spotlight.exhibit_home_page_path(exhibit.home_page)
+
+    click_link 'Edit'
+    click_button 'Save changes'
+
+    expect(page.current_url).to eq spotlight.exhibit_home_page_url(exhibit)
+  end
+
   it 'has working facet links' do
     visit spotlight.exhibit_home_page_path(exhibit.home_page)
     click_button 'Genre'
