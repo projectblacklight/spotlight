@@ -41,7 +41,7 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
       it 'redirects to the feature page index action' do
         put :update, params: { id: page, exhibit_id: page.exhibit.id, home_page: valid_attributes }
         page.reload
-        expect(response).to redirect_to(exhibit_home_page_path(page.exhibit, page))
+        expect(response).to redirect_to(exhibit_home_page_path(page.exhibit))
         expect(flash[:notice]).to have_link 'Undo changes'
       end
     end
