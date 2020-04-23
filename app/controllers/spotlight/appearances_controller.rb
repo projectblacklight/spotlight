@@ -40,6 +40,7 @@ module Spotlight
         source
         image
         document_global_id
+        upload_id
       ]
     end
   end

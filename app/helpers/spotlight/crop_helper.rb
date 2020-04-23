@@ -25,7 +25,10 @@ module Spotlight
     end
 
     def iiif_upload_tag(f)
-      f.file_field_without_bootstrap :file, name: 'featured_image[image]', data: { endpoint: polymorphic_path(f.object.model_name.route_key) }
+      content_tag(:div) do
+        concat f.file_field_without_bootstrap :file, name: 'featured_image[image]', data: { endpoint: polymorphic_path(f.object.model_name.route_key) }
+        concat f.hidden_field :upload_id
+      end
     end
 
     def form_prefix(f)
