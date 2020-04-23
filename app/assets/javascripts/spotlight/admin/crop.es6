@@ -269,6 +269,11 @@ export default class Crop {
 
   successHandler(data, stat, xhr) {
     this.setIiifFields({ tilesource: data.tilesource });
+    this.setUploadId(data.id);
+  }
+
+  setUploadId(id) {
+    $('#' + this.form_prefix + "_upload_id").val(id);
   }
 
   aspectRatioPreservingRectangleEditor(aspect) {

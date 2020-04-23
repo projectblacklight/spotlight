@@ -13,6 +13,7 @@ module Spotlight
       end
     end
 
+    attr_accessor :upload_id
     after_create :set_tilesource_from_uploaded_resource
 
     def iiif_url
