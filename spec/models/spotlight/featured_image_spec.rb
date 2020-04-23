@@ -3,6 +3,22 @@
 describe Spotlight::FeaturedImage do
   subject(:featured_image) { described_class.new }
 
+  let(:temp_image) { FactoryBot.create(:temporary_image) }
+
+  context 'with an uploaded image' do
+    it 'copies the temporary uploaded image to this model' do
+      featured_image.source = 'remote'
+      featured_image.upload_id = temp_image.id
+
+      featured_image.save
+
+      expect(featured_image.image.filename).to eq temp_image.image.filename
+      expect(featured_image.image.read).to eq temp_image.image.read
+
+      expect { temp_image.reload }.to raise_exception ActiveRecord::RecordNotFound
+    end
+  end
+
   describe '#iiif_url' do
     let(:iiif_tilesource) { 'http://example.com/iiif/abc123/info.json' }
     let(:iiif_region) { '0,0,400,300' }
@@ -16,6 +32,18 @@ describe Spotlight::FeaturedImage do
         subject.iiif_tilesource = iiif_tilesource
         expect(subject.iiif_url).to match(%r{^http://example.com/iiif/abc123/})
         expect(subject.iiif_url).not_to include('info.json')
+      end
+
+      context 'with an uploaded image' do
+        before do
+          featured_image.source = 'remote'
+          featured_image.image = temp_image.image
+          featured_image.save!
+        end
+
+        it 'points at the RIIIF endpoint' do
+          expect(subject.iiif_url).to match(%r{^/images/\d+/})
+        end
       end
     end
 

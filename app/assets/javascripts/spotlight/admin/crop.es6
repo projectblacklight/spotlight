@@ -273,7 +273,7 @@ export default class Crop {
   }
 
   setUploadId(id) {
-    $('#' + this.form_prefix + "_upload_id").val(id);
+    $('#' + this.formPrefix + "_upload_id").val(id);
   }
 
   aspectRatioPreservingRectangleEditor(aspect) {

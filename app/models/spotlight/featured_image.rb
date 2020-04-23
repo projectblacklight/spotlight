@@ -6,6 +6,24 @@ module Spotlight
   class FeaturedImage < ActiveRecord::Base
     mount_uploader :image, Spotlight::FeaturedImageUploader
 
+    before_validation do
+      next unless upload_id.present? && source == 'remote'
+
+      # copy the image from the temp upload
+      temp_image = Spotlight::TemporaryImage.find(upload_id)
+      self.image = CarrierWave::SanitizedFile.new tempfile: StringIO.new(temp_image.image.read),
+                                                  filename: temp_image.image.identifier,
+                                                  content_type: temp_image.image.content_type
+
+      # Unset the incoming iiif_tilesource, which points at the temp image
+      self.iiif_tilesource = nil
+    end
+
+    after_commit do
+      # Clean up the temporary image
+      Spotlight::TemporaryImage.find(upload_id).delete if upload_id.present?
+    end
+
     after_save do
       if image.present?
         image.cache! unless image.cached?
@@ -14,7 +32,6 @@ module Spotlight
     end
 
     attr_accessor :upload_id
-    after_create :set_tilesource_from_uploaded_resource
 
     def iiif_url
       return unless iiif_service_base.present?
@@ -46,24 +63,23 @@ module Spotlight
       image.file.present?
     end
 
-    private
-
-    def set_tilesource_from_uploaded_resource
-      return if iiif_tilesource
-
-      riiif = Riiif::Engine.routes.url_helpers
-      self.iiif_tilesource = riiif.info_path(id)
-      save
+    def iiif_tilesource
+      if self[:iiif_tilesource]
+        self[:iiif_tilesource]
+      elsif source == 'remote' && file_present?
+        riiif = Riiif::Engine.routes.url_helpers
+        riiif.info_path(id)
+      end
     end
+
+    private
 
     def image_size
       Spotlight::Engine.config.featured_image_thumb_size
     end
 
     def iiif_service_base
-      return unless iiif_tilesource
-
-      iiif_tilesource.sub('/info.json', '')
+      iiif_tilesource&.sub('/info.json', '')
     end
   end
 end

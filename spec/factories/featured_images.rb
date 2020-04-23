@@ -6,6 +6,10 @@ FactoryBot.define do
     iiif_tilesource { 'https://exhibits-stage.stanford.edu/images/78' }
   end
 
+  factory :temporary_image, class: 'Spotlight::TemporaryImage' do
+    image { Rack::Test::UploadedFile.new(File.expand_path(File.join('..', 'fixtures', 'avatar.png'), __dir__)) }
+  end
+
   factory :masthead, class: 'Spotlight::Masthead' do
     image { Rack::Test::UploadedFile.new(File.expand_path(File.join('..', 'fixtures', 'avatar.png'), __dir__)) }
   end
