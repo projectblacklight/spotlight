@@ -73,12 +73,24 @@ module Spotlight
       hash[:about_pages].each do |attr|
         masthead = attr.delete(:masthead)
         thumbnail = attr.delete(:thumbnail)
+        translated_pages = attr.delete(:translated_pages) || []
 
         ar = exhibit.about_pages.find_or_initialize_by(slug: attr[:slug])
         ar.update_attributes(attr)
 
         deserialize_featured_image(ar, :masthead, masthead) if masthead
         deserialize_featured_image(ar, :thumbnail, thumbnail) if thumbnail
+
+        translated_pages.each do |tattr|
+          masthead = tattr.delete(:masthead)
+          thumbnail = tattr.delete(:thumbnail)
+
+          tar = ar.translated_page_for(tattr[:locale]) || ar.clone_for_locale(tattr[:locale])
+          tar.update_attributes(tattr)
+
+          deserialize_featured_image(ar, :masthead, masthead) if masthead
+          deserialize_featured_image(ar, :thumbnail, thumbnail) if thumbnail
+        end
       end
 
       hash[:feature_pages].each do |attr|
@@ -86,7 +98,7 @@ module Spotlight
         thumbnail = attr.delete(:thumbnail)
 
         ar = exhibit.feature_pages.find_or_initialize_by(slug: attr[:slug])
-        ar.update_attributes(attr.except(:parent_page_slug))
+        ar.update_attributes(attr.except(:parent_page_slug, :translated_pages))
 
         deserialize_featured_image(ar, :masthead, masthead) if masthead
         deserialize_featured_image(ar, :thumbnail, thumbnail) if thumbnail
@@ -99,9 +111,36 @@ module Spotlight
         feature_pages[attr[:slug]].parent_page_id = feature_pages[attr[:parent_page_slug]].id
       end
 
+      hash[:feature_pages].each do |attr|
+        ar = exhibit.feature_pages.find_or_initialize_by(slug: attr[:slug])
+
+        (attr[:translated_pages] || []).each do |tattr|
+          masthead = tattr.delete(:masthead)
+          thumbnail = tattr.delete(:thumbnail)
+
+          tar = ar.translated_page_for(tattr[:locale]) || ar.clone_for_locale(tattr[:locale])
+          tar.update_attributes(tattr)
+
+          deserialize_featured_image(ar, :masthead, masthead) if masthead
+          deserialize_featured_image(ar, :thumbnail, thumbnail) if thumbnail
+        end
+      end
+
       if hash[:home_page]
+        translated_pages = hash[:home_page].delete(:translated_pages) || []
         exhibit.home_page.update_attributes(hash[:home_page].except(:thumbnail))
         deserialize_featured_image(exhibit.home_page, :thumbnail, hash[:home_page][:thumbnail]) if hash[:home_page][:thumbnail]
+
+        translated_pages.each do |tattr|
+          masthead = tattr.delete(:masthead)
+          thumbnail = tattr.delete(:thumbnail)
+
+          tar = exhibit.home_page.translated_page_for(tattr[:locale]) || exhibit.home_page.clone_for_locale(tattr[:locale])
+          tar.update_attributes(tattr)
+
+          deserialize_featured_image(ar, :masthead, masthead) if masthead
+          deserialize_featured_image(ar, :thumbnail, thumbnail) if thumbnail
+        end
       end
 
       hash[:contacts].each do |attr|
@@ -197,6 +236,13 @@ module Spotlight
         page.delete(:masthead_id)
         page[:thumbnail] = serialize_featured_image(page[:thumbnail_id]) if page[:thumbnail_id]
         page.delete(:thumbnail_id)
+
+        (page[:translated_pages] || []).each do |translated_page|
+          translated_page[:masthead] = serialize_featured_image(translated_page[:masthead_id]) if translated_page[:masthead_id]
+          translated_page.delete(:masthead_id)
+          translated_page[:thumbnail] = serialize_featured_image(translated_page[:thumbnail_id]) if translated_page[:thumbnail_id]
+          translated_page.delete(:thumbnail_id)
+        end
       end
 
       (json[:feature_pages] || []).each do |page|
@@ -204,6 +250,13 @@ module Spotlight
         page.delete(:masthead_id)
         page[:thumbnail] = serialize_featured_image(page[:thumbnail_id]) if page[:thumbnail_id]
         page.delete(:thumbnail_id)
+
+        (page[:translated_pages] || []).each do |translated_page|
+          translated_page[:masthead] = serialize_featured_image(translated_page[:masthead_id]) if translated_page[:masthead_id]
+          translated_page.delete(:masthead_id)
+          translated_page[:thumbnail] = serialize_featured_image(translated_page[:thumbnail_id]) if translated_page[:thumbnail_id]
+          translated_page.delete(:thumbnail_id)
+        end
       end
 
       if json[:home_page]
@@ -211,6 +264,13 @@ module Spotlight
         json[:home_page].delete(:masthead_id)
         json[:home_page][:thumbnail] = serialize_featured_image(json[:home_page][:thumbnail_id]) if json[:home_page][:thumbnail_id]
         json[:home_page].delete(:thumbnail_id)
+
+        (json[:home_page][:translated_pages] || []).each do |translated_page|
+          translated_page[:masthead] = serialize_featured_image(translated_page[:masthead_id]) if translated_page[:masthead_id]
+          translated_page.delete(:masthead_id)
+          translated_page[:thumbnail] = serialize_featured_image(translated_page[:thumbnail_id]) if translated_page[:thumbnail_id]
+          translated_page.delete(:thumbnail_id)
+        end
       end
 
       (json[:contacts] || []).each do |page|
@@ -277,15 +337,25 @@ module Spotlight
 
     def add_page_content(json)
       (json[:feature_pages] || []).each do |page|
-        page[:content] = exhibit.feature_pages.find_by(slug: page[:slug]).read_attribute(:content)
+        p = exhibit.feature_pages.find_by(slug: page[:slug])
+        page[:content] = p.read_attribute(:content)
+        (page[:translated_pages]).each do |translated_page|
+          translated_page[:content] = p.translated_page_for(translated_page[:locale]).read_attribute(:content)
+        end
       end
 
       (json[:about_pages] || []).each do |page|
-        page[:content] = exhibit.about_pages.find_by(slug: page[:slug]).read_attribute(:content)
+        p = exhibit.about_pages.find_by(slug: page[:slug])
+        page[:content] = p.read_attribute(:content)
+        (page[:translated_pages]).each do |translated_page|
+          translated_page[:content] = p.translated_page_for(translated_page[:locale]).read_attribute(:content)
+        end
       end
 
       json[:home_page][:content] = exhibit.home_page.read_attribute(:content) if json[:home_page]
-
+      (json.dig(:home_page, :translated_pages) || []).each do |translated_page|
+        translated_page[:content] = exhibit.home_page.translated_page_for(translated_page[:locale]).read_attribute(:content)
+      end
       json
     end
 
@@ -313,13 +383,28 @@ module Spotlight
                           except: %i[id scope exhibit_id]
                         },
                         about_pages: { # thumbnail
-                          except: %i[id scope exhibit_id parent_page_id content]
+                          except: %i[id scope exhibit_id parent_page_id content],
+                          include: {
+                            translated_pages: {
+                              except: %i[id scope exhibit_id parent_page_id default_locale_page_id content]
+                            }
+                          }
                         },
                         home_page: { # thumbnail
-                          except: %i[id scope exhibit_id parent_page_id content]
+                          except: %i[id slug scope exhibit_id parent_page_id content],
+                          include: {
+                            translated_pages: {
+                              except: %i[id scope exhibit_id parent_page_id default_locale_page_id content]
+                            }
+                          }
                         },
                         feature_pages: { # thumbnail
-                          except: %i[scope exhibit_id content]
+                          except: %i[scope exhibit_id content],
+                          include: {
+                            translated_pages: {
+                              except: %i[id scope exhibit_id parent_page_id default_locale_page_id content]
+                            }
+                          }
                         },
                         contacts: {
                           except: %i[id exhibit_id]
