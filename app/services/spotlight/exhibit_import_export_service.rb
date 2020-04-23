@@ -161,6 +161,7 @@ module Spotlight
     def deserialize_featured_image(obj, method, data)
       file = data.delete(:image)
       image = obj.public_send("build_#{method}")
+      image.update_attributes(data)
       if file
         image.image = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file[:content])),
                                                      filename: file[:filename],
