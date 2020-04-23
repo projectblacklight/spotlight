@@ -247,6 +247,21 @@ describe Spotlight::ExhibitImportExportService do
         expect(subject.feature_pages.first.content.length).to eq 1
         expect(subject.feature_pages.first.content.first).to be_a_kind_of SirTrevorRails::Blocks::TextBlock
       end
+
+      context 'with a translation' do
+        before do
+          localized_page = feature_page.clone_for_locale('ar')
+          localized_page.content = { data: [{ type: 'text', data: { text: 'xyz-in-ar' } }] }.to_json
+          localized_page.save!
+        end
+
+        it 'transfers the localized page' do
+          expect(subject.feature_pages.first.translated_pages.length).to eq 1
+          expect(JSON.parse(subject.feature_pages.first.translated_page_for('ar').read_attribute(:content))).to have_key 'data'
+          expect(subject.feature_pages.first.translated_page_for('ar').content.length).to eq 1
+          expect(subject.feature_pages.first.translated_page_for('ar').content.first).to be_a_kind_of SirTrevorRails::Blocks::TextBlock
+        end
+      end
     end
 
     it 'assigns STI resources the correct class' do
@@ -352,12 +367,52 @@ describe Spotlight::ExhibitImportExportService do
     end
   end
 
-  it 'is idempotent-ish' do
-    FactoryBot.create :feature_subpage, exhibit: source_exhibit
-    export = described_class.new(source_exhibit).as_json
-    e = FactoryBot.create(:exhibit)
-    e.import(export).tap(&:save)
-    e.import(export).tap(&:save)
+  context 'testing idempotency' do
+    let(:masthead) { FactoryBot.create(:masthead) }
+    let(:thumbnail) { FactoryBot.create(:exhibit_thumbnail) }
+    let!(:search) { FactoryBot.create(:search, exhibit: source_exhibit, masthead: FactoryBot.create(:masthead), thumbnail: FactoryBot.create(:featured_image)) }
+    let!(:feature_page_1) { FactoryBot.create(:feature_page, exhibit: source_exhibit) }
+    let!(:feature_page_2) { FactoryBot.create(:feature_page, exhibit: source_exhibit) }
+
+    before do
+      source_exhibit.masthead = masthead
+      source_exhibit.thumbnail = thumbnail
+    end
+
+    # From Rails 6:
+    def _deep_transform_values_in_object(object, &block)
+      case object
+      when Hash
+        object.transform_values { |value| _deep_transform_values_in_object(value, &block) }
+      when Array
+        object.map { |e| _deep_transform_values_in_object(e, &block) }
+      else
+        yield(object)
+      end
+    end
+
+    it 'is re-runnable' do
+      FactoryBot.create :feature_subpage, exhibit: source_exhibit
+      export = described_class.new(source_exhibit).as_json
+      e = FactoryBot.create(:exhibit)
+      e.import(export).tap(&:save)
+      e.import(export).tap(&:save)
+    end
+
+    it 'is idempotent-ish' do
+      export = described_class.new(source_exhibit).as_json
+      e = FactoryBot.create(:exhibit)
+      e.import(export).tap(&:save)
+      new_export = described_class.new(e).as_json
+
+      actual = _deep_transform_values_in_object(new_export) do |v|
+        v.is_a?(Time) ? nil : v
+      end
+      expected = _deep_transform_values_in_object(export) do |v|
+        v.is_a?(Time) ? nil : v
+      end
+      expect(actual).to include expected
+    end
   end
 
   describe 'should export saved searches with query parameters that can be re-generated' do
