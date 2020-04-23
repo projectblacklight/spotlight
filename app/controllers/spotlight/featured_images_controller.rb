@@ -3,7 +3,7 @@
 module Spotlight
   # Handles requests to upload images for exhibit thumbnails
   class FeaturedImagesController < Spotlight::ApplicationController
-    load_and_authorize_resource instance_name: :featured_image
+    load_and_authorize_resource instance_name: :featured_image, class: 'Spotlight::TemporaryImage'
 
     def create
       if @featured_image.save && @featured_image.file_present?
