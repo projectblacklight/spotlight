@@ -27,8 +27,7 @@ module Spotlight
     end
 
     def process_import
-      @exhibit.import(JSON.parse(import_exhibit_params.read))
-      if @exhibit.save && @exhibit.reindex_later
+      if @exhibit.import(JSON.parse(import_exhibit_params.read)) && @exhibit.reindex_later
         redirect_to spotlight.exhibit_dashboard_path(@exhibit), notice: t(:'helpers.submit.exhibit.updated', model: @exhibit.class.model_name.human.downcase)
       else
         render action: :import

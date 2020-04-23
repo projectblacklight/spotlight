@@ -83,7 +83,8 @@ describe Spotlight::ExhibitImportExportService do
 
   describe 'should round-trip data' do
     subject do
-      destination_exhibit.import(export).tap(&:save)
+      destination_exhibit.import(export)
+      destination_exhibit
     end
 
     let(:destination_exhibit) { FactoryBot.create(:exhibit) }
@@ -395,14 +396,14 @@ describe Spotlight::ExhibitImportExportService do
       FactoryBot.create :feature_subpage, exhibit: source_exhibit
       export = described_class.new(source_exhibit).as_json
       e = FactoryBot.create(:exhibit)
-      e.import(export).tap(&:save)
-      e.import(export).tap(&:save)
+      e.import(export)
+      e.import(export)
     end
 
     it 'is idempotent-ish' do
       export = described_class.new(source_exhibit).as_json
       e = FactoryBot.create(:exhibit)
-      e.import(export).tap(&:save)
+      e.import(export)
       new_export = described_class.new(e).as_json
 
       actual = _deep_transform_values_in_object(new_export) do |v|
@@ -418,7 +419,8 @@ describe Spotlight::ExhibitImportExportService do
   describe 'should export saved searches with query parameters that can be re-generated' do
     subject do
       e = FactoryBot.create(:exhibit)
-      e.import(export).tap(&:save)
+      e.import(export)
+      e
     end
 
     before do

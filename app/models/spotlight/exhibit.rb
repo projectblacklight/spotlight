@@ -100,8 +100,10 @@ module Spotlight
     end
 
     def import(hash)
-      Spotlight::ExhibitImportExportService.new(self).from_hash!(hash)
-      self
+      ActiveRecord::Base.transaction do
+        Spotlight::ExhibitImportExportService.new(self).from_hash!(hash)
+        save
+      end
     end
 
     def solr_data
