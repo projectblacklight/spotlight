@@ -119,7 +119,7 @@ describe Spotlight::Page, type: :model do
   end
 
   describe '#slug' do
-    let(:page) { FactoryBot.create(:feature_page) }
+    let(:page) { FactoryBot.create(:about_page) }
 
     it 'gets a default slug' do
       expect(page.slug).not_to be_blank
@@ -128,6 +128,11 @@ describe Spotlight::Page, type: :model do
     it 'is updated when the title changes' do
       page.update(title: 'abc')
       expect(page.slug).to eq 'abc'
+    end
+
+    it 'blacklists contacts' do
+      page.update(title: 'contacts')
+      expect(page.slug).not_to eq 'contacts'
     end
 
     context 'with a custom slug' do
