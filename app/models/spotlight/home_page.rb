@@ -5,7 +5,9 @@ module Spotlight
   # Exhibit home page
   class HomePage < Spotlight::Page
     extend FriendlyId
-    friendly_id :title, use: %i[slugged scoped finders], scope: %i[exhibit locale]
+    friendly_id :title, use: %i[slugged scoped finders history], scope: %i[exhibit locale] do |config|
+      config.reserved_words.concat(%w[update_all])
+    end
 
     before_save :publish
     before_create :default_content
