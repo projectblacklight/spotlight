@@ -412,10 +412,26 @@ describe Spotlight::ExhibitImportExportService do
       new_export = described_class.new(e).as_json
 
       actual = _deep_transform_values_in_object(new_export) do |v|
-        v.is_a?(Time) ? nil : v
+        begin
+          if DateTime.parse(v.to_s)
+            nil
+          else
+            v
+          end
+        rescue ArgumentError
+          nil
+        end
       end
       expected = _deep_transform_values_in_object(export) do |v|
-        v.is_a?(Time) ? nil : v
+        begin
+          if DateTime.parse(v.to_s)
+            nil
+          else
+            v
+          end
+        rescue ArgumentError
+          nil
+        end
       end
       expect(actual).to include expected
     end
