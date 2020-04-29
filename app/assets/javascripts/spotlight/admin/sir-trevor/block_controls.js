@@ -40,19 +40,28 @@
       }
     }
 
-    return Object.keys(groups).reduce(function(memo, groupKey) {
-      var group   = groups[groupKey];
-      var groupEl = $("<div class='st-controls-group'><div class='st-group-col-form-label'>" + groupKey + "</div></div>");
+    function generateBlock(groups, key) {
+      var group   = groups[key];
+      var groupEl = $("<div class='st-controls-group'><div class='st-group-col-form-label'>" + key + "</div></div>");
       var buttons = group.reduce(function(memo, btn) {
         return memo += btn;
       }, "");
       groupEl.append(buttons);
-      if (memo.length === 0) {
-        return memo += groupEl[0].outerHTML;
-      } else {
-        return memo += "<hr />" + groupEl[0].outerHTML;
+      return groupEl[0].outerHTML;
+    }
+
+    var standardWidgets = generateBlock(groups, i18n.t("blocks:group:undefined"));
+
+    var exhibitWidgets = Object.keys(groups).map(function(key) {
+      if (key !== i18n.t("blocks:group:undefined")) {
+        return generateBlock(groups, key);
       }
-    }, "");
+    }).filter(function (element) {
+      return element != null;
+    });
+
+    var blocks = [standardWidgets].concat(exhibitWidgets).join("<hr />");
+    return blocks;
   }
 
   function render(Blocks, availableTypes) {
@@ -65,7 +74,7 @@
     elButtons.appendChild(el);
     return elButtons;
   }
-  
+
   global.Spotlight.BlockControls = function() { };
   global.Spotlight.BlockControls.create = function(editor) {
     // REFACTOR - should probably not know about blockManager
@@ -83,10 +92,10 @@
       SirTrevor = null;
       el = null;
     }
-    
+
     function insert(e) {
       e.stopPropagation();
-      
+
       var parent = this.parentNode;
       if (!parent || hide() === parent) { return; }
       $('.st-block__inner', parent).after(el);
@@ -101,7 +110,7 @@
 
     $(editor.wrapper).delegate(".st-block-replacer", "click", insert);
     $(editor.wrapper).delegate(".st-block-controls__button", "click", insert);
-    
+
     return {
       el: el,
       hide: hide,
