@@ -47,7 +47,7 @@ module Spotlight
       deserialize_featured_image(exhibit, :masthead, hash[:masthead]) if hash[:masthead]
       deserialize_featured_image(exhibit, :thumbnail, hash[:thumbnail]) if hash[:thumbnail]
 
-      exhibit.blacklight_configuration.update_attributes hash[:blacklight_configuration] if hash[:blacklight_configuration]
+      exhibit.blacklight_configuration.update_attributes hash[:blacklight_configuration].deep_stringify_keys if hash[:blacklight_configuration]
 
       hash[:main_navigations].each do |attr|
         ar = exhibit.main_navigations.find_or_initialize_by(nav_type: attr[:nav_type])
