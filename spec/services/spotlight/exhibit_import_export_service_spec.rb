@@ -114,7 +114,12 @@ describe Spotlight::ExhibitImportExportService do
     end
 
     it 'has blacklight configuration properties' do
+      subject.blacklight_configuration.index_fields_will_change!
+      subject.blacklight_configuration.index_fields['language_ssm'] = { some_value: true }
+      subject.blacklight_configuration.save
+
       expect(subject.blacklight_configuration).to be_persisted
+      expect(subject.blacklight_configuration.blacklight_config.index_fields['language_ssm'].to_h).to include some_value: true
     end
 
     context 'for an exhibit without search fields' do
