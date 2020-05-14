@@ -3,111 +3,111 @@ ar:
   activerecord:
     attributes:
       spotlight/contact:
-        avatar: ""
+        avatar:
       spotlight/custom_field:
-        is_multiple: ""
+        is_multiple: 
       spotlight/custom_search_field:
-        field: ""
+        field:
       spotlight/exhibit:
-        published: ""
+        published:
       spotlight/language:
-        locale: ""
+        locale:
       spotlight/masthead:
-        display: ""
+        display:
       spotlight/page:
-        display_sidebar?: ""
-        display_title: ""
+        display_sidebar?:
+        display_title:
     help:
       spotlight/exhibit:
-        tag_list: ""
+        tag_list:
     models:
       spotlight:
-        page: ""
-  cancel: ""
-  drag: ""
+        page:
+  cancel:
+  drag:
   helpers:
     action:
-      add_another: ""
+      add_another:
       cancel: إلغاء
-      destroy: ""
-      destroy_are_you_sure: ""
-      edit: ""
-      edit_long: ""
+      destroy:
+      destroy_are_you_sure:
+      edit:
+      edit_long:
       exhibit:
         contact:
-          submit: ""
-      new: ""
+          submit:
+      new:
       spotlight/contact:
-        create: ""
+        create:
       spotlight/custom_field:
-        create: ""
+        create:
       spotlight/custom_search_field:
-        create: ""
+        create:
       spotlight/role:
-        create: ""
-        destroy: ""
+        create:
+        destroy:
       spotlight/search:
-        destroy: ""
-        edit_long: ""
-      update_all: ""
-      view: ""
+        destroy:
+        edit_long:
+      update_all:
+      view:
     label:
       solr_document:
-        exhibit_tag_list: ""
+        exhibit_tag_list:
       spotlight/filter:
-        field: ""
-        value: ""
+        field:
+        value:
     submit:
       blacklight_configuration:
-        updated: ""
+        updated:
       contact:
-        batch_updated: ""
-        create: ""
-        created: ""
-        destroyed: ""
-        updated: ""
+        batch_updated:
+        create:
+        created:
+        destroyed:
+        updated:
       contact_form:
         create: ارسل
         created: شكراً. لقد تم إرسال ملاحظاتك واقتراحاتك.
       custom_field:
-        batch_error: ""
-        batch_updated: ""
-        create: ""
-        created: ""
-        destroyed: ""
-        updated: ""
+        batch_error:
+        batch_updated:
+        create:
+        created:
+        destroyed:
+        updated:
       custom_search_field:
-        batch_error: ""
-        batch_updated: ""
-        create: ""
-        created: ""
-        destroyed: ""
-        updated: ""
+        batch_error:
+        batch_updated:
+        create:
+        created:
+        destroyed:
+        updated:
       exhibit:
-        batch_error: ""
-        batch_updated: ""
-        create: ""
-        created: ""
-        destroyed: ""
-        updated: ""
+        batch_error:
+        batch_updated:
+        create:
+        created:
+        destroyed:
+        updated:
       filter:
-        batch_error: ""
-        batch_updated: ""
-        create: ""
-        created: ""
-        destroyed: ""
-        updated: ""
+        batch_error:
+        batch_updated:
+        create:
+        created:
+        destroyed:
+        updated:
       language:
-        create: ""
-        created: ""
-        destroyed: ""
+        create:
+        created:
+        destroyed:
       page:
-        batch_error: ""
-        batch_updated: ""
-        create: ""
-        created: ""
-        destroyed: ""
-        updated: ""
+        batch_error:
+        batch_updated:
+        create:
+        created:
+        destroyed:
+        updated:
       role:
         batch_error:
           zero: ''
@@ -117,110 +117,110 @@ ar:
           many: ''
           other: ''
 
-        destroyed: ""
-        updated: ""
+        destroyed:
+        updated:
       search:
-        batch_error: ""
-        batch_updated: ""
-        create: ""
-        created: ""
-        destroyed: ""
-        updated: ""
+        batch_error:
+        batch_updated:
+        create:
+        created:
+        destroyed:
+        updated:
       site:
-        batch_error: ""
-        batch_updated: ""
-        create: ""
-        created: ""
-        destroyed: ""
-        updated: ""
+        batch_error:
+        batch_updated:
+        create:
+        created:
+        destroyed:
+        updated:
       solr_document:
-        batch_error: ""
-        batch_updated: ""
-        create: ""
-        created: ""
-        destroyed: ""
-        updated: ""
+        batch_error:
+        batch_updated:
+        create:
+        created:
+        destroyed:
+        updated:
       spotlight_default:
-        updated: ""
-      submit: ""
-      update: ""
+        updated:
+      submit:
+      update:
   locales:
-    ar: ""
-    de: ""
-    en: ""
-    es: ""
-    fr: ""
-    hu: ""
-    it: ""
-    nl: ""
-    pt-BR: ""
-    sq: ""
-    zh: ""
+    ar:
+    de:
+    en:
+    es:
+    fr:
+    hu:
+    it:
+    nl:
+    pt-BR:
+    sq:
+    zh:
   reindexing_log:
     status:
-      failed: ""
-      in_progress: ""
-      succeeded: ""
-      unstarted: ""
+      failed:
+      in_progress:
+      succeeded:
+      unstarted:
   shared:
     site_sidebar:
-      documentation: ""
-      header: ""
+      documentation:
+      header:
   spotlight:
     about_pages:
       contacts:
         header: جهات الاتصال
       contacts_form:
-        header: ""
-        instructions: ""
+        header:
+        instructions:
       page_options:
-        published: ""
+        published:
     admin_users:
       create:
-        error: ""
-        success: ""
+        error:
+        success:
       destroy:
-        error: ""
-        success: ""
+        error:
+        success:
       index:
-        admins_curators: ""
-        all_users: ""
-        copy: ""
-        create: ""
-        destroy: ""
-        instructions: ""
-        page_title: ""
-        pending: ""
-        save: ""
-        update: ""
+        admins_curators:
+        all_users:
+        copy:
+        create:
+        destroy:
+        instructions:
+        page_title:
+        pending:
+        save:
+        update:
     appearances:
       edit:
-        header: ""
+        header:
         main_navigation:
-          help: ""
-          menu: ""
+          help:
+          menu:
         site_masthead:
-          heading: ""
-          help: ""
+          heading:
+          help:
         site_theme:
-          heading: ""
+          heading:
           help: ''
-          label: ""
+          label:
         site_thumbnail:
-          heading: ""
-          help: ""
-    application_name: ""
+          heading:
+          help:
+    application_name:
     breadcrumb:
       label: مسار التنقل
     browse:
       search:
         item_count:
-          zero: ""
-          one: ""
-          two: ""
-          few: ""
-          many: ""
-          other: ""
+          zero:
+          one:
+          two:
+          few:
+          many:
+          other:
 
       search_box:
         label: ابحث في فئة التصفح الحالية
@@ -235,516 +235,516 @@ ar:
           result_number: لم يتطابق بحثك مع أي عنصر في هذه الفئة.
     catalog:
       admin:
-        header: ""
-        title: ""
+        header:
+        title:
       admin_header:
-        new_resource: ""
-        reindex: ""
+        new_resource:
+        reindex:
       breadcrumb:
-        index: ""
+        index:
       document_visibility_control:
         inprogress:
           label: ''
         make_private:
-          button: ""
+          button:
           label: ''
         make_public:
-          button: ""
+          button:
           label: ''
       edit_default:
         url-field:
           help: ''
       edit_sidecar:
-        blank_field_warning_html: ""
+        blank_field_warning_html:
       facets:
         exhibit_visibility:
-          label: ""
-          private: ""
+          label:
+          private:
       fields:
-        date_added: ""
-        title: ""
-        visibility: ""
+        date_added:
+        title:
+        visibility:
       reindex_progress_panel:
-        begin_html: ""
-        completed_html: ""
-        error: ""
-        heading: ""
+        begin_html:
+        completed_html:
+        error:
+        heading:
     configuration:
-      header: ""
+      header:
       sidebar:
-        appearance: ""
-        header: ""
-        metadata: ""
-        search_configuration: ""
-        settings: ""
-        users: ""
+        appearance:
+        header:
+        metadata:
+        search_configuration:
+        settings:
+        users:
     confirmation_mailer:
       confirmation_instructions:
-        confirm: ""
+        confirm:
         instructions: ''
-        welcome: ""
+        welcome:
     contact_form:
-      subject: ""
+      subject:
     contacts:
       edit:
-        header: ""
+        header:
       form:
         avatar:
-          header: ""
+          header:
         email:
-          placeholder: ""
+          placeholder:
         location:
-          placeholder: ""
+          placeholder:
         name:
-          placeholder: ""
+          placeholder:
         source:
           remote:
             help: ''
-            label: ""
+            label:
         telephone:
-          placeholder: ""
+          placeholder:
         title:
-          placeholder: ""
+          placeholder:
       new:
-        header: ""
+        header:
     curation:
-      header: ""
+      header:
       nav:
-        home: ""
+        home:
       sidebar:
-        about_pages: ""
-        analytics: ""
-        browse: ""
-        dashboard: ""
-        feature_pages: ""
-        header: ""
-        items: ""
-        tags: ""
-        translations: ""
+        about_pages:
+        analytics:
+        browse:
+        dashboard:
+        feature_pages:
+        header:
+        items:
+        tags:
+        translations:
     custom_fields:
       edit:
-        header: ""
+        header:
       form:
         field_type:
-          label: ""
-          text: ""
-          vocab: ""
+          label:
+          text:
+          vocab:
         is_multiple:
-          label: ""
+          label:
       new:
-        header: ""
+        header:
     custom_search_fields:
       edit:
-        header: ""
+        header:
       form:
         field:
-          help: ""
+          help:
       new:
-        header: ""
+        header:
     dashboards:
       analytics:
-        header: ""
-        monthly_header: ""
+        header:
+        monthly_header:
         pages:
-          header: ""
-        pagetitle: ""
-        pageviews: ""
-        sessions: ""
-        users: ""
+          header:
+        pagetitle:
+        pageviews:
+        sessions:
+        users:
       page_activity:
         field:
-          last_edited_by: ""
-          title: ""
-          updated_at: ""
-        header: ""
+          last_edited_by:
+          title:
+          updated_at:
+        header:
       reindexing_activity:
         field:
-          date: ""
-          duration: ""
-          items_reindexed_count: ""
-          job_status: ""
-          user: ""
-        header: ""
-        no_reindexing_activity: ""
+          date:
+          duration:
+          items_reindexed_count:
+          job_status:
+          user:
+        header:
+        no_reindexing_activity:
       show:
-        header: ""
+        header:
       solr_document_activity:
-        header: ""
-        no_documents: ""
+        header:
+        no_documents:
     exhibitnavbar:
-      label: ""
+      label:
     exhibits:
-      breadcrumb: ""
+      breadcrumb:
       confirmation_status:
-        confirmation_sent: ""
-        confirmed: ""
-        not_validated: ""
-        resend: ""
+        confirmation_sent:
+        confirmed:
+        not_validated:
+        resend:
       contact:
-        email_delete_button: ""
-        email_delete_confirmation: ""
+        email_delete_button:
+        email_delete_confirmation:
         email_delete_error: ''
-        email_input_aria_label: ""
+        email_input_aria_label:
       delete:
-        heading: ""
-        warning_html: ""
+        heading:
+        warning_html:
       edit:
         basic_settings:
-          heading: ""
-        header: ""
+          heading:
+        header:
       exhibit_card:
-        unpublished: ""
+        unpublished:
       export:
-        download: ""
-        heading: ""
-        instructions: ""
+        download:
+        heading:
+        instructions:
       filter:
-        heading: ""
-        instructions: ""
+        heading:
+        instructions:
       form:
-        add_contact_email_button: ""
+        add_contact_email_button:
         fields:
           contact_emails:
-            help_block: ""
+            help_block:
           published:
             help_block: ''
-        uneditable_non_default_language: ""
+        uneditable_non_default_language:
       import:
-        button: ""
-        heading: ""
-        instructions: ""
+        button:
+        heading:
+        instructions:
       index:
-        published: ""
-        unpublished: ""
-        user: ""
+        published:
+        unpublished:
+        user:
       languages:
-        current_header: ""
-        current_instructions: ""
-        heading: ""
+        current_header:
+        current_instructions:
+        heading:
         modal:
-          confirm: ""
-        no_languages_help_text: ""
-        remove: ""
-        selection_instructions: ""
-        selection_prompt: ""
+          confirm:
+        no_languages_help_text:
+        remove:
+        selection_instructions:
+        selection_prompt:
         table_heading:
-          action: ""
-          language: ""
-          public: ""
+          action:
+          language:
+          public:
       new:
-        page_title: ""
+        page_title:
       new_exhibit_form:
         fields:
           slug:
-            help_block: ""
-            label: ""
+            help_block:
+            label:
           title:
-            help_block: ""
-            label: ""
+            help_block:
+            label:
       tags:
-        all: ""
+        all:
     exhibits_admin_invitation_mailer:
       invitation_instructions:
-        accept: ""
-        accept_invitation: ""
-        hello: ""
-        ignore: ""
-        someone_invited_you: ""
-        subject: ""
+        accept:
+        accept_invitation:
+        hello:
+        ignore:
+        someone_invited_you:
+        subject:
     feature_pages:
       page_options:
-        published: ""
+        published:
     featured_images:
       form:
         crop_area:
-          help: ""
-        non_iiif_alert_html: ""
+          help:
+        non_iiif_alert_html:
         source:
           exhibit:
-            help: ""
-            label: ""
-          header: ""
+            help:
+            label:
+          header:
           remote:
-            header: ""
+            header:
             help: ''
-            label: ""
+            label:
       upload_form:
         crop_area:
-          help: ""
-        non_iiif_alert_html: ""
+          help:
+        non_iiif_alert_html:
         source:
           exhibit:
-            help: ""
-            label: ""
-          header: ""
+            help:
+            label:
+          header:
           remote:
-            header: ""
+            header:
             help: ''
-            label: ""
+            label:
     header_links:
       contact: ملاحظات واقتراحات
-      create_exhibit: ""
-      dashboard: ""
-      edit_site: ""
-      login: ""
-      logout: ""
-    html_admin_title: ""
-    html_title: ""
+      create_exhibit:
+      dashboard:
+      edit_site:
+      login:
+      logout:
+    html_admin_title:
+    html_title:
     indexing_complete_mailer:
       documents_indexed:
         body:
-          zero: ""
-          one: ""
-          two: ""
-          few: ""
-          many: ""
-          other: ""
+          zero:
+          one:
+          two:
+          few:
+          many:
+          other:
 
-        title: ""
+        title:
     invitation_mailer:
       invitation_instructions:
-        accept_invitation: ""
-        hello: ""
-        ignore: ""
-        someone_invited_you: ""
-        subject: ""
-        visit: ""
+        accept_invitation:
+        hello:
+        ignore:
+        someone_invited_you:
+        subject:
+        visit:
     main_navigation:
-      about: ""
-      browse: ""
-      curated_features: ""
+      about:
+      browse:
+      curated_features:
     metadata_configurations:
       edit:
-        deselect_all: ""
+        deselect_all:
         exhibit_specific:
-          header: ""
-          instructions: ""
+          header:
+          instructions:
         field:
-          label: ""
-        header: ""
-        instructions: ""
-        order_header: ""
-        select_all: ""
+          label:
+        header:
+        instructions:
+        order_header:
+        select_all:
         view:
-          show: ""
+          show:
     pages:
       edit:
-        header: ""
-        locked: ""
+        header:
+        locked:
       form:
-        page_content: ""
-        page_options: ""
-        page_thumbnail: ""
+        page_content:
+        page_options:
+        page_thumbnail:
         thumbnail:
-          help: ""
-        title_placeholder: ""
+          help:
+        title_placeholder:
       index:
         about_pages:
-          header: ""
+          header:
         feature_pages:
-          header: ""
-          home_pages_header: ""
+          header:
+          home_pages_header:
         home_pages:
-          header: ""
-          title: ""
+          header:
+          title:
       new:
-        header: ""
+        header:
       order_pages:
-        cancel: ""
-        instructions: ""
-        new_page: ""
-        pages_header: ""
-        save: ""
+        cancel:
+        instructions:
+        new_page:
+        pages_header:
+        save:
     resources:
       csv_upload:
         form:
-          add_item: ""
-          file_label: ""
-          help_html: ""
-          template: ""
-          title: ""
+          add_item:
+          file_label:
+          help_html:
+          template:
+          title:
       external_resources_form:
-        title: ""
+        title:
       form:
-        add_item: ""
+        add_item:
       iiif:
         form:
-          add_item: ""
-          manifest: ""
-          title: ""
+          add_item:
+          manifest:
+          title:
           url-field:
-            help: ""
+            help:
       json_upload:
         form:
-          add_item: ""
-          file_label: ""
-          title: ""
+          add_item:
+          file_label:
+          title:
       new:
-        header: ""
-      reindexing_in_progress: ""
+        header:
+      reindexing_in_progress:
       upload:
         csv:
-          anonymous_file: ""
-          success: ""
-        error: ""
+          anonymous_file:
+          success:
+        error:
         form:
-          add_item: ""
-          add_item_and_continue: ""
-          title: ""
+          add_item:
+          add_item_and_continue:
+          title:
           url-field:
             help: ''
-        success: ""
+        success:
     role:
-      admin: ""
-      curator: ""
+      admin:
+      curator:
     roles:
       edit_fields:
-        help: ""
+        help:
       index:
-        actions: ""
-        email: ""
-        header: ""
-        invite_pending: ""
-        role: ""
-        title: ""
+        actions:
+        email:
+        header:
+        invite_pending:
+        role:
+        title:
     saved_search:
-      id: ""
-      label: ""
-      title: ""
+      id:
+      label:
+      title:
     search:
       fields:
-        abstract_tesim: ""
-        corporate_name_ssm: ""
+        abstract_tesim:
+        corporate_name_ssm:
         facet:
-          corporate_name_ssm: ""
-          exhibit_tags: ""
-          genre_ssim: ""
-          language_ssim: ""
-          personal_name_ssm: ""
-          subject_geographic_ssim: ""
-          subject_temporal_ssim: ""
-        full_title_tesim: ""
-        language_ssm: ""
-        note_desc_note_tesim: ""
-        note_mapuse_tesim: ""
-        note_page_num_tesim: ""
-        note_phys_desc_tesim: ""
-        note_provenance_tesim: ""
-        note_references_tesim: ""
-        note_source_tesim: ""
-        personal_name_ssm: ""
+          corporate_name_ssm:
+          exhibit_tags:
+          genre_ssim:
+          language_ssim:
+          personal_name_ssm:
+          subject_geographic_ssim:
+          subject_temporal_ssim:
+        full_title_tesim:
+        language_ssm:
+        note_desc_note_tesim:
+        note_mapuse_tesim:
+        note_page_num_tesim:
+        note_phys_desc_tesim:
+        note_provenance_tesim:
+        note_references_tesim:
+        note_source_tesim:
+        personal_name_ssm:
         search:
-          all_fields: ""
-          author: ""
-          title: ""
+          all_fields:
+          author:
+          title:
         sort:
-          date: ""
-          identifier: ""
-          relevance: ""
-          source: ""
-          title: ""
-          type: ""
-        spotlight_upload_attribution_tesim: ""
-        spotlight_upload_date_tesim: ""
-        spotlight_upload_description_tesim: ""
-        subject_geographic_tesim: ""
-        subject_temporal_tesim: ""
+          date:
+          identifier:
+          relevance:
+          source:
+          title:
+          type:
+        spotlight_upload_attribution_tesim:
+        spotlight_upload_date_tesim:
+        spotlight_upload_description_tesim:
+        subject_geographic_tesim:
+        subject_temporal_tesim:
     search_configurations:
       default_per_page:
-        label: ""
+        label:
       document_index_view_types:
-        label: ""
+        label:
       edit:
-        header: ""
+        header:
         tab:
-          facets: ""
-          options: ""
-          results: ""
+          facets:
+          options:
+          results:
       facet_metadata:
         document_count:
-          zero: ""
-          one: ""
-          two: ""
-          few: ""
-          many: ""
-          other: ""
+          zero:
+          one:
+          two:
+          few:
+          many:
+          other:
 
-        too_many_values_count: ""
+        too_many_values_count:
         value_count:
-          zero: ""
-          one: ""
-          two: ""
-          few: ""
-          many: ""
-          other: ""
+          zero:
+          one:
+          two:
+          few:
+          many:
+          other:
 
       facets:
-        help: ""
+        help:
         sort_by:
-          count: ""
-          index: ""
+          count:
+          index:
           label: ''
       search_fields:
-        enable_feature: ""
+        enable_feature:
         exhibit_specific:
-          header: ""
-          instructions: ""
-        header: ""
-        help: ""
-        instructions: ""
+          header:
+          instructions:
+        header:
+        help:
+        instructions:
       sort:
-        header: ""
-        help: ""
+        header:
+        help:
         keys:
-          asc: ""
-          desc: ""
-          id: ""
-          score: ""
-          sort_date_dtsi: ""
-          sort_source_ssi: ""
-          sort_title_ssi: ""
-          sort_type_ssi: ""
+          asc:
+          desc:
+          id:
+          score:
+          sort_date_dtsi:
+          sort_source_ssi:
+          sort_title_ssi:
+          sort_type_ssi:
     searches:
       edit:
-        header: ""
-        title: ""
+        header:
+        title:
       form:
-        default_index_view_type: ""
+        default_index_view_type:
         masthead:
-          help: ""
-          help_secondary: ""
-        query_params: ""
+          help:
+          help_secondary:
+        query_params:
         search_box:
-          checkbox_label: ""
-          help_block: ""
-          label: ""
-        search_description: ""
-        search_masthead: ""
-        search_thumbnail: ""
+          checkbox_label:
+          help_block:
+          label:
+        search_description:
+        search_masthead:
+        search_thumbnail:
         thumbnail:
-          help: ""
+          help:
       index:
-        categories_header: ""
-        header: ""
-        instructions: ""
-        no_saved_searches: ""
-        not_searchable_html: ""
-        title: ""
+        categories_header:
+        header:
+        instructions:
+        no_saved_searches:
+        not_searchable_html:
+        title:
       search:
         item_count:
-          zero: ""
-          one: ""
-          two: ""
-          few: ""
-          many: ""
-          other: ""
+          zero:
+          one:
+          two:
+          few:
+          many:
+          other:
 
-        missing_description_html: ""
+        missing_description_html:
     shared:
       dd3_item:
-        restore_default: ""
+        restore_default:
       exhibit_sidebar:
-        header: ""
+        header:
       report_a_problem:
         honeypot_field_explanation: تجاهل هذا المربع النصي، فهو يُستخدم فقط لكشف المحتالين. إذا كتبت أي شيء في هذا المربع النصي، فلن يتم إرسال رسالتك.
         title: تواصل معنا
@@ -752,114 +752,114 @@ ar:
       blocks:
         browse_block:
           items:
-            zero: ""
-            one: ""
-            two: ""
-            few: ""
-            many: ""
-            other: ""
+            zero:
+            one:
+            two:
+            few:
+            many:
+            other:
 
         link_to_search_block:
           items:
-            zero: ""
-            one: ""
-            two: ""
-            few: ""
-            many: ""
-            other: ""
+            zero:
+            one:
+            two:
+            few:
+            many:
+            other:
 
     sites:
       edit:
         basic_settings:
-          heading: ""
-        page_title: ""
+          heading:
+        page_title:
         site_masthead:
-          heading: ""
+          heading:
           help: |
       edit_exhibits:
-        instructions: ""
-        page_title: ""
+        instructions:
+        page_title:
       exhibit:
-        published: ""
-        unpublished: ""
-      home: ""
+        published:
+        unpublished:
+      home:
     tags:
       index:
-        actions: ""
-        header: ""
-        name: ""
-        no_tags: ""
+        actions:
+        header:
+        name:
+        no_tags:
         taggings:
-          count: ""
+          count:
     topbar:
-      label: ""
+      label:
     translations:
       browse_categories:
-        default_language_column_label: ""
-        description_label: ""
-        label: ""
-        subtitle_label: ""
-        translation_column_label: ""
+        default_language_column_label:
+        description_label:
+        label:
+        subtitle_label:
+        translation_column_label:
       edit:
-        title: ""
+        title:
       general:
         basic_settings:
-          description: ""
-          label: ""
-          subtitle: ""
-          title: ""
-        label: ""
+          description:
+          label:
+          subtitle:
+          title:
+        label:
         main_menu:
-          about: ""
-          browse: ""
-          curated_features: ""
-          home: ""
-          label: ""
+          about:
+          browse:
+          curated_features:
+          home:
+          label:
       import:
-        description: ""
-        export_current_locale: ""
-        export_default_locale: ""
-        export_label: ""
-        header: ""
-        import_label: ""
-        import_submit: ""
+        description:
+        export_current_locale:
+        export_default_locale:
+        export_label:
+        header:
+        import_label:
+        import_submit:
       metadata:
         exhibit_specific_fields:
-          label: ""
-        label: ""
+          label:
+        label:
       page:
-        destroy: ""
-        destroy_are_you_sure: ""
-        edit: ""
-        new: ""
-        no_translated_page: ""
-        recreate: ""
-        recreate_are_you_sure: ""
+        destroy:
+        destroy_are_you_sure:
+        edit:
+        new:
+        no_translated_page:
+        recreate:
+        recreate_are_you_sure:
       pages:
         about_pages:
-          label: ""
+          label:
         feature_pages:
-          label: ""
-        help_html: ""
+          label:
+        help_html:
         home_page:
-          label: ""
-        label: ""
+          label:
+        label:
       pages_table:
         header:
-          actions: ""
-          default_published: ""
-          language_published: ""
-          last_updated: ""
+          actions:
+          default_published:
+          language_published:
+          last_updated:
       search_fields:
         facet_fields:
-          label: ""
+          label:
         field_based_search_fields:
-          label: ""
-        label: ""
+          label:
+        label:
         sort_fields:
-          label: ""
+          label:
     versions:
-      redo: ""
-      undo: ""
-      undo_error: ""
-  toggle_nav: ""
+      redo:
+      undo:
+      undo_error:
+  toggle_nav:
