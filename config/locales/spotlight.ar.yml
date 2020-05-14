@@ -5,7 +5,7 @@ ar:
       spotlight/contact:
         avatar:
       spotlight/custom_field:
-        is_multiple: 
+        is_multiple:
       spotlight/custom_search_field:
         field:
       spotlight/exhibit:
@@ -110,12 +110,12 @@ ar:
         updated:
       role:
         batch_error:
-          zero: ''
-          one: ''
-          two: ''
-          few: ''
-          many: ''
-          other: ''
+          zero: 
+          one: 
+          two: 
+          few: 
+          many: 
+          other: 
 
         destroyed:
         updated:
@@ -204,7 +204,7 @@ ar:
           help:
         site_theme:
           heading:
-          help: ''
+          help: 
           label:
         site_thumbnail:
           heading:
@@ -244,16 +244,16 @@ ar:
         index:
       document_visibility_control:
         inprogress:
-          label: ''
+          label: 
         make_private:
           button:
-          label: ''
+          label: 
         make_public:
           button:
-          label: ''
+          label: 
       edit_default:
         url-field:
-          help: ''
+          help: 
       edit_sidecar:
         blank_field_warning_html:
       facets:
@@ -281,7 +281,7 @@ ar:
     confirmation_mailer:
       confirmation_instructions:
         confirm:
-        instructions: ''
+        instructions: 
         welcome:
     contact_form:
       subject:
@@ -299,7 +299,7 @@ ar:
           placeholder:
         source:
           remote:
-            help: ''
+            help: 
             label:
         telephone:
           placeholder:
@@ -383,7 +383,7 @@ ar:
       contact:
         email_delete_button:
         email_delete_confirmation:
-        email_delete_error: ''
+        email_delete_error: 
         email_input_aria_label:
       delete:
         heading:
@@ -407,7 +407,7 @@ ar:
           contact_emails:
             help_block:
           published:
-            help_block: ''
+            help_block: 
         uneditable_non_default_language:
       import:
         button:
@@ -466,7 +466,7 @@ ar:
           header:
           remote:
             header:
-            help: ''
+            help: 
             label:
       upload_form:
         crop_area:
@@ -479,7 +479,7 @@ ar:
           header:
           remote:
             header:
-            help: ''
+            help: 
             label:
     header_links:
       contact: ملاحظات واقتراحات
@@ -592,7 +592,7 @@ ar:
           add_item_and_continue:
           title:
           url-field:
-            help: ''
+            help: 
         success:
     role:
       admin:
@@ -683,7 +683,7 @@ ar:
         sort_by:
           count:
           index:
-          label: ''
+          label: 
       search_fields:
         enable_feature:
         exhibit_specific:
