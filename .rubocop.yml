@@ -80,6 +80,7 @@ RSpec/DescribeClass:
   Exclude:
     - 'spec/features/**/*'
     - 'spec/views/**/*'
+    - 'spec/i18n_spec.rb'
 
 RSpec/NestedGroups:
   Max: 4
