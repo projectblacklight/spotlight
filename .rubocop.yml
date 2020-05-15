@@ -18,6 +18,9 @@ Bundler/DuplicatedGem:
 Bundler/OrderedGems:
   Enabled: false
 
+Capybara/VisibilityMatcher:
+  Enabled: false
+
 Layout/LineLength:
   Max: 160
 
