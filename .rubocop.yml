@@ -9,13 +9,16 @@ AllCops:
     - 'db/**/*'
     - 'spec/internal/**/*'
     - 'vendor/**/*'
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.5
   DisplayCopNames: true
 
 Bundler/DuplicatedGem:
   Enabled: false
 
 Bundler/OrderedGems:
+  Enabled: false
+
+Capybara/VisibilityMatcher:
   Enabled: false
 
 Layout/LineLength:
@@ -77,6 +80,7 @@ RSpec/DescribeClass:
   Exclude:
     - 'spec/features/**/*'
     - 'spec/views/**/*'
+    - 'spec/i18n_spec.rb'
 
 RSpec/NestedGroups:
   Max: 4

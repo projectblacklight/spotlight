@@ -19,7 +19,7 @@ these collections.)
   s.files = Dir['{app,config,db,lib,vendor}/**/*', 'Rakefile', 'README.md', 'LICENSE']
   s.test_files = Dir['spec/**/*']
 
-  s.required_ruby_version = '~> 2.3'
+  s.required_ruby_version = '~> 2.5'
 
   s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 7'
   s.add_dependency 'almond-rails', '~> 0.1'
@@ -66,7 +66,7 @@ these collections.)
   s.add_development_dependency 'rspec-collection_matchers'
   s.add_development_dependency 'rspec-its'
   s.add_development_dependency 'rspec-rails', '>= 4.0.0.beta1'
-  s.add_development_dependency 'rubocop', '~> 0.79.0'
+  s.add_development_dependency 'rubocop', '~> 0.83.0'
   s.add_development_dependency 'rubocop-rspec'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'simplecov', '~> 0.12'
