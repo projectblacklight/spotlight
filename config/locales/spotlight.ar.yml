@@ -1,40 +1,32 @@
+---
 ar:
-  activemodel:
-    attributes:
-      spotlight/contact_form:
-        email: البريد الإلكتروني
-        message: الرسالة
-        name: الاسم
   helpers:
     action:
       cancel: إلغاء
     submit:
       contact_form:
-        create: إرسال
-        created: .نشكرك على رسالتك. لقد تم إرسال ملاحظاتك واقتراحاتك
+        create: ارسل
+        created: شكراً. لقد تم إرسال ملاحظاتك واقتراحاتك.
   spotlight:
     about_pages:
       contacts:
-        header: عنوان فرعي
+        header: جهات الاتصال
+    breadcrumb:
+      label: مسار التنقل
+      search_box:
+        label: ابحث في فئة التصفح الحالية
+        placeholder: بحث...
+        reset: مسح استعلام البحث
+        submit: ابحث في فئة التصفح
+        success:
+          expand_html: "يمكنك ايضاً <a href=\"%{expand_search_url}\">البحث في كل مواد المعرض عن \"%{browse_query}\"</a>."
+          result_number_html: "طابق استعلام البحث <strong> %{search_size} من %{parent_search_count} عنصر</strong> في هذه الفئة."
+        zero_results:
+          expand_html: "تستطيع أن <a href=\"%{clear_search_url}\"> تمسح استعلام البحث </a> أو محاولة <a href=\"%{expand_search_url}\"> البحث في كل المواد المعروضة لاستعلام البحث ل\"%{browse_query}\"</a>"
+          result_number: لم يتطابق بحثك مع أي عنصر في هذه الفئة.
     header_links:
       contact: ملاحظات واقتراحات
     shared:
       report_a_problem:
-        honeypot_field_explanation: .تجاهل هذا المربع النصي، فهو يُستخدم فقط لكشف المحتالين. إذا كتبت أي شيء في هذا المربع النصي، فلن يتم إرسال رسالتك
-        title: عنوان
-    browse:
-      search:
-        item_count:
-          one: "%{count} مادة"
-          other: "%{count} مواد"
-      search_box:
-        label: البحث في فئة التصفح الحالية
-        placeholder: ...بحث
-        reset: مسح استعلام البحث
-        submit: البحث في فئة التصفح
-        success:
-          expand_html: يمكنك <a href="%{expand_search_url}">البحث في كل مواد المعرض عن "%{browse_query}"</a>.
-          result_number_html: طابق استعلام البحث <strong> %{search_size} من %{parent_search_count} مادة</strong> .في هذه الفئة
-        zero_results:
-          expand_html: <a href="%{clear_search_url}"> امسح استعلام المسح </a> أو حاول <a href="%{expand_search_url}">.البحث في كل المواد المعروضة لاستعلام البحث "%{browse_query}"</a>
-          result_number: .لم يتطابق بحثك مع أي مادة في هذه الفئة
+        honeypot_field_explanation: تجاهل هذا المربع النصي، فهو يُستخدم فقط لكشف المحتالين. إذا كتبت أي شيء في هذا المربع النصي، فلن يتم إرسال رسالتك.
+        title: تواصل معنا
