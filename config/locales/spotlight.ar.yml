@@ -14,6 +14,10 @@ ar:
     breadcrumb:
       label: مسار التنقل
     browse:
+      search:
+        item_count:
+          one: %{count} عنصر
+          other: %{count} عنصر
       search_box:
         label: ابحث في فئة التصفح الحالية
         placeholder: بحث...
