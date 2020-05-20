@@ -13,6 +13,7 @@ ar:
         header: جهات الاتصال
     breadcrumb:
       label: مسار التنقل
+    browse:
       search_box:
         label: ابحث في فئة التصفح الحالية
         placeholder: بحث...
