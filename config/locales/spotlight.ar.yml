@@ -16,8 +16,12 @@ ar:
     browse:
       search:
         item_count:
-          one: "%{count} عنصر"
-          other: "%{count} عنصرs"
+          one: 1 عنصر
+          few: "%{count} عناصر"
+          many: "%{count} عناصر"
+          other: "%{count} عناصر"
+          two: عنصرين
+          zero: لا يوجد
       search_box:
         label: ابحث في فئة التصفح الحالية
         placeholder: بحث...
@@ -35,3 +39,21 @@ ar:
       report_a_problem:
         honeypot_field_explanation: تجاهل هذا المربع النصي، فهو يُستخدم فقط لكشف المحتالين. إذا كتبت أي شيء في هذا المربع النصي، فلن يتم إرسال رسالتك.
         title: تواصل معنا
+    sir_trevor:
+      blocks:
+        browse_block:
+          items:
+            one: 1 عنصر
+            few: "%{count} عناصر"
+            many: "%{count} عناصر"
+            other: "%{count} عناصر"
+            two: عنصرين
+            zero: لا يوجد
+        link_to_search_block:
+          items:
+            one: 1 عنصر
+            few: "%{count} عناصر"
+            many: "%{count} عناصر"
+            other: "%{count} عناصر"
+            two: عنصرين
+            zero: لا يوجد
