@@ -40,6 +40,12 @@ export default class Crop {
     this.renderCropperMap();
 
     if (this.imageLayer) {
+      // Force a broken layer's container to be an element before removing.
+      // Code in leaflet-iiif land calls delete on the image layer's container when removing,
+      // which errors if there is an issue fetching the info.json and stops further necessary steps to execute.
+      if(!this.imageLayer._container) {
+        this.imageLayer._container = $('<div></div>');
+      }
       this.cropperMap.removeLayer(this.imageLayer);
     }
 
