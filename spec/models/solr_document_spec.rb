@@ -4,13 +4,12 @@ describe SolrDocument, type: :model do
   subject { document }
 
   let(:document) { described_class.new(id: 'abcd123') }
+  let(:exhibit_alt) { FactoryBot.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do
     allow(subject).to receive_messages(reindex: nil)
   end
-
-  let(:exhibit_alt) { FactoryBot.create(:exhibit) }
-  let(:exhibit) { FactoryBot.create(:exhibit) }
 
   its(:to_key) { is_expected.to eq ['abcd123'] }
   its(:persisted?) { is_expected.to be_truthy }

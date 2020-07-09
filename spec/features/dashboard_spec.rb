@@ -2,11 +2,6 @@
 
 describe 'Dashboard', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
-  before do
-    login_as(admin)
-  end
-
   let!(:parent_feature_page) do
     FactoryBot.create(:feature_page, title: 'Parent Page', exhibit: exhibit)
   end
@@ -17,6 +12,11 @@ describe 'Dashboard', type: :feature do
       parent_page: parent_feature_page,
       exhibit: exhibit
     )
+  end
+  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+
+  before do
+    login_as(admin)
   end
 
   it 'includes a list of recently edited feature pages' do
