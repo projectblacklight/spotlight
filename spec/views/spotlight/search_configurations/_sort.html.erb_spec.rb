@@ -2,6 +2,13 @@
 
 describe 'spotlight/search_configurations/_sort', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:f) do
+    form_helper = nil
+    controller.view_context.bootstrap_form_for(exhibit.blacklight_configuration, url: '/update') do |f|
+      form_helper = f
+    end
+    form_helper
+  end
 
   before do
     original_config = Spotlight::Engine.blacklight_config.deep_dup
@@ -14,14 +21,6 @@ describe 'spotlight/search_configurations/_sort', type: :view do
       current_exhibit: exhibit,
       translate_sort_fields: ''
     )
-  end
-
-  let(:f) do
-    form_helper = nil
-    controller.view_context.bootstrap_form_for(exhibit.blacklight_configuration, url: '/update') do |f|
-      form_helper = f
-    end
-    form_helper
   end
 
   it 'has a disabled relevance sort option' do

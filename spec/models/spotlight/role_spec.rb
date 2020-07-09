@@ -37,9 +37,9 @@ describe Spotlight::Role, type: :model do
 
       describe 'that points at a user with an existing role' do
         let(:user) { FactoryBot.create(:user) }
-        before { described_class.create!(role: 'curator', user: user) }
-
         let(:args) { { role: 'curator', user_key: user.email } }
+
+        before { described_class.create!(role: 'curator', user: user) }
 
         it 'is valid' do
           expect(subject).not_to be_valid
