@@ -37,29 +37,4 @@ Spotlight.onLoad(function(){
 
     new Spotlight.BlockLimits(editor).enforceLimits(editor);
   }
-
-  var editorjsinstance = $('.js-editorjs-instance').first();
-
-  if (editorjsinstance.length) {
-    $('<div id="codex-editor"></div>').insertAfter(editorjsinstance);
-    const data = JSON.parse($(editorjsinstance).val());
-
-    const editor = new EditorJS({
-      /**
-       * Id of Element that should contain the Editor
-       */
-      holder: 'codex-editor',
-
-      /**
-       * Previously saved data that should be rendered
-       */
-      data: data['data'] || {}
-    });
-
-    $(editorjsinstance).closest('form').on('submit', async function() {
-      await editor.save().then(function(outputData) {
-        $(editorjsinstance).val(JSON.stringify(outputData));
-      });
-    });
-  }
 });

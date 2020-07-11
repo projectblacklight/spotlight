@@ -1,0 +1,33 @@
+{
+  "name": "@projectblacklight/spotlight",
+  "version": "3.0.0",
+  "description": "Spotlight JS",
+  "main": "app/javascript/spotlight.js",
+  "files": [
+    "app/javascript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/projectblacklight/spotlight.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/projectblacklight/spotlight/issues"
+  },
+  "homepage": "https://github.com/projectblacklight/spotlight#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.3"
+  },
+  "dependencies": {
+    "@editorjs/delimiter": "^1.1.0",
+    "@editorjs/editorjs": "^2.18.0",
+    "@editorjs/image": "^2.4.2",
+    "@editorjs/list": "^1.5.0",
+    "@editorjs/quote": "^2.3.0",
+    "@editorjs/raw": "^2.1.2",
+    "@editorjs/underline": "^1.0.0",
+    "jquery": "^3.5.1"
+  }
+}
