@@ -8,7 +8,7 @@ module Spotlight
         Class.new do
           def initialize(page, content)
             @page = page
-            @content = content
+            @content = JSON.parse(content)
           end
 
           def to_partial_path

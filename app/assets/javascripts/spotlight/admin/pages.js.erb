@@ -38,7 +38,7 @@ Spotlight.onLoad(function(){
     new Spotlight.BlockLimits(editor).enforceLimits(editor);
   }
 
-  var editorjsinstance = $('.js-EditorJS-instance').first();
+  var editorjsinstance = $('.js-editorjs-instance').first();
 
   if (editorjsinstance.length) {
     $('<div id="codex-editor"></div>').insertAfter(editorjsinstance);
@@ -48,7 +48,7 @@ Spotlight.onLoad(function(){
       /**
        * Id of Element that should contain the Editor
        */
-      holderId : 'codex-editor',
+      holder: 'codex-editor',
 
       /**
        * Previously saved data that should be rendered
