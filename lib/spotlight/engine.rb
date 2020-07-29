@@ -264,6 +264,14 @@ module Spotlight
 
     config.default_page_content_type = 'SirTrevor'
 
+    # Added here for backwards compatability with SirTrevor 0.6
+    # and apps who have customized their avaialble widgets
+    config.sir_trevor_widgets = %w[
+      Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse LinkToSearch
+      FeaturedPages SolrDocuments SolrDocumentsCarousel SolrDocumentsEmbed
+      SolrDocumentsFeatures SolrDocumentsGrid SearchResults
+    ]
+
     config.routes = OpenStruct.new
     config.routes.solr_documents = {}
 
