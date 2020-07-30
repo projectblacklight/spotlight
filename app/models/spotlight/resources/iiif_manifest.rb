@@ -6,6 +6,7 @@ module Spotlight
     # A PORO to construct a solr hash for a given IiifManifest
     class IiifManifest
       attr_reader :collection
+
       def initialize(attrs = {})
         @url = attrs[:url]
         @manifest = attrs[:manifest]
@@ -36,6 +37,7 @@ module Spotlight
       private
 
       attr_reader :url, :manifest, :exhibit, :solr_hash
+
       delegate :blacklight_config, to: :exhibit
 
       def add_document_id

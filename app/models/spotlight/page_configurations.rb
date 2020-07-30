@@ -27,6 +27,7 @@ module Spotlight
              to: :context
 
     attr_reader :context, :page
+
     def initialize(context:, page:)
       @context = context
       @page = page
