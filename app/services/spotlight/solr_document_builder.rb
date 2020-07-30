@@ -8,6 +8,7 @@ module Spotlight
     end
 
     attr_reader :resource
+
     delegate :exhibit, :document_model, to: :resource
 
     ##

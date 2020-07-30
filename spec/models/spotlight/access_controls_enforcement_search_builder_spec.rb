@@ -3,6 +3,7 @@
 describe Spotlight::AccessControlsEnforcementSearchBuilder do
   class MockSearchBuilder < Blacklight::SearchBuilder
     attr_reader :blacklight_params, :scope
+
     def initialize(blacklight_params, scope)
       @blacklight_params = blacklight_params
       @scope = scope

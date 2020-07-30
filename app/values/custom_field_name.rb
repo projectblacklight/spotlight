@@ -5,6 +5,7 @@
 class CustomFieldName
   delegate :readonly_field?, :configuration, :field_type, to: :custom_field
   attr_reader :custom_field
+
   def initialize(custom_field)
     @custom_field = custom_field
   end

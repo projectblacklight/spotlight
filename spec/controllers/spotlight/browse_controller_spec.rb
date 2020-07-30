@@ -100,7 +100,7 @@ describe Spotlight::BrowseController, type: :controller do
           c.browse.document_actions = %i[a b c]
         end
 
-        allow(controller). to receive(:blacklight_config).and_return(config)
+        allow(controller).to receive(:blacklight_config).and_return(config)
 
         get :show, params: { id: search, exhibit_id: exhibit }
         expect(controller.blacklight_config.index.document_actions).to match_array %i[a b c]
