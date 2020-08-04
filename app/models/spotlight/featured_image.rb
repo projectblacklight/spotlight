@@ -66,7 +66,7 @@ module Spotlight
     def iiif_tilesource
       if self[:iiif_tilesource]
         self[:iiif_tilesource]
-      elsif source == 'remote' && file_present?
+      elsif file_present?
         riiif = Riiif::Engine.routes.url_helpers
         riiif.info_path(id)
       end

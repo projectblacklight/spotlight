@@ -36,7 +36,6 @@ describe Spotlight::FeaturedImage do
 
       context 'with an uploaded image' do
         before do
-          featured_image.source = 'remote'
           featured_image.image = temp_image.image
           featured_image.save!
         end
