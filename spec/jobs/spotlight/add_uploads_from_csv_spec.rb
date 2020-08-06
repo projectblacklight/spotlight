@@ -40,4 +40,16 @@ describe Spotlight::AddUploadsFromCsv do
 
     job.perform_now
   end
+
+  context 'with errors' do
+    it 'collects errors uploaded resources for each row of data' do
+      allow(Spotlight::IndexingCompleteMailer).to receive(:documents_indexed).and_return(double(deliver_now: true))
+      job.perform_now
+      expect(Spotlight::IndexingCompleteMailer).to have_received(:documents_indexed).with(
+        data, exhibit, user,
+        indexed_count: 1,
+        errors: { 1 => array_including(match(/relative URI: x/)), 2 => array_including(match(/Upload is invalid/)) }
+      )
+    end
+  end
 end
