@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Spotlight::IndexingCompleteMailer do
-  subject { described_class.documents_indexed [1, 2, 3], exhibit, user }
+  subject { described_class.documents_indexed [1, 2, 3], exhibit, user, indexed_count: 3 }
 
   let(:user) { double(email: 'test@example.com') }
   let(:exhibit) { double(title: 'Exhibit title') }
@@ -28,5 +28,15 @@ describe Spotlight::IndexingCompleteMailer do
 
   it 'includes the exhibit title' do
     expect(subject.body.encoded).to match exhibit.title
+  end
+
+  context 'with errors' do
+    subject { described_class.documents_indexed [], exhibit, user, indexed_count: 0, errors: { 1 => ['missing title'], 20 => ['whatever'] } }
+
+    it 'includes some errors' do
+      expect(subject.body.encoded).to match 'Errors'
+      expect(subject.body.encoded).to match 'Row 1: missing title'
+      expect(subject.body.encoded).to match 'Row 20: whatever'
+    end
   end
 end

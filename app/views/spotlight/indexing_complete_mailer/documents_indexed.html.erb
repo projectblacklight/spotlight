@@ -1,3 +1,12 @@
 <p><%= t :".title" %></p>
 
 <p><%= t :".body", count: @number, title: @exhibit.title %></p>
+
+<% if @errors.length > 0 %>
+  <p><%= t :".errors",  default: :'spotlight.catalog.reindex_progress_panel.error' %></p>
+  <ul>
+    <% @errors.each do |index, message| %>
+      <li><%= t :'.error', index: index, message: message.to_sentence %>
+    <% end %>
+  </ul>
+<% end  %>
