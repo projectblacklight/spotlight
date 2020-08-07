@@ -34,6 +34,7 @@ ignore_unused:
   - activerecord.attributes.spotlight/page.{display_sidebar\?,display_title} # app/views/spotlight/home_pages/_page_options.html.erb
   - activerecord.attributes.spotlight/language.locale # app/views/spotlight/exhibits/_languages.html.erb
   - activerecord.attributes.spotlight/contact.avatar # app/views/spotlight/contacts/_form.html.erb
+  - activerecord.attributes.spotlight/exhibit.contact_emails # app/views/spotlight/exhibits/_form.html.erb
   - activerecord.attributes.spotlight/exhibit.published # app/views/spotlight/sites/_exhibit.html.erb
   - activerecord.attributes.spotlight/masthead.display # app/views/spotlight/appearances/edit.html.erb
   - activerecord.attributes.spotlight/custom_field.is_multiple # app/views/spotlight/custom_fields/_form.html.erb

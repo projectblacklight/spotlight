@@ -9,6 +9,7 @@ en:
       spotlight/custom_search_field:
         field: Solr specification
       spotlight/exhibit:
+        contact_emails: Feedback recipients
         published: Published?
       spotlight/language:
         locale: Language
@@ -371,10 +372,10 @@ en:
         not_validated: Not validated.
         resend: Resend confirmation?
       contact:
-        email_delete_button: Delete contact
-        email_delete_confirmation: Delete contact email address?
-        email_delete_error: 'Problem deleting contact email:'
-        email_input_aria_label: Contact email %{index}
+        email_delete_button: Delete recipient
+        email_delete_confirmation: Delete recipient email address?
+        email_delete_error: 'Problem deleting recipient:'
+        email_input_aria_label: Recipient email %{index}
       delete:
         heading: Delete exhibit
         warning_html: This action is irreversible. Be sure to back up the exhibit settings and content using the %{export_link} feature before proceeding.
@@ -392,10 +393,10 @@ en:
         heading: Filter items
         instructions: You can limit the items included in this exhibit by applying a filter to your Solr index. When you apply a filter, only items with values that match the filter will be included in your exhibit. To apply a filter, enter both a field and a value that match the names used in your Solr index.
       form:
-        add_contact_email_button: Add new contact
+        add_contact_email_button: Add new recipient
         fields:
           contact_emails:
-            help_block: Each contact email will receive feedback submissions
+            help_block: Each recipient will receive submissions made through the feedback form
           published:
             help_block: ''
         uneditable_non_default_language: This field is not editable in the current language. Switch to the default language to edit it.
