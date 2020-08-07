@@ -2,20 +2,17 @@
   <div class="row justify-content-center">
     <% contact_form ||= Spotlight::ContactForm.new current_url: request.original_url %>
     <%= bootstrap_form_for contact_form, url: spotlight.exhibit_contact_form_path(current_exhibit, contact_form), layout: :horizontal, label_col: 'col-sm-3', control_col: 'col-sm-9', html: { class: 'col-md-offset-2 col-md-8 my-3 '} do |f| %>
-
       <h2><%= t(:'.title') %></h2>
+      <div class="alert alert-primary"><%= t('.reporting_from', url: contact_form.current_url) %></div>
+      <%= f.text_area :message, rows: 4 %>
       <%= f.text_field :name %>
-      <span style="display:none;visibility:hidden;">
-        <% honeypot_field_name = Spotlight::Engine.config.spambot_honeypot_email_field %>
-        <%= f.email_field honeypot_field_name, label: t(:'.honeypot_field_explanation') %>
-      </span>
+      <%= render '/spotlight/shared/honeypot_field', f: f %>
       <%= f.email_field :email %>
-      <%= f.text_area :message, rows: 7 %>
       <%= f.hidden_field :current_url %>
-      <div class="form-actions">
-        <div class="primary-actions">
-        <%= link_to t(:'helpers.action.cancel'), '#', class: 'btn-sizing', data: { 'behavior' => 'cancel-link' } %>
-        <%= f.submit nil, class: 'btn btn-primary' %>
+      <div class="form-actions row">
+        <div class="col offset-sm-3">
+          <%= f.submit nil, class: 'btn btn-primary' %>
+          <%= link_to t(:'helpers.action.cancel'), '#', class: 'btn-sizing', data: { 'behavior' => 'cancel-link' } %>
         </div>
       </div>
     <% end %>

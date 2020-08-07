@@ -66,6 +66,7 @@ ignore_unused:
   - helpers.submit.{submit,update} # Generically used set defaults
   - helpers.submit.contact.create # app/views/spotlight/contacts/_form.html.erb
   - helpers.action.exhibit.contact.submit # helpers.action.exhibit.contact.submit
+  - helpers.label.contact_form.{email,name} # app/views/spotlight/shared/_report_a_problem.html.erb
 
   # TODO Look into these as its unclear
   - activerecord.models.spotlight.page
