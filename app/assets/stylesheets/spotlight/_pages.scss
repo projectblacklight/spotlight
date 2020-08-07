@@ -58,13 +58,18 @@
   }
 
   .contact-properties {
-    padding-left: 1rem;
-    text-indent: -1rem;
+    padding-left: 0.125rem;
+
+    > div {
+      padding-bottom: 5px;
+    }
   }
 
   ol.contacts {
+    line-height: 1.33;
+
     li {
-      margin-bottom: $spacer * .5;
+      margin-bottom: 1rem;
       margin-top: $spacer * .5;
       word-break: break-word;
       .name {
@@ -76,7 +81,7 @@
   ol.sidenav {
     li {
       color: $gray-900;
-      margin-top: $spacer * .25;
+      margin-top: $spacer * .5;
     }
 
     ol.subsection {
