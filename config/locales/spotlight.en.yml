@@ -53,6 +53,9 @@ en:
       update_all: Save changes
       view: View
     label:
+      contact_form:
+        email: Your email
+        name: Your name
       solr_document:
         exhibit_tag_list: Tags
       spotlight/filter:
@@ -720,6 +723,7 @@ en:
         header: Administration menu
       report_a_problem:
         honeypot_field_explanation: Ignore this text box. It is used to detect spammers. If you enter anything into this text box, your message will not be sent.
+        reporting_from: 'Reporting from: %{url}'
         title: Contact Us
     sir_trevor:
       blocks:
