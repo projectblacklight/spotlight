@@ -63,9 +63,9 @@ describe 'Exhibit Administration', type: :feature do
     it 'updates the aria-labels properly', js: true do
       visit spotlight.edit_exhibit_path(exhibit)
 
-      expect(find_field(email_id_0)['aria-label']).to eq 'Contact email 1'
+      expect(find_field(email_id_0)['aria-label']).to eq 'Recipient email 1'
       find('#another-email').click
-      expect(find_field(email_id_1)['aria-label']).to eq 'Contact email 2'
+      expect(find_field(email_id_1)['aria-label']).to eq 'Recipient email 2'
     end
 
     it 'allows deletion of contact email addresses', js: true do
@@ -135,7 +135,7 @@ describe 'Exhibit Administration', type: :feature do
         find_all('.contact-email-delete').first.click
       end
 
-      expect(page).to have_css("##{hidden_input_id_0}~div span.contact-email-delete-error", text: 'Problem deleting contact email: Not Found')
+      expect(page).to have_css("##{hidden_input_id_0}~div span.contact-email-delete-error", text: 'Problem deleting recipient: Not Found')
     end
   end
 end
