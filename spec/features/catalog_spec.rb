@@ -23,13 +23,13 @@ describe 'Catalog', type: :feature do
 
     it "has a 'Item Visiblity' facet" do
       visit spotlight.search_exhibit_catalog_path(exhibit)
-      expect(page).to have_selector '.card-header', text: 'Item Visibility'
+      expect(page).to have_selector '.card-header', text: 'Item visibility'
     end
   end
 
   it 'has breadcrumbs' do
     visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
-    expect(page).to have_breadcrumbs 'Home', 'Search Results'
+    expect(page).to have_breadcrumbs 'Home', 'Search results'
   end
 
   describe 'Non-spotlight #show' do

@@ -73,7 +73,7 @@ describe 'Edit in place', type: :feature, js: true do
       within('#nested-navigation') do
         expect(page).to have_css("#exhibit_main_navigations_attributes_0_label[type='hidden']", visible: false)
         expect(page).not_to have_css("#exhibit_main_navigations_attributes_0_label[type='text']")
-        click_link('Curated Features')
+        click_link('Curated features')
         expect(page).not_to have_css("#exhibit_main_navigations_attributes_0_label[type='hidden']")
         expect(page).to have_css("#exhibit_main_navigations_attributes_0_label[type='text']")
         fill_in 'exhibit_main_navigations_attributes_0_label', with: 'My Page Label'

@@ -10,7 +10,7 @@ describe 'Home page', type: :feature, versioning: true do
     visit spotlight.exhibit_dashboard_path(exhibit)
     click_link 'Feature pages'
     expect(page).to have_selector 'h2', text: 'Homepage'
-    expect(page).to have_selector 'h3.card-title', text: 'Exhibit Home'
+    expect(page).to have_selector 'h3.card-title', text: 'Exhibit home'
   end
 
   it 'allows users to edit the home page title' do

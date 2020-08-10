@@ -15,7 +15,7 @@ FactoryBot.define do
 
   factory :default_search, class: 'Spotlight::Search' do
     exhibit
-    title { 'All Exhibit Items' }
+    title { 'All exhibit items' }
     long_description { 'All items in this exhibit.' }
 
     after(:build) { |search| search.thumbnail = FactoryBot.create(:featured_image) }

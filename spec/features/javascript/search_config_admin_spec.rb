@@ -120,7 +120,7 @@ describe 'Search Configuration Administration', js: true do
       within('#nested-sort-fields') do
         expect(page).to have_css("#blacklight_configuration_sort_fields_title_label[type='hidden']", visible: false)
         expect(page).not_to have_css("#blacklight_configuration_sort_fields_title_label[type='text']")
-        click_link('Title')
+        click_link('title')
         expect(page).not_to have_css("#blacklight_configuration_sort_fields_title_label[type='hidden']")
         expect(page).to have_css("#blacklight_configuration_sort_fields_title_label[type='text']")
         fill_in 'blacklight_configuration_sort_fields_title_label', with: 'My Title Label'
