@@ -19,7 +19,7 @@ describe 'spotlight/dashboards/_analytics.html.erb', type: :view do
 
   it 'has header' do
     render
-    expect(rendered).to have_content 'User Activity Over the Past Month'
+    expect(rendered).to have_content 'User activity over the past month'
   end
 
   it 'has metric labels' do

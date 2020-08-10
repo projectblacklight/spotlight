@@ -112,7 +112,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
       describe 'on the main about page' do
         it 'is successful' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('About Pages', exhibit_about_pages_path(exhibit))
+          expect(controller).to receive(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
           get :edit, params: { id: page, exhibit_id: exhibit }
           expect(assigns(:page)).to eq page
           expect(assigns(:exhibit)).to eq exhibit
@@ -122,7 +122,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
       describe 'on a different about page' do
         it 'is successful' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('About Pages', exhibit_about_pages_path(exhibit))
+          expect(controller).to receive(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with(page2.title, [:edit, exhibit, page2])
           get :edit, params: { id: page2, exhibit_id: exhibit }
           expect(assigns(:page)).to eq page2
@@ -137,7 +137,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('About Pages', exhibit_about_pages_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
         get :index, params: { exhibit_id: exhibit }
         expect(assigns(:page)).to be_kind_of Spotlight::Page
         expect(assigns(:page)).to be_new_record

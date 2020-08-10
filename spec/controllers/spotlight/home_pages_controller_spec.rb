@@ -22,7 +22,7 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
         it 'shows breadcrumbs' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
           expect(controller).to receive(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('Exhibit Home', [:edit, exhibit, page])
+          expect(controller).to receive(:add_breadcrumb).with('Exhibit home', [:edit, exhibit, page])
           get :edit, params: { id: page, exhibit_id: page.exhibit }
           expect(response).to be_successful
         end

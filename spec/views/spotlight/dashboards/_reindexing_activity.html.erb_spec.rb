@@ -20,7 +20,7 @@ describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
     end
 
     it 'displays the section header' do
-      expect(rendered).to have_css('h2', text: 'Recent Item Indexing Activity')
+      expect(rendered).to have_css('h2', text: 'Recent item indexing activity')
     end
 
     it 'displays an explanatory message when there are no reindexing attempts in the log' do
@@ -36,9 +36,9 @@ describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
 
     it 'displays the correct localized column headings when there are reindexing attempts in the log' do
       expect(rendered).to have_css('table.table-striped th.col-3', text: 'Date', count: 1)
-      expect(rendered).to have_css('table.table-striped th.col-3', text: 'Requested By', count: 1)
-      expect(rendered).to have_css('table.table-striped th.col-1', text: 'Items Indexed', count: 1)
-      expect(rendered).to have_css('table.table-striped th.col-3', text: 'Elapsed Time', count: 1)
+      expect(rendered).to have_css('table.table-striped th.col-3', text: 'Requested by', count: 1)
+      expect(rendered).to have_css('table.table-striped th.col-1', text: 'Items indexed', count: 1)
+      expect(rendered).to have_css('table.table-striped th.col-3', text: 'Elapsed time', count: 1)
       expect(rendered).to have_css('table.table-striped th.col-2', text: 'Status', count: 1)
     end
 
@@ -66,9 +66,9 @@ describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
     end
 
     it 'displays the status of the reindexing attempt using localized text' do
-      expect(rendered).to have_css('table.table-striped td', text: 'Not Yet Started', count: 1)
+      expect(rendered).to have_css('table.table-striped td', text: 'Not yet started', count: 1)
       expect(rendered).to have_css('table.table-striped td', text: 'Successful', count: 2)
-      expect(rendered).to have_css('table.table-striped td', text: 'In Progress', count: 1)
+      expect(rendered).to have_css('table.table-striped td', text: 'In progress', count: 1)
       expect(rendered).to have_css('table.table-striped td', text: 'Failed', count: 1)
     end
   end

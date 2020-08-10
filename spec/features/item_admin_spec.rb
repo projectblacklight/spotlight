@@ -30,12 +30,12 @@ describe 'Item Administration', type: :feature do
     it 'has a public/private toggle' do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
       item = first('tr[itemscope]')
-      expect(item).to have_button 'Make Private'
-      item.click_button 'Make Private'
+      expect(item).to have_button 'Make private'
+      item.click_button 'Make private'
 
       item = first('tr[itemscope]')
-      expect(item).to have_button 'Make Public'
-      item.click_button 'Make Public'
+      expect(item).to have_button 'Make public'
+      item.click_button 'Make public'
     end
 
     it "toggles the 'blacklight-private' label", js: true, default_max_wait_time: 5 do

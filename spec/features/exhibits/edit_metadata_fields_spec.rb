@@ -9,7 +9,7 @@ describe 'Editing metadata fields', type: :feature do
   it 'works' do
     visit spotlight.edit_exhibit_metadata_configuration_path exhibit
 
-    expect(page).to have_content 'Display and Order Metadata Fields'
+    expect(page).to have_content 'Display and order metadata fields'
 
     check :blacklight_configuration_index_fields_language_ssm_show
     check :blacklight_configuration_index_fields_abstract_tesim_show

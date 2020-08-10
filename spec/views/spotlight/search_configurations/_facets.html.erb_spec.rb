@@ -29,7 +29,7 @@ describe 'spotlight/search_configurations/_facets', type: :view do
   end
 
   it 'shows the config for the non-empty personal name facet' do
-    expect(rendered).to have_content 'Personal Names'
+    expect(rendered).to have_content 'Personal names'
   end
 
   it 'shows the config for the empty custom facet' do

@@ -158,9 +158,9 @@ en:
   reindexing_log:
     status:
       failed: Failed
-      in_progress: In Progress
+      in_progress: In progress
       succeeded: Successful
-      unstarted: Not Yet Started
+      unstarted: Not yet started
   shared:
     site_sidebar:
       documentation: Curator documentation
@@ -171,7 +171,7 @@ en:
         header: Contacts
       contacts_form:
         header: Contacts
-        instructions: Enter details for each librarian, curator or other contact person for this exhibit. Select the contacts you want to be show in the sidebar of the About Pages. Drag and drop contacts to specify the order in which they are shown in the sidebar.
+        instructions: Enter details for each librarian, curator or other contact person for this exhibit. Select the contacts you want to be show in the sidebar of the about pages. Drag and drop contacts to specify the order in which they are shown in the sidebar.
       page_options:
         published: Publish
     admin_users:
@@ -230,20 +230,20 @@ en:
     catalog:
       admin:
         header: Items
-        title: Curation - Items
+        title: Curation - items
       admin_header:
         new_resource: Add items
         reindex: Reindex items
       breadcrumb:
-        index: Search Results
+        index: Search results
       document_visibility_control:
         inprogress:
           label: ''
         make_private:
-          button: Make Private
+          button: Make private
           label: ''
         make_public:
-          button: Make Public
+          button: Make public
           label: ''
       edit_default:
         url-field:
@@ -252,10 +252,10 @@ en:
         blank_field_warning_html: This field is currently hidden on all pages. You can make it visible on the Curation &gt; %{link} page.
       facets:
         exhibit_visibility:
-          label: Item Visibility
+          label: Item visibility
           private: Private
       fields:
-        date_added: Date Added
+        date_added: Date added
         title: Title
         visibility: Public
       reindex_progress_panel:
@@ -281,7 +281,7 @@ en:
       subject: "%{application_name} exhibit feedback"
     contacts:
       edit:
-        header: Edit Contact
+        header: Edit contact
       form:
         avatar:
           header: Avatar
@@ -300,7 +300,7 @@ en:
         title:
           placeholder: Job title most relevant to this exhibit
       new:
-        header: Add Exhibit Contact
+        header: Add exhibit contact
     curation:
       header: Curation
       nav:
@@ -317,7 +317,7 @@ en:
         translations: Translations
     custom_fields:
       edit:
-        header: Edit Exhibit-Specific Field
+        header: Edit exhibit-specific field
       form:
         field_type:
           label: Type
@@ -326,19 +326,19 @@ en:
         is_multiple:
           label: Multi-valued?
       new:
-        header: Add Exhibit-Specific Field
+        header: Add exhibit-specific field
     custom_search_fields:
       edit:
-        header: Edit Exhibit-Specific Field
+        header: Edit exhibit-specific field
       form:
         field:
           help: Specify fields to be searched and their boost values (e.g., full_title_tesim^100 personal_name_tesim^50).
       new:
-        header: Add Exhibit-Specific Field
+        header: Add exhibit-specific field
     dashboards:
       analytics:
         header: Analytics
-        monthly_header: User Activity Over the Past Month
+        monthly_header: User activity over the past month
         pages:
           header: Most popular pages
         pagetitle: page title
@@ -349,21 +349,21 @@ en:
         field:
           last_edited_by: User
           title: Title
-          updated_at: Last Edited
-        header: Recent Site Building Activity
+          updated_at: Last edited
+        header: Recent site building activity
       reindexing_activity:
         field:
           date: Date
-          duration: Elapsed Time
-          items_reindexed_count: Items Indexed
+          duration: Elapsed time
+          items_reindexed_count: Items indexed
           job_status: Status
-          user: Requested By
-        header: Recent Item Indexing Activity
+          user: Requested by
+        header: Recent item indexing activity
         no_reindexing_activity: There has been no reindexing activity
       show:
         header: Dashboard
       solr_document_activity:
-        header: Recently Updated Items
+        header: Recently updated items
         no_documents: There are no documents in this exhibit
     exhibitnavbar:
       label: Exhibit navigation
@@ -412,7 +412,7 @@ en:
         unpublished: Unpublished exhibits
         user: Your exhibits
       languages:
-        current_header: Current Languages
+        current_header: Current languages
         current_instructions: Each language listed below is available for translations on the Curation > Translations page. To enable exhibit visitors to change the language of the exhibit, enable the Public checkbox. To hide translations from an available language from the exhibit, disable the Public checkbox.
         heading: Languages
         modal:
@@ -503,21 +503,21 @@ en:
     main_navigation:
       about: About
       browse: Browse
-      curated_features: Curated Features
+      curated_features: Curated features
     metadata_configurations:
       edit:
         deselect_all: Deselect all
         exhibit_specific:
-          header: Exhibit-Specific Fields
+          header: Exhibit-specific fields
           instructions: You can add metadata fields to supplement the metadata fields that are part of the repository item record.
         field:
           label: Field name
         header: Metadata
         instructions: Select metadata fields to display on each type of page. Select a field name to edit its display label. Drag and drop fields to specify the order in which they are displayed.
-        order_header: Display and Order Metadata Fields
+        order_header: Display and order metadata fields
         select_all: Select all
         view:
-          show: Item Details
+          show: Item details
     pages:
       edit:
         header: Edit page
@@ -531,26 +531,26 @@ en:
         title_placeholder: Title
       index:
         about_pages:
-          header: About Pages
+          header: About pages
         feature_pages:
-          header: Feature Pages
+          header: Feature pages
           home_pages_header: Homepage
         home_pages:
-          header: Exhibit Home
-          title: Exhibit Home
+          header: Exhibit home
+          title: Exhibit home
       new:
         header: New page
       order_pages:
         cancel: Cancel
         instructions: Add new pages below. Drag and drop pages to change the order in which they are displayed in the sidebar.
         new_page: Add new page
-        pages_header: Custom Pages
+        pages_header: Custom pages
         save: Save
     resources:
       csv_upload:
         form:
           add_item: Add item
-          file_label: CSV File
+          file_label: CSV file
           help_html: "%{link}"
           template: Download template
           title: Upload multiple items
@@ -568,7 +568,7 @@ en:
       json_upload:
         form:
           add_item: Add item
-          file_label: JSON File
+          file_label: JSON file
           title: Upload raw documents
       new:
         header: Add items
@@ -593,11 +593,11 @@ en:
         help: Enter a valid email address
       index:
         actions: Actions
-        email: Email Address
+        email: Email address
         header: Users
         invite_pending: pending
         role: Role
-        title: Site Configuration - Users
+        title: Site configuration - users
     saved_search:
       id: Select a title to update a previously saved search
       label: Save this search
@@ -605,41 +605,41 @@ en:
     search:
       fields:
         abstract_tesim: Abstract
-        corporate_name_ssm: Corporate Names
+        corporate_name_ssm: Corporate names
         facet:
-          corporate_name_ssm: Corporate Names
-          exhibit_tags: Exhibit Tags
+          corporate_name_ssm: Corporate names
+          exhibit_tags: Exhibit tags
           genre_ssim: Genre
           language_ssim: Language
-          personal_name_ssm: Personal Names
+          personal_name_ssm: Personal names
           subject_geographic_ssim: Geographic
           subject_temporal_ssim: Era
         full_title_tesim: Title
         language_ssm: Language
         note_desc_note_tesim: Note
         note_mapuse_tesim: Type
-        note_page_num_tesim: Page Number
+        note_page_num_tesim: Page number
         note_phys_desc_tesim: Note
         note_provenance_tesim: Provenance
         note_references_tesim: References
         note_source_tesim: Source
-        personal_name_ssm: Personal Names
+        personal_name_ssm: Personal names
         search:
           all_fields: Everything
           author: Author
           title: Title
         sort:
-          date: Date (new to old)
-          identifier: Identifier
-          relevance: Relevance
-          source: Source
-          title: Title
-          type: Type
+          date: date (new to old)
+          identifier: identifier
+          relevance: relevance
+          source: source
+          title: title
+          type: type
         spotlight_upload_attribution_tesim: Attribution
         spotlight_upload_date_tesim: Date
         spotlight_upload_description_tesim: Description
-        subject_geographic_tesim: Geographic Subject
-        subject_temporal_tesim: Temporal Subject
+        subject_geographic_tesim: Geographic subject
+        subject_temporal_tesim: Temporal subject
     search_configurations:
       default_per_page:
         label: Default per page
@@ -687,8 +687,8 @@ en:
           sort_type_ssi: type
     searches:
       edit:
-        header: Edit Browse Category
-        title: Curation - Browse
+        header: Edit browse category
+        title: Curation - browse
       form:
         default_index_view_type: Default view
         masthead:
@@ -705,12 +705,12 @@ en:
         thumbnail:
           help: You can select and crop an image to visually represent this search.
       index:
-        categories_header: Browse Categories
+        categories_header: Browse categories
         header: Browse
         instructions: Use the Save search button on a search results page to create a new browse category. Select the categories you want to be displayed on the browse landing page. Drag and drop categories to change the order in which they appear on that page.
         no_saved_searches: You can save search results while in curation mode to create browse categories, which will be displayed here.
         not_searchable_html: This exhibit is not currently searchable. To perform searches that can be saved as additional browse categories, temporarily turn on the Display search box option in the Options section of the Configuration > %{href} page.
-        title: Curation - Browse
+        title: Curation - browse
       search:
         item_count:
           one: "%{count} item"
@@ -724,7 +724,7 @@ en:
       report_a_problem:
         honeypot_field_explanation: Ignore this text box. It is used to detect spammers. If you enter anything into this text box, your message will not be sent.
         reporting_from: 'Reporting from: %{url}'
-        title: Contact Us
+        title: Contact us
     sir_trevor:
       blocks:
         browse_block:
@@ -757,7 +757,7 @@ en:
         actions: Actions
         header: Tags
         name: Tag name
-        no_tags: No items in this exhibit have been tagged. You can add tags to an item on the Item Details page while in curation mode.
+        no_tags: No items in this exhibit have been tagged. You can add tags to an item on the item details page while in curation mode.
         taggings:
           count: Items tagged
     topbar:
@@ -774,16 +774,16 @@ en:
       general:
         basic_settings:
           description: Description
-          label: Basic Settings
+          label: Basic settings
           subtitle: Subtitle
           title: Title
         label: General
         main_menu:
           about: About
           browse: Browse
-          curated_features: Curated Features
+          curated_features: Curated features
           home: Home
-          label: Main Menu
+          label: Main menu
       import:
         description: You can import and export Rails-based YAML files containing the translated label values for the currently selected language for use in internationalization tools such as Transifex and i18n-tools. This feature does not include importing or exporting translations for Pages.
         export_current_locale: Export %{language}
@@ -794,7 +794,7 @@ en:
         import_submit: Import translations
       metadata:
         exhibit_specific_fields:
-          label: Exhibit-Specific Fields
+          label: Exhibit-specific fields
         label: Metadata field labels
       page:
         destroy: Delete
@@ -806,12 +806,12 @@ en:
         recreate_are_you_sure: Are you sure you want to recreate this page? If you recreate this page all content, including any existing translations you have made, will be replaced with the content of the English version of the page.
       pages:
         about_pages:
-          label: About Pages
+          label: About pages
         feature_pages:
-          label: Feature Pages
+          label: Feature pages
         help_html: Before exhibit visitors can view translated pages you must create, edit, and publish each page translation. When you create a translated page, a copy of the default language version of the page is made to serve as the initial translated page. You can then edit that translated page to replace the page title and any text fields with translated text. A translated page will not be visible to exhibit visitors until you publish it.  To replace a translated page with a current copy of the default language version of the page, use the <b>Recreate</b> action.
         home_page:
-          label: Home Page
+          label: Home page
         label: Pages
       pages_table:
         header:
@@ -821,12 +821,12 @@ en:
           last_updated: "%{language} title / Last update"
       search_fields:
         facet_fields:
-          label: Facet Fields
+          label: Facet fields
         field_based_search_fields:
-          label: Field-Based Search Fields
+          label: Field-based search fields
         label: Search field labels
         sort_fields:
-          label: Sort Fields
+          label: Sort fields
     versions:
       redo: Redo changes
       undo: Undo changes

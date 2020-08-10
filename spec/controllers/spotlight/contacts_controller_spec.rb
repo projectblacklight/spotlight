@@ -24,7 +24,7 @@ describe Spotlight::ContactsController, type: :controller do
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('About Pages', exhibit_about_pages_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with(contact.name, edit_exhibit_contact_path(exhibit, contact))
         get :edit, params: { id: contact, exhibit_id: contact.exhibit }
         expect(response).to be_successful
@@ -76,7 +76,7 @@ describe Spotlight::ContactsController, type: :controller do
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('About Pages', exhibit_about_pages_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Add contact', new_exhibit_contact_path(exhibit))
         get :new, params: { exhibit_id: exhibit }
         expect(response).to be_successful

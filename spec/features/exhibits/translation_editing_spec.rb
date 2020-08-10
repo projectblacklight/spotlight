@@ -148,7 +148,7 @@ describe 'Translation editing', type: :feature do
         before do
           within '.translation-edit-form #general' do
             fill_in 'Home', with: 'Maison'
-            fill_in 'Search Results', with: 'Résultats de la recherche'
+            fill_in 'Search results', with: 'Résultats de la recherche'
             click_button 'Save changes'
           end
         end
@@ -310,7 +310,7 @@ describe 'Translation editing', type: :feature do
         click_link 'Search field labels'
 
         within('#search_fields', visible: true) do
-          fill_in 'Relevance', with: 'French Relevance'
+          fill_in 'relevance', with: 'French Relevance'
           click_button 'Save changes'
         end
 
@@ -333,7 +333,7 @@ describe 'Translation editing', type: :feature do
         expect(page).to have_css('input[type="text"]', count: 4)
         expect(page).to have_css('textarea', count: 2)
 
-        expect(page).to have_field 'All Exhibit Items'
+        expect(page).to have_field 'All exhibit items'
         expect(page).to have_field 'Browse Category 1'
         expect(page).to have_css('.form-text', text: 'All items in this exhibit.')
       end
@@ -342,7 +342,7 @@ describe 'Translation editing', type: :feature do
     it 'redirects to the same form tab' do
       click_link 'Browse categories'
       within('#browse', visible: true) do
-        fill_in 'All Exhibit Items', with: "Tous les objets d'exposition"
+        fill_in 'All exhibit items', with: "Tous les objets d'exposition"
         click_button 'Save changes'
       end
 
@@ -354,7 +354,7 @@ describe 'Translation editing', type: :feature do
       click_link 'Browse categories'
 
       within('#browse', visible: true) do
-        fill_in 'All Exhibit Items', with: "Tous les objets d'exposition"
+        fill_in 'All exhibit items', with: "Tous les objets d'exposition"
 
         first('.translation-description-toggle').click
 
@@ -366,7 +366,7 @@ describe 'Translation editing', type: :feature do
 
       expect(page).to have_css('.flash_messages', text: 'The exhibit was successfully updated.')
 
-      expect(exhibit.searches.first.title).to eq 'All Exhibit Items'
+      expect(exhibit.searches.first.title).to eq 'All exhibit items'
       expect(exhibit.searches.first.long_description).to eq 'All items in this exhibit.'
 
       I18n.locale = :fr

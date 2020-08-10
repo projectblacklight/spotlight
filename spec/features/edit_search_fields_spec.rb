@@ -54,7 +54,7 @@ describe 'Search Administration', type: :feature do
         visit spotlight.edit_exhibit_search_configuration_path(exhibit)
 
         expect(page).to have_css("input[name='blacklight_configuration[sort_fields][relevance][enable]'][disabled='disabled']")
-        expect(page).to have_css('#nested-sort-fields .dd-item:nth-child(5) h3', text: 'Date (new to old)')
+        expect(page).to have_css('#nested-sort-fields .dd-item:nth-child(5) h3', text: 'date (new to old)')
 
         uncheck 'blacklight_configuration_sort_fields_title_enabled'
         uncheck 'blacklight_configuration_sort_fields_identifier_enabled'
@@ -72,7 +72,7 @@ describe 'Search Administration', type: :feature do
         expect(find('#blacklight_configuration_sort_fields_identifier_enabled')).not_to be_checked
 
         # Type is now sorted last
-        expect(page).to have_css('#nested-sort-fields .dd-item:nth-child(5) h3', text: 'Type')
+        expect(page).to have_css('#nested-sort-fields .dd-item:nth-child(5) h3', text: 'type')
       end
     end
   end

@@ -7,7 +7,7 @@ describe Spotlight::MainNavigation, type: :model do
 
   it 'has a default_label' do
     subject.nav_type = :curated_features
-    expect(subject.default_label).to eq 'Curated Features'
+    expect(subject.default_label).to eq 'Curated features'
   end
 
   it 'returns the use the default label in the absence of a label' do

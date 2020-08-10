@@ -42,7 +42,7 @@ describe 'shared/_exhibit_navbar', type: :view do
     feature_page
     another_page = FactoryBot.create(:feature_page, exhibit: current_exhibit)
     render
-    expect(response).to have_selector '.dropdown .dropdown-toggle', text: 'Curated Features'
+    expect(response).to have_selector '.dropdown .dropdown-toggle', text: 'Curated features'
     expect(response).to have_link feature_page.title, visible: false, href: spotlight.exhibit_feature_page_path(current_exhibit, feature_page)
     expect(response).to have_link another_page.title, visible: false, href: spotlight.exhibit_feature_page_path(current_exhibit, another_page)
   end
