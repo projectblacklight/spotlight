@@ -1,10 +1,10 @@
 <% if can? :import_translations, Spotlight::Exhibit %>
-  <div class="row col-md-12 mb-4">
+  <div class="row col-md-12 mb-5">
     <h2><%= t(:'.header') %></h2>
     <p class="instructions"><%= t(:'.description') %></p>
 
-    <%= bootstrap_form_for current_exhibit, url: spotlight.import_exhibit_translations_path(current_exhibit), html: { class: 'row col-md-12 clearfix mb-3', multipart: true } do |f| %>
-      <%= f.label :value, t(".import_label"), class: 'col-form-label col-12 col-sm-3 text-right' %>
+    <%= bootstrap_form_for current_exhibit, url: spotlight.import_exhibit_translations_path(current_exhibit), html: { class: 'row col-md-12 align-items-center clearfix mb-3', multipart: true } do |f| %>
+      <%= f.label :value, t(".import_label"), class: 'col-form-label col-12 col-sm-3 pl-0 translation-import-export-label' %>
 
       <div class="input-group col px-0">
         <%= file_field_tag :file, class: 'form-control' %>
@@ -14,8 +14,8 @@
         </div>
       </div>
     <% end %>
-    <div class="row col-md-12">
-      <%= content_tag :span, t(".export_label"), class: 'col-form-label col-12 col-sm-3 text-right' %>
+    <div class="row col-md-12 align-items-center">
+      <%= content_tag :span, t(".export_label"), class: 'col-form-label col-12 col-sm-3 pl-0 translation-import-export-label' %>
 
       <%= link_to t(:'.export_current_locale', language: t(:"locales.#{@language}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: @language), class: 'btn btn-primary mr-3' %>
       <%= link_to t(:'.export_default_locale', language: t(:"locales.#{I18n.default_locale}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: I18n.default_locale), class: 'btn btn-primary' %>
