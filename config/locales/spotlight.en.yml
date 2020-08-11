@@ -196,7 +196,7 @@ en:
       edit:
         header: Appearance
         main_navigation:
-          help: Select the menu items you want to be displayed in the main navigation menu (menu items are only displayed when published pages exist for that item). Click a menu item to change its display label. Drag and drop a menu item to change their order in the menu.
+          help: Select the menu items you want to be displayed in the main navigation menu (menu items are only displayed when published pages exist for that item). Select a menu item to change its display label. Drag and drop a menu item to change their order in the menu.
           menu: Main menu
         site_masthead:
           heading: Exhibit masthead
@@ -440,7 +440,7 @@ en:
     exhibits_admin_invitation_mailer:
       invitation_instructions:
         accept: Accept invitation
-        accept_invitation: " You can accept this invitation by clicking the link below."
+        accept_invitation: You can accept this invitation by selecting the link below.
         hello: Hello!
         ignore: If you don't want to accept the invitation, please ignore this email. Your exhibits administrator account won't be created until you access the link above.
         someone_invited_you: The Exhibits Administrator has invited you to help manage exhibits.
@@ -451,7 +451,7 @@ en:
     featured_images:
       form:
         crop_area:
-          help: Adjust the image so that the rectangle contains the area you want to use as the %{thing}. Click "Save changes" to save the cropped area.
+          help_html: Adjust the image so that the rectangle contains the area you want to use as the %{thing}. Select <b>Save changes</b> to save the cropped area.
         non_iiif_alert_html: The image source must be a IIIF image. Contact your exhibits adminstrator or see the <a href="http://iiif.io">IIIF website</a> for more information about IIIF.
         source:
           exhibit:
@@ -464,7 +464,7 @@ en:
             label: Upload an image
       upload_form:
         crop_area:
-          help: Adjust the image so that the rectangle contains the area you want to use as the %{thing}. Click "Save changes" to save the cropped area.
+          help_html: Adjust the image so that the rectangle contains the area you want to use as the %{thing}. Select <b>Save changes</b> to save the cropped area.
         non_iiif_alert_html: The image source must be a IIIF image. Contact your exhibits adminstrator or see the <a href="http://iiif.io">IIIF website</a> for more information about IIIF.
         source:
           exhibit:
@@ -494,7 +494,7 @@ en:
         title: Your CSV file has just finished being processed.
     invitation_mailer:
       invitation_instructions:
-        accept_invitation: You can accept this invitation by clicking the link below.
+        accept_invitation: You can accept this invitation by selecting the link below.
         hello: Hello!
         ignore: If you don't want to accept the invitation, please ignore this email. Your account won't be created until you access the link above.
         someone_invited_you: The Exhibits Administrator has invited you to help work on the "%{exhibit_name}" exhibit.
@@ -513,7 +513,7 @@ en:
         field:
           label: Field name
         header: Metadata
-        instructions: Select metadata fields to display on each type of page. Click a field name to edit its display label. Drag and drop fields to specify the order in which they are displayed.
+        instructions: Select metadata fields to display on each type of page. Select a field name to edit its display label. Drag and drop fields to specify the order in which they are displayed.
         order_header: Display and Order Metadata Fields
         select_all: Select all
         view:
@@ -527,7 +527,7 @@ en:
         page_options: Options
         page_thumbnail: Thumbnail
         thumbnail:
-          help: You can select and crop an image to visually represent this page. It will be used as the thumbnail image if you include this page using the 'Highlight Featured Pages' widget.
+          help: You can select and crop an image to visually represent this page. It will be used as the thumbnail image if you include this page in the Pages widget.
         title_placeholder: Title
       index:
         about_pages:
@@ -660,7 +660,7 @@ en:
           one: "%{count} unique value"
           other: "%{count} unique values"
       facets:
-        help: If the sidebar is visible, users can use the facets shown in the sidebar to limit a search.  You can select the facets that are available for searching below. Click a facet field name to edit its display label. Drag and drop facets to specify the order they are displayed in the sidebar.
+        help: If the sidebar is visible, users can use the facets shown in the sidebar to limit a search.  You can select the facets that are available for searching below. Select a facet field name to edit its display label. Drag and drop facets to specify the order they are displayed in the sidebar.
         sort_by:
           count: Frequency
           index: Value
@@ -672,10 +672,10 @@ en:
           instructions: You can add custom search fields to supplement the search fields that are part of the default configuration.
         header: Field-based search
         help: If the search box is displayed, you can also enable field-based search. Field-based search adds a dropdown menu to your exhibit site's search box that provides the user with an option to restrict a search query to a single metadata field.
-        instructions: If enabled, you can select below the metadata fields that are available for searching. Click a field name to edit its display label.  Drag and drop fields to specify the order they are displayed in the search box dropdown menu.
+        instructions: If enabled, you can select below the metadata fields that are available for searching. Select a field name to edit its display label.  Drag and drop fields to specify the order they are displayed in the search box dropdown menu.
       sort:
         header: Sort fields
-        help: Select the fields you want to be available to users for sorting results. Click a field title to change its display label. Drag and drop fields to change their order in the sort dropdown menu. The field listed first is the default sort field.
+        help: Select the fields you want to be available to users for sorting results. Select a field title to change its display label. Drag and drop fields to change their order in the sort dropdown menu. The field listed first is the default sort field.
         keys:
           asc: ascending
           desc: descending
@@ -809,7 +809,7 @@ en:
           label: About Pages
         feature_pages:
           label: Feature Pages
-        help_html: Before exhibit visitors can view translated pages you must create, edit, and publish each page translation. When you create a translated page, a copy of the default language version of the page is made to serve as the initial translated page. You can then edit that translated page to replace the page title and any text fields with translated text. A translated page will not be visible to exhibit visitors until you publish it.  To replace a translated page with a current copy of the default language version of the page, use the <i>Recreate</i> action.
+        help_html: Before exhibit visitors can view translated pages you must create, edit, and publish each page translation. When you create a translated page, a copy of the default language version of the page is made to serve as the initial translated page. You can then edit that translated page to replace the page title and any text fields with translated text. A translated page will not be visible to exhibit visitors until you publish it.  To replace a translated page with a current copy of the default language version of the page, use the <b>Recreate</b> action.
         home_page:
           label: Home Page
         label: Pages
