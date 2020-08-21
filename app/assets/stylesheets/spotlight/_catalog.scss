@@ -122,14 +122,14 @@ form.edit_solr_document {
   margin-right: $spacer * 0.1;
 }
 
-#document {
-  dd.blacklight-exhibit_tags {
-    color: $body-bg;
-    line-height: 2em;
-  }
-
+#document,
+.document {
   .blacklight-exhibit_tags a {
     @extend .badge;
     @extend .badge-secondary;
+
+    &:not(:last-child) {
+      @extend .mr-2;
+    }
   }
 }
