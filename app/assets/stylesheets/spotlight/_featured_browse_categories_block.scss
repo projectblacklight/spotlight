@@ -1,141 +1,236 @@
 $featured-browse-category-border-color: $border-color;
 $featured-browse-category-caption-color: $white;
-$container-tablet: 720px;
-$container-desktop: 960px;
-$container-large-desktop: 1140px;
-// Large desktop
-$featured-browse-category-margin-large-desktop: 15px;
-$no-sidebar-large-desktop-large-image-width: floor(($container-large-desktop)/ 3) - $featured-browse-category-margin-large-desktop;
-$no-sidebar-large-desktop-medium-image-width: floor(($container-large-desktop)/ 5) - $featured-browse-category-margin-large-desktop;
 
-$with-sidebar-large-desktop-width: floor($container-large-desktop - ($container-large-desktop)/ 4);  // sidebar space to remove
-$with-sidebar-large-desktop-large-image-width: floor(($with-sidebar-large-desktop-width)/ 2) - ($featured-browse-category-margin-large-desktop * 2);
-$with-sidebar-large-desktop-medium-image-width: 265px;
+// These are the widths of the main content area at each viewport width
+$container-sm: 510px; // (Bootstrap 4 "sm")
+$container-md: 690px; // (Bootstrap 4 "md")
+$container-lg: 930px; // (Bootstrap 4 "lg")
+$container-xl: 1100px; // (Bootstrap 4 "xl")
+$container-xl-sidebar: 825px; // ("xl" main content area when sidebar present)
 
-// Desktop
-$featured-browse-category-margin-desktop: 20px;
-$no-sidebar-desktop-large-image-width: floor(($container-desktop)/ 3) - $featured-browse-category-margin-desktop;
+// The aspect ratio factor determines the height of the tile.
+// Can use different values because images are background images
+// and will fit the container without distortion.
+$aspect-ratio-factor-4x3: 0.75; // 4:3 width:height
+$aspect-ratio-factor-1x1: 1; // 1:1 width: height
 
-$with-sidebar-desktop-width: floor($container-desktop - ($container-desktop)/ 4);  // sidebar space to remove
-$with-sidebar-desktop-large-image-width: floor(($with-sidebar-desktop-width)/ 2) - ($featured-browse-category-margin-desktop * 2);
-$with-sidebar-desktop-medium-image-width: floor(($with-sidebar-desktop-width)/ 3) - ($featured-browse-category-margin-desktop);
+// Horizontal space between tiles
+$tile-margin: 16px;
 
-// Tablet
-$featured-browse-category-margin-tablet: 20px;
-$no-sidebar-tablet-large-image-width: floor(($container-tablet)/ 3) - $featured-browse-category-margin-tablet;
-$with-sidebar-tablet-large-image-width: floor(($container-tablet)/ 2) - ($featured-browse-category-margin-tablet * 2);
+// Limits size of tile in cases where calculations create unreasonably large tile
+$maximum-tile-width: 290px;
 
-// Extra small
-$no-sidebar-xs-image-width: 190px;
-$with-sidebar-xs-image-width: $no-sidebar-xs-image-width;
+// `xs` viewport width; always display one full-width tile, wrapping others
+$xs-one-tile-width: $maximum-tile-width;
 
-// Height adjustments
-$aspect-ratio-factor-large-image: 0.75; // 4:3 width:height
-$aspect-ratio-factor-medium-image: 1; // 1:1 width: height
+// `sm` viewport width
+$sm-one-tile-width: $xs-one-tile-width;
+$sm-two-tile-width: ($container-sm / 2) - $tile-margin;
+$sm-three-tile-width: ($container-sm / 3) - $tile-margin;
+
+// `md` viewport width
+$md-one-tile-width: $xs-one-tile-width;
+$md-two-tile-width: ($container-md/ 2) - $tile-margin;
+$md-three-tile-width: ($container-md / 3) - $tile-margin;
+
+// `lg` viewport width
+$lg-one-tile-width: $xs-one-tile-width;
+$lg-two-tile-width: ($container-lg/ 2) - $tile-margin;
+$lg-three-tile-width: ($container-lg / 3) - $tile-margin;
+$lg-four-tile-width: ($container-lg / 4) - $tile-margin;
+$lg-five-tile-width: ($container-lg / 5) - $tile-margin;
+
+// `xl` viewport width
+$xl-one-tile-width: $xs-one-tile-width;
+$xl-two-tile-width: ($container-xl/ 2) - $tile-margin;
+$xl-three-tile-width: ($container-xl / 3) - $tile-margin;
+$xl-four-tile-width: ($container-xl / 4) - $tile-margin;
+$xl-five-tile-width: ($container-xl / 5) - $tile-margin;
+
+// `xl` with sidebar viewport width
+$xl-sidebar-three-tile-width: ($container-xl-sidebar / 3) - $tile-margin;
+$xl-sidebar-four-tile-width: ($container-xl-sidebar / 4) - $tile-margin;
+$xl-sidebar-five-tile-width: ($container-xl-sidebar / 5) - $tile-margin;
 
 .browse-category {
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   border: 2px solid $featured-browse-category-border-color;
   border-radius: $border-radius-lg;
   position: relative;
-  float: left;
-  background-repeat: no-repeat;
+
   .category-caption {
+    bottom: 16px; // assumes default font-size of 16px, using browser default of 1 rem == 16px
     color: $featured-browse-category-caption-color;
     position: absolute;
-    bottom: 16px; // assumes default font-size of 16px, using browser default of 1 rem == 16px
     text-align: center;
-    text-shadow: 0 1px 0 #000000;
+    text-shadow: 0 1px 0 $black;
     width: 100%;
   }
+
   .category-title {
     font-size: $font-size-lg;
     line-height: 1.2;
     margin: 0;
     padding: $spacer / 4;
   }
+
   .category-subtitle {
     display: block;
   }
+
   .item-count {
     font-size: $font-size-base;
     text-transform: uppercase;
   }
 }
 
-[data-sidebar="false"] {
-  &.categories-1, &.categories-2, &.categories-3 {
+.spotlight-flexbox.browse-categories {
+  justify-content: space-around;
+
+  .box {
+    flex: none;
+    margin-bottom: 1rem;
+    min-width: 150px;
+    padding: 0;
+  }
+}
+
+// Most tile sizing works regardless of sidebar or not, because
+// only "lg" and "xl" have a sidebar, and "lg" with a sidebar
+// is the same width as "md" without a sidebar.
+[data-sidebar="false"],
+[data-sidebar="true"] {
+  &.categories-1, &.categories-2, &.categories-3,
+  &.categories-4, &.categories-5 {
     .browse-category {
-      width: $no-sidebar-xs-image-width;
-      height: $no-sidebar-xs-image-width * $aspect-ratio-factor-large-image;
-      @media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("md")) {
-        width: $no-sidebar-tablet-large-image-width;
-        height: $no-sidebar-tablet-large-image-width * $aspect-ratio-factor-large-image;
+      max-width: $maximum-tile-width;
+      max-height: $maximum-tile-width * $aspect-ratio-factor-4x3;
+      width: $xs-one-tile-width;
+      height: $xs-one-tile-width * $aspect-ratio-factor-4x3;
+    }
+  }
+  &.categories-2 {
+    .browse-category {
+      @media (min-width: breakpoint-min("sm")) {
+        width: $sm-two-tile-width;
+        height: $sm-two-tile-width * $aspect-ratio-factor-4x3;
       }
-      @media (min-width: breakpoint-min("md")) and (min-width: breakpoint-min("lg")) {
-        width: $no-sidebar-desktop-large-image-width;
-        height: $no-sidebar-desktop-large-image-width * $aspect-ratio-factor-large-image;
-      }
-      @media (min-width: breakpoint-min("lg")) {
-        width: $no-sidebar-large-desktop-large-image-width;
-        height: $no-sidebar-large-desktop-large-image-width * $aspect-ratio-factor-large-image;
+
+      @media (min-width: breakpoint-min("md")) {
+        width: $md-two-tile-width;
+        height: $md-two-tile-width * $aspect-ratio-factor-4x3;
       }
     }
   }
-  &.categories-4, &.categories-5 {
+  &.categories-3 {
     .browse-category {
-      width: $no-sidebar-large-desktop-medium-image-width;
-      height: $no-sidebar-large-desktop-medium-image-width * $aspect-ratio-factor-medium-image;
-      @media (max-width: breakpoint-max("sm")) {
-        width: $no-sidebar-xs-image-width;
-        height: $no-sidebar-xs-image-width * $aspect-ratio-factor-medium-image;
+      @media (min-width: breakpoint-min("sm")) {
+        width: $sm-three-tile-width;
+        height: $sm-three-tile-width * $aspect-ratio-factor-4x3;
+      }
+
+      @media (min-width: breakpoint-min("md")) {
+        width: $md-three-tile-width;
+        height: $md-three-tile-width * $aspect-ratio-factor-4x3;
+      }
+
+      @media (min-width: breakpoint-min("lg")) {
+        width: $lg-three-tile-width;
+        height: $lg-three-tile-width * $aspect-ratio-factor-4x3;
       }
     }
-    .category-4 {
-      @extend .d-sm-none;
+  }
+  &.categories-4 {
+    .browse-category {
+      @media (min-width: breakpoint-min("sm")) {
+        width: $sm-two-tile-width;
+        height: $sm-two-tile-width * $aspect-ratio-factor-4x3;
+      }
+
+      @media (min-width: breakpoint-min("md")) {
+        width: $md-two-tile-width;
+        height: $md-two-tile-width * $aspect-ratio-factor-4x3;
+      }
+
+      @media (min-width: breakpoint-min("lg")) {
+        width: $lg-four-tile-width;
+        height: $lg-four-tile-width * $aspect-ratio-factor-4x3;
+      }
+
+      @media (min-width: breakpoint-min("xl")) {
+        width: $xl-four-tile-width;
+        height: $xl-four-tile-width * $aspect-ratio-factor-4x3;
+      }
     }
-    .category-5 {
-      @extend .d-md-none;
-      @extend .d-sm-none;
+  }
+  &.categories-5 {
+    .browse-category {
+      @media (min-width: breakpoint-min("sm")) {
+        width: $sm-three-tile-width;
+        height: $sm-three-tile-width * $aspect-ratio-factor-4x3;
+      }
+
+      @media (min-width: breakpoint-min("md")) {
+        width: $md-three-tile-width;
+        height: $md-three-tile-width * $aspect-ratio-factor-4x3;
+      }
+
+      @media (min-width: breakpoint-min("lg")) {
+        width: $lg-five-tile-width;
+        height: $lg-five-tile-width * $aspect-ratio-factor-4x3;
+      }
+
+      @media (min-width: breakpoint-min("xl")) {
+        width: $xl-five-tile-width;
+        height: $xl-five-tile-width * $aspect-ratio-factor-4x3;
+      }
     }
   }
 }
 
+// Special cases where the sizing above doesn't work when there is a sidebar.
+// Note that "lg" with a sidebar has the same available width as "md"
+// without a sidebar.
 [data-sidebar="true"] {
-  &.categories-1, &.categories-2 {
+  &.categories-3 {
     .browse-category {
-      width: $with-sidebar-xs-image-width;
-      height: $with-sidebar-xs-image-width * $aspect-ratio-factor-large-image;
-      @media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("md")) {
-        width: $with-sidebar-tablet-large-image-width;
-        height: $with-sidebar-tablet-large-image-width * $aspect-ratio-factor-large-image;
-      }
-      @media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
-        width: $with-sidebar-desktop-large-image-width;
-        height: $with-sidebar-desktop-large-image-width * $aspect-ratio-factor-large-image;
-      }
       @media (min-width: breakpoint-min("lg")) {
-        width: $with-sidebar-large-desktop-large-image-width;
-        height: $with-sidebar-large-desktop-large-image-width * $aspect-ratio-factor-large-image;
+        width: $md-three-tile-width;
+        height: $md-three-tile-width * $aspect-ratio-factor-4x3;
+      }
+
+      @media (min-width: breakpoint-min("xl")) {
+        width: $xl-sidebar-three-tile-width;
+        height: $xl-sidebar-three-tile-width * $aspect-ratio-factor-4x3;
       }
     }
   }
-  &.categories-3, &.categories-4, &.categories-5 {
-   .browse-category {
-    width: $with-sidebar-desktop-medium-image-width;
-    height: $with-sidebar-desktop-medium-image-width * $aspect-ratio-factor-medium-image;
-      @media (max-width: breakpoint-max("sm")) {
-        width: $with-sidebar-xs-image-width;
-        height: $with-sidebar-xs-image-width * $aspect-ratio-factor-medium-image;
-      }
+  &.categories-4 {
+    .browse-category {
       @media (min-width: breakpoint-min("lg")) {
-        width: $with-sidebar-large-desktop-medium-image-width;
-        height: $with-sidebar-large-desktop-medium-image-width * $aspect-ratio-factor-medium-image;
+        width: $md-two-tile-width;
+        height: $md-two-tile-width * $aspect-ratio-factor-4x3;
+      }
+
+      @media (min-width: breakpoint-min("xl")) {
+        width: $xl-sidebar-four-tile-width;
+        height: $xl-sidebar-four-tile-width * $aspect-ratio-factor-4x3;
       }
     }
   }
-  .category-4, .category-5 {
-    display: none;
+  &.categories-5 {
+    .browse-category {
+      @media (min-width: breakpoint-min("lg")) {
+        width: $md-three-tile-width;
+        height: $md-three-tile-width * $aspect-ratio-factor-4x3;
+      }
+
+      @media (min-width: breakpoint-min("xl")) {
+        width: $xl-sidebar-five-tile-width;
+        height: $xl-sidebar-five-tile-width * $aspect-ratio-factor-4x3;
+      }
+    }
   }
 }
