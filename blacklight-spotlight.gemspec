@@ -34,7 +34,7 @@ these collections.)
   s.add_dependency 'devise_invitable'
   s.add_dependency 'faraday'
   s.add_dependency 'faraday_middleware'
-  s.add_dependency 'friendly_id', '~> 5.2'
+  s.add_dependency 'friendly_id', '~> 5.2', '< 5.4'
   s.add_dependency 'github-markup'
   s.add_dependency 'i18n'
   s.add_dependency 'i18n-active_record'
