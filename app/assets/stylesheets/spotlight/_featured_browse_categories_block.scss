@@ -70,10 +70,22 @@ $xl-sidebar-five-tile-width: ($container-xl-sidebar / 5) - $tile-margin;
   }
 
   .category-title {
-    font-size: $font-size-lg;
+    font-size: $h4-font-size;
     line-height: 1.2;
     margin: 0;
     padding: $spacer / 4;
+
+    @media (min-width: breakpoint-min("sm")) {
+      font-size: 1.125rem;
+    }
+
+    @media (min-width: breakpoint-min("md")) {
+      font-size: $h5-font-size;
+    }
+
+    @media (min-width: breakpoint-min("lg")) {
+      font-size: $h4-font-size;
+    }
   }
 
   .category-subtitle {
@@ -83,6 +95,10 @@ $xl-sidebar-five-tile-width: ($container-xl-sidebar / 5) - $tile-margin;
   .item-count {
     font-size: $font-size-base;
     text-transform: uppercase;
+
+    @media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-min("lg")) {
+      font-size: $font-size-sm;
+    }
   }
 }
 
@@ -185,6 +201,23 @@ $xl-sidebar-five-tile-width: ($container-xl-sidebar / 5) - $tile-margin;
       @media (min-width: breakpoint-min("xl")) {
         width: $xl-five-tile-width;
         height: $xl-five-tile-width * $aspect-ratio-factor-4x3;
+      }
+    }
+  }
+}
+
+[data-sidebar="true"] {
+  // Font size smaller at "lg" breakpoint only when there is a sidebar
+  .browse-category {
+    .category-title {
+      @media (min-width: breakpoint-min("lg")) and (max-width: breakpoint-min("xl")) {
+        font-size: $h5-font-size;
+      }
+    }
+
+    .item-count {
+      @media (min-width: breakpoint-min("lg")) and (max-width: breakpoint-min("xl")) {
+        font-size: $font-size-sm;
       }
     }
   }
