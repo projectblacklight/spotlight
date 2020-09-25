@@ -19,6 +19,14 @@ describe Spotlight::Exhibit, type: :model do
     expect(subject.description).to eq 'Test description'
   end
 
+  it 'has reserved slugs' do
+    subject.slug = 'site'
+
+    expect do
+      subject.save!
+    end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Slug is reserved')
+  end
+
   describe 'validations' do
     it 'validates the presence of the title' do
       exhibit.title = ''

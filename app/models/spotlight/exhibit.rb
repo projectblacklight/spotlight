@@ -22,10 +22,15 @@ module Spotlight
     paginates_per 48
 
     extend FriendlyId
-    friendly_id :title, use: %i[slugged finders]
+    friendly_id :title, use: %i[slugged finders] do |config|
+      config.reserved_words.concat(%w[site])
+    end
+
     validates :title, presence: true, if: -> { I18n.locale == I18n.default_locale }
     validates :slug, uniqueness: true
     validates :theme, inclusion: { in: Spotlight::Engine.config.exhibit_themes }, allow_blank: true
+
+    after_validation :move_friendly_id_error_to_slug
 
     acts_as_tagger
     acts_as_taggable
@@ -150,6 +155,10 @@ module Spotlight
 
     def current_reindexing_log_entry
       reindexing_log_entries.started_or_completed.first || reindexing_log_entries.build
+    end
+
+    def move_friendly_id_error_to_slug
+      errors.add :slug, *errors.delete(:friendly_id) if errors[:friendly_id].present?
     end
   end
 end
