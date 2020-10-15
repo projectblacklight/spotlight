@@ -25,6 +25,10 @@ class CatalogController < ApplicationController
 
     config.add_field_configuration_to_solr_request!
 
+    config.add_results_collection_tool(:sort_widget)
+    config.add_results_collection_tool(:per_page_widget)
+    config.add_results_collection_tool(:view_type_group)
+
     # enable facets:
     # https://github.com/projectblacklight/spotlight/issues/1812#issuecomment-327345318
     config.add_facet_fields_to_solr_request!
