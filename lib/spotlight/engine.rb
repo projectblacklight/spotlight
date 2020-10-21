@@ -55,6 +55,7 @@ module Spotlight
       require 'acts-as-taggable-on'
 
       Mime::Type.register 'application/solr+json', :solr_json
+      Mime::Type.register 'application/iiif+json', :iiif_json
     end
 
     initializer 'spotlight.factories', after: 'factory_bot.set_factory_paths' do

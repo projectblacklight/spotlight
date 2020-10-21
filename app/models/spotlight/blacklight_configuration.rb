@@ -76,6 +76,7 @@ module Spotlight
 
         config.show.merge! show unless show.blank?
         config.index.merge! index unless index.blank?
+        config.index.respond_to[:iiif_json] = true
 
         config.index.thumbnail_field ||= Spotlight::Engine.config.thumbnail_field
 

@@ -149,6 +149,7 @@ Spotlight::Engine.routes.draw do
         patch 'import'
       end
     end
+    get 'iiif/collection' => 'catalog#index', defaults: { q: '*:*', format: :iiif_json }
   end
 
   get '/:exhibit_id' => 'home_pages#show', as: :exhibit_root
