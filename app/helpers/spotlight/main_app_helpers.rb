@@ -28,15 +28,6 @@ module Spotlight
       super
     end
 
-    def presenter(document)
-      case action_name
-      when 'index'
-        super
-      else
-        show_presenter(document)
-      end
-    end
-
     def exhibit_stylesheet_link_tag(tag)
       if current_exhibit_theme && current_exhibit&.theme != 'default'
         stylesheet_link_tag "#{tag}_#{current_exhibit_theme}"

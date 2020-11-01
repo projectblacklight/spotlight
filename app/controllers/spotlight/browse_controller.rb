@@ -14,7 +14,7 @@ module Spotlight
     before_action :attach_search_breadcrumb, only: :show
     record_search_parameters only: :show
 
-    helper_method :should_render_spotlight_search_bar?, :presenter
+    helper_method :should_render_spotlight_search_bar?
 
     before_action :swap_actions_configuration, only: :show
 
@@ -121,10 +121,6 @@ module Spotlight
 
     def default_browse_index_view_type
       Spotlight::Engine.config.default_browse_index_view_type
-    end
-
-    def presenter(document)
-      view_context.index_presenter(document)
     end
 
     def render_save_this_search?

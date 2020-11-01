@@ -81,7 +81,7 @@ module Spotlight
     end
 
     def document_twitter_card_content(document)
-      presenter = show_presenter(document)
+      presenter = document_presenter(document)
 
       twitter_card('summary_large_image') do |card|
         card.title presenter.heading
@@ -90,7 +90,7 @@ module Spotlight
     end
 
     def document_opengraph_content(document)
-      presenter = show_presenter(document)
+      presenter = document_presenter(document)
 
       opengraph do |graph|
         graph.site_name application_name

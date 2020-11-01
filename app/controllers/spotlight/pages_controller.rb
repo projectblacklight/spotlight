@@ -17,7 +17,7 @@ module Spotlight
     include Spotlight::Base
     include Blacklight::SearchContext
 
-    helper_method :get_search_results, :search_results, :fetch, :page_collection_name, :presenter
+    helper_method :get_search_results, :search_results, :fetch, :page_collection_name
 
     # GET /exhibits/1/pages
     def index
@@ -206,10 +206,6 @@ module Spotlight
       else
         raise ActiveRecord::RecordNotFound
       end
-    end
-
-    def presenter(document)
-      view_context.index_presenter(document)
     end
   end
   # rubocop:enable Metrics/ClassLength

@@ -70,7 +70,7 @@ module Spotlight
     private
 
     def presenter
-      controller.view_context.show_presenter(resource)
+      controller.view_context.document_presenter(resource)
     end
 
     def endpoint

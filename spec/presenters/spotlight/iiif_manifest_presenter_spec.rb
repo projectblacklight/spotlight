@@ -16,7 +16,7 @@ describe Spotlight::IiifManifestPresenter do
   end
 
   describe 'public methods' do
-    let(:helpers) { double(show_presenter: presenter) }
+    let(:helpers) { double(document_presenter: presenter) }
     let(:presenter) { instance_double(Blacklight::ShowPresenter, heading: title_field_value) }
 
     let(:iiif_url) { 'https://iiif.test/images/1-1' }

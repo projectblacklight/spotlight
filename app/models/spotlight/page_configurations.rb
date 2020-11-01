@@ -15,6 +15,8 @@ module Spotlight
   #   'exhibit-path': ->(context) { context.spotlight.exhibit_path(context.current_exhibit) }
   # }
   class PageConfigurations
+    TITLE_FIELD = '_spotlight_title_field'
+
     delegate :available_view_fields,
              :blacklight_config,
              :current_exhibit,
@@ -48,14 +50,16 @@ module Spotlight
     private
 
     def available_index_fields
-      fields = blacklight_config.index_fields.map { |k, _v| { key: k, label: index_field_label(blacklight_config.document_model.new, k) } }
-      fields.unshift(key: document_show_link_field, label: t(:'spotlight.pages.form.title_placeholder')) unless index_fields.include? document_show_link_field
+      fields = blacklight_config.index_fields.map { |k, v| { key: k, label: v.display_label('index') } }
+      unless blacklight_config.index_fields.include?(blacklight_config.index.title_field)
+        fields.unshift(key: TITLE_FIELD, label: t(:'spotlight.pages.form.title_placeholder'))
+      end
 
       fields
     end
 
     def available_view_configs
-      available_view_fields.map { |k, _| { key: k, label: view_label(k) } }
+      available_view_fields.map { |k, v| { key: k, label: v.display_label(k) } }
     end
 
     def attachment_endpoint

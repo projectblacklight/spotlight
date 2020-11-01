@@ -23,6 +23,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.erb', 
   end
 
   it 'has a slideshow block' do
+    allow(view).to receive(:caption_for_document).and_return('whatever')
     render partial: p, locals: { item_carousel_block: block }
     expect(rendered).to have_selector '.item-features'
     expect(rendered).to have_selector '.carousel-item', text: 'thumb', count: 3
@@ -31,6 +32,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.erb', 
   end
 
   it 'truncates long titles' do
+    allow(view).to receive(:caption_for_document).and_return('a' * 100)
     render partial: p, locals: { item_carousel_block: block }
     expect(rendered).to have_selector '.item-features'
     expect(rendered).to have_selector '.carousel-item', text: 'thumb', count: 3

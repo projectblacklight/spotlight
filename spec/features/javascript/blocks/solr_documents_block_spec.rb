@@ -145,6 +145,7 @@ describe 'Solr Document Block', feature: true, versioning: true, default_max_wai
     check 'Display ZPR link'
     # this seems silly, but also seems to help with the flappy-ness of this spec
     expect(find_field('Display ZPR link', checked: true)).to be_checked
+    sleep 1
 
     save_page
 
@@ -225,6 +226,6 @@ describe 'Solr Document Block', feature: true, versioning: true, default_max_wai
 
     # for some reason, the text area above isn't getting filled in
     # expect(page).to have_selector ".st-text-block", text: "zzz"
-    expect(find_field('primary-caption-field').value).to eq 'full_title_tesim'
+    expect(find_field('primary-caption-field').value).to eq '_spotlight_title_field'
   end
 end
