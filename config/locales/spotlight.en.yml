@@ -46,7 +46,7 @@ en:
         create: Add new field
       spotlight/role:
         create: Add a new user
-        destroy: Remove from site
+        destroy: Remove from exhibit
       spotlight/search:
         destroy: Delete
         edit_long: Edit this saved search
