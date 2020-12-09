@@ -5,7 +5,7 @@ describe Spotlight::Search, type: :model do
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
-  let(:query_params) { { 'f' => { 'genre_sim' => ['map'] } } }
+  let(:query_params) { { 'f' => { 'genre_ssim' => ['map'] } } }
 
   let(:blacklight_config) { ::CatalogController.blacklight_config }
   let(:document) do
@@ -54,7 +54,7 @@ describe Spotlight::Search, type: :model do
 
   describe '#search_params' do
     it 'maps the search to the appropriate facet values' do
-      expect(subject.search_params.to_hash).to include 'fq' => array_including('{!term f=genre_sim}map')
+      expect(subject.search_params.to_hash).to include 'fq' => array_including('{!term f=genre_ssim}map')
     end
 
     context 'with filter_resources_by_exhibit configured' do
