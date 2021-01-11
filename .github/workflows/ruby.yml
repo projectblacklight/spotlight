@@ -11,8 +11,26 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        rails_version: [6.1.1, 6.0.3.2, 5.2.4.4]
+        rails_version: [6.1.1, 6.0.3.2]
         ruby: [2.7, 3.0]
+    env:
+      RAILS_VERSION: ${{ matrix.rails_version }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby ${{ matrix.ruby }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - name: Install dependencies with Rails ${{ matrix.rails_version }}
+      run: bundle install
+    - name: Run tests
+      run: bundle exec rake
+  test_rails52:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rails_version: [5.2.4.4]
+        ruby: [2.7]
     env:
       RAILS_VERSION: ${{ matrix.rails_version }}
     steps:
