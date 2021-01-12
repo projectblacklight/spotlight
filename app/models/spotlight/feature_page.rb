@@ -6,7 +6,7 @@ module Spotlight
   class FeaturePage < Spotlight::Page
     extend FriendlyId
     friendly_id :title, use: %i[slugged scoped finders history], scope: %i[exhibit locale] do |config|
-      config.reserved_words.concat(%w[update_all])
+      config.reserved_words&.concat(%w[update_all])
     end
 
     has_many :child_pages, class_name: 'Spotlight::FeaturePage', inverse_of: :parent_page, foreign_key: 'parent_page_id'

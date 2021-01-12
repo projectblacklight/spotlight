@@ -6,7 +6,7 @@ module Spotlight
   class AboutPage < Spotlight::Page
     extend FriendlyId
     friendly_id :title, use: %i[slugged scoped finders history], scope: %i[exhibit locale] do |config|
-      config.reserved_words.concat(%w[update_all contacts])
+      config.reserved_words&.concat(%w[update_all contacts])
     end
   end
 end
