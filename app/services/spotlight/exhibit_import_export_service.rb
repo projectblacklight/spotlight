@@ -210,8 +210,8 @@ module Spotlight
       obj.update(method => image)
     end
 
-    def as_json(**args)
-      self.class.serialization_pipeline.inject(args) do |memo, step|
+    def as_json(*_args)
+      self.class.serialization_pipeline.inject({}) do |memo, step|
         method(step).call(memo)
       end
     end
