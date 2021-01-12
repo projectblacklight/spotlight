@@ -41,22 +41,22 @@ module Spotlight
       )
 
       exhibit_attributes = hash.reject { |_k, v| v.is_a?(Array) || v.is_a?(Hash) }
-      exhibit.update_attributes(exhibit_attributes.except(:theme))
+      exhibit.update(exhibit_attributes.except(:theme))
       exhibit.theme = exhibit_attributes[:theme] if exhibit.themes.include? exhibit_attributes[:theme]
 
       deserialize_featured_image(exhibit, :masthead, hash[:masthead]) if hash[:masthead]
       deserialize_featured_image(exhibit, :thumbnail, hash[:thumbnail]) if hash[:thumbnail]
 
-      exhibit.blacklight_configuration.update_attributes hash[:blacklight_configuration].deep_stringify_keys if hash[:blacklight_configuration]
+      exhibit.blacklight_configuration.update hash[:blacklight_configuration].deep_stringify_keys if hash[:blacklight_configuration]
 
       hash[:main_navigations].each do |attr|
         ar = exhibit.main_navigations.find_or_initialize_by(nav_type: attr[:nav_type])
-        ar.update_attributes(attr)
+        ar.update(attr)
       end
 
       hash[:contact_emails].each do |attr|
         ar = exhibit.contact_emails.find_or_initialize_by(email: attr[:email])
-        ar.update_attributes(attr)
+        ar.update(attr)
       end
 
       hash[:searches].each do |attr|
@@ -64,7 +64,7 @@ module Spotlight
         thumbnail = attr.delete(:thumbnail)
 
         ar = exhibit.searches.find_or_initialize_by(slug: attr[:slug])
-        ar.update_attributes(attr)
+        ar.update(attr)
 
         deserialize_featured_image(ar, :masthead, masthead) if masthead
         deserialize_featured_image(ar, :thumbnail, thumbnail) if thumbnail
@@ -76,7 +76,7 @@ module Spotlight
         translated_pages = attr.delete(:translated_pages) || []
 
         ar = exhibit.about_pages.find_or_initialize_by(slug: attr[:slug])
-        ar.update_attributes(attr)
+        ar.update(attr)
 
         deserialize_featured_image(ar, :masthead, masthead) if masthead
         deserialize_featured_image(ar, :thumbnail, thumbnail) if thumbnail
@@ -86,7 +86,7 @@ module Spotlight
           thumbnail = tattr.delete(:thumbnail)
 
           tar = ar.translated_page_for(tattr[:locale]) || ar.clone_for_locale(tattr[:locale])
-          tar.update_attributes(tattr)
+          tar.update(tattr)
 
           deserialize_featured_image(ar, :masthead, masthead) if masthead
           deserialize_featured_image(ar, :thumbnail, thumbnail) if thumbnail
@@ -98,7 +98,7 @@ module Spotlight
         thumbnail = attr.delete(:thumbnail)
 
         ar = exhibit.feature_pages.find_or_initialize_by(slug: attr[:slug])
-        ar.update_attributes(attr.except(:parent_page_slug, :translated_pages))
+        ar.update(attr.except(:parent_page_slug, :translated_pages))
 
         deserialize_featured_image(ar, :masthead, masthead) if masthead
         deserialize_featured_image(ar, :thumbnail, thumbnail) if thumbnail
@@ -119,7 +119,7 @@ module Spotlight
           thumbnail = tattr.delete(:thumbnail)
 
           tar = ar.translated_page_for(tattr[:locale]) || ar.clone_for_locale(tattr[:locale])
-          tar.update_attributes(tattr)
+          tar.update(tattr)
 
           deserialize_featured_image(ar, :masthead, masthead) if masthead
           deserialize_featured_image(ar, :thumbnail, thumbnail) if thumbnail
@@ -128,7 +128,7 @@ module Spotlight
 
       if hash[:home_page]
         translated_pages = hash[:home_page].delete(:translated_pages) || []
-        exhibit.home_page.update_attributes(hash[:home_page].except(:thumbnail))
+        exhibit.home_page.update(hash[:home_page].except(:thumbnail))
         deserialize_featured_image(exhibit.home_page, :thumbnail, hash[:home_page][:thumbnail]) if hash[:home_page][:thumbnail]
 
         translated_pages.each do |tattr|
@@ -136,7 +136,7 @@ module Spotlight
           thumbnail = tattr.delete(:thumbnail)
 
           tar = exhibit.home_page.translated_page_for(tattr[:locale]) || exhibit.home_page.clone_for_locale(tattr[:locale])
-          tar.update_attributes(tattr)
+          tar.update(tattr)
 
           deserialize_featured_image(ar, :masthead, masthead) if masthead
           deserialize_featured_image(ar, :thumbnail, thumbnail) if thumbnail
@@ -147,26 +147,26 @@ module Spotlight
         avatar = attr.delete(:avatar)
 
         ar = exhibit.contacts.find_or_initialize_by(slug: attr[:slug])
-        ar.update_attributes(attr)
+        ar.update(attr)
 
         deserialize_featured_image(ar, :avatar, avatar) if avatar
       end
 
       hash[:custom_fields].each do |attr|
         ar = exhibit.custom_fields.find_or_initialize_by(slug: attr[:slug])
-        ar.update_attributes(attr)
+        ar.update(attr)
       end
 
       hash[:solr_document_sidecars].each do |attr|
         ar = exhibit.solr_document_sidecars.find_or_initialize_by(document_id: attr[:document_id])
-        ar.update_attributes(attr)
+        ar.update(attr)
       end
 
       hash[:resources].each do |attr|
         upload = attr.delete(:upload)
 
         ar = exhibit.resources.find_or_initialize_by(type: attr[:type], url: attr[:url])
-        ar.update_attributes(attr)
+        ar.update(attr)
 
         deserialize_featured_image(ar, :upload, upload) if upload
       end
@@ -183,12 +183,12 @@ module Spotlight
 
       hash[:languages].each do |attr|
         ar = exhibit.languages.find_or_initialize_by(locale: attr[:locale])
-        ar.update_attributes(attr)
+        ar.update(attr)
       end
 
       hash[:translations].each do |attr|
         ar = exhibit.translations.find_or_initialize_by(locale: attr[:locale], key: attr[:key])
-        ar.update_attributes(attr)
+        ar.update(attr)
       end
 
       hash[:owned_taggings].each do |attr|
@@ -200,7 +200,7 @@ module Spotlight
     def deserialize_featured_image(obj, method, data)
       file = data.delete(:image)
       image = obj.public_send("build_#{method}")
-      image.update_attributes(data)
+      image.update(data)
       if file
         image.image = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file[:content])),
                                                      filename: file[:filename],
