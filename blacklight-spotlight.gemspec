@@ -53,7 +53,7 @@ these collections.)
   s.add_dependency 'roar-rails'
   s.add_dependency 'signet'
   s.add_dependency 'sir_trevor_rails', '>= 0.6.1'
-  s.add_dependency 'sprockets', '< 4'
+  s.add_dependency 'sprockets', '>= 3'
   s.add_dependency 'sprockets-es6'
   s.add_dependency 'thor'
   s.add_dependency 'tophat'
