@@ -9,7 +9,7 @@ describe Spotlight::Role, type: :model do
 
       it 'does not be valid' do
         expect(subject).not_to be_valid
-        expect(subject.errors.messages).to include(role: ['is not included in the list'], 'user.email': ["can't be blank"])
+        expect(subject.errors.messages.transform_values(&:to_a)).to include(role: ['is not included in the list'], 'user.email': ["can't be blank"])
       end
     end
 
