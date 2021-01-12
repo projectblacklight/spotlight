@@ -46,7 +46,7 @@ these collections.)
   s.add_dependency 'nokogiri'
   s.add_dependency 'oauth2'
   s.add_dependency 'openseadragon'
-  s.add_dependency 'paper_trail', '~> 10.0'
+  s.add_dependency 'paper_trail', '~> 11.0'
   s.add_dependency 'rails', '< 6.2'
   s.add_dependency 'riiif', '~> 2.0'
   s.add_dependency 'roar', '~> 1.1'
