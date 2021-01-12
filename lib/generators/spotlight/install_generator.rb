@@ -17,8 +17,8 @@ module Spotlight
       gem 'coffee-rails', '~> 4.2'
       gem 'uglifier', '>= 1.3.0'
 
-      append_to_file 'app/assets/config/manifest.js', '//= link_directory ../javascripts .js'
-      append_to_file 'app/assets/javascripts/application.js', '//= require_tree .'
+      append_to_file 'app/assets/config/manifest.js', "\n//= link_directory ../javascripts .js\n"
+      append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
       gsub_file 'app/views/layouts/application.html.erb', /pack/, 'include'
       inject_into_file 'config/environments/production.rb', after: '  # config.assets.css_compressor = :sass' do
         "\n  config.assets.js_compressor = :uglifier"
