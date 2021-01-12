@@ -1,0 +1,1 @@
+gem 'sprockets', '< 4' if ENV['RAILS_VERSION'] && ENV['RAILS_VERSION'] < '6'
