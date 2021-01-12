@@ -127,7 +127,7 @@ module Spotlight
       # /exhibits/1?f%5Bgenre_sim%5D%5B%5D=map&q= is not the same as /exhibits/1
       # Otherwise the exhibit breadcrumb won't be a link.
       # see http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-current_page-3F
-      if view_context.current_page?(action: :admin)
+      if view_context.current_page?({ action: :admin })
         add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), exhibit_root_path(@exhibit, q: '')
       else
         # When not on the admin page, get the translated value for the "Home" breadcrumb
