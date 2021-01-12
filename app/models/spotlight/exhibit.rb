@@ -23,7 +23,7 @@ module Spotlight
 
     extend FriendlyId
     friendly_id :title, use: %i[slugged finders] do |config|
-      config.reserved_words.concat(%w[site])
+      config.reserved_words&.concat(%w[site])
     end
 
     validates :title, presence: true, if: -> { I18n.locale == I18n.default_locale }
