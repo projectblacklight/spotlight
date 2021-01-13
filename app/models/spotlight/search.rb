@@ -12,6 +12,10 @@ module Spotlight
 
     self.table_name = 'spotlight_searches'
     belongs_to :exhibit
+    has_many :group_memberships, class_name: 'Spotlight::GroupMember', as: :member, dependent: :delete_all
+    has_many :groups, through: :group_memberships
+    accepts_nested_attributes_for :group_memberships
+    accepts_nested_attributes_for :groups
     serialize :query_params, Hash
     default_scope { order('weight ASC') }
     scope :published, -> { where(published: true) }
