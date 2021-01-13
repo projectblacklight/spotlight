@@ -31,7 +31,7 @@ describe 'Home page', type: :feature, versioning: true do
   end
 
   it 'has working facet links' do
-    visit spotlight.exhibit_home_page_path(exhibit.home_page)
+    visit spotlight.exhibit_home_page_path(exhibit)
     click_link 'Genre'
     click_link 'map'
     expect(page).to have_content exhibit.title
@@ -39,7 +39,7 @@ describe 'Home page', type: :feature, versioning: true do
   end
 
   it 'has a search box' do
-    visit spotlight.exhibit_home_page_path(exhibit.home_page)
+    visit spotlight.exhibit_home_page_path(exhibit)
     fill_in 'q', with: 'query'
     click_button 'Search'
 
@@ -52,7 +52,7 @@ describe 'Home page', type: :feature, versioning: true do
     TopHat.current['opengraph'] = nil
     Spotlight::Site.instance.update(title: 'some title')
 
-    visit spotlight.exhibit_home_page_path(exhibit.home_page)
+    visit spotlight.exhibit_home_page_path(exhibit)
 
     expect(page).to have_css "meta[name='twitter:card'][value='summary']", visible: false
     expect(page).to have_css "meta[name='twitter:url'][value='#{spotlight.exhibit_root_url(exhibit)}']", visible: false
