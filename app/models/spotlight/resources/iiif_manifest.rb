@@ -69,7 +69,7 @@ module Spotlight
       end
 
       def add_label
-        return unless title_fields.present? && manifest.try(:label)
+        return unless title_fields.present? && manifest&.label
 
         Array.wrap(title_fields).each do |field|
           solr_hash[field] = metadata_class.new(manifest).label
@@ -144,7 +144,7 @@ module Spotlight
       end
 
       def thumbnail_field
-        blacklight_config.index.try(:thumbnail_field)
+        blacklight_config.index.thumbnail_field
       end
 
       def full_image_field
@@ -152,11 +152,11 @@ module Spotlight
       end
 
       def tile_source_field
-        blacklight_config.show.try(:tile_source_field)
+        blacklight_config.show.tile_source_field
       end
 
       def title_fields
-        Spotlight::Engine.config.iiif_title_fields || blacklight_config.index.try(:title_field)
+        Spotlight::Engine.config.iiif_title_fields || blacklight_config.index&.title_field
       end
 
       def sidecar
@@ -187,7 +187,7 @@ module Spotlight
         end
 
         def label
-          return unless manifest.try(:label)
+          return unless manifest&.label
 
           Array(json_ld_value(manifest.label)).map { |v| html_sanitize(v) }.first
         end
@@ -197,7 +197,7 @@ module Spotlight
         attr_reader :manifest
 
         def metadata
-          manifest.try(:metadata) || []
+          manifest&.metadata || []
         end
 
         def metadata_hash
