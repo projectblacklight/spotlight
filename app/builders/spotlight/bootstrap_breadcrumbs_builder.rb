@@ -31,8 +31,7 @@ module Spotlight
     private
 
     def element_label(element)
-      label = compute_name(element)
-      @context.truncate(label, escape: !label.html_safe?, length: 30, separator: ' ')
+      @context.content_tag(:span, class: 'truncated-value') { compute_name(element) }
     end
   end
 end
