@@ -354,7 +354,7 @@ module Spotlight
     def title_only_by_default?(view)
       return false if %i[show enabled].include?(view)
 
-      title_only = default_blacklight_config.view.send(:[], view).try(:title_only_by_default)
+      title_only = default_blacklight_config.view.send(:[], view)&.title_only_by_default
       title_only.nil? ? false : title_only
     end
 
