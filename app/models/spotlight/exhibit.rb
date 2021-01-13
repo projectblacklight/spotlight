@@ -55,6 +55,7 @@ module Spotlight
     has_many :custom_search_fields, dependent: :delete_all
 
     has_many :feature_pages, -> { for_default_locale }, extend: FriendlyId::FinderMethods
+    has_many :groups, dependent: :delete_all
     has_many :main_navigations, dependent: :delete_all
     has_many :reindexing_log_entries, dependent: :destroy
     has_many :resources
