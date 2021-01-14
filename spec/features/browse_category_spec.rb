@@ -100,7 +100,7 @@ describe 'Browse pages' do
       it 'uses the appropriate view config' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
-        expect(page).to have_css('#documents.gallery .document', count: 1)
+        expect(page).to have_css('#documents.documents-gallery .document', count: 1)
 
         within '.document' do
           expect(page).not_to have_css('dt')
@@ -113,7 +113,7 @@ describe 'Browse pages' do
       it 'renders the gallery view' do
         visit spotlight.exhibit_browse_path(exhibit, search)
         expect(page).to have_selector '.view-type-gallery.active'
-        expect(page).to have_selector '#documents.gallery'
+        expect(page).to have_selector '#documents.documents-gallery'
       end
     end
 
