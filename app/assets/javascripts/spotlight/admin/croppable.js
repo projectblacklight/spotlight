@@ -12,7 +12,7 @@ Spotlight.onLoad(function() {
   $.fn.croppable = function() {
     var croppables = this;
 
-    var Crop = require('spotlight/admin/crop');
+    var Crop = spotlightAdminCrop;
     $(croppables).each(function() {
       var cropElement = $(this);
       var c = new Crop(cropElement);

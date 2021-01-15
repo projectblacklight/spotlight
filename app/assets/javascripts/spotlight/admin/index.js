@@ -12,7 +12,5 @@
 //= require Path.Drag
 //= require MutationObserver
 
-// Provide AMD module support
-//= require almond
 //= require polyfill.min.js
 //= require_tree .

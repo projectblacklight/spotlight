@@ -85,7 +85,7 @@ SirTrevor.Blocks.SolrDocumentsBase = (function(){
 
       $.ajax(manifestUrl).done(
         function(manifest) {
-          var Iiif = require('spotlight/admin/iiif');
+          var Iiif = spotlightAdminIiif;
           var iiifManifest = new Iiif(manifestUrl, manifest);
 
           var thumbs = iiifManifest.imagesArray();
