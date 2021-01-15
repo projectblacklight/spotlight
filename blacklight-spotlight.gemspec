@@ -36,6 +36,7 @@ these collections.)
   s.add_dependency 'faraday_middleware'
   s.add_dependency 'friendly_id', '~> 5.2', '!=5.4.0', '!=5.4.1'
   s.add_dependency 'github-markup'
+  s.add_dependency 'handlebars_assets'
   s.add_dependency 'i18n'
   s.add_dependency 'i18n-active_record'
   s.add_dependency 'iiif-presentation'
