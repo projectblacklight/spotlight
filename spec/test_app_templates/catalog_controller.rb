@@ -6,6 +6,12 @@ class CatalogController < ApplicationController
   before_action :set_paper_trail_whodunnit
 
   configure_blacklight do |config|
+    config.view.gallery.document_component = Blacklight::Gallery::DocumentComponent
+    # config.view.gallery.classes = 'row-cols-2 row-cols-md-3'
+    config.view.masonry.document_component = Blacklight::Gallery::DocumentComponent
+    config.view.slideshow.document_component = Blacklight::Gallery::SlideshowComponent
+    config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
+    config.show.partials.insert(1, :openseadragon)
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = {
       qt: 'search',
@@ -28,9 +34,6 @@ class CatalogController < ApplicationController
     config.index.title_field = 'full_title_tesim'
     config.index.display_type_field = 'content_metadata_type_ssm'
     config.index.thumbnail_field = Spotlight::Engine.config.thumbnail_field
-
-    config.view.gallery.partials = %i[index_header index]
-    config.view.slideshow.partials = [:index]
 
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
     config.show.partials.insert(1, :openseadragon)

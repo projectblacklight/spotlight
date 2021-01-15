@@ -28,7 +28,7 @@ describe Spotlight::ViewConfigurationsController, type: :controller do
         get :show, params: { exhibit_id: exhibit, format: 'json' }
         expect(response).to be_successful
         available = JSON.parse(response.body)
-        expect(available).to match_array %w[list gallery slideshow]
+        expect(available).to match_array %w[list gallery masonry slideshow]
       end
     end
   end
