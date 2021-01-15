@@ -22,7 +22,6 @@ these collections.)
   s.required_ruby_version = '>= 2.5'
 
   s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 8'
-  s.add_dependency 'almond-rails', '>= 0.3.0'
   s.add_dependency 'autoprefixer-rails'
   s.add_dependency 'blacklight', '~> 7.0'
   s.add_dependency 'bootstrap_form', '~> 4.1'
