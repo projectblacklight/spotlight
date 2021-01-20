@@ -4,6 +4,7 @@ require 'mail'
 module Spotlight
   ##
   # Spotlight exhibit
+  # rubocop:disable Metrics/ClassLength
   class Exhibit < ActiveRecord::Base
     class_attribute :themes_selector
     include Spotlight::ExhibitAnalytics
@@ -162,4 +163,5 @@ module Spotlight
       errors.add :slug, *errors.delete(:friendly_id) if errors[:friendly_id].present?
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
