@@ -92,6 +92,17 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
           expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page_es))
         end
       end
+
+      context 'when the sidebar is set to not display' do
+        let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit, published: true) }
+
+        before { page.update(display_sidebar: false) }
+
+        it 'injects custom classes into the gallery view' do
+          get :show, params: { exhibit_id: exhibit.id, id: page.id }
+          expect(assigns(:exhibit).blacklight_config.view.gallery.classes).to eq 'row-cols-2 row-cols-md-4'
+        end
+      end
     end
 
     describe 'GET new' do

@@ -19,6 +19,10 @@ module Spotlight
 
     helper_method :get_search_results, :search_results, :fetch, :page_collection_name, :presenter
 
+    before_action do
+      blacklight_config.view.gallery.classes = 'row-cols-2 row-cols-md-4' unless @page&.display_sidebar
+    end
+
     # GET /exhibits/1/pages
     def index
       # set up a model the inline "add a new page" form
