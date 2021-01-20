@@ -20,6 +20,7 @@ module Spotlight
 
     before_action do
       blacklight_config.track_search_session = false
+      blacklight_config.view.gallery.classes = 'row-cols-2 row-cols-md-4'
     end
 
     def index
