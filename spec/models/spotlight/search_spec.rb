@@ -98,4 +98,18 @@ describe Spotlight::Search, type: :model do
       expect(search_params).to include user_params
     end
   end
+
+  describe '#groups' do
+    let(:search) { FactoryBot.create(:search_with_groups, groups_count: 3) }
+
+    it do
+      expect(search.groups.count).to eq 3
+    end
+
+    it do
+      search.groups.all do |group|
+        expect(group).to be_an Spotlight::Group
+      end
+    end
+  end
 end

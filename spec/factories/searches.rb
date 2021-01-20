@@ -7,6 +7,16 @@ FactoryBot.define do
     sequence(:slug) { |n| "Search#{n}" }
 
     after(:build) { |search| search.thumbnail = FactoryBot.create(:featured_image) }
+
+    factory :search_with_groups do
+      transient do
+        groups_count { 2 }
+      end
+    end
+
+    after(:create) do |search, evaluator|
+      create_list(:group, evaluator.groups_count, searches: [search]) if evaluator.respond_to?(:groups_count)
+    end
   end
 
   factory :published_search, parent: :search do
