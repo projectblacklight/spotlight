@@ -403,6 +403,8 @@ en:
           published:
             help_block: ''
         uneditable_non_default_language: This field is not editable in the current language. Switch to the default language to edit it.
+      groups:
+        all: All
       import:
         button: Import data
         heading: Import data

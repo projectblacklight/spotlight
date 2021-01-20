@@ -2,6 +2,19 @@
 <% set_html_page_title(title) %>
 <h1 class="sr-only"><%= title %></h1>
 
+<% if @groups.any? # active %>
+  <ul class="browse-group-navigation nav nav-pills justify-content-center">
+    <li class="nav-item">
+      <%= link_to t('spotlight.exhibits.groups.all'), exhibit_browse_index_path(current_exhibit), class: "nav-link #{'active' if @group.blank?}" %>
+    </li>
+    <% @groups.each do |group| %>
+      <li class="nav-item">
+        <%= link_to group.title, exhibit_browse_groups_path(current_exhibit, group), class: "nav-link #{'active' if @group.present? && @group.id == group.id}" %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
 <div class="browse-landing row">
   <%= render collection: @searches, partial: 'spotlight/browse/search' %>
 </div>

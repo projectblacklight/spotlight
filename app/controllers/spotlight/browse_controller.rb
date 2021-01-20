@@ -9,7 +9,8 @@ module Spotlight
     include Spotlight::Catalog
     include Blacklight::Facet
 
-    load_and_authorize_resource :search, except: :index, through: :exhibit, parent: false
+    load_resource :group, through: :exhibit
+    load_and_authorize_resource :search, through: %i[group exhibit], parent: false
     before_action :attach_breadcrumbs
     before_action :attach_search_breadcrumb, only: :show
     record_search_parameters only: :show
@@ -23,7 +24,8 @@ module Spotlight
     end
 
     def index
-      @searches = @exhibit.searches.published
+      @groups = @exhibit.groups.published
+      @searches = @searches.published
     end
 
     def show
@@ -66,10 +68,11 @@ module Spotlight
     def attach_breadcrumbs
       add_breadcrumb t(:'spotlight.curation.nav.home', title: @exhibit.title), @exhibit
       add_breadcrumb(@exhibit.main_navigations.browse.label_or_default, exhibit_browse_index_path(@exhibit))
+      add_breadcrumb(@group.title, exhibit_browse_groups_path(@exhibit, @group)) if @group.present?
     end
 
     def attach_search_breadcrumb
-      add_breadcrumb @search.full_title, exhibit_browse_path(@exhibit, @search)
+      add_breadcrumb @search.full_title, (@group.present? ? exhibit_browse_group_path(@exhibit, @group, @search) : exhibit_browse_path(@exhibit, @search))
     end
 
     def _prefixes
