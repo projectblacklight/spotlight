@@ -4,6 +4,8 @@ describe Spotlight::BrowseController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:search) { FactoryBot.create(:published_search, exhibit: exhibit) }
+  let(:group) { FactoryBot.create(:group, published: true, title: 'Good group', exhibit: exhibit, searches: [search]) }
+  let(:group_unpublished) { FactoryBot.create(:group, title: 'Secret group', exhibit: exhibit, searches: [search]) }
   let!(:unpublished) { FactoryBot.create(:search, exhibit: exhibit) }
   let(:admin) { FactoryBot.create(:site_admin) }
 
@@ -53,6 +55,16 @@ describe Spotlight::BrowseController, type: :controller do
         expect(assigns[:exhibit]).to eq exhibit
         expect(response).to render_template 'spotlight/browse/index'
       end
+
+      it 'includes the browse groups' do
+        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with('Good group', exhibit_browse_groups_path(exhibit, group))
+        get :index, params: { exhibit_id: exhibit, group_id: group.id }
+        expect(response).to be_successful
+        expect(assigns[:groups]).to eq [group]
+        expect(response).to render_template 'spotlight/browse/index'
+      end
     end
   end
 
@@ -87,6 +99,17 @@ describe Spotlight::BrowseController, type: :controller do
         expect(assigns[:search]).to be_a Spotlight::Search
         expect(assigns[:response]).to eq mock_response
         expect(assigns[:document_list]).to eq document_list
+        expect(response).to render_template 'spotlight/browse/show'
+      end
+
+      it 'includes the browse group when a group_id is provided' do
+        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
+        expect(controller).to receive(:add_breadcrumb).with('Good group', exhibit_browse_groups_path(exhibit, group))
+        expect(controller).to receive(:add_breadcrumb).with(search.title, exhibit_browse_group_path(exhibit, group, search))
+        get :show, params: { id: search, exhibit_id: exhibit, group_id: group.id }
+        expect(response).to be_successful
+        expect(assigns[:group]).to eq group
         expect(response).to render_template 'spotlight/browse/show'
       end
 
