@@ -61,7 +61,7 @@ module Spotlight
 
     def update_all_group_params
       params.require(:exhibit).permit(
-        groups_attributes: %i[id published weight]
+        groups_attributes: %i[id title published weight]
       )
     end
 
