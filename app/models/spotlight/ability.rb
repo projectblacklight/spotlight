@@ -25,6 +25,7 @@ module Spotlight
       can :manage, [
         Spotlight::Attachment,
         Spotlight::Search,
+        Spotlight::Group,
         Spotlight::Resource,
         Spotlight::Page,
         Spotlight::Contact,

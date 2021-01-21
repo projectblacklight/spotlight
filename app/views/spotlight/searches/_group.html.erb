@@ -1,0 +1,26 @@
+<% group = f.object %>
+<%= render layout: 'spotlight/shared/dd3_item', locals: { id: group.id.to_s, field: f, dd3_content_classes: "group" , enabled_method: :published, label_method: :title, label: group.title } do |_, section| %>
+  <% case section when nil %>
+  <div class="d-flex flex-grow-1">
+    <div>
+      <%= f.check_box :published, inline: true, hide_label: true %>
+    </div>
+
+    <div class="flex-grow-1 mx-2 main">
+      <h4 class="card-title h6 mb-0">
+        <%= group.title %>
+      </h4>
+
+      <div class="card-text">
+        <div class=""><%= t :'spotlight.searches.group.category_count', count: group.searches.count %> <%= t :'spotlight.searches.group.unpublished_count', count: group.searches.unpublished.count %> &bull; <%= link_to t(:'helpers.action.view'), exhibit_browse_groups_path(current_exhibit, group) %></div>
+        <%= f.hidden_field :id %>
+        <%= f.hidden_field :weight, data: {property: "weight"} %>
+      </div>
+    </div>
+    <div class="flex m-2">
+      <div class="card-text">
+        <%= exhibit_delete_link(group) %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

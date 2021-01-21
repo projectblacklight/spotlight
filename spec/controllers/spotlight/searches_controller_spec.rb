@@ -48,6 +48,7 @@ describe Spotlight::SearchesController, type: :controller do
 
     describe 'GET index' do
       let!(:search) { FactoryBot.create(:search, exhibit: exhibit) }
+      let(:group) { FactoryBot.create(:group, published: true, title: 'Good group', exhibit: exhibit, searches: [search]) }
 
       it 'shows all the items' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
@@ -57,6 +58,12 @@ describe Spotlight::SearchesController, type: :controller do
         expect(response).to be_successful
         expect(assigns[:exhibit]).to eq search.exhibit
         expect(assigns[:searches]).to include search
+      end
+
+      it 'assigns groups and group' do
+        get :index, params: { exhibit_id: search.exhibit_id }
+        expect(response).to be_successful
+        expect(assigns[:groups]).to eq [group]
       end
 
       it 'has a JSON response with published resources' do
