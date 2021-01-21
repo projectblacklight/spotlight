@@ -13,6 +13,7 @@
       var cancel = $("input[data-behavior='cancel']", target);
       var input  = $("input[type='text']", target);
       var original_width  = button.outerWidth();
+      var expanded = false;
 
       // Animate button open when the mouse enters or
       // the button is given focus (i.e. clicked/tabbed)
@@ -43,7 +44,13 @@
         }
       });
       function expandButton(){
+        // If this has not yet been expanded, recalculate original_width to 
+        // handle things that may have been originally hidden.
+        if (!expanded) {
+          original_width  = button.outerWidth();
+        }
         if(button.outerWidth() <= (original_width + 5)) {
+          expanded = true;
           button.animate(
             {width: settings.animate_width + 'px'}, settings.speed, function(){
               target.show(0, function(){

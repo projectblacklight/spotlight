@@ -136,7 +136,7 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 end
 
-def add_new_page_via_button(title = 'New Page')
+def add_new_via_button(title = 'New Page')
   add_link = find('[data-expanded-add-button]')
   within(add_link) do
     expect(page).to have_css("input[type='text']", visible: false)

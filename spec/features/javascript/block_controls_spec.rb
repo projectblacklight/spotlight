@@ -12,7 +12,7 @@ describe 'Block controls' do
 
     click_link 'Feature pages'
 
-    add_new_page_via_button('My New Feature Page')
+    add_new_via_button('My New Feature Page')
 
     expect(page).to have_css('h3', text: 'My New Feature Page')
 
