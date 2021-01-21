@@ -43,6 +43,7 @@ module Spotlight
       can :read, Spotlight::Exhibit, published: true
       can :read, Spotlight::Page, published: true
       can :read, Spotlight::Search, published: true
+      can :read, Spotlight::Group, published: true
       can :read, Spotlight::Language, public: true
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
