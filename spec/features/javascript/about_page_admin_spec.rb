@@ -12,7 +12,7 @@ describe 'About Pages Adminstration', js: true do
 
     click_link 'About pages'
 
-    add_new_page_via_button('My New Page')
+    add_new_via_button('My New Page')
 
     expect(page).to have_content 'The about page was created.'
     expect(page).to have_css('li.dd-item')
