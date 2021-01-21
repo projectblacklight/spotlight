@@ -49,9 +49,11 @@ ignore_unused:
   - spotlight.featured_images.upload_form.{non_iiif_alert_html,source.exhibit.help,source.exhibit.label} # app/views/spotlight/featured_images/_form.html.erb
   - spotlight.feature_pages.page_options.published # app/views/spotlight/feature_pages/_page_options.html.erb
   - spotlight.{exhibits,custom_fields,custom_search_fields}.{new,edit}.header # configuration_page_title
+  - spotlight.{searches}.{group}.{view}
   - helpers.submit.custom_field.{batch_error,batch_updated,create,submit,update} # Generic repeated template
   - helpers.submit.custom_search_field.{batch_error,batch_updated,create,submit,update} # Generic repeated template
   - helpers.submit.exhibit.{batch_error,batch_updated,create,submit,update} # Generic repeated template
+  - helpers.submit.group.{destroyed,updated} # Generic helper that is used
   - helpers.submit.search.{create,submit,update} # Generic repeated template
   - helpers.submit.site.{batch_error,batch_updated,create,created,destroyed,submit,update} # Generic repeated template
   - helpers.submit.filter.{batch_error,batch_updated,create,created,destroyed,submit,update} # Generic repeated template

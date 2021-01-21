@@ -77,7 +77,7 @@ module Spotlight
     belongs_to :masthead, dependent: :destroy, optional: true
     belongs_to :thumbnail, class_name: 'Spotlight::ExhibitThumbnail', dependent: :destroy, optional: true
 
-    accepts_nested_attributes_for :about_pages, :attachments, :contacts, :custom_fields, :feature_pages, :languages,
+    accepts_nested_attributes_for :about_pages, :attachments, :contacts, :custom_fields, :feature_pages, :groups, :languages,
                                   :main_navigations, :owned_taggings, :pages, :resources, :searches, :solr_document_sidecars, :translations
     accepts_nested_attributes_for :blacklight_configuration, :home_page, :filters, update_only: true
     accepts_nested_attributes_for :masthead, :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }

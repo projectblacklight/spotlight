@@ -27,6 +27,7 @@ module Spotlight
     end
 
     def index
+      @groups = @exhibit.groups
       respond_to do |format|
         format.html
         format.json do
