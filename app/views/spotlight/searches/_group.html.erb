@@ -7,8 +7,9 @@
     </div>
 
     <div class="flex-grow-1 mx-2 main">
-      <h4 class="card-title h6 mb-0">
-        <%= group.title %>
+      <h4 class="card-title h6 mb-0" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+        <a href="#edit-in-place" class="field-label edit-in-place"><%= group.title %></a>
+        <%= f.hidden_field :title, value: group.title , class: 'form-control form-control-sm title-field', data: {:"edit-field-target" => 'true'} %>
       </h4>
 
       <div class="card-text">
