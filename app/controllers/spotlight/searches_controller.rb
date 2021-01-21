@@ -5,9 +5,8 @@ module Spotlight
   # CRUD actions for curating browse categories (see
   # {Spotlight::BrowseController} for the end-user read and index actions)
   class SearchesController < Spotlight::ApplicationController
-    load_resource :exhibit, class: 'Spotlight::Exhibit'
+    load_and_authorize_resource :exhibit, class: 'Spotlight::Exhibit', parent_action: :curate
     before_action :authenticate_user!
-    before_action :only_curators!
     before_action :create_or_load_resource, only: [:create]
     load_and_authorize_resource through: :exhibit
     before_action :attach_breadcrumbs, only: %i[index edit], unless: -> { request.format.json? }
@@ -127,10 +126,6 @@ module Spotlight
         image
         document_global_id
       ]
-    end
-
-    def only_curators!
-      authorize! :curate, @exhibit if @exhibit
     end
 
     def blacklisted_search_session_params
