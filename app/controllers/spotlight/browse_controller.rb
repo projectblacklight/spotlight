@@ -9,7 +9,7 @@ module Spotlight
     include Spotlight::Catalog
     include Blacklight::Facet
 
-    load_resource :group, through: :exhibit
+    load_and_authorize_resource :group, through: :exhibit
     load_and_authorize_resource :search, through: %i[group exhibit], parent: false
     before_action :attach_breadcrumbs
     before_action :attach_search_breadcrumb, only: :show
