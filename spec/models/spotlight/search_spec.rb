@@ -34,6 +34,16 @@ describe Spotlight::Search, type: :model do
     end
   end
 
+  describe '.unpublished' do
+    let!(:search1) { FactoryBot.create(:search, published: true) }
+    let!(:search2) { FactoryBot.create(:search, published: false) }
+    let!(:search3) { FactoryBot.create(:search, published: nil) }
+
+    it 'accounts for nil and false values' do
+      expect(described_class.unpublished.count).to eq 5
+    end
+  end
+
   describe '#slug' do
     let(:search) { FactoryBot.create(:search) }
 
