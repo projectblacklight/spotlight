@@ -17,6 +17,10 @@
       </li>
 
       <li role="presentation" class="nav-item">
+        <a href="#search-group" aria-controls="search-group" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.search_group') %></a>
+      </li>
+
+      <li role="presentation" class="nav-item">
         <a href="#search-masthead" aria-controls="search-masthead" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.search_masthead') %></a>
       </li>
 
@@ -48,6 +52,14 @@
               </div>
             </div>
           </div>
+        <% end %>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="search-group">
+        <% if @groups.present? %>
+          <p class="instructions"><%= t(:'.group.help') %></p>
+          <%= f.collection_check_boxes(:group_ids, @groups, :id, :title, hide_label: true) %>
+        <% else %>
+          <p class="instructions"><%= t(:'.group.help_no_groups') %></p>
         <% end %>
       </div>
       <div role="tabpanel" class="tab-pane" id="search-masthead">

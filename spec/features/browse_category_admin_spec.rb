@@ -48,6 +48,38 @@ describe 'Browse Category Administration', type: :feature do
       end
     end
 
+    describe 'with a group present' do
+      let!(:group) { FactoryBot.create(:group, exhibit: exhibit, title: 'Good group') }
+
+      it 'enables group selection' do
+        visit spotlight.edit_exhibit_search_path(exhibit, search)
+        click_link 'Group'
+        expect(page).to have_content 'You can add this browse category'
+
+        within '#search-group' do
+          expect(find('input[type="checkbox"]')).not_to be_checked
+          check 'Good group'
+        end
+
+        click_button 'Save changes'
+        expect(page).to have_content('The search was successfully updated.')
+        visit spotlight.edit_exhibit_search_path(exhibit, search)
+        click_link 'Group'
+
+        within '#search-group' do
+          expect(find('input[type="checkbox"]')).to be_checked
+        end
+      end
+    end
+
+    describe 'without a group present' do
+      it 'displays no group help text' do
+        visit spotlight.edit_exhibit_search_path(exhibit, search)
+        click_link 'Group'
+        expect(page).to have_content 'You cannot add this browse category'
+      end
+    end
+
     it 'attaches a masthead image' do
       visit spotlight.edit_exhibit_search_path exhibit, search
 

@@ -50,6 +50,7 @@ module Spotlight
     end
 
     def edit
+      @groups = @exhibit.groups
       add_breadcrumb @search.full_title, edit_exhibit_search_path(@search.exhibit, @search)
       @exhibit = @search.exhibit
     end
@@ -109,6 +110,7 @@ module Spotlight
         :long_description,
         :search_box,
         :default_index_view_type,
+        group_ids: [],
         masthead_attributes: featured_image_params,
         thumbnail_attributes: featured_image_params
       )
