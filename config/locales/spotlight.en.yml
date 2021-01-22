@@ -699,6 +699,9 @@ en:
         title: Curation - browse
       form:
         default_index_view_type: Default view
+        group:
+          help: You can add this browse category to any number of browse groups. When you add a browse category to a group it will be displayed when an exhibit visitor selects that browse group’s filter button on the Browse landing page.
+          help_no_groups: You cannot add this browse category to a browse group because no browse groups have been created. To create a browse group, use the Browse groups tab on the Curation > Browse page.
         masthead:
           help: You can select and crop an image to use as a browse category-specific masthead, instead of the default site masthead, for this browse category's detail page.
           help_secondary: To create a browse category-specific masthead, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.
@@ -708,6 +711,7 @@ en:
           help_block: Displays a search box that enables users to search within the browse category results
           label: Search box
         search_description: Description
+        search_group: Group
         search_masthead: Masthead
         search_thumbnail: Thumbnail
         thumbnail:
