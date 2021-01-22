@@ -38,7 +38,6 @@ module Spotlight
         end
       end
 
-      # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
       def field_enabled?(field, *args)
         if !field.enabled
           false
@@ -52,7 +51,6 @@ module Spotlight
           field.send(document_index_view_type)
         end
       end
-      # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
       private
 
