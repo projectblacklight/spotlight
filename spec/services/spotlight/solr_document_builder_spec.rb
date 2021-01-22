@@ -54,7 +54,7 @@ describe Spotlight::SolrDocumentBuilder do
       end
 
       context 'without a persisted resource' do
-        let(:resource) { FactoryBot.build(:resource) }
+        let(:resource) { FactoryBot.build(:resource, exhibit: exhibit) }
 
         it 'does not implicitly persist the resource' do
           resource.document_builder.documents_to_index.first
