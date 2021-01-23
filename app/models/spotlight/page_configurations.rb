@@ -40,6 +40,7 @@ module Spotlight
         'attachment-endpoint': attachment_endpoint,
         'autocomplete-exhibit-catalog-path': exhibit_autocomplete_endpoint,
         'autocomplete-exhibit-pages-path': page_autocomplete_endpoint,
+        'autocomplete-exhibit-browse-groups-path': browse_groups_autocomplete_endpoint,
         'autocomplete-exhibit-searches-path': search_autocomplete_endpoint,
         'preview-url': page_preview_url
       }.merge(downstream_parameters)
@@ -60,6 +61,10 @@ module Spotlight
 
     def attachment_endpoint
       spotlight.exhibit_attachments_path(current_exhibit)
+    end
+
+    def browse_groups_autocomplete_endpoint
+      spotlight.exhibit_groups_path(current_exhibit)
     end
 
     def exhibit_autocomplete_endpoint

@@ -268,7 +268,7 @@ module Spotlight
     # Added here for backwards compatability with SirTrevor 0.6
     # and apps who have customized their avaialble widgets
     config.sir_trevor_widgets = %w[
-      Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse LinkToSearch
+      Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse BrowseGroupCategories LinkToSearch
       FeaturedPages SolrDocuments SolrDocumentsCarousel SolrDocumentsEmbed
       SolrDocumentsFeatures SolrDocumentsGrid SearchResults
     ]

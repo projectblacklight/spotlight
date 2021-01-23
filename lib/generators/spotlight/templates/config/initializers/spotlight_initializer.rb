@@ -73,7 +73,7 @@
 # These are set by default by Spotlight's configuration,
 # but you can customize them here, or in the SirTrevorRails::Block#custom_block_types method
 # Spotlight::Engine.config.sir_trevor_widgets = %w(
-#   Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse
+#   Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse BrowseGroupCategories
 #   FeaturedPages SolrDocuments SolrDocumentsCarousel SolrDocumentsEmbed
 #   SolrDocumentsFeatures SolrDocumentsGrid SearchResults
 # )
