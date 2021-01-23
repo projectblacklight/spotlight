@@ -1,0 +1,12 @@
+<% if browse_group_categories_block.groups? %>
+  <% browse_group_categories_block.groups.each do |group| %>
+    <div>
+      <h2><%= group.title %></h2>
+      <%= link_to 'View all', exhibit_browse_groups_path(current_exhibit, group) %>
+      <% group.searches.published.each do |search| %>
+        <% # To be implemented in #1142 %>
+        <% search.full_title %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

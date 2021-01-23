@@ -103,7 +103,7 @@ Spotlight::Engine.routes.draw do
     get 'browse/group/:group_id', to: 'browse#index', as: 'browse_groups'
     get 'browse/group/:group_id/:id', to: 'browse#show', as: 'browse_group'
 
-    resources :groups, only: %i[create update destroy] do
+    resources :groups, except: %i[show] do
       collection do
         patch :update_all
       end

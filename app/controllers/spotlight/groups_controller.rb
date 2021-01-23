@@ -8,6 +8,14 @@ module Spotlight
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
     load_and_authorize_resource through: :exhibit
 
+    def index
+      respond_to do |format|
+        format.json do
+          render json: @groups.as_json, root: false
+        end
+      end
+    end
+
     # POST /exhibits/1/groups
     def create
       @group.attributes = group_params

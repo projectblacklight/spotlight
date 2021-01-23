@@ -18,6 +18,10 @@
         this.transform_autocomplete_results = _.identity;
       }
 
+      if (_.isUndefined(this['autocomplete_control'])) {
+        this.autocomplete_control = function() { return '<input type="text" class="st-input-string form-control item-input-field" data-twitter-typeahead="true" placeholder="<%= i18n.t("blocks:autocompleteable:placeholder")%>"/>' };
+      }
+
       if (_.isUndefined(this['bloodhoundOptions'])) {
         this.bloodhoundOptions = function() {
           return {
@@ -28,10 +32,6 @@
           };
         };
       }
-    },
-
-    autocomplete_control: function() {
-      return '<input type="text" class="st-input-string form-control item-input-field" data-twitter-typeahead="true" placeholder="<%= i18n.t("blocks:autocompleteable:placeholder")%>"/>';
     },
 
     addAutocompletetoSirTrevorForm: function() {

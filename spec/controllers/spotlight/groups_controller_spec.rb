@@ -3,11 +3,19 @@
 describe Spotlight::GroupsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:group) { FactoryBot.create(:group, exhibit: exhibit) }
+  let!(:group) { FactoryBot.create(:group, exhibit: exhibit) }
 
   describe 'when the user is not authorized' do
     before do
       sign_in FactoryBot.create(:exhibit_visitor)
+    end
+
+    describe 'GET index' do
+      it 'returns authorized groups (none)' do
+        get :index, params: { exhibit_id: exhibit }, format: :json
+        expect(response).to be_successful
+        expect(JSON.parse(response.body).length).to eq 0
+      end
     end
 
     describe 'POST create' do
@@ -30,6 +38,13 @@ describe Spotlight::GroupsController, type: :controller do
   describe 'when the user is a curator' do
     before do
       sign_in FactoryBot.create(:exhibit_curator, exhibit: exhibit)
+    end
+
+    describe 'GET index' do
+      it 'returns json response of groups' do
+        get :index, params: { exhibit_id: exhibit }, format: :json
+        expect(JSON.parse(response.body).length).to eq 1
+      end
     end
 
     describe 'POST create' do
