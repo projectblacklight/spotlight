@@ -1,12 +1,44 @@
 <% if browse_group_categories_block.groups? %>
   <% browse_group_categories_block.groups.each do |group| %>
-    <div>
-      <h2><%= group.title %></h2>
-      <%= link_to 'View all', exhibit_browse_groups_path(current_exhibit, group) %>
-      <% group.searches.published.each do |search| %>
-        <% # To be implemented in #1142 %>
-        <% search.full_title %>
-      <% end %>
+    <div class="browse-group-categories-block" data-browse-group-categories data-browse-group-categories-count="<%= group.searches.count %>">
+      <div class="d-flex flex-column flex-md-row">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2 class="m-0"><%= group.title %></h2>
+          <div class="px-2">
+            <%= link_to 'View all', exhibit_browse_groups_path(current_exhibit, group) %>
+          </div>
+        </div>
+        <% if group.searches.count > 1 %>
+          <ul class="browse-group-categories-controls p-0 ml-md-auto d-flex justify-content-center">
+            <li class="prev">
+              <%= blacklight_icon 'arrow-alt-circle-left' %>
+            </li>
+            <li class="next">
+              <%= blacklight_icon 'arrow-alt-circle-right', classes: 'arrow' %>
+            </li>
+          </ul>
+        <% end %>
+      </div>
+      <div class="spotlight-flexbox browse-categories categories-3" data-browse-group-categories-carousel data-sidebar='<%= @page.display_sidebar? %>'>
+        <% group.searches.each_with_index do |search, index| %>
+          <div class="box category-1">
+            <%= link_to spotlight.exhibit_browse_group_path(current_exhibit, group, search), data: { turbolinks: false } do %>
+              <div class="browse-category" style='background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url("<%= search.thumbnail.iiif_url if search.thumbnail %>")'>
+                <div class="category-caption">
+                  <p class="category-title">
+                    <%= search.title %>
+                    <% if search.subtitle.present? %><span class="category-subtitle"><%= search.subtitle %></span><% end %>
+                  </p>
+
+                  <% if browse_group_categories_block.display_item_counts? %>
+                    <span class="item-count"><%= t(:'.items', count: search.count) %></span>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   <% end %>
 <% end %>
