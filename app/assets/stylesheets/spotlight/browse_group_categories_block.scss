@@ -1,0 +1,50 @@
+@import "tiny-slider";
+
+.browse-group-categories-block {
+  .browse-group-categories-controls {
+    list-style: none;
+    li {
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .blacklight-icon-arrow-alt-circle-left, .blacklight-icon-arrow-alt-circle-right {
+      display: inline-block;
+      fill: $gray-600;
+      height: 32px;
+      width: 32px;
+      
+      &:hover,&:focus {
+        fill: $gray-700;
+      }
+    }
+
+    li[aria-disabled="true"] {
+      cursor: auto;
+    }
+
+    [aria-disabled="true"] {
+      .blacklight-icon-arrow-alt-circle-left, .blacklight-icon-arrow-alt-circle-right {
+        fill: $gray-400;
+
+        &:hover,&:focus {
+          fill: $gray-400;
+        }
+      }
+    }
+  }
+
+  // Coming from tiny-slider, make sure these disappear when navigating via turbolinks
+  .tns-controls {
+    display: none;
+  }
+
+  @media screen and (min-width: breakpoint-min("md")) {
+    &[data-browse-group-categories-count="2"],&[data-browse-group-categories-count="3"] {
+      .browse-group-categories-controls {
+        display: none !important;
+      }
+    }
+  }
+
+}

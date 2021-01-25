@@ -1,6 +1,7 @@
 <%= cache [@exhibit, search, I18n.locale] do %>
+  <% group ||= @group %>
   <div class="col-md-4 col-12 category">
-    <%= link_to @group.present? ? spotlight.exhibit_browse_group_path(@exhibit, @group, search) : spotlight.exhibit_browse_path(@exhibit, search) do %>
+    <%= link_to group.present? ? spotlight.exhibit_browse_group_path(@exhibit, group, search) : spotlight.exhibit_browse_path(@exhibit, search) do %>
       <div class="image-overlay">
         <%= image_tag(search.thumbnail_image_url || 'spotlight/default_browse_thumbnail.jpg', class: 'img-responsive', alt: '') %>
         <div class="text-overlay">

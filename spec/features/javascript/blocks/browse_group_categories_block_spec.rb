@@ -7,7 +7,11 @@ describe 'Browse Group Categories', type: :feature, js: true do
   let(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
   let(:search1) { FactoryBot.create(:search, exhibit: exhibit, title: 'All of the good dogs') }
   let(:search2) { FactoryBot.create(:search, exhibit: exhibit, title: 'All of the good cats') }
-  let!(:group) { FactoryBot.create(:group, exhibit: exhibit, searches: [search1, search2], title: 'Pets', published: true) }
+  let(:search3) { FactoryBot.create(:search, exhibit: exhibit, title: 'All of the good birds') }
+  let(:search4) { FactoryBot.create(:search, exhibit: exhibit, title: 'All of the good pigs') }
+  let(:search5) { FactoryBot.create(:search, exhibit: exhibit, title: 'All of the good tigers') }
+  let(:search6) { FactoryBot.create(:search, exhibit: exhibit, title: 'All of the good ferrets') }
+  let!(:group) { FactoryBot.create(:group, exhibit: exhibit, searches: [search1, search2, search3, search4, search5, search6], title: 'Pets', published: true) }
   let!(:group2) { FactoryBot.create(:group, exhibit: exhibit, searches: [search1, search2], title: 'Good animals', published: true) }
 
   before do
@@ -26,5 +30,22 @@ describe 'Browse Group Categories', type: :feature, js: true do
     save_page
 
     expect(page).to have_css 'h2', text: 'Pets'
+  end
+
+  it 'can navigate using arrows' do
+    fill_in_prefetched_typeahead_field with: 'Pets', wait_for: '[data-type="browse_group_categories"] [data-browse-groups-fetched]'
+    within '.dd-list' do
+      expect(page).to have_css '.title', text: 'Pets'
+    end
+
+    save_page
+
+    expect(page).to have_css 'h2', text: 'Pets'
+
+    expect(page).to have_css '.category-title', text: 'All of the good dogs'
+    expect(page).not_to have_css '.category-title', text: 'All of the good tigers'
+    find('[data-controls="next"]').click
+    expect(page).not_to have_css '.category-title', text: 'All of the good dogs'
+    expect(page).to have_css '.category-title', text: 'All of the good tigers'
   end
 end
