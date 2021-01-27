@@ -3,6 +3,10 @@
 .browse-group-categories-block {
   padding-bottom: $spacer * .75;
   padding-top: $spacer * .75;
+  
+  .spotlight-flexbox.browse-categories .box {
+    display: flex;
+  }
 
   .browse-group-categories-controls {
     list-style: none;
@@ -14,8 +18,8 @@
     .blacklight-icon-arrow-alt-circle-left, .blacklight-icon-arrow-alt-circle-right {
       display: inline-block;
       fill: $gray-600;
-      height: 32px;
-      width: 32px;
+      height: 44px;
+      width: 44px;
       
       &:hover,&:focus {
         fill: $gray-700;
@@ -43,6 +47,13 @@
   }
 
   @media screen and (min-width: breakpoint-min("md")) {
+    .browse-group-categories-controls {
+      .blacklight-icon-arrow-alt-circle-left, .blacklight-icon-arrow-alt-circle-right {
+        height: 32px;
+        width: 32px;
+      }
+    }
+
     &[data-browse-group-categories-count="2"],&[data-browse-group-categories-count="3"] {
       .browse-group-categories-controls {
         display: none !important;

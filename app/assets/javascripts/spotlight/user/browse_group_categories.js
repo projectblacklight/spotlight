@@ -16,7 +16,6 @@
         loop: false,
         nav: false,
         items: 1,
-        gutter: 20,
         slideBy: 'page',
         responsive: {
           576: {
