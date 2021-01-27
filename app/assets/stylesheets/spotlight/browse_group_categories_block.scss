@@ -1,6 +1,9 @@
 @import "tiny-slider";
 
 .browse-group-categories-block {
+  padding-bottom: $spacer * .75;
+  padding-top: $spacer * .75;
+
   .browse-group-categories-controls {
     list-style: none;
     li {
