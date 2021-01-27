@@ -6,6 +6,10 @@
     var $container, slider;
 
     function init() {
+      var data = $container.data();
+      var sidebar = $container.data().sidebar;
+      var items = data.browseGroupCategoriesCount;
+
       slider = tns({
         container: $container[0],
         controlsContainer: $container.parent().find('.browse-group-categories-controls')[0],
@@ -16,10 +20,17 @@
         slideBy: 'page',
         responsive: {
           576: {
-            items: 3
+            items: itemCount(items, sidebar)
           }
         }
       });
+    }
+
+    function itemCount(items, sidebar) {
+      if (items < 3) {
+        return items;
+      }
+      return sidebar ? 3 : 4;
     }
 
     return this.each(function() {
