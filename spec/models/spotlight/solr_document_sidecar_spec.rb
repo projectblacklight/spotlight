@@ -20,6 +20,7 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
     context 'with an uploaded item' do
       before do
         subject.data = { 'configured_fields' => { 'some_configured_field' => 'some value' } }
+        subject.resource = Spotlight::Resources::Upload.new
         allow(Spotlight::Resources::Upload).to receive(:fields).with(exhibit).and_return([uploaded_field_config])
       end
 

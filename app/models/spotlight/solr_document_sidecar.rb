@@ -74,7 +74,6 @@ module Spotlight
 
       upload_fields.each_with_object({}) do |field, solr_hash|
         field_name = field.field_name.to_s
-        next unless configured_fields && configured_fields[field_name].present?
 
         value = configured_fields[field_name]
         field_data = field.data_to_solr(convert_stored_value_to_solr(value))
@@ -85,6 +84,8 @@ module Spotlight
     end
 
     def upload_fields
+      return [] unless document.uploaded_resource? || resource.is_a?(Spotlight::Resources::Upload)
+
       Spotlight::Resources::Upload.fields(exhibit)
     end
 
