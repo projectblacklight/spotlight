@@ -42,6 +42,11 @@
         </a>
       </li>
       <li class="nav-item">
+        <a href="#groups" class="nav-link <%= 'active' if @tab == 'groups' %>" aria-controls="groups" role="tab" data-toggle="tab" data-behavior="translation-progress">
+          <%= t('spotlight.translations.groups.label') %> <span class="badge"></span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a href="#pages" class="nav-link <%= 'active' if @tab == 'pages' %>" aria-controls="pages" role="tab" data-toggle="tab" data-behavior="translation-progress">
           <%= t('spotlight.translations.pages.label') %> <span class="badge"></span>
         </a>
@@ -54,6 +59,7 @@
       <%= render 'search_fields' %>
       <%= render 'browse_categories' %>
       <%= render 'pages' %>
+      <%= render 'groups' %>
     </div>
   </div>
 </div>

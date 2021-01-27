@@ -810,6 +810,8 @@ en:
           curated_features: Curated features
           home: Home
           label: Main menu
+      groups:
+        label: Browse groups
       import:
         description: You can import and export Rails-based YAML files containing the translated label values for the currently selected language for use in internationalization tools such as Transifex and i18n-tools. This feature does not include importing or exporting translations for Pages.
         export_current_locale: Export %{language}
