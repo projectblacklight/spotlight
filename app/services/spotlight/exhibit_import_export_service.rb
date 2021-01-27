@@ -11,6 +11,7 @@ module Spotlight
     class_attribute :serialization_pipeline, default: %i[
       raw_json
       add_feature_page_hierarchy
+      add_browse_group_hierarchy
       add_page_content
       attach_featured_images
       attach_attachments
@@ -37,7 +38,8 @@ module Spotlight
         attachments: {},
         languages: {},
         translations: {},
-        owned_taggings: {}
+        owned_taggings: {},
+        groups: {}
       )
 
       exhibit_attributes = hash.reject { |_k, v| v.is_a?(Array) || v.is_a?(Hash) }
@@ -59,12 +61,20 @@ module Spotlight
         ar.update(attr)
       end
 
+      hash[:groups].each do |attr|
+        gr = exhibit.groups.find_or_initialize_by(slug: attr[:slug])
+        gr.update(attr)
+      end
+
       hash[:searches].each do |attr|
+        group_slugs = attr.delete(:group_slugs) || []
         masthead = attr.delete(:masthead)
         thumbnail = attr.delete(:thumbnail)
 
         ar = exhibit.searches.find_or_initialize_by(slug: attr[:slug])
         ar.update(attr)
+
+        ar.update(groups: exhibit.groups.select { |x| group_slugs.include? x.slug })
 
         deserialize_featured_image(ar, :masthead, masthead) if masthead
         deserialize_featured_image(ar, :thumbnail, thumbnail) if thumbnail
@@ -335,6 +345,18 @@ module Spotlight
       json
     end
 
+    def add_browse_group_hierarchy(json)
+      return json unless json[:groups] && json[:searches]
+
+      json[:searches].each do |attr|
+        search = exhibit.searches.find_by(slug: attr[:slug])
+
+        attr[:group_slugs] = search.groups.pluck(:slug)
+      end
+
+      json
+    end
+
     def add_page_content(json)
       (json[:feature_pages] || []).each do |page|
         p = exhibit.feature_pages.find_by(slug: page[:slug])
@@ -381,6 +403,9 @@ module Spotlight
             if_include?(:pages,
                         searches: { # thumbnail
                           except: %i[id scope exhibit_id]
+                        },
+                        groups: {
+                          except: %i[id exhibit_id]
                         },
                         about_pages: { # thumbnail
                           except: %i[id scope exhibit_id parent_page_id content],

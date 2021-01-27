@@ -24,6 +24,10 @@ describe Spotlight::ExhibitImportExportService do
     expect(subject['searches']).to have(source_exhibit.searches.count).searches
   end
 
+  it 'has group attributes' do
+    expect(subject['groups']).to have(source_exhibit.groups.count).groups
+  end
+
   it 'has home page attributes' do
     expect(subject).to have_key 'home_page'
     expect(subject['home_page']).not_to have_key 'id'
@@ -344,6 +348,27 @@ describe Spotlight::ExhibitImportExportService do
           expect(existing_search.masthead).not_to be_blank
         end
       end
+
+      context 'in a group' do
+        let!(:group) { FactoryBot.create(:group, title: 'blah', exhibit: source_exhibit) }
+
+        before do
+          search.groups << group
+          search.save!
+        end
+
+        it 'copies the group' do
+          subject
+          expect(destination_exhibit.groups.length).to eq 1
+          expect(destination_exhibit.groups.first.as_json).to include(group.as_json.slice('slug', 'title', 'weight', 'published'))
+        end
+
+        it 'copies the group membership' do
+          subject
+          expect(existing_search.reload.groups.length).to eq 1
+          expect(existing_search.groups.pluck(:slug)).to match_array [group.slug]
+        end
+      end
     end
 
     context 'with a masthead' do
@@ -516,7 +541,7 @@ describe Spotlight::ExhibitImportExportService do
     end
 
     it 'includes only the page-related data' do
-      expect(subject.keys).to match_array %w[searches about_pages feature_pages home_page contacts]
+      expect(subject.keys).to match_array %w[searches groups about_pages feature_pages home_page contacts]
     end
   end
 end
