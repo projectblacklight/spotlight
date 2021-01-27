@@ -378,6 +378,55 @@ describe 'Translation editing', type: :feature do
     end
   end
 
+  describe 'Browse groups' do
+    before do
+      FactoryBot.create(:group, exhibit: exhibit, title: 'Browse Group 1')
+      FactoryBot.create(:group, exhibit: exhibit, title: 'Browse Group 2')
+
+      visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
+    end
+
+    it 'has a title browse group' do
+      within '#groups' do
+        expect(page).to have_css('input[type="text"]', count: 2)
+
+        expect(page).to have_field 'Browse Group 1'
+        expect(page).to have_field 'Browse Group 2'
+      end
+    end
+
+    it 'redirects to the same form tab' do
+      click_link 'Browse categories'
+      within('#groups', visible: true) do
+        fill_in 'Browse Group 1', with: 'parcourir le groupe 1'
+        click_button 'Save changes'
+      end
+
+      expect(page).to have_css '.nav-pills .nav-link.active', text: 'French'
+      expect(page).to have_css '.nav-tabs .nav-link.active', text: 'Browse groups'
+    end
+
+    it 'persists changes', js: true do
+      click_link 'Browse groups'
+
+      within('#groups', visible: true) do
+        fill_in 'Browse Group 1', with: 'parcourir le groupe 1'
+
+        click_button 'Save changes'
+      end
+
+      expect(page).to have_css('.flash_messages', text: 'The exhibit was successfully updated.')
+
+      expect(exhibit.groups.first.title).to eq 'Browse Group 1'
+
+      I18n.locale = :fr
+      Translation.current_exhibit = exhibit
+      expect(exhibit.groups.first.title).to eq 'parcourir le groupe 1'
+      I18n.locale = I18n.default_locale
+      Translation.current_exhibit = nil
+    end
+  end
+
   describe 'home page translation table entry' do
     let(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
     let(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit) }
