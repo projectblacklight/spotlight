@@ -118,8 +118,8 @@ module Spotlight
       end
     end
 
-    def reindex_later(user = nil)
-      Spotlight::ReindexJob.perform_later(self, new_reindexing_log_entry(user))
+    def reindex_later(current_user = nil)
+      Spotlight::ReindexExhibitJob.perform_later(self, user: current_user)
     end
 
     def uploaded_resource_fields

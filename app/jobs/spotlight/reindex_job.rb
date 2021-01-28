@@ -5,70 +5,73 @@ module Spotlight
   # Reindex the given resources or exhibits
   class ReindexJob < Spotlight::ApplicationJob
     include Spotlight::JobTracking
-
-    # The validity checker is a seam for implementations to expire unnecessary
-    # indexing tasks if it becomes redundant while waiting in the job queue.
-    class_attribute :validity_checker, default: Spotlight::ValidityChecker.new
-    self.validity_checker ||= Spotlight::ValidityChecker.new if Rails.version < '5.2'
+    include Spotlight::LimitConcurrency
 
     before_perform do |job|
-      job_log_entry = log_entry(job)
-      next unless job_log_entry
+      pagination = job.arguments.last.slice(:per, :page, :last) if job.arguments.last.is_a? Hash
+      pagination ||= {}
 
-      items_reindexed_estimate = resource_list(job.arguments.first).sum do |resource|
+      items_reindexed_estimate = resource_list(job.arguments.first, **pagination).sum do |resource|
         resource.document_builder.documents_to_index.size
       end
-      job_log_entry.update(items_reindexed_estimate: items_reindexed_estimate)
+
+      progress.total = items_reindexed_estimate
     end
 
-    around_perform do |job, block|
-      job_log_entry = log_entry(job)
-      job_log_entry&.in_progress!
+    def perform(exhibit_or_resources, *args, per: nil, page: nil, last: false, **)
+      job_tracker.update(status: 'in_progress')
 
-      begin
-        block.call
-      rescue StandardError
-        job_log_entry&.failed!
-        raise
+      errors = 0
+
+      resource_list(exhibit_or_resources, per: per, page: page, last: last).each do |resource|
+        service = resource.reindex(commit: false, job_tracker: job_tracker, additional_data: job_data) do |batch|
+          progress&.increment(batch.length)
+        end
+
+        if service&.errors.to_i.positive?
+          errors += service&.errors.to_i
+          job_tracker.append_log_entry(type: :error, resource_id: resource.id)
+        end
+      rescue StandardError => e
+        Rails.logger.error(e)
+        errors += 1
+        job_tracker.append_log_entry(type: :error, message: e.to_s, resource_id: resource.id)
       end
 
-      job_log_entry&.succeeded!
-    end
-
-    def self.perform_later(exhibit_or_resources, log_entry = nil)
-      validity_token = validity_checker.mint(exhibit_or_resources)
-
-      super(exhibit_or_resources, log_entry, validity_token)
-    end
-
-    def perform(exhibit_or_resources, log_entry = nil, validity_token = nil)
-      return unless still_valid?(exhibit_or_resources, validity_token)
-
-      resource_list(exhibit_or_resources).each do |resource|
-        resource.reindex(log_entry)
-      end
+      job_tracker.append_log_entry(type: :info, message: "#{progress.progress} of #{progress.total} (#{errors} errors)")
+      job_tracker.update(status: errors.zero? ? 'completed' : 'failed', data: { progress: progress.progress, total: progress.total })
     end
 
     private
 
-    def resource_list(exhibit_or_resources)
+    def job_data
+      return unless job_tracker
+
+      { Spotlight::Engine.config.job_tracker_id_field => job_tracker.top_level_job_tracker.job_id }
+    end
+
+    def resource_list(exhibit_or_resources, per: nil, page: nil, last: false)
       if exhibit_or_resources.is_a?(Spotlight::Exhibit)
-        exhibit_or_resources.resources.find_each
-      elsif exhibit_or_resources.is_a?(Enumerable)
-        exhibit_or_resources
+        resources = exhibit_or_resources.resources
+        if per
+          resources = resources.offset((page - 1) * per)
+          resources = resources.limit(per) unless last
+        end
+        resources.find_each
       else
         Array(exhibit_or_resources)
       end
     end
 
-    def log_entry(job)
-      job.arguments.second if job.arguments.second.is_a?(Spotlight::ReindexingLogEntry)
-    end
+    def job_tracking_resource
+      exhibit_or_resources = arguments.first
 
-    def still_valid?(exhibit_or_resources, validity_token)
-      return true unless validity_token
-
-      validity_checker.check exhibit_or_resources, validity_token
+      case exhibit_or_resources
+      when Spotlight::Exhibit
+        exhibit_or_resources
+      when Spotlight::Resource
+        exhibit_or_resources.exhibit
+      end
     end
   end
 end
