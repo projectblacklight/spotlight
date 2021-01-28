@@ -24,6 +24,7 @@ en:
     models:
       spotlight:
         page: Page
+      spotlight/search: Browse category
   cancel: Cancel
   drag: Drag
   helpers:

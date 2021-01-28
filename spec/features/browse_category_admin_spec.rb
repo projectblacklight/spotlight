@@ -62,7 +62,7 @@ describe 'Browse Category Administration', type: :feature do
         end
 
         click_button 'Save changes'
-        expect(page).to have_content('The search was successfully updated.')
+        expect(page).to have_content('The browse category was successfully updated.')
         visit spotlight.edit_exhibit_search_path(exhibit, search)
         click_link 'Group'
 
@@ -95,7 +95,7 @@ describe 'Browse Category Administration', type: :feature do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The search was successfully updated.')
+      expect(page).to have_content('The browse category was successfully updated.')
 
       search.reload
 
@@ -115,7 +115,7 @@ describe 'Browse Category Administration', type: :feature do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The search was successfully updated.')
+      expect(page).to have_content('The browse category was successfully updated.')
 
       search.reload
 
@@ -129,7 +129,7 @@ describe 'Browse Category Administration', type: :feature do
       check 'Search box'
 
       click_button 'Save changes'
-      expect(page).to have_content('The search was successfully updated.')
+      expect(page).to have_content('The browse category was successfully updated.')
       search.reload
 
       expect(search.search_box).to eq true
@@ -141,7 +141,7 @@ describe 'Browse Category Administration', type: :feature do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The search was successfully updated.')
+      expect(page).to have_content('The browse category was successfully updated.')
 
       search.reload
 
