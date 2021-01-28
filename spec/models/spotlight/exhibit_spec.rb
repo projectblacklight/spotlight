@@ -253,48 +253,9 @@ describe Spotlight::Exhibit, type: :model do
   describe '#reindex_later' do
     subject { FactoryBot.create(:exhibit) }
 
-    let(:log_entry) { Spotlight::ReindexingLogEntry.new(exhibit: subject, user: user, items_reindexed_count: 0) }
-
-    context 'user is omitted' do
-      let(:user) { nil }
-
-      it 'queues a reindex job for the exhibit, with nil user for the log entry' do
-        expect(subject).to receive(:new_reindexing_log_entry).with(nil).and_return(log_entry)
-        expect(Spotlight::ReindexJob).to receive(:perform_later).with(subject, log_entry)
-        subject.reindex_later
-        expect(log_entry.user).to be nil
-      end
-    end
-
-    context 'non-nil user is provided' do
-      let(:user) { FactoryBot.build(:user) }
-
-      it 'queues a reindex job for the exhibit, with actual user for the log entry' do
-        expect(subject).to receive(:new_reindexing_log_entry).with(user).and_return(log_entry)
-        expect(Spotlight::ReindexJob).to receive(:perform_later).with(subject, log_entry)
-        subject.reindex_later user
-        expect(log_entry.user).to eq user
-      end
-    end
-  end
-
-  describe '#new_reindexing_log_entry' do
-    let(:user) { FactoryBot.build(:user) }
-
-    it 'returns a properly configured Spotlight::ReindexingLogEntry instance' do
-      reindexing_log_entry = subject.send(:new_reindexing_log_entry, user)
-      expect(reindexing_log_entry.exhibit).to eq subject
-      expect(reindexing_log_entry.user).to eq user
-      expect(reindexing_log_entry.items_reindexed_count).to eq 0
-      expect(reindexing_log_entry.unstarted?).to be true
-    end
-
-    it 'does not require user the user parameter' do
-      reindexing_log_entry = subject.send(:new_reindexing_log_entry)
-      expect(reindexing_log_entry.exhibit).to eq subject
-      expect(reindexing_log_entry.user).to be nil
-      expect(reindexing_log_entry.items_reindexed_count).to eq 0
-      expect(reindexing_log_entry.unstarted?).to be true
+    it 'queues a reindex job for the exhibit' do
+      expect(Spotlight::ReindexExhibitJob).to receive(:perform_later).with(subject, user: nil)
+      subject.reindex_later
     end
   end
 
@@ -366,24 +327,9 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#reindex_progress' do
-    let!(:reindexing_log_entries) do
-      [
-        FactoryBot.create(:unstarted_reindexing_log_entry, exhibit: exhibit),
-        FactoryBot.create(:reindexing_log_entry, exhibit: exhibit),
-        in_progress_entry,
-        FactoryBot.create(:failed_reindexing_log_entry, exhibit: exhibit),
-        FactoryBot.create(:unstarted_reindexing_log_entry, exhibit: exhibit)
-      ]
-    end
-
-    let(:in_progress_entry) do
-      FactoryBot.create(:in_progress_reindexing_log_entry, exhibit: exhibit)
-    end
-
     it 'returns the latest log entry that is not unstarted' do
       reindex_progress = subject.reindex_progress
       expect(reindex_progress).to be_a Spotlight::ReindexProgress
-      expect(reindex_progress.current_log_entry).to eq in_progress_entry
     end
   end
 

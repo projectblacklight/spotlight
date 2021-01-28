@@ -4,42 +4,12 @@ module Spotlight
   ##
   # ReindexProgress is a class that models the progress of reindexing a list of resources
   class ReindexProgress
-    attr_reader :current_log_entry
+    attr_reader :exhibit
 
-    delegate :updated_at, to: :current_log_entry
+    delegate :updated_at, to: :most_relevant_job_tracker
 
-    def initialize(current_log_entry)
-      @current_log_entry = current_log_entry
-    end
-
-    def recently_in_progress?
-      return true if current_log_entry.in_progress?
-
-      current_log_entry.end_time.present? && (current_log_entry.end_time > Spotlight::Engine.config.reindex_progress_window.minutes.ago)
-    end
-
-    def started_at
-      current_log_entry.start_time
-    end
-
-    def finished?
-      current_log_entry.succeeded? || current_log_entry.failed?
-    end
-
-    def finished_at
-      current_log_entry.end_time
-    end
-
-    def total
-      current_log_entry.items_reindexed_estimate
-    end
-
-    def completed
-      current_log_entry.items_reindexed_count
-    end
-
-    def errored?
-      current_log_entry.failed?
+    def initialize(exhibit)
+      @exhibit = exhibit
     end
 
     def as_json(*)
@@ -48,7 +18,7 @@ module Spotlight
         started_at: localized_start_time,
         finished_at: localized_finish_time,
         updated_at: localized_updated_time,
-        total: total,
+        total: [total, completed].max,
         completed: completed,
         finished: finished?,
         errored: errored?
@@ -56,6 +26,53 @@ module Spotlight
     end
 
     private
+
+    def job_trackers
+      @job_trackers ||= exhibit.job_trackers.where(job_class: 'Spotlight::ReindexExhibitJob').recent
+    end
+
+    def most_relevant_job_tracker
+      return @most_relevant_job_tracker if @most_relevant_job_tracker
+
+      @most_relevant_job_tracker ||= job_trackers.in_progress.first || job_trackers.completed.first || job_trackers.first || Spotlight::JobTracker.new
+    end
+
+    def recently_in_progress?
+      return false unless most_relevant_job_tracker.persisted?
+      return true if most_relevant_job_tracker.in_progress?
+
+      finished? && most_relevant_job_tracker.updated_at >= Spotlight::Engine.config.reindex_progress_window.ago
+    end
+
+    def started_at
+      most_relevant_job_tracker.created_at
+    end
+
+    def finished?
+      most_relevant_job_tracker.completed? || (errored? && most_relevant_job_tracker.job_trackers.none?(&:in_progress?))
+    end
+
+    def finished_at
+      return unless finished?
+
+      most_relevant_job_tracker.updated_at
+    end
+
+    def total
+      return most_relevant_job_tracker.total if finished?
+
+      most_relevant_job_tracker.job_trackers.sum(&:total)
+    end
+
+    def completed
+      return most_relevant_job_tracker.progress if finished?
+
+      most_relevant_job_tracker.job_trackers.sum(&:progress)
+    end
+
+    def errored?
+      most_relevant_job_tracker.failed?
+    end
 
     def localized_start_time
       return unless started_at
