@@ -120,8 +120,9 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'GET manifest' do
       context 'document is an uploaded resource' do
+        let(:uploaded_resource) { FactoryBot.create(:uploaded_resource) }
+
         it 'returns the json manifest produced by Spotlight::IiifManifestPresenter, based on the retrieved document and the controller' do
-          uploaded_resource = FactoryBot.create(:uploaded_resource)
           compound_id = uploaded_resource.compound_id
           slug = uploaded_resource.exhibit.slug
 
@@ -146,6 +147,7 @@ describe Spotlight::CatalogController, type: :controller do
           expect(image['resource']['@id']).to eq compound_id
           expect(image['resource']['format']).to eq 'image/jpeg'
 
+        ensure
           # clean up solr document created by save_and_index above
           Blacklight.default_index.connection.delete_by_id uploaded_resource.compound_id
           Blacklight.default_index.connection.commit
