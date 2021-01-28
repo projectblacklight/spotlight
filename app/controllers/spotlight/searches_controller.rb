@@ -120,17 +120,6 @@ module Spotlight
       params.to_unsafe_h.with_indifferent_access.except(:exhibit_id, :search, *blacklisted_search_session_params).reject { |_k, v| v.blank? }
     end
 
-    def featured_image_params
-      %i[
-        iiif_region iiif_tilesource
-        iiif_manifest_url iiif_canvas_id iiif_image_id
-        display
-        source
-        image
-        document_global_id
-      ]
-    end
-
     def blacklisted_search_session_params
       %i[id commit counter total search_id page per_page authenticity_token utf8 action controller]
     end
