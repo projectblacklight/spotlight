@@ -84,6 +84,7 @@ Spotlight.onLoad(function() {
     }
 
     function calculatePercentage(data) {
+      if (data.total == 0) return 0;
       return Math.floor((data.completed / data.total) * 100);
     }
 
