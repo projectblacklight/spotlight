@@ -333,6 +333,20 @@ describe Spotlight::ExhibitImportExportService do
         end
       end
 
+      context 'remote thumbnail with existing tilesource' do
+        it do
+          search.thumbnail.iiif_tilesource
+          search.thumbnail.save
+          source_exhibit.reload
+        end
+
+        it 'unsets the iiif_tilesource' do
+          subject
+          existing_search.reload
+          expect(existing_search.thumbnail.iiif_tilesource).not_to eq search.thumbnail.iiif_tilesource
+        end
+      end
+
       context 'with a thumbnail from an uploaded resource' do
         before do
           search.masthead.document_global_id = SolrDocument.new(id: 'xyz').to_global_id

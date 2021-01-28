@@ -216,6 +216,8 @@ module Spotlight
                                                      filename: file[:filename],
                                                      content_type: file[:content_type]
       end
+      # Unset the iiif_tilesource field as the new image should be different
+      image.iiif_tilesource = nil
       image.save!
       obj.update(method => image)
     end
