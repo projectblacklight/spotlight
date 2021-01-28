@@ -150,14 +150,7 @@ module Spotlight
     end
 
     def allowed_page_params
-      [:title, :content, thumbnail_attributes: featured_image_attributes]
-    end
-
-    def featured_image_attributes
-      %i[
-        source image document_global_id iiif_region iiif_tilesource
-        iiif_manifest_url iiif_canvas_id iiif_image_id
-      ]
+      [:title, :content, thumbnail_attributes: featured_image_params]
     end
 
     def human_name

@@ -30,18 +30,5 @@ module Spotlight
                                       masthead_attributes: featured_image_params,
                                       thumbnail_attributes: featured_image_params)
     end
-
-    def featured_image_params
-      %i[
-        iiif_region iiif_tilesource
-        iiif_manifest_url iiif_canvas_id
-        iiif_image_id
-        display
-        source
-        image
-        document_global_id
-        upload_id
-      ]
-    end
   end
 end

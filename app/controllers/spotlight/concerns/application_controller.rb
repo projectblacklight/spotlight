@@ -80,6 +80,19 @@ module Spotlight
       def default_document_index_view_type
         document_index_views.select { |_k, config| config.respond_to?(:default) && config.default }.keys.first || document_index_views.keys.first
       end
+
+      def featured_image_params
+        %i[
+          iiif_region iiif_tilesource
+          iiif_manifest_url iiif_canvas_id
+          iiif_image_id
+          display
+          source
+          image
+          document_global_id
+          upload_id
+        ]
+      end
     end
   end
 end
