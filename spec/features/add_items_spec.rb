@@ -43,7 +43,8 @@ describe 'Uploading a non-repository item', type: :feature do
       expect(page).to have_content 'Object uploaded successfully.'
 
       expect(Spotlight::Resource.last.upload.image.file.path).to end_with '800x600.png'
-      Blacklight.default_index.connection.delete_by_id Spotlight::Resource.last.send(:compound_id)
+    ensure
+      Blacklight.default_index.connection.delete_by_query 'spotlight_resource_type_ssim:spotlight/resources/uploads'
       Blacklight.default_index.connection.commit
     end
 
@@ -59,8 +60,8 @@ describe 'Uploading a non-repository item', type: :feature do
       end
       expect(page).to have_content 'Object uploaded successfully.'
       expect(Spotlight::Resource.last.data['full_title_tesim']).to eq 'no-image'
-
-      Blacklight.default_index.connection.delete_by_id Spotlight::Resource.last.send(:compound_id)
+    ensure
+      Blacklight.default_index.connection.delete_by_query 'spotlight_resource_type_ssim:spotlight/resources/uploads'
       Blacklight.default_index.connection.commit
     end
 
@@ -113,6 +114,9 @@ describe 'Uploading a non-repository item', type: :feature do
         end
       end
 
+      Blacklight.default_index.connection.commit
+      visit current_path
+
       click_link '800x600'
       click_link 'Edit'
       fill_in 'Title', with: 'This is a now an avatar'
@@ -123,7 +127,8 @@ describe 'Uploading a non-repository item', type: :feature do
 
       expect(page).to have_content 'This is a now an avatar'
       expect(Spotlight::Resource.last.upload.image.path).to end_with 'avatar.png'
-      Blacklight.default_index.connection.delete_by_id Spotlight::Resource.last.send(:compound_id)
+    ensure
+      Blacklight.default_index.connection.delete_by_query 'spotlight_resource_type_ssim:spotlight/resources/uploads'
       Blacklight.default_index.connection.commit
     end
   end

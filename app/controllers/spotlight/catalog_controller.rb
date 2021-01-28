@@ -31,7 +31,10 @@ module Spotlight
       blacklight_config.view.admin_table.document_actions = []
       blacklight_config.track_search_session = false
 
-      blacklight_config.add_sort_field :timestamp, sort: "#{blacklight_config.index.timestamp_field} desc" unless blacklight_config.sort_fields.key? :timestamp
+      unless blacklight_config.sort_fields.key? :timestamp
+        blacklight_config.add_sort_field :timestamp, default: true,
+                                                     sort: "#{blacklight_config.index.timestamp_field} desc"
+      end
     end
 
     before_action only: :edit do
