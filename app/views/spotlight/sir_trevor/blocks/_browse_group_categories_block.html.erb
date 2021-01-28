@@ -20,7 +20,7 @@
         <% end %>
       </div>
       <div class="spotlight-flexbox browse-categories categories-<%= [group.searches.count, (@page.display_sidebar? ? 3 : 4)].min %>" data-browse-group-categories-carousel data-sidebar='<%= @page.display_sidebar? %>' data-browse-group-categories-count="<%= group.searches.count %>">
-        <% group.searches.each_with_index do |search, index| %>
+        <% group.searches.published.each_with_index do |search, index| %>
           <div class="box category-1 justify-content-center justify-content-md-start">
             <%= link_to spotlight.exhibit_browse_group_path(current_exhibit, group, search), data: { turbolinks: false }, class: 'justify-content-center' do %>
               <div class="browse-category" style='background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url("<%= search.thumbnail.iiif_url if search.thumbnail %>")'>
