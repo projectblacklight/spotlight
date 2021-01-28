@@ -16,6 +16,7 @@ module Spotlight
 
     belongs_to :exhibit
     has_many :solr_document_sidecars
+    has_many :events, as: :resource
 
     serialize :data, Hash
 

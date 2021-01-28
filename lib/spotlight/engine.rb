@@ -6,6 +6,7 @@
 require 'devise'
 require 'devise_invitable'
 
+require 'activejob-status'
 require 'blacklight'
 require 'autoprefixer-rails'
 require 'friendly_id'
