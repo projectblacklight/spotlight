@@ -5,16 +5,16 @@ module Spotlight
   # check if a delayed job still needs to run
   class ValidityChecker
     # Return a validity token
-    # @param [ActiveModel::Model]
+    # @param [ActiveJob::Base]
     # @return [Object] any serializable object
-    def mint(_model); end
+    def mint(_job); end
 
     # Check if the token is still valid for the model
-    # @param [ActiveModel::Model]
+    # @param [ActiveJob::Base]
     # @param [Object] the serializable token minted by #mint
     # @return [boolean]
-    def check(_model, _token)
-      true
+    def check(_job, validity_token: nil)
+      validity_token || true
     end
   end
 end
