@@ -4,8 +4,8 @@ module Spotlight
   ##
   # After renaming an exhibit-specific field, we also
   # need to update the sidecars that may contain that field
-  class RenameSidecarFieldJob < ActiveJob::Base
-    queue_as :default
+  class RenameSidecarFieldJob < Spotlight::ApplicationJob
+    include Spotlight::JobTracking
 
     def perform(exhibit, old_field, new_field, old_slug = nil, new_slug = nil)
       exhibit.solr_document_sidecars.find_each do |s|

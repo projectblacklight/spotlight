@@ -3,11 +3,9 @@
 module Spotlight
   ##
   # Process a CSV upload into new Spotlight::Resource::Upload objects
-  class AddUploadsFromCsv < ActiveJob::Base
+  class AddUploadsFromCsv < Spotlight::ApplicationJob
     attr_reader :count
     attr_reader :errors
-
-    queue_as :default
 
     after_perform do |job|
       csv_data, exhibit, user = job.arguments

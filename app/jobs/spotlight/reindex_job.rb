@@ -3,9 +3,7 @@
 module Spotlight
   ##
   # Reindex the given resources or exhibits
-  class ReindexJob < ActiveJob::Base
-    queue_as :default
-
+  class ReindexJob < Spotlight::ApplicationJob
     # The validity checker is a seam for implementations to expire unnecessary
     # indexing tasks if it becomes redundant while waiting in the job queue.
     class_attribute :validity_checker, default: Spotlight::ValidityChecker.new
