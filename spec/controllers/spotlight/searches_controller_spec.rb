@@ -41,7 +41,7 @@ describe Spotlight::SearchesController, type: :controller do
       request.env['HTTP_REFERER'] = '/referring_url'
       post :create, params: { 'search' => { 'title' => 'A bunch of maps' }, 'f' => { 'genre_ssim' => ['map'] }, exhibit_id: exhibit }
       expect(response).to redirect_to '/referring_url'
-      expect(flash[:notice]).to eq 'The search was created.'
+      expect(flash[:notice]).to eq 'The browse category was created.'
       expect(assigns[:search].title).to eq 'A bunch of maps'
       expect(assigns[:search].query_params).to eq('f' => { 'genre_ssim' => ['map'] })
     end
@@ -162,7 +162,7 @@ describe Spotlight::SearchesController, type: :controller do
           delete :destroy, params: { id: search, exhibit_id: search.exhibit }
         end.to change { Spotlight::Search.count }.by(-1)
         expect(response).to redirect_to exhibit_searches_path(search.exhibit)
-        expect(flash[:alert]).to eq 'The search was deleted.'
+        expect(flash[:alert]).to eq 'The browse category was deleted.'
       end
     end
 
@@ -188,7 +188,7 @@ describe Spotlight::SearchesController, type: :controller do
         expect(search2.reload.published).to be_falsey
         expect(search3.reload.published).to be_truthy # should remain untouched since it wasn't present
         expect(response).to redirect_to 'http://example.com'
-        expect(flash[:notice]).to eq 'Searches were successfully updated.'
+        expect(flash[:notice]).to eq 'Browse categories were successfully updated.'
       end
     end
   end
