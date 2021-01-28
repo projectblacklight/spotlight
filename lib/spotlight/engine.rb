@@ -126,6 +126,7 @@ module Spotlight
     }
 
     config.resource_global_id_field = :"#{config.solr_fields.prefix}spotlight_resource_id#{config.solr_fields.string_suffix}"
+    config.job_tracker_id_field = :"#{config.solr_fields.prefix}spotlight_job_tracker_id#{config.solr_fields.string_suffix}"
 
     # Set to nil if you don't want to pull thumbnails from the index
     config.full_image_field = :full_image_url_ssm
