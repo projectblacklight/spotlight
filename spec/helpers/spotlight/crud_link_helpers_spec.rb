@@ -104,7 +104,7 @@ describe Spotlight::CrudLinkHelpers, type: :helper do
   describe '#action_default_value' do
     it 'attempts i18n lookups for models' do
       expect(I18n).to receive(:t).with(:'helpers.action.spotlight/feature_page.edit',
-                                       model: some_model.class.model_name.human,
+                                       model: some_model.class.model_name.human.downcase,
                                        default: [:'helpers.action.edit', 'Edit Feature page'])
       expect(helper.send(:action_default_value, some_model))
     end
@@ -112,14 +112,14 @@ describe Spotlight::CrudLinkHelpers, type: :helper do
     it 'attempts i18n lookups for unpersisted models' do
       some_model = Spotlight::FeaturePage.new
       expect(I18n).to receive(:t).with(:'helpers.action.spotlight/feature_page.create',
-                                       model: some_model.class.model_name.human,
+                                       model: some_model.class.model_name.human.downcase,
                                        default: [:'helpers.action.create', 'Create Feature page'])
       expect(helper.send(:action_default_value, some_model))
     end
 
     it 'attempts i18n lookups for models with an explicit action' do
       expect(I18n).to receive(:t).with(:'helpers.action.spotlight/feature_page.custom_action',
-                                       model: some_model.class.model_name.human,
+                                       model: some_model.class.model_name.human.downcase,
                                        default: [:'helpers.action.custom_action', 'Custom action Feature page'])
       expect(helper.send(:action_default_value, some_model, :custom_action))
     end
