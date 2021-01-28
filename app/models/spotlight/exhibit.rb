@@ -4,7 +4,6 @@ require 'mail'
 module Spotlight
   ##
   # Spotlight exhibit
-  # rubocop:disable Metrics/ClassLength
   class Exhibit < ActiveRecord::Base
     class_attribute :themes_selector
     include Spotlight::ExhibitAnalytics
@@ -59,7 +58,6 @@ module Spotlight
     has_many :groups, dependent: :delete_all
     has_many :job_trackers, as: :on, dependent: :delete_all
     has_many :main_navigations, dependent: :delete_all
-    has_many :reindexing_log_entries, dependent: :destroy
     has_many :resources
     has_many :roles, as: :resource, dependent: :delete_all
     has_many :searches, dependent: :destroy, extend: FriendlyId::FinderMethods
@@ -137,7 +135,7 @@ module Spotlight
     end
 
     def reindex_progress
-      @reindex_progress ||= ReindexProgress.new(current_reindexing_log_entry)
+      @reindex_progress ||= ReindexProgress.new(self)
     end
 
     def available_locales
@@ -150,19 +148,10 @@ module Spotlight
       self.description = ::Rails::Html::FullSanitizer.new.sanitize(description)
     end
 
-    def new_reindexing_log_entry(user = nil)
-      Spotlight::ReindexingLogEntry.create(exhibit: self, user: user, items_reindexed_count: 0, job_status: 'unstarted')
-    end
-
     private
-
-    def current_reindexing_log_entry
-      reindexing_log_entries.started_or_completed.first || reindexing_log_entries.build
-    end
 
     def move_friendly_id_error_to_slug
       errors.add :slug, *errors.delete(:friendly_id) if errors[:friendly_id].present?
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end

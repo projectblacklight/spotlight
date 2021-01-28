@@ -8,7 +8,6 @@ module Spotlight
     included do
       has_many :roles, class_name: 'Spotlight::Role', dependent: :destroy
       has_many :exhibits, class_name: 'Spotlight::Exhibit', through: :roles, source: 'resource', source_type: 'Spotlight::Exhibit'
-      has_many :reindexing_log_entries, class_name: 'Spotlight::ReindexingLogEntry'
 
       scope :with_roles, -> { where(id: Spotlight::Role.distinct.pluck(:user_id)) }
 

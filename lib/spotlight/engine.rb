@@ -101,7 +101,7 @@ module Spotlight
     config.external_resources_partials = []
     config.solr_batch_size = 20
 
-    Spotlight::Engine.config.reindex_progress_window = 10
+    Spotlight::Engine.config.reindex_progress_window = 1.hour
 
     # Filter resources by exhibit by default
     config.filter_resources_by_exhibit = true
