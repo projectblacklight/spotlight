@@ -112,7 +112,7 @@ module Spotlight
       defaults << :"helpers.action.#{object_name}.#{key}"
       defaults << :"helpers.action.#{key}"
       defaults << "#{key.to_s.humanize} #{model}"
-      I18n.t(defaults.shift, model: model, default: defaults)
+      I18n.t(defaults.shift, model: model.downcase, default: defaults)
     end
     # rubocop:enable Metrics/MethodLength
   end
