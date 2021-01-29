@@ -116,7 +116,6 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
     before { sign_in user }
 
     it 'calls the CloneTranslatedPageFromLocale service' do
-      pending('RSpec mocks do not play nice with kwargs') if RUBY_VERSION >= '3.0'
       expect(
         Spotlight::CloneTranslatedPageFromLocale
       ).to receive(:call).with(locale: 'es', page: page).and_call_original
