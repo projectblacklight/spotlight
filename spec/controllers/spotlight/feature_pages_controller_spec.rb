@@ -240,7 +240,6 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
       let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
 
       it 'calls the CloneTranslatedPageFromLocale service' do
-        pending('RSpec mocks do not play nice with kwargs') if RUBY_VERSION >= '3.0'
         expect(
           Spotlight::CloneTranslatedPageFromLocale
         ).to receive(:call).with(locale: 'es', page: page).and_call_original
