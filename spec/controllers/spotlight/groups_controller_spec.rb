@@ -51,7 +51,7 @@ describe Spotlight::GroupsController, type: :controller do
       it 'creates a saved search' do
         post :create, params: { exhibit_id: exhibit, group: { title: 'Hello' } }
         expect(response).to redirect_to spotlight.exhibit_searches_path(exhibit, anchor: 'browse-groups')
-        expect(flash[:notice]).to eq 'The group was created.'
+        expect(flash[:notice]).to eq 'The browse group was created.'
       end
     end
 

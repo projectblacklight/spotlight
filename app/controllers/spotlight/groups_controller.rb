@@ -34,14 +34,14 @@ module Spotlight
     def update
       @group.update(group_params)
 
-      redirect_to spotlight.exhibit_searches_path(anchor: 'browse-groups')
+      redirect_to spotlight.exhibit_searches_path(anchor: 'browse-groups'), notice: t(:'helpers.submit.group.updated', model: human_name)
     end
 
     # DELETE /groups/1
     def destroy
       @group.destroy
 
-      redirect_to spotlight.exhibit_searches_path(anchor: 'browse-groups')
+      redirect_to spotlight.exhibit_searches_path(anchor: 'browse-groups'), alert: t(:'helpers.submit.group.destroyed', model: human_name)
     end
 
     def update_all
@@ -62,7 +62,7 @@ module Spotlight
     private
 
     def human_name
-      @human_name ||= group_collection_name.humanize.downcase.singularize
+      @human_name ||= @group ? @group.class.model_name.human.downcase : Spotlight::Group.model_name.human.pluralize
     end
 
     alias group_collection_name controller_name
