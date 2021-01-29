@@ -12,7 +12,7 @@ module Spotlight
       # copy the image from the temp upload
       temp_image = Spotlight::TemporaryImage.find(upload_id)
       self.image = CarrierWave::SanitizedFile.new tempfile: StringIO.new(temp_image.image.read),
-                                                  filename: temp_image.image.identifier,
+                                                  filename: temp_image.image.filename || temp_image.image.identifier,
                                                   content_type: temp_image.image.content_type
 
       # Unset the incoming iiif_tilesource, which points at the temp image

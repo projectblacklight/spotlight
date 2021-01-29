@@ -304,7 +304,7 @@ module Spotlight
       if file
         img = {
           image: {
-            filename: file.identifier, content_type: file.content_type, content: Base64.encode64(file.read)
+            filename: file.filename, content_type: file.content_type, content: Base64.encode64(file.read)
           }
         }
       end
