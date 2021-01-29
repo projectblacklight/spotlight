@@ -39,6 +39,7 @@ ignore_unused:
   - activerecord.attributes.spotlight/masthead.display # app/views/spotlight/appearances/edit.html.erb
   - activerecord.attributes.spotlight/custom_field.is_multiple # app/views/spotlight/custom_fields/_form.html.erb
   - activerecord.attributes.spotlight/custom_search_field.field # app/views/spotlight/custom_search_fields/_form.html.erb
+  - activerecord.models.spotlight/group # Used in flash messages around the app to rename Group to Browse group
   - activerecord.models.spotlight/search # Used in flash messages around the app to rename Search to Browse category
   - helpers.label.spotlight/filter.{field,value} # app/views/spotlight/filters/_form.html.erb
   - spotlight.catalog.admin.{title,header} # app/helpers/spotlight/title_helper.rb
@@ -60,6 +61,7 @@ ignore_unused:
   - helpers.submit.filter.{batch_error,batch_updated,create,created,destroyed,submit,update} # Generic repeated template
   - helpers.action.destroy_are_you_sure # app/helpers/spotlight/crud_link_helpers.rb
   - helpers.action.spotlight/role.{create,destroy} # app/views/spotlight/roles/index.html.erb
+  - helpers.action.spotlight/group.destroy # app/views/spotlight/searches/_group.html.erb
   - helpers.action.{edit,edit_long,new,view} # app/helpers/spotlight/crud_link_helpers.rb
   - helpers.action.spotlight/search.edit_long # app/views/spotlight/searches/_search.html.erb
   - spotlight.about_pages.page_options.published # app/views/spotlight/about_pages/_page_options.html.erb

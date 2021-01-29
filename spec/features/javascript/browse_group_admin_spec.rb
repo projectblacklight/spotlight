@@ -18,7 +18,7 @@ describe 'Browse Group Adminstration', js: true do
 
     add_new_via_button('My New Group')
 
-    expect(page).to have_content 'The group was created.'
+    expect(page).to have_content 'The browse group was created.'
     expect(page).to have_css('li.dd-item')
     expect(page).to have_css('h4', text: 'My New Group')
   end

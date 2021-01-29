@@ -24,6 +24,7 @@ en:
     models:
       spotlight:
         page: Page
+      spotlight/group: Browse group
       spotlight/search: Browse category
   cancel: Cancel
   drag: Drag
@@ -45,6 +46,8 @@ en:
         create: Add new field
       spotlight/custom_search_field:
         create: Add new field
+      spotlight/group:
+        destroy: Delete group
       spotlight/role:
         create: Add a new user
         destroy: Remove from site
