@@ -351,6 +351,8 @@ describe Spotlight::ExhibitImportExportService do
         before do
           search.masthead.document_global_id = SolrDocument.new(id: 'xyz').to_global_id
           search.masthead.source = 'exhibit'
+          search.masthead.iiif_tilesource = 'foo'
+          search.masthead.image = nil # Setting to nil to mimick an exhibit source
           search.masthead.save
 
           source_exhibit.reload
@@ -360,6 +362,12 @@ describe Spotlight::ExhibitImportExportService do
           subject
           existing_search.reload
           expect(existing_search.masthead).not_to be_blank
+        end
+
+        it 'does not unset the iiif_tilesource' do
+          subject
+          existing_search.reload
+          expect(existing_search.masthead.iiif_tilesource).to eq search.masthead.iiif_tilesource
         end
       end
 

@@ -215,9 +215,10 @@ module Spotlight
         image.image = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file[:content])),
                                                      filename: file[:filename],
                                                      content_type: file[:content_type]
+        # Unset the iiif_tilesource field as the new image should be different, because
+        # the source has been reloaded
+        image.iiif_tilesource = nil
       end
-      # Unset the iiif_tilesource field as the new image should be different
-      image.iiif_tilesource = nil
       image.save!
       obj.update(method => image)
     end
