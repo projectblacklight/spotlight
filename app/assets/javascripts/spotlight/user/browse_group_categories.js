@@ -28,6 +28,15 @@
       });
     }
 
+    // Destroy the slider instance, as tns will change the dom elements, causing some issues with turbolinks
+    function setupDestroy() {
+      document.addEventListener('turbolinks:before-cache', function() {
+        if (slider && slider.destroy) {
+          slider.destroy();
+        }
+      });
+    }
+
     function itemCount(items, sidebar) {
       if (items < 3) {
         return items;
@@ -38,6 +47,7 @@
     return this.each(function() {
       $container = $(this);
       init();
+      setupDestroy();
     });
   }
 })( jQuery );
