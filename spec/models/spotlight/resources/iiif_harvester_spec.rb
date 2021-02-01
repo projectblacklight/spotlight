@@ -3,12 +3,11 @@
 require 'spec_helper'
 
 describe Spotlight::Resources::IiifHarvester do
+  subject(:harvester) { described_class.create(exhibit_id: exhibit.id, url: url) }
+
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:harvester) { described_class.create(exhibit_id: exhibit.id, url: url) }
 
   describe 'Validation' do
-    subject { harvester }
-
     context 'when given an invalid URL' do
       before do
         stub_request(:head, 'http://example.com').to_return(status: 200, headers: { 'Content-Type' => 'text/html' })
@@ -38,16 +37,16 @@ describe Spotlight::Resources::IiifHarvester do
     end
   end
 
-  describe '#documents_to_index' do
-    subject { harvester.document_builder }
-
+  describe '#reindex' do
     let(:url) { 'uri://for-top-level-collection' }
 
-    before { stub_default_collection }
+    before do
+      stub_default_collection
+      allow(Spotlight::Engine.config).to receive(:writable_index).and_return(false)
+    end
 
-    it 'returns an Enumerator of all the solr documents' do
-      expect(subject.documents_to_index).to be_a(Enumerator)
-      expect(subject.documents_to_index.count).to eq 8
+    it 'indexes all the solr documents' do
+      expect(subject.reindex).to eq 8
     end
   end
 end

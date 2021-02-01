@@ -1,107 +1,13 @@
 # frozen_string_literal: true
 
 describe Spotlight::Resource, type: :model do
-  before do
-    allow_any_instance_of(described_class).to receive(:update_index)
-  end
+  subject(:resource) { described_class.create(id: 123, exhibit: exhibit) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
-  describe '#reindex' do
-    context 'with a provider that generates ids' do
-      subject do
-        Class.new(described_class).new(exhibit: exhibit)
-      end
-
-      let(:solr_response) { { id: 123 } }
-
-      before do
-        SolrDocument.new(id: 123).sidecars.create!(exhibit: exhibit, data: { document_data: true })
-        allow(subject).to receive_messages(to_global_id: '')
-
-        allow(subject.document_builder).to receive(:to_solr).and_return(solr_response)
-      end
-
-      it 'includes exhibit document-specific data' do
-        allow(subject.send(:blacklight_solr)).to receive(:update) do |options|
-          data = JSON.parse(options[:data], symbolize_names: true)
-
-          expect(data.length).to eq 1
-          doc = data.first
-
-          break if doc.first == :commit
-
-          expect(doc).to include document_data: true
-        end
-
-        subject.reindex
-      end
-
-      context 'when a document does not have an identifier' do
-        let(:solr_response) { { other_field: 'Content' } }
-
-        it 'is not indexed (but a commit can be sent)' do
-          allow(subject.send(:blacklight_solr)).to receive(:commit)
-          expect(subject.send(:blacklight_solr)).not_to receive(:update)
-
-          subject.reindex
-        end
-      end
-
-      context 'reindexing_log_entry is provided' do
-        before do
-          allow(subject.send(:blacklight_solr)).to receive(:update)
-        end
-
-        it 'updates the count of reindexed items in the log entry' do
-          reindexing_log_entry = double(Spotlight::ReindexingLogEntry)
-          expect(reindexing_log_entry).to receive(:update).with(items_reindexed_count: 1)
-          subject.reindex reindexing_log_entry
-        end
-      end
-
-      context 'when the index is not writable' do
-        before do
-          allow(Spotlight::Engine.config).to receive_messages(writable_index: false)
-        end
-
-        it "doesn't write" do
-          expect(subject.send(:blacklight_solr)).not_to receive(:update)
-          subject.reindex
-        end
-      end
-
-      context 'with a resource that creates multiple solr documents' do
-        let(:solr_response) { [{ id: 1 }, { id: 2 }] }
-
-        before do
-          allow(subject.send(:blacklight_solr)).to receive(:update)
-        end
-
-        it 'returns the number of indexed objects' do
-          expect(subject.reindex).to eq 2
-        end
-
-        it 'triggers a solr commit' do
-          expect(subject.send(:blacklight_solr)).to receive(:commit).once
-
-          subject.reindex
-        end
-
-        it 'touches the exhibit to clear any caches' do
-          allow(subject.exhibit).to receive(:touch)
-
-          subject.reindex
-
-          expect(subject.exhibit).to have_received(:touch)
-        end
-      end
-    end
-  end
-
   describe '#save_and_index' do
     before do
-      allow(subject.send(:blacklight_solr)).to receive(:update)
+      allow(subject).to receive(:save)
       allow(subject).to receive(:reindex_later)
     end
 
@@ -122,6 +28,69 @@ describe Spotlight::Resource, type: :model do
         expect(subject).not_to receive(:reindex_later)
         subject.save_and_index
       end
+    end
+  end
+
+  describe '#reindex' do
+    before do
+      # sneak some data into the pipeline
+      subject.indexing_pipeline.transforms = [->(*) { { id: '123' } }] + subject.indexing_pipeline.transforms
+    end
+
+    let(:indexed_document) do
+      result = nil
+
+      subject.reindex(**index_args) do |data, *|
+        result = data
+
+        # skip actually indexing the document into the solr index
+        throw :skip
+      end
+
+      result
+    end
+
+    let(:index_args) { {} }
+
+    it 'returns the number of items indexed' do
+      expect(subject.reindex { |*| throw :skip }).to eq 1
+    end
+
+    it 'applies exhibit-specific metadata from the sidecar' do
+      expect(indexed_document).to include Spotlight::SolrDocumentSidecar.new(document: SolrDocument.new(id: '123'), exhibit: exhibit).to_solr
+    end
+
+    it 'includes metata from each sidecar' do
+      a = Spotlight::SolrDocumentSidecar.create(document: SolrDocument.new(id: '123'), exhibit: exhibit)
+      b = Spotlight::SolrDocumentSidecar.create(document: SolrDocument.new(id: '123'), exhibit: FactoryBot.build(:exhibit))
+
+      expect(indexed_document).to include(a.to_solr).and(include(b.to_solr))
+    end
+
+    it 'persists a sidecar document' do
+      expect { indexed_document }.to change(Spotlight::SolrDocumentSidecar, :count).by(1)
+
+      expect(Spotlight::SolrDocumentSidecar.last).to have_attributes(document_id: '123', exhibit: exhibit)
+    end
+
+    it 'applies application metadata' do
+      expect(indexed_document).to include(spotlight_resource_id_ssim: resource.to_global_id.to_s, spotlight_resource_type_ssim: 'spotlight/resources')
+    end
+
+    context 'with some provided metadata' do
+      let(:index_args) { { additional_metadata: { a: 1 } } }
+
+      it 'applies externally provided metadata' do
+        expect(indexed_document).to include a: 1
+      end
+    end
+
+    it 'touches the exhibit to bust any caches' do
+      allow(exhibit).to receive(:touch)
+
+      indexed_document
+
+      expect(exhibit).to have_received(:touch)
     end
   end
 

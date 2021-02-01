@@ -14,7 +14,9 @@ module Spotlight
         @solr_hash = {}
       end
 
-      def to_solr
+      def to_solr(exhibit: nil)
+        @exhibit = exhibit if exhibit
+
         add_document_id
         add_label
         add_thumbnail_url

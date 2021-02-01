@@ -4,10 +4,17 @@ module Spotlight
   ##
   # Exhibit resources
   class Resource < ActiveRecord::Base
-    include ActiveSupport::Benchmarkable
-
-    class_attribute :document_builder_class
-    self.document_builder_class = SolrDocumentBuilder
+    class_attribute :indexing_pipeline, default: (Spotlight::Etl::Pipeline.new do |pipeline|
+      pipeline.sources = [Spotlight::Etl::Sources::IdentitySource]
+      pipeline.transforms = [
+        reject_blank: Spotlight::Etl::Transforms::RejectBlank,
+        reject_missing: Spotlight::Etl::Transforms::RejectMissingUniqueId,
+        apply_exhibit_metadata: Spotlight::Etl::Transforms::ApplyExhibitMetadata,
+        apply_application_metadata: Spotlight::Etl::Transforms::ApplyApplicationMetadata,
+        apply_pipeline_metadata: Spotlight::Etl::Transforms::ApplyPipelineMetadata
+      ]
+      pipeline.loaders = [Spotlight::Etl::SolrLoader]
+    end)
 
     extend ActiveModel::Callbacks
     define_model_callbacks :index
@@ -20,7 +27,7 @@ module Spotlight
 
     serialize :data, Hash
 
-    after_index :commit
+    # bust any caches after indexing data
     after_index :touch_exhibit!
 
     ##
@@ -46,67 +53,26 @@ module Spotlight
       # Index the result of {#to_solr} into the index in batches of {#batch_size}
       #
       # @return [Integer] number of records indexed
-      def reindex(reindexing_log_entry = nil)
-        benchmark "Reindexing #{self} (batch size: #{batch_size})" do
-          count = 0
-
-          run_callbacks :index do
-            document_builder.documents_to_index.each_slice(batch_size) do |batch|
-              write_to_index(batch)
-              count += batch.length
-              reindexing_log_entry&.update(items_reindexed_count: count)
-            end
-
-            count
+      def reindex(**args, &block)
+        i = 0
+        run_callbacks :index do
+          indexing_pipeline.call(Spotlight::Etl::Context.new(self, commit: true, **args)) do |data|
+            i += 1
+            block&.call(data)
           end
         end
+
+        i
       end
 
-      def document_builder
-        @document_builder ||= document_builder_class.new(self)
+      def estimated_size(**args)
+        indexing_pipeline.estimated_size(Spotlight::Etl::Context.new(self, **args))
       end
 
       private
 
-      def blacklight_solr
-        @solr ||= RSolr.connect(connection_config.merge(adapter: connection_config[:http_adapter]))
-      end
-
-      def connection_config
-        Blacklight.connection_config
-      end
-
-      def batch_size
-        Spotlight::Engine.config.solr_batch_size
-      end
-
-      def write_to_index(batch)
-        documents = documents_that_have_ids(batch)
-        return unless write? && documents.present?
-
-        blacklight_solr.update params: { commitWithin: 500 },
-                               data: documents.to_json,
-                               headers: { 'Content-Type' => 'application/json' }
-      end
-
-      def commit
-        return unless write?
-
-        blacklight_solr.commit
-      rescue StandardError => e
-        Rails.logger.warn "Unable to commit to solr: #{e}"
-      end
-
       def touch_exhibit!
-        exhibit.touch
-      end
-
-      def write?
-        Spotlight::Engine.config.writable_index
-      end
-
-      def documents_that_have_ids(document_list)
-        document_list.reject { |d| d[document_builder.document_model.unique_key.to_sym].blank? }
+        exhibit&.touch
       end
     end
   end
