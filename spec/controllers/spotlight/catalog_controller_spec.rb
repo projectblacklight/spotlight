@@ -128,6 +128,7 @@ describe Spotlight::CatalogController, type: :controller do
 
           perform_enqueued_jobs do
             uploaded_resource.save_and_index
+            SolrDocument.index.connection.commit
           end
 
           get :manifest, params: { exhibit_id: uploaded_resource.exhibit, id: compound_id }
