@@ -1,3 +1,4 @@
+// Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
 var tns = (function (){
 var win = window;
 
@@ -547,6 +548,7 @@ var tns = function(options) {
     freezable: true,
     onInit: false,
     useLocalStorage: true,
+    textDirection: 'ltr',
     nonce: false
   }, options || {});
 
@@ -716,6 +718,7 @@ var tns = function(options) {
       autoHeight = getOption('autoHeight'),
       controls = getOption('controls'),
       controlsText = getOption('controlsText'),
+      textDirection = getOption('textDirection'),
       nav = getOption('nav'),
       touch = getOption('touch'),
       mouseDrag = getOption('mouseDrag'),
@@ -2555,6 +2558,9 @@ var tns = function(options) {
 
   function doContainerTransform (val) {
     if (val == null) { val = getContainerTransformValue(); }
+    if (textDirection === 'rtl' && val.charAt(0) === '-') {
+      val = val.substr(1);
+    }
     container.style[transformAttr] = transformPrefix + val + transformPostfix;
   }
 
@@ -3084,7 +3090,11 @@ var tns = function(options) {
             if (horizontal && !autoWidth) {
               var indexMoved = - dist * items / (viewport + gutter);
               indexMoved = dist > 0 ? Math.floor(indexMoved) : Math.ceil(indexMoved);
-              index += indexMoved;
+              if (textDirection === 'rtl') { 
+                index += indexMoved * -1;
+              } else {
+                index += indexMoved;
+              }
             } else {
               var moved = - (translateInit + dist);
               if (moved <= 0) {

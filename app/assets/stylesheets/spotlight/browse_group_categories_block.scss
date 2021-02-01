@@ -60,5 +60,10 @@
       }
     }
   }
+}
 
+[dir="rtl"] {
+  .browse-group-categories-block .blacklight-icon-arrow-alt-circle-left, .blacklight-icon-arrow-alt-circle-right{
+    transform: rotate(180deg);
+  }
 }
