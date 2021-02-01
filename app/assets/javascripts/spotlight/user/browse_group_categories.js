@@ -9,14 +9,17 @@
       var data = $container.data();
       var sidebar = $container.data().sidebar;
       var items = data.browseGroupCategoriesCount;
+      var dir = $('html').attr('dir');
+      var controls = $container.parent().find('.browse-group-categories-controls')[0];
 
       slider = tns({
         container: $container[0],
-        controlsContainer: $container.parent().find('.browse-group-categories-controls')[0],
+        controlsContainer: controls,
         loop: false,
         nav: false,
         items: 1,
         slideBy: 'page',
+        textDirection: dir,
         responsive: {
           576: {
             items: itemCount(items, sidebar)
