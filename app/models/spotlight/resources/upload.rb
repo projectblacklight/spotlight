@@ -10,8 +10,6 @@ module Spotlight
       # we want to do this before reindexing
       after_create :update_document_sidecar
 
-      self.document_builder_class = UploadSolrDocumentBuilder
-
       def self.fields(exhibit)
         @fields ||= {}
         @fields[exhibit] ||= begin
@@ -25,12 +23,37 @@ module Spotlight
         end
       end
 
+      def self.indexing_pipeline
+        @indexing_pipeline ||= super.dup.tap do |pipeline|
+          pipeline.transforms = [
+            ->(data, p) { data.merge({ p.context.document_model.unique_key.to_sym => p.source.compound_id }) },
+            Spotlight::Etl::Transforms::SourceMethodTransform(:to_solr)
+          ] + pipeline.transforms
+        end
+      end
+
       def compound_id
         "#{exhibit_id}-#{id}"
       end
 
       def sidecar
         @sidecar ||= document_model.new(id: compound_id).sidecar(exhibit)
+      end
+
+      def to_solr
+        return {} unless upload.file_present?
+
+        spotlight_routes = Spotlight::Engine.routes.url_helpers
+        riiif = Riiif::Engine.routes.url_helpers
+
+        dimensions = Riiif::Image.new(upload_id).info
+
+        {
+          spotlight_full_image_width_ssm: dimensions.width,
+          spotlight_full_image_height_ssm: dimensions.height,
+          Spotlight::Engine.config.thumbnail_field => riiif.image_path(upload_id, size: '!400,400'),
+          Spotlight::Engine.config.iiif_manifest_field => spotlight_routes.manifest_exhibit_solr_document_path(exhibit, compound_id)
+        }
       end
 
       private

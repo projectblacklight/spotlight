@@ -11,36 +11,32 @@ module Spotlight
       pagination = job.arguments.last.slice(:per, :page, :last) if job.arguments.last.is_a? Hash
       pagination ||= {}
 
-      items_reindexed_estimate = resource_list(job.arguments.first, **pagination).sum do |resource|
-        resource.document_builder.documents_to_index.size
-      end
-
-      progress.total = items_reindexed_estimate
+      progress.total = resource_list(job.arguments.first, **pagination).sum(&:estimated_size)
     end
 
-    def perform(exhibit_or_resources, *args, per: nil, page: nil, last: false, **)
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def perform(exhibit_or_resources, per: nil, page: nil, last: false, **)
       job_tracker.update(status: 'in_progress')
 
       errors = 0
 
-      resource_list(exhibit_or_resources, per: per, page: page, last: last).each do |resource|
-        service = resource.reindex(commit: false, job_tracker: job_tracker, additional_data: job_data) do |batch|
-          progress&.increment(batch.length)
-        end
+      error_handler = lambda do |pipeline, _error_context, exception, _data|
+        job_tracker.append_log_entry(type: :error, message: exception.to_s, resource_id: pipeline.source&.id)
+        errors += 1
+      end
 
-        if service&.errors.to_i.positive?
-          errors += service&.errors.to_i
-          job_tracker.append_log_entry(type: :error, resource_id: resource.id)
+      resource_list(exhibit_or_resources, per: per, page: page, last: last).each do |resource|
+        resource.reindex(commit: false, job_tracker: job_tracker, additional_data: job_data, on_error: error_handler) do |*|
+          progress&.increment
         end
       rescue StandardError => e
-        Rails.logger.error(e)
-        errors += 1
-        job_tracker.append_log_entry(type: :error, message: e.to_s, resource_id: resource.id)
+        error_handler.call(Struct.new(:source).new(resource), self, e, nil)
       end
 
       job_tracker.append_log_entry(type: :info, message: "#{progress.progress} of #{progress.total} (#{errors} errors)")
       job_tracker.update(status: errors.zero? ? 'completed' : 'failed', data: { progress: progress.progress, total: progress.total })
     end
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
     private
 

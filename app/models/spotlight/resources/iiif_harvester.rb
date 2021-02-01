@@ -7,13 +7,22 @@ module Spotlight
     # harvest Images from IIIF Manifest and turn them into a Spotlight::Resource
     # Note: IIIF API : http://iiif.io/api/presentation/2.0
     class IiifHarvester < Spotlight::Resource
-      self.document_builder_class = Spotlight::Resources::IiifBuilder
       self.weight = -5000
 
       validate :valid_url?
 
       def iiif_manifests
         @iiif_manifests ||= IiifService.parse(url)
+      end
+
+      def self.indexing_pipeline
+        @indexing_pipeline ||= super.dup.tap do |pipeline|
+          pipeline.sources = [Spotlight::Etl::Sources::SourceMethodSource(:iiif_manifests)]
+
+          pipeline.transforms = [
+            ->(data, p) { data.merge(p.source.to_solr(exhibit: p.context.resource.exhibit)) }
+          ] + pipeline.transforms
+        end
       end
 
       private
