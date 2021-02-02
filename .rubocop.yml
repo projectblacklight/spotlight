@@ -44,8 +44,9 @@ Metrics/AbcSize:
     - 'app/services/spotlight/exhibit_import_export_service.rb'
 
 Metrics/ModuleLength:
-  Max: 120
   Exclude:
+    - 'app/helpers/spotlight/application_helper.rb'
+    - 'app/models/concerns/spotlight/solr_document.rb'
     - 'spec/fixtures/**/*'
 
 Metrics/BlockLength:
