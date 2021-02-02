@@ -6,7 +6,7 @@
     <ul class="dropdown-menu">
       <% locale_selecter_dropown_options.each do |language| %>
         <li>
-          <%= link_to language.to_native, (spotlight.url_for(locale: language.locale) rescue url_for(locale: language.locale)), class: 'dropdown-item', data: { turbolinks: false } %>
+          <%= link_to language.to_native, current_page_for_locale(language.locale), class: 'dropdown-item', data: { turbolinks: false } %>
         </li>
       <% end %>
     </ul>
