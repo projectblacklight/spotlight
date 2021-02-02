@@ -66,4 +66,9 @@
   .browse-group-categories-block .blacklight-icon-arrow-alt-circle-left, .blacklight-icon-arrow-alt-circle-right{
     transform: rotate(180deg);
   }
+  // Hack to override overflow issue not fixed in RTL upstream in tiny-slider
+  .tns-visually-hidden {
+    left: 0;
+    right: -10000em;
+  }
 }
