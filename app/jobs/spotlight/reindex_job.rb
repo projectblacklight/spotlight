@@ -14,6 +14,12 @@ module Spotlight
       progress.total = resource_list(job.arguments.first, **pagination).sum(&:estimated_size)
     end
 
+    after_perform do
+      exhibit&.touch # rubocop:disable Rails/SkipsModelValidations
+    end
+
+    after_perform :commit
+
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def perform(exhibit_or_resources, per: nil, page: nil, last: false, **)
       job_tracker.update(status: 'in_progress')
@@ -33,14 +39,16 @@ module Spotlight
         error_handler.call(Struct.new(:source).new(resource), self, e, nil)
       end
 
-      exhibit&.touch # rubocop:disable Rails/SkipsModelValidations
-
       job_tracker.append_log_entry(type: :info, message: "#{progress.progress} of #{progress.total} (#{errors} errors)")
       job_tracker.update(status: errors.zero? ? 'completed' : 'failed', data: { progress: progress.progress, total: progress.total })
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
     private
+
+    def commit
+      Blacklight.default_index.connection.commit
+    end
 
     def job_data
       return unless job_tracker
