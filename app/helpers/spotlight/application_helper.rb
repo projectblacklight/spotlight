@@ -30,6 +30,25 @@ module Spotlight
       current_site.title if current_site.title.present?
     end
 
+    # Returns the url for the current page in the new locale. This may be
+    # overridden in downstream applications where our naive use of `url_for`
+    # is insufficient to generate the expected routes
+    def current_page_for_locale(locale)
+      initial_exception = nil
+
+      ([self] + additional_locale_routing_scopes).each do |scope|
+        return scope.public_send(:url_for, params.to_unsafe_h.merge(locale: locale))
+      rescue ActionController::UrlGenerationError => e
+        initial_exception ||= e
+      end
+
+      raise initial_exception
+    end
+
+    def additional_locale_routing_scopes
+      [spotlight, main_app]
+    end
+
     # Can search for named routes directly in the main app, omitting
     # the "main_app." prefix
     def method_missing(method, *args, &block)
