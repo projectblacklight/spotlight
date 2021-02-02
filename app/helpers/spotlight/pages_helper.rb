@@ -21,7 +21,7 @@ module Spotlight
     # a more complete markdown rendered
     def sir_trevor_markdown(text)
       clean_text = if text
-                     text.gsub('<br>', "\n").gsub('<p>', '').gsub('</p>', "\n\n")
+                     text.gsub('<br>', "\n\n").gsub('<p>', '').gsub('</p>', "\n\n")
                    else
                      ''
                    end

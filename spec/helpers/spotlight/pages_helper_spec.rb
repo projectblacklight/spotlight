@@ -106,6 +106,14 @@ describe Spotlight::PagesHelper, type: :helper do
     it 'handles nil input' do
       expect(helper.sir_trevor_markdown(nil)).to be_blank
     end
+
+    it 'retains paragraphs' do
+      expect(helper.sir_trevor_markdown('<p>First Line</p><p>Second Line</p>').chomp).to match(%r{<p>First Line</p>\s*<p>Second Line</p>})
+    end
+
+    it 'replaces line breaks with paragraphs' do
+      expect(helper.sir_trevor_markdown('First Line<br>Second Line').chomp).to match(%r{<p>First Line</p>\s*<p>Second Line</p>})
+    end
   end
 
   describe '#content_editor_class' do
