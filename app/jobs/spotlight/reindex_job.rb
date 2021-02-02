@@ -26,12 +26,14 @@ module Spotlight
       end
 
       resource_list(exhibit_or_resources, per: per, page: page, last: last).each do |resource|
-        resource.reindex(commit: false, job_tracker: job_tracker, additional_data: job_data, on_error: error_handler) do |*|
+        resource.reindex(touch: false, commit: false, job_tracker: job_tracker, additional_data: job_data, on_error: error_handler) do |*|
           progress&.increment
         end
       rescue StandardError => e
         error_handler.call(Struct.new(:source).new(resource), self, e, nil)
       end
+
+      exhibit&.touch # rubocop:disable Rails/SkipsModelValidations
 
       job_tracker.append_log_entry(type: :info, message: "#{progress.progress} of #{progress.total} (#{errors} errors)")
       job_tracker.update(status: errors.zero? ? 'completed' : 'failed', data: { progress: progress.progress, total: progress.total })
@@ -60,6 +62,10 @@ module Spotlight
     end
 
     def job_tracking_resource
+      exhibit
+    end
+
+    def exhibit
       exhibit_or_resources = arguments.first
 
       case exhibit_or_resources

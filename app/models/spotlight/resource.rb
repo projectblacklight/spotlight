@@ -27,9 +27,6 @@ module Spotlight
 
     serialize :data, Hash
 
-    # bust any caches after indexing data
-    after_index :touch_exhibit!
-
     ##
     # Persist the record to the database, and trigger a reindex to solr
     #
@@ -53,7 +50,7 @@ module Spotlight
       # Index the result of {#to_solr} into the index in batches of {#batch_size}
       #
       # @return [Integer] number of records indexed
-      def reindex(**args, &block)
+      def reindex(touch: true, **args, &block)
         i = 0
         run_callbacks :index do
           indexing_pipeline.call(Spotlight::Etl::Context.new(self, commit: true, **args)) do |data|
@@ -61,6 +58,8 @@ module Spotlight
             block&.call(data)
           end
         end
+
+        touch_exhibit! if touch
 
         i
       end

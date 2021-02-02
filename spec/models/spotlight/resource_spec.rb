@@ -92,6 +92,16 @@ describe Spotlight::Resource, type: :model do
 
       expect(exhibit).to have_received(:touch)
     end
+
+    context 'with touch: false' do
+      it 'does not touch the exhibit' do
+        allow(exhibit).to receive(:touch)
+
+        expect(subject.reindex(touch: false) { |*| throw :skip }).to eq 1
+
+        expect(exhibit).not_to have_received(:touch)
+      end
+    end
   end
 
   it 'stores arbitrary data' do
