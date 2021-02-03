@@ -4,6 +4,24 @@
   padding-bottom: $spacer * .75;
   padding-top: $spacer * .75;
   
+  .browse-categories .browse-category {
+    .category-caption {
+      z-index: 100;
+    }
+
+    .hover-overlay {
+      height: 100%;
+      position: absolute;
+      width: 100%;
+    }
+
+    &:hover {
+      .hover-overlay {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
+      }
+    }
+  }
+  
   .spotlight-flexbox.browse-categories .box {
     display: flex;
   }
