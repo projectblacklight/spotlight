@@ -765,6 +765,7 @@ en:
           items:
             one: "%{count} item"
             other: "%{count} items"
+          view_all: View all
         link_to_search_block:
           items:
             one: "%{count} item"
