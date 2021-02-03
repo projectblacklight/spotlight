@@ -34,6 +34,9 @@ ar:
         zero_results:
           expand_html: "تستطيع أن <a href=\"%{clear_search_url}\"> تمسح استعلام البحث </a> أو محاولة <a href=\"%{expand_search_url}\"> البحث في كل المواد المعروضة لاستعلام البحث ل\"%{browse_query}\"</a>"
           result_number: لم يتطابق بحثك مع أي عنصر في هذه الفئة.
+    exhibits:
+      groups:
+        all: الكل
     header_links:
       contact: ملاحظات واقتراحات
       login: تسجيل الدخول
@@ -52,7 +55,14 @@ ar:
             few: "%{count} عناصر"
             many: "%{count} عنصراً"
             other: "%{count} عنصراً"
-
+        browse_group_categories_block:
+          items:
+            one: "%{count} عنصر"
+            two: "%{count} عنصرين"
+            few: "%{count} عناصر"
+            many: "%{count} عنصراً"
+            other: "%{count} عنصراً"
+          view_all: مشاهدة الكل
         link_to_search_block:
           items:
             zero: "%{count} عنصر"
