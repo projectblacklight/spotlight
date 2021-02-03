@@ -7,23 +7,15 @@ module Spotlight
   # spotlight:scaffold_resource generator
   class ScaffoldResource < Rails::Generators::NamedBase
     source_root File.expand_path('templates', __dir__)
-    def create_document_builder
-      create_file "app/services/#{file_name}_builder.rb", <<-FILE.strip_heredoc
-        class #{class_name}Builder < Spotlight::SolrDocumentBuilder
-          def to_solr
-            return to_enum(:to_solr) unless block_given?
-
-            # TODO: your implementation here
-            # yield { id: resource.id }
-          end
-        end
-      FILE
-    end
 
     def create_model
       create_file "app/models/#{file_name}_resource.rb", <<-FILE.strip_heredoc
         class #{class_name}Resource < Spotlight::Resource
-          self.document_builder_class = #{class_name}Builder
+          def self.indexing_pipeline
+            @indexing_pipeline ||= super.dup.tap do |pipeline|
+              # your pipeline here...
+            end
+          end
         end
       FILE
     end
