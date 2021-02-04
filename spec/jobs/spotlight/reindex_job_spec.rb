@@ -4,7 +4,7 @@ describe Spotlight::ReindexJob do
   include ActiveJob::TestHelper
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:resource) { FactoryBot.create(:resource) }
+  let(:resource) { FactoryBot.create(:resource, exhibit: exhibit) }
   let(:user) { FactoryBot.create(:user) }
 
   before do
@@ -47,6 +47,30 @@ describe Spotlight::ReindexJob do
       expect(resource).to receive(:reindex)
 
       subject.perform_now
+    end
+  end
+
+  context 'with start and finish' do
+    it 'indexes the resources within that page' do
+      count = 0
+      allow_any_instance_of(Spotlight::Resource).to receive(:reindex) do
+        count += 1
+      end
+
+      described_class.perform_now(exhibit, start: 0, finish: resource.id)
+
+      expect(count).to eq 1
+    end
+
+    it 'does not index resources off that page' do
+      count = 0
+      allow_any_instance_of(Spotlight::Resource).to receive(:reindex) do
+        count += 1
+      end
+
+      described_class.perform_now(exhibit, start: resource.id + 1, finish: resource.id + 500)
+
+      expect(count).to eq 0
     end
   end
 end
