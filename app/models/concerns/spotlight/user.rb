@@ -27,6 +27,8 @@ module Spotlight
     end
 
     def add_default_roles
+      return unless Spotlight::Engine.config.assign_default_roles_to_first_user
+
       roles.build role: 'admin', resource: Spotlight::Site.instance unless self.class.any?
     end
 

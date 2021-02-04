@@ -49,6 +49,7 @@ require 'spotlight'
 # configure spotlight with all the settings necessary to test functionality
 Spotlight::Engine.config.exhibit_themes = %w[default modern]
 Spotlight::Engine.config.reindexing_batch_count = 1
+Spotlight::Engine.config.assign_default_roles_to_first_user = false
 
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 
@@ -62,11 +63,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.use_transactional_fixtures = true
-
-  config.before do
-    # The first user is automatically granted admin privileges; we don't want that behavior for many of our tests
-    Spotlight::Engine.user_class.create email: 'initial+admin@example.com', password: 'password', password_confirmation: 'password'
-  end
 
   if defined? Devise::Test::ControllerHelpers
     config.include Devise::Test::ControllerHelpers, type: :controller
