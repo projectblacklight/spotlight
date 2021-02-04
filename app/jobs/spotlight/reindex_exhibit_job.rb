@@ -18,6 +18,8 @@ module Spotlight
 
       batch_size ||= (count.to_f / batch_count).ceil
 
+      return Spotlight::ReindexJob.perform_now(exhibit, reports_on: job_tracker) if batch_count == 1
+
       batch_count.times do |i|
         Spotlight::ReindexJob.perform_later(exhibit, reports_on: job_tracker, per: batch_size, page: i + 1)
       end
