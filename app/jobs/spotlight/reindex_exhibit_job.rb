@@ -16,16 +16,21 @@ module Spotlight
       batch_count = (count.to_f / batch_size).ceil if batch_size
       batch_count ||= 1 + Math.log(count).round # e.g. 10 => 3, 100 => 6, 1000 => 8
 
-      batch_size ||= (count.to_f / batch_count).ceil
-
       return Spotlight::ReindexJob.perform_now(exhibit, reports_on: job_tracker) if batch_count == 1
 
-      batch_count.times do |i|
-        Spotlight::ReindexJob.perform_later(exhibit, reports_on: job_tracker, per: batch_size, page: i + 1)
+      batch_size ||= (count.to_f / batch_count).ceil
+
+      perform_later_in_batches(exhibit, of: batch_size)
+    end
+
+    def perform_later_in_batches(exhibit, of:)
+      last = 0
+      exhibit.resources.select(:id).in_batches(of: of) do |batch|
+        last = batch.last.id
+        Spotlight::ReindexJob.perform_later(exhibit, reports_on: job_tracker, start: batch.first.id, finish: batch.last.id)
       end
 
-      # and one extra to catch any late additions
-      Spotlight::ReindexJob.perform_later(exhibit, reports_on: job_tracker, per: batch_size, page: batch_count + 1, last: true)
+      Spotlight::ReindexJob.perform_later(exhibit, reports_on: job_tracker, start: last)
     end
   end
 end
