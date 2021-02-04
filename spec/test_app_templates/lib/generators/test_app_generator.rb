@@ -66,4 +66,8 @@ class TestAppGenerator < Rails::Generators::Base
     uncomment_lines 'config/environments/development.rb', /config.action_view.raise_on_missing_translations/
     uncomment_lines 'config/environments/test.rb', /config.action_view.raise_on_missing_translations/
   end
+
+  def tweak_database_timeout
+    gsub_file 'config/database.yml', /timeout: 5000/, 'timeout: 15000'
+  end
 end
