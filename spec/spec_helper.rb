@@ -48,6 +48,7 @@ require 'spotlight'
 
 # configure spotlight with all the settings necessary to test functionality
 Spotlight::Engine.config.exhibit_themes = %w[default modern]
+Spotlight::Engine.config.reindexing_batch_count = 1
 
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 
