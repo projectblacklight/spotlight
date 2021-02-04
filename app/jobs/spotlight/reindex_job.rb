@@ -8,7 +8,7 @@ module Spotlight
     include Spotlight::LimitConcurrency
 
     before_perform do |job|
-      pagination = job.arguments.last.slice(:per, :page, :last) if job.arguments.last.is_a? Hash
+      pagination = job.arguments.last.slice(:start, :finish) if job.arguments.last.is_a? Hash
       pagination ||= {}
 
       progress.total = resource_list(job.arguments.first, **pagination).sum(&:estimated_size)
@@ -21,7 +21,7 @@ module Spotlight
     after_perform :commit
 
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    def perform(exhibit_or_resources, per: nil, page: nil, last: false, **)
+    def perform(exhibit_or_resources, start: nil, finish: nil, **)
       job_tracker.update(status: 'in_progress')
 
       errors = 0
@@ -31,7 +31,7 @@ module Spotlight
         errors += 1
       end
 
-      resource_list(exhibit_or_resources, per: per, page: page, last: last).each do |resource|
+      resource_list(exhibit_or_resources, start: start, finish: finish).each do |resource|
         resource.reindex(touch: false, commit: false, job_tracker: job_tracker, additional_data: job_data, on_error: error_handler) do |*|
           progress&.increment
         end
@@ -56,14 +56,9 @@ module Spotlight
       { Spotlight::Engine.config.job_tracker_id_field => job_tracker.top_level_job_tracker.job_id }
     end
 
-    def resource_list(exhibit_or_resources, per: nil, page: nil, last: false)
+    def resource_list(exhibit_or_resources, start: nil, finish: nil)
       if exhibit_or_resources.is_a?(Spotlight::Exhibit)
-        resources = exhibit_or_resources.resources
-        if per
-          resources = resources.offset((page - 1) * per)
-          resources = resources.limit(per) unless last
-        end
-        resources.find_each
+        exhibit_or_resources.resources.find_each(start: start, finish: finish)
       else
         Array(exhibit_or_resources)
       end
