@@ -7,7 +7,7 @@ module Spotlight
     include Spotlight::JobTracking
     include Spotlight::LimitConcurrency
 
-    def perform(exhibit, batch_size: nil, batch_count: nil, **)
+    def perform(exhibit, batch_size: Spotlight::Engine.config.reindexing_batch_size, batch_count: Spotlight::Engine.config.reindexing_batch_count, **)
       job_tracker.update(status: 'in_progress')
 
       count = exhibit.resources.count
