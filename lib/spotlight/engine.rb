@@ -287,5 +287,8 @@ module Spotlight
       pages: true,
       resources: true
     }
+
+    config.reindexing_batch_size = nil
+    config.reindexing_batch_count = nil
   end
 end
