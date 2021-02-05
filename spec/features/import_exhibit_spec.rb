@@ -6,7 +6,11 @@ describe 'Allow exhibit admins to import and export content from an exhibit', ty
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
 
-  before { login_as user }
+  before do
+    allow(Spotlight::ReindexExhibitJob).to receive(:perform_later).and_return(true) if Rails.version < '6'
+
+    login_as user
+  end
 
   pending 'should allow admins to export content from an exhibit' do
     pending(%(There's not really any good way to test the contents of a
