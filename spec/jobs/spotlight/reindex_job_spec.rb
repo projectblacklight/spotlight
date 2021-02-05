@@ -8,7 +8,6 @@ describe Spotlight::ReindexJob do
   let(:user) { FactoryBot.create(:user) }
 
   before do
-    ActiveJob::Base.queue_adapter = :test
     allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
   end
 
