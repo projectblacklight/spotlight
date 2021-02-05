@@ -141,6 +141,11 @@ Spotlight::Engine.routes.draw do
         get :clone
       end
     end
+    resource :bulk_actions, only: [] do
+      member do
+        post :visibility
+      end
+    end
     post '/pages/:id/preview' => 'pages#preview', as: :preview_block
     get '/pages' => 'pages#index', constraints: { format: 'json' }
 

@@ -517,6 +517,25 @@ describe Spotlight::CatalogController, type: :controller do
         expect(controller).not_to be_render_save_this_search
       end
     end
+
+    describe 'render_bulk_actions?' do
+      it 'returns false if we are on the items admin screen' do
+        allow(controller).to receive(:can?).with(:curate, current_exhibit).and_return(true)
+        allow(controller).to receive(:params).and_return(controller: 'spotlight/catalog', action: 'admin')
+        expect(controller).not_to be_render_bulk_actions
+      end
+
+      it 'returns true if we are not on the items admin screen' do
+        allow(controller).to receive(:can?).with(:curate, current_exhibit).and_return(true)
+        allow(controller).to receive(:params).and_return(controller: 'spotlight/catalog', action: 'index')
+        expect(controller).to be_render_bulk_actions
+      end
+
+      it 'returns false if a user cannot curate the object' do
+        allow(controller).to receive(:can?).with(:curate, current_exhibit).and_return(false)
+        expect(controller).not_to be_render_bulk_actions
+      end
+    end
   end
 
   describe '#setup_next_and_previous_documents_from_browse_category' do
