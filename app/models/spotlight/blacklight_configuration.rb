@@ -81,6 +81,7 @@ module Spotlight
         config.index.thumbnail_field ||= Spotlight::Engine.config.thumbnail_field
 
         config.add_results_collection_tool 'save_search', if: :render_save_this_search?
+        config.add_results_collection_tool 'bulk_actions', if: :render_bulk_actions?
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
