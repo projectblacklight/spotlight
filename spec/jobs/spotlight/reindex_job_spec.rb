@@ -19,6 +19,10 @@ describe Spotlight::ReindexJob do
       expect(resource).to receive(:reindex)
       subject.perform_now
     end
+
+    it 'adds some job tracking events' do
+      expect { subject.perform_now }.to change(Spotlight::Event, :count).by(1)
+    end
   end
 
   describe 'validity' do
