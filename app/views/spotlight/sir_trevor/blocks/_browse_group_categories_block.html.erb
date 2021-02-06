@@ -2,9 +2,9 @@
   <% browse_group_categories_block.groups.each do |group| %>
     <div class="browse-group-categories-block" data-browse-group-categories-count="<%= group.searches.count %>">
       <div class="d-flex flex-column flex-md-row py-2">
-        <div class="d-flex justify-content-between align-items-end">
+        <div class="d-flex justify-content-between align-items-baseline">
           <h2 class="m-0"><%= group.title %></h2>
-          <div class="pl-5">
+          <div class="pl-3">
             <%= link_to t(:'.view_all'), exhibit_browse_groups_path(current_exhibit, group) %>
           </div>
         </div>
@@ -21,7 +21,7 @@
       </div>
       <div class="spotlight-flexbox browse-categories categories-<%= [group.searches.count, (@page.display_sidebar? ? 3 : 4)].min %>" data-browse-group-categories-carousel data-sidebar='<%= @page.display_sidebar? %>' data-browse-group-categories-count="<%= group.searches.count %>">
         <% group.searches.published.each_with_index do |search, index| %>
-          <div class="box category-1 justify-content-center justify-content-md-start">
+          <div class="box category-1 justify-content-center justify-content-md-space-around">
             <%= link_to spotlight.exhibit_browse_group_path(current_exhibit, group, search), class: 'justify-content-center' do %>
               <div class="browse-category" style='background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url("<%= search.thumbnail.iiif_url if search.thumbnail %>")'>
                 <div class="category-caption">
