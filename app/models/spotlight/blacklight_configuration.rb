@@ -84,6 +84,8 @@ module Spotlight
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
+        config.default_per_page = default_per_page if default_per_page
+
         config.view.embed.partials ||= ['openseadragon']
         config.view.embed.if = false
         config.view.embed.locals ||= { osd_container_class: '' }
@@ -185,11 +187,6 @@ module Spotlight
         end
 
         config.per_page = (config.per_page & per_page) unless per_page.blank?
-
-        if default_per_page
-          config.per_page.delete(default_per_page)
-          config.per_page.unshift(default_per_page)
-        end
 
         unless document_index_view_types.blank?
           config.view.each do |k, v|
