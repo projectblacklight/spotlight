@@ -449,11 +449,16 @@ describe Spotlight::BlacklightConfiguration, type: :model do
 
       expect(subject.blacklight_config.per_page).to eq [10, 50]
     end
+  end
 
-    it 'prepends the default per page' do
-      blacklight_config.per_page = [1, 10, 50, 100]
+  describe '#default_per_page' do
+    it 'is the first per page option by default' do
+      expect(subject.blacklight_config.default_per_page).to eq 10
+    end
+
+    it "is set from the model's default_per_page" do
       subject.default_per_page = 50
-      expect(subject.blacklight_config.per_page.first).to eq 50
+      expect(subject.blacklight_config.default_per_page).to eq 50
     end
   end
 
