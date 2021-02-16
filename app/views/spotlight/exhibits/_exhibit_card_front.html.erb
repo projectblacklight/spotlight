@@ -1,7 +1,7 @@
 <% if exhibit.thumbnail.present? && exhibit.thumbnail.iiif_url %>
-  <%= image_tag(exhibit.thumbnail.iiif_url) %>
+  <%= image_tag(exhibit.thumbnail.iiif_url, alt: '') %>
 <% else %>
-  <%= image_tag 'spotlight/default_thumbnail.jpg', class: 'default-thumbnail' %>
+  <%= image_tag 'spotlight/default_thumbnail.jpg', class: 'default-thumbnail', alt: '' %>
 <% end %>
 
 <% unless exhibit.published? %>
