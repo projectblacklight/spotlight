@@ -48,7 +48,10 @@ describe Spotlight::AddUploadsFromCsv do
       expect(Spotlight::IndexingCompleteMailer).to have_received(:documents_indexed).with(
         data, exhibit, user,
         indexed_count: 1,
-        errors: { 1 => array_including(match(/relative URI: x/)), 2 => array_including(match(/Upload is invalid/)) }
+        errors: {
+          1 => array_including(match(Regexp.union(/relative URI: x/, /URI scheme '' not in whitelist:/))),
+          2 => array_including(match(/Upload is invalid/))
+        }
       )
     end
   end
