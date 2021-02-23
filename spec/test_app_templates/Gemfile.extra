@@ -1,1 +1,2 @@
 gem 'sprockets', '< 4' if ENV['RAILS_VERSION'] && ENV['RAILS_VERSION'] < '6'
+gem 'view_component', '!= 2.26.0'
