@@ -26,7 +26,7 @@
         <% ['public', 'private'].each do |key| %>
           <div class="form-check">
             <%= label_tag "visibility_#{key}", class: 'form-check-label'  do %>
-              <%= radio_button_tag :visibility, key, class: 'form-check-input' %>
+              <%= radio_button_tag :visibility, key, {}, class: 'form-check-input' %>
               <%= t(:"spotlight.bulk_actions.change_visibility.#{key}") %>
             <% end %>
           </div>
