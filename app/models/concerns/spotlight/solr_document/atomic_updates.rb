@@ -5,12 +5,12 @@ module Spotlight
     ##
     # Solr indexing strategy using Solr's Atomic Updates
     module AtomicUpdates
-      def reindex
+      def reindex(update_params: { commitWithin: 500 })
         return unless write?
 
         data = hash_for_solr_update(to_solr)
 
-        blacklight_solr.update params: { commitWithin: 500 }, data: data.to_json, headers: { 'Content-Type' => 'application/json' } unless data.empty?
+        blacklight_solr.update params: update_params, data: data.to_json, headers: { 'Content-Type' => 'application/json' } unless data.empty?
       end
 
       def write?
