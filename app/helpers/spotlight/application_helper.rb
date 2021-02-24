@@ -92,7 +92,7 @@ module Spotlight
     # Helper to turn tag data into facets
     def url_to_tag_facet(tag)
       if current_exhibit
-        search_action_url(search_state.reset.add_facet_params(blacklight_config.document_model.solr_field_for_tagger(current_exhibit), tag))
+        search_action_url(search_state.reset.add_facet_params(:exhibit_tags, tag))
       else
         search_action_url(q: tag)
       end
