@@ -12,8 +12,9 @@ module Spotlight
         when 'private'
           document.make_private!(exhibit)
         end
-        document.reindex
+        document.reindex(update_params: {})
       end
+      exhibit.blacklight_config.repository.connection.commit
     end
 
     # rubocop:disable Metrics/MethodLength
