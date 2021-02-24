@@ -15,6 +15,12 @@ describe Spotlight::ChangeVisibilityJob do
     subject.perform_now
     response = exhibit.blacklight_config.repository.search(solr_params.merge('rows' => 999_999_999))
     expect(response.total).to eq 55
+    expect(Spotlight::JobTracker.last).to have_attributes(
+      status: 'completed',
+      total: 55,
+      progress: 55,
+      job_class: 'Spotlight::ChangeVisibilityJob'
+    )
     response.documents.each do |document|
       expect(document.private?(exhibit)).to be true
       document.make_public!(exhibit)
