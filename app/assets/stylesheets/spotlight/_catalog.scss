@@ -117,7 +117,7 @@ form.edit_solr_document {
   @extend .clearfix;
 }
 
-#save-this-search {
+#save-this-search, .bulk-actions-dropdown {
   float:left;
   margin-right: $spacer * 0.1;
 }
