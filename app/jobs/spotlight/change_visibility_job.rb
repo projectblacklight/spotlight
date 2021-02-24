@@ -4,8 +4,7 @@ module Spotlight
   ###
   class ChangeVisibilityJob < Spotlight::ApplicationJob
     def perform(solr_params:, exhibit:, visibility:, **)
-      documents = retrieve_documents(solr_params, exhibit)
-      documents.each do |document|
+      each_document(solr_params, exhibit) do |document|
         case visibility
         when 'public'
           document.make_public!(exhibit)
@@ -18,10 +17,13 @@ module Spotlight
     end
 
     # rubocop:disable Metrics/MethodLength
-    def retrieve_documents(solr_params, exhibit)
+    def each_document(solr_params, exhibit, &block)
+      return to_enum(:each_document, solr_params, exhibit) unless block_given?
+
       cursor_mark = '*'
-      documents = []
-      loop do
+      response = {}
+
+      while response['nextCursorMark'] == cursor_mark
         response = exhibit.blacklight_config.repository.search(
           solr_params.merge(
             'rows' => Spotlight::Engine.config.bulk_actions_batch_size,
@@ -29,12 +31,13 @@ module Spotlight
             'sort' => "#{exhibit.blacklight_config.document_model.unique_key} asc"
           )
         )
-        documents.concat response.documents
-        break if response['nextCursorMark'] == cursor_mark
+
+        response.documents.each do |document|
+          block.call(document)
+        end
 
         cursor_mark = response['nextCursorMark']
       end
-      documents
     end
     # rubocop:enable Metrics/MethodLength
   end
