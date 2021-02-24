@@ -290,6 +290,7 @@ module Spotlight
 
     config.reindexing_batch_size = nil
     config.reindexing_batch_count = nil
+    config.bulk_actions_batch_size = 1000
 
     config.assign_default_roles_to_first_user = true
   end

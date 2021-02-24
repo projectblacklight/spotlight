@@ -7,6 +7,10 @@ describe Spotlight::ChangeVisibilityJob do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:visibility) { 'private' }
 
+  before do
+    allow(Spotlight::Engine.config).to receive_messages(bulk_actions_batch_size: 5)
+  end
+
   it 'sets the items based off of the visibility' do
     subject.perform_now
     response = exhibit.blacklight_config.repository.search(solr_params.merge('rows' => 999_999_999))
