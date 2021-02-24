@@ -23,7 +23,7 @@ module Spotlight
       cursor_mark = '*'
       response = {}
 
-      while response['nextCursorMark'] == cursor_mark
+      while response['nextCursorMark'] != cursor_mark
         response = exhibit.blacklight_config.repository.search(
           solr_params.merge(
             'rows' => Spotlight::Engine.config.bulk_actions_batch_size,
