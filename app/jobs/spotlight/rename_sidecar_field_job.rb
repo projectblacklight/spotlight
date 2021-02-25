@@ -6,6 +6,7 @@ module Spotlight
   # need to update the sidecars that may contain that field
   class RenameSidecarFieldJob < Spotlight::ApplicationJob
     include Spotlight::JobTracking
+    with_job_tracking(resource: ->(job) { job.arguments.first })
 
     def perform(exhibit, old_field, new_field, old_slug = nil, new_slug = nil)
       exhibit.solr_document_sidecars.find_each do |s|
