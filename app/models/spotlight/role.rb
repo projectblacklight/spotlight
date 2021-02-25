@@ -4,11 +4,10 @@ module Spotlight
   ##
   # Exhibit authorization roles
   class Role < ActiveRecord::Base
-    ROLES = %w[admin curator].freeze
     belongs_to :resource, polymorphic: true, optional: true
     belongs_to :user, class_name: Spotlight::Engine.config.user_class, autosave: true, optional: false
 
-    validates :role, inclusion: { in: ROLES }
+    validates :role, inclusion: { in: Spotlight::Engine.config.exhibit_roles }
     validate :user_must_be_unique, if: :user
 
     def user_key

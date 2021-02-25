@@ -292,5 +292,7 @@ module Spotlight
     config.reindexing_batch_count = nil
 
     config.assign_default_roles_to_first_user = true
+
+    config.exhibit_roles = %w[admin curator]
   end
 end
