@@ -5,6 +5,8 @@ module Spotlight
   # Reindex the given resources or exhibits
   class ReindexJob < Spotlight::ApplicationJob
     include Spotlight::JobTracking
+    with_job_tracking(resource: ->(job) { job.exhibit })
+
     include Spotlight::LimitConcurrency
 
     before_perform do |job|
@@ -22,12 +24,11 @@ module Spotlight
 
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def perform(exhibit_or_resources, start: nil, finish: nil, **)
-      job_tracker.update(status: 'in_progress')
-
       errors = 0
 
       error_handler = lambda do |pipeline, _error_context, exception, _data|
         job_tracker.append_log_entry(type: :error, exhibit: exhibit, message: exception.to_s, resource_id: pipeline.source&.id)
+        mark_job_as_failed!
         errors += 1
       end
 
@@ -40,9 +41,19 @@ module Spotlight
       end
 
       job_tracker.append_log_entry(type: :info, exhibit: exhibit, message: "#{progress.progress} of #{progress.total} (#{errors} errors)")
-      job_tracker.update(status: errors.zero? ? 'completed' : 'failed', data: { progress: progress.progress, total: progress.total })
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+    def exhibit
+      exhibit_or_resources = arguments.first
+
+      case exhibit_or_resources
+      when Spotlight::Exhibit
+        exhibit_or_resources
+      when Spotlight::Resource
+        exhibit_or_resources.exhibit
+      end
+    end
 
     private
 
@@ -53,7 +64,7 @@ module Spotlight
     def job_data
       return unless job_tracker
 
-      { Spotlight::Engine.config.job_tracker_id_field => job_tracker.top_level_job_tracker.job_id }
+      @job_data ||= { Spotlight::Engine.config.job_tracker_id_field => job_tracker.top_level_job_tracker.job_id }
     end
 
     def resource_list(exhibit_or_resources, start: nil, finish: nil)
@@ -61,21 +72,6 @@ module Spotlight
         exhibit_or_resources.resources.find_each(start: start, finish: finish)
       else
         Array(exhibit_or_resources)
-      end
-    end
-
-    def job_tracking_resource
-      exhibit
-    end
-
-    def exhibit
-      exhibit_or_resources = arguments.first
-
-      case exhibit_or_resources
-      when Spotlight::Exhibit
-        exhibit_or_resources
-      when Spotlight::Resource
-        exhibit_or_resources.exhibit
       end
     end
   end
