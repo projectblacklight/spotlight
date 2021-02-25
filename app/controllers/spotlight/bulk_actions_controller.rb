@@ -8,6 +8,27 @@ module Spotlight
     before_action :check_authorization
 
     # rubocop:disable Metrics/MethodLength
+    def add_tags
+      solr_params = nil
+      # Get the total number of results
+      (response,) = search_service.search_results do |builder|
+        builder.merge(fl: 'id', rows: 1)
+        solr_params = builder.to_h
+      end
+
+      Spotlight::AddTagsJob.perform_later(
+        solr_params: solr_params,
+        exhibit: current_exhibit,
+        tags: tags_param,
+        user: current_user
+      )
+
+      redirect_back fallback_location: fallback_url,
+                    notice: t(:'spotlight.bulk_actions.add_tags.changed', count: response.total)
+    end
+    # rubocop:enable Metrics/MethodLength
+
+    # rubocop:disable Metrics/MethodLength
     def visibility
       solr_params = nil
       # Get the total number of results
@@ -27,6 +48,10 @@ module Spotlight
                     notice: t(:'spotlight.bulk_actions.change_visibility.changed', count: response.total)
     end
     # rubocop:enable Metrics/MethodLength
+
+    def tags_param
+      params.require(:tags).split(',')
+    end
 
     def visibility_param
       params.require(:visibility)

@@ -144,6 +144,7 @@ Spotlight::Engine.routes.draw do
     resource :bulk_actions, only: [] do
       member do
         post :visibility
+        post :add_tags
       end
     end
     post '/pages/:id/preview' => 'pages#preview', as: :preview_block

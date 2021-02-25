@@ -73,7 +73,6 @@ form.edit_solr_document {
   .bootstrap-tagsinput {
     @extend .clearfix;
     cursor: text;
-    display: block;
   }
   .bg-warning.form-text {
     font-size: 0.9em;
@@ -82,6 +81,7 @@ form.edit_solr_document {
 }
 
 .bootstrap-tagsinput {
+  display: block;
   .twitter-typeahead {
     width: auto;
   }
