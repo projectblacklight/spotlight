@@ -25,7 +25,7 @@ describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
   it 'has a edit tag form' do
     render
     expect(rendered).to have_field 'solr_document_exhibit_tag_list'
-    expect(rendered).to have_selector '#solr_document_exhibit_tag_list[@data-autocomplete_url="autocomplete-path.json"]'
+    expect(rendered).to have_selector '#solr_document_exhibit_tag_list[@data-autocomplete-url="autocomplete-path.json"]'
   end
 
   it 'does not have special metadata editing fields for non-uploaded resources' do
