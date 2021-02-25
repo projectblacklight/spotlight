@@ -24,7 +24,7 @@ module Spotlight
 
       def reindex(id)
         find(id).reindex
-      rescue Blacklight::Exceptions::InvalidSolrID => e
+      rescue Blacklight::Exceptions::RecordNotFound => e
         Rails.logger.debug "Unable to find document #{id}: #{e}"
       end
 
