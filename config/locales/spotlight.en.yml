@@ -273,6 +273,15 @@ en:
           other: "<p>There are %{count} items in the current search result set. Tags shown below are assigned to one or more of those items.</p><p>When you delete a tag below it will be removed from any item in the current result set to which that tag is assigned.</p>"
         heading: Remove tags
         label: Enter tags to remove
+    bulk_updates:
+      edit:
+        download:
+          heading: Download CSV
+        header: Bulk updates
+        overview:
+          heading: Overview
+        upload:
+          heading: Upload CSV
     catalog:
       admin:
         header: Items
@@ -355,6 +364,7 @@ en:
         about_pages: About pages
         analytics: Analytics
         browse: Browse
+        bulk_updates: Bulk updates
         dashboard: Dashboard
         feature_pages: Feature pages
         header: Curation
