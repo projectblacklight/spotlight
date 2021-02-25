@@ -12,6 +12,8 @@ Spotlight.onLoad(function() {
         url: $('[data-autocomplete-tag="true"]').data('autocomplete-url'),
         ttl: 1,
         filter: function(list) {
+          // Let the dom know that the response has been returned
+          $('[data-autocomplete-tag="true"]').attr('data-autocomplete-fetched', true);
           return $.map(list, function(tag) { return { name: tag }; });
         }
       }

@@ -238,6 +238,16 @@ en:
           expand_html: You can <a href="%{clear_search_url}"> clear this search</a> or try <a href="%{expand_search_url}">searching all exhibit items for "%{browse_query}"</a>.
           result_number: Your search did not match any items in this browse category.
     bulk_actions:
+      add: Add
+      add_tags:
+        changed:
+          one: Tags are being added for %{count} item.
+          other: Tags are being added for %{count} items.
+        description:
+          one: There is %{count} item in the current search result set. Tags entered below will be added to all items in the current result set. This won’t affect any tags already assigned to items.
+          other: There are %{count} items in the current search result set. Tags entered below will be added to all items in the current result set. This won’t affect any tags already assigned to items.
+        heading: Add tags
+        label: Tags
       change: Change
       change_visibility:
         changed:
