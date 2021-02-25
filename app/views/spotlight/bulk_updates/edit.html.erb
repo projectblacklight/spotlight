@@ -1,0 +1,31 @@
+<% content_for(:sidebar) do %>
+  <%= render 'spotlight/shared/exhibit_sidebar' %>
+<% end %>
+
+<%= curation_page_title t(:".header") %>
+
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="nav-item">
+      <a href="#overview" aria-controls="overview" role="tab" data-toggle="tab" class="nav-link active"><%= t(:'.overview.heading') %></a>
+    </li>
+    <li role="presentation" class="nav-item">
+      <a href="#download" aria-controls="download" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.download.heading') %></a>
+    </li>
+    <li role="presentation" class="nav-item">
+      <a href="#upload" aria-controls="upload" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.upload.heading') %></a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="overview">
+      <%= render 'overview' %>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="download">
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="upload">
+    </div>
+  </div>
+</div>

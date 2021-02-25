@@ -148,6 +148,9 @@ Spotlight::Engine.routes.draw do
         post :remove_tags
       end
     end
+
+    resource :bulk_updates, only: %i[edit]
+
     post '/pages/:id/preview' => 'pages#preview', as: :preview_block
     get '/pages' => 'pages#index', constraints: { format: 'json' }
 
