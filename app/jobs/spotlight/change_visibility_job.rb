@@ -4,11 +4,10 @@ module Spotlight
   ###
   class ChangeVisibilityJob < Spotlight::ApplicationJob
     include Spotlight::JobTracking
+    with_job_tracking(resource: ->(job) { job.arguments.last[:exhibit] })
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength
     def perform(solr_params:, exhibit:, visibility:, **)
-      job_tracker.update(status: 'in_progress')
-
       @errors = 0
 
       each_document(solr_params, exhibit) do |document|
@@ -23,21 +22,12 @@ module Spotlight
       rescue StandardError => e
         job_tracker.append_log_entry(type: :error, exhibit: exhibit, message: e.to_s)
         @errors += 1
+        mark_job_as_failed!
       end
       exhibit.blacklight_config.repository.connection.commit
       job_tracker.append_log_entry(type: :info, exhibit: exhibit, message: "#{progress.progress} of #{progress.total} (#{@errors} errors)")
-    ensure
-      job_tracker.update(status: @errors.zero? ? 'completed' : 'failed', data: { progress: progress.progress, total: progress.total })
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
-
-    def job_tracking_resource
-      arguments.last[:exhibit]
-    end
-
-    def reports_on_resource
-      arguments.last[:exhibit] if arguments.last.is_a?(Hash)
-    end
+    # rubocop:enable Metrics/MethodLength
 
     # rubocop:disable Metrics/MethodLength
     def each_document(solr_params, exhibit, &block)
