@@ -165,12 +165,6 @@ en:
     pt-BR: Portuguese - Brazil
     sq: Albanian
     zh: Chinese
-  reindexing_log:
-    status:
-      completed: Successful
-      enqueued: Not yet started
-      failed: Failed
-      in_progress: In progress
   shared:
     site_sidebar:
       documentation: Curator documentation
@@ -403,6 +397,7 @@ en:
       sidebar:
         appearance: Appearance
         header: Configuration
+        job_trackers: Job status
         metadata: Metadata
         search_configuration: Search
         settings: General
@@ -638,6 +633,37 @@ en:
         someone_invited_you: The Exhibits Administrator has invited you to help work on the "%{exhibit_name}" exhibit.
         subject: Invitation to manage \"%{exhibit_name}\"
         visit: Visit exhibit
+    job_trackers:
+      show:
+        headers:
+          details: Details
+          message: Message
+        messages:
+          created_by: job created by %{user}
+          errors:
+            one: "(%{count} error)"
+            other: "(%{count} errors)"
+          progress: processed %{progress} / %{total}
+          started: job started
+          status:
+            completed: job completed
+            enqueued: job enqueued
+            failed: job failed
+            in_progress: ''
+            missing: "(missing status)"
+            pending: job pending
+        summary:
+          completed: Completed %{last_updated} ago in %{duration}
+          enqueued: In progress for %{created_at}
+          failed: Failed %{last_updated} ago in %{duration}
+          in_progress: In progress for %{created_at}
+      status:
+        completed: Successful
+        enqueued: Not yet started
+        failed: Failed
+        in_progress: In progress
+        missing: Unknown
+        pending: Pending
     main_navigation:
       about: About
       browse: Browse

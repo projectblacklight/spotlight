@@ -18,7 +18,7 @@
         <td class="col-3"><%= tracker.user.email if tracker.user %></td>
         <td class="col-1"><%= tracker.progress %></td>
         <td class="col-3"><%= distance_of_time_in_words tracker.created_at, tracker.updated_at, include_seconds: true if tracker.completed? || tracker.failed? %></td>
-        <td class="col-2"><%= t "reindexing_log.status.#{tracker.status}" %></td>
+        <td class="col-2"><%= link_to_if can?(:read, tracker), t("spotlight.job_trackers.status.#{tracker.status}"), [current_exhibit, tracker], data: { blacklight_modal: 'trigger' } %></td>
       </tr>
     <% end %>
   </tbody>

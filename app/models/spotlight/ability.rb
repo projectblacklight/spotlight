@@ -34,6 +34,8 @@ module Spotlight
         Translation
       ], exhibit_id: user.exhibit_roles.pluck(:resource_id)
 
+      can :read, Spotlight::JobTracker, on_id: user.exhibit_roles.pluck(:resource_id), on_type: 'Spotlight::Exhibit'
+
       can :manage, Spotlight::Lock, by: user
 
       can :read, Spotlight::Language, exhibit_id: user.exhibit_roles.pluck(:resource_id)

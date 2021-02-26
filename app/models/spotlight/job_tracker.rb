@@ -12,6 +12,7 @@ module Spotlight
     belongs_to :user, optional: true, class_name: Spotlight::Engine.config.user_class # rubocop:disable Rails/ReflectionClassName
     has_many :events, as: :resource, dependent: :delete_all
     has_many :job_trackers, as: :on, dependent: Rails.version > '6.1' ? :destroy_async : :destroy
+    has_many :subevents, through: :job_trackers, source: :events
 
     serialize :data
 
@@ -66,6 +67,14 @@ module Spotlight
       (100.0 * progress) / total
     end
 
+    def status
+      @status ||= super
+      @status ||= 'missing'
+      @status = 'in_progress' if @status == 'completed' && job_trackers.any? { |t| t.in_progress? || t.enqueued? }
+
+      @status
+    end
+
     def enqueued?
       status == 'enqueued'
     end
@@ -82,8 +91,8 @@ module Spotlight
       status == 'failed'
     end
 
-    def append_log_entry(type:, **args)
-      events.create(type: type, data: args)
+    def append_log_entry(type:, exhibit: nil, **args)
+      events.create(type: type, exhibit: exhibit, data: args)
     rescue StandardError => e
       Rails.logger.error("Unable to create log entry for job tracker #{id}: #{e}")
     end
