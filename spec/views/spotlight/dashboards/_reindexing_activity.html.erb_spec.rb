@@ -2,9 +2,11 @@
 
 describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
   let(:p) { 'spotlight/dashboards/reindexing_activity' }
+  let(:exhibit) { FactoryBot.build(:exhibit) }
 
   before do
     assign(:recent_reindexing, recent_reindexing)
+    allow(view).to receive(:current_exhibit).and_return(exhibit)
   end
 
   context 'the reindexing log is empty' do
