@@ -41,7 +41,7 @@ module Spotlight
       end
 
       def to_solr
-        return {} unless upload.file_present?
+        return {} unless upload&.file_present?
 
         spotlight_routes = Spotlight::Engine.routes.url_helpers
         riiif = Riiif::Engine.routes.url_helpers
