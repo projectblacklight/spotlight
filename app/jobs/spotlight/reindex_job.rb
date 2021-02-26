@@ -26,7 +26,7 @@ module Spotlight
     def perform(exhibit_or_resources, start: nil, finish: nil, **)
       errors = 0
 
-      error_handler = lambda do |pipeline, _error_context, exception, _data|
+      error_handler = lambda do |pipeline, exception, _data|
         job_tracker.append_log_entry(type: :error, exhibit: exhibit, message: exception.to_s, resource_id: pipeline.source&.id)
         mark_job_as_failed!
         errors += 1
@@ -37,7 +37,7 @@ module Spotlight
           progress&.increment
         end
       rescue StandardError => e
-        error_handler.call(Struct.new(:source).new(resource), self, e, nil)
+        error_handler.call(Struct.new(:source).new(resource), e, nil)
       end
 
       job_tracker.append_log_entry(type: :info, exhibit: exhibit, message: "#{progress.progress} of #{progress.total} (#{errors} errors)")
