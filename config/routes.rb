@@ -159,6 +159,7 @@ Spotlight::Engine.routes.draw do
     get '/pages' => 'pages#index', constraints: { format: 'json' }
 
     resources :lock, only: [:destroy]
+    resources :job_trackers, only: [:show]
 
     resources :roles, path: 'users', only: %i[index create destroy] do
       collection do

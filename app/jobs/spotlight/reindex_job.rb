@@ -27,7 +27,13 @@ module Spotlight
       errors = 0
 
       error_handler = lambda do |pipeline, exception, _data|
-        job_tracker.append_log_entry(type: :error, exhibit: exhibit, message: exception.to_s, resource_id: pipeline.source&.id)
+        job_tracker.append_log_entry(
+          type: :error,
+          exhibit: exhibit,
+          message: exception.to_s,
+          backtrace: exception.backtrace.first(5).join("\n"),
+          resource_id: pipeline.source&.id
+        )
         mark_job_as_failed!
         errors += 1
       end
@@ -40,7 +46,17 @@ module Spotlight
         error_handler.call(Struct.new(:source).new(resource), e, nil)
       end
 
-      job_tracker.append_log_entry(type: :info, exhibit: exhibit, message: "#{progress.progress} of #{progress.total} (#{errors} errors)")
+      job_tracker.append_log_entry(
+        type: :summary,
+        exhibit: exhibit,
+        message: I18n.t(
+          'spotlight.job_trackers.show.messages.status.in_progress',
+          progress: progress.progress,
+          total: progress.total,
+          errors: (I18n.t('spotlight.job_trackers.show.messages.errors', count: errors) if errors.positive?)
+        ),
+        progress: progress.progress, total: progress.total, errors: errors
+      )
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
