@@ -143,7 +143,7 @@ Spotlight::Engine.routes.draw do
     end
     resource :bulk_actions, only: [] do
       member do
-        post :visibility
+        post :change_visibility
         post :add_tags
       end
     end
