@@ -7,58 +7,48 @@ module Spotlight
     before_action :authenticate_user!
     before_action :check_authorization
 
-    # rubocop:disable Metrics/MethodLength
     def add_tags
-      solr_params = nil
-      # Get the total number of results
-      (response,) = search_service.search_results do |builder|
-        builder.merge(fl: 'id', rows: 1)
-        solr_params = builder.to_h
-      end
+      handle_bulk_action_with_job(Spotlight::AddTagsJob, tags: add_tags_params)
+    end
 
-      Spotlight::AddTagsJob.perform_later(
+    def change_visibility
+      handle_bulk_action_with_job(Spotlight::ChangeVisibilityJob, visibility: change_visibility_params)
+    end
+
+    private
+
+    def handle_bulk_action_with_job(job, i18n_key: action_name, **params)
+      job.perform_later(
         solr_params: solr_params,
         exhibit: current_exhibit,
-        tags: tags_param,
-        user: current_user
+        user: current_user,
+        **params
       )
 
-      redirect_back fallback_location: fallback_url,
-                    notice: t(:'spotlight.bulk_actions.add_tags.changed', count: response.total)
+      redirect_back fallback_location: spotlight.search_exhibit_catalog_path(current_search_session.query_params),
+                    notice: t(:"spotlight.bulk_actions.#{i18n_key}.changed", count: solr_response.total)
     end
-    # rubocop:enable Metrics/MethodLength
 
-    # rubocop:disable Metrics/MethodLength
-    def visibility
-      solr_params = nil
-      # Get the total number of results
-      (response,) = search_service.search_results do |builder|
-        builder.merge(fl: 'id', rows: 1)
-        solr_params = builder.to_h
+    def solr_params
+      solr_response.request_params
+    end
+
+    def solr_response
+      @solr_response ||= begin
+        response, _docs = search_service.search_results do |builder|
+          builder.merge(fl: 'id', rows: 0)
+        end
+
+        response
       end
-
-      Spotlight::ChangeVisibilityJob.perform_later(
-        solr_params: solr_params,
-        exhibit: current_exhibit,
-        visibility: visibility_param,
-        user: current_user
-      )
-
-      redirect_back fallback_location: fallback_url,
-                    notice: t(:'spotlight.bulk_actions.change_visibility.changed', count: response.total)
     end
-    # rubocop:enable Metrics/MethodLength
 
-    def tags_param
+    def add_tags_params
       params.require(:tags).split(',')
     end
 
-    def visibility_param
+    def change_visibility_params
       params.require(:visibility)
-    end
-
-    def fallback_url
-      spotlight.search_exhibit_catalog_path(current_search_session.query_params)
     end
   end
 end

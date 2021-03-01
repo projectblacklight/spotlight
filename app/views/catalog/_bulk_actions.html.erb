@@ -9,7 +9,7 @@
 </div>
 <div class="modal fade" id="change-visibility-modal" tabindex="-1" role="dialog" aria-labelledby="save-modal-label" aria-hidden="true">
   <div class="modal-dialog">
-  <%= bootstrap_form_for([:visibility, current_exhibit], url: visibility_exhibit_bulk_actions_path(current_exhibit), method: 'post') do |f| %>
+  <%= bootstrap_form_for([:change_visibility, current_exhibit], url: change_visibility_exhibit_bulk_actions_path(current_exhibit), method: 'post') do |f| %>
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="save-modal-label"><%= t(:'spotlight.bulk_actions.change_visibility.heading') %></h4>
