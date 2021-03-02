@@ -93,6 +93,7 @@ module Spotlight
 
           config.bulk_actions.change_visibility
           config.bulk_actions.add_tags
+          config.bulk_actions.remove_tags
         end
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)

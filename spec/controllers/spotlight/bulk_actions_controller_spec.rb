@@ -28,6 +28,14 @@ describe Spotlight::BulkActionsController, type: :controller do
         expect(flash[:alert]).to be_present
       end
     end
+
+    describe 'POST remove_tags' do
+      it 'denies access' do
+        post :remove_tags, params: { exhibit_id: exhibit }
+        expect(response).to redirect_to main_app.root_path
+        expect(flash[:alert]).to be_present
+      end
+    end
   end
 
   describe 'when the user is a curator' do
@@ -55,6 +63,16 @@ describe Spotlight::BulkActionsController, type: :controller do
         post :add_tags, params: { 'tags' => 'hello,world', 'q' => 'map', exhibit_id: exhibit }
         expect(response).to redirect_to '/referring_url'
         expect(flash[:notice]).to eq 'Tags are being added for 55 items.'
+      end
+    end
+
+    describe 'POST remove_tags' do
+      it 'redirects and sets a notice' do
+        allow(controller).to receive(:current_search_session).and_return(search_session)
+        request.env['HTTP_REFERER'] = '/referring_url'
+        post :remove_tags, params: { 'tags' => 'hello,world', 'q' => 'map', exhibit_id: exhibit }
+        expect(response).to redirect_to '/referring_url'
+        expect(flash[:notice]).to eq 'Tags are being removed for 55 items.'
       end
     end
   end

@@ -1,0 +1,39 @@
+<div class="modal fade" id="remove-tags-modal" tabindex="-1" role="dialog" aria-labelledby="remove-tag-modal" aria-hidden="true">
+  <div class="modal-dialog">
+  <%= bootstrap_form_for([:visibility, current_exhibit], url: remove_tags_exhibit_bulk_actions_path(current_exhibit), method: 'post') do |f| %>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="remove-tag-modal"><%= t(:'spotlight.bulk_actions.remove_tags.heading') %></h4>
+        <button type="button" class="blacklight-modal-close close" data-dismiss="modal" aria-label="<%= t('blacklight.modal.close') %>">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <%= t(:'spotlight.bulk_actions.remove_tags.description_html', count: @response.total) %>
+        </p>
+        <% facets = facets_from_request([search_state.blacklight_config.document_model.solr_field_for_tagger(current_exhibit)], @response) %>
+        <% facets.each do |facet| %>
+          <% if facet.items.any? %>
+            <h5><%= t(:'spotlight.bulk_actions.remove_tags.assigned') %></h5>
+          <% end %>
+          <% facet.items.each do |facet_item| %>
+            <div class="badge badge-info">
+              <%= "#{facet_item.value} (#{facet_item.hits})" %>
+            </div>
+          <% end %>
+        <% end %>
+        <div class="form-group mt-4">
+          <%= label_tag :tags, t(:'spotlight.bulk_actions.remove_tags.label') %>
+          <%= text_field_tag :tags, '', class: 'form-control', data: { autocomplete_tag: true, autocomplete_url: exhibit_tags_path(current_exhibit, format: 'json')} %>
+        </div>
+        <%= render_hash_as_hidden_fields(search_state.params_for_search) %>
+      </div>
+      <div class="modal-footer d-flex flex-row-reverse justify-content-start">
+        <%= f.submit t(:'spotlight.bulk_actions.remove'), class: 'btn btn-primary', data: { confirm: t(:'spotlight.bulk_actions.confirm') } %>
+        <button type="button" class="btn btn-link" data-dismiss="modal"><%= t :cancel %></button>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
