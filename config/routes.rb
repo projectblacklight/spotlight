@@ -145,6 +145,7 @@ Spotlight::Engine.routes.draw do
       member do
         post :change_visibility
         post :add_tags
+        post :remove_tags
       end
     end
     post '/pages/:id/preview' => 'pages#preview', as: :preview_block

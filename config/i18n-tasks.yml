@@ -83,7 +83,7 @@ ignore_unused:
   - helpers.action.destroy # no idea here
   - helpers.action.spotlight/search.destroy # I think it might be used by #action_default_value
   - helpers.submit.contact_form.create # /shrug
-  - spotlight.bulk_actions.{add_tags,change_visibility}.changed.* # app/controllers/spotlight/bulk_actions_controller.rb
+  - spotlight.bulk_actions.{add_tags,change_visibility,remove_tags}.changed.* # app/controllers/spotlight/bulk_actions_controller.rb
 
 <% I18n::Tasks.add_scanner 'I18n::Tasks::Scanners::PatternMapper',
       patterns: [

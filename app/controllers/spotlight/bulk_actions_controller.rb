@@ -11,6 +11,10 @@ module Spotlight
       handle_bulk_action_with_job(Spotlight::AddTagsJob, tags: add_tags_params)
     end
 
+    def remove_tags
+      handle_bulk_action_with_job(Spotlight::RemoveTagsJob, tags: remove_tags_params)
+    end
+
     def change_visibility
       handle_bulk_action_with_job(Spotlight::ChangeVisibilityJob, visibility: change_visibility_params)
     end
@@ -44,6 +48,10 @@ module Spotlight
     end
 
     def add_tags_params
+      params.require(:tags).split(',')
+    end
+
+    def remove_tags_params
       params.require(:tags).split(',')
     end
 
