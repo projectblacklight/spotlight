@@ -134,5 +134,9 @@ module Spotlight
     def render_save_this_search?
       false
     end
+
+    def render_bulk_actions?
+      false
+    end
   end
 end
