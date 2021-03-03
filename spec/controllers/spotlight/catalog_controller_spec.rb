@@ -81,7 +81,7 @@ describe Spotlight::CatalogController, type: :controller do
     describe 'GET index' do
       it 'shows the index when there are parameters' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Search results', search_exhibit_catalog_path(exhibit, q: 'map'))
+        expect(controller).to receive(:add_breadcrumb).with('Search results', search_exhibit_catalog_path(exhibit, q: 'map'), current: true)
         get :index, params: { exhibit_id: exhibit, q: 'map' }
         expect(response).to be_successful
       end
