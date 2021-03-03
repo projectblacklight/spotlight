@@ -1,23 +1,21 @@
-<p class="instructions">
-  A CSV file listing each item in this exhibit will be generated with the reference and updatable fields you specify below. <i>Reference fields</i> are intended to help you identify items that you intend to update. <i>Updatable fields</i> are the fields for which you can update values (see guidelines below).
-</p>
+<p class="instructions"><%= t('.instructions_html') %></p>
 
 <%= bootstrap_form_with(url: download_template_exhibit_bulk_updates_path) do |f| %>
   <div class="row">
     <div class="col col-3">
-      <%= f.form_group(:reference_fields, label: { text: 'Reference fields' }) do %>
-        <%= f.check_box('reference_fields[item_id]', label: 'Item ID', checked: true, disabled: true) %>
-        <%= f.check_box('reference_fields[item_title]', label: 'Item title') %>
+      <%= f.form_group(:reference_fields, label: { text: t('.reference_fields.heading'), class: 'font-weight-bold' }) do %>
+        <%= f.check_box('reference_fields[item_id]', label: t('.item_id'), checked: true, disabled: true) %>
+        <%= f.check_box('reference_fields[item_title]', label: t('.item_title')) %>
       <% end %>
     </div>
     <div class="col col-3">
-      <%= f.form_group(:updatable_fields, label: { text: 'Updatable fields' }) do %>
-        <%= f.check_box('updatable_fields[visibility]', label: 'Visibility') %>
-        <%= f.check_box('updatable_fields[tags]', label: 'Tags') %>
+      <%= f.form_group(:updatable_fields, label: { text: t('.updatable_fields.heading'), class: 'font-weight-bold' }) do %>
+        <%= f.check_box('updatable_fields[visibility]', checked: true, label: t('.visibility')) %>
+        <%= f.check_box('updatable_fields[tags]', label: t('.tags')) %>
       <% end %>
     </div>
     <div class="col col-3">
-      <%= f.submit 'Download CSV file', class: 'btn btn-primary'  %>
+      <%= f.submit t('.submit'), class: 'btn btn-primary'  %>
     </div>
   </div>
 <% end %>
