@@ -37,7 +37,7 @@ module Spotlight
       can :manage, Spotlight::Lock, by: user
 
       can :read, Spotlight::Language, exhibit_id: user.exhibit_roles.pluck(:resource_id)
-      can %i[read curate tag], Spotlight::Exhibit, id: user.exhibit_roles.pluck(:resource_id)
+      can %i[read curate tag bulk_update], Spotlight::Exhibit, id: user.exhibit_roles.pluck(:resource_id)
 
       # public
       can :read, Spotlight::HomePage

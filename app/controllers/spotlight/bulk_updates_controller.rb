@@ -36,7 +36,7 @@ module Spotlight
     end
 
     def check_authorization
-      authorize! :curate, current_exhibit
+      authorize! :bulk_update, current_exhibit
     end
   end
 end
