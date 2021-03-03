@@ -274,6 +274,17 @@ en:
         heading: Remove tags
         label: Enter tags to remove
     bulk_updates:
+      download:
+        instructions_html: A CSV file listing each item in this exhibit will be generated with the reference and updatable fields you specify below. <i>Reference fields</i> are intended to help you identify items that you intend to update. <i>Updatable fields</i> are the fields for which you can update values (see guidelines below).
+        item_id: Item ID
+        item_title: Item title
+        reference_fields:
+          heading: Reference fields
+        submit: Download CSV file
+        tags: Tags
+        updatable_fields:
+          heading: Updatable fields
+        visibility: Visibility
       edit:
         download:
           heading: Download CSV
@@ -282,6 +293,20 @@ en:
           heading: Overview
         upload:
           heading: Upload CSV
+      overview:
+        instructions_html: |
+          <p>You can update in bulk several properties of items in this exhibit:</p> <ul>
+            <li>Visibility</li>
+            <li>Tags</li>
+            <li>Custom metadata fields</li>
+          </ul> <p>The steps to making bulk updates are:</p> <ol>
+            <li>Download a CSV (comma-separated values) file from the Download CSV tab above. The downloaded CSV file will contain a row for every item in this exhibit. Each row contains the unique ID of an exhibit item along with the values of the reference and updatable fields you specify.</li>
+            <li>Import the CSV file into a new spreadsheet, using an application such as a Google Sheets or Excel.</li>
+            <li>In the new spreadsheet, update the values for the updatable fields of exhibit items you want to change. When you’ve finished making updates, save the spreadsheet.</li>
+            <li>(Optional) Remove the rows for items that contain no updated values. This is not required but for exhibits with many items this can speed up the import process. If necessary, save the spreadsheet.</li>
+            <li>Download/export the updated spreadsheet to your computer as a .csv file.</li>
+            <li>Use the Upload CSV tab above to submit the updated file for processing.</li>
+          </ol>
     catalog:
       admin:
         header: Items
