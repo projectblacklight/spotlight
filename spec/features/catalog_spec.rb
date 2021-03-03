@@ -30,6 +30,7 @@ describe 'Catalog', type: :feature do
   it 'has breadcrumbs' do
     visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
     expect(page).to have_breadcrumbs 'Home', 'Search results'
+    expect(page).to have_selector '.breadcrumb-item.active', text: 'Search results'
   end
 
   describe 'Non-spotlight #show' do

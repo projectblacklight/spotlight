@@ -26,7 +26,7 @@ these collections.)
   s.add_dependency 'autoprefixer-rails'
   s.add_dependency 'blacklight', '~> 7.0'
   s.add_dependency 'bootstrap_form', '~> 4.1'
-  s.add_dependency 'breadcrumbs_on_rails', '~> 3.0'
+  s.add_dependency 'breadcrumbs_on_rails', '>= 3.0', '< 5'
   s.add_dependency 'cancancan'
   s.add_dependency 'carrierwave'
   s.add_dependency 'clipboard-rails', '~> 1.5'

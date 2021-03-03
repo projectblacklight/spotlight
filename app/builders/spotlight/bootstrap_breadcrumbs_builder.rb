@@ -21,10 +21,12 @@ module Spotlight
     end
 
     def render_element(element)
-      html_class = 'active' if @context.current_page?(compute_path(element))
+      current = @context.current_page?(compute_path(element)) || element.options&.dig(:current)
+
+      html_class = 'active' if current
 
       @context.content_tag(:li, class: "breadcrumb-item #{html_class}") do
-        @context.link_to_unless_current(element_label(element), compute_path(element), element.options)
+        @context.link_to_unless(current, element_label(element), compute_path(element), element.options&.except(:current))
       end
     end
 
