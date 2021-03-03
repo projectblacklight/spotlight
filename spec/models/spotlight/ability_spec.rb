@@ -80,6 +80,7 @@ describe Spotlight::Ability, type: :model do
     it { is_expected.to be_able_to(:destroy, translation) }
 
     it { is_expected.to be_able_to(:tag, exhibit) }
+    it { is_expected.to be_able_to(:bulk_update, exhibit) }
 
     it { is_expected.to be_able_to(:edit, contact) }
     it { is_expected.to be_able_to(:new, contact) }
