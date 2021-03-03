@@ -5,9 +5,9 @@ describe Spotlight::FeaturedImageUploader do
 
   let(:mounter) { FactoryBot.create(:featured_image) }
 
-  describe '#extension_whitelist' do
+  describe '#extension_allowlist' do
     it 'is the configured array of approved extension to be uploaded' do
-      expect(featured_image_uploader.extension_whitelist).to eq Spotlight::Engine.config.allowed_upload_extensions
+      expect(featured_image_uploader.extension_allowlist).to eq Spotlight::Engine.config.allowed_upload_extensions
     end
   end
 
