@@ -275,6 +275,46 @@ en:
         label: Enter tags to remove
     bulk_updates:
       download:
+        guidelines_html: |
+          <h2>Guidelines for CSV updates</h2>
+          <p class="instructions">
+            The downloadable CSV file for this exhibit contains one line for each item in the exhibit. Each line contains one or more comma-separated values. Although you can update the CSV file directly, we strongly recommended importing it into a spreadsheet application and making your updates there. The rest of these guidelines assume you are making updates in a spreadsheet.
+          </p>
+
+          <h3>Column headers</h3>
+          <p class="instructions">
+            Do not edit the column headers. These are used to match property values to existing exhibit item fields.
+          </p>
+
+          <h3>Reference fields</h3>
+          <p class="instructions">
+            Do not edit the reference fields. These are intended to help you identify items whose updatable fields you might want to change. Updates to the reference fields will not be processed.
+          </p>
+
+          <p class="instructions">
+            If you are making a lot of updates, we recommended you use the protect or lock feature of your spreadsheet application to lock the reference field columns and ensure you don’t inadvertently edit them.
+          </p>
+
+          <h3>Updatable fields</h3>
+          <dl>
+            <dt>Visibility</dt>
+            <dd>Valid values are public and private. If no value is present, the item is assigned a value of private.</dd>
+
+            <dt>Tags</dt>
+            <dd>
+              <p class="instructions">
+                If you chose to include tags in the CSV file, there will be a column in the spreadsheet for each existing tag in the exhibit, prefixed with “Tag:”, such as “Tag: apples”.
+              </p>
+
+              <p class="instructions">
+                To assign a tag to an exhibit item, the value of the “Tag:” column for that item must be true. A blank value (or any value other than true) in the “Tag:” column for an item means that tag is not assigned to that item.
+              </p>
+
+              <p class="instructions">
+                To remove a tag currently assigned to an item, remove the true value from the appropriate “Tag:” column for that item.
+              </p>
+            </dd>
+          </dl>
         instructions_html: A CSV file listing each item in this exhibit will be generated with the reference and updatable fields you specify below. <i>Reference fields</i> are intended to help you identify items that you intend to update. <i>Updatable fields</i> are the fields for which you can update values (see guidelines below).
         item_id: Item ID
         item_title: Item title
