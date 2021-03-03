@@ -117,9 +117,35 @@ form.edit_solr_document {
   @extend .clearfix;
 }
 
-#save-this-search, .bulk-actions-dropdown {
-  float:left;
-  margin-right: $spacer * 0.1;
+#sortAndPerPage {
+  align-items: flex-end;
+}
+
+.search-widgets {
+  align-items: flex-start;
+  display: flex;
+  @media (min-width: breakpoint-min("md")) {
+    justify-content: flex-end;
+  }
+  flex-wrap: wrap;
+  width: 60%;
+  margin-left: -1 * $spacer * 0.1;
+
+  .btn, .btn-group {
+    margin-left: $spacer * 0.1;
+    margin-top: $spacer * 0.25;
+  }
+}
+
+.curator-actions {
+  align-items: flex-start;
+  display: flex;
+  @media (min-width: breakpoint-min("md")) {
+    justify-content: flex-end;
+  }
+  order: -1;
+  width: 100%;
+  margin-left: -1 * $spacer * 0.1;
 }
 
 #document,

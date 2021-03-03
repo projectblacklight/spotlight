@@ -1,0 +1,28 @@
+<div class="modal fade" id="add-tags-modal" tabindex="-1" role="dialog" aria-labelledby="add-tag-modal" aria-hidden="true">
+  <div class="modal-dialog">
+  <%= bootstrap_form_for([:visibility, current_exhibit], url: add_tags_exhibit_bulk_actions_path(current_exhibit), method: 'post') do |f| %>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="add-tag-modal"><%= t(:'spotlight.bulk_actions.add_tags.heading') %></h4>
+        <button type="button" class="blacklight-modal-close close" data-dismiss="modal" aria-label="<%= t('blacklight.modal.close') %>">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <%= t(:'spotlight.bulk_actions.add_tags.description', count: @response.total) %>
+        </p>
+        <div class="form-group">
+          <%= label_tag :tags, t(:'spotlight.bulk_actions.add_tags.label') %>
+          <%= text_field_tag :tags, '', class: 'form-control', data: { autocomplete_tag: true, autocomplete_url: exhibit_tags_path(current_exhibit, format: 'json')} %>
+        </div>
+        <%= render_hash_as_hidden_fields(search_state.params_for_search) %>
+      </div>
+      <div class="modal-footer d-flex flex-row-reverse justify-content-start">
+        <%= f.submit t(:'spotlight.bulk_actions.add'), class: 'btn btn-primary', data: { confirm: t(:'spotlight.bulk_actions.confirm') } %>
+        <button type="button" class="btn btn-link" data-dismiss="modal"><%= t :cancel %></button>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

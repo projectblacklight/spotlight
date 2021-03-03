@@ -27,12 +27,7 @@ module Spotlight
                                         }
     end
 
-    def render_save_this_search?
-      (current_exhibit && can?(:curate, current_exhibit)) &&
-        !(params[:controller] == 'spotlight/catalog' && params[:action] == 'admin')
-    end
-
-    def render_bulk_actions?
+    def render_curator_actions?
       (current_exhibit && can?(:curate, current_exhibit)) &&
         !(params[:controller] == 'spotlight/catalog' && params[:action] == 'admin')
     end
