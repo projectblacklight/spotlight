@@ -58,7 +58,7 @@
         </p>
         <div class="form-group">
           <%= label_tag :tags, t(:'spotlight.bulk_actions.add_tags.label') %>
-          <%= text_field_tag :tags, {}, class: 'form-control', data: { autocomplete_tag: true, autocomplete_url: exhibit_tags_path(current_exhibit, format: 'json')} %>
+          <%= text_field_tag :tags, '', class: 'form-control', data: { autocomplete_tag: true, autocomplete_url: exhibit_tags_path(current_exhibit, format: 'json')} %>
         </div>
         <%= render_hash_as_hidden_fields(search_state.params_for_search) %>
       </div>
