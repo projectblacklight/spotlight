@@ -48,11 +48,11 @@ module Spotlight
     end
 
     def add_tags_params
-      params.require(:tags).split(',')
+      params.require(:tags).split(',').map(&:strip)
     end
 
     def remove_tags_params
-      params.require(:tags).split(',')
+      params.require(:tags).split(',').map(&:strip)
     end
 
     def change_visibility_params
