@@ -1,0 +1,23 @@
+<p class="instructions">
+  A CSV file listing each item in this exhibit will be generated with the reference and updatable fields you specify below. <i>Reference fields</i> are intended to help you identify items that you intend to update. <i>Updatable fields</i> are the fields for which you can update values (see guidelines below).
+</p>
+
+<%= bootstrap_form_with(url: download_template_exhibit_bulk_updates_path) do |f| %>
+  <div class="row">
+    <div class="col col-3">
+      <%= f.form_group(:reference_fields, label: { text: 'Reference fields' }) do %>
+        <%= f.check_box('reference_fields[item_id]', label: 'Item ID', checked: true, disabled: true) %>
+        <%= f.check_box('reference_fields[item_title]', label: 'Item title') %>
+      <% end %>
+    </div>
+    <div class="col col-3">
+      <%= f.form_group(:updatable_fields, label: { text: 'Updatable fields' }) do %>
+        <%= f.check_box('updatable_fields[visibility]', label: 'Visibility') %>
+        <%= f.check_box('updatable_fields[tags]', label: 'Tags') %>
+      <% end %>
+    </div>
+    <div class="col col-3">
+      <%= f.submit 'Download CSV file', class: 'btn btn-primary'  %>
+    </div>
+  </div>
+<% end %>

@@ -149,7 +149,11 @@ Spotlight::Engine.routes.draw do
       end
     end
 
-    resource :bulk_updates, only: %i[edit]
+    resource :bulk_updates, only: %i[edit] do
+      member do
+        post :download_template
+      end
+    end
 
     post '/pages/:id/preview' => 'pages#preview', as: :preview_block
     get '/pages' => 'pages#index', constraints: { format: 'json' }

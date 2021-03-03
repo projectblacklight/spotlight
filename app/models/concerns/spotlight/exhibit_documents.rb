@@ -23,11 +23,11 @@ module Spotlight
       end
     end
 
-    private
-
     def exhibit_search_builder
       blacklight_config.search_builder_class.new(exhibit_search_builder_context).except(:apply_permissive_visibility_filter)
     end
+
+    private
 
     def exhibit_search_builder_context
       OpenStruct.new(blacklight_config: blacklight_config.tap { |x| x.current_exhibit = self })

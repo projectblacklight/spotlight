@@ -292,6 +292,12 @@ module Spotlight
     config.reindexing_batch_count = nil
     config.bulk_actions_batch_size = 1000
 
+    config.bulk_updates = OpenStruct.new
+    config.bulk_updates.csv_id = 'Item ID'
+    config.bulk_updates.csv_title = 'Item Title'
+    config.bulk_updates.csv_visibility = 'Visibility'
+    config.bulk_updates.csv_tags = 'Tag: %s'
+
     config.assign_default_roles_to_first_user = true
 
     config.exhibit_roles = %w[admin curator]
