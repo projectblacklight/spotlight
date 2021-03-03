@@ -1,19 +1,20 @@
 Spotlight.onLoad(function() {
-  if($('[data-autocomplete-tag="true"]').length > 0) {
+  $('[data-autocomplete-tag="true"]').each(function(_i, el) {
+    var $el = $(el);
     // By default tags input binds on page ready to [data-role=tagsinput],
     // however, that doesn't work with Turbolinks. So we init manually:
-    $('[data-autocomplete-tag="true"]').tagsinput();
+    $el.tagsinput();
 
     var tags = new Bloodhound({
       datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       limit: 100,
       prefetch: {
-        url: $('[data-autocomplete-tag="true"]').data('autocomplete-url'),
+        url: $el.data('autocomplete-url'),
         ttl: 1,
         filter: function(list) {
           // Let the dom know that the response has been returned
-          $('[data-autocomplete-tag="true"]').attr('data-autocomplete-fetched', true);
+          $el.attr('data-autocomplete-fetched', true);
           return $.map(list, function(tag) { return { name: tag }; });
         }
       }
@@ -21,16 +22,16 @@ Spotlight.onLoad(function() {
 
     tags.initialize();
 
-    $('[data-autocomplete-tag="true"]').tagsinput('input').typeahead({highlight: true, hint: false}, {
+    $el.tagsinput('input').typeahead({highlight: true, hint: false}, {
       name: 'tags',
       displayKey: 'name',
       source: tags.ttAdapter()
     }).bind('typeahead:selected', $.proxy(function (obj, datum) {
-      $('[data-autocomplete-tag="true"]').tagsinput('add', datum.name);
-      $('[data-autocomplete-tag="true"]').tagsinput('input').typeahead('val', '');
+      $el.tagsinput('add', datum.name);
+      $el.tagsinput('input').typeahead('val', '');
     })).bind('blur', function() {
-      $('[data-autocomplete-tag="true"]').tagsinput('add', $('[data-autocomplete-tag="true"]').tagsinput('input').typeahead('val'));
-      $('[data-autocomplete-tag="true"]').tagsinput('input').typeahead('val', '');
+      $el.tagsinput('add', $el.tagsinput('input').typeahead('val'));
+      $el.tagsinput('input').typeahead('val', '');
     });
-  }
+  });
 });
