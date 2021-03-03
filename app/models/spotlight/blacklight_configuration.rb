@@ -80,8 +80,20 @@ module Spotlight
 
         config.index.thumbnail_field ||= Spotlight::Engine.config.thumbnail_field
 
-        config.add_results_collection_tool 'save_search', if: :render_save_this_search?
-        config.add_results_collection_tool 'bulk_actions', if: :render_bulk_actions?
+        config.add_results_collection_tool 'curator_actions', if: :render_curator_actions?
+
+        unless config.curator_actions
+          config.curator_actions ||= Blacklight::NestedOpenStructWithHashAccess.new(Blacklight::Configuration::ToolConfig)
+          config.curator_actions.save_search
+          config.curator_actions.bulk_actions
+        end
+
+        unless config.bulk_actions
+          config.bulk_actions ||= Blacklight::NestedOpenStructWithHashAccess.new(Blacklight::Configuration::ToolConfig)
+
+          config.bulk_actions.change_visibility
+          config.bulk_actions.add_tags
+        end
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 

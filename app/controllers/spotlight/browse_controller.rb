@@ -135,7 +135,7 @@ module Spotlight
       false
     end
 
-    def render_bulk_actions?
+    def render_curator_actions?
       false
     end
   end
