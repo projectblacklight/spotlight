@@ -9,9 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>
-          <%= t(:'spotlight.bulk_actions.remove_tags.description_html', count: @response.total) %>
-        </p>
+        <%= t(:'spotlight.bulk_actions.remove_tags.description_html', count: @response.total) %>
         <% facets = facets_from_request([search_state.blacklight_config.document_model.solr_field_for_tagger(current_exhibit)], @response) %>
         <% facets.each do |facet| %>
           <% if facet.items.any? %>

@@ -244,33 +244,33 @@ en:
           one: Tags are being added for %{count} item.
           other: Tags are being added for %{count} items.
         description:
-          one: There is %{count} item in the current search result set. Tags entered below will be added to all items in the current result set. This won’t affect any tags already assigned to items.
-          other: There are %{count} items in the current search result set. Tags entered below will be added to all items in the current result set. This won’t affect any tags already assigned to items.
+          one: There is %{count} item in the current search result set. Tags entered below will be added to this item. This action won’t affect any tags already assigned to this item.
+          other: There are %{count} items in the current search result set. Tags entered below will be added to all %{count} items in the result set. This action won’t affect any tags already assigned to these items.
         heading: Add tags
-        label: Tags
+        label: Enter tags to add
       change: Change
       change_visibility:
         changed:
           one: Visibility of %{count} item is being updated.
           other: Visibility of %{count} items is being updated.
         description:
-          one: There is %{count} item in the current search result set. This change will be applied to all items.
-          other: There are %{count} items in the current search result set. This change will be applied to all items.
+          one: There is %{count} item in the current search result set. A visibility change will be applied to this item.
+          other: There are %{count} items in the current search result set. A visibility change will be applied to all items in the result set.
         heading: Change item visibility
         label: Item visibility
         private: Private
         public: Public
-      confirm: Are you sure?
+      confirm: All items in the result set will be updated. Are you sure?
       label: Bulk actions
       remove: Remove
       remove_tags:
-        assigned: Assigned tags
+        assigned: Currently assigned tags
         changed:
           one: Tags are being removed for %{count} item.
           other: Tags are being removed for %{count} items.
         description_html:
-          one: "<p>There is %{count} item in the current search result set. Tags shown below are assigned to one or more of those items.</p><p>When you delete a tag below it will be removed from any item in the current result set to which that tag is assigned.</p>"
-          other: "<p>There are %{count} items in the current search result set. Tags shown below are assigned to one or more of those items.</p><p>When you delete a tag below it will be removed from any item in the current result set to which that tag is assigned.</p>"
+          one: "<p>There is %{count} item in the current search result set. Tags shown below are assigned to this item.</p><p>When you remove a tag below it will be unassigned from this item.</p>"
+          other: "<p>There are %{count} items in the current search result set. Tags shown below are assigned to one or more of those items.</p><p>When you remove a tag below it will be unassigned from any item in the result set to which that tag is currently assigned.</p>"
         heading: Remove tags
         label: Enter tags to remove
     catalog:
