@@ -306,7 +306,7 @@
         <filter class="solr.EdgeNGramFilterFactory" minGramSize="3" maxGramSize="15" />
       </analyzer>
 
-      <analyzer type="index">
+      <analyzer type="query">
         <tokenizer class="solr.ICUTokenizerFactory"/>
         <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
         <filter class="solr.EnglishPossessiveFilterFactory"/>
