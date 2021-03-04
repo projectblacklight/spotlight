@@ -2,7 +2,7 @@
 
 describe Spotlight::BulkActionsController, type: :controller do
   routes { Spotlight::Engine.routes }
-  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:exhibit) { FactoryBot.create(:skinny_exhibit) }
 
   before do
     allow(Spotlight::ChangeVisibilityJob).to receive(:perform_later)

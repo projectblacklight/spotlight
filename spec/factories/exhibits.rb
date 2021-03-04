@@ -10,4 +10,8 @@ FactoryBot.define do
       association :thumbnail, factory: :exhibit_thumbnail
     end
   end
+  factory :skinny_exhibit, class: 'Spotlight::Exhibit' do
+    sequence(:title) { |n| "Exhibit Title #{n}" }
+    published { true }
+  end
 end
