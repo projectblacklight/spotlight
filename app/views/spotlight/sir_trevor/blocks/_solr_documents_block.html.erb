@@ -9,9 +9,9 @@
         <div class="box" data-id="<%= document.id %>">
           <div class="contents">
             <% if block_options[:thumbnail_image_url].present? %>
-              <%= link_to_document(document, image_tag(block_options[:thumbnail_image_url], class: 'img-thumbnail', alt: doc_presenter.heading), counter: -1) %>
+              <%= link_to_document(document, image_tag(block_options[:thumbnail_image_url], class: 'img-thumbnail', alt: doc_presenter.heading, skip_pipeline: true), counter: -1) %>
             <% elsif block_options[:iiif_tilesource_base].present?  %>
-              <%= link_to_document(document, image_tag(block_options[:iiif_tilesource_base] + '/full/!400,400/0/default.jpg', class: 'img-thumbnail', alt: doc_presenter.heading), counter: -1) %>
+              <%= link_to_document(document, image_tag(block_options[:iiif_tilesource_base] + '/full/!400,400/0/default.jpg', class: 'img-thumbnail', alt: doc_presenter.heading, skip_pipeline: true), counter: -1) %>
             <% elsif has_thumbnail? document %>
               <%= render_thumbnail_tag(document, { class: 'img-thumbnail', alt: doc_presenter.heading }, document_counter: -1) %>
             <% end %>
