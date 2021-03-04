@@ -4,9 +4,15 @@ describe Spotlight::BulkActionsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:skinny_exhibit) }
 
-  before do
-    allow(Spotlight::ChangeVisibilityJob).to receive(:perform_later)
+  # rubocop:disable RSpec/BeforeAfterAll
+  before(:all) do
+    ActiveJob::Base.queue_adapter = :test
   end
+
+  after(:all) do
+    ActiveJob::Base.queue_adapter = :inline
+  end
+  # rubocop:enable RSpec/BeforeAfterAll
 
   describe 'when the user is not authorized' do
     before do
@@ -54,6 +60,19 @@ describe Spotlight::BulkActionsController, type: :controller do
         expect(response).to redirect_to '/referring_url'
         expect(flash[:notice]).to eq 'Visibility of 55 items is being updated.'
       end
+
+      # rubocop:disable Style/MultilineBlockChain
+      it 'enqueues the job' do
+        allow(controller).to receive(:current_search_session).and_return(search_session)
+        expect do
+          post :change_visibility, params: { 'visibility' => 'private', 'q' => 'map', exhibit_id: exhibit }
+        end.to have_enqueued_job(Spotlight::ChangeVisibilityJob).with do |solr_params, exhb, visibility|
+          expect(solr_params).to.not be_nil
+          expect(exhb).to eq exhibit
+          expect(visibility).to eq 'private'
+        end
+      end
+      # rubocop:enable Style/MultilineBlockChain
     end
 
     describe 'POST add_tags' do
@@ -64,6 +83,19 @@ describe Spotlight::BulkActionsController, type: :controller do
         expect(response).to redirect_to '/referring_url'
         expect(flash[:notice]).to eq 'Tags are being added for 55 items.'
       end
+
+      # rubocop:disable Style/MultilineBlockChain
+      it 'enqueues the job' do
+        allow(controller).to receive(:current_search_session).and_return(search_session)
+        expect do
+          post :add_tags, params: { 'tags' => 'howdy,planet', 'q' => 'map', exhibit_id: exhibit }
+        end.to have_enqueued_job(Spotlight::AddTagsJob).with do |solr_params, exhb, tags|
+          expect(solr_params).to.not be_nil
+          expect(exhb).to eq exhibit
+          expect(tags).to eq %w[howdy planet]
+        end
+      end
+      # rubocop:enable Style/MultilineBlockChain
     end
 
     describe 'POST remove_tags' do
@@ -74,6 +106,19 @@ describe Spotlight::BulkActionsController, type: :controller do
         expect(response).to redirect_to '/referring_url'
         expect(flash[:notice]).to eq 'Tags are being removed for 55 items.'
       end
+
+      # rubocop:disable Style/MultilineBlockChain
+      it 'enqueues the job' do
+        allow(controller).to receive(:current_search_session).and_return(search_session)
+        expect do
+          post :remove_tags, params: { 'tags' => 'howdy,planet', 'q' => 'map', exhibit_id: exhibit }
+        end.to have_enqueued_job(Spotlight::RemoveTagsJob).with do |solr_params, exhb, tags|
+          expect(solr_params).to.not be_nil
+          expect(exhb).to eq exhibit
+          expect(tags).to eq %w[howdy planet]
+        end
+      end
+      # rubocop:enable Style/MultilineBlockChain
     end
   end
 end
