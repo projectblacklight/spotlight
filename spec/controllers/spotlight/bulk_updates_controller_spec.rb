@@ -51,5 +51,27 @@ describe Spotlight::BulkUpdatesController, type: :controller do
         expect(content[0]).to eq ['Item ID', 'Item Title', 'Visibility']
       end
     end
+
+    describe 'PATCH download_template' do
+      before { ActiveJob::Base.queue_adapter = :test }
+
+      after { ActiveJob::Base.queue_adapter = :inline }
+
+      it 'uploads the given CSV template and passes it to a job' do
+        expect do
+          patch :update, params: {
+            exhibit_id: exhibit,
+            file: fixture_file_upload('bulk-update-template.csv', 'text/csv')
+          }
+        end.to(have_enqueued_job(Spotlight::ProcessBulkUpdatesCsvJob).with do |job_exhibit, uploader|
+          expect(job_exhibit).to eq exhibit
+          expect(uploader).to be_a Spotlight::BulkUpdate
+          expect(uploader.file_identifier).to eq 'bulk-update-template.csv'
+        end)
+
+        expect(flash[:notice]).to eq 'The CSV file was uploaded successfully.'
+        expect(response).to redirect_to(spotlight.edit_exhibit_bulk_updates_path(exhibit))
+      end
+    end
   end
 end

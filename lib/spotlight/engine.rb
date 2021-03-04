@@ -300,6 +300,7 @@ module Spotlight
     config.bulk_updates.csv_id = 'Item ID'
     config.bulk_updates.csv_title = 'Item Title'
     config.bulk_updates.csv_visibility = 'Visibility'
+    config.bulk_updates.csv_tags_prefix = 'Tag:'
     config.bulk_updates.csv_tags = 'Tag: %s'
 
     config.assign_default_roles_to_first_user = true

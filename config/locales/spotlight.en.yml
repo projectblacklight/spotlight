@@ -347,6 +347,14 @@ en:
             <li>Download/export the updated spreadsheet to your computer as a .csv file.</li>
             <li>Use the Upload CSV tab above to submit the updated file for processing.</li>
           </ol>
+      update:
+        error: There was a problem uploading your CSV.
+        submitted: The CSV file was uploaded successfully.
+      upload:
+        file_label: Upload CSV file
+        form_help: The uploaded file must have a ".csv" extension
+        instructions: After you've saved updates to a CSV file, use the Upload CSV file action below to submit it for processing.
+        submit: Upload
     catalog:
       admin:
         header: Items
