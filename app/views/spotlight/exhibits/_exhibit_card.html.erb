@@ -2,7 +2,7 @@
   <div class="card exhibit-card">
     <%= link_to exhibit, aria: { hidden: true  }, tabindex: '-1' do %>
       <% if exhibit.thumbnail.present? && exhibit.thumbnail.iiif_url %>
-        <%= image_tag(exhibit.thumbnail.iiif_url, class: 'card-img',  alt: '', role: 'presentation') %>
+        <%= image_tag(exhibit.thumbnail.iiif_url, class: 'card-img',  alt: '', role: 'presentation', skip_pipeline: true) %>
       <% else %>
         <%= image_tag 'spotlight/default_thumbnail.jpg', class: 'card-img default-thumbnail',  alt: '', role: 'presentation' %>
       <% end %>
