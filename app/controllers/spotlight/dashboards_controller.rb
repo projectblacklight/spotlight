@@ -22,7 +22,7 @@ module Spotlight
 
       @pages = @exhibit.pages.recent.limit(5)
       @solr_documents = load_recent_solr_documents 5
-      @recent_reindexing = @exhibit.job_trackers.recent
+      @recent_reindexing = @exhibit.job_trackers.where.not(job_class: Spotlight::Engine.config.hidden_job_classes).recent
 
       attach_dashboard_breadcrumbs
     end

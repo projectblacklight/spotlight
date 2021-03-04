@@ -290,6 +290,8 @@ module Spotlight
 
     config.reindexing_batch_size = nil
     config.reindexing_batch_count = nil
+    config.hidden_job_classes = %w[Spotlight::ReindexJob]
+
     config.bulk_actions_batch_size = 1000
 
     config.bulk_updates = OpenStruct.new
