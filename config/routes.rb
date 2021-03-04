@@ -149,7 +149,7 @@ Spotlight::Engine.routes.draw do
       end
     end
 
-    resource :bulk_updates, only: %i[edit] do
+    resource :bulk_updates, only: %i[edit update] do
       member do
         post :download_template
       end
