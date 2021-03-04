@@ -8,7 +8,7 @@ module Spotlight
     mount_uploader :file, Spotlight::AttachmentUploader
 
     def as_json(options = nil)
-      file.as_json(options).merge(name: name, uid: uid, id: id, class: self.class.to_s)
+      file.as_json(options).merge(name: name, uid: uid, attachment: to_global_id)
     end
   end
 end
