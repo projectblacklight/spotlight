@@ -31,14 +31,14 @@ module Spotlight
     # Persist the record to the database, and trigger a reindex to solr
     #
     # @param [Hash] All arguments will be passed through to ActiveRecord's #save method
-    def save_and_index(*args)
-      save(*args) && reindex_later
+    def save_and_index(reindex_options: {}, **args)
+      save(*args) && reindex_later(**reindex_options)
     end
 
     ##
     # Enqueue an asynchronous reindexing job for this resource
-    def reindex_later
-      Spotlight::ReindexJob.perform_later(self)
+    def reindex_later(**args)
+      Spotlight::ReindexJob.perform_later(self, **args)
     end
 
     def document_model
