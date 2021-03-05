@@ -42,15 +42,15 @@ describe 'Site users management', js: true do
 
     click_button 'Add role'
 
-    expect(page).to have_css(:td, text: 'not-an-admin@example.com')
+    expect(page).to have_css('td', text: 'not-an-admin@example.com')
 
-    expect(page).to have_css(:a, text: 'Remove from admin role', count: 2)
+    expect(page).to have_css('a', text: 'Remove from admin role', count: 2)
     within(all('table tbody tr:not([data-edit-for])').last) do
       click_link 'Remove from admin role'
     end
 
     expect(page).to have_content 'User removed from site adminstrator role'
-    expect(page).to have_css(:a, text: 'Remove from admin role', count: 0)
+    expect(page).to have_css('a', text: 'Remove from admin role', count: 0)
   end
 
   it 'sends an invitation email to users who do not exist' do
@@ -69,6 +69,6 @@ describe 'Site users management', js: true do
 
     expect(page).to have_css('td', text: user.email)
     # There is just our admin user so no button
-    expect(page).to have_css(:a, text: 'Remove from admin role', count: 0)
+    expect(page).to have_css('a', text: 'Remove from admin role', count: 0)
   end
 end
