@@ -29,13 +29,6 @@ module Spotlight
       render_markdown(clean_text)
     end
 
-    def available_index_fields
-      fields = blacklight_config.index_fields.map { |k, _v| { key: k, label: index_field_label(blacklight_config.document_model.new, k) } }
-      fields.unshift(key: document_show_link_field, label: t(:'spotlight.pages.form.title_placeholder')) unless index_fields.include? document_show_link_field
-
-      fields
-    end
-
     def disable_save_pages_button?
       page_collection_name == 'about_pages' && @pages.empty?
     end
