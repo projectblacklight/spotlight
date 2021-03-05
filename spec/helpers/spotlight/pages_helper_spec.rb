@@ -12,21 +12,6 @@ describe Spotlight::PagesHelper, type: :helper do
     allow(helper).to receive_messages(blacklight_config: blacklight_config)
   end
 
-  describe 'available_index_fields' do
-    before do
-      blacklight_config.index.title_field = :title_field
-      blacklight_config.add_index_field 'x', label: 'X'
-    end
-
-    it 'lists the configured index fields' do
-      expect(helper.available_index_fields).to include key: 'x', label: 'X'
-    end
-
-    it 'adds the title field if necessary' do
-      expect(helper.available_index_fields).to include key: :title_field, label: 'Title'
-    end
-  end
-
   describe 'disable_save_pages_button?' do
     it 'returns true if there are no pages and we are on the about pages page' do
       expect(helper).to receive(:page_collection_name).and_return('about_pages')
