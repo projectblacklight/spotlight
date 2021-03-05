@@ -29,6 +29,13 @@ module Spotlight
         recursive_manifests(new(url))
       end
 
+      def self.http_client
+        Faraday.new do |b|
+          b.use FaradayMiddleware::FollowRedirects
+          b.adapter Faraday.default_adapter
+        end
+      end
+
       protected
 
       def object
@@ -41,7 +48,7 @@ module Spotlight
 
       class << self
         def iiif_response(url)
-          Faraday.get(url).body
+          Spotlight::Resources::IiifService.http_client.get(url).body
         rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
           Rails.logger.warn("HTTP GET for #{url} failed with #{e}")
           {}.to_json

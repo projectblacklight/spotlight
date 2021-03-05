@@ -33,8 +33,8 @@ module Spotlight
 
       def url_is_iiif?(url)
         valid_content_types = ['application/json', 'application/ld+json']
-        req = Faraday.head(url)
-        req = Faraday.get(url) if req.status == 405
+        req = Spotlight::Resources::IiifService.http_client.head(url)
+        req = Spotlight::Resources::IiifService.http_client.get(url) if req.status == 405
         return unless req.success?
 
         valid_content_types.any? do |valid_type|

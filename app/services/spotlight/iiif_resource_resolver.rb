@@ -57,7 +57,7 @@ module Spotlight
 
     def response
       @response ||= begin
-                      Faraday.get(iiif_manifest_url).body
+                      Spotlight::Resources::IiifService.http_client.get(iiif_manifest_url).body
                     rescue Faraday::Error => e
                       Rails.logger.warn("#{self.class.name} failed to fetch #{iiif_manifest_url} with: #{e}")
                       '{}'
