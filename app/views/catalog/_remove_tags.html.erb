@@ -10,17 +10,17 @@
       </div>
       <div class="modal-body">
         <%= t(:'spotlight.bulk_actions.remove_tags.description_html', count: @response.total) %>
-        <% facets = facets_from_request([search_state.blacklight_config.document_model.solr_field_for_tagger(current_exhibit)], @response) %>
-        <% facets.each do |facet| %>
-          <% if facet.items.any? %>
-            <h5><%= t(:'spotlight.bulk_actions.remove_tags.assigned') %></h5>
-          <% end %>
-          <% facet.items.each do |facet_item| %>
-            <div class="badge badge-info">
-              <%= "#{facet_item.value} (#{facet_item.hits})" %>
-            </div>
-          <% end %>
+        <% facet = @response.aggregations[blacklight_config.facet_fields['exhibit_tags'].field] %>
+
+        <% if facet.items.any? %>
+          <h5><%= t(:'spotlight.bulk_actions.remove_tags.assigned') %></h5>
         <% end %>
+        <% facet.items.each do |facet_item| %>
+          <div class="badge badge-info">
+            <%= "#{facet_item.value} (#{facet_item.hits})" %>
+          </div>
+        <% end %>
+
         <div class="form-group mt-4">
           <%= label_tag :tags, t(:'spotlight.bulk_actions.remove_tags.label') %>
           <%= text_field_tag :tags, '', class: 'form-control', data: { autocomplete_tag: true, autocomplete_url: exhibit_tags_path(current_exhibit, format: 'json')} %>
