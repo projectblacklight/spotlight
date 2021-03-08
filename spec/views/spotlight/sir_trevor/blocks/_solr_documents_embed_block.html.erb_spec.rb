@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', type: :view do
-  let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_embed_block.html.erb' }
+  let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_embed_block' }
   let(:page) { double('Page') }
   let(:block) do
     SirTrevorRails::Blocks::SolrDocumentsEmbedBlock.new({ type: 'block', data: { title: 'Some title', text: 'Some text', 'text-align' => 'right' } }, page)
@@ -13,6 +13,11 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
       config.view.embed.locals = { a: 1 }
     end
   end
+  let(:stub_presenter) do
+    instance_double(Blacklight::DocumentPresenter, heading: 'blah', thumbnail: thumbnail_presenter)
+  end
+
+  let(:thumbnail_presenter) { instance_double(Blacklight::ThumbnailPresenter, exists?: true, thumbnail_tag: 'thumb') }
 
   before do
     allow(block).to receive(:each_document).and_yield({}, doc)
@@ -20,8 +25,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
   end
 
   before do
-    allow(view).to receive(:blacklight_config).and_return(blacklight_config)
-    allow(view).to receive_messages(has_thumbnail?: true, render_thumbnail_tag: 'thumb')
+    allow(view).to receive_messages(blacklight_config: blacklight_config, document_presenter: stub_presenter)
   end
 
   it 'has a embed block' do

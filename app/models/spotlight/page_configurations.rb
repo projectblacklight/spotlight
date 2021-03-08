@@ -18,13 +18,11 @@ module Spotlight
     delegate :available_view_fields,
              :blacklight_config,
              :current_exhibit,
-             :document_show_link_field,
-             :index_fields,
-             :index_field_label,
              :spotlight,
              :t,
-             :view_label,
              to: :context
+
+    DOCUMENT_TITLE_KEY = '__spotlight_document_title___'
 
     attr_reader :context, :page
 
@@ -35,7 +33,7 @@ module Spotlight
 
     def as_json(*)
       {
-        'blacklight-configuration-index-fields': available_index_fields,
+        'blacklight-configuration-index-fields': available_caption_fields,
         'blacklight-configuration-search-views': available_view_configs,
         'attachment-endpoint': attachment_endpoint,
         'autocomplete-exhibit-catalog-path': exhibit_autocomplete_endpoint,
@@ -48,15 +46,18 @@ module Spotlight
 
     private
 
-    def available_index_fields
-      fields = blacklight_config.index_fields.map { |k, _v| { key: k, label: index_field_label(blacklight_config.document_model.new, k) } }
-      fields.unshift(key: document_show_link_field, label: t(:'spotlight.pages.form.title_placeholder')) unless index_fields.include? document_show_link_field
+    def available_caption_fields
+      default_caption_fields + blacklight_config.index_fields.reject { |_k, v| v.caption == false }.map { |k, v| { key: k, label: v.display_label } }
+    end
 
+    def default_caption_fields
+      fields = []
+      fields << { key: DOCUMENT_TITLE_KEY, label: t(:'spotlight.pages.form.title_placeholder') } unless blacklight_config.index_fields.key? DOCUMENT_TITLE_KEY
       fields
     end
 
     def available_view_configs
-      available_view_fields.map { |k, _| { key: k, label: view_label(k) } }
+      available_view_fields.map { |k, v| { key: k, label: v.display_label(k) } }
     end
 
     def attachment_endpoint

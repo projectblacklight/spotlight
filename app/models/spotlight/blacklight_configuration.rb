@@ -74,6 +74,14 @@ module Spotlight
 
         config.current_exhibit = exhibit
 
+        config.document_presenter_class = lambda do |context|
+          if context.action_name == 'index'
+            config.index.document_presenter_class
+          else
+            config.show.document_presenter_class
+          end
+        end
+
         config.show.merge! show unless show.blank?
         config.index.merge! index unless index.blank?
         config.index.respond_to[:iiif_json] = true

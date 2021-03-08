@@ -28,12 +28,11 @@ module Spotlight
       super
     end
 
-    def presenter(document)
-      case action_name
-      when 'index'
+    def document_presenter_class(_document)
+      if action_name == 'index'
         super
       else
-        show_presenter(document)
+        blacklight_config.view_config(action_name: :show).document_presenter_class
       end
     end
 

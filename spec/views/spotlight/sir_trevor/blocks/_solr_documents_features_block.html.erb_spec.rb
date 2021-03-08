@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.erb', type: :view do
-  let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_features_block.html.erb' }
+  let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_features_block' }
   let(:block) do
     SirTrevorRails::Blocks::SolrDocumentsFeaturesBlock.new({ type: 'block', data: { 'show-primary-caption' => true, 'primary-caption-field' => 'x' } }, page)
   end
@@ -19,7 +19,8 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.erb', 
     allow(block).to receive(:each_document).and_return([doc1, doc2, doc3])
     allow(block).to receive_messages(documents?: true)
     allow(view).to receive_messages(solr_documents_features_block: block)
-    allow(view).to receive_messages(has_thumbnail?: true, render_thumbnail_tag: 'thumb', blacklight_config: blacklight_config)
+    allow(view).to receive_messages(blacklight_config: blacklight_config)
+    allow_any_instance_of(Blacklight::ThumbnailPresenter).to receive_messages(exists?: true, thumbnail_tag: 'thumb')
   end
 
   it 'has a slideshow block' do

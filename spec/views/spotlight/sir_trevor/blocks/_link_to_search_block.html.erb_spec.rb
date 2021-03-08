@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe 'spotlight/sir_trevor/blocks/_link_to_search_block.html.erb', type: :view do
-  let(:p) { 'spotlight/sir_trevor/blocks/link_to_search_block.html.erb' }
+  let(:p) { 'spotlight/sir_trevor/blocks/link_to_search_block' }
   let(:page) { double('Page', display_sidebar?: true) }
   let(:search) { FactoryBot.create(:search, query_params: { a: 1 }) }
   let(:block) do

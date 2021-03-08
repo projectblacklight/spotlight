@@ -220,7 +220,7 @@ module Spotlight
         add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), search_action_url(current_search_session.query_params)
       end
 
-      add_breadcrumb view_context.show_presenter(document).heading, polymorphic_path([current_exhibit, document])
+      add_breadcrumb view_context.document_presenter(document).heading, polymorphic_path([current_exhibit, document])
     end
     # rubocop:enable Metrics/AbcSize
 

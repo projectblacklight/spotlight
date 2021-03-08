@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
 describe 'spotlight/sir_trevor/blocks/_solr_documents_carousel_block.html.erb', type: :view do
-  let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_carousel_block.html.erb' }
+  let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_carousel_block' }
   let(:block) do
     SirTrevorRails::Blocks::SolrDocumentsCarouselBlock.new({ type: 'block', data: {} }, page)
   end
+  let(:stub_presenter) do
+    instance_double(Blacklight::DocumentPresenter, heading: 'blah', thumbnail: thumbnail_presenter)
+  end
+
+  let(:thumbnail_presenter) { instance_double(Blacklight::ThumbnailPresenter, exists?: true, thumbnail_tag: 'thumb') }
 
   before do
     allow(block).to receive(:each_document).and_return([
@@ -14,7 +19,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_carousel_block.html.erb', 
                                                        ])
     allow(block).to receive_messages(documents?: true)
     allow(view).to receive_messages(solr_documents_carousel_block: block)
-    allow(view).to receive_messages(has_thumbnail?: true, render_thumbnail_tag: 'thumb', blacklight_config: Blacklight::Configuration.new)
+    allow(view).to receive_messages(document_presenter: stub_presenter, blacklight_config: Blacklight::Configuration.new)
   end
 
   it 'has a slideshow block' do

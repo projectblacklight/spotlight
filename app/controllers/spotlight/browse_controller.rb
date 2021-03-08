@@ -15,13 +15,15 @@ module Spotlight
     before_action :attach_search_breadcrumb, only: :show
     record_search_parameters only: :show
 
-    helper_method :should_render_spotlight_search_bar?, :presenter
+    helper_method :should_render_spotlight_search_bar?
 
     before_action :swap_actions_configuration, only: :show
 
     before_action do
       blacklight_config.track_search_session = false
       blacklight_config.view.gallery.classes = 'row-cols-2 row-cols-md-4'
+      blacklight_config.action_mapping.default = blacklight_config.index
+      blacklight_config.action_mapping.show = blacklight_config.index
     end
 
     def index
@@ -117,10 +119,6 @@ module Spotlight
 
     def default_browse_index_view_type
       Spotlight::Engine.config.default_browse_index_view_type
-    end
-
-    def presenter(document)
-      view_context.index_presenter(document)
     end
 
     def render_save_this_search?

@@ -225,6 +225,6 @@ describe 'Solr Document Block', feature: true, versioning: true, default_max_wai
 
     # for some reason, the text area above isn't getting filled in
     # expect(page).to have_selector ".st-text-block", text: "zzz"
-    expect(find_field('primary-caption-field').value).to eq 'full_title_tesim'
+    expect(find_field('primary-caption-field').value).to eq Spotlight::PageConfigurations::DOCUMENT_TITLE_KEY
   end
 end
