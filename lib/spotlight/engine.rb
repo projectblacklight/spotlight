@@ -17,6 +17,8 @@ require 'leaflet-rails'
 require 'i18n/active_record'
 require 'spotlight/upload_field_config'
 require 'riiif'
+require 'faraday'
+require 'faraday_middleware'
 
 module Spotlight
   ##
