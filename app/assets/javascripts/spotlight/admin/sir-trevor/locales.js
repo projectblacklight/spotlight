@@ -72,7 +72,7 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
       secondary: "Secondary caption"
     },
     zpr: {
-      title: 'Display ZPR link'
+      title: 'Offer "View larger" option'
     }
   },
 

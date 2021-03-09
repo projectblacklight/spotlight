@@ -142,14 +142,14 @@ describe 'Solr Document Block', feature: true, versioning: true, default_max_wai
   it 'allows you to optionally display a ZPR link with the image', js: true do
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
-    check 'Display ZPR link'
+    check 'Offer "View larger" option'
     # this seems silly, but also seems to help with the flappy-ness of this spec
-    expect(find_field('Display ZPR link', checked: true)).to be_checked
+    expect(find_field('Offer "View larger" option', checked: true)).to be_checked
 
     save_page
 
     within '.contents' do
-      click_button 'Show in ZPR viewer'
+      click_button 'View larger'
     end
 
     within '.modal-content' do

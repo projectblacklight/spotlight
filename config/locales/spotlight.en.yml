@@ -889,6 +889,8 @@ en:
           items:
             one: "%{count} item"
             other: "%{count} items"
+        solr_documents_block:
+          zpr_link: View larger
     sites:
       edit:
         basic_settings:
