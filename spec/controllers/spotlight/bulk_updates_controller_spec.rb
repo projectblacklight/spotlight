@@ -61,7 +61,7 @@ describe Spotlight::BulkUpdatesController, type: :controller do
         expect do
           patch :update, params: {
             exhibit_id: exhibit,
-            file: fixture_file_upload('bulk-update-template.csv', 'text/csv')
+            file: fixture_file_upload('spec/fixtures/bulk-update-template.csv', 'text/csv')
           }
         end.to(have_enqueued_job(Spotlight::ProcessBulkUpdatesCsvJob).with do |job_exhibit, uploader|
           expect(job_exhibit).to eq exhibit
