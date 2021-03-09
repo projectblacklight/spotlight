@@ -890,7 +890,7 @@ en:
             one: "%{count} item"
             other: "%{count} items"
         solr_documents_block:
-          zpr_link: View larger
+          zpr_link_html: View <span class="sr-only">%{title}</span> larger
     sites:
       edit:
         basic_settings:

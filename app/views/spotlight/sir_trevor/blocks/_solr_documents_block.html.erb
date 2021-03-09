@@ -26,7 +26,7 @@
               </div>
             <% end %>
             <% if solr_documents_block.zpr_link? && block_options[:iiif_tilesource].present? %>
-              <button class="btn btn-secondary zpr-link" data-iiif-tilesource="<%= block_options[:iiif_tilesource] %>"><%= t('.zpr_link') %></button>
+              <button class="btn btn-secondary zpr-link" data-iiif-tilesource="<%= block_options[:iiif_tilesource] %>"><%= t('.zpr_link_html', title: doc_presenter.heading) %></button>
             <% end %>
           </div>
         </div>

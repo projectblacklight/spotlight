@@ -149,7 +149,7 @@ describe 'Solr Document Block', feature: true, versioning: true, default_max_wai
     save_page
 
     within '.contents' do
-      click_button 'View larger'
+      click_button 'View [World map] larger'
     end
 
     within '.modal-content' do
