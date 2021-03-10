@@ -1,4 +1,4 @@
-Item ID,Item Title,Visibility,Tag: CSV Tag1,Tag: CSV Tag2
-bm387cy2596,L'AMERIQVE,true,true,true
-cz507zk0531,NEW MEXICO,true,false,true
-dq287tq6352,L'AMERIQUE,true,true,true
+Item ID,Item Title,Visibility,Tag: CSV Tag1,Tag: CSV Tag2,Tag: CSV DoesntExist
+bm387cy2596,L'AMERIQVE,true,true,true,false
+cz507zk0531,NEW MEXICO,true,false,true,false
+dq287tq6352,L'AMERIQUE,true,true,true,false
