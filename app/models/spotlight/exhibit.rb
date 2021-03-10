@@ -57,6 +57,7 @@ module Spotlight
     has_many :feature_pages, -> { for_default_locale }, extend: FriendlyId::FinderMethods
     has_many :groups, dependent: :delete_all
     has_many :job_trackers, as: :on, dependent: :delete_all
+    has_many :bulk_updates, dependent: :delete_all
     has_many :main_navigations, dependent: :delete_all
     has_many :resources
     has_many :roles, as: :resource, dependent: :delete_all
