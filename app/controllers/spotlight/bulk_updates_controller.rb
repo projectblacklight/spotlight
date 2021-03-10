@@ -12,7 +12,12 @@ module Spotlight
     def edit; end
 
     def download_template
-      send_data csv_template, type: 'text/csv', filename: 'bulk-update-template.csv'
+      headers['Cache-Control'] = 'no-cache'
+      headers['Content-Type'] = 'text/csv'
+      headers['Content-Disposition'] = "attachment; filename=\"#{current_exhibit.slug}-bulk-update-template.csv\""
+      headers.delete('Content-Length')
+
+      self.response_body = csv_template
     end
 
     def update

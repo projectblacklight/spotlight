@@ -12,16 +12,17 @@ module Spotlight
     end
 
     def template(view_context:, title: true, tags: true, visibility: true)
-      ::CSV.generate(headers: csv_headers(title: title, tags: tags, visibility: visibility), write_headers: true) do |csv|
-        each_document do |document|
-          sidecar = document.sidecar(exhibit)
-          csv << [
-            document.id,
-            (title_column(view_context, document) if title),
-            (visibility_column(sidecar) if visibility),
-            (tags_column(sidecar) if tags)
-          ].flatten.compact
-        end
+      return to_enum(:template, view_context: view_context, title: title, tags: tags, visibility: visibility) unless block_given?
+
+      yield ::CSV.generate_line(csv_headers(title: title, tags: tags, visibility: visibility))
+      each_document do |document|
+        sidecar = document.sidecar(exhibit)
+        yield ::CSV.generate_line([
+          document.id,
+          (title_column(view_context, document) if title),
+          (visibility_column(sidecar) if visibility),
+          (tags_column(sidecar) if tags)
+        ].flatten.compact)
       end
     end
 
