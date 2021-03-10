@@ -1,0 +1,77 @@
+version: '3.7'
+
+services:
+  web:
+    build:
+      context: .
+    image: spotlight
+    stdin_open: true
+    tty: true
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - .:/spotlight/engine
+      - spotlight_app:/spotlight/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - chrome
+      - db_migrate
+      - solr
+    networks:
+      - spotlight
+
+  db_migrate:
+    image: spotlight
+    env_file:
+      - .env
+    environment:
+      SKIP_TRANSLATION: "yes"
+    entrypoint: sh -c '/spotlight/engine/bin/db-migrate-seed.sh'
+    depends_on:
+      - postgres
+    volumes:
+      - .:/spotlight/engine
+      - spotlight_app:/spotlight/app
+    networks:
+      - spotlight
+
+  postgres:
+    image: bitnami/postgresql:12.10.0
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - spotlight_db:/bitnami/postgresql
+    networks:
+      - spotlight
+
+  solr:
+    image: bitnami/solr:8.8.1-debian-10-r22
+    env_file:
+      - .env
+    ports:
+      - 8983:8983
+    volumes:
+      - spotlight_solr:/bitnami/solr
+      - ./lib/generators/spotlight/templates/solr/config:/opt/custom/spotlightset
+    networks:
+      - spotlight
+
+  chrome:
+    image: selenium/standalone-chrome:3.141
+    networks:
+      - spotlight
+
+volumes:
+  spotlight_app:
+  spotlight_db:
+  spotlight_redis:
+  spotlight_solr:
+
+networks:
+  spotlight:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-spotlight
