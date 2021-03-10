@@ -29,6 +29,7 @@ module Spotlight
       @searches = @searches.published
     end
 
+    # rubocop:disable Metrics/MethodLength
     def show
       @response, @document_list = search_service.search_results do |builder|
         builder.with(search_query)
@@ -36,14 +37,68 @@ module Spotlight
 
       respond_to do |format|
         format.html
+        format.rss  { render layout: false }
+        format.atom { render layout: false }
         format.json do
           @presenter = Blacklight::JsonPresenter.new(@response, blacklight_config)
           render template: 'catalog/index'
         end
+        additional_response_formats(format)
+        document_export_formats(format)
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     protected
+
+    ##
+    # Render additional response formats for the index action, as provided by the
+    # blacklight configuration
+    # @param [Hash] format
+    # @note Make sure your format has a well known mime-type or is registered in config/initializers/mime_types.rb
+    # @example
+    #   config.index.respond_to.txt = Proc.new { render plain: "A list of docs." }
+    # rubocop:disable Metrics/MethodLength
+    def additional_response_formats(format)
+      blacklight_config.index.respond_to.each do |key, config|
+        format.send key do
+          case config
+          when false
+            raise ActionController::RoutingError, 'Not Found'
+          when Hash
+            render config
+          when Proc
+            instance_exec(&config)
+          when Symbol, String
+            send config
+          else
+            render({})
+          end
+        end
+      end
+    end
+    # rubocop:enable Metrics/MethodLength
+
+    ##
+    # Render the document export formats for a response
+    # First, try to render an appropriate template (e.g. index.endnote.erb)
+    # If that fails, just concatenate the document export responses with a newline.
+    def render_document_export_format(format_name)
+      render 'catalog/index'
+    rescue ActionView::MissingTemplate
+      render plain: @response.documents.map { |x| x.export_as(format_name) if x.exports_as? format_name }.compact.join("\n"), layout: false
+    end
+
+    ##
+    # Try to render a response from the document export formats available
+    def document_export_formats(format)
+      format.any do
+        format_name = params.fetch(:format, '').to_sym
+        raise ActionController::UnknownFormat unless @response.export_formats.include? format_name
+
+        render_document_export_format format_name
+      end
+    end
 
     def swap_actions_configuration
       blacklight_config.index.document_actions = blacklight_config.browse.document_actions
