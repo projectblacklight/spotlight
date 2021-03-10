@@ -13,13 +13,13 @@ RSpec.describe Spotlight::BulkUpdatesCsvTemplateService do
     let(:view_context) { double('ViewContext', document_presenter: double('DocumentPresenter', heading: 'Document Title')) }
 
     it 'has a row for every document (+ the header)' do
-      template = CSV.parse(service.template(view_context: view_context))
+      template = CSV.parse(service.template(view_context: view_context).to_a.join)
       expect(template).to have_at_least(56).items
       expect(template[0].join(',')).to match(/Item ID,Item Title,Visibility,Tag: tagging\d,Tag: tagging\d/)
     end
 
     it 'only has requested columns' do
-      template = CSV.parse(service.template(view_context: view_context, tags: false))
+      template = CSV.parse(service.template(view_context: view_context, tags: false).to_a.join)
       expect(template[0].join(',')).to eq 'Item ID,Item Title,Visibility'
     end
   end
