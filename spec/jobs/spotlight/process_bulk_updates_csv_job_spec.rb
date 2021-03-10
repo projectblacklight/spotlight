@@ -13,9 +13,28 @@ describe Spotlight::ProcessBulkUpdatesCsvJob do
     let(:bulk_update) { FactoryBot.create(:bulk_update, exhibit: exhibit) }
 
     it 'is updated' do
+      allow(SolrDocument.index.connection).to receive(:update).and_call_original
       expect(exhibit.blacklight_config.repository.find('dq287tq6352').documents.first).not_to be_private(exhibit)
+
       subject.perform_now
+
       expect(exhibit.blacklight_config.repository.find('dq287tq6352').documents.first).to be_private(exhibit)
+      expect(SolrDocument.index.connection).to have_received(:update)
+    end
+
+    context 'with a row that does not change visibility' do
+      before do
+        sidecar = exhibit.solr_document_sidecars.find_or_create_by(document_type: 'SolrDocument', document_id: 'dq287tq6352')
+        sidecar.private!
+      end
+
+      it 'does not update solr' do
+        allow(SolrDocument.index.connection).to receive(:update)
+
+        subject.perform_now
+
+        expect(SolrDocument.index.connection).not_to have_received(:update)
+      end
     end
   end
 
@@ -28,6 +47,7 @@ describe Spotlight::ProcessBulkUpdatesCsvJob do
     end
 
     it 'are added/removed' do
+      allow(SolrDocument.index.connection).to receive(:update).and_call_original
       expect(tag_names(exhibit, 'bm387cy2596')).to be_empty
       expect(tag_names(exhibit, 'cz507zk0531')).to eq(['CSV Tag1'])
       expect(tag_names(exhibit, 'dq287tq6352')).to be_empty
@@ -35,6 +55,24 @@ describe Spotlight::ProcessBulkUpdatesCsvJob do
       expect(tag_names(exhibit, 'bm387cy2596')).to eq(['CSV Tag1', 'CSV Tag2'])
       expect(tag_names(exhibit, 'cz507zk0531')).to eq(['CSV Tag2'])
       expect(tag_names(exhibit, 'dq287tq6352')).to eq(['CSV Tag1', 'CSV Tag2'])
+
+      # 3 updates plus the final commit
+      expect(SolrDocument.index.connection).to have_received(:update).exactly(4).times
+    end
+
+    context 'with a row that does not change visibility' do
+      before do
+        # set up the documents to match what's the in the spreadsheet already
+        subject.perform_now
+      end
+
+      it 'does not update solr' do
+        allow(SolrDocument.index.connection).to receive(:update)
+
+        subject.perform_now
+
+        expect(SolrDocument.index.connection).not_to have_received(:update)
+      end
     end
   end
 end
