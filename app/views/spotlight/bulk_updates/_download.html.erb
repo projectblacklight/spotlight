@@ -1,6 +1,6 @@
 <p class="instructions"><%= t('.instructions_html') %></p>
 
-<%= bootstrap_form_with(url: download_template_exhibit_bulk_updates_path, remote: false, target: '_blank') do |f| %>
+<%= bootstrap_form_with(url: download_template_exhibit_bulk_updates_path, local: true, target: '_blank') do |f| %>
   <div class="row">
     <div class="col col-3">
       <%= f.form_group(:reference_fields, label: { text: t('.reference_fields.heading'), class: 'font-weight-bold' }) do %>
