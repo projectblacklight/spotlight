@@ -109,7 +109,11 @@ Spotlight::Engine.routes.draw do
       end
     end
 
-    resources :tags, only: %i[index destroy]
+    resources :tags, only: %i[index destroy] do
+      member do
+        post :rename
+      end
+    end
 
     resources :contacts, only: %i[edit update destroy]
 
