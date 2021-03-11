@@ -338,7 +338,6 @@ en:
           <p>You can update in bulk several properties of items in this exhibit:</p> <ul>
             <li>Visibility</li>
             <li>Tags</li>
-            <li>Custom metadata fields</li>
           </ul> <p>The steps to making bulk updates are:</p> <ol>
             <li>Download a CSV (comma-separated values) file from the Download CSV tab above. The downloaded CSV file will contain a row for every item in this exhibit. Each row contains the unique ID of an exhibit item along with the values of the reference and updatable fields you specify.</li>
             <li>Import the CSV file into a new spreadsheet, using an application such as a Google Sheets or Excel.</li>
