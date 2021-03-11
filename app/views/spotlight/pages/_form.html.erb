@@ -61,7 +61,7 @@
 
   <div class="form-actions">
     <div class="primary-actions">
-      <%= link_to(t('cancel'), :back, data: (@page.lock && @page.lock.current_session? ? { lock: url_for([spotlight, @page.exhibit, @page.lock]) } : {})) %>
+      <%= link_to(t('cancel'), :back, data: (@page.lock && @page.lock.current_session? ? { lock: url_for([spotlight, @page.exhibit, @page.lock]) } : {}), class: 'btn-sizing') %>
       <%= f.submit class: 'btn btn-primary' %>
     </div>
   </div>
