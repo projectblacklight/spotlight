@@ -38,6 +38,14 @@ $image-overlay-max-height: 300px;
   }
 }
 
+#main-container .browse-group-navigation.nav {
+  margin-bottom: $spacer;
+
+  .nav-link {
+    margin-bottom: $spacer * .75;
+  }
+}
+
 .browse-landing {
   text-align: center;
   // Placeholder for vertically alignment - might already be available from use in another feature
