@@ -6,7 +6,7 @@ module Spotlight
   ##
   # Controller enabling bulk functionality for items defined in a spreadsheet.
   class BulkUpdatesController < Spotlight::ApplicationController
-    include ActionController::Live
+    include ActionController::Live unless ENV['CI']
 
     before_action :authenticate_user!
     before_action :check_authorization
