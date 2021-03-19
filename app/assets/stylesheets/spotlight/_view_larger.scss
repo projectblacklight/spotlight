@@ -1,0 +1,22 @@
+#osd-modal-container {
+  .controls {
+    .custom-close-controls {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .zoom-controls {
+      bottom: 0;
+      position: absolute;
+      z-index: 999;
+    }
+    svg {
+      fill: $white;
+    }
+  }
+  #osd-div {
+    background: $gray-700;
+    height: calc(100vh - 80px);
+  }
+}
