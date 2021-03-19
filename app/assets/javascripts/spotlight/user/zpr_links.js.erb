@@ -1,29 +1,37 @@
 Spotlight.onLoad(function(){
   $('.zpr-link').on('click', function() {
-    $('#blacklight-modal .modal-content').html('<div id="osd-modal-container"></div>');
+    var modalDialog = $('#blacklight-modal .modal-dialog');
+    var modalContent = modalDialog.find('.modal-content')
+    modalDialog.removeClass('modal-lg')
+    modalDialog.addClass('modal-xl')
+    modalContent.html('<div id="osd-modal-container"></div>');
     var controls = [
-      '<div class="controls">',
-      '  <a id="osd-zoom-in"><%= Blacklight::Icon.new('add_circle').file_source.strip %></a>',
-      '  <a id="osd-zoom-out"><%= Blacklight::Icon.new('remove_circle').file_source.strip %></a>',
-      '  <a id="osd-home"><%= Blacklight::Icon.new('resize_small').file_source.strip %></a>',
-      '  <a id="osd-full-page"><%= Blacklight::Icon.new('custom_fullscreen').file_source.strip %></a>',
+      '<div class="controls d-flex justify-content-center justify-content-md-end">',
+      '  <div class="custom-close-controls pr-3 pt-3">',
+      '    <button type="button" class="btn btn-dark" data-dismiss="modal" aria-hidden="true"><%= Blacklight::Icon.new('close').file_source.strip %></button>',
+      '  </div>',
+      '  <div class="zoom-controls mb-3 mr-md-3">',
+      '    <button id="osd-zoom-in" type="button" class="btn btn-dark"><%= Blacklight::Icon.new('zoom_in').file_source.strip %></button>',
+      '    <button id="osd-zoom-out" type="button" class="btn btn-dark"><%= Blacklight::Icon.new('zoom_out').file_source.strip %></button>',
+      '  </div>',
       '</div>'
     ].join("\n");
 
-    $('#osd-modal-container').append(controls);
+
     $('#osd-modal-container').append('<div id="osd-div"></div>');
-    $('#osd-div').css('height', '400px');
+    $('#osd-modal-container').append(controls);
 
     $('#blacklight-modal').modal('show');
+    
+    $('#blacklight-modal').one('hidden.bs.modal', function (event) {
+      modalDialog.removeClass('modal-xl')
+      modalDialog.addClass('modal-lg')
+    });
 
     OpenSeadragon({
       id: 'osd-div',
       zoomInButton:     "osd-zoom-in",
       zoomOutButton:    "osd-zoom-out",
-      homeButton:       "osd-home",
-      fullPageButton:   "osd-full-page",
-      nextButton:       "osd-next",
-      previousButton:   "osd-previous",
       tileSources: [$(this).data('iiif-tilesource')]
     })
   });
