@@ -381,6 +381,7 @@ en:
         exhibit_visibility:
           label: Item visibility
           private: Private
+          public: Public
       fields:
         date_added: Date added
         title: Title
