@@ -14,7 +14,7 @@ module Spotlight
       header_converter = ->(header) { header } # Use raw header for columns (since they are configured)
       csv_path = bulk_update.file.current_path
       File.open(csv_path) do |f|
-        progress&.total = f.each_line.count
+        progress&.total = f.each_line.count(&:present?) - 1 # ignore the header
 
         ::CSV.table(f, header_converters: header_converter).each do |row|
           process_row(exhibit, row)

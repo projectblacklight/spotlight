@@ -4,6 +4,10 @@
 
 <%= curation_page_title t(:".header") %>
 
+<div data-behavior='progress-panel' data-monitor-url="<%= monitor_exhibit_bulk_updates_path(current_exhibit) %>">
+  <%= render 'progress_panel' %>
+</div>
+
 <div role="tabpanel">
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="nav-item">

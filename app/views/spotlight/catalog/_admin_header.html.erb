@@ -1,5 +1,5 @@
 <% if can? :manage, Spotlight::Resource.new(exhibit: current_exhibit) %>
-  <div data-behavior='reindex-monitor' data-monitor-url="<%= monitor_exhibit_resources_path(current_exhibit) %>">
+  <div data-behavior='progress-panel' data-monitor-url="<%= monitor_exhibit_resources_path(current_exhibit) %>">
     <%= render 'reindex_progress_panel' %>
   </div>
   <div class="add-items-nav clearfix">

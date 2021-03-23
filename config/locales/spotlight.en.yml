@@ -346,6 +346,11 @@ en:
             <li>Download/export the updated spreadsheet to your computer as a .csv file.</li>
             <li>Use the Upload CSV tab above to submit the updated file for processing.</li>
           </ol>
+      progress_panel:
+        begin_html: Began CSV processing
+        completed_html: Completed CSV processing
+        error: An error occured while processing the CSV. Contact your exhibits administrator for more information.
+        heading: CSV processing status
       update:
         error: There was a problem uploading your CSV.
         submitted: The CSV file was uploaded successfully.
