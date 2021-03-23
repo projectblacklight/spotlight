@@ -1,0 +1,19 @@
+<div class="card index-status border-info mb-3" style='display:none;'>
+  <h3 class="card-header bg-info text-white h4"><%= t('.heading') %></h3>
+  <div class="card-body">
+    <p data-behavior='monitor-start'>
+      <span class="text-muted" data-behavior='date'></span> <%= t('.begin_html') %>
+    </p>
+    <p data-behavior='monitor-current'>
+      <span class="text-muted" data-behavior='date'></span> <%= t('.completed_html') %>
+    </p>
+
+    <p class="bg-warning" data-behavior='monitor-error' style='display:none;'>
+      <%= t('.error') %>
+    </p>
+
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax=""></div>
+    </div>
+  </div>
+</div>

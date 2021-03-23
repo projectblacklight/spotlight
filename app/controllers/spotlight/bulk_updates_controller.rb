@@ -32,6 +32,10 @@ module Spotlight
       end
     end
 
+    def monitor
+      render json: BackgroundJobProgress.new(current_exhibit, job_class: Spotlight::ProcessBulkUpdatesCsvJob)
+    end
+
     private
 
     def csv_template

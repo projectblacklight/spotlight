@@ -150,6 +150,10 @@ Spotlight::Engine.routes.draw do
     end
 
     resource :bulk_updates, only: %i[edit update] do
+      collection do
+        get :monitor
+      end
+
       member do
         post :download_template
       end
