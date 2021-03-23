@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-describe Spotlight::ReindexProgress, type: :model do
-  subject(:progress) { described_class.new(exhibit) }
+describe Spotlight::BackgroundJobProgress, type: :model do
+  subject(:progress) { described_class.new(exhibit, job_class: Spotlight::ReindexExhibitJob) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:job_tracker) do

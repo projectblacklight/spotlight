@@ -1,9 +1,9 @@
 Spotlight.onLoad(function() {
-  $('[data-behavior="reindex-monitor"]').reindexMonitor();
+  $('[data-behavior="progress-panel"]').progressMonitor();
 });
 
 (function($) {
-  $.fn.reindexMonitor = function() {
+  $.fn.progressMonitor = function() {
     var monitorElements = this;
     var defaultRefreshRate = 3000;
     var panelContainer;

@@ -329,7 +329,7 @@ describe Spotlight::Exhibit, type: :model do
   describe '#reindex_progress' do
     it 'returns the latest log entry that is not unstarted' do
       reindex_progress = subject.reindex_progress
-      expect(reindex_progress).to be_a Spotlight::ReindexProgress
+      expect(reindex_progress).to be_a Spotlight::BackgroundJobProgress
     end
   end
 

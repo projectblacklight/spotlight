@@ -136,7 +136,7 @@ module Spotlight
     end
 
     def reindex_progress
-      @reindex_progress ||= ReindexProgress.new(self)
+      @reindex_progress ||= BackgroundJobProgress.new(self, job_class: Spotlight::ReindexExhibitJob)
     end
 
     def available_locales

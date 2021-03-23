@@ -2,14 +2,15 @@
 
 module Spotlight
   ##
-  # ReindexProgress is a class that models the progress of reindexing a list of resources
-  class ReindexProgress
-    attr_reader :exhibit
+  # BackgroundJobProgress is a class that models the progress of a list of resources
+  class BackgroundJobProgress
+    attr_reader :exhibit, :job_class
 
     delegate :updated_at, to: :most_relevant_job_tracker
 
-    def initialize(exhibit)
+    def initialize(exhibit, job_class:)
       @exhibit = exhibit
+      @job_class = job_class
     end
 
     def as_json(*)
@@ -28,7 +29,7 @@ module Spotlight
     private
 
     def job_trackers
-      @job_trackers ||= exhibit.job_trackers.where(job_class: 'Spotlight::ReindexExhibitJob').recent
+      @job_trackers ||= exhibit.job_trackers.where(job_class: job_class.to_s).recent
     end
 
     def most_relevant_job_tracker
@@ -59,13 +60,13 @@ module Spotlight
     end
 
     def total
-      return most_relevant_job_tracker.total if finished?
+      return most_relevant_job_tracker.total if finished? || most_relevant_job_tracker.job_trackers.none?
 
       most_relevant_job_tracker.job_trackers.sum(&:total)
     end
 
     def completed
-      return most_relevant_job_tracker.progress if finished?
+      return most_relevant_job_tracker.progress if finished? || most_relevant_job_tracker.job_trackers.none?
 
       most_relevant_job_tracker.job_trackers.sum(&:progress)
     end
