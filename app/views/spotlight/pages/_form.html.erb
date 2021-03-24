@@ -50,7 +50,7 @@
 
       <% if @page.respond_to? :thumbnail %>
       <div role="tabpanel" class="tab-pane" id="page-thumbnail">
-        <%= f.fields_for :thumbnail, (@page.thumbnail || @page.build_thumbnail) do |m| %>
+        <%= f.fields_for :thumbnail, (@page.thumbnail || @page.build_thumbnail), include_id: false do |m| %>
           <p class="instructions"><%= t(:'.thumbnail.help') %></p>
           <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.featured_image_thumb_size, crop_type: :thumbnail %>
         <% end %>
