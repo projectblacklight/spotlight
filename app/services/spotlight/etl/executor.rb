@@ -47,9 +47,7 @@ module Spotlight
       #
       # @return [Number]
       def estimated_size
-        @estimated_size ||= begin
-          compile_steps(sources).sum { |source| source.call(context).count }
-        end
+        @estimated_size ||= compile_steps(sources).sum { |source| source.call(context).count }
       end
 
       ##

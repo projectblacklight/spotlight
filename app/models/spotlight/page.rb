@@ -51,9 +51,7 @@ module Spotlight
     end
 
     def content
-      @content ||= begin
-        Spotlight::PageContent.for(self, :content)
-      end
+      @content ||= Spotlight::PageContent.for(self, :content)
     end
 
     def content_type
