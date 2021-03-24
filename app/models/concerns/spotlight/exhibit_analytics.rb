@@ -8,18 +8,14 @@ module Spotlight
       return OpenStruct.new unless analytics_provider&.enabled?
 
       @analytics ||= {}
-      @analytics[start_date] ||= begin
-        analytics_provider.exhibit_data(path || self, start_date: start_date.ago)
-      end
+      @analytics[start_date] ||= analytics_provider.exhibit_data(path || self, start_date: start_date.ago)
     end
 
     def page_analytics(start_date = 1.month, path = nil)
       return [] unless analytics_provider&.enabled?
 
       @page_analytics ||= {}
-      @page_analytics[start_date] ||= begin
-        analytics_provider.page_data(path || self, start_date: start_date.ago)
-      end
+      @page_analytics[start_date] ||= analytics_provider.page_data(path || self, start_date: start_date.ago)
     end
 
     def analytics_provider
