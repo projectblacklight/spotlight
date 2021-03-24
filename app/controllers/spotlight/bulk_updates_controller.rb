@@ -6,14 +6,13 @@ module Spotlight
   ##
   # Controller enabling bulk functionality for items defined in a spreadsheet.
   class BulkUpdatesController < Spotlight::ApplicationController
-    include ActionController::Live unless ENV['CI']
-
     before_action :authenticate_user!
     before_action :check_authorization
 
     def edit; end
 
     def download_template
+      headers['Last-Modified'] = ''
       headers['Cache-Control'] = 'no-cache'
       headers['Content-Type'] = 'text/csv'
       headers['Content-Disposition'] = "attachment; filename=\"#{current_exhibit.slug}-bulk-update-template.csv\""
