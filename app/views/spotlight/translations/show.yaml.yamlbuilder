@@ -71,6 +71,12 @@ json.set!(locale) do
     end
   end
 
+  current_exhibit.groups.each do |group|
+    json.set!(group.slug) do
+      json.title group.translated_title(default: '')
+    end
+  end
+
   current_exhibit.searches.each do |search|
     json.set!(search.slug) do
       json.title search.translated_title(default: '')
