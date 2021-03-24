@@ -12,6 +12,7 @@ module Spotlight
     def edit; end
 
     def download_template
+      # Set Last-Modified as a work-around for https://github.com/rack/rack/issues/1619
       headers['Last-Modified'] = ''
       headers['Cache-Control'] = 'no-cache'
       headers['Content-Type'] = 'text/csv'
