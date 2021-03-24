@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 ActiveSupport::Reloader.to_prepare do
   Riiif::Image.file_resolver = Spotlight::CarrierwaveFileResolver.new
 
