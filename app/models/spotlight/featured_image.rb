@@ -72,6 +72,12 @@ module Spotlight
       end
     end
 
+    # Include a hashed updated_at timestamp in the parameter key to bust any
+    # browser caching.
+    def to_param
+      "#{id}-#{Digest::MD5.hexdigest(updated_at.iso8601)}"
+    end
+
     private
 
     def image_size

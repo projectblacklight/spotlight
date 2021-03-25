@@ -26,7 +26,7 @@ RSpec.describe Migration::IIIF do
     context "when it's any FeaturedImage" do
       it 'updates the iiif_tilesource attribute based on the given host and image resource' do
         instance.run
-        expect(updated_thumb.iiif_tilesource).to eq "http://test.host/images/#{updated_thumb.id}/info.json"
+        expect(updated_thumb.iiif_tilesource).to match %r{http://test.host/images/#{updated_thumb.id}-.*/info.json}
       end
 
       it 'returns a nil region if one was not set' do
