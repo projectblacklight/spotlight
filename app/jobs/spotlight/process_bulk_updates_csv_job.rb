@@ -44,7 +44,7 @@ module Spotlight
 
       begin
         if sidecar.public != to_bool(row[config.csv_visibility])
-          sidecar.update(public: row[config.csv_visibility])
+          sidecar.update(public: to_bool(row[config.csv_visibility]))
           needs_reindex = true
         end
 
@@ -72,7 +72,7 @@ module Spotlight
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
     def to_bool(value)
-      ActiveModel::Type::Boolean.new.cast(value)
+      ActiveModel::Type::Boolean.new.cast(value.strip)
     end
 
     def config
