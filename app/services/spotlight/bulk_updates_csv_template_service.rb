@@ -33,7 +33,7 @@ module Spotlight
     end
 
     def visibility_column(sidecar)
-      sidecar.public
+      sidecar.public ? 'TRUE' : ' '
     end
 
     def tags_column(sidecar)
