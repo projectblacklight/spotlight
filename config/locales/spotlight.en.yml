@@ -393,7 +393,7 @@ en:
         visibility: Public
       reindex_progress_panel:
         begin_html: Began reindexing a total of <span data-behavior='total'></span> items.
-        completed_html: Reindexed <span data-behavior='completed'></span> of <span data-behavior='total'></span> items.
+        current_html: Reindexed <span data-behavior='completed'></span> of <span data-behavior='total'></span> items.
         error: An error occured while reindexing. Contact your exhibits administrator for more information.
         heading: Reindexing status
     configuration:
