@@ -49,7 +49,9 @@ Spotlight.onLoad(function() {
     function updateMonitorPanel(data) {
       panelStartDate().text(data.started_at);
       panelCurrentDate().text(data.updated_at);
-      panelCompleted().text(data.completed);
+      panelCompletedDate().text(data.updated_at);
+      panelCurrent().text(data.completed);
+      setPanelCompleted(data.finished);
       updatePanelTotals(data);
       updatePanelErrorMessage(data);
       updateProgressBar(data);
@@ -107,11 +109,17 @@ Spotlight.onLoad(function() {
                .find('[data-behavior="date"]');
     }
 
+    function panelCompletedDate() {
+      return monitorPanel()
+               .find('[data-behavior="monitor-completed"]')
+               .find('[data-behavior="date"]');
+    }
+
     function panelTotals() {
       return monitorPanel().find('[data-behavior="total"]');
     }
 
-    function panelCompleted() {
+    function panelCurrent() {
       return monitorPanel()
                .find('[data-behavior="monitor-current"]')
                .find('[data-behavior="completed"]');
@@ -123,6 +131,16 @@ Spotlight.onLoad(function() {
 
     function panelErrorMessage() {
       return monitorPanel().find('[data-behavior="monitor-error"]');
+    }
+
+    function setPanelCompleted(finished) {
+      var panel = monitorPanel().find('[data-behavior="monitor-completed"]');
+
+      if (finished) {
+        panel.show();
+      } else {
+        panel.hide();
+      }
     }
 
     return this;
