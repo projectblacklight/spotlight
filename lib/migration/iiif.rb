@@ -73,7 +73,7 @@ module Migration
 
       old_file = File.new(filepath)
       image = contact.create_avatar { |i| i.image.store!(old_file) }
-      iiif_tilesource = riiif.info_path(image.id)
+      iiif_tilesource = riiif.info_path(image)
       image.update(iiif_tilesource: iiif_tilesource, iiif_region: avatar_coordinates(contact))
       image
     end
@@ -87,7 +87,7 @@ module Migration
 
       old_file = File.new(filepath)
       image = upload.create_upload { |i| i.image.store!(old_file) }
-      iiif_tilesource = riiif.info_path(image.id)
+      iiif_tilesource = riiif.info_path(image)
       image.update(iiif_tilesource: iiif_tilesource)
       upload.upload_id = image.id
       upload.save_and_index
@@ -95,7 +95,7 @@ module Migration
 
     def update_iiif_url(image)
       image.update(
-        iiif_tilesource: riiif.info_url(image.id, host: hostname),
+        iiif_tilesource: riiif.info_url(image, host: hostname),
         iiif_region: coordinates(image)
       )
     end

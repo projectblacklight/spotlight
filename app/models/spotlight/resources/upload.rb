@@ -51,7 +51,7 @@ module Spotlight
         {
           spotlight_full_image_width_ssm: dimensions.width,
           spotlight_full_image_height_ssm: dimensions.height,
-          Spotlight::Engine.config.thumbnail_field => riiif.image_path(upload_id, size: '!400,400'),
+          Spotlight::Engine.config.thumbnail_field => riiif.image_path(upload, size: '!400,400'),
           Spotlight::Engine.config.iiif_manifest_field => spotlight_routes.manifest_exhibit_solr_document_path(exhibit, compound_id)
         }
       end
