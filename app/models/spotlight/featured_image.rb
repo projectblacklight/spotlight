@@ -68,7 +68,7 @@ module Spotlight
         self[:iiif_tilesource]
       elsif file_present?
         riiif = Riiif::Engine.routes.url_helpers
-        riiif.info_path(id)
+        riiif.info_path(self)
       end
     end
 
