@@ -44,6 +44,19 @@ describe Spotlight::BackgroundJobProgress, type: :model do
   end
 
   context 'with an in-progress job' do
+    let(:job_tracker_args) { { status: 'in_progress', data: { progress: 32, total: 50 } } }
+
+    it 'reports on reindexing progress' do
+      expect(progress.as_json).to include(
+        completed: 32,
+        total: 50,
+        finished: false,
+        errored: false
+      )
+    end
+  end
+
+  context 'with an in-progress job with subtasks' do
     before do
       FactoryBot.create(:job_tracker, on: job_tracker, resource: exhibit, data: { progress: 32, total: 32 }, status: 'completed')
       FactoryBot.create(:job_tracker, on: job_tracker, resource: exhibit, data: { progress: 16, total: 50 }, status: 'in_progress')
