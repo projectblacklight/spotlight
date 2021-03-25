@@ -11,6 +11,7 @@ Spotlight.onLoad(function() {
 
     $(monitorElements).each(function() {
       panelContainer = $(this);
+      panelContainer.hide();
       var monitorUrl = panelContainer.data('monitorUrl');
       var refreshRate = panelContainer.data('refreshRate') || defaultRefreshRate;
       pollers.push(
@@ -52,6 +53,8 @@ Spotlight.onLoad(function() {
       updatePanelTotals(data);
       updatePanelErrorMessage(data);
       updateProgressBar(data);
+
+      panelContainer.show();
     }
 
     function updateProgressBar(data) {
