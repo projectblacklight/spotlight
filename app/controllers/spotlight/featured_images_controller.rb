@@ -16,7 +16,7 @@ module Spotlight
     private
 
     def tilesource
-      riiif.info_url(@featured_image.id)
+      riiif.info_url(@featured_image)
     end
 
     # The create action can be called from a number of different forms, so

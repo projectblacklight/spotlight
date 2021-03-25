@@ -79,7 +79,7 @@ module Spotlight
 
     def iiif_url
       # yes this is hacky, and we are appropriately ashamed.
-      controller.riiif.info_url(uploaded_resource.upload.id).sub(%r{/info\.json\Z}, '')
+      controller.riiif.info_url(uploaded_resource.upload).sub(%r{/info\.json\Z}, '')
     end
   end
 end
