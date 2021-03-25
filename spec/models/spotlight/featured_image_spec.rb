@@ -41,7 +41,7 @@ describe Spotlight::FeaturedImage do
         end
 
         it 'points at the RIIIF endpoint' do
-          expect(subject.iiif_url).to match(%r{^/images/\d+/})
+          expect(subject.iiif_url).to match(%r{^/images/\d+-.+/})
         end
       end
     end
