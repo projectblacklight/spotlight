@@ -72,7 +72,7 @@ module Spotlight
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
     def to_bool(value)
-      ActiveModel::Type::Boolean.new.cast(value.strip)
+      ActiveModel::Type::Boolean.new.cast(value.to_s.strip)
     end
 
     def config
