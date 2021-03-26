@@ -14,6 +14,7 @@ Spotlight.onLoad(function(){
       '    <button id="osd-zoom-in" type="button" class="btn btn-dark"><%= Blacklight::Icon.new('zoom_in').file_source.strip %></button>',
       '    <button id="osd-zoom-out" type="button" class="btn btn-dark"><%= Blacklight::Icon.new('zoom_out').file_source.strip %></button>',
       '  </div>',
+      '  <div id="empty-div-required-by-osd"></div>',
       '</div>'
     ].join("\n");
 
@@ -30,8 +31,14 @@ Spotlight.onLoad(function(){
 
     OpenSeadragon({
       id: 'osd-div',
-      zoomInButton:     "osd-zoom-in",
-      zoomOutButton:    "osd-zoom-out",
+      zoomInButton: "osd-zoom-in",
+      zoomOutButton: "osd-zoom-out",
+      // This is a hack where OpenSeadragon (if using mapped buttons) requires you
+      // to map all of the buttons.
+      homeButton: "empty-div-required-by-osd",
+      fullPageButton: "empty-div-required-by-osd",
+      nextButton: "empty-div-required-by-osd",
+      previousButton: "empty-div-required-by-osd",
       tileSources: [$(this).data('iiif-tilesource')]
     })
   });
