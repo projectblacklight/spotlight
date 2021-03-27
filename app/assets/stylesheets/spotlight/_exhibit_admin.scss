@@ -70,3 +70,12 @@
     display: inline;
   }
 }
+
+.download-csv {
+  align-items: flex-end;
+  display: flex;
+
+  .btn-primary {
+    margin-bottom: $spacer;
+  }
+}
