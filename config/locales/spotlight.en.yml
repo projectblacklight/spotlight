@@ -280,7 +280,9 @@ en:
           <p class="instructions">
             The downloadable CSV file for this exhibit contains one line for each item in the exhibit. Each line contains one or more comma-separated values. Although you can update the CSV file directly, we strongly recommended importing it into a spreadsheet application and making your updates there. The rest of these guidelines assume you are making updates in a spreadsheet.
           </p>
-
+          <p class="instructions">
+            Note that the more lines there are in the completed CSV file that you upload, the longer the updates will take to process. If your exhibit contains more than a few thousand items, after importing the CSV file into a spreadsheet application, you should consider removing the rows of items you do not intend to update. This will also make it easier to focus on the items you do intend to update.
+          </p>
           <h3>Column headers</h3>
           <p class="instructions">
             Do not edit the column headers. These are used to match property values to existing exhibit item fields.
@@ -298,20 +300,20 @@ en:
           <h3>Updatable fields</h3>
           <dl>
             <dt>Visibility</dt>
-            <dd>Valid values are public and private. If no value is present, the item is assigned a value of private.</dd>
+            <dd>Valid values are <em>public</em> (expressed as <samp>TRUE</samp>) and <em>private</em> (blank value).</dd>
 
             <dt>Tags</dt>
             <dd>
               <p class="instructions">
-                If you chose to include tags in the CSV file, there will be a column in the spreadsheet for each existing tag in the exhibit, prefixed with “Tag:”, such as “Tag: apples”.
+                If you chose to include tags in the CSV file, there will be a column in the spreadsheet for each existing tag in the exhibit, prefixed with <samp>Tag:</samp>, such as <samp>Tag: apples</samp>. (If you want to add to items a tag that does not yet exist, you must first add that tag to at least one item (by editing an item or using the Bulk actions feature on a search result set of items) before downloading the CSV file.)
               </p>
 
               <p class="instructions">
-                To assign a tag to an exhibit item, the value of the “Tag:” column for that item must be true. A blank value (or any value other than true) in the “Tag:” column for an item means that tag is not assigned to that item.
+                To assign a tag to an exhibit item, the value of the <samp>Tag:</samp> column for that item must be <samp>TRUE</samp>. A blank value in the <samp>Tag:</samp> column for an item means that tag is not assigned to that item.
               </p>
 
               <p class="instructions">
-                To remove a tag currently assigned to an item, remove the true value from the appropriate “Tag:” column for that item.
+                To remove a tag currently assigned to an item, remove the <samp>TRUE</samp> value from the appropriate <samp>Tag:</samp> column for that item.
               </p>
             </dd>
           </dl>
