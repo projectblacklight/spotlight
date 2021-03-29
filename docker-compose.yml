@@ -10,7 +10,7 @@ services:
     volumes:
       - .:/spotlight/engine
     ports:
-      - 3000:3000
+      - 3333:3000
     depends_on:
       - chrome
       - db_migrate
