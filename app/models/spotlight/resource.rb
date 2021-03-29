@@ -74,7 +74,7 @@ module Spotlight
       end
 
       def document_ids
-        document_builder.documents_to_index.to_a.map { |y| y[:id] }
+        document_builder.documents_to_index.to_a.pluck(:id)
       end
 
       def batch_size
