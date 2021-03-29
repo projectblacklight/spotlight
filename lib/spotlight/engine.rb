@@ -36,7 +36,6 @@ module Spotlight
       end
     end
 
-    require 'carrierwave'
     require 'underscore-rails'
     require 'github/markup'
     require 'sir_trevor_rails'

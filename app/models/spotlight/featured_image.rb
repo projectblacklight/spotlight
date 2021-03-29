@@ -4,16 +4,14 @@ module Spotlight
   ##
   # Featured images for browse categories, feature pages, and exhibits
   class FeaturedImage < ActiveRecord::Base
-    mount_uploader :image, Spotlight::FeaturedImageUploader
+    has_one_attached :image
 
     before_validation do
       next unless upload_id.present? && source == 'remote'
 
       # copy the image from the temp upload
       temp_image = Spotlight::TemporaryImage.find(upload_id)
-      self.image = CarrierWave::SanitizedFile.new tempfile: StringIO.new(temp_image.image.read),
-                                                  filename: temp_image.image.filename || temp_image.image.identifier,
-                                                  content_type: temp_image.image.content_type
+      image.attach(temp_image.image.blob)
 
       # Unset the incoming iiif_tilesource, which points at the temp image
       self.iiif_tilesource = nil
@@ -22,13 +20,6 @@ module Spotlight
     after_commit do
       # Clean up the temporary image
       Spotlight::TemporaryImage.find(upload_id).delete if upload_id.present?
-    end
-
-    after_save do
-      if image.present?
-        image.cache! unless image.cached?
-        image.store!
-      end
     end
 
     attr_accessor :upload_id
@@ -60,7 +51,7 @@ module Spotlight
     end
 
     def file_present?
-      image.file.present?
+      image.blob.present?
     end
 
     def iiif_tilesource

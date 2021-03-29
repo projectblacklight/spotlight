@@ -29,6 +29,11 @@ module Spotlight
       run 'bundle exec rails webpacker:install'
     end
 
+    def setup_activestorage
+      run 'bundle exec rails active_storage:install'
+      run 'bundle exec rails db:migrate'
+    end
+
     def inject_spotlight_routes
       route "mount Spotlight::Engine, at: 'spotlight'"
       gsub_file 'config/routes.rb', /^\s*root.*/ do |match|

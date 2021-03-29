@@ -4,11 +4,18 @@ module Spotlight
   ##
   # Sir-trevor image upload attachments
   class Attachment < ActiveRecord::Base
-    belongs_to :exhibit
-    mount_uploader :file, Spotlight::AttachmentUploader
+    # Open to alternatives on how to do this, but this works
+    include Rails.application.routes.url_helpers
 
-    def as_json(options = nil)
-      file.as_json(options).merge(name: name, uid: uid, attachment: to_global_id)
+    belongs_to :exhibit
+    has_one_attached :file
+
+    def as_json(_options = nil)
+      # as_json has problems with single has_one_attached content
+      # https://github.com/rails/rails/issues/33036
+      {
+        name: name, uid: uid, attachment: to_global_id, url: rails_blob_path(file, only_path: true)
+      }
     end
   end
 end
