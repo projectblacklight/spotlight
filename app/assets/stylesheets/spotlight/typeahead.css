@@ -51,6 +51,12 @@
   }
 }
 
+.tt-dataset-tags {
+  p {
+    white-space: nowrap !important;
+  }
+}
+
 .autocomplete-item {
   display: flex;
 
