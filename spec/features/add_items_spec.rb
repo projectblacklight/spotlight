@@ -85,7 +85,7 @@ describe 'Uploading a non-repository item', type: :feature do
     end
 
     context 'as an site administrator' do
-      let(:user) { FactoryBot.create(:site_admin, exhibit: exhibit) }
+      let(:user) { FactoryBot.create(:site_admin) }
 
       it 'displays the JSON upload form' do
         visit spotlight.new_exhibit_resource_path(exhibit)
