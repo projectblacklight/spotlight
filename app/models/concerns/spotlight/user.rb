@@ -19,7 +19,11 @@ module Spotlight
     end
 
     def exhibit_roles
-      roles.where(resource_type: 'Spotlight::Exhibit')
+      roles.where(resource_type: 'Spotlight::Exhibit').where.not(role: 'viewer')
+    end
+
+    def viewer_roles
+      roles.where(resource_type: 'Spotlight::Exhibit', role: 'viewer')
     end
 
     def admin_roles

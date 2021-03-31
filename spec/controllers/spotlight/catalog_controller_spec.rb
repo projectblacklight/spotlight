@@ -299,7 +299,7 @@ describe Spotlight::CatalogController, type: :controller do
   end
 
   describe 'when the user is a site admin' do
-    before { sign_in FactoryBot.create(:site_admin, exhibit: exhibit) }
+    before { sign_in FactoryBot.create(:site_admin) }
 
     describe 'GET show' do
       it 'has a solr_json serialization' do
