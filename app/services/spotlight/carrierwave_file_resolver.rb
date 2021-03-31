@@ -9,10 +9,10 @@ module Spotlight
     end
 
     def pattern(id)
-      uploaded_file = Spotlight::FeaturedImage.find(id).image.file
+      uploaded_file = Spotlight::FeaturedImage.find(id).image.blob
       raise Riiif::ImageNotFoundError, "unable to find file for #{id}" if uploaded_file.nil?
 
-      uploaded_file.file
+      ActiveStorage::Blob.service.path_for(uploaded_file.key)
     end
   end
 end

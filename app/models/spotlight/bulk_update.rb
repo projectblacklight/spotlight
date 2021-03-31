@@ -2,7 +2,7 @@
 
 module Spotlight
   class BulkUpdate < ActiveRecord::Base
-    mount_uploader :file, Spotlight::BulkUpdatesUploader
+    has_one_attached :file
     belongs_to :exhibit
   end
 end

@@ -77,6 +77,42 @@ namespace :spotlight do
     Migration::PageLanguage.run
   end
 
+  desc 'Migrate CarrierWave content to ActiveStorage'
+  task migrate_carrier_wave: :environment do
+    puts 'Mirating Spotlight::Attachment'
+    Spotlight::Attachment.find_each do |attachment|
+      next if attachment.file.blob
+
+      attachment.file.attach(
+        io: File.open(Rails.root.join("public/uploads/spotlight/attachment/file/#{attachment.attributes['file']}")),
+        filename: attachment.attributes['file'],
+        content_type: Mime::Type.lookup_by_extension(File.extname(attachment.attributes['file'])[1..])
+      )
+    end
+
+    puts 'Mirating Spotlight::FeaturedImage'
+    Spotlight::FeaturedImage.find_each do |featured_image|
+      next if featured_image.image.blob
+
+      featured_image.image.attach(
+        io: File.open(Rails.root.join("public/uploads/spotlight/featured_image/image/#{featured_image.attributes['image']}")),
+        filename: featured_image.attributes['image'],
+        content_type: Mime::Type.lookup_by_extension(File.extname(featured_image.attributes['image'])[1..])
+      )
+    end
+
+    puts 'Mirating Spotlight::BulkUpdate'
+    Spotlight::BulkUpdate.find_each do |bulk_update|
+      next if bulk_update.file.blob
+
+      bulk_update.file.attach(
+        io: File.open(Rails.root.join("public/uploads/#{bulk_update.attributes['file']}")),
+        filename: bulk_update.attributes['file'],
+        content_type: Mime::Type.lookup_by_extension(File.extname(bulk_update.attributes['file'])[1..])
+      )
+    end
+  end
+
   def prompt_to_create_user
     Spotlight::Engine.user_class.find_or_create_by!(email: prompt_for_email) do |u|
       puts 'User not found. Enter a password to create the user.'

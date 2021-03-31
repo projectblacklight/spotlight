@@ -25,6 +25,7 @@ class TestAppGenerator < Rails::Generators::Base
 
   def run_spotlight_migrations
     rake 'spotlight:install:migrations'
+    rake 'active_storage:install'
     rake 'db:migrate'
   end
 
@@ -38,10 +39,6 @@ class TestAppGenerator < Rails::Generators::Base
 
   def add_rake_tasks_to_app
     rakefile 'spotlight_test.rake', File.read(find_in_source_paths('spotlight_test.rake'))
-  end
-
-  def disable_carrierwave_processing
-    copy_file 'carrierwave.rb', 'config/initializers/carrierwave.rb'
   end
 
   def add_theme_assets

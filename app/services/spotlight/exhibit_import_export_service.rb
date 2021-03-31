@@ -186,9 +186,9 @@ module Spotlight
 
         # dedupe by something??
         ar = exhibit.attachments.build(attr)
-        ar.file = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file[:content])),
-                                                 filename: file[:filename],
-                                                 content_type: file[:content_type]
+        ar.file.attach io: StringIO.new(Base64.decode64(file[:content])),
+                       filename: file[:filename],
+                       content_type: file[:content_type]
       end
 
       hash[:languages].each do |attr|
@@ -212,9 +212,9 @@ module Spotlight
       image = obj.public_send("build_#{method}")
       image.update(data)
       if file
-        image.image = CarrierWave::SanitizedFile.new tempfile: StringIO.new(Base64.decode64(file[:content])),
-                                                     filename: file[:filename],
-                                                     content_type: file[:content_type]
+        image.image.attach io: StringIO.new(Base64.decode64(file[:content])),
+                           filename: file[:filename],
+                           content_type: file[:content_type]
         # Unset the iiif_tilesource field as the new image should be different, because
         # the source has been reloaded
         image.iiif_tilesource = nil
@@ -301,11 +301,11 @@ module Spotlight
 
     def serialize_featured_image(id)
       image = Spotlight::FeaturedImage.find(id)
-      file = image.image.file
+      file = image.image
       if file
         img = {
           image: {
-            filename: file.filename, content_type: file.content_type, content: Base64.encode64(file.read)
+            filename: file.filename, content_type: file.content_type, content: Base64.encode64(file.download)
           }
         }
       end
