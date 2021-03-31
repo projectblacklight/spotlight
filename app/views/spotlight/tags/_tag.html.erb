@@ -1,0 +1,24 @@
+<% tag = f.object %>
+
+<%= render layout: 'spotlight/shared/dd3_item', locals: { id: tag.id.to_s, field: f, dd3_content_classes: "tag" , enabled_method: :present?, label_method: :name, label: tag.name } do |_, section| %>
+  <% case section when nil %>
+  <div class="d-flex flex-grow-1">
+    <div class="flex-grow-1 mx-2 main">
+      <h4 class="card-title h6 mb-0" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
+        <a href="#edit-in-place" class="field-label edit-in-place"><%= tag.name %></a>
+        <%= f.hidden_field :name, value: tag.name , class: 'form-control form-control-sm title-field', data: {:"edit-field-target" => 'true'} %>
+      </h4>
+
+      <div class="card-text">
+        <div class=""><%= t 'spotlight.tags.index.taggings.count', count: tag.taggings.count %> &bull; <%= link_to t(:'helpers.action.view'), url_to_tag_facet(tag.name) %></div>
+        <%= f.hidden_field :current_name, value: tag.name %>
+
+      </div>
+    </div>
+    <div class="flex m-2">
+      <div class="card-text">
+        <%= delete_link(tag, exhibit_tag_path(current_exhibit, tag), class: 'btn btn-danger btn-sm') %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

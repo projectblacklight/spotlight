@@ -110,6 +110,10 @@ Spotlight::Engine.routes.draw do
     end
 
     resources :tags, only: %i[index destroy] do
+      collection do
+        patch :update_all
+      end
+
       member do
         post :rename
       end
