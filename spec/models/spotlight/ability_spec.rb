@@ -89,4 +89,30 @@ describe Spotlight::Ability, type: :model do
     it { is_expected.not_to be_able_to(:manage, language) }
     it { is_expected.to be_able_to(:read, language) }
   end
+
+  context 'with an unpublished exhibit' do
+    before do
+      exhibit.update(published: false)
+    end
+
+    context 'with a user with a viewer role' do
+      let(:user) { FactoryBot.create(:user, :with_exhibit_role, role: 'viewer', exhibit: exhibit) }
+
+      it { is_expected.not_to be_able_to(:create, exhibit) }
+      it { is_expected.to be_able_to(:read, exhibit) }
+      it { is_expected.to be_able_to(:read, page) }
+      it { is_expected.not_to be_able_to(:create, Spotlight::Page.new(exhibit: exhibit)) }
+      it { is_expected.to be_able_to(:read, search) }
+      it { is_expected.to be_able_to(:read, public_language) }
+      it { is_expected.not_to be_able_to(:read, language) }
+      it { is_expected.not_to be_able_to(:read, unpublished_search) }
+      it { is_expected.not_to be_able_to(:tag, exhibit) }
+    end
+
+    context 'with an anonymous user' do
+      let(:user) { FactoryBot.create(:exhibit_visitor) }
+
+      it { is_expected.not_to be_able_to(:read, exhibit) }
+    end
+  end
 end

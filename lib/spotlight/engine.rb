@@ -305,6 +305,6 @@ module Spotlight
 
     config.assign_default_roles_to_first_user = true
 
-    config.exhibit_roles = %w[admin curator]
+    config.exhibit_roles = %w[admin curator viewer]
   end
 end
