@@ -130,9 +130,16 @@ SirTrevor.Blocks.UploadedItems = (function(){
             '</div>',
             '<input type="file" id="uploaded_item_url" name="file[file_0][file_data]" />',
           '</div>',
+          '<div class="col-md-4">',
+            '<input name="<%= zpr_key %>" type="hidden" value="false" />',
+            '<input name="<%= zpr_key %>" id="<%= formId(zpr_key) %>" data-key="<%= zpr_key %>" type="checkbox" value="true" />',
+            '<label for="<%= formId(zpr_key) %>"><%= i18n.t("blocks:solr_documents:zpr:title") %></label>',
+          '</div>',
         '</div>',
         '<%= text_area() %>',
       '</div>'
-    ].join("\n")
+    ].join("\n"),
+
+    zpr_key: 'zpr_link'
   });
 })();
