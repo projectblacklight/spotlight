@@ -102,7 +102,11 @@ module Spotlight
 
     def swap_actions_configuration
       blacklight_config.index.document_actions = blacklight_config.browse.document_actions
-      blacklight_config.action_mapping.show.top_level_config = :index if blacklight_config.key?(:action_mapping)
+      blacklight_config.action_mapping.show = if blacklight_config.action_mapping.key?(:index)
+                                                blacklight_config.action_mapping.index
+                                              else
+                                                blacklight_config.action_mapping.default
+                                              end
     end
 
     def search_query
