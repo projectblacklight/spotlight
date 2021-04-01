@@ -11,6 +11,10 @@ module SirTrevorRails
       def files
         (item || {}).map { |_, file| file }.select { |file| file[:display].to_s == 'true' }
       end
+
+      def zpr_link?
+        zpr_link == 'true'
+      end
     end
   end
 end

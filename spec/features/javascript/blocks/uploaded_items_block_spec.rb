@@ -65,4 +65,30 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
       expect(page).to have_css('img[alt=""]', count: 1)
     end
   end
+
+  it 'may have ZPR links' do
+    attach_file('uploaded_item_url', fixture_file1)
+    attach_file('uploaded_item_url', fixture_file2)
+
+    check 'Offer "View larger" option'
+    # this seems silly, but also seems to help with the flappy-ness of this spec
+    expect(find_field('Offer "View larger" option', checked: true)).to be_checked
+
+    save_page
+
+    within('.uploaded-items-block') do
+      expect(page).to have_button('View larger', count: 2)
+    end
+
+    within first('.contents') do
+      data = find('button')['data-iiif-tilesource']
+      expect(data).to be_present
+      expect(JSON.parse(data).with_indifferent_access).to include type: 'image', url: end_with('800x600.png')
+      click_button 'View larger'
+    end
+
+    within '.modal-content' do
+      expect(page).to have_css('#osd-modal-container')
+    end
+  end
 end
