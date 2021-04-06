@@ -114,3 +114,11 @@ tr.dd-item {
 .dd3-content .card-header {
   padding: .5rem 1rem
 }
+
+.dd3-content.tag {
+  .dd3-handle {
+    display: none;
+  }
+
+  padding-left: 0;
+}
