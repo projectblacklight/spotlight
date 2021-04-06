@@ -152,6 +152,10 @@ en:
       spotlight_default:
         updated: The %{model} was successfully updated.
       submit: Save changes
+      tags:
+        batch_updated:
+          one: Renaming %{count} tag
+          other: Renaming %{count} tags
       update: Save changes
   locales:
     ar: Arabic
@@ -946,12 +950,10 @@ en:
       home: Exhibits
     tags:
       index:
-        actions: Actions
         header: Tags
-        name: Tag name
         no_tags: No items in this exhibit have been tagged. You can add tags to an item on the item details page while in curation mode.
         taggings:
-          count: Items tagged
+          count: 'Items tagged: %{count}'
     topbar:
       label: Utilities
     translations:
