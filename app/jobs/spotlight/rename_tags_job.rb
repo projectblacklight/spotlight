@@ -18,6 +18,7 @@ module Spotlight
         all_tags += [to] unless to.nil?
 
         exhibit.tag(sidecar, with: all_tags, on: :tags)
+        sidecar.document.reindex
       rescue StandardError => e
         job_tracker.append_log_entry(type: :error, exhibit: exhibit, message: e.to_s)
         @errors += 1
