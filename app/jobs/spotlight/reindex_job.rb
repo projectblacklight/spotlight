@@ -32,7 +32,7 @@ module Spotlight
           exhibit: exhibit,
           message: exception.to_s,
           backtrace: exception.backtrace.first(5).join("\n"),
-          resource_id: pipeline.source&.id
+          resource_id: (pipeline.source.id if pipeline.source.respond_to?(:id))
         )
         mark_job_as_failed!
         errors += 1
