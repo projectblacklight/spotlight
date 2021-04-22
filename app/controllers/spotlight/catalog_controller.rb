@@ -199,6 +199,10 @@ module Spotlight
       redirect_to spotlight.exhibit_root_path(@exhibit) unless has_search_parameters?
     end
 
+    def has_search_parameters? # rubocop:disable Naming/PredicateName
+      super || params[:browse_category_id].present?
+    end
+
     def add_breadcrumb_with_search_params
       return unless has_search_parameters?
 

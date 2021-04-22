@@ -36,10 +36,6 @@ module Spotlight
 
       respond_to do |format|
         format.html
-        format.json do
-          @presenter = Blacklight::JsonPresenter.new(@response, blacklight_config)
-          render template: 'catalog/index'
-        end
       end
     end
 
