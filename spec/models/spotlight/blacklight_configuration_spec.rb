@@ -483,7 +483,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       blacklight_config.view.something
 
       expect(subject.blacklight_config.view.keys).to include :list, :gallery, :something
-      expect(subject.blacklight_config.view.all? { |k, v| v.key == k && v.if == :enabled_in_spotlight_view_type_configuration? }).to be_truthy
+      expect(subject.blacklight_config.view.select { |k, v| v.key == k && v.if == :enabled_in_spotlight_view_type_configuration? }.any?).to be_truthy
     end
     # rubocop:enable RSpec/PredicateMatcher
 
