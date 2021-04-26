@@ -79,6 +79,12 @@ Lint/RedundantSafeNavigation:
   Exclude:
     - 'app/controllers/spotlight/catalog_controller.rb'
 
+# Offense count: 1
+# Configuration parameters: IgnoreImplicitReferences.
+Lint/ShadowedArgument:
+  Exclude:
+    - 'app/jobs/spotlight/reindex_exhibit_job.rb'
+
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: AllowComments.
@@ -88,7 +94,7 @@ Lint/UselessMethodDefinition:
     - 'app/controllers/spotlight/feature_pages_controller.rb'
     - 'app/controllers/spotlight/home_pages_controller.rb'
 
-# Offense count: 24
+# Offense count: 25
 # Configuration parameters: IgnoredMethods, CountRepeatedAttributes.
 Metrics/AbcSize:
   Max: 22
@@ -98,10 +104,10 @@ Metrics/AbcSize:
 Metrics/CyclomaticComplexity:
   Max: 9
 
-# Offense count: 8
+# Offense count: 9
 # Configuration parameters: CountComments, CountAsOne, ExcludedMethods, IgnoredMethods.
 Metrics/MethodLength:
-  Max: 11
+  Max: 12
 
 # Offense count: 2
 # Configuration parameters: CountComments, CountAsOne.
@@ -223,7 +229,7 @@ RSpec/MissingExampleGroupArgument:
 RSpec/MultipleMemoizedHelpers:
   Max: 18
 
-# Offense count: 804
+# Offense count: 805
 # Configuration parameters: IgnoreSharedExamples.
 RSpec/NamedSubject:
   Enabled: false
