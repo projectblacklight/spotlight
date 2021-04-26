@@ -115,10 +115,10 @@ module Spotlight
     def add_search_builder_mixin
       if File.exist? 'app/models/search_builder.rb'
         inject_into_file 'app/models/search_builder.rb', after: "include Blacklight::Solr::SearchBuilderBehavior\n" do
-          "\n  include Spotlight::AccessControlsEnforcementSearchBuilder\n"
+          "\n  include Spotlight::SearchBuilder\n"
         end
       else
-        say 'Unable to find SearchBuilder class; add `include Spotlight::AccessControlsEnforcementSearchBuilder` to the class manually.'
+        say 'Unable to find SearchBuilder class; add `include Spotlight::SearchBuilder` to the class manually.'
       end
     end
 
