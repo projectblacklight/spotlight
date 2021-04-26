@@ -128,12 +128,6 @@ describe Spotlight::BrowseController, type: :controller do
         get :show, params: { id: search, exhibit_id: exhibit }
         expect(controller.blacklight_config.index.document_actions).to match_array %i[a b c]
       end
-
-      it 'has a json response' do
-        get :show, params: { id: search, exhibit_id: exhibit, format: :json }
-        expect(assigns[:presenter]).to be_a Blacklight::JsonPresenter
-        expect(response).to render_template 'catalog/index'
-      end
     end
   end
 end

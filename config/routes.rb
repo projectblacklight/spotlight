@@ -99,6 +99,7 @@ Spotlight::Engine.routes.draw do
         get :autocomplete
       end
     end
+    get 'browse/:browse_category_id', to: 'catalog#index', constraints: ->(req) { req.format != :html }
     resources :browse, only: %i[index show]
     get 'browse/group/:group_id', to: 'browse#index', as: 'browse_groups'
     get 'browse/group/:group_id/:id', to: 'browse#show', as: 'browse_group'

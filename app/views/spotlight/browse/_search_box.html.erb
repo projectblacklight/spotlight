@@ -1,11 +1,11 @@
 <div class="search-box-container">
   <%= form_tag exhibit_browse_path(current_exhibit, search), method: :get, class: 'browse-search-form search-query-form form-horizontal', role: 'search', 'aria-labelledby' => 'browse-search-form' do %>
-    <%= render_hash_as_hidden_fields(search_state.params_for_search.except(:q, :search_field, :exhibit_id, :browse_q, :qt, :page, :utf8)) %>
+    <%= render_hash_as_hidden_fields(search_state.params_for_search.except(:q, :search_field, :exhibit_id, :q, :qt, :page, :utf8)) %>
     <div class="form-group row">
       <label id="browse-search-form" class="col-sm-4 col-form-label h6" for="browse_q"><%= t(:'.label') %></label>
       <div class="col-sm-6">
         <div class="input-group">
-          <%= text_field_tag :browse_q, params[:browse_q], placeholder: t(:'.placeholder'), class: "form-control", id: "browse_q" %>
+          <%= text_field_tag :q, params[:q], placeholder: t(:'.placeholder'), class: "form-control", id: "browse_q" %>
             <span class="input-group-btn input-group-append">
               <button class="btn btn-reset btn-sm" type="reset">
                 <span class="sr-only"><%= t(:'.reset') %></span>
@@ -20,20 +20,20 @@
       </div>
     </div>
   <% end %>
-  <% if params[:browse_q]%>
+  <% if params[:q].present? %>
     <div class="browse-search-expand">
-      <% if search.count > 0 %>
-        <p><%= t(:'.success.result_number_html', search_size: search.count, parent_search_count: parent_search_count) %></p>
+      <% if @response.size > 0 %>
+        <p><%= t(:'.success.result_number_html', search_size: @response.size, parent_search_count: parent_search_count) %></p>
         <p><%= t(:'.success.expand_html',
-                  expand_search_url: search_exhibit_catalog_path(current_exhibit, q: params[:browse_q]),
-                  browse_query: params[:browse_q]) %>
+                  expand_search_url: search_exhibit_catalog_path(current_exhibit, q: params[:q]),
+                  browse_query: params[:q]) %>
         </p>
       <% else %>
         <p><%= t(:'.zero_results.result_number') %></p>
         <p><%= t(:'.zero_results.expand_html',
                   clear_search_url: exhibit_browse_path(current_exhibit, search),
-                  expand_search_url: search_exhibit_catalog_path(current_exhibit, q: params[:browse_q]),
-                  browse_query: params[:browse_q])%>
+                  expand_search_url: search_exhibit_catalog_path(current_exhibit, q: params[:q]),
+                  browse_query: params[:q])%>
         </p>
       <% end %>
     </div>

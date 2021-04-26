@@ -31,15 +31,11 @@ module Spotlight
 
     def show
       @response, @document_list = search_service.search_results do |builder|
-        builder.with(search_query)
+        builder.with(params.merge(browse_category_id: @search.id))
       end
 
       respond_to do |format|
         format.html
-        format.json do
-          @presenter = Blacklight::JsonPresenter.new(@response, blacklight_config)
-          render template: 'catalog/index'
-        end
       end
     end
 
@@ -48,11 +44,6 @@ module Spotlight
     def swap_actions_configuration
       blacklight_config.index.document_actions = blacklight_config.browse.document_actions
       blacklight_config.action_mapping.show.top_level_config = :index if blacklight_config.key?(:action_mapping)
-    end
-
-    def search_query
-      @search.query_params['q'] = [@search.query_params['q'], params[:browse_q]].join(' ')
-      @search.merge_params_for_search(params, blacklight_config)
     end
 
     ##
