@@ -638,8 +638,8 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.document_index_view_types_selected_hash.to_h).to include list: true, gallery: true
     end
 
-    it 'disabled view types are not included' do
-      expect(subject.document_index_view_types_selected_hash.to_h).not_to include :map
+    it 'disabled view types use the value false' do
+      expect(subject.document_index_view_types_selected_hash.to_h).to include whatever: false
     end
 
     it 'excludes view types disabled by configuration (not by curator settings)' do
