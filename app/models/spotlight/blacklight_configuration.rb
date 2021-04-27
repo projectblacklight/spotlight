@@ -92,22 +92,23 @@ module Spotlight
 
         unless config.curator_actions
           config.curator_actions ||= Blacklight::NestedOpenStructWithHashAccess.new(Blacklight::Configuration::ToolConfig)
-          config.curator_actions.save_search
-          config.curator_actions.bulk_actions
+          config.curator_actions.save_search!
+          config.curator_actions.bulk_actions!
         end
 
         unless config.bulk_actions
           config.bulk_actions ||= Blacklight::NestedOpenStructWithHashAccess.new(Blacklight::Configuration::ToolConfig)
 
-          config.bulk_actions.change_visibility
-          config.bulk_actions.add_tags
-          config.bulk_actions.remove_tags
+          config.bulk_actions.change_visibility!
+          config.bulk_actions.add_tags!
+          config.bulk_actions.remove_tags!
         end
 
         config.default_solr_params = config.default_solr_params.merge(default_solr_params)
 
         config.default_per_page = default_per_page if default_per_page
 
+        config.view.embed!
         config.view.embed.partials ||= ['openseadragon']
         config.view.embed.if = false
         config.view.embed.locals ||= { osd_container_class: '' }

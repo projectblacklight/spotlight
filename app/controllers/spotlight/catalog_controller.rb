@@ -27,8 +27,7 @@ module Spotlight
 
     before_action only: :admin do
       blacklight_config.view.select! { |k, _v| k == :admin_table }
-      blacklight_config.view.admin_table.partials = [:index_compact]
-      blacklight_config.view.admin_table.document_actions = []
+      blacklight_config.view.admin_table(partials: [:index_compact], document_actions: []) unless blacklight_config.view.key? :admin_table
       blacklight_config.track_search_session = false
 
       unless blacklight_config.sort_fields.key? :timestamp
@@ -38,8 +37,7 @@ module Spotlight
     end
 
     before_action only: :edit do
-      blacklight_config.view.edit.partials = blacklight_config.view_config(:show).partials.dup
-      blacklight_config.view.edit.partials.insert(2, :edit)
+      blacklight_config.view.edit(partials: blacklight_config.view_config(:show).partials.dup.insert(2, :edit)) unless blacklight_config.view.key? :edit
     end
 
     def show
