@@ -314,7 +314,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     context 'title only configuration' do
       before do
         blacklight_config.configure do |config|
-          config.view.gallery.title_only_by_default = true
+          config.view.gallery(title_only_by_default: true)
           config.add_index_field 'a'
         end
       end
@@ -478,9 +478,9 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     # rubocop:disable RSpec/PredicateMatcher
     it 'filters the upstream blacklight config' do
       subject.document_index_view_types = %w[list gallery unknown]
-      blacklight_config.view.list
-      blacklight_config.view.gallery
-      blacklight_config.view.something
+      blacklight_config.view.list!
+      blacklight_config.view.gallery!
+      blacklight_config.view.something!
 
       expect(subject.blacklight_config.view.keys).to include :list, :gallery, :something
       expect(subject.blacklight_config.view.select { |k, v| v.key == k && v.if == :enabled_in_spotlight_view_type_configuration? }.any?).to be_truthy
@@ -488,10 +488,10 @@ describe Spotlight::BlacklightConfiguration, type: :model do
     # rubocop:enable RSpec/PredicateMatcher
 
     it 'passes through the blacklight configuration when not set' do
-      blacklight_config.view.list
-      blacklight_config.view.gallery
-      blacklight_config.view.something
-      expect(subject.blacklight_config.view.keys).to include(*blacklight_config.view.keys)
+      blacklight_config.view.list!
+      blacklight_config.view.gallery!
+      blacklight_config.view.something!
+      expect(subject.blacklight_config.view.keys.map(&:to_s)).to include(*blacklight_config.view.keys.map(&:to_s))
     end
   end
 
@@ -627,9 +627,9 @@ describe Spotlight::BlacklightConfiguration, type: :model do
 
   describe '#document_index_view_types_selected_hash' do
     before do
-      subject.default_blacklight_config.view.list
-      subject.default_blacklight_config.view.gallery
-      subject.default_blacklight_config.view.map
+      subject.default_blacklight_config.view.list!
+      subject.default_blacklight_config.view.gallery!
+      subject.default_blacklight_config.view.whatever!
       subject.default_blacklight_config.view.rss.if = false
       subject.document_index_view_types = %w[list gallery rss]
     end
@@ -638,8 +638,8 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.document_index_view_types_selected_hash.to_h).to include list: true, gallery: true
     end
 
-    it 'disabled view types are not included' do
-      expect(subject.document_index_view_types_selected_hash.to_h).not_to include :map
+    it 'disabled view types use the value false' do
+      expect(subject.document_index_view_types_selected_hash.to_h).to include whatever: false
     end
 
     it 'excludes view types disabled by configuration (not by curator settings)' do

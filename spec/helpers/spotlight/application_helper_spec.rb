@@ -155,8 +155,8 @@ describe Spotlight::ApplicationHelper, type: :helper do
     end
 
     it 'excludes view fields that are never visible (e.g. atom, rss)' do
-      blacklight_config.view.a.if = true
-      blacklight_config.view.b.if = false
+      blacklight_config.view.a(if: true)
+      blacklight_config.view.b(if: false)
 
       expect(helper.available_view_fields).to include :a
       expect(helper.available_view_fields).not_to include :b
@@ -172,9 +172,9 @@ describe Spotlight::ApplicationHelper, type: :helper do
       # clean out the default views
       blacklight_config.view.reject! { |_| true }
 
-      blacklight_config.view.a
-      blacklight_config.view.b
-      blacklight_config.view.c
+      blacklight_config.view.a!
+      blacklight_config.view.b!
+      blacklight_config.view.c!
       allow(helper).to receive(:blacklight_config).and_return(blacklight_config)
     end
 

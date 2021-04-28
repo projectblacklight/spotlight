@@ -43,6 +43,15 @@ module SirTrevorRails
         ActiveModel::Type::Boolean.new.cast(send(:'show-primary-caption'))
       end
 
+      def document_caption(presenter, caption_field, default: nil)
+        caption_field ||= default
+
+        return unless caption_field
+        return presenter.heading if caption_field == Spotlight::PageConfigurations::DOCUMENT_TITLE_KEY
+
+        presenter.field_value(solr_helper.blacklight_config.index_fields[caption_field] || Blacklight::Configuration::NullField.new(caption_field))
+      end
+
       def secondary_caption?
         secondary_caption_field.present? && show_secondary_caption?
       end

@@ -25,7 +25,7 @@
           <%= label_tag :tags, t(:'spotlight.bulk_actions.remove_tags.label') %>
           <%= text_field_tag :tags, '', class: 'form-control', data: { autocomplete_tag: true, autocomplete_url: exhibit_tags_path(current_exhibit, format: 'json')} %>
         </div>
-        <%= render_hash_as_hidden_fields(search_state.params_for_search) %>
+        <%= render Blacklight::HiddenSearchStateComponent.new(params: search_state.params_for_search) %>
       </div>
       <div class="modal-footer d-flex flex-row-reverse justify-content-start">
         <%= f.submit t(:'spotlight.bulk_actions.remove'), class: 'btn btn-primary', data: { confirm: t(:'spotlight.bulk_actions.confirm') } %>

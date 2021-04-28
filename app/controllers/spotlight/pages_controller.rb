@@ -17,9 +17,11 @@ module Spotlight
     include Spotlight::Base
     include Blacklight::SearchContext
 
-    helper_method :get_search_results, :search_results, :fetch, :page_collection_name, :presenter
+    helper_method :get_search_results, :search_results, :fetch, :page_collection_name
 
     before_action do
+      blacklight_config.action_mapping.default = blacklight_config.index
+      blacklight_config.action_mapping.show = blacklight_config.index
       blacklight_config.view.gallery.classes = 'row-cols-2 row-cols-md-4' unless @page&.display_sidebar
     end
 
@@ -203,10 +205,6 @@ module Spotlight
       else
         raise ActiveRecord::RecordNotFound
       end
-    end
-
-    def presenter(document)
-      view_context.index_presenter(document)
     end
   end
   # rubocop:enable Metrics/ClassLength
