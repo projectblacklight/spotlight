@@ -12,7 +12,7 @@ json.manifests do
 
     json.set! :@id, doc.first(Spotlight::Engine.config.iiif_manifest_field)
     json.set! :@type, 'sc:manifest'
-    json.label presenter(doc).label(document_show_link_field(doc)).to_str
+    json.label document_presenter(doc).heading
   end
 end
 

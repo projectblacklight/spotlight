@@ -1,6 +1,6 @@
 <div class="search-box-container">
   <%= form_tag exhibit_browse_path(current_exhibit, search), method: :get, class: 'browse-search-form search-query-form form-horizontal', role: 'search', 'aria-labelledby' => 'browse-search-form' do %>
-    <%= render_hash_as_hidden_fields(search_state.params_for_search.except(:q, :search_field, :exhibit_id, :q, :qt, :page, :utf8)) %>
+    <%= render Blacklight::HiddenSearchStateComponent.new(params: search_state.params_for_search.except(:q, :search_field, :exhibit_id, :qt, :page)) %>
     <div class="form-group row">
       <label id="browse-search-form" class="col-sm-4 col-form-label h6" for="browse_q"><%= t(:'.label') %></label>
       <div class="col-sm-6">

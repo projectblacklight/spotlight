@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe 'spotlight/sir_trevor/blocks/_iframe_block.html.erb', type: :view do
-  let(:p) { 'spotlight/sir_trevor/blocks/iframe_block.html.erb' }
+  let(:p) { 'spotlight/sir_trevor/blocks/iframe_block' }
   let(:block) do
     OpenStruct.new
   end

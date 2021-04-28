@@ -92,7 +92,7 @@ module Spotlight
     # Helper to turn tag data into facets
     def url_to_tag_facet(tag)
       if current_exhibit
-        search_action_url(search_state.reset.add_facet_params(:exhibit_tags, tag))
+        search_action_url(search_state.reset.filter(:exhibit_tags).add(tag).params)
       else
         search_action_url(q: tag)
       end

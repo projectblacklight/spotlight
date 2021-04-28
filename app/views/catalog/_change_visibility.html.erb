@@ -23,7 +23,7 @@
             <% end %>
           </div>
         <% end %>
-        <%= render_hash_as_hidden_fields(search_state.params_for_search) %>
+        <%= render Blacklight::HiddenSearchStateComponent.new(params: search_state.params_for_search) %>
       </div>
       <div class="modal-footer d-flex flex-row-reverse justify-content-start">
         <%= f.submit t(:'spotlight.bulk_actions.change'), class: 'btn btn-primary', data: { confirm: t(:'spotlight.bulk_actions.confirm') } %>

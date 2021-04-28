@@ -2,9 +2,9 @@
 
 describe 'spotlight/metadata_configurations/_metadata_field', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:field) { Blacklight::Configuration::Field.new immutable: OpenStruct.new(another_view_type: false) }
+  let(:field) { Blacklight::Configuration::Field.new label: 'Some label', immutable: OpenStruct.new(another_view_type: false) }
   let(:builder) { ActionView::Helpers::FormBuilder.new 'z', nil, view, {} }
-  let(:p) { 'spotlight/metadata_configurations/metadata_field.html.erb' }
+  let(:p) { 'spotlight/metadata_configurations/metadata_field' }
 
   before do
     assign(:exhibit, exhibit)
@@ -17,8 +17,7 @@ describe 'spotlight/metadata_configurations/_metadata_field', type: :view do
     )
   end
 
-  it 'uses the index_field_label helper to render the label' do
-    allow(view).to receive(:index_field_label).with(anything, 'some_key').and_return 'Some label'
+  it 'uses the metadata field label' do
     render partial: p, locals: { key: 'some_key', config: field, f: builder }
     expect(rendered).to have_selector '.field-label', text: 'Some label'
   end

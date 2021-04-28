@@ -32,7 +32,7 @@ module Spotlight
     def autocomplete_json_response_for_document(doc)
       {
         id: doc.id,
-        title: CGI.unescapeHTML(view_context.presenter(doc).heading.to_str),
+        title: CGI.unescapeHTML(view_context.document_presenter(doc).heading.to_str),
         thumbnail: doc.first(blacklight_config.index.thumbnail_field),
         full_image_url: doc.first(Spotlight::Engine.config.full_image_field),
         description: doc.id,

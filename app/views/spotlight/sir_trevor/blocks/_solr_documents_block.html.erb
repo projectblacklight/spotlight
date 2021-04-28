@@ -5,24 +5,24 @@
 
     <div class="items-col spotlight-flexbox <%= solr_documents_block.text? ? "col-md-6" : "col-md-12" %> <%= solr_documents_block.content_align == 'right' ? 'float-right' : 'float-left' %>">
       <% solr_documents_block.each_document do |block_options, document| %>
-        <% doc_presenter = index_presenter(document) %>
+        <% doc_presenter = document_presenter(document) %>
         <div class="box" data-id="<%= document.id %>">
           <div class="contents">
             <% if block_options[:thumbnail_image_url].present? %>
               <%= link_to_document(document, image_tag(block_options[:thumbnail_image_url], class: 'img-thumbnail', alt: doc_presenter.heading, skip_pipeline: true), counter: -1) %>
             <% elsif block_options[:iiif_tilesource_base].present?  %>
               <%= link_to_document(document, image_tag(block_options[:iiif_tilesource_base] + '/full/!400,400/0/default.jpg', class: 'img-thumbnail', alt: doc_presenter.heading, skip_pipeline: true), counter: -1) %>
-            <% elsif has_thumbnail? document %>
-              <%= render_thumbnail_tag(document, { class: 'img-thumbnail', alt: doc_presenter.heading }, document_counter: -1) %>
+            <% elsif doc_presenter.thumbnail.exists? %>
+              <%= doc_presenter.thumbnail.thumbnail_tag({ class: 'img-thumbnail', alt: doc_presenter.heading }, document_counter: -1) %>
             <% end %>
             <% if solr_documents_block.primary_caption? %>
               <div class="caption primary-caption">
-                <%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_block.primary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_block.primary_caption_field)) %>
+                <%= solr_documents_block.document_caption(doc_presenter, solr_documents_block.primary_caption_field) %>
               </div>
             <% end %>
             <% if solr_documents_block.secondary_caption? %>
               <div class="caption secondary-caption">
-                <%= doc_presenter.field_value(blacklight_config.index_fields[solr_documents_block.secondary_caption_field] || Blacklight::Configuration::NullField.new(solr_documents_block.secondary_caption_field)) %>
+                <%= solr_documents_block.document_caption(doc_presenter, solr_documents_block.secondary_caption_field) %>
               </div>
             <% end %>
             <% if solr_documents_block.zpr_link? && block_options[:iiif_tilesource].present? %>

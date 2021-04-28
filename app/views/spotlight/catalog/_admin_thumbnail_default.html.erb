@@ -1,5 +1,6 @@
-<%- if has_thumbnail?(document) && tn = render_thumbnail_tag(document, { alt: '' }, 'aria-hidden': true, tabindex: -1, counter: document_counter_with_offset(document_counter)) %>
+<% doc_presenter = document_presenter(document) %>
+<%- if doc_presenter.thumbnail.exists? %>
   <div class="document-thumbnail spotlight-admin-thumbnail">
-    <%= tn %>
+    <%= doc_presenter.thumbnail.thumbnail_tag({ alt: '' }, 'aria-hidden': true, tabindex: -1, counter: document_counter_with_offset(document_counter)) %>
   </div>
 <%- end %>
