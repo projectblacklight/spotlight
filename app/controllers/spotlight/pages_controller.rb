@@ -179,6 +179,14 @@ module Spotlight
       redirect_page_to_related_locale_version
     end
 
+    def document_index_view_type
+      return super if params[:view].present?
+
+      @document_index_view_type || super
+    end
+
+    helper_method :document_index_view_type
+
     private
 
     def update_all_page_params

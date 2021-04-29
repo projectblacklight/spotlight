@@ -16,7 +16,8 @@
         </div>
       </div>
       <% end %>
-
+      <%# ensure we set the right global view type so all the blacklight indirection works out; maybe revisit this on Blacklight 8 %>
+      <% controller.instance_variable_set(:@document_index_view_type, block_document_index_view_type(search_results_block)) %>
       <%= render_document_index_with_view(block_document_index_view_type(search_results_block), document_list) %>
       <%= render 'results_pagination' %>
   <%- end %>

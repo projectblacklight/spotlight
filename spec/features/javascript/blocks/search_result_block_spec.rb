@@ -42,6 +42,6 @@ describe 'Search Result Block', type: :feature, js: true do
     end
 
     # Documents should exist
-    expect(page).to have_css('.documents .document')
+    expect(page).to have_css('.documents-gallery .document')
   end
 end
