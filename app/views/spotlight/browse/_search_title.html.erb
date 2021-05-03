@@ -1,3 +1,3 @@
 <span class="title"><%= search.title %></span>
 <% if search.subtitle.present? %><span class="subtitle"><%= search.subtitle %></span><% end %>
-<small class="item-count"><%= t :'spotlight.browse.search.item_count', count: params[:browse_q] ? parent_search_count: search.count %></small>
+<small class="item-count"><%= t :'spotlight.browse.search.item_count', count: search.count %></small>
