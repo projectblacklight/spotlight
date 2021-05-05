@@ -1,4 +1,4 @@
-<% cache_unless current_user, [current_exhibit, @page] do %>
+<% cache_unless current_user, [current_exhibit, @page, I18n.locale] do %>
   <ol class="nav sidenav flex-column">
     <% @exhibit.feature_pages.for_locale.published.at_top_level.each do |feature_section| %>
       <li class="<%= 'active' if current_page? [spotlight, @exhibit, feature_section] %>">

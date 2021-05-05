@@ -5,7 +5,7 @@
   <%= render 'sidebar' %>
 <% end if @page.display_sidebar?%>
 
-<%= cache_unless current_user, [@page, request.query_string] do %>
+<%= cache_unless current_user, [current_exhibit, @page, I18n.locale, request.query_string] do %>
   <div class="clearfix">
     <%= render 'edit_page_link' if can? :edit, @page %>
     <% if @page.should_display_title? %>
