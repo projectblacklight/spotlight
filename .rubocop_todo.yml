@@ -157,7 +157,7 @@ Naming/VariableNumber:
     - 'spec/models/sir_trevor_rails/blocks/browse_block_spec.rb'
     - 'spec/services/spotlight/exhibit_import_export_service_spec.rb'
 
-# Offense count: 63
+# Offense count: 64
 RSpec/AnyInstance:
   Enabled: false
 
@@ -177,11 +177,6 @@ RSpec/ContextWording:
 RSpec/EmptyExampleGroup:
   Exclude:
     - 'spec/factories/tags.rb'
-
-# Offense count: 335
-# Configuration parameters: Max.
-RSpec/ExampleLength:
-  Enabled: false
 
 # Offense count: 8
 RSpec/ExpectInHook:
@@ -223,7 +218,7 @@ RSpec/MissingExampleGroupArgument:
     - 'spec/factories/tags.rb'
     - 'spec/views/spotlight/search_configurations/_facets.html.erb_spec.rb'
 
-# Offense count: 80
+# Offense count: 84
 # Configuration parameters: AllowSubject.
 RSpec/MultipleMemoizedHelpers:
   Max: 18
@@ -355,6 +350,13 @@ Rails/PluckInWhere:
   Exclude:
     - 'app/models/concerns/spotlight/user.rb'
 
+# Offense count: 2
+# Cop supports --auto-correct.
+# Configuration parameters: NotNilAndNotEmpty, NotBlank, UnlessBlank.
+Rails/Present:
+  Exclude:
+    - 'app/models/spotlight/blacklight_configuration.rb'
+
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: Include.
@@ -371,11 +373,12 @@ Rails/ReflectionClassName:
     - 'app/models/spotlight/page.rb'
     - 'app/models/spotlight/role.rb'
 
-# Offense count: 1
+# Offense count: 6
 # Configuration parameters: ForbiddenMethods, AllowedMethods.
 # ForbiddenMethods: decrement!, decrement_counter, increment!, increment_counter, insert, insert!, insert_all, insert_all!, toggle!, touch, touch_all, update_all, update_attribute, update_column, update_columns, update_counters, upsert, upsert_all
 Rails/SkipsModelValidations:
   Exclude:
+    - 'app/models/spotlight/featured_image.rb'
     - 'app/models/spotlight/resource.rb'
 
 # Offense count: 1
@@ -384,6 +387,13 @@ Rails/SkipsModelValidations:
 Rails/UnknownEnv:
   Exclude:
     - 'spec/test_app_templates/carrierwave.rb'
+
+# Offense count: 1
+# Configuration parameters: AllowedChars.
+# AllowedChars: ©
+Style/AsciiComments:
+  Exclude:
+    - 'app/models/spotlight/featured_image.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

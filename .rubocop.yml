@@ -101,6 +101,10 @@ RSpec/DescribeClass:
     - 'spec/views/**/*'
     - 'spec/i18n_spec.rb'
 
+# Configuration parameters: CountAsOne.
+RSpec/ExampleLength:
+  Enabled: false
+
 RSpec/NestedGroups:
   Max: 4
 
