@@ -5,6 +5,18 @@ describe Spotlight::FeaturedImage do
 
   let(:temp_image) { FactoryBot.create(:temporary_image) }
 
+  describe '#bust_containing_resource_caches' do
+    let!(:feature_page) { FactoryBot.create(:feature_page, thumbnail: temp_image) }
+    let!(:feature_page2) { FactoryBot.create(:feature_page, thumbnail: temp_image) }
+
+    it 'changes the updated_at for all resources that might be using this image' do
+      temp_image.save
+
+      expect(feature_page.updated_at).to be < feature_page.reload.updated_at
+      expect(feature_page2.updated_at).to be < feature_page2.reload.updated_at
+    end
+  end
+
   context 'with an uploaded image' do
     it 'copies the temporary uploaded image to this model' do
       featured_image.source = 'remote'
