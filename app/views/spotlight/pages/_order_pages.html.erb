@@ -1,5 +1,5 @@
 <%= curation_page_title t(:"spotlight.pages.index.#{page_collection_name}.header") %>
-<%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, page_collection_name]), layout: :horizontal, control_col: 'col-sm-10', html: {:'data-form-observer' => true} do |f| %>
+<%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, page_collection_name.to_sym]), layout: :horizontal, control_col: 'col-sm-10', html: {:'data-form-observer' => true} do |f| %>
 
     <%= render partial: 'header', locals: {f: f} %>
     <h2 class="mt-4"><%= t :'.pages_header' %></h2>
@@ -20,7 +20,7 @@
     </div>
 <%- end -%>
 <div>
-  <%= form_for @page, url: spotlight.polymorphic_path([@exhibit, page_collection_name]), html: {class: "expanded-add-button"} do |f|%>
+  <%= form_for @page, url: spotlight.polymorphic_path([@exhibit, page_collection_name.to_sym]), html: {class: "expanded-add-button"} do |f|%>
     <a href='#add-new' class="btn btn-primary" data-turbolinks="false" data-expanded-add-button="true" data-field-target="[data-title-field]">
       <%= t(:'.new_page') %> <%= blacklight_icon('chevron_right') %>
       <span data-title-field="true" class="input-field">
