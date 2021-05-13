@@ -31,7 +31,7 @@ module SirTrevorRails
         send(:'display-item-counts') == 'true'
       end
 
-      def as_json
+      def as_json(*)
         result = super
 
         result[:data][:item] ||= {}
