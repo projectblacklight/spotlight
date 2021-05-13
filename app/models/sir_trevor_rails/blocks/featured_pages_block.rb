@@ -22,7 +22,7 @@ module SirTrevorRails
       end
 
       # rubocop:disable Metrics/MethodLength
-      def as_json
+      def as_json(*)
         result = super
         result[:data][:item] ||= {}
 

@@ -42,8 +42,7 @@ describe Spotlight::AccessControlsEnforcementSearchBuilder do
     it 'does not filter resources to just those created by the exhibit' do
       allow(current_ability).to receive(:can?).and_return(true)
       subject.apply_permissive_visibility_filter(solr_request)
-      expect(solr_request).to include :fq
-      expect(solr_request[:fq]).not_to include "{!term f=spotlight_exhibit_slug_#{exhibit.slug}_bsi}true"
+      expect(solr_request[:fq]).to be_blank
     end
   end
 
