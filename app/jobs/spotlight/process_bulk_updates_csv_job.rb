@@ -43,7 +43,7 @@ module Spotlight
       needs_reindex = false
 
       begin
-        if sidecar.public != to_bool(row[config.csv_visibility])
+        if row.headers.include?(config.csv_visibility) && sidecar.public != to_bool(row[config.csv_visibility])
           sidecar.update(public: to_bool(row[config.csv_visibility]))
           needs_reindex = true
         end
