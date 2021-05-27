@@ -55,7 +55,9 @@ module Spotlight
     end
 
     def count
-      documents.size
+      @count ||= Rails.cache.fetch([exhibit, self, 'count']) do
+        documents.size
+      end
     end
 
     delegate :blacklight_config, to: :exhibit
