@@ -36,6 +36,14 @@ describe Spotlight::ProcessBulkUpdatesCsvJob do
         expect(SolrDocument.index.connection).not_to have_received(:update)
       end
     end
+
+    context 'without a visibility column' do
+      let(:bulk_update) { FactoryBot.create(:bulk_update_no_cols, exhibit: exhibit) }
+
+      it 'does nothing with the data' do
+        expect { subject.perform_now }.not_to(change { exhibit.reload.solr_document_sidecars.where(public: false).count })
+      end
+    end
   end
 
   describe 'tags' do
