@@ -13,8 +13,13 @@ module Spotlight
       count = exhibit.resources.count
 
       # Use the provided batch size, or calculate a reasonable default
-      batch_count = (count.to_f / batch_size).ceil if batch_size
-      batch_count ||= 1 + Math.log(count).round # e.g. 10 => 3, 100 => 6, 1000 => 8
+      batch_count = if count.zero?
+                      1
+                    elsif batch_size
+                      (count.to_f / batch_size).ceil
+                    else
+                      1 + Math.log(count).round # e.g. 10 => 3, 100 => 6, 1000 => 8
+                    end
 
       return Spotlight::ReindexJob.perform_now(exhibit, reports_on: job_tracker) if batch_count == 1
 
