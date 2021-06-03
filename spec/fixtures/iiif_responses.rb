@@ -5,24 +5,24 @@ module IiifResponses
     {
       "@id": 'uri://for-top-level-collection',
       "@type": 'sc:Collection',
-      "label": 'Complex Collection',
-      "collections": [
+      label: 'Complex Collection',
+      collections: [
         {
           "@id": 'uri://for-child-collection1',
           "@type": 'sc:Collection',
-          "label": 'Child Collection 1'
+          label: 'Child Collection 1'
         },
         {
           "@id": 'uri://for-child-collection2',
           "@type": 'sc:Collection',
-          "label": 'Child Collection 2'
+          label: 'Child Collection 2'
         }
       ],
-      "manifests": [
+      manifests: [
         {
           "@id": 'uri://for-manifest1',
           "@type": 'sc:Manifest',
-          "label": 'Test Manifest 1'
+          label: 'Test Manifest 1'
         }
       ]
     }.to_json
@@ -32,19 +32,19 @@ module IiifResponses
     {
       "@id": 'uri://for-child-collection1',
       "@type": 'sc:Collection',
-      "label": 'Child Collection 1',
-      "collections": [
+      label: 'Child Collection 1',
+      collections: [
         {
           "@id": 'uri://for-child-collection3',
           "@type": 'sc:Collection',
-          "label": 'Child Collection 3'
+          label: 'Child Collection 3'
         }
       ],
-      "manifests": [
+      manifests: [
         {
           "@id": 'uri://for-manifest2',
           "@type": 'sc:Manifest',
-          "label": 'Test Manifest 2'
+          label: 'Test Manifest 2'
         }
       ]
     }.to_json
@@ -54,12 +54,12 @@ module IiifResponses
     {
       "@id": 'uri://for-child-collection2',
       "@type": 'sc:Collection',
-      "label": 'Child Collection 2',
-      "manifests": [
+      label: 'Child Collection 2',
+      manifests: [
         {
           "@id": 'uri://for-manifest4',
           "@type": 'sc:Manifest',
-          "label": 'Test Manifest 4'
+          label: 'Test Manifest 4'
         }
       ]
     }.to_json
@@ -69,12 +69,12 @@ module IiifResponses
     {
       "@id": 'uri://for-child-collection3',
       "@type": 'sc:Collection',
-      "label": 'Child Collection 3',
-      "manifests": [
+      label: 'Child Collection 3',
+      manifests: [
         {
           "@id": 'uri://for-manifest3',
           "@type": 'sc:Manifest',
-          "label": 'Test Manifest 3'
+          label: 'Test Manifest 3'
         }
       ]
     }.to_json
@@ -84,40 +84,40 @@ module IiifResponses
     {
       "@id": 'uri://for-manifest1',
       "@type": 'sc:Manifest',
-      "label": 'Test Manifest 1',
-      "attribution": 'Attribution Data',
-      "description": 'A test IIIF manifest',
-      "license": 'http://www.example.org/license.html',
-      "metadata": [
+      label: 'Test Manifest 1',
+      attribution: 'Attribution Data',
+      description: 'A test IIIF manifest',
+      license: 'http://www.example.org/license.html',
+      metadata: [
         {
-          "label": 'Author',
-          "value": 'John Doe'
+          label: 'Author',
+          value: 'John Doe'
         },
         {
-          "label": 'Author',
-          "value": 'Jane Doe'
+          label: 'Author',
+          value: 'Jane Doe'
         },
         {
-          "label": 'Another Field',
-          "value": 'Some data'
+          label: 'Another Field',
+          value: 'Some data'
         }
       ],
-      "thumbnail": {
+      thumbnail: {
         "@id": 'uri://to-thumbnail'
       },
-      "sequences": [
+      sequences: [
         {
           "@type": 'sc:Sequence',
-          "canvases": [
+          canvases: [
             {
               "@type": 'sc:Canvas',
-              "images": [
+              images: [
                 {
                   "@type": 'oa:Annotation',
-                  "resource": {
+                  resource: {
                     "@type": 'dcterms:Image',
                     "@id": 'uri://full-image',
-                    "service": {
+                    service: {
                       "@id": 'uri://to-image-service'
                     }
                   }
@@ -134,47 +134,47 @@ module IiifResponses
     {
       "@id": 'uri://for-manifest2',
       "@type": 'sc:Manifest',
-      "label": {
+      label: {
         "@value": 'Test Manifest 2',
         "@language": 'en'
       },
-      "attribution": 'Attribution Data',
-      "description": 'A test IIIF manifest',
-      "license": 'http://www.example.org/license.html',
-      "metadata": [
+      attribution: 'Attribution Data',
+      description: 'A test IIIF manifest',
+      license: 'http://www.example.org/license.html',
+      metadata: [
         {
-          "label": 'Contributor',
-          "value": 'John Doe'
+          label: 'Contributor',
+          value: 'John Doe'
         },
         {
-          "label": 'Yet Another Field',
-          "value": 'Some data'
+          label: 'Yet Another Field',
+          value: 'Some data'
         }
       ],
-      "thumbnail": {
+      thumbnail: {
         "@id": 'uri://to-thumbnail'
       },
-      "sequences": [
+      sequences: [
         {
           "@type": 'sc:Sequence',
-          "canvases": [
+          canvases: [
             {
               "@type": 'sc:Canvas',
-              "images": [
+              images: [
                 {
                   "@type": 'oa:Annotation',
-                  "resource": {
+                  resource: {
                     "@type": 'dcterms:Image',
-                    "service": {
+                    service: {
                       "@id": 'uri://to-image-service'
                     }
                   }
                 },
                 {
                   "@type": 'oa:Annotation',
-                  "resource": {
+                  resource: {
                     "@type": 'dcterms:Image',
-                    "service": {
+                    service: {
                       "@id": 'uri://to-image-service2'
                     }
                   }
@@ -191,7 +191,7 @@ module IiifResponses
     {
       "@id": 'uri://for-manifest3',
       "@type": 'sc:Manifest',
-      "label": [
+      label: [
         {
           "@value": 'Test Manifest 3',
           "@language": 'en'
@@ -201,34 +201,34 @@ module IiifResponses
           "@language": 'fr'
         }
       ],
-      "attribution": 'Attribution Data',
-      "description": 'A test IIIF manifest',
-      "license": 'http://www.example.org/license.html',
-      "metadata": [
+      attribution: 'Attribution Data',
+      description: 'A test IIIF manifest',
+      license: 'http://www.example.org/license.html',
+      metadata: [
         {
-          "label": 'Author',
-          "value": 'Jane Doe'
+          label: 'Author',
+          value: 'Jane Doe'
         },
         {
-          "label": 'Collection',
-          "value": 'Some Collection'
+          label: 'Collection',
+          value: 'Some Collection'
         }
       ],
-      "thumbnail": {
+      thumbnail: {
         "@id": 'uri://to-thumbnail'
       },
-      "sequences": [
+      sequences: [
         {
           "@type": 'sc:Sequence',
-          "canvases": [
+          canvases: [
             {
               "@type": 'sc:Canvas',
-              "images": [
+              images: [
                 {
                   "@type": 'oa:Annotation',
-                  "resource": {
+                  resource: {
                     "@type": 'dcterms:Image',
-                    "service": {
+                    service: {
                       "@id": 'uri://to-image-service'
                     }
                   }
@@ -245,35 +245,35 @@ module IiifResponses
     {
       "@id": 'uri://for-manifest4',
       "@type": 'sc:Manifest',
-      "label": 'Test Manifest 4',
-      "attribution": 'Attribution Data',
-      "description": 'A test IIIF manifest',
-      "license": 'http://www.example.org/license.html',
-      "metadata": [
+      label: 'Test Manifest 4',
+      attribution: 'Attribution Data',
+      description: 'A test IIIF manifest',
+      license: 'http://www.example.org/license.html',
+      metadata: [
         {
-          "label": 'Contributor',
-          "value": 'Jane Doe'
+          label: 'Contributor',
+          value: 'Jane Doe'
         },
         {
-          "label": 'Location',
-          "value": 'Some location'
+          label: 'Location',
+          value: 'Some location'
         }
       ],
-      "thumbnail": {
+      thumbnail: {
         "@id": 'uri://to-thumbnail'
       },
-      "sequences": [
+      sequences: [
         {
           "@type": 'sc:Sequence',
-          "canvases": [
+          canvases: [
             {
               "@type": 'sc:Canvas',
-              "images": [
+              images: [
                 {
                   "@type": 'oa:Annotation',
-                  "resource": {
+                  resource: {
                     "@type": 'dcterms:Image',
-                    "service": {
+                    service: {
                       "@id": 'uri://to-image-service'
                     }
                   }
