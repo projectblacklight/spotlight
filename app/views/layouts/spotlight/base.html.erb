@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <%= render partial: 'shared/analytics' %>
     <title><%= h(@page_title || application_name.to_s) %></title>
     <link href="<%= current_exhibit ? spotlight.opensearch_exhibit_catalog_url(current_exhibit, format: 'xml') : main_app.opensearch_catalog_url(format: 'xml') %>" title="<%= h(@page_title || application_name.to_str) %>" type="application/opensearchdescription+xml" rel="search"/>
     <%= favicon_link_tag 'favicon.ico' %>
@@ -22,6 +22,7 @@
     <%= javascript_tag '$.fx.off = true;' if Rails.env.test? %>
   </head>
   <body class="<%= render_body_class %>">
+    <%= render partial: 'shared/body_preamble' %>
     <div id="skip-link">
       <%= link_to t('blacklight.skip_links.search_field'), '#search_field', class: 'element-invisible element-focusable rounded-bottom py-2 px-3', data: { turbolinks: 'false' } %>
       <%= link_to t('blacklight.skip_links.main_content'), '#main-container', class: 'element-invisible element-focusable rounded-bottom py-2 px-3', data: { turbolinks: 'false' } %>

@@ -33,12 +33,22 @@ describe 'spotlight/pages/show', type: :view do
     render
   end
 
-  it 'does not double-escape HTML entities in the HTML title' do
-    allow(page).to receive_messages(title: 'Abbott & Costello')
-    stub_template 'shared/_user_util_links.html.erb' => ''
-    stub_template 'shared/_masthead.html.erb' => ''
-    render template: 'spotlight/pages/show', layout: 'layouts/spotlight/spotlight'
-    expect(rendered).to have_content('Abbott & Costello | Blacklight')
+  context 'when rendering with layout' do
+    before do
+      allow(page).to receive_messages(title: 'Abbott & Costello')
+      stub_template 'shared/_analytics.html.erb' => 'analytics'
+      stub_template 'shared/_user_util_links.html.erb' => ''
+      stub_template 'shared/_masthead.html.erb' => ''
+      render template: 'spotlight/pages/show', layout: 'layouts/spotlight/spotlight'
+    end
+
+    it 'does not double-escape HTML entities in the HTML title' do
+      expect(rendered).to have_content('Abbott & Costello | Blacklight')
+    end
+
+    it 'includes analytics reporting' do
+      expect(rendered).to have_content 'analytics'
+    end
   end
 
   it 'does not include the page title' do
