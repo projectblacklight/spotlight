@@ -200,5 +200,13 @@ module Spotlight
         EOF
       end
     end
+
+    private
+
+    def bundle_install
+      inside destination_root do
+        Bundler.with_clean_env { run 'bundle install' }
+      end
+    end
   end
 end
