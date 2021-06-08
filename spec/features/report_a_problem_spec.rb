@@ -28,6 +28,7 @@ describe 'Report a Problem', type: :feature do
       click_on 'Feedback'
 
       expect(page).to have_css('h2', text: 'Contact us', visible: true)
+      expect(page).to have_css('#contact_form_name', count: 1)
     end
 
     it 'accepts a problem report', js: true do

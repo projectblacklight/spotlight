@@ -1,4 +1,4 @@
-<% if show_contact_form? %>
+<% if show_contact_form? && (current_exhibit.nil? || !current_page?(spotlight.new_exhibit_contact_form_path(current_exhibit))) %>
   <div id="report-problem-form">
     <%= render 'spotlight/shared/report_a_problem' %>
   </div>
