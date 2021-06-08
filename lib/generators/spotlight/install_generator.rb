@@ -39,8 +39,7 @@ module Spotlight
 
     def friendly_id
       gem 'friendly_id'
-      # we need to immediately run `bundle install` while pointing at github.
-      Bundler.with_clean_env { run 'bundle install' }
+      bundle_install
       generate 'friendly_id'
     end
 
@@ -58,7 +57,7 @@ module Spotlight
     def sitemaps
       gem 'sitemap_generator'
 
-      Bundler.with_clean_env { run 'bundle install' }
+      bundle_install
 
       copy_file 'config/sitemap.rb', 'config/sitemap.rb'
 
@@ -93,7 +92,7 @@ module Spotlight
     end
 
     def add_model_mixin
-      if File.exist? 'app/models/solr_document.rb'
+      if File.exist? File.expand_path('app/models/solr_document.rb', destination_root)
         inject_into_file 'app/models/solr_document.rb', after: 'include Blacklight::Solr::Document' do
           "\n  include Spotlight::SolrDocument\n"
         end
@@ -103,7 +102,7 @@ module Spotlight
     end
 
     def add_solr_indexing_mixin
-      if File.exist? 'app/models/solr_document.rb'
+      if File.exist? File.expand_path('app/models/solr_document.rb', destination_root)
         inject_into_file 'app/models/solr_document.rb', after: "include Spotlight::SolrDocument\n" do
           "\n  include #{options[:solr_update_class]}\n"
         end
@@ -113,7 +112,7 @@ module Spotlight
     end
 
     def add_search_builder_mixin
-      if File.exist? 'app/models/search_builder.rb'
+      if File.exist? File.expand_path('app/models/search_builder.rb', destination_root)
         inject_into_file 'app/models/search_builder.rb', after: "include Blacklight::Solr::SearchBuilderBehavior\n" do
           "\n  include Spotlight::SearchBuilder\n"
         end
@@ -128,12 +127,13 @@ module Spotlight
 
     def add_osd_viewer
       gem 'blacklight-gallery', '~> 3.0'
+      bundle_install
       generate 'blacklight_gallery:install'
     end
 
     def add_oembed
       gem 'blacklight-oembed', '~> 1.0'
-      Bundler.with_clean_env { run 'bundle install' }
+      bundle_install
       generate 'blacklight_oembed:install'
       copy_file 'config/initializers/oembed.rb'
     end
@@ -162,6 +162,7 @@ module Spotlight
 
     def generate_devise_invitable
       gem 'devise_invitable'
+      bundle_install
       generate 'devise_invitable:install'
       generate 'devise_invitable', 'User'
     end
