@@ -1,5 +1,9 @@
 (function ($){
   Spotlight.Block = SirTrevor.Block.extend({
+    scribeOptions: {
+      allowBlockElements: true,
+      tags: { p: true }
+    },
     formable: true,
     editorHTML: function() {
       return _.template(this.template)(this);
