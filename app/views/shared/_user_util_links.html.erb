@@ -1,8 +1,14 @@
-<ul class="navbar-nav mr-auto">
+<% nav_actions = capture do %>
   <%= render_nav_actions do |config, action|%>
     <li class="nav-item"><%= action %></li>
   <% end %>
-</ul>
+<% end %>
+
+<% if nav_actions.present? %>
+  <ul class="navbar-nav mr-auto">
+    <%= nav_actions %>
+  </ul>
+<% end %>
 
 <ul class="navbar-nav">
   <%= render '/spotlight/shared/locale_picker' %>
