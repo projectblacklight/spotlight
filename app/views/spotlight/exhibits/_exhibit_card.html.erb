@@ -1,21 +1,18 @@
 <div class="col mb-4">
+  <%= link_to exhibit, tabindex: '-1' do %>
   <div class="card exhibit-card">
-    <%= link_to exhibit, aria: { hidden: true  }, tabindex: '-1' do %>
       <% if exhibit.thumbnail.present? && exhibit.thumbnail.iiif_url %>
-        <%= image_tag(exhibit.thumbnail.iiif_url, class: 'card-img',  alt: '', role: 'presentation', skip_pipeline: true) %>
+        <%= image_tag(exhibit.thumbnail.iiif_url, class: 'card-img',  alt: '', role: 'presentation', skip_pipeline: true, aria: { hidden: true  }) %>
       <% else %>
-        <%= image_tag 'spotlight/default_thumbnail.jpg', class: 'card-img default-thumbnail',  alt: '', role: 'presentation' %>
+        <%= image_tag 'spotlight/default_thumbnail.jpg', class: 'card-img default-thumbnail',  alt: '', role: 'presentation', aria: { hidden: true  } %>
       <% end %>
-    <% end %>
     <div class="card-img-overlay pb-0">
       <% unless exhibit.published? %>
         <div class="badge badge-warning unpublished"><%= t('.unpublished') %></div>
       <% end %>
 
       <%= content_tag :h2, class: 'card-title h5 text-center', aria: { describedby: "exhibit-description-#{exhibit.to_param}" } do %>
-        <%= link_to exhibit, class: 'stretched-link' do %>
           <span><%= exhibit.title %></span>
-        <% end %>
       <% end %>
 
       <% if exhibit.subtitle || exhibit.description  %>
@@ -35,4 +32,5 @@
       <% end %>
     </div>
   </div>
+  <% end %>
 </div>
