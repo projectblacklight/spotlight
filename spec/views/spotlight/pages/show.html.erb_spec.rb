@@ -36,6 +36,7 @@ describe 'spotlight/pages/show', type: :view do
   context 'when rendering with layout' do
     before do
       allow(page).to receive_messages(title: 'Abbott & Costello')
+      allow_any_instance_of(Spotlight::Exhibit).to receive(:searchable?).and_return(true)
       stub_template 'shared/_analytics.html.erb' => 'analytics'
       stub_template 'shared/_user_util_links.html.erb' => ''
       stub_template 'shared/_masthead.html.erb' => ''
