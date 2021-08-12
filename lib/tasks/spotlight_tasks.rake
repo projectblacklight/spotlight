@@ -33,7 +33,10 @@ namespace :spotlight do
     print 'Exhibit title: '
     title = $stdin.gets.chomp
 
-    exhibit = Spotlight::Exhibit.create!(title: title)
+    print 'Exhibit URL slug: '
+    slug = @stdin.gets.chomp
+
+    exhibit = Spotlight::Exhibit.create!({ title: title, slug: slug })
 
     puts 'Who can admin this exhibit?'
 
