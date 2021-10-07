@@ -60,7 +60,7 @@ Metrics/BlockLength:
     - 'app/models/spotlight/resource.rb'
 
 Metrics/ClassLength:
-  Max: 120
+  Max: 150
   Exclude:
     - 'app/models/spotlight/resources/iiif_manifest.rb'
     - 'app/controllers/spotlight/browse_controller.rb'

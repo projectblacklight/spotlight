@@ -12,7 +12,7 @@ module SirTrevorRails
       end
 
       def pages
-        @pages ||= parent.exhibit.pages.published.where(slug: item_ids).sort do |a, b|
+        @pages ||= parent.exhibit.pages.for_default_locale.published.where(slug: item_ids).sort do |a, b|
           ordered_items.index(a.slug) <=> ordered_items.index(b.slug)
         end
       end
@@ -28,7 +28,7 @@ module SirTrevorRails
 
         result[:data][:item].transform_values! do |v|
           begin
-            v['thumbnail_image_url'] = parent.exhibit.pages.find(v['id']).thumbnail_image_url
+            v['thumbnail_image_url'] = parent.exhibit.pages.for_default_locale.find(v['id']).thumbnail_image_url
           rescue ActiveRecord::RecordNotFound
             v = nil
           end
