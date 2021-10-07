@@ -3,7 +3,8 @@
 describe SirTrevorRails::Blocks::FeaturedPagesBlock do
   subject { described_class.new({ type: '', data: block_data }, page) }
 
-  let(:page) { FactoryBot.create(:feature_page) }
+  let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:block_data) { {} }
 
   describe '#items' do
@@ -18,6 +19,23 @@ describe SirTrevorRails::Blocks::FeaturedPagesBlock do
 
     it 'is an empty array when there is no browse category' do
       expect(subject.items).to eq([])
+    end
+  end
+
+  describe '#pages' do
+    let!(:page_a) { FactoryBot.create(:feature_page, slug: 'a', exhibit: exhibit) }
+    let!(:translated_page_a) { page_a.clone_for_locale('a').tap { |x| x.update(published: true) && x.save } }
+    let!(:page_b) { FactoryBot.create(:feature_page, slug: 'b', exhibit: exhibit) }
+
+    before do
+      block_data[:item] = {
+        '0': { id: 'a', display: 'true' },
+        '1': { id: 'b', display: 'true' }
+      }
+    end
+
+    it 'retrieves the pages from the default locale' do
+      expect(subject.pages.length).to eq 2
     end
   end
 
