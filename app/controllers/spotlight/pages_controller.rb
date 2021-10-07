@@ -3,9 +3,6 @@
 module Spotlight
   ##
   # Base CRUD controller for pages
-  # rubocop:disable Metrics/ClassLength
-  # Disableing class length because this is a base
-  # controller that gives other controllers their behavior
   class PagesController < Spotlight::ApplicationController
     before_action :authenticate_user!, except: [:show]
     before_action :load_locale_specific_page, only: %i[destroy edit show update]
@@ -32,7 +29,7 @@ module Spotlight
 
       respond_to do |format|
         format.html
-        format.json { render json: @pages.for_locale.published.to_json(methods: [:thumbnail_image_url]) }
+        format.json { render json: @pages.for_default_locale.published.to_json(methods: [:thumbnail_image_url]) }
       end
     end
 
@@ -208,5 +205,4 @@ module Spotlight
       end
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end
