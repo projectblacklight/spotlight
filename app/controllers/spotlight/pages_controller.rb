@@ -32,7 +32,7 @@ module Spotlight
 
       respond_to do |format|
         format.html
-        format.json { render json: @pages.for_locale.published.to_json(methods: [:thumbnail_image_url]) }
+        format.json { render json: @pages.for_default_locale.published.to_json(methods: [:thumbnail_image_url]) }
       end
     end
 

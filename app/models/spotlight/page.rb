@@ -46,6 +46,12 @@ module Spotlight
 
     after_update :update_translated_pages_weights_and_parent_page
 
+    def title
+      return super if I18n.locale == I18n.default_locale
+
+      translated_page_for(I18n.locale)&.title || super
+    end
+
     def content_changed!
       @content = nil
     end
@@ -133,6 +139,8 @@ module Spotlight
     end
 
     def translated_page_for(locale)
+      return self if locale == self.locale
+
       translated_pages.for_locale(locale).first
     end
 
