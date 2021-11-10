@@ -10,74 +10,56 @@
       </ul>
     </div>
   <% end %>
-  <div role="tabpanel">
-    <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="nav-item">
-        <a href="#search-description" aria-controls="search-description" role="tab" data-toggle="tab" class="nav-link active"><%= t(:'.search_description') %></a>
-      </li>
 
-      <li role="presentation" class="nav-item">
-        <a href="#search-group" aria-controls="search-group" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.search_group') %></a>
-      </li>
-
-      <li role="presentation" class="nav-item">
-        <a href="#search-masthead" aria-controls="search-masthead" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.search_masthead') %></a>
-      </li>
-
-      <li role="presentation" class="nav-item">
-        <a href="#search-thumbnail" aria-controls="search-thumbnail" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.search_thumbnail') %></a>
-      </li>
-    </ul>
-
-
-    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="search-description">
-        <%= f.text_field :title, control_col: "col-sm-5" %>
-        <%= f.text_field :subtitle, control_col: "col-sm-5" %>
-        <%= f.text_area :long_description, rows: 5 %>
-        <%= f.form_group :search_box, label: { text: t(:'.search_box.label'), class: 'pt-0' }, help: t(:'.search_box.help_block') do %>
-          <%= f.check_box :search_box, label: t(:'.search_box.checkbox_label') %>
+  <%= render Spotlight::TabPanelComponent.new do |component| %>
+    <% component.tab(id: 'search-description', label: t(:'.search_description'), active: true) do %>
+      <%= f.text_field :title, control_col: "col-sm-5" %>
+      <%= f.text_field :subtitle, control_col: "col-sm-5" %>
+      <%= f.text_area :long_description, rows: 5 %>
+      <%= f.form_group :search_box, label: { text: t(:'.search_box.label'), class: 'pt-0' }, help: t(:'.search_box.help_block') do %>
+        <%= f.check_box :search_box, label: t(:'.search_box.checkbox_label') %>
+      <% end %>
+      <%= f.form_group label: { text: t(:".default_index_view_type"), class: 'pt-0' } do %>
+        <% available_document_index_views.each do |key, view| %>
+          <%= f.radio_button :default_index_view_type, key, label: view.display_label(key) %>
         <% end %>
-        <%= f.form_group label: { text: t(:".default_index_view_type"), class: 'pt-0' } do %>
-          <% available_document_index_views.each do |key, view| %>
-            <%= f.radio_button :default_index_view_type, key, label: view.display_label(key) %>
-          <% end %>
-        <% end %>
-        <% unless @search.query_params.blank? %>
-          <div class="form-group row">
-            <label class="col-md-2 col-sm-2 col-form-label"><%= t(:".query_params") %></label>
-            <div class="col-md-7 col-sm-7">
-              <div class="appliedParams card card-body bg-light d-block">
-                <%= render_constraints(@search.query_params) %>
-              </div>
+      <% end %>
+      <% unless @search.query_params.blank? %>
+        <div class="form-group row">
+          <label class="col-md-2 col-sm-2 col-form-label"><%= t(:".query_params") %></label>
+          <div class="col-md-7 col-sm-7">
+            <div class="appliedParams card card-body bg-light d-block">
+              <%= render_constraints(@search.query_params) %>
             </div>
           </div>
-        <% end %>
-      </div>
-      <div role="tabpanel" class="tab-pane" id="search-group">
-        <% if @groups.present? %>
-          <p class="instructions"><%= t(:'.group.help') %></p>
-          <%= f.collection_check_boxes(:group_ids, @groups, :id, :title, hide_label: true) %>
-        <% else %>
-          <p class="instructions"><%= t(:'.group.help_no_groups') %></p>
-        <% end %>
-      </div>
-      <div role="tabpanel" class="tab-pane" id="search-masthead">
-        <%= f.fields_for :masthead, (@search.masthead || @search.build_masthead) do |m| %>
-          <p class="instructions"><%= t(:'.masthead.help') %></p>
-          <p class="instructions"><%= t(:'.masthead.help_secondary') %></p>
-          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection, crop_type: :masthead %>
-        <% end %>
-      </div>
-      <div role="tabpanel" class="tab-pane" id="search-thumbnail">
-        <%= f.fields_for :thumbnail, (@search.thumbnail || @search.build_thumbnail) do |m| %>
-          <p class="instructions"><%= t(:'.thumbnail.help') %></p>
-          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.featured_image_thumb_size, crop_type: :thumbnail %>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
+    <% end %>
 
-    </div>
-  </div>
+    <% component.tab(id: 'search-group', label: t(:'.search_group')) do %>
+      <% if @groups.present? %>
+        <p class="instructions"><%= t(:'.group.help') %></p>
+        <%= f.collection_check_boxes(:group_ids, @groups, :id, :title, hide_label: true) %>
+      <% else %>
+        <p class="instructions"><%= t(:'.group.help_no_groups') %></p>
+      <% end %>
+    <% end %>
+
+    <% component.tab(id: 'search-masthead', label: t(:'.search_masthead')) do %>
+      <%= f.fields_for :masthead, (@search.masthead || @search.build_masthead) do |m| %>
+        <p class="instructions"><%= t(:'.masthead.help') %></p>
+        <p class="instructions"><%= t(:'.masthead.help_secondary') %></p>
+        <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection, crop_type: :masthead %>
+      <% end %>
+    <% end %>
+
+    <% component.tab(id: 'search-thumbnail', label: t(:'.search_thumbnail')) do %>
+      <%= f.fields_for :thumbnail, (@search.thumbnail || @search.build_thumbnail) do |m| %>
+        <p class="instructions"><%= t(:'.thumbnail.help') %></p>
+        <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.featured_image_thumb_size, crop_type: :thumbnail %>
+      <% end %>
+    <% end %>
+  <% end %>
 
   <div class="form-actions">
     <div class="primary-actions">

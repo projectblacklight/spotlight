@@ -1,47 +1,32 @@
-<% if (current_user && current_user.exhibits.any?) || can?(:manage, Spotlight::Exhibit) %>
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="nav-item"><a href="#published" aria-controls="published" role="tab" data-toggle="tab" class="nav-link active"><%= t('.published') %></a></li>
-    <% if can?(:manage, Spotlight::Exhibit) && @exhibits.unpublished.accessible_by(current_ability).any? %>
-      <li role="presentation" class="nav-item"><a href="#unpublished" aria-controls="unpublished" role="tab" data-toggle="tab" class="nav-link"><%= t('.unpublished') %></a></li>
-    <% end %>
-    <% if current_user && current_user.exhibits.any? %>
-      <li role="presentation" class="nav-item"><a href="#user" aria-controls="user" role="tab" data-toggle="tab" class="nav-link"><%= t('.user') %></a></li>
-    <% end %>
-  </ul>
+<% public_content = capture do %>
+  <% if @exhibits.published.none? %>
+    <%= render 'missing_exhibits' %>
+  <% else %>
+    <%= render 'public_exhibits' %>
+  <% end %>
 <% end %>
 
-<div class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="published">
-    <% if @exhibits.published.none? %>
-      <%= render 'missing_exhibits' %>
-    <% else %>
-      <%= render 'tags', tags: @exhibits.published.all_tags %>
-      <%= render 'exhibits', exhibits: @published_exhibits %>
+<% if (current_user && current_user.exhibits.any?) || can?(:manage, Spotlight::Exhibit) %>
+  <%= render Spotlight::TabPanelComponent.new(tab_position: :outside) do |component| %>
+    <% component.tab(id: 'published', label: t('.published'), active: true) do %>
+      <%= public_content %>
+    <% end %>
 
-      <% if @published_exhibits.total_count > @published_exhibits.size %>
-        <nav class="d-flex justify-content-center">
-          <ul class="pagination">
-            <li class="page-item"><%= link_to_previous_page @published_exhibits, t('views.pagination.previous').html_safe, class: 'page-link' %></li>
-            <li class="page-item"><%= link_to_next_page @published_exhibits, t('views.pagination.next').html_safe, class: 'page-link' %></li>
-          </ul>
-        </nav>
+    <% if can?(:manage, Spotlight::Exhibit) && @exhibits.unpublished.accessible_by(current_ability).any? %>
+      <% component.tab(id: 'unpublished', label: t('.unpublished')) do %>
+        <%= render 'exhibits', exhibits: @exhibits.unpublished.ordered_by_weight.accessible_by(current_ability) %>
       <% end %>
     <% end %>
 
-  </div>
-
-  <% if @exhibits.unpublished.accessible_by(current_ability).any? %>
-    <div role="tabpanel" class="tab-pane" id="unpublished">
-      <%= render 'exhibits', exhibits: @exhibits.unpublished.ordered_by_weight.accessible_by(current_ability) %>
-    </div>
+    <% if current_user && current_user.exhibits.any? %>
+      <% component.tab(id: 'user', label: t('.user')) do %>
+        <%= render 'exhibits', exhibits: current_user.exhibits %>
+      <% end %>
+    <% end %>
   <% end %>
-
-  <% if current_user && current_user.exhibits.any? %>
-    <div role="tabpanel" class="tab-pane" id="user">
-      <%= render 'exhibits', exhibits: current_user.exhibits %>
-    </div>
-  <% end %>
-</div>
+<% else %>
+  <%= public_content %>
+<% end %>
 
 <% content_for(:sidebar_position) { 'order-last' } %>
 <% content_for(:sidebar) do %>

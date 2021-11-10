@@ -4,44 +4,28 @@
 
 <%= configuration_page_title %>
 <%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_search_configuration_path(@exhibit), layout: :horizontal, label_col: 'col-md-3 col-sm-3', control_col: 'col-md-5 col-sm-5' do |f| %>
+  <%= render Spotlight::TabPanelComponent.new do |component| %>
+    <% component.tab(id: 'options', label: t(:'.tab.options'), active: true) do %>
+      <%= render 'search_fields', f: f %>
+    <% end %>
 
-  <div role="tabpanel">
-    <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="nav-item">
-        <a href="#options" aria-controls="options" role="tab" data-toggle="tab" class="nav-link active"><%= t(:'.tab.options') %></a>
-      </li>
-      <li role="presentation" class="nav-item">
-        <a href="#facets" aria-controls="facets" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.tab.facets') %></a>
-      </li>
-      <li role="presentation" class="nav-item">
-        <a href="#results" aria-controls="results" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.tab.results') %></a>
-      </li>
-    </ul>
-    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="options">
-        <%= render 'search_fields', f: f %>
-      </div>
+    <% component.tab(id: 'facets', label: t(:'.tab.facets')) do %>
+      <%= render 'facets', f: f %>
+    <% end %>
 
-      <div role="tabpanel" class="tab-pane" id="facets">
-        <%= render 'facets', f: f %>
-      </div>
+    <% component.tab(id: 'results', label: t(:'.tab.results')) do %>
+      <%= field_set_tag do %>
+        <%= render 'document_index_view_types', f: f %>
+        <%= render 'default_per_page', f: f %>
+      <% end %>
 
-      <div role="tabpanel" class="tab-pane" id="results">
-        <%= field_set_tag do %>
-          <%= render 'document_index_view_types', f: f %>
-          <%= render 'default_per_page', f: f %>
-        <% end %>
-
-        <%= render 'sort', f: f %>
-      </div>
-
-    </div>
-  </div>
+      <%= render 'sort', f: f %>
+    <% end %>
+  <% end %>
 
   <div class="form-actions">
     <div class="primary-actions">
       <%= f.submit nil, class: 'btn btn-primary' %>
     </div>
   </div>
-
 <% end %>

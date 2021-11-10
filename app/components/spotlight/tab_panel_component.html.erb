@@ -1,0 +1,19 @@
+<% tabs_content = capture do %>
+  <ul class="nav nav-tabs" role="tablist">
+    <% tabs.each do |tab| %>
+      <%= tab.render_label %>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= tabs_content if @tab_position == :outside %>
+
+<div role="tabpanel">
+  <%= tabs_content if @tab_position == :inside %>
+
+  <div class="tab-content">
+    <% tabs.each do |tab| %>
+      <%= tab %>
+    <% end %>
+  </div>
+</div>
