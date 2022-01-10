@@ -35,7 +35,7 @@
       <p class="instructions"><%= t(:'.site_masthead.help') %></p>
       <%= f.fields_for(:masthead, current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
         <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection, crop_type: :masthead %>
-      <% end %>``
+      <% end %>
     <% end %>
 
     <% component.tab(id: 'site-thumbnail', label: t(:'.site_thumbnail.heading')) do %>
