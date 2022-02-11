@@ -46,7 +46,7 @@ describe Spotlight::PagesHelper, type: :helper do
     let(:search_result) { [double('response'), double('documents')] }
 
     it 'returns the results for a given search browse category' do
-      expect(helper).to receive(:search_results).with('q' => 'query').and_return(search_result)
+      expect(helper).to receive(:search_results).with({ 'q' => 'query' }).and_return(search_result)
       expect(helper.get_search_widget_search_results(good)).to eq search_result
     end
 

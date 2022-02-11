@@ -67,38 +67,39 @@ module Spotlight
       end
     end
 
-    def search_action_url(*args)
+    def search_action_url(*args, **kwargs)
       if current_exhibit
-        exhibit_search_action_url(*args)
+        exhibit_search_action_url(*args, **kwargs)
       else
-        main_app.search_catalog_url(*args)
+        main_app.search_catalog_url(*args, **kwargs)
       end
     end
 
-    def search_facet_path(*args)
+    def search_facet_path(*args, **kwargs)
       if current_exhibit
-        exhibit_search_facet_path(*args)
+        exhibit_search_facet_path(*args, **kwargs)
       else
-        main_app.catalog_facet_url(*args)
+        main_app.catalog_facet_url(*args, **kwargs)
       end
     end
 
-    def exhibit_search_action_url(*args)
+    def exhibit_search_action_url(*args, **kwargs)
       options = args.extract_options!
+      options = options.merge(kwargs)
       only_path = options[:only_path]
       options.except! :exhibit_id, :only_path
 
       if only_path
-        spotlight.search_exhibit_catalog_path(current_exhibit, *args, options)
+        spotlight.search_exhibit_catalog_path(current_exhibit, *args, **options)
       else
-        spotlight.search_exhibit_catalog_url(current_exhibit, *args, options)
+        spotlight.search_exhibit_catalog_url(current_exhibit, *args, **options)
       end
     end
 
-    def exhibit_search_facet_path(*args)
+    def exhibit_search_facet_path(*args, **kwargs)
       options = args.extract_options!
-      options = Blacklight::Parameters.sanitize(params.to_unsafe_h.with_indifferent_access).merge(options).except(:exhibit_id, :only_path)
-      spotlight.facet_exhibit_catalog_url(current_exhibit, *args, options)
+      options = Blacklight::Parameters.sanitize(params.to_unsafe_h.with_indifferent_access).merge(options).merge(kwargs).except(:exhibit_id, :only_path)
+      spotlight.facet_exhibit_catalog_url(current_exhibit, *args, **options&.symbolize_keys)
     end
   end
 end
