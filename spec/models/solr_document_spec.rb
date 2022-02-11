@@ -74,7 +74,7 @@ describe SolrDocument, type: :model do
     it 'stores sidecar data on the sidecar object' do
       mock_sidecar = double
       allow(subject).to receive_messages(sidecar: mock_sidecar)
-      expect(mock_sidecar).to receive(:update).with(data: { 'a' => 1 })
+      expect(mock_sidecar).to receive(:update).with({ data: { 'a' => 1 } })
       subject.update exhibit, sidecar: { data: { 'a' => 1 } }
     end
 
@@ -86,14 +86,14 @@ describe SolrDocument, type: :model do
     it 'converts empty strings to nil' do
       mock_sidecar = double
       allow(subject).to receive_messages(sidecar: mock_sidecar)
-      expect(mock_sidecar).to receive(:update).with(data: { 'a' => nil })
+      expect(mock_sidecar).to receive(:update).with({ data: { 'a' => nil } })
       subject.update exhibit, sidecar: { data: { 'a' => '' } }
     end
 
     it 'compacts arrays of empty or nil values' do
       mock_sidecar = double
       allow(subject).to receive_messages(sidecar: mock_sidecar)
-      expect(mock_sidecar).to receive(:update).with(data: { 'a' => ['a'] })
+      expect(mock_sidecar).to receive(:update).with({ data: { 'a' => ['a'] } })
       subject.update exhibit, sidecar: { data: { 'a' => ['', nil, 'a'] } }
     end
   end
