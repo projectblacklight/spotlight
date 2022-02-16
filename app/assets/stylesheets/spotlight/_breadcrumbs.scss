@@ -1,8 +1,6 @@
-.breadcrumb-item {
-  .truncated-value {
+.truncated-value {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 30ex;
-  }
+    max-width: 30ex;
 }
