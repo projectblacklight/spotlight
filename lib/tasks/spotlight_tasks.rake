@@ -18,11 +18,8 @@ namespace :spotlight do
 
   desc 'Create a new exhibit'
   task exhibit: :environment do
-    print 'Exhibit title: '
-    title = $stdin.gets.chomp
-
-    print 'Exhibit URL slug: '
-    slug = @stdin.gets.chomp
+    title = prompt_for_title
+    slug = prompt_for_slug
 
     exhibit = Spotlight::Exhibit.create!({ title: title, slug: slug })
 
@@ -91,11 +88,15 @@ namespace :spotlight do
   end
 
   def prompt_for_email
+    return ENV['SPOTLIGHT_USER_EMAIL'] if ENV['SPOTLIGHT_USER_EMAIL']
+
     print 'Email: '
     $stdin.gets.chomp
   end
 
   def prompt_for_password
+    return ENV['SPOTLIGHT_USER_PASSWORD'] if ENV['SPOTLIGHT_USER_PASSWORD']
+
     begin
       system 'stty -echo'
       print 'Password (must be 8+ characters): '
@@ -105,6 +106,20 @@ namespace :spotlight do
       system 'stty echo'
     end
     password
+  end
+
+  def prompt_for_title
+    return ENV['SPOTLIGHT_EXHIBIT_TITLE'] if ENV['SPOTLIGHT_EXHIBIT_TITLE']
+
+    print 'Exhibit title: '
+    $stdin.gets.chomp
+  end
+
+  def prompt_for_slug
+    return ENV['SPOTLIGHT_EXHIBIT_SLUG'] if ENV['SPOTLIGHT_EXHIBIT_SLUG']
+
+    print 'Exhibit URL slug: '
+    $stdin.gets.chomp
   end
 
   namespace :check do
