@@ -1,8 +1,10 @@
 <%= content_tag :span, t(:'.document_count', count: metadata[:document_count]) %>
 <% if metadata[:document_count] > 0 %>
   •
-  <% if metadata[:value_count] > Spotlight::FieldMetadata::FACET_LIMIT %>
-    <%= content_tag :span, t(:'.too_many_values_count', count: Spotlight::FieldMetadata::FACET_LIMIT) %>
+  <% limit = field_config&.limit || Spotlight::FieldMetadata::FACET_LIMIT %>
+  <% limit = blacklight_config.default_facet_limit if limit == true %>
+  <% if metadata[:value_count] >= limit %>
+    <%= content_tag :span, t(:'.too_many_values_count', count: limit) %>
   <% else %>
     <%= content_tag :span, t(:'.value_count', count: metadata[:value_count]) %>
   <% end %>
