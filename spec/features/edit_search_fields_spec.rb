@@ -23,7 +23,7 @@ describe 'Search Administration', type: :feature do
         within("[data-id='genre_ssim']") do
           expect(page).to have_content('Genre')
           expect(page).to have_content(/\d+ items/)
-          expect(page).to have_content(/(\d+) unique values/)
+          expect(page).to have_content(/([\d+]+) unique values/)
         end
       end
 
