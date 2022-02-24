@@ -1,0 +1,11 @@
+<%= render 'tags', tags: @exhibits.published.all_tags %>
+<%= render 'exhibits', exhibits: @published_exhibits %>
+
+<% if @published_exhibits.total_count > @published_exhibits.size %>
+  <nav class="d-flex justify-content-center">
+    <ul class="pagination">
+      <li class="page-item"><%= link_to_previous_page @published_exhibits, t('views.pagination.previous').html_safe, class: 'page-link' %></li>
+      <li class="page-item"><%= link_to_next_page @published_exhibits, t('views.pagination.next').html_safe, class: 'page-link' %></li>
+    </ul>
+  </nav>
+<% end %>

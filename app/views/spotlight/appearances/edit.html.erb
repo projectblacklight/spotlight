@@ -16,29 +16,9 @@
       </ul>
     </div>
   <% end %>
-  <div role="tabpanel">
-    <ul class="nav nav-tabs" role="tablist">
-      <% if current_exhibit.themes.many? %>
-        <li role="presentation" class="nav-item">
-          <a href="#site-theme" aria-controls="site-theme" role="tab" data-toggle="tab" class="nav-link active"><%= t(:'.site_theme.heading') %></a>
-        </li>
-      <% end %>
-
-      <li role="presentation" class="nav-item">
-        <a href="#site-masthead" aria-controls="site-masthead" role="tab" data-toggle="tab" class="nav-link <%= 'active' unless current_exhibit.themes.many? %>"><%= t(:'.site_masthead.heading') %></a>
-      </li>
-
-      <li role="presentation" class="nav-item">
-        <a href="#site-thumbnail" aria-controls="site-thumbnail" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.site_thumbnail.heading') %></a>
-      </li>
-
-      <li role="presentation" class="nav-item">
-        <a href="#main-menu" aria-controls="main-menu" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.main_navigation.menu') %></a>
-      </li>
-    </ul>
-    <div class="tab-content">
-      <% if current_exhibit.themes.many? %>
-      <div role="tabpanel" class="tab-pane active" id="site-theme">
+  <%= render Spotlight::TabPanelComponent.new do |component| %>
+    <% if current_exhibit.themes.many? %>
+      <% component.tab(id: 'site-theme', active: true, label: t(:'.site_theme.heading')) do %>
         <p class="instructions"><%= t(:'.site_theme.help') %></p>
         <%= f.form_group :theme, label: { text: t(:'.site_theme.label') } do %>
           <% current_exhibit.themes.each do |theme| %>
@@ -48,37 +28,36 @@
             </div>
           <% end %>
         <% end %>
-      </div>
       <% end %>
+    <% end %>
 
-      <div role="tabpanel" class="tab-pane <%= 'active' unless current_exhibit.themes.many? %>" id="site-masthead">
-        <p class="instructions"><%= t(:'.site_masthead.help') %></p>
-        <%= f.fields_for(:masthead, current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection, crop_type: :masthead %>
-        <% end %>
-      </div>
+    <% component.tab(id: 'site-masthead', active: !current_exhibit.themes.many?, label: t(:'.site_masthead.heading')) do %>
+      <p class="instructions"><%= t(:'.site_masthead.help') %></p>
+      <%= f.fields_for(:masthead, current_exhibit.masthead || current_exhibit.build_masthead) do |m| %>
+        <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.masthead_initial_crop_selection, crop_type: :masthead %>
+      <% end %>
+    <% end %>
 
-      <div role="tabpanel" class="tab-pane" id="site-thumbnail">
-        <p class="instructions"><%= t(:'.site_thumbnail.help') %></p>
-        <%= f.fields_for(:thumbnail, current_exhibit.thumbnail || current_exhibit.build_thumbnail) do |m| %>
-          <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.thumbnail_initial_crop_selection, crop_type: :thumbnail %>
-        <% end %>
-      </div>
+    <% component.tab(id: 'site-thumbnail', label: t(:'.site_thumbnail.heading')) do %>
+      <p class="instructions"><%= t(:'.site_thumbnail.help') %></p>
+      <%= f.fields_for(:thumbnail, current_exhibit.thumbnail || current_exhibit.build_thumbnail) do |m| %>
+        <%= render '/spotlight/featured_images/form', f: m, initial_crop_selection: Spotlight::Engine.config.thumbnail_initial_crop_selection, crop_type: :thumbnail %>
+      <% end %>
+    <% end %>
 
-      <div role="tabpanel" class="tab-pane" id="main-menu">
-        <%= field_set_tag do %>
-          <p class="instructions"><%= t(:'.main_navigation.help') %></p>
-          <div class="card-group dd main_navigation_admin col-sm-7" id="nested-navigation" data-behavior="nestable" data-max-depth="1">
-            <ol class="dd-list">
-              <%= f.fields_for :main_navigations do |label| %>
-                <%= render layout: 'spotlight/shared/dd3_item', locals: { id: label.object.nav_type, field: label, label: label.object.label_or_default, default_value: label.object.default_label, enabled_method: :display } do; end %>
-              <% end %>
-            </ol>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+    <% component.tab(id: 'main-menu', label: t(:'.main_navigation.menu')) do %>
+      <%= field_set_tag do %>
+        <p class="instructions"><%= t(:'.main_navigation.help') %></p>
+        <div class="card-group dd main_navigation_admin col-sm-7" id="nested-navigation" data-behavior="nestable" data-max-depth="1">
+          <ol class="dd-list">
+            <%= f.fields_for :main_navigations do |label| %>
+              <%= render layout: 'spotlight/shared/dd3_item', locals: { id: label.object.nav_type, field: label, label: label.object.label_or_default, default_value: label.object.default_label, enabled_method: :display } do; end %>
+            <% end %>
+          </ol>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
 
   <div class="form-actions">
     <div class="primary-actions">

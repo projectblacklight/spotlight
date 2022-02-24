@@ -12,66 +12,56 @@
     </p>
   <% end %>
 <% else %>
-  <div role="tabpanel">
-    <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="nav-item">
-        <a href="#browse-categories" aria-controls="browse-categories" role="tab" data-toggle="tab" class="nav-link active"><%= t(:'.categories_header') %></a>
-      </li>
+  <%= render Spotlight::TabPanelComponent.new do |component| %>
+    <% component.tab(id: 'browse-categories', label: t(:'.categories_header'), active: true) do %>
+      <p class="instructions"><%= t(:'.categories_instructions') %></p>
+      <% unless @exhibit.searchable? %>
+        <p class="instructions alert-warning">
+          <%= t(:'.not_searchable_html', href: link_to(t(:'spotlight.configuration.sidebar.search_configuration'), spotlight.edit_exhibit_search_configuration_path(@exhibit))) %>
+        </p>
+      <% end %>
+      <%= bootstrap_form_for @exhibit, url: update_all_exhibit_searches_path(@exhibit), layout: :horizontal, control_col: 'col-sm-10' do |f| %>
 
-      <li role="presentation" class="nav-item">
-        <a href="#browse-groups" aria-controls="browse-groups" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.groups_header') %></a>
-      </li>
-    </ul>
-    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="browse-categories">
-        <p class="instructions"><%= t(:'.categories_instructions') %></p>
-        <% unless @exhibit.searchable? %>
-          <p class="instructions alert-warning">
-            <%= t(:'.not_searchable_html', href: link_to(t(:'spotlight.configuration.sidebar.search_configuration'), spotlight.edit_exhibit_search_configuration_path(@exhibit))) %>
-          </p>
-        <% end %>
-        <%= bootstrap_form_for @exhibit, url: update_all_exhibit_searches_path(@exhibit), layout: :horizontal, control_col: 'col-sm-10' do |f| %>
+        <div class="panel-group dd search_admin" id="nested-pages" data-behavior="nestable" data-max-depth="1">
+          <ol class="dd-list">
+            <%= f.fields_for :searches do |p| %>
+              <%= render partial: 'search', locals: { f: p} %>
+            <% end %>
+          </ol>
+        </div>
 
-          <div class="panel-group dd search_admin" id="nested-pages" data-behavior="nestable" data-max-depth="1">
-            <ol class="dd-list">
-              <%= f.fields_for :searches do |p| %>
-                <%= render partial: 'search', locals: { f: p} %>
-              <% end %>
-            </ol>
-          </div>
+        <div class="float-right">
+          <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    <% end %>
 
-          <div class="float-right">
-            <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-primary" %>
-          </div>
-        <% end %>
-      </div>
-      <div role="tabpanel" class="tab-pane" id="browse-groups">
-        <div class="instructions"><%= t(:'.groups_instructions_html') %></div>
-        <%= bootstrap_form_for @exhibit, url: update_all_exhibit_groups_path(@exhibit), layout: :horizontal, control_col: 'col-sm-10' do |f| %>
+    <% component.tab(id: 'browse-groups', label: t(:'.groups_header')) do %>
+      <div class="instructions"><%= t(:'.groups_instructions_html') %></div>
+      <%= bootstrap_form_for @exhibit, url: update_all_exhibit_groups_path(@exhibit), layout: :horizontal, control_col: 'col-sm-10' do |f| %>
 
-          <div class="panel-group dd search_admin" id="nested-pages" data-behavior="nestable" data-max-depth="1">
-            <ol class="dd-list">
-              <%= f.fields_for :groups do |p| %>
-                <%= render partial: 'group', locals: { f: p} %>
-              <% end %>
-            </ol>
-          </div>
+        <div class="panel-group dd search_admin" id="nested-pages" data-behavior="nestable" data-max-depth="1">
+          <ol class="dd-list">
+            <%= f.fields_for :groups do |p| %>
+              <%= render partial: 'group', locals: { f: p} %>
+            <% end %>
+          </ol>
+        </div>
 
-          <div class="float-right">
-            <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-primary" %>
-          </div>
-        <% end %>
-        <%= form_for :group, url: spotlight.exhibit_groups_path(current_exhibit), html: {class: "expanded-add-button"} do |f|%>
-          <a href='#add-new' class="btn btn-primary" data-turbolinks="false" data-expanded-add-button="true" data-field-target="[data-title-field]">
-            <%= t(:'.add_new_group') %> <%= blacklight_icon('chevron_right') %>
-            <span data-title-field="true" class="input-field">
-              <%= f.text_field(:title) %>
-              <%= f.submit t(:'.save'), data: {behavior: "save"} %>
-              <%= f.submit t(:'.cancel'), data: {behavior: "cancel"} %>
-            </span>
-          </a>
-        <%- end -%>
-      </div>
-    </div>
-  </div>
+        <div class="float-right">
+          <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-primary" %>
+        </div>
+      <% end %>
+      <%= form_for :group, url: spotlight.exhibit_groups_path(current_exhibit), html: {class: "expanded-add-button"} do |f|%>
+        <a href='#add-new' class="btn btn-primary" data-turbolinks="false" data-expanded-add-button="true" data-field-target="[data-title-field]">
+          <%= t(:'.add_new_group') %> <%= blacklight_icon('chevron_right') %>
+          <span data-title-field="true" class="input-field">
+            <%= f.text_field(:title) %>
+            <%= f.submit t(:'.save'), data: {behavior: "save"} %>
+            <%= f.submit t(:'.cancel'), data: {behavior: "cancel"} %>
+          </span>
+        </a>
+      <%- end -%>
+    <% end %>
+  <% end %>
 <% end %>

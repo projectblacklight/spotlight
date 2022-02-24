@@ -19,6 +19,7 @@ require 'spotlight/upload_field_config'
 require 'riiif'
 require 'faraday'
 require 'faraday_middleware'
+require 'view_component/engine'
 
 module Spotlight
   ##

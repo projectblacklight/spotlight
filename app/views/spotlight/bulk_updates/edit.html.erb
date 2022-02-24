@@ -8,30 +8,16 @@
   <%= render 'progress_panel' %>
 </div>
 
-<div role="tabpanel">
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="nav-item">
-      <a href="#overview" aria-controls="overview" role="tab" data-toggle="tab" class="nav-link active"><%= t(:'.overview.heading') %></a>
-    </li>
-    <li role="presentation" class="nav-item">
-      <a href="#download" aria-controls="download" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.download.heading') %></a>
-    </li>
-    <li role="presentation" class="nav-item">
-      <a href="#upload" aria-controls="upload" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.upload.heading') %></a>
-    </li>
-  </ul>
+<%= render Spotlight::TabPanelComponent.new do |component| %>
+  <% component.tab(id: 'overview', label: t(:'.overview.heading'), active: true) do %>
+    <%= render 'overview' %>
+  <% end %>
 
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="overview">
-      <%= render 'overview' %>
-    </div>
+  <% component.tab(id: 'download', label: t(:'.download.heading')) do %>
+    <%= render 'download' %>
+  <% end %>
 
-    <div role="tabpanel" class="tab-pane" id="download">
-      <%= render 'download' %>
-    </div>
-
-    <div role="tabpanel" class="tab-pane" id="upload">
-      <%= render 'upload' %>
-    </div>
-  </div>
-</div>
+  <% component.tab(id: 'upload', label: t(:'.upload.heading')) do %>
+    <%= render 'upload' %>
+  <% end %>
+<% end %>

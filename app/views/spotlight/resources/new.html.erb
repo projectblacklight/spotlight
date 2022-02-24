@@ -3,26 +3,13 @@
 <% end %>
 
 <%= curation_page_title %>
-<div role="tabpanel">
-  <ul class="nav nav-tabs" role="tablist">
-    <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
-      <% tab_name = p.split('/')[2] %>
-      <li role="presentation" class="nav-item">
-        <%= link_to t("#{p.gsub('/', '.')}.title"),
-                    "##{tab_name}",
-                    role: 'tab',
-                    class: "nav-link #{"active" if @tab == tab_name}",
-                    'data-toggle' => 'tab',
-                    'aria-controls' => "#{tab_name}" %>
-      </li>
+
+<%= render Spotlight::TabPanelComponent.new do |component| %>
+  <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
+    <% tab_name = p.split('/')[2] %>
+
+    <% component.tab(id: tab_name, label: t("#{p.gsub('/', '.')}.title"), active: @tab == tab_name) do %>
+      <%= render p %>
     <% end %>
-  </ul>
-  <div class="tab-content">
-    <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
-      <% tab_name = p.split('/')[2] %>
-      <%= content_tag :div, id: "#{tab_name}", role: 'tabpanel', class: "tab-pane #{"active" if @tab == tab_name}" do %>
-        <%= render p %>
-      <% end %>
-    <% end %>
-  </div>
-</div>
+  <% end %>
+<% end %>

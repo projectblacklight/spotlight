@@ -329,7 +329,7 @@ describe 'Translation editing', type: :feature do
     end
 
     it 'has a title and description for every browse category' do
-      within '#browse' do
+      within '#browse_categories' do
         expect(page).to have_css('input[type="text"]', count: 4)
         expect(page).to have_css('textarea', count: 2)
 
@@ -341,7 +341,7 @@ describe 'Translation editing', type: :feature do
 
     it 'redirects to the same form tab' do
       click_link 'Browse categories'
-      within('#browse', visible: true) do
+      within('#browse_categories', visible: true) do
         fill_in 'All exhibit items', with: "Tous les objets d'exposition"
         click_button 'Save changes'
       end
@@ -353,7 +353,7 @@ describe 'Translation editing', type: :feature do
     it 'persists changes', js: true do
       click_link 'Browse categories'
 
-      within('#browse', visible: true) do
+      within('#browse_categories', visible: true) do
         fill_in 'All exhibit items', with: "Tous les objets d'exposition"
 
         first('.translation-description-toggle').click
@@ -454,6 +454,7 @@ describe 'Translation editing', type: :feature do
 
     it 'counts existing and total available translations' do
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
+
       expect(page).to have_link('General 1/8')
       expect(page).to have_link('Search field labels 0/16')
       expect(page).to have_link('Browse categories 0/3')
