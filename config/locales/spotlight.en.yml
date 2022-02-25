@@ -27,6 +27,10 @@ en:
       spotlight/group: Browse group
       spotlight/search: Browse category
   cancel: Cancel
+  devise:
+    mailer:
+      confirmation_instructions:
+        contact_email_subject: Exhibit feedback confirmation
   drag: Drag
   helpers:
     action:
@@ -408,9 +412,14 @@ en:
         users: Users
     confirmation_mailer:
       confirmation_instructions:
-        confirm: Confirm my account
-        instructions: 'You can confirm your account email through the link below:'
-        welcome: Welcome %{email}!
+        confirm: Yes, add me to the list of feedback form recipients
+        instructions: |
+          An administrator of the %{exhibit_title} exhibit has added your email address to the list of feedback form recipients.
+          This will enable you to receive any feedback submitted through the feedback form by visitors to the %{exhibit_title} exhibit.
+
+          To receive feedback from this exhibit, confirm your decision through the link below. If you do not want to
+          receive feedback form submissions from this exhibit, you can ignore this email.
+        welcome: Hello %{email},
     contact_form:
       subject: "%{application_name} exhibit feedback"
     contacts:

@@ -33,7 +33,7 @@ module Spotlight
     end
 
     def send_devise_notification(notification, *args)
-      notice = notification_mailer.send(notification, self, *args)
+      notice = notification_mailer.send(notification, self, *args, exhibit: exhibit)
       if notice.respond_to? :deliver_now
         notice.deliver_now
       else
