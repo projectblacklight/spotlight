@@ -117,9 +117,14 @@ module Spotlight
     end
 
     def query_params
-      params.to_unsafe_h.with_indifferent_access.except(:exhibit_id, :search, *blacklisted_search_session_params).reject { |_k, v| v.blank? }
+      params.to_unsafe_h.with_indifferent_access.except(:exhibit_id, :search, *excluded_search_session_params).reject { |_k, v| v.blank? }
     end
 
+    def excluded_search_session_params
+      blacklisted_search_session_params
+    end
+
+    # @deprecated
     def blacklisted_search_session_params
       %i[id commit counter total search_id page per_page authenticity_token utf8 action controller]
     end
