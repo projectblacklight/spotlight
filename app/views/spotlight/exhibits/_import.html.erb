@@ -4,7 +4,7 @@
       <p class="instructions"><%= t :'.instructions' %></p>
       <div class="form-group">
         <%= file_field_tag :file, class: 'form-control' %>
-        <%= hidden_field_tag :tab, 'import' %>
+        <%= hidden_field_tag :tab, 'import', id: nil %>
       </div>
       <div class="form-actions">
         <div class="primary-actions">

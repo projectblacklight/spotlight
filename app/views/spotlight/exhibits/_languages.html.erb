@@ -4,7 +4,7 @@
   <%= bootstrap_form_for [current_exhibit, Spotlight::Language.new], layout: :horizontal, html: { class: 'row' }, label_col: "col-sm-3", control_col: "col-sm-9" do |f| %>
     <div class='col-sm-6'>
       <%= f.select('locale', add_exhibit_language_dropdown_options, prompt: t('.selection_prompt')) %>
-      <%= hidden_field_tag :tab, 'language' %>
+      <%= hidden_field_tag :tab, 'language', id: nil %>
     </div>
     <div class='col-sm-6'>
       <%= f.submit nil, class: 'btn btn-primary' %>
@@ -48,7 +48,7 @@
       </div>
       <div class="form-actions">
         <div class="primary-actions">
-          <%= hidden_field_tag :tab, 'language' %>
+          <%= hidden_field_tag :tab, 'language', id: nil %>
           <%= f.submit nil, class: 'btn btn-primary' %>
         </div>
       </div>
