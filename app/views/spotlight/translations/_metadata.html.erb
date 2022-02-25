@@ -2,7 +2,7 @@
   <%= bootstrap_form_for current_exhibit, url: spotlight.exhibit_translations_path(current_exhibit), layout: :horizontal do |f| %>
     <% # Add a hidden field for the language so the redirect knows how to come back here %>
     <%= hidden_field_tag :language, @language %>
-    <%= hidden_field_tag :tab, 'metadata' %>
+    <%= hidden_field_tag :tab, 'metadata', id: nil %>
 
     <% non_custom_metadata_fields.each do |key, field_config| %>
       <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "blacklight.search.fields.#{key}", locale: @language) %>
