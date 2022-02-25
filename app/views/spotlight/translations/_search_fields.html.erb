@@ -2,7 +2,7 @@
   <%= bootstrap_form_for current_exhibit, url: spotlight.exhibit_translations_path(current_exhibit), layout: :horizontal do |f| %>
     <% # Add hidden fields for the language and tab so the redirect knows how to come back here %>
     <%= hidden_field_tag :language, @language %>
-    <%= hidden_field_tag :tab, 'search_fields' %>
+    <%= hidden_field_tag :tab, 'search_fields', id: nil %>
 
     <div class='translation-field-based-search-fields'>
       <h2 class='translation-subheading'>

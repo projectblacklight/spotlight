@@ -8,7 +8,7 @@
 
       <div class="input-group col px-0">
         <%= file_field_tag :file, class: 'form-control' %>
-        <%= hidden_field_tag :tab, 'import' %>
+        <%= hidden_field_tag :tab, 'import', id: nil %>
         <div class="input-group-append">
           <%= f.submit t(:'.import_submit'), class: 'btn btn-primary' %>
         </div>
