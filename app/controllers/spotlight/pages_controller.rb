@@ -189,7 +189,7 @@ module Spotlight
       add_breadcrumb t(key, title: current_exhibit.title), spotlight.exhibit_root_path(current_exhibit)
     end
 
-    # Only allow a trusted parameter "white list" through.
+    # Only allow a trusted parameters through.
     def page_params
       params.require(controller_name.singularize).permit(allowed_page_params)
     end

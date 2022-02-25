@@ -17,7 +17,7 @@ module Spotlight
 
     private
 
-    # Only allow a trusted parameter "white list" through.
+    # Only allow a trusted parameters through.
     def attachment_params
       params.require(:attachment).permit(:name, :file, :uid)
     end

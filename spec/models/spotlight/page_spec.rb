@@ -130,7 +130,7 @@ describe Spotlight::Page, type: :model do
       expect(page.slug).to eq 'abc'
     end
 
-    it 'blacklists contacts' do
+    it 'reserves the slug "contacts"' do
       page.update(title: 'contacts')
       expect(page.slug).not_to eq 'contacts'
     end
