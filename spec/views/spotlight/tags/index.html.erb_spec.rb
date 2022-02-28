@@ -18,7 +18,6 @@ describe 'spotlight/tags/index.html.erb', type: :view do
   describe 'Tags' do
     it 'is displayed' do
       render
-      puts rendered
       [tag1.tag.name, tag2.tag.name].each do |name|
         expect(rendered).to have_css('h4', text: name)
         expect(rendered).to have_link(name, href: '#edit-in-place')
