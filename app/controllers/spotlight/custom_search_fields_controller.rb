@@ -57,7 +57,7 @@ module Spotlight
       add_breadcrumb t(:'spotlight.configuration.sidebar.search_configuration'), edit_exhibit_search_configuration_path(@exhibit)
     end
 
-    # Only allow a trusted parameters through.
+    # Only allow trusted parameters through.
     def custom_search_field_params
       params.require(:custom_search_field).permit(:slug, :field, :label)
     end
