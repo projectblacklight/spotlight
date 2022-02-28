@@ -50,7 +50,7 @@ these collections.)
   s.add_dependency 'oauth2'
   s.add_dependency 'openseadragon'
   s.add_dependency 'ostruct', '!= 0.3.0', '!= 0.3.1', '!= 0.3.2'
-  s.add_dependency 'paper_trail', '~> 11.0'
+  s.add_dependency 'paper_trail', '>= 11.0', '< 13'
   s.add_dependency 'pg'
   s.add_dependency 'rails', '>= 5.2', '< 6.2'
   s.add_dependency 'riiif', '~> 2.0'
