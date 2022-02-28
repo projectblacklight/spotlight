@@ -57,7 +57,7 @@ module Spotlight
     end
 
     def available_view_configs
-      available_view_fields.map { |k, v| { key: k, label: v.display_label(k) } }
+      available_view_fields.map { |k, v| { key: k, label: v.display_label } }
     end
 
     def attachment_endpoint

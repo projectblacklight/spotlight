@@ -40,7 +40,7 @@
         <% end %>
         <%= f.form_group label: { text: t(:".default_index_view_type"), class: 'pt-0' } do %>
           <% available_document_index_views.each do |key, view| %>
-            <%= f.radio_button :default_index_view_type, key, label: view.display_label(key) %>
+            <%= f.radio_button :default_index_view_type, key, label: view.display_label %>
           <% end %>
         <% end %>
         <% unless @search.query_params.blank? %>
