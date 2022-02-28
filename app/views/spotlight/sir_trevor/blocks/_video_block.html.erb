@@ -1,0 +1,5 @@
+<% if video.source == 'vimeo' %>
+  <%= render partial: '/spotlight/sir_trevor/blocks/videos/vimeo', vimeo: video %>
+<% elsif video.source == 'youtube' %>
+  <%= render partial: '/spotlight/sir_trevor/blocks/videos/youtube', youtube: video %>
+<% end %>

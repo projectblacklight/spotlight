@@ -8,9 +8,20 @@ module Spotlight
         content = page.read_attribute(attribute)
         content ||= [].to_json
 
-        return SirTrevorRails::BlockArray.new if content.blank?
+        return [] if blocks.blank?
 
-        SirTrevorRails::BlockArray.from_json(content, page)
+        if blocks.is_a?(String)
+          blocks = JSON.parse(blocks, symbolize_names: true)
+        end
+
+        if blocks.is_a?(Hash)
+          blocks = blocks[:data] || blocks['data'] or
+            raise IndexError, "No block data found"
+        end
+
+        blocks.map do |obj|
+          SirTrevorRails::Block.from_hash(obj, page)
+        end
       end
     end
   end
