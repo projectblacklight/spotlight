@@ -25,7 +25,7 @@ module Spotlight
     end
 
     def sir_trevor_html(text)
-      sanitize(text, tags: %w(b i a br p sup))
+      sanitize(text, tags: %w[b i a br p sup])
     end
 
     ##
