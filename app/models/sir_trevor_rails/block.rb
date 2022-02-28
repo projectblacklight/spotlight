@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ostruct'
 
 module SirTrevorRails
@@ -7,9 +9,9 @@ module SirTrevorRails
   class Block < OpenStruct
     DEFAULT_FORMAT = :markdown
 
-    def self.from_hash(hash, parent)
+    def self.from_hash(hash, parent = nil)
       hash = hash.deep_dup.with_indifferent_access
-      self.type_klass(hash).new(hash, parent)
+      type_klass(hash).new(hash, parent)
     end
 
     def format
@@ -32,17 +34,15 @@ module SirTrevorRails
     attr_reader :parent, :type
 
     def to_partial_path
-      "sir_trevor/blocks/" << self.class.name.demodulize.underscore
+      "sir_trevor/blocks/#{self.class.name.demodulize.underscore}"
     end
 
-    def as_json(*attrs)
+    def as_json(*_attrs)
       {
         type: @type.to_s,
         data: marshal_dump
       }
     end
-
-    private
 
     # Infers the block class.
     # Safe lookup that tries to identify user created block class.
@@ -69,11 +69,9 @@ module SirTrevorRails
     #
     # @param [Constant] block_name
     def self.block_class!(block_name)
-      begin
-        SirTrevorRails::Blocks.const_get(block_name)
-      rescue NameError
-        SirTrevorRails::Blocks.const_set(block_name, Class.new(Block))
-      end
+      SirTrevorRails::Blocks.const_get(block_name)
+    rescue NameError
+      SirTrevorRails::Blocks.const_set(block_name, Class.new(Block))
     end
 
     def self.type_klass(hash)
