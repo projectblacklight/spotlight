@@ -1,7 +1,7 @@
 <%= f.form_group :document_index_view_types, label: {text: t(:'.label'), class: 'pt-0'} do %>
   <%= f.fields_for :document_index_view_types, @blacklight_configuration.document_index_view_types_selected_hash do |vt| %>
     <% @blacklight_configuration.default_blacklight_config.view.select { |_k, v| v.if != false }.each do |key, view| %>
-      <%= vt.check_box key, label: view.display_label(key) %>
+      <%= vt.check_box key, label: view.display_label %>
     <% end %>
   <% end %>
 <% end %>
