@@ -42,3 +42,11 @@ jobs:
       run: bundle install
     - name: Run tests
       run: bundle exec rake
+    - if: always()
+      run: zip -r internal_test_app.zip .internal_test_app
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: generated-test-app
+        retention-days: 1
+        path: internal_test_app.zip
