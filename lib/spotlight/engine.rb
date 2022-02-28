@@ -179,7 +179,9 @@ module Spotlight
     config.analytics_provider = nil
 
     initializer 'analytics.initialize' do
-      Spotlight::Engine.config.analytics_provider = Spotlight::Analytics::Ga
+      ActiveSupport::Reloader.to_prepare do
+        Spotlight::Engine.config.analytics_provider = Spotlight::Analytics::Ga
+      end
     end
 
     # If you use Google Analytics, you need to wire your site to report to a Google Analytics property.
