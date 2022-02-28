@@ -29,7 +29,7 @@ Capybara.register_driver :headless_chrome do |app|
     opts.args << '--no-sandbox'
     opts.args << '--window-size=1280,1696'
   end
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+  Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: [browser_options])
 end
 require 'webmock/rspec'
 allowed_sites = ['chromedriver.storage.googleapis.com']
