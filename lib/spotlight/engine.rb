@@ -38,8 +38,8 @@ module Spotlight
 
     require 'carrierwave'
     require 'underscore-rails'
+    require 'redcarpet'
     require 'github/markup'
-    require 'sir_trevor_rails'
     require 'openseadragon'
     require 'handlebars_assets'
     require 'sprockets/es6'

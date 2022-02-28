@@ -58,16 +58,6 @@ describe Spotlight::Page, type: :model do
   describe '#content=' do
     let(:page) { FactoryBot.create(:feature_page) }
 
-    it 'works with a serialized JSON array' do
-      page.content = [].to_json
-      expect(page.content).to be_a_kind_of SirTrevorRails::BlockArray
-    end
-
-    it 'works with an array' do
-      page.content = []
-      expect(page.content).to be_a_kind_of SirTrevorRails::BlockArray
-    end
-
     context 'with an alternate page content type' do
       let(:page) { FactoryBot.create(:feature_page, content_type: 'Static') }
       let(:fake_class) do

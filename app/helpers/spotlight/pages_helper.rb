@@ -16,6 +16,18 @@ module Spotlight
       end
     end
 
+    def sir_trevor_format(text, format: :markdown)
+      if format.to_s.to_sym == :html
+        sir_trevor_html(text)
+      else
+        sir_trevor_markdown(text)
+      end
+    end
+
+    def sir_trevor_html(text)
+      sanitize(text, tags: %w(b i a br p sup))
+    end
+
     ##
     # Override the default #sir_trevor_markdown so we can use
     # a more complete markdown rendered
