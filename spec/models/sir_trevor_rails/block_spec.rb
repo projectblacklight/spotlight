@@ -7,14 +7,14 @@ RSpec.describe SirTrevorRails::Block do
     subject { described_class }
 
     describe 'for known type' do
-      let(:klass) { subject.block_class('tweet') }
+      let(:klass) { subject.block_class('browse') }
 
       it 'returns class' do
-        expect(klass).to eq SirTrevorRails::Blocks::TweetBlock
+        expect(klass).to eq SirTrevorRails::Blocks::BrowseBlock
       end
 
       it 'returned class is the one defined in file' do
-        expect(klass.method_defined?(:at_name)).to be true
+        expect(klass.method_defined?(:searches)).to be true
       end
     end
 
