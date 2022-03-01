@@ -209,11 +209,11 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
       let!(:page2) { FactoryBot.create(:feature_page, exhibit: page1.exhibit) }
       let!(:page3) { FactoryBot.create(:feature_page, exhibit: page1.exhibit, parent_page_id: page1.id) }
 
-      before { request.env['HTTP_REFERER'] = 'http://example.com' }
+      before { request.env['HTTP_REFERER'] = 'http://test.host/' }
 
       it 'updates the parent/child relationship' do
         post :update_all, params: { exhibit_id: page1.exhibit, exhibit: { feature_pages_attributes: [{ id: page2.id, parent_page_id: page1.id }] } }
-        expect(response).to redirect_to 'http://example.com'
+        expect(response).to redirect_to 'http://test.host/'
         expect(flash[:notice]).to eq 'Feature pages were successfully updated.'
         expect(page1.parent_page).to be_nil
         expect(page1.child_pages).to include page2

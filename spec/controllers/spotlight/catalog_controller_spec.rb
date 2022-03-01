@@ -271,7 +271,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'PUT make_public' do
       before do
-        request.env['HTTP_REFERER'] = 'where_i_came_from'
+        request.env['HTTP_REFERER'] = 'http://test.host/where_i_came_from'
         allow_any_instance_of(::SolrDocument).to receive(:reindex)
       end
 
@@ -279,13 +279,13 @@ describe Spotlight::CatalogController, type: :controller do
         expect_any_instance_of(::SolrDocument).to receive(:reindex)
         expect_any_instance_of(::SolrDocument).to receive(:make_public!).with(exhibit)
         put :make_public, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
-        expect(response).to redirect_to 'where_i_came_from'
+        expect(response).to redirect_to 'http://test.host/where_i_came_from'
       end
     end
 
     describe 'DELETE make_private' do
       before do
-        request.env['HTTP_REFERER'] = 'where_i_came_from'
+        request.env['HTTP_REFERER'] = 'http://test.host/where_i_came_from'
         allow_any_instance_of(::SolrDocument).to receive(:reindex)
       end
 
@@ -293,7 +293,7 @@ describe Spotlight::CatalogController, type: :controller do
         expect_any_instance_of(::SolrDocument).to receive(:reindex)
         expect_any_instance_of(::SolrDocument).to receive(:make_private!).with(exhibit)
         delete :make_private, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
-        expect(response).to redirect_to 'where_i_came_from'
+        expect(response).to redirect_to 'http://test.host/where_i_came_from'
       end
     end
   end

@@ -38,9 +38,9 @@ describe Spotlight::SearchesController, type: :controller do
     let(:search) { FactoryBot.create(:search, exhibit: exhibit) }
 
     it 'creates a saved search' do
-      request.env['HTTP_REFERER'] = '/referring_url'
+      request.env['HTTP_REFERER'] = 'http://test.host/referring_url'
       post :create, params: { 'search' => { 'title' => 'A bunch of maps' }, 'f' => { 'genre_ssim' => ['map'] }, exhibit_id: exhibit }
-      expect(response).to redirect_to '/referring_url'
+      expect(response).to redirect_to 'http://test.host/referring_url'
       expect(flash[:notice]).to eq 'The browse category was created.'
       expect(assigns[:search].title).to eq 'A bunch of maps'
       expect(assigns[:search].query_params).to eq('f' => { 'genre_ssim' => ['map'] })
@@ -170,7 +170,7 @@ describe Spotlight::SearchesController, type: :controller do
       let!(:search2) { FactoryBot.create(:search, exhibit: exhibit, published: true) }
       let!(:search3) { FactoryBot.create(:search, exhibit: exhibit, published: true) }
 
-      before { request.env['HTTP_REFERER'] = 'http://example.com' }
+      before { request.env['HTTP_REFERER'] = 'http://test.host/whatever' }
 
       it 'updates whether they are on the landing page' do
         post :update_all, params: {
@@ -187,7 +187,7 @@ describe Spotlight::SearchesController, type: :controller do
         expect(search.weight).to eq 1
         expect(search2.reload.published).to be_falsey
         expect(search3.reload.published).to be_truthy # should remain untouched since it wasn't present
-        expect(response).to redirect_to 'http://example.com'
+        expect(response).to redirect_to 'http://test.host/whatever'
         expect(flash[:notice]).to eq 'Browse categories were successfully updated.'
       end
     end

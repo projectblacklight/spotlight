@@ -16,7 +16,7 @@ RSpec.describe Spotlight::AdminUsersController, type: :controller do
   end
 
   context 'by an admin user' do
-    before { request.env['HTTP_REFERER'] = 'http://example.com' }
+    before { request.env['HTTP_REFERER'] = 'http://test.host' }
 
     let(:user) { FactoryBot.create(:site_admin) }
 
