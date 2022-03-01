@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/searches/edit.html.erb', type: :view do
+describe 'spotlight/searches/edit', type: :view do
   let(:blacklight_config) do
     Blacklight::Configuration.new do |config|
       config.add_facet_field :some_field

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/searches/_search.html.erb', type: :view do
+describe 'spotlight/searches/_search', type: :view do
   let(:search) do
     FactoryBot.build_stubbed(:search, exhibit: FactoryBot.create(:exhibit),
                                       id: 99,

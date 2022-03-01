@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/dashboards/analytics.html.erb', type: :view do
+describe 'spotlight/dashboards/analytics', type: :view do
   let(:current_exhibit) { FactoryBot.create(:exhibit) }
 
   before do

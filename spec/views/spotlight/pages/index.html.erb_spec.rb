@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/pages/index.html.erb', type: :view do
+describe 'spotlight/pages/index', type: :view do
   let(:pages) do
     [
       stub_model(Spotlight::FeaturePage,

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/searches/index.html.erb', type: :view do
+describe 'spotlight/searches/index', type: :view do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
 
   before do

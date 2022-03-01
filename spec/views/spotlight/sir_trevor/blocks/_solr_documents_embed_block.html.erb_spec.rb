@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', type: :view do
+describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block', type: :view do
   let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_embed_block' }
   let(:page) { double('Page') }
   let(:block) do

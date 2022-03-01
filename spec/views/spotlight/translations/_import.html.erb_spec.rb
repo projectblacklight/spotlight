@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/translations/_import.html.erb', type: :view do
+describe 'spotlight/translations/_import', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do

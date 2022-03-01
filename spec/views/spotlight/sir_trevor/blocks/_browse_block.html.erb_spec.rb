@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/sir_trevor/blocks/_browse_block.html.erb', type: :view do
+describe 'spotlight/sir_trevor/blocks/_browse_block', type: :view do
   let(:p) { 'spotlight/sir_trevor/blocks/browse_block' }
   let(:page) { double('Page', display_sidebar?: true) }
   let(:search) { FactoryBot.create(:search) }
