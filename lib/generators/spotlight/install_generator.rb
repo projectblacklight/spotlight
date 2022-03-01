@@ -11,7 +11,7 @@ module Spotlight
     class_option :mailer_default_url_host, type: :string, default: '' # e.g. localhost:3000
 
     # we're not (yet) using webpacker, so we need to re-add sprockets functionality
-    def add_js
+    def add_js_rails6
       return unless Rails.version.to_i == 6
 
       gem 'coffee-rails', '~> 4.2'
@@ -27,6 +27,14 @@ module Spotlight
       # but since webpacker exists in the gemfile, we still need to run the
       # install before rails will start
       run 'bundle exec rails webpacker:install'
+    end
+
+    # we're not (yet) using importmaps, so we need to add some stuff to blacklight's generated configuration
+    def add_js_rails7
+      return unless Rails.version.to_i == 7
+
+      append_to_file 'app/assets/config/manifest.js', "\n//= link_directory ../javascripts .js\n"
+      append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
     end
 
     def inject_spotlight_routes
