@@ -47,7 +47,6 @@ end
 require 'spotlight'
 
 # configure spotlight with all the settings necessary to test functionality
-Spotlight::Engine.config.exhibit_themes = %w[default modern]
 Spotlight::Engine.config.reindexing_batch_count = 1
 Spotlight::Engine.config.assign_default_roles_to_first_user = false
 
