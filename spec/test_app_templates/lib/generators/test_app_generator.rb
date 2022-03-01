@@ -53,6 +53,8 @@ class TestAppGenerator < Rails::Generators::Base
 
     append_to_file 'config/initializers/assets.rb',
                    'Rails.application.config.assets.precompile += %w( application_modern application_fancy.css )'
+
+    append_to_file 'config/initializers/spotlight_initializer.rb', "\nSpotlight::Engine.config.exhibit_themes = %w[modern fancy]"
   end
 
   def disable_filter_resources_by_exhibit
