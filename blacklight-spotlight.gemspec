@@ -22,7 +22,7 @@ these collections.)
   s.required_ruby_version = '>= 2.6'
 
   s.add_dependency 'activejob-status'
-  s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 8'
+  s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 10'
   s.add_dependency 'autoprefixer-rails'
   s.add_dependency 'blacklight', '~> 7.18'
   s.add_dependency 'bootstrap_form', '~> 4.1'
