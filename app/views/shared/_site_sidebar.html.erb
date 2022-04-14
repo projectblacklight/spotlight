@@ -7,7 +7,7 @@
     <li class="nav-item"><%= link_to t(:'spotlight.sites.edit.page_title'), spotlight.edit_site_path, class: 'nav-link' %></li>
   <% end %>
 
-  <% if can? :manange, Spotlight::Exhibit %>
+  <% if can? :manage, Spotlight::Exhibit %>
     <li class="nav-item"><%= link_to t(:'spotlight.sites.edit_exhibits.page_title'), spotlight.edit_site_exhibits_path, class: 'nav-link' %></li>
     <li class="nav-item"><%= link_to t(:'spotlight.admin_users.index.page_title'), spotlight.admin_users_path, class: 'nav-link' %></li>
   <% end %>
