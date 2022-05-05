@@ -5,6 +5,15 @@ module Spotlight
     ##
     # Search context helpers
     module CatalogSearchContext
+      extend ActiveSupport::Concern
+
+      # The following code is executed when someone includes Spotlight::Concerns::CatalogSearchContext in their
+      # own controller.
+      included do
+        # Provides access to the method in views as a helper method.
+        helper_method :current_search_session_from_page? if respond_to? :helper_method
+      end
+
       protected
 
       def current_page_context
