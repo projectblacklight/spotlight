@@ -11,8 +11,16 @@ describe 'shared/_exhibit_navbar', type: :view do
     allow(view).to receive_messages(resource_masthead?: false)
     allow(view).to receive_messages(current_exhibit: current_exhibit)
     allow(view).to receive_messages(on_browse_page?: false, on_about_page?: false)
-    allow(view).to receive_messages(render_search_bar: 'Search Bar')
+    allow(view).to receive_messages(should_render_field?: true)
+    allow(view).to receive_messages(document_index_view_type: :list)
     allow(view).to receive_messages(exhibit_path: spotlight.exhibit_path(current_exhibit))
+    allow(view).to receive_messages(blacklight_config: current_exhibit.blacklight_config)
+    allow(view).to receive(:search_action_url) do |*args|
+      spotlight.search_exhibit_catalog_path(current_exhibit, *args)
+    end
+    allow(view).to receive(:search_action_path) do |*args|
+      spotlight.search_exhibit_catalog_path(current_exhibit, *args)
+    end
   end
 
   it 'links to the exhibit home page (as branding) when there is a current search masthead' do
@@ -109,13 +117,13 @@ describe 'shared/_exhibit_navbar', type: :view do
   it 'includes the search bar when the exhibit is searchable' do
     expect(current_exhibit).to receive(:searchable?).and_return(true)
     render
-    expect(response).to have_content 'Search Bar'
+    expect(response).to have_selector('button#search')
   end
 
   it 'does not include the search bar when the exhibit is not searchable' do
     expect(current_exhibit).to receive(:searchable?).and_return(false)
     render
-    expect(response).not_to have_content 'Search Bar'
+    expect(response).not_to have_selector('button#search')
   end
 
   it 'does not include any navigation menu items that are not configured' do
