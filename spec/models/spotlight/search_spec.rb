@@ -94,6 +94,10 @@ describe Spotlight::Search, type: :model do
   end
 
   describe '#merge_params_for_search' do
+    before do
+      blacklight_config.search_state_fields&.concat [:view] # Blacklight 7.25+ will sanitize
+    end
+
     it 'merges user-supplied parameters into the search query' do
       user_params = { view: 'x' }
       search_params = subject.merge_params_for_search(user_params, blacklight_config)
