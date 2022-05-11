@@ -10,6 +10,11 @@ module Spotlight
 
     included do
       before_action :add_facet_visibility_field
+
+      blacklight_config.search_state_fields.tap do |allowed_fields|
+        # if the blacklight config may be filtering params, add the required fields for exihibits, browse and search
+        allowed_fields&.concat(%i[browse_category_id exhibit_id id] - Array(allowed_fields))
+      end
     end
 
     # Adds a facet to display document visibility for the current exhibit
