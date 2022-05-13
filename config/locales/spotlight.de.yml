@@ -1,0 +1,40 @@
+de:
+  activemodel:
+    attributes:
+      spotlight/contact_form:
+        email: E-Mail Adresse
+        message: Nachricht
+        name: Name
+  helpers:
+    action:
+      cancel: Abbrechen
+    submit:
+      contact_form:
+        create: Senden
+        created: Vielen Dank. Ihre Feedback wurde gesendet.
+  spotlight:
+    about_pages:
+      contacts:
+        header: Kontakt
+    header_links:
+      contact: Feedback
+    shared:
+      report_a_problem:
+        honeypot_field_explanation: Bitte ignorieren Sie dieses Textfeld. Es wird verwendet, um Spam zu erkennen. Wenn Sie etwas hier eingeben, wird Ihre Nachricht nicht gesendet.
+        title: Kontakten Sie Uns
+    browse:
+      search:
+        item_count:
+          one: "%{count} Suchergebnisse"
+          other: "%{count} Suchergebnisse"
+      search_box:
+        label: Innerhalb dieser Kategorie suchen
+        placeholder: Suchen…
+        reset: Zurücksetzen
+        submit: Innerhalb dieser Kategorie suchen
+        success:
+          expand_html: Suche erweitern <a href="%{expand_search_url}">"%{browse_query}"</a>.
+          result_number_html: <strong> %{search_size} Suchergebnisse von %{parent_search_count} Gesamteinheiten in dieser Suchkategorie gefunden</strong>.
+        zero_results:
+          expand_html: <a href="%{clear_search_url}">Suche zurücksetzen</a> oder <a href="%{expand_search_url}"> erweitern "%{browse_query}"</a>.
+          result_number: Es können keine Suchergebnisse gefunden werden.
