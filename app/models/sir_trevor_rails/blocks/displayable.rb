@@ -14,7 +14,7 @@ module SirTrevorRails
       end
 
       def ordered_items
-        items.sort_by { |x| x[:weight] }.map { |x| x[:id] }
+        items.sort_by { |x| x[:weight].to_i }.map { |x| x[:id] }
       end
 
       private
