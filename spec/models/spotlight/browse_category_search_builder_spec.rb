@@ -9,7 +9,9 @@ describe Spotlight::BrowseCategorySearchBuilder do
   subject { BrowseCategoryMockSearchBuilder.new(scope).with(blacklight_params) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:scope) { double(blacklight_config: exhibit.blacklight_config, current_exhibit: exhibit) }
+  let(:scope) do
+    double(blacklight_config: exhibit.blacklight_config, current_exhibit: exhibit, search_state_class: nil)
+  end
   let(:solr_request) { Blacklight::Solr::Request.new }
   let(:blacklight_params) { { browse_category_id: search.id } }
   let(:search) { FactoryBot.create(:search, exhibit: exhibit, query_params: { sort: 'type', f: { genre_ssim: ['term'] }, q: 'search query' }) }
