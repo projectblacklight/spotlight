@@ -48,7 +48,7 @@ describe Spotlight::TagsController, type: :controller do
           perform_enqueued_jobs do
             delete :destroy, params: { exhibit_id: exhibit, id: tagging.tag }
           end
-        end.to change { ActsAsTaggableOn::Tagging.count }.by(-1)
+        end.to change(ActsAsTaggableOn::Tagging, :count).by(-1)
         expect(response).to redirect_to exhibit_tags_path(exhibit)
       end
     end

@@ -32,7 +32,7 @@ describe SolrDocument, type: :model do
   it 'is able to add tags' do
     expect do
       exhibit.tag(subject.sidecar(exhibit), with: 'paris, normandy', on: :tags)
-    end.to change { ActsAsTaggableOn::Tag.count }.by(2)
+    end.to change(ActsAsTaggableOn::Tag, :count).by(2)
     expect(subject.sidecar(exhibit).tags_from(exhibit)).to eq %w[paris normandy]
   end
 

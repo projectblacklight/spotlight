@@ -96,7 +96,7 @@ describe Spotlight::GroupsController, type: :controller do
         group
         expect do
           delete :destroy, params: { id: group.id, exhibit_id: group.exhibit }
-        end.to change { Spotlight::Group.count }.by(-1)
+        end.to change(Spotlight::Group, :count).by(-1)
       end
     end
   end
