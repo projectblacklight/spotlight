@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        rails_version: [5.2.8]
+        rails_version: [5.2.2]
         ruby: [2.7]
     env:
       RAILS_VERSION: ${{ matrix.rails_version }}
