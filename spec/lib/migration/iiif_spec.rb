@@ -64,7 +64,7 @@ RSpec.describe Migration::IIIF do
       expect_any_instance_of(Spotlight::Resources::Upload).to receive(:save_and_index)
       expect do
         instance.send :migrate_upload_images
-      end.to change { Spotlight::FeaturedImage.count }.by(1)
+      end.to change(Spotlight::FeaturedImage, :count).by(1)
       expect(Spotlight::FeaturedImage.all.pluck(:id)).to include Spotlight::Resources::Upload.last.id
     end
   end
@@ -84,7 +84,7 @@ RSpec.describe Migration::IIIF do
     it 'migrates' do
       expect do
         instance.send :migrate_contact_avatars
-      end.to change { Spotlight::FeaturedImage.count }.by(1)
+      end.to change(Spotlight::FeaturedImage, :count).by(1)
       expect(Spotlight::Contact.all.pluck(:avatar_id)).to eq Spotlight::FeaturedImage.all.pluck(:id)
     end
   end

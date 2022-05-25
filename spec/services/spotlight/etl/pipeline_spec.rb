@@ -14,7 +14,7 @@ describe Spotlight::Etl::Pipeline do
 
   describe '#estimated_size' do
     it 'forwards the call to the executor' do
-      allow(Spotlight::Etl::Executor).to receive(:new).with(subject, context).and_return(mock_executor)
+      allow(Spotlight::Etl::Executor).to receive(:new).with(subject, context, any_args).and_return(mock_executor)
 
       expect(subject.estimated_size(context)).to eq 10
     end
