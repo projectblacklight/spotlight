@@ -106,7 +106,7 @@ describe Spotlight::ExhibitsController, type: :controller do
       it 'is successful' do
         expect do
           post :create, params: { exhibit: { title: 'Some Title', slug: 'custom-slug', tag_list: '2014, R. Buckminster Fuller' } }
-        end.to change { Spotlight::Exhibit.count }.by(1)
+        end.to change(Spotlight::Exhibit, :count).by(1)
 
         exhibit = Spotlight::Exhibit.last
         expect(response).to redirect_to(exhibit_dashboard_path(exhibit))

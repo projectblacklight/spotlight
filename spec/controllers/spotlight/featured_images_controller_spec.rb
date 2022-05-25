@@ -16,7 +16,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
               image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
             }
           }
-        end.not_to change { Spotlight::FeaturedImage.count }
+        end.not_to change(Spotlight::FeaturedImage, :count)
 
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to be_present
@@ -37,7 +37,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
               image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
             }
           }
-        end.to change { Spotlight::FeaturedImage.count }.by(1)
+        end.to change(Spotlight::FeaturedImage, :count).by(1)
 
         expect(response).to be_successful
         expect(response.body).to match %r{\{"tilesource":"http://test\.host/images/\d+-.+/info\.json","id":\d+\}}
@@ -52,7 +52,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
               image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
             }
           }
-        end.to change { Spotlight::FeaturedImage.count }.by(1)
+        end.to change(Spotlight::FeaturedImage, :count).by(1)
 
         expect(response).to be_successful
         expect(response.body).to match %r{\{"tilesource":"http://test\.host/images/\d+-.+/info\.json","id":\d+\}}
@@ -67,7 +67,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
               image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
             }
           }
-        end.to change { Spotlight::FeaturedImage.count }.by(1)
+        end.to change(Spotlight::FeaturedImage, :count).by(1)
 
         expect(response).to be_successful
         expect(response.body).to match %r{\{"tilesource":"http://test\.host/images/\d+-.+/info\.json","id":\d+\}}

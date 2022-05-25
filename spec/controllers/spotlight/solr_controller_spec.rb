@@ -87,7 +87,7 @@ describe Spotlight::SolrController, type: :controller do
 
         expect do
           post_update_with_json_body(exhibit, a: 1, custom_field: 'abc')
-        end.to change { Spotlight::SolrDocumentSidecar.count }.by(1)
+        end.to change(Spotlight::SolrDocumentSidecar, :count).by(1)
 
         expect(response).to be_successful
         expect(doc.first).to include a: 1

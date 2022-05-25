@@ -65,6 +65,7 @@ ignore_unused:
   - helpers.action.{edit,edit_long,new,view} # app/helpers/spotlight/crud_link_helpers.rb
   - helpers.action.spotlight/search.edit_long # app/views/spotlight/searches/_search.html.erb
   - spotlight.about_pages.page_options.published # app/views/spotlight/about_pages/_page_options.html.erb
+  - spotlight.job_trackers.show.messages.status.{completed,enqueued,failed,missing,pending} # app/views/spotlight/job_trackers/show.html.erb
   - helpers.submit.contact_form.create # app/views/spotlight/shared/_report_a_problem.html.erb
   - activerecord.help.spotlight/exhibit.tag_list # app/views/spotlight/exhibits/_form.html.erb
   - helpers.label.solr_document.exhibit_tag_list # app/views/spotlight/catalog/_edit_default.html.erb

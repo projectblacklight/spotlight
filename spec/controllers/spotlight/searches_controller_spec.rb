@@ -160,7 +160,7 @@ describe Spotlight::SearchesController, type: :controller do
       it 'removes it' do
         expect do
           delete :destroy, params: { id: search, exhibit_id: search.exhibit }
-        end.to change { Spotlight::Search.count }.by(-1)
+        end.to change(Spotlight::Search, :count).by(-1)
         expect(response).to redirect_to exhibit_searches_path(search.exhibit)
         expect(flash[:alert]).to eq 'The browse category was deleted.'
       end
