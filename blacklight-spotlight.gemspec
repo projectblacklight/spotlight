@@ -64,6 +64,7 @@ these collections.)
   s.add_dependency 'thor'
   s.add_dependency 'tophat'
   s.add_dependency 'underscore-rails', '~> 1.6'
+  s.add_dependency 'webpacker'
 
   s.add_development_dependency 'capybara', '~> 3.31'
   s.add_development_dependency 'engine_cart', '~> 2.0'
