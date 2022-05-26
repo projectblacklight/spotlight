@@ -1,5 +1,8 @@
 ARG RUBY_VERSION=2.7.6
-FROM ruby:$RUBY_VERSION-alpine
+ARG ALPINE_VERSION=3.15
+FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION
+
+ARG RAILS_VERSION=6.1.6
 
 ENV SPOTLIGHT_ENGINE_PATH /spotlight/engine
 ENV SPOTLIGHT_GEM /spotlight/engine
@@ -16,7 +19,7 @@ RUN apk --no-cache upgrade && \
   less \
   libxml2-dev \
   libxslt-dev \
-  nodejs-current \
+  nodejs \
   postgresql-dev \
   shared-mime-info \
   sqlite-dev \
@@ -31,7 +34,7 @@ RUN addgroup --gid 10001 --system spotlight && \
 
 USER spotlight
 RUN gem update bundler
-RUN gem install --no-document rails -v '< 6.1'
+RUN gem install --no-document rails -v "${RAILS_VERISION}"
 
 COPY --chown=10000:10001 . /spotlight/engine
 WORKDIR /spotlight/engine
@@ -39,7 +42,7 @@ RUN bundle install --jobs "$(nproc)"
 
 RUN mkdir -p /spotlight/app
 WORKDIR /spotlight/app
-RUN SKIP_TRANSLATION=yes rails new . --force --template=../engine/template.rb
+RUN SKIP_TRANSLATION=yes rails _${RAILS_VERSION}_ new . --force --template=../engine/template.rb
 
 RUN SKIP_TRANSLATION=yes DB_ADAPTER=nulldb DATABASE_URL='postgresql://fake' bundle exec rake assets:precompile
 
