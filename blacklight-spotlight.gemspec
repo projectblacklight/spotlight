@@ -79,7 +79,6 @@ these collections.)
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'simplecov', '~> 0.12'
   s.add_development_dependency 'sitemap_generator'
-  s.add_development_dependency 'solr_wrapper'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'webdrivers'
   s.add_development_dependency 'webmock'
