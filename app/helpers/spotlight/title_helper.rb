@@ -27,10 +27,8 @@ module Spotlight
       content_tag(:h1, html_content, class: 'page-header')
     end
 
-    # rubocop:disable Naming/AccessorMethodName
     def set_html_page_title(title = nil)
       @page_title = strip_tags(t(:'spotlight.html_title', title: title || t(:'.title', default: :'.header'), application_name: application_name)).html_safe
     end
-    # rubocop:enable Naming/AccessorMethodName
   end
 end
