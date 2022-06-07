@@ -126,7 +126,7 @@ module Spotlight
     end
 
     def add_osd_viewer
-      gem 'blacklight-gallery', '~> 3.0'
+      gem 'blacklight-gallery', '~> 4.0'
       bundle_install
       generate 'blacklight_gallery:install'
     end
