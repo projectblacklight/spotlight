@@ -11,7 +11,7 @@ class TestAppGenerator < Rails::Generators::Base
 
   def add_gems
     gem 'blacklight', '~> 7.17'
-    gem 'blacklight-gallery', '~> 3.0'
+    gem 'blacklight-gallery', '~> 4.0'
     Bundler.with_clean_env do
       run 'bundle install'
     end
