@@ -169,8 +169,6 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
       let!(:page2) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
       let!(:page3) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
 
-      before { request.env['HTTP_REFERER'] = 'http://example.com' }
-
       it 'updates whether they are on the landing page' do
         post :update_all, params: {
           exhibit_id: page1.exhibit,
@@ -181,7 +179,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
             ]
           }
         }
-        expect(response).to redirect_to 'http://example.com'
+        expect(response).to redirect_to end_with('/dashboard')
         expect(flash[:notice]).to eq 'About pages were successfully updated.'
         expect(page1.reload.published).to be_truthy
         expect(page1.title).to eq 'This is a new title!'
