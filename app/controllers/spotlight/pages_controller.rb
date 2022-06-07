@@ -35,7 +35,7 @@ module Spotlight
 
     # GET /pages/1
     def show
-      fresh_when([@page.exhibit, @page, request.query_parameters.to_query])
+      fresh_when([@page.exhibit, @page])
     end
 
     def preview
