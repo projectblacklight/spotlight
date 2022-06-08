@@ -50,7 +50,7 @@ module Spotlight
     end
 
     def riiif
-      gem 'riiif', git: 'https://github.com/curationexperts/riiif.git'
+      gem 'riiif'
       Bundler.with_clean_env { run 'bundle install' }
       route "mount Riiif::Engine => '/images', as: 'riiif'"
       copy_file 'config/initializers/riiif.rb'
