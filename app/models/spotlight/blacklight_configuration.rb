@@ -224,6 +224,11 @@ module Spotlight
           config.navbar.partials[:search_history].if = false if config.navbar.partials.key? :search_history
         end
 
+        config.search_state_fields.tap do |allowed_fields|
+          # if the blacklight config may be filtering params, add the required fields for exihibits, browse and search
+          allowed_fields&.concat(%i[browse_category_id exhibit_id id] - Array(allowed_fields))
+        end
+
         config
       end
     end

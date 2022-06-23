@@ -55,9 +55,15 @@ describe Spotlight::ApplicationHelper, type: :helper do
   end
 
   describe '#url_to_tag_facet' do
+    let(:blacklight_config) do
+      Blacklight::Configuration.new.configure do |config|
+        config.add_facet_field :exhibit_tags # this is added to exhibit configurations by model
+      end
+    end
+
     before do
       allow(helper).to receive_messages(current_exhibit: FactoryBot.create(:exhibit))
-      allow(helper).to receive_messages(blacklight_config: Blacklight::Configuration.new)
+      allow(helper).to receive_messages(blacklight_config: blacklight_config)
 
       # controller provided helper.
       allow(helper).to receive(:search_action_url) do |*args|

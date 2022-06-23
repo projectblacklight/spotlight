@@ -17,8 +17,14 @@ describe Spotlight::BrowseCategorySearchBuilder do
   let(:search) { FactoryBot.create(:search, exhibit: exhibit, query_params: { sort: 'type', f: { genre_ssim: ['term'] }, q: 'search query' }) }
 
   describe '#restrict_to_browse_category' do
+    before do
+      exhibit.blacklight_config.configure do |config|
+        config.search_state_fields << :browse_category_id
+      end
+    end
+
     it 'adds the search query parameters from the browse category' do
-      params = subject.to_hash.with_indifferent_access
+      params = subject.to_hash.symbolize_keys
 
       expect(params).to include(
         q: 'search query',
