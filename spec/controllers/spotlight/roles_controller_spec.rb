@@ -28,7 +28,6 @@ describe Spotlight::RolesController, type: :controller do
       expect(controller).to receive(:add_breadcrumb).with('Users', exhibit_roles_path(exhibit))
       get :index, params: { exhibit_id: exhibit }
       expect(response).to be_successful
-      expect(assigns[:roles].to_a).to eq [admin.roles.first]
     end
 
     describe 'PATCH update_all' do
