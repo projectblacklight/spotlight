@@ -40,7 +40,6 @@ these collections.)
   s.add_dependency 'i18n'
   s.add_dependency 'i18n-active_record'
   s.add_dependency 'iiif_manifest'
-  s.add_dependency 'iiif-presentation'
   s.add_dependency 'leaflet-rails'
   s.add_dependency 'legato'
   s.add_dependency 'mimemagic', '0.3.8'
