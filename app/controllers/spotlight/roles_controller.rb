@@ -7,7 +7,7 @@ module Spotlight
   class RolesController < Spotlight::ApplicationController
     before_action :authenticate_user!
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
-    load_and_authorize_resource through: :exhibit, except: [:update_all]
+    load_and_authorize_resource through: :exhibit, except: %i[index update_all]
 
     def index
       role = @exhibit.roles.build

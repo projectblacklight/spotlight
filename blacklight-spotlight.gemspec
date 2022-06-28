@@ -17,7 +17,6 @@ for digital collections to create attractive, feature-rich websites that feature
 these collections.)
 
   s.files = Dir['{app,config,db,lib,vendor}/**/*', 'Rakefile', 'README.md', 'LICENSE']
-  s.test_files = Dir['spec/**/*']
 
   s.required_ruby_version = '>= 2.6'
 
@@ -52,7 +51,7 @@ these collections.)
   s.add_dependency 'ostruct', '!= 0.3.0', '!= 0.3.1', '!= 0.3.2'
   s.add_dependency 'paper_trail', '>= 11.0', '< 13'
   s.add_dependency 'pg'
-  s.add_dependency 'rails', '>= 5.2', '< 8'
+  s.add_dependency 'rails', '>= 6.1', '< 8'
   s.add_dependency 'redcarpet', '>= 2.0.1', '< 4'
   s.add_dependency 'riiif', '~> 2.0'
   s.add_dependency 'roar', '~> 1.1'
