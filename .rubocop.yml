@@ -216,7 +216,7 @@ Rails/WhereExists: # (new in 2.7)
   Enabled: true
 Rails/WhereNot: # (new in 2.8)
   Enabled: true
-Gemspec/DateAssignment: # (new in 1.10)
+Gemspec/DeprecatedAttributeAssignment: # (new in 1.10)
   Enabled: true
 Lint/NumberedParameterAssignment: # (new in 1.9)
   Enabled: true
