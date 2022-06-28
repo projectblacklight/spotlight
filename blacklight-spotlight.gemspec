@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 for digital collections to create attractive, feature-rich websites that feature
 these collections.)
 
-  s.files = Dir['{app,config,db,lib,vendor}/**/*', 'Rakefile', 'README.md', 'LICENSE']
+  s.files = Dir['{app,config,db,lib,vendor}/**/*', 'Rakefile', 'README.md', 'LICENSE', 'spec/factories/*']
 
   s.required_ruby_version = '>= 2.6'
 
