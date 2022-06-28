@@ -177,14 +177,6 @@ module Spotlight
       copy_file 'config/initializers/translation.rb'
     end
 
-    def configure_queue
-      insert_into_file 'config/application.rb', after: "< Rails::Application\n" do
-        <<-EOF
-        config.active_job.queue_adapter = ENV["RAILS_QUEUE"]&.to_sym || :sidekiq
-        EOF
-      end
-    end
-
     def configure_logging
       insert_into_file 'config/application.rb', after: "< Rails::Application\n" do
         <<-EOF
