@@ -10,6 +10,7 @@ spotlight_options = ENV.fetch('SPOTLIGHT_INSTALL_OPTIONS', DEFAULT_SPOTLIGHT_OPT
 # Add gem dependencies to the application
 gem 'blacklight', ' ~> 7.0'
 gem 'blacklight-spotlight', ENV['SPOTLIGHT_GEM'] ? { path: ENV['SPOTLIGHT_GEM'] } : { github: 'projectblacklight/spotlight' }
+gem 'sidekiq'
 
 Bundler.with_clean_env do
   run 'bundle install'
@@ -26,4 +27,10 @@ rake 'spotlight:install:migrations'
 if !options['quiet'] && yes?('Would you like to create an initial administrator?')
   rake 'db:migrate' # we only need to run the migrations if we are creating an admin user
   rake 'spotlight:initialize'
+end
+
+insert_into_file 'config/application.rb', after: "< Rails::Application\n" do
+  <<-CONFIG
+  config.active_job.queue_adapter = ENV["RAILS_QUEUE"]&.to_sym || :sidekiq
+  CONFIG
 end
