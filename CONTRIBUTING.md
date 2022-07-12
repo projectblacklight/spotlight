@@ -1,6 +1,6 @@
 # Contributing to Spotlight
 
-Spotlight is a collaborative, open source project produced by developers, designers, product owners from several organizations. Spotlight mostly uses the [contribution model](https://github.com/projectblacklight/blacklight/blob/master/CONTRIBUTING.md) from its parent project [Blacklight](https://github.com/projectblacklight/blacklight). There are a few differences from the Blacklight process that this document will highlight.
+Spotlight is a collaborative, open source project produced by developers, designers, product owners from several organizations. Spotlight mostly uses the [contribution model](https://github.com/projectblacklight/blacklight/blob/main/CONTRIBUTING.md) from its parent project [Blacklight](https://github.com/projectblacklight/blacklight). There are a few differences from the Blacklight process that this document will highlight.
 
 ## User experience changes
 
