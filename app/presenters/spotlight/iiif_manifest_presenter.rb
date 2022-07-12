@@ -8,7 +8,7 @@ module Spotlight
   #  nodes.
   #
   # IIIFManifest expects the following methods:  #file_set_presenters, #work_presenters, #manifest_url, #description.
-  #  see: https://github.com/projecthydra-labs/iiif_manifest/blob/master/README.md
+  #  see: https://github.com/projecthydra-labs/iiif_manifest/blob/main/README.md
   class IiifManifestPresenter
     require 'iiif_manifest'
 
