@@ -78,7 +78,7 @@ ignore_unused:
   # TODO Look into these as its unclear
   - activerecord.models.spotlight.page
   #- # perhaps removed here? https://github.com/projectblacklight/spotlight/commit/d4fdf04565ab3d648f0cb2a1238d84f262509fcd
-  - devise.mailer.*.* # Does this even work? https://github.com/projectblacklight/spotlight/blob/master/app/mailers/spotlight/invitation_mailer.rb#L16
+  - devise.mailer.*.* # Does this even work? https://github.com/projectblacklight/spotlight/blob/main/app/mailers/spotlight/invitation_mailer.rb#L16
   - helpers.submit.solr_document.{batch_error,batch_updated,create,created,destroyed,submit,update,updated} # Do we need this?
   - helpers.submit.user.{batch_error,batch_updated,create,created,destroyed,submit,update,updated} # Do we need this?
   - helpers.action.destroy # no idea here
