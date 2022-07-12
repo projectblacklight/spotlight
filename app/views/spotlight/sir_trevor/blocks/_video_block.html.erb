@@ -1,5 +1,5 @@
 <% if video_block.source == 'vimeo' %>
-  <%= render partial: '/spotlight/sir_trevor/blocks/videos/vimeo', vimeo: video_block %>
+  <%= render partial: '/spotlight/sir_trevor/blocks/videos/vimeo', locals: { vimeo: video_block } %>
 <% elsif video_block.source == 'youtube' %>
-  <%= render partial: '/spotlight/sir_trevor/blocks/videos/youtube', youtube: video_block %>
+  <%= render partial: '/spotlight/sir_trevor/blocks/videos/youtube', locals: { youtube: video_block } %>
 <% end %>
