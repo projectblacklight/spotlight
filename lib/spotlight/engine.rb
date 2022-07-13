@@ -308,5 +308,10 @@ module Spotlight
     config.assign_default_roles_to_first_user = true
 
     config.exhibit_roles = %w[admin curator viewer]
+
+    if ActiveRecord.respond_to?(:yaml_column_permitted_classes) || ActiveRecord::Base.respond_to?(:yaml_column_permitted_classes)
+      config.active_record.yaml_column_permitted_classes ||= []
+      config.active_record.yaml_column_permitted_classes += [Symbol, ActiveSupport::HashWithIndifferentAccess]
+    end
   end
 end
