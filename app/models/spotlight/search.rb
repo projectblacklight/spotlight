@@ -71,11 +71,11 @@ module Spotlight
     end
 
     def search_params
-      search_service.search_builder.with(query_params.with_indifferent_access).merge(facet: false)
+      search_service.search_builder.with((query_params || {}).with_indifferent_access).merge(facet: false)
     end
 
     def merge_params_for_search(params, blacklight_config)
-      base_query = Blacklight::SearchState.new(query_params, blacklight_config)
+      base_query = Blacklight::SearchState.new((query_params || {}), blacklight_config)
       user_query = Blacklight::SearchState.new(params, blacklight_config).to_h
       base_query.params_for_search(user_query).merge(user_query.slice(:page))
     end
