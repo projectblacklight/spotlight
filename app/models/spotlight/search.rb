@@ -64,6 +64,10 @@ module Spotlight
       end
     end
 
+    def query_params
+      super || {}.with_indifferent_access
+    end
+
     delegate :blacklight_config, to: :exhibit
 
     def display_masthead?
