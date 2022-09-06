@@ -70,7 +70,7 @@ namespace :spotlight do
   task :export, [:exhibit_slug] => :environment do |_, args|
     exhibit = Spotlight::Exhibit.find_by(slug: args[:exhibit_slug])
 
-    puts Spotlight::ExhibitExportSerializer.new(exhibit).to_json
+    puts Spotlight::ExhibitImportExportService.new(exhibit).to_json
   end
 
   desc 'Migrate to IIIF'
