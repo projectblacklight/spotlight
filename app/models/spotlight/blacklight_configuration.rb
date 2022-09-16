@@ -320,7 +320,7 @@ module Spotlight
           field: config.document_model.solr_field_for_tagger(exhibit),
           link_to_facet: true,
           separator_options: { words_connector: nil, two_words_connector: nil, last_word_connector: nil },
-          label: I18n.t('spotlight.search.fields.facet.exhibit_tags')
+          label: I18n.t('spotlight.search.fields.exhibit_tags')
         )
       end
 
