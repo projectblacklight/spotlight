@@ -315,13 +315,22 @@ module Spotlight
     def add_exhibit_tags_fields(config)
       # rubocop:disable Style/GuardClause
       unless config.show_fields.include? :exhibit_tags
-        config.add_show_field :exhibit_tags, field: config.document_model.solr_field_for_tagger(exhibit),
-                                             link_to_facet: true,
-                                             separator_options: { words_connector: nil, two_words_connector: nil, last_word_connector: nil }
+        config.add_show_field(
+          :exhibit_tags,
+          field: config.document_model.solr_field_for_tagger(exhibit),
+          link_to_facet: true,
+          separator_options: { words_connector: nil, two_words_connector: nil, last_word_connector: nil },
+          label: I18n.t('spotlight.search.fields.facet.exhibit_tags')
+        )
       end
 
       unless config.facet_fields.include? :exhibit_tags
-        config.add_facet_field :exhibit_tags, field: config.document_model.solr_field_for_tagger(exhibit), limit: true
+        config.add_facet_field(
+          :exhibit_tags,
+          field: config.document_model.solr_field_for_tagger(exhibit),
+          limit: true,
+          label: I18n.t('spotlight.search.fields.facet.exhibit_tags')
+        )
       end
       # rubocop:enable Style/GuardClause
     end

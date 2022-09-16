@@ -784,6 +784,7 @@ en:
       fields:
         abstract_tesim: Abstract
         corporate_name_ssm: Corporate names
+        exhibit_tags: Exhibit tags
         facet:
           corporate_name_ssm: Corporate names
           exhibit_tags: Exhibit tags
