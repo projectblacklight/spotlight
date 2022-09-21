@@ -75,6 +75,14 @@ Our `$ rake ci` and `$ rake spotlight:server` tasks utilize Solr and the testing
 
 See more detailed instructions for development environment setup at ["Contributing to Spotlight"](https://github.com/projectblacklight/spotlight/wiki/Contributing-to-Spotlight)
 
+## With Docker
+
+```sh
+# because of how docker-compose handles named images, running `docker-compose up --build` will error when the Rails images have not been built locally
+docker-compose build
+docker-compose up
+```
+
 ## Tests
 
 ### Run all the tests:
