@@ -43,16 +43,13 @@ module Spotlight
       def to_solr
         return {} unless upload&.file_present?
 
-        spotlight_routes = Spotlight::Engine.routes.url_helpers
-        riiif = Riiif::Engine.routes.url_helpers
-
-        dimensions = Riiif::Image.new(upload_id).info
+        dimensions = Spotlight::Engine.config.iiif_service.info(id)
 
         {
           spotlight_full_image_width_ssm: dimensions.width,
           spotlight_full_image_height_ssm: dimensions.height,
-          Spotlight::Engine.config.thumbnail_field => riiif.image_path(upload, size: '!400,400'),
-          Spotlight::Engine.config.iiif_manifest_field => spotlight_routes.manifest_exhibit_solr_document_path(exhibit, compound_id)
+          Spotlight::Engine.config.thumbnail_field => Spotlight::Engine.config.iiif_service.thumbnail_path(upload),
+          Spotlight::Engine.config.iiif_manifest_field => Spotlight::Engine.config.iiif_service.manifest_path(exhibit, upload)
         }
       end
 

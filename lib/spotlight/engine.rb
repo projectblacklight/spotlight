@@ -7,18 +7,19 @@ require 'devise'
 require 'devise_invitable'
 
 require 'activejob-status'
-require 'blacklight'
 require 'autoprefixer-rails'
-require 'friendly_id'
-require 'tophat'
-require 'paper_trail'
+require 'blacklight'
 require 'clipboard/rails'
-require 'leaflet-rails'
-require 'i18n/active_record'
-require 'spotlight/upload_field_config'
-require 'riiif'
 require 'faraday'
 require 'faraday_middleware'
+require 'friendly_id'
+require 'i18n/active_record'
+require 'leaflet-rails'
+require 'paper_trail'
+require 'riiif'
+require 'spotlight/riiif_service'
+require 'spotlight/upload_field_config'
+require 'tophat'
 
 module Spotlight
   ##
@@ -113,6 +114,9 @@ module Spotlight
 
     # The allowed file extensions for uploading non-repository items.
     config.allowed_upload_extensions = %w[jpg jpeg png]
+
+    # IIIF integration
+    config.iiif_service = Spotlight::RiiifService
 
     # Suffixes for spotlight-created solr fields
     config.solr_fields = OpenStruct.new
