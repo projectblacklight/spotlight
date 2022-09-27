@@ -44,6 +44,8 @@ module Spotlight
     end
 
     def riiif
+      gem 'riiif', git: 'https://github.com/curationexperts/riiif.git'
+      Bundler.with_clean_env { run 'bundle install' }
       route "mount Riiif::Engine => '/images', as: 'riiif'"
       copy_file 'config/initializers/riiif.rb'
     end
@@ -172,7 +174,7 @@ module Spotlight
     def configure_queue
       insert_into_file 'config/application.rb', after: "< Rails::Application\n" do
         <<-EOF
-        config.active_job.queue_adapter = ENV["RAILS_QUEUE"].to_sym || :sidekiq
+        config.active_job.queue_adapter = ENV["RAILS_QUEUE"]&.to_sym || :sidekiq
         EOF
       end
     end

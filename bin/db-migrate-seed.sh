@@ -17,8 +17,8 @@ wait_for () {
 wait_for "$DB_HOST:$DB_PORT"
 wait_for "$SOLR_HOST:$SOLR_PORT"
 
-bundle exec rails db:migrate
+bundle exec rake db:create db:migrate
 if [ "${RAILS_ENV}" = "development" ]; then
-  bundle exec rails db:seed
+  bundle exec rake db:seed
   bundle exec rake spotlight:seed_admin_user
 fi

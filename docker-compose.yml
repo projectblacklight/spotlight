@@ -5,18 +5,20 @@ services:
     build:
       context: .
     image: spotlight
+    stdin_open: true
+    tty: true
+    restart: always
     env_file:
       - .env
     volumes:
       - .:/spotlight/engine
+      - spotlight_app:/spotlight/app
     ports:
-      - 3333:3000
+      - 3000:3000
     depends_on:
       - chrome
       - db_migrate
       - solr
-    stdin_open: true
-    tty: true
     networks:
       - spotlight
 
@@ -24,37 +26,35 @@ services:
     image: spotlight
     env_file:
       - .env
+    environment:
+      SKIP_TRANSLATION: "yes"
     entrypoint: sh -c '/spotlight/engine/bin/db-migrate-seed.sh'
     depends_on:
       - postgres
     volumes:
       - .:/spotlight/engine
+      - spotlight_app:/spotlight/app
     networks:
       - spotlight
 
   postgres:
-    image: bitnami/postgresql:12.6.0
+    image: bitnami/postgresql:12.10.0
     restart: always
-    environment:
-      - POSTGRES_USER=spotlight_user
-      - POSTGRES_PASSWORD=spotlight_password
-      - POSTGRES_DB=spotlight
-      - POSTGRES_HOST_AUTH_METHOD=trust
-    # ports:
-    #   - 5432:5432
+    env_file:
+      - .env
     volumes:
-      - spotlight_db:/var/lib/postgresql/data
+      - spotlight_db:/bitnami/postgresql
     networks:
       - spotlight
 
   solr:
-    image: bitnami/solr:8.11.1-debian-10-r134
+    image: bitnami/solr:8.8.1-debian-10-r22
     env_file:
       - .env
     ports:
       - 8983:8983
     volumes:
-      - spotlight_solr:/opt/solr/server/solr
+      - spotlight_solr:/bitnami/solr
       - ./lib/generators/spotlight/templates/solr/config:/opt/custom/spotlightset
     networks:
       - spotlight
@@ -65,6 +65,7 @@ services:
       - spotlight
 
 volumes:
+  spotlight_app:
   spotlight_db:
   spotlight_redis:
   spotlight_solr:
