@@ -68,9 +68,8 @@ module Spotlight
     def iiif_tilesource
       if self[:iiif_tilesource]
         self[:iiif_tilesource]
-      elsif file_present?
-        riiif = Riiif::Engine.routes.url_helpers
-        riiif.info_path(self)
+      elsif file_present
+        Spotlight::Engine.config.iiif_service.info_path(self)
       end
     end
 
