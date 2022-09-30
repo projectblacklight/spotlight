@@ -63,6 +63,7 @@ these collections.)
   s.add_dependency 'thor'
   s.add_dependency 'tophat'
   s.add_dependency 'underscore-rails', '~> 1.6'
+  s.add_dependency 'view_component', '< 2.74' # until a release includes https://github.com/projectblacklight/blacklight/pull/2818/files
   s.add_dependency 'webpacker'
 
   s.add_development_dependency 'capybara', '~> 3.31'
