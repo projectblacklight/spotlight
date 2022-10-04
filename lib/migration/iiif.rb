@@ -90,10 +90,8 @@ module Migration
     end
 
     def update_iiif_url(image)
-      iiif_url = "#{hostname}/#{Spotlight::Engine.config.iiif_service.info_path(image)}"
-
       image.update(
-        iiif_tilesource: iiif_url,
+        iiif_tilesource: Spotlight::Engine.config.iiif_service.info_url(image),
         iiif_region: coordinates(image)
       )
     end
