@@ -20,7 +20,7 @@ module Spotlight
       set_html_page_title(head_content)
 
       html_content = safe_join([
-        (section if section.present?),
+        section.presence,
         (content_tag(:small, title) if title.present?)
       ].compact, "\n")
 

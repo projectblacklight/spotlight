@@ -10,11 +10,11 @@ module SirTrevorRails
       end
 
       def item_ids
-        items.map { |v| v[:id] }
+        items.pluck(:id)
       end
 
       def ordered_items
-        items.sort_by { |x| x[:weight].to_i }.map { |x| x[:id] }
+        items.sort_by { |x| x[:weight].to_i }.pluck(:id)
       end
 
       private

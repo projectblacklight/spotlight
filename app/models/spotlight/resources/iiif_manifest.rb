@@ -115,8 +115,8 @@ module Spotlight
       end
 
       def exhibit_custom_fields
-        @exhibit_custom_fields ||= exhibit.custom_fields.each_with_object({}) do |value, hash|
-          hash[value.label] = value
+        @exhibit_custom_fields ||= exhibit.custom_fields.index_by do |value|
+          value.label
         end
       end
 
