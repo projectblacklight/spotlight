@@ -69,7 +69,7 @@ module Spotlight
       if self[:iiif_tilesource]
         self[:iiif_tilesource]
       elsif file_present?
-        Spotlight::Engine.config.iiif_service.info_path(self)
+        Spotlight::Engine.config.iiif_service.info_url(self)
       end
     end
 
