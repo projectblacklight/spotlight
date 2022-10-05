@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Spotlight
+  # iiif_service module for when using the built-in riiif server
   module RiiifService
     # @param [Spotlight::FeaturedImage] image
     # @return [String]
