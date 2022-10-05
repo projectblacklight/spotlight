@@ -7,6 +7,7 @@ require 'engine_cart'
 EngineCart.load_application!
 
 Internal::Application.config.active_job.queue_adapter = :inline
+Internal::Application.config.action_controller.default_url_options = { host: 'test.host' }
 
 require 'rails-controller-testing'
 require 'rspec/collection_matchers'
