@@ -27,7 +27,7 @@ module Spotlight
     end
 
     def site_title
-      current_site.title if current_site.title.present?
+      current_site.title.presence
     end
 
     # Returns the url for the current page in the new locale. This may be
