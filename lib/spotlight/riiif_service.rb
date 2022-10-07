@@ -11,8 +11,8 @@ module Spotlight
 
     # @param [Spotlight::FeaturedImage] image
     # @return [String]
-    def self.info_url(image)
-      Riiif::Engine.routes.url_helpers.info_url(image)
+    def self.info_url(image, _host = nil)
+      Riiif::Engine.routes.url_helpers.info_path(image)
     end
 
     # @param [Spotlight::Exhibit] exhibit

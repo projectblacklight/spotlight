@@ -157,20 +157,6 @@ module Spotlight
       end
     end
 
-    def add_hostname_defaults
-      insert_into_file 'config/application.rb', after: "< Rails::Application\n" do
-        <<-EOF
-        config.action_controller.default_url_options = { host: ENV["HOSTNAME"] }
-        EOF
-      end
-
-      insert_into_file 'config/environments/test.rb', after: "Rails.application.configure do\n" do
-        <<-EOF
-        config.action_controller.default_url_options = { host: "test.host" }
-        EOF
-      end
-    end
-
     def generate_config
       directory 'config'
     end

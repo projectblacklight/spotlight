@@ -40,7 +40,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
         end.to change(Spotlight::FeaturedImage, :count).by(1)
 
         expect(response).to be_successful
-        expect(response.body).to match %r{\{"tilesource":"http://test\.host/images/\d+-.+/info\.json","id":\d+\}}
+        expect(response.body).to match %r{\{"tilesource":"/images/\d+-.+/info\.json","id":\d+\}}
       end
     end
 
@@ -55,7 +55,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
         end.to change(Spotlight::FeaturedImage, :count).by(1)
 
         expect(response).to be_successful
-        expect(response.body).to match %r{\{"tilesource":"http://test\.host/images/\d+-.+/info\.json","id":\d+\}}
+        expect(response.body).to match %r{\{"tilesource":"/images/\d+-.+/info\.json","id":\d+\}}
       end
     end
 
@@ -70,7 +70,7 @@ describe Spotlight::FeaturedImagesController, type: :controller do
         end.to change(Spotlight::FeaturedImage, :count).by(1)
 
         expect(response).to be_successful
-        expect(response.body).to match %r{\{"tilesource":"http://test\.host/images/\d+-.+/info\.json","id":\d+\}}
+        expect(response.body).to match %r{\{"tilesource":"/images/\d+-.+/info\.json","id":\d+\}}
       end
     end
   end
