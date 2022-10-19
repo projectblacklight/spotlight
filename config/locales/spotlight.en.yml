@@ -475,8 +475,12 @@ en:
       edit:
         header: Edit exhibit-specific field
       form:
+        slug:
+          help: A machine friendly name for the Solr specification.  See https://github.com/projectblacklight/blacklight/wiki/Blacklight-configuration#search-fields
         field:
           help: Specify fields to be searched and their boost values (e.g., full_title_tesim^100 personal_name_tesim^50).
+        label:
+          help: A human friendly label for the Solr specification.
       new:
         header: Add exhibit-specific field
     dashboards:
