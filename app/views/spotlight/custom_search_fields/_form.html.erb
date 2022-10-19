@@ -1,8 +1,8 @@
 <%= bootstrap_form_for @custom_search_field.new_record? ? [current_exhibit, @custom_search_field] : [@custom_search_field.exhibit, @custom_search_field], layout: :horizontal, label_col: 'col-md-3', control_col: 'col-md-9', html: {class: 'col-md-9', id: 'edit-search-field'} do |f| %>
 
-  <%= f.text_field :slug %>
+  <%= f.text_field :slug, help: t('.slug.help') %>
   <%= f.text_field :field, help: t('.field.help') %>
-  <%= f.text_field :label %>
+  <%= f.text_field :label, help: t('.label.help') %>
 
   <div class="form-actions">
     <div class="primary-actions">
