@@ -27,7 +27,6 @@ module Spotlight
 
     serialize :data, Hash
 
-    after_index :commit
     after_index :touch_exhibit!
 
     after_destroy :cleanup_solr
