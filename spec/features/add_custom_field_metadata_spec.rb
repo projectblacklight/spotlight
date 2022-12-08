@@ -12,7 +12,7 @@ describe 'Adding custom metadata field data', type: :feature do
     config.save!
   end
 
-  it 'works' do
+  it 'allows admins to add metadata to a document' do
     visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
 
     expect(page).to have_link 'Edit'

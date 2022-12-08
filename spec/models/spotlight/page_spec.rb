@@ -74,7 +74,7 @@ describe Spotlight::Page, type: :model do
         stub_const('Spotlight::PageContent::Static', fake_class)
       end
 
-      it 'works' do
+      it 'allows the implementation to specify a custom content parser' do
         page.content = [].to_json
         expect(page.content).to eq 'xyz'
       end

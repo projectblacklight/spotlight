@@ -8,7 +8,7 @@ describe 'Adding custom metadata fields', type: :feature do
     login_as(admin)
   end
 
-  it 'works' do
+  it 'allows admins to manage a new custom field' do
     # Add
 
     visit spotlight.edit_exhibit_metadata_configuration_path exhibit

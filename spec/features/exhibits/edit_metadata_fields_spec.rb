@@ -6,7 +6,7 @@ describe 'Editing metadata fields', type: :feature do
 
   before { login_as(admin) }
 
-  it 'works' do
+  it 'allows admins to configure which index fields display in certain contexts' do
     visit spotlight.edit_exhibit_metadata_configuration_path exhibit
 
     expect(page).to have_content 'Display and order metadata fields'
