@@ -8,7 +8,7 @@ describe 'Adding custom search fields', type: :feature do
     login_as(admin)
   end
 
-  it 'works' do
+  it 'allows admins to define a new custom search field' do
     # Add
 
     visit spotlight.edit_exhibit_search_configuration_path exhibit

@@ -48,7 +48,7 @@ RSpec.describe 'Locale Selector', js: true do
   describe 'switching locales' do
     let(:user) { FactoryBot.create(:exhibit_visitor) }
 
-    it 'works' do
+    it 'allows the user to select the language most appropriate for them' do
       visit spotlight.exhibit_path(exhibit)
 
       expect(page).to have_css('input[placeholder="Search..."]')
