@@ -22,10 +22,6 @@ module Migration
 
     private
 
-    def riiif
-      Riiif::Engine.routes.url_helpers
-    end
-
     def migrate_featured_images
       Spotlight::FeaturedImage.all.each do |image|
         update_iiif_url(image)
@@ -73,7 +69,7 @@ module Migration
 
       old_file = File.new(filepath)
       image = contact.create_avatar { |i| i.image.store!(old_file) }
-      iiif_tilesource = riiif.info_path(image)
+      iiif_tilesource = Spotlight::Engine.config.iiif_service.info_url(image)
       image.update(iiif_tilesource: iiif_tilesource, iiif_region: avatar_coordinates(contact))
       image
     end
@@ -87,7 +83,7 @@ module Migration
 
       old_file = File.new(filepath)
       image = upload.create_upload { |i| i.image.store!(old_file) }
-      iiif_tilesource = riiif.info_path(image)
+      iiif_tilesource = Spotlight::Engine.config.iiif_service.info_url(image)
       image.update(iiif_tilesource: iiif_tilesource)
       upload.upload_id = image.id
       upload.save_and_index
@@ -95,7 +91,7 @@ module Migration
 
     def update_iiif_url(image)
       image.update(
-        iiif_tilesource: riiif.info_url(image, host: hostname),
+        iiif_tilesource: Spotlight::Engine.config.iiif_service.info_url(image),
         iiif_region: coordinates(image)
       )
     end

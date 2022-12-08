@@ -21,6 +21,9 @@
 # Spotlight::Engine.config.default_browse_index_view_type = :gallery
 # Spotlight::Engine.config.default_contact_email = nil
 
+# ==> IIIF configuration
+# Spotlight::Engine.config.iiif_service = Spotlight::RIIIFService
+
 # ==> Solr configuration
 # Spotlight::Engine.config.writable_index = true
 # Spotlight::Engine.config.solr_batch_size = 20
