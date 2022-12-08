@@ -243,14 +243,14 @@ module Spotlight
             # If any of the values have a language associated with them, the client must display all of the values associated with the language that best
             # matches the language preference.
             elsif value.any? { |v| v.is_a?(Hash) && v['@language'] == default_json_ld_language }
-              value.select { |v| v.is_a?(Hash) && v['@language'] == default_json_ld_language }.map { |v| v['@value'] }
+              value.select { |v| v.is_a?(Hash) && v['@language'] == default_json_ld_language }.pluck('@value')
             # If all of the values have a language associated with them, and none match the language preference, the client must select a language
             # and display all of the values associated with that language.
             elsif value.all? { |v| v.is_a?(Hash) && v.key?('@language') }
               selected_json_ld_language = value.find { |v| v.is_a?(Hash) && v.key?('@language') }
 
               value.select { |v| v.is_a?(Hash) && v['@language'] == selected_json_ld_language['@language'] }
-                   .map { |v| v['@value'] }
+                   .pluck('@value')
             # If some of the values have a language associated with them, but none match the language preference, the client must display all of the values
             # that do not have a language associated with them.
             else

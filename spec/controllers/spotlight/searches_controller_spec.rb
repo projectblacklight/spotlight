@@ -91,7 +91,7 @@ describe Spotlight::SearchesController, type: :controller do
         get :autocomplete, params: { exhibit_id: exhibit, id: search, format: 'json' }
         expect(response).to be_successful
         docs = JSON.parse(response.body)['docs']
-        doc_ids = docs.map { |d| d['id'] }
+        doc_ids = docs.pluck('id')
         expect(docs.length).to eq 2
         expect(doc_ids).to include 'cz507zk0531'
         expect(doc_ids).to include 'rz818vx8201'
