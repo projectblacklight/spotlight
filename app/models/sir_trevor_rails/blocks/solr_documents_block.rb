@@ -26,8 +26,13 @@ module SirTrevorRails
       def documents
         @documents ||= begin
           doc_ids = items.pluck(:id)
-          _, documents = solr_helper.controller.send(:search_service).fetch(doc_ids)
-          documents
+          result = solr_helper.controller.send(:search_service).fetch(doc_ids)
+
+          if result.first.is_a? Blacklight::Solr::Response
+            result.last
+          else
+            result
+          end
         end
       end
 

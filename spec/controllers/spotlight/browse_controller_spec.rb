@@ -83,7 +83,7 @@ describe Spotlight::BrowseController, type: :controller do
     end
 
     describe 'GET show' do
-      let(:mock_response) { double aggregations: {} }
+      let(:mock_response) { double documents: document_list, aggregations: {} }
       let(:document_list) { double }
 
       before do
@@ -98,7 +98,6 @@ describe Spotlight::BrowseController, type: :controller do
         expect(response).to be_successful
         expect(assigns[:search]).to be_a Spotlight::Search
         expect(assigns[:response]).to eq mock_response
-        expect(assigns[:document_list]).to eq document_list
         expect(response).to render_template 'spotlight/browse/show'
       end
 

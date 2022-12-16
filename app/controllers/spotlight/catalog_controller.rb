@@ -20,6 +20,8 @@ module Spotlight
     before_action :attach_breadcrumbs
     before_action :add_breadcrumb_with_search_params, only: :index
 
+    before_action :load_document, only: %i[edit update make_private make_public manifest]
+
     before_action only: :show do
       blacklight_config.show.partials.unshift 'tophat'
       blacklight_config.show.partials.unshift 'curation_mode_toggle'
@@ -53,13 +55,13 @@ module Spotlight
     # setup within their index analyzer. This will ensure that this method returns
     # results when a partial match is passed in the "q" parameter.
     def autocomplete
-      (_, @document_list) = search_service.search_results do |builder|
+      @response, = search_service.search_results do |builder|
         builder.with(builder.blacklight_params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field, public: true, rows: 100))
       end
 
       respond_to do |format|
         format.json do
-          render json: { docs: autocomplete_json_response(@document_list) }
+          render json: { docs: autocomplete_json_response(@response.documents) }
         end
       end
     end
@@ -67,7 +69,7 @@ module Spotlight
     def admin
       add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
       add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_path(@exhibit)
-      (@response, @document_list) = search_service.search_results
+      (@response,) = search_service.search_results
       @filters = params[:f] || []
 
       respond_to do |format|
@@ -75,12 +77,9 @@ module Spotlight
       end
     end
 
-    def edit
-      @response, @document = search_service.fetch params[:id]
-    end
+    def edit; end
 
     def update
-      @response, @document = search_service.fetch params[:id]
       @document.update(current_exhibit, solr_document_params)
       @document.save
 
@@ -90,7 +89,6 @@ module Spotlight
     end
 
     def make_private
-      @response, @document = search_service.fetch params[:id]
       @document.make_private!(current_exhibit)
       @document.save
 
@@ -101,7 +99,6 @@ module Spotlight
     end
 
     def make_public
-      @response, @document = search_service.fetch params[:id]
       @document.make_public!(current_exhibit)
       @document.save
 
@@ -112,16 +109,24 @@ module Spotlight
     end
 
     def manifest
-      _, document = search_service.fetch params[:id]
-
-      if document.uploaded_resource?
-        render json: Spotlight::IiifManifestPresenter.new(document, self).iiif_manifest_json
+      if @document.uploaded_resource?
+        render json: Spotlight::IiifManifestPresenter.new(@document, self).iiif_manifest_json
       else
         head :not_found
       end
     end
 
     protected
+
+    def load_document
+      result = search_service.fetch params[:id]
+
+      @document = if result.is_a?(Array)
+                    result.last
+                  else
+                    result
+                  end
+    end
 
     def attach_breadcrumbs
       if view_context.current_page?({ action: :admin })

@@ -6,11 +6,12 @@ describe 'Browse pages' do
   context 'a browse page' do
     let!(:search) { FactoryBot.create(:search, title: 'Some Saved Search', exhibit: exhibit, published: true) }
 
-    let(:mock_response) { Blacklight::Solr::Response.new({ response: { numFound: 10, docs: mock_documents } }, {}) }
     let(:mock_documents) { [] }
+    let(:mock_response) { Blacklight::Solr::Response.new({ response: { numFound: 10 } }, {}) }
 
     before do
-      allow_any_instance_of(Blacklight::SearchService).to receive(:search_results).and_return([mock_response, mock_documents])
+      allow(mock_response).to receive(:documents).and_return(mock_documents)
+      allow_any_instance_of(Blacklight::SearchService).to receive(:search_results).and_return(mock_response)
     end
 
     context 'with the standard exhibit masthead' do
