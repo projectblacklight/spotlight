@@ -22,6 +22,7 @@ jobs:
     env:
       RAILS_VERSION: ${{ matrix.rails_version }}
       BLACKLIGHT_VERSION: ${{ matrix.blacklight_version }}
+      ENGINE_CART_RAILS_OPTIONS: --skip-git --skip-listen --skip-spring --skip-keeps --skip-action-cable --skip-coffee --skip-test --skip-javascript
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby ${{ matrix.ruby }}
