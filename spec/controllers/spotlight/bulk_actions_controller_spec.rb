@@ -50,7 +50,7 @@ describe Spotlight::BulkActionsController, type: :controller do
     end
 
     let(:search) { FactoryBot.create(:search, exhibit: exhibit) }
-    let(:search_session) { instance_double('Blacklight::Search', query_params: { q: 'map' }) }
+    let(:search_session) { instance_double('::Search', query_params: { q: 'map' }) }
 
     describe 'POST change_visibility' do
       it 'redirects and sets a notice' do
