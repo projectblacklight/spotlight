@@ -64,19 +64,6 @@ module Spotlight
     end
 
     ##
-    # Override the Blacklight #url_for_document helper to add
-    # the current exhibit context
-    def url_for_document(document)
-      return nil if document.nil?
-
-      if current_exhibit
-        [spotlight, current_exhibit, document]
-      else
-        document
-      end
-    end
-
-    ##
     # Override Blacklight's #document_action_path helper to add
     # the current exhibit context
     def document_action_path(action_opts, url_opts = nil)

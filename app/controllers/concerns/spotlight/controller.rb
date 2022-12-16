@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'spotlight/search_state'
+
 module Spotlight
   ##
   # Spotlight controller helpers
@@ -64,6 +66,14 @@ module Spotlight
         exhibit_specific_blacklight_config
       else
         default_catalog_controller.blacklight_config
+      end
+    end
+
+    def search_state
+      if current_exhibit
+        @search_state ||= Spotlight::SearchState.new(super, current_exhibit)
+      else
+        super
       end
     end
 
