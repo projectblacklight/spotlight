@@ -13,6 +13,7 @@ describe 'spotlight/searches/edit.html.erb', type: :view do
   end
 
   before do
+    view.extend(Spotlight::ApplicationHelper)
     allow(view).to receive(:search_action_path).and_return('/search')
     allow(view).to receive(:mastheads_path).and_return('/mastheads')
     allow(view).to receive(:featured_images_path).and_return('/featured_images')
