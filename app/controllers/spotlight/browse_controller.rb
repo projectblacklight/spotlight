@@ -7,7 +7,7 @@ module Spotlight
   class BrowseController < Spotlight::ApplicationController
     load_and_authorize_resource :exhibit, class: 'Spotlight::Exhibit'
     include Spotlight::Catalog
-    include Blacklight::Facet
+    include Blacklight::Facet if defined?(Blacklight::Facet)
 
     load_and_authorize_resource :group, through: :exhibit
     load_and_authorize_resource :search, through: %i[group exhibit], parent: false
