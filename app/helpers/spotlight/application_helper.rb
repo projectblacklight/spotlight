@@ -158,7 +158,36 @@ module Spotlight
       current_exhibit.theme if current_exhibit && current_exhibit.theme.present? && current_exhibit.themes.include?(current_exhibit.theme)
     end
 
+    def render_search_bar
+      return super if defined?(super)
+
+      render((blacklight_config&.view_config(document_index_view_type)&.search_bar_component || Blacklight::SearchBarComponent).new(
+               url: search_action_url,
+               advanced_search_url: search_action_url(action: 'advanced_search'),
+               params: search_state.params_for_search.except(:qt),
+               autocomplete_path: suggest_index_catalog_path
+             ))
+    end
+
+    def render_constraints(localized_params = nil, local_search_state = nil)
+      return super if defined?(super)
+
+      local_search_state ||= convert_to_search_state(localized_params || search_state)
+      constraints_component = blacklight_config&.view_config(document_index_view_type)&.constraints_component
+      constraints_component ||= Blacklight::ConstraintsComponent
+      render(constraints_component.new(search_state: local_search_state))
+    end
+
     private
+
+    def convert_to_search_state(params_or_search_state)
+      if params_or_search_state.is_a? Blacklight::SearchState
+        params_or_search_state
+      else
+        # deprecated
+        controller.search_state_class.new(params_or_search_state, blacklight_config, controller)
+      end
+    end
 
     def main_app_url_helper?(method)
       method.to_s.end_with?('_path', '_url') && main_app.respond_to?(method)
