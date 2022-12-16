@@ -38,8 +38,8 @@ describe Spotlight::BrowseCategorySearchBuilder do
             query: {
               bool: {
                 must: [
-                  { edismax: { query: 'cats' } },
-                  { edismax: { query: 'search query' } }
+                  { edismax: { query: 'search query' } },
+                  { edismax: { query: 'cats' } }
                 ]
               }
             }
