@@ -96,7 +96,7 @@ describe Spotlight::CatalogController, type: :controller do
       it 'has partial matches for title' do
         # Testing with ps921pn8250 because it has html escapable characters in the title (c&#39;estadire)
         get :autocomplete, params: { exhibit_id: exhibit, q: 'PLANIS', format: 'json' }
-        expect(assigns[:document_list].first.id).to eq 'ps921pn8250'
+        expect(assigns[:response].documents.first.id).to eq 'ps921pn8250'
         expect(response).to be_successful
         json = JSON.parse(response.body)
         doc = json['docs'].first
@@ -104,13 +104,13 @@ describe Spotlight::CatalogController, type: :controller do
         expect(doc['id']).to eq 'ps921pn8250'
         expect(doc['description']).to eq 'ps921pn8250'
         expect(doc['title']).to eq "PLANISPHERE URANO-GEOGRAPHIQUE c'estadire LES SPHERES CELESTE et TERRESTRE mises en plan."
-        expect(doc['thumbnail']).to eq assigns[:document_list].first.first(:thumbnail_url_ssm)
+        expect(doc['thumbnail']).to eq assigns[:response].documents.first.first(:thumbnail_url_ssm)
         expect(doc['url']).to eq exhibit_solr_document_path(exhibit, id: 'ps921pn8250')
       end
 
       it 'has partial matches for id' do
         get :autocomplete, params: { exhibit_id: exhibit, q: 'dx157', format: 'json' }
-        expect(assigns[:document_list].first.id).to eq 'dx157dh4345'
+        expect(assigns[:response].documents.first.id).to eq 'dx157dh4345'
         expect(response).to be_successful
         json = JSON.parse(response.body)
         expect(json['docs'].first['id']).to eq 'dx157dh4345'
@@ -221,7 +221,7 @@ describe Spotlight::CatalogController, type: :controller do
       expect(controller).to receive(:add_breadcrumb).with('Items', admin_exhibit_catalog_path(exhibit))
       get :admin, params: { exhibit_id: exhibit }
       expect(response).to be_successful
-      expect(assigns[:document_list]).to be_a Array
+      expect(assigns[:response]&.documents).to be_a Array
       expect(assigns[:exhibit]).to eq exhibit
       expect(response).to render_template 'spotlight/catalog/admin'
       expect(controller.blacklight_config.view.admin_table.document_actions).to be_empty

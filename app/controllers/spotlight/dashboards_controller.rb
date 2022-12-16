@@ -52,10 +52,10 @@ module Spotlight
 
     def load_recent_solr_documents(count)
       solr_params = { sort: "#{blacklight_config.index.timestamp_field} desc" }
-      @response, docs = search_service.search_results do |builder|
+      @response, _docs = search_service.search_results do |builder|
         builder.merge(solr_params)
       end
-      docs.take(count)
+      @response.documents.take(count)
     end
   end
 end

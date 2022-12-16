@@ -1,7 +1,7 @@
 <% if search_results_block.searches? %>
 <div class="content-block documents">
   <% response, document_list = get_search_widget_search_results(search_results_block) %>
-  <%- unless document_list.present? %>
+  <%- unless response.documents.present? %>
     <div class="alert alert-warning">
       <strong>No items to display.</strong> There are currently no items in this exhibit that match the curator's search criteria.
     </div>
@@ -18,7 +18,7 @@
       <% end %>
 
       <h2 class="sr-only visually-hidden"><%= t('blacklight.search.search_results') %></h2>
-      <%= render_document_index_with_view(block_document_index_view_type(search_results_block), document_list) %>
+      <%= render_document_index_with_view(block_document_index_view_type(search_results_block), response.documents) %>
       <%= render 'results_pagination' %>
   <%- end %>
 </div>

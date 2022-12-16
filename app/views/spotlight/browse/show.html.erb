@@ -20,8 +20,8 @@
   <%= render partial: 'search_box', locals: {search: @search} %>
 <% end %>
 <% if @search.default_index_view_type && params[:view].blank? %>
-  <%= render_document_index_with_view(@search.default_index_view_type, @document_list) %>
+  <%= render_document_index_with_view(@search.default_index_view_type, @response.documents) %>
 <% else %>
-  <%= render_document_index(@document_list) %>
+  <%= render_document_index(@response.documents) %>
 <% end %>
 <%= render 'results_pagination' %>

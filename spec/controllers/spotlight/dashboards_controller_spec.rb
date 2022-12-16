@@ -19,7 +19,7 @@ describe Spotlight::DashboardsController, type: :controller do
         exhibit.blacklight_configuration.index = { timestamp_field: 'timestamp_field' }
         exhibit.save!
         # TODO: restore test for: .with(sort: 'timestamp_field desc')
-        expect(controller).to receive(:search_service).and_return(double(search_results: [double(:response), [{ id: 1 }]]))
+        expect(controller).to receive(:search_service).and_return(double(search_results: [double(:response, documents: [SolrDocument.new(id: 1)])]))
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
         expect(controller).to receive(:add_breadcrumb).with('Dashboard', exhibit_dashboard_path(exhibit))
         get :show, params: { exhibit_id: exhibit.id }

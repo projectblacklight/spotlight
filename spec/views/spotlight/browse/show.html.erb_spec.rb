@@ -7,7 +7,6 @@ describe 'spotlight/browse/show', type: :view do
   before do
     allow(view).to receive_messages(resource_masthead?: false)
     allow(view).to receive_messages(blacklight_config: Blacklight::Configuration.new)
-    allow(search).to receive_messages(documents: double(size: 15))
     allow(view).to receive_messages(render_document_index_with_view: '')
     stub_template('_results_pagination.html.erb' => '')
     stub_template('_sort_and_per_page.html.erb' => 'Sort and Per Page actions')
@@ -17,7 +16,7 @@ describe 'spotlight/browse/show', type: :view do
   before do
     assign :exhibit, exhibit
     assign :search, search
-    assign :document_list, []
+    assign :response, double(documents: double(size: 15))
   end
 
   it 'has a heading and item count when there is no current search masthead' do
