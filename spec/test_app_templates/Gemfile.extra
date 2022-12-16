@@ -4,4 +4,5 @@ gem 'view_component', '!= 2.26.0'
 if ENV['BLACKLIGHT_VERSION'] == 'edge'
   gem 'blacklight', github: 'projectblacklight/blacklight'
   gem 'blacklight-gallery', github: 'projectblacklight/blacklight-gallery'
+  gem 'blacklight-oembed', github: 'projectblacklight/blacklight-oembed'
 end
