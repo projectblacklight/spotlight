@@ -6,7 +6,8 @@ module Spotlight
   module Base
     extend ActiveSupport::Concern
 
-    include Blacklight::Base
+    include Blacklight::Configurable
+    include Blacklight::SearchContext
     include Spotlight::Config
 
     included do
