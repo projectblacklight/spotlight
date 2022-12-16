@@ -31,7 +31,7 @@ module Spotlight
                       { set: v }
                     end
         end
-        output[Blacklight::Configuration.default_values[:index].timestamp_field] ||= { set: nil }
+        output[Spotlight::Engine.blacklight_config.index.timestamp_field] ||= { set: nil }
         output
       end
     end
