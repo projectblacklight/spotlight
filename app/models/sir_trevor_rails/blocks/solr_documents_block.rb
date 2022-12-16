@@ -54,7 +54,7 @@ module SirTrevorRails
         return unless caption_field
         return presenter.heading if caption_field == Spotlight::PageConfigurations::DOCUMENT_TITLE_KEY
 
-        presenter.field_value(solr_helper.blacklight_config.index_fields[caption_field] || Blacklight::Configuration::NullField.new(caption_field))
+        presenter.field_value(solr_helper.blacklight_config.index_fields[caption_field] || null_display_field_class.new(caption_field))
       end
 
       def secondary_caption?
@@ -77,6 +77,12 @@ module SirTrevorRails
       def secondary_caption_field
         val = send(:'secondary-caption-field')
         val.presence
+      end
+
+      def null_display_field_class
+        return Blacklight::Configuration::NullDisplayField if defined?(Blacklight::Configuration::NullDisplayField)
+
+        Blacklight::Configuration::NullField
       end
     end
   end
