@@ -13,6 +13,7 @@ module Spotlight
       included do
         layout 'spotlight/spotlight'
 
+        helper ::BlacklightHelper
         helper Spotlight::ApplicationHelper
 
         rescue_from CanCan::AccessDenied do |exception|

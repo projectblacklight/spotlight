@@ -10,7 +10,7 @@ module Spotlight
 
     before_action :attach_breadcrumbs, except: :show
 
-    helper_method :facet_limit_for
+    helper_method :facet_limit_for, :search_facet_path
 
     def index
       redirect_to exhibit_feature_pages_path(@exhibit)

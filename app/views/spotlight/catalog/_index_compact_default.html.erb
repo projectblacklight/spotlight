@@ -6,7 +6,7 @@
   <%= render_document_partial document, 'admin_index_header', document_counter: document_counter %>
 
   <div class="page-links">
-  <%= view_link document, url_for_document(document) %> &middot;
+  <%= view_link document, search_state.url_for_document(document) %> &middot;
   <%= exhibit_edit_link document, [:edit, current_exhibit, document] %>
   </div>
 </td>
