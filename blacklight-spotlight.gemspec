@@ -57,7 +57,6 @@ these collections.)
   s.add_dependency 'signet'
   s.add_dependency 'sprockets', '>= 3'
   s.add_dependency 'sprockets-es6'
-  s.add_dependency 'thor'
   s.add_dependency 'tophat'
   s.add_dependency 'underscore-rails', '~> 1.6'
   s.add_dependency 'view_component', '< 2.74' # until a release includes https://github.com/projectblacklight/blacklight/pull/2818/files
