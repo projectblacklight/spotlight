@@ -34,7 +34,7 @@ describe 'Report a Problem', type: :feature do
     it 'accepts a problem report', js: true do
       visit spotlight.exhibit_solr_document_path(exhibit, id: 'dq287tq6352')
       click_on 'Feedback'
-      expect(page).to have_css('.alert-primary', text: '/dq287tq6352')
+      expect(page).to have_css('.alert-info', text: '/dq287tq6352')
       expect(find_by_id('contact_form_current_url', visible: false).value).to end_with spotlight.exhibit_solr_document_path(exhibit, id: 'dq287tq6352')
       fill_in 'Your name', with: 'Some Body'
       fill_in 'Your email', with: 'test@example.com'

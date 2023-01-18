@@ -3,7 +3,7 @@
     <% contact_form ||= Spotlight::ContactForm.new current_url: request.original_url %>
     <%= bootstrap_form_for contact_form, url: spotlight.exhibit_contact_form_path(current_exhibit, contact_form), layout: :horizontal, label_col: 'col-sm-3', control_col: 'col-sm-9', html: { class: 'col-md-offset-2 col-md-8 my-3 '} do |f| %>
       <h2><%= t(:'.title') %></h2>
-      <div class="alert alert-primary"><%= t('.reporting_from', url: contact_form.current_url) %></div>
+      <div class="alert alert-info"><%= t('.reporting_from', url: contact_form.current_url) %></div>
       <%= f.text_area :message, rows: 4 %>
       <%= f.text_field :name %>
       <%= render '/spotlight/shared/honeypot_field', f: f %>
