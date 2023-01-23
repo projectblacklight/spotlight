@@ -31,7 +31,7 @@ module Spotlight
 
       def self.http_client
         Faraday.new do |b|
-          b.use FaradayMiddleware::FollowRedirects
+          b.response :follow_redirects
           b.adapter Faraday.default_adapter
         end
       end

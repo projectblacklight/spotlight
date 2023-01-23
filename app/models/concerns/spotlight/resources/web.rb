@@ -29,7 +29,7 @@ module Spotlight
 
       def self.fetch(url)
         Faraday.new(url) do |b|
-          b.use FaradayMiddleware::FollowRedirects
+          b.response :follow_redirects
           b.adapter Faraday.default_adapter
         end.get
       end
