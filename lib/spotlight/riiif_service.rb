@@ -16,10 +16,10 @@ module Spotlight
     end
 
     # @param [Spotlight::Exhibit] exhibit
-    # @param [Spotlight::FeaturedImage] image
+    # @param [Spotlight::Resource::Upload] resource
     # @return [String]
-    def self.manifest_url(exhibit, image)
-      Spotlight::Engine.routes.url_helpers.manifest_exhibit_solr_document_path(exhibit, "#{exhibit.id}-#{image.id}")
+    def self.manifest_url(exhibit, resource)
+      Spotlight::Engine.routes.url_helpers.manifest_exhibit_solr_document_path(exhibit, "#{exhibit.id}-#{resource.id}")
     end
 
     # @param [String] id

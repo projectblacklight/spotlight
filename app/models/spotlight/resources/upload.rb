@@ -49,7 +49,7 @@ module Spotlight
           spotlight_full_image_width_ssm: dimensions.width,
           spotlight_full_image_height_ssm: dimensions.height,
           Spotlight::Engine.config.thumbnail_field => Spotlight::Engine.config.iiif_service.thumbnail_url(upload),
-          Spotlight::Engine.config.iiif_manifest_field => Spotlight::Engine.config.iiif_service.manifest_url(exhibit, upload)
+          Spotlight::Engine.config.iiif_manifest_field => Spotlight::Engine.config.iiif_service.manifest_url(exhibit, self)
         }
       end
 
