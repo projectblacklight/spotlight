@@ -19,6 +19,7 @@ RUN apk --no-cache upgrade && \
   libxml2-dev \
   libxslt-dev \
   nodejs \
+  npm \
   postgresql-dev \
   shared-mime-info \
   sqlite-dev \
@@ -42,7 +43,7 @@ RUN bundle install --jobs "$(nproc)"
 RUN mkdir -p /spotlight/app
 WORKDIR /spotlight/app
 
-RUN SKIP_TRANSLATION=yes rails _${RAILS_VERSION}_ new . -j webpack --force --template=../engine/template.rb
+RUN SKIP_TRANSLATION=yes rails _${RAILS_VERSION}_ new . --skip-javascript --skip-turbolinks --force --template=../engine/template.rb
 RUN bundle add pg
 RUN SKIP_TRANSLATION=yes DB_ADAPTER=nulldb DATABASE_URL='postgresql://fake' bundle exec rake assets:precompile
 
