@@ -15,6 +15,7 @@ module Spotlight
       Bundler.with_clean_env { run 'bundle install' }
 
       gsub_file 'app/assets/javascripts/application.js', '//= require turbolinks', ''
+      append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
 
       run 'bundle exec rails webpacker:install'
     end
