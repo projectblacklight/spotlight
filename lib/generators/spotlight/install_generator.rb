@@ -10,14 +10,29 @@ module Spotlight
     class_option :solr_update_class, type: :string, default: 'Spotlight::SolrDocument::AtomicUpdates'
     class_option :mailer_default_url_host, type: :string, default: '' # e.g. localhost:3000
 
-    def add_js
-      gem 'shakapacker'
-      Bundler.with_clean_env { run 'bundle install' }
+    # we're not (yet) using webpacker, so we need to re-add sprockets functionality
+    def add_js_rails6
+      return unless Rails.version.to_i == 6
 
-      gsub_file 'app/assets/javascripts/application.js', '//= require turbolinks', ''
+      gem 'coffee-rails', '~> 4.2'
+      gem 'uglifier', '>= 1.3.0'
+
+      append_to_file 'app/assets/config/manifest.js', "\n//= link_directory ../javascripts .js\n"
       append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
+      gsub_file 'app/views/layouts/application.html.erb', /pack/, 'include'
+      inject_into_file 'config/environments/production.rb', after: '  # config.assets.css_compressor = :sass' do
+        "\n  config.assets.js_compressor = :uglifier"
+      end
 
+      # but since webpacker exists in the gemfile, we still need to run the
+      # install before rails will start
       run 'bundle exec rails webpacker:install'
+    end
+
+    def add_js_rails7
+      return unless Rails.version.to_i == 7
+
+      append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
     end
 
     def add_manifest
