@@ -42,7 +42,6 @@ module Spotlight
     require 'github/markup'
     require 'openseadragon'
     require 'handlebars_assets'
-    require 'sprockets/es6'
 
     config.assets.precompile += %w[spotlight/fallback/*.png]
 
@@ -67,11 +66,6 @@ module Spotlight
 
     initializer 'spotlight.assets.precompile' do |app|
       app.config.assets.precompile += %w[spotlight/default_thumbnail.jpg spotlight/default_browse_thumbnail.jpg]
-
-      Sprockets::ES6.configuration = { 'modules' => 'umd', 'moduleIds' => true }
-      # When we upgrade to Sprockets 4, we can ditch sprockets-es6 and config AMD
-      # in this way:
-      # https://github.com/rails/sprockets/issues/73#issuecomment-139113466
     end
 
     def self.user_class
