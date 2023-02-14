@@ -31,7 +31,7 @@ describe 'About page', type: :feature, versioning: true do
         expect(unpublished_page).not_to be_published
 
         visit spotlight.edit_exhibit_about_page_path(unpublished_page.exhibit, unpublished_page)
-        expect(find('#about_page_published')).not_to be_checked
+        expect(find_by_id('about_page_published')).not_to be_checked
 
         check 'Publish'
         click_button 'Save changes'
@@ -39,7 +39,7 @@ describe 'About page', type: :feature, versioning: true do
         expect(unpublished_page.reload).to be_published
 
         visit spotlight.edit_exhibit_about_page_path(unpublished_page.exhibit, unpublished_page)
-        expect(find('#about_page_published')).to be_checked
+        expect(find_by_id('about_page_published')).to be_checked
       end
     end
   end

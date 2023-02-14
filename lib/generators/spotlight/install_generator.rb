@@ -56,9 +56,9 @@ module Spotlight
 
       copy_file 'config/sitemap.rb', 'config/sitemap.rb'
 
-      say <<-EOS.strip_heredoc, :red
-       Added a default sitemap_generator configuration in config/sitemap.rb; please
-       update the default host to match your environment
+      say <<~EOS, :red
+        Added a default sitemap_generator configuration in config/sitemap.rb; please
+        update the default host to match your environment
       EOS
     end
 

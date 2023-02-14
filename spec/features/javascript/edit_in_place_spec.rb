@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Edit in place', type: :feature, js: true do
+describe 'Edit in place', js: true, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
 

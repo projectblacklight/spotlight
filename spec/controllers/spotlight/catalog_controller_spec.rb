@@ -5,7 +5,7 @@ describe Spotlight::CatalogController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
-  it { is_expected.to be_a_kind_of ::CatalogController }
+  it { is_expected.to be_a_kind_of CatalogController }
   it { is_expected.to be_a_kind_of Spotlight::Concerns::ApplicationController }
   its(:view_context) { is_expected.to be_a_kind_of Spotlight::ApplicationHelper }
 
@@ -187,7 +187,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'GET show with private item' do
       it 'is not allowed' do
-        allow_any_instance_of(::SolrDocument).to receive(:private?).and_return(true)
+        allow_any_instance_of(SolrDocument).to receive(:private?).and_return(true)
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to redirect_to main_app.root_path
         expect(flash[:alert]).to eq 'You are not authorized to access this page.'
@@ -272,12 +272,12 @@ describe Spotlight::CatalogController, type: :controller do
     describe 'PUT make_public' do
       before do
         request.env['HTTP_REFERER'] = '/where_i_came_from'
-        allow_any_instance_of(::SolrDocument).to receive(:reindex)
+        allow_any_instance_of(SolrDocument).to receive(:reindex)
       end
 
       it 'is successful' do
-        expect_any_instance_of(::SolrDocument).to receive(:reindex)
-        expect_any_instance_of(::SolrDocument).to receive(:make_public!).with(exhibit)
+        expect_any_instance_of(SolrDocument).to receive(:reindex)
+        expect_any_instance_of(SolrDocument).to receive(:make_public!).with(exhibit)
         put :make_public, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to redirect_to end_with('/where_i_came_from')
       end
@@ -286,12 +286,12 @@ describe Spotlight::CatalogController, type: :controller do
     describe 'DELETE make_private' do
       before do
         request.env['HTTP_REFERER'] = '/where_i_came_from'
-        allow_any_instance_of(::SolrDocument).to receive(:reindex)
+        allow_any_instance_of(SolrDocument).to receive(:reindex)
       end
 
       it 'is successful' do
-        expect_any_instance_of(::SolrDocument).to receive(:reindex)
-        expect_any_instance_of(::SolrDocument).to receive(:make_private!).with(exhibit)
+        expect_any_instance_of(SolrDocument).to receive(:reindex)
+        expect_any_instance_of(SolrDocument).to receive(:make_private!).with(exhibit)
         delete :make_private, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to redirect_to end_with('/where_i_came_from')
       end

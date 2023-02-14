@@ -23,7 +23,7 @@ describe 'Adding custom metadata field data', type: :feature do
 
     click_on 'Save changes'
 
-    expect(::SolrDocument.new(id: 'dq287tq6352').sidecar(exhibit).data).to include 'some-field' => 'My new custom field value'
+    expect(SolrDocument.new(id: 'dq287tq6352').sidecar(exhibit).data).to include 'some-field' => 'My new custom field value'
     sleep(1) # The data isn't commited to solr immediately.
 
     visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
@@ -60,7 +60,7 @@ describe 'Adding custom metadata field data', type: :feature do
 
       click_on 'Save changes'
 
-      expect(::SolrDocument.new(id: 'dq287tq6352').sidecar(exhibit).data).to include 'some-field' => ['value 1', 'value 2']
+      expect(SolrDocument.new(id: 'dq287tq6352').sidecar(exhibit).data).to include 'some-field' => ['value 1', 'value 2']
     end
   end
 

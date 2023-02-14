@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Search Result Block', type: :feature, js: true do
+describe 'Search Result Block', js: true, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
 

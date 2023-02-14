@@ -37,7 +37,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.erb', 
     expect(rendered).to have_selector '.carousel-item', text: 'thumb', count: 3
     expect(rendered).to have_selector '.carousel-indicators'
     expect(rendered).to have_selector '.carousel-indicators li', count: 3
-    expect(rendered).to have_selector '.carousel-indicators li', text: 'a' * 92 + '...'
+    expect(rendered).to have_selector '.carousel-indicators li', text: ('a' * 92) + '...'
   end
 
   describe 'without a primary caption' do

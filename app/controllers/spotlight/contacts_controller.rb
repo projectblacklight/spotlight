@@ -18,19 +18,19 @@ module Spotlight
       add_breadcrumb @contact.name, edit_exhibit_contact_path(@contact.exhibit, @contact)
     end
 
-    def update
-      if @contact.update(contact_params)
-        redirect_to exhibit_about_pages_path(@contact.exhibit), notice: t(:'helpers.submit.contact.updated', model: @contact.class.model_name.human.downcase)
-      else
-        render 'edit'
-      end
-    end
-
     def create
       if @contact.update(contact_params)
         redirect_to exhibit_about_pages_path(@contact.exhibit), notice: t(:'helpers.submit.contact.created', model: @contact.class.model_name.human.downcase)
       else
         render 'new'
+      end
+    end
+
+    def update
+      if @contact.update(contact_params)
+        redirect_to exhibit_about_pages_path(@contact.exhibit), notice: t(:'helpers.submit.contact.updated', model: @contact.class.model_name.human.downcase)
+      else
+        render 'edit'
       end
     end
 

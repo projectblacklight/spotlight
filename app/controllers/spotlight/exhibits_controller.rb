@@ -20,6 +20,18 @@ module Spotlight
       end
     end
 
+    def show
+      respond_to do |format|
+        format.json do
+          authorize! :export, @exhibit
+          send_data JSON.pretty_generate(Spotlight::ExhibitImportExportService.new(@exhibit).as_json),
+                    type: 'application/json',
+                    disposition: 'attachment',
+                    filename: "#{@exhibit.friendly_id}-export.json"
+        end
+      end
+    end
+
     def new
       build_initial_exhibit_contact_emails
       add_breadcrumb t(:'spotlight.sites.home'), root_url
@@ -34,6 +46,13 @@ module Spotlight
       end
     end
 
+    def edit
+      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
+      add_breadcrumb t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit)
+      add_breadcrumb t(:'spotlight.configuration.sidebar.settings'), edit_exhibit_path(@exhibit)
+      build_initial_exhibit_contact_emails
+    end
+
     def create
       @exhibit.attributes = exhibit_params
 
@@ -43,25 +62,6 @@ module Spotlight
       else
         render action: :new
       end
-    end
-
-    def show
-      respond_to do |format|
-        format.json do
-          authorize! :export, @exhibit
-          send_data JSON.pretty_generate(Spotlight::ExhibitImportExportService.new(@exhibit).as_json),
-                    type: 'application/json',
-                    disposition: 'attachment',
-                    filename: "#{@exhibit.friendly_id}-export.json"
-        end
-      end
-    end
-
-    def edit
-      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit)
-      add_breadcrumb t(:'spotlight.configuration.sidebar.settings'), edit_exhibit_path(@exhibit)
-      build_initial_exhibit_contact_emails
     end
 
     def update

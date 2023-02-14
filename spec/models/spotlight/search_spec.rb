@@ -7,7 +7,7 @@ describe Spotlight::Search, type: :model do
 
   let(:query_params) { { 'f' => { 'genre_ssim' => ['map'] } } }
 
-  let(:blacklight_config) { ::CatalogController.blacklight_config }
+  let(:blacklight_config) { CatalogController.blacklight_config }
   let(:document) do
     SolrDocument.new(id: 'dq287tq6352',
                      blacklight_config.index.title_field => 'title')

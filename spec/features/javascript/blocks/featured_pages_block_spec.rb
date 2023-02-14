@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Featured Pages Blocks', type: :feature, js: true do
+describe 'Featured Pages Blocks', js: true, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:feature_page1) do
     FactoryBot.create(

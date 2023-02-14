@@ -3,7 +3,7 @@
 describe 'spotlight/catalog/edit.html.erb', type: :view do
   let(:blacklight_config) { Blacklight::Configuration.new }
 
-  let(:document) { stub_model(::SolrDocument) }
+  let(:document) { stub_model(SolrDocument) }
 
   before do
     allow(view).to receive_messages(blacklight_config: blacklight_config)

@@ -20,7 +20,7 @@ class TestAppGenerator < Rails::Generators::Base
   def run_blacklight_generator
     say_status('warning', 'GENERATING BL', :yellow)
 
-    generate 'blacklight:install', '--devise'
+    generate :'blacklight:install', '--devise'
   end
 
   def run_spotlight_migrations
@@ -29,7 +29,7 @@ class TestAppGenerator < Rails::Generators::Base
   end
 
   def add_spotlight_routes_and_assets
-    generate 'spotlight:install', '-f --mailer_default_url_host=localhost:3000'
+    generate :'spotlight:install', '-f --mailer_default_url_host=localhost:3000'
   end
 
   def install_test_catalog_controller

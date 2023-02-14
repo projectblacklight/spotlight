@@ -14,7 +14,7 @@ module Spotlight
                                     current_search_session_page_context
                                   end
       rescue ActiveRecord::RecordNotFound => e
-        Rails.logger.debug "Unable to get current page context from #{current_search_session.inspect}: #{e}"
+        Rails.logger.debug { "Unable to get current page context from #{current_search_session.inspect}: #{e}" }
         nil
       end
 
@@ -24,7 +24,7 @@ module Spotlight
                                        current_exhibit.searches.accessible_by(current_ability).find(search_id)
                                      end
       rescue ActiveRecord::RecordNotFound => e
-        Rails.logger.debug "Unable to get current page context from #{current_search_session.inspect}: #{e}"
+        Rails.logger.debug { "Unable to get current page context from #{current_search_session.inspect}: #{e}" }
         nil
       end
 

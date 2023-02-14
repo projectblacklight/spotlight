@@ -12,12 +12,6 @@ module Spotlight
 
     helper_method :facet_limit_for
 
-    def edit
-      add_breadcrumb t(:'spotlight.curation.sidebar.feature_pages'), exhibit_feature_pages_path(@exhibit)
-      add_breadcrumb @page.title, [:edit, @exhibit, @page]
-      super
-    end
-
     def index
       redirect_to exhibit_feature_pages_path(@exhibit)
     end
@@ -30,6 +24,12 @@ module Spotlight
       else
         render 'show'
       end
+    end
+
+    def edit
+      add_breadcrumb t(:'spotlight.curation.sidebar.feature_pages'), exhibit_feature_pages_path(@exhibit)
+      add_breadcrumb @page.title, [:edit, @exhibit, @page]
+      super
     end
 
     # We're oddly getting an unknown action

@@ -75,6 +75,10 @@ module Spotlight
       end
     end
 
+    def edit
+      @response, @document = search_service.fetch params[:id]
+    end
+
     def update
       @response, @document = search_service.fetch params[:id]
       @document.update(current_exhibit, solr_document_params)
@@ -83,10 +87,6 @@ module Spotlight
       try_solr_commit!
 
       redirect_to polymorphic_path([current_exhibit, @document])
-    end
-
-    def edit
-      @response, @document = search_service.fetch params[:id]
     end
 
     def make_private

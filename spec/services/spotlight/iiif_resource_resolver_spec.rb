@@ -4,9 +4,7 @@ describe Spotlight::IiifResourceResolver do
   subject(:resolver) { described_class.new(resource) }
 
   let(:fixture_json) do
-    File.open(
-      File.expand_path(File.join('..', 'spec', 'fixtures', 'gk446cj2442-manifest.json'), Rails.root)
-    ).read
+    File.read(File.expand_path(File.join('..', 'spec', 'fixtures', 'gk446cj2442-manifest.json'), Rails.root))
   end
   let(:iiif_manifest_url) { 'https://purl.stanford.edu/gk446cj2442/manifest.json' }
   let(:resource) do

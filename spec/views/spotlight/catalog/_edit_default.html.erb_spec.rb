@@ -7,7 +7,7 @@ describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
     end
   end
 
-  let(:document) { stub_model(::SolrDocument) }
+  let(:document) { stub_model(SolrDocument) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit) }

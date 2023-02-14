@@ -59,13 +59,13 @@ describe 'shared/_exhibit_navbar', type: :view do
   end
 
   it "links to the browse index if there's a published search" do
-    FactoryBot.create :published_search, exhibit: current_exhibit
+    FactoryBot.create(:published_search, exhibit: current_exhibit)
     render
     expect(response).to have_link 'Browse', href: spotlight.exhibit_browse_index_path(current_exhibit)
   end
 
   it "marks the browse button as active if we're on a browse page" do
-    FactoryBot.create :published_search, exhibit: current_exhibit
+    FactoryBot.create(:published_search, exhibit: current_exhibit)
     allow(view).to receive_messages(on_browse_page?: true)
     render
     expect(response).to have_selector 'li.active', text: 'Browse'
@@ -77,7 +77,7 @@ describe 'shared/_exhibit_navbar', type: :view do
   end
 
   it 'does not link to the browse index if only private categories are defined' do
-    FactoryBot.create :search, exhibit: current_exhibit
+    FactoryBot.create(:search, exhibit: current_exhibit)
     render
     expect(response).not_to have_link 'Browse'
   end

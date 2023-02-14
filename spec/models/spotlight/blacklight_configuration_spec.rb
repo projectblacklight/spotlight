@@ -348,7 +348,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       end
 
       its(:default_per_page) { is_expected.to eq 10 }
-      its(:document_index_view_types) { is_expected.to match_array ::CatalogController.blacklight_config.view.keys.map(&:to_s) }
+      its(:document_index_view_types) { is_expected.to match_array CatalogController.blacklight_config.view.keys.map(&:to_s) }
     end
   end
 

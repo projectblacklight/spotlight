@@ -125,7 +125,7 @@ describe Spotlight::BackgroundJobProgress, type: :model do
         resource: exhibit,
         on: exhibit,
         job_class: 'Spotlight::ReindexExhibitJob',
-        updated_at: Time.zone.now - 5.years,
+        updated_at: 5.years.ago,
         status: 'in_progress'
       )
     end
