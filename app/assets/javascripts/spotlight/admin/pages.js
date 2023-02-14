@@ -4,7 +4,7 @@ Spotlight.onLoad(function(){
   // Set a ujs adapter to support both rails-ujs and jquery-ujs
   var ujs = typeof Rails === 'undefined' ? $.rails : Rails;
   SirTrevor.setDefaults({
-    iconUrl: <%= asset_path('spotlight/blocks/sir-trevor-icons.svg').to_json %>,
+    iconUrl: Spotlight.sirTrevorIcon,
     uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint'),
     ajaxOptions: {
       headers: {
