@@ -19,16 +19,12 @@ SirTrevor.Blocks.Iframe = (function(){
     icon_name: "iframe",
     
     editorHTML: function() {
-      return _.template(this.template, this)(this);
-    },
-
-    template: [
-      '<div class="clearfix">',
-        '<div class="widget-header">',
-          '<%= description() %>',
-        '</div>',
-        '<textarea name="code" class="form-control" rows="5" placeholder="<%= i18n.t("blocks:iframe:placeholder") %>"></textarea>',
-      '</div>'
-    ].join("\n"),
+      return `<div class="clearfix">
+        <div class="widget-header">
+          ${this.description()}
+        </div>
+        <textarea name="code" class="form-control" rows="5" placeholder="${i18n.t("blocks:iframe:placeholder")}"></textarea>
+      </div>`;
+    }
   });
 })();

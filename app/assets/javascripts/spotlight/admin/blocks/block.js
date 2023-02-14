@@ -6,7 +6,7 @@
     },
     formable: true,
     editorHTML: function() {
-      return _.template(this.template)(this);
+      return '';
     },
     beforeBlockRender: function() {
       this.availableMixins.forEach(function(mixin) {

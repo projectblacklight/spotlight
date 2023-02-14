@@ -23,26 +23,26 @@ SirTrevor.Blocks.SolrDocumentsBase = (function(){
 
     item_options: function() { return this.caption_options(); },
 
-    caption_options: function() { return [
-      '<div class="field-select primary-caption" data-behavior="item-caption-admin">',
-        '<input name="<%= show_primary_field_key %>" type="hidden" value="false" />',
-        '<input data-input-select-target="#<%= formId(primary_field_key) %>" name="<%= show_primary_field_key %>" id="<%= formId(show_primary_field_key) %>" type="checkbox" value="true" />',
-        '<label for="<%= formId(show_primary_field_key) %>"><%= i18n.t("blocks:solr_documents:caption:primary") %></label>',
-        '<select data-input-select-target="#<%= formId(show_primary_field_key) %>" name="<%= primary_field_key %>" id="<%= formId(primary_field_key) %>">',
-          '<option value=""><%= i18n.t("blocks:solr_documents:caption:placeholder") %></option>',
-          '<%= caption_option_values() %>',
-        '</select>',
-      '</div>',
-      '<div class="field-select secondary-caption" data-behavior="item-caption-admin">',
-        '<input name="<%= show_secondary_field_key %>" type="hidden" value="false" />',
-        '<input data-input-select-target="#<%= formId(secondary_field_key) %>" name="<%= show_secondary_field_key %>" id="<%= formId(show_secondary_field_key) %>" type="checkbox" value="true" />',
-        '<label for="<%= formId(show_secondary_field_key) %>"><%= i18n.t("blocks:solr_documents:caption:secondary") %></label>',
-        '<select data-input-select-target="#<%= formId(show_secondary_field_key) %>" name="<%= secondary_field_key %>" id="<%= formId(secondary_field_key) %>">',
-        '<option value=""><%= i18n.t("blocks:solr_documents:caption:placeholder") %></option>',
-          '<%= caption_option_values() %>',
-        '</select>',
-      '</div>',
-    ].join("\n") },
+    caption_options: function() { return `
+      <div class="field-select primary-caption" data-behavior="item-caption-admin">
+        <input name="${this.show_primary_field_key}" type="hidden" value="false" />
+        <input data-input-select-target="#${this.formId(this.primary_field_key)}" name="${this.show_primary_field_key}" id="${this.formId(this.show_primary_field_key)}" type="checkbox" value="true" />
+        <label for="${this.formId(this.show_primary_field_key)}">${i18n.t("blocks:solr_documents:caption:primary")}</label>
+        <select data-input-select-target="#${this.formId(this.show_primary_field_key)}" name="${this.primary_field_key}" id="${this.formId(this.primary_field_key)}">
+          <option value="">${i18n.t("blocks:solr_documents:caption:placeholder")}</option>
+          ${this.caption_option_values()}
+        </select>
+      </div>
+      <div class="field-select secondary-caption" data-behavior="item-caption-admin">
+        <input name="${this.show_secondary_field_key}" type="hidden" value="false" />
+        <input data-input-select-target="#${this.formId(this.secondary_field_key)}" name="${this.show_secondary_field_key}" id="${this.formId(this.show_secondary_field_key)}" type="checkbox" value="true" />
+        <label for="${this.formId(this.show_secondary_field_key)}">${i18n.t("blocks:solr_documents:caption:secondary")}</label>
+        <select data-input-select-target="#${this.formId(this.show_secondary_field_key)}" name="${this.secondary_field_key}" id="${this.formId(this.secondary_field_key)}">
+        <option value="">${i18n.t("blocks:solr_documents:caption:placeholder")}</option>
+          ${this.caption_option_values()}
+        </select>
+      </div>
+    `},
 
     _itemPanelIiifFields: function(index, data) {
       return [

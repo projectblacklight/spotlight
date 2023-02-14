@@ -5,7 +5,7 @@
 
     initializeFormable: function() {
 
-      if (_.isUndefined(this['afterLoadData'])) {
+      if (this['afterLoadData'] === undefined) {
         this['afterLoadData'] = function(data) { };
       }
     },

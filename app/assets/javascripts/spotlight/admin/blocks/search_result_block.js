@@ -13,7 +13,7 @@ SirTrevor.Blocks.SearchResults =  (function(){
     plustextable: false,
 
     content: function() {
-      return _.template([this.items_selector()].join("<hr />\n"))(this);
+      return this.items_selector()
     },
 
     item_options: function() {
