@@ -20,6 +20,10 @@ module Spotlight
       run 'bundle exec rails webpacker:install'
     end
 
+    def add_manifest
+      append_to_file 'app/assets/config/manifest.js', "\n//= link spotlight/manifest.js"
+    end
+
     def inject_spotlight_routes
       route "mount Spotlight::Engine, at: 'spotlight'"
       gsub_file 'config/routes.rb', /^\s*root.*/ do |match|
