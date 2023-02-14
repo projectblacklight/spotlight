@@ -16,7 +16,6 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - chrome
       - db_migrate
       - solr
     networks:
@@ -61,11 +60,6 @@ services:
       - solr-precreate
       - blacklight-core
       - /opt/solr/conf
-    networks:
-      - spotlight
-
-  chrome:
-    image: selenium/standalone-chrome:3.141
     networks:
       - spotlight
 
