@@ -1,4 +1,5 @@
-//= require underscore
+import _, { map } from 'underscore';
+
 //= require eventable
 //= require sir-trevor
 //= require nestable
