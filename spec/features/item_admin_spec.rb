@@ -7,7 +7,7 @@ describe 'Item Administration', type: :feature do
   before { login_as curator }
 
   before do
-    allow_any_instance_of(::SolrDocument).to receive_messages(reindex: true)
+    allow_any_instance_of(SolrDocument).to receive_messages(reindex: true)
   end
 
   describe 'admin' do
@@ -38,7 +38,7 @@ describe 'Item Administration', type: :feature do
       item.click_button 'Make public'
     end
 
-    it "toggles the 'blacklight-private' label", js: true, default_max_wait_time: 5 do
+    it "toggles the 'blacklight-private' label", default_max_wait_time: 5, js: true do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
       # The label should be toggled when the checkbox is clicked
       expect(page).not_to have_css('tr.blacklight-private')

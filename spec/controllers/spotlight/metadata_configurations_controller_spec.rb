@@ -69,7 +69,7 @@ describe Spotlight::MetadataConfigurationsController, type: :controller do
       it 'updates metadata fields' do
         blacklight_config = Blacklight::Configuration.new
         blacklight_config.add_index_field %w[a b c d e f]
-        allow(::CatalogController).to receive_messages(blacklight_config: blacklight_config)
+        allow(CatalogController).to receive_messages(blacklight_config: blacklight_config)
         patch :update, params: {
           exhibit_id: exhibit,
           blacklight_configuration: {

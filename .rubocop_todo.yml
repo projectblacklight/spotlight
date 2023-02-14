@@ -6,14 +6,28 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 4
+# Offense count: 36
+Capybara/SpecificMatcher:
+  Enabled: false
+
+# Offense count: 13
+# Configuration parameters: EnforcedStyle, AllowedGems, Include.
+# SupportedStyles: Gemfile, gems.rb, gemspec
+# Include: **/*.gemspec, **/Gemfile, **/gems.rb
+Gemspec/DevelopmentDependencies:
+  Exclude:
+    - 'blacklight-spotlight.gemspec'
+
+# Offense count: 8
 # Configuration parameters: AllowedMethods, AllowedPatterns.
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'app/models/spotlight/blacklight_configuration.rb'
     - 'spec/controllers/spotlight/roles_controller_spec.rb'
     - 'spec/features/report_a_problem_spec.rb'
+    - 'spec/models/spotlight/exhibit_spec.rb'
     - 'spec/models/spotlight/resources/iiif_service_spec.rb'
+    - 'spec/services/spotlight/invite_users_service_spec.rb'
 
 # Offense count: 6
 # Configuration parameters: AllowedMethods.
@@ -173,6 +187,20 @@ Naming/VariableNumber:
 RSpec/AnyInstance:
   Enabled: false
 
+# Offense count: 36
+# This cop supports unsafe autocorrection (--autocorrect-all).
+RSpec/BeEq:
+  Exclude:
+    - 'spec/controllers/spotlight/catalog_controller_spec.rb'
+    - 'spec/features/browse_category_admin_spec.rb'
+    - 'spec/helpers/spotlight/languages_helper_spec.rb'
+    - 'spec/lib/spotlight/controller_spec.rb'
+    - 'spec/models/sir_trevor_rails/blocks/solr_documents_block_spec.rb'
+    - 'spec/models/solr_document_spec.rb'
+    - 'spec/models/spotlight/blacklight_configuration_spec.rb'
+    - 'spec/models/spotlight/exhibit_spec.rb'
+    - 'spec/services/spotlight/exhibit_import_export_service_spec.rb'
+
 # Offense count: 2
 RSpec/BeforeAfterAll:
   Exclude:
@@ -197,6 +225,17 @@ RSpec/ExpectInHook:
     - 'spec/lib/migration/iiif_spec.rb'
     - 'spec/services/spotlight/iiif_resource_resolver_spec.rb'
     - 'spec/views/spotlight/catalog/_edit_default.html.erb_spec.rb'
+
+# Offense count: 693
+# This cop supports unsafe autocorrection (--autocorrect-all).
+RSpec/FactoryBot/SyntaxMethods:
+  Enabled: false
+
+# Offense count: 2
+RSpec/IdenticalEqualityAssertion:
+  Exclude:
+    - 'spec/models/solr_document_spec.rb'
+    - 'spec/models/spotlight/site_spec.rb'
 
 # Offense count: 5
 RSpec/LeakyConstantDeclaration:
@@ -242,6 +281,36 @@ RSpec/MultipleMemoizedHelpers:
 RSpec/NamedSubject:
   Enabled: false
 
+# Offense count: 3
+# Configuration parameters: AllowedPatterns.
+# AllowedPatterns: ^expect_, ^assert_
+RSpec/NoExpectationExample:
+  Exclude:
+    - 'spec/models/spotlight/custom_translation_extension_spec.rb'
+    - 'spec/services/spotlight/exhibit_import_export_service_spec.rb'
+
+# Offense count: 9
+RSpec/PendingWithoutReason:
+  Exclude:
+    - 'spec/features/import_exhibit_spec.rb'
+    - 'spec/features/javascript/blocks/featured_browse_categories_block_spec.rb'
+    - 'spec/features/javascript/blocks/featured_pages_block_spec.rb'
+    - 'spec/features/javascript/blocks/link_to_search_block_spec.rb'
+    - 'spec/i18n_spec.rb'
+
+# Offense count: 2
+# This cop supports unsafe autocorrection (--autocorrect-all).
+RSpec/Rails/HaveHttpStatus:
+  Exclude:
+    - 'spec/controllers/spotlight/catalog_controller_spec.rb'
+    - 'spec/controllers/spotlight/contact_email_controller_spec.rb'
+
+# Offense count: 180
+# This cop supports unsafe autocorrection (--autocorrect-all).
+# Configuration parameters: Inferences.
+RSpec/Rails/InferredSpecType:
+  Enabled: false
+
 # Offense count: 2
 RSpec/RepeatedDescription:
   Exclude:
@@ -268,9 +337,25 @@ RSpec/ScatteredSetup:
 RSpec/StubbedMock:
   Enabled: false
 
+# Offense count: 2
+RSpec/SubjectDeclaration:
+  Exclude:
+    - 'spec/models/sir_trevor_rails/blocks/textable_spec.rb'
+    - 'spec/presenters/spotlight/iiif_manifest_presenter_spec.rb'
+
 # Offense count: 70
 RSpec/SubjectStub:
   Enabled: false
+
+# Offense count: 3
+# This cop supports unsafe autocorrection (--autocorrect-all).
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: constant, string
+RSpec/VerifiedDoubleReference:
+  Exclude:
+    - 'spec/controllers/spotlight/bulk_actions_controller_spec.rb'
+    - 'spec/controllers/spotlight/catalog_controller_spec.rb'
+    - 'spec/views/spotlight/translations/_page.html.erb_spec.rb'
 
 # Offense count: 69
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
@@ -317,6 +402,14 @@ Rails/Blank:
     - 'lib/migration/iiif.rb'
     - 'spec/support/features/test_features_helpers.rb'
 
+# Offense count: 4
+# This cop supports unsafe autocorrection (--autocorrect-all).
+Rails/CompactBlank:
+  Exclude:
+    - 'app/controllers/spotlight/exhibits_controller.rb'
+    - 'app/controllers/spotlight/searches_controller.rb'
+    - 'app/models/spotlight/solr_document_sidecar.rb'
+
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Whitelist, AllowedMethods, AllowedReceivers.
@@ -347,6 +440,20 @@ Rails/HelperInstanceVariable:
     - 'app/helpers/spotlight/browse_helper.rb'
     - 'app/helpers/spotlight/pages_helper.rb'
     - 'app/helpers/spotlight/title_helper.rb'
+
+# Offense count: 14
+# Configuration parameters: Include.
+# Include: spec/**/*.rb, test/**/*.rb
+Rails/I18nLocaleAssignment:
+  Exclude:
+    - 'spec/controllers/spotlight/about_pages_controller_spec.rb'
+    - 'spec/features/exhibits/translation_editing_spec.rb'
+    - 'spec/models/spotlight/exhibit_spec.rb'
+
+# Offense count: 1
+Rails/I18nLocaleTexts:
+  Exclude:
+    - 'app/mailers/spotlight/indexing_complete_mailer.rb'
 
 # Offense count: 4
 # Configuration parameters: IgnoreScopes, Include.
@@ -390,6 +497,12 @@ Rails/RakeEnvironment:
     - 'Rakefile'
     - 'spec/test_app_templates/spotlight_test.rake'
 
+# Offense count: 1
+# This cop supports unsafe autocorrection (--autocorrect-all).
+Rails/RedundantPresenceValidationOnBelongsTo:
+  Exclude:
+    - 'app/models/spotlight/contact_email.rb'
+
 # Offense count: 4
 Rails/ReflectionClassName:
   Exclude:
@@ -423,6 +536,14 @@ Style/CommentedKeyword:
   Exclude:
     - 'spec/features/javascript/search_config_admin_spec.rb'
 
+# Offense count: 3
+# This cop supports unsafe autocorrection (--autocorrect-all).
+Style/ConcatArrayLiterals:
+  Exclude:
+    - 'app/controllers/spotlight/about_pages_controller.rb'
+    - 'app/controllers/spotlight/feature_pages_controller.rb'
+    - 'app/controllers/spotlight/home_pages_controller.rb'
+
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/GlobalStdStream:
@@ -453,11 +574,33 @@ Style/HashTransformValues:
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
+Style/MapToHash:
+  Exclude:
+    - 'app/services/spotlight/exhibit_import_export_service.rb'
+
+# Offense count: 1
+# This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, AllowedMethods, AllowedPatterns.
 # SupportedStyles: predicate, comparison
 Style/NumericPredicate:
   Exclude:
     - 'lib/tasks/spotlight_tasks.rake'
+
+# Offense count: 16
+Style/OpenStructUse:
+  Exclude:
+    - 'app/models/concerns/spotlight/exhibit_analytics.rb'
+    - 'app/models/concerns/spotlight/exhibit_documents.rb'
+    - 'app/models/sir_trevor_rails/block.rb'
+    - 'app/models/spotlight/analytics/ga.rb'
+    - 'lib/spotlight/engine.rb'
+    - 'spec/controllers/spotlight/catalog_controller_spec.rb'
+    - 'spec/helpers/spotlight/application_helper_spec.rb'
+    - 'spec/models/spotlight/exhibit_spec.rb'
+    - 'spec/models/spotlight/masthead_spec.rb'
+    - 'spec/views/spotlight/dashboards/_analytics.html.erb_spec.rb'
+    - 'spec/views/spotlight/metadata_configurations/_metadata_field.html.erb_spec.rb'
+    - 'spec/views/spotlight/sir_trevor/blocks/_iframe_block.html.erb_spec.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -466,11 +609,24 @@ Style/RedundantArgument:
   Exclude:
     - 'app/helpers/spotlight/search_configurations_helper.rb'
 
+# Offense count: 1
+# This cop supports unsafe autocorrection (--autocorrect-all).
+# Configuration parameters: AllowComments.
+Style/RedundantInitialize:
+  Exclude:
+    - 'lib/migration/page_language.rb'
+
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 Style/RedundantRegexpEscape:
   Exclude:
     - 'app/models/spotlight/contact_form.rb'
+
+# Offense count: 1
+# This cop supports unsafe autocorrection (--autocorrect-all).
+Style/SelectByRegexp:
+  Exclude:
+    - 'app/jobs/spotlight/process_bulk_updates_csv_job.rb'
 
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).

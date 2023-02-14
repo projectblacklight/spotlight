@@ -14,6 +14,26 @@ module Spotlight
     include Spotlight::Base
     include Spotlight::SearchHelper
 
+    def index
+      @groups = @exhibit.groups
+      respond_to do |format|
+        format.html
+        format.json do
+          render json: @searches.as_json(methods: %i[full_title count thumbnail_image_url]), root: false
+        end
+      end
+    end
+
+    def show
+      redirect_to exhibit_browse_url(@search.exhibit, @search)
+    end
+
+    def edit
+      @groups = @exhibit.groups
+      add_breadcrumb @search.full_title, edit_exhibit_search_path(@search.exhibit, @search)
+      @exhibit = @search.exhibit
+    end
+
     def create
       @search.assign_attributes(search_params.except((:title unless @search.new_record?)))
       @search.query_params = query_params
@@ -23,16 +43,6 @@ module Spotlight
                       notice: t(:'helpers.submit.search.created', model: @search.class.model_name.human.downcase)
       else
         redirect_back fallback_location: fallback_url, alert: @search.errors.full_messages.join('<br>'.html_safe)
-      end
-    end
-
-    def index
-      @groups = @exhibit.groups
-      respond_to do |format|
-        format.html
-        format.json do
-          render json: @searches.as_json(methods: %i[full_title count thumbnail_image_url]), root: false
-        end
       end
     end
 
@@ -47,12 +57,6 @@ module Spotlight
           render json: { docs: autocomplete_json_response(document_list) }
         end
       end
-    end
-
-    def edit
-      @groups = @exhibit.groups
-      add_breadcrumb @search.full_title, edit_exhibit_search_path(@search.exhibit, @search)
-      @exhibit = @search.exhibit
     end
 
     def update
@@ -75,10 +79,6 @@ module Spotlight
                  t(:'helpers.submit.search.batch_error', model: Spotlight::Search.model_name.human.pluralize.downcase)
                end
       redirect_back fallback_location: fallback_url, notice: notice
-    end
-
-    def show
-      redirect_to exhibit_browse_url(@search.exhibit, @search)
     end
 
     protected

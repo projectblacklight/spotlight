@@ -20,8 +20,8 @@ describe 'Add and update the site masthead', type: :feature do
       choose 'Upload an image'
 
       # The JS fills in these fields:
-      find('#exhibit_masthead_attributes_iiif_tilesource', visible: false).set 'http://test.host/images/7'
-      find('#exhibit_masthead_attributes_iiif_region', visible: false).set '0,0,100,200'
+      find_by_id('exhibit_masthead_attributes_iiif_tilesource', visible: false).set 'http://test.host/images/7'
+      find_by_id('exhibit_masthead_attributes_iiif_region', visible: false).set '0,0,100,200'
       # attach_file('exhibit_masthead_attributes_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
     end
 
@@ -55,8 +55,8 @@ describe 'Add and update the site masthead', type: :feature do
 
       # attach_file('exhibit_masthead_attributes_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
       # The JS fills in these fields:
-      find('#exhibit_masthead_attributes_iiif_tilesource', visible: false).set 'http://test.host/images/7'
-      find('#exhibit_masthead_attributes_iiif_region', visible: false).set '0,0,100,200'
+      find_by_id('exhibit_masthead_attributes_iiif_tilesource', visible: false).set 'http://test.host/images/7'
+      find_by_id('exhibit_masthead_attributes_iiif_region', visible: false).set '0,0,100,200'
     end
 
     click_button 'Save changes'

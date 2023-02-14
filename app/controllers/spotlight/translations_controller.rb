@@ -7,6 +7,12 @@ module Spotlight
     before_action :authenticate_user!, :set_language, :set_tab
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
+    def show
+      respond_to do |format|
+        format.yaml
+      end
+    end
+
     def edit
       attach_breadcrumbs
     end
@@ -18,12 +24,6 @@ module Spotlight
         redirect_to edit_exhibit_translations_path(current_exhibit, language: @language, tab: @tab), notice: notice
       else
         render 'edit'
-      end
-    end
-
-    def show
-      respond_to do |format|
-        format.yaml
       end
     end
 

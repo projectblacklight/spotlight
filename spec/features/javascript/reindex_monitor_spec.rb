@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Reindex Monitor', js: true, default_max_wait_time: 10 do
+describe 'Reindex Monitor', default_max_wait_time: 10, js: true do
   let(:resources) do
     [FactoryBot.create(:resource)]
   end

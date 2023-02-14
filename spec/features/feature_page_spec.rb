@@ -87,7 +87,7 @@ describe 'Feature page', type: :feature, versioning: true do
         expect(unpublished_page).not_to be_published
 
         visit spotlight.edit_exhibit_feature_page_path(unpublished_page.exhibit, unpublished_page)
-        expect(find('#feature_page_published')).not_to be_checked
+        expect(find_by_id('feature_page_published')).not_to be_checked
 
         check 'Publish'
         click_button 'Save changes'
@@ -95,7 +95,7 @@ describe 'Feature page', type: :feature, versioning: true do
         expect(unpublished_page.reload).to be_published
 
         visit spotlight.edit_exhibit_feature_page_path(unpublished_page.exhibit, unpublished_page)
-        expect(find('#feature_page_published')).to be_checked
+        expect(find_by_id('feature_page_published')).to be_checked
       end
     end
 
@@ -108,7 +108,7 @@ describe 'Feature page', type: :feature, versioning: true do
         expect(feature_page).not_to be_display_sidebar
 
         visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
-        expect(find('#feature_page_display_sidebar')).not_to be_checked
+        expect(find_by_id('feature_page_display_sidebar')).not_to be_checked
 
         check 'Show sidebar'
         click_button 'Save changes'
@@ -116,7 +116,7 @@ describe 'Feature page', type: :feature, versioning: true do
         expect(feature_page.reload).to be_display_sidebar
 
         visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
-        expect(find('#feature_page_display_sidebar')).to be_checked
+        expect(find_by_id('feature_page_display_sidebar')).to be_checked
       end
     end
   end

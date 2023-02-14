@@ -13,7 +13,7 @@ describe Spotlight::InviteUsersService do
     it 'does not send an invite' do
       expect do
         subject
-      end.to change { Devise::Mailer.deliveries.count }.by(0)
+      end.not_to change { Devise::Mailer.deliveries.count }
       expect(user.reload.invitation_sent_at).to be_nil
     end
   end
@@ -28,7 +28,7 @@ describe Spotlight::InviteUsersService do
     it 'does not send an invite' do
       expect do
         subject
-      end.to change { Devise::Mailer.deliveries.count }.by(0)
+      end.not_to change { Devise::Mailer.deliveries.count }
     end
   end
 

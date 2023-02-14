@@ -22,7 +22,7 @@ RSpec.describe Spotlight::CloneTranslatedPageFromLocale do
       expect(Spotlight::Page.where(locale: 'es')).not_to be_present
       translated_page.save!
       expect(Spotlight::Page.where(locale: 'es').count).to eq 1
-      expect { clone.save! }.to change(Spotlight::Page, :count).by(0) # because it deletes one and adds one
+      expect { clone.save! }.not_to change(Spotlight::Page, :count) # because it deletes one and adds one
       expect(Spotlight::Page.where(locale: 'es').count).to eq 1
       expect(Spotlight::Page.unscope(:order).last.locale).to eq 'es'
     end

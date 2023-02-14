@@ -77,13 +77,13 @@ describe 'Home page', type: :feature, versioning: true do
         expect(home_page.display_title).to be_falsey
 
         visit spotlight.edit_exhibit_home_page_path(home_page.exhibit, home_page)
-        expect(find('#home_page_display_title')).not_to be_checked
+        expect(find_by_id('home_page_display_title')).not_to be_checked
 
         check 'Show title'
         click_button 'Save changes'
 
         visit spotlight.edit_exhibit_home_page_path(home_page.exhibit, home_page)
-        expect(find('#home_page_display_title')).to be_checked
+        expect(find_by_id('home_page_display_title')).to be_checked
       end
     end
   end

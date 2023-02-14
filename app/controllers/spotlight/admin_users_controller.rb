@@ -18,9 +18,9 @@ module Spotlight
     def create
       if update_roles
         Spotlight::InviteUsersService.call(resource: @site)
-        flash[:notice] = t('spotlight.admin_users.create.success')
+        flash[:notice] = t('.success')
       else
-        flash[:error] = t('spotlight.admin_users.create.error')
+        flash[:error] = t('.error')
       end
 
       redirect_to spotlight.admin_users_path
@@ -41,9 +41,9 @@ module Spotlight
     def destroy
       user = Spotlight::Engine.user_class.find(params[:id])
       if user.roles.where(resource: @site).first.destroy
-        flash[:notice] = t('spotlight.admin_users.destroy.success')
+        flash[:notice] = t('.success')
       else
-        flash[:error] = t('spotlight.admin_users.destroy.error')
+        flash[:error] = t('.error')
       end
       redirect_to spotlight.admin_users_path
     end

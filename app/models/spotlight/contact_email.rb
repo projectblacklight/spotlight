@@ -26,7 +26,7 @@ module Spotlight
       begin
         parsed = Mail::Address.new(email)
       rescue Mail::Field::ParseError => e
-        Rails.logger.debug "Failed to parse email #{email}: #{e}"
+        Rails.logger.debug { "Failed to parse email #{email}: #{e}" }
       end
 
       errors.add :email, 'is not valid' if parsed.nil? || parsed.address != email || parsed.local == email

@@ -219,7 +219,7 @@ describe Spotlight::ExhibitImportExportService do
     end
 
     it 'deals with nested feature pages' do
-      FactoryBot.create :feature_subpage, exhibit: source_exhibit
+      FactoryBot.create(:feature_subpage, exhibit: source_exhibit)
       expect(subject.feature_pages.at_top_level.length).to eq 1
       expect(subject.feature_pages.first.child_pages.length).to eq 1
     end
@@ -275,14 +275,14 @@ describe Spotlight::ExhibitImportExportService do
     end
 
     it 'assigns STI resources the correct class' do
-      resource = FactoryBot.create :uploaded_resource, exhibit: source_exhibit
+      resource = FactoryBot.create(:uploaded_resource, exhibit: source_exhibit)
       expect(subject.resources.length).to eq 1
       expect(subject.resources.first.class).to eq Spotlight::Resources::Upload
       expect(subject.resources.first.upload.image.path).not_to eq resource.upload.image.path
     end
 
     it 'assigns normal resources the correct class' do
-      resource = FactoryBot.create :resource, exhibit: source_exhibit
+      resource = FactoryBot.create(:resource, exhibit: source_exhibit)
       expect(subject.resources.length).to eq 1
       expect(subject.resources.first.class).to eq Spotlight::Resource
       expect(subject.resources.first.url).to eq resource.url
@@ -445,7 +445,7 @@ describe Spotlight::ExhibitImportExportService do
     end
 
     it 'is re-runnable' do
-      FactoryBot.create :feature_subpage, exhibit: source_exhibit
+      FactoryBot.create(:feature_subpage, exhibit: source_exhibit)
       export = described_class.new(source_exhibit).as_json
       e = FactoryBot.create(:exhibit)
       e.import(export)

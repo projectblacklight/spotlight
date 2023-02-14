@@ -4,8 +4,8 @@ describe Spotlight::MainAppHelpers, type: :helper do
   describe '#show_contact_form?' do
     subject { helper }
 
-    let(:exhibit) { FactoryBot.create :exhibit }
-    let(:exhibit_with_contacts) { FactoryBot.create :exhibit }
+    let(:exhibit) { FactoryBot.create(:exhibit) }
+    let(:exhibit_with_contacts) { FactoryBot.create(:exhibit) }
 
     context 'with an exhibit with confirmed contacts' do
       before do

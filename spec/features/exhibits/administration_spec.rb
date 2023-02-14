@@ -44,7 +44,7 @@ describe 'Exhibit Administration', type: :feature do
       # Additonal blank fields should not exist
       expect(page).not_to have_css("input##{email_id_1}")
       # click the + (add contact) button
-      find('#another-email').click
+      find_by_id('another-email').click
       # An additional blank field should exist now
       expect(page).to have_css("input##{email_id_1}")
       expect(find_field(email_id_1).value).to be_blank
@@ -64,7 +64,7 @@ describe 'Exhibit Administration', type: :feature do
       visit spotlight.edit_exhibit_path(exhibit)
 
       expect(find_field(email_id_0)['aria-label']).to eq 'Recipient email 1'
-      find('#another-email').click
+      find_by_id('another-email').click
       expect(find_field(email_id_1)['aria-label']).to eq 'Recipient email 2'
     end
 
@@ -72,7 +72,7 @@ describe 'Exhibit Administration', type: :feature do
       # go to edit page, fill in first email field, click the + (add contact) button, fill in the second email field, click save.
       visit spotlight.edit_exhibit_path(exhibit)
       fill_in email_id_0, with: email_address_0
-      find('#another-email').click
+      find_by_id('another-email').click
       fill_in email_id_1, with: email_address_1
       click_button 'Save changes'
 
@@ -109,7 +109,7 @@ describe 'Exhibit Administration', type: :feature do
       fill_in email_id_0, with: email_address_0
       click_button 'Save changes'
 
-      find('#another-email').click
+      find_by_id('another-email').click
       expect(find_field(email_id_0).value).to eq email_address_0
       expect(find_field(email_id_1).value).to eq ''
 
@@ -126,7 +126,7 @@ describe 'Exhibit Administration', type: :feature do
     it 'displays the error message from the server if there is one', js: true do
       visit spotlight.edit_exhibit_path(exhibit)
       fill_in email_id_0, with: email_address_0
-      find('#another-email').click
+      find_by_id('another-email').click
       fill_in email_id_1, with: email_address_1
       click_button 'Save changes'
 

@@ -9,7 +9,7 @@ module Spotlight
     source_root File.expand_path('templates', __dir__)
 
     def create_model
-      create_file "app/models/#{file_name}_resource.rb", <<-FILE.strip_heredoc
+      create_file "app/models/#{file_name}_resource.rb", <<~FILE
         class #{class_name}Resource < Spotlight::Resource
           def self.indexing_pipeline
             @indexing_pipeline ||= super.dup.tap do |pipeline|
@@ -21,7 +21,7 @@ module Spotlight
     end
 
     def create_controller
-      create_file "app/controllers/#{file_name}_resources_controller.rb", <<-FILE.strip_heredoc
+      create_file "app/controllers/#{file_name}_resources_controller.rb", <<~FILE
         class #{class_name}ResourcesController < Spotlight::ResourcesController
           private
 
@@ -33,16 +33,16 @@ module Spotlight
     end
 
     def create_form
-      create_file "app/views/#{file_name}_resources/_form.html.erb", <<-FILE.strip_heredoc
-      <%= bootstrap_form_for([current_exhibit, @resource.becomes(#{class_name}Resource)], as: :resource) do |f| %>
-        <%= f.text_field :url  %>
-        <div class="form-actions">
-          <div class="primary-actions">
-            <%= cancel_link @resource, :back, class: 'btn btn-secondary' %>
-            <%= f.submit t('.add_item'), class: 'btn btn-primary' %>
+      create_file "app/views/#{file_name}_resources/_form.html.erb", <<~FILE
+        <%= bootstrap_form_for([current_exhibit, @resource.becomes(#{class_name}Resource)], as: :resource) do |f| %>
+          <%= f.text_field :url  %>
+          <div class="form-actions">
+            <div class="primary-actions">
+              <%= cancel_link @resource, :back, class: 'btn btn-secondary' %>
+              <%= f.submit t('.add_item'), class: 'btn btn-primary' %>
+            </div>
           </div>
-        </div>
-      <% end if can? :manage, @resource %>
+        <% end if can? :manage, @resource %>
       FILE
     end
   end
@@ -54,7 +54,7 @@ module Spotlight
   end
 
   def create_routes
-    route <<-FILE.strip_heredoc
+    route <<~FILE
       resources :exhibits, only: [] do
         resources :#{file_name}_resources, only: [:create, :update] do
         end
