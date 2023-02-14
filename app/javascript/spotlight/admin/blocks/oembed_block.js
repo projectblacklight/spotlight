@@ -6,6 +6,7 @@
   and any provided text
   and displays them.
 */
+import Spotlight from 'spotlight'
 
 SirTrevor.Blocks.Oembed =  (function(){
 

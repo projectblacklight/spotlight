@@ -1,4 +1,4 @@
-//= require spotlight/admin/blocks/resources_block
+import Spotlight from 'spotlight'
 
 SirTrevor.Blocks.Browse = (function(){
 

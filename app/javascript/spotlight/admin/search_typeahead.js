@@ -1,5 +1,4 @@
-//= require typeahead.bundle.min.js
-//= require handlebars
+import { addImageSelector } from 'add_image_selector'
 
 (function($){
   $.fn.spotlightSearchTypeAhead = function( options ) {
@@ -52,19 +51,15 @@ function itemsTemplate() {
   return '<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail"><img class="img-thumbnail" src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>';
 }
 
-function addAutocompletetoFeaturedImage(){
+export function addAutocompletetoFeaturedImage(){
   if($('[data-featured-image-typeahead]').length > 0) {
     $('[data-featured-image-typeahead]').spotlightSearchTypeAhead({bloodhound: itemsBloodhound(), template: itemsTemplate()}).on('click', function() {
       $(this).select();
     }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
       var panel = $($(this).data('target-panel'));
-      spotlightAdminAdd_image_selector.addImageSelector($(this), panel, data.iiif_manifest, true);
+      addImageSelector($(this), panel, data.iiif_manifest, true);
       $($(this).data('id-field')).val(data['global_id']);
       $(this).attr('type', 'text');
     });
   }
 }
-
-Spotlight.onLoad(function(){
-  addAutocompletetoFeaturedImage();
-});

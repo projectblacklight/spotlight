@@ -1,5 +1,7 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
+import Spotlight from 'spotlight'
+
 export default class {
   connect(){
     // Set a ujs adapter to support both rails-ujs and jquery-ujs

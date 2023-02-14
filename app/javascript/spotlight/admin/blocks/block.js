@@ -1,3 +1,4 @@
+import Spotlight from 'spotlight'
 (function ($){
   Spotlight.Block = SirTrevor.Block.extend({
     scribeOptions: {
