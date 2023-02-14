@@ -22,19 +22,19 @@ SirTrevor.Blocks.Oembed =  (function(){
     icon_name: "oembed",
     show_heading: false,
 
-    template: [
-    '<div class="form oembed-text-admin clearfix">',
-      '<div class="widget-header">',
-        '<%= description() %>',
-      '</div>',
-      '<div class="row">',
-        '<div class="form-group col-md-8">',
-          '<label for="<%= formId(id_key) %>"><%= i18n.t("blocks:oembed:url") %></label>',
-          '<input name="<%= id_key %>" class="form-control col-md-6" type="text" id="<%= formId(id_key) %>" />',
-        '</div>',
-      '</div>',
-      '<%= text_area() %>',
-    '</div>'
-  ].join("\n")
+    editorHTML: function () {
+      return `<div class="form oembed-text-admin clearfix">
+      <div class="widget-header">
+        ${this.description()}
+      </div>
+      <div class="row">
+        <div class="form-group col-md-8">
+          <label for="${this.formId(id_key)}">${i18n.t("blocks:oembed:url")}</label>
+          <input name="${id_key}" class="form-control col-md-6" type="text" id="${this.formId(id_key)}" />
+        </div>
+      </div>
+      ${this.text_area()}
+    </div>`
+    }
   });
 })();

@@ -38,7 +38,6 @@ module Spotlight
     end
 
     require 'carrierwave'
-    require 'underscore-rails'
     require 'redcarpet'
     require 'github/markup'
     require 'openseadragon'

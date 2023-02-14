@@ -25,21 +25,20 @@ SirTrevor.Blocks.SolrDocumentsCarousel = (function(){
     },
 
     item_options: function() {
-      return [this.caption_options(),
-        '<div class="field-select auto-cycle-images" data-behavior="auto-cycle-images">',
-          '<input name="<%= auto_play_images_key %>" type="hidden" value="false" />',
-          '<input name="<%= auto_play_images_key %>" id="<%= formId(auto_play_images_key) %>" data-key="<%= auto_play_images_key %>" type="checkbox" value="true" checked/>',
-          '<label for="<%= formId(auto_play_images_key) %>"><%= i18n.t("blocks:solr_documents_carousel:interval:title") %></label>',
-          '<select name="<%= auto_play_images_interval_key %>" id="<%= formId(auto_play_images_interval_key) %>" data=key="<%= auto_play_images_interval_key %>">',
-            '<option value=""><%= i18n.t("blocks:solr_documents_carousel:interval:placeholder") %></option>',
-            '<%= addCarouselCycleOptions(carouselCycleTimesInSeconds) %>',
-          '</select>',
-        '</div>',
-        '<div class="field-select max-heights" data-behavior="max-heights">',
-          '<label for="<%= formId(max_height_key) %>"><%= i18n.t("blocks:solr_documents_carousel:height:title") %></label><br/>',
-          '<%= addCarouselMaxHeightOptions(carouselMaxHeights) %>',
-        '</div>',
-      ].join("\n");
+      return `${this.caption_options()}
+        <div class="field-select auto-cycle-images" data-behavior="auto-cycle-images">
+          <input name="${this.auto_play_images_key}" type="hidden" value="false" />
+          <input name="${this.auto_play_images_key}" id="${this.formId(this.auto_play_images_key)}" data-key="${this.auto_play_images_key}" type="checkbox" value="true" checked/>
+          <label for="${this.formId(this.auto_play_images_key)}">${i18n.t("blocks:solr_documents_carousel:interval:title")}</label>
+          <select name="${this.auto_play_images_interval_key}" id="${this.formId(this.auto_play_images_interval_key)}" data=key="${this.auto_play_images_interval_key}">
+            <option value="">${i18n.t("blocks:solr_documents_carousel:interval:placeholder")}</option>
+            ${this.addCarouselCycleOptions(this.carouselCycleTimesInSeconds)}
+          </select>
+        </div>
+        <div class="field-select max-heights" data-behavior="max-heights">
+          <label for="${this.formId(this.max_height_key)}">${i18n.t("blocks:solr_documents_carousel:height:title")}</label><br/>
+          ${this.addCarouselMaxHeightOptions(this.carouselMaxHeights)}
+        </div>`
     },
 
     addCarouselCycleOptions: function(options) {

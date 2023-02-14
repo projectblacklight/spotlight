@@ -1,4 +1,3 @@
-//= require underscore
 //= require eventable
 //= require sir-trevor
 //= require nestable

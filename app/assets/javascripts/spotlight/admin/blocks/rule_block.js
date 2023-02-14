@@ -17,9 +17,7 @@ SirTrevor.Blocks.Rule = (function(){
     icon_name: "rule",
     
     editorHTML: function() {
-      return _.template(this.template, this)(this);
-    },
-
-    template: '<hr />'
+      return '<hr />'
+    }
   });
 })();

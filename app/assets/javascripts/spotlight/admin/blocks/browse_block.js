@@ -30,37 +30,36 @@ SirTrevor.Blocks.Browse = (function(){
         checked = "";
       }
       var resource_id = data.slug || data.id;
-      var markup = [
-          '<li class="field form-inline dd-item dd3-item" data-resource-id="' + resource_id + '" data-id="' + index + '" id="' + this.formId("item_" + data.id) + '">',
-            '<input type="hidden" name="item[' + index + '][id]" value="' + resource_id + '" />',
-            '<input type="hidden" name="item[' + index + '][full_title]" value="' + (data.full_title || data.title) + '" />',
-            '<input data-property="weight" type="hidden" name="item[' + index + '][weight]" value="' + data.weight + '" />',
-              '<div class="card d-flex dd3-content">',
-                '<div class="dd-handle dd3-handle"><%= i18n.t("blocks:resources:panel:drag") %></div>',
-                '<div class="card-header item-grid">',
-                  '<div class="d-flex">',
-                    '<div class="checkbox">',
-                      '<input name="item[' + index + '][display]" type="hidden" value="false" />',
-                      '<input name="item[' + index + '][display]" id="'+ this.formId(this.display_checkbox + '_' + data.id) + '" type="checkbox" ' + checked + ' class="item-grid-checkbox" value="true"  />',
-                      '<label class="sr-only" for="'+ this.formId(this.display_checkbox + '_' + data.id) +'"><%= i18n.t("blocks:resources:panel:display") %></label>',
-                    '</div>',
-                    '<div class="pic">',
-                      '<img class="img-thumbnail" src="' + (data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg"))) + '" />',
-                    '</div>',
-                    '<div class="main">',
-                      '<div class="title card-title">' + (data.full_title || data.title) + '</div>',
-                      '<div>' + (data.slug || data.id) + '</div>',
-                    '</div>',
-                    '<div class="remove float-right">',
-                      '<a data-item-grid-panel-remove="true" href="#"><%= i18n.t("blocks:resources:panel:remove") %></a>',
-                    '</div>',
-                  '</div>',
-                '</div>',
-              '</div>',
-            '</li>'
-      ].join("\n");
+      var markup = `
+           <li class="field form-inline dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+            <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
+            <input type="hidden" name="item[${index}][full_title]" value="${(data.full_title || data.title)}" />
+            <input data-property="weight" type="hidden" name="item[${index}][weight]" value="${data.weight}" />
+              <div class="card d-flex dd3-content">
+                <div class="dd-handle dd3-handle">${i18n.t("blocks:resources:panel:drag")}</div>
+                <div class="card-header item-grid">
+                  <div class="d-flex">
+                    <div class="checkbox">
+                      <input name="item[${index}][display]" type="hidden" value="false" />
+                      <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                      <label class="sr-only" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                    </div>
+                    <div class="pic">
+                      <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
+                    </div>
+                    <div class="main">
+                      <div class="title card-title">${(data.full_title || data.title)}</div>
+                      <div>${(data.slug || data.id)}</div>
+                    </div>
+                    <div class="remove float-right">
+                      <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>`
 
-      var panel = $(_.template(markup)(this));
+      var panel = $(markup);
       var context = this;
 
       $('.remove a', panel).on('click', function(e) {
@@ -75,13 +74,13 @@ SirTrevor.Blocks.Browse = (function(){
       return panel;
     },
 
-    item_options: function() { return [
-      '<label>',
-        '<input type="hidden" name="display-item-counts" value="false" />',
-        '<input type="checkbox" name="display-item-counts" value="true" checked />',
-        '<%= i18n.t("blocks:browse:item_counts") %>',
-      '</label>'
-    ].join("\n") },
+    item_options: function() { return `
+      <label>
+        <input type="hidden" name="display-item-counts" value="false" />
+        <input type="checkbox" name="display-item-counts" value="true" checked />
+        ${i18n.t("blocks:browse:item_counts")}
+      </label>`
+    },
   });
 
 })();

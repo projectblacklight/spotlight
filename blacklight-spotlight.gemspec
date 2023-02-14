@@ -58,7 +58,6 @@ these collections.)
   s.add_dependency 'sprockets', '>= 3'
   s.add_dependency 'sprockets-es6'
   s.add_dependency 'tophat'
-  s.add_dependency 'underscore-rails', '~> 1.6'
   s.add_dependency 'view_component', '~> 2.0'
 
   s.add_development_dependency 'capybara', '~> 3.31'

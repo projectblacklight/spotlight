@@ -6,23 +6,23 @@
     initializeAutocompleteable: function() {
       this.on("onRender", this.addAutocompletetoSirTrevorForm);
 
-      if (_.isUndefined(this['autocomplete_url'])) {
+      if (this['autocomplete_url'] === undefined) {
         this.autocomplete_url = function() { return $('form[data-autocomplete-url]').data('autocomplete-url').replace("%25QUERY", "%QUERY"); };
       }
 
-      if (_.isUndefined(this['autocomplete_template'])) {
+      if (this['autocomplete_template'] === undefined) {
         this.autocomplete_url = function() { return '<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail"><img class="img-thumbnail" src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>' };
       }
 
-      if (_.isUndefined(this['transform_autocomplete_results'])) {
-        this.transform_autocomplete_results = _.identity;
+      if (this['transform_autocomplete_results'] === undefined) {
+        this.transform_autocomplete_results = (val) => val
       }
 
-      if (_.isUndefined(this['autocomplete_control'])) {
-        this.autocomplete_control = function() { return '<input type="text" class="st-input-string form-control item-input-field" data-twitter-typeahead="true" placeholder="<%= i18n.t("blocks:autocompleteable:placeholder")%>"/>' };
+      if (this['autocomplete_control'] === undefined) {
+        this.autocomplete_control = function() { return `<input type="text" class="st-input-string form-control item-input-field" data-twitter-typeahead="true" placeholder="${i18n.t("blocks:autocompleteable:placeholder")}"/>` };
       }
 
-      if (_.isUndefined(this['bloodhoundOptions'])) {
+      if (this['bloodhoundOptions'] === undefined) {
         this.bloodhoundOptions = function() {
           return {
             remote: {
@@ -55,7 +55,7 @@
 
     bloodhound: function() {
       var block = this;
-      var results = new Bloodhound(_.extend({
+      var results = new Bloodhound(Object.assign({
         datumTokenizer: function(d) {
           return Bloodhound.tokenizers.whitespace(d.title);
         },
