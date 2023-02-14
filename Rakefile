@@ -34,7 +34,7 @@ task ci: ['engine_cart:generate'] do
   ENV['environment'] = 'test'
 
   SolrWrapper.wrap(port: '8983') do |solr|
-    solr.with_collection(name: 'blacklight-core', dir: File.join(__dir__, 'solr_conf', 'conf')) do
+    solr.with_collection(name: 'blacklight-core', dir: 'lib/generators/spotlight/templates/solr/conf') do
       within_test_app do
         system 'bundle install'
         system 'bin/rails db:migrate'
@@ -62,7 +62,7 @@ namespace :spotlight do
     Rake::Task['engine_cart:generate'].invoke
 
     SolrWrapper.wrap(port: '8983') do |solr|
-      solr.with_collection(name: 'blacklight-core', dir: File.join(__dir__, 'solr_conf', 'conf')) do
+      solr.with_collection(name: 'blacklight-core', dir: 'lib/generators/spotlight/templates/solr/conf') do
         within_test_app do
           unless File.exist? '.initialized'
             system 'bin/rails spotlight:initialize spotlight_test:solr:seed'

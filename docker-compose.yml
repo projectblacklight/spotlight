@@ -48,14 +48,19 @@ services:
       - spotlight
 
   solr:
-    image: bitnami/solr:8.11.1
-    env_file:
-      - .env
-    ports:
-      - 8983:8983
+    environment:
+      - SOLR_PORT # Set via environment variable or use default defined in .env file
+      - SOLR_VERSION # Set via environment variable or use default defined in .env file
+    image: "solr:${SOLR_VERSION}"
     volumes:
-      - spotlight_solr:/bitnami/solr
-      - ./lib/generators/spotlight/templates/solr/config:/opt/custom/spotlightset
+      - $PWD/lib/generators/spotlight/templates/solr/conf:/opt/solr/conf
+    ports:
+      - "${SOLR_PORT}:8983"
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - blacklight-core
+      - /opt/solr/conf
     networks:
       - spotlight
 
