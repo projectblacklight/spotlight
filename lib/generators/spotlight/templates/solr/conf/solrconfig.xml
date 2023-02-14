@@ -17,10 +17,9 @@
   </updateHandler>
 
   <!-- solr lib dirs -->
+  <lib dir="${solr.install.dir:../../../..}/modules/analysis-extras/lib" />
   <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lib" />
   <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" />
-  <lib dir="${solr.install.dir:../../../..}/modules/analysis-extras/lib" />
-  <lib dir="${solr.install.dir:../../../..}/modules/analysis-extras/lucene-libs" />
 
   <dataDir>${solr.data.dir:}</dataDir>
 
@@ -45,13 +44,13 @@
        -->
         <str name="qf">
           id
-          full_title_tesim
-          short_title_tesim
-          alternative_title_tesim
+          full_title_tsim
+          short_title_tsim
+          alternative_title_tsim
           active_fedora_model_ssi
-          title_tesim
-          author_tesim
-          subject_tesim
+          title_tsim
+          author_tsim
+          subject_tsim
           all_text_timv
         </str>
         <str name="pf">
@@ -59,20 +58,20 @@
         </str>
 
        <str name="author_qf">
-          author_tesim
+          author_tsim
        </str>
        <str name="author_pf">
        </str>
        <str name="title_qf">
-          title_tesim
-          full_title_tesim
-          short_title_tesim
-          alternative_title_tesim
+          title_tsim
+          full_title_tsim
+          short_title_tsim
+          alternative_title_tsim
        </str>
        <str name="title_pf">
        </str>
        <str name="subject_qf">
-          subject_tesim
+          subject_tsim
        </str>
        <str name="subject_pf">
        </str>
@@ -131,16 +130,6 @@
      </lst>
   </requestHandler>
 
-  <!-- for requests to get a single document; use id=666 instead of q=id:666 -->
-  <requestHandler name="document" class="solr.SearchHandler" >
-    <lst name="defaults">
-      <str name="echoParams">all</str>
-      <str name="fl">*</str>
-      <str name="rows">1</str>
-      <str name="q">{!raw f=id v=$id}</str> <!-- use id=666 instead of q=id:666 -->
-    </lst>
-  </requestHandler>
-
 
   <searchComponent name="spellcheck" class="solr.SpellCheckComponent">
     <str name="queryAnalyzerFieldType">textSpell</str>
@@ -153,7 +142,49 @@
       <str name="spellcheckIndexDir">./spell</str>
       <str name="buildOnOptimize">true</str>
     </lst>
+    <lst name="spellchecker">
+      <str name="name">author</str>
+      <str name="field">author_spell</str>
+      <str name="spellcheckIndexDir">./spell_author</str>
+      <str name="accuracy">0.7</str>
+      <str name="buildOnOptimize">true</str>
+    </lst>
+    <lst name="spellchecker">
+      <str name="name">subject</str>
+      <str name="field">subject_spell</str>
+      <str name="spellcheckIndexDir">./spell_subject</str>
+      <str name="accuracy">0.7</str>
+      <str name="buildOnOptimize">true</str>
+    </lst>
+    <lst name="spellchecker">
+      <str name="name">title</str>
+      <str name="field">title_spell</str>
+      <str name="spellcheckIndexDir">./spell_title</str>
+      <str name="accuracy">0.7</str>
+      <str name="buildOnOptimize">true</str>
+    </lst>
   </searchComponent>
+
+  <searchComponent name="suggest" class="solr.SuggestComponent">
+    <lst name="suggester">
+      <str name="name">mySuggester</str>
+      <str name="lookupImpl">FuzzyLookupFactory</str>
+      <str name="suggestAnalyzerFieldType">textSuggest</str>
+      <str name="buildOnCommit">true</str>
+      <str name="field">suggest</str>
+    </lst>
+  </searchComponent>
+
+  <requestHandler name="/suggest" class="solr.SearchHandler" startup="lazy">
+    <lst name="defaults">
+      <str name="suggest">true</str>
+      <str name="suggest.count">5</str>
+      <str name="suggest.dictionary">mySuggester</str>
+    </lst>
+    <arr name="components">
+      <str>suggest</str>
+    </arr>
+  </requestHandler>
 
   <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy" />
 
