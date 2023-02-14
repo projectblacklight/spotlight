@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-describe Spotlight::NavbarHelper, type: :helper do
-  describe '#should_render_search_bar?' do
+RSpec.describe Spotlight::NavbarHelper, type: :helper do
+  describe '#should_render_spotlight_search_bar?' do
     before do
       allow(helper).to receive_messages(current_exhibit: nil)
       allow(helper).to receive_messages(exhibit_masthead?: true)
