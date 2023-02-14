@@ -32,6 +32,7 @@ class TestAppGenerator < Rails::Generators::Base
 
   def add_spotlight_routes_and_assets
     generate :'spotlight:install', '-f --mailer_default_url_host=localhost:3000'
+    append_to_file 'app/assets/config/manifest.js', "\n//= link application.js\n" if Rails.version > '7' && File.exist?('app/assets/config/manifest.js')
   end
 
   def install_test_catalog_controller
