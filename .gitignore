@@ -25,3 +25,4 @@ spec/internal
 /spec/tmp/*
 /tmp/*
 /vendor/bundle
+node_modules

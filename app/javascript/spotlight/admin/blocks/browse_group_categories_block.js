@@ -1,6 +1,7 @@
 /*
   Sir Trevor BrowseGroupCategories
 */
+import Spotlight from 'spotlight'
 
 SirTrevor.Blocks.BrowseGroupCategories = (function(){
 

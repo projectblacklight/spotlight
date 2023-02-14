@@ -1,4 +1,4 @@
-const Crop = spotlightAdminCrop;
+import Crop from 'crop';
 
 export default class {
   connect() {

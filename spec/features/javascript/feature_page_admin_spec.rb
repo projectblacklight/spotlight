@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Feature Pages Adminstration', js: true do
+RSpec.describe 'Feature Pages Adminstration', js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
   let!(:page1) do
@@ -58,6 +58,7 @@ describe 'Feature Pages Adminstration', js: true do
     visit spotlight.edit_exhibit_feature_page_path(page1.exhibit, page1)
 
     fill_in('Title', with: 'Some Fancy Title')
+
     page.dismiss_confirm do
       click_link 'Cancel'
     end

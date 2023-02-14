@@ -1,3 +1,5 @@
+import Spotlight from 'spotlight'
+
 Spotlight.BlockLimits = function(editor) {
   this.editor = editor;
 };

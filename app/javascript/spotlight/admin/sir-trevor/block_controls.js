@@ -1,4 +1,6 @@
-(function(global) {
+import Spotlight from 'spotlight'
+
+(function() {
   var BLOCK_REPLACER_CONTROL_TEMPLATE = function(block) {
     var el = document.createElement('button');
     el.className = "st-block-controls__button";
@@ -75,8 +77,8 @@
     return elButtons;
   }
 
-  global.Spotlight.BlockControls = function() { };
-  global.Spotlight.BlockControls.create = function(editor) {
+  Spotlight.BlockControls = function() { };
+  Spotlight.BlockControls.create = function(editor) {
     // REFACTOR - should probably not know about blockManager
     var el = render(SirTrevor.Blocks, editor.blockManager.blockTypes);
 
@@ -117,4 +119,4 @@
       destroy: destroy
     };
   };
-})(this);
+})();

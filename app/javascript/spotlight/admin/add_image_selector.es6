@@ -1,3 +1,5 @@
+import Iiif from 'iiif'
+
 export function addImageSelector(input, panel, manifestUrl, initialize) {
   if (!manifestUrl) {
     showNonIiifAlert(input);
@@ -6,7 +8,6 @@ export function addImageSelector(input, panel, manifestUrl, initialize) {
   var cropper = input.data('iiifCropper');
   $.ajax(manifestUrl).done(
     function(manifest) {
-      var Iiif = spotlightAdminIiif;
       var iiifManifest = new Iiif(manifestUrl, manifest);
 
       var thumbs = iiifManifest.imagesArray();

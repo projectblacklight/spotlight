@@ -1,6 +1,4 @@
-
-(function( global ) {
-  var Module = (function() {
+const Module = (function() {
     var nestableSelector = '[data-behavior="nestable"]';
     return {
       init: function(selector){
@@ -65,8 +63,6 @@
     function find_property(node, property) {
       return node.find("input[data-property=" + property + "]");
     }
-  })();
+})();
 
-  global.SpotlightNestable = Module;
-
-})( this );
+export default Module

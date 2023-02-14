@@ -1,3 +1,6 @@
+import Spotlight from 'spotlight'
+import SpotlightNestable from 'spotlight_nestable'
+
 Spotlight.Block.Resources = (function(){
 
   return Spotlight.Block.extend({

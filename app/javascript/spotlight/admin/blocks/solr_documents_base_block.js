@@ -1,4 +1,5 @@
-//= require spotlight/admin/blocks/resources_block
+import Iiif from '../iiif'
+import Spotlight from 'spotlight'
 
 SirTrevor.Blocks.SolrDocumentsBase = (function(){
 
@@ -85,7 +86,6 @@ SirTrevor.Blocks.SolrDocumentsBase = (function(){
 
       $.ajax(manifestUrl).done(
         function(manifest) {
-          var Iiif = spotlightAdminIiif;
           var iiifManifest = new Iiif(manifestUrl, manifest);
 
           var thumbs = iiifManifest.imagesArray();

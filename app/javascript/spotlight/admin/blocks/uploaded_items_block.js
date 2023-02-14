@@ -1,3 +1,6 @@
+import SpotlightNestable from 'spotlight_nestable'
+import Spotlight from 'spotlight'
+
 SirTrevor.Blocks.UploadedItems = (function(){
   return Spotlight.Block.Resources.extend({
     plustextable: true,

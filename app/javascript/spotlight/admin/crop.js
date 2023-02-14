@@ -1,3 +1,5 @@
+import { addImageSelector } from 'add_image_selector'
+
 export default class Crop {
   constructor(cropArea) {
     this.cropArea = cropArea;
@@ -227,7 +229,7 @@ export default class Crop {
     var input = $('[data-behavior="autocomplete"]', this.cropTool);
     var panel = $(input.data('target-panel'));
 
-    spotlightAdminAdd_image_selector.addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+    addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
   }
 
   invalidateMapSizeOnTabToggle() {
