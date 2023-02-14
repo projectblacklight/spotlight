@@ -12,7 +12,12 @@
     </ul>
     <% if should_render_spotlight_search_bar? %>
       <div class="navbar-right navbar-nav exhibit-search-form mt-3 mt-md-0">
-        <%= render_search_bar %>
+        <%= render Blacklight::SearchBarComponent.new(
+          url: search_action_url,
+          advanced_search_url: search_action_url(action: 'advanced_search'),
+          params: search_state.params_for_search.except(:qt),
+          autocomplete_path: suggest_index_catalog_path
+        ) %>
       </div>
     <% end %>
   </div>

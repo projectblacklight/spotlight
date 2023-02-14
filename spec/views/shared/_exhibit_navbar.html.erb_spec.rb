@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'shared/_exhibit_navbar', type: :view do
+RSpec.describe 'shared/_exhibit_navbar', type: :view do
   let(:current_exhibit) { FactoryBot.create(:exhibit) }
   let(:feature_page) { FactoryBot.create(:feature_page, exhibit: current_exhibit) }
   let(:unpublished_feature_page) { FactoryBot.create(:feature_page, published: false, exhibit: current_exhibit) }
@@ -8,10 +8,14 @@ describe 'shared/_exhibit_navbar', type: :view do
   let(:unpublished_about_page) { FactoryBot.create(:about_page, published: false, exhibit: current_exhibit) }
 
   before do
+    allow(view).to receive(:search_action_url).and_return('/catalog')
+    allow(view).to receive(:blacklight_config).and_return(CatalogController.blacklight_config)
+
     allow(view).to receive_messages(resource_masthead?: false)
     allow(view).to receive_messages(current_exhibit: current_exhibit)
     allow(view).to receive_messages(on_browse_page?: false, on_about_page?: false)
-    allow(view).to receive_messages(render_search_bar: 'Search Bar')
+    allow(view).to receive(:render).and_call_original
+    allow(view).to receive(:render).with(Blacklight::SearchBarComponent).and_return('Search Bar')
     allow(view).to receive_messages(exhibit_path: spotlight.exhibit_path(current_exhibit))
   end
 
