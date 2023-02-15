@@ -9,7 +9,6 @@
 //= require leaflet-iiif
 //= require Leaflet.Editable
 //= require Path.Drag
-//= require MutationObserver
 
 //= require polyfill.min.js
 //= require_tree .
