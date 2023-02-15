@@ -1,5 +1,24 @@
 <% action = document.private?(current_exhibit) ? :make_public : :make_private %>
 
-<%= form_tag( [:visibility, current_exhibit, document], :method => document.private?(current_exhibit) ? :put : :delete, :class => "visiblity_toggle", "data-doc-id" => document.id, :'data-present' => t('.make_private.label'), :'data-absent' => t('.make_public.label'), :'data-inprogress' => t('.inprogress.label'), :'data-label-toggle-target' => "[data-label-toggle='#{document.id}']") do %>
-  <%= submit_tag(t(".#{action}.button"), :id => "visibility_toggle_#{document.id.to_s.parameterize}", :class => "visibility_#{action}") %>
+<%= form_tag([:visibility, current_exhibit, document],
+             method: document.private?(current_exhibit) ? :put : :delete,
+             class: 'visibility-toggle',
+             data: {
+               'doc-id': document.id,
+               present: t('.make_private'),
+               absent: t('.make_public'),
+               inprogress: t('.inprogress'),
+             }) do %>
+
+  <div class="checkbox toggle-visibility">
+    <label class="toggle-visibility" data-checkboxsubmit-target="label">
+      <input type="checkbox" class="toggle-visibility" data-checkboxsubmit-target="checkbox" <%= 'checked="checked"' if document.public?(current_exhibit) %>>
+      <span data-checkboxsubmit-target="span" class="sr-only">
+        <%= document.private?(current_exhibit) ? t('.make_public') : t('.make_private') %>
+      </span>
+    </label>
+  </div>
+
+  <%= submit_tag(t(".#{action}"), id: "visibility_toggle_#{document.id.to_s.parameterize}", class: "visibility-#{action}") %>
+
 <% end %>
