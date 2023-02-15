@@ -5,7 +5,7 @@
 //= require parameterize
 //= require bootstrap-tagsinput
 //= require jquery.serializejson
-//= require clipboard
+//= require clipboard/dist/clipboard
 //= require leaflet
 //= require leaflet-iiif
 //= require Leaflet.Editable
