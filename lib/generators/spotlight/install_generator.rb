@@ -27,6 +27,9 @@ module Spotlight
       # but since webpacker exists in the gemfile, we still need to run the
       # install before rails will start
       run 'bin/rails webpacker:install'
+
+      say 'Install Clipboard'
+      run 'yarn add clipboard@1.7.1'
     end
 
     def add_js_rails7

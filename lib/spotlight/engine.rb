@@ -9,7 +9,6 @@ require 'devise_invitable'
 require 'activejob-status'
 require 'autoprefixer-rails'
 require 'blacklight'
-require 'clipboard/rails'
 require 'faraday'
 require 'faraday/follow_redirects'
 require 'friendly_id'
@@ -66,6 +65,8 @@ module Spotlight
     end
 
     initializer 'spotlight.assets.precompile' do |app|
+      config.assets.paths << Rails.root.join('node_modules')
+
       app.config.assets.precompile += %w[spotlight/default_thumbnail.jpg spotlight/default_browse_thumbnail.jpg]
 
       Sprockets::ES6.configuration = { 'modules' => 'umd', 'moduleIds' => true }

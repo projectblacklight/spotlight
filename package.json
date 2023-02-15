@@ -25,5 +25,6 @@
     "not IE 11"
   ],
   "dependencies": {
+    "clipboard": "1.7.1"
   }
 }
