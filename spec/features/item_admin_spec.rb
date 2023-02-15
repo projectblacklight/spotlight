@@ -43,7 +43,7 @@ describe 'Item Administration', type: :feature do
       # The label should be toggled when the checkbox is clicked
       expect(page).not_to have_css('tr.blacklight-private')
       within 'tr[itemscope]:first-child' do
-        find("input.toggle_visibility[type='checkbox']").click
+        find("input.toggle-visibility[type='checkbox']").click
       end
       expect(page).to have_css('tr.blacklight-private')
 
@@ -51,7 +51,7 @@ describe 'Item Administration', type: :feature do
       expect(page).to have_css('tr.blacklight-private')
       visit spotlight.admin_exhibit_catalog_path(exhibit)
       within 'tr[itemscope]:first-child' do
-        find("input.toggle_visibility[type='checkbox']").click
+        find("input.toggle-visibility[type='checkbox']").click
       end
       expect(page).not_to have_css('tr.blacklight-private')
     end

@@ -159,3 +159,19 @@ form.edit_solr_document {
     }
   }
 }
+
+.visibility-toggle {
+	.no-js & {
+		input[type="submit"] {
+			display: inline
+		}
+
+		div.toggle-visibility {
+			display: none
+		}
+	}
+
+	input[type="submit"] {
+		display: none;
+	}
+}

@@ -373,14 +373,9 @@ en:
       breadcrumb:
         index: Search results
       document_visibility_control:
-        inprogress:
-          label: ''
-        make_private:
-          button: Make private
-          label: ''
-        make_public:
-          button: Make public
-          label: ''
+        inprogress: In progress
+        make_private: Make private
+        make_public: Make public
       edit_default:
         url-field:
           help: 'Valid file types: %{extensions}'
