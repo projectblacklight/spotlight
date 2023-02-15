@@ -26,7 +26,7 @@ module Spotlight
 
       # but since webpacker exists in the gemfile, we still need to run the
       # install before rails will start
-      run 'bundle exec rails webpacker:install'
+      run 'bin/rails webpacker:install'
     end
 
     def add_js_rails7

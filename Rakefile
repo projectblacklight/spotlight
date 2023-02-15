@@ -37,7 +37,7 @@ task ci: ['engine_cart:generate'] do
     solr.with_collection(name: 'blacklight-core', dir: File.join(__dir__, 'solr_conf', 'conf')) do
       within_test_app do
         system 'bundle install'
-        system 'bundle exec rake db:migrate'
+        system 'bin/rails db:migrate'
       end
 
       Rake::Task['spotlight:fixtures'].invoke
@@ -65,11 +65,10 @@ namespace :spotlight do
       solr.with_collection(name: 'blacklight-core', dir: File.join(__dir__, 'solr_conf', 'conf')) do
         within_test_app do
           unless File.exist? '.initialized'
-            system 'bundle exec rake spotlight:initialize'
-            system 'bundle exec rake spotlight_test:solr:seed'
+            system 'bin/rails spotlight:initialize spotlight_test:solr:seed'
             File.open('.initialized', 'w') {}
           end
-          system 'bundle exec rails s'
+          system 'bin/rails s'
         end
       end
     end
@@ -104,7 +103,7 @@ namespace :spotlight do
                 APP_ROOT = Dir.pwd
                 SolrWrapper.wrap(port: '8983') do |solr|
                   solr.with_collection(name: 'blacklight-core', dir: File.join(File.expand_path('..', File.dirname(__FILE__)), 'solr', 'conf')) do
-                    system 'bundle exec rails s'
+                    system 'bin/rails s'
                   end
                 end
               end
