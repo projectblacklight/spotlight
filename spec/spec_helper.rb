@@ -19,19 +19,8 @@ require 'selenium-webdriver'
 require 'webdrivers'
 require 'webmock/rspec'
 
-Capybara.javascript_driver = :headless_chrome
+Capybara.javascript_driver = :selenium_chrome_headless
 
-Capybara.register_driver :headless_chrome do |app|
-  Capybara::Selenium::Driver.load_selenium
-  browser_options = Selenium::WebDriver::Chrome::Options.new.tap do |opts|
-    opts.args << '--headless'
-    opts.args << '--disable-gpu'
-    opts.args << '--no-sandbox'
-    opts.args << '--window-size=1280,1696'
-  end
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
-end
-require 'webmock/rspec'
 allowed_sites = ['chromedriver.storage.googleapis.com']
 
 WebMock.disable_net_connect!(net_http_connect_on_start: true, allow_localhost: true, allow: allowed_sites)
