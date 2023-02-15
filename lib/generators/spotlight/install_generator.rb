@@ -37,7 +37,12 @@ module Spotlight
 
     def add_js_deps
       say 'Install Clipboard & Leaflet'
-      run 'yarn add clipboard@1.7.1 leaflet@^1.9.3'
+      if defined?(Importmap)
+        run 'bin/importmap pin clipboard@1.7.1 leaflet@^1.9.3'
+        append_to_file 'app/javascript/application.js', "\nimport \"spotlight/application\"\n"
+      else
+        run 'yarn add clipboard@1.7.1 leaflet@^1.9.3'
+      end
     end
 
     def add_manifest

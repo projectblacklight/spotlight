@@ -1,4 +1,4 @@
-Spotlight = function() {
+const Spotlight = function() {
   var buffer = [];
   return {
     onLoad: function(func) {
@@ -13,7 +13,7 @@ Spotlight = function() {
   };
 }();
 
-Blacklight.onLoad(function() {
+window.Blacklight.onLoad(function() {
   Spotlight.activate();
 });
 
@@ -21,3 +21,4 @@ Spotlight.onLoad(function(){
   SpotlightNestable.init();
 });
 
+export default Spotlight;
