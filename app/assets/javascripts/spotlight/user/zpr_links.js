@@ -5,19 +5,16 @@ Spotlight.onLoad(function(){
     modalDialog.removeClass('modal-lg')
     modalDialog.addClass('modal-xl')
     modalContent.html('<div id="osd-modal-container"></div>');
-    var controls = [
-      '<div class="controls d-flex justify-content-center justify-content-md-end">',
-      '  <div class="custom-close-controls pr-3 pt-3">',
-      '    <button type="button" class="btn btn-dark" data-dismiss="modal" aria-hidden="true"><%= Blacklight::Icon.new('close').file_source.strip %></button>',
-      '  </div>',
-      '  <div class="zoom-controls mb-3 mr-md-3">',
-      '    <button id="osd-zoom-in" type="button" class="btn btn-dark"><%= Blacklight::Icon.new('zoom_in').file_source.strip %></button>',
-      '    <button id="osd-zoom-out" type="button" class="btn btn-dark"><%= Blacklight::Icon.new('zoom_out').file_source.strip %></button>',
-      '  </div>',
-      '  <div id="empty-div-required-by-osd"></div>',
-      '</div>'
-    ].join("\n");
-
+    var controls = `<div class="controls d-flex justify-content-center justify-content-md-end">
+        <div class="custom-close-controls pr-3 pt-3">
+          <button type="button" class="btn btn-dark" data-dismiss="modal" aria-hidden="true">${Spotlight.ZprLinks.close}</button>
+        </div>
+        <div class="zoom-controls mb-3 mr-md-3">
+          <button id="osd-zoom-in" type="button" class="btn btn-dark">${Spotlight.ZprLinks.zoomIn}</button>
+          <button id="osd-zoom-out" type="button" class="btn btn-dark">${Spotlight.ZprLinks.zoomOut}</button>
+        </div>
+        <div id="empty-div-required-by-osd"></div>
+      </div>`
 
     $('#osd-modal-container').append('<div id="osd-div"></div>');
     $('#osd-modal-container').append(controls);
