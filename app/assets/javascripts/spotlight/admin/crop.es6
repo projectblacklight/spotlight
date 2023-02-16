@@ -226,8 +226,8 @@ export default class Crop {
 
     var input = $('[data-behavior="autocomplete"]', this.cropTool);
     var panel = $(input.data('target-panel'));
-    // This is defined in search_typeahead.js
-    addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+
+    spotlightAdminAdd_image_selector.addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
   }
 
   invalidateMapSizeOnTabToggle() {
