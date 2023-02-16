@@ -1,10 +1,6 @@
-Spotlight.onLoad(function() {
-  $('[data-behavior="progress-panel"]').progressMonitor();
-});
-
-(function($) {
-  $.fn.progressMonitor = function() {
-    var monitorElements = this;
+export default class {
+  connect() {
+    var monitorElements = $('[data-behavior="progress-panel"]');
     var defaultRefreshRate = 3000;
     var panelContainer;
     var pollers = [];
@@ -144,5 +140,5 @@ Spotlight.onLoad(function() {
     }
 
     return this;
-  };
-})(jQuery);
+  }
+}

@@ -1,24 +1,3 @@
-Spotlight.onLoad(function() {
-  // Instantiate the singleton SerializedForm plugin
-  var serializedForm = $.SerializedForm();
-  $(window).on('beforeunload page:before-change turbolinks:before-visit', function(event) {
-    // Don't handle the same event twice #turbolinks
-    if (event.handled !== true) {
-      if ( serializedForm.observedFormsStatusHasChanged() ) {
-        event.handled = true;
-        var message = "You have unsaved changes. Are you sure you want to leave this page?";
-        // There are variations in how Webkit browsers may handle this:
-        // https://developer.mozilla.org/en-US/docs/Web/Events/beforeunload
-        if ( event.type == "beforeunload" ) {
-          return message;
-        }else{
-          
-          return confirm(message)
-        }
-      }
-    }
-  });
-});
 
 (function($, undefined) {
   'use strict';
@@ -84,3 +63,26 @@ Spotlight.onLoad(function() {
     return plugin;
   };
 })(jQuery);
+
+export default class {
+  connect() {
+    // Instantiate the singleton SerializedForm plugin
+    var serializedForm = $.SerializedForm();
+    $(window).on('beforeunload page:before-change turbolinks:before-visit', function(event) {
+      // Don't handle the same event twice #turbolinks
+      if (event.handled !== true) {
+        if ( serializedForm.observedFormsStatusHasChanged() ) {
+          event.handled = true;
+          var message = "You have unsaved changes. Are you sure you want to leave this page?";
+          // There are variations in how Webkit browsers may handle this:
+          // https://developer.mozilla.org/en-US/docs/Web/Events/beforeunload
+          if ( event.type == "beforeunload" ) {
+            return message;
+          } else {
+            return confirm(message)
+          }
+        }
+      }
+    });
+  }
+}
