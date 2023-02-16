@@ -94,7 +94,7 @@ Downcoder.Initialize = function()
     Downcoder.regex = new RegExp('[' + Downcoder.chars + ']|[^' + Downcoder.chars + ']+','g') ;
   }
   
-  downcode= function( slug )
+const downcode = function( slug )
 {
   Downcoder.Initialize() ;
   var downcoded =""
