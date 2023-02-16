@@ -1,10 +1,6 @@
-Spotlight.onLoad(function() {
-  $('.btn-reset').ClearFormButton();
-});
-
-(function($) {
-  $.fn.ClearFormButton = function() {
-    var $clearBtn = $(this);
+export default class {
+  connect() {
+    var $clearBtn = $('.btn-reset');
     var $input = $clearBtn.parent().prev('input');
     var btnCheck = function(){
       if ($input.val() !== '') {
@@ -23,5 +19,5 @@ Spotlight.onLoad(function() {
       event.preventDefault();
       $input.val('');
     });
-  };
-})(jQuery);
+  }
+}

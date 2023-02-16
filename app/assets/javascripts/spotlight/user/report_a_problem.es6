@@ -1,9 +1,6 @@
-(function( $ ){
-
-  $.fn.reportProblem = function( options ) {
-    // Create some defaults, extending them with any options that were provided
-    var settings = $.extend( { }, options);
-    var container, target, cancel;
+export default class {
+  connect(){
+    var container, target;
 
     function init() {
       target_val = container.attr('data-target')
@@ -25,15 +22,9 @@
       target.slideUp('fast');
     }
 
-    return this.each(function() {        
+    return $('[data-behavior="contact-link"]').each(function() {        
       container = $(this);
       init();
     });
   }
-})( jQuery );
-
-Spotlight.onLoad(function() {
-  $('[data-behavior="contact-link"]').reportProblem();
-});
-
-
+}
