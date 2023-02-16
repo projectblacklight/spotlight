@@ -1,11 +1,6 @@
-(function( $ ){
-
-  $.fn.spotlight_users = function( options ) {
-
-    // Create some defaults, extending them with any options that were provided
-    var settings = $.extend( { }, options);
+export default class {
+  connect() {
     var container;
-
     function edit_user(event) {
       event.preventDefault();
       $(this).closest('tr').hide();
@@ -54,13 +49,13 @@
     }
 
     function open_errors() {
-      edit_row = container.find('.has-error').closest('[data-edit-for]');
+      const edit_row = container.find('.has-error').closest('[data-edit-for]');
       edit_row.show();
       // The following row has the controls, so show it too.
       edit_row.next().show();
     }
 
-    return this.each(function() {
+    $('.edit_exhibit, .admin-users').each(function() {
 
       container = $(this);
       $('[data-edit-for]', container).hide();
@@ -69,11 +64,6 @@
       $("[data-behavior='cancel-edit']", container).on('click', cancel_edit);
       $("[data-behavior='destroy-user']", container).on('click', destroy_user);
       $("[data-behavior='new-user']", container).on('click', new_user);
-    });
-  };
-})( jQuery );
-
-
-Spotlight.onLoad(function() {
-  $('.edit_exhibit, .admin-users').spotlight_users();
-});
+    })
+  }
+}

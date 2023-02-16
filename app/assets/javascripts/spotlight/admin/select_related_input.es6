@@ -1,6 +1,3 @@
-Spotlight.onLoad(function() {
-  $('[data-input-select-target]').selectRelatedInput();
-});
 /*
   Simple plugin to select form elements
   when other elements are clicked.
@@ -32,3 +29,9 @@ Spotlight.onLoad(function() {
     return this;
   };
 })(jQuery);
+
+export default class {
+  connect() {
+    $('[data-input-select-target]').selectRelatedInput();
+  }
+}

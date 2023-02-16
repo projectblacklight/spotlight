@@ -1,14 +1,9 @@
-Spotlight.onLoad(function() {
-  $('[data-in-place-edit-target]').spotlightEditInPlace();
-});
 /*
   Simple plugin add edit-in-place behavior
 */
-(function($) {
-  $.fn.spotlightEditInPlace = function() {
-    var clickElements = this;
-
-    $(clickElements).each(function() {
+export default class {
+  connect() {
+    $('[data-in-place-edit-target]').each(function() {
       $(this).on('click.inplaceedit', function() {
         var $label = $(this).find($(this).data('in-place-edit-target'));
         var $input = $(this).find($(this).data('in-place-edit-field-target'));
@@ -47,8 +42,6 @@ Spotlight.onLoad(function() {
 
         return false;
       });
-    });
-
-    return this;
-  };
-})(jQuery);
+    })
+  }
+}

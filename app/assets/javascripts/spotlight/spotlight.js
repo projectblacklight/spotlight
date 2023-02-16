@@ -1,4 +1,4 @@
-Spotlight = function() {
+const Spotlight = function() {
   var buffer = [];
   return {
     onLoad: function(func) {
@@ -26,3 +26,4 @@ Spotlight.onLoad(function(){
   SpotlightNestable.init();
 });
 
+window.Spotlight = Spotlight

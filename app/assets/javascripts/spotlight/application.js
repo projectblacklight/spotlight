@@ -10,5 +10,6 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require spotlight/spotlight
 //= require spotlight/user/index
 //= require spotlight/admin/index
