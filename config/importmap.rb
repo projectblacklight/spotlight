@@ -1,0 +1,1 @@
+pin_all_from File.expand_path("../app/assets/javascripts/spotlight", __dir__), under: 'spotlight'

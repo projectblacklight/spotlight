@@ -9,12 +9,10 @@ require 'devise_invitable'
 require 'activejob-status'
 require 'autoprefixer-rails'
 require 'blacklight'
-require 'clipboard/rails'
 require 'faraday'
 require 'faraday/follow_redirects'
 require 'friendly_id'
 require 'i18n/active_record'
-require 'leaflet-rails'
 require 'paper_trail'
 require 'riiif'
 require 'spotlight/riiif_service'
@@ -65,13 +63,22 @@ module Spotlight
       FactoryBot.definition_file_paths << File.expand_path('../../spec/factories', __dir__) if defined?(FactoryBot)
     end
 
+    PRECOMPILE_ASSETS = %w(spotlight/default_thumbnail.jpg spotlight/default_thumbnail.jpg
+      spotlight.js application.js).freeze
+
     initializer 'spotlight.assets.precompile' do |app|
-      app.config.assets.precompile += %w[spotlight/default_thumbnail.jpg spotlight/default_browse_thumbnail.jpg]
+      config.assets.paths << Rails.root.join('node_modules')
+
+      app.config.assets.precompile += Engine::PRECOMPILE_ASSETS
 
       Sprockets::ES6.configuration = { 'modules' => 'umd', 'moduleIds' => true }
       # When we upgrade to Sprockets 4, we can ditch sprockets-es6 and config AMD
       # in this way:
       # https://github.com/rails/sprockets/issues/73#issuecomment-139113466
+    end
+
+    initializer "spotlight.importmap", before: "importmap" do |app|
+      app.config.importmap.paths << Engine.root.join("config/importmap.rb") if app.config.respond_to?(:importmap)
     end
 
     def self.user_class
