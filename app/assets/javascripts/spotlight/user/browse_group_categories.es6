@@ -1,8 +1,5 @@
-(function( $ ){
-
-  $.fn.browseGroupCategories = function( options ) {
-    // Create some defaults, extending them with any options that were provided
-    var settings = $.extend( { }, options);
+export default class {
+  connect() {
     var $container, slider;
 
     function init() {
@@ -44,16 +41,10 @@
       return sidebar ? 3 : 4;
     }
 
-    return this.each(function() {
+    return $('[data-browse-group-categories-carousel]').each(function() {
       $container = $(this);
       init();
       setupDestroy();
     });
   }
-})( jQuery );
-
-Spotlight.onLoad(function() {
-  $('[data-browse-group-categories-carousel]').each(function(i, el) {
-    $(el).browseGroupCategories();
-  });
-});
+}
