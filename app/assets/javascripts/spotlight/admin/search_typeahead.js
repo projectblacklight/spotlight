@@ -58,49 +58,11 @@ function addAutocompletetoFeaturedImage(){
       $(this).select();
     }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
       var panel = $($(this).data('target-panel'));
-      addImageSelector($(this), panel, data.iiif_manifest, true);
+      spotlightAdminAdd_image_selector.addImageSelector($(this), panel, data.iiif_manifest, true);
       $($(this).data('id-field')).val(data['global_id']);
       $(this).attr('type', 'text');
     });
   }
-}
-
-function addImageSelector(input, panel, manifestUrl, initialize) {
-  if (!manifestUrl) {
-    showNonIiifAlert(input);
-    return;
-  }
-  var cropper = input.data('iiifCropper');
-  $.ajax(manifestUrl).done(
-    function(manifest) {
-      var Iiif = spotlightAdminIiif;
-      var iiifManifest = new Iiif(manifestUrl, manifest);
-
-      var thumbs = iiifManifest.imagesArray();
-
-      hideNonIiifAlert(input);
-
-      if (initialize) {
-        cropper.setIiifFields(thumbs[0]);
-        panel.multiImageSelector(); // Clears out existing selector
-      }
-
-      if(thumbs.length > 1) {
-        panel.show();
-        panel.multiImageSelector(thumbs, function(selectorImage) {
-          cropper.setIiifFields(selectorImage);
-        }, cropper.iiifImageField.val());
-      }
-    }
-  );
-}
-
-function showNonIiifAlert(input){
-  input.parent().prev('[data-behavior="non-iiif-alert"]').show();
-}
-
-function hideNonIiifAlert(input){
-  input.parent().prev('[data-behavior="non-iiif-alert"]').hide();
 }
 
 Spotlight.onLoad(function(){
