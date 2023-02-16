@@ -12,3 +12,7 @@
 
 //= require polyfill.min.js
 //= require_tree .
+
+Spotlight.onLoad(() => {
+  new spotlightAdminSearch_typeahead().connect()
+})
