@@ -1,4 +1,3 @@
-//= require eventable
 //= require sir-trevor
 //= require nestable
 //= require parameterize
