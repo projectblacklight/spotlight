@@ -21,14 +21,12 @@ SirTrevor.Blocks.SearchResults =  (function(){
       var fields = $('[data-blacklight-configuration-search-views]').data('blacklight-configuration-search-views');
 
       return $.map(fields, function(field) {
-        checkbox = ""
-        checkbox += "<div>";
-        checkbox += "<label for='" + block.formId(block.view_key + field.key) + "'>";
-          checkbox += "<input id='" + block.formId(block.view_key + field.key) + "' name='" + block.view_key + "[]' type='checkbox' value='" + field.key + "' /> ";
-            checkbox += field.label;
-            checkbox += "</label>";
-          checkbox += "</div>";
-        return checkbox;
+        return `<div>
+          <label for='${block.formId(block.view_key + field.key)}'>
+            <input id='${block.formId(block.view_key + field.key)}' name='${block.view_key}[]' type='checkbox' value='${field.key}' />
+          ${field.label}
+          </label>
+        </div>`
       }).join("\n");
     },
 
