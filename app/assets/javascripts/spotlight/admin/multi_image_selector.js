@@ -36,7 +36,8 @@
     }
 
     function indexOf(thumb){
-      if( (index = imageIds.indexOf(thumb)) > -1 ){
+      const index = imageIds.indexOf(thumb)
+      if (index > -1) {
         return index + 1;
       } else {
         return 1;
