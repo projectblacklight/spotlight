@@ -16,7 +16,9 @@
               <span class='badge badge-warning pending-label'><%= t('.pending') %></span>
             </td>
             <td>
-              <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-sm btn-danger float-right') unless user == current_user %>
+              <%= link_to(t('.destroy'), admin_user_path(user),
+                    data: { method: :delete, turbo_method: :delete },
+                    class: 'btn btn-sm btn-danger float-right') unless user == current_user %>
             </td>
           </tr>
         <% end %>
@@ -81,9 +83,13 @@
             </td>
             <td class="text-right">
               <% if user.superadmin? %>
-                <%= link_to(t('.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-sm btn-danger') unless user == current_user %>
+                <%= link_to(t('.destroy'), admin_user_path(user),
+                      data: { method: :delete, turbo_method: :delete },
+                      class: 'btn btn-sm btn-danger') unless user == current_user %>
               <% else %>
-                <%= link_to(t('.update'), admin_user_path(user), method: :patch, class: 'btn btn-sm btn-secondary') %>
+                <%= link_to(t('.update'), admin_user_path(user), 
+                      data: { method: :patch, turbo_method: :patch },
+                      class: 'btn btn-sm btn-secondary') %>
               <% end %>
             </td>
           </tr>

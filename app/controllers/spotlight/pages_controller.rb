@@ -128,7 +128,8 @@ module Spotlight
       return unless can? :manage, @page
       return if @page.versions.blank?
 
-      view_context.link_to(t(:'spotlight.versions.undo'), revert_version_path(@page.versions.last), method: :post)
+      view_context.link_to(t(:'spotlight.versions.undo'), revert_version_path(@page.versions.last),
+                           data: { method: :post, turbo_method: :post })
     end
 
     def undo_notice(key)

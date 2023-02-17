@@ -4,6 +4,8 @@
               <% elsif contact_email.recently_sent? %>
                 <span class="confirmed"><%= blacklight_icon('check_circle') %> <%= t('.confirmation_sent') %></span>
               <% else %>
-                <span class="unconfirmed"><%= blacklight_icon('error') %> <%= t('.not_validated') %></span> <%= link_to t('.resend'), contact_email_confirmation_path(contact_email: {email: contact_email.email}),  method: :post %>
+                <span class="unconfirmed"><%= blacklight_icon('error') %> <%= t('.not_validated') %></span>
+                <%= link_to t('.resend'), contact_email_confirmation_path(contact_email: {email: contact_email.email}), 
+                            data: { method: :post, turbo_method: :post } %>
               <% end %>
             </div>

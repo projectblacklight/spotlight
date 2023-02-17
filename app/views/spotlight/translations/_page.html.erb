@@ -40,7 +40,12 @@
       <%= link_to(t('.recreate'), polymorphic_path([:clone, current_exhibit, page], language: @language), data: { confirm: t('.recreate_are_you_sure') }) %>
       <% if page.feature_page? || page.about_page? %>
         &middot;
-        <%= link_to(t('.destroy'), polymorphic_path([current_exhibit, translated_page], locale: @language), method: :delete, data: { confirm: t('.destroy_are_you_sure') }) %>
+        <%= link_to(t('.destroy'), polymorphic_path([current_exhibit, translated_page], locale: @language), 
+                    data: {
+                      method: :delete, 
+                      turbo_method: :delete,
+                      confirm: t('.destroy_are_you_sure'),
+                      turbo_confirm: t('.destroy_are_you_sure') }) %>
       <% end %>
     <% end %>
   </td>
