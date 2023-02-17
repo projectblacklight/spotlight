@@ -32,7 +32,8 @@ module Spotlight
                     view_context.t(:'spotlight.versions.redo')
                   end
 
-      view_context.link_to(link_name, revert_version_path(@version.next, redo: !params[:redo]), method: :post)
+      view_context.link_to(link_name, revert_version_path(@version.next, redo: !params[:redo]),
+                           data: { method: :post, turbo_method: :post })
     end
   end
 end

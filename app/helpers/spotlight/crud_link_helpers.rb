@@ -47,14 +47,24 @@ module Spotlight
     def delete_link(model, *args)
       link_to_options = args.extract_options!
       link = args.first || [spotlight, model]
-      default_options = { method: :delete, data: { confirm: action_default_value(model, :destroy_are_you_sure) } }
+      default_options = { data: {
+        method: :delete,
+        turbo_method: :delete,
+        confirm: action_default_value(model, :destroy_are_you_sure),
+        turbo_confirm: action_default_value(model, :destroy_are_you_sure)
+      } }
       link_to action_default_value(model, :destroy), link, default_options.merge(link_to_options)
     end
 
     def exhibit_delete_link(model, *args)
       link_to_options = args.extract_options!
       link = args.first || [spotlight, model.exhibit, model]
-      default_options = { method: :delete, data: { confirm: action_default_value(model, :destroy_are_you_sure) } }
+      default_options = { data: {
+        method: :delete,
+        turbo_method: :delete,
+        confirm: action_default_value(model, :destroy_are_you_sure),
+        turbo_confirm: action_default_value(model, :destroy_are_you_sure)
+      } }
       link_to action_default_value(model, :destroy), link, default_options.merge(link_to_options)
     end
 
