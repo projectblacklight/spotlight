@@ -35,6 +35,11 @@ module Spotlight
       append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
     end
 
+    def add_js_deps
+      say 'Install Clipboard & Leaflet'
+      run 'yarn add clipboard@1.7.1 leaflet@^1.9.3'
+    end
+
     def add_manifest
       append_to_file 'app/assets/config/manifest.js', "\n//= link spotlight/manifest.js"
     end
