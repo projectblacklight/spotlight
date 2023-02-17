@@ -23,7 +23,7 @@
         var weight = 0;
         for(var i in data){
           var parent_id = data[i]['id'];
-          parent_node = findNode(parent_id, container);
+          const parent_node = findNode(parent_id, container);
           setWeight(parent_node, weight++);
           if(data[i]['children']){
             var children = data[i]['children'];
