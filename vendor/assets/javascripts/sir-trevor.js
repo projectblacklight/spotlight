@@ -102,8 +102,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 exports.isEmpty = __webpack_require__(119);
-exports.isFunction = __webpack_require__(27);
-exports.isObject = __webpack_require__(17);
+exports.isFunction = __webpack_require__(28);
+exports.isObject = __webpack_require__(18);
 exports.isString = __webpack_require__(129);
 exports.isUndefined = __webpack_require__(130);
 exports.result = __webpack_require__(131);
@@ -112,6 +112,88 @@ exports.uniqueId = __webpack_require__(139);
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _ = __webpack_require__(0);
+
+var config = __webpack_require__(2);
+
+var Dom = __webpack_require__(3);
+
+var urlRegex = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
+var utils = {
+  getInstance: function getInstance(identifier) {
+    if (_.isUndefined(identifier)) {
+      return config.instances[0];
+    }
+
+    if (_.isString(identifier)) {
+      return config.instances.find(function (editor) {
+        return editor.ID === identifier;
+      });
+    }
+
+    return config.instances[identifier];
+  },
+  getInstanceBySelection: function getInstanceBySelection() {
+    return utils.getInstance(Dom.getClosest(window.getSelection().anchorNode.parentNode, '.st-block').getAttribute('data-instance'));
+  },
+  getBlockBySelection: function getBlockBySelection() {
+    var instance = utils.getInstanceBySelection();
+    if (!instance) return;
+    return instance.findBlockById(Dom.getClosest(window.getSelection().anchorNode.parentNode, '.st-block').id);
+  },
+  log: function log() {
+    if (!_.isUndefined(console) && config.debug) {
+      console.log.apply(console, arguments);
+    }
+  },
+  isURI: function isURI(string) {
+    return urlRegex.test(string);
+  },
+  titleize: function titleize(str) {
+    if (str === null) {
+      return '';
+    }
+
+    str = String(str).toLowerCase();
+    return str.replace(/(?:^|\s|-)\S/g, function (c) {
+      return c.toUpperCase();
+    });
+  },
+  classify: function classify(str) {
+    return utils.titleize(String(str).replace(/[\W_]/g, ' ')).replace(/\s/g, '');
+  },
+  capitalize: function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
+  },
+  flatten: function flatten(obj) {
+    var x = {};
+    (Array.isArray(obj) ? obj : Object.keys(obj)).forEach(function (i) {
+      x[i] = true;
+    });
+    return x;
+  },
+  underscored: function underscored(str) {
+    return str.trim().replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
+  },
+  reverse: function reverse(str) {
+    return str.split("").reverse().join("");
+  },
+  toSlug: function toSlug(str) {
+    return str.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-');
+  },
+  leftTrim: function leftTrim(str) {
+    return str.replace(/^\s+/, '');
+  }
+};
+module.exports = utils;
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -186,6 +268,7 @@ module.exports = {
         title: "link",
         iconName: "fmt-link",
         cmd: "linkPrompt",
+        keyCode: 75,
         text: "link"
       }, {
         name: "Unlink",
@@ -210,89 +293,14 @@ module.exports = {
     ajaxOptions: {
       headers: {}
     },
-    focusOnInit: true
+    focusOnInit: true,
+    selectionMouse: true,
+    selectionCopy: true,
+    selectionCut: true,
+    selectionPaste: true,
+    selectionLimitToEditor: true
   }
 };
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _ = __webpack_require__(0);
-
-var config = __webpack_require__(1);
-
-var Dom = __webpack_require__(3);
-
-var urlRegex = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
-var utils = {
-  getInstance: function getInstance(identifier) {
-    if (_.isUndefined(identifier)) {
-      return config.instances[0];
-    }
-
-    if (_.isString(identifier)) {
-      return config.instances.find(function (editor) {
-        return editor.ID === identifier;
-      });
-    }
-
-    return config.instances[identifier];
-  },
-  getInstanceBySelection: function getInstanceBySelection() {
-    return utils.getInstance(Dom.getClosest(window.getSelection().anchorNode.parentNode, '.st-block').getAttribute('data-instance'));
-  },
-  getBlockBySelection: function getBlockBySelection() {
-    return utils.getInstanceBySelection().findBlockById(Dom.getClosest(window.getSelection().anchorNode.parentNode, '.st-block').id);
-  },
-  log: function log() {
-    if (!_.isUndefined(console) && config.debug) {
-      console.log.apply(console, arguments);
-    }
-  },
-  isURI: function isURI(string) {
-    return urlRegex.test(string);
-  },
-  titleize: function titleize(str) {
-    if (str === null) {
-      return '';
-    }
-
-    str = String(str).toLowerCase();
-    return str.replace(/(?:^|\s|-)\S/g, function (c) {
-      return c.toUpperCase();
-    });
-  },
-  classify: function classify(str) {
-    return utils.titleize(String(str).replace(/[\W_]/g, ' ')).replace(/\s/g, '');
-  },
-  capitalize: function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
-  },
-  flatten: function flatten(obj) {
-    var x = {};
-    (Array.isArray(obj) ? obj : Object.keys(obj)).forEach(function (i) {
-      x[i] = true;
-    });
-    return x;
-  },
-  underscored: function underscored(str) {
-    return str.trim().replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
-  },
-  reverse: function reverse(str) {
-    return str.split("").reverse().join("");
-  },
-  toSlug: function toSlug(str) {
-    return str.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-');
-  },
-  leftTrim: function leftTrim(str) {
-    return str.replace(/^\s+/, '');
-  }
-};
-module.exports = utils;
 
 /***/ }),
 /* 3 */
@@ -5403,6 +5411,23 @@ module.exports = Object.assign({}, __webpack_require__(9));
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+/* Generic function binding utility, used by lots of our classes */
+
+module.exports = {
+  bound: [],
+  _bindFunctions: function _bindFunctions() {
+    this.bound.forEach(function (f) {
+      this[f] = this[f].bind(this);
+    }, this);
+  }
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() {
 
   /**
@@ -5433,23 +5458,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/* Generic function binding utility, used by lots of our classes */
-
-module.exports = {
-  bound: [],
-  _bindFunctions: function _bindFunctions() {
-    this.bound.forEach(function (f) {
-      this[f] = this[f].bind(this);
-    }, this);
-  }
-};
-
-/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5460,9 +5468,9 @@ var _ = __webpack_require__(0);
 
 var ScribeInterface = __webpack_require__(68);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var Dom = __webpack_require__(3);
 
@@ -5472,7 +5480,7 @@ var BlockMixins = __webpack_require__(65);
 
 var SimpleBlock = __webpack_require__(87);
 
-var BlockReorder = __webpack_require__(37);
+var BlockReorder = __webpack_require__(39);
 
 var BlockDeletion = __webpack_require__(83);
 
@@ -5482,6 +5490,11 @@ var EventBus = __webpack_require__(4);
 
 var _require = __webpack_require__(226),
     Spinner = _require.Spinner;
+
+var _require2 = __webpack_require__(16),
+    trimScribeContent = _require2.trimScribeContent;
+
+;
 
 var DELETE_TEMPLATE = __webpack_require__(227);
 
@@ -5663,6 +5676,9 @@ Object.assign(Block.prototype, SimpleBlock.fn, __webpack_require__(84), {
     Array.prototype.forEach.call(this.getTextBlock(), function (el) {
       el.focus();
     });
+  },
+  focusAtStart: function focusAtStart() {
+    this.focus();
   },
   focusAtEnd: function focusAtEnd() {
     this.focus();
@@ -5857,31 +5873,19 @@ Object.assign(Block.prototype, SimpleBlock.fn, __webpack_require__(84), {
     return this._scribe.getContent();
   },
   setTextBlockHTML: function setTextBlockHTML(html) {
-    var returnVal = this._scribe.setContent(html); // Remove any whitespace in the first node, otherwise selections won't work.
+    var returnVal = this._scribe.setContent(html);
 
-
-    var firstNode = this._scribe.node.firstDeepestChild(this._scribe.el);
-
-    if (firstNode.nodeName === '#text') {
-      firstNode.textContent = utils.leftTrim(firstNode.textContent);
-    } // Remove all empty nodes at the front to get blocks working.
-    // Don't remove nodes that can't contain text content (e.g. <input>)
-
-
-    while (this._scribe.el.firstChild && this._scribe.el.firstChild.textContent === '' && document.createElement(this._scribe.el.firstChild.tagName).outerHTML.indexOf("/") != -1) {
-      this._scribe.el.removeChild(this._scribe.el.firstChild);
-    } // Firefox adds empty br tags at the end of content.
-
-
-    while (this._scribe.el.lastChild && this._scribe.el.lastChild.nodeName === 'BR') {
-      this._scribe.el.removeChild(this._scribe.el.lastChild);
-    }
-
+    trimScribeContent(this._scribe);
     return returnVal;
   },
   isEmpty: function isEmpty() {
     return _.isEmpty(this.getBlockData());
-  }
+  },
+  select: function select(selected) {
+    this.el.classList.toggle("st-block--is-selected", selected);
+  },
+  split: function split() {},
+  asClipboardHTML: function asClipboardHTML() {}
 });
 Block.extend = __webpack_require__(89); // Allow our Block to be extended.
 
@@ -6024,8 +6028,8 @@ module.exports = {
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-var isNative = __webpack_require__(24),
-    isObject = __webpack_require__(17),
+var isNative = __webpack_require__(25),
+    isObject = __webpack_require__(18),
     shimKeys = __webpack_require__(128);
 
 /* Native method shortcuts for methods with the same name as other `lodash` methods */
@@ -6217,6 +6221,138 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 /***/ }),
 /* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createBlocksFromParagraphs", function() { return createBlocksFromParagraphs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTotalLength", function() { return getTotalLength; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isAtStart", function() { return isAtStart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isAtEnd", function() { return isAtEnd; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectToEnd", function() { return selectToEnd; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isSelectedFromStart", function() { return isSelectedFromStart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isSelectedToEnd", function() { return isSelectedToEnd; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rangeToHTML", function() { return rangeToHTML; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "trimScribeContent", function() { return trimScribeContent; });
+
+
+var selectionRange = __webpack_require__(13);
+
+var utils = __webpack_require__(1);
+
+var selectToEnd = function selectToEnd(scribe) {
+  var selection = new scribe.api.Selection();
+  var range = selection.range.cloneRange();
+  range.setEndAfter(scribe.el.lastChild, 0);
+  return range;
+};
+
+var isAtStart = function isAtStart(scribe) {
+  var currentRange = selectionRange(scribe.el);
+  return currentRange.start === 0 && currentRange.end === 0 && currentRange.atStart;
+};
+
+var getTotalLength = function getTotalLength(scribe) {
+  var selection = new scribe.api.Selection();
+  var range = selection.range.cloneRange();
+  range.selectNodeContents(scribe.el);
+  return range.toString().length;
+};
+
+var isAtEnd = function isAtEnd(scribe) {
+  var currentRange = selectionRange(scribe.el);
+  return getTotalLength(scribe) === currentRange.end && currentRange.start === currentRange.end;
+};
+
+var isSelectedToEnd = function isSelectedToEnd(scribe) {
+  var currentRange = selectionRange(scribe.el);
+  return getTotalLength(scribe) === currentRange.end;
+};
+
+var isSelectedFromStart = function isSelectedFromStart(scribe) {
+  var currentRange = selectionRange(scribe.el);
+  return currentRange.atStart && currentRange.start === 0;
+}; // Remove any empty elements at the start of the range.
+
+
+var stripFirstEmptyElement = function stripFirstEmptyElement(div) {
+  if (div.firstChild === null) {
+    return;
+  }
+
+  var firstChild = div.firstChild.childNodes[0];
+
+  if (firstChild && firstChild.nodeName !== '#text') {
+    if (firstChild.innerText === '') {
+      div.firstChild.removeChild(firstChild);
+    }
+  }
+};
+
+var createBlocksFromParagraphs = function createBlocksFromParagraphs(block, scribe) {
+  var fakeContent = document.createElement('div');
+  fakeContent.appendChild(selectToEnd(scribe).extractContents());
+  stripFirstEmptyElement(fakeContent); // Add wrapper div which is missing in non blockElement scribe.
+
+  if (!scribe.allowsBlockElements()) {
+    var tempContent = document.createElement('div');
+    tempContent.appendChild(fakeContent);
+    fakeContent = tempContent;
+  }
+
+  if (fakeContent.childNodes.length >= 1) {
+    var data;
+    var nodes = [].slice.call(fakeContent.childNodes);
+    nodes.reverse().forEach(function (node) {
+      if (node.innerText !== '') {
+        data = {
+          format: 'html',
+          text: node.innerHTML.trim()
+        };
+        block.mediator.trigger("block:create", block.type, data, block.el, {
+          autoFocus: true
+        });
+      }
+    });
+  }
+};
+
+var rangeToHTML = function rangeToHTML(range) {
+  var div = document.createElement('div');
+  div.appendChild(range.extractContents());
+  return div.innerHTML;
+};
+
+var trimScribeContent = function trimScribeContent(scribe) {
+  // Remove any whitespace in the first node, otherwise selections won't work.
+  var firstNode = scribe.node.firstDeepestChild(scribe.el);
+
+  if (firstNode.nodeName === '#text') {
+    firstNode.textContent = utils.leftTrim(firstNode.textContent);
+  } // Remove all empty nodes at the front to get blocks working.
+  // Don't remove nodes that can't contain text content (e.g. <input>)
+
+
+  while (scribe.el.firstChild && scribe.el.firstChild.textContent === '' && document.createElement(scribe.el.firstChild.tagName).outerHTML.indexOf("/") != -1) {
+    scribe.el.removeChild(scribe.el.firstChild);
+  } // Remove all empty nodes at the end to get blocks working.
+  // Don't remove nodes that can't contain text content (e.g. <input>)
+
+
+  while (scribe.el.lastChild && scribe.el.lastChild.textContent === '' && document.createElement(scribe.el.lastChild.tagName).outerHTML.indexOf("/") != -1) {
+    scribe.el.removeChild(scribe.el.lastChild);
+  } // Firefox adds empty br tags at the end of content.
+
+
+  while (scribe.el.lastChild && scribe.el.lastChild.nodeName === 'BR') {
+    scribe.el.removeChild(scribe.el.lastChild);
+  }
+};
+
+
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports) {
 
 var g;
@@ -6242,7 +6378,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -6253,7 +6389,7 @@ module.exports = g;
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-var objectTypes = __webpack_require__(25);
+var objectTypes = __webpack_require__(26);
 
 /**
  * Checks if `value` is the language type of Object.
@@ -6287,7 +6423,7 @@ module.exports = isObject;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(202), __webpack_require__(15)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(escapeRegExp, isObjectLike) {
@@ -6349,10 +6485,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(6), __webpack_require__(18), __webpack_require__(15)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isLength, isNative, isObjectLike) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(7), __webpack_require__(19), __webpack_require__(15)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isLength, isNative, isObjectLike) {
 
   /** `Object#toString` result references. */
   var arrayTag = '[object Array]';
@@ -6396,7 +6532,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6413,7 +6549,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6421,12 +6557,12 @@ module.exports = {
 
 var _ = __webpack_require__(0);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 module.exports = function (markdown, type) {
   // Deferring requiring these to sidestep a circular dependency:
   // Block -> this -> Blocks -> Block
-  var Blocks = __webpack_require__(20); // MD -> HTML
+  var Blocks = __webpack_require__(21); // MD -> HTML
 
 
   type = utils.classify(type);
@@ -6483,7 +6619,7 @@ module.exports = function (markdown, type) {
 };
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6546,7 +6682,7 @@ module.exports = defineProperties;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6558,7 +6694,7 @@ module.exports = Function.prototype.bind || implementation;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 /**
@@ -6598,7 +6734,7 @@ module.exports = isNative;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 /**
@@ -6624,7 +6760,7 @@ module.exports = objectTypes;
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 /**
@@ -6668,7 +6804,7 @@ module.exports = slice;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 /**
@@ -6701,7 +6837,7 @@ module.exports = isFunction;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
@@ -6916,19 +7052,38 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var bind = __webpack_require__(23);
+module.exports = {
+  mediatedEvents: {},
+  eventNamespace: null,
+  _bindMediatedEvents: function _bindMediatedEvents() {
+    Object.keys(this.mediatedEvents).forEach(function (eventName) {
+      var cb = this.mediatedEvents[eventName];
+      eventName = this.eventNamespace ? this.eventNamespace + ':' + eventName : eventName;
+      this.mediator.on(eventName, this[cb].bind(this));
+    }, this);
+  }
+};
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bind = __webpack_require__(24);
 
 module.exports = bind.call(Function.call, Object.prototype.hasOwnProperty);
 
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6972,7 +7127,7 @@ module.exports = function isCallable(value) {
 
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -6983,7 +7138,7 @@ module.exports = function isCallable(value) {
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-var isNative = __webpack_require__(24),
+var isNative = __webpack_require__(25),
     noop = __webpack_require__(57);
 
 /** Used as the property descriptor for `__bindData__` */
@@ -7021,13 +7176,13 @@ module.exports = setBindData;
 
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 module.exports = {
   mixinName: "Ajaxable",
@@ -7061,7 +7216,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7101,10 +7256,10 @@ module.exports = {
 };
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(6), __webpack_require__(15)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isLength, isObjectLike) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(7), __webpack_require__(15)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isLength, isObjectLike) {
 
   /** Used as a safe reference for `undefined` in pre-ES5 environments. */
   var undefined;
@@ -7149,7 +7304,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() {
@@ -7181,10 +7336,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(34), __webpack_require__(19), __webpack_require__(35), __webpack_require__(6), __webpack_require__(14), __webpack_require__(75)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isArguments, isArray, isIndex, isLength, isObject, support) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(36), __webpack_require__(20), __webpack_require__(37), __webpack_require__(7), __webpack_require__(14), __webpack_require__(75)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isArguments, isArray, isIndex, isLength, isObject, support) {
 
   /** Used for native method references. */
   var objectProto = Object.prototype;
@@ -7249,19 +7404,19 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var dropEvents = __webpack_require__(33);
+var dropEvents = __webpack_require__(35);
 
 var EventBus = __webpack_require__(4);
 
 var Dom = __webpack_require__(3);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
 var BlockReorder = function BlockReorder(block_element, mediator) {
   this.block = block_element;
@@ -7275,7 +7430,7 @@ var BlockReorder = function BlockReorder(block_element, mediator) {
   this.initialize();
 };
 
-Object.assign(BlockReorder.prototype, __webpack_require__(7), __webpack_require__(11), {
+Object.assign(BlockReorder.prototype, __webpack_require__(6), __webpack_require__(11), {
   bound: ['onMouseDown', 'onDragStart', 'onDragEnd', 'onDrop'],
   className: 'st-block-ui-btn__reorder',
   tagName: 'a',
@@ -7337,47 +7492,7 @@ Object.assign(BlockReorder.prototype, __webpack_require__(7), __webpack_require_
 module.exports = BlockReorder;
 
 /***/ }),
-/* 38 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTotalLength", function() { return getTotalLength; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isAtStart", function() { return isAtStart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isAtEnd", function() { return isAtEnd; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectToEnd", function() { return selectToEnd; });
-
-
-var selectionRange = __webpack_require__(13);
-
-var selectToEnd = function selectToEnd(scribe) {
-  var selection = new scribe.api.Selection();
-  var range = selection.range.cloneRange();
-  range.setEndAfter(scribe.el.lastChild, 0);
-  return range;
-};
-
-var isAtStart = function isAtStart(scribe) {
-  var currentRange = selectionRange(scribe.el);
-  return currentRange.start === 0 && currentRange.end === 0 && currentRange.atStart;
-};
-
-var getTotalLength = function getTotalLength(scribe) {
-  var selection = new scribe.api.Selection();
-  var range = selection.range.cloneRange();
-  range.selectNodeContents(scribe.el);
-  return range.toString().length;
-};
-
-var isAtEnd = function isAtEnd(scribe) {
-  var currentRange = selectionRange(scribe.el);
-  return getTotalLength(scribe) === currentRange.end && currentRange.start === currentRange.end;
-};
-
-
-
-/***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7414,7 +7529,7 @@ var scribeHeadingPlugin = function scribeHeadingPlugin(block) {
 module.exports = scribeHeadingPlugin;
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7449,25 +7564,6 @@ var scribeQuotePlugin = function scribeQuotePlugin(block) {
 };
 
 module.exports = scribeQuotePlugin;
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = {
-  mediatedEvents: {},
-  eventNamespace: null,
-  _bindMediatedEvents: function _bindMediatedEvents() {
-    Object.keys(this.mediatedEvents).forEach(function (eventName) {
-      var cb = this.mediatedEvents[eventName];
-      eventName = this.eventNamespace ? this.eventNamespace + ':' + eventName : eventName;
-      this.mediator.on(eventName, this[cb].bind(this));
-    }, this);
-  }
-};
 
 /***/ }),
 /* 42 */
@@ -7626,7 +7722,7 @@ module.exports = keysShim;
 
 // modified from https://github.com/es-shims/es6-shim
 var keys = __webpack_require__(42);
-var bind = __webpack_require__(23);
+var bind = __webpack_require__(24);
 var canBeObject = function (obj) {
 	return typeof obj !== 'undefined' && obj !== null;
 };
@@ -8263,8 +8359,8 @@ process.umask = function() { return 0; };
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-var isNative = __webpack_require__(24),
-    isObject = __webpack_require__(17),
+var isNative = __webpack_require__(25),
+    isObject = __webpack_require__(18),
     noop = __webpack_require__(57);
 
 /* Native method shortcuts for methods with the same name as other `lodash` methods */
@@ -8298,7 +8394,7 @@ if (!nativeCreate) {
 
 module.exports = baseCreate;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(16)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(17)))
 
 /***/ }),
 /* 57 */
@@ -8434,7 +8530,7 @@ module.exports = reInterpolate;
 
 var _ = __webpack_require__(0);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var EditorStore = function EditorStore(data, mediator) {
   this.mediator = mediator;
@@ -8506,7 +8602,7 @@ module.exports = EditorStore;
  * This will be triggered *by anything* so it needs to subscribe to events.
  */
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var EventBus = __webpack_require__(4);
 
@@ -8603,9 +8699,9 @@ module.exports = Submittable;
 
 var _ = __webpack_require__(0);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var Ajax = __webpack_require__(64);
 
@@ -8669,7 +8765,7 @@ var fetchJsonP = __webpack_require__(143);
 
 var cancellablePromise = __webpack_require__(144);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
 var Ajax = Object.create(null);
 
@@ -8703,7 +8799,7 @@ module.exports = Ajax;
 
 
 module.exports = {
-  Ajaxable: __webpack_require__(32),
+  Ajaxable: __webpack_require__(34),
   Controllable: __webpack_require__(145),
   Droppable: __webpack_require__(146),
   Fetchable: __webpack_require__(147),
@@ -8843,7 +8939,7 @@ var _ = __webpack_require__(0);
 
 var Scribe = __webpack_require__(152);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
 var scribePluginFormatterPlainTextConvertNewLinesToHTML = __webpack_require__(191);
 
@@ -9051,7 +9147,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(6), __webpack_require__(18), __webpack_require__(14), __webpack_require__(204)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isLength, isNative, isObject, shimKeys) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(7), __webpack_require__(19), __webpack_require__(14), __webpack_require__(204)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isLength, isNative, isObject, shimKeys) {
 
   /* Native method references for those with the same name as other `lodash` methods. */
   var nativeKeys = isNative(nativeKeys = Object.keys) && nativeKeys;
@@ -9104,7 +9200,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(18), __webpack_require__(76)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isNative, root) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(19), __webpack_require__(76)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isNative, root) {
 
   /** Used to detect functions containing a `this` reference. */
   var reThis = /\bthis\b/;
@@ -9219,7 +9315,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(205)(module), __webpack_require__(16)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(205)(module), __webpack_require__(17)))
 
 /***/ }),
 /* 77 */
@@ -9255,7 +9351,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(6), __webpack_require__(15)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isLength, isObjectLike) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(7), __webpack_require__(15)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isLength, isObjectLike) {
 
   /** `Object#toString` result references. */
   var argsTag = '[object Arguments]',
@@ -9433,7 +9529,7 @@ var BlockPositioner = function BlockPositioner(block, mediator) {
   this.initialize();
 };
 
-Object.assign(BlockPositioner.prototype, __webpack_require__(7), __webpack_require__(11), {
+Object.assign(BlockPositioner.prototype, __webpack_require__(6), __webpack_require__(11), {
   bound: ['toggle', 'show', 'hide'],
   className: 'st-block-positioner',
   visibleClass: 'active',
@@ -9472,7 +9568,7 @@ var BlockPositionerSelect = function BlockPositionerSelect(mediator) {
   this.initialize();
 };
 
-Object.assign(BlockPositionerSelect.prototype, __webpack_require__(7), __webpack_require__(11), {
+Object.assign(BlockPositionerSelect.prototype, __webpack_require__(6), __webpack_require__(11), {
   total_blocks: 0,
   bound: ['onBlockCountChange', 'onSelectChange'],
   className: 'st-block-positioner__inner',
@@ -9527,7 +9623,7 @@ module.exports = BlockPositionerSelect;
 "use strict";
 
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
 var BlockDeletion = function BlockDeletion() {
   this._ensureElement();
@@ -9535,7 +9631,7 @@ var BlockDeletion = function BlockDeletion() {
   this._bindFunctions();
 };
 
-Object.assign(BlockDeletion.prototype, __webpack_require__(7), __webpack_require__(11), {
+Object.assign(BlockDeletion.prototype, __webpack_require__(6), __webpack_require__(11), {
   tagName: 'a',
   className: 'st-block-ui-btn__delete',
   attributes: {
@@ -9556,7 +9652,7 @@ module.exports = BlockDeletion;
 
 var _ = __webpack_require__(0);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var bestNameFromField = function bestNameFromField(field) {
   var msg = field.getAttribute("data-st-name") || field.getAttribute("name");
@@ -9629,7 +9725,7 @@ module.exports = {
 
 var _ = __webpack_require__(0);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var EventBus = __webpack_require__(4);
 
@@ -9712,13 +9808,13 @@ var selectionRange = __webpack_require__(13);
 
 var _ = __webpack_require__(0);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
 var EventBus = __webpack_require__(4);
 
-var Blocks = __webpack_require__(20);
+var Blocks = __webpack_require__(21);
 
 var Dom = __webpack_require__(3);
 
@@ -9731,7 +9827,8 @@ var BlockManager = function BlockManager(SirTrevor) {
     return acc;
   }, {});
   this.instance_scope = SirTrevor.ID;
-  this.mediator = SirTrevor.mediator; // REFACTOR: this is a hack until I can focus on reworking the blockmanager
+  this.mediator = SirTrevor.mediator;
+  this.editor = SirTrevor; // REFACTOR: this is a hack until I can focus on reworking the blockmanager
 
   this.wrapper = SirTrevor.wrapper;
   this.blocks = [];
@@ -9747,7 +9844,7 @@ var BlockManager = function BlockManager(SirTrevor) {
   this.initialize();
 };
 
-Object.assign(BlockManager.prototype, __webpack_require__(7), __webpack_require__(41), __webpack_require__(9), {
+Object.assign(BlockManager.prototype, __webpack_require__(6), __webpack_require__(30), __webpack_require__(9), {
   eventNamespace: 'block',
   mediatedEvents: {
     'create': 'createBlock',
@@ -9756,10 +9853,16 @@ Object.assign(BlockManager.prototype, __webpack_require__(7), __webpack_require_
     'rerender': 'rerenderBlock',
     'replace': 'replaceBlock',
     'focusPrevious': 'focusPreviousBlock',
-    'focusNext': 'focusNextBlock'
+    'focusNext': 'focusNextBlock',
+    'paste': 'paste'
   },
   initialize: function initialize() {},
-  createBlock: function createBlock(type, data, previousSibling, options) {
+  createBlock: function createBlock(type, data, previousSibling) {
+    var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+    options = Object.assign({
+      autoFocus: false,
+      focusAtEnd: false
+    }, options);
     type = utils.classify(type); // Run validations
 
     if (!this.canCreateBlock(type)) {
@@ -9773,8 +9876,10 @@ Object.assign(BlockManager.prototype, __webpack_require__(7), __webpack_require_
 
     this.renderBlock(block, previousSibling);
 
-    if (options && options.autoFocus) {
+    if (options.autoFocus) {
       block.focus();
+    } else if (options.focusAtEnd) {
+      block.focusAtEnd();
     }
 
     this.triggerBlockCountUpdate();
@@ -9783,7 +9888,12 @@ Object.assign(BlockManager.prototype, __webpack_require__(7), __webpack_require_
     EventBus.trigger(data ? "block:create:existing" : "block:create:new", block);
     utils.log("Block created of type " + type);
   },
-  createBlockBefore: function createBlockBefore(type, data, nextBlock, options) {
+  createBlockBefore: function createBlockBefore(type, data, nextBlock) {
+    var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+    options = Object.assign({
+      autoFocus: false,
+      focusAtEnd: false
+    }, options);
     type = utils.classify(type); // Run validations
 
     if (!this.canCreateBlock(type)) {
@@ -9803,8 +9913,10 @@ Object.assign(BlockManager.prototype, __webpack_require__(7), __webpack_require_
       this.renderBlock(block, this.wrapper.querySelector(".st-top-controls"));
     }
 
-    if (options && options.autoFocus) {
+    if (options.autoFocus) {
       block.focus();
+    } else if (options.focusAtEnd) {
+      block.focusAtEnd();
     }
 
     this.triggerBlockCountUpdate();
@@ -9816,7 +9928,9 @@ Object.assign(BlockManager.prototype, __webpack_require__(7), __webpack_require_
   removeBlock: function removeBlock(blockID, options) {
     options = Object.assign({
       transposeContent: false,
-      focusOnPrevious: false
+      focusOnPrevious: false,
+      focusOnNext: false,
+      createNextBlock: false
     }, options);
     var block = this.findBlockById(blockID);
     var type = utils.classify(block.type);
@@ -9882,6 +9996,16 @@ Object.assign(BlockManager.prototype, __webpack_require__(7), __webpack_require_
       previousBlock.focusAtEnd();
     }
 
+    if (options.focusOnNext) {
+      if (nextBlock) {
+        nextBlock.focus();
+      } else if (options.createNextBlock) {
+        this.createBlock("text", null, null, {
+          autoFocus: true
+        });
+      }
+    }
+
     this._decrementBlockTypeCount(type);
 
     this.triggerBlockCountUpdate();
@@ -9895,15 +10019,39 @@ Object.assign(BlockManager.prototype, __webpack_require__(7), __webpack_require_
     block.remove();
   },
   renderBlock: function renderBlock(block, previousSibling) {
+    var _this = this;
+
     // REFACTOR: this will have to do until we're able to address
     // the block manager
+    var blockElement = block.render().el;
+
     if (previousSibling) {
-      Dom.insertAfter(block.render().el, previousSibling);
+      Dom.insertAfter(blockElement, previousSibling);
     } else {
-      this.wrapper.appendChild(block.render().el);
+      this.wrapper.appendChild(blockElement);
     }
 
     block.trigger("onRender");
+
+    if (this.options.selectionMouse) {
+      blockElement.addEventListener("mouseenter", function () {
+        if (!_this.editor.mouseDown) return;
+
+        var blockPosition = _this.getBlockPosition(block.el);
+
+        _this.mediator.trigger("selection:update", blockPosition);
+      });
+      blockElement.addEventListener("mousedown", function (ev) {
+        var blockPosition = _this.getBlockPosition(block.el);
+
+        var options = {
+          mouseEnabled: true,
+          expand: ev.shiftKey || ev.metaKey
+        };
+
+        _this.mediator.trigger("selection:start", blockPosition, options);
+      });
+    }
   },
   rerenderBlock: function rerenderBlock(blockID) {
     var block = this.findBlockById(blockID);
@@ -9935,26 +10083,67 @@ Object.assign(BlockManager.prototype, __webpack_require__(7), __webpack_require_
     return Array.prototype.indexOf.call(this.wrapper.querySelectorAll('.st-block'), block);
   },
   focusPreviousBlock: function focusPreviousBlock(blockID) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    options = Object.assign({
+      force: false
+    }, options);
     var block = this.findBlockById(blockID);
 
-    if (block.mergeable) {
+    if (block && (block.mergeable || options.force)) {
       var previousBlock = this.getPreviousBlock(block);
 
       if (previousBlock && previousBlock.mergeable) {
         previousBlock.focusAtEnd();
+      } else if (options.force) {
+        block.focus();
       }
     }
   },
   focusNextBlock: function focusNextBlock(blockID) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    options = Object.assign({
+      force: false
+    }, options);
     var block = this.findBlockById(blockID);
 
-    if (block && block.mergeable) {
+    if (block && (block.mergeable || options.force)) {
       var nextBlock = this.getNextBlock(block);
 
       if (nextBlock && nextBlock.mergeable) {
-        nextBlock.focus();
+        nextBlock.focusAtStart();
+      } else if (options.force) {
+        block.focusAtEnd();
       }
     }
+  },
+  paste: function paste(blocks) {
+    var _this2 = this;
+
+    var currentBlock = utils.getBlockBySelection();
+
+    if (currentBlock) {
+      currentBlock.split();
+      var nextBlock = this.getNextBlock(currentBlock);
+
+      if (currentBlock.isEmpty()) {
+        this.removeBlock(currentBlock.blockID);
+      }
+
+      if (nextBlock) {
+        blocks.forEach(function (block) {
+          _this2.createBlockBefore(block.type, block.data, nextBlock, {
+            focusAtEnd: true
+          });
+        });
+        return;
+      }
+    }
+
+    blocks.forEach(function (block) {
+      _this2.createBlock(block.type, block.data, undefined, {
+        focusAtEnd: true
+      });
+    });
   },
   triggerBlockCountUpdate: function triggerBlockCountUpdate() {
     this.mediator.trigger('block:countUpdate', this.blocks.length);
@@ -10080,13 +10269,13 @@ module.exports = BlockManager;
 
 var _ = __webpack_require__(0);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var Dom = __webpack_require__(3);
 
 var Events = __webpack_require__(10);
 
-var BlockReorder = __webpack_require__(37);
+var BlockReorder = __webpack_require__(39);
 
 var BLOCK_TEMPLATE = __webpack_require__(223);
 
@@ -10105,7 +10294,7 @@ var SimpleBlock = function SimpleBlock(data, instance_id, mediator, options, edi
   this.initialize.apply(this, arguments);
 };
 
-Object.assign(SimpleBlock.prototype, __webpack_require__(7), __webpack_require__(9), __webpack_require__(11), __webpack_require__(85), {
+Object.assign(SimpleBlock.prototype, __webpack_require__(6), __webpack_require__(9), __webpack_require__(11), __webpack_require__(85), {
   focus: function focus() {},
   valid: function valid() {
     return true;
@@ -10211,7 +10400,7 @@ module.exports = SimpleBlock;
 "use strict";
 
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
 module.exports = function () {
   return "\n    <button class=\"st-block-addition\" type=\"button\">\n      <span class=\"st-block-addition__button\">\n        <svg role=\"img\" class=\"st-icon\">\n          <use xlink:href=\"".concat(config.defaults.iconUrl, "#plus\"/>\n        </svg>\n      </span>\n    </button>\n  ");
@@ -10275,63 +10464,23 @@ module.exports = function (protoProps, staticProps) {
 "use strict";
 
 
-var _require = __webpack_require__(38),
+var _require = __webpack_require__(16),
+    createBlocksFromParagraphs = _require.createBlocksFromParagraphs,
     isAtStart = _require.isAtStart,
     isAtEnd = _require.isAtEnd,
+    isSelectedFromStart = _require.isSelectedFromStart,
+    isSelectedToEnd = _require.isSelectedToEnd,
     selectToEnd = _require.selectToEnd;
 
 var ScribeTextBlockPlugin = function ScribeTextBlockPlugin(block) {
   return function (scribe) {
-    // Remove any empty elements at the start of the range.
-    var stripFirstEmptyElement = function stripFirstEmptyElement(div) {
-      if (div.firstChild === null) {
-        return;
-      }
-
-      var firstChild = div.firstChild.childNodes[0];
-
-      if (firstChild && firstChild.nodeName !== '#text') {
-        if (firstChild.innerText === '') {
-          div.firstChild.removeChild(firstChild);
-        }
-      }
-    };
-
-    var createBlocksFromParagraphs = function createBlocksFromParagraphs() {
-      var fakeContent = document.createElement('div');
-      fakeContent.appendChild(selectToEnd(scribe).extractContents());
-      stripFirstEmptyElement(fakeContent); // Add wrapper div which is missing in non blockElement scribe.
-
-      if (!scribe.allowsBlockElements()) {
-        var tempContent = document.createElement('div');
-        tempContent.appendChild(fakeContent);
-        fakeContent = tempContent;
-      }
-
-      if (fakeContent.childNodes.length >= 1) {
-        var data;
-        var nodes = [].slice.call(fakeContent.childNodes);
-        nodes.reverse().forEach(function (node) {
-          if (node.innerText !== '') {
-            data = {
-              format: 'html',
-              text: node.innerHTML.trim()
-            };
-            block.mediator.trigger("block:create", 'Text', data, block.el, {
-              autoFocus: true
-            });
-          }
-        });
-      }
-    };
-
     var isAtStartBoolean = false;
     scribe.el.addEventListener('keydown', function (ev) {
       if (block.supressKeyListeners) {
         return;
       }
 
-      if (ev.keyCode === 13 && !ev.shiftKey) {
+      if (ev.key === "Enter" && !ev.shiftKey) {
         // enter pressed
         ev.preventDefault();
 
@@ -10342,22 +10491,37 @@ var ScribeTextBlockPlugin = function ScribeTextBlockPlugin(block) {
             autoFocus: true
           });
         } else {
-          createBlocksFromParagraphs();
+          createBlocksFromParagraphs(block, scribe);
         } // If the block is left empty then we need to reset the placeholder content.
 
 
         if (scribe.allowsBlockElements() && scribe.getTextContent() === '') {
           scribe.setContent('<p><br></p>');
         }
-      } else if ((ev.keyCode === 37 || ev.keyCode === 38) && isAtStart(scribe)) {
-        ev.preventDefault();
-        block.mediator.trigger("block:focusPrevious", block.blockID);
+      } else if (["Left", "ArrowLeft", "Up", "ArrowUp"].indexOf(ev.key) > -1) {
+        if (ev.shiftKey && isSelectedFromStart(scribe)) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          document.activeElement && document.activeElement.blur();
+          block.mediator.trigger("selection:block", block);
+        } else if (isAtStart(scribe)) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          block.mediator.trigger("block:focusPrevious", block.blockID);
+        }
       } else if (ev.keyCode === 8 && isAtStart(scribe)) {
         ev.preventDefault();
         isAtStartBoolean = true;
-      } else if ((ev.keyCode === 39 || ev.keyCode === 40) && isAtEnd(scribe)) {
-        ev.preventDefault();
-        block.mediator.trigger("block:focusNext", block.blockID);
+      } else if (["Right", "ArrowRight", "Down", "ArrowDown"].indexOf(ev.key) > -1) {
+        if (ev.shiftKey && isSelectedToEnd(scribe)) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          document.activeElement && document.activeElement.blur();
+          block.mediator.trigger("selection:block", block);
+        } else if (isAtEnd(scribe)) {
+          ev.preventDefault();
+          block.mediator.trigger("block:focusNext", block.blockID);
+        }
       }
     });
     scribe.el.addEventListener('keyup', function (ev) {
@@ -10365,7 +10529,7 @@ var ScribeTextBlockPlugin = function ScribeTextBlockPlugin(block) {
         return;
       }
 
-      if (ev.keyCode === 8 && isAtStartBoolean) {
+      if (ev.key === "Backspace" && isAtStartBoolean) {
         ev.preventDefault();
         block.mediator.trigger('block:remove', block.blockID, {
           transposeContent: true
@@ -10393,7 +10557,7 @@ module.exports = ScribeTextBlockPlugin;
 
 var _ = __webpack_require__(0);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
 var Dom = __webpack_require__(3);
 
@@ -10417,7 +10581,7 @@ var FormatBar = function FormatBar(options, mediator, editor) {
   this.initialize.apply(this, arguments);
 };
 
-Object.assign(FormatBar.prototype, __webpack_require__(7), __webpack_require__(41), __webpack_require__(9), __webpack_require__(11), {
+Object.assign(FormatBar.prototype, __webpack_require__(6), __webpack_require__(30), __webpack_require__(9), __webpack_require__(11), {
   className: 'st-format-bar',
   bound: ["onFormatButtonClick", "renderBySelection", "hide"],
   eventNamespace: 'formatter',
@@ -10510,9 +10674,9 @@ module.exports = FormatBar;
 "use strict";
 
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var EventBus = __webpack_require__(4);
 
@@ -10559,7 +10723,7 @@ module.exports = FormEvents;
 
 module.exports = __webpack_require__(94);
 
-__webpack_require__(245);
+__webpack_require__(246);
 
 /***/ }),
 /* 94 */
@@ -10587,10 +10751,10 @@ __webpack_require__(117);
 
 __webpack_require__(118);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var SirTrevor = {
-  config: __webpack_require__(1),
+  config: __webpack_require__(2),
   log: utils.log,
   Locales: __webpack_require__(140),
   Events: __webpack_require__(9),
@@ -10601,18 +10765,18 @@ var SirTrevor = {
   BlockMixins: __webpack_require__(65),
   BlockPositioner: __webpack_require__(81),
   BlockPositionerSelect: __webpack_require__(82),
-  BlockReorder: __webpack_require__(37),
+  BlockReorder: __webpack_require__(39),
   BlockDeletion: __webpack_require__(83),
   BlockValidations: __webpack_require__(84),
   BlockStore: __webpack_require__(85),
   BlockManager: __webpack_require__(86),
   SimpleBlock: __webpack_require__(87),
   Block: __webpack_require__(8),
-  Blocks: __webpack_require__(20),
+  Blocks: __webpack_require__(21),
   FormatBar: __webpack_require__(91),
   Editor: __webpack_require__(237),
-  toMarkdown: __webpack_require__(244),
-  toHTML: __webpack_require__(21),
+  toMarkdown: __webpack_require__(245),
+  toHTML: __webpack_require__(22),
   setDefaults: function setDefaults(options) {
     Object.assign(SirTrevor.config.defaults, options || {});
   },
@@ -10644,7 +10808,7 @@ module.exports = SirTrevor;
 /* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "2fb4dafac0f79d49859b0abebd2eec59.svg";
+module.exports = __webpack_require__.p + "178289a66e4bc63fe9a24fba4c8acf36.svg";
 
 /***/ }),
 /* 96 */
@@ -10653,7 +10817,7 @@ module.exports = __webpack_require__.p + "2fb4dafac0f79d49859b0abebd2eec59.svg";
 "use strict";
 
 
-var defineProperties = __webpack_require__(22);
+var defineProperties = __webpack_require__(23);
 
 var implementation = __webpack_require__(43);
 var getPolyfill = __webpack_require__(45);
@@ -10788,7 +10952,7 @@ module.exports = function bind(that) {
 "use strict";
 
 
-var define = __webpack_require__(22);
+var define = __webpack_require__(23);
 var getPolyfill = __webpack_require__(45);
 
 module.exports = function shimAssign() {
@@ -10809,7 +10973,7 @@ module.exports = function shimAssign() {
 "use strict";
 
 
-var define = __webpack_require__(22);
+var define = __webpack_require__(23);
 var ES = __webpack_require__(46);
 
 var implementation = __webpack_require__(53);
@@ -10842,7 +11006,7 @@ module.exports = boundFindShim;
 "use strict";
 
 
-var has = __webpack_require__(29);
+var has = __webpack_require__(31);
 var toPrimitive = __webpack_require__(103);
 
 var GetIntrinsic = __webpack_require__(48);
@@ -10867,7 +11031,7 @@ var sign = __webpack_require__(51);
 var mod = __webpack_require__(52);
 var isPrimitive = __webpack_require__(109);
 var parseInteger = parseInt;
-var bind = __webpack_require__(23);
+var bind = __webpack_require__(24);
 var arraySlice = bind.call(Function.call, $Array.prototype.slice);
 var strSlice = bind.call(Function.call, $String.prototype.slice);
 var isBinary = bind.call(Function.call, $RegExp.prototype.test, /^0b[01]+$/i);
@@ -11555,7 +11719,7 @@ module.exports = __webpack_require__(104);
 var hasSymbols = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol';
 
 var isPrimitive = __webpack_require__(47);
-var isCallable = __webpack_require__(30);
+var isCallable = __webpack_require__(32);
 var isDate = __webpack_require__(105);
 var isSymbol = __webpack_require__(106);
 
@@ -11715,13 +11879,13 @@ module.exports = function hasNativeSymbols() {
 	return hasSymbolSham();
 };
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(16)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(17)))
 
 /***/ }),
 /* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var bind = __webpack_require__(23);
+var bind = __webpack_require__(24);
 var has = bind.call(Function.call, Object.prototype.hasOwnProperty);
 
 var $assign = Object.assign;
@@ -11768,10 +11932,10 @@ var $isFinite = __webpack_require__(50);
 var sign = __webpack_require__(51);
 var mod = __webpack_require__(52);
 
-var IsCallable = __webpack_require__(30);
+var IsCallable = __webpack_require__(32);
 var toPrimitive = __webpack_require__(111);
 
-var has = __webpack_require__(29);
+var has = __webpack_require__(31);
 
 // https://es5.github.io/#x9
 var ES5 = {
@@ -12009,7 +12173,7 @@ var toStr = Object.prototype.toString;
 
 var isPrimitive = __webpack_require__(47);
 
-var isCallable = __webpack_require__(30);
+var isCallable = __webpack_require__(32);
 
 // http://ecma-international.org/ecma-262/5.1/#sec-8.12.8
 var ES5internalSlots = {
@@ -12057,7 +12221,7 @@ module.exports = function ToPrimitive(input) {
 "use strict";
 
 
-var has = __webpack_require__(29);
+var has = __webpack_require__(31);
 var regexExec = RegExp.prototype.exec;
 var gOPD = Object.getOwnPropertyDescriptor;
 
@@ -12103,7 +12267,7 @@ module.exports = function isRegex(value) {
 "use strict";
 
 
-var define = __webpack_require__(22);
+var define = __webpack_require__(23);
 var getPolyfill = __webpack_require__(54);
 
 module.exports = function shimArrayPrototypeFind() {
@@ -13353,7 +13517,7 @@ return Promise$1;
 
 //# sourceMappingURL=es6-promise.map
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(55), __webpack_require__(16)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(55), __webpack_require__(17)))
 
 /***/ }),
 /* 116 */
@@ -13495,7 +13659,7 @@ return Promise$1;
  * Available under MIT license <http://lodash.com/license>
  */
 var forOwn = __webpack_require__(120),
-    isFunction = __webpack_require__(27);
+    isFunction = __webpack_require__(28);
 
 /** `Object#toString` result shortcuts */
 var argsClass = '[object Arguments]',
@@ -13565,7 +13729,7 @@ module.exports = isEmpty;
  */
 var baseCreateCallback = __webpack_require__(121),
     keys = __webpack_require__(12),
-    objectTypes = __webpack_require__(25);
+    objectTypes = __webpack_require__(26);
 
 /**
  * Iterates over own enumerable properties of an object, executing the callback
@@ -13621,7 +13785,7 @@ module.exports = forOwn;
  */
 var bind = __webpack_require__(122),
     identity = __webpack_require__(126),
-    setBindData = __webpack_require__(31),
+    setBindData = __webpack_require__(33),
     support = __webpack_require__(127);
 
 /** Used to detected named functions */
@@ -13706,7 +13870,7 @@ module.exports = baseCreateCallback;
  * Available under MIT license <http://lodash.com/license>
  */
 var createWrapper = __webpack_require__(123),
-    slice = __webpack_require__(26);
+    slice = __webpack_require__(27);
 
 /**
  * Creates a function that, when called, invokes `func` with the `this`
@@ -13753,8 +13917,8 @@ module.exports = bind;
  */
 var baseBind = __webpack_require__(124),
     baseCreateWrapper = __webpack_require__(125),
-    isFunction = __webpack_require__(27),
-    slice = __webpack_require__(26);
+    isFunction = __webpack_require__(28),
+    slice = __webpack_require__(27);
 
 /**
  * Used for `Array` method references.
@@ -13864,9 +14028,9 @@ module.exports = createWrapper;
  * Available under MIT license <http://lodash.com/license>
  */
 var baseCreate = __webpack_require__(56),
-    isObject = __webpack_require__(17),
-    setBindData = __webpack_require__(31),
-    slice = __webpack_require__(26);
+    isObject = __webpack_require__(18),
+    setBindData = __webpack_require__(33),
+    slice = __webpack_require__(27);
 
 /**
  * Used for `Array` method references.
@@ -13932,9 +14096,9 @@ module.exports = baseBind;
  * Available under MIT license <http://lodash.com/license>
  */
 var baseCreate = __webpack_require__(56),
-    isObject = __webpack_require__(17),
-    setBindData = __webpack_require__(31),
-    slice = __webpack_require__(26);
+    isObject = __webpack_require__(18),
+    setBindData = __webpack_require__(33),
+    slice = __webpack_require__(27);
 
 /**
  * Used for `Array` method references.
@@ -14049,7 +14213,7 @@ module.exports = identity;
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-var isNative = __webpack_require__(24);
+var isNative = __webpack_require__(25);
 
 /** Used to detect functions containing a `this` reference */
 var reThis = /\bthis\b/;
@@ -14082,7 +14246,7 @@ support.funcNames = typeof Function.name == 'string';
 
 module.exports = support;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(16)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(17)))
 
 /***/ }),
 /* 128 */
@@ -14096,7 +14260,7 @@ module.exports = support;
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-var objectTypes = __webpack_require__(25);
+var objectTypes = __webpack_require__(26);
 
 /** Used for native method references */
 var objectProto = Object.prototype;
@@ -14216,7 +14380,7 @@ module.exports = isUndefined;
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-var isFunction = __webpack_require__(27);
+var isFunction = __webpack_require__(28);
 
 /**
  * Resolves the value of property `key` on `object`. If `key` is a function
@@ -14490,7 +14654,7 @@ module.exports = template;
  * Available under MIT license <http://lodash.com/license>
  */
 var keys = __webpack_require__(12),
-    objectTypes = __webpack_require__(25);
+    objectTypes = __webpack_require__(26);
 
 /**
  * Assigns own enumerable properties of source object(s) to the destination
@@ -14795,9 +14959,9 @@ module.exports = uniqueId;
 
 var _ = __webpack_require__(0);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var Locales = {
   en: {
@@ -15776,9 +15940,9 @@ module.exports = cancellablePromise;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
 var Dom = __webpack_require__(3);
 
@@ -15839,13 +16003,13 @@ module.exports = {
 
 var _ = __webpack_require__(0);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var Dom = __webpack_require__(3);
 
-var dropEvents = __webpack_require__(33);
+var dropEvents = __webpack_require__(35);
 
 var EventBus = __webpack_require__(4);
 
@@ -15935,7 +16099,7 @@ var Ajax = __webpack_require__(64);
 module.exports = {
   mixinName: "Fetchable",
   initializeFetchable: function initializeFetchable() {
-    this.withMixin(__webpack_require__(32));
+    this.withMixin(__webpack_require__(34));
   },
   fetch: function fetch(url, options, success, failure) {
     var uid = _.uniqueId(this.blockID + "_fetch"),
@@ -15971,9 +16135,9 @@ module.exports = {
 
 var _ = __webpack_require__(0);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 module.exports = {
   mixinName: "Pastable",
@@ -16005,9 +16169,9 @@ module.exports = {
 
 var _ = __webpack_require__(0);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var fileUploader = __webpack_require__(63);
 
@@ -16017,7 +16181,7 @@ module.exports = {
   requireInputs: true,
   initializeUploadable: function initializeUploadable() {
     utils.log("Adding uploadable to block " + this.blockID);
-    this.withMixin(__webpack_require__(32));
+    this.withMixin(__webpack_require__(34));
     this.upload_options = Object.assign({}, config.defaults.Block.upload_options, this.upload_options);
     this.inputs.insertAdjacentHTML("beforeend", _.template(this.upload_options.html, this));
     Array.prototype.forEach.call(this.inputs.querySelectorAll('button'), function (button) {
@@ -16048,6 +16212,9 @@ var selectionRange = __webpack_require__(13);
 var _ = __webpack_require__(0);
 
 var ScribeInterface = __webpack_require__(68);
+
+var _require = __webpack_require__(16),
+    trimScribeContent = _require.trimScribeContent;
 
 module.exports = {
   mixinName: 'MultiEditable',
@@ -16096,6 +16263,7 @@ module.exports = {
   },
   appendToTextEditor: function appendToTextEditor(id, content) {
     var scribe = this.getTextEditor(id).scribe;
+    trimScribeContent(scribe);
     var range = document.createRange();
     range.selectNodeContents(scribe.el);
     range.collapse(false);
@@ -16469,7 +16637,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
   __webpack_require__(187),
   __webpack_require__(188),
   __webpack_require__(189),
-  __webpack_require__(28),
+  __webpack_require__(29),
   __webpack_require__(5),
   __webpack_require__(190),
   __webpack_require__(70)
@@ -17027,7 +17195,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
-    __webpack_require__(28),
+    __webpack_require__(29),
     __webpack_require__(5)
   ], __WEBPACK_AMD_DEFINE_RESULT__ = (function (
     nodeHelpers,
@@ -17151,7 +17319,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(28)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (nodeHelpers) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(29)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (nodeHelpers) {
 
   'use strict';
 
@@ -18081,7 +18249,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
-  __webpack_require__(28),
+  __webpack_require__(29),
   __webpack_require__(173)
 ], __WEBPACK_AMD_DEFINE_RESULT__ = (function (nodeHelpers, mutations) {
 
@@ -19644,7 +19812,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     // browser to ensure elements are selectable.
     var configAllowMarkers = merge(cloneDeep(config), {
       tags: {
-        em: {class: 'scribe-marker'},
+        em: {class: 'scribe-marker', style: true},
         br: {}
       }
     });
@@ -19705,8 +19873,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (roo
     return inlineElementNames.indexOf(node.nodeName) !== -1;
   }
 
+  function isScribeMarker(node) {
+    return node.nodeName === "EM" && node.outerHTML === '<em class="scribe-marker" style=""></em>';
+  }
+
   HTMLJanitor.prototype.clean = function (html) {
-    const sandbox = document.implementation.createHTMLDocument();
+    const sandbox = document.implementation.createHTMLDocument('');
     const root = sandbox.createElement("div");
     root.innerHTML = html;
 
@@ -19781,15 +19953,17 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (roo
         this._sanitize(document, parentNode);
         break;
       }
+      
+      if (!isScribeMarker(node)) {
+        // Sanitize attributes
+        for (var a = 0; a < node.attributes.length; a += 1) {
+          var attr = node.attributes[a];
 
-      // Sanitize attributes
-      for (var a = 0; a < node.attributes.length; a += 1) {
-        var attr = node.attributes[a];
-
-        if (shouldRejectAttr(attr, allowedAttrs, node)) {
-          node.removeAttribute(attr.name);
-          // Shift the array to continue looping.
-          a = a - 1;
+          if (shouldRejectAttr(attr, allowedAttrs, node)) {
+            node.removeAttribute(attr.name);
+            // Shift the array to continue looping.
+            a = a - 1;
+          }
         }
       }
 
@@ -19911,7 +20085,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(71), __webpack_require__(72), __webpack_require__(206), __webpack_require__(19), __webpack_require__(6), __webpack_require__(14), __webpack_require__(15), __webpack_require__(78)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(arrayEach, baseForOwn, baseMergeDeep, isArray, isLength, isObject, isObjectLike, isTypedArray) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(71), __webpack_require__(72), __webpack_require__(206), __webpack_require__(20), __webpack_require__(7), __webpack_require__(14), __webpack_require__(15), __webpack_require__(78)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(arrayEach, baseForOwn, baseMergeDeep, isArray, isLength, isObject, isObjectLike, isTypedArray) {
 
   /** Used as a safe reference for `undefined` in pre-ES5 environments. */
   var undefined;
@@ -20051,7 +20225,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(34), __webpack_require__(19), __webpack_require__(35), __webpack_require__(6), __webpack_require__(36), __webpack_require__(75)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isArguments, isArray, isIndex, isLength, keysIn, support) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(36), __webpack_require__(20), __webpack_require__(37), __webpack_require__(7), __webpack_require__(38), __webpack_require__(75)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isArguments, isArray, isIndex, isLength, keysIn, support) {
 
   /** Used for native method references. */
   var objectProto = Object.prototype;
@@ -20124,7 +20298,7 @@ module.exports = function(module) {
 /* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(77), __webpack_require__(34), __webpack_require__(19), __webpack_require__(6), __webpack_require__(207), __webpack_require__(78), __webpack_require__(210)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(arrayCopy, isArguments, isArray, isLength, isPlainObject, isTypedArray, toPlainObject) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(77), __webpack_require__(36), __webpack_require__(20), __webpack_require__(7), __webpack_require__(207), __webpack_require__(78), __webpack_require__(210)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(arrayCopy, isArguments, isArray, isLength, isPlainObject, isTypedArray, toPlainObject) {
 
   /** Used as a safe reference for `undefined` in pre-ES5 environments. */
   var undefined;
@@ -20196,7 +20370,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(18), __webpack_require__(208)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isNative, shimIsPlainObject) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(19), __webpack_require__(208)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isNative, shimIsPlainObject) {
 
   /** `Object#toString` result references. */
   var objectTag = '[object Object]';
@@ -20323,7 +20497,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(73), __webpack_require__(36)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(baseFor, keysIn) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(73), __webpack_require__(38)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(baseFor, keysIn) {
 
   /**
    * The base implementation of `_.forIn` without support for callback
@@ -20347,7 +20521,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(79), __webpack_require__(36)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(baseCopy, keysIn) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(79), __webpack_require__(38)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(baseCopy, keysIn) {
 
   /**
    * Converts `value` to a plain object flattening inherited enumerable
@@ -20469,7 +20643,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(35), __webpack_require__(6), __webpack_require__(14)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isIndex, isLength, isObject) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(37), __webpack_require__(7), __webpack_require__(14)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(isIndex, isLength, isObject) {
 
   /**
    * Checks if the provided arguments are from an iteratee call.
@@ -20568,7 +20742,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(77), __webpack_require__(71), __webpack_require__(79), __webpack_require__(72), __webpack_require__(216), __webpack_require__(217), __webpack_require__(220), __webpack_require__(19), __webpack_require__(14), __webpack_require__(74)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(arrayCopy, arrayEach, baseCopy, baseForOwn, initCloneArray, initCloneByTag, initCloneObject, isArray, isObject, keys) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(77), __webpack_require__(71), __webpack_require__(79), __webpack_require__(72), __webpack_require__(216), __webpack_require__(217), __webpack_require__(220), __webpack_require__(20), __webpack_require__(14), __webpack_require__(74)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(arrayCopy, arrayEach, baseCopy, baseForOwn, initCloneArray, initCloneByTag, initCloneObject, isArray, isObject, keys) {
 
   /** `Object#toString` result references. */
   var argsTag = '[object Arguments]',
@@ -20805,7 +20979,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(219), __webpack_require__(18), __webpack_require__(76)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(constant, isNative, root) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(219), __webpack_require__(19), __webpack_require__(76)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(constant, isNative, root) {
 
   /** Native method references. */
   var ArrayBuffer = isNative(ArrayBuffer = root.ArrayBuffer) && ArrayBuffer,
@@ -20931,6 +21105,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 var selectionRange = __webpack_require__(13);
 
+var _require = __webpack_require__(16),
+    createBlocksFromParagraphs = _require.createBlocksFromParagraphs,
+    getTotalLength = _require.getTotalLength;
+
 module.exports = {
   mixinName: 'Textable',
   initializeTextable: function initializeTextable() {
@@ -20938,7 +21116,13 @@ module.exports = {
   },
   focusAtEnd: function focusAtEnd() {
     this.focus();
-    this.selectText();
+    var length = getTotalLength(this._scribe);
+
+    if (length > 0) {
+      selectionRange(this._scribe.el, {
+        start: length
+      });
+    }
   },
   selectText: function selectText() {
     var range = document.createRange();
@@ -20998,6 +21182,9 @@ module.exports = {
         end: caretPosition.end
       });
     }
+  },
+  split: function split() {
+    createBlocksFromParagraphs(this, this._scribe);
   }
 };
 
@@ -21013,15 +21200,15 @@ module.exports = {
 
 var Block = __webpack_require__(8);
 
-var stToHTML = __webpack_require__(21);
+var stToHTML = __webpack_require__(22);
 
 var ScribeTextBlockPlugin = __webpack_require__(90);
 
 var ScribePastePlugin = __webpack_require__(228);
 
-var ScribeHeadingPlugin = __webpack_require__(39);
+var ScribeHeadingPlugin = __webpack_require__(40);
 
-var ScribeQuotePlugin = __webpack_require__(40);
+var ScribeQuotePlugin = __webpack_require__(41);
 
 module.exports = Block.extend({
   type: "text",
@@ -21058,6 +21245,10 @@ module.exports = Block.extend({
   },
   isEmpty: function isEmpty() {
     return this._scribe.getTextContent() === '';
+  },
+  asClipboardHTML: function asClipboardHTML() {
+    var data = this.getBlockData();
+    return "".concat(data.text);
   }
 });
 
@@ -21085,7 +21276,7 @@ module.exports = function (editor_html) {
 "use strict";
 
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
 module.exports = function () {
   return "\n    <div class=\"st-block-addition-top\">\n      <div class=\"st-block-addition-top__button\" type=\"button\"></div>\n      <div class=\"st-block-addition-top__icon\">\n        <svg role=\"img\" class=\"st-icon\">\n          <use xlink:href=\"".concat(config.defaults.iconUrl, "#add-block\"/>\n        </svg>\n      </div>\n    </div>\n  ");
@@ -21098,7 +21289,7 @@ module.exports = function () {
 "use strict";
 
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
 module.exports = function () {
   return "\n    <button class=\"st-block-replacer\" type=\"button\">\n      <span class=\"st-block-replacer__button\">\n        <svg role=\"img\" class=\"st-icon\">\n          <use xlink:href=\"".concat(config.defaults.iconUrl, "#add-block\"/>\n        </svg>\n      </span>\n    </button>\n  ");
@@ -21344,6 +21535,22 @@ function handleListItems(block, listItemsToCreate) {
   }
 
   return [];
+} // In firefox when you paste any text is wraps in a paragraph block which we don't want.
+
+
+function removeWrappingParagraphForFirefox(value) {
+  var fakeContent = document.createElement('div');
+  fakeContent.innerHTML = value;
+
+  if (fakeContent.childNodes.length === 1) {
+    var node = [].slice.call(fakeContent.childNodes)[0];
+
+    if (node && node.nodeName === "P") {
+      value = node.innerHTML;
+    }
+  }
+
+  return value;
 }
 
 var scribePastePlugin = function scribePastePlugin(block) {
@@ -21362,6 +21569,7 @@ var scribePastePlugin = function scribePastePlugin(block) {
       var _this = this;
 
       scribe.transactionManager.run(function () {
+        value = removeWrappingParagraphForFirefox(value);
         scribe.api.CommandPatch.prototype.execute.call(_this, value);
         var fakeContent = document.createElement('div');
         fakeContent.innerHTML = scribe.getContent();
@@ -21444,11 +21652,11 @@ var _ = __webpack_require__(0);
 
 var Block = __webpack_require__(8);
 
-var stToHTML = __webpack_require__(21);
+var stToHTML = __webpack_require__(22);
 
-var ScribeHeadingPlugin = __webpack_require__(39);
+var ScribeHeadingPlugin = __webpack_require__(40);
 
-var ScribeQuotePlugin = __webpack_require__(40);
+var ScribeQuotePlugin = __webpack_require__(41);
 
 var template = _.template(['<blockquote class="st-required st-text-block st-text-block--quote" contenteditable="true"></blockquote>', '<label class="st-input-label"> <%= i18n.t("blocks:quote:credit_field") %></label>', '<input maxlength="140" name="cite" placeholder="<%= i18n.t("blocks:quote:credit_field") %>"', ' class="st-input-string js-cite-input" type="text" />'].join("\n"));
 
@@ -21475,6 +21683,10 @@ module.exports = Block.extend({
     if (data.cite) {
       this.$('.js-cite-input')[0].value = data.cite;
     }
+  },
+  asClipboardHTML: function asClipboardHTML() {
+    var data = this.getBlockData();
+    return "<blockquote>".concat(data.text, "<cite>- ").concat(data.cite, "</cite></blockquote>");
   }
 });
 
@@ -21522,6 +21734,12 @@ module.exports = Block.extend({
         this.ready();
       });
     }
+  },
+  asClipboardHTML: function asClipboardHTML() {
+    var data = this.getBlockData();
+    var url = data.file && data.file.url;
+    if (!url) return;
+    return "<img src=\"".concat(url, "\" alt=\"").concat(url, "\" />");
   }
 });
 
@@ -21537,13 +21755,13 @@ module.exports = Block.extend({
 
 var Block = __webpack_require__(8);
 
-var stToHTML = __webpack_require__(21);
+var stToHTML = __webpack_require__(22);
 
 var ScribeTextBlockPlugin = __webpack_require__(90);
 
-var ScribeHeadingPlugin = __webpack_require__(39);
+var ScribeHeadingPlugin = __webpack_require__(40);
 
-var ScribeQuotePlugin = __webpack_require__(40);
+var ScribeQuotePlugin = __webpack_require__(41);
 
 module.exports = Block.extend({
   type: 'heading',
@@ -21576,6 +21794,10 @@ module.exports = Block.extend({
   },
   toggleEmptyClass: function toggleEmptyClass() {
     this.el.classList.toggle('st-block--empty', this._scribe.getTextContent().length === 0);
+  },
+  asClipboardHTML: function asClipboardHTML() {
+    var data = this.getBlockData();
+    return "<h2>".concat(data.text, "</h2>");
   }
 });
 
@@ -21590,12 +21812,14 @@ var selectionRange = __webpack_require__(13);
 
 var Block = __webpack_require__(8);
 
-var stToHTML = __webpack_require__(21);
+var stToHTML = __webpack_require__(22);
 
 var ScribeListBlockPlugin = __webpack_require__(233);
 
-var _require = __webpack_require__(38),
-    getTotalLength = _require.getTotalLength;
+var _require = __webpack_require__(16),
+    getTotalLength = _require.getTotalLength,
+    rangeToHTML = _require.rangeToHTML,
+    selectToEnd = _require.selectToEnd;
 
 module.exports = Block.extend({
   type: 'list',
@@ -21610,6 +21834,13 @@ module.exports = Block.extend({
   },
   configureScribe: function configureScribe(scribe) {
     scribe.use(new ScribeListBlockPlugin(this));
+    scribe.on('content-changed', function () {
+      setTimeout(function () {
+        if (scribe.getHTML() === "") {
+          scribe.setHTML("<br>");
+        }
+      }, 0);
+    });
   },
   editorHTML: '<ul class="st-list-block__list"></ul>',
   listItemEditorHTML: '<li class="st-list-block__item"><div class="st-list-block__editor st-block__editor"></div></li>',
@@ -21681,8 +21912,9 @@ module.exports = Block.extend({
   },
   addListItem: function addListItem(content, after) {
     content = content || '';
+    content = content.trim();
 
-    if (content.trim() === "<br>") {
+    if (content === "<br>") {
       content = '';
     }
 
@@ -21746,6 +21978,10 @@ module.exports = Block.extend({
       });
     }
   },
+  focusAtStart: function focusAtStart() {
+    var editor = this.getTextEditor(this.editorIds[0]);
+    this.focusOn(editor);
+  },
   focusAtEnd: function focusAtEnd() {
     var lastEditorId = this.editorIds[this.editorIds.length - 1];
     this.appendToTextEditor(lastEditorId);
@@ -21787,6 +22023,69 @@ module.exports = Block.extend({
     } else {
       return null;
     }
+  },
+  asClipboardHTML: function asClipboardHTML() {
+    var data = this.getBlockData();
+    var listItems = data.listItems.map(function (item) {
+      return "<li>".concat(item.content, "</li>");
+    }).join("\n");
+    return "<ul>".concat(listItems, "</ul>");
+  },
+  splitCurrentEditor: function splitCurrentEditor(scribe) {
+    if (scribe.getTextContent().length === 0) return false;
+    var content = rangeToHTML(selectToEnd(scribe));
+    this.addListItemAfterCurrent(content);
+    return true;
+  },
+  split: function split() {
+    var currentEditor = this.getCurrentTextEditor();
+    if (!currentEditor) return;
+    var scribe = currentEditor.scribe;
+
+    if (this.splitCurrentEditor(scribe)) {
+      this.focusOnNeighbor();
+      this.addListItemAfterCurrent("");
+    }
+
+    this.splitListItem(this.getCurrentTextEditor().scribe);
+  },
+  splitListItem: function splitListItem(scribe) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    options = Object.assign({
+      createTextBlock: false
+    }, options);
+    if (this.splitCurrentEditor(scribe)) return;
+    var nextListItem = this.nextListItem();
+
+    if (nextListItem) {
+      var data = {
+        format: 'html',
+        listItems: []
+      };
+      this.removeCurrentListItem();
+      this.focusOn(nextListItem);
+
+      while (!!nextListItem) {
+        data.listItems.push({
+          content: nextListItem.scribe.getContent()
+        });
+        this.focusOn(nextListItem);
+        this.removeCurrentListItem();
+        nextListItem = this.nextListItem();
+      }
+
+      this.mediator.trigger("block:create", 'List', data, this.el, {
+        autoFocus: true
+      });
+    } else {
+      this.removeCurrentListItem();
+    }
+
+    if (options.createTextBlock) {
+      this.mediator.trigger("block:create", 'Text', null, this.el, {
+        autoFocus: true
+      });
+    }
   }
 });
 
@@ -21799,10 +22098,13 @@ module.exports = Block.extend({
 
 var selectionRange = __webpack_require__(13);
 
-var _require = __webpack_require__(38),
+var _require = __webpack_require__(16),
     getTotalLength = _require.getTotalLength,
     isAtStart = _require.isAtStart,
     isAtEnd = _require.isAtEnd,
+    isSelectedFromStart = _require.isSelectedFromStart,
+    isSelectedToEnd = _require.isSelectedToEnd,
+    rangeToHTML = _require.rangeToHTML,
     selectToEnd = _require.selectToEnd;
 
 var ScribeListBlockPlugin = function ScribeListBlockPlugin(block) {
@@ -21812,73 +22114,46 @@ var ScribeListBlockPlugin = function ScribeListBlockPlugin(block) {
         return;
       }
 
-      var rangeToHTML = function rangeToHTML(range) {
-        var div = document.createElement('div');
-        div.appendChild(range.extractContents());
-        return div.innerHTML;
-      };
-
       var content;
 
       if (ev.key === "Enter" && !ev.shiftKey) {
         ev.preventDefault();
+        block.splitListItem(scribe, {
+          createTextBlock: true
+        });
+      } else if (["Left", "ArrowLeft", "Up", "ArrowUp"].indexOf(ev.key) > -1) {
+        if (ev.shiftKey && isSelectedFromStart(scribe)) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          document.activeElement && document.activeElement.blur();
+          block.mediator.trigger("selection:block", block);
+        } else if (isAtStart(scribe)) {
+          ev.preventDefault();
+          var previousListItem = block.previousListItem();
 
-        if (scribe.getTextContent().length === 0) {
-          var _nextListItem = block.nextListItem();
-
-          if (_nextListItem) {
-            var _data = {
-              format: 'html',
-              listItems: []
-            };
-            block.removeCurrentListItem();
-            block.focusOn(_nextListItem);
-
-            while (!!_nextListItem) {
-              _data.listItems.push({
-                content: _nextListItem.scribe.getContent()
-              });
-
-              block.focusOn(_nextListItem);
-              block.removeCurrentListItem();
-              _nextListItem = block.nextListItem();
-            }
-
-            block.mediator.trigger("block:create", 'List', _data, block.el, {
-              autoFocus: true
-            });
-            block.mediator.trigger("block:create", 'Text', null, block.el, {
-              autoFocus: true
+          if (previousListItem) {
+            block.focusOn(previousListItem, {
+              focusAtEnd: true
             });
           } else {
-            block.removeCurrentListItem();
-            block.mediator.trigger("block:create", 'Text', null, block.el, {
-              autoFocus: true
-            });
+            block.mediator.trigger("block:focusPrevious", block.blockID);
           }
-        } else {
-          content = rangeToHTML(selectToEnd(scribe));
-          block.addListItemAfterCurrent(content);
         }
-      } else if (["Left", "ArrowLeft", "Up", "ArrowUp"].indexOf(ev.key) > -1 && isAtStart(scribe)) {
-        ev.preventDefault();
-        var previousListItem = block.previousListItem();
+      } else if (["Right", "ArrowRight", "Down", "ArrowDown"].indexOf(ev.key) > -1) {
+        if (ev.shiftKey && isSelectedToEnd(scribe)) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          document.activeElement && document.activeElement.blur();
+          block.mediator.trigger("selection:block", block);
+        } else if (isAtEnd(scribe)) {
+          ev.preventDefault();
+          var nextListItem = block.nextListItem();
 
-        if (previousListItem) {
-          block.focusOn(previousListItem, {
-            focusAtEnd: true
-          });
-        } else {
-          block.mediator.trigger("block:focusPrevious", block.blockID);
-        }
-      } else if (["Right", "ArrowRight", "Down", "ArrowDown"].indexOf(ev.key) > -1 && isAtEnd(scribe)) {
-        ev.preventDefault();
-        var nextListItem = block.nextListItem();
-
-        if (nextListItem) {
-          block.focusOn(nextListItem);
-        } else {
-          block.mediator.trigger("block:focusNext", block.blockID);
+          if (nextListItem) {
+            block.focusOn(nextListItem);
+          } else {
+            block.mediator.trigger("block:focusNext", block.blockID);
+          }
         }
       } else if (ev.key === "Backspace" && isAtStart(scribe)) {
         ev.preventDefault();
@@ -21917,7 +22192,7 @@ module.exports = ScribeListBlockPlugin;
 
 var _ = __webpack_require__(0);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var Dom = __webpack_require__(3);
 
@@ -22002,6 +22277,11 @@ module.exports = Block.extend({
   onDrop: function onDrop(transferData) {
     var url = transferData.getData('text/plain');
     this.handleTwitterDropPaste(url);
+  },
+  asClipboardHTML: function asClipboardHTML() {
+    var data = this.getBlockData();
+    if (!data.status_url) return;
+    return "<p>".concat(data.status_url, "</p>");
   }
 });
 
@@ -22014,7 +22294,7 @@ module.exports = Block.extend({
 
 var _ = __webpack_require__(0);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var Block = __webpack_require__(8);
 
@@ -22023,11 +22303,17 @@ module.exports = Block.extend({
   providers: {
     vimeo: {
       regex: /(?:http[s]?:\/\/)?(?:www.)?vimeo\.co(?:.+(?:\/)([^\/].*)+$)/,
-      html: "<iframe src=\"<%= protocol %>//player.vimeo.com/video/<%= remote_id %>?title=0&byline=0\" width=\"580\" height=\"320\" frameborder=\"0\"></iframe>"
+      html: "<iframe src=\"<%= protocol %>//player.vimeo.com/video/<%= remote_id %>?title=0&byline=0\" width=\"580\" height=\"320\" frameborder=\"0\"></iframe>",
+      url: function url(remote_id) {
+        return "https://player.vimeo.com/video/".concat(remote_id);
+      }
     },
     youtube: {
       regex: /^.*(?:(?:youtu\.be\/)|(?:youtube\.com)\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*)/,
-      html: "<iframe src=\"<%= protocol %>//www.youtube.com/embed/<%= remote_id %>\" width=\"580\" height=\"320\" frameborder=\"0\" allowfullscreen></iframe>"
+      html: "<iframe src=\"<%= protocol %>//www.youtube.com/embed/<%= remote_id %>\" width=\"580\" height=\"320\" frameborder=\"0\" allowfullscreen></iframe>",
+      url: function url(remote_id) {
+        return "https://www.youtube.com/embed/".concat(remote_id);
+      }
     }
   },
   type: 'video',
@@ -22081,6 +22367,12 @@ module.exports = Block.extend({
   onDrop: function onDrop(transferData) {
     var url = transferData.getData('text/plain');
     this.handleDropPaste(url);
+  },
+  asClipboardHTML: function asClipboardHTML() {
+    var data = this.getBlockData();
+    var source = this.providers[data.source];
+    var src = source.url(data.remote_id);
+    return "<p>".concat(src, "</p>");
   }
 });
 
@@ -22091,7 +22383,7 @@ module.exports = Block.extend({
 "use strict";
 
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
 module.exports = function (_ref) {
   var name = _ref.name,
@@ -22117,9 +22409,9 @@ module.exports = function (_ref) {
 
 var _ = __webpack_require__(0);
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var Dom = __webpack_require__(3);
 
@@ -22145,11 +22437,13 @@ var ErrorHandler = __webpack_require__(243);
 
 var BlockPositionerSelect = __webpack_require__(82);
 
+var SelectionHandler = __webpack_require__(244);
+
 var Editor = function Editor(options) {
   this.initialize(options);
 };
 
-Object.assign(Editor.prototype, __webpack_require__(7), __webpack_require__(9), {
+Object.assign(Editor.prototype, __webpack_require__(6), __webpack_require__(9), {
   bound: ['onFormSubmit', 'hideAllTheThings', 'changeBlockPosition', 'removeBlockDragOver', 'blockLimitReached', 'blockOrderUpdated', 'onBlockCountChange', 'renderBlockPositionerSelect'],
   events: {
     'block:reorder:dragend': 'removeBlockDragOver',
@@ -22194,6 +22488,7 @@ Object.assign(Editor.prototype, __webpack_require__(7), __webpack_require__(9), 
     this.BlockAdditionTop = BlockAdditionTop.create(this);
     this.blockControls = BlockControls.create(this);
     this.blockPositionerSelect = new BlockPositionerSelect(this.mediator);
+    this.selectionHandler = new SelectionHandler(this.outer, this.mediator, this);
     this.formatBar = new FormatBar(this.options.formatBar, this.mediator, this);
     this.mediator.on('block:changePosition', this.changeBlockPosition);
     this.mediator.on('block:limitReached', this.blockLimitReached); // Apply specific classes when block order is updated
@@ -22427,6 +22722,13 @@ Object.assign(Editor.prototype, __webpack_require__(7), __webpack_require__(9), 
     utils.log("This method has been moved to blockManager.getBlockPosition()");
     return this.blockManager.getBlockPosition(block);
   },
+  getBlocks: function getBlocks() {
+    var _this2 = this;
+
+    return [].map.call(this.wrapper.querySelectorAll('.st-block'), function (blockEl) {
+      return _this2.findBlockById(blockEl.getAttribute('id'));
+    });
+  },
 
   /*
    * Set all dom elements required for the editor.
@@ -22468,7 +22770,7 @@ module.exports = Editor;
  * Gives an interface for adding new Sir Trevor blocks.
  */
 
-var Blocks = __webpack_require__(20);
+var Blocks = __webpack_require__(21);
 
 var Events = __webpack_require__(10);
 
@@ -22556,7 +22858,7 @@ module.exports.create = function (SirTrevor) {
 "use strict";
 
 
-var config = __webpack_require__(1);
+var config = __webpack_require__(2);
 
 module.exports = function (block) {
   return "\n    <button class=\"st-block-controls__button\" data-type=\"".concat(block.type, "\" type=\"button\">\n      <svg role=\"img\" class=\"st-icon\">\n        <use xlink:href=\"").concat(config.defaults.iconUrl, "#").concat(block.icon_name, "\"/>\n      </svg>\n      ").concat(block.title(), "\n    </button>\n  ");
@@ -22574,7 +22876,7 @@ module.exports = function (block) {
  * Gives an interface for adding new Sir Trevor blocks.
  */
 
-var dropEvents = __webpack_require__(33);
+var dropEvents = __webpack_require__(35);
 
 var EventBus = __webpack_require__(4);
 
@@ -22710,7 +23012,7 @@ var ErrorHandler = function ErrorHandler(wrapper, mediator, container) {
   this.initialize();
 };
 
-Object.assign(ErrorHandler.prototype, __webpack_require__(7), __webpack_require__(41), __webpack_require__(11), {
+Object.assign(ErrorHandler.prototype, __webpack_require__(6), __webpack_require__(30), __webpack_require__(11), {
   errors: [],
   className: "st-errors",
   eventNamespace: 'errors',
@@ -22764,12 +23066,364 @@ module.exports = ErrorHandler;
 
 var _ = __webpack_require__(0);
 
-var utils = __webpack_require__(2);
+var Dom = __webpack_require__(3);
+
+var TYPE = 'application/vnd.sirtrevor+json';
+
+var SelectionHandler = function SelectionHandler(wrapper, mediator, editor) {
+  this.wrapper = wrapper;
+  this.mediator = mediator;
+  this.editor = editor;
+  this.options = editor.options;
+  this.startIndex = this.endIndex = 0;
+  this.selecting = false;
+
+  this._bindFunctions();
+
+  this._bindMediatedEvents();
+
+  this.initialize();
+};
+
+Object.assign(SelectionHandler.prototype, __webpack_require__(6), __webpack_require__(30), {
+  eventNamespace: 'selection',
+  bound: ['onCopy', 'onCut', 'onKeyDown', 'onMouseUp', 'onMouseDown', 'onPaste'],
+  mediatedEvents: {
+    'start': 'start',
+    'render': 'render',
+    'complete': 'complete',
+    'all': 'all',
+    'copy': 'copy',
+    'update': 'update',
+    'delete': 'delete',
+    'cancel': 'cancel',
+    'block': 'block'
+  },
+  canSelect: function canSelect() {
+    // Don't select if within an input field
+    var editorEl1 = Dom.getClosest(document.activeElement, 'input');
+    if (editorEl1 !== document.body) return false;
+    var editorEl2 = Dom.getClosest(document.activeElement, '.st-outer'); // Don't select all if focused on element outside of the editor.
+
+    if (this.options.selectionLimitToEditor) {
+      if (editorEl2 !== this.wrapper) return false;
+    }
+
+    return true;
+  },
+  initialize: function initialize() {
+    if (!this.enabled()) return false;
+    window.addEventListener("keydown", this.onKeyDown, false);
+    window.addEventListener('mouseup', this.onMouseUp, false);
+    document.addEventListener('copy', this.onCopy, false);
+
+    if (this.options.selectionCut) {
+      document.addEventListener('cut', this.onCut, false);
+    }
+
+    if (this.options.selectionPaste) {
+      document.addEventListener('paste', this.onPaste, true);
+    }
+  },
+  enabled: function enabled() {
+    return !!this.options.selectionCopy;
+  },
+  start: function start(index) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    if (!this.enabled()) return false;
+    options = Object.assign({
+      mouseEnabled: false,
+      expand: false
+    }, options);
+    this.endIndex = index;
+    if (!options.expand) this.startIndex = this.endIndex;
+    this.selecting = true;
+
+    if (options.mouseEnabled) {
+      this.editor.mouseDown = true;
+      this.selecting = this.startIndex !== this.endIndex;
+      if (this.selecting) this.removeNativeSelection();
+      window.addEventListener("mousemove", this.onMouseMove);
+    }
+
+    this.mediator.trigger("selection:render");
+  },
+  startAtEnd: function startAtEnd() {
+    this.start(this.editor.getBlocks().length - 1);
+  },
+  move: function move(offset) {
+    this.start(this.endIndex + offset);
+  },
+  onMouseMove: function onMouseMove() {},
+  update: function update(index) {
+    if (index < 0 || index >= this.editor.getBlocks().length) return;
+    this.endIndex = index;
+    if (this.startIndex !== this.endIndex) this.selecting = true;
+    this.removeNativeSelection();
+    this.mediator.trigger("selection:render");
+  },
+  expand: function expand(offset) {
+    this.update(this.endIndex + offset);
+  },
+  expandToStart: function expandToStart() {
+    this.update(0);
+  },
+  expandToEnd: function expandToEnd() {
+    this.update(this.editor.getBlocks().length - 1);
+  },
+  focusAtEnd: function focusAtEnd() {
+    var block = this.editor.getBlocks()[this.endIndex];
+    block.el.scrollIntoView({
+      behavior: "smooth"
+    });
+  },
+  complete: function complete() {
+    window.removeEventListener("mousemove", this.onMouseMove);
+  },
+  all: function all() {
+    if (!this.enabled()) return false;
+    this.removeNativeSelection();
+    var blocks = this.editor.getBlocks();
+    this.selecting = true;
+    this.startIndex = 0;
+    this.endIndex = blocks.length - 1;
+    this.mediator.trigger("selection:render");
+  },
+  cancel: function cancel() {
+    this.editor.mouseDown = false;
+    this.selecting = false;
+    this.render();
+  },
+  removeNativeSelection: function removeNativeSelection() {
+    var sel = window.getSelection ? window.getSelection() : document.selection;
+
+    if (sel) {
+      if (sel.removeAllRanges) {
+        sel.removeAllRanges();
+      } else if (sel.empty) {
+        sel.empty();
+      }
+    }
+
+    document.activeElement && document.activeElement.blur();
+  },
+  render: function render() {
+    var _this = this;
+
+    var visible = this.selecting;
+    this.editor.getBlocks().forEach(function (block, idx) {
+      block.select(visible && _this.indexSelected(idx));
+    });
+  },
+  getClipboardData: function getClipboardData() {
+    var _this2 = this;
+
+    this.editor.getData();
+    var htmlOutput = [];
+    var textOutput = [];
+    var dataOutput = [];
+    this.editor.getBlocks().forEach(function (block, idx) {
+      if (_this2.indexSelected(idx)) {
+        var html = block.asClipboardHTML();
+        var text = html;
+        htmlOutput.push(html);
+        textOutput.push(text);
+        dataOutput.push(block.getData());
+      }
+    });
+    return {
+      html: htmlOutput.join(""),
+      text: textOutput.join("\n\n"),
+      data: dataOutput
+    };
+  },
+  copy: function copy() {
+    var copyArea = this.createFakeCopyArea();
+    copyArea.innerHTML = this.getClipboardData().html;
+    var selection = window.getSelection();
+    var range = document.createRange();
+    range.selectNodeContents(copyArea);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    try {
+      document.execCommand('copy');
+      copyArea.blur();
+    } catch (err) {
+      console.log("Copy could not be performed");
+    }
+  },
+  createFakeCopyArea: function createFakeCopyArea() {
+    var copyArea = document.body.querySelector(".st-copy-area");
+
+    if (!copyArea) {
+      copyArea = Dom.createElement("div", {
+        contenteditable: true,
+        class: 'st-copy-area st-utils__hidden'
+      });
+      document.body.appendChild(copyArea);
+    }
+
+    return copyArea;
+  },
+  delete: function _delete() {
+    var _this3 = this;
+
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    options = Object.assign({
+      createNextBlock: true
+    }, options);
+    this.editor.getBlocks().forEach(function (block, idx) {
+      if (!_this3.indexSelected(idx)) return;
+
+      _this3.mediator.trigger("block:remove", block.blockID, {
+        focusOnNext: true,
+        createNextBlock: options.createNextBlock
+      });
+    });
+    this.cancel();
+  },
+  indexSelected: function indexSelected(index) {
+    return index >= this.getStartIndex() && index <= this.getEndIndex();
+  },
+  block: function block(_block) {
+    var blockPosition = this.editor.blockManager.getBlockPosition(_block.el);
+    this.mediator.trigger("formatter:hide");
+    this.removeNativeSelection();
+    this.start(blockPosition);
+  },
+  getStartIndex: function getStartIndex() {
+    return Math.min(this.startIndex, this.endIndex);
+  },
+  getEndIndex: function getEndIndex() {
+    return Math.max(this.startIndex, this.endIndex);
+  },
+  getStartBlock: function getStartBlock() {
+    return this.editor.getBlocks()[this.getStartIndex()];
+  },
+  getEndBlock: function getEndBlock() {
+    return this.editor.getBlocks()[this.getEndIndex()];
+  },
+  onKeyDown: function onKeyDown(ev) {
+    ev = ev || window.event;
+    var ctrlKey = ev.ctrlKey || ev.metaKey;
+    var key = ev.key;
+
+    if (this.selecting && key === "Backspace") {
+      ev.preventDefault();
+      this.delete();
+    } else if (ctrlKey && key === "a") {
+      if (!this.selecting && !this.canSelect()) return;
+      ev.preventDefault();
+      this.mediator.trigger("selection:all");
+    } else if (this.selecting) {
+      if (["Down", "ArrowDown"].indexOf(key) > -1) {
+        ev.preventDefault();
+        if (ev.shiftKey && ctrlKey) this.expandToEnd();else if (ev.shiftKey) this.expand(1);else if (ctrlKey) this.startAtEnd();else {
+          this.cancel();
+          this.mediator.trigger("block:focusNext", this.getEndBlock().blockID, {
+            force: true
+          });
+          return;
+        }
+        this.focusAtEnd();
+      } else if (["Up", "ArrowUp"].indexOf(key) > -1) {
+        ev.preventDefault();
+        if (ev.shiftKey && ctrlKey) this.expandToStart();else if (ev.shiftKey) this.expand(-1);else if (ctrlKey) this.start(0);else {
+          this.cancel();
+          this.mediator.trigger("block:focusPrevious", this.getStartBlock().blockID, {
+            force: true
+          });
+          return;
+        }
+        this.focusAtEnd();
+      }
+    }
+  },
+  onMouseUp: function onMouseUp() {
+    if (!this.editor.mouseDown) {
+      window.addEventListener('mousedown', this.onMouseDown);
+      this.mediator.trigger("selection:complete");
+      this.mediator.trigger("selection:cancel");
+      return;
+    }
+
+    this.editor.mouseDown = false;
+    this.mediator.trigger("selection:complete");
+    this.mediator.trigger("selection:render");
+  },
+  onMouseDown: function onMouseDown(ev) {
+    if (!this.editor.mouseDown) {
+      window.removeEventListener('mousedown', this.onMouseDown);
+      this.mediator.trigger("selection:complete");
+      this.mediator.trigger("selection:cancel");
+      return;
+    }
+  },
+  copySelection: function copySelection(ev) {
+    var content = this.getClipboardData();
+    ev.clipboardData.setData(TYPE, JSON.stringify(content.data));
+    ev.clipboardData.setData('text/html', content.html);
+    ev.clipboardData.setData('text/plain', content.text);
+    ev.preventDefault();
+  },
+  onCopy: function onCopy(ev) {
+    if (!this.selecting) return;
+    this.copySelection(ev);
+  },
+  onCut: function onCut(ev) {
+    if (!this.selecting) return;
+    this.copySelection(ev);
+    this.delete();
+  },
+  onPaste: function onPaste(ev) {
+    // Fix Edge types DomStringList.
+    var types = [].slice.call(ev.clipboardData.types);
+
+    if (types.includes(TYPE)) {
+      if (!this.selecting && !this.canSelect()) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      var data = JSON.parse(ev.clipboardData.getData(TYPE));
+
+      if (this.selecting) {
+        var nextBlock = this.editor.getBlocks()[this.getEndIndex() + 1];
+        this.delete({
+          createNextBlock: false
+        });
+
+        if (nextBlock && !nextBlock.isEmpty()) {
+          this.mediator.trigger("block:createBefore", "text", "", nextBlock, {
+            autoFocus: true
+          });
+        } else {
+          this.mediator.trigger("block:create", "text", "", null, {
+            autoFocus: true
+          });
+        }
+      }
+
+      this.mediator.trigger("block:paste", data);
+    }
+  }
+});
+module.exports = SelectionHandler;
+
+/***/ }),
+/* 245 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _ = __webpack_require__(0);
+
+var utils = __webpack_require__(1);
 
 module.exports = function (content, type) {
   // Deferring requiring these to sidestep a circular dependency:
   // Block -> this -> Blocks -> Block
-  var Blocks = __webpack_require__(20);
+  var Blocks = __webpack_require__(21);
 
   type = utils.classify(type);
   var markdown = content; //Normalise whitespace
@@ -22844,7 +23498,7 @@ module.exports = function (content, type) {
 };
 
 /***/ }),
-/* 245 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
