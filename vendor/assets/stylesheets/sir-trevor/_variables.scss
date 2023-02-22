@@ -1,22 +1,20 @@
-// Adjusted from upstream to use bootstrap's colors.
+$text-block-font-size: 1.275em !default;
 
-$text-block-font-size: 1.275em;
-$text-color: $body-color;
-$text-block-font-color: $text-color;
-$accent-color: theme-color("primary");
-$base-ui-color: theme-color("secondary");
-$light-ui-color: $gray-400;
-$blocks-control-bg-color: $card-cap-bg;
-$blocks-control-border-color: $card-border-color;
-$error-color: theme-color("danger");
-$selection-color: #B4D5FE;
+$text-block-font-color: #282d31 !default;
+$accent-color: #17bb75 !default;
+$base-ui-color: #42474b !default;
+$light-ui-color: #ccc !default;
+$blocks-control-bg-color: #f7f7f7 !default;
+$blocks-control-border-color: #ddd !default;
+$error-color: #d70014 !default;
+$selection-color: #b1f2d6 !default;
 
-$inner-block-padding: $grid-gutter-width $grid-gutter-width $grid-gutter-width + 18px $grid-gutter-width;
+$inner-block-padding: 30px 30px 48px !default;
 
-$block-controls-height: 164px;
-$block-add-height: $line-height-lg * 2;
-$block-controls-color:#9B9B9B;
+$block-controls-height: 164px !default;
+$block-add-height: 40px !default;
+$block-controls-color: #9b9b9b !default;
 
-$border-size: 2px;
-$border-style: solid;
-$default-border: $border-size $border-style $accent-color;
+$border-size: 2px !default;
+$border-style: solid !default;
+$default-border: $border-size $border-style $accent-color !default;
