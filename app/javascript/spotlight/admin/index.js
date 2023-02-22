@@ -8,7 +8,6 @@ import '../../../../vendor/assets/javascripts/jquery.serializejson'
 import '../../../../vendor/assets/javascripts/leaflet-iiif'
 import '../../../../vendor/assets/javascripts/Leaflet.Editable'
 import '../../../../vendor/assets/javascripts/Path.Drag'
-import '../../../../vendor/assets/javascripts/polyfill.min.js'
 
 import AddAnother from 'add_another'
 import AddNewButton from 'add_new_button'
