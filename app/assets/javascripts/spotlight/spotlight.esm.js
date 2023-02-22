@@ -7144,4 +7144,6 @@ Spotlight$1.onLoad(() => {
   new UserIndex().connect();
   new AdminIndex().connect();
 });
+
+export { Spotlight$1 as default };
 //# sourceMappingURL=spotlight.esm.js.map

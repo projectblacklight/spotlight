@@ -6,3 +6,5 @@ Spotlight.onLoad(() => {
   new UserIndex().connect()
   new AdminIndex().connect()
 })
+
+export default Spotlight
