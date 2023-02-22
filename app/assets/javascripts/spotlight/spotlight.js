@@ -99,7 +99,7 @@
       var container, target;
 
       function init() {
-        target_val = container.attr('data-target');
+        const target_val = container.attr('data-target');
         if (!target_val) 
           return
 
