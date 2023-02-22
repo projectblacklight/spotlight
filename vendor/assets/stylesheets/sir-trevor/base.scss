@@ -11,6 +11,17 @@
   fill: currentColor;
 }
 
+.st-block__inner {
+  ::-moz-selection {
+    background: $selection-color;
+    text-shadow: none;
+  }
+  ::selection {
+    background: $selection-color;
+    text-shadow: none;
+  }
+}
+
 .st-spinner {
   position: absolute!important;
   left: 50%; top: 50%;
