@@ -4,14 +4,12 @@ import Spotlight from 'spotlight'
 
 export default class {
   connect(){
-    // Set a ujs adapter to support both rails-ujs and jquery-ujs
-    var ujs = typeof Rails === 'undefined' ? $.rails : Rails;
     SirTrevor.setDefaults({
       iconUrl: Spotlight.sirTrevorIcon,
       uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint'),
       ajaxOptions: {
         headers: {
-          'X-CSRF-Token': ujs.csrfToken() || ''
+          'X-CSRF-Token': Spotlight.csrfToken() || ''
         },
         credentials: 'same-origin'
       }

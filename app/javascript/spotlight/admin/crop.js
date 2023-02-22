@@ -1,4 +1,5 @@
 import { addImageSelector } from 'add_image_selector'
+import Spotlight from 'spotlight'
 
 export default class Crop {
   constructor(cropArea) {
@@ -253,8 +254,6 @@ export default class Crop {
   }
 
   uploadFile() {
-    // Set a ujs adapter to support both rails-ujs and jquery-ujs
-    var ujs = typeof Rails === 'undefined' ? $.rails : Rails;
     var url = this.fileInput.data('endpoint')
     // Every post creates a new image/masthead.
     // Because they create IIIF urls which are heavily cached.
@@ -266,7 +265,7 @@ export default class Crop {
       // Form data
       data: this.getData(),
       headers: {
-        'X-CSRF-Token': ujs.csrfToken() || ''
+        'X-CSRF-Token': Spotlight.csrfToken() || ''
       },
       //Options to tell jQuery not to process data or worry about content-type.
       cache: false,
