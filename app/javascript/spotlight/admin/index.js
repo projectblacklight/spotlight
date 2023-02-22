@@ -1,5 +1,4 @@
 import '../../../../vendor/assets/javascripts/parameterize'
-import '../../../../vendor/assets/javascripts/jquery.serializejson'
 import '../../../../vendor/assets/javascripts/leaflet-iiif'
 import '../../../../vendor/assets/javascripts/Leaflet.Editable'
 import '../../../../vendor/assets/javascripts/Path.Drag'

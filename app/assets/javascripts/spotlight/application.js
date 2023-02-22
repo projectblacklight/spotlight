@@ -12,4 +12,5 @@
 //= require typeahead.bundle.min.js
 //= require nestable
 //= require bootstrap-tagsinput
+//= require jquery.serializejson
 //= require spotlight/spotlight
