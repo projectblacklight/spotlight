@@ -10,5 +10,5 @@
 //= require handlebars
 //= require tiny-slider
 //= require typeahead.bundle.min.js
-
+//= require nestable
 //= require spotlight/spotlight
