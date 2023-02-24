@@ -181,11 +181,7 @@ module Spotlight
       end
     end
 
-    # If you use Google Analytics, you need to wire your site to report to a Google Analytics property.
-    # Adding Google Analytics to your site is left as an excersize for the implementor (you could
-    # consider overriding the layout to inject GA code..)
-    #
-    # After getting your site to report to Google Analytics, you need to:
+    # After creating a property for your site on Google Analytics, you need to:
     # a) register an OAuth service account with access to your analytics property:
     #     (https://github.com/tpitale/legato/wiki/OAuth2-and-Google#registering-for-api-access)
     # b) download the pkcs12 key and make it accessible to your application
@@ -196,7 +192,8 @@ module Spotlight
     config.ga_email = nil
     config.ga_analytics_options = {}
     config.ga_page_analytics_options = config.ga_analytics_options.merge(limit: 5)
-    config.ga_anonymize_ip = false # false for backwards compatibility
+    config.ga_debug_mode = false
+
     config.max_pages = 1000
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
