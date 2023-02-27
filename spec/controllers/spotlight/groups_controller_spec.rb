@@ -14,7 +14,7 @@ describe Spotlight::GroupsController, type: :controller do
       it 'returns authorized groups (none)' do
         get :index, params: { exhibit_id: exhibit }, format: :json
         expect(response).to be_successful
-        expect(JSON.parse(response.body).length).to eq 0
+        expect(response.parsed_body.length).to eq 0
       end
     end
 
@@ -43,7 +43,7 @@ describe Spotlight::GroupsController, type: :controller do
     describe 'GET index' do
       it 'returns json response of groups' do
         get :index, params: { exhibit_id: exhibit }, format: :json
-        expect(JSON.parse(response.body).length).to eq 1
+        expect(response.parsed_body.length).to eq 1
       end
     end
 

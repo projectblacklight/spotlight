@@ -46,14 +46,14 @@ module Spotlight
       model.search_fields&.each do |k, v|
         v[:enabled] &&= value_to_boolean(v[:enabled])
         v[:enabled] ||= true if v[:enabled].nil?
-        v[:label] = default_blacklight_config.search_fields[k][:label] if default_blacklight_config.search_fields[k] && !v[:label].present?
+        v[:label] = default_blacklight_config.search_fields[k][:label] if default_blacklight_config.search_fields[k] && v[:label].blank?
         v.reject! { |_k, v1| v1.blank? && v1 != false }
       end
 
       model.sort_fields&.each do |k, v|
         v[:enabled] &&= value_to_boolean(v[:enabled])
         v[:enabled] ||= true if v[:enabled].nil?
-        v[:label] = default_blacklight_config.sort_fields[k][:label] if default_blacklight_config.sort_fields[k] && !v[:label].present?
+        v[:label] = default_blacklight_config.sort_fields[k][:label] if default_blacklight_config.sort_fields[k] && v[:label].blank?
         v.reject! { |_k, v1| v1.blank? && v1 != false }
       end
 

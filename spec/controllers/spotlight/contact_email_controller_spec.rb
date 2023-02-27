@@ -50,14 +50,14 @@ describe Spotlight::ContactEmailController, type: :controller do
         it 'is successful when the record exists' do
           delete :destroy, params: { id: contact_email, exhibit_id: contact_email.exhibit }
           expect(response).to be_successful
-          expect(JSON.parse(response.body)).to eq('success' => true, 'error' => nil)
+          expect(response.parsed_body).to eq('success' => true, 'error' => nil)
         end
 
         it 'gives a 404 with appropriate message when the record no longer exists' do
           contact_email.destroy
           delete :destroy, params: { id: contact_email, exhibit_id: contact_email.exhibit }
           expect(response.status).to eq 404
-          expect(JSON.parse(response.body)).to eq('success' => false, 'error' => 'Not Found')
+          expect(response.parsed_body).to eq('success' => false, 'error' => 'Not Found')
         end
       end
     end

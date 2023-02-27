@@ -98,7 +98,7 @@ describe Spotlight::CatalogController, type: :controller do
         get :autocomplete, params: { exhibit_id: exhibit, q: 'PLANIS', format: 'json' }
         expect(assigns[:response].documents.first.id).to eq 'ps921pn8250'
         expect(response).to be_successful
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         doc = json['docs'].first
         expect(doc).to include 'id', 'title', 'description', 'thumbnail', 'url'
         expect(doc['id']).to eq 'ps921pn8250'
@@ -112,7 +112,7 @@ describe Spotlight::CatalogController, type: :controller do
         get :autocomplete, params: { exhibit_id: exhibit, q: 'dx157', format: 'json' }
         expect(assigns[:response].documents.first.id).to eq 'dx157dh4345'
         expect(response).to be_successful
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json['docs'].first['id']).to eq 'dx157dh4345'
         expect(json['docs'].first['title']).to eq 'KAART der REYZE van drie Schepen naar het ZUYDLAND in de Jaaren 1721 en 1722'
       end
@@ -134,7 +134,7 @@ describe Spotlight::CatalogController, type: :controller do
 
           expect(response).to be_successful
 
-          json = JSON.parse(response.body)
+          json = response.parsed_body
           expect(json['@context']).to eq 'http://iiif.io/api/presentation/2/context.json'
           expect(json['@id']).to eq "http://test.host/spotlight/#{slug}/catalog/#{compound_id}/manifest"
           expect(json['@type']).to eq 'sc:Manifest'
@@ -305,7 +305,7 @@ describe Spotlight::CatalogController, type: :controller do
       it 'has a solr_json serialization' do
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352', format: :solr_json }
         expect(response).to be_successful
-        data = JSON.parse(response.body).with_indifferent_access
+        data = JSON.parse(response.body).with_indifferent_access # rubocop:disable Rails/ResponseParsedBody https://github.com/rubocop/rubocop-rails/issues/940
         expect(data).to include id: 'dq287tq6352'
         expect(data).to include exhibit.solr_data
       end
