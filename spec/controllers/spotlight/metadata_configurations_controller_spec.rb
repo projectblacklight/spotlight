@@ -61,7 +61,7 @@ describe Spotlight::MetadataConfigurationsController, type: :controller do
       it 'is successful' do
         get :show, params: { exhibit_id: exhibit, format: 'json' }
         expect(response).to be_successful
-        expect(JSON.parse(response.body).keys).to eq exhibit.blacklight_config.index_fields.keys
+        expect(response.parsed_body.keys).to eq exhibit.blacklight_config.index_fields.keys
       end
     end
 

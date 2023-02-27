@@ -72,7 +72,7 @@ describe Spotlight::SearchesController, type: :controller do
 
         get :index, params: { exhibit_id: exhibit, format: 'json' }
         expect(response).to be_successful
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json.last).to include('id' => search.id, 'title' => search.title)
       end
     end
@@ -90,7 +90,7 @@ describe Spotlight::SearchesController, type: :controller do
         pending("A search defined by a query doesn't work with autocomplete correctly.")
         get :autocomplete, params: { exhibit_id: exhibit, id: search, format: 'json' }
         expect(response).to be_successful
-        docs = JSON.parse(response.body)['docs']
+        docs = response.parsed_body['docs']
         doc_ids = docs.pluck('id')
         expect(docs.length).to eq 2
         expect(doc_ids).to include 'cz507zk0531'
@@ -100,7 +100,7 @@ describe Spotlight::SearchesController, type: :controller do
       it 'searches within the items returned in the query_params' do
         get :autocomplete, params: { exhibit_id: exhibit, id: search_fq, q: 'California', format: 'json' }
         expect(response).to be_successful
-        docs = JSON.parse(response.body)['docs']
+        docs = response.parsed_body['docs']
         expect(docs.length).to eq 1
         expect(docs.first['id']).to eq 'sn161bw2027'
         expect(docs.first['description']).to eq 'sn161bw2027'

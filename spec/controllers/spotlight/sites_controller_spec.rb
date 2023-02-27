@@ -58,7 +58,7 @@ describe Spotlight::SitesController, type: :controller do
       it 'serializes the exhibit-level tags' do
         get :tags, params: { format: 'json' }
         expect(response).to be_successful
-        data = JSON.parse(response.body)
+        data = response.parsed_body
 
         expect(data).to include 'a'
       end
