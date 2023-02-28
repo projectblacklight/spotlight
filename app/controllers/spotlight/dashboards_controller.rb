@@ -14,7 +14,11 @@ module Spotlight
       blacklight_config.action_mapping&.delete(:show)
       blacklight_config.view.clear
       blacklight_config.view.admin_table(partials: ['index_compact'], document_actions: [])
-      blacklight_config.track_search_session = false
+      if Blacklight::VERSION > '8'
+        blacklight_config.track_search_session.storage = false
+      else
+        blacklight_config.track_search_session = false
+      end
       blacklight_config.action_mapping.show.top_level_config = :index if blacklight_config.key?(:action_mapping)
     end
 

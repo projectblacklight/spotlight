@@ -20,7 +20,11 @@ module Spotlight
     before_action :swap_actions_configuration, only: :show
 
     before_action do
-      blacklight_config.track_search_session = false
+      if Blacklight::VERSION > '8'
+        blacklight_config.track_search_session.storage = false
+      else
+        blacklight_config.track_search_session = false
+      end
       blacklight_config.view.gallery.classes = 'row-cols-2 row-cols-md-4' if blacklight_config.view.key? :gallery
       blacklight_config.action_mapping.default = blacklight_config.index
       blacklight_config.action_mapping.show = blacklight_config.index
