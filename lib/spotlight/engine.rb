@@ -248,7 +248,7 @@ module Spotlight
 
     config.spambot_honeypot_email_field = :email_address
 
-    config.to_prepare do
+    config.after_initialize do
       Blacklight::Configuration.try(:initialize_default_configuration) unless Blacklight::Configuration.try(:initialized_default_configuration?)
 
       # Field containing the last modified date for a Solr document
