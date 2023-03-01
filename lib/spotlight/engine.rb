@@ -248,14 +248,12 @@ module Spotlight
 
     config.spambot_honeypot_email_field = :email_address
 
-    config.to_prepare do
-      Blacklight::Configuration.try(:initialize_default_configuration) unless Blacklight::Configuration.try(:initialized_default_configuration?)
-
+    Blacklight::Configuration.default_configuration do
       # Field containing the last modified date for a Solr document
       Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
 
       # Default configuration for the browse view
-      Blacklight::Configuration.default_values[:browse] ||= Blacklight::OpenStructWithHashAccess.new(document_actions: [])
+      Blacklight::Configuration.property :browse, default: Blacklight::OpenStructWithHashAccess.new(document_actions: [])
 
       Blacklight::Configuration.default_values[:search_state_fields] ||= []
       Blacklight::Configuration.default_values[:search_state_fields] += %i[id exhibit_id]
