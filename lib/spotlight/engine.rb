@@ -38,7 +38,7 @@ module Spotlight
     end
 
     require 'carrierwave'
-    require 'redcarpet'
+    require 'redcarpet' # required for markdown support in github/markup https://github.com/github/markup#markups
     require 'github/markup'
     require 'openseadragon'
     require 'handlebars_assets'
