@@ -38,7 +38,6 @@ module Spotlight
     end
 
     require 'carrierwave'
-    require 'redcarpet'
     require 'github/markup'
     require 'openseadragon'
     require 'handlebars_assets'
