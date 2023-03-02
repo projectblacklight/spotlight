@@ -33,7 +33,7 @@ $image-overlay-max-height: 300px;
     &::before {
       content: " \000B7 ";
       color: $text-muted;
-      padding-right: $spacer / 2;
+      padding-right: $spacer * 0.5;
     }
   }
 }
