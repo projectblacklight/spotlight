@@ -1,13 +1,3 @@
-class Analytics {
-  connect() {
-    if (window._gaq != null) {
-      return _gaq.push(['_trackPageview']);
-    } else if (window.pageTracker != null) {
-      return pageTracker._trackPageview();
-    }
-  }
-}
-
 class BrowseGroupCateogries {
   connect() {
     var $container, slider;
@@ -167,7 +157,6 @@ class ZprLinks {
 
 class UserIndex {
   connect() {
-    new Analytics().connect();
     new BrowseGroupCateogries().connect();
     new Carousel().connect();
     new ClearFormButton().connect();

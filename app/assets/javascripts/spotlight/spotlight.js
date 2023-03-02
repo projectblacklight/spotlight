@@ -4,16 +4,6 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory());
 })(this, (function () { 'use strict';
 
-  class Analytics {
-    connect() {
-      if (window._gaq != null) {
-        return _gaq.push(['_trackPageview']);
-      } else if (window.pageTracker != null) {
-        return pageTracker._trackPageview();
-      }
-    }
-  }
-
   class BrowseGroupCateogries {
     connect() {
       var $container, slider;
@@ -173,7 +163,6 @@
 
   class UserIndex {
     connect() {
-      new Analytics().connect();
       new BrowseGroupCateogries().connect();
       new Carousel().connect();
       new ClearFormButton().connect();
