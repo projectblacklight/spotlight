@@ -14,27 +14,8 @@ $exhibit-card-gutter: 30px !default;
 $exhibit-card-image-size: 269px !default;
 $exhibit-card-shadow: inset 2px 2px 5px -2px $exhibit-card-border !default;
 
-$navbar-transparent-color: $gray-400 !default;
-$navbar-transparent-bg: rgba(0, 0, 0, 0.2) !default;
 $navbar-transparent-border: $gray-500 !default;
-$navbar-transparent-link-color: $gray-600 !default;
-$navbar-transparent-link-hover-color: $gray-600 !default;
-$navbar-transparent-link-hover-bg: rgba(255, 255, 255, 0.15) !default;
-$navbar-transparent-link-active-color: $gray-600 !default;
-$navbar-transparent-link-active-bg: rgba(255, 255, 255, 0.3) !default;
-$navbar-transparent-link-disabled-color: #ccc !default;
-$navbar-transparent-link-disabled-bg: transparent !default;
-
 $navbar-transparent-page-bg: rgba(0, 0, 0, 0.5) !default;
-
-// Navbar brand label
-$navbar-transparent-brand-color: $navbar-transparent-link-color !default;
-$navbar-transparent-brand-hover-color: darken($navbar-transparent-brand-color, 10%) !default;
-$navbar-transparent-brand-hover-bg: transparent !default;
-
-// Navbar toggle
-$navbar-transparent-toggle-icon-bar-bg: $navbar-light-toggler-icon-bg !default;
-$navbar-transparent-toggle-border-color: $navbar-light-toggler-border-color !default;
 
 // Translations
 $translation-available-color: #80bf77;
