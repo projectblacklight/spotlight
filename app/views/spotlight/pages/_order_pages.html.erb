@@ -21,7 +21,7 @@
 <%- end -%>
 <div>
   <%= form_for @page, url: spotlight.polymorphic_path([@exhibit, page_collection_name.to_sym]), html: {class: "expanded-add-button"} do |f|%>
-    <a href='#add-new' class="btn btn-primary" data-turbolinks="false" data-expanded-add-button="true" data-field-target="[data-title-field]">
+    <a href='#add-new' class="btn btn-primary" data-turbo="false" data-turbolinks="false" data-expanded-add-button="true" data-field-target="[data-title-field]">
       <%= t(:'.new_page') %> <%= blacklight_icon('chevron_right') %>
       <span data-title-field="true" class="input-field">
         <%= f.text_field(:title) %>

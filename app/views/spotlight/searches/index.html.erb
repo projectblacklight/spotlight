@@ -62,7 +62,7 @@
           </div>
         <% end %>
         <%= form_for :group, url: spotlight.exhibit_groups_path(current_exhibit), html: {class: "expanded-add-button"} do |f|%>
-          <a href='#add-new' class="btn btn-primary" data-turbolinks="false" data-expanded-add-button="true" data-field-target="[data-title-field]">
+          <a href='#add-new' class="btn btn-primary" data-turbo="false" data-turbolinks="false" data-expanded-add-button="true" data-field-target="[data-title-field]">
             <%= t(:'.add_new_group') %> <%= blacklight_icon('chevron_right') %>
             <span data-title-field="true" class="input-field">
               <%= f.text_field(:title) %>
