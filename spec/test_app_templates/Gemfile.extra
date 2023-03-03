@@ -5,4 +5,6 @@ if ENV['BLACKLIGHT_VERSION'] == 'edge'
   gem 'blacklight', github: 'projectblacklight/blacklight'
   gem 'blacklight-gallery', github: 'projectblacklight/blacklight-gallery'
   gem 'blacklight-oembed', github: 'projectblacklight/blacklight-oembed'
+elsif ENV['BLACKLIGHT_VERSION'] && !ENV['BLACKLIGHT_VERSION'].empty?
+  gem 'blacklight', ENV['BLACKLIGHT_VERSION']
 end
