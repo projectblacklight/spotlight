@@ -73,7 +73,7 @@ $xl-sidebar-five-tile-width: ($container-xl-sidebar * 0.2) - $tile-margin;
     font-size: $h4-font-size;
     line-height: 1.2;
     margin: 0;
-    padding: $spacer / 4;
+    padding: $spacer * 0.25;
 
     @media (min-width: breakpoint-min("sm")) {
       font-size: 1.125rem;
