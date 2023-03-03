@@ -25,32 +25,32 @@ $xs-one-tile-width: $maximum-tile-width;
 
 // `sm` viewport width
 $sm-one-tile-width: $xs-one-tile-width;
-$sm-two-tile-width: ($container-sm / 2) - $tile-margin;
-$sm-three-tile-width: ($container-sm / 3) - $tile-margin;
+$sm-two-tile-width: ($container-sm * 0.5) - $tile-margin;
+$sm-three-tile-width: ($container-sm * 0.3333333333333333) - $tile-margin;
 
 // `md` viewport width
 $md-one-tile-width: $xs-one-tile-width;
-$md-two-tile-width: ($container-md/ 2) - $tile-margin;
-$md-three-tile-width: ($container-md / 3) - $tile-margin;
+$md-two-tile-width: ($container-md * 0.5) - $tile-margin;
+$md-three-tile-width: ($container-md * 0.3333333333333333) - $tile-margin;
 
 // `lg` viewport width
 $lg-one-tile-width: $xs-one-tile-width;
-$lg-two-tile-width: ($container-lg/ 2) - $tile-margin;
-$lg-three-tile-width: ($container-lg / 3) - $tile-margin;
-$lg-four-tile-width: ($container-lg / 4) - $tile-margin;
-$lg-five-tile-width: ($container-lg / 5) - $tile-margin;
+$lg-two-tile-width: ($container-lg * 0.5) - $tile-margin;
+$lg-three-tile-width: ($container-lg * 0.3333333333333333) - $tile-margin;
+$lg-four-tile-width: ($container-lg * 0.25) - $tile-margin;
+$lg-five-tile-width: ($container-lg * 0.2) - $tile-margin;
 
 // `xl` viewport width
 $xl-one-tile-width: $xs-one-tile-width;
-$xl-two-tile-width: ($container-xl/ 2) - $tile-margin;
-$xl-three-tile-width: ($container-xl / 3) - $tile-margin;
-$xl-four-tile-width: ($container-xl / 4) - $tile-margin;
-$xl-five-tile-width: ($container-xl / 5) - $tile-margin;
+$xl-two-tile-width: ($container-xl * 0.5) - $tile-margin;
+$xl-three-tile-width: ($container-xl * 0.3333333333333333) - $tile-margin;
+$xl-four-tile-width: ($container-xl * 0.25) - $tile-margin;
+$xl-five-tile-width: ($container-xl * 0.2) - $tile-margin;
 
 // `xl` with sidebar viewport width
-$xl-sidebar-three-tile-width: ($container-xl-sidebar / 3) - $tile-margin;
-$xl-sidebar-four-tile-width: ($container-xl-sidebar / 4) - $tile-margin;
-$xl-sidebar-five-tile-width: ($container-xl-sidebar / 5) - $tile-margin;
+$xl-sidebar-three-tile-width: ($container-xl-sidebar * 0.3333333333333333) - $tile-margin;
+$xl-sidebar-four-tile-width: ($container-xl-sidebar * 0.25) - $tile-margin;
+$xl-sidebar-five-tile-width: ($container-xl-sidebar * 0.2) - $tile-margin;
 
 .browse-category {
   background-size: cover;
