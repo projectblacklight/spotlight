@@ -26,7 +26,11 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
     autocomplete_control: function() {
       return `<input type="text" class="st-input-string form-control item-input-field" data-twitter-typeahead="true" placeholder="${i18n.t("blocks:browse_group_categories:autocomplete")}"/>`
     },
-    autocomplete_template: function() { return '<div class="autocomplete-item{{#unless published}} blacklight-private{{/unless}}"><span class="autocomplete-title">{{title}}</span><br/></div>' },
+    autocomplete_template: function(obj) {
+      return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">
+      <span class="autocomplete-title">${obj.title}</span><br/></div>`
+    },
+
     autocomplete_url: function() { return $(this.inner).closest('form[data-autocomplete-exhibit-browse-groups-path]').data('autocomplete-exhibit-browse-groups-path').replace("%25QUERY", "%QUERY"); },
     _itemPanel: function(data) {
       var index = "item_" + this.globalIndex++;

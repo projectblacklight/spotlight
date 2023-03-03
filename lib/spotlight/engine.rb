@@ -41,7 +41,6 @@ module Spotlight
     require 'redcarpet' # required for markdown support in github/markup https://github.com/github/markup#markups
     require 'github/markup'
     require 'openseadragon'
-    require 'handlebars_assets'
 
     config.assets.precompile += %w[spotlight/fallback/*.png]
 

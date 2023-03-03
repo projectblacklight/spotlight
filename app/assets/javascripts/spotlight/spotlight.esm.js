@@ -5297,12 +5297,11 @@ class ReadonlyCheckbox {
         hint: (typeAheadInput.data('autocomplete-hint') || false),
         autoselect: (typeAheadInput.data('autocomplete-autoselect') || true)
       }, options);
-
       typeAheadInput.typeahead(settings, {
         displayKey: settings.displayKey,
         source: settings.bloodhound.ttAdapter(),
         templates: {
-          suggestion: Handlebars.compile(settings.template)
+          suggestion: settings.template
         }
       });
     }
@@ -5329,13 +5328,15 @@ function itemsBloodhound() {
   results.initialize();
   return results;
 }
-function itemsTemplate() {
-  return '<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail"><img class="img-thumbnail" src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>';
+function templateFunc(obj) {
+  const thumbnail = obj.thumbnail ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail}" /></div>` : '';
+  return $(`<div class="autocomplete-item${obj.private ? ' blacklight-private' : ''}">${thumbnail}
+  <span class="autocomplete-title">${obj.title}</span><br/><small>&nbsp;&nbsp;${obj.description}</small></div>`)
 }
 
 function addAutocompletetoFeaturedImage(){
   if($('[data-featured-image-typeahead]').length > 0) {
-    $('[data-featured-image-typeahead]').spotlightSearchTypeAhead({bloodhound: itemsBloodhound(), template: itemsTemplate()}).on('click', function() {
+    $('[data-featured-image-typeahead]').spotlightSearchTypeAhead({bloodhound: itemsBloodhound(), template: templateFunc}).on('click', function() {
       $(this).select();
     }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
       var panel = $($(this).data('target-panel'));
@@ -5654,10 +5655,6 @@ class Users {
         this.autocomplete_url = function() { return $('form[data-autocomplete-url]').data('autocomplete-url').replace("%25QUERY", "%QUERY"); };
       }
 
-      if (this['autocomplete_template'] === undefined) {
-        this.autocomplete_url = function() { return '<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail"><img class="img-thumbnail" src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>' };
-      }
-
       if (this['transform_autocomplete_results'] === undefined) {
         this.transform_autocomplete_results = (val) => val;
       }
@@ -5679,7 +5676,7 @@ class Users {
     },
 
     addAutocompletetoSirTrevorForm: function() {
-      $('[data-twitter-typeahead]', this.inner).spotlightSearchTypeAhead({bloodhound: this.bloodhound(), template: this.autocomplete_template()}).on('typeahead:selected typeahead:autocompleted', this.autocompletedHandler()).on( 'focus', function() {
+      $('[data-twitter-typeahead]', this.inner).spotlightSearchTypeAhead({bloodhound: this.bloodhound(), template: this.autocomplete_template}).on('typeahead:selected typeahead:autocompleted', this.autocompletedHandler()).on( 'focus', function() {
         if($(this).val() === '') {
           $(this).data().ttTypeahead.input.trigger('queryChanged', '');
         }
@@ -6033,7 +6030,12 @@ SirTrevor.Blocks.Browse = (function(){
     autocomplete_url: function() {
       return $(this.inner).closest('form[data-autocomplete-exhibit-searches-path]').data('autocomplete-exhibit-searches-path').replace("%25QUERY", "%QUERY");
     },
-    autocomplete_template: function() { return '<div class="autocomplete-item{{#unless published}} blacklight-private{{/unless}}">{{#if thumbnail_image_url}}<div class="document-thumbnail"><img class="img-thumbnail" src="{{thumbnail_image_url}}" /></div>{{/if}}<span class="autocomplete-title">{{full_title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>' },
+
+    autocomplete_template: function(obj) {
+      const thumbnail = obj.thumbnail_image_url ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail_image_url}" /></div>` : '';
+      return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">${thumbnail}
+      <span class="autocomplete-title">${obj.full_title}</span><br/><small>&nbsp;&nbsp;${obj.description}</small></div>`
+    },
 
     bloodhoundOptions: function() {
       return {
@@ -6135,7 +6137,11 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
     autocomplete_control: function() {
       return `<input type="text" class="st-input-string form-control item-input-field" data-twitter-typeahead="true" placeholder="${i18n.t("blocks:browse_group_categories:autocomplete")}"/>`
     },
-    autocomplete_template: function() { return '<div class="autocomplete-item{{#unless published}} blacklight-private{{/unless}}"><span class="autocomplete-title">{{title}}</span><br/></div>' },
+    autocomplete_template: function(obj) {
+      return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">
+      <span class="autocomplete-title">${obj.title}</span><br/></div>`
+    },
+
     autocomplete_url: function() { return $(this.inner).closest('form[data-autocomplete-exhibit-browse-groups-path]').data('autocomplete-exhibit-browse-groups-path').replace("%25QUERY", "%QUERY"); },
     _itemPanel: function(data) {
       var index = "item_" + this.globalIndex++;
@@ -6291,7 +6297,11 @@ SirTrevor.Blocks.FeaturedPages = (function(){
     icon_name: "pages",
 
     autocomplete_url: function() { return $(this.inner).closest('form[data-autocomplete-exhibit-pages-path]').data('autocomplete-exhibit-pages-path').replace("%25QUERY", "%QUERY"); },
-    autocomplete_template: function() { return '<div class="autocomplete-item{{#unless published}} blacklight-private{{/unless}}">{{#if thumbnail_image_url}}<div class="document-thumbnail"><img class="img-thumbnail" src="{{thumbnail_image_url}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>' },
+    autocomplete_template: function(obj) {
+      const thumbnail = obj.thumbnail_image_url ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail_image_url}" /></div>` : '';
+      return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">${thumbnail}
+      <span class="autocomplete-title">${obj.title}</span><br/><small>&nbsp;&nbsp;${obj.description}</small></div>`
+    },
     bloodhoundOptions: function() {
       return {
         prefetch: {
@@ -6376,8 +6386,11 @@ SirTrevor.Blocks.SolrDocumentsBase = (function(){
   return Spotlight$1.Block.Resources.extend({
     plustextable: true,
     autocomplete_url: function() { return this.$instance().closest('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path').replace("%25QUERY", "%QUERY"); },
-    autocomplete_template: function() { return '<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail"><img class="img-thumbnail" src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>' },
-
+    autocomplete_template: function(obj) {
+      const thumbnail = obj.thumbnail ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail}" /></div>` : '';
+      return `<div class="autocomplete-item${obj.private ? ' blacklight-private' : ''}">${thumbnail}
+      <span class="autocomplete-title">${obj.title}</span><br/><small>&nbsp;&nbsp;${obj.description}</small></div>`
+    },
     transform_autocomplete_results: function(response) {
       return $.map(response['docs'], function(doc) {
         return doc;
