@@ -14,12 +14,11 @@ import { addImageSelector } from 'add_image_selector'
         hint: (typeAheadInput.data('autocomplete-hint') || false),
         autoselect: (typeAheadInput.data('autocomplete-autoselect') || true)
       }, options);
-
       typeAheadInput.typeahead(settings, {
         displayKey: settings.displayKey,
         source: settings.bloodhound.ttAdapter(),
         templates: {
-          suggestion: Handlebars.compile(settings.template)
+          suggestion: settings.template
         }
       })
     }
@@ -47,13 +46,15 @@ function itemsBloodhound() {
   return results;
 };
 
-function itemsTemplate() {
-  return '<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail"><img class="img-thumbnail" src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>';
+function templateFunc(obj) {
+  const thumbnail = obj.thumbnail ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail}" /></div>` : ''
+  return $(`<div class="autocomplete-item${obj.private ? ' blacklight-private' : ''}">${thumbnail}
+  <span class="autocomplete-title">${obj.title}</span><br/><small>&nbsp;&nbsp;${obj.description}</small></div>`)
 }
 
 export function addAutocompletetoFeaturedImage(){
   if($('[data-featured-image-typeahead]').length > 0) {
-    $('[data-featured-image-typeahead]').spotlightSearchTypeAhead({bloodhound: itemsBloodhound(), template: itemsTemplate()}).on('click', function() {
+    $('[data-featured-image-typeahead]').spotlightSearchTypeAhead({bloodhound: itemsBloodhound(), template: templateFunc}).on('click', function() {
       $(this).select();
     }).on('typeahead:selected typeahead:autocompleted', function(e, data) {
       var panel = $($(this).data('target-panel'));

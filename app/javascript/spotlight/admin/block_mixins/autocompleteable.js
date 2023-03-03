@@ -10,10 +10,6 @@
         this.autocomplete_url = function() { return $('form[data-autocomplete-url]').data('autocomplete-url').replace("%25QUERY", "%QUERY"); };
       }
 
-      if (this['autocomplete_template'] === undefined) {
-        this.autocomplete_url = function() { return '<div class="autocomplete-item{{#if private}} blacklight-private{{/if}}">{{#if thumbnail}}<div class="document-thumbnail"><img class="img-thumbnail" src="{{thumbnail}}" /></div>{{/if}}<span class="autocomplete-title">{{title}}</span><br/><small>&nbsp;&nbsp;{{description}}</small></div>' };
-      }
-
       if (this['transform_autocomplete_results'] === undefined) {
         this.transform_autocomplete_results = (val) => val
       }
@@ -35,7 +31,7 @@
     },
 
     addAutocompletetoSirTrevorForm: function() {
-      $('[data-twitter-typeahead]', this.inner).spotlightSearchTypeAhead({bloodhound: this.bloodhound(), template: this.autocomplete_template()}).on('typeahead:selected typeahead:autocompleted', this.autocompletedHandler()).on( 'focus', function() {
+      $('[data-twitter-typeahead]', this.inner).spotlightSearchTypeAhead({bloodhound: this.bloodhound(), template: this.autocomplete_template}).on('typeahead:selected typeahead:autocompleted', this.autocompletedHandler()).on( 'focus', function() {
         if($(this).val() === '') {
           $(this).data().ttTypeahead.input.trigger('queryChanged', '');
         }
