@@ -197,7 +197,7 @@ describe SolrDocument, type: :model do
       allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(start: 3)).and_return(double(documents: [4, 5, 6]))
       allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(start: 6)).and_return(double(documents: []))
 
-      expect(described_class.find_each.to_a).to match_array [1, 2, 3, 4, 5, 6]
+      expect(described_class.find_each.to_a).to contain_exactly(1, 2, 3, 4, 5, 6)
     end
   end
 

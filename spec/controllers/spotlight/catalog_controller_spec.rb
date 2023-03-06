@@ -230,7 +230,7 @@ describe Spotlight::CatalogController, type: :controller do
     it 'uses the admin table view and hide the document actions' do
       get :admin, params: { exhibit_id: exhibit }
 
-      expect(controller.blacklight_config.view.to_h.keys).to match_array [:admin_table]
+      expect(controller.blacklight_config.view.to_h.keys).to contain_exactly(:admin_table)
       expect(controller.blacklight_config.view.admin_table.document_actions).to be_empty
     end
 

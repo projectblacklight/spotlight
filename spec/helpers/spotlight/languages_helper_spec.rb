@@ -1,24 +1,22 @@
 # frozen_string_literal: true
 
-describe Spotlight::LanguagesHelper, type: :helper do
+RSpec.describe Spotlight::LanguagesHelper, type: :helper do
   let(:current_exhibit) { FactoryBot.create(:exhibit) }
 
   describe '#add_exhibit_language_dropdown_options' do
     it 'returns a sorted Array of locales and their names' do
       allow(helper).to receive_messages(current_exhibit: current_exhibit)
-      expect(helper.add_exhibit_language_dropdown_options).to match_array(
-        [
-          ['Albanian', :sq],
-          ['Arabic', :ar],
-          ['Chinese', :zh],
-          ['Dutch', :nl],
-          ['French', :fr],
-          ['German', :de],
-          ['Hungarian', :hu],
-          ['Italian', :it],
-          ['Portuguese - Brazil', :'pt-BR'],
-          ['Spanish', :es]
-        ]
+      expect(helper.add_exhibit_language_dropdown_options).to contain_exactly(
+        ['Albanian', :sq],
+        ['Arabic', :ar],
+        ['Chinese', :zh],
+        ['Dutch', :nl],
+        ['French', :fr],
+        ['German', :de],
+        ['Hungarian', :hu],
+        ['Italian', :it],
+        ['Portuguese - Brazil', :'pt-BR'],
+        ['Spanish', :es]
       )
     end
   end

@@ -388,7 +388,7 @@ describe Spotlight::ExhibitImportExportService do
         it 'copies the group membership' do
           subject
           expect(existing_search.reload.groups.length).to eq 1
-          expect(existing_search.groups.pluck(:slug)).to match_array [group.slug]
+          expect(existing_search.groups.pluck(:slug)).to contain_exactly(group.slug)
         end
       end
     end

@@ -282,7 +282,7 @@ describe Spotlight::Exhibit, type: :model do
       allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(start: 3)).and_return(double(documents: [4, 5, 6]))
       allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(start: 6)).and_return(double(documents: []))
 
-      expect(subject.solr_documents.to_a).to match_array [1, 2, 3, 4, 5, 6]
+      expect(subject.solr_documents.to_a).to contain_exactly(1, 2, 3, 4, 5, 6)
     end
 
     context 'with filter_resources_by_exhibit enabled' do
