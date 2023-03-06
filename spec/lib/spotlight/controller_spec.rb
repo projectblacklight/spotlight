@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Controller do
+RSpec.describe Spotlight::Controller do
   class MockController < ActionController::Base
     include Spotlight::Controller
   end
@@ -66,17 +66,6 @@ describe Spotlight::Controller do
     it 'allows the masthead to be set' do
       subject.current_masthead = search_masthead
       expect(subject.current_masthead).to eq search_masthead
-    end
-
-    context 'with a resource masthead' do
-      before do
-        allow(subject).to receive(:resource_masthead?).and_return(true)
-      end
-
-      it 'checks if the current resource has a masthead' do
-        pending
-        expect(subject.current_masthead).to eq search_masthead
-      end
     end
   end
 

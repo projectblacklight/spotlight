@@ -1,6 +1,7 @@
 inherit_from: .rubocop_todo.yml
 
 require:
+  - rubocop-capybara
   - rubocop-rspec
   - rubocop-rails
 
@@ -447,4 +448,16 @@ Rails/WhereNotWithMultipleConditions: # new in 2.17
   Enabled: true
 
 Rails/ResponseParsedBody: # new in 2.18
+  Enabled: true
+Metrics/CollectionLiteralLength: # new in 1.47
+  Enabled: true
+Style/DirEmpty: # new in 1.48
+  Enabled: true
+Style/FileEmpty: # new in 1.48
+  Enabled: true
+RSpec/RedundantAround: # new in 2.19
+  Enabled: true
+RSpec/SkipBlockInsideExample: # new in 2.19
+  Enabled: true
+RSpec/Rails/TravelAround: # new in 2.19
   Enabled: true
