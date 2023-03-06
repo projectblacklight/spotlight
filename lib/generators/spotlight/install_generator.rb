@@ -21,6 +21,9 @@ module Spotlight
     def add_manifest
       append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
       append_to_file 'app/assets/config/manifest.js', "\n//= link spotlight/manifest.js"
+
+      # Rails installed importmap by default, but we don't have importmap + Blacklight 7 working yet.
+      remove_file 'app/javascript/application.js'
     end
 
     def inject_spotlight_routes

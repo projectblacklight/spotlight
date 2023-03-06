@@ -63,10 +63,23 @@ module Spotlight
       FactoryBot.definition_file_paths << File.expand_path('../../spec/factories', __dir__) if defined?(FactoryBot)
     end
 
+    PRECOMPILE_ASSETS = %w[
+      spotlight/blocks/sir-trevor-icons.svg
+      spotlight/default_thumbnail.jpg
+      spotlight/default_browse_thumbnail.jpg
+      spotlight/spotlight.js
+      spotlight/spotlight.js.map
+      spotlight/spotlight.esm.js
+      spotlight/spotlight.esm.js.map
+    ].freeze
+
     initializer 'spotlight.assets.precompile' do |app|
-      app.config.assets.precompile += %w[spotlight/blocks/sir-trevor-icons.svg
-                                         spotlight/default_thumbnail.jpg
-                                         spotlight/default_browse_thumbnail.jpg]
+      app.config.assets.paths << Engine.root.join('app/javascript')
+      app.config.assets.precompile += PRECOMPILE_ASSETS
+    end
+
+    initializer 'spotlight.importmap', before: 'importmap' do |app|
+      app.config.importmap.paths << Engine.root.join('config/importmap.rb') if app.config.respond_to?(:importmap)
     end
 
     def self.user_class
