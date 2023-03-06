@@ -64,7 +64,9 @@ module Spotlight
     end
 
     initializer 'spotlight.assets.precompile' do |app|
-      app.config.assets.precompile += %w[spotlight/default_thumbnail.jpg spotlight/default_browse_thumbnail.jpg]
+      app.config.assets.precompile += %w[spotlight/blocks/sir-trevor-icons.svg
+                                         spotlight/default_thumbnail.jpg
+                                         spotlight/default_browse_thumbnail.jpg]
     end
 
     def self.user_class
