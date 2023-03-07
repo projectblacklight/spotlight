@@ -1,4 +1,4 @@
-import { addImageSelector } from 'add_image_selector'
+import { addImageSelector } from 'spotlight/admin/add_image_selector'
 import Spotlight from 'spotlight'
 
 export default class Crop {

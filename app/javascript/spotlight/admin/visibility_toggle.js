@@ -1,7 +1,7 @@
 // Visibility toggle for items in an exhibit, based on Blacklight's bookmark toggle
 // See: https://github.com/projectblacklight/blacklight/blob/main/app/javascript/blacklight/bookmark_toggle.js
 
-import CheckboxSubmit from 'checkbox_submit'
+import CheckboxSubmit from 'spotlight/admin/checkbox_submit'
 
 const VisibilityToggle = (e) => {
   if (e.target.matches('[data-checkboxsubmit-target="checkbox"]')) {
