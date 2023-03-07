@@ -1,9 +1,9 @@
-import Spotlight from 'spotlight'
-import SpotlightNestable from 'spotlight_nestable'
+import Core from 'spotlight/core'
+import SpotlightNestable from 'spotlight/admin/spotlight_nestable'
 
-Spotlight.Block.Resources = (function(){
+Core.Block.Resources = (function(){
 
-  return Spotlight.Block.extend({
+  return Core.Block.extend({
     type: "resources",
     formable: true,
     autocompleteable: true,

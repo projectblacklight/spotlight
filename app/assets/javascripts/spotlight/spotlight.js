@@ -1,12 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('spotlight_nestable')) :
-  typeof define === 'function' && define.amd ? define(['spotlight_nestable'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.SpotlightNestable));
-})(this, (function (SpotlightNestable) { 'use strict';
-
-  const _interopDefaultLegacy = e => e && typeof e === 'object' && 'default' in e ? e : { default: e };
-
-  const SpotlightNestable__default = /*#__PURE__*/_interopDefaultLegacy(SpotlightNestable);
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory());
+})(this, (function () { 'use strict';
 
   class BrowseGroupCateogries {
     connect() {
@@ -4342,6 +4338,36 @@
     input.parent().prev('[data-behavior="non-iiif-alert"]').hide();
   }
 
+  const Spotlight$1 = function() {
+    var buffer = [];
+    return {
+      onLoad: function(func) {
+        buffer.push(func);
+      },
+
+      activate: function() {
+        for(var i = 0; i < buffer.length; i++) {
+          buffer[i].call();
+        }
+      },
+      csrfToken: function () {
+        return document.querySelector('meta[name=csrf-token]')?.content
+      },
+      ZprLinks: {
+        close: "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M0 0h24v24H0V0z\" fill=\"none\"/><path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z\"/></svg>",
+        zoomIn: "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M0 0h24v24H0V0z\" fill=\"none\"/><path d=\"M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zm.5-7H9v2H7v1h2v2h1v-2h2V9h-2z\"/></svg>\n",
+        zoomOut: "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M0 0h24v24H0V0z\" fill=\"none\"/><path d=\"M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7V9z\"/></svg>\n"
+      }
+    };
+  }();
+
+  // This allows us to configure Spotlight in app/views/layouts/base.html.erb
+  window.Spotlight = Spotlight$1;
+
+  Blacklight.onLoad(function() {
+    Spotlight$1.activate();
+  });
+
   class Crop {
     constructor(cropArea) {
       this.cropArea = cropArea;
@@ -4606,7 +4632,7 @@
         // Form data
         data: this.getData(),
         headers: {
-          'X-CSRF-Token': Spotlight$2.csrfToken() || ''
+          'X-CSRF-Token': Spotlight$1.csrfToken() || ''
         },
         //Options to tell jQuery not to process data or worry about content-type.
         cache: false,
@@ -5073,11 +5099,11 @@
   class Pages {
     connect(){
       SirTrevor.setDefaults({
-        iconUrl: Spotlight$2.sirTrevorIcon,
+        iconUrl: Spotlight.sirTrevorIcon,
         uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint'),
         ajaxOptions: {
           headers: {
-            'X-CSRF-Token': Spotlight$2.csrfToken() || ''
+            'X-CSRF-Token': Spotlight$1.csrfToken() || ''
           },
           credentials: 'same-origin'
         }
@@ -5102,9 +5128,9 @@
           }
         });
 
-        editor.blockControls = Spotlight$2.BlockControls.create(editor);
+        editor.blockControls = Spotlight$1.BlockControls.create(editor);
 
-        new Spotlight$2.BlockLimits(editor).enforceLimits(editor);
+        new Spotlight$1.BlockLimits(editor).enforceLimits(editor);
       }
     }
   }
@@ -5831,7 +5857,7 @@
   })(jQuery);
 
   (function ($){
-    Spotlight$2.Block = SirTrevor.Block.extend({
+    Spotlight$1.Block = SirTrevor.Block.extend({
       scribeOptions: {
         allowBlockElements: true,
         tags: { p: true }
@@ -5854,9 +5880,9 @@
     });
   })(jQuery);
 
-  Spotlight$2.Block.Resources = (function(){
+  Spotlight$1.Block.Resources = (function(){
 
-    return Spotlight$2.Block.extend({
+    return Spotlight$1.Block.extend({
       type: "resources",
       formable: true,
       autocompleteable: true,
@@ -5985,7 +6011,7 @@
       },
 
       onBlockRender: function() {
-        SpotlightNestable__default.default.init($('[data-behavior="nestable"]', this.inner));
+        Module.init($('[data-behavior="nestable"]', this.inner));
 
         $('[data-input-select-target]', this.inner).selectRelatedInput();
       },
@@ -6002,7 +6028,7 @@
 
   SirTrevor.Blocks.Browse = (function(){
 
-    return Spotlight$2.Block.Resources.extend({
+    return Spotlight$1.Block.Resources.extend({
       type: "browse",
 
       icon_name: "browse",
@@ -6096,7 +6122,7 @@
 
   SirTrevor.Blocks.BrowseGroupCategories = (function(){
 
-    return Spotlight$2.Block.Resources.extend({
+    return Spotlight$1.Block.Resources.extend({
       type: "browse_group_categories",
       icon_name: "browse",
       bloodhoundOptions: function() {
@@ -6239,7 +6265,7 @@
 
   SirTrevor.Blocks.Oembed =  (function(){
 
-    return Spotlight$2.Block.extend({
+    return Spotlight$1.Block.extend({
       plustextable: true,
 
       id_key:"url",
@@ -6271,7 +6297,7 @@
 
   SirTrevor.Blocks.FeaturedPages = (function(){
 
-    return Spotlight$2.Block.Resources.extend({
+    return Spotlight$1.Block.Resources.extend({
       type: "featured_pages",
 
       icon_name: "pages",
@@ -6363,7 +6389,7 @@
 
   SirTrevor.Blocks.SolrDocumentsBase = (function(){
 
-    return Spotlight$2.Block.Resources.extend({
+    return Spotlight$1.Block.Resources.extend({
       plustextable: true,
       autocomplete_url: function() { return this.$instance().closest('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path').replace("%25QUERY", "%QUERY"); },
       autocomplete_template: function(obj) {
@@ -6675,7 +6701,7 @@
   })();
 
   SirTrevor.Blocks.UploadedItems = (function(){
-    return Spotlight$2.Block.Resources.extend({
+    return Spotlight$1.Block.Resources.extend({
       plustextable: true,
       uploadable: true,
       autocompleteable: false,
@@ -6695,7 +6721,7 @@
       fileInput: function() { return $(this.inner).find('input[type="file"]'); },
 
       onBlockRender: function(){
-        SpotlightNestable__default.default.init($(this.inner).find('[data-behavior="nestable"]'));
+        Module.init($(this.inner).find('[data-behavior="nestable"]'));
 
         this.fileInput().on('change', (function(ev) {
           this.onDrop(ev.currentTarget);
@@ -6896,8 +6922,8 @@
       return elButtons;
     }
 
-    Spotlight$2.BlockControls = function() { };
-    Spotlight$2.BlockControls.create = function(editor) {
+    Spotlight$1.BlockControls = function() { };
+    Spotlight$1.BlockControls.create = function(editor) {
       // REFACTOR - should probably not know about blockManager
       var el = render(SirTrevor.Blocks, editor.blockManager.blockTypes);
 
@@ -6934,21 +6960,21 @@
     };
   })();
 
-  Spotlight$2.BlockLimits = function(editor) {
+  Spotlight$1.BlockLimits = function(editor) {
     this.editor = editor;
   };
 
-  Spotlight$2.BlockLimits.prototype.enforceLimits = function(editor) {
+  Spotlight$1.BlockLimits.prototype.enforceLimits = function(editor) {
     this.addEditorCallbacks(editor);
     this.checkGlobalBlockTypeLimit()();
   };
 
-  Spotlight$2.BlockLimits.prototype.addEditorCallbacks = function(editor) {
+  Spotlight$1.BlockLimits.prototype.addEditorCallbacks = function(editor) {
     SirTrevor.EventBus.on('block:create:new', this.checkBlockTypeLimitOnAdd());
     SirTrevor.EventBus.on('block:remove', this.checkGlobalBlockTypeLimit());
   };
 
-  Spotlight$2.BlockLimits.prototype.checkBlockTypeLimitOnAdd = function() {
+  Spotlight$1.BlockLimits.prototype.checkBlockTypeLimitOnAdd = function() {
     var editor = this.editor;
 
     return function(block) {
@@ -6958,7 +6984,7 @@
     };
   };
 
-  Spotlight$2.BlockLimits.prototype.checkGlobalBlockTypeLimit = function() {
+  Spotlight$1.BlockLimits.prototype.checkGlobalBlockTypeLimit = function() {
     // we don't know what type of block was created or removed.. So, try them all.
     var editor = this.editor;
 
@@ -7121,44 +7147,12 @@
     }
   }
 
-  const Spotlight$1 = function() {
-    var buffer = [];
-    return {
-      onLoad: function(func) {
-        buffer.push(func);
-      },
-
-      activate: function() {
-        for(var i = 0; i < buffer.length; i++) {
-          buffer[i].call();
-        }
-      },
-      csrfToken: function () {
-        return document.querySelector('meta[name=csrf-token]')?.content
-      },
-      ZprLinks: {
-        close: "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M0 0h24v24H0V0z\" fill=\"none\"/><path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z\"/></svg>",
-        zoomIn: "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M0 0h24v24H0V0z\" fill=\"none\"/><path d=\"M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zm.5-7H9v2H7v1h2v2h1v-2h2V9h-2z\"/></svg>\n",
-        zoomOut: "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M0 0h24v24H0V0z\" fill=\"none\"/><path d=\"M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7V9z\"/></svg>\n"
-      }
-    };
-  }();
-
-  // This allows us to configure Spotlight in app/views/layouts/base.html.erb
-  window.Spotlight = Spotlight$1;
-
-  const Spotlight$2 = Spotlight$1;
-
-  Blacklight.onLoad(function() {
-    Spotlight$1.activate();
-  });
-
-  Spotlight$2.onLoad(() => {
+  Spotlight$1.onLoad(() => {
     new UserIndex().connect();
     new AdminIndex().connect();
   });
 
-  return Spotlight$2;
+  return Spotlight$1;
 
 }));
 //# sourceMappingURL=spotlight.js.map

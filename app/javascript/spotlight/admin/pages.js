@@ -1,6 +1,6 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
-import Spotlight from 'spotlight'
+import Core from 'spotlight/core'
 
 export default class {
   connect(){
@@ -9,7 +9,7 @@ export default class {
       uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint'),
       ajaxOptions: {
         headers: {
-          'X-CSRF-Token': Spotlight.csrfToken() || ''
+          'X-CSRF-Token': Core.csrfToken() || ''
         },
         credentials: 'same-origin'
       }
@@ -34,9 +34,9 @@ export default class {
         }
       });
 
-      editor.blockControls = Spotlight.BlockControls.create(editor);
+      editor.blockControls = Core.BlockControls.create(editor);
 
-      new Spotlight.BlockLimits(editor).enforceLimits(editor);
+      new Core.BlockLimits(editor).enforceLimits(editor);
     }
   }
 }

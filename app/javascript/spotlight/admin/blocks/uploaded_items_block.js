@@ -1,8 +1,8 @@
-import SpotlightNestable from 'spotlight_nestable'
-import Spotlight from 'spotlight'
+import SpotlightNestable from 'spotlight/admin/spotlight_nestable'
+import Core from 'spotlight/core'
 
 SirTrevor.Blocks.UploadedItems = (function(){
-  return Spotlight.Block.Resources.extend({
+  return Core.Block.Resources.extend({
     plustextable: true,
     uploadable: true,
     autocompleteable: false,

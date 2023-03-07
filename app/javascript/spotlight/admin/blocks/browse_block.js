@@ -1,8 +1,8 @@
-import Spotlight from 'spotlight'
+import Core from 'spotlight/core'
 
 SirTrevor.Blocks.Browse = (function(){
 
-  return Spotlight.Block.Resources.extend({
+  return Core.Block.Resources.extend({
     type: "browse",
 
     icon_name: "browse",
