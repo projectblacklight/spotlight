@@ -4,10 +4,10 @@
     <div class="page-links pt-0">
       <% if page.is_a?(Spotlight::HomePage) %>
           <%= link_to action_default_value(page, :view), current_exhibit %> &middot;
-          <%= exhibit_edit_link page, edit_exhibit_home_page_path(page.exhibit), data: { turbolinks: false } %>
+          <%= exhibit_edit_link page, edit_exhibit_home_page_path(page.exhibit), data: { turbolinks: false, turbo: false } %>
       <% else %>
         <%= exhibit_view_link page %> &middot;
-        <%= exhibit_edit_link page, data: { turbolinks: false } %>
+        <%= exhibit_edit_link page, data: { turbolinks: false, turbo: false } %>
       <% end %>
     </div>
   </td>
