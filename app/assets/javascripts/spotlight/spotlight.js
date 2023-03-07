@@ -7119,7 +7119,7 @@
     }
   });
 
-  // import '../../../../vendor/assets/javascripts/sir-trevor'
+  // These scripts are in the vendor directory
 
 
   class AdminIndex {
