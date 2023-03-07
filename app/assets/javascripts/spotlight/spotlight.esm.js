@@ -7113,7 +7113,7 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
   }
 });
 
-// import '../../../../vendor/assets/javascripts/sir-trevor'
+// These scripts are in the vendor directory
 
 
 class AdminIndex {

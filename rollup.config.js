@@ -13,7 +13,7 @@ const globals = {}
 
 let includePathOptions = {
   include: {},
-  paths: ['app/javascript', 'vendor/assets/javascript'],
+  paths: ['app/javascript', 'vendor/assets/javascripts'],
   external: [],
   extensions: ['.js', '.es6']
 };
