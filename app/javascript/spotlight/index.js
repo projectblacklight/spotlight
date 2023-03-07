@@ -1,5 +1,5 @@
-import UserIndex from 'spotlight/user/index'
-import AdminIndex from 'spotlight/admin/index'
+import UserIndex from 'spotlight/user'
+import AdminIndex from 'spotlight/admin'
 import Spotlight from 'spotlight/spotlight'
 
 Spotlight.onLoad(() => {
