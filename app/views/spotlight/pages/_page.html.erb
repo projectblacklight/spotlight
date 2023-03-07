@@ -3,7 +3,7 @@
   <% case section when :additional_options %>
     <div class="page-links">
       <%= exhibit_view_link page %> &middot;
-      <%= exhibit_edit_link page, data: { turbolinks: false } %> &middot;
+      <%= exhibit_edit_link page, data: { turbolinks: false, turbo: false } %> &middot;
       <%= exhibit_delete_link page %>
     </div>
     <%- if page.feature_page? -%>
