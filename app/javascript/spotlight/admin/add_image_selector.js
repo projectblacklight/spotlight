@@ -1,4 +1,4 @@
-import Iiif from 'iiif'
+import Iiif from 'spotlight/admin/iiif'
 
 export function addImageSelector(input, panel, manifestUrl, initialize) {
   if (!manifestUrl) {

@@ -1,4 +1,4 @@
-import Crop from 'crop';
+import Crop from 'spotlight/admin/crop';
 
 export default class {
   connect() {

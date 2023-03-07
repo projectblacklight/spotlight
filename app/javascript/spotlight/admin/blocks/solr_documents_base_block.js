@@ -1,4 +1,4 @@
-import Iiif from '../iiif'
+import Iiif from 'spotlight/admin/iiif'
 import Spotlight from 'spotlight'
 
 SirTrevor.Blocks.SolrDocumentsBase = (function(){

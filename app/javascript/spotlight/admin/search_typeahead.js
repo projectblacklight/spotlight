@@ -1,4 +1,4 @@
-import { addImageSelector } from 'add_image_selector'
+import { addImageSelector } from 'spotlight/admin/add_image_selector'
 
 (function($){
   $.fn.spotlightSearchTypeAhead = function( options ) {
