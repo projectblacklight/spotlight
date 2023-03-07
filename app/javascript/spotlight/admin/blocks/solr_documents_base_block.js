@@ -1,9 +1,9 @@
 import Iiif from 'spotlight/admin/iiif'
-import Spotlight from 'spotlight'
+import Core from 'spotlight/core'
 
 SirTrevor.Blocks.SolrDocumentsBase = (function(){
 
-  return Spotlight.Block.Resources.extend({
+  return Core.Block.Resources.extend({
     plustextable: true,
     autocomplete_url: function() { return this.$instance().closest('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path').replace("%25QUERY", "%QUERY"); },
     autocomplete_template: function(obj) {

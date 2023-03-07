@@ -1,10 +1,10 @@
 import UserIndex from 'spotlight/user'
 import AdminIndex from 'spotlight/admin'
-import Spotlight from 'spotlight/spotlight'
+import Core from 'spotlight/core'
 
-Spotlight.onLoad(() => {
+Core.onLoad(() => {
   new UserIndex().connect()
   new AdminIndex().connect()
 })
 
-export default Spotlight
+export default Core

@@ -6,11 +6,11 @@
   and any provided text
   and displays them.
 */
-import Spotlight from 'spotlight'
+import Core from 'spotlight/core'
 
 SirTrevor.Blocks.Oembed =  (function(){
 
-  return Spotlight.Block.extend({
+  return Core.Block.extend({
     plustextable: true,
 
     id_key:"url",

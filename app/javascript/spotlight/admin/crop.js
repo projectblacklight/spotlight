@@ -1,5 +1,5 @@
 import { addImageSelector } from 'spotlight/admin/add_image_selector'
-import Spotlight from 'spotlight'
+import Core from 'spotlight/core'
 
 export default class Crop {
   constructor(cropArea) {
@@ -265,7 +265,7 @@ export default class Crop {
       // Form data
       data: this.getData(),
       headers: {
-        'X-CSRF-Token': Spotlight.csrfToken() || ''
+        'X-CSRF-Token': Core.csrfToken() || ''
       },
       //Options to tell jQuery not to process data or worry about content-type.
       cache: false,

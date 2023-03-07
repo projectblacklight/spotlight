@@ -1,20 +1,20 @@
-import Spotlight from 'spotlight'
+import Core from 'spotlight/core'
 
-Spotlight.BlockLimits = function(editor) {
+Core.BlockLimits = function(editor) {
   this.editor = editor;
 };
 
-Spotlight.BlockLimits.prototype.enforceLimits = function(editor) {
+Core.BlockLimits.prototype.enforceLimits = function(editor) {
   this.addEditorCallbacks(editor);
   this.checkGlobalBlockTypeLimit()();
 };
 
-Spotlight.BlockLimits.prototype.addEditorCallbacks = function(editor) {
+Core.BlockLimits.prototype.addEditorCallbacks = function(editor) {
   SirTrevor.EventBus.on('block:create:new', this.checkBlockTypeLimitOnAdd());
   SirTrevor.EventBus.on('block:remove', this.checkGlobalBlockTypeLimit());
 };
 
-Spotlight.BlockLimits.prototype.checkBlockTypeLimitOnAdd = function() {
+Core.BlockLimits.prototype.checkBlockTypeLimitOnAdd = function() {
   var editor = this.editor;
 
   return function(block) {
@@ -24,7 +24,7 @@ Spotlight.BlockLimits.prototype.checkBlockTypeLimitOnAdd = function() {
   };
 };
 
-Spotlight.BlockLimits.prototype.checkGlobalBlockTypeLimit = function() {
+Core.BlockLimits.prototype.checkGlobalBlockTypeLimit = function() {
   // we don't know what type of block was created or removed.. So, try them all.
   var editor = this.editor;
 

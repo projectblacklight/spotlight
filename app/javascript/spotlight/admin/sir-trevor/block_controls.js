@@ -1,4 +1,4 @@
-import Spotlight from 'spotlight'
+import Core from 'spotlight/core'
 
 (function() {
   var BLOCK_REPLACER_CONTROL_TEMPLATE = function(block) {
@@ -77,8 +77,8 @@ import Spotlight from 'spotlight'
     return elButtons;
   }
 
-  Spotlight.BlockControls = function() { };
-  Spotlight.BlockControls.create = function(editor) {
+  Core.BlockControls = function() { };
+  Core.BlockControls.create = function(editor) {
     // REFACTOR - should probably not know about blockManager
     var el = render(SirTrevor.Blocks, editor.blockManager.blockTypes);
 

@@ -1,8 +1,8 @@
-import Spotlight from 'spotlight'
+import Core from 'spotlight/core'
 
 SirTrevor.Blocks.FeaturedPages = (function(){
 
-  return Spotlight.Block.Resources.extend({
+  return Core.Block.Resources.extend({
     type: "featured_pages",
 
     icon_name: "pages",

@@ -1,6 +1,6 @@
-import Spotlight from 'spotlight'
+import Core from 'spotlight/core'
 (function ($){
-  Spotlight.Block = SirTrevor.Block.extend({
+  Core.Block = SirTrevor.Block.extend({
     scribeOptions: {
       allowBlockElements: true,
       tags: { p: true }

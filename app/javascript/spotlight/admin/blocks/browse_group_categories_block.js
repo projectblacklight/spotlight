@@ -1,11 +1,11 @@
 /*
   Sir Trevor BrowseGroupCategories
 */
-import Spotlight from 'spotlight'
+import Core from 'spotlight/core'
 
 SirTrevor.Blocks.BrowseGroupCategories = (function(){
 
-  return Spotlight.Block.Resources.extend({
+  return Core.Block.Resources.extend({
     type: "browse_group_categories",
     icon_name: "browse",
     bloodhoundOptions: function() {
