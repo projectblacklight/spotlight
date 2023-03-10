@@ -23,8 +23,7 @@ module Spotlight
     before_action :load_document, only: %i[edit update make_private make_public manifest]
 
     before_action only: :show do
-      blacklight_config.show.partials.unshift 'tophat'
-      blacklight_config.show.partials.unshift 'curation_mode_toggle'
+      blacklight_config.show.document_component = Spotlight::DocumentComponent
     end
 
     before_action only: :admin do
