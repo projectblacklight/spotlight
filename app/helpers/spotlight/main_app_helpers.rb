@@ -7,10 +7,6 @@ module Spotlight
     include Spotlight::NavbarHelper
     include Spotlight::MastheadHelper
 
-    def cache_key_for_spotlight_exhibits
-      "#{Spotlight::Exhibit.count}/#{Spotlight::Exhibit.maximum(:updated_at).try(:utc)}"
-    end
-
     def on_browse_page?
       params[:controller] == 'spotlight/browse'
     end
