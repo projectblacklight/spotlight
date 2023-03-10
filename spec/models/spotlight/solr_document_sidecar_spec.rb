@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::SolrDocumentSidecar, type: :model do
+RSpec.describe Spotlight::SolrDocumentSidecar, type: :model do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do
@@ -43,6 +43,17 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
       its(:to_solr) { is_expected.to include 'a_blank_field' => nil }
       its(:to_solr) { is_expected.to include 'a_blank_multivalued_field' => [] }
       its(:to_solr) { is_expected.to include 'a_multivalued_field_with_some_blanks' => ['a'] }
+    end
+  end
+
+  describe '#update' do
+    before do
+      subject.save
+    end
+
+    it 'poisions the exhibit cache' do
+      expect { subject.update(data: { 'a_tesim' => 1, 'b_tesim' => 2, 'c_tesim' => 3 }) }
+        .to(change { subject.exhibit.updated_at })
     end
   end
 end
