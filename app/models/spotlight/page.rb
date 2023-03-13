@@ -129,7 +129,7 @@ module Spotlight
     end
 
     def lock!(user)
-      create_lock(by: user).tap(&:current_session!) unless lock.present?
+      create_lock(by: user).tap(&:current_session!) if lock.blank?
     end
 
     def updated_after?(other_page)

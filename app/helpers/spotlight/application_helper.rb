@@ -97,7 +97,7 @@ module Spotlight
     # Return a copy of the blacklight configuration
     # that only includes views conifgured by our block
     def blacklight_view_config_for_search_block(block)
-      return {} unless block.view.present?
+      return {} if block.view.blank?
 
       # Reject any views that aren't configured to display for this block
       blacklight_config.view.select do |view, _|
