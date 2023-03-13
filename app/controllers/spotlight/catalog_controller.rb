@@ -245,4 +245,5 @@ module Spotlight
       Rails.logger.info "Failed to commit document updates: #{e}"
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

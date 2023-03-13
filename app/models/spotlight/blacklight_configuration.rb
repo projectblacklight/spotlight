@@ -227,7 +227,7 @@ module Spotlight
         config
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize
 
     def custom_index_fields(blacklight_config)
       Hash[exhibit.custom_fields.reject(&:new_record?).map do |custom_field|
@@ -406,4 +406,5 @@ module Spotlight
       ActiveModel::Type::Boolean.new.cast v
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

@@ -57,14 +57,6 @@ Lint/EmptyFile:
   Exclude:
     - 'spec/lib/spotlight/catalog_spec.rb'
 
-# Offense count: 4
-# Configuration parameters: MaximumRangeSize.
-Lint/MissingCopEnableDirective:
-  Exclude:
-    - 'app/controllers/spotlight/catalog_controller.rb'
-    - 'app/models/spotlight/blacklight_configuration.rb'
-    - 'lib/spotlight/engine.rb'
-
 # Offense count: 1
 Lint/MissingSuper:
   Exclude:

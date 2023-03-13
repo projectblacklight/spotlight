@@ -340,4 +340,5 @@ module Spotlight
       config.active_record.yaml_column_permitted_classes += [Symbol, ActiveSupport::HashWithIndifferentAccess]
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
