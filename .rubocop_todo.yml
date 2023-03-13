@@ -339,21 +339,6 @@ Rails/ApplicationMailer:
 Rails/ApplicationRecord:
   Enabled: false
 
-# Offense count: 10
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: NilOrEmpty, NotPresent, UnlessPresent.
-Rails/Blank:
-  Exclude:
-    - 'app/controllers/spotlight/exhibits_controller.rb'
-    - 'app/helpers/spotlight/application_helper.rb'
-    - 'app/jobs/spotlight/add_uploads_from_csv.rb'
-    - 'app/models/spotlight/featured_image.rb'
-    - 'app/models/spotlight/page.rb'
-    - 'app/models/spotlight/resources/iiif_manifest.rb'
-    - 'app/models/spotlight/resources/iiif_service.rb'
-    - 'lib/migration/iiif.rb'
-    - 'spec/support/features/test_features_helpers.rb'
-
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/CompactBlank:
