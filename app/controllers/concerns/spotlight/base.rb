@@ -31,10 +31,9 @@ module Spotlight
 
     # rubocop:disable Metrics/AbcSize
     def autocomplete_json_response_for_document(doc)
-      heading = view_context.document_presenter(doc).heading
       {
         id: doc.id,
-        title: CGI.unescapeHTML(heading.is_a?(Array) ? heading.join(',').to_str: heading.to_str),
+        title: autocomplete_title(view_context.document_presenter(doc).heading),
         thumbnail: doc.first(blacklight_config.index.thumbnail_field),
         full_image_url: doc.first(Spotlight::Engine.config.full_image_field),
         description: doc.id,
@@ -45,5 +44,15 @@ module Spotlight
       }
     end
     # rubocop:enable Metrics/AbcSize
+
+    private
+    # Some pipeline steps may return an array instead of a string
+    # to_str throws an error if the object is not a string
+    # This workaround does a join on the array to allow values to be returned
+    def autocomplete_title(heading)
+      heading = heading.join(',') if heading.is_a?(Array)
+      CGI.unescapeHTML(heading.to_str)
+    end
+
   end
 end
