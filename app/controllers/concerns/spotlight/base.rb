@@ -48,7 +48,7 @@ module Spotlight
     # This workaround does a join on the array to allow values to be returned
 
     private
-    
+
     def autocomplete_title(heading)
       heading = heading.join(',') if heading.is_a?(Array)
       CGI.unescapeHTML(heading.to_str)
