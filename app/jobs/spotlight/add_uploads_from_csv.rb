@@ -15,8 +15,8 @@ module Spotlight
         csv_data,
         exhibit,
         user,
-        indexed_count: job.count,
-        errors: job.errors
+        job.count,
+        job.errors
       ).deliver_now
     end
 
