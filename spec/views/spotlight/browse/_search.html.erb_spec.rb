@@ -7,9 +7,6 @@ describe 'spotlight/browse/search', type: :view do
   before do
     allow(search).to receive_messages(documents: double(size: 15))
     allow(search).to receive_message_chain(:thumbnail, iiif_url: '/some/image')
-  end
-
-  before do
     assign :exhibit, exhibit
   end
 

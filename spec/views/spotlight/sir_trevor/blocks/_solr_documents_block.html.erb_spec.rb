@@ -21,9 +21,6 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_block.html.erb', type: :vi
   before do
     allow(block).to receive(:each_document).and_yield({}, doc)
     allow(block).to receive(:documents?).and_return(true)
-  end
-
-  before do
     allow(view).to receive(:blacklight_config).and_return(blacklight_config)
     allow(view).to receive_messages(document_presenter: stub_presenter, document_link_params: {})
   end

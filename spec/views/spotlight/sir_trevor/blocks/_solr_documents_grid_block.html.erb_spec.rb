@@ -22,9 +22,6 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_grid_block', type: :view d
                                                          [{}, SolrDocument.new(id: 2)],
                                                          [{}, SolrDocument.new(id: 3)]
                                                        ])
-  end
-
-  before do
     allow(view).to receive_messages(
       blacklight_config: blacklight_config,
       document_presenter: stub_presenter

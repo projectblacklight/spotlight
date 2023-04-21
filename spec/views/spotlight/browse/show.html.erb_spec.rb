@@ -11,9 +11,6 @@ describe 'spotlight/browse/show', type: :view do
     stub_template('_results_pagination.html.erb' => '')
     stub_template('_sort_and_per_page.html.erb' => 'Sort and Per Page actions')
     stub_template 'spotlight/browse/_tophat.html.erb' => ''
-  end
-
-  before do
     assign :exhibit, exhibit
     assign :search, search
     assign :response, double(documents: double(size: 15))

@@ -4,9 +4,8 @@ describe 'Item Administration', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
 
-  before { login_as curator }
-
   before do
+    login_as curator
     allow_any_instance_of(SolrDocument).to receive_messages(reindex: true)
   end
 
