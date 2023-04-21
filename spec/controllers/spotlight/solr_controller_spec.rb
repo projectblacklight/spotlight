@@ -22,9 +22,8 @@ describe Spotlight::SolrController, type: :controller do
     let(:repository) { instance_double(Blacklight::Solr::Repository, connection: connection) }
     let!(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit, slug: 'custom_field') }
 
-    before { sign_in admin }
-
     before do
+      sign_in admin
       allow(controller).to receive(:repository).and_return(repository)
     end
 

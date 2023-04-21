@@ -16,17 +16,17 @@ describe Spotlight::MainAppHelpers, type: :helper do
             e.confirm!
           end
         end
+        allow(helper).to receive_messages current_exhibit: exhibit_with_contacts
       end
-
-      before { allow(helper).to receive_messages current_exhibit: exhibit_with_contacts }
 
       its(:show_contact_form?) { is_expected.to be_truthy }
     end
 
     context 'with an exhibit with only unconfirmed contacts' do
-      before { exhibit_with_contacts.contact_emails.build email: 'cabeer@stanford.edu' }
-
-      before { allow(helper).to receive_messages current_exhibit: exhibit_with_contacts }
+      before do
+        exhibit_with_contacts.contact_emails.build email: 'cabeer@stanford.edu'
+        allow(helper).to receive_messages current_exhibit: exhibit_with_contacts
+      end
 
       its(:show_contact_form?) { is_expected.to be_falsey }
     end
@@ -44,9 +44,10 @@ describe Spotlight::MainAppHelpers, type: :helper do
     end
 
     context 'with a default contact address' do
-      before { allow(Spotlight::Engine.config).to receive_messages default_contact_email: 'root@localhost' }
-
-      before { allow(helper).to receive_messages current_exhibit: exhibit }
+      before do
+        allow(Spotlight::Engine.config).to receive_messages default_contact_email: 'root@localhost'
+        allow(helper).to receive_messages current_exhibit: exhibit
+      end
 
       its(:show_contact_form?) { is_expected.to be_truthy }
     end

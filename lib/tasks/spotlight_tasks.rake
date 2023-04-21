@@ -152,7 +152,7 @@ namespace :spotlight do
         print " OK\n"
       rescue StandardError => e
         errors += 1
-        puts e.to_s
+        puts e
       end
 
       exit 1 if errors > 0
