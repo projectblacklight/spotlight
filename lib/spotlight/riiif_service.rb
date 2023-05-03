@@ -22,7 +22,7 @@ module Spotlight
       Spotlight::Engine.routes.url_helpers.manifest_exhibit_solr_document_path(exhibit, "#{exhibit.id}-#{resource.id}")
     end
 
-    # @param [String] id
+    # @param [String] id the ID string of a Spotlight::FeaturedImage
     # @return [Hash]
     def self.info(id)
       Riiif::Image.new(id).info

@@ -43,7 +43,7 @@ module Spotlight
       def to_solr
         return {} unless upload&.file_present?
 
-        dimensions = Spotlight::Engine.config.iiif_service.info(id)
+        dimensions = Spotlight::Engine.config.iiif_service.info(upload.id)
 
         {
           spotlight_full_image_width_ssm: dimensions.width,
