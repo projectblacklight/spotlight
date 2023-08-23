@@ -141,7 +141,6 @@ describe Spotlight::CatalogController, type: :controller do
           image = canvas['images'].first
           expect(image['resource']['@id']).to eq compound_id
           expect(image['resource']['format']).to eq 'image/jpeg'
-
         ensure
           # clean up solr document created by save_and_index above
           Blacklight.default_index.connection.delete_by_id uploaded_resource.compound_id
