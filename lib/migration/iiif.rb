@@ -23,21 +23,21 @@ module Migration
     private
 
     def migrate_featured_images
-      Spotlight::FeaturedImage.all.each do |image|
+      Spotlight::FeaturedImage.all.find_each do |image|
         update_iiif_url(image)
         copy_exhibit_thumbnail_from_featured_image(image)
       end
     end
 
     def migrate_contact_avatars
-      Spotlight::Contact.all.each do |contact|
+      Spotlight::Contact.all.find_each do |contact|
         avatar = copy_contact_image_to_avatar(contact)
         contact.update(avatar: avatar) if avatar
       end
     end
 
     def migrate_upload_images
-      Spotlight::Resources::Upload.all.each do |upload|
+      Spotlight::Resources::Upload.all.find_each do |upload|
         copy_upload_to_featured_image(upload)
       end
     end

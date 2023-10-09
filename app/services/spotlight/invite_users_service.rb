@@ -7,7 +7,7 @@ module Spotlight
   # need to be persisted in order to generate the appropriate content in the invitation email.
   class InviteUsersService
     def self.call(resource:)
-      resource.roles.includes(:user).each do |role|
+      resource.roles.includes(:user).find_each do |role|
         user = role.user
 
         user.deliver_invitation if user.created_by_invite? && user.invitation_sent_at.blank?
