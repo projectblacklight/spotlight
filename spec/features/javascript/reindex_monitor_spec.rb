@@ -2,7 +2,7 @@
 
 describe 'Reindex Monitor', default_max_wait_time: 10, js: true do
   let(:resources) do
-    [FactoryBot.create(:resource)]
+    FactoryBot.create_list(:resource, 1)
   end
   let(:exhibit) { FactoryBot.create(:exhibit, resources: resources) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }

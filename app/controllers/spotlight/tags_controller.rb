@@ -38,7 +38,7 @@ module Spotlight
 
     def update_all
       tags_to_rename = batch_update_params['owned_tags_attributes'].values.select do |tag|
-        tag[:name]&.present? && tag[:current_name]&.strip != tag[:name]&.strip
+        tag[:name].present? && tag[:current_name]&.strip != tag[:name]&.strip
       end
 
       rename_tags_later!(tags_to_rename)
