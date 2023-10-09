@@ -75,7 +75,7 @@ describe 'Search Configuration Administration', js: true do
 
       within '.facet-config-genre_ssim' do
         click_button 'Options'
-        expect(find(:css, '#blacklight_configuration_facet_fields_genre_ssim_sort_count')).to be_checked
+        expect(find_by_id('blacklight_configuration_facet_fields_genre_ssim_sort_count')).to be_checked
 
         choose 'Value'
       end
