@@ -19,13 +19,13 @@ Read more about what Spotlight is, our motivations for creating it, and how to i
 To bootstrap a new Rails application:
 
 ```
-$ rails new app-name -m https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb
+$ SKIP_TRANSLATION=1 rails new app-name -m https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb
 ```
 
 or from an existing Rails application:
 
 ```
-$ rails app:template LOCATION=https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb
+$ SKIP_TRANSLATION=1 rails app:template LOCATION=https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb
 ```
 
 *During this process you will be prompted to enter an initial administrator email and password (this is a super-admin that can administer any exhibit in the installation).* If you choose not to create one, the first user will be given administrative privileges.
@@ -39,7 +39,7 @@ $ cd app-name
 Run the database migrations:
 
 ```
-$ rake db:migrate
+$ SKIP_TRANSLATION=1 rake db:migrate
 ```
 
 Start Solr (possibly using `solr_wrapper` in development or testing):
