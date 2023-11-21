@@ -335,9 +335,10 @@ module Spotlight
 
     config.exhibit_roles = %w[admin curator viewer]
 
-    if ActiveRecord.respond_to?(:yaml_column_permitted_classes) || ActiveRecord::Base.respond_to?(:yaml_column_permitted_classes)
-      config.active_record.yaml_column_permitted_classes ||= []
-      config.active_record.yaml_column_permitted_classes += [Symbol, ActiveSupport::HashWithIndifferentAccess]
+    initializer 'spotlight.permitted_yaml_columns' do
+      config.after_initialize do
+        config.active_record.yaml_column_permitted_classes += [Symbol, ActiveSupport::HashWithIndifferentAccess]
+      end
     end
   end
   # rubocop:enable Metrics/ClassLength
