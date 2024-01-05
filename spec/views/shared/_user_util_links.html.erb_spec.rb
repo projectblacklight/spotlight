@@ -29,7 +29,7 @@ describe 'shared/_user_util_links', type: :view do
 
     it 'does not render the feedback link' do
       render
-      expect(rendered).not_to have_link 'Feedback'
+      expect(rendered).to have_no_link 'Feedback'
     end
   end
 
@@ -39,7 +39,7 @@ describe 'shared/_user_util_links', type: :view do
     it 'renders the links' do
       render
       expect(rendered).to have_link 'Feedback'
-      expect(rendered).not_to have_link 'Exhibit dashboard'
+      expect(rendered).to have_no_link 'Exhibit dashboard'
       expect(rendered).to have_link 'Sign out'
     end
   end

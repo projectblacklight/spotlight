@@ -44,9 +44,9 @@ describe 'Browse Group Categories', js: true, type: :feature do
     expect(page).to have_css 'h2', text: 'Pets'
 
     expect(page).to have_css '.category-title', text: 'All of the good dogs'
-    expect(page).not_to have_css '.category-title', text: 'All of the good tigers'
+    expect(page).to have_no_css '.category-title', text: 'All of the good tigers'
     find('[data-controls="next"]').click
-    expect(page).not_to have_css '.category-title', text: 'All of the good dogs'
+    expect(page).to have_no_css '.category-title', text: 'All of the good dogs'
     expect(page).to have_css '.category-title', text: 'All of the good tigers'
   end
 

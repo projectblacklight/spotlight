@@ -23,7 +23,7 @@ describe 'spotlight/shared/_exhibit_sidebar', type: :view do
     it 'does not have an analytics link in the sidebar' do
       render
 
-      expect(rendered).not_to have_link 'Analytics'
+      expect(rendered).to have_no_link 'Analytics'
     end
   end
 end

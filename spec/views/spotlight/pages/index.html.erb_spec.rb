@@ -35,7 +35,7 @@ describe 'spotlight/pages/index.html.erb', type: :view do
     it 'does not disable the update button' do
       assign(:pages, [])
       render
-      expect(rendered).not_to have_selector 'button[disabled]', text: 'Save changes'
+      expect(rendered).to have_no_selector 'button[disabled]', text: 'Save changes'
       expect(rendered).to have_selector 'button', text: 'Save changes'
     end
   end

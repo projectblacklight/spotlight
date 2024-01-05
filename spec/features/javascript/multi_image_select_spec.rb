@@ -26,7 +26,7 @@ RSpec.describe 'Multi image selector', default_max_wait_time: 5, js: true, type:
     visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
     expect(page).to have_css("[data-id='xd327cm9378']")
     expect(page).to have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378/xd327cm9378_05_0001/full/!400,400/0/default.jpg']")
-    expect(page).not_to have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378/xd327cm9378_05_0002/full/!400,400/0/default.jpg']")
+    expect(page).to have_no_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378/xd327cm9378_05_0002/full/!400,400/0/default.jpg']")
 
     click_link('Edit')
 
@@ -44,7 +44,7 @@ RSpec.describe 'Multi image selector', default_max_wait_time: 5, js: true, type:
     save_page
 
     expect(page).to have_css("[data-id='xd327cm9378']")
-    expect(page).not_to have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378/xd327cm9378_05_0001/full/!400,400/0/default.jpg']")
+    expect(page).to have_no_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378/xd327cm9378_05_0001/full/!400,400/0/default.jpg']")
     expect(page).to have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378/xd327cm9378_05_0002/full/!400,400/0/default.jpg']")
   end
 end

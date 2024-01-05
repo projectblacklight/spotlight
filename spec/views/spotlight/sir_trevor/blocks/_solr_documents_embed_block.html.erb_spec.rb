@@ -32,7 +32,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
     expect(rendered).to have_selector '.box', text: 'OSD'
     expect(rendered).to have_selector '.items-col'
     expect(rendered).to have_selector '.text-col'
-    expect(rendered).not_to have_selector '.col-md-12'
+    expect(rendered).to have_no_selector '.col-md-12'
   end
 
   context 'with a block with no text' do

@@ -34,7 +34,7 @@ describe 'Search contexts' do
     # verify that the item + image widget is displaying an image from the document.
     within(:css, '.items-block') do
       expect(page).to have_css('.img-thumbnail')
-      expect(page).not_to have_css('.title')
+      expect(page).to have_no_css('.title')
     end
 
     find('.items-block a').click
@@ -63,7 +63,7 @@ describe 'Search contexts' do
     # verify that the item + image widget is displaying an image from the document.
     within(:css, '.items-block') do
       expect(page).to have_css('.img-thumbnail')
-      expect(page).not_to have_css('.title')
+      expect(page).to have_no_css('.title')
     end
 
     find('.items-block a').click

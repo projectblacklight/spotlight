@@ -81,7 +81,7 @@ describe 'Uploading a non-repository item', type: :feature do
     it 'does not display the raw documents upload form' do
       visit spotlight.new_exhibit_resource_path(exhibit)
       click_link 'Upload raw documents'
-      expect(page).not_to have_css('form#new_resources_json_upload')
+      expect(page).to have_no_css('form#new_resources_json_upload')
     end
 
     context 'as an site administrator' do

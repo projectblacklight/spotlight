@@ -35,6 +35,6 @@ describe 'spotlight/search_configurations/_sort', type: :view do
 
   it 'hides fields that are configured not to display' do
     render partial: 'spotlight/search_configurations/sort', locals: { f: f }
-    expect(rendered).not_to have_css('[data-id="some_disabled_field"]')
+    expect(rendered).to have_no_css('[data-id="some_disabled_field"]')
   end
 end

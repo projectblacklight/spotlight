@@ -50,7 +50,7 @@ describe 'Main navigation labels are settable', type: :feature do
     about_nav.display = false
     about_nav.save
     visit spotlight.exhibit_path(exhibit)
-    expect(page).not_to have_css('.navbar-nav li', text: 'New About Label')
+    expect(page).to have_no_css('.navbar-nav li', text: 'New About Label')
     about_nav = exhibit.main_navigations.about
     about_nav.display = true
     about_nav.save
@@ -68,7 +68,7 @@ describe 'Main navigation labels are settable', type: :feature do
 
       within '.main_navigation_admin' do
         within all('li').first do
-          expect(page).not_to have_css('button.restore-default', visible: true)
+          expect(page).to have_no_css('button.restore-default', visible: true)
         end
 
         within all('li').last do

@@ -14,7 +14,7 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
     end
 
     its(:to_solr) { is_expected.to include id: 'doc_id' }
-    its(:to_solr) { is_expected.to include "exhibit_#{exhibit.slug}_public_bsi".to_sym => true }
+    its(:to_solr) { is_expected.to include "exhibit_#{exhibit.slug}_public_bsi": true }
     its(:to_solr) { is_expected.to include 'a_tesim', 'b_tesim', 'c_tesim' }
 
     context 'with an uploaded item' do

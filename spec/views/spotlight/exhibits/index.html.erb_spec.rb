@@ -26,7 +26,7 @@ describe 'spotlight/exhibits/index', type: :view do
       expect(rendered).to have_selector('.exhibit-card', count: 2)
       expect(rendered).to have_text exhibit_a.title
       expect(rendered).to have_text exhibit_b.title
-      expect(rendered).not_to have_text exhibit_c.title
+      expect(rendered).to have_no_text exhibit_c.title
 
       expect(rendered).not_to include 'Private exhibits'
     end
@@ -34,19 +34,19 @@ describe 'spotlight/exhibits/index', type: :view do
     it 'does not include the tab bar' do
       render
 
-      expect(rendered).not_to have_selector '.nav-tabs'
+      expect(rendered).to have_no_selector '.nav-tabs'
     end
 
     it 'does not include tags controls' do
       render
 
-      expect(rendered).not_to have_selector '.tags'
+      expect(rendered).to have_no_selector '.tags'
     end
 
     it 'does not include pagination controls' do
       render
 
-      expect(rendered).not_to have_selector '.pager'
+      expect(rendered).to have_no_selector '.pager'
     end
 
     context 'with tagged exhibits' do
@@ -95,7 +95,7 @@ describe 'spotlight/exhibits/index', type: :view do
         render
 
         expect(rendered).to have_selector '.nav-tabs'
-        expect(rendered).not_to have_link 'Unpublished exhibits'
+        expect(rendered).to have_no_link 'Unpublished exhibits'
       end
     end
 

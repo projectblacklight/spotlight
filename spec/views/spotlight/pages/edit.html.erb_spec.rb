@@ -38,7 +38,7 @@ describe 'spotlight/pages/edit', type: :view do
 
       render
 
-      expect(rendered).not_to have_css '.alert-lock'
+      expect(rendered).to have_no_css '.alert-lock'
     end
 
     it 'does not render a lock held by the current session' do
@@ -46,7 +46,7 @@ describe 'spotlight/pages/edit', type: :view do
 
       render
 
-      expect(rendered).not_to have_css '.alert-lock'
+      expect(rendered).to have_no_css '.alert-lock'
     end
 
     it 'attaches a data-lock attribute to the cancel button' do
@@ -62,7 +62,7 @@ describe 'spotlight/pages/edit', type: :view do
       render
 
       expect(rendered).to have_link 'Cancel'
-      expect(rendered).not_to have_css 'a[data-lock]', text: 'Cancel'
+      expect(rendered).to have_no_css 'a[data-lock]', text: 'Cancel'
     end
   end
 end

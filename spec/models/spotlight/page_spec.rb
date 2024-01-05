@@ -86,7 +86,7 @@ describe Spotlight::Page, type: :model do
 
     it 'does not have content when the page is empty' do
       page.content = []
-      expect(page).not_to have_content
+      expect(page).not_to have_content # rubocop:disable Capybara/NegationMatcher
     end
 
     it 'has content when the page has a widget' do

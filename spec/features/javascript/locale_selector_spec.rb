@@ -59,7 +59,7 @@ RSpec.describe 'Locale Selector', js: true do
         click_link 'Español'
       end
 
-      expect(page).not_to have_css('input[placeholder="Search..."]')
+      expect(page).to have_no_css('input[placeholder="Search..."]')
       expect(page).to have_css('input[placeholder="Buscar..."]')
     end
   end

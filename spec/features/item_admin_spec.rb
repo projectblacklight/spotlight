@@ -12,7 +12,7 @@ describe 'Item Administration', type: :feature do
   describe 'admin' do
     it "does not have a 'Save this search' button" do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
-      expect(page).not_to have_css('button', text: 'Save this search')
+      expect(page).to have_no_css('button', text: 'Save this search')
     end
 
     it 'has catalog items' do
@@ -40,7 +40,7 @@ describe 'Item Administration', type: :feature do
     it "toggles the 'blacklight-private' label", default_max_wait_time: 5, js: true do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
       # The label should be toggled when the checkbox is clicked
-      expect(page).not_to have_css('tr.blacklight-private')
+      expect(page).to have_no_css('tr.blacklight-private')
       within 'tr[itemscope]:first-child' do
         find("input.toggle-visibility[type='checkbox']").click
       end
@@ -52,7 +52,7 @@ describe 'Item Administration', type: :feature do
       within 'tr[itemscope]:first-child' do
         find("input.toggle-visibility[type='checkbox']").click
       end
-      expect(page).not_to have_css('tr.blacklight-private')
+      expect(page).to have_no_css('tr.blacklight-private')
     end
   end
 end

@@ -43,7 +43,7 @@ describe 'Translation editing', type: :feature do
           expect(page).to have_css '.translation-complete'
         end
         within '.translation-basic-settings-description' do
-          expect(page).not_to have_css '.translation-complete'
+          expect(page).to have_no_css '.translation-complete'
         end
       end
     end
@@ -75,10 +75,10 @@ describe 'Translation editing', type: :feature do
           expect(page).to have_css '.translation-complete'
         end
         within '.translation-main-menu-curated_features' do
-          expect(page).not_to have_css '.translation-complete'
+          expect(page).to have_no_css '.translation-complete'
         end
         within '.translation-main-menu-about' do
-          expect(page).not_to have_css '.translation-complete'
+          expect(page).to have_no_css '.translation-complete'
         end
         I18n.locale = :fr
         expect(exhibit.main_navigations.browse.label).to eq 'parcourir ceci!'
@@ -442,7 +442,7 @@ describe 'Translation editing', type: :feature do
       # home page should have a disabled checkbox
       expect(page).to have_css('.translation-home-page-settings input[type="checkbox"][disabled]')
       # feature page does not have a translation, so don't use checkbox
-      expect(page).not_to have_css('.translation-feature-page-settings input[type="checkbox"]')
+      expect(page).to have_no_css('.translation-feature-page-settings input[type="checkbox"]')
       # about page should have a checked checkbox
       expect(page).to have_css('.translation-about-page-settings input[type="checkbox"][checked]')
     end
