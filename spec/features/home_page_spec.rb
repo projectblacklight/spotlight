@@ -96,7 +96,7 @@ describe 'Home page', type: :feature, versioning: true do
 
     it 'does not display the facet sidebar' do
       visit spotlight.exhibit_home_page_path(exhibit)
-      expect(page).not_to have_css('#sidebar')
+      expect(page).to have_no_css('#sidebar')
     end
   end
 end

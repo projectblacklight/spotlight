@@ -10,7 +10,7 @@ describe 'spotlight/feature_pages/_empty.html.erb', type: :view do
 
   describe 'when a user cannot edit' do
     it 'does not render an ordered list of steps' do
-      expect(rendered).not_to have_css('ol')
+      expect(rendered).to have_no_css('ol')
     end
   end
 

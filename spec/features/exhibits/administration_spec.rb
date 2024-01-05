@@ -42,7 +42,7 @@ describe 'Exhibit Administration', type: :feature do
       fill_in email_id_0, with: email_address_0
 
       # Additonal blank fields should not exist
-      expect(page).not_to have_css("input##{email_id_1}")
+      expect(page).to have_no_css("input##{email_id_1}")
       # click the + (add contact) button
       find_by_id('another-email').click
       # An additional blank field should exist now
@@ -88,7 +88,7 @@ describe 'Exhibit Administration', type: :feature do
       end
 
       # the page element for the first entry should now be gone, but the second should still be present
-      expect(page).not_to have_css("##{email_id_0}")
+      expect(page).to have_no_css("##{email_id_0}")
       expect(find_field(email_id_1).value).to eq email_address_1
 
       # reload the edit page to confirm deletion from db...
@@ -97,7 +97,7 @@ describe 'Exhibit Administration', type: :feature do
       # what was the second address should now be the only one on the page, and should now be
       # in the first/only form field (form fields are numbered at page load from 0).
       expect(find_field(email_id_0).value).to eq email_address_1
-      expect(page).not_to have_css("##{email_id_1}")
+      expect(page).to have_no_css("##{email_id_1}")
 
       # the hidden input field is what contains the underlying id of the contact for db retrieval
       expect(find("##{hidden_input_id_0}", visible: false).value).to eq hidden_input_val_1
@@ -117,8 +117,8 @@ describe 'Exhibit Administration', type: :feature do
       # id field that's used to indicate the id of the record to be updated.
       expect(page).to have_css("##{hidden_input_id_0}~div div.confirmation-status")
       expect(page).to have_css("##{hidden_input_id_0}~div span.contact-email-delete-wrapper")
-      expect(page).not_to have_css("##{hidden_input_id_1}~div div.confirmation-status")
-      expect(page).not_to have_css("##{hidden_input_id_1}~div span.contact-email-delete-wrapper")
+      expect(page).to have_no_css("##{hidden_input_id_1}~div div.confirmation-status")
+      expect(page).to have_no_css("##{hidden_input_id_1}~div span.contact-email-delete-wrapper")
       expect(find_all('.confirmation-status').length).to eq 1
       expect(find_all('.contact-email-delete-wrapper').length).to eq 1
     end

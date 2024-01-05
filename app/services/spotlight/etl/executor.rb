@@ -56,7 +56,7 @@ module Spotlight
       # @private
       # @yield Logger
       def with_logger
-        logger = (context&.logger || Rails.logger)
+        logger = context&.logger || Rails.logger
         logger.tagged(pipeline.class) do
           logger.tagged("#<#{source.class} id=#{source&.id if source.respond_to?(:id)}>") do
             @logger = logger

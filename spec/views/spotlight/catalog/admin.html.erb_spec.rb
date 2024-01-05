@@ -34,6 +34,6 @@ describe 'spotlight/catalog/admin.html.erb', type: :view do
   it "does not render the 'add items' link if no repository sources are configured" do
     allow(Spotlight::Engine.config).to receive(:resource_partials).and_return([])
     render
-    expect(rendered).not_to have_link 'Add items'
+    expect(rendered).to have_no_link 'Add items'
   end
 end

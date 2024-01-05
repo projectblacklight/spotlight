@@ -56,7 +56,7 @@ describe 'Add and update the site masthead', type: :feature do
   it 'displays a masthead image when one is uploaded and configured' do
     visit spotlight.edit_site_path
 
-    expect(page).not_to have_css('.image-masthead')
+    expect(page).to have_no_css('.image-masthead')
 
     click_link 'Site masthead'
 
@@ -76,7 +76,7 @@ describe 'Add and update the site masthead', type: :feature do
   it 'does not display an uploaded masthead if configured to not display' do
     visit spotlight.edit_site_path
 
-    expect(page).not_to have_css('.image-masthead')
+    expect(page).to have_no_css('.image-masthead')
 
     click_link 'Site masthead'
 
@@ -86,6 +86,6 @@ describe 'Add and update the site masthead', type: :feature do
 
     click_button 'Save changes'
     expect(page).to have_content('The site was successfully updated.')
-    expect(page).not_to have_css('.image-masthead .background-container')
+    expect(page).to have_no_css('.image-masthead .background-container')
   end
 end

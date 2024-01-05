@@ -157,7 +157,7 @@ describe 'Browse Category Administration', type: :feature do
         click_link('Delete')
       end
       expect(page).to have_content('Search was deleted')
-      expect(page).not_to have_content(search.title)
+      expect(page).to have_no_content(search.title)
     end
   end
 end

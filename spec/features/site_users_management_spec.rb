@@ -20,7 +20,7 @@ describe 'Site users management', js: true do
       expect(page).to have_css('div#admins_curators', text: user.email)
       expect(page).to have_css('div#admins_curators', text: exhibit_admin.email)
       expect(page).to have_css('div#admins_curators', text: exhibit_curator.email)
-      expect(page).not_to have_css('div#admins_curators', text: existing_user.email)
+      expect(page).to have_no_css('div#admins_curators', text: existing_user.email)
       expect(page).to have_css('button.copy-email-addresses')
     end
   end

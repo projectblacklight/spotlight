@@ -157,7 +157,7 @@ describe Spotlight::CrudLinkHelpers, type: :helper do
       allow(helper).to receive(:current_page?).with(root_url).and_return(true)
 
       rendered = Capybara.string(helper.nav_link('Some link', root_url, active: false))
-      expect(rendered).not_to have_css('.nav-link.active')
+      expect(rendered).to have_no_css('.nav-link.active')
     end
   end
 end
