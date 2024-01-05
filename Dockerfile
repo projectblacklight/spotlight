@@ -44,6 +44,8 @@ WORKDIR /spotlight/app
 
 RUN SKIP_TRANSLATION=yes rails _${RAILS_VERSION}_ new . -j webpack --force --template=../engine/template.rb
 RUN bundle add pg
+RUN bin/yarn add @babel/plugin-proposal-private-methods --dev
+RUN bin/yarn add @babel/plugin-proposal-private-property-in-object
 RUN SKIP_TRANSLATION=yes DB_ADAPTER=nulldb DATABASE_URL='postgresql://fake' bundle exec rake assets:precompile
 
 ENTRYPOINT ["/sbin/tini", "--", "/spotlight/engine/bin/docker-entrypoint.sh"]
