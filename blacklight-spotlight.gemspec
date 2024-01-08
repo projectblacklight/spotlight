@@ -21,7 +21,7 @@ these collections.)
   s.required_ruby_version = '>= 2.6'
 
   s.add_dependency 'activejob-status'
-  s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 10'
+  s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 11'
   s.add_dependency 'autoprefixer-rails'
   s.add_dependency 'blacklight', '>= 7.18', '< 9'
   s.add_dependency 'blacklight-gallery', '>= 3.0', '< 5'
