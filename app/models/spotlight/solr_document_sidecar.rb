@@ -101,8 +101,10 @@ module Spotlight
     def convert_stored_value_to_solr(value)
       if value.blank?
         nil
-      elsif value.is_a? Enumerable
+      elsif value.is_a? Array
         value.reject(&:blank?)
+      elsif value.is_a? Hash
+        value.values.reject(&:blank?)
       else
         value
       end

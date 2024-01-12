@@ -44,5 +44,15 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
       its(:to_solr) { is_expected.to include 'a_blank_multivalued_field' => [] }
       its(:to_solr) { is_expected.to include 'a_multivalued_field_with_some_blanks' => ['a'] }
     end
+
+    context 'with other data structures' do
+      before do
+        subject.data = {
+          'a_hash_field' => { 'a' => 'b' }
+        }
+      end
+
+      its(:to_solr) { is_expected.to include 'a_hash_field' => ['b'] }
+    end
   end
 end
