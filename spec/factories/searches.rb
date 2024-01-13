@@ -30,4 +30,16 @@ FactoryBot.define do
 
     after(:build) { |search| search.thumbnail = FactoryBot.create(:featured_image) }
   end
+
+  factory :search_field_search, class: 'Spotlight::Search' do
+    exhibit
+    title { 'Based on a search field' }
+    query_params { { 'search_field' => 'search', 'q' => 'model' } }
+  end
+
+  factory :facet_search, class: 'Spotlight::Search' do
+    exhibit
+    title { 'Based on a facet' }
+    query_params { { 'f' => { 'language_ssim' => 'Latin' } } }
+  end
 end
