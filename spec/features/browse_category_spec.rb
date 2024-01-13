@@ -156,4 +156,30 @@ describe 'Browse pages' do
       expect(page).to have_css "meta[property='og:title'][content='#{search.title}']", visible: false
     end
   end
+
+  context 'with a search field based browse category' do
+    let(:search) { FactoryBot.create(:search_field_search, title: 'Search field search', exhibit: exhibit, published: true, search_box: true) }
+
+    it 'conducts a search within the browse category' do
+      visit spotlight.exhibit_browse_path(exhibit, search)
+      expect(search.documents.count).to eq 6
+
+      fill_in 'Search within this browse category', with: 'azimuthal'
+      click_button 'Search within browse category'
+      expect(page).to have_text('Your search matched 1 of 6 items in this browse category.')
+    end
+  end
+
+  context 'with a facet based browse category' do
+    let(:search) { FactoryBot.create(:facet_search, title: 'Facet search', exhibit: exhibit, published: true, search_box: true) }
+
+    it 'conducts a search within the browse category' do
+      visit spotlight.exhibit_browse_path(exhibit, search)
+      expect(search.documents.count).to eq 3
+
+      fill_in 'Search within this browse category', with: 'Stopendael'
+      click_button 'Search within browse category'
+      expect(page).to have_text('Your search matched 1 of 3 items in this browse category.')
+    end
+  end
 end
