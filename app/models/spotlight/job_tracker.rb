@@ -14,7 +14,7 @@ module Spotlight
     has_many :job_trackers, as: :on, dependent: Rails.version > '6.1' ? :destroy_async : :destroy
     has_many :subevents, through: :job_trackers, source: :events
 
-    serialize :data
+    serialize :data, coder: YAML
 
     after_initialize do
       self.data ||= {}
