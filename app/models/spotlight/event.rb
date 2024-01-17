@@ -6,7 +6,7 @@ module Spotlight
     belongs_to :resource, polymorphic: true
     belongs_to :exhibit, optional: true
 
-    serialize :data
+    serialize :data, coder: YAML
 
     self.inheritance_column = :event_class
   end
