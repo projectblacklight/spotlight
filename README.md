@@ -118,9 +118,11 @@ See [developer-facing instructions for enabling translation](https://github.com/
 The javascript is built by npm from sources in `app/javascript` into a bundle
 in `app/assets/javascripts/spotlight/spotlight.js`. This file should not be edited
 by hand as any changes would be overwritten.  When any of the javascript
-components in the gem are changed, this bundle should be rebuild with the
+components in the gem are changed, this bundle should be rebuilt with the
 following steps:
 1. [Install npm](https://www.npmjs.com/get-npm)
-1. run `npm install` to download dependencies
-1. run `npm run prepare` to build the bundle
-1. run `npm publish` to push the javascript package to https://npmjs.org/package/spotlight-frontend
+2. run `npm install` to download dependencies
+3. make sure that the version in `package.json` matches your intended release version
+4. commit the new `package-lock.json` that reflects the desired version number
+6. run `npm run prepare` to build the bundle
+6. run `npm publish` to push the javascript package to https://npmjs.org/package/spotlight-frontend
