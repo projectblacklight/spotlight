@@ -14,37 +14,65 @@ describe Spotlight::BrowseCategorySearchBuilder do
   end
   let(:solr_request) { Blacklight::Solr::Request.new }
   let(:blacklight_params) { { browse_category_id: search.id } }
-  let(:search) { FactoryBot.create(:search, exhibit: exhibit, query_params: { sort: 'type', f: { genre_ssim: ['term'] }, q: 'search query' }) }
 
-  describe '#restrict_to_browse_category' do
-    it 'adds the search query parameters from the browse category' do
-      params = subject.to_hash.with_indifferent_access
+  context 'with a facet as the basis of the browse category (no search query present)' do
+    let(:search) { FactoryBot.create(:search, exhibit: exhibit, query_params: { sort: 'type', f: { genre_ssim: ['genre facet'] } }) }
 
-      expect(params).to include(
-        q: 'search query',
-        fq: ['{!term f=genre_ssim}term'],
-        sort: 'sort_type_ssi asc'
-      )
-    end
-
-    context 'with a user-provided query' do
-      let(:blacklight_params) { { browse_category_id: search.id, q: 'cats' } }
-
-      it 'uses the user-provided query to further restrict the search' do
+    describe 'constructs params properly' do
+      it 'adds facet to the solr params' do
         params = subject.to_hash.with_indifferent_access
-        expect(params).not_to include(:q)
+
         expect(params).to include(
-          json: {
-            query: {
-              bool: {
-                must: [
-                  { edismax: { query: 'cats' } },
-                  { edismax: { query: 'search query' } }
-                ]
+          fq: ['{!term f=genre_ssim}genre facet'],
+          sort: 'sort_type_ssi asc'
+        )
+      end
+
+      it 'does not override the default query parser' do
+        params = subject.to_hash.with_indifferent_access
+        expect(params).not_to include(:defType)
+      end
+    end
+  end
+
+  context 'with a search query as part of the construction of the browse category' do
+    let(:search) { FactoryBot.create(:search, exhibit: exhibit, query_params: { sort: 'type', f: { genre_ssim: ['term'] }, q: 'search query' }) }
+
+    describe 'constructs params properly' do
+      it 'includes the facet and the seach term information in the params' do
+        params = subject.to_hash.with_indifferent_access
+
+        expect(params).to include(
+          q: 'search query',
+          fq: ['{!term f=genre_ssim}term'],
+          sort: 'sort_type_ssi asc'
+        )
+      end
+
+      context 'with a search term present' do
+        let(:blacklight_params) { { browse_category_id: search.id, q: 'cats' } }
+
+        it 'manipulates the solr query as expected into json syntax' do
+          params = subject.to_hash.with_indifferent_access
+          expect(params).not_to include(:q)
+          expect(params).to include(
+            json: {
+              query: {
+                bool: {
+                  must: [
+                    { edismax: { query: 'search query' } },
+                    { edismax: { query: 'cats' } }
+                  ]
+                }
               }
             }
-          }
-        )
+          )
+        end
+
+        it 'overrides the default query parser' do
+          params = subject.to_hash.with_indifferent_access
+          expect(params).to include(defType: 'lucene')
+        end
       end
     end
   end
