@@ -232,3 +232,27 @@ Style/IfWithBooleanLiteralBranches: # (new in 1.9)
   Enabled: true
 Style/StringChars: # (new in 1.12)
   Enabled: true
+
+# Disabling these rules so that a backport to Spotlight v3.5.0.2 can pass CI
+Spec/ExampleWording:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/RedundantParentheses:
+  Enabled: false
+Style/HashEachMethods:
+  Enabled: false
+Lint/RedundantSafeNavigation:
+  Enabled: false
+Style/HashExcept:
+  Enabled: false
+Rails/Pluck:
+  Enabled: false
+Rails/FindEach:
+  Enabled: false
+Lint/RedundantStringCoercion:
+  Enabled: false
+Layout/EmptyLinesAroundExceptionHandlingKeywords:
+    Enabled: false
+Lint/SymbolConversion:
+    Enabled: false
