@@ -32,7 +32,7 @@ Capybara.register_driver :headless_chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: [browser_options])
 end
 require 'webmock/rspec'
-allowed_sites = ['chromedriver.storage.googleapis.com']
+allowed_sites = ['chromedriver.storage.googleapis.com', 'googlechromelabs.github.io', 'edgedl.me.gvt1.com']
 
 WebMock.disable_net_connect!(net_http_connect_on_start: true, allow_localhost: true, allow: allowed_sites)
 
