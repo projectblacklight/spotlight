@@ -801,7 +801,7 @@ en:
         note_provenance_tesim: Provenance
         note_references_tesim: References
         note_source_tesim: Source
-        personal_name_ssm: Personal names
+        personal_name_ssim: Personal names
         search:
           all_fields: Everything
           author: Author

@@ -61,8 +61,8 @@ class CatalogController < ApplicationController
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
     config.add_facet_field 'genre_ssim', label: I18n.t('spotlight.search.fields.facet.genre_ssim'), limit: true
-    config.add_facet_field 'personal_name_ssm', label: I18n.t('spotlight.search.fields.facet.personal_name_ssm'), limit: true
-    config.add_facet_field 'corporate_name_ssm', label: I18n.t('spotlight.search.fields.facet.corporate_name_ssm'), limit: true
+    config.add_facet_field 'personal_name_ssim', label: I18n.t('spotlight.search.fields.facet.personal_name_ssm'), limit: true
+    config.add_facet_field 'corporate_name_ssim', label: I18n.t('spotlight.search.fields.facet.corporate_name_ssm'), limit: true
     config.add_facet_field 'subject_geographic_ssim', label: I18n.t('spotlight.search.fields.facet.subject_geographic_ssim')
     config.add_facet_field 'subject_temporal_ssim', label: I18n.t('spotlight.search.fields.facet.subject_temporal_ssim')
     config.add_facet_field 'language_ssim', label: I18n.t('spotlight.search.fields.facet.language_ssim')
