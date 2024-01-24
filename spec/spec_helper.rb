@@ -6,7 +6,7 @@ require 'devise'
 require 'engine_cart'
 EngineCart.load_application!
 
-Internal::Application.config.active_job.queue_adapter = :inline
+ActiveJob::Base.queue_adapter = :test
 
 require 'rails-controller-testing'
 require 'rspec/collection_matchers'
@@ -16,22 +16,10 @@ require 'rspec/active_model/mocks'
 require 'paper_trail/frameworks/rspec'
 
 require 'selenium-webdriver'
-require 'webdrivers'
 require 'webmock/rspec'
 
-Capybara.javascript_driver = :headless_chrome
+Capybara.javascript_driver = :selenium_chrome_headless
 
-Capybara.register_driver :headless_chrome do |app|
-  Capybara::Selenium::Driver.load_selenium
-  browser_options = ::Selenium::WebDriver::Chrome::Options.new.tap do |opts|
-    opts.args << '--headless'
-    opts.args << '--disable-gpu'
-    opts.args << '--no-sandbox'
-    opts.args << '--window-size=1280,1696'
-  end
-  Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: [browser_options])
-end
-require 'webmock/rspec'
 allowed_sites = ['chromedriver.storage.googleapis.com', 'googlechromelabs.github.io', 'edgedl.me.gvt1.com']
 
 WebMock.disable_net_connect!(net_http_connect_on_start: true, allow_localhost: true, allow: allowed_sites)
@@ -83,8 +71,8 @@ RSpec.configure do |config|
   config.after(:each, type: :feature) { Warden.test_reset! }
   config.include Controllers::EngineHelpers, type: :controller
   config.include Capybara::DSL
-  config.include ::Rails.application.routes.url_helpers
-  config.include ::Rails.application.routes.mounted_helpers
+  config.include Rails.application.routes.url_helpers
+  config.include Rails.application.routes.mounted_helpers
   config.include Spotlight::TestFeaturesHelpers, type: :feature
   config.include CapybaraDefaultMaxWaitMetadataHelper, type: :feature
 
