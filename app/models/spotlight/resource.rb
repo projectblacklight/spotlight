@@ -25,7 +25,7 @@ module Spotlight
     has_many :solr_document_sidecars
     has_many :events, as: :resource
 
-    serialize :data, Hash
+    serialize :data, Hash, coder: YAML
 
     ##
     # Persist the record to the database, and trigger a reindex to solr
