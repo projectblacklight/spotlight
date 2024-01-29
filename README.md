@@ -112,7 +112,7 @@ See [developer-facing instructions for enabling translation](https://github.com/
   - **#spotlight-service** - a service-focused channel for people who support exhibit-builders at institutions already using Spotlight
 - Google Groups
   - [Blacklight Development Google group](https://groups.google.com/forum/#!forum/blacklight-development)
-  - [Spotlight Community Group](https://groups.google.com/forum/#!forum/spotlight-community) (equivalent to #spotlight-service; not in active use since September 2021)
+  - [Spotlight Community Group](https://groups.google.com/forum/#!forum/spotlight-community) (equivalent to #spotlight-service)
 
 
 ## Building the javascript
