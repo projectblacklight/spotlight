@@ -4,7 +4,7 @@ module Spotlight
   ##
   # Exhibit custom fields
   class CustomField < ActiveRecord::Base
-    serialize :configuration, Hash
+    serialize :configuration, Hash, coder: YAML
     belongs_to :exhibit, optional: true
 
     extend FriendlyId
