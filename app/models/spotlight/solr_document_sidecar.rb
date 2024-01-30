@@ -11,8 +11,8 @@ module Spotlight
     belongs_to :exhibit, optional: false
     belongs_to :resource, optional: true
     belongs_to :document, optional: false, polymorphic: true
-    serialize :data, Hash
-    serialize :index_status, Hash
+    serialize :data, Hash, coder: YAML
+    serialize :index_status, Hash, coder: YAML
 
     delegate :has_key?, :key?, to: :data
 
