@@ -25,7 +25,11 @@ module Spotlight
     has_many :solr_document_sidecars
     has_many :events, as: :resource
 
-    serialize :data, Hash, coder: YAML
+    if Rails.version > '7'
+      serialize :data, type: Hash, coder: YAML
+    else
+      serialize :data, Hash, coder: YAML
+    end
 
     ##
     # Persist the record to the database, and trigger a reindex to solr
