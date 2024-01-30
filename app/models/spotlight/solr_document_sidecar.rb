@@ -11,8 +11,14 @@ module Spotlight
     belongs_to :exhibit, optional: false
     belongs_to :resource, optional: true
     belongs_to :document, optional: false, polymorphic: true
-    serialize :data, Hash, coder: YAML
-    serialize :index_status, Hash, coder: YAML
+
+    if Rails.version > '7'
+      serialize :data, type: Hash, coder: YAML
+      serialize :index_status, type: Hash, coder: YAML
+    else
+      serialize :data, Hash, coder: YAML
+      serialize :index_status, Hash, coder: YAML
+    end
 
     delegate :has_key?, :key?, to: :data
 
