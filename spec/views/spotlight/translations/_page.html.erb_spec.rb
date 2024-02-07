@@ -56,7 +56,7 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
       it 'does not render a delete link' do
         render
 
-        expect(rendered).not_to have_link('Delete')
+        expect(rendered).to have_no_link('Delete')
       end
     end
   end
@@ -70,7 +70,7 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
 
     it 'does not include the data attribute used by the progress tracker' do
       render
-      expect(rendered).not_to have_css('[data-translation-present="true"]')
+      expect(rendered).to have_no_css('[data-translation-present="true"]')
     end
   end
 end

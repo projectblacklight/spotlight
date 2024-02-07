@@ -14,7 +14,7 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
     end
 
     its(:to_solr) { is_expected.to include id: 'doc_id' }
-    its(:to_solr) { is_expected.to include "exhibit_#{exhibit.slug}_public_bsi".to_sym => true }
+    its(:to_solr) { is_expected.to include "exhibit_#{exhibit.slug}_public_bsi": true }
     its(:to_solr) { is_expected.to include 'a_tesim', 'b_tesim', 'c_tesim' }
 
     context 'with an uploaded item' do
@@ -43,6 +43,16 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
       its(:to_solr) { is_expected.to include 'a_blank_field' => nil }
       its(:to_solr) { is_expected.to include 'a_blank_multivalued_field' => [] }
       its(:to_solr) { is_expected.to include 'a_multivalued_field_with_some_blanks' => ['a'] }
+    end
+
+    context 'with other data structures' do
+      before do
+        subject.data = {
+          'a_hash_field' => { 'a' => 'b' }
+        }
+      end
+
+      its(:to_solr) { is_expected.to include 'a_hash_field' => ['b'] }
     end
   end
 end

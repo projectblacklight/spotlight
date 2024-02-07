@@ -26,7 +26,7 @@ describe 'shared/_masthead', type: :view do
 
     it 'does not include the subtitle' do
       render
-      expect(rendered).not_to have_selector 'small'
+      expect(rendered).to have_no_selector 'small'
     end
   end
 

@@ -10,15 +10,15 @@ module Spotlight
     has_paper_trail
 
     belongs_to :exhibit, touch: true, optional: true
-    serialize :facet_fields, Hash
-    serialize :index_fields, Hash
-    serialize :search_fields, Hash
-    serialize :sort_fields, Hash
-    serialize :default_solr_params, Hash
-    serialize :show, Hash
-    serialize :index, Hash
-    serialize :per_page, Array
-    serialize :document_index_view_types, Array
+    serialize :facet_fields, Hash, coder: YAML
+    serialize :index_fields, Hash, coder: YAML
+    serialize :search_fields, Hash, coder: YAML
+    serialize :sort_fields, Hash, coder: YAML
+    serialize :default_solr_params, Hash, coder: YAML
+    serialize :show, Hash, coder: YAML
+    serialize :index, Hash, coder: YAML
+    serialize :per_page, Array, coder: YAML
+    serialize :document_index_view_types, Array, coder: YAML
 
     include Spotlight::BlacklightConfigurationDefaults
 

@@ -18,9 +18,9 @@ describe 'Edit in place', js: true, type: :feature do
 
       within('.feature_pages_admin') do
         expect(page).to have_css('#exhibit_feature_pages_attributes_0_title[type="hidden"]', visible: false)
-        expect(page).not_to have_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
+        expect(page).to have_no_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
         click_link('My New Feature Page')
-        expect(page).not_to have_css('#exhibit_feature_pages_attributes_0_title[type="hidden"]')
+        expect(page).to have_no_css('#exhibit_feature_pages_attributes_0_title[type="hidden"]')
         expect(page).to have_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
         fill_in 'exhibit_feature_pages_attributes_0_title', with: 'My Newer Feature Page'
       end
@@ -28,7 +28,7 @@ describe 'Edit in place', js: true, type: :feature do
 
       expect(page).to have_content('Feature pages were successfully updated.')
       expect(page).to have_css('h3', text: 'My Newer Feature Page')
-      expect(page).not_to have_css('h3', text: 'My New Feature Page')
+      expect(page).to have_no_css('h3', text: 'My New Feature Page')
     end
 
     it 'rejects blank values' do
@@ -44,9 +44,9 @@ describe 'Edit in place', js: true, type: :feature do
 
       within('.feature_pages_admin') do
         expect(page).to have_css('#exhibit_feature_pages_attributes_0_title[type="hidden"]', visible: false)
-        expect(page).not_to have_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
+        expect(page).to have_no_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
         click_link('My New Feature Page')
-        expect(page).not_to have_css('#exhibit_feature_pages_attributes_0_title[type="hidden"]')
+        expect(page).to have_no_css('#exhibit_feature_pages_attributes_0_title[type="hidden"]')
         expect(page).to have_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
         fill_in 'exhibit_feature_pages_attributes_0_title', with: ''
         # blur out of the now-emptytitle field
@@ -54,7 +54,7 @@ describe 'Edit in place', js: true, type: :feature do
         field.native.send_keys :tab
 
         expect(page).to have_css('#exhibit_feature_pages_attributes_0_title[type="hidden"]', visible: false)
-        expect(page).not_to have_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
+        expect(page).to have_no_css('#exhibit_feature_pages_attributes_0_title[type="text"]')
         expect(page).to have_css('h3', text: 'My New Feature Page')
       end
     end
@@ -72,9 +72,9 @@ describe 'Edit in place', js: true, type: :feature do
 
       within('#nested-navigation') do
         expect(page).to have_css("#exhibit_main_navigations_attributes_0_label[type='hidden']", visible: false)
-        expect(page).not_to have_css("#exhibit_main_navigations_attributes_0_label[type='text']")
+        expect(page).to have_no_css("#exhibit_main_navigations_attributes_0_label[type='text']")
         click_link('Curated features')
-        expect(page).not_to have_css("#exhibit_main_navigations_attributes_0_label[type='hidden']")
+        expect(page).to have_no_css("#exhibit_main_navigations_attributes_0_label[type='hidden']")
         expect(page).to have_css("#exhibit_main_navigations_attributes_0_label[type='text']")
         fill_in 'exhibit_main_navigations_attributes_0_label', with: 'My Page Label'
       end

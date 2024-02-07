@@ -3,7 +3,7 @@
 module Spotlight
   # Exhibit-specific custom search fields
   class CustomSearchField < ApplicationRecord
-    serialize :configuration, Hash
+    serialize :configuration, Hash, coder: YAML
     belongs_to :exhibit
 
     def label=(label)

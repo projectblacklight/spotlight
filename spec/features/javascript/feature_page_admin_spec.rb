@@ -62,7 +62,7 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
     page.dismiss_confirm do
       click_link 'Cancel'
     end
-    expect(page).not_to have_selector 'a', text: 'Edit'
+    expect(page).to have_no_selector 'a', text: 'Edit'
   end
 
   it 'stays in curation mode if a user has unsaved contenteditable data' do
@@ -75,7 +75,7 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
     page.accept_confirm do
       click_link 'Cancel'
     end
-    expect(page).not_to have_selector 'a', text: 'Edit'
+    expect(page).to have_no_selector 'a', text: 'Edit'
   end
 
   it 'does not update the pages list when the user has unsaved changes' do
@@ -98,7 +98,7 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
         click_link 'Home'
       end
     end
-    expect(page).not_to have_content('Feature pages were successfully updated.')
+    expect(page).to have_no_content('Feature pages were successfully updated.')
     # NOTE: get flash message about unsaved changes
     expect(page).to have_content('Welcome to your new exhibit')
 

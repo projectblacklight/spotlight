@@ -19,7 +19,7 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     content_editable = find('.st-text-block')
     content_editable.set(text)
 
-    expect(page).not_to have_css('.dd-list li')
+    expect(page).to have_no_css('.dd-list li')
     attach_file('uploaded_item_url', fixture_file1)
 
     expect(page).to have_css('.dd-list li', count: 1)

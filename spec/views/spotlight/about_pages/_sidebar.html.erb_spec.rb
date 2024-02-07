@@ -19,6 +19,6 @@ describe 'spotlight/about_pages/_sidebar.html.erb', type: :view do
     expect(rendered).to have_selector 'ul.sidenav li:nth-child(2) a', text: 'One'
     expect(rendered).to have_link 'Three', href: "/spotlight/#{exhibit.slug}/about/three"
     expect(rendered).to have_link 'One', href: "/spotlight/#{exhibit.slug}/about/one"
-    expect(rendered).not_to have_link 'Two'
+    expect(rendered).to have_no_link 'Two'
   end
 end

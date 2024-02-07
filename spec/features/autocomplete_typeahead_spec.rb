@@ -12,7 +12,7 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
         visit spotlight.edit_exhibit_appearance_path(exhibit)
         click_link 'Exhibit masthead'
 
-        expect(page).not_to have_css('.leaflet-container')
+        expect(page).to have_no_css('.leaflet-container')
 
         check 'Show background image in masthead'
 
@@ -65,7 +65,7 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
 
         fill_in_typeahead_field(with: 'gk446cj2442', type: 'featured-image')
 
-        expect(page).not_to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/)
+        expect(page).to have_no_css('[data-panel-image-pagination]', text: /Image 1 of 2/)
       end
     end
 
@@ -78,7 +78,7 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
         visit spotlight.edit_exhibit_appearance_path(exhibit)
         click_link 'Exhibit masthead'
 
-        expect(page).not_to have_css('[data-behavior="non-iiif-alert"]', visible: true)
+        expect(page).to have_no_css('[data-behavior="non-iiif-alert"]', visible: true)
 
         fill_in_typeahead_field(with: 'gk446cj2442', type: 'featured-image')
 

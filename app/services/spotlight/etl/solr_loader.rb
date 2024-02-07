@@ -53,7 +53,7 @@ module Spotlight
                                data: [document].to_json,
                                headers: { 'Content-Type' => 'application/json' }
       rescue StandardError => e
-        pipeline&.on_error(self, e, document.to_json)
+        pipeline&.on_error(e, document.to_json)
       end
 
       def blacklight_solr

@@ -62,7 +62,7 @@ describe 'spotlight/about_pages/index.html.erb', type: :view do
       allow(view).to receive(:disable_save_pages_button?).and_return(false)
       assign(:pages, [{}])
       render
-      expect(rendered).not_to have_selector 'button[disabled]', text: 'Save changes'
+      expect(rendered).to have_no_selector 'button[disabled]', text: 'Save changes'
       expect(rendered).to have_selector 'button', text: 'Save changes'
     end
   end

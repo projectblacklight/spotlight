@@ -19,7 +19,7 @@ describe 'Search Configuration Administration', js: true do
 
       expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
-      expect(page).not_to have_css 'select#search_field'
+      expect(page).to have_no_css 'select#search_field'
     end
 
     it 'allows the curator to update search field options' do
@@ -29,9 +29,9 @@ describe 'Search Configuration Administration', js: true do
 
       within('#nested-search-fields') do
         expect(page).to have_css("#blacklight_configuration_search_fields_title_label[type='hidden']", visible: false)
-        expect(page).not_to have_css("#blacklight_configuration_search_fields_title_label[type='text']")
+        expect(page).to have_no_css("#blacklight_configuration_search_fields_title_label[type='text']")
         click_link('Title')
-        expect(page).not_to have_css("#blacklight_configuration_search_fields_title_label[type='hidden']")
+        expect(page).to have_no_css("#blacklight_configuration_search_fields_title_label[type='hidden']")
         expect(page).to have_css("#blacklight_configuration_search_fields_title_label[type='text']")
         fill_in 'blacklight_configuration_search_fields_title_label', with: 'My Title Label'
       end
@@ -51,7 +51,7 @@ describe 'Search Configuration Administration', js: true do
       click_link 'Facets'
 
       facet = find('.edit-in-place', text: 'Genre')
-      expect(page).not_to have_content('Topic')
+      expect(page).to have_no_content('Topic')
       expect(page).to have_css("input##{input_id}", visible: false)
 
       facet.click
@@ -65,7 +65,7 @@ describe 'Search Configuration Administration', js: true do
 
       expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
-      expect(page).not_to have_content('Genre')
+      expect(page).to have_no_content('Genre')
       expect(page).to have_content('Topic')
     end
 
@@ -119,9 +119,9 @@ describe 'Search Configuration Administration', js: true do
 
       within('#nested-sort-fields') do
         expect(page).to have_css("#blacklight_configuration_sort_fields_title_label[type='hidden']", visible: false)
-        expect(page).not_to have_css("#blacklight_configuration_sort_fields_title_label[type='text']")
+        expect(page).to have_no_css("#blacklight_configuration_sort_fields_title_label[type='text']")
         click_link('title')
-        expect(page).not_to have_css("#blacklight_configuration_sort_fields_title_label[type='hidden']")
+        expect(page).to have_no_css("#blacklight_configuration_sort_fields_title_label[type='hidden']")
         expect(page).to have_css("#blacklight_configuration_sort_fields_title_label[type='text']")
         fill_in 'blacklight_configuration_sort_fields_title_label', with: 'My Title Label'
       end

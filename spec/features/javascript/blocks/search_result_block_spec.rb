@@ -30,13 +30,13 @@ describe 'Search Result Block', js: true, type: :feature do
 
     save_page
 
-    expect(page).not_to have_content 'per page'
-    expect(page).not_to have_content 'Sort by'
+    expect(page).to have_no_content 'per page'
+    expect(page).to have_no_content 'Sort by'
 
     # The two configured view types should be
     # present and the one not selected should not be
     within('.view-type-group') do
-      expect(page).not_to have_css('.view-type-list')
+      expect(page).to have_no_css('.view-type-list')
       expect(page).to have_css('.view-type-gallery')
       expect(page).to have_css('.view-type-slideshow')
     end

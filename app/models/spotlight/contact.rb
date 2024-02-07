@@ -7,7 +7,7 @@ module Spotlight
     belongs_to :exhibit, touch: true, optional: true
     scope :published, -> { where(show_in_sidebar: true) }
     default_scope { order('weight ASC') }
-    serialize :contact_info, Hash
+    serialize :contact_info, Hash, coder: YAML
 
     extend FriendlyId
     friendly_id :name, use: %i[slugged scoped finders], scope: :exhibit

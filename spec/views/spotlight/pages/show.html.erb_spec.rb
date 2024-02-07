@@ -25,7 +25,7 @@ describe 'spotlight/pages/show', type: :view do
   it 'does not render an empty heading' do
     allow(page).to receive_messages(title: nil)
     render
-    expect(rendered).not_to have_css('.page-title')
+    expect(rendered).to have_no_css('.page-title')
   end
 
   it 'injects the page title into the html title' do

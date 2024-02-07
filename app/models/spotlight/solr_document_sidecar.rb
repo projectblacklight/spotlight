@@ -11,8 +11,8 @@ module Spotlight
     belongs_to :exhibit, optional: false
     belongs_to :resource, optional: true
     belongs_to :document, optional: false, polymorphic: true
-    serialize :data, Hash
-    serialize :index_status, Hash
+    serialize :data, Hash, coder: YAML
+    serialize :index_status, Hash, coder: YAML
 
     delegate :has_key?, :key?, to: :data
 
@@ -101,8 +101,10 @@ module Spotlight
     def convert_stored_value_to_solr(value)
       if value.blank?
         nil
-      elsif value.is_a? Enumerable
+      elsif value.is_a? Array
         value.reject(&:blank?)
+      elsif value.is_a? Hash
+        value.values.reject(&:blank?)
       else
         value
       end

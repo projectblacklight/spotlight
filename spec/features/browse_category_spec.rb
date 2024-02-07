@@ -22,7 +22,7 @@ describe 'Browse pages' do
           expect(page).to have_selector 'h1', text: 'Some Saved Search'
         end
 
-        expect(page).not_to have_selector '.masthead .h2', text: 'Some Saved Search'
+        expect(page).to have_no_selector '.masthead .h2', text: 'Some Saved Search'
       end
 
       it 'shows the search bar' do
@@ -43,7 +43,7 @@ describe 'Browse pages' do
 
           visit spotlight.exhibit_browse_path(exhibit, search)
 
-          expect(page).not_to have_selector '.search-query-form'
+          expect(page).to have_no_selector '.search-query-form'
         end
       end
     end
@@ -62,7 +62,7 @@ describe 'Browse pages' do
         expect(page).to have_selector '.masthead .h2', text: 'Some Saved Search'
 
         within '#main-container' do
-          expect(page).not_to have_selector 'h1', text: 'Some Saved Search'
+          expect(page).to have_no_selector 'h1', text: 'Some Saved Search'
         end
 
         expect(page).to have_selector '.masthead small.item-count', text: /\d+ items/
@@ -71,13 +71,13 @@ describe 'Browse pages' do
       it 'does not show the search bar' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
-        expect(page).not_to have_selector '.search-query-form'
+        expect(page).to have_no_selector '.search-query-form'
       end
 
       it 'does not have breadcrumbs' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
-        expect(page).not_to have_selector '.breadcrumbs-container'
+        expect(page).to have_no_selector '.breadcrumbs-container'
       end
     end
 
@@ -104,8 +104,8 @@ describe 'Browse pages' do
         expect(page).to have_css('#documents.documents-gallery .document', count: 1)
 
         within '.document' do
-          expect(page).not_to have_css('dt')
-          expect(page).not_to have_css('dd')
+          expect(page).to have_no_css('dt')
+          expect(page).to have_no_css('dd')
         end
       end
     end
@@ -136,7 +136,7 @@ describe 'Browse pages' do
       it 'renders search box' do
         visit spotlight.exhibit_browse_path(exhibit, search)
         expect(page).to have_selector '.browse-search-form'
-        expect(page).not_to have_css '.browse-search-expand'
+        expect(page).to have_no_css '.browse-search-expand'
 
         fill_in 'Search within this browse category', with: 'SEPTENTRIONALE'
         click_button 'Search within browse category'
@@ -154,6 +154,32 @@ describe 'Browse pages' do
       expect(page).to have_css "meta[name='twitter:title'][value='#{search.title}']", visible: false
       expect(page).to have_css "meta[property='og:site_name']", visible: false
       expect(page).to have_css "meta[property='og:title'][content='#{search.title}']", visible: false
+    end
+  end
+
+  context 'with a search field based browse category' do
+    let(:search) { FactoryBot.create(:search_field_search, title: 'Search field search', exhibit: exhibit, published: true, search_box: true) }
+
+    it 'conducts a search within the browse category' do
+      visit spotlight.exhibit_browse_path(exhibit, search)
+      expect(search.documents.count).to eq 6
+
+      fill_in 'Search within this browse category', with: 'azimuthal'
+      click_button 'Search within browse category'
+      expect(page).to have_text('Your search matched 1 of 6 items in this browse category.')
+    end
+  end
+
+  context 'with a facet based browse category' do
+    let(:search) { FactoryBot.create(:facet_search, title: 'Facet search', exhibit: exhibit, published: true, search_box: true) }
+
+    it 'conducts a search within the browse category' do
+      visit spotlight.exhibit_browse_path(exhibit, search)
+      expect(search.documents.count).to eq 3
+
+      fill_in 'Search within this browse category', with: 'Stopendael'
+      click_button 'Search within browse category'
+      expect(page).to have_text('Your search matched 1 of 3 items in this browse category.')
     end
   end
 end

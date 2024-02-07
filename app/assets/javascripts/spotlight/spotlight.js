@@ -6434,19 +6434,24 @@
       </div>
     `},
 
-      _itemPanelIiifFields: function(index, data) {
+      // Sets the first version of the IIIF information from autocomplete data.
+      _itemPanelIiifFields: function(index, autocomplete_data) {
         return [
           // '<input type="hidden" name="item[' + index + '][iiif_region]" value="' + (data.iiif_region) + '"/>',
           // for legacy compatiblity:
-          '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" value="' + (data.thumbnail_image_url || data.thumbnail || "") + '"/>',
-          '<input type="hidden" name="item[' + index + '][full_image_url]" value="' + (data.full_image_url || data.thumbnail_image_url || data.thumbnail || "") + '"/>',
-          '<input type="hidden" name="item[' + index + '][iiif_tilesource]" value="' + (data.iiif_tilesource) + '"/>',
-          '<input type="hidden" name="item[' + index + '][iiif_manifest_url]" value="' + (data.iiif_manifest_url) + '"/>',
-          '<input type="hidden" name="item[' + index + '][iiif_canvas_id]" value="' + (data.iiif_canvas_id) + '"/>',
-          '<input type="hidden" name="item[' + index + '][iiif_image_id]" value="' + (data.iiif_image_id) + '"/>',
+          '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" value="' + (autocomplete_data.thumbnail_image_url || autocomplete_data.thumbnail || "") + '"/>',
+          '<input type="hidden" name="item[' + index + '][full_image_url]" value="' + (autocomplete_data.full_image_url || autocomplete_data.thumbnail_image_url || autocomplete_data.thumbnail || "") + '"/>',
+          '<input type="hidden" name="item[' + index + '][iiif_tilesource]" value="' + (autocomplete_data.iiif_tilesource) + '"/>',
+          '<input type="hidden" name="item[' + index + '][iiif_manifest_url]" value="' + (autocomplete_data.iiif_manifest_url) + '"/>',
+          '<input type="hidden" name="item[' + index + '][iiif_canvas_id]" value="' + (autocomplete_data.iiif_canvas_id) + '"/>',
+          '<input type="hidden" name="item[' + index + '][iiif_image_id]" value="' + (autocomplete_data.iiif_image_id) + '"/>',
         ].join("\n");
       },
-      setIiifFields: function(panel, data, initialize) {
+      // Overwrites the hidden inputs from _itemPanelIiifFields with data from the
+      // manifest. Called by afterPanelRender - the manifest_data here is built
+      // from canvases in the manifest, transformed by spotlight/admin/iiif.js in
+      // the #images method.
+      setIiifFields: function(panel, manifest_data, initialize) {
         var legacyThumbnailField = $(panel).find('[name$="[thumbnail_image_url]"]');
         var legacyFullField = $(panel).find('[name$="[full_image_url]"]');
 
@@ -6456,11 +6461,11 @@
 
         legacyThumbnailField.val("");
         legacyFullField.val("");
-        $(panel).find('[name$="[iiif_image_id]"]').val(data.imageId);
-        $(panel).find('[name$="[iiif_tilesource]"]').val(data.tilesource);
-        $(panel).find('[name$="[iiif_manifest_url]"]').val(data.manifest);
-        $(panel).find('[name$="[iiif_canvas_id]"]').val(data.canvasId);
-        $(panel).find('img.img-thumbnail').attr('src', data.thumbnail_image_url || data.tilesource.replace("/info.json", "/full/100,100/0/default.jpg"));
+        $(panel).find('[name$="[iiif_image_id]"]').val(manifest_data.imageId);
+        $(panel).find('[name$="[iiif_tilesource]"]').val(manifest_data.tilesource);
+        $(panel).find('[name$="[iiif_manifest_url]"]').val(manifest_data.manifest);
+        $(panel).find('[name$="[iiif_canvas_id]"]').val(manifest_data.canvasId);
+        $(panel).find('img.img-thumbnail').attr('src', manifest_data.thumbnail_image_url || manifest_data.tilesource.replace("/info.json", "/full/100,100/0/default.jpg"));
       },
       afterPanelRender: function(data, panel) {
         var context = this;

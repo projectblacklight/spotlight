@@ -30,10 +30,10 @@ describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
 
   it 'does not have special metadata editing fields for non-uploaded resources' do
     render
-    expect(rendered).not_to have_field 'full_title_tesim label'
-    expect(rendered).not_to have_field 'spotlight_upload_description_tesim label'
-    expect(rendered).not_to have_field 'spotlight_upload_attribution_tesim label'
-    expect(rendered).not_to have_field 'spotlight_upload_date_tesim label'
+    expect(rendered).to have_no_field 'full_title_tesim label'
+    expect(rendered).to have_no_field 'spotlight_upload_description_tesim label'
+    expect(rendered).to have_no_field 'spotlight_upload_attribution_tesim label'
+    expect(rendered).to have_no_field 'spotlight_upload_date_tesim label'
   end
 
   it 'has special metadata fields for an uploaded resource' do

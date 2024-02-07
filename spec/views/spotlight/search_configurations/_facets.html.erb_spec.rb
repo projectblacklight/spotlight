@@ -37,7 +37,7 @@ describe 'spotlight/search_configurations/_facets', type: :view do
   end
 
   it 'hides the config for the empty genre facet' do
-    expect(rendered).not_to have_content 'Genre'
+    expect(rendered).to have_no_content 'Genre'
   end
 
   describe do
@@ -48,7 +48,7 @@ describe 'spotlight/search_configurations/_facets', type: :view do
     end
 
     it 'hides the config facets configured not to display' do
-      expect(rendered).not_to have_content 'Some hidden field'
+      expect(rendered).to have_no_content 'Some hidden field'
     end
   end
 end

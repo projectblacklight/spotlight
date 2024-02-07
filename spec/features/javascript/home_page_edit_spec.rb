@@ -10,7 +10,7 @@ describe 'Editing the Home Page', js: true, versioning: true do
     visit spotlight.edit_exhibit_home_page_path(exhibit)
     click_add_widget
     expect(page).to have_css("[data-type='solr_documents']", visible: true)
-    expect(page).not_to have_css("[data-type='search_results']", visible: true)
+    expect(page).to have_no_css("[data-type='search_results']", visible: true)
   end
 
   it 'correctly saves a list widget' do

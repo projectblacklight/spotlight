@@ -30,7 +30,7 @@ describe 'Featured Browse Category Block', js: true, type: :feature do
     save_page
 
     # Documents should exist
-    expect(page).not_to have_css('.category-title', text: search1.title)
+    expect(page).to have_no_css('.category-title', text: search1.title)
     expect(page).to have_css('.category-title', text: search2.title)
     expect(page).to have_css('.item-count', text: /\d+ items/i)
   end
@@ -41,6 +41,6 @@ describe 'Featured Browse Category Block', js: true, type: :feature do
     fill_in_typeahead_field with: 'Title1'
     save_page
 
-    expect(page).not_to have_css('.item-count', text: /\d+ items/i)
+    expect(page).to have_no_css('.item-count', text: /\d+ items/i)
   end
 end

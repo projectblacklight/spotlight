@@ -31,12 +31,21 @@ module Spotlight
 
       solr_params.append_query(query) if query.present?
 
+      # for a browse category formed from a saved search, the query syntax reads as two "must" values
+      # e.g.  "json"=>{"query"=>{"bool"=>{"must"=>["savedsearchterm", "browsecategorysearchterm"]}}}}
+      must_values = solr_params.dig(:json, :query, :bool, :must)
+
+      return unless must_values&.any?
+
+      # this type of query must be parsed by lucene to function
+      solr_params[:defType] = 'lucene'
+
       # This replicates existing spotlight 2.x search behavior, more or less. It
       # doesn't take into account the possibility that the browse category query
       # could use a different search field (which.. doesn't have an existing UI
       # control.. and may require additional upstream work to properly encapsulate
       # the two query parameters)
-      solr_params.dig(:json, :query, :bool, :must)&.map! do |q|
+      must_values.map! do |q|
         q.is_a?(String) ? { edismax: { query: q } } : q
       end
     end

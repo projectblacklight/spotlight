@@ -26,8 +26,8 @@ describe 'spotlight/feature_pages/_sidebar.html.erb', type: :view do
     expect(rendered).to have_selector 'ol.sidenav li:nth-child(2) a', text: 'Three'
     expect(rendered).to have_selector 'li a', text: 'Two' # a different parent page
     expect(rendered).to have_link 'Four' # different parent
-    expect(rendered).not_to have_link 'Six' # not published
-    expect(rendered).not_to have_link 'Seven' # different exhibit
+    expect(rendered).to have_no_link 'Six' # not published
+    expect(rendered).to have_no_link 'Seven' # different exhibit
   end
 
   it 'renders a list of pages from a child page' do
@@ -40,6 +40,6 @@ describe 'spotlight/feature_pages/_sidebar.html.erb', type: :view do
     expect(rendered).to have_selector 'ol.sidenav li:nth-child(2) a', text: 'Three'
     expect(rendered).to have_content 'Two' # not selected page
     expect(rendered).to have_link 'Four' # different parent
-    expect(rendered).not_to have_link 'Six' # not published
+    expect(rendered).to have_no_link 'Six' # not published
   end
 end
