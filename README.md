@@ -107,6 +107,7 @@ See [developer-facing instructions for enabling translation](https://github.com/
 
 
 - Join us on the [code4lib Slack](https://code4lib.org/irc)
+  - **#spotlight-development** - a developer-focused channel for Spotlight
   - **#blacklight** - a developer-focused channel for discussing implementation, customization, and other software concerns in the larger [Blacklight community](http://projectblacklight.org/)
   - **#spotlight-service** - a service-focused channel for people who support exhibit-builders at institutions already using Spotlight
 - Google Groups
