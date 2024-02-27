@@ -4,7 +4,7 @@ module Spotlight
   ##
   # CRUD actions for exhibit resources
   class ResourcesController < Spotlight::ApplicationController
-    before_action :authenticate_user!, except: [:show]
+    before_action :authenticate_user!
     before_action :set_tab, only: %i[new create]
 
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
