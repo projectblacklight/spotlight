@@ -45,7 +45,7 @@ jobs:
       RAILS_VERSION: ${{ matrix.rails_version }}
       BLACKLIGHT_VERSION: ${{ matrix.blacklight_version }}
       BOOTSTRAP_VERSION: ${{ matrix.bootstrap_version }}
-      ENGINE_CART_RAILS_OPTIONS: --skip-git --skip-listen --skip-spring --skip-keeps --skip-action-cable --skip-coffee --skip-test
+      ENGINE_CART_RAILS_OPTIONS: --skip-git --skip-listen --skip-spring --skip-keeps --skip-coffee --skip-test
     steps:
       - uses: actions/checkout@v4
       - name: Set up Ruby ${{ matrix.ruby }}
