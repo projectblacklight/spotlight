@@ -43,13 +43,13 @@ module Spotlight
       def to_solr
         return {} unless upload&.file_present?
 
-        dimensions = Spotlight::Engine.config.iiif_service.info(id)
+        dimensions = Spotlight::Engine.config.iiif_service.info(upload.id)
 
         {
           spotlight_full_image_width_ssm: dimensions.width,
           spotlight_full_image_height_ssm: dimensions.height,
           Spotlight::Engine.config.thumbnail_field => Spotlight::Engine.config.iiif_service.thumbnail_url(upload),
-          Spotlight::Engine.config.iiif_manifest_field => Spotlight::Engine.config.iiif_service.manifest_url(exhibit, upload)
+          Spotlight::Engine.config.iiif_manifest_field => Spotlight::Engine.config.iiif_service.manifest_url(exhibit, self)
         }
       end
 
