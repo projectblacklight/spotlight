@@ -16,10 +16,14 @@ module Spotlight
     has_many :groups, through: :group_memberships
     accepts_nested_attributes_for :group_memberships
     accepts_nested_attributes_for :groups
-    if defined?(Blacklight::SearchParamsYamlCoder)
-      serialize :query_params, Blacklight::SearchParamsYamlCoder, default: -> { {} }
+    if defined?(Blacklight::SearchParamsYamlCoder) # in Blacklight 7.28.0+
+      serialize :query_params, coder: Blacklight::SearchParamsYamlCoder, default: -> { {} }
     else
-      serialize :query_params, Hash
+      if Rails.version > '7' # rubocop:disable Style/IfInsideElse
+        serialize :query_params, type: Hash
+      else
+        serialize :query_params, Hash
+      end
     end
     default_scope { order('weight ASC') }
     scope :published, -> { where(published: true) }
