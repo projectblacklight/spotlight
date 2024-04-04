@@ -56,7 +56,7 @@ describe Spotlight::ContactEmailController, type: :controller do
         it 'gives a 404 with appropriate message when the record no longer exists' do
           contact_email.destroy
           delete :destroy, params: { id: contact_email, exhibit_id: contact_email.exhibit }
-          expect(response.status).to eq 404
+          expect(response).to have_http_status :not_found
           expect(response.parsed_body).to eq('success' => false, 'error' => 'Not Found')
         end
       end

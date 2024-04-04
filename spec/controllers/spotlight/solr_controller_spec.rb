@@ -48,7 +48,7 @@ describe Spotlight::SolrController, type: :controller do
         it 'raises an error' do
           post_update_with_json_body(exhibit, a: 1)
 
-          expect(response.code).to eq '409'
+          expect(response).to have_http_status :conflict
         end
       end
 
