@@ -67,6 +67,7 @@ these collections.)
   s.add_development_dependency 'rspec-its'
   s.add_development_dependency 'rspec-rails', '>= 4.0.0.beta1'
   s.add_development_dependency 'rubocop', '~> 1.8'
+  s.add_development_dependency 'rubocop-capybara'
   s.add_development_dependency 'rubocop-rails'
   s.add_development_dependency 'rubocop-rspec'
   s.add_development_dependency 'selenium-webdriver'
