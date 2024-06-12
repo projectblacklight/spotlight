@@ -295,7 +295,6 @@ describe 'Translation editing', type: :feature do
 
         visit spotlight.search_exhibit_catalog_path(exhibit, q: '*', locale: 'fr')
 
-        find('button[aria-label="plus »"]').click # Hamburger icon
         expect(page).to have_css('h3.facet-field-heading', text: 'Géographique')
       end
     end
