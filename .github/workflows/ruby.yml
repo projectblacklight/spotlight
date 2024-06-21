@@ -22,10 +22,6 @@ jobs:
             ruby: '3.0'
             blacklight_version: '7.33.1'
             bootstrap_version: ~> 4.0
-          - rails_version: '6.1.7.6'
-            ruby: '2.7'
-            blacklight_version: '7.33.1'
-            bootstrap_version: ~> 4.0
           - rails_version: '7.0.8'
             ruby: '3.1'
             blacklight_version: '8.0.0'
