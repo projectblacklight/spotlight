@@ -35,10 +35,13 @@
   }
 
   .constraint-value {
-     @include border-right-radius($border-radius-sm);
+    border-top-right-radius: $border-radius-sm;
+    border-bottom-right-radius: $border-radius-sm;
   }
 
-  .form-control-plaintext { display: none; }
+  .form-control-plaintext {
+    display: none;
+  }
 }
 
 .analytics {
@@ -52,7 +55,8 @@
     text-align: center;
   }
 
-  th, td {
+  th,
+  td {
     &:first-child {
       border-left: 0;
     }
