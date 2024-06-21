@@ -43,7 +43,7 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
-        bundler: '2.4.22'
+        bundler: 'latest'
         ruby-version: ${{ matrix.ruby }}
     - name: Run tests
       run: bundle exec rake
