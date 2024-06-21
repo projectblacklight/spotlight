@@ -13,7 +13,11 @@
     <% else %>
       <%= stylesheet_link_tag "application" %>
     <% end %>
-    <%= javascript_include_tag "application" %>
+    <% if defined? Importmap %>
+      <%= javascript_importmap_tags %>
+    <% else %>
+      <%= javascript_include_tag "application" %>
+    <% end %>
     <%= csrf_meta_tags %>
     <%= content_for(:head) %>
     <%= description %>
