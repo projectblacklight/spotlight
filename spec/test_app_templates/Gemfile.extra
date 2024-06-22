@@ -1,8 +1,13 @@
 gem 'sprockets', '< 4' if ENV['RAILS_VERSION'] && ENV['RAILS_VERSION'] < '6'
 gem 'view_component', '!= 2.26.0'
 
-if ENV['BLACKLIGHT_VERSION'] == 'edge'
+case ENV['BLACKLIGHT_VERSION']
+when 'edge'
   gem 'blacklight', github: 'projectblacklight/blacklight'
   gem 'blacklight-gallery', github: 'projectblacklight/blacklight-gallery'
   gem 'blacklight-oembed', github: 'projectblacklight/blacklight-oembed'
+when 'latest'
+  gem 'blacklight'
+else
+  gem 'blacklight', ENV['BLACKLIGHT_VERSION'] if ENV['BLACKLIGHT_VERSION'] && !ENV['BLACKLIGHT_VERSION'].empty?
 end
