@@ -69,8 +69,6 @@ describe Spotlight::Page, type: :model do
       end
 
       before do
-        # needed so we don't accidentally stub Spotlight::PageContent below
-        require 'spotlight/page_content'
         stub_const('Spotlight::PageContent::Static', fake_class)
       end
 
