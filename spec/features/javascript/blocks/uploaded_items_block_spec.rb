@@ -71,8 +71,10 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     attach_file('uploaded_item_url', fixture_file2)
 
     check 'Offer "View larger" option'
-    # this seems silly, but also seems to help with the flappy-ness of this spec
-    expect(find_field('Offer "View larger" option', checked: true)).to be_checked
+
+    # Flappy guards. Wait for the thumbnail src to be populated.
+    expect(page).to have_selector('li[data-id="file_0"] .img-thumbnail[src^="/"]')
+    expect(page).to have_selector('li[data-id="file_1"] .img-thumbnail[src^="/"]')
 
     save_page
 

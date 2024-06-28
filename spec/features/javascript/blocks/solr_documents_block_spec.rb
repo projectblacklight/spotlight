@@ -84,8 +84,10 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
   end
 
   it 'allows you to toggle visibility of solr documents', js: true do
-    skip('Passes locally, but soooo flakey in CI.') if ENV['CI']
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
+
+    # Flappy guard. Wait for the thumbnail src to be populated.
+    expect(page).to have_selector('li[data-resource-id="dq287tq6352"] .img-thumbnail[src^="http"]')
 
     within(:css, '.card') do
       uncheck 'Display?'
@@ -93,14 +95,14 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
 
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
+    # Flappy guard. Wait for the thumbnail src to be populated.
+    expect(page).to have_selector('li[data-resource-id="gk446cj2442"] .img-thumbnail[src^="http"]')
+
     # display the title as the primary caption
     within('.primary-caption') do
       check('Primary caption')
       select('Title', from: 'primary-caption-field')
     end
-
-    # this seems silly, but also seems to help with the flappy-ness of this spec
-    expect(find_field('Primary caption', checked: true)).to be_checked
 
     save_page
 
@@ -113,9 +115,6 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     within('.primary-caption') do
       uncheck('Primary caption')
     end
-
-    # this seems silly, but also seems to help with the flappy-ness of this spec
-    expect(find_field('Primary caption', checked: false)).not_to be_checked
 
     save_page
 
@@ -148,13 +147,12 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
   end
 
   it 'allows you to optionally display a ZPR link with the image', js: true do
-    skip('Passes locally, but soooo flakey on Travis.') if ENV['CI']
-
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
+    # Flappy guard. Wait for the thumbnail src to be populated.
+    expect(page).to have_selector('li[data-resource-id="gk446cj2442"] .img-thumbnail[src^="http"]')
+
     check 'Offer "View larger" option'
-    # this seems silly, but also seems to help with the flappy-ness of this spec
-    expect(find_field('Offer "View larger" option', checked: true)).to be_checked
 
     save_page
 
@@ -182,13 +180,13 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
   end
 
   it 'allows you to choose which side the text will be on', js: true do
-    skip('Passes locally, but soooo flakey on Travis.') if ENV['CI']
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
+
+    # Flappy guard. Wait for the thumbnail src to be populated.
+    expect(page).to have_selector('li[data-resource-id="dq287tq6352"] .img-thumbnail[src^="http"]')
 
     # Select to align the text right
     choose 'Left'
-    # this seems silly, but also seems to help with the flappy-ness of this spec
-    expect(find_field('Left', checked: true)).to be_checked
 
     # fill in the content editable div
     content_editable = find('.st-text-block')
@@ -209,11 +207,17 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
   it 'round-trip data', js: true do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
+    # Flappy guard. Wait for the thumbnail src to be populated.
+    expect(page).to have_selector('li[data-resource-id="dq287tq6352"] .img-thumbnail[src^="http"]')
+
     within(:css, '.card') do
       uncheck 'Display?'
     end
 
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
+
+    # Flappy guard. Wait for the thumbnail src to be populated.
+    expect(page).to have_selector('li[data-resource-id="gk446cj2442"] .img-thumbnail[src^="http"]')
 
     # display the title as the primary caption
     within('.primary-caption') do
