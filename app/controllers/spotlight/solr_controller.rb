@@ -20,7 +20,10 @@ module Spotlight
 
       data = solr_documents
 
-      @exhibit.blacklight_config.repository.connection.update params: { commitWithin: 500 }, data: data.to_json, headers: { 'Content-Type' => 'application/json' } unless data.empty?
+      unless data.empty?
+        repository.connection.update params: { commitWithin: 500 }, data: data.to_json,
+                                     headers: { 'Content-Type' => 'application/json' }
+      end
 
       if params[:resources_json_upload]
         redirect_back fallback_location: exhibit_resources_path(@exhibit)
@@ -30,6 +33,10 @@ module Spotlight
     end
 
     private
+
+    def repository
+      @repository ||= blacklight_config.repository
+    end
 
     def solr_documents
       req = ActiveSupport::JSON.decode(json_content)
