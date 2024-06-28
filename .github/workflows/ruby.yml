@@ -32,6 +32,11 @@ jobs:
             bootstrap_version: ~> 4.0
             additional_engine_cart_rails_options: -a propshaft
             additional_name: '/ Propshaft'
+          - rails_version: '7.0.8'
+            ruby: '3.3'
+            blacklight_version: 'latest'
+            bootstrap_version: ~> 4.0
+            additional_engine_cart_rails_options: -a propshaft
     env:
       RAILS_VERSION: ${{ matrix.rails_version }}
       BLACKLIGHT_VERSION: ${{ matrix.blacklight_version }}
