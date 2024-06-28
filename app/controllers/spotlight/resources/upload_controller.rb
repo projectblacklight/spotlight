@@ -9,7 +9,7 @@ module Spotlight
       helper :all
 
       before_action :authenticate_user!
-      before_action :set_tab, only: %i[new create]
+      before_action :set_tab, only: %i[create]
 
       load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
       before_action :build_resource
