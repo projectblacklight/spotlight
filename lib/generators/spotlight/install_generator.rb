@@ -152,15 +152,6 @@ module Spotlight
       end
     end
 
-    def generate_config
-      directory 'config'
-    end
-
-    def add_solr_config_resources
-      copy_file '.solr_wrapper.yml', '.solr_wrapper.yml'
-      directory 'solr'
-    end
-
     def generate_devise_invitable
       gem 'devise_invitable'
       bundle_install
@@ -168,8 +159,13 @@ module Spotlight
       generate 'devise_invitable', 'User'
     end
 
-    def add_translations
-      copy_file 'config/initializers/translation.rb'
+    def generate_config
+      directory 'config'
+    end
+
+    def add_solr_config_resources
+      copy_file '.solr_wrapper.yml', '.solr_wrapper.yml'
+      directory 'solr'
     end
 
     def configure_logging
