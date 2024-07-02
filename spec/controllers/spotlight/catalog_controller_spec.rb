@@ -152,7 +152,7 @@ describe Spotlight::CatalogController, type: :controller do
         it 'returns a 404 when called on something other than an uploaded resource' do
           get :manifest, params: { exhibit_id: exhibit, id: 'dx157dh4345' }
           expect(response).not_to be_successful
-          expect(response.status).to eq(404)
+          expect(response).to have_http_status(:not_found)
         end
       end
     end
