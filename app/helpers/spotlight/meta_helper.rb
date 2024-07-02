@@ -46,7 +46,7 @@ module Spotlight
         graph.type 'article'
         graph.site_name application_name
         graph.title page.title
-        graph.send('og:image', page.thumbnail.iiif_url) if page.thumbnail
+        graph.send('image', page.thumbnail.iiif_url) if page.thumbnail
         graph.send('article:published_time', page.created_at.iso8601)
         graph.send('article:modified_time', page.updated_at.iso8601)
       end
@@ -69,7 +69,7 @@ module Spotlight
         graph.type 'article'
         graph.site_name application_name
         graph.title browse.title
-        graph.send('og:image', browse.thumbnail.iiif_url) if browse.thumbnail
+        graph.send('image', browse.thumbnail.iiif_url) if browse.thumbnail
         graph.send('article:published_time', browse.created_at.iso8601)
         graph.send('article:modified_time', browse.updated_at.iso8601)
       end
@@ -95,7 +95,7 @@ module Spotlight
       opengraph do |graph|
         graph.site_name application_name
         graph.title presenter.heading
-        graph.send('og:image', document.first(blacklight_config.index.thumbnail_field))
+        graph.send('image', document.first(blacklight_config.index.thumbnail_field))
       end
     end
   end
