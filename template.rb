@@ -34,3 +34,10 @@ insert_into_file 'config/application.rb', after: "< Rails::Application\n" do
   config.active_job.queue_adapter = ENV["RAILS_QUEUE"]&.to_sym || :sidekiq
   CONFIG
 end
+
+after_bundle do
+  # Rails installed importmap by default, but we don't have importmap + Blacklight 7 working yet.
+  # Similar to step in Spotlight::Install#add_manifest, but this cleans up the file stimulus-rails
+  # creates afterward.
+  remove_file 'app/javascript/application.js'
+end
