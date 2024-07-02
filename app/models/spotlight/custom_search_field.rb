@@ -3,7 +3,7 @@
 module Spotlight
   # Exhibit-specific custom search fields
   class CustomSearchField < ApplicationRecord
-    if Rails.version > '7'
+    if Rails.version > '7.1'
       serialize :configuration, type: Hash, coder: YAML
     else
       serialize :configuration, Hash, coder: YAML

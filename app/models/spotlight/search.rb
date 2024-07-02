@@ -19,7 +19,7 @@ module Spotlight
     if defined?(Blacklight::SearchParamsYamlCoder) # in Blacklight 7.28.0+
       serialize :query_params, coder: Blacklight::SearchParamsYamlCoder, default: -> { {} }
     else
-      if Rails.version > '7' # rubocop:disable Style/IfInsideElse
+      if Rails.version > '7.1' # rubocop:disable Style/IfInsideElse
         serialize :query_params, type: Hash
       else
         serialize :query_params, Hash

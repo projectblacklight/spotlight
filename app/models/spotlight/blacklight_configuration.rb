@@ -10,7 +10,7 @@ module Spotlight
     has_paper_trail
 
     belongs_to :exhibit, touch: true, optional: true
-    if Rails.version > '7'
+    if Rails.version > '7.1'
       serialize :facet_fields, type: Hash, coder: YAML
       serialize :index_fields, type: Hash, coder: YAML
       serialize :search_fields, type: Hash, coder: YAML

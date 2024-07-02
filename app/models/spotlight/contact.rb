@@ -7,7 +7,7 @@ module Spotlight
     belongs_to :exhibit, touch: true, optional: true
     scope :published, -> { where(show_in_sidebar: true) }
     default_scope { order('weight ASC') }
-    if Rails.version > '7'
+    if Rails.version > '7.1'
       serialize :contact_info, type: Hash, coder: YAML
     else
       serialize :contact_info, Hash, coder: YAML

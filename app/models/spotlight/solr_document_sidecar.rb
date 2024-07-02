@@ -12,7 +12,7 @@ module Spotlight
     belongs_to :resource, optional: true
     belongs_to :document, optional: false, polymorphic: true
 
-    if Rails.version > '7'
+    if Rails.version > '7.1'
       serialize :data, type: Hash, coder: YAML
       serialize :index_status, type: Hash, coder: YAML
     else

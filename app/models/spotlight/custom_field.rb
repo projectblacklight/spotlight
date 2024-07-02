@@ -4,7 +4,7 @@ module Spotlight
   ##
   # Exhibit custom fields
   class CustomField < ActiveRecord::Base
-    if Rails.version > '7'
+    if Rails.version > '7.1'
       serialize :configuration, type: Hash, coder: YAML
     else
       serialize :configuration, Hash, coder: YAML

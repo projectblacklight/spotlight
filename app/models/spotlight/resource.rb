@@ -25,7 +25,7 @@ module Spotlight
     has_many :solr_document_sidecars
     has_many :events, as: :resource
 
-    if Rails.version > '7'
+    if Rails.version > '7.1'
       serialize :data, type: Hash, coder: YAML
     else
       serialize :data, Hash, coder: YAML

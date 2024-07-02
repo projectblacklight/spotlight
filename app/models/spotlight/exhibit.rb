@@ -35,7 +35,7 @@ module Spotlight
     acts_as_tagger
     acts_as_taggable
     delegate :blacklight_config, to: :blacklight_configuration
-    if Rails.version > '7'
+    if Rails.version > '7.1'
       serialize :facets, type: Array, coder: YAML
     else
       serialize :facets, Array, coder: YAML
