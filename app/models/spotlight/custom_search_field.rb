@@ -3,7 +3,11 @@
 module Spotlight
   # Exhibit-specific custom search fields
   class CustomSearchField < ApplicationRecord
-    serialize :configuration, Hash, coder: YAML
+    if Rails.version > '7.1'
+      serialize :configuration, type: Hash, coder: YAML
+    else
+      serialize :configuration, Hash, coder: YAML
+    end
     belongs_to :exhibit
 
     def label=(label)

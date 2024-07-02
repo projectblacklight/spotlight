@@ -10,15 +10,27 @@ module Spotlight
     has_paper_trail
 
     belongs_to :exhibit, touch: true, optional: true
-    serialize :facet_fields, Hash, coder: YAML
-    serialize :index_fields, Hash, coder: YAML
-    serialize :search_fields, Hash, coder: YAML
-    serialize :sort_fields, Hash, coder: YAML
-    serialize :default_solr_params, Hash, coder: YAML
-    serialize :show, Hash, coder: YAML
-    serialize :index, Hash, coder: YAML
-    serialize :per_page, Array, coder: YAML
-    serialize :document_index_view_types, Array, coder: YAML
+    if Rails.version > '7.1'
+      serialize :facet_fields, type: Hash, coder: YAML
+      serialize :index_fields, type: Hash, coder: YAML
+      serialize :search_fields, type: Hash, coder: YAML
+      serialize :sort_fields, type: Hash, coder: YAML
+      serialize :default_solr_params, type: Hash, coder: YAML
+      serialize :show, type: Hash, coder: YAML
+      serialize :index, type: Hash, coder: YAML
+      serialize :per_page, type: Array, coder: YAML
+      serialize :document_index_view_types, type: Array, coder: YAML
+    else
+      serialize :facet_fields, Hash, coder: YAML
+      serialize :index_fields, Hash, coder: YAML
+      serialize :search_fields, Hash, coder: YAML
+      serialize :sort_fields, Hash, coder: YAML
+      serialize :default_solr_params, Hash, coder: YAML
+      serialize :show, Hash, coder: YAML
+      serialize :index, Hash, coder: YAML
+      serialize :per_page, Array, coder: YAML
+      serialize :document_index_view_types, Array, coder: YAML
+    end
 
     include Spotlight::BlacklightConfigurationDefaults
 

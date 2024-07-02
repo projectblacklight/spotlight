@@ -35,8 +35,11 @@ module Spotlight
     acts_as_tagger
     acts_as_taggable
     delegate :blacklight_config, to: :blacklight_configuration
-    serialize :facets, Array, coder: YAML
-
+    if Rails.version > '7.1'
+      serialize :facets, type: Array, coder: YAML
+    else
+      serialize :facets, Array, coder: YAML
+    end
     # NOTE: friendly id associations need to be 'destroy'ed to reap the slug history
     has_many :about_pages, -> { for_default_locale }, extend: FriendlyId::FinderMethods
     has_many :attachments, dependent: :destroy
