@@ -14,7 +14,7 @@ jobs:
         rails_version: ['7.0.8.4']
         ruby: ['3.1', '3.2']
         bootstrap_version: ['~> 4.0']
-        blacklight_version: ['latest']
+        blacklight_version: ['']
         additional_engine_cart_rails_options: ['']
         additional_name: ['']
         include:
