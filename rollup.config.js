@@ -8,8 +8,10 @@ const BUNDLE = process.env.BUNDLE === 'true'
 const ESM = process.env.ESM === 'true'
 
 const fileDest = `spotlight${ESM ? '.esm' : ''}`
-const external = []
-const globals = {}
+const external = ['sortablejs']
+const globals = {
+  'sortablejs': 'Sortable'
+}
 
 let includePathOptions = {
   include: {},
