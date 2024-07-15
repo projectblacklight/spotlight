@@ -11,14 +11,16 @@ const external = [
   'jquery-serializejson',
   'jquery',
   'leaflet',
-  'sir-trevor'
+  'sir-trevor',
+  'sortablejs'
 ]
 const globals = {
   'blacklight-frontend': 'Blacklight',
   clipboard: 'Clipboard',
   jquery: 'jQuery',
   leaflet: 'L',
-  'sir-trevor': 'SirTrevor'
+  'sir-trevor': 'SirTrevor',
+  'sortablejs': 'Sortable'
 }
 
 let includePathOptions = {
