@@ -20,9 +20,6 @@ Bundler/DuplicatedGem:
 Bundler/OrderedGems:
   Enabled: false
 
-RSpec/Capybara/VisibilityMatcher:
-  Enabled: false
-
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
 
