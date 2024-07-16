@@ -35,6 +35,24 @@ describe Spotlight::Resources::Upload, type: :model do
     end
   end
 
+  describe '#to_solr' do
+    subject(:solr_document) { upload.to_solr }
+
+    let(:featured_image) { instance_double(Spotlight::FeaturedImage, id: 1, file_present?: true) }
+
+    before do
+      allow(upload).to receive(:upload).and_return(featured_image)
+      allow(Spotlight::RiiifService).to receive(:thumbnail_url).with(featured_image).and_return('/a/thumbnail/url')
+      allow(Spotlight::RiiifService).to receive(:manifest_url).with(exhibit, upload).and_return('/a/manifest/url')
+    end
+
+    it 'returns a hash using the iiif service' do
+      expect(solr_document).to have_key(:iiif_manifest_url_ssi)
+      expect(solr_document).to have_key(:thumbnail_url_ssm)
+      expect(Spotlight::RiiifService).to have_received(:manifest_url).with(exhibit, upload)
+    end
+  end
+
   context 'when creating' do
     before do
       allow(upload).to receive(:write?).and_return(false)
