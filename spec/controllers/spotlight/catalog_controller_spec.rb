@@ -67,7 +67,7 @@ describe Spotlight::CatalogController, type: :controller do
         expect(response).to be_successful
       end
 
-      it 'adds the curation widget' do
+      it 'adds the curation widget for legacy applications' do
         skip if Blacklight::VERSION > '8'
 
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
