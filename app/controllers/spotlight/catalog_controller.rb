@@ -22,10 +22,6 @@ module Spotlight
 
     before_action :load_document, only: %i[edit update make_private make_public manifest]
 
-    before_action only: :show do
-      blacklight_config.show.document_component = Spotlight::DocumentComponent
-    end
-
     before_action only: :admin do
       blacklight_config.view.select! { |k, _v| k == :admin_table }
       blacklight_config.view.admin_table(partials: [:index_compact], document_actions: []) unless blacklight_config.view.key? :admin_table
