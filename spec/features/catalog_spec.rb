@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Catalog', type: :feature do
+RSpec.describe 'Catalog', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe 'admin' do
@@ -25,6 +25,11 @@ describe 'Catalog', type: :feature do
       visit spotlight.search_exhibit_catalog_path(exhibit)
       expect(page).to have_selector '.card-header', text: 'Item visibility'
     end
+
+    it 'has an edit link' do
+      visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
+      expect(page).to have_link('Edit')
+    end
   end
 
   it 'has breadcrumbs' do
@@ -41,7 +46,11 @@ describe 'Catalog', type: :feature do
   end
 
   describe 'viewing the page' do
-    let(:exhibit) { FactoryBot.create(:exhibit) }
+    it 'displays the title and image viewer' do
+      visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
+      expect(page).to have_css('h1', text: "L'AMERIQUE")
+      expect(page).to have_css('.openseadragon-container')
+    end
 
     it 'has <meta> tags' do
       TopHat.current['twitter_card'] = nil
