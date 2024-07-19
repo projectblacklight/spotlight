@@ -23,7 +23,16 @@ module Spotlight
     before_action :load_document, only: %i[edit update make_private make_public manifest]
 
     before_action only: :show do
-      blacklight_config.show.document_component = Spotlight::DocumentComponent
+      # Substitute the default document component with the custom one for Blacklight 8,
+      # and add the necessary partials for Blacklight 7 (if they haven't configured the document component)
+      if blacklight_config.show.document_component.nil? || blacklight_config.show.document_component == Blacklight::DocumentComponent
+        if Blacklight::VERSION > '8'
+          blacklight_config.show.document_component = Spotlight::DocumentComponent
+        else
+          blacklight_config.show.partials.unshift 'tophat'
+          blacklight_config.show.partials.unshift 'curation_mode_toggle'
+        end
+      end
     end
 
     before_action only: :admin do

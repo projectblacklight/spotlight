@@ -5,7 +5,9 @@ module Spotlight
   # This overrides the title method to provide an edit link.
   class DocumentComponent < Blacklight::DocumentComponent
     def title
-      safe_join([exhibit_edit_link, super, add_document_meta_content(@document)])
+      return safe_join([exhibit_edit_link, super, add_document_meta_content(@document)]) if current_exhibit
+
+      super
     end
 
     attr_reader :document
