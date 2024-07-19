@@ -20,6 +20,7 @@ describe 'Item Administration', type: :feature do
       expect(page).to have_css('h1 small', text: 'Items')
       expect(page).to have_css('table#documents')
       expect(page).to have_css('.pagination')
+      expect(page).to have_css('.spotlight-admin-thumbnail')
 
       item = first('tr[itemscope]')
       expect(item).to have_link 'View'
