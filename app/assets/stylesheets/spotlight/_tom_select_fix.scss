@@ -1,0 +1,4 @@
+// Remove when this is fixed or we switch from sassc-rails: https://github.com/orchidjs/tom-select/issues/656
+@function max($value, $value2) {
+  @return unquote('max(#{$value}, #{$value2})');
+}

@@ -1,6 +1,7 @@
 'use strict'
 
 import includePaths from 'rollup-plugin-includepaths';
+import resolve from '@rollup/plugin-node-resolve';
 
 const path = require('path')
 
@@ -27,7 +28,10 @@ const rollupConfig = {
     generatedCode: 'es2015'
   },
   external,
-  plugins: [includePaths(includePathOptions)]
+  plugins: [
+    resolve(),
+    includePaths(includePathOptions)
+  ]
 }
 
 if (!ESM) {
