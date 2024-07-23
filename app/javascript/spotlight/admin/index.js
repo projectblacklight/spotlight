@@ -1,5 +1,4 @@
 // These scripts are in the vendor directory
-import 'nestable'
 import 'parameterize'
 import 'bootstrap-tagsinput'
 import 'jquery.serializejson'

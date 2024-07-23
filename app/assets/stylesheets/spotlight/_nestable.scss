@@ -26,8 +26,8 @@ tr.dd-item {
   position: relative;
 }
 
-.dd-list { display: block; position: relative; margin: 0; padding: 0; list-style: none; }
-.dd-list .dd-list { padding-left: 30px; }
+.dd-list { display: block; position: relative; margin: 0; padding: 0 0 5px 0; list-style: none; }
+.dd-list .dd-list { padding-left: 30px; padding-bottom: 0; }
 .dd-collapsed .dd-list { display: none; }
 
 .dd-item,
