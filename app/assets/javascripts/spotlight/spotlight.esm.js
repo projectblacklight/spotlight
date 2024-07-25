@@ -6827,9 +6827,9 @@ SirTrevor.Blocks.UploadedItems = (function(){
             <div class="panels dd nestable-item-grid" data-behavior="nestable" data-max-depth="1">
               <ol class="dd-list">
               </ol>
-            </div>,
+            </div>
             <input type="file" id="uploaded_item_url" name="file[file_0][file_data]" />
-          </div>'
+          </div>
           <div class="col-md-4">
             <input name="${this.zpr_key}" type="hidden" value="false" />
             <input name="${this.zpr_key}" id="${this.formId(this.zpr_key)}" data-key=${this.zpr_key}" type="checkbox" value="true" />
