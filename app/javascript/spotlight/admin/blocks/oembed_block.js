@@ -29,7 +29,7 @@ SirTrevor.Blocks.Oembed =  (function(){
         ${this.description()}
       </div>
       <div class="row">
-        <div class="form-group col-md-8">
+        <div class="form-group mb-3 col-md-8">
           <label for="${this.formId(id_key)}">${i18n.t("blocks:oembed:url")}</label>
           <input name="${id_key}" class="form-control col-md-6" type="text" id="${this.formId(id_key)}" />
         </div>

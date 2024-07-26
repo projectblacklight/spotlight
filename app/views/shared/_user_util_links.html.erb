@@ -5,7 +5,7 @@
 <% end %>
 
 <% if nav_actions.present? %>
-  <ul class="navbar-nav mr-auto">
+  <ul class="navbar-nav mr-auto me-auto">
     <%= nav_actions %>
   </ul>
 <% end %>
@@ -14,7 +14,7 @@
   <%= render '/spotlight/shared/locale_picker' %>
   <% if current_user %>
     <li class="nav-item dropdown">
-      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><%=current_user%></a>
+      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown"><%=current_user%></a>
       <ul class="dropdown-menu">
         <% if can? :manage, Spotlight::Site.instance %>
           <li><%= link_to t(:'spotlight.header_links.edit_site'), spotlight.edit_site_path, class: 'dropdown-item' %></li>

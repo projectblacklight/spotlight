@@ -21,7 +21,7 @@
       return `
       <div class="row">
         <div class="col-md-8">
-          <div class="form-group">
+          <div class="form-group mb-3">
             ${this.heading()}
             <div class="field">
               <label for="${this.formId(this.text_key)}" class="col-form-label">${i18n.t("blocks:textable:text")}</label>

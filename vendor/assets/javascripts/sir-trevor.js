@@ -5647,7 +5647,7 @@ Object.assign(Block.prototype, SimpleBlock.fn, __webpack_require__(84), {
           } else if (input.getAttribute('type') === 'checkbox') {
             var value = "";
 
-            if (input.getAttribute('data-toggle')) {
+            if (input.getAttribute('data-toggle') || input.getAttribute('data-bs-toggle')) {
               value = "off";
 
               if (input.checked === true) {

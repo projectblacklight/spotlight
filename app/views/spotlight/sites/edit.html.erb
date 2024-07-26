@@ -3,10 +3,10 @@
   <%= bootstrap_form_for @site, url: spotlight.site_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10' do |f| %>
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="nav-item">
-        <a href="#basic" class="active nav-link" aria-controls="basic" role="tab" data-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
+        <a href="#basic" class="active nav-link" aria-controls="basic" role="tab" data-toggle="tab" data-bs-toggle="tab"><%= t(:'.basic_settings.heading') %></a>
       </li>
       <li role="presentation" class="nav-item">
-        <a href="#site-masthead" class="nav-link" aria-controls="site-masthead" role="tab" data-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
+        <a href="#site-masthead" class="nav-link" aria-controls="site-masthead" role="tab" data-toggle="tab" data-bs-toggle="tab"><%= t(:'.site_masthead.heading') %></a>
       </li>
     </ul>
     <div class="tab-content">

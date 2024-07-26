@@ -4,12 +4,12 @@
       <div class="d-flex flex-column flex-md-row py-2">
         <div class="d-flex justify-content-between align-items-baseline">
           <h2 class="m-0"><%= group.title %></h2>
-          <div class="pl-3">
+          <div class="pl-3 ps-3">
             <%= link_to t(:'.view_all'), exhibit_browse_groups_path(current_exhibit, group) %>
           </div>
         </div>
         <% if group.searches.count > 1 %>
-          <ul class="browse-group-categories-controls p-0 pt-2 pt-md-0 ml-md-auto mb-0 d-flex justify-content-center align-items-end">
+          <ul class="browse-group-categories-controls p-0 pt-2 pt-md-0 ml-md-auto ms-md-auto mb-0 d-flex justify-content-center align-items-end">
             <li class="prev px-1 overflow-hidden">
               <%= blacklight_icon 'arrow-alt-circle-left' %>
             </li>

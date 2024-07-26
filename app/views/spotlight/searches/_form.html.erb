@@ -13,19 +13,19 @@
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="nav-item">
-        <a href="#search-description" aria-controls="search-description" role="tab" data-toggle="tab" class="nav-link active"><%= t(:'.search_description') %></a>
+        <a href="#search-description" aria-controls="search-description" role="tab" data-toggle="tab" data-bs-toggle="tab" class="nav-link active"><%= t(:'.search_description') %></a>
       </li>
 
       <li role="presentation" class="nav-item">
-        <a href="#search-group" aria-controls="search-group" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.search_group') %></a>
+        <a href="#search-group" aria-controls="search-group" role="tab" data-toggle="tab" data-bs-toggle="tab" class="nav-link"><%= t(:'.search_group') %></a>
       </li>
 
       <li role="presentation" class="nav-item">
-        <a href="#search-masthead" aria-controls="search-masthead" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.search_masthead') %></a>
+        <a href="#search-masthead" aria-controls="search-masthead" role="tab" data-toggle="tab" data-bs-toggle="tab" class="nav-link"><%= t(:'.search_masthead') %></a>
       </li>
 
       <li role="presentation" class="nav-item">
-        <a href="#search-thumbnail" aria-controls="search-thumbnail" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.search_thumbnail') %></a>
+        <a href="#search-thumbnail" aria-controls="search-thumbnail" role="tab" data-toggle="tab" data-bs-toggle="tab" class="nav-link"><%= t(:'.search_thumbnail') %></a>
       </li>
     </ul>
 
@@ -44,7 +44,7 @@
           <% end %>
         <% end %>
         <% unless @search.query_params.blank? %>
-          <div class="form-group row">
+          <div class="form-group mb-3 row">
             <label class="col-md-2 col-sm-2 col-form-label"><%= t(:".query_params") %></label>
             <div class="col-md-7 col-sm-7">
               <div class="appliedParams card card-body bg-light d-block">
@@ -81,7 +81,7 @@
 
   <div class="form-actions">
     <div class="primary-actions">
-      <%= cancel_link @search,exhibit_searches_path(@exhibit), class: 'btn-sizing' %>
+      <%= cancel_link @search,exhibit_searches_path(@exhibit), class: 'btn btn-link', role: 'button' %>
       <%= f.submit nil, class: 'btn btn-primary' %>
     </div>
   </div>

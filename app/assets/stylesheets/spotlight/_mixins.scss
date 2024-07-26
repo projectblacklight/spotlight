@@ -10,7 +10,8 @@
 @mixin private-label() {
   &:after {
     @extend .badge;
-    @extend .badge-warning;
+    @extend .badge-warning !optional;
+    @extend .bg-warning !optional;
     content: 'Private';
     margin-left: 3px;
   }

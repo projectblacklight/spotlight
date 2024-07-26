@@ -3,7 +3,8 @@
   border-bottom: 1px solid $gray-600;
 
   h2 {
-    @extend .sr-only;
+    @extend .sr-only !optional;
+    @extend .visually-hidden !optional;
   }
 }
 

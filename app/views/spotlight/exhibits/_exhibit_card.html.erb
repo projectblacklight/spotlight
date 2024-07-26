@@ -9,7 +9,7 @@
     <% end %>
     <div class="card-img-overlay pb-0">
       <% unless exhibit.published? %>
-        <div class="badge badge-warning unpublished"><%= t('.unpublished') %></div>
+        <div class="badge badge-warning bg-warning unpublished"><%= t('.unpublished') %></div>
       <% end %>
 
       <%= content_tag :h2, class: 'card-title h5 text-center', aria: { describedby: "exhibit-description-#{exhibit.to_param}" } do %>

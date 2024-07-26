@@ -4,7 +4,7 @@
     <%= hidden_field_tag :language, @language %>
     <%= hidden_field_tag :tab, 'browse', id: nil %>
     <div class="row">
-      <div class="col-4 text-right">
+      <div class="col-4 text-right text-end">
         <span class="browse-translations-header">
           <%= t :'.default_language_column_label' %>
         </span>
@@ -21,7 +21,7 @@
       <%= f.fields_for :translations, title_translation do |translation_fields| %>
         <%= translation_fields.hidden_field :key %>
         <%= translation_fields.hidden_field :locale %>
-        <div data-translation-progress-item="true" class="row form-group browse-category-title">
+        <div data-translation-progress-item="true" class="row form-group mb-3 browse-category-title">
           <%= translation_fields.label :value, search[:title], class: 'col-form-label col-4' %>
           <div class="col-7">
             <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
@@ -37,10 +37,10 @@
       <% end %>
 
       <% subtitle_translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "#{search.slug}.subtitle", locale: @language) %>
-      <div data-translation-progress-item="true" class="row form-group browse-category-subtitle">
+      <div data-translation-progress-item="true" class="row form-group mb-3 browse-category-subtitle">
         <div class="col-7 offset-4">
           <%= f.fields_for :translations, subtitle_translation do |translation_fields| %>
-            <%= button_tag 'type' => 'button', class: 'btn btn-text collapse-toggle collapsed translation-subtitle-toggle', 'data-toggle': 'collapse', 'data-target': "#browse_category_subtitle_#{search.id}", 'aria-expanded': 'false', 'aria-controls': "#browse_category_subtitle_#{search.id}" do %>
+            <%= button_tag 'type' => 'button', class: 'btn btn-text collapse-toggle collapsed translation-subtitle-toggle', 'data-toggle': 'collapse','data-bs-toggle': 'collapse', 'data-target': "#browse_category_subtitle_#{search.id}", 'data-bs-target': "#browse_category_subtitle_#{search.id}", 'aria-expanded': 'false', 'aria-controls': "#browse_category_subtitle_#{search.id}" do %>
               <%= translation_fields.label :value, t(:'.subtitle_label') %>
             <% end %>
             <span class="collapse-chevron">❯</span>
@@ -63,10 +63,10 @@
       </div>
 
       <% description_translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "#{search.slug}.long_description", locale: @language) %>
-      <div data-translation-progress-item="true" class="row form-group browse-category-description">
+      <div data-translation-progress-item="true" class="row form-group mb-3 browse-category-description">
         <div class="col-7 offset-4">
           <%= f.fields_for :translations, description_translation do |translation_fields| %>
-            <%= button_tag 'type' => 'button', class: 'btn btn-text collapse-toggle collapsed translation-description-toggle', 'data-toggle': 'collapse', 'data-target': "#browse_category_description_#{search.id}", 'aria-expanded': 'false', 'aria-controls': "#browse_category_description_#{search.id}" do %>
+            <%= button_tag 'type' => 'button', class: 'btn btn-text collapse-toggle collapsed translation-description-toggle', 'data-toggle': 'collapse', 'data-bs-toggle': 'collapse', 'data-target': "#browse_category_description_#{search.id}", 'data-bs-target': "#browse_category_description_#{search.id}", 'aria-expanded': 'false', 'aria-controls': "#browse_category_description_#{search.id}" do %>
               <%= translation_fields.label :value, t(:'.description_label') %>
             <% end %>
             <span class="collapse-chevron">❯</span>

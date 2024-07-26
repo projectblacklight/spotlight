@@ -21,13 +21,13 @@
     <thead>
       <tr>
         <th><%= t(:".pagetitle") %></th>
-        <th class="text-right"><%= t(:".pageviews") %></th>
+        <th class="text-right text-end"><%= t(:".pageviews") %></th>
       </tr>
     </thead>
     <% page_analytics.each do |p| %>
       <tr>
         <td><%= link_to p.pageTitle, p.pagePath %></td>
-        <td class="text-right"><%= p.pageviews %></td>
+        <td class="text-right text-end"><%= p.pageviews %></td>
       </tr>
     <% end %>
   </table>

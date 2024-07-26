@@ -53,7 +53,7 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
                   <div class="checkbox">
                     <input name="item[${index}][display]" type="hidden" value="false" />
                     <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                    <label class="sr-only" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                    <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                   </div>
                   <div class="main">
                     <div class="title card-title">${data.title}</div>

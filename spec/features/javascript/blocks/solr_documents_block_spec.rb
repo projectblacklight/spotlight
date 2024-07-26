@@ -200,7 +200,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
       within('.text-col') do
         expect(page).to have_content 'zzz'
       end
-      expect(page).to have_css('.items-col.float-right')
+      expect(page).to have_css('.items-col.float-right.float-end')
     end
   end
 

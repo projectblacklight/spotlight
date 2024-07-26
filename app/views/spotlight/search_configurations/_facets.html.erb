@@ -15,7 +15,7 @@
                 <% end %>
               </div>
             <% when :additional_options  %>
-              <div class="facet-metadata mr-3">
+              <div class="facet-metadata mr-3 me-3">
                 <%= render partial: 'facet_metadata', locals: { blacklight_config: @blacklight_configuration.blacklight_config, field_config: config, metadata: metadata } %>
               </div>
             <% else %>

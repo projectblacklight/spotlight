@@ -90,7 +90,7 @@
       var container, target;
 
       function init() {
-        const target_val = container.attr('data-target');
+        const target_val = container.attr('data-target') || container.attr('data-bs-target');
         if (!target_val) 
           return
 
@@ -125,10 +125,10 @@
         modalDialog.addClass('modal-xl');
         modalContent.html('<div id="osd-modal-container"></div>');
         var controls = `<div class="controls d-flex justify-content-center justify-content-md-end">
-          <div class="custom-close-controls pr-3 pt-3">
-            <button type="button" class="btn btn-dark" data-dismiss="modal" aria-hidden="true">${Spotlight.ZprLinks.close}</button>
+          <div class="custom-close-controls pr-3 pe-3 pt-3">
+            <button type="button" class="btn btn-dark" data-dismiss="modal" data-bs-dismiss="modal" aria-hidden="true">${Spotlight.ZprLinks.close}</button>
           </div>
-          <div class="zoom-controls mb-3 mr-md-3">
+          <div class="zoom-controls mb-3 mr-md-3 me-md-3">
             <button id="osd-zoom-in" type="button" class="btn btn-dark">${Spotlight.ZprLinks.zoomIn}</button>
             <button id="osd-zoom-out" type="button" class="btn btn-dark">${Spotlight.ZprLinks.zoomOut}</button>
           </div>
@@ -941,7 +941,7 @@
 
     var defaultOptions = {
       tagClass: function(item) {
-        return 'badge badge-info';
+        return 'badge badge-info bg-info';
       },
       itemValue: function(item) {
         return item ? item.toString() : item;
@@ -5585,7 +5585,7 @@
       function edit_user(event) {
         event.preventDefault();
         $(this).closest('tr').hide();
-        const id = $(this).attr('data-target');
+        const id = $(this).attr('data-target') || $(this).attr('data-bs-target');
         const edit_view = $("[data-edit-for='"+id+"']", container).show();
         $.each(edit_view.find('input[type="text"], select'), function() {
           // Cache original values incase editing is canceled
@@ -5616,7 +5616,7 @@
       }
 
       function destroy_user(event) {
-        const id = $(this).attr('data-target');
+        const id = $(this).attr('data-target') || $(this).attr('data-bs-target');
         $("[data-destroy-for='"+id+"']", container).val('1');
       }
 
@@ -5820,7 +5820,7 @@
         return `
       <div class="row">
         <div class="col-md-8">
-          <div class="form-group">
+          <div class="form-group mb-3">
             ${this.heading()}
             <div class="field">
               <label for="${this.formId(this.text_key)}" class="col-form-label">${i18n.t("blocks:textable:text")}</label>
@@ -5929,7 +5929,7 @@
                     <div class="checkbox">
                       <input name="item[${index}][display]" type="hidden" value="false" />
                       <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                      <label class="sr-only" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                      <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                     </div>
                     <div class="pic">
                       <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
@@ -5938,7 +5938,7 @@
                       <div class="title card-title">${data.title}</div>
                       <div>${(data.slug || data.id)}</div>
                     </div>
-                    <div class="remove float-right">
+                    <div class="remove float-right float-end">
                       <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
                     </div>
                   </div>
@@ -5990,7 +5990,7 @@
       items_selector: function() { return [
       '<div class="row">',
         '<div class="col-md-8">',
-          '<div class="form-group">',
+          '<div class="form-group mb-3">',
           '<div class="panels dd nestable-item-grid" data-behavior="nestable" data-max-depth="1"><ol class="dd-list"></ol></div>',
             this.autocomplete_control(),
           '</div>',
@@ -6073,7 +6073,7 @@
                     <div class="checkbox">
                       <input name="item[${index}][display]" type="hidden" value="false" />
                       <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                      <label class="sr-only" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                      <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                     </div>
                     <div class="pic">
                       <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
@@ -6082,7 +6082,7 @@
                       <div class="title card-title">${(data.full_title || data.title)}</div>
                       <div>${(data.slug || data.id)}</div>
                     </div>
-                    <div class="remove float-right">
+                    <div class="remove float-right float-end">
                       <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
                     </div>
                   </div>
@@ -6170,7 +6170,7 @@
                   <div class="checkbox">
                     <input name="item[${index}][display]" type="hidden" value="false" />
                     <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                    <label class="sr-only" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                    <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                   </div>
                   <div class="main">
                     <div class="title card-title">${data.title}</div>
@@ -6284,7 +6284,7 @@
         ${this.description()}
       </div>
       <div class="row">
-        <div class="form-group col-md-8">
+        <div class="form-group mb-3 col-md-8">
           <label for="${this.formId(id_key)}">${i18n.t("blocks:oembed:url")}</label>
           <input name="${id_key}" class="form-control col-md-6" type="text" id="${this.formId(id_key)}" />
         </div>
@@ -6601,15 +6601,15 @@
       afterPreviewLoad: function(options) {
         $(this.inner).find('.carousel').carousel();
 
-        // the bootstrap carousel only initializes data-slide widgets on page load, so we need
+        // the bootstrap carousel only initializes data-bs-slide widgets on page load, so we need
         // to initialize them ourselves..
         var clickHandler = function (e) {
           var href;
           var $this   = $(this);
-          var $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
+          var $target = $($this.attr('data-target') || $this.attr('data-bs-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
           if (!$target.hasClass('carousel')) return
           var options = $.extend({}, $target.data(), $this.data());
-          var slideIndex = $this.attr('data-slide-to');
+          var slideIndex = $this.attr('data-slide-to') || $this.attr('data-bs-slide-to');
           if (slideIndex) options.interval = false;
 
           $.fn.carousel.call($target, options);
@@ -6622,8 +6622,8 @@
         };
 
         $(this.inner).find('.carousel')
-          .on('click.bs.carousel.data-api', '[data-slide]', clickHandler)
-          .on('click.bs.carousel.data-api', '[data-slide-to]', clickHandler);
+          .on('click.bs.carousel.data-api', '[data-slide], [data-bs-slide]', clickHandler)
+          .on('click.bs.carousel.data-api', '[data-slide-to], [data-bs-slide-to]', clickHandler);
       }
 
     });
@@ -6661,15 +6661,15 @@
       afterPreviewLoad: function(options) {
         $(this.inner).find('.carousel').carousel();
 
-        // the bootstrap carousel only initializes data-slide widgets on page load, so we need
+        // the bootstrap carousel only initializes data-bs-slide widgets on page load, so we need
         // to initialize them ourselves..
         var clickHandler = function (e) {
           var href;
           var $this   = $(this);
-          var $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
+          var $target = $($this.attr('data-target') || $this.attr('data-bs-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
           if (!$target.hasClass('carousel')) return
           var options = $.extend({}, $target.data(), $this.data());
-          var slideIndex = $this.attr('data-slide-to');
+          var slideIndex = $this.attr('data-slide-to') || $this.attr('data-bs-slide-to');
           if (slideIndex) options.interval = false;
 
           $.fn.carousel.call($target, options);
@@ -6682,8 +6682,8 @@
         };
 
         $(this.inner).find('.carousel')
-          .on('click.bs.carousel.data-api', '[data-slide]', clickHandler)
-          .on('click.bs.carousel.data-api', '[data-slide-to]', clickHandler);
+          .on('click.bs.carousel.data-api', '[data-slide], [data-bs-slide]', clickHandler)
+          .on('click.bs.carousel.data-api', '[data-slide-to], [data-bs-slide-to]', clickHandler);
       }
 
     });
@@ -6785,23 +6785,23 @@
                 <div class="checkbox">
                   <input name="item[${index}][display]" type="hidden" value="false" />
                   <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + dataId)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                  <label class="sr-only" for="${this.formId(this.display_checkbox + '_' + dataId)}">${i18n.t("blocks:resources:panel:display")}</label>
+                  <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + dataId)}">${i18n.t("blocks:resources:panel:display")}</label>
                 </div>
                 <div class="pic">
                   <img class="img-thumbnail" src="${dataUrl}" />
                 </div>
                 <div class="main form-horizontal">
                   <div class="title card-title">${dataTitle}</div>
-                  <div class="field row mr-3">
+                  <div class="field row mr-3 me-3">
                     <label for="${this.formId('caption_' + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:caption")}</label>
                     <input type="text" class="form-control col" id="${this.formId('caption_' + dataId)}" name="item[${index}][caption]" data-field="caption"/>
                   </div>
-                  <div class="field row mr-3">
+                  <div class="field row mr-3 me-3">
                     <label for="${this.formId('link_' + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:link")}</label>
                     <input type="text" class="form-control col" id="${this.formId('link_' + dataId)}" name="item[${index}][link]" data-field="link"/>
                   </div>
                 </div>
-                <div class="remove float-right">
+                <div class="remove float-right float-end">
                   <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
                 </div>
               </div>
@@ -6829,7 +6829,7 @@
           ${this.description()}
         </div>
         <div class="row">
-          <div class="form-group col-md-8">
+          <div class="form-group mb-3 col-md-8">
             <div class="panels dd nestable-item-grid" data-behavior="nestable" data-max-depth="1">
               <ol class="dd-list">
               </ol>

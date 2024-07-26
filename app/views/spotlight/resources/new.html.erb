@@ -13,6 +13,7 @@
                     role: 'tab',
                     class: "nav-link #{"active" if @tab == tab_name}",
                     'data-toggle' => 'tab',
+                    'data-bs-toggle' => 'tab',
                     'aria-controls' => "#{tab_name}" %>
       </li>
     <% end %>

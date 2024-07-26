@@ -1,4 +1,4 @@
-<h2 class="sr-only"><%= t(:'.header') %></h2>
+<h2 class="sr-only visually-hidden"><%= t(:'.header') %></h2>
 <ul class="nav sidenav top-level flex-column">
   <%= nav_link t(:'spotlight.curation.sidebar.dashboard'), spotlight.exhibit_dashboard_path(current_exhibit) %>
   <% if current_exhibit.analytics_provider&.enabled? %>
