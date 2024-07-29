@@ -26,7 +26,8 @@ window.Spotlight = Spotlight
 
 export default Spotlight
 
-Blacklight.onLoad(function() {
-  Spotlight.activate();
-});
+// Blacklight.onLoad(function() {
+//   console.log('Blacklight onLoad is loading Spotlight');
+//   Spotlight.activate();
+// });
 

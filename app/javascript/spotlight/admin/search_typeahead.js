@@ -3,7 +3,7 @@ import { addImageSelector } from 'spotlight/admin/add_image_selector'
 (function($){
   $.fn.spotlightSearchTypeAhead = function( options ) {
     $.each(this, function(){
-      addAutocompleteBehavior($(this));
+      // addAutocompleteBehavior($(this));
     });
 
     function addAutocompleteBehavior( typeAheadInput, settings ) {
@@ -27,23 +27,23 @@ import { addImageSelector } from 'spotlight/admin/add_image_selector'
 })( jQuery );
 
 function itemsBloodhound() {
-  var results = new Bloodhound({
-    datumTokenizer: function(d) {
-      return Bloodhound.tokenizers.whitespace(d.title);
-    },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    limit: 100,
-    remote: {
-      url: $('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path').replace("%25QUERY", "%QUERY"),
-      filter: function(response) {
-        return $.map(response['docs'], function(doc) {
-          return doc;
-        })
-      }
-    }
-  });
-  results.initialize();
-  return results;
+  // var results = new Bloodhound({
+  //   datumTokenizer: function(d) {
+  //     return Bloodhound.tokenizers.whitespace(d.title);
+  //   },
+  //   queryTokenizer: Bloodhound.tokenizers.whitespace,
+  //   limit: 100,
+  //   remote: {
+  //     url: $('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path').replace("%25QUERY", "%QUERY"),
+  //     filter: function(response) {
+  //       return $.map(response['docs'], function(doc) {
+  //         return doc;
+  //       })
+  //     }
+  //   }
+  // });
+  // results.initialize();
+  // return results;
 };
 
 function templateFunc(obj) {

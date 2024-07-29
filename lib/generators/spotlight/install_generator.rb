@@ -18,12 +18,37 @@ module Spotlight
       gsub_file 'app/views/layouts/application.html.erb', /pack/, 'include'
     end
 
+    def add_js_deps
+      say 'Install Spotlight JavaScript dependencies'
+      run 'bin/importmap pin clipboard@2.0.11 leaflet@^1.9.3'
+      # append_to_file 'app/javascript/application.js', "\nimport \"spotlight/application\"\n"
+    end
+
     def add_manifest
-      append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
       append_to_file 'app/assets/config/manifest.js', "\n//= link spotlight/manifest.js"
 
-      # Rails installed importmap by default, but we don't have importmap + Blacklight 7 working yet.
-      remove_file 'app/javascript/application.js'
+      # Blacklight 8 does not use this directory by default.
+      if File.exist?('app/assets/javascripts')
+        append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
+        # Rails installed importmap by default, but we don't have importmap + Blacklight 7 working yet.
+        remove_file 'app/javascript/application.js'
+      else
+        # install via importmap
+        append_to_file 'app/javascript/application.js' do
+          <<~CONTENT
+            import * as SirTrevor from "sir-trevor"
+            import Spotlight from "spotlight/spotlight.esm"
+
+            // TODO: Blacklight already does this, why do we need to?
+            window.Blacklight = Blacklight;
+            Blacklight.onLoad(function() {
+              window.Spotlight = Spotlight;
+              Spotlight.sirTrevorIcon = '/assets/spotlight/blocks/sir-trevor-icons.svg';
+              Spotlight.activate();
+            });
+          CONTENT
+        end
+      end
     end
 
     def inject_spotlight_routes

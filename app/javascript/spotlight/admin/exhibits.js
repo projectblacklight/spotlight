@@ -3,7 +3,8 @@ export default class {
     // auto-fill the exhibit slug on the new exhibit form
     $('#new_exhibit').each(function() {
       $('#exhibit_title').on('change keyup', function() {
-        $('#exhibit_slug').attr('placeholder', URLify($(this).val(), $(this).val().length));
+        // $('#exhibit_slug').attr('placeholder', URLify($(this).val(), $(this).val().length));
+        $('#exhibit_slug').attr('placeholder', $(this).val());
       });
 
       $('#exhibit_slug').on('focus', function() {

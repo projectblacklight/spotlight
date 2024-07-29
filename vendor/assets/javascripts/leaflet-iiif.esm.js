@@ -1,8 +1,13 @@
+// import L from 'leaflet/dist/leaflet-src.esm';
+// import L from 'leaflet';
+import * as L from "leaflet";
+
 /*
- * Leaflet-IIIF 3.0.0
+ * Leaflet-IIIF 3.1.0-alpha.1
  * IIIF Viewer for Leaflet
  * by Jack Reed, @mejackreed
  */
+
 
 L.TileLayer.Iiif = L.TileLayer.extend({
   options: {
@@ -48,7 +53,7 @@ L.TileLayer.Iiif = L.TileLayer.extend({
       miny = (y * tileBaseSize),
       maxx = Math.min(minx + tileBaseSize, _this.x),
       maxy = Math.min(miny + tileBaseSize, _this.y);
-
+    
     var xDiff = (maxx - minx);
     var yDiff = (maxy - miny);
 
@@ -73,7 +78,7 @@ L.TileLayer.Iiif = L.TileLayer.extend({
     // Wait for info.json fetch and parse to complete
     Promise.all([_this._infoPromise]).then(function() {
       // Store unmutated imageSizes
-      _this._imageSizesOriginal = _this._imageSizes.slice(0);
+      _this._imageSizesOriginal = _this._imageSizes.slice(0); 
 
       // Set maxZoom for map
       map._layersMaxZoom = _this.maxZoom;
@@ -128,7 +133,7 @@ L.TileLayer.Iiif = L.TileLayer.extend({
   },
   onRemove: function(map) {
     var _this = this;
-
+    
     map._layersMinZoom = _this._prev_map_layersMinZoom;
     _this._imageSizes = _this._imageSizesOriginal;
 
@@ -213,8 +218,7 @@ L.TileLayer.Iiif = L.TileLayer.extend({
 
         function ceilLog2(x) {
           return Math.ceil(Math.log(x) / Math.LN2);
-        };
-
+        }
         // Calculates maximum native zoom for the layer
         _this.maxNativeZoom = Math.max(
           ceilLog2(_this.x / _this.options.tileSize),
@@ -222,7 +226,7 @@ L.TileLayer.Iiif = L.TileLayer.extend({
           0
         );
         _this.options.maxNativeZoom = _this.maxNativeZoom;
-
+        
         // Enable zooming further than native if maxZoom option supplied
         if (_this._customMaxZoom && _this.options.maxZoom > _this.maxNativeZoom) {
           _this.maxZoom = _this.options.maxZoom;
@@ -230,7 +234,7 @@ L.TileLayer.Iiif = L.TileLayer.extend({
         else {
           _this.maxZoom = _this.maxNativeZoom;
         }
-
+        
         for (var i = 0; i <= _this.maxZoom; i++) {
           scale = Math.pow(2, _this.maxNativeZoom - i);
           width_ = Math.ceil(_this.x / scale);
@@ -247,7 +251,7 @@ L.TileLayer.Iiif = L.TileLayer.extend({
       .catch(function(err){
           console.error(err);
       });
-
+      
   },
 
   _setQuality: function() {
@@ -321,3 +325,4 @@ L.TileLayer.Iiif = L.TileLayer.extend({
 L.tileLayer.iiif = function(url, options) {
   return new L.TileLayer.Iiif(url, options);
 };
+//# sourceMappingURL=leaflet-iiif.esm.js.map
