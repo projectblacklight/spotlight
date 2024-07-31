@@ -5579,8 +5579,8 @@ class Users {
     function edit_user(event) {
       event.preventDefault();
       $(this).closest('tr').hide();
-      id = $(this).attr('data-target');
-      edit_view = $("[data-edit-for='"+id+"']", container).show();
+      const id = $(this).attr('data-target');
+      const edit_view = $("[data-edit-for='"+id+"']", container).show();
       $.each(edit_view.find('input[type="text"], select'), function() {
         // Cache original values incase editing is canceled
         $(this).data('orig', $(this).val());
@@ -5589,8 +5589,8 @@ class Users {
 
     function cancel_edit(event) {
       event.preventDefault();
-      id = $(this).closest('tr').attr('data-edit-for');
-      edit_view = $("[data-edit-for='"+id+"']", container).hide();
+      const id = $(this).closest('tr').attr('data-edit-for');
+      const edit_view = $("[data-edit-for='"+id+"']", container).hide();
       clear_errors(edit_view);
       rollback_changes(edit_view);
       $("[data-show-for='"+id+"']", container).show();
@@ -5610,13 +5610,13 @@ class Users {
     }
 
     function destroy_user(event) {
-      id = $(this).attr('data-target');
+      const id = $(this).attr('data-target');
       $("[data-destroy-for='"+id+"']", container).val('1');
     }
 
     function new_user(event) {
       event.preventDefault();
-      edit_view = $("[data-edit-for='new']", container).show();
+      const edit_view = $("[data-edit-for='new']", container).show();
       $.each(edit_view.find('input[type="text"], select'), function() {
         // Cache original values incase editing is canceled
         $(this).data('orig', $(this).val());
