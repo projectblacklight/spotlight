@@ -70,4 +70,13 @@ class TestAppGenerator < Rails::Generators::Base
     uncomment_lines 'config/environments/development.rb', /config.action_view.raise_on_missing_translations/
     uncomment_lines 'config/environments/test.rb', /config.action_view.raise_on_missing_translations/
   end
+
+  # Without this, the fix in _tom_select_fix.scss does not work in test. If we remove that fix, we can likely remove this.
+  def disable_css_compressor_in_test
+    inject_into_file 'config/environments/test.rb', after: "Rails.application.configure do\n" do
+      <<-RUBY
+      config.assets.css_compressor = nil
+      RUBY
+    end
+  end
 end

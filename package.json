@@ -11,7 +11,8 @@
     "url": "git+https://github.com/projectblacklight/spotlight.git"
   },
   "files": [
-    "app/assets", "vendor/assets"
+    "app/assets",
+    "vendor/assets"
   ],
   "author": "",
   "license": "Apache-2.0",
@@ -20,13 +21,13 @@
   },
   "homepage": "https://github.com/projectblacklight/spotlight#readme",
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "rollup": "^2.60.0",
-    "rollup-plugin-includepaths": "^0.2.4"
+    "rollup-plugin-includepaths": "^0.2.4",
+    "tom-select": "^2.3.1"
   },
   "browserslist": [
     "defaults",
     "not IE 11"
-  ],
-  "dependencies": {
-  }
+  ]
 }
