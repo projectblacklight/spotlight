@@ -13,7 +13,8 @@
 
   <% if can? :tag, current_exhibit %>
   <div class="edit-tags">
-  <%= f.text_field :exhibit_tag_list, value: f.object.sidecar(current_exhibit).tags_from(current_exhibit).to_s, data: { autocomplete_tag: true, autocomplete_url: exhibit_tags_path(current_exhibit, format: 'json')} %>
+  <%= render Spotlight::TagSelectorComponent.new(form: f, field_name: :exhibit_tag_list, selected_tags_value: f.object.sidecar(current_exhibit).tags_from(current_exhibit).to_s,
+                                                 all_tags: current_exhibit.owned_tags) %>
   </div>
   <% end %>
   <div class="form-actions">

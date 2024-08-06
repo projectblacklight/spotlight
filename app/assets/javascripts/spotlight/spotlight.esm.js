@@ -1,3 +1,5 @@
+import { Controller, Application } from '@hotwired/stimulus';
+
 class BrowseGroupCateogries {
   connect() {
     var $container, slider;
@@ -904,535 +906,6 @@ Downcoder.Initialize = function()
     }
     Downcoder.regex = new RegExp('[' + Downcoder.chars + ']|[^' + Downcoder.chars + ']+','g') ;
   };
-
-/* From https://github.com/TimSchlechter/bootstrap-tagsinput/blob/2661784c2c281d3a69b93897ff3f39e4ffa5cbd1/dist/bootstrap-tagsinput.js */
-
-/* The MIT License (MIT)
-
-Copyright (c) 2013 Tim Schlechter
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-
-/* Retrieved 12 February 2014 */
-
-(function ($) {
-
-  var defaultOptions = {
-    tagClass: function(item) {
-      return 'badge badge-info';
-    },
-    itemValue: function(item) {
-      return item ? item.toString() : item;
-    },
-    itemText: function(item) {
-      return this.itemValue(item);
-    },
-    freeInput: true,
-    maxTags: undefined,
-    confirmKeys: [13],
-    onTagExists: function(item, $tag) {
-      $tag.hide().fadeIn();
-    }
-  };
-
-  /**
-   * Constructor function
-   */
-  function TagsInput(element, options) {
-    this.itemsArray = [];
-
-    this.$element = $(element);
-    this.$element.hide();
-
-    this.isSelect = (element.tagName === 'SELECT');
-    this.multiple = (this.isSelect && element.hasAttribute('multiple'));
-    this.objectItems = options && options.itemValue;
-    this.placeholderText = element.hasAttribute('placeholder') ? this.$element.attr('placeholder') : '';
-    this.inputSize = Math.max(1, this.placeholderText.length);
-
-    this.$container = $('<div class="bootstrap-tagsinput"></div>');
-    this.$input = $('<input size="' + this.inputSize + '" type="text" placeholder="' + this.placeholderText + '"/>').appendTo(this.$container);
-
-    this.$element.after(this.$container);
-
-    this.build(options);
-  }
-
-  TagsInput.prototype = {
-    constructor: TagsInput,
-
-    /**
-     * Adds the given item as a new tag. Pass true to dontPushVal to prevent
-     * updating the elements val()
-     */
-    add: function(item, dontPushVal) {
-      var self = this;
-
-      if (self.options.maxTags && self.itemsArray.length >= self.options.maxTags)
-        return;
-
-      // Ignore falsey values, except false
-      if (item !== false && !item)
-        return;
-
-      // Throw an error when trying to add an object while the itemValue option was not set
-      if (typeof item === "object" && !self.objectItems)
-        throw("Can't add objects when itemValue option is not set");
-
-      // Ignore strings only containg whitespace
-      if (item.toString().match(/^\s*$/))
-        return;
-
-      // If SELECT but not multiple, remove current tag
-      if (self.isSelect && !self.multiple && self.itemsArray.length > 0)
-        self.remove(self.itemsArray[0]);
-
-      if (typeof item === "string" && this.$element[0].tagName === 'INPUT') {
-        var items = item.split(',');
-        if (items.length > 1) {
-          for (var i = 0; i < items.length; i++) {
-            this.add(items[i], true);
-          }
-
-          if (!dontPushVal)
-            self.pushVal();
-          return;
-        }
-      }
-
-      var itemValue = self.options.itemValue(item),
-          itemText = self.options.itemText(item),
-          tagClass = self.options.tagClass(item);
-
-      // Ignore items allready added
-      var existing = $.grep(self.itemsArray, function(item) { return self.options.itemValue(item) === itemValue; } )[0];
-      if (existing) {
-        // Invoke onTagExists
-        if (self.options.onTagExists) {
-          var $existingTag = $(".tag", self.$container).filter(function() { return $(this).data("item") === existing; });
-          self.options.onTagExists(item, $existingTag);
-        }
-        return;
-      }
-
-      // register item in internal array and map
-      self.itemsArray.push(item);
-
-      // add a tag element
-      var $tag = $('<span class="tag ' + htmlEncode(tagClass) + '">' + htmlEncode(itemText) + '<span data-role="remove"></span></span>');
-      $tag.data('item', item);
-      self.findInputWrapper().before($tag);
-      $tag.after(' ');
-
-      // add <option /> if item represents a value not present in one of the <select />'s options
-      if (self.isSelect && !$('option[value="' + escape(itemValue) + '"]',self.$element)[0]) {
-        var $option = $('<option selected>' + htmlEncode(itemText) + '</option>');
-        $option.data('item', item);
-        $option.attr('value', itemValue);
-        self.$element.append($option);
-      }
-
-      if (!dontPushVal)
-        self.pushVal();
-
-      // Add class when reached maxTags
-      if (self.options.maxTags === self.itemsArray.length)
-        self.$container.addClass('bootstrap-tagsinput-max');
-
-      self.$element.trigger($.Event('itemAdded', { item: item }));
-    },
-
-    /**
-     * Removes the given item. Pass true to dontPushVal to prevent updating the
-     * elements val()
-     */
-    remove: function(item, dontPushVal) {
-      var self = this;
-
-      if (self.objectItems) {
-        if (typeof item === "object")
-          item = $.grep(self.itemsArray, function(other) { return self.options.itemValue(other) ==  self.options.itemValue(item); } )[0];
-        else
-          item = $.grep(self.itemsArray, function(other) { return self.options.itemValue(other) ==  item; } )[0];
-      }
-
-      if (item) {
-        $('.tag', self.$container).filter(function() { return $(this).data('item') === item; }).remove();
-        $('option', self.$element).filter(function() { return $(this).data('item') === item; }).remove();
-        self.itemsArray.splice($.inArray(item, self.itemsArray), 1);
-      }
-
-      if (!dontPushVal)
-        self.pushVal();
-
-      // Remove class when reached maxTags
-      if (self.options.maxTags > self.itemsArray.length)
-        self.$container.removeClass('bootstrap-tagsinput-max');
-
-      self.$element.trigger($.Event('itemRemoved',  { item: item }));
-    },
-
-    /**
-     * Removes all items
-     */
-    removeAll: function() {
-      var self = this;
-
-      $('.tag', self.$container).remove();
-      $('option', self.$element).remove();
-
-      while(self.itemsArray.length > 0)
-        self.itemsArray.pop();
-
-      self.pushVal();
-
-      if (self.options.maxTags && !this.isEnabled())
-        this.enable();
-    },
-
-    /**
-     * Refreshes the tags so they match the text/value of their corresponding
-     * item.
-     */
-    refresh: function() {
-      var self = this;
-      $('.tag', self.$container).each(function() {
-        var $tag = $(this),
-            item = $tag.data('item'),
-            itemValue = self.options.itemValue(item),
-            itemText = self.options.itemText(item),
-            tagClass = self.options.tagClass(item);
-
-          // Update tag's class and inner text
-          $tag.attr('class', null);
-          $tag.addClass('tag ' + htmlEncode(tagClass));
-          $tag.contents().filter(function() {
-            return this.nodeType == 3;
-          })[0].nodeValue = htmlEncode(itemText);
-
-          if (self.isSelect) {
-            var option = $('option', self.$element).filter(function() { return $(this).data('item') === item; });
-            option.attr('value', itemValue);
-          }
-      });
-    },
-
-    /**
-     * Returns the items added as tags
-     */
-    items: function() {
-      return this.itemsArray;
-    },
-
-    /**
-     * Assembly value by retrieving the value of each item, and set it on the
-     * element. 
-     */
-    pushVal: function() {
-      var self = this,
-          val = $.map(self.items(), function(item) {
-            return self.options.itemValue(item).toString();
-          });
-
-      self.$element.val(val, true).trigger('change');
-    },
-
-    /**
-     * Initializes the tags input behaviour on the element
-     */
-    build: function(options) {
-      var self = this;
-
-      self.options = $.extend({}, defaultOptions, options);
-      var typeahead = self.options.typeahead || {};
-
-      // When itemValue is set, freeInput should always be false
-      if (self.objectItems)
-        self.options.freeInput = false;
-
-      makeOptionItemFunction(self.options, 'itemValue');
-      makeOptionItemFunction(self.options, 'itemText');
-      makeOptionItemFunction(self.options, 'tagClass');
-
-      // for backwards compatibility, self.options.source is deprecated
-      if (self.options.source)
-        typeahead.source = self.options.source;
-
-      if (typeahead.source && $.fn.typeahead) {
-        makeOptionFunction(typeahead, 'source');
-
-        self.$input.typeahead({
-          source: function (query, process) {
-            function processItems(items) {
-              var texts = [];
-
-              for (var i = 0; i < items.length; i++) {
-                var text = self.options.itemText(items[i]);
-                map[text] = items[i];
-                texts.push(text);
-              }
-              process(texts);
-            }
-
-            this.map = {};
-            var map = this.map,
-                data = typeahead.source(query);
-
-            if ($.isFunction(data.success)) {
-              // support for Angular promises
-              data.success(processItems);
-            } else {
-              // support for functions and jquery promises
-              $.when(data)
-               .then(processItems);
-            }
-          },
-          updater: function (text) {
-            self.add(this.map[text]);
-          },
-          matcher: function (text) {
-            return (text.toLowerCase().indexOf(this.query.trim().toLowerCase()) !== -1);
-          },
-          sorter: function (texts) {
-            return texts.sort();
-          },
-          highlighter: function (text) {
-            var regex = new RegExp( '(' + this.query + ')', 'gi' );
-            return text.replace( regex, "<strong>$1</strong>" );
-          }
-        });
-      }
-
-      self.$container.on('click', $.proxy(function(event) {
-        self.$input.focus();
-      }, self));
-
-      self.$container.on('keydown', 'input', $.proxy(function(event) {
-        var $input = $(event.target),
-            $inputWrapper = self.findInputWrapper();
-
-        switch (event.which) {
-          // BACKSPACE
-          case 8:
-            if (doGetCaretPosition($input[0]) === 0) {
-              var prev = $inputWrapper.prev();
-              if (prev) {
-                self.remove(prev.data('item'));
-              }
-            }
-            break;
-
-          // DELETE
-          case 46:
-            if (doGetCaretPosition($input[0]) === 0) {
-              var next = $inputWrapper.next();
-              if (next) {
-                self.remove(next.data('item'));
-              }
-            }
-            break;
-
-          // LEFT ARROW
-          case 37:
-            // Try to move the input before the previous tag
-            var $prevTag = $inputWrapper.prev();
-            if ($input.val().length === 0 && $prevTag[0]) {
-              $prevTag.before($inputWrapper);
-              $input.focus();
-            }
-            break;
-          // RIGHT ARROW
-          case 39:
-            // Try to move the input after the next tag
-            var $nextTag = $inputWrapper.next();
-            if ($input.val().length === 0 && $nextTag[0]) {
-              $nextTag.after($inputWrapper);
-              $input.focus();
-            }
-            break;
-         default:
-            // When key corresponds one of the confirmKeys, add current input
-            // as a new tag
-            if (self.options.freeInput && $.inArray(event.which, self.options.confirmKeys) >= 0) {
-              self.add($input.val());
-              $input.val('');
-              event.preventDefault();
-            }
-        }
-
-        // Reset internal input's size
-        $input.attr('size', Math.max(this.inputSize, $input.val().length));
-      }, self));
-
-      // Remove icon clicked
-      self.$container.on('click', '[data-role=remove]', $.proxy(function(event) {
-        self.remove($(event.target).closest('.tag').data('item'));
-      }, self));
-
-      // Only add existing value as tags when using strings as tags
-      if (self.options.itemValue === defaultOptions.itemValue) {
-        if (self.$element[0].tagName === 'INPUT') {
-            self.add(self.$element.val());
-        } else {
-          $('option', self.$element).each(function() {
-            self.add($(this).attr('value'), true);
-          });
-        }
-      }
-    },
-
-    /**
-     * Removes all tagsinput behaviour and unregsiter all event handlers
-     */
-    destroy: function() {
-      var self = this;
-
-      // Unbind events
-      self.$container.off('keypress', 'input');
-      self.$container.off('click', '[role=remove]');
-
-      self.$container.remove();
-      self.$element.removeData('tagsinput');
-      self.$element.show();
-    },
-
-    /**
-     * Sets focus on the tagsinput 
-     */
-    focus: function() {
-      this.$input.focus();
-    },
-
-    /**
-     * Returns the internal input element
-     */
-    input: function() {
-      return this.$input;
-    },
-
-    /**
-     * Returns the element which is wrapped around the internal input. This
-     * is normally the $container, but typeahead.js moves the $input element.
-     */
-    findInputWrapper: function() {
-      var elt = this.$input[0],
-          container = this.$container[0];
-      while(elt && elt.parentNode !== container)
-        elt = elt.parentNode;
-
-      return $(elt);
-    }
-  };
-
-  /**
-   * Register JQuery plugin
-   */
-  $.fn.tagsinput = function(arg1, arg2) {
-    var results = [];
-
-    this.each(function() {
-      var tagsinput = $(this).data('tagsinput');
-
-      // Initialize a new tags input
-      if (!tagsinput) {
-        tagsinput = new TagsInput(this, arg1);
-        $(this).data('tagsinput', tagsinput);
-        results.push(tagsinput);
-
-        if (this.tagName === 'SELECT') {
-          $('option', $(this)).attr('selected', 'selected');
-        }
-
-        // Init tags from $(this).val()
-        $(this).val($(this).val());
-      } else {
-        // Invoke function on existing tags input
-        var retVal = tagsinput[arg1](arg2);
-        if (retVal !== undefined)
-          results.push(retVal);
-      }
-    });
-
-    if ( typeof arg1 == 'string') {
-      // Return the results from the invoked function calls
-      return results.length > 1 ? results : results[0];
-    } else {
-      return results;
-    }
-  };
-
-  $.fn.tagsinput.Constructor = TagsInput;
-  
-  /**
-   * Most options support both a string or number as well as a function as 
-   * option value. This function makes sure that the option with the given
-   * key in the given options is wrapped in a function
-   */
-  function makeOptionItemFunction(options, key) {
-    if (typeof options[key] !== 'function') {
-      var propertyName = options[key];
-      options[key] = function(item) { return item[propertyName]; };
-    }
-  }
-  function makeOptionFunction(options, key) {
-    if (typeof options[key] !== 'function') {
-      var value = options[key];
-      options[key] = function() { return value; };
-    }
-  }
-  /**
-   * HtmlEncodes the given value
-   */
-  var htmlEncodeContainer = $('<div />');
-  function htmlEncode(value) {
-    if (value) {
-      return htmlEncodeContainer.text(value).html();
-    } else {
-      return '';
-    }
-  }
-
-  /**
-   * Returns the position of the caret in the given input field
-   * http://flightschool.acylt.com/devnotes/caret-position-woes/
-   */
-  function doGetCaretPosition(oField) {
-    var iCaretPos = 0;
-    if (document.selection) {
-      oField.focus ();
-      var oSel = document.selection.createRange();
-      oSel.moveStart ('character', -oField.value.length);
-      iCaretPos = oSel.text.length;
-    } else if (oField.selectionStart || oField.selectionStart == '0') {
-      iCaretPos = oField.selectionStart;
-    }
-    return (iCaretPos);
-  }
-
-  /**
-   * Initialize tagsinput behaviour on inputs and selects which have
-   * data-role=tagsinput
-   */
-  $(function() {
-    $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
-  });
-})(window.jQuery);
 
 /*!
   SerializeJSON jQuery plugin.
@@ -4728,46 +4201,6 @@ class EditInPlace {
   }
 }
 
-class ExhibitTagAutocomplete {
-  connect() {
-    $('[data-autocomplete-tag="true"]').each(function(_i, el) {
-      var $el = $(el);
-      // By default tags input binds on page ready to [data-role=tagsinput],
-      // however, that doesn't work with Turbolinks. So we init manually:
-      $el.tagsinput();
-
-      var tags = new Bloodhound({
-        datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 100,
-        prefetch: {
-          url: $el.data('autocomplete-url'),
-          ttl: 1,
-          filter: function(list) {
-            // Let the dom know that the response has been returned
-            $el.attr('data-autocomplete-fetched', true);
-            return $.map(list, function(tag) { return { name: tag }; });
-          }
-        }
-      });
-
-      tags.initialize();
-
-      $el.tagsinput('input').typeahead({highlight: true, hint: false}, {
-        name: 'tags',
-        displayKey: 'name',
-        source: tags.ttAdapter()
-      }).bind('typeahead:selected', $.proxy(function (obj, datum) {
-        $el.tagsinput('add', datum.name);
-        $el.tagsinput('input').typeahead('val', '');
-      })).bind('blur', function() {
-        $el.tagsinput('add', $el.tagsinput('input').typeahead('val'));
-        $el.tagsinput('input').typeahead('val', '');
-      });
-    });
-  }
-}
-
 class Exhibits {
   connect() {
     // auto-fill the exhibit slug on the new exhibit form
@@ -7129,7 +6562,6 @@ class AdminIndex {
     new CopyEmailAddress().connect();
     new Croppable().connect();
     new EditInPlace().connect();
-    new ExhibitTagAutocomplete().connect();
     new Exhibits().connect();
     new FormObserver().connect();
     new Locks().connect();
@@ -7145,6 +6577,198 @@ class AdminIndex {
     Module.init();
   }
 }
+
+class TagSelectorController extends Controller {
+
+  static targets = [
+    'addNewTagWrapper',
+    'dropdownContent',
+    'initialTags',
+    'newTag',
+    'searchResultTags',
+    'selectedTags',
+    'tagControlWrapper',
+    'tagSearch',
+    'tagsField',
+    'textExtractionDropdown'
+  ]
+
+  static values = { 
+    tags: Array,
+    closeButtonHtml: String,
+    translations: Object
+  }
+
+  tagDropdown (event) {
+    const ishidden = this.dropdownContentTarget.classList.contains('d-none');
+    this.dropdownContentTarget.classList.toggle('d-none');
+    this.textExtractionDropdownTarget.querySelector('#caret').innerHTML = `<i class="bi bi-caret-${ishidden ? 'up' : 'down'}">`;
+  }
+
+  clickOutside (event) {
+    const isshown = !this.dropdownContentTarget.classList.contains('d-none');
+    const inselected = event.target.classList.contains('pill-close');
+    const incontainer = this.tagControlWrapperTarget.contains(event.target);
+
+    if (!incontainer && !inselected && isshown) {
+      this.tagDropdown(event);
+    }
+  }
+
+  handleKeydown (event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const tagElementToAdd = this.dropdownContentTarget.querySelector('.active').firstElementChild;
+      if (tagElementToAdd) tagElementToAdd.click();
+    }
+
+    if (event.key === ',') {
+      event.preventDefault();
+      this.addNewTagWrapperTarget.click();
+      this.tagSearchTarget.focus();
+    }
+  }
+
+  addNewTag (event) {
+    if (this.addNewTagWrapperTarget.classList.contains('d-none') || this.newTagTarget.dataset.tag.length === 0) {
+      return
+    }
+
+    this.tagsValue = this.tagsValue.concat([this.newTagTarget.dataset.tag]);
+    this.resetSearch(event);
+  }
+
+  resetSearch(event) {
+    this.tagSearchTarget.value = '';
+    this.newTagTarget.innerHTML = '';
+    this.newTagTarget.dataset.tag = ''; 
+    this.addNewTagWrapperTarget.classList.remove('d-block');
+    this.addNewTagWrapperTarget.classList.add('d-none');
+
+    this.searchResultTagsTargets.forEach(target => {
+      target.parentElement.classList.add('d-block');
+      target.parentElement.classList.remove('d-none');
+    });
+  }
+
+  tagUpdate (event) {
+    const target = event.target ? event.target : event;
+    if (target.checked) {
+      this.tagsValue = this.tagsValue.concat([target.dataset.tag]);
+    } else {
+      this.tagsValue = this.tagsValue.filter(tag => tag !== target.dataset.tag);
+    }
+  }
+
+  tagCreate(event) {
+    event.preventDefault();
+    const newTagCheckbox = document.createElement('label');
+    newTagCheckbox.classList.add('d-block');
+    newTagCheckbox.innerHTML = `<input type="checkbox" checked data-action="click->${this.identifier}#tagUpdate" data-tag-selector-target="searchResultTags" data-tag="${this.newTagTarget.dataset.tag}"> ${this.newTagTarget.dataset.tag}`;
+
+    const existingTags = Array.from(this.dropdownContentTarget.querySelectorAll('label:not(#add-new-tag-wrapper)'));
+    const insertPosition = existingTags.findIndex(tag => tag.textContent.trim().localeCompare(this.newTagTarget.dataset.tag) > 0);
+    if (insertPosition === -1) {
+      this.addNewTagWrapperTarget.insertAdjacentElement('beforebegin', newTagCheckbox);
+    } else {
+      existingTags[insertPosition].insertAdjacentElement('beforebegin', newTagCheckbox);
+    }
+
+    this.tagsValue = this.tagsValue.concat([this.newTagTarget.dataset.tag]);
+    this.tagSearchTarget.value = '';
+    this.tagSearchTarget.dispatchEvent(new Event('input'));
+  }
+
+  tagsValueChanged () {
+    if (this.tagsValue.length === 0) {
+      this.selectedTagsTarget.classList.add('d-none');
+    } else {
+      this.selectedTagsTarget.classList.remove('d-none');
+      this.selectedTagsTarget.innerHTML = `<div>${this.translationsValue.selected_tags}</div>
+                                                <ul class="list-unstyled border rounded mb-3 p-1">${this.renderTagPills()}</ul>`;
+    }
+
+    // The backend expects the comma with the space. If we're not careful here, observedFormsStatusHasChanged
+    // will return true and warn the user that the form has changed, even when it really hasn't.
+    const newValue = this.tagsValue.join(', ');
+    if (this.tagsFieldTarget.value !== newValue) {
+      this.tagsFieldTarget.value = newValue;
+    }
+  }
+
+  search (event) {
+    const normalizeRegex = /[^\w\s]/gi;
+    const searchTerm = event.target.value.replace(normalizeRegex, '').toLowerCase().trim();
+    let exactMatch = false;
+    this.dropdownContentTarget.classList.remove('d-none');
+
+    this.searchResultTagsTargets.forEach(target => {
+      target.parentElement.classList.remove('active');
+      const compareTerm = target.dataset.tag.replace(normalizeRegex, '').toLowerCase().trim();
+      if (compareTerm.includes(searchTerm)) {
+        target.parentElement.classList.add('d-block');
+        target.parentElement.classList.remove('d-none');
+        if (compareTerm === searchTerm) exactMatch = true;
+      } else {
+        target.parentElement.classList.add('d-none');
+        target.parentElement.classList.remove('d-block');
+      }
+    });
+
+    if (searchTerm.length > 0 && !exactMatch) {
+      this.addNewTagWrapperTarget.classList.remove('d-none');
+      this.addNewTagWrapperTarget.classList.add('d-block');
+    } else {
+      this.addNewTagWrapperTarget.classList.add('d-none');
+      this.addNewTagWrapperTarget.classList.remove('d-block');
+    }
+    this.addNewTagWrapperTarget.classList.remove('active');
+
+    const firstVisibleTag = this.dropdownContentTarget.querySelector('label.d-block');
+    if (firstVisibleTag) {
+      firstVisibleTag.classList.add('active');
+    }
+  }
+
+  updateTagToAdd (event) {
+    this.newTagTarget.dataset.tag = event.target.value.trim();
+    this.newTagTarget.nextSibling.textContent = ` ${this.translationsValue.add_new_tag}: ${event.target.value}`;
+  }
+
+  deselect (event) {
+    event.preventDefault();
+
+    const target = this.searchResultTagsTargets.find((tag) => tag.dataset.tag === event.target.dataset.tag);
+    if (target) {
+      target.checked = false;
+      this.tagUpdate(target);
+    } else {
+      this.tagsValue = this.tagsValue.filter(tag => tag !== event.target.dataset.tag);
+    }
+  }
+
+  renderTagPills () {
+    return this.tagsValue.map((tag) => {
+      return `
+        <li class="d-inline-flex gap-2 align-items-center my-2">
+          <span class="bg-light badge rounded-pill border selected-item d-inline-flex align-items-center">
+            <span class="selected-item-label d-inline-flex">${tag}</span>
+            <button
+              type="button"
+              data-action="${this.identifier}#deselect"
+              data-tag="${tag}"
+              class="btn-close close ms-1 ml-1"
+              aria-label="${this.translationsValue.remove} ${tag}"
+            >${this.closeButtonHtmlValue}</button>
+          </span>
+        </li>
+      `
+    }).join('')
+  }
+}
+
+const application = Application.start();
+application.register('tag-selector', TagSelectorController);
 
 Spotlight$1.onLoad(() => {
   new UserIndex().connect();

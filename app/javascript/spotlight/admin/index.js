@@ -1,7 +1,6 @@
 // These scripts are in the vendor directory
 import 'nestable'
 import 'parameterize'
-import 'bootstrap-tagsinput'
 import 'jquery.serializejson'
 import 'leaflet-iiif'
 import 'Leaflet.Editable'
@@ -14,7 +13,6 @@ import BlacklightConfiguration from 'spotlight/admin/blacklight_configuration'
 import CopyEmailAddress from 'spotlight/admin/copy_email_addresses'
 import Croppable from 'spotlight/admin/croppable'
 import EditInPlace from 'spotlight/admin/edit_in_place'
-import ExhibitTagAutocomplete from 'spotlight/admin/exhibit_tag_autocomplete'
 import Exhibits from 'spotlight/admin/exhibits'
 import FormObserver from 'spotlight/admin/form_observer'
 import Locks from 'spotlight/admin/locks'
@@ -65,7 +63,6 @@ export default class {
     new CopyEmailAddress().connect()
     new Croppable().connect()
     new EditInPlace().connect()
-    new ExhibitTagAutocomplete().connect()
     new Exhibits().connect()
     new FormObserver().connect()
     new Locks().connect()
