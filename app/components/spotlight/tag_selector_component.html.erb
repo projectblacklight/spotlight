@@ -1,0 +1,40 @@
+<div data-controller="tag-selector" class="tag-selector" data-tag-selector-translations-value="<%= translation_data.to_json %>" data-tag-selector-tags-value="<%= selected_tags %>">
+  <% if form.nil? %>
+    <%= text_field_tag field_name, selected_tags_value, class: 'tag-selector-input', placeholder: t('.no_js_placeholder'), data: { tag_selector_target: "tagsField" } %>
+  <% else %>
+    <%= form.text_field field_name, value: selected_tags_value, class: 'tag-selector-input', placeholder: t('.no_js_placeholder'), data: { tag_selector_target: "tagsField" } %>
+  <% end %>
+  <input type="hidden" value="<%= selected_tags_value %>" data-tag-selector-target="initialTags">
+    
+  <div class='mb-3'>
+    <div class="tag-selection-wrapper" data-tag-selector-target="tagControlWrapper">
+      <div class="dropdown w-100 mb-3 d-inline-block" data-action="click@window->tag-selector#clickOutside">
+        <div data-tag-selector-target="tagSearchDropdown">
+          <div data-tag-selector-target="selectedTags"></div>
+          <div data-tag-selector-target="tagSearchInputWrapper" class="border rounded-bottom tag-selection-search-bar d-flex">
+            <button type="button" aria-label="toggle dropdown" class="btn btn-link text-secondary me-1 px-2" data-action="click->tag-selector#tagDropdown">
+              <span><%= search_icon_svg %></span>
+            </button>
+            <input class="flex-grow-1" data-action="input->tag-selector#search input->tag-selector#updateSearchResultsPlaceholder input->tag-selector#updateTagToAdd focus->tag-selector#tagDropdown keydown->tag-selector#handleKeydown" 
+              data-tag-selector-target="tagSearch" placeholder="<%= t('.search') %>" aria-label="<%= t('.search') %>">
+            <button type="button" aria-label="toggle dropdown" class="dropdown-toggle btn btn-link text-secondary" data-bs-toggle="dropdown" data-action="click->tag-selector#tagDropdown"></button>
+          </div>
+        </div>
+        <div data-tag-selector-target="dropdownContent" class="dropdown-content d-none tags-group border rounded">
+          <% all_tags.each do |tag| %>
+            <label class="d-block">
+              <input type="checkbox" <%= 'checked' if selected?(tag) %> data-action="click->tag-selector#tagUpdate" data-tag-selector-target="searchResultTags" data-tag="<%= tag %>">
+              <%= tag %>
+            </label>
+          <% end %>
+          <% if all_tags.empty? %>
+            <label class="no-results"><%= t('.no_results') %></label>
+          <% end %>
+          <label class="d-none" data-tag-selector-target="addNewTagWrapper">
+            <input type="checkbox" disabled data-action="click->tag-selector#tagCreate" data-tag-selector-target="newTag" data-tag=""> Add new tag
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
