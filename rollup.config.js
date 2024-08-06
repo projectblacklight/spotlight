@@ -1,6 +1,7 @@
 'use strict'
 
 import includePaths from 'rollup-plugin-includepaths';
+import resolve from '@rollup/plugin-node-resolve';
 
 const path = require('path')
 
@@ -8,12 +9,14 @@ const BUNDLE = process.env.BUNDLE === 'true'
 const ESM = process.env.ESM === 'true'
 
 const fileDest = `spotlight${ESM ? '.esm' : ''}`
-const external = []
-const globals = {}
+const external = ['@hotwired/stimulus']
+const globals = {
+  '@hotwired/stimulus': 'Stimulus'
+}
 
 let includePathOptions = {
   include: {},
-  paths: ['app/javascript', 'vendor/assets/javascripts'],
+  paths: ['app/javascript', 'app/javascript/controllers', 'vendor/assets/javascripts'],
   external: [],
   extensions: ['.js', '.es6']
 };
@@ -27,7 +30,7 @@ const rollupConfig = {
     generatedCode: 'es2015'
   },
   external,
-  plugins: [includePaths(includePathOptions)]
+  plugins: [resolve(), includePaths(includePathOptions)]
 }
 
 if (!ESM) {
