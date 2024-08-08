@@ -1,7 +1,3 @@
 .inline-block {
   display: inline-block;
 }
-
-.btn-sizing {
-  @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-line-height, $btn-border-radius);
-}

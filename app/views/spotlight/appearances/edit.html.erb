@@ -20,20 +20,20 @@
     <ul class="nav nav-tabs" role="tablist">
       <% if current_exhibit.themes.many? %>
         <li role="presentation" class="nav-item">
-          <a href="#site-theme" aria-controls="site-theme" role="tab" data-toggle="tab" class="nav-link active"><%= t(:'.site_theme.heading') %></a>
+          <a href="#site-theme" aria-controls="site-theme" role="tab" data-toggle="tab" data-bs-toggle="tab" class="nav-link active"><%= t(:'.site_theme.heading') %></a>
         </li>
       <% end %>
 
       <li role="presentation" class="nav-item">
-        <a href="#site-masthead" aria-controls="site-masthead" role="tab" data-toggle="tab" class="nav-link <%= 'active' unless current_exhibit.themes.many? %>"><%= t(:'.site_masthead.heading') %></a>
+        <a href="#site-masthead" aria-controls="site-masthead" role="tab" data-toggle="tab" data-bs-toggle="tab" class="nav-link <%= 'active' unless current_exhibit.themes.many? %>"><%= t(:'.site_masthead.heading') %></a>
       </li>
 
       <li role="presentation" class="nav-item">
-        <a href="#site-thumbnail" aria-controls="site-thumbnail" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.site_thumbnail.heading') %></a>
+        <a href="#site-thumbnail" aria-controls="site-thumbnail" role="tab" data-toggle="tab" data-bs-toggle="tab" class="nav-link"><%= t(:'.site_thumbnail.heading') %></a>
       </li>
 
       <li role="presentation" class="nav-item">
-        <a href="#main-menu" aria-controls="main-menu" role="tab" data-toggle="tab" class="nav-link"><%= t(:'.main_navigation.menu') %></a>
+        <a href="#main-menu" aria-controls="main-menu" role="tab" data-toggle="tab" data-bs-toggle="tab" class="nav-link"><%= t(:'.main_navigation.menu') %></a>
       </li>
     </ul>
     <div class="tab-content">

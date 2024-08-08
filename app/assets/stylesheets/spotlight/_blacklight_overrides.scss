@@ -1,5 +1,6 @@
 .submit-search-text {
-  @extend .sr-only;
+  @extend .sr-only !optional;
+  @extend .visually-hidden !optional;
 }
 
 .search-query-form {

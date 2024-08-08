@@ -13,12 +13,12 @@
           <tr>
             <td class="<%= 'invite-pending' if user.invite_pending? %>">
               <%= user.email %>
-              <span class='badge badge-warning pending-label'><%= t('.pending') %></span>
+              <span class='badge badge-warning bg-warning pending-label'><%= t('.pending') %></span>
             </td>
             <td>
               <%= link_to(t('.destroy'), admin_user_path(user),
                     data: { method: :delete, turbo_method: :delete },
-                    class: 'btn btn-sm btn-danger float-right') unless user == current_user %>
+                    class: 'btn btn-sm btn-danger float-right float-end') unless user == current_user %>
             </td>
           </tr>
         <% end %>
@@ -30,7 +30,7 @@
           <td>
             <div class="form-actions">
               <div class="primary-actions">
-              <%= cancel_link f.object, '#', class: 'btn-sizing', data: { behavior: 'cancel-edit' } %>
+              <%= cancel_link f.object, '#', class: 'btn btn-link', role: 'button', data: { behavior: 'cancel-edit' } %>
               <%= f.submit t('.save'), class: 'btn btn-primary'%>
               </div>
             </div>
@@ -53,7 +53,7 @@
   <div class="mb-4">
     <h3 class="instructions"><%= t :'.admins_curators' %></h3>
     <div id="admins_curators" class="card card-body bg-light">
-      <div class='btn-toolbar float-right'>
+      <div class='btn-toolbar float-right float-end'>
         <button class="btn btn-sm btn-secondary copy-email-addresses" data-clipboard-target="#admins_curators">
             <%= t('.copy') %>
         </button>
@@ -76,12 +76,12 @@
           <tr>
             <td class="<%= 'invite-pending' if user.invite_pending? %>">
               <%= user.email %>
-              <span class='badge badge-warning pending-label'><%= t('.pending') %></span>
+              <span class='badge badge-warning bg-warning pending-label'><%= t('.pending') %></span>
             </td>
             <td class="role">
               <%= user.roles.map { |r| r.role.titleize }.uniq.join(", ") %>
             </td>
-            <td class="text-right">
+            <td class="text-right text-end">
               <% if user.superadmin? %>
                 <%= link_to(t('.destroy'), admin_user_path(user),
                       data: { method: :delete, turbo_method: :delete },

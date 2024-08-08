@@ -3,7 +3,7 @@ export default class {
     var container, target;
 
     function init() {
-      const target_val = container.attr('data-target')
+      const target_val = container.attr('data-target') || container.attr('data-bs-target');
       if (!target_val) 
         return
 

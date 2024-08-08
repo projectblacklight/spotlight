@@ -1,6 +1,6 @@
 <% title = current_exhibit.main_navigations.browse.label_or_default %>
 <% set_html_page_title(title) %>
-<h1 class="sr-only"><%= title %></h1>
+<h1 class="sr-only visually-hidden"><%= title %></h1>
 
 <% if @groups.any? # active %>
   <ul class="browse-group-navigation nav nav-pills justify-content-center">

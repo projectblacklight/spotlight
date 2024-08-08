@@ -10,7 +10,7 @@
         <%= translation_fields.hidden_field :key %>
         <%= translation_fields.hidden_field :locale %>
 
-        <div data-translation-progress-item='true' class='row form-group translation-form'>
+        <div data-translation-progress-item='true' class='row form-group mb-3 translation-form'>
           <%= translation_fields.label :value, t("spotlight.search.fields.#{key}", default: field_config.label, locale: I18n.default_locale), class: 'col-form-label col-12 col-sm-2' %>
           <div class='col-11 col-sm-9 card card-body panel-translation'>
             <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
@@ -41,7 +41,7 @@
             <%= translation_fields.hidden_field :key %>
             <%= translation_fields.hidden_field :locale %>
 
-            <div data-translation-progress-item='true' class='row form-group translation-form'>
+            <div data-translation-progress-item='true' class='row form-group mb-3 translation-form'>
               <%= translation_fields.label :value, t("spotlight.search.fields.#{custom_field.field}", default: custom_field.configuration['label'], locale: I18n.default_locale), class: 'col-form-label col-12 col-sm-2' %>
               <div class='col-11 col-sm-9 card card-body panel-translation'>
                 <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>

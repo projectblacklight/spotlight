@@ -12,7 +12,8 @@
 }
 
 .primary-actions {
-  @extend .float-right;
+  @extend .float-right !optional;
+  @extend .float-end !optional;
 }
 
 #nested-pages {

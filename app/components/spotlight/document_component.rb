@@ -15,7 +15,7 @@ module Spotlight
     delegate :current_exhibit, :can?, :add_document_meta_content, to: :helpers
 
     def exhibit_edit_link
-      helpers.exhibit_edit_link document, [:edit, current_exhibit, document], class: 'float-right btn btn-primary' if can?(:curate, current_exhibit)
+      helpers.exhibit_edit_link document, [:edit, current_exhibit, document], class: 'float-right float-end btn btn-primary' if can?(:curate, current_exhibit)
     end
   end
 end

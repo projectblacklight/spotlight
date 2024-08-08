@@ -43,7 +43,8 @@
     text-align: center;
     li {
       @extend .badge;
-      @extend .badge-secondary;
+      @extend .badge-secondary !optional;
+      @extend .bg-secondary !optional;
       a {
         color: #fff;
       }
@@ -152,10 +153,12 @@ form.edit_solr_document {
 .document {
   .blacklight-exhibit_tags a {
     @extend .badge;
-    @extend .badge-secondary;
+    @extend .badge-secondary !optional;
+    @extend .bg-secondary !optional;
 
     &:not(:last-child) {
-      @extend .mr-2;
+      @extend .mr-2 !optional;
+      @extend .me-2 !optional;
     }
   }
 }

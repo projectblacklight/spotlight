@@ -2,7 +2,7 @@
   <%= bootstrap_form_for [:import, current_exhibit], html: { class: 'clearfix', multipart: true } do |f| %>
     <div class="row col-md-12">
       <p class="instructions"><%= t :'.instructions' %></p>
-      <div class="form-group">
+      <div class="form-group mb-3">
         <%= file_field_tag :file, class: 'form-control' %>
         <%= hidden_field_tag :tab, 'import', id: nil %>
       </div>

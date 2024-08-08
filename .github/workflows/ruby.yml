@@ -22,11 +22,16 @@ jobs:
             ruby: "3.0"
             blacklight_version: "7.34"
             bootstrap_version: ~> 4.0
+            additional_name: Rails 6.1
           - rails_version: "7.1.3.4"
             ruby: "3.2"
             blacklight_version: "~> 7.34"
             bootstrap_version: ~> 4.0
-            additional_name: Rails 6.1
+          - rails_version: "7.1.3.4"
+            ruby: "3.2"
+            blacklight_version: "~> 7.34"
+            bootstrap_version: ~> 5.0
+            additional_name: Bootstrap 5
           - rails_version: 7.0.8.4
             ruby: 3.3
             blacklight_version: ~> 7.34

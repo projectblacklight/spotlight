@@ -3,7 +3,7 @@
 <div class="content-block items-block row d-block clearfix">
 
   <% if solr_documents_embed_block.documents? %>
-    <div class="items-col <%= solr_documents_embed_block.text? ? "col-md-6" : "col-md-12" %> <%= solr_documents_embed_block.content_align == 'right' ? 'float-right' : 'float-left' %>">
+    <div class="items-col <%= solr_documents_embed_block.text? ? "col-md-6" : "col-md-12" %> <%= solr_documents_embed_block.content_align == 'right' ? 'float-right float-end' : 'float-left float-start' %>">
       <% unless solr_documents_embed_block.text? %>
         <% unless solr_documents_embed_block.title.blank? %>
 

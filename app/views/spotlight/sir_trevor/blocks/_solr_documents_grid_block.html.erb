@@ -1,6 +1,6 @@
 <% solr_documents_grid_block.with_solr_helper(self) %>
 <div class="content-block item-grid-block row d-block clearfix">
-  <div class="items-col align-content-start justify-content-between flex-wrap <%= solr_documents_grid_block.text? ? 'col-md-9' : 'col-md-12' %> <%= solr_documents_grid_block.content_align == 'right' ? 'float-right' : 'float-left' %>">
+  <div class="items-col align-content-start justify-content-between flex-wrap <%= solr_documents_grid_block.text? ? 'col-md-9' : 'col-md-12' %> <%= solr_documents_grid_block.content_align == 'right' ? 'float-right float-end' : 'float-left float-start' %>">
     <% if solr_documents_grid_block.documents? %>
         <% solr_documents_grid_block.each_document.each_with_index do |(block_options, document), index| %>
           <% doc_presenter = document_presenter(document) %>

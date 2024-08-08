@@ -4,7 +4,7 @@
       <%= link_to(current_exhibit.title, spotlight.exhibit_path(current_exhibit), class: 'navbar-brand') %>
     <% end %>
 
-    <ul class="navbar-nav <%= resource_masthead? ? 'justify-content-md-end' : 'mr-auto' %>">
+    <ul class="navbar-nav <%= resource_masthead? ? 'justify-content-md-end' : 'mr-auto me-auto' %>">
       <li class="nav-item <%= "active" if current_page?([spotlight, current_exhibit]) %>"><%= link_to t(:'spotlight.curation.nav.home'), [spotlight, current_exhibit], class: 'nav-link' %></li>
       <% current_exhibit.main_navigations.displayable.each do |navigation| %>
         <%= render partial: "shared/#{navigation.nav_type}_navbar", locals: { navigation: navigation } %>

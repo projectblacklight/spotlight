@@ -15,7 +15,8 @@ describe 'Slideshow', js: true, type: :feature do
     within '.view-type' do
       click_link 'Slideshow'
     end
-    find('.grid [data-slide-to="1"] img').click
+
+    find('.grid [data-slide-to="1"] img, .grid [data-bs-slide-to="1"] img').click
     expect(page).to have_selector '#slideshow', visible: true
   end
 end

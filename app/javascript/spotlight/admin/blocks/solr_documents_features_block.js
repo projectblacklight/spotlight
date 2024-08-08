@@ -11,15 +11,15 @@ SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
     afterPreviewLoad: function(options) {
       $(this.inner).find('.carousel').carousel();
 
-      // the bootstrap carousel only initializes data-slide widgets on page load, so we need
+      // the bootstrap carousel only initializes data-bs-slide widgets on page load, so we need
       // to initialize them ourselves..
       var clickHandler = function (e) {
         var href
         var $this   = $(this)
-        var $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) // strip for ie7
+        var $target = $($this.attr('data-target') || $this.attr('data-bs-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) // strip for ie7
         if (!$target.hasClass('carousel')) return
         var options = $.extend({}, $target.data(), $this.data())
-        var slideIndex = $this.attr('data-slide-to')
+        var slideIndex = $this.attr('data-slide-to') || $this.attr('data-bs-slide-to')
         if (slideIndex) options.interval = false
 
         $.fn.carousel.call($target, options)
@@ -32,8 +32,8 @@ SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
       }
 
       $(this.inner).find('.carousel')
-        .on('click.bs.carousel.data-api', '[data-slide]', clickHandler)
-        .on('click.bs.carousel.data-api', '[data-slide-to]', clickHandler)
+        .on('click.bs.carousel.data-api', '[data-slide], [data-bs-slide]', clickHandler)
+        .on('click.bs.carousel.data-api', '[data-slide-to], [data-bs-slide-to]', clickHandler)
     }
 
   });

@@ -2,7 +2,7 @@
 <% if published_top_level_feature_pages.present? %>
   <% if published_top_level_feature_pages.many? %>
     <li class="nav-item dropdown">
-      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><%= navigation.label_or_default %></a>
+      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown"><%= navigation.label_or_default %></a>
       <ul class="dropdown-menu">
         <% published_top_level_feature_pages.each do |page| %>
           <li><%= link_to page.title, [spotlight, page.exhibit, page], class: 'dropdown-item' %></li>

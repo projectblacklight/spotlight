@@ -30,14 +30,6 @@
     padding-top: 0;
     padding-bottom: 0;
 
-    label {
-      margin-left: $spacer;
-      margin-right: $spacer;
-      padding-left: 0px;
-      padding-bottom: $table-cell-padding;
-      padding-top: 1 + $table-cell-padding;
-      display: block;
-    }
     input {
       display: inline-block;
       float: none;

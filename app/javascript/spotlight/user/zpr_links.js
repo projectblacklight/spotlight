@@ -7,10 +7,10 @@ export default class {
       modalDialog.addClass('modal-xl')
       modalContent.html('<div id="osd-modal-container"></div>');
       var controls = `<div class="controls d-flex justify-content-center justify-content-md-end">
-          <div class="custom-close-controls pr-3 pt-3">
-            <button type="button" class="btn btn-dark" data-dismiss="modal" aria-hidden="true">${Spotlight.ZprLinks.close}</button>
+          <div class="custom-close-controls pr-3 pe-3 pt-3">
+            <button type="button" class="btn btn-dark" data-dismiss="modal" data-bs-dismiss="modal" aria-hidden="true">${Spotlight.ZprLinks.close}</button>
           </div>
-          <div class="zoom-controls mb-3 mr-md-3">
+          <div class="zoom-controls mb-3 mr-md-3 me-md-3">
             <button id="osd-zoom-in" type="button" class="btn btn-dark">${Spotlight.ZprLinks.zoomIn}</button>
             <button id="osd-zoom-out" type="button" class="btn btn-dark">${Spotlight.ZprLinks.zoomOut}</button>
           </div>

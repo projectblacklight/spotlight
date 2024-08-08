@@ -4,8 +4,8 @@
   <%= f.text_field :subtitle %>
   <%= f.text_area :description %>
   <%= f.text_field :tag_list, value: f.object.tag_list.to_s %>
-  <%= f.form_group(:contact_emails, label: { text: nil, class: nil, for: 'exhibit_contact_email_0' }, help: nil) do %>
-    <%= f.fields_for :contact_emails do |contact| %>
+  <%= f.form_group(:contact_emails, label: { text: nil, class: nil, for: 'exhibit_contact_email_0' }, class: 'form-group mb-3', help: nil) do %>
+    <%= f.fields_for :contact_emails do |contact| %> 
       <%= render partial: 'contact', locals: {exhibit: @exhibit, contact: contact} %>
     <% end %>
     <button id='another-email' class="btn btn-sm btn-info"><%= t('.add_contact_email_button') %></button>

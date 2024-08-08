@@ -1,5 +1,10 @@
 ---
 en:
+  activemodel:
+    attributes:
+      spotlight/contact_form:
+        email: Your email
+        name: Your name
   activerecord:
     attributes:
       spotlight/contact:
@@ -932,9 +937,9 @@ en:
             one: "%{count} item"
             other: "%{count} items"
         solr_documents_block:
-          zpr_link_html: View <span class="sr-only">%{title}</span> larger
+          zpr_link_html: View <span class="sr-only visually-hidden">%{title}</span> larger
         uploaded_items_block:
-          zpr_link_html: View <span class="sr-only">%{title}</span> larger
+          zpr_link_html: View <span class="sr-only visually-hidden">%{title}</span> larger
     sites:
       edit:
         basic_settings:
