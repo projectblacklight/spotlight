@@ -4,9 +4,9 @@ FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION
 
 ARG RAILS_VERSION=6.1.6
 
-ENV SPOTLIGHT_ENGINE_PATH /spotlight/engine
-ENV SPOTLIGHT_GEM /spotlight/engine
-ENV RAILS_QUEUE inline
+ENV SPOTLIGHT_ENGINE_PATH=/spotlight/engine
+ENV SPOTLIGHT_GEM=/spotlight/engine
+ENV RAILS_QUEUE=inline
 
 RUN apk --no-cache upgrade && \
   apk add --no-cache \
