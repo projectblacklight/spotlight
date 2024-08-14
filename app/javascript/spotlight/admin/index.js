@@ -2,7 +2,6 @@
 import 'nestable'
 import 'parameterize'
 import 'bootstrap-tagsinput'
-import 'jquery.serializejson'
 import 'leaflet-iiif'
 import 'Leaflet.Editable'
 import 'Path.Drag'
