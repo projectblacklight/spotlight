@@ -19,6 +19,10 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     config.index.title_field = 'full_title_tesim'
 
+    config.add_results_collection_tool(:sort_widget)
+    config.add_results_collection_tool(:per_page_widget)
+    config.add_results_collection_tool(:view_type_group)
+
     config.add_search_field 'all_fields', label: I18n.t('spotlight.search.fields.search.all_fields')
 
     config.add_sort_field 'relevance', sort: 'score desc', label: I18n.t('spotlight.search.fields.sort.relevance')
