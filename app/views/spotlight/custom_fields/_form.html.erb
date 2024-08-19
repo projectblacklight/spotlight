@@ -10,7 +10,7 @@
   <% end %>
 
   <%= f.form_group :field_type, label: { text: t(:'.is_multiple.label') } do %>
-    <%= f.check_box :is_multiple, disabled: @custom_field.persisted? %>
+    <%= f.check_box :is_multiple, layout: :vertical, disabled: @custom_field.persisted? %>
   <% end %>
 
   <div class="form-actions">
