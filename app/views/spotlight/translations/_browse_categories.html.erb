@@ -49,7 +49,7 @@
             <%= translation_fields.hidden_field :locale %>
             <div id="browse_category_subtitle_<%= search.id %>" class="card card-body collapse panel-translation">
               <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
-              <small class="form-text text-muted"><%= search[:subtitle] %></small>
+              <div class="form-text text-muted mb-3"><%= search[:subtitle] %></div>
             </div>
           <% end %>
         </div>
@@ -75,7 +75,7 @@
             <%= translation_fields.hidden_field :locale %>
             <div id="browse_category_description_<%= search.id %>" class="card card-body collapse panel-translation">
               <%= translation_fields.text_area_without_bootstrap :value, class: 'form-control' %>
-              <small class="form-text text-muted"><%= search[:long_description] %></small>
+              <div class="form-text text-muted mb-3"><%= search[:long_description] %></div>
             </div>
           <% end %>
         </div>
