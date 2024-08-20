@@ -1,24 +1,37 @@
 <% if can? :import_translations, Spotlight::Exhibit %>
-  <div class="row col-md-12 mb-5">
-    <h2><%= t(:'.header') %></h2>
-    <p class="instructions"><%= t(:'.description') %></p>
-
-    <%= bootstrap_form_for current_exhibit, url: spotlight.import_exhibit_translations_path(current_exhibit), html: { class: 'row col-md-12 align-items-center clearfix mb-3', multipart: true } do |f| %>
-      <%= f.label :value, t(".import_label"), class: 'col-form-label col-12 col-sm-3 pl-0 translation-import-export-label' %>
-
-      <div class="input-group col px-0">
-        <%= file_field_tag :file, class: 'form-control' %>
-        <%= hidden_field_tag :tab, 'import', id: nil %>
-        <div class="input-group-append">
-          <%= f.submit t(:'.import_submit'), class: 'btn btn-primary' %>
+  <div class="row">
+    <div class="col-md-12 mb-5">
+      <h2><%= t(:'.header') %></h2>
+      <p class="instructions"><%= t(:'.description') %></p>
+      <%= bootstrap_form_for current_exhibit, url: spotlight.import_exhibit_translations_path(current_exhibit), html: { class: 'mb-3', multipart: true } do |f| %>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 col-md-3 text-md-right text-md-end">
+              <%= f.label :value, t(".import_label"), class: 'col-form-label' %>
+            </div>
+            <div class="col-12 col-md-9">
+              <div class="input-group">
+                <%= file_field_tag :file, class: 'form-control' %>
+                <%= hidden_field_tag :tab, 'import', id: nil %>
+                <div class="input-group-append">
+                  <%= f.submit t(:'.import_submit'), class: 'btn btn-primary' %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-form-label col-12 col-md-3 text-md-right text-md-end">
+            <%= content_tag :span, t(".export_label") %>
+          </div>
+          <div class="col-12 col-md-9">
+            <%= link_to t(:'.export_current_locale', language: t(:"locales.#{@language}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: @language), class: 'btn btn-primary mr-3 me-3' %>
+            <%= link_to t(:'.export_default_locale', language: t(:"locales.#{I18n.default_locale}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: I18n.default_locale), class: 'btn btn-primary' %>
+          </div>
         </div>
       </div>
-    <% end %>
-    <div class="row col-md-12 align-items-center">
-      <%= content_tag :span, t(".export_label"), class: 'col-form-label col-12 col-sm-3 pl-0 ps-3 translation-import-export-label' %>
-
-      <%= link_to t(:'.export_current_locale', language: t(:"locales.#{@language}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: @language), class: 'btn btn-primary w-auto mr-3 me-3' %>
-      <%= link_to t(:'.export_default_locale', language: t(:"locales.#{I18n.default_locale}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: I18n.default_locale), class: 'btn btn-primary w-auto' %>
     </div>
   </div>
 <% end %>
