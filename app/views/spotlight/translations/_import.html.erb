@@ -17,8 +17,8 @@
     <div class="row col-md-12 align-items-center">
       <%= content_tag :span, t(".export_label"), class: 'col-form-label col-12 col-sm-3 pl-0 ps-3 translation-import-export-label' %>
 
-      <%= link_to t(:'.export_current_locale', language: t(:"locales.#{@language}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: @language), class: 'btn btn-primary mr-3 me-3' %>
-      <%= link_to t(:'.export_default_locale', language: t(:"locales.#{I18n.default_locale}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: I18n.default_locale), class: 'btn btn-primary' %>
+      <%= link_to t(:'.export_current_locale', language: t(:"locales.#{@language}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: @language), class: 'btn btn-primary w-auto mr-3 me-3' %>
+      <%= link_to t(:'.export_default_locale', language: t(:"locales.#{I18n.default_locale}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: I18n.default_locale), class: 'btn btn-primary w-auto' %>
     </div>
   </div>
 <% end %>
