@@ -23,7 +23,7 @@ describe 'Browse Group Categories', js: true, type: :feature do
   end
 
   it 'allows a curator to select a caption to display' do
-    fill_in_prefetched_typeahead_field with: 'Pets', wait_for: '[data-type="browse_group_categories"] [data-browse-groups-fetched]'
+    fill_in_typeahead_field with: 'Pets'
     within '.dd-list' do
       expect(page).to have_css '.title', text: 'Pets'
     end
@@ -34,7 +34,7 @@ describe 'Browse Group Categories', js: true, type: :feature do
   end
 
   it 'can navigate using arrows' do
-    fill_in_prefetched_typeahead_field with: 'Pets', wait_for: '[data-type="browse_group_categories"] [data-browse-groups-fetched]'
+    fill_in_typeahead_field with: 'Pets'
     within '.dd-list' do
       expect(page).to have_css '.title', text: 'Pets'
     end
@@ -51,7 +51,7 @@ describe 'Browse Group Categories', js: true, type: :feature do
   end
 
   it 'only published searches are displayed' do
-    fill_in_prefetched_typeahead_field with: 'Pets', wait_for: '[data-type="browse_group_categories"] [data-browse-groups-fetched]'
+    fill_in_typeahead_field with: 'Pets'
     within '.dd-list' do
       expect(page).to have_css '.title', text: 'Pets'
     end

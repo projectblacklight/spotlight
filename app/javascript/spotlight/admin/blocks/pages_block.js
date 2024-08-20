@@ -7,20 +7,16 @@ SirTrevor.Blocks.FeaturedPages = (function(){
 
     icon_name: "pages",
 
-    autocomplete_url: function() { return $(this.inner).closest('form[data-autocomplete-exhibit-pages-path]').data('autocomplete-exhibit-pages-path').replace("%25QUERY", "%QUERY"); },
+    autocomplete_url: function() { return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-pages-path]').dataset.autocompleteExhibitPagesPath; },
+    autocomplete_fetch: function(url) {
+      return this.fetchOnceAndFilterLocalResults(url);
+    },
     autocomplete_template: function(obj) {
+      const description = obj.description ? `<small>&nbsp;&nbsp;${obj.description}</small>` : '';
       const thumbnail = obj.thumbnail_image_url ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail_image_url}" /></div>` : ''
       return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">${thumbnail}
-      <span class="autocomplete-title">${obj.title}</span><br/><small>&nbsp;&nbsp;${obj.description}</small></div>`
+      <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/>${description}</div>`
     },
-    bloodhoundOptions: function() {
-      return {
-        prefetch: {
-          url: this.autocomplete_url(),
-          ttl: 0
-        }
-      };
-    }
   });
 
 })();
