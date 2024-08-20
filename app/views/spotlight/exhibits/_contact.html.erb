@@ -3,7 +3,7 @@
           <div class="col-md-8<%= ' has-error' if contact.object.errors[:email].present? %>">
             <%= text_field_tag "#{contact.object_name}[email]", contact.object.email, class: 'exhibit-contact form-control', id: "exhibit_contact_email_#{contact.index}", 'aria-label': t('.email_input_aria_label', index: contact.index + 1) %>
             <% if contact.object.errors[:email].present? %>
-              <small class="form-text text-muted"><%=contact.object.errors[:email].join(", ".html_safe) %></small>
+              <div class="form-text text-muted mb-3"><%=contact.object.errors[:email].join(", ".html_safe) %></div>
             <% end %>
             <p>
               <span class="contact-email-delete-error text-danger bg-danger" style="display: none;"><%= t('.email_delete_error') %> <span class="error-msg"></span></span>
