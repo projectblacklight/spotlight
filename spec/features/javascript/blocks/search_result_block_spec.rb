@@ -16,15 +16,7 @@ describe 'Search Result Block', js: true, type: :feature do
   end
 
   it 'allows a curator to select from existing browse categories' do
-    # Manually inject the inputs to the widget that the autocomplete would.
-    # fill_in_typeahead_field does not work here for us for some reason.
-    page.execute_script <<-JS
-      $("[data-twitter-typeahead]:visible").after(
-        "<input type='hidden' name='item[item_0][id]' value='all-exhibit-items' />" +
-        "<input type='hidden' name='item[item_0][display]' value='true' />"
-      );
-    JS
-
+    fill_in_typeahead_field(with: 'All exhibit items')
     check 'Gallery'
     check 'Slideshow'
 

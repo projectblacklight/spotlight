@@ -8,22 +8,18 @@ SirTrevor.Blocks.Browse = (function(){
     icon_name: "browse",
 
     autocomplete_url: function() {
-      return $(this.inner).closest('form[data-autocomplete-exhibit-searches-path]').data('autocomplete-exhibit-searches-path').replace("%25QUERY", "%QUERY");
+      return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-searches-path]').dataset.autocompleteExhibitSearchesPath;
+    },
+
+    autocomplete_fetch: function(url) {
+      return this.fetchOnceAndFilterLocalResults(url);
     },
 
     autocomplete_template: function(obj) {
       const thumbnail = obj.thumbnail_image_url ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail_image_url}" /></div>` : ''
+      const description = obj.description ? `<small>&nbsp;&nbsp;${obj.description}</small>` : '';
       return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">${thumbnail}
-      <span class="autocomplete-title">${obj.full_title}</span><br/><small>&nbsp;&nbsp;${obj.description}</small></div>`
-    },
-
-    bloodhoundOptions: function() {
-      return {
-        prefetch: {
-          url: this.autocomplete_url(),
-          ttl: 0
-        }
-      };
+      <span class="autocomplete-title">${this.highlight(obj.full_title)}</span>${description}</div>`;
     },
 
     _itemPanel: function(data) {

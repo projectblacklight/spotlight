@@ -8,30 +8,26 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
   return Core.Block.Resources.extend({
     type: "browse_group_categories",
     icon_name: "browse",
-    bloodhoundOptions: function() {
-      var that = this;
-      return {
-        prefetch: {
-          url: this.autocomplete_url(),
-          ttl: 0,
-          filter: function(response) {
-            // Let the dom know that the response has been returned
-            $(that.inner).attr('data-browse-groups-fetched', true);
-            return response;
-          }
-        }
-      };
-    },
 
     autocomplete_control: function() {
-      return `<input type="text" class="st-input-string form-control item-input-field" data-twitter-typeahead="true" placeholder="${i18n.t("blocks:browse_group_categories:autocomplete")}"/>`
+      const autocompleteID = this.blockID + '-autocomplete';
+      return `<auto-complete src="${this.autocomplete_url()}" for="${autocompleteID}-popup" fetch-on-empty>
+        <input type="text" name="${autocompleteID}" placeholder="${i18n.t("blocks:browse_group_categories:autocomplete")}" data-default-typeahead>
+        <ul id="${autocompleteID}-popup"></ul>
+        <div id="${autocompleteID}-popup-feedback" class="sr-only visually-hidden"></div>
+      </auto-complete>`
     },
     autocomplete_template: function(obj) {
       return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">
-      <span class="autocomplete-title">${obj.title}</span><br/></div>`
+      <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/></div>`
     },
 
-    autocomplete_url: function() { return $(this.inner).closest('form[data-autocomplete-exhibit-browse-groups-path]').data('autocomplete-exhibit-browse-groups-path').replace("%25QUERY", "%QUERY"); },
+    autocomplete_url: function() { 
+      return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-browse-groups-path]').dataset.autocompleteExhibitBrowseGroupsPath;
+    },
+    autocomplete_fetch: function(url) {
+      return this.fetchOnceAndFilterLocalResults(url);
+    },
     _itemPanel: function(data) {
       var index = "item_" + this.globalIndex++;
       var checked;
