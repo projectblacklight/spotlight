@@ -1,6 +1,6 @@
 <div data-cropper="<%= f.object.model_name.singular_route_key %>" data-form-prefix="<%= form_prefix(f) %>">
 <%= field_set_tag do %>
-  <%= f.check_box(:display) %>
+  <%= f.check_box(:display, layout: :vertical) %>
 <% end if f.object.is_a? Spotlight::Masthead %>
 <%= field_set_tag(t(:'.source.header')) do %>
   <div>
