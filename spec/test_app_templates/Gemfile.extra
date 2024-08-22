@@ -3,3 +3,5 @@ if ENV['BLACKLIGHT_VERSION'] == 'edge'
   gem 'blacklight-gallery', github: 'projectblacklight/blacklight-gallery'
   gem 'blacklight-oembed', github: 'projectblacklight/blacklight-oembed'
 end
+
+gem 'acts-as-taggable-on', github: 'seuros/acts-as-taggable-on'
