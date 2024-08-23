@@ -9,9 +9,12 @@ module SirTrevorRails
         send(:'max-height')
       end
 
+      def autoplay?
+        send(:'auto-play-images') == 'true'
+      end
+
       def interval
-        val = send(:'auto-play-images')
-        if val == 'true'
+        if autoplay?
           send(:'auto-play-images-interval')
         else
           false

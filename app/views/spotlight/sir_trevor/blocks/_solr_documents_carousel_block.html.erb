@@ -3,7 +3,7 @@
 <% html_id = "carousel-#{solr_documents_carousel_block.object_id}" %>
 <div class="content-block carousel-block carousel-height-<%= solr_documents_carousel_block.max_height %>">
 <% if solr_documents_carousel_block.documents? %>
-  <div id="<%= html_id %>" class="carousel slide" data-ride="carousel" data-bs-ride="carousel" data-interval="<%= solr_documents_carousel_block.interval %>" data-bs-interval="<%= solr_documents_carousel_block.interval %>">
+  <div id="<%= html_id %>" class="carousel slide" data-ride="carousel" data-interval="<%= solr_documents_carousel_block.interval %>" <%= "data-bs-ride=carousel data-bs-interval=#{solr_documents_carousel_block.interval}" if solr_documents_carousel_block.autoplay? %>>
     <div class="carousel-inner text-center">
     <% solr_documents_carousel_block.each_document.each_with_index do |(block_options, document), index| %>
       <% doc_presenter = document_presenter(document) %>
