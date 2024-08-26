@@ -68,11 +68,11 @@ module Spotlight
       end
 
       def custom_fields_data
-        data.slice(*exhibit.custom_fields.map(&:slug).map(&:to_s)).select { |_k, v| v.present? }
+        data.slice(*exhibit.custom_fields.map(&:slug).map(&:to_s)).compact_blank
       end
 
       def configured_fields_data
-        data.slice(*configured_fields.map(&:field_name).map(&:to_s)).select { |_k, v| v.present? }
+        data.slice(*configured_fields.map(&:field_name).map(&:to_s)).compact_blank
       end
     end
   end
