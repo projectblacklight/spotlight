@@ -22,6 +22,7 @@ Capybara.register_driver :selenium_chrome_headless do |app|
   browser_options = Selenium::WebDriver::Chrome::Options.new
   browser_options.add_argument('--window-size=1920,1080')
   browser_options.add_argument('--headless')
+  browser_options.binary = ENV['CHROME_BIN'] if ENV['CHROME_BIN']
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
 
