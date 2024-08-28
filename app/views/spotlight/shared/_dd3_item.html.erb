@@ -22,7 +22,7 @@
           <div class="flex-grow-1 align-self-center">
             <h3 class="h6 card-title mb-0">
               <%= field.hidden_field :weight, value: index, 'data-property' => 'weight' %>
-              <%= field.check_box_without_bootstrap enabled_method, checked: field.object.public_send(enabled_method), hide_label: true, title: label %>
+              <%= field.check_box_without_bootstrap enabled_method, class: 'mr-3 me-3', checked: field.object.public_send(enabled_method), hide_label: true, title: label %>
               <span class="d-inline-block w-75" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
                 <a href="#edit-in-place" class="field-label edit-in-place"><%= label %></a>
                 <%= field.hidden_field label_method, value: label, class: 'form-control form-control-sm title-field', data: {:"edit-field-target" => 'true', default_value: default_value } %>
