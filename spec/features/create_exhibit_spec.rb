@@ -62,4 +62,11 @@ describe 'Create a new exhibit', type: :feature do
 
     expect(page).to have_content 'has already been taken'
   end
+
+  it 'suggests a slug based on the title', js: true do
+    visit spotlight.new_exhibit_path
+
+    fill_in 'Title', with: 'My exhibit title'
+    expect(find_field('URL slug')[:placeholder]).to eq 'my-exhibit-title'
+  end
 end

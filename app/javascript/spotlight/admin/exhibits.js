@@ -1,3 +1,5 @@
+import { URLify } from 'parameterize';
+
 export default class {
   connect() {
     // auto-fill the exhibit slug on the new exhibit form
