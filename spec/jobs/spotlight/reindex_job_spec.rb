@@ -32,7 +32,10 @@ describe Spotlight::ReindexJob do
     before do
       allow(described_class).to receive(:validity_checker).and_return(mock_checker)
       allow(mock_checker).to receive(:mint).with(anything).and_return('xyz')
+      ActiveJob::Base.queue_adapter = :test
     end
+
+    after { ActiveJob::Base.queue_adapter = :inline }
 
     it 'mints a new validity token' do
       expect { described_class.perform_later(resource) }.to have_enqueued_job(described_class).with(resource, 'validity_token' => 'xyz')
