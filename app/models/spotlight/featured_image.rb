@@ -100,24 +100,11 @@ module Spotlight
     # Ideally, we might create a join table to connect this model to where it is used, but 🤷‍♂️
     # Instead, we check each place this might be used and touch it
     def bust_containing_resource_caches
-      if Rails.version > '6'
-        Spotlight::Search.where(thumbnail: self).or(Spotlight::Search.where(masthead: self)).touch_all
-        Spotlight::Page.where(thumbnail: self).touch_all
-        Spotlight::Exhibit.where(thumbnail: self).or(Spotlight::Exhibit.where(masthead: self)).touch_all
-        Spotlight::Contact.where(avatar: self).touch_all
-        Spotlight::Resources::Upload.where(upload: self).touch_all
-      else
-        bust_containing_resource_caches_rails5
-      end
-    end
-
-    # Rails 5 doesn't support touch_all.
-    def bust_containing_resource_caches_rails5
-      Spotlight::Search.where(thumbnail: self).or(Spotlight::Search.where(masthead: self)).find_each(&:touch)
-      Spotlight::Page.where(thumbnail: self).find_each(&:touch)
-      Spotlight::Exhibit.where(thumbnail: self).or(Spotlight::Exhibit.where(masthead: self)).find_each(&:touch)
-      Spotlight::Contact.where(avatar: self).find_each(&:touch)
-      Spotlight::Resources::Upload.where(upload: self).find_each(&:touch)
+      Spotlight::Search.where(thumbnail: self).or(Spotlight::Search.where(masthead: self)).touch_all
+      Spotlight::Page.where(thumbnail: self).touch_all
+      Spotlight::Exhibit.where(thumbnail: self).or(Spotlight::Exhibit.where(masthead: self)).touch_all
+      Spotlight::Contact.where(avatar: self).touch_all
+      Spotlight::Resources::Upload.where(upload: self).touch_all
     end
   end
 end

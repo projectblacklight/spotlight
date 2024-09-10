@@ -7,8 +7,6 @@ describe 'Allow exhibit admins to import and export content from an exhibit', js
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
 
   before do
-    allow(Spotlight::ReindexExhibitJob).to receive(:perform_later).and_return(true) if Rails.version < '6'
-
     login_as user
   end
 

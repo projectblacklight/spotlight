@@ -14,7 +14,7 @@ gem 'blacklight-spotlight', ENV['SPOTLIGHT_GEM'] ? { path: ENV['SPOTLIGHT_GEM'] 
 gem 'sidekiq'
 gem 'bootstrap_form', /(\d)(?:\.\d){0,2}/.match(bootstrap_version)[1].to_i == 5 ? '~> 5.4' : '~> 4.5'
 
-Bundler.with_clean_env do
+Bundler.with_unbundled_env do
   run 'bundle install'
 end
 
