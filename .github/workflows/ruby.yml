@@ -38,6 +38,11 @@ jobs:
             blacklight_version: ~> 7.34
             bootstrap_version: ~> 4.0
             additional_name: Ruby 3.1
+          - rails_version: "~> 7.2"
+            ruby: "3.2"
+            blacklight_version: "~> 7.34"
+            bootstrap_version: ~> 4.0
+            additional_name: Rails 7.2
     env:
       RAILS_VERSION: ${{ matrix.rails_version }}
       BLACKLIGHT_VERSION: ${{ matrix.blacklight_version }}
