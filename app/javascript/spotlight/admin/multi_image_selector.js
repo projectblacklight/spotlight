@@ -66,7 +66,7 @@
       $('li', thumbList).each(function(){
         var thisThumb  = $(this),
             image      = $('img', thisThumb),
-            totalWidth = width += thisThumb.width();
+            totalWidth = width += thisThumb.width(),
             position   = (thumbList.position().left + totalWidth) - thisThumb.width();
 
         if(position >= 0 && position < viewportWidth) {
