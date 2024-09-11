@@ -7,14 +7,11 @@ require 'devise'
 require 'devise_invitable'
 
 require 'activejob-status'
-require 'autoprefixer-rails'
 require 'blacklight'
-require 'clipboard/rails'
 require 'faraday'
 require 'faraday/follow_redirects'
 require 'friendly_id'
 require 'i18n/active_record'
-require 'leaflet-rails'
 require 'paper_trail'
 require 'riiif'
 require 'spotlight/riiif_service'
@@ -33,7 +30,7 @@ module Spotlight
     require 'github/markup'
     require 'openseadragon'
 
-    config.assets.precompile += %w[spotlight/fallback/*.png]
+    config.assets.precompile += %w[spotlight/fallback/*.png] if defined?(Sprockets)
 
     config.autoload_paths += %W[
       #{config.root}/app/builders
@@ -66,6 +63,7 @@ module Spotlight
 
     initializer 'spotlight.assets.precompile' do |app|
       app.config.assets.paths << Engine.root.join('app/javascript')
+      app.config.assets.paths << Rails.root.join('node_modules')
       app.config.assets.precompile += PRECOMPILE_ASSETS
     end
 

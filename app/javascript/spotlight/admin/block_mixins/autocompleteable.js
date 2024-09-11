@@ -1,3 +1,5 @@
+import SirTrevor from 'sir-trevor'
+
 (function ($){
   SirTrevor.BlockMixins.Autocompleteable = {
     mixinName: "Autocompleteable",

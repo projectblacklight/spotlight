@@ -4,6 +4,7 @@
   "description": "Exhibits plugin for blacklight",
   "main": "app/assets/javascripts/spotlight",
   "type": "module",
+  "module": "app/assets/javascripts/spotlight/spotlight.esm.js",
   "scripts": {
     "prepare": "rollup --config rollup.config.js --sourcemap && ESM=true rollup --config rollup.config.js --sourcemap"
   },
@@ -12,7 +13,8 @@
     "url": "git+https://github.com/projectblacklight/spotlight.git"
   },
   "files": [
-    "app/assets", "vendor/assets"
+    "app/assets",
+    "vendor/assets"
   ],
   "author": "",
   "license": "Apache-2.0",
@@ -22,6 +24,7 @@
   "homepage": "https://github.com/projectblacklight/spotlight#readme",
   "devDependencies": {
     "rollup": "^4.0.0",
+    "@rollup/plugin-commonjs": "^26.0.1",
     "rollup-plugin-includepaths": "^0.2.4"
   },
   "browserslist": [
@@ -29,5 +32,12 @@
     "not IE 11"
   ],
   "dependencies": {
+    "blacklight-frontend": ">= 7.38 < 9",
+    "bootstrap": ">=4.3.1 <6.0.0",
+    "clipboard": "^2.0.11",
+    "jquery": "^3.7.1",
+    "jquery-serializejson": "^3.2.1",
+    "leaflet": "^1.9.4",
+    "leaflet-iiif": "^3.0.0"
   }
 }

@@ -35,7 +35,7 @@ class TestAppGenerator < Rails::Generators::Base
   end
 
   def add_spotlight_routes_and_assets
-    generate :'spotlight:install', '-f --mailer_default_url_host=localhost:3000'
+    generate :'spotlight:install', '-f --mailer_default_url_host=localhost:3000 --test'
     append_to_file 'app/assets/config/manifest.js', "\n//= link application.js\n" if File.exist?('app/assets/config/manifest.js')
   end
 
@@ -74,13 +74,5 @@ class TestAppGenerator < Rails::Generators::Base
   def raise_on_missing_translation
     uncomment_lines 'config/environments/development.rb', /config.action_view.raise_on_missing_translations/
     uncomment_lines 'config/environments/test.rb', /config.action_view.raise_on_missing_translations/
-  end
-
-  # Temporarily force js assets to fall back to sprockets
-  def clean_up_js_builds
-    return unless File.exist?('app/assets/builds')
-
-    gsub_file 'app/assets/config/manifest.js', '//= link_tree ../builds', ''
-    remove_dir 'app/assets/builds'
   end
 end

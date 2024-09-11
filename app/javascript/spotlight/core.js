@@ -1,3 +1,5 @@
+import Blacklight from "blacklight-frontend";
+
 const Spotlight = function() {
   var buffer = [];
   return {
@@ -6,6 +8,7 @@ const Spotlight = function() {
     },
 
     activate: function() {
+      this.sirTrevorIcon = window.sirTrevorIcon;
       for(var i = 0; i < buffer.length; i++) {
         buffer[i].call();
       }
@@ -29,4 +32,3 @@ export default Spotlight
 Blacklight.onLoad(function() {
   Spotlight.activate();
 });
-

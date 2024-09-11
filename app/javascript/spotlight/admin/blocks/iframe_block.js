@@ -6,6 +6,7 @@
   and any provided text
   and displays them.
 */
+import SirTrevor from 'sir-trevor'
 
 SirTrevor.Blocks.Iframe = (function(){
 
