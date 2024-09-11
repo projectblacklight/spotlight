@@ -10,14 +10,6 @@ module Spotlight
     class_option :solr_update_class, type: :string, default: 'Spotlight::SolrDocument::AtomicUpdates'
     class_option :mailer_default_url_host, type: :string, default: '' # e.g. localhost:3000
 
-    # we're not using webpacker, so we need to re-add sprockets functionality
-    def add_js_rails6
-      return unless Rails.version.to_i == 6
-
-      # By default rails generates javascript_pack_tag, we'll change this to javascript_include_tag
-      gsub_file 'app/views/layouts/application.html.erb', /pack/, 'include'
-    end
-
     def add_manifest
       append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
       append_to_file 'app/assets/config/manifest.js', "\n//= link spotlight/manifest.js"
@@ -42,7 +34,7 @@ module Spotlight
 
     def riiif
       gem 'riiif'
-      Bundler.with_clean_env { run 'bundle install' }
+      Bundler.with_unbundled_env { run 'bundle install' }
       route "mount Riiif::Engine => '/images', as: 'riiif'"
       copy_file 'config/initializers/riiif.rb'
     end
@@ -194,7 +186,7 @@ module Spotlight
 
     def bundle_install
       inside destination_root do
-        Bundler.with_clean_env { run 'bundle install' }
+        Bundler.with_unbundled_env { run 'bundle install' }
       end
     end
   end

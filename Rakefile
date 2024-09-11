@@ -78,10 +78,10 @@ namespace :spotlight do
 
       Dir.mktmpdir do |dir|
         Dir.chdir(dir) do
-          Bundler.with_clean_env do
+          Bundler.with_unbundled_env do
             version = "_#{Gem.loaded_specs['rails'].version}_" if Gem.loaded_specs['rails']
 
-            Bundler.with_clean_env do
+            Bundler.with_unbundled_env do
               IO.popen({ 'SPOTLIGHT_GEM' => File.dirname(__FILE__) },
                        ['rails', version, 'new', 'internal', '--skip-spring', '-m', template_path] +
                           [err: %i[child out]]) do |io|
@@ -93,7 +93,7 @@ namespace :spotlight do
               end
             end
 
-            Bundler.with_clean_env do
+            Bundler.with_unbundled_env do
               Dir.chdir('internal') do
                 APP_ROOT = Dir.pwd
                 SolrWrapper.wrap(port: '8983') do |solr|
