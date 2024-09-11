@@ -5456,7 +5456,7 @@ const Module = (function() {
             var children = data[i]['children'];
             for(var child in children){
               var id = children[child]['id'];
-              child_node = findNode(id, container);
+              var child_node = findNode(id, container);
               setWeight(child_node, weight++);
               setParent(child_node, parent_id);
             }
