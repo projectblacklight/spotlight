@@ -1,5 +1,6 @@
 import Iiif from 'spotlight/admin/iiif'
 import Core from 'spotlight/core'
+import SirTrevor from 'sir-trevor'
 
 SirTrevor.Blocks.SolrDocumentsBase = (function(){
 

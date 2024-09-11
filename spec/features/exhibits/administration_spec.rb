@@ -108,6 +108,7 @@ describe 'Exhibit Administration', type: :feature do
       visit spotlight.edit_exhibit_path(exhibit)
       fill_in email_id_0, with: email_address_0
       click_button 'Save changes'
+      sleep 1 # Test fails without this after move to Propshaft.
 
       find_by_id('another-email').click
       expect(find_field(email_id_0).value).to eq email_address_0
@@ -129,6 +130,7 @@ describe 'Exhibit Administration', type: :feature do
       find_by_id('another-email').click
       fill_in email_id_1, with: email_address_1
       click_button 'Save changes'
+      sleep 1 # Test fails without this after move to Propshaft.
 
       Spotlight::ContactEmail.all.first.destroy
       page.accept_confirm do

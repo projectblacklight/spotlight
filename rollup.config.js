@@ -1,11 +1,23 @@
 import includePaths from 'rollup-plugin-includepaths';
+import commonjs from '@rollup/plugin-commonjs';
 
 const BUNDLE = process.env.BUNDLE === 'true'
 const ESM = process.env.ESM === 'true'
 
 const fileDest = `spotlight${ESM ? '.esm' : ''}`
-const external = []
-const globals = {}
+const external = [
+  'blacklight-frontend',
+  'clipboard',
+  'jquery-serializejson',
+  'jquery',
+  'leaflet'
+]
+const globals = {
+  'blacklight-frontend': 'Blacklight',
+  clipboard: 'Clipboard',
+  jquery: 'jQuery',
+  leaflet: 'L'
+}
 
 let includePathOptions = {
   include: {},
@@ -24,7 +36,7 @@ const rollupConfig = {
     name: ESM ? undefined : 'Spotlight'
   },
   external,
-  plugins: [includePaths(includePathOptions)]
-};
+  plugins: [includePaths(includePathOptions), commonjs()]
+}
 
 export default rollupConfig
