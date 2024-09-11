@@ -6,7 +6,7 @@ import { addImageSelector } from 'spotlight/admin/add_image_selector'
       addAutocompleteBehavior($(this));
     });
 
-    function addAutocompleteBehavior( typeAheadInput, settings ) {
+    function addAutocompleteBehavior( typeAheadInput, _ ) {
       var settings = $.extend({
         displayKey: 'title',
         minLength: 0,

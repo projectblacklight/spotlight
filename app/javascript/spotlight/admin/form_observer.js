@@ -1,5 +1,5 @@
 
-(function($, undefined) {
+(function($, _) {
   'use strict';
 
   /*
