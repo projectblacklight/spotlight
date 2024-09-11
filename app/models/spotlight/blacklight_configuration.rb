@@ -121,8 +121,12 @@ module Spotlight
         config.default_per_page = default_per_page if default_per_page
 
         config.view.embed!
+        # This is blacklight-gallery's openseadragon partial
         config.view.embed.partials ||= ['openseadragon']
         config.view.embed.if = false
+
+        # blacklight-gallery requires tile_source_field
+        config.view.embed.tile_source_field ||= config.show.tile_source_field
         config.view.embed.locals ||= { osd_container_class: '' }
 
         # Add any custom fields
