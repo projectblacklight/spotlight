@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   web:
     build:
@@ -16,23 +14,8 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - db_migrate
       - solr
-    networks:
-      - spotlight
-
-  db_migrate:
-    image: spotlight
-    env_file:
-      - .env
-    environment:
-      SKIP_TRANSLATION: "yes"
-    entrypoint: sh -c '/spotlight/engine/bin/db-migrate-seed.sh'
-    depends_on:
       - postgres
-    volumes:
-      - .:/spotlight/engine
-      - spotlight_app:/spotlight/app
     networks:
       - spotlight
 
