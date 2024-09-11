@@ -1,5 +1,6 @@
 import SpotlightNestable from 'spotlight/admin/spotlight_nestable'
 import Core from 'spotlight/core'
+import SirTrevor from 'sir-trevor'
 
 SirTrevor.Blocks.UploadedItems = (function(){
   return Core.Block.Resources.extend({

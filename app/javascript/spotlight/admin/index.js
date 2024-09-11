@@ -1,7 +1,7 @@
 // These scripts are in the vendor directory
 import 'nestable'
 import 'bootstrap-tagsinput'
-import 'jquery.serializejson'
+import 'typeahead.bundle.min'
 import 'leaflet-iiif'
 import 'Leaflet.Editable'
 import 'Path.Drag'

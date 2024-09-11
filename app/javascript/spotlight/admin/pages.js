@@ -1,6 +1,7 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 import Core from 'spotlight/core'
+import SirTrevor from 'sir-trevor'
 
 export default class {
   connect(){

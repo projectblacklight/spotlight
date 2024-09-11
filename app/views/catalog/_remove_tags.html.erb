@@ -28,7 +28,7 @@
         <%= render Blacklight::HiddenSearchStateComponent.new(params: search_state.params_for_search) %>
       </div>
       <div class="modal-footer d-flex flex-row-reverse justify-content-start">
-        <%= f.submit t(:'spotlight.bulk_actions.remove'), class: 'btn btn-primary', data: { confirm: t(:'spotlight.bulk_actions.confirm') } %>
+        <%= f.submit t(:'spotlight.bulk_actions.remove'), class: 'btn btn-primary', data: { confirm: t(:'spotlight.bulk_actions.confirm'), turbo_confirm: t(:'spotlight.bulk_actions.confirm') } %>
         <button type="button" class="btn btn-link" data-dismiss="modal" data-bs-dismiss="modal"><%= t :cancel %></button>
       </div>
     </div>

@@ -59,6 +59,7 @@ describe 'Adding custom metadata field data', type: :feature do
       fill_in 'solr_document_sidecar_data_some-field_2', with: 'value 2'
 
       click_on 'Save changes'
+      sleep 1 # The data isn't committed to solr immediately.
 
       expect(SolrDocument.new(id: 'dq287tq6352').sidecar(exhibit).data).to include 'some-field' => ['value 1', 'value 2']
     end

@@ -13,14 +13,25 @@
     <% else %>
       <%= stylesheet_link_tag "application" %>
     <% end %>
-    <%= javascript_include_tag "application" %>
+    <%= javascript_tag "window.sirTrevorIcon = '#{asset_path('spotlight/blocks/sir-trevor-icons.svg')}'" %>
+
+    <% if defined? Propshaft %>
+      <%= javascript_include_tag 'jquery/dist/jquery', "data-turbo-track": "reload", defer: true %>
+      <%= javascript_include_tag 'jquery-serializejson/jquery.serializejson', "data-turbo-track": "reload", defer: true %>
+      <%= javascript_include_tag 'leaflet/dist/leaflet', "data-turbo-track": "reload", defer: true %>
+      <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+      <%= javascript_include_tag 'openseadragon/openseadragon', "data-turbo-track": "reload", defer: true %>
+      <%= javascript_include_tag 'openseadragon/jquery', "data-turbo-track": "reload", defer: true %>
+      <%= javascript_include_tag 'openseadragon/rails', "data-turbo-track": "reload", defer: true %>
+    <% else %>
+      <%= javascript_include_tag "application" %>
+    <% end %>
     <%= csrf_meta_tags %>
     <%= content_for(:head) %>
     <%= description %>
     <%= twitter_card %>
     <%= opengraph %>
-    <%= javascript_tag "Spotlight.sirTrevorIcon = '#{asset_path('spotlight/blocks/sir-trevor-icons.svg')}'" %>
-    <%= javascript_tag '$.fx.off = true;' if Rails.env.test? %>
+    <%= javascript_tag "window.addEventListener('load', () => $.fx.off = true)" if Rails.env.test? %>
   </head>
   <body class="<%= render_body_class %>">
     <%= render partial: 'shared/body_preamble' %>
