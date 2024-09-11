@@ -1,8 +1,8 @@
-ARG RUBY_VERSION=3.0.6
-ARG ALPINE_VERSION=3.16
+ARG RUBY_VERSION=3.3.5
+ARG ALPINE_VERSION=3.20
 FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION
 
-ARG RAILS_VERSION=6.1.6
+ARG RAILS_VERSION=7.2.1
 
 ENV SPOTLIGHT_ENGINE_PATH=/spotlight/engine
 ENV SPOTLIGHT_GEM=/spotlight/engine
@@ -19,6 +19,7 @@ RUN apk --no-cache upgrade && \
   libxml2-dev \
   libxslt-dev \
   nodejs \
+  npm \
   postgresql-dev \
   shared-mime-info \
   sqlite-dev \
@@ -30,6 +31,8 @@ RUN apk --no-cache upgrade && \
 RUN addgroup --gid 10001 --system spotlight && \
   adduser --uid 10000 --system \
   --ingroup spotlight --home /spotlight spotlight
+
+RUN npm i -g npx
 
 USER spotlight
 RUN gem update bundler
@@ -44,8 +47,8 @@ WORKDIR /spotlight/app
 
 RUN SKIP_TRANSLATION=yes rails _${RAILS_VERSION}_ new . -j webpack --force --template=../engine/template.rb
 RUN bundle add pg
-RUN bin/yarn add @babel/plugin-proposal-private-methods --dev
-RUN bin/yarn add @babel/plugin-proposal-private-property-in-object
+RUN yarn add @babel/plugin-proposal-private-methods --dev
+RUN yarn add @babel/plugin-proposal-private-property-in-object
 RUN SKIP_TRANSLATION=yes DB_ADAPTER=nulldb DATABASE_URL='postgresql://fake' bundle exec rake assets:precompile
 
 ENTRYPOINT ["/sbin/tini", "--", "/spotlight/engine/bin/docker-entrypoint.sh"]
