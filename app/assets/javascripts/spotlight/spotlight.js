@@ -4876,7 +4876,7 @@
     }
   }
 
-  (function($, undefined$1) {
+  (function($, _) {
 
     /*
     * SerializedForm is built as a singleton jQuery plugin. It needs to be able to
@@ -5337,7 +5337,7 @@
         addAutocompleteBehavior($(this));
       });
 
-      function addAutocompleteBehavior( typeAheadInput, settings ) {
+      function addAutocompleteBehavior( typeAheadInput, _ ) {
         var settings = $.extend({
           displayKey: 'title',
           minLength: 0,
@@ -6582,8 +6582,6 @@
       auto_play_images_key: "auto-play-images",
       auto_play_images_interval_key: "auto-play-images-interval",
       max_height_key: "max-height",
-
-      item_options: function() { return "" },
 
       carouselCycleTimesInSeconds: {
         values: [ 3, 5, 8, 12, 20 ],
