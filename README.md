@@ -114,16 +114,24 @@ See [developer-facing instructions for enabling translation](https://github.com/
   - [Blacklight Development Google group](https://groups.google.com/forum/#!forum/blacklight-development)
   - [Spotlight Community Group](https://groups.google.com/forum/#!forum/spotlight-community) (equivalent to #spotlight-service)
 
-
-## Building the javascript
-The javascript is built by npm from sources in `app/javascript` into a bundle
+## Updating the JavaScript bundle
+The JavaScript is built by npm from sources in `app/javascript` into a bundle
 in `app/assets/javascripts/spotlight/spotlight.js`. This file should not be edited
-by hand as any changes would be overwritten.  When any of the javascript
+by hand as any changes would be overwritten.  When any of the JavaScript
 components in the gem are changed, this bundle should be rebuilt with the
 following steps:
 1. [Install npm](https://www.npmjs.com/get-npm)
-2. run `npm install` to download dependencies
-3. make sure that the version in `package.json` matches your intended release version
-4. commit the new `package-lock.json` that reflects the desired version number
-6. run `npm run prepare` to build the bundle
-6. run `npm publish` to push the javascript package to https://npmjs.org/package/spotlight-frontend
+2. Run `npm install` to download dependencies
+3. Run `npm run prepare` to build the bundle
+4. If you are releasing a new version of the gem, follow the release instructions below.
+
+## Releasing a new version and publishing the JavaScript
+You only need to update `package.json` and prepare/publish the JavaScript package for npm if there are changes to the JavaScript.
+1. Edit `version.rb` and `package.json` to set the new version
+2. Run `npm run prepare` to build the JavaScript bundle
+3. Run `npm i --package-lock-only` to update the version in `package-lock.json`
+4. Commit the changes e.g. `git commit -am "Bump version to X.X.X"`
+5. Push the release to rubygems and GitHub: `bundle exec rake release`
+6. Run `npm publish` to push the JavaScript package to https://npmjs.org/package/spotlight-frontend
+
+See "Updating the JavaScript bundle" above for more details.
