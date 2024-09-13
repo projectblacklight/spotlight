@@ -481,14 +481,26 @@ en:
         header: Add exhibit-specific field
     dashboards:
       analytics:
+        activeUsers: unique visits
+        engagementRate: engagement rate
         header: Analytics
-        monthly_header: User activity over the past month
+        no_results: There are no analytics for the path "%{pageurl}"
         pages:
           header: Most popular pages
-        pagetitle: page title
-        pageviews: page views
-        sessions: visitors
+        pagetitle: Page title
+        pageviews: Page views
+        reporting_period_heading: User activity over the past year
+        screenPageViews: page views
+        screenPageViewsPerSession: pages per session
+        searches:
+          header: Most used search terms
+          term: Search term
+          views: Searches
+        session_header: Sessions
+        sessions: sessions
+        totalUsers: visitors
         users: unique visits
+        visitor_header: Visitors
       page_activity:
         field:
           last_edited_by: User

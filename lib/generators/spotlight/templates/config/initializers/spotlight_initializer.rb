@@ -65,17 +65,17 @@
 
 # ==> Google Analytics integration
 # After creating a property for your site on Google Analytics, you need to:
-# a) register an OAuth service account with access to your analytics property:
-#     (https://github.com/tpitale/legato/wiki/OAuth2-and-Google#registering-for-api-access)
-# b) download the pkcs12 key and make it accessible to your application
+# a) Enable Google Analytics API in https://console.cloud.google.com/
+# b) generate and download the JSON key and make it accessible to your application
+# (https://console.cloud.google.com/iam-admin/iam -> Service accounts -> click on service account -> keys)
 # c) set ga_web_property_id below to your site's property id
 # Rails.application.config.to_prepare do
 #   Spotlight::Engine.config.analytics_provider = Spotlight::Analytics::Ga
-#   Spotlight::Engine.config.ga_pkcs12_key_path = nil
+#   Spotlight::Engine.config.ga_json_key_path = nil
 #   Spotlight::Engine.config.ga_web_property_id = 'G-XXXXXXXXXX'
-#   Spotlight::Engine.config.ga_email = 'test@example.com'
 #   Spotlight::Engine.config.ga_analytics_options = {}
 #   Spotlight::Engine.config.ga_page_analytics_options = Spotlight::Engine.config.ga_analytics_options.merge(limit: 5)
+#   Spotlight::Engine.config.ga_search_analytics_options = Spotlight::Engine.config.ga_analytics_options.merge(limit: 11)
 #   Spotlight::Engine.config.ga_debug_mode = false
 # end
 

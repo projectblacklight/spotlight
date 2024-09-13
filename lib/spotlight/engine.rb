@@ -201,9 +201,8 @@ module Spotlight
     # b) download the pkcs12 key and make it accessible to your application
     # c) in e.g. an initializer, set these configuration values as appropriate
     #    to your OAuth2 service account and analytics property:
-    config.ga_pkcs12_key_path = nil
+    config.ga_json_key_path = nil
     config.ga_web_property_id = nil
-    config.ga_email = nil
     config.ga_analytics_options = {}
     config.ga_page_analytics_options = config.ga_analytics_options.merge(limit: 5)
     config.ga_debug_mode = false
