@@ -27,7 +27,7 @@ describe 'Link to Search Block', js: true, type: :feature do
 
     fill_in_typeahead_field with: 'Title2'
 
-    save_page
+    save_page_changes
 
     # Documents should exist
     expect(page).to have_no_css('.category-title', text: search1.title)
@@ -39,7 +39,7 @@ describe 'Link to Search Block', js: true, type: :feature do
     pending('Prefetched autocomplete does not work the same way as solr-backed autocompletes')
     uncheck 'Include item counts?'
     fill_in_typeahead_field with: 'Title1'
-    save_page
+    save_page_changes
 
     expect(page).to have_no_css('.item-count', text: /\d+ items/i)
   end

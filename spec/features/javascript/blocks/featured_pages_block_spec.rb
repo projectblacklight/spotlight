@@ -35,7 +35,7 @@ describe 'Featured Pages Blocks', js: true, type: :feature do
 
     fill_in_typeahead_field with: feature_page2.title
 
-    save_page
+    save_page_changes
 
     expect(page).to have_content feature_page2.title
   end
@@ -51,7 +51,7 @@ describe 'Featured Pages Blocks', js: true, type: :feature do
     fill_in_typeahead_field with: feature_page1.title
     fill_in_typeahead_field with: feature_page2.title
 
-    save_page
+    save_page_changes
 
     feature_page1_position = page.body =~ /<p class="category-title">\s+#{feature_page1.title}/
     feature_page2_position = page.body =~ /<p class="category-title">\s+#{feature_page2.title}/

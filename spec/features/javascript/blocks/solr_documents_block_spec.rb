@@ -33,7 +33,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
       expect(page).to have_content "L'AMERIQUE"
     end
 
-    save_page
+    save_page_changes
 
     # verify that the item + image widget is displaying an image from the document.
     within(:css, '.items-block', visible: true) do
@@ -47,7 +47,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
     expect(page).to have_selector '.panels li', count: 2, visible: true
 
-    save_page
+    save_page_changes
 
     expect(page).to have_selector '.items-block .box', count: 2, visible: true
   end
@@ -62,7 +62,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     find('.thumbs-list li[data-index="1"]').click
     expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/, visible: true)
 
-    save_page
+    save_page_changes
 
     # The thumbnail on the rendered block should be correct
     thumb = find('.img-thumbnail')
@@ -76,7 +76,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     thumb = find('.pic .img-thumbnail')
     expect(thumb['src']).to match(%r{xd327cm9378_05_0002/full})
 
-    save_page
+    save_page_changes
 
     # Expect that the original image selection was retained
     thumb = find('.img-thumbnail')
@@ -104,7 +104,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
       select('Title', from: 'primary-caption-field')
     end
 
-    save_page
+    save_page_changes
 
     expect(page).to have_selector '.items-block .box', count: 1, visible: true
     expect(page).to have_content '[World map]'
@@ -116,7 +116,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
       uncheck('Primary caption')
     end
 
-    save_page
+    save_page_changes
 
     expect(page).to have_selector '.items-block .box', count: 1, visible: true
     expect(page).to have_no_content '[World map]'
@@ -136,7 +136,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
       select('Language', from: 'secondary-caption-field')
     end
     # create the page
-    save_page
+    save_page_changes
 
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, '.items-block', visible: true) do
@@ -154,7 +154,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
 
     check 'Offer "View larger" option'
 
-    save_page
+    save_page_changes
 
     within '.contents' do
       click_button 'View [World map] larger'
@@ -170,7 +170,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     content_editable = find('.st-text-block')
     content_editable.set('zzz')
     # create the page
-    save_page
+    save_page_changes
 
     # visit the show page for the document we just saved
     # verify that the item + image widget is displaying image and title from the requested document.
@@ -193,7 +193,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     content_editable.set('zzz')
 
     # create the page
-    save_page
+    save_page_changes
 
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, '.items-block') do
@@ -231,7 +231,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     # Select to align the text right
     choose 'Right'
 
-    save_page
+    save_page_changes
 
     click_on 'Edit'
 

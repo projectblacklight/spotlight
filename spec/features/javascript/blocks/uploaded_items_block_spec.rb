@@ -36,7 +36,7 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
       expect(page).to have_css('.card-title', text: 'avatar.png')
     end
 
-    save_page
+    save_page_changes
 
     expect(page).to have_css('h3', text: heading)
     expect(page).to have_css('p', text: text)
@@ -59,7 +59,7 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     # Uncheck the first checkbox
     all('input[type="checkbox"]').first.click
 
-    save_page
+    save_page_changes
 
     within('.uploaded-items-block') do
       expect(page).to have_css('img[alt=""]', count: 1)
@@ -76,7 +76,7 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     expect(page).to have_selector('li[data-id="file_0"] .img-thumbnail[src^="/"]')
     expect(page).to have_selector('li[data-id="file_1"] .img-thumbnail[src^="/"]')
 
-    save_page
+    save_page_changes
 
     within('.uploaded-items-block') do
       expect(page).to have_button('View larger', count: 2)

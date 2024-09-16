@@ -19,7 +19,7 @@ describe 'Solr Documents Carousel Block', js: true, type: :feature do
     check 'Primary caption'
     select 'Title', from: 'primary-caption-field'
 
-    save_page
+    save_page_changes
 
     within '.carousel-block' do
       expect(page).to have_css('.carousel-item', count: 1)
