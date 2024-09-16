@@ -16,7 +16,7 @@ describe 'Horizontal rule block', js: true, type: :feature, versioning: true do
 
     add_widget 'rule'
 
-    save_page
+    save_page_changes
 
     expect(page).to have_css('hr')
   end

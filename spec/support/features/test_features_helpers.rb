@@ -54,7 +54,7 @@ module Spotlight
       first('.st-block-replacer').click
     end
 
-    def save_page
+    def save_page_changes
       page.execute_script <<-EOF
         SirTrevor.getInstance().onFormSubmit();
       EOF

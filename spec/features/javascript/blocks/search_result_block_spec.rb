@@ -28,7 +28,7 @@ describe 'Search Result Block', js: true, type: :feature do
     check 'Gallery'
     check 'Slideshow'
 
-    save_page
+    save_page_changes
 
     expect(page).to have_no_content 'per page'
     expect(page).to have_no_content 'Sort by'

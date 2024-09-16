@@ -21,7 +21,7 @@ RSpec.describe 'Multi image selector', default_max_wait_time: 5, js: true, type:
       expect(page).to have_link 'Change'
     end
 
-    save_page
+    save_page_changes
 
     visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
     expect(page).to have_css("[data-id='xd327cm9378']")
@@ -41,7 +41,7 @@ RSpec.describe 'Multi image selector', default_max_wait_time: 5, js: true, type:
       all('li')[1].click
     end
 
-    save_page
+    save_page_changes
 
     expect(page).to have_css("[data-id='xd327cm9378']")
     expect(page).to have_no_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378/xd327cm9378_05_0001/full/!400,400/0/default.jpg']")

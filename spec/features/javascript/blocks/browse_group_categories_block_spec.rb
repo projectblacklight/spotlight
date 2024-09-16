@@ -28,7 +28,7 @@ describe 'Browse Group Categories', js: true, type: :feature do
       expect(page).to have_css '.title', text: 'Pets'
     end
 
-    save_page
+    save_page_changes
 
     expect(page).to have_css 'h2', text: 'Pets'
   end
@@ -39,7 +39,7 @@ describe 'Browse Group Categories', js: true, type: :feature do
       expect(page).to have_css '.title', text: 'Pets'
     end
 
-    save_page
+    save_page_changes
 
     expect(page).to have_css 'h2', text: 'Pets'
 
@@ -56,7 +56,7 @@ describe 'Browse Group Categories', js: true, type: :feature do
       expect(page).to have_css '.title', text: 'Pets'
     end
 
-    save_page
+    save_page_changes
 
     expect(page).to have_css 'h2', text: 'Pets'
     expect(page).to have_css '.box.category-1', count: 6, visible: false
