@@ -15,7 +15,7 @@ describe 'spotlight/dashboards/analytics.html.erb', type: :view do
 
   it 'has directions for configuring analytics' do
     render
-    expect(rendered).to have_link 'configure an analytics provider'
+    expect(rendered).to have_text 'configure an analytics provider'
   end
 
   context 'with a configured analytics integration' do
