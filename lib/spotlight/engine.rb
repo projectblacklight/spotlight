@@ -271,7 +271,7 @@ module Spotlight
         Blacklight::Configuration.property :browse, default: Blacklight::OpenStructWithHashAccess.new(document_actions: [])
 
         Blacklight::Configuration.default_values[:search_state_fields] ||= []
-        Blacklight::Configuration.default_values[:search_state_fields] += %i[id exhibit_id]
+        Blacklight::Configuration.default_values[:search_state_fields] += %i[id exhibit_id browse_category_id]
       end
     else
       config.to_prepare do
