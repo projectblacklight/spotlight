@@ -51,7 +51,7 @@ describe 'Report a Problem', type: :feature do
       expect(find_by_id('contact_form_current_url', visible: false).value).to end_with spotlight.exhibit_solr_document_path(exhibit, id: 'dq287tq6352')
       fill_in 'Your name', with: 'Some Body'
       fill_in 'Your email', with: 'test@example.com'
-      page.evaluate_script("$('#contact_form_#{honeypot_field_name}').val('possible_spam@spam.com')")
+      page.evaluate_script("document.querySelector('#contact_form_#{honeypot_field_name}').value = 'possible_spam@spam.com'")
       fill_in 'Message', with: 'This is my problem report'
 
       expect do
