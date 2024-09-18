@@ -25,7 +25,7 @@
                   <% caption_text = solr_documents_features_block.document_caption(doc_presenter, solr_documents_features_block.primary_caption_field, default: Spotlight::PageConfigurations::DOCUMENT_TITLE_KEY) %>
 
                   <a href="#" title="<%= caption_text %>">
-                    <%= truncate(caption_text, length: 95) %>
+                    <%= truncate(caption_text.to_s, length: 95) %>
                   </a>
                   <% if solr_documents_features_block.secondary_caption? %>
                     <p><%= solr_documents_features_block.document_caption(doc_presenter, solr_documents_features_block.secondary_caption_field) %></p>
