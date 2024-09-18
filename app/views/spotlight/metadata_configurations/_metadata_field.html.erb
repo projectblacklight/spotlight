@@ -1,12 +1,22 @@
-<tr data-id="<%= key.parameterize %>" class="dd-item">
+<% default_field_label = local_assigns.dig(:config, :original, :label) %>
+
+<tr data-id="<%= key.parameterize %>" class="dd-item" data-behavior="restore-default">
   <%= f.fields_for key do |field| %>
     <td>
       <%= field.hidden_field :weight, 'data-property' => 'weight' %>
       <div class="handle-wrap" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
         <div class="dd-handle dd3-handle"><%= t :drag %></div>
-        <a href="#edit-in-place" class="field-label edit-in-place"><%= config.display_label %></a>
-        <%= field.hidden_field :label, value: config.display_label, class: 'form-control form-control-sm', data: {:"edit-field-target" => 'true'} %>
-       </div>
+        <div class="d-flex justify-content-between">
+          <a href="#edit-in-place" class="field-label edit-in-place align-self-center"><%= config.display_label %></a>
+          <%= field.hidden_field :label, value: config.display_label, class: 'metadata-label-edit form-control form-control-sm', data: {:"edit-field-target" => 'true', default_value: default_field_label} %>
+          <% if default_field_label %>
+            <div class="restore-default">
+              <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn btn-secondary btn-sm #{'d-none' if config.display_label == default_field_label}" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
     </td>
     <td class="checkbox-cell text-center">
       <%= field.check_box_without_bootstrap :show, checked: config.show, disabled: !config.immutable.show.nil?, hide_label: true %>

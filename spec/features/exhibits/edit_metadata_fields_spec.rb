@@ -38,6 +38,8 @@ describe 'Editing metadata fields', type: :feature do
     fill_in :blacklight_configuration_index_fields_language_ssm_label, with: 'Language of Origin'
 
     click_on 'Save changes'
+    # Find the 'Restore default' button to verify that saving has completed
+    find('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default')
     expect(exhibit.reload.blacklight_config.index_fields['language_ssm'].label).to eq 'Language of Origin'
   end
 
