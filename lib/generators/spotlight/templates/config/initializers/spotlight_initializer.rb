@@ -42,21 +42,21 @@
 
 # ==> Uploaded item configuration
 # Spotlight::Engine.config.upload_fields = [
-#   UploadFieldConfig.new(
-#     field_name: config.upload_description_field,
-#     label: -> { I18n.t(:"spotlight.search.fields.#{config.upload_description_field}") },
+#   Spotlight::UploadFieldConfig.new(
+#     field_name: Spotlight::Engine.config.upload_description_field,
+#     label: -> { I18n.t(:"spotlight.search.fields.#{Spotlight::Engine.config.upload_description_field}") },
 #     form_field_type: :text_area
 #   ),
-#   UploadFieldConfig.new(
+#   Spotlight::UploadFieldConfig.new(
 #     field_name: :spotlight_upload_attribution_tesim,
 #     label: -> { I18n.t(:'spotlight.search.fields.spotlight_upload_attribution_tesim') }
 #   ),
-#   UploadFieldConfig.new(
+#   Spotlight::UploadFieldConfig.new(
 #     field_name: :spotlight_upload_date_tesim,
 #     label: -> { I18n.t(:'spotlight.search.fields.spotlight_upload_date_tesim') }
 #   )
 # ]
-# Spotlight::Engine.config.upload_title_field = nil # UploadFieldConfig.new(...)
+# Spotlight::Engine.config.upload_title_field = nil # Spotlight::UploadFieldConfig.new(...)
 # Spotlight::Engine.config.uploader_storage = :file
 # Spotlight::Engine.config.allowed_upload_extensions = %w(jpg jpeg png)
 
