@@ -27,7 +27,7 @@ module Spotlight
           metric_aggregations: [
             ::Google::Analytics::Data::V1beta::MetricAggregation::TOTAL
           ],
-          property: "properties/#{ga_web_property_id}",
+          property: "properties/#{ga_property_id}",
           dimension_filter: dimension_filter(path)
         }
       end
@@ -120,8 +120,8 @@ module Spotlight
 
       private
 
-      def ga_web_property_id
-        Spotlight::Engine.config.ga_web_property_id
+      def ga_property_id
+        Spotlight::Engine.config.ga_property_id
       end
     end
   end

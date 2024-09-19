@@ -68,11 +68,15 @@
 # a) Enable Google Analytics API in https://console.cloud.google.com/
 # b) generate and download the JSON key and make it accessible to your application
 # (https://console.cloud.google.com/iam-admin/iam -> Service accounts -> click on service account -> keys)
-# c) set ga_web_property_id below to your site's property id
+# c) set ga_property_id below to your site's property id (located in admin -> Property -> Property details upper right hand corner)
+# d) Set the ga_web_property_id. (located in admin -> Data collection and modification -> Web stream details and begins with G-)
+# ga_property_id is used for fetching analytics data from google's api, ga_web_property_id is used for sending events to GA analtyics
+# ga_web_property_id will probably change in V5 to ga_measurement_id for clarity
 # Rails.application.config.to_prepare do
 #   Spotlight::Engine.config.analytics_provider = Spotlight::Analytics::Ga
 #   Spotlight::Engine.config.ga_json_key_path = nil
 #   Spotlight::Engine.config.ga_web_property_id = 'G-XXXXXXXXXX'
+#   Spotlight::Engine.config.ga_property_id = '12345678'
 #   Spotlight::Engine.config.ga_analytics_options = {}
 #   Spotlight::Engine.config.ga_page_analytics_options = Spotlight::Engine.config.ga_analytics_options.merge(limit: 5)
 #   Spotlight::Engine.config.ga_search_analytics_options = Spotlight::Engine.config.ga_analytics_options.merge(limit: 11)

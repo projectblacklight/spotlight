@@ -196,13 +196,16 @@ module Spotlight
     end
 
     # After creating a property for your site on Google Analytics, you need to:
-    # a) register an OAuth service account with access to your analytics property:
-    #     (https://github.com/tpitale/legato/wiki/OAuth2-and-Google#registering-for-api-access)
-    # b) download the pkcs12 key and make it accessible to your application
-    # c) in e.g. an initializer, set these configuration values as appropriate
-    #    to your OAuth2 service account and analytics property:
+    # a) Enable Google Analytics API in https://console.cloud.google.com/
+    # b) generate and download the JSON key and make it accessible to your application
+    # (https://console.cloud.google.com/iam-admin/iam -> Service accounts -> click on service account -> keys)
+    # c) set ga_property_id below to your site's property id (located in admin -> Property -> Property details upper right hand corner)
+    # d) Set the ga_web_property_id. (located in admin -> Data collection and modification -> Web stream details and begins with G-)
+    # ga_property_id is used for fetching analytics data from google's api, ga_web_property_id is used for sending events to GA analtyics
+    # ga_web_property_id will probably change in V5 to ga_measurement_id for clarity
     config.ga_json_key_path = nil
     config.ga_web_property_id = nil
+    config.ga_property_id = nil
     config.ga_analytics_options = {}
     config.ga_page_analytics_options = config.ga_analytics_options.merge(limit: 5)
     config.ga_debug_mode = false
