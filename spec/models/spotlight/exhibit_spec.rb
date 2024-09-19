@@ -218,7 +218,7 @@ describe Spotlight::Exhibit, type: :model do
   describe '#analytics' do
     subject { FactoryBot.create(:exhibit) }
 
-    let(:ga_data) { OpenStruct.new(pageviews: 123) }
+    let(:ga_data) { OpenStruct.new({ totals: OpenStruct.new(pageviews: 123), rows: OpenStruct.new }) }
     let(:mock_analytics) { double(Spotlight::Analytics::Ga) }
 
     before do
@@ -228,7 +228,7 @@ describe Spotlight::Exhibit, type: :model do
     end
 
     it 'requests analytics data' do
-      expect(subject.analytics.pageviews).to eq 123
+      expect(subject.analytics.totals.pageviews).to eq 123
     end
   end
 

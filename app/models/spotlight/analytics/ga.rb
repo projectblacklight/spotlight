@@ -1,80 +1,127 @@
 # frozen_string_literal: true
 
 require 'signet/oauth_2/client'
-require 'legato'
+require 'google/analytics/data'
 
 module Spotlight
   module Analytics
     ##
     # Google Analytics data provider for the Exhibit dashboard
     class Ga
-      extend Legato::Model
-
       def enabled?
-        user && site
+        Spotlight::Engine.config.ga_json_key_path && client
       end
 
-      delegate :metrics, to: :model
-
-      def exhibit_data(exhibit, options)
-        model.context(exhibit).results(site, Spotlight::Engine.config.ga_analytics_options.merge(options)).to_a.first || exhibit_data_unavailable
+      def client
+        Google::Analytics::Data.analytics_data do |config|
+          config.credentials = Spotlight::Engine.config.ga_json_key_path
+        end
+      rescue StandardError => e
+        Rails.logger.error(e)
+        nil
       end
 
-      def page_data(exhibit, options)
-        options[:sort] ||= '-pageviews'
-        query = model.context(exhibit).results(site, Spotlight::Engine.config.ga_page_analytics_options.merge(options))
-        query.dimensions << :page_path
-        query.dimensions << :page_title
-
-        query.to_a
+      def params(path, dates)
+        {
+          date_ranges: [{ start_date: dates['start_date'], end_date: dates['end_date'] }],
+          metric_aggregations: [
+            ::Google::Analytics::Data::V1beta::MetricAggregation::TOTAL
+          ],
+          property: "properties/#{ga_web_property_id}",
+          dimension_filter: dimension_filter(path)
+        }
       end
 
-      def user(scope = 'https://www.googleapis.com/auth/analytics.readonly')
-        @user ||= begin
-          Legato::User.new(oauth_token(scope))
-        rescue StandardError => e
-          Rails.logger.info(e)
-          nil
+      def dimension_filter(path)
+        Google::Analytics::Data::V1beta::FilterExpression.new(
+          filter: Google::Analytics::Data::V1beta::Filter.new(
+            field_name: 'pagePath',
+            string_filter: Google::Analytics::Data::V1beta::Filter::StringFilter.new(
+              match_type: :BEGINS_WITH,
+              value: path.to_s
+            )
+          )
+        )
+      end
+
+      def search_params(path, dates)
+        params(path, dates).merge({ dimensions: [{ name: 'searchTerm' }],
+                                    metrics: [{ name: 'eventCount' }, { name: 'sessions' },
+                                              { name: 'screenPageViewsPerSession' }, { name: 'engagementRate' }],
+                                    order_bys: [{ metric: { metric_name: 'eventCount' },
+                                                  desc: true }] }).merge(Spotlight::Engine.config.ga_search_analytics_options)
+      end
+
+      def page_params(path, dates)
+        params(path, dates).merge({
+                                    dimensions: [{ name: 'pagePath' }, { name: 'pageTitle' }],
+                                    order_bys: [{ metric: { metric_name: 'screenPageViews' }, desc: true }],
+                                    metrics: [{ name: 'totalUsers' }, { name: 'activeUsers' },
+                                              { name: 'screenPageViews' }]
+                                  }).merge(Spotlight::Engine.config.ga_page_analytics_options)
+      end
+
+      def report(params)
+        request = ::Google::Analytics::Data::V1beta::RunReportRequest.new(params)
+        client.run_report request
+      end
+
+      def page_data(path, dates)
+        metric_parsing(report(page_params(path, dates)))
+      end
+
+      def parse_data(value)
+        if value.to_i.to_s == value
+          value.to_i.to_fs(:delimited)
+        elsif !!(value =~ /\A[-+]?\d*\.?\d+\z/)
+          value.to_f
+        else
+          value
         end
       end
 
-      def site
-        @site ||= user.accounts.first.profiles.find { |x| x.web_property_id == Spotlight::Engine.config.ga_web_property_id }
+      def exhibit_data(path, dates)
+        metric_parsing(report(search_params(path, dates)))
+      end
+
+      def totals
+        OpenStruct.new(@report_data.totals[0].metric_values.each_with_index.with_object({}) do |(mv, index), result|
+          result[metric_headers[index]] = parse_data(mv.value)
+        end)
+      end
+
+      # rubocop:disable Metrics/AbcSize
+      def rows
+        @report_data.rows.map do |row|
+          OpenStruct.new(row.dimension_values.each_with_index.with_object({}) do |(dv, index), result|
+            result[dimension_headers[index]] = parse_data(dv.value)
+          end.merge(row.metric_values.each_with_index.with_object({}) do |(mv, index), result|
+            result[metric_headers[index]] = parse_data(mv.value)
+          end))
+        end
+      end
+      # rubocop:enable Metrics/AbcSize
+
+      def metric_headers
+        @report_data.metric_headers.map(&:name)
+      end
+
+      def dimension_headers
+        @report_data.dimension_headers.map(&:name)
+      end
+
+      def metric_parsing(report_data)
+        return OpenStruct.new({ totals: [], rows: [] }) unless report_data.rows.any?
+
+        @report_data = report_data
+
+        OpenStruct.new({ rows: rows, totals: totals })
       end
 
       private
 
-      def model
-        Spotlight::Analytics::GaModel
-      end
-
-      def exhibit_data_unavailable
-        OpenStruct.new(pageviews: 'n/a', users: 'n/a', sessions: 'n/a')
-      end
-
-      def oauth_token(scope)
-        require 'oauth2'
-
-        access_token = auth_client(scope).fetch_access_token!
-        OAuth2::AccessToken.new(oauth_client, access_token['access_token'], expires_in: access_token['expires_in'])
-      end
-
-      def oauth_client
-        OAuth2::Client.new('', '', authorize_url: 'https://accounts.google.com/o/oauth2/auth',
-                                   token_url: 'https://accounts.google.com/o/oauth2/token')
-      end
-
-      def signing_key
-        @signing_key ||= OpenSSL::PKCS12.new(File.read(Spotlight::Engine.config.ga_pkcs12_key_path), 'notasecret').key
-      end
-
-      def auth_client(scope)
-        Signet::OAuth2::Client.new token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
-                                   audience: 'https://accounts.google.com/o/oauth2/token',
-                                   scope: scope,
-                                   issuer: Spotlight::Engine.config.ga_email,
-                                   signing_key: signing_key,
-                                   sub: Spotlight::Engine.config.ga_email
+      def ga_web_property_id
+        Spotlight::Engine.config.ga_web_property_id
       end
     end
   end

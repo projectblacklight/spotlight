@@ -4,18 +4,20 @@ module Spotlight
   ##
   # Exhibit mixin to provide analytics data
   module ExhibitAnalytics
-    def analytics(start_date = 1.month, path = nil)
+    def analytics(dates = { start_date: '365daysAgo', end_date: 'today' }, path = nil)
       return OpenStruct.new unless analytics_provider&.enabled?
 
       @analytics ||= {}
-      @analytics[start_date] ||= analytics_provider.exhibit_data(path || self, start_date: start_date.ago)
+      start_date = dates['start_date'] || 1.month.ago
+      @analytics[start_date] ||= analytics_provider.exhibit_data(path || self, dates)
     end
 
-    def page_analytics(start_date = 1.month, path = nil)
+    def page_analytics(dates = { start_date: '365daysAgo', end_date: 'today' }, path = nil)
       return [] unless analytics_provider&.enabled?
 
       @page_analytics ||= {}
-      @page_analytics[start_date] ||= analytics_provider.page_data(path || self, start_date: start_date.ago)
+      start_date = dates['start_date'] || 1.month.ago
+      @page_analytics[start_date] ||= analytics_provider.page_data(path || self, dates)
     end
 
     def analytics_provider

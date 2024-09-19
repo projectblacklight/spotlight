@@ -1,0 +1,14 @@
+<table class="table analytics">
+  <tr>
+  <% display_fields.each_pair do |key, value| %>
+    <td class="value <%= key %>"><%= format_field(key, value) %></td>
+  <% end %>
+  </tr>
+  <tfoot>
+    <tr>
+    <% display_fields.each_pair do |key, value| %>
+      <th><%= I18n.t("spotlight.dashboards.analytics.#{key}") %></th>
+    <% end %>
+    </tr>
+  </tfoot>
+</table>

@@ -5,7 +5,7 @@
 <%= curation_page_title %>
 
 <% if current_exhibit.analytics_provider&.enabled? %>
-  <%= render 'analytics' %>
+  <%= render Spotlight::Analytics::DashboardComponent.new(current_exhibit: current_exhibit) %>
 <% else %>
   <div class="empty-page-block">
     <p>In order to view exhibit analytics, the site administrator must configure an analytics provider.</p>
