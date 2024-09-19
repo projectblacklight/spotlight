@@ -89,7 +89,7 @@ module Spotlight
       if current_exhibit
         exhibit_search_facet_path(*args, **kwargs)
       else
-        main_app.catalog_facet_url(*args, **kwargs)
+        main_app.facet_catalog_url(*args, **kwargs)
       end
     end
 
