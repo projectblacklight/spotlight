@@ -6,6 +6,7 @@ class CatalogController < ApplicationController
   before_action :set_paper_trail_whodunnit
 
   configure_blacklight do |config|
+    config.header_component = Spotlight::HeaderComponent
     config.view.gallery(document_component: Blacklight::Gallery::DocumentComponent)
     # config.view.gallery.classes = 'row-cols-2 row-cols-md-3'
     config.view.masonry(document_component: Blacklight::Gallery::DocumentComponent)
