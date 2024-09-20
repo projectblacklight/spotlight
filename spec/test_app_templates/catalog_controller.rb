@@ -35,9 +35,6 @@ class CatalogController < ApplicationController
     config.index.display_type_field = 'content_metadata_type_ssm'
     config.index.thumbnail_field = Spotlight::Engine.config.thumbnail_field
 
-    # config.show.document_component = Spotlight::DocumentComponent
-    config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
-
     config.add_results_collection_tool(:sort_widget)
     config.add_results_collection_tool(:per_page_widget)
     config.add_results_collection_tool(:view_type_group)
