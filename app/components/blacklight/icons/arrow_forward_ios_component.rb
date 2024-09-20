@@ -3,7 +3,7 @@
 module Blacklight
   module Icons
     # Icon for ArrowForwardIos
-    class ArrowForwardIosComponent < Blacklight::Icons::IconComponent
+    class ArrowForwardIosComponent < Spotlight::IconComponent
       self.svg = <<~SVG
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path opacity=".87" fill="none" d="M24 24H0V0h24v24z"/>
