@@ -75,4 +75,12 @@ class TestAppGenerator < Rails::Generators::Base
     uncomment_lines 'config/environments/development.rb', /config.action_view.raise_on_missing_translations/
     uncomment_lines 'config/environments/test.rb', /config.action_view.raise_on_missing_translations/
   end
+
+  # Temporarily force js assets to fall back to sprockets
+  def clean_up_js_builds
+    return unless File.exist?('app/assets/builds')
+
+    gsub_file 'app/assets/config/manifest.js', '//= link_tree ../builds', ''
+    remove_dir 'app/assets/builds'
+  end
 end

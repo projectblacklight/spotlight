@@ -1,5 +1,8 @@
-if ENV['BLACKLIGHT_VERSION'] == 'edge'
+case ENV['BLACKLIGHT_VERSION']
+when 'edge'
   gem 'blacklight', github: 'projectblacklight/blacklight'
   gem 'blacklight-gallery', github: 'projectblacklight/blacklight-gallery'
   gem 'blacklight-oembed', github: 'projectblacklight/blacklight-oembed'
+else
+  gem 'blacklight', ENV['BLACKLIGHT_VERSION'] if ENV['BLACKLIGHT_VERSION'] && !ENV['BLACKLIGHT_VERSION'].empty?
 end

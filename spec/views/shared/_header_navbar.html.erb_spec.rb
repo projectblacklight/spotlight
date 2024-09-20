@@ -2,6 +2,7 @@
 
 describe 'shared/_header_navbar', type: :view do
   before do
+    allow(view).to receive(:blacklight_config).and_return(Blacklight.default_configuration)
     stub_template 'shared/_user_util_links.html.erb' => 'links'
   end
 
