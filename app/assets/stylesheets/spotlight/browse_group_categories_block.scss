@@ -33,7 +33,7 @@
       cursor: pointer;
     }
 
-    .blacklight-icon-arrow-alt-circle-left, .blacklight-icon-arrow-alt-circle-right {
+    .blacklight-icons-arrow-alt-circle-left, .blacklight-icons-arrow-alt-circle-right {
       display: inline-block;
       fill: $gray-600;
       height: 44px;
@@ -49,7 +49,7 @@
     }
 
     [aria-disabled="true"] {
-      .blacklight-icon-arrow-alt-circle-left, .blacklight-icon-arrow-alt-circle-right {
+      .blacklight-icons-arrow-alt-circle-left, .blacklight-icons-arrow-alt-circle-right {
         fill: $gray-400;
 
         &:hover,&:focus {
@@ -66,7 +66,7 @@
 
   @media screen and (min-width: breakpoint-min("md")) {
     .browse-group-categories-controls {
-      .blacklight-icon-arrow-alt-circle-left, .blacklight-icon-arrow-alt-circle-right {
+      .blacklight-icons-arrow-alt-circle-left, .blacklight-icons-arrow-alt-circle-right {
         height: 32px;
         width: 32px;
       }
@@ -81,7 +81,7 @@
 }
 
 [dir="rtl"] {
-  .browse-group-categories-block .blacklight-icon-arrow-alt-circle-left, .blacklight-icon-arrow-alt-circle-right{
+  .browse-group-categories-block .blacklight-icons-arrow-alt-circle-left, .blacklight-icons-arrow-alt-circle-right{
     transform: rotate(180deg);
   }
   // Hack to override overflow issue not fixed in RTL upstream in tiny-slider
