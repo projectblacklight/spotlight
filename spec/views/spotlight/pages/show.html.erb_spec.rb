@@ -11,6 +11,7 @@ describe 'spotlight/pages/show', type: :view do
 
   before do
     allow(view).to receive(:current_exhibit).and_return(exhibit)
+    allow(view).to receive(:blacklight_config).and_return(Blacklight.default_configuration)
     allow(view).to receive(:render_body_class).and_return('')
     assign(:page, page)
     stub_template 'spotlight/pages/_sidebar.html.erb' => 'Sidebar'
