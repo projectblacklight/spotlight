@@ -26,9 +26,9 @@
     <%= render partial: 'shared/body_preamble' %>
     <div id="skip-link">
       <% if should_render_spotlight_search_bar? %>
-        <%= link_to t('blacklight.skip_links.search_field'), '#search_field', class: 'element-invisible element-focusable rounded-bottom py-2 px-3' %>
+        <%= link_to t('blacklight.skip_links.search_field'), '#search_field', class: 'btn btn-link bg-light sr-only sr-only-focusable visually-hidden-focusable' %>
       <% end %>
-      <%= link_to t('blacklight.skip_links.main_content'), '#main-container', class: 'element-invisible element-focusable rounded-bottom py-2 px-3' %>
+      <%= link_to t('blacklight.skip_links.main_content'), '#main-container', class: 'btn btn-link bg-light sr-only sr-only-focusable visually-hidden-focusable' %>
       <%= content_for(:skip_links) %>
     </div>
 
