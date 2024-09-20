@@ -37,7 +37,7 @@ module Spotlight
 
     def show
       # For Blacklight 8, @document_list will be nil but
-      # will be required for Blacklight 7 to work correctly. 
+      # will be required for Blacklight 7 to work correctly.
       @response, @document_list = search_service.search_results do |builder|
         builder.with(params.merge(browse_category_id: @search.id))
       end
