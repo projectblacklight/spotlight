@@ -19,6 +19,8 @@ class CatalogController < ApplicationController
       fl: '*'
     }
 
+    # Blacklight 8 sets a default value to 'advanced'
+    config.json_solr_path = nil
     ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SolrHelper#solr_doc_params) or
     ## parameters included in the Blacklight document requestHandler.
     #
