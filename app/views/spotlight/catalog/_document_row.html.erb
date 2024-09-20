@@ -1,5 +1,2 @@
-<% # container for a single doc -%>
-<tr class="<%= render_document_class document %> doc-row" data-label-toggle="<%= document.id %>" itemscope itemtype="<%= document.itemtype %>">
-  <%= render_document_partials document, blacklight_config.view_config(document_index_view_type).partials, :document_counter => document_counter %>
-</tr>
-
+<%- Spotlight.deprecator.warn 'The partial _spotlight/catalog/_document_row.html.erb will be removed; customize the admin display using components instead' %>
+<%= render Spotlight::DocumentAdminTableComponent.new(presenter: document_presenter(document)) %>

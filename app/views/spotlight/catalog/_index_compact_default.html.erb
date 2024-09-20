@@ -1,3 +1,4 @@
+<%- Spotlight.deprecator.warn 'The partial _spotlight/catalog/_index_compact_default.html.erb will be removed; customize the admin display using components instead' %>
 <% # header bar for doc items in index view -%>
 <td>
   <%= render_document_partial document, 'admin_thumbnail', document_counter: document_counter %>

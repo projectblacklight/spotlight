@@ -37,7 +37,11 @@ module Spotlight
 
     before_action only: :admin do
       blacklight_config.view.select! { |k, _v| k == :admin_table }
-      blacklight_config.view.admin_table(partials: [:index_compact], document_actions: []) unless blacklight_config.view.key? :admin_table
+      unless blacklight_config.view.key? :admin_table
+        blacklight_config.view.admin_table(document_component: Spotlight::DocumentAdminTableComponent,
+                                           partials: [:index_compact],
+                                           document_actions: [])
+      end
       if Blacklight::VERSION > '8'
         blacklight_config.track_search_session.storage = false
       else
