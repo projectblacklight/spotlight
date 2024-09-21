@@ -1,0 +1,36 @@
+<%= content_tag @component,
+  id: @id,
+  data: {
+    'document-id': @document.id.to_s.parameterize,
+    'document-counter': @counter,
+    'label-toggle': @document.id
+  },
+  itemscope: true,
+  itemtype: @document.itemtype,
+  class: classes.flatten.join(' ') do %>
+  <% # header bar for doc items in index view -%>
+    <td class="spotlight-admin-thumbnail">
+      <%= thumbnail %>
+    </td>
+    <td>
+      <%# header bar for doc items in index view -%>
+      <div class="documentHeader row" data-label-toggle="<%= @document.id %>">
+        <h5 class="index_title col-md-12">
+          <%= helpers.link_to_document(presenter.document, itemprop: 'name') %>
+        </h5>
+      </div>
+
+      <div class="page-links">
+        <%= helpers.view_link presenter.document, helpers.link_to_document(presenter.document) %> &middot;
+        <%= helpers.exhibit_edit_link presenter.document, [:edit, helpers.current_exhibit, presenter.document] %>
+      </div>
+    </td>
+
+    <td class="text-nowrap">
+      <%= timestamp %>
+    </td>
+
+    <td class="checkbox-toggle">
+      <%= render partial: 'document_visibility_control', locals: { document: presenter.document} %>
+    </td>
+<% end %>

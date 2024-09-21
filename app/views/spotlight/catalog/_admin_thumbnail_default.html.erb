@@ -1,3 +1,4 @@
+<%- Spotlight.deprecator.warn 'The partial _spotlight/catalog/_admin_thumbnail.html.erb will be removed; customize the admin display using components instead' %>
 <% doc_presenter = document_presenter(document) %>
 <%- if doc_presenter.thumbnail.exists? %>
   <div class="document-thumbnail spotlight-admin-thumbnail">
