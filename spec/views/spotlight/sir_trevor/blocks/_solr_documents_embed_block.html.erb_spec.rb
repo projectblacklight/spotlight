@@ -9,11 +9,19 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
   let(:doc) { blacklight_config.document_model.new(id: 1) }
   let(:blacklight_config) do
     Blacklight::Configuration.new do |config|
-      config.view.embed(partials: %w[a b c], locals: { a: 1 })
+      config.view.embed(
+        document_component: Spotlight::SolrDocumentLegacyEmbedComponent,
+        partials: %w[a b c],
+        locals: { a: 1 }
+      )
     end
   end
   let(:stub_presenter) do
-    instance_double(Blacklight::DocumentPresenter, heading: 'blah', thumbnail: thumbnail_presenter)
+    instance_double(Blacklight::DocumentPresenter, document: doc, heading: 'blah',
+                                                   thumbnail: thumbnail_presenter,
+                                                   view_config: blacklight_config.view.embed,
+                                                   field_presenters: [],
+                                                   display_type: nil)
   end
 
   let(:thumbnail_presenter) { instance_double(Blacklight::ThumbnailPresenter, exists?: true, thumbnail_tag: 'thumb') }

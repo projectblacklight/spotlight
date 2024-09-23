@@ -1,0 +1,8 @@
+<div class="box" data-id="<%= document.id %>">
+  <% view_config = blacklight_config.view_config(:embed) %>
+  <%= render (view_config.document_component || Spotlight::SolrDocumentLegacyEmbedComponent).new((Blacklight.version > '8.0' ? :document : :presenter) => document_presenter(document), counter: nil) do |component| %>
+    <% component.with_partial do %>
+      <%= render_document_partials document, view_config.partials, component: component, document_counter: nil, view_config: view_config, block: local_assigns[:block], **(view_config.locals) %>
+    <% end if view_config&.partials&.any? %>
+  <% end %>
+</div>
