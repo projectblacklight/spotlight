@@ -15,6 +15,7 @@ class CatalogController < ApplicationController
 
     # Blacklight 8 sets a default value to 'advanced'
     config.json_solr_path = nil
+    config.header_component = Spotlight::HeaderComponent
     config.document_solr_path = 'get'
     config.document_unique_id_param = 'ids'
 
