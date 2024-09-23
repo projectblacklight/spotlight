@@ -3,11 +3,8 @@
 <div class="view-type">
   <span class="sr-only visually-hidden"><%= t('blacklight.search.view_title') %></span>
   <div class="view-type-group btn-group">
-    <% views.each do |view, config| %>
-      <%= link_to url_for(search_state.to_h.merge(view: view)), :title => t("blacklight.search.view_title.#{view}", default: t("blacklight.search.view.#{view}", default: blacklight_config.view[view].title)), :class => "btn btn-outline-secondary view-type-#{ view.to_s.parameterize } #{"active" if block_document_index_view_type(block) == view}" do %>
-        <%= blacklight_icon config.icon || view %>
-        <span class="caption"><%= t("blacklight.search.view.#{view}") %></span>
-      <% end %>
+    <% views.each do |key, config| %>
+      <%= render Blacklight::Response::ViewTypeButtonComponent.new(key: key, view: config, selected: block_document_index_view_type(block) == key, search_state: search_state) %>
     <% end %>
   </div>
 </div>
