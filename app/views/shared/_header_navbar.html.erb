@@ -2,5 +2,5 @@
   <%= render blacklight_config.header_component.new(blacklight_config: blacklight_config) %>
 <% else %>
   <%= render Spotlight::HeaderComponent.new(blacklight_config: blacklight_config) %>
-  <% ActiveSupport::Deprecation.new('5.0', 'Spotlight').warn("_header_navbar.html.erb will be deprecated in future versions. Please use Blacklight configuration to specify your HeaderComponent.") %>
+  <% Spotlight.deprecator.warn("_header_navbar.html.erb will be deprecated in future versions. Please use Blacklight configuration to specify your HeaderComponent.") %>
 <% end %>
