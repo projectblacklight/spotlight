@@ -97,14 +97,6 @@ form.edit_solr_document {
     @extend .col-md-6;
   }
 
-  .edit_solr_document {
-    float: right;
-    @extend .col-md-6;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 1em;
-    padding-bottom: 1em;
-  }
-
   .tags, .dl-horizontal {
     @extend .col-md-6;
   }
@@ -112,10 +104,6 @@ form.edit_solr_document {
   #document {
     @extend .clearfix;
   }
-}
-
-.edit_solr_document {
-  @extend .clearfix;
 }
 
 #sortAndPerPage {

@@ -55,7 +55,7 @@ module Spotlight
     end
 
     before_action only: :edit do
-      blacklight_config.view.edit(partials: blacklight_config.view_config(:show).partials.dup.insert(2, :edit)) unless blacklight_config.view.key? :edit
+      blacklight_config.action_mapping.edit.top_level_config = :show
     end
 
     def show
