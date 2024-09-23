@@ -30,6 +30,7 @@ these collections.)
   s.add_dependency 'cancancan'
   s.add_dependency 'carrierwave', '~> 2.2'
   s.add_dependency 'clipboard-rails', '~> 1.5'
+  s.add_dependency 'csv'
   s.add_dependency 'devise', '~> 4.9'
   s.add_dependency 'devise_invitable'
   s.add_dependency 'faraday'
