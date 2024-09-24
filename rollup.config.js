@@ -8,8 +8,12 @@ const BUNDLE = process.env.BUNDLE === 'true'
 const ESM = process.env.ESM === 'true'
 
 const fileDest = `spotlight${ESM ? '.esm' : ''}`
-const external = []
-const globals = {}
+const external = [
+  '@github/auto-complete-element'
+]
+const globals = {
+  '@github/auto-complete-element': 'AutoCompleteElement'
+}
 
 let includePathOptions = {
   include: {},

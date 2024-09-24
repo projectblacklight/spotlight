@@ -13,6 +13,10 @@
     <% else %>
       <%= stylesheet_link_tag "application" %>
     <% end %>
+    <!-- Once support for importmaps is added, Blacklight 8 provides githubAutoCompleteElement pinned by default -->
+    <script type="module">
+      import githubAutoCompleteElement from 'https://cdn.skypack.dev/@github/auto-complete-element';
+    </script>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= content_for(:head) %>
