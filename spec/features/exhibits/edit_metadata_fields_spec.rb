@@ -27,7 +27,7 @@ describe 'Editing metadata fields', type: :feature do
     expect(exhibit.blacklight_config.show_fields.select { |_k, x| x.show }).not_to include 'note_mapuse_tesim'
   end
 
-  it 'has in-place editing of labels', default_max_wait_time: 20, js: true do
+  it 'has in-place editing of labels', js: true do
     visit spotlight.edit_exhibit_metadata_configuration_path exhibit
     check :blacklight_configuration_index_fields_language_ssm_show
     check :blacklight_configuration_index_fields_language_ssm_list
