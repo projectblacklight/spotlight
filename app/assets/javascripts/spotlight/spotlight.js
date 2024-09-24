@@ -4056,6 +4056,29 @@
     }
   }
 
+  class Appearance {
+    connect(){
+      $("[data-behavior='restore-default']").each(function(){
+        var hidden = $("[data-default-value]", $(this));
+        var value = $($("[data-in-place-edit-target]", $(this)).data('in-place-edit-target'), $(this));
+        var button = $("[data-restore-default]", $(this));
+        hidden.on('blur', function(){
+          if( $(this).val() == $(this).data('default-value') ) {
+            button.addClass('d-none');
+          } else {
+            button.removeClass('d-none');
+          }
+        });
+        button.on('click', function(e){
+          e.preventDefault();
+          hidden.val(hidden.data('default-value'));
+          value.text(hidden.data('default-value'));
+          button.hide();
+        });
+      });
+    }
+  }
+
   class BlacklightConfiguration {
     connect() {
       // Add Select/Deselect all button behavior
@@ -4610,25 +4633,6 @@
           });
 
           return false;
-        });
-      });
-
-      $("[data-behavior='restore-default']").each(function(){
-        var hidden = $("[data-default-value]", $(this));
-        var value = $($("[data-in-place-edit-target]", $(this)).data('in-place-edit-target'), $(this));
-        var button = $("[data-restore-default]", $(this));
-        hidden.on('blur', function(){
-          if( $(this).val() == $(this).data('default-value') ) {
-            button.addClass('d-none');
-          } else {
-            button.removeClass('d-none');
-          }
-        });
-        button.on('click', function(e){
-          e.preventDefault();
-          hidden.val(hidden.data('default-value'));
-          value.text(hidden.data('default-value'));
-          button.hide();
         });
       });
     }
@@ -7167,6 +7171,7 @@
     connect() {
       new AddAnother().connect();
       new AddNewButton().connect();
+      new Appearance().connect();
       new CopyEmailAddress().connect();
       new Croppable().connect();
       new EditInPlace().connect();
