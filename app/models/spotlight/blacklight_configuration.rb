@@ -122,7 +122,10 @@ module Spotlight
 
         config.view.embed!
         # This is blacklight-gallery's openseadragon partial
-        config.view.embed.partials ||= ['openseadragon']
+        unless config.view.embed.document_component
+          config.view.embed.partials ||= ['openseadragon']
+          config.view.embed.document_component = Spotlight::SolrDocumentLegacyEmbedComponent
+        end
         config.view.embed.if = false
 
         # blacklight-gallery requires tile_source_field

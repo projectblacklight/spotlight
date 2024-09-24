@@ -14,12 +14,9 @@
       <%# Render the openseadragon viewer from blacklight-gallery.
         # Settings in blacklight_configuration.rb %>
         <% solr_documents_embed_block.each_document do |block_options, document| %>
-          <div class="box" data-id="<%= document.id %>">
-            <% view_config = blacklight_config.view_config(:embed) %>
-            <%= render_document_partials document, view_config.partials, (view_config.locals || {}).reverse_merge(block: solr_documents_embed_block, view_config: view_config) %>
-          </div>
-          <% end %>
-        </div>
+          <%= render '/spotlight/sir_trevor/blocks/embedded_document', document: document, block: solr_documents_embed_block %>
+        <% end %>
+      </div>
     </div>
   <% end %>
 
