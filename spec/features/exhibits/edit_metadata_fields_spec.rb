@@ -39,7 +39,7 @@ describe 'Editing metadata fields', type: :feature do
 
     click_on 'Save changes'
     # Find the 'Restore default' button to verify that saving has completed
-    find('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default')
+    find('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default', visible: true)
     expect(exhibit.reload.blacklight_config.index_fields['language_ssm'].label).to eq 'Language of Origin'
   end
 
