@@ -1,5 +1,5 @@
 <% # container for all documents in index view -%>
-<% view_config = local_assigns[:view_config] || blacklight_config&.view_config(document_index_view_type) %>
+<% view_config = local_assigns[:view_config] || blacklight_config&.view_config(default_document_index_view_type) %>
 <table id="documents" class="table">
   <thead>
     <tr>
