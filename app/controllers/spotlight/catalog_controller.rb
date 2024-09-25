@@ -42,6 +42,8 @@ module Spotlight
                                            partials: [:index_compact],
                                            document_actions: [])
       end
+      blacklight_config.view.admin_table.document_component ||= Spotlight::DocumentAdminTableComponent
+
       if Blacklight::VERSION > '8'
         blacklight_config.track_search_session.storage = false
       else
