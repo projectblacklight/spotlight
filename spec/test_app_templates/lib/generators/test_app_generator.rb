@@ -10,7 +10,7 @@ class TestAppGenerator < Rails::Generators::Base
   end
 
   def add_gems
-    gem 'blacklight', ENV['BLACKLIGHT_VERSION'] || '~> 7.17' unless Bundler.locked_gems.dependencies.key? 'blacklight'
+    gem 'blacklight', ENV['BLACKLIGHT_VERSION'] || '~> 7.38' unless Bundler.locked_gems.dependencies.key? 'blacklight'
     gem 'blacklight-gallery', '~> 4.5' unless Bundler.locked_gems.dependencies.key? 'blacklight-gallery'
 
     unless Bundler.locked_gems.dependencies.key? 'bootstrap_form'
