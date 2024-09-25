@@ -22,7 +22,7 @@ these collections.)
 
   s.add_dependency 'activejob-status'
   s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 12'
-  s.add_dependency 'blacklight', '>= 7.18', '< 9'
+  s.add_dependency 'blacklight', '>= 7.38', '< 9'
   s.add_dependency 'blacklight-gallery', '>= 3.0', '< 5'
   s.add_dependency 'bootstrap_form', '>= 4.1', '< 6'
   s.add_dependency 'cancancan'
