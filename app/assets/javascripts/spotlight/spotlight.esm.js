@@ -1,3 +1,5 @@
+import Sortable from 'sortablejs';
+
 class BrowseGroupCateogries {
   connect() {
     var $container, slider;
@@ -165,649 +167,143 @@ class UserIndex {
   }
 }
 
-/*!
- * Nestable jQuery Plugin - Copyright (c) 2012 David Bushell - http://dbushell.com/
- * Dual-licensed under the BSD or MIT licenses
- */
-(function($, window, document, undefined$1)
+/*
+https://gist.github.com/pjambet/3710461
+*/
+var LATIN_MAP = {
+  'À': 'A', 'Á': 'A', 'Â': 'A', 'Ã': 'A', 'Ä': 'A', 'Å': 'A', 'Æ': 'AE', 'Ç':
+  'C', 'È': 'E', 'É': 'E', 'Ê': 'E', 'Ë': 'E', 'Ì': 'I', 'Í': 'I', 'Î': 'I',
+  'Ï': 'I', 'Ð': 'D', 'Ñ': 'N', 'Ò': 'O', 'Ó': 'O', 'Ô': 'O', 'Õ': 'O', 'Ö':
+  'O', 'Ő': 'O', 'Ø': 'O', 'Ù': 'U', 'Ú': 'U', 'Û': 'U', 'Ü': 'U', 'Ű': 'U',
+  'Ý': 'Y', 'Þ': 'TH', 'ß': 'ss', 'à':'a', 'á':'a', 'â': 'a', 'ã': 'a', 'ä':
+  'a', 'å': 'a', 'æ': 'ae', 'ç': 'c', 'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e',
+  'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i', 'ð': 'd', 'ñ': 'n', 'ò': 'o', 'ó':
+  'o', 'ô': 'o', 'õ': 'o', 'ö': 'o', 'ő': 'o', 'ø': 'o', 'ù': 'u', 'ú': 'u',
+  'û': 'u', 'ü': 'u', 'ű': 'u', 'ý': 'y', 'þ': 'th', 'ÿ': 'y'
+};
+var LATIN_SYMBOLS_MAP = {
+  '©':'(c)'
+};
+var GREEK_MAP = {
+  'α':'a', 'β':'b', 'γ':'g', 'δ':'d', 'ε':'e', 'ζ':'z', 'η':'h', 'θ':'8',
+  'ι':'i', 'κ':'k', 'λ':'l', 'μ':'m', 'ν':'n', 'ξ':'3', 'ο':'o', 'π':'p',
+  'ρ':'r', 'σ':'s', 'τ':'t', 'υ':'y', 'φ':'f', 'χ':'x', 'ψ':'ps', 'ω':'w',
+  'ά':'a', 'έ':'e', 'ί':'i', 'ό':'o', 'ύ':'y', 'ή':'h', 'ώ':'w', 'ς':'s',
+  'ϊ':'i', 'ΰ':'y', 'ϋ':'y', 'ΐ':'i',
+  'Α':'A', 'Β':'B', 'Γ':'G', 'Δ':'D', 'Ε':'E', 'Ζ':'Z', 'Η':'H', 'Θ':'8',
+  'Ι':'I', 'Κ':'K', 'Λ':'L', 'Μ':'M', 'Ν':'N', 'Ξ':'3', 'Ο':'O', 'Π':'P',
+  'Ρ':'R', 'Σ':'S', 'Τ':'T', 'Υ':'Y', 'Φ':'F', 'Χ':'X', 'Ψ':'PS', 'Ω':'W',
+  'Ά':'A', 'Έ':'E', 'Ί':'I', 'Ό':'O', 'Ύ':'Y', 'Ή':'H', 'Ώ':'W', 'Ϊ':'I',
+  'Ϋ':'Y'
+};
+var TURKISH_MAP = {
+  'ş':'s', 'Ş':'S', 'ı':'i', 'İ':'I', 'ç':'c', 'Ç':'C', 'ü':'u', 'Ü':'U',
+  'ö':'o', 'Ö':'O', 'ğ':'g', 'Ğ':'G'
+};
+var RUSSIAN_MAP = {
+  'а':'a', 'б':'b', 'в':'v', 'г':'g', 'д':'d', 'е':'e', 'ё':'yo', 'ж':'zh',
+  'з':'z', 'и':'i', 'й':'j', 'к':'k', 'л':'l', 'м':'m', 'н':'n', 'о':'o',
+  'п':'p', 'р':'r', 'с':'s', 'т':'t', 'у':'u', 'ф':'f', 'х':'h', 'ц':'c',
+  'ч':'ch', 'ш':'sh', 'щ':'sh', 'ъ':'', 'ы':'y', 'ь':'', 'э':'e', 'ю':'yu',
+  'я':'ya',
+  'А':'A', 'Б':'B', 'В':'V', 'Г':'G', 'Д':'D', 'Е':'E', 'Ё':'Yo', 'Ж':'Zh',
+  'З':'Z', 'И':'I', 'Й':'J', 'К':'K', 'Л':'L', 'М':'M', 'Н':'N', 'О':'O',
+  'П':'P', 'Р':'R', 'С':'S', 'Т':'T', 'У':'U', 'Ф':'F', 'Х':'H', 'Ц':'C',
+  'Ч':'Ch', 'Ш':'Sh', 'Щ':'Sh', 'Ъ':'', 'Ы':'Y', 'Ь':'', 'Э':'E', 'Ю':'Yu',
+  'Я':'Ya'
+};
+var UKRAINIAN_MAP = {
+  'Є':'Ye', 'І':'I', 'Ї':'Yi', 'Ґ':'G', 'є':'ye', 'і':'i', 'ї':'yi', 'ґ':'g'
+};
+var CZECH_MAP = {
+  'č':'c', 'ď':'d', 'ě':'e', 'ň': 'n', 'ř':'r', 'š':'s', 'ť':'t', 'ů':'u',
+  'ž':'z', 'Č':'C', 'Ď':'D', 'Ě':'E', 'Ň': 'N', 'Ř':'R', 'Š':'S', 'Ť':'T',
+  'Ů':'U', 'Ž':'Z'
+};
+
+var POLISH_MAP = {
+  'ą':'a', 'ć':'c', 'ę':'e', 'ł':'l', 'ń':'n', 'ó':'o', 'ś':'s', 'ź':'z',
+  'ż':'z', 'Ą':'A', 'Ć':'C', 'Ę':'e', 'Ł':'L', 'Ń':'N', 'Ó':'o', 'Ś':'S',
+  'Ź':'Z', 'Ż':'Z'
+};
+
+var LATVIAN_MAP = {
+  'ā':'a', 'č':'c', 'ē':'e', 'ģ':'g', 'ī':'i', 'ķ':'k', 'ļ':'l', 'ņ':'n',
+  'š':'s', 'ū':'u', 'ž':'z', 'Ā':'A', 'Č':'C', 'Ē':'E', 'Ģ':'G', 'Ī':'i',
+  'Ķ':'k', 'Ļ':'L', 'Ņ':'N', 'Š':'S', 'Ū':'u', 'Ž':'Z'
+};
+
+var ALL_DOWNCODE_MAPS=new Array();
+ALL_DOWNCODE_MAPS[0]=LATIN_MAP;
+ALL_DOWNCODE_MAPS[1]=LATIN_SYMBOLS_MAP;
+ALL_DOWNCODE_MAPS[2]=GREEK_MAP;
+ALL_DOWNCODE_MAPS[3]=TURKISH_MAP;
+ALL_DOWNCODE_MAPS[4]=RUSSIAN_MAP;
+ALL_DOWNCODE_MAPS[5]=UKRAINIAN_MAP;
+ALL_DOWNCODE_MAPS[6]=CZECH_MAP;
+ALL_DOWNCODE_MAPS[7]=POLISH_MAP;
+ALL_DOWNCODE_MAPS[8]=LATVIAN_MAP;
+
+var Downcoder = new Object();
+Downcoder.Initialize = function()
 {
-    var hasTouch = 'ontouchstart' in window;
-
-    /**
-     * Detect CSS pointer-events property
-     * events are normally disabled on the dragging element to avoid conflicts
-     * https://github.com/ausi/Feature-detection-technique-for-pointer-events/blob/master/modernizr-pointerevents.js
-     */
-    var hasPointerEvents = (function()
+  if (Downcoder.map) // already made
+    return ;
+    Downcoder.map ={};
+    Downcoder.chars = '' ;
+    for(var i in ALL_DOWNCODE_MAPS)
     {
-        var el    = document.createElement('div'),
-            docEl = document.documentElement;
-        if (!('pointerEvents' in el.style)) {
-            return false;
-        }
-        el.style.pointerEvents = 'auto';
-        el.style.pointerEvents = 'x';
-        docEl.appendChild(el);
-        var supports = window.getComputedStyle && window.getComputedStyle(el, '').pointerEvents === 'auto';
-        docEl.removeChild(el);
-        return !!supports;
-    })();
-
-    var eStart  = hasTouch ? 'touchstart'  : 'mousedown',
-         eMove   = hasTouch ? 'touchmove'   : 'mousemove',
-         eEnd    = hasTouch ? 'touchend'    : 'mouseup',
-         eCancel = hasTouch ? 'touchcancel' : 'mouseup';
-          
-    var defaults = {
-        listNodeName    : 'ol',
-        itemNodeName    : 'li',
-        rootClass       : 'dd',
-        listClass       : 'dd-list',
-        itemClass       : 'dd-item',
-        dragClass       : 'dd-dragel',
-        handleClass     : 'dd-handle',
-        collapsedClass  : 'dd-collapsed',
-        placeClass      : 'dd-placeholder',
-        noDragClass     : 'dd-nodrag',
-        noChildrenClass : 'dd-nochildren',
-        emptyClass      : 'dd-empty',
-        expandBtnHTML   : '<button data-action="expand" type="button">Expand</button>',
-        collapseBtnHTML : '<button data-action="collapse" type="button">Collapse</button>',
-        group           : 0,
-        maxDepth        : 5,
-        threshold       : 20,
-        reject          : [],
-        //method for call when an item has been successfully dropped
-        //method has 1 argument in which sends an object containing all
-        //necessary details
-        dropCallback    : null,
-      // When a node is dragged it is moved to its new location.
-      // You can set the next option to true to create a copy of the node  that is dragged.
-      cloneNodeOnDrag   : false,
-      // When the node is dragged and released outside its list delete it.
-      dragOutsideToDelete : false
-    };
-
-    function Plugin(element, options)
-    {
-        this.w = $(document);
-        this.el = $(element);
-        this.options = $.extend({}, defaults, options);
-        this.init();
+      var lookup = ALL_DOWNCODE_MAPS[i];
+      for (var c in lookup)
+      {
+        Downcoder.map[c] = lookup[c] ;
+        Downcoder.chars += c ;
+      }
     }
-
-    Plugin.prototype = {
-
-        init: function()
-        {
-            var list = this;
-
-            list.reset();
-
-            list.el.data('nestable-group', this.options.group);
-
-            list.placeEl = $('<div class="' + list.options.placeClass + '"/>');
-
-            $.each(this.el.find(list.options.itemNodeName), function(k, el) {
-                list.setParent($(el));
-            });
-
-            list.el.on('click', 'button', function(e)
-            {
-                if (list.dragEl || (!hasTouch && e.button !== 0)) {
-                    return;
-                }
-                var target = $(e.currentTarget),
-                    action = target.data('action'),
-                    item   = target.parent(list.options.itemNodeName);
-                if (action === 'collapse') {
-                    list.collapseItem(item);
-                }
-                if (action === 'expand') {
-                    list.expandItem(item);
-                }
-            });
-
-            var onStartEvent = function(e)
-            {
-                var handle = $(e.target);
-
-                list.nestableCopy = handle.closest('.'+list.options.rootClass).clone(true);
-
-                if (!handle.hasClass(list.options.handleClass)) {
-                    if (handle.closest('.' + list.options.noDragClass).length) {
-                        return;
-                    }
-                    handle = handle.closest('.' + list.options.handleClass);
-                }
-                if (!handle.length || list.dragEl || (!hasTouch && e.which !== 1) || (hasTouch && e.touches.length !== 1)) {
-                    return;
-                }
-                e.preventDefault();
-                list.dragStart(hasTouch ? e.touches[0] : e);
-            };
-
-            var onMoveEvent = function(e)
-            {
-                if (list.dragEl) {
-                    e.preventDefault();
-                    list.dragMove(hasTouch ? e.touches[0] : e);
-                }
-            };
-
-            var onEndEvent = function(e)
-            {
-                if (list.dragEl) {
-                    e.preventDefault();
-                    list.dragStop(hasTouch ? e.touches[0] : e);
-                }
-            };
-
-            if (hasTouch) {
-                list.el[0].addEventListener(eStart, onStartEvent, false);
-                window.addEventListener(eMove, onMoveEvent, false);
-                window.addEventListener(eEnd, onEndEvent, false);
-                window.addEventListener(eCancel, onEndEvent, false);
-            } else {
-                list.el.on(eStart, onStartEvent);
-                list.w.on(eMove, onMoveEvent);
-                list.w.on(eEnd, onEndEvent);
-            }
-
-            var destroyNestable = function()
-            {
-                if (hasTouch) {
-                    list.el[0].removeEventListener(eStart, onStartEvent, false);
-                    window.removeEventListener(eMove, onMoveEvent, false);
-                    window.removeEventListener(eEnd, onEndEvent, false);
-                    window.removeEventListener(eCancel, onEndEvent, false);
-                } else {
-                    list.el.off(eStart, onStartEvent);
-                    list.w.off(eMove, onMoveEvent);
-                    list.w.off(eEnd, onEndEvent);
-                }
-
-                list.el.off('click');
-                list.el.unbind('destroy-nestable');
-
-                list.el.data("nestable", null);
-
-                var buttons = list.el[0].getElementsByTagName('button');
-
-                $(buttons).remove();
-            };
-
-            list.el.bind('destroy-nestable', destroyNestable);
-        },
-
-        destroy: function ()
-        {
-            this.expandAll();
-            this.el.trigger('destroy-nestable');
-        },
-
-        serialize: function()
-        {
-            var data,
-                list  = this;
-            const step  = function(level, depth)
-                {
-                    var array = [ ],
-                        items = level.children(list.options.itemNodeName);
-                    items.each(function()
-                    {
-                        var li   = $(this),
-                            item = $.extend({}, li.data()),
-                            sub  = li.children(list.options.listNodeName);
-                        if (sub.length) {
-                            item.children = step(sub);
-                        }
-                        array.push(item);
-                    });
-                    return array;
-                };
-            var el;
-
-            if (list.el.is(list.options.listNodeName)) {
-                el = list.el;
-            } else {
-                el = list.el.find(list.options.listNodeName).first();
-            }
-            data = step(el);
-            return data;
-        },
-
-        reset: function()
-        {
-            this.mouse = {
-                offsetX   : 0,
-                offsetY   : 0,
-                startX    : 0,
-                startY    : 0,
-                lastX     : 0,
-                lastY     : 0,
-                nowX      : 0,
-                nowY      : 0,
-                distX     : 0,
-                distY     : 0,
-                dirAx     : 0,
-                dirX      : 0,
-                dirY      : 0,
-                lastDirX  : 0,
-                lastDirY  : 0,
-                distAxX   : 0,
-                distAxY   : 0
-            };
-            this.moving     = false;
-            this.dragEl     = null;
-            this.dragRootEl = null;
-            this.dragDepth  = 0;
-            this.dragItem   = null;
-            this.hasNewRoot = false;
-            this.pointEl    = null;
-            this.sourceRoot = null;
-            this.isOutsideRoot = false;
-        },
-
-        expandItem: function(li)
-        {
-            li.removeClass(this.options.collapsedClass);
-            li.children('[data-action="expand"]').hide();
-            li.children('[data-action="collapse"]').show();
-            li.children(this.options.listNodeName).show();
-            this.el.trigger('expand', [li]);
-            li.trigger('expand');
-        },
-
-        collapseItem: function(li)
-        {
-            var lists = li.children(this.options.listNodeName);
-            if (lists.length) {
-                li.addClass(this.options.collapsedClass);
-                li.children('[data-action="collapse"]').hide();
-                li.children('[data-action="expand"]').show();
-                li.children(this.options.listNodeName).hide();
-            }
-            this.el.trigger('collapse', [li]);
-            li.trigger('collapse');
-        },
-
-        expandAll: function()
-        {
-            var list = this;
-            list.el.find(list.options.itemNodeName).each(function() {
-                list.expandItem($(this));
-            });
-        },
-
-        collapseAll: function()
-        {
-            var list = this;
-            list.el.find(list.options.itemNodeName).each(function() {
-                list.collapseItem($(this));
-            });
-        },
-
-        setParent: function(li)
-        {
-            if (li.children(this.options.listNodeName).length) {
-                li.prepend($(this.options.expandBtnHTML));
-                li.prepend($(this.options.collapseBtnHTML));
-            }
-            if( (' ' + li[0].className + ' ').indexOf(' ' + defaults.collapsedClass + ' ') > -1 )
-            {
-                li.children('[data-action="collapse"]').hide();
-            } else {
-                li.children('[data-action="expand"]').hide();
-            }
-        },
-
-        unsetParent: function(li)
-        {
-            li.removeClass(this.options.collapsedClass);
-            li.children('[data-action]').remove();
-            li.children(this.options.listNodeName).remove();
-        },
-
-        dragStart: function(e)
-        {
-            var mouse    = this.mouse,
-                target   = $(e.target),
-                dragItem = target.closest('.' + this.options.handleClass).closest(this.options.itemNodeName);
-
-            this.sourceRoot = target.closest('.' + this.options.rootClass);
-
-            this.dragItem = dragItem;
-
-            this.placeEl.css('height', dragItem.height());
-
-            mouse.offsetX = e.offsetX !== undefined$1 ? e.offsetX : e.pageX - target.offset().left;
-            mouse.offsetY = e.offsetY !== undefined$1 ? e.offsetY : e.pageY - target.offset().top;
-            mouse.startX = mouse.lastX = e.pageX;
-            mouse.startY = mouse.lastY = e.pageY;
-
-            this.dragRootEl = this.el;
-
-            this.dragEl = $(document.createElement(this.options.listNodeName)).addClass(this.options.listClass + ' ' + this.options.dragClass);
-            this.dragEl.css('width', dragItem.width());
-
-            // fix for zepto.js
-            //dragItem.after(this.placeEl).detach().appendTo(this.dragEl);
-            if(this.options.cloneNodeOnDrag) {
-                dragItem.after(dragItem.clone());
-            } else {
-                dragItem.after(this.placeEl);
-            }
-            dragItem[0].parentNode.removeChild(dragItem[0]);
-            dragItem.appendTo(this.dragEl);
-
-            $(document.body).append(this.dragEl);
-            this.dragEl.css({
-                'left' : e.pageX - mouse.offsetX,
-                'top'  : e.pageY - mouse.offsetY
-            });
-            // total depth of dragging item
-            var i, depth,
-                items = this.dragEl.find(this.options.itemNodeName);
-            for (i = 0; i < items.length; i++) {
-                depth = $(items[i]).parents(this.options.listNodeName).length;
-                if (depth > this.dragDepth) {
-                    this.dragDepth = depth;
-                }
-            }
-        },
-
-        dragStop: function(e)
-        {
-            // fix for zepto.js
-            //this.placeEl.replaceWith(this.dragEl.children(this.options.itemNodeName + ':first').detach());
-            var el = this.dragEl.children(this.options.itemNodeName).first();
-            el[0].parentNode.removeChild(el[0]);
-
-            if(this.isOutsideRoot && this.options.dragOutsideToDelete)
-                {
-                var parent = this.placeEl.parent();
-                this.placeEl.remove();
-                if (!parent.children().length) {
-                    this.unsetParent(parent.parent());
-                }
-                // If all nodes where deleted, create a placeholder element.
-                if (!this.dragRootEl.find(this.options.itemNodeName).length)
-                     {
-                    this.dragRootEl.append('<div class="' + this.options.emptyClass + '"/>');
-                }
-            } 
-                else 
-                {
-                this.placeEl.replaceWith(el);
-            }
-
-            if (!this.moving)
-            {
-                $(this.dragItem).trigger('click');
-            }
-
-            var i;
-            var isRejected = false;
-            for (i = 0; i < this.options.reject.length; i++)
-            {
-                var reject = this.options.reject[i];
-                if (reject.rule.apply(this.dragRootEl))
-                {
-                    var nestableDragEl = el.clone(true);
-                    this.dragRootEl.html(this.nestableCopy.children().clone(true));
-                    if (reject.action) {
-                        reject.action.apply(this.dragRootEl, [nestableDragEl]);
-                    }
-
-                    isRejected = true;
-                    break;
-                }
-            }
-
-            if (!isRejected)
-            {
-                this.dragEl.remove();
-                this.el.trigger('change');
-
-                //Let's find out new parent id
-                var parentItem = el.parent().parent();
-                var parentId = null;
-                if(parentItem !== null && !parentItem.is('.' + this.options.rootClass))
-                    parentId = parentItem.data('id');
-
-                if($.isFunction(this.options.dropCallback))
-                {
-                    var details = {
-                        sourceId   : el.data('id'),
-                        destId     : parentId,
-                        sourceEl   : el,
-                        destParent : parentItem,
-                        destRoot   : el.closest('.' + this.options.rootClass),
-                        sourceRoot : this.sourceRoot
-                  };
-                  this.options.dropCallback.call(this, details);
-                }
-
-                if (this.hasNewRoot) {
-                    this.dragRootEl.trigger('change');
-                }
-
-                this.reset();
-            }
-        },
-
-        dragMove: function(e)
-        {
-            var list, parent, prev, next, depth,
-                opt   = this.options,
-                mouse = this.mouse;
-
-            this.dragEl.css({
-                'left' : e.pageX - mouse.offsetX,
-                'top'  : e.pageY - mouse.offsetY
-            });
-
-            // mouse position last events
-            mouse.lastX = mouse.nowX;
-            mouse.lastY = mouse.nowY;
-            // mouse position this events
-            mouse.nowX  = e.pageX;
-            mouse.nowY  = e.pageY;
-            // distance mouse moved between events
-            mouse.distX = mouse.nowX - mouse.lastX;
-            mouse.distY = mouse.nowY - mouse.lastY;
-            // direction mouse was moving
-            mouse.lastDirX = mouse.dirX;
-            mouse.lastDirY = mouse.dirY;
-            // direction mouse is now moving (on both axis)
-            mouse.dirX = mouse.distX === 0 ? 0 : mouse.distX > 0 ? 1 : -1;
-            mouse.dirY = mouse.distY === 0 ? 0 : mouse.distY > 0 ? 1 : -1;
-            // axis mouse is now moving on
-            var newAx   = Math.abs(mouse.distX) > Math.abs(mouse.distY) ? 1 : 0;
-
-            // do nothing on first move
-            if (!this.moving) {
-                mouse.dirAx  = newAx;
-                this.moving = true;
-                return;
-            }
-
-            // calc distance moved on this axis (and direction)
-            if (mouse.dirAx !== newAx) {
-                mouse.distAxX = 0;
-                mouse.distAxY = 0;
-            } else {
-                mouse.distAxX += Math.abs(mouse.distX);
-                if (mouse.dirX !== 0 && mouse.dirX !== mouse.lastDirX) {
-                    mouse.distAxX = 0;
-                }
-                mouse.distAxY += Math.abs(mouse.distY);
-                if (mouse.dirY !== 0 && mouse.dirY !== mouse.lastDirY) {
-                    mouse.distAxY = 0;
-                }
-            }
-            mouse.dirAx = newAx;
-
-            /**
-             * move horizontal
-             */
-            if (mouse.dirAx && mouse.distAxX >= opt.threshold) {
-                // reset move distance on x-axis for new phase
-                mouse.distAxX = 0;
-                prev = this.placeEl.prev(opt.itemNodeName);
-                // increase horizontal level if previous sibling exists and is not collapsed
-                if (mouse.distX > 0 && prev.length && !prev.hasClass(opt.collapsedClass) && !prev.hasClass(opt.noChildrenClass)) {
-                    // cannot increase level when item above is collapsed
-                    list = prev.find(opt.listNodeName).last();
-                    // check if depth limit has reached
-                    depth = this.placeEl.parents(opt.listNodeName).length;
-                    if (depth + this.dragDepth <= opt.maxDepth) {
-                        // create new sub-level if one doesn't exist
-                        if (!list.length) {
-                            list = $('<' + opt.listNodeName + '/>').addClass(opt.listClass);
-                            list.append(this.placeEl);
-                            prev.append(list);
-                            this.setParent(prev);
-                        } else {
-                            // else append to next level up
-                            list = prev.children(opt.listNodeName).last();
-                            list.append(this.placeEl);
-                        }
-                    }
-                }
-                // decrease horizontal level
-                if (mouse.distX < 0) {
-                    // we can't decrease a level if an item preceeds the current one
-                    next = this.placeEl.next(opt.itemNodeName);
-                    if (!next.length) {
-                        parent = this.placeEl.parent();
-                        this.placeEl.closest(opt.itemNodeName).after(this.placeEl);
-                        if (!parent.children().length) {
-                            this.unsetParent(parent.parent());
-                        }
-                    }
-                }
-            }
-
-            var isEmpty = false;
-
-            // find list item under cursor
-            if (!hasPointerEvents) {
-                this.dragEl[0].style.visibility = 'hidden';
-            }
-                
-            this.pointEl = $(document.elementFromPoint(e.pageX - document.documentElement.scrollLeft, e.pageY - (window.pageYOffset || document.documentElement.scrollTop)));
-
-            // Check if the node is dragged outside of its list.
-            if(this.dragRootEl.has(this.pointEl).length) {
-                this.isOutsideRoot = false;
-                this.dragEl[0].style.opacity = 1;
-            } else {
-                this.isOutsideRoot = true;
-                this.dragEl[0].style.opacity = 0.5;
-            }
-
-            // find parent list of item under cursor
-            var pointElRoot = this.pointEl.closest('.' + opt.rootClass),
-                isNewRoot   = this.dragRootEl.data('nestable-id') !== pointElRoot.data('nestable-id');
-
-            this.isOutsideRoot = !pointElRoot.length;
-
-            if (!hasPointerEvents) {
-                this.dragEl[0].style.visibility = 'visible';
-            }
-            if (this.pointEl.hasClass(opt.handleClass)) {
-                this.pointEl = this.pointEl.closest( opt.itemNodeName );
-            }
-
-            if (opt.maxDepth == 1 && !this.pointEl.hasClass(opt.itemClass)) {
-                this.pointEl = this.pointEl.closest("." + opt.itemClass);
-            }
-
-            if (this.pointEl.hasClass(opt.emptyClass)) {
-                isEmpty = true;
-            }
-            else if (!this.pointEl.length || !this.pointEl.hasClass(opt.itemClass)) {
-                return;
-            }
-
-            /**
-             * move vertical
-             */
-            if (!mouse.dirAx || isNewRoot || isEmpty) {
-                // check if groups match if dragging over new root
-                if (isNewRoot && opt.group !== pointElRoot.data('nestable-group')) {
-                    return;
-                }
-                // check depth limit
-                depth = this.dragDepth - 1 + this.pointEl.parents(opt.listNodeName).length;
-                if (depth > opt.maxDepth) {
-                    return;
-                }
-                var before = e.pageY < (this.pointEl.offset().top + this.pointEl.height() / 2);
-                    parent = this.placeEl.parent();
-                // if empty create new list to replace empty placeholder
-                if (isEmpty) {
-                    list = $(document.createElement(opt.listNodeName)).addClass(opt.listClass);
-                    list.append(this.placeEl);
-                    this.pointEl.replaceWith(list);
-                }
-                else if (before) {
-                    this.pointEl.before(this.placeEl);
-                }
-                else {
-                    this.pointEl.after(this.placeEl);
-                }
-                if (!parent.children().length) {
-                    this.unsetParent(parent.parent());
-                }
-                if (!this.dragRootEl.find(opt.itemNodeName).length) {
-                    this.dragRootEl.append('<div class="' + opt.emptyClass + '"/>');
-                }
-                // parent root list has changed
-                this.dragRootEl = pointElRoot;
-                if (isNewRoot) {
-                    this.hasNewRoot = this.el[0] !== this.dragRootEl[0];
-                }
-            }
-        }
-
-    };
-
-    $.fn.nestable = function(params)
+    Downcoder.regex = new RegExp('[' + Downcoder.chars + ']|[^' + Downcoder.chars + ']+','g') ;
+  };
+  
+const downcode = function( slug )
+{
+  Downcoder.Initialize() ;
+  var downcoded ="";
+  var pieces = slug.match(Downcoder.regex);
+  if(pieces)
+  {
+    for (var i = 0 ; i < pieces.length ; i++)
     {
-        var lists  = this,
-            retval = this;
-
-        var generateUid = function (separator) {
-            var delim = separator || "-";
-
-            function S4() {
-                return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-            }
-
-            return (S4() + S4() + delim + S4() + delim + S4() + delim + S4() + delim + S4() + S4() + S4());
-        };
-
-        lists.each(function()
+      if (pieces[i].length == 1)
+      {
+        var mapped = Downcoder.map[pieces[i]] ;
+        if (mapped != null)
         {
-            var plugin = $(this).data("nestable");
+          downcoded+=mapped;
+          continue ;
+        }
+      }
+      downcoded+=pieces[i];
+    }
+  }
+  else
+  {
+    downcoded = slug;
+  }
+  return downcoded;
+};
 
-            if (!plugin) {
-                $(this).data("nestable", new Plugin(this, params));
-                $(this).data("nestable-id", generateUid());
-            } else {
-                if (typeof params === 'string' && typeof plugin[params] === 'function') {
-                    retval = plugin[params]();
-                }
-            }
-        });
 
-        return retval || lists;
-    };
-
-})(window.jQuery || window.Zepto, window, document);
+function URLify(s, num_chars) {
+  // changes, e.g., "Petty theft" to "petty_theft"
+  // remove all these words from the string before urlifying
+  s = downcode(s);
+  //
+  // if downcode doesn't hit, the char will be stripped here
+  s = s.replace(/[^-\w\s]/g, ' ');  // remove unneeded chars
+  s = s.replace(/^\s+|\s+$/g, ''); // trim leading/trailing spaces
+  s = s.replace(/[-\s]+/g, '-');   // convert spaces to hyphens
+  s = s.toLowerCase();             // convert to lowercase
+  return s.substring(0, num_chars);// trim to first num_chars chars
+}
 
 /* From https://github.com/TimSchlechter/bootstrap-tagsinput/blob/2661784c2c281d3a69b93897ff3f39e4ffa5cbd1/dist/bootstrap-tagsinput.js */
 
@@ -4672,144 +4168,6 @@ class ExhibitTagAutocomplete {
   }
 }
 
-/*
-https://gist.github.com/pjambet/3710461
-*/
-var LATIN_MAP = {
-  'À': 'A', 'Á': 'A', 'Â': 'A', 'Ã': 'A', 'Ä': 'A', 'Å': 'A', 'Æ': 'AE', 'Ç':
-  'C', 'È': 'E', 'É': 'E', 'Ê': 'E', 'Ë': 'E', 'Ì': 'I', 'Í': 'I', 'Î': 'I',
-  'Ï': 'I', 'Ð': 'D', 'Ñ': 'N', 'Ò': 'O', 'Ó': 'O', 'Ô': 'O', 'Õ': 'O', 'Ö':
-  'O', 'Ő': 'O', 'Ø': 'O', 'Ù': 'U', 'Ú': 'U', 'Û': 'U', 'Ü': 'U', 'Ű': 'U',
-  'Ý': 'Y', 'Þ': 'TH', 'ß': 'ss', 'à':'a', 'á':'a', 'â': 'a', 'ã': 'a', 'ä':
-  'a', 'å': 'a', 'æ': 'ae', 'ç': 'c', 'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e',
-  'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i', 'ð': 'd', 'ñ': 'n', 'ò': 'o', 'ó':
-  'o', 'ô': 'o', 'õ': 'o', 'ö': 'o', 'ő': 'o', 'ø': 'o', 'ù': 'u', 'ú': 'u',
-  'û': 'u', 'ü': 'u', 'ű': 'u', 'ý': 'y', 'þ': 'th', 'ÿ': 'y'
-};
-var LATIN_SYMBOLS_MAP = {
-  '©':'(c)'
-};
-var GREEK_MAP = {
-  'α':'a', 'β':'b', 'γ':'g', 'δ':'d', 'ε':'e', 'ζ':'z', 'η':'h', 'θ':'8',
-  'ι':'i', 'κ':'k', 'λ':'l', 'μ':'m', 'ν':'n', 'ξ':'3', 'ο':'o', 'π':'p',
-  'ρ':'r', 'σ':'s', 'τ':'t', 'υ':'y', 'φ':'f', 'χ':'x', 'ψ':'ps', 'ω':'w',
-  'ά':'a', 'έ':'e', 'ί':'i', 'ό':'o', 'ύ':'y', 'ή':'h', 'ώ':'w', 'ς':'s',
-  'ϊ':'i', 'ΰ':'y', 'ϋ':'y', 'ΐ':'i',
-  'Α':'A', 'Β':'B', 'Γ':'G', 'Δ':'D', 'Ε':'E', 'Ζ':'Z', 'Η':'H', 'Θ':'8',
-  'Ι':'I', 'Κ':'K', 'Λ':'L', 'Μ':'M', 'Ν':'N', 'Ξ':'3', 'Ο':'O', 'Π':'P',
-  'Ρ':'R', 'Σ':'S', 'Τ':'T', 'Υ':'Y', 'Φ':'F', 'Χ':'X', 'Ψ':'PS', 'Ω':'W',
-  'Ά':'A', 'Έ':'E', 'Ί':'I', 'Ό':'O', 'Ύ':'Y', 'Ή':'H', 'Ώ':'W', 'Ϊ':'I',
-  'Ϋ':'Y'
-};
-var TURKISH_MAP = {
-  'ş':'s', 'Ş':'S', 'ı':'i', 'İ':'I', 'ç':'c', 'Ç':'C', 'ü':'u', 'Ü':'U',
-  'ö':'o', 'Ö':'O', 'ğ':'g', 'Ğ':'G'
-};
-var RUSSIAN_MAP = {
-  'а':'a', 'б':'b', 'в':'v', 'г':'g', 'д':'d', 'е':'e', 'ё':'yo', 'ж':'zh',
-  'з':'z', 'и':'i', 'й':'j', 'к':'k', 'л':'l', 'м':'m', 'н':'n', 'о':'o',
-  'п':'p', 'р':'r', 'с':'s', 'т':'t', 'у':'u', 'ф':'f', 'х':'h', 'ц':'c',
-  'ч':'ch', 'ш':'sh', 'щ':'sh', 'ъ':'', 'ы':'y', 'ь':'', 'э':'e', 'ю':'yu',
-  'я':'ya',
-  'А':'A', 'Б':'B', 'В':'V', 'Г':'G', 'Д':'D', 'Е':'E', 'Ё':'Yo', 'Ж':'Zh',
-  'З':'Z', 'И':'I', 'Й':'J', 'К':'K', 'Л':'L', 'М':'M', 'Н':'N', 'О':'O',
-  'П':'P', 'Р':'R', 'С':'S', 'Т':'T', 'У':'U', 'Ф':'F', 'Х':'H', 'Ц':'C',
-  'Ч':'Ch', 'Ш':'Sh', 'Щ':'Sh', 'Ъ':'', 'Ы':'Y', 'Ь':'', 'Э':'E', 'Ю':'Yu',
-  'Я':'Ya'
-};
-var UKRAINIAN_MAP = {
-  'Є':'Ye', 'І':'I', 'Ї':'Yi', 'Ґ':'G', 'є':'ye', 'і':'i', 'ї':'yi', 'ґ':'g'
-};
-var CZECH_MAP = {
-  'č':'c', 'ď':'d', 'ě':'e', 'ň': 'n', 'ř':'r', 'š':'s', 'ť':'t', 'ů':'u',
-  'ž':'z', 'Č':'C', 'Ď':'D', 'Ě':'E', 'Ň': 'N', 'Ř':'R', 'Š':'S', 'Ť':'T',
-  'Ů':'U', 'Ž':'Z'
-};
-
-var POLISH_MAP = {
-  'ą':'a', 'ć':'c', 'ę':'e', 'ł':'l', 'ń':'n', 'ó':'o', 'ś':'s', 'ź':'z',
-  'ż':'z', 'Ą':'A', 'Ć':'C', 'Ę':'e', 'Ł':'L', 'Ń':'N', 'Ó':'o', 'Ś':'S',
-  'Ź':'Z', 'Ż':'Z'
-};
-
-var LATVIAN_MAP = {
-  'ā':'a', 'č':'c', 'ē':'e', 'ģ':'g', 'ī':'i', 'ķ':'k', 'ļ':'l', 'ņ':'n',
-  'š':'s', 'ū':'u', 'ž':'z', 'Ā':'A', 'Č':'C', 'Ē':'E', 'Ģ':'G', 'Ī':'i',
-  'Ķ':'k', 'Ļ':'L', 'Ņ':'N', 'Š':'S', 'Ū':'u', 'Ž':'Z'
-};
-
-var ALL_DOWNCODE_MAPS=new Array();
-ALL_DOWNCODE_MAPS[0]=LATIN_MAP;
-ALL_DOWNCODE_MAPS[1]=LATIN_SYMBOLS_MAP;
-ALL_DOWNCODE_MAPS[2]=GREEK_MAP;
-ALL_DOWNCODE_MAPS[3]=TURKISH_MAP;
-ALL_DOWNCODE_MAPS[4]=RUSSIAN_MAP;
-ALL_DOWNCODE_MAPS[5]=UKRAINIAN_MAP;
-ALL_DOWNCODE_MAPS[6]=CZECH_MAP;
-ALL_DOWNCODE_MAPS[7]=POLISH_MAP;
-ALL_DOWNCODE_MAPS[8]=LATVIAN_MAP;
-
-var Downcoder = new Object();
-Downcoder.Initialize = function()
-{
-  if (Downcoder.map) // already made
-    return ;
-    Downcoder.map ={};
-    Downcoder.chars = '' ;
-    for(var i in ALL_DOWNCODE_MAPS)
-    {
-      var lookup = ALL_DOWNCODE_MAPS[i];
-      for (var c in lookup)
-      {
-        Downcoder.map[c] = lookup[c] ;
-        Downcoder.chars += c ;
-      }
-    }
-    Downcoder.regex = new RegExp('[' + Downcoder.chars + ']|[^' + Downcoder.chars + ']+','g') ;
-  };
-  
-const downcode = function( slug )
-{
-  Downcoder.Initialize() ;
-  var downcoded ="";
-  var pieces = slug.match(Downcoder.regex);
-  if(pieces)
-  {
-    for (var i = 0 ; i < pieces.length ; i++)
-    {
-      if (pieces[i].length == 1)
-      {
-        var mapped = Downcoder.map[pieces[i]] ;
-        if (mapped != null)
-        {
-          downcoded+=mapped;
-          continue ;
-        }
-      }
-      downcoded+=pieces[i];
-    }
-  }
-  else
-  {
-    downcoded = slug;
-  }
-  return downcoded;
-};
-
-
-function URLify(s, num_chars) {
-  // changes, e.g., "Petty theft" to "petty_theft"
-  // remove all these words from the string before urlifying
-  s = downcode(s);
-  //
-  // if downcode doesn't hit, the char will be stripped here
-  s = s.replace(/[^-\w\s]/g, ' ');  // remove unneeded chars
-  s = s.replace(/^\s+|\s+$/g, ''); // trim leading/trailing spaces
-  s = s.replace(/[-\s]+/g, '-');   // convert spaces to hyphens
-  s = s.toLowerCase();             // convert to lowercase
-  return s.substring(0, num_chars);// trim to first num_chars chars
-}
-
 class Exhibits {
   connect() {
     // auto-fill the exhibit slug on the new exhibit form
@@ -5428,70 +4786,191 @@ class SelectRelatedInput {
 }
 
 const Module = (function() {
-    var nestableSelector = '[data-behavior="nestable"]';
-    return {
-      init: function(selector){
+  const nestableContainerSelector = '[data-behavior="nestable"]';
+  const sortableOptions = {
+    animation: 150,
+    draggable: '.dd-item',
+    handle: '.dd-handle',
+    fallbackOnBody: true,
+    swapThreshold: 0.65,
+    emptyInsertThreshold: 15,
+    onStart: onStartHandler,
+    onEnd: onEndHandler,
+    onMove: onMoveHandler,
+  };
+  const draggableClass = 'dd-item';
+  const nestedSortableClass = 'dd-list';
+  const nestedSortableSelector = '.dd-list';
+  const nestedSortableNodeName = 'ol';
+  const findNode = (id, container) => container.querySelector(`[data-id="${id}"]`);
+  const setWeight = (node, weight) => weightField(node).value = weight;
+  const setParent = (node, parentId) => parentPageField(node).value = parentId;
+  const weightField = node => findProperty(node, "weight");
+  const parentPageField = node => findProperty(node, "parent_page");
+  const findProperty = (node, property) => node.querySelector(`input[data-property="${property}"]`);
+  let nestedId = 0;
 
-        $(selector || nestableSelector).each(function(){
-          // Because the Rails helper will not maintain the case that Nestable
-          // expects, we just need to do this manual conversion. :(
-          var data = $(this).data();
-          data.expandBtnHTML = data.expandBtnHtml;
-          data.collapseBtnHTML = data.collapseBtnHtml;
-          $(this).nestable(data);
-          updateWeightsAndRelationships($(this));
-        });
+  return {
+    init: function(nestedContainers) {
+      if (nestedContainers === undefined) {
+        nestedContainers = document.querySelectorAll(nestableContainerSelector);
       }
-    };
-    function updateWeightsAndRelationships(nestedList){
-      nestedList.on('change', function(event){
-        var container = $(event.currentTarget);
-        var data = $(this).nestable('serialize');
-        var weight = 0;
-        for(var i in data){
-          var parent_id = data[i]['id'];
-          const parent_node = findNode(parent_id, container);
-          setWeight(parent_node, weight++);
-          if(data[i]['children']){
-            var children = data[i]['children'];
-            for(var child in children){
-              var id = children[child]['id'];
-              var child_node = findNode(id, container);
-              setWeight(child_node, weight++);
-              setParent(child_node, parent_id);
-            }
-          } else {
-            setParent(parent_node, "");
+
+      // nestedContainers could be a jQuery selector result, normalize to an array.
+      const containersToInit = Array.from(nestedContainers);
+      containersToInit.forEach((container) => {
+        // Sir Trevor listens for drag and drop events and will error on Sortable events.
+        // Don't let them bubble past the Sortable wrapper.
+        container.addEventListener('drop', stopPropagationHandler);
+      
+        const nestedSortables = [
+          ...(container.matches(nestedSortableSelector) ? [container] : []),
+          ...Array.from(container.querySelectorAll(nestedSortableSelector))
+        ];
+        const group = `nested-${nestedId++}`;
+        
+        nestedSortables.forEach(sortable => {
+          new Sortable(sortable, { ...sortableOptions, group: group });
+        });
+      });
+    }
+  };
+
+  function stopPropagationHandler(evt) {
+    evt.stopPropagation();
+  }
+
+  function onStartHandler(evt) {
+    makeEmptyChildSortablesForEligibleParents(getNestableContainer(evt.item), getMaxNestingLevelSetting(evt.item));
+  }
+
+  function onEndHandler(evt) {
+    const nestableContainer = getNestableContainer(evt.item);
+    removeEmptySortables(nestableContainer);
+    updateWeightsAndRelationships(nestableContainer);
+  }
+
+  function onMoveHandler(evt) {
+    // The usage of data-max-depth is one off of the standard notion of depth (# edges to root)
+    // E.g., data-max-depth=2 allows for one level of nesting.
+    // evt.dragged is a draggable in a Sortable (e.g., a dd-item)
+    // evt.to is the Sortable to insert into (e.g., a dd-list)
+    const maxAllowedDepth = getMaxNestingLevelSetting(evt.to) - 1;
+    const newDepth = getSortableDepth(evt.to) + getHeight(evt.dragged);
+
+    // Be careful here. Returning true is different than returning nothing in SortableJS.
+    if (newDepth > maxAllowedDepth) {
+      return false;
+    }
+  }
+
+  // Get the depth of the sortable element from the root container
+  function getSortableDepth(sortableElement) {
+    const originatingGroup = Sortable.get(sortableElement).options.group.name;
+    let depth = 0;
+    let parentSortableElement = sortableElement;
+
+    while ((parentSortableElement = parentSortableElement.parentElement.closest(nestedSortableSelector))) {
+      const parentSortable = Sortable.get(parentSortableElement);
+      if (parentSortable?.options.group.name === originatingGroup) {
+        depth++;
+      }
+    }
+
+    return depth;
+  }
+
+  // Find the max child depth in the tree, starting from the draggableElement
+  function findMaxDepth(draggableElement) {
+    const childSortableElement = draggableElement.querySelector(nestedSortableSelector);
+    if (!childSortableElement) {
+      return 1;
+    }
+
+    const children = childSortableElement.querySelectorAll(`.${draggableClass}`);
+    const childDepths = Array.from(children).map(findMaxDepth);
+    return 1 + Math.max(0, ...childDepths);
+  }
+
+  function getHeight(draggableElement) {
+    return findMaxDepth(draggableElement) - 1;
+  }
+
+  function getNestableContainer(element) {
+    return element.closest(nestableContainerSelector);
+  }
+
+  function getMaxNestingLevelSetting(element) {
+    return getNestableContainer(element).getAttribute('data-max-depth') || 1;
+  }
+
+  // Create empty child sortables for all potential parents as appropriate for the given nesting level
+  function makeEmptyChildSortablesForEligibleParents(container, nestingLevel) {
+    if (nestingLevel <= 1) {
+      return;
+    }
+
+    const sortableElement = container.querySelector(nestedSortableSelector);
+    const sortable = Sortable.get(sortableElement);
+    if (!sortable) {
+      return;
+    }
+
+    const group = sortable.options.group.name;
+    const draggableElements = Array.from(sortableElement.children)
+      .filter(child => child.classList.contains(draggableClass));
+
+    draggableElements.forEach(draggableElement => {
+      if (!draggableElement.querySelector(nestedSortableSelector)) {
+        const emptySortableElement = document.createElement(nestedSortableNodeName);
+        emptySortableElement.className = nestedSortableClass;
+        draggableElement.appendChild(emptySortableElement);
+        new Sortable(emptySortableElement, { ...sortableOptions, group: group });
+      }
+      makeEmptyChildSortablesForEligibleParents(draggableElement, nestingLevel - 1);
+    });
+  }
+
+  // Remove any empty sortables within the container. They could be empty lists, which are invalid for accessibility.
+  function removeEmptySortables(container) {
+    const sortableElements = container.querySelectorAll(nestedSortableSelector);
+    sortableElements.forEach(sortableElement => {
+      if (sortableElement.innerHTML.trim() === '') {
+        const sortable = Sortable.get(sortableElement);
+        if (sortable) {
+          sortable.destroy();
+          sortableElement.remove();
+        }
+      }
+    });
+  }
+
+  // Traverse all sortables within a container and update the weight and parent_page inputs
+  function updateWeightsAndRelationships(container) {
+    const sortableElement = container.matches(nestedSortableSelector) ? container : container.querySelector(nestedSortableSelector);
+    const nestingLevelSetting = getMaxNestingLevelSetting(sortableElement);
+    const sortable = Sortable.get(sortableElement);
+    const stack = [{nodes: sortable.toArray(), parentId: ''}];
+    let weight = 0;
+
+    while (stack.length > 0) {
+      const {nodes, parentId} = stack.pop();
+
+      nodes.forEach((nodeId) => {
+        const node = findNode(nodeId, container);
+        setWeight(node, weight++);
+
+        if (nestingLevelSetting > 1) {
+          setParent(node, parentId);
+          const children = node.querySelector(nestedSortableSelector);
+          if (children) {
+            const sortableElement = Sortable.get(children);
+            stack.push({nodes: sortableElement.toArray(), parentId: nodeId});
           }
         }
       });
-
     }
-    function findNode(id, container) {
-      return container.find("[data-id="+id+"]");
-    }
-
-    function setWeight(node, weight) {
-      weight_field(node).val(weight);
-    }
-
-    function setParent(node, parent_id) {
-      parent_page_field(node).val(parent_id);
-    }
-
-    /* find the input element with data-property="weight" that is nested under the given node */
-    function weight_field(node) {
-      return find_property(node, "weight");
-    }
-
-    /* find the input element with data-property="parent_page" that is nested under the given node */
-    function parent_page_field(node){
-      return find_property(node, "parent_page");
-    }
-
-    function find_property(node, property) {
-      return node.find("input[data-property=" + property + "]");
-    }
+  }
 })();
 
 class Tabs {
