@@ -87,5 +87,11 @@ module Spotlight
 
       default
     end
+
+    def embedded_document_presenter(document, view_config: nil)
+      return document_presenter(document) if view_config.nil? || Blacklight.version < '8.0'
+
+      view_config.document_presenter_class.new(document, self, view_config: view_config)
+    end
   end
 end
