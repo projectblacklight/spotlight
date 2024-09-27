@@ -123,7 +123,7 @@ module Spotlight
         config.view.embed!
         # This is blacklight-gallery's openseadragon partial
         unless config.view.embed.document_component
-          config.view.embed.partials ||= ['openseadragon']
+          config.view.embed.partials ||= ['openseadragon'] unless config.view.embed.embed_component
           config.view.embed.document_component = Spotlight::SolrDocumentLegacyEmbedComponent
         end
         config.view.embed.if = false
