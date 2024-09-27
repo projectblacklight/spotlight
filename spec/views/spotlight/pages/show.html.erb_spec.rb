@@ -35,7 +35,7 @@ describe 'spotlight/pages/show', type: :view do
   end
 
   context 'when rendering with layout' do
-    let(:blacklight_config) { Blacklight::Configuration.new }
+    let(:blacklight_config) { Blacklight::Configuration.new header_component: Spotlight::HeaderComponent }
     let(:document) { SolrDocument.new id: 'xyz', format: 'a' }
     let(:presenter) { Blacklight::ShowPresenter.new(document, view, blacklight_config) }
 
