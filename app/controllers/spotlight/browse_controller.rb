@@ -67,13 +67,13 @@ module Spotlight
     end
 
     def attach_breadcrumbs
-      add_breadcrumb t(:'spotlight.curation.nav.home', title: @exhibit.title), @exhibit
+      add_breadcrumb(t(:'spotlight.curation.nav.home', title: @exhibit.title), @exhibit)
       add_breadcrumb(@exhibit.main_navigations.browse.label_or_default, exhibit_browse_index_path(@exhibit))
       add_breadcrumb(@group.title, exhibit_browse_groups_path(@exhibit, @group)) if @group.present?
     end
 
     def attach_search_breadcrumb
-      add_breadcrumb @search.full_title, (@group.present? ? exhibit_browse_group_path(@exhibit, @group, @search) : exhibit_browse_path(@exhibit, @search))
+      add_breadcrumb(@search.full_title, (@group.present? ? exhibit_browse_group_path(@exhibit, @group, @search) : exhibit_browse_path(@exhibit, @search)))
     end
 
     def _prefixes

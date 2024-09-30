@@ -46,7 +46,7 @@ module Spotlight
 
     def attach_section_breadcrumbs
       if action_name == 'edit'
-        add_breadcrumb t(:'spotlight.pages.index.about_pages.header'), exhibit_about_pages_path(@exhibit)
+        add_breadcrumb(t(:'spotlight.pages.index.about_pages.header'), exhibit_about_pages_path(@exhibit))
       else
         add_breadcrumb(@exhibit.main_navigations.about.label_or_default, [spotlight, @exhibit, @exhibit.main_about_page])
       end

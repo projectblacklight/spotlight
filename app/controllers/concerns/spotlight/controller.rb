@@ -11,7 +11,7 @@ module Spotlight
     include Spotlight::Config
 
     included do
-      helper_method :current_site, :current_exhibit, :current_masthead, :exhibit_masthead?, :resource_masthead?
+      helper_method :current_site, :current_exhibit, :current_masthead, :exhibit_masthead?, :resource_masthead?, :breadcrumbs
       before_action :set_exhibit_locale_scope, :set_locale
     end
 
@@ -21,6 +21,14 @@ module Spotlight
 
     def current_site
       @current_site ||= Spotlight::Site.instance
+    end
+
+    def breadcrumbs
+      @breadcrumbs ||= []
+    end
+
+    def add_breadcrumb(name, path = nil, _current = nil)
+      breadcrumbs << Breadcrumb.new(name, path)
     end
 
     def current_exhibit

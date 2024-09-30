@@ -26,7 +26,6 @@ these collections.)
   s.add_dependency 'blacklight', '>= 7.19', '< 9'
   s.add_dependency 'blacklight-gallery', '>= 3.0', '< 5'
   s.add_dependency 'bootstrap_form', '>= 4.1', '< 6'
-  s.add_dependency 'breadcrumbs_on_rails', '>= 3.0', '< 5'
   s.add_dependency 'cancancan'
   s.add_dependency 'carrierwave', '~> 2.2'
   s.add_dependency 'clipboard-rails', '~> 1.5'
