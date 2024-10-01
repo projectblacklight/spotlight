@@ -18,7 +18,14 @@ module Spotlight
       DESCRIPTION
 
       def install_dependencies
-        copy_file 'package.json', 'package.json'
+        copy_file 'package.json', 'package.json' unless File.exist?('package.json')
+        run 'yarn add @hotwired/turbo-rails'
+        run 'yarn add clipboard'
+        run 'yarn add jquery'
+        run 'yarn add jquery-serializejson'
+        run 'yarn add leaflet'
+        run 'yarn add leaflet-iiif'
+        run 'yarn add sir-trevor'
         run 'yarn install'
       end
 
@@ -28,6 +35,11 @@ module Spotlight
 
       def add_bootstrap
         run "yarn add bootstrap@\"~#{bootstrap_yarn_version}\""
+        if bootstrap4?
+          run 'yarn add popper.js'
+        else
+          run 'yarn add @popperjs/core'
+        end
       end
 
       def install_gems
@@ -62,12 +74,20 @@ module Spotlight
       end
 
       def add_javascript
-        copy_file 'assets/spotlight.js', 'app/javascript/application.js', force: true
+        gsub_file 'app/javascript/application.js', 'import "controllers"', '// import "controllers"'
+
+        append_to_file 'app/javascript/application.js', "\n// Bootstrap\nimport * as Bootstrap from 'bootstrap'\n"
+
+        if Blacklight::VERSION.start_with?('7')
+          append_to_file 'app/javascript/application.js', "\n// Blacklight\nimport \"blacklight-frontend/app/assets/javascripts/blacklight/blacklight.js\"\n"
+        end
+
+        append_to_file 'app/javascript/application.js', "\n// Spotlight\nimport Spotlight from \"spotlight-frontend\"\n"
       end
 
       def add_stylesheets
-        copy_file 'assets/application.sass.scss', 'app/assets/stylesheets/application.sass.scss', force: true
         copy_file 'assets/spotlight.scss', 'app/assets/stylesheets/spotlight.scss'
+        append_to_file 'app/assets/stylesheets/application.sass.scss', "\n@import \"spotlight\";\n"
       end
 
       # This resolves a bundling issue with bootstrap/popper on esbuild.
@@ -82,6 +102,10 @@ module Spotlight
       # Support the gem version format e.g.,  `~> 5.3` for consistency.
       def bootstrap_yarn_version
         options[:'bootstrap-version'].match(/(\d+(\.\d+)*)/)[0]
+      end
+
+      def bootstrap4?
+        bootstrap_yarn_version.start_with?('4')
       end
 
       # Yarn link was including so many files (and a circular reference) that Propshaft was having a bad time.

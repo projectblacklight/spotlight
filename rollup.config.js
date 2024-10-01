@@ -10,13 +10,15 @@ const external = [
   'clipboard',
   'jquery-serializejson',
   'jquery',
-  'leaflet'
+  'leaflet',
+  'sir-trevor'
 ]
 const globals = {
   'blacklight-frontend': 'Blacklight',
   clipboard: 'Clipboard',
   jquery: 'jQuery',
-  leaflet: 'L'
+  leaflet: 'L',
+  'sir-trevor': 'SirTrevor'
 }
 
 let includePathOptions = {
