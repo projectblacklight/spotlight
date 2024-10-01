@@ -38,6 +38,7 @@
     "jquery": "^3.7.1",
     "jquery-serializejson": "^3.2.1",
     "leaflet": "^1.9.4",
-    "leaflet-iiif": "^3.0.0"
+    "leaflet-iiif": "^3.0.0",
+    "sir-trevor": "^0.8.2"
   }
 }
