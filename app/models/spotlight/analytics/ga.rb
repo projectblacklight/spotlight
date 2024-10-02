@@ -37,8 +37,8 @@ module Spotlight
           filter: Google::Analytics::Data::V1beta::Filter.new(
             field_name: 'pagePath',
             string_filter: Google::Analytics::Data::V1beta::Filter::StringFilter.new(
-              match_type: :BEGINS_WITH,
-              value: path.to_s
+              match_type: :PARTIAL_REGEXP,
+              value: "^#{path}(/.*)?$"
             )
           )
         )
