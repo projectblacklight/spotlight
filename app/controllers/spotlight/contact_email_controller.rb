@@ -12,13 +12,19 @@ module Spotlight
 
     def destroy
       @contact_email.destroy
-      render json: { success: true, error: nil }
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.remove(@contact_email) }
+        format.json { render json: { success: true, error: nil } }
+      end
     end
 
     private
 
     def record_not_found(_error)
-      render json: { success: false, error: 'Not Found' }, status: :not_found
+      respond_to do |format|
+        format.turbo_stream { head :not_found }
+        format.json { render json: { success: false, error: 'Not Found' }, status: :not_found }
+      end
     end
   end
 end

@@ -1,5 +1,7 @@
 export default class {
   connect() {
-    $('.carousel').carousel();
+    if ($.fn.carousel) {
+      $('.carousel').carousel();
+    }
   }
 }

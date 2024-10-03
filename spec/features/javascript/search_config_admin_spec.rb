@@ -61,6 +61,7 @@ describe 'Search Configuration Administration', js: true do
       fill_in(input_id, with: 'Topic')
 
       click_button 'Save changes'
+      sleep 1 # Test fails without this after move to Propshaft.
       click_link 'Facets'
 
       expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)

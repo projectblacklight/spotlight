@@ -38,6 +38,7 @@ describe 'Editing metadata fields', type: :feature do
     fill_in :blacklight_configuration_index_fields_language_ssm_label, with: 'Language of Origin'
 
     click_on 'Save changes'
+    sleep 1 # Test fails without this after move to Propshaft.
     expect(exhibit.reload.blacklight_config.index_fields['language_ssm'].label).to eq 'Language of Origin'
   end
 

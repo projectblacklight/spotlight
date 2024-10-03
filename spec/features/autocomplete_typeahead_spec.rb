@@ -21,6 +21,7 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
         expect(page).to have_css('.leaflet-container', visible: true)
 
         click_button 'Save changes'
+        sleep 1 # Test fails without this after move to Propshaft.
 
         featured_image = Spotlight::FeaturedImage.last
 

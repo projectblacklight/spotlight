@@ -9,13 +9,15 @@ module Spotlight
     source_root File.expand_path('templates', __dir__)
     class_option :solr_update_class, type: :string, default: 'Spotlight::SolrDocument::AtomicUpdates'
     class_option :mailer_default_url_host, type: :string, default: '' # e.g. localhost:3000
+    class_option :test, type: :boolean, default: false, aliases: '-t', desc: 'Indicates that app will be installed in a test environment'
+    class_option :'bootstrap-version', type: :string, default: ENV.fetch('BOOTSTRAP_VERSION', '~> 5.3'), desc: "Set the generated app's bootstrap version"
 
-    def add_manifest
-      append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
-      append_to_file 'app/assets/config/manifest.js', "\n//= link spotlight/manifest.js"
-
-      # Rails installed importmap by default, but we don't have importmap + Blacklight 7 working yet.
-      remove_file 'app/javascript/application.js'
+    def generate_assets
+      if options[:test]
+        generate 'spotlight:assets', '--test=true'
+      else
+        generate 'spotlight:assets'
+      end
     end
 
     def inject_spotlight_routes
@@ -54,11 +56,6 @@ module Spotlight
         Added a default sitemap_generator configuration in config/sitemap.rb; please
         update the default host to match your environment
       EOS
-    end
-
-    def assets
-      copy_file 'spotlight.scss', 'app/assets/stylesheets/spotlight.scss'
-      copy_file 'spotlight.js', 'app/assets/javascripts/spotlight.js'
     end
 
     def add_roles_to_user

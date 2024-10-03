@@ -1,4 +1,6 @@
 import Core from 'spotlight/core'
+import SirTrevor from 'sir-trevor'
+
 (function ($){
   Core.Block = SirTrevor.Block.extend({
     scribeOptions: {

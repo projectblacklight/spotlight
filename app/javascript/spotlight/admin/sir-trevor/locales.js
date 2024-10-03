@@ -1,3 +1,5 @@
+import SirTrevor from 'sir-trevor'
+
 SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
   autocompleteable: {
     placeholder: "Enter a title..."

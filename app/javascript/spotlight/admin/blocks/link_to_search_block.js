@@ -1,3 +1,5 @@
+import SirTrevor from 'sir-trevor'
+
 SirTrevor.Blocks.LinkToSearch = (function(){
 
   return SirTrevor.Blocks.Browse.extend({

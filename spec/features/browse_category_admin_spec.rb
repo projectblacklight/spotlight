@@ -22,7 +22,9 @@ describe 'Browse Category Administration', type: :feature do
       fill_in 'search_title', with: 'Some search'
       expect do
         find('input[name="commit"]').click
+        sleep 1 # Test fails without this after move to Propshaft.
         exhibit.searches.reload
+        sleep 1 # Test fails without this after move to Propshaft.
       end.to change { exhibit.searches.count }.by 1
       expect(exhibit.searches.last.query_params).to eq 'q' => 'xyz'
     end
@@ -33,6 +35,7 @@ describe 'Browse Category Administration', type: :feature do
       expect(page).to have_css('#save-modal')
       select search.title, from: 'id'
       find('input[name="commit"]').click
+      sleep 1 # Test fails without this after move to Propshaft.
       expect(search.reload.query_params).to eq 'q' => 'xyz'
     end
   end

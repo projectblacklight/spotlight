@@ -30,6 +30,9 @@ require 'engine_cart/rake_task'
 
 require 'spotlight/version'
 
+# Ensure the app generates with Propshaft; sprockets is no longer supported
+ENV['ENGINE_CART_RAILS_OPTIONS'] = "#{ENV.fetch('ENGINE_CART_RAILS_OPTIONS', nil)} -a propshaft"
+
 task ci: ['engine_cart:generate'] do
   ENV['environment'] = 'test'
 
@@ -63,7 +66,7 @@ namespace :spotlight do
             system 'bin/rails spotlight:initialize spotlight_test:solr:seed'
             File.open('.initialized', 'w') {}
           end
-          system 'bin/rails s'
+          system 'bin/dev'
         end
       end
     end

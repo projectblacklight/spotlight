@@ -60,6 +60,13 @@
   }
 }
 
+// Don't show the private label until Blacklight reports success
+tr.doc-row:has(input.toggle-visibility:disabled:not(:checked)) {
+  .index_title::after {
+    display: none;
+  }
+}
+
 .blacklight-catalog-admin {
   .add-items-nav {
     margin-bottom: $spacer;

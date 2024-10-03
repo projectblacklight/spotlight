@@ -42,6 +42,7 @@ describe 'Report a Problem', type: :feature do
 
       expect do
         click_on 'Send'
+        sleep 1 # Test fails without this after move to Propshaft.
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
 

@@ -38,7 +38,7 @@ jobs:
       RAILS_VERSION: ${{ matrix.rails_version }}
       BLACKLIGHT_VERSION: ${{ matrix.blacklight_version }}
       BOOTSTRAP_VERSION: ${{ matrix.bootstrap_version }}
-      ENGINE_CART_RAILS_OPTIONS: "--skip-git --skip-listen --skip-spring --skip-keeps --skip-coffee --skip-test ${{ matrix.additional_engine_cart_rails_options }}"
+      ENGINE_CART_RAILS_OPTIONS: "--skip-git --skip-listen --skip-spring --skip-keeps --skip-coffee --skip-test -a propshaft ${{ matrix.additional_engine_cart_rails_options }}"
     steps:
       - uses: actions/checkout@v4
       # Remove these Chrome steps after https://issues.chromium.org/issues/351858989 is fixed

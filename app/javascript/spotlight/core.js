@@ -1,3 +1,6 @@
+import Blacklight from "blacklight-frontend"
+import SirTrevor from "sir-trevor"
+
 const Spotlight = function() {
   var buffer = [];
   return {
@@ -6,6 +9,7 @@ const Spotlight = function() {
     },
 
     activate: function() {
+      this.sirTrevorIcon = window.sirTrevorIcon;
       for(var i = 0; i < buffer.length; i++) {
         buffer[i].call();
       }
@@ -23,10 +27,9 @@ const Spotlight = function() {
 
 // This allows us to configure Spotlight in app/views/layouts/base.html.erb
 window.Spotlight = Spotlight
-
+window.SirTrevor = SirTrevor
 export default Spotlight
 
 Blacklight.onLoad(function() {
   Spotlight.activate();
 });
-

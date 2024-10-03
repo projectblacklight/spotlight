@@ -1,6 +1,7 @@
 'use strict'
 
 import includePaths from 'rollup-plugin-includepaths';
+import commonjs from '@rollup/plugin-commonjs';
 
 const path = require('path')
 
@@ -8,8 +9,21 @@ const BUNDLE = process.env.BUNDLE === 'true'
 const ESM = process.env.ESM === 'true'
 
 const fileDest = `spotlight${ESM ? '.esm' : ''}`
-const external = []
-const globals = {}
+const external = [
+  'blacklight-frontend',
+  'clipboard',
+  'jquery-serializejson',
+  'jquery',
+  'leaflet',
+  'sir-trevor'
+]
+const globals = {
+  'blacklight-frontend': 'Blacklight',
+  clipboard: 'Clipboard',
+  jquery: 'jQuery',
+  leaflet: 'L',
+  'sir-trevor': 'SirTrevor'
+}
 
 let includePathOptions = {
   include: {},
@@ -27,7 +41,7 @@ const rollupConfig = {
     generatedCode: 'es2015'
   },
   external,
-  plugins: [includePaths(includePathOptions)]
+  plugins: [includePaths(includePathOptions), commonjs()]
 }
 
 if (!ESM) {

@@ -1,4 +1,5 @@
 // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
+// Includes "export default tns" at the end of the file for spotlight/user/browse_group_categories.js
 var tns = (function (){
 var win = window;
 
@@ -3216,3 +3217,5 @@ var tns = function(options) {
 
 return tns;
 })();
+
+export default tns;

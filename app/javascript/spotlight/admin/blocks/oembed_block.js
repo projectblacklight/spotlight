@@ -7,6 +7,7 @@
   and displays them.
 */
 import Core from 'spotlight/core'
+import SirTrevor from 'sir-trevor'
 
 SirTrevor.Blocks.Oembed =  (function(){
 

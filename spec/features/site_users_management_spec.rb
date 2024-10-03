@@ -60,6 +60,7 @@ describe 'Site users management', js: true do
 
     expect do
       click_button 'Add role'
+      sleep 1 # Test fails without this after move to Propshaft.
     end.to change { Devise::Mailer.deliveries.count }.by(1)
     expect(User.where(email: 'a-user-that-did-not-exist@example.com').first.invitation_sent_at).to be_present
   end

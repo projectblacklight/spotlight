@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.1"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --define:global=window --outdir=app/assets/builds"
+  }
+}

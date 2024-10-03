@@ -1,4 +1,5 @@
 //= require spotlight/admin/blocks/solr_documents_base_block
+import SirTrevor from 'sir-trevor'
 
 SirTrevor.Blocks.SolrDocumentsEmbed = (function(){
 
