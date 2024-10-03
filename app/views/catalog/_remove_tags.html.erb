@@ -23,7 +23,7 @@
 
         <div class="form-group mb-3 mt-4">
           <%= label_tag :tags, t(:'spotlight.bulk_actions.remove_tags.label') %>
-          <%= text_field_tag :tags, '', class: 'form-control', data: { autocomplete_tag: true, autocomplete_url: exhibit_tags_path(current_exhibit, format: 'json')} %>
+          <%= render Spotlight::TagSelectorComponent.new(field_name: :tags, all_tags: current_exhibit.owned_tags) %>
         </div>
         <%= render Blacklight::HiddenSearchStateComponent.new(params: search_state.params_for_search) %>
       </div>
