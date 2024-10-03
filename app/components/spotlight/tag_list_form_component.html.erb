@@ -1,0 +1,14 @@
+<% if Spotlight::Engine.config.site_tags %>
+  <div class="form-group row">
+  <label class="col-form-label col-md-2" for="tag_list">Tag list</label>
+  <div class="col-md-10">
+    <div class="overflow-scroll rounded border px-3 py-2 h-25" style="overflow: scroll; height: 25vh!important;">
+      <% Spotlight::Engine.config.site_tags.each do |tag| %>
+        <%= form.check_box :tag_list, { multiple: true, label: tag }, tag , nil %>
+      <% end %>
+    </div>
+  </div>
+  </div>
+<% else %>
+  <%= form.text_field :tag_list, value: form.object.tag_list.to_s %>
+<% end %>

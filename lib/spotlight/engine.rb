@@ -145,6 +145,8 @@ module Spotlight
     config.full_image_field = :full_image_url_ssm
     config.thumbnail_field = :thumbnail_url_ssm
 
+    Spotlight::Engine.config.site_tags = nil
+
     # Defaults to the blacklight_config.index.title_field:
     config.upload_title_field = nil # UploadFieldConfig.new(...)
     config.upload_description_field = :spotlight_upload_description_tesim
