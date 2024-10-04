@@ -61,7 +61,7 @@ describe 'Edit in place', js: true, type: :feature do
   end
 
   describe 'Main navigation' do
-    it 'updates the label' do
+    it 'updates the Appearance label' do
       visit spotlight.exhibit_dashboard_path(exhibit)
 
       within '#sidebar' do
@@ -87,6 +87,36 @@ describe 'Edit in place', js: true, type: :feature do
 
       within('#nested-navigation') do
         expect(page).to have_css('h3', text: 'My Page Label')
+      end
+    end
+
+    it 'updates the metadata label' do
+      visit spotlight.exhibit_dashboard_path(exhibit)
+
+      within '#sidebar' do
+        click_link 'Metadata'
+      end
+
+      within('.metadata_fields') do
+        expect(page).to have_css("[data-id='personal_name_ssm'][data-behavior='restore-default']", visible: true)
+        expect(page).to have_no_selector('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default')
+        click_link('Personal names')
+        fill_in 'blacklight_configuration_index_fields_personal_name_ssm_label', with: 'Brand new name'
+      end
+
+      click_button 'Save changes'
+
+      within('.metadata_fields') do
+        expect(page).to have_css('a[href="#edit-in-place"]', text: 'Brand new name')
+        expect(page).to have_selector('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default', visible: true)
+      end
+
+      click_button 'Restore default'
+      click_button 'Save changes'
+
+      within('.metadata_fields') do
+        expect(page).to have_css('a[href="#edit-in-place"]', text: 'Personal names')
+        expect(page).to have_no_selector('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default')
       end
     end
   end
