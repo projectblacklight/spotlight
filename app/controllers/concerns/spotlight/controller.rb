@@ -111,5 +111,11 @@ module Spotlight
       options = Blacklight::Parameters.sanitize(params.to_unsafe_h.with_indifferent_access).merge(options).merge(kwargs).except(:exhibit_id, :only_path)
       spotlight.facet_exhibit_catalog_url(current_exhibit, *args, **options&.symbolize_keys)
     end
+
+
+    # Overrides Blacklight's default blacklight.html.erb template
+    def determine_layout
+      'spotlight/spotlight'
+    end
   end
 end
