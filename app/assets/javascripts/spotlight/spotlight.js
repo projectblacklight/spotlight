@@ -4617,6 +4617,14 @@
         var hidden = $("[data-default-value]", $(this));
         var value = $($("[data-in-place-edit-target]", $(this)).data('in-place-edit-target'), $(this));
         var button = $("[data-restore-default]", $(this));
+
+        hidden.on('keypress', function(e) {
+          if(e.which == 13) {
+            hidden.trigger('blur');
+            return false;
+          }
+        });
+
         hidden.on('blur', function(){
           if( $(this).val() == $(this).data('default-value') ) {
             button.addClass('d-none');
