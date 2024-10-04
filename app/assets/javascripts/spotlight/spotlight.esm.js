@@ -5927,6 +5927,7 @@ Spotlight$1.Block.Resources = (function(){
     formable: true,
     autocompleteable: true,
     show_heading: true,
+    show_alt_text: true,
 
     title: function() { return i18n.t("blocks:" + this.type + ":title"); },
     description: function() { return i18n.t("blocks:" + this.type + ":description"); },
@@ -5940,11 +5941,20 @@ Spotlight$1.Block.Resources = (function(){
     show_secondary_field_key: "show-secondary-caption",
 
     display_checkbox: "display-checkbox",
+    decorative_checkbox: "decorative-checkbox",
+    alt_text_textarea: "alt-text-textarea",
 
     globalIndex: 0,
 
     _itemPanelIiifFields: function(index, data) {
       return [];
+    },
+
+    _altTextFieldsHTML: function(index, data) {
+      if (this.show_alt_text) {
+        return this.altTextHTML(index, data);
+      }
+      return "";
     },
 
     _itemPanel: function(data) {
@@ -5977,6 +5987,7 @@ Spotlight$1.Block.Resources = (function(){
                     <div class="main">
                       <div class="title card-title">${data.title}</div>
                       <div>${(data.slug || data.id)}</div>
+                      ${this._altTextFieldsHTML(index, data)}
                     </div>
                     <div class="remove float-right float-end">
                       <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
@@ -6013,6 +6024,7 @@ Spotlight$1.Block.Resources = (function(){
 
     createItemPanel: function(data) {
       var panel = this._itemPanel(data);
+      this.attachAltTextHandlers(panel);
       $(panel).appendTo($('.panels > ol', this.inner));
       $('[data-behavior="nestable"]', this.inner).trigger('change');
     },
@@ -6048,6 +6060,60 @@ Spotlight$1.Block.Resources = (function(){
         </div>
         ${this.content()}
       </div>`
+    },
+
+    _altTextData: function(data) {
+      const isDecorative = data.decorative;
+      const altText = isDecorative ? '' : (data.alt_text || '');
+      const altTextBackup = data.alt_text_backup || '';
+      const placeholderAttr = isDecorative ? '' : `placeholder="${i18n.t("blocks:resources:alt_text:placeholder")}"`;
+      const disabledAttr = isDecorative ? 'disabled' : '';
+
+      return { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr };
+    },
+
+    altTextHTML: function(index, data) {
+      const { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr } = this._altTextData(data);
+      return `<div class="mt-2 pt-2 d-flex">
+          <div class="me-2 mr-2">
+            <label class="col-form-label pb-0 pt-1" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
+            <div class="form-check mb-1 justify-content-end">
+              <input class="form-check-input" type="checkbox" 
+                id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
+              <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
+            </div>
+          </div>
+          <div class="flex-grow-1 flex-fill d-flex">
+            <input type="hidden" name="item[${index}][alt_text_backup]" value="${altTextBackup}" />
+            <textarea class="form-control w-100" rows="2" ${placeholderAttr}
+              id="${this.formId(this.alt_text_textarea + '_' + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
+          </div>
+        </div>`
+    },
+
+    attachAltTextHandlers: function(panel) {
+      if (this.show_alt_text) {
+        const decorativeCheckbox = $('input[name$="[decorative]"]', panel);
+        const altTextInput = $('textarea[name$="[alt_text]"]', panel);
+        const altTextBackupInput = $('input[name$="[alt_text_backup]"]', panel);
+
+        decorativeCheckbox.on('change', function() {
+          const isDecorative = this.checked;
+          if (isDecorative) {
+            altTextBackupInput.val(altTextInput.val());
+            altTextInput.val('');
+          } else {
+            altTextInput.val(altTextBackupInput.val());
+          }
+          altTextInput
+            .prop('disabled', isDecorative)
+            .attr('placeholder', isDecorative ? '' : i18n.t("blocks:resources:alt_text:placeholder"));
+        });
+
+        altTextInput.on('input', function() {
+          $(this).data('lastValue', $(this).val());
+        });
+      }
     },
 
     onBlockRender: function() {
@@ -6674,7 +6740,7 @@ SirTrevor.Blocks.SolrDocumentsEmbed = (function(){
 
   return SirTrevor.Blocks.SolrDocumentsBase.extend({
     type: "solr_documents_embed",
-
+    show_alt_text: false,
     icon_name: "item_embed",
 
     item_options: function() { return "" },
@@ -6838,6 +6904,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
                     <label for="${this.formId('link_' + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:link")}</label>
                     <input type="text" class="form-control col" id="${this.formId('link_' + dataId)}" name="item[${index}][link]" data-field="link"/>
                   </div>
+                  ${this._altTextFieldsHTML(index, data)}
                 </div>
                 <div class="remove float-right float-end">
                   <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
@@ -6881,6 +6948,24 @@ SirTrevor.Blocks.UploadedItems = (function(){
           </div>
         </div>
         ${this.text_area()}
+      </div>`
+    },
+
+    altTextHTML: function(index, data) {
+      const { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr } = this._altTextData(data);
+      return `
+      <div class="field row mr-3 me-3">
+        <div class="col-lg-3 ps-md-2 pl-md-2">
+          <label class="col-form-label text-nowrap pb-0 pt-1 justify-content-md-start justify-content-lg-end d-flex" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
+          <div class="form-check d-flex justify-content-md-start justify-content-lg-end">
+            <input class="form-check-input" type="checkbox" 
+              id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
+            <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
+          </div>
+        </div>
+        <input type="hidden" name="item[${index}][alt_text_backup]" value="${altTextBackup}" />
+        <textarea class="col-lg-9" rows="2" ${placeholderAttr}
+          id="${this.formId(this.alt_text_textarea + '_' + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
       </div>`
     },
 
@@ -7094,6 +7179,11 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
       drag: "Drag",
       display: "Display?",
       remove: "Remove"
+    },
+    alt_text: {
+      decorative: "Decorative",
+      alternative_text: "Alternative text",
+      placeholder: "Enter alt text for this item..."
     }
   },
 

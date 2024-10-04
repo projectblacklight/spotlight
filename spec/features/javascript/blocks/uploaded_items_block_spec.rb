@@ -66,6 +66,16 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     end
   end
 
+  it 'toggles alt text input when marking an image as decorative' do
+    attach_file('uploaded_item_url', fixture_file1)
+
+    fill_in 'Alternative text', with: 'custom alt text'
+    check 'Decorative'
+    expect(page).to have_field('Alternative text', type: 'textarea', disabled: true, placeholder: '', with: '')
+    uncheck 'Decorative'
+    expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
+  end
+
   it 'may have ZPR links' do
     attach_file('uploaded_item_url', fixture_file1)
     attach_file('uploaded_item_url', fixture_file2)

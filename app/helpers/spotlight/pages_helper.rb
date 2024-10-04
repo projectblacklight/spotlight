@@ -80,5 +80,12 @@ module Spotlight
     def configurations_for_current_page
       Spotlight::PageConfigurations.new(context: self, page: @page).as_json
     end
+
+    def resource_alt_text(options, default)
+      return '' if options[:decorative].present?
+      return options[:alt_text] if options[:alt_text].present?
+
+      default
+    end
   end
 end

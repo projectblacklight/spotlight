@@ -96,6 +96,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
                     <label for="${this.formId('link_' + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:link")}</label>
                     <input type="text" class="form-control col" id="${this.formId('link_' + dataId)}" name="item[${index}][link]" data-field="link"/>
                   </div>
+                  ${this._altTextFieldsHTML(index, data)}
                 </div>
                 <div class="remove float-right float-end">
                   <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
@@ -139,6 +140,24 @@ SirTrevor.Blocks.UploadedItems = (function(){
           </div>
         </div>
         ${this.text_area()}
+      </div>`
+    },
+
+    altTextHTML: function(index, data) {
+      const { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr } = this._altTextData(data);
+      return `
+      <div class="field row mr-3 me-3">
+        <div class="col-lg-3 ps-md-2 pl-md-2">
+          <label class="col-form-label text-nowrap pb-0 pt-1 justify-content-md-start justify-content-lg-end d-flex" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
+          <div class="form-check d-flex justify-content-md-start justify-content-lg-end">
+            <input class="form-check-input" type="checkbox" 
+              id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
+            <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
+          </div>
+        </div>
+        <input type="hidden" name="item[${index}][alt_text_backup]" value="${altTextBackup}" />
+        <textarea class="col-lg-9" rows="2" ${placeholderAttr}
+          id="${this.formId(this.alt_text_textarea + '_' + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
       </div>`
     },
 

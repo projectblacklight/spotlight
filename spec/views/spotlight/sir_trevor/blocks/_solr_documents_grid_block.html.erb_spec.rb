@@ -18,22 +18,29 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_grid_block', type: :view d
 
   before do
     allow(block).to receive(:each_document).and_return([
-                                                         [{}, SolrDocument.new(id: 1)],
-                                                         [{}, SolrDocument.new(id: 2)],
-                                                         [{}, SolrDocument.new(id: 3)]
+                                                         [{ thumbnail_image_url: 'http://example.com', decorative: 'on' }, SolrDocument.new(id: 1)],
+                                                         [{ thumbnail_image_url: 'http://example.com', alt_text: 'custom alt text' }, SolrDocument.new(id: 2)],
+                                                         [{ thumbnail_image_url: 'http://example.com' }, SolrDocument.new(id: 3)]
                                                        ])
     allow(view).to receive_messages(
       blacklight_config: blacklight_config,
-      document_presenter: stub_presenter
+      document_presenter: stub_presenter,
+      document_link_params: {}
     )
+    render partial: p, locals: { solr_documents_grid_block: block }
   end
 
   it 'has a slideshow block' do
-    render partial: p, locals: { solr_documents_grid_block: block }
     expect(rendered).to have_selector 'h3', text: 'Some title'
     expect(rendered).to have_content 'Some text'
-    expect(rendered).to have_selector '.box', text: 'thumb', count: 3
+    expect(rendered).to have_selector '.box img', count: 3
     expect(rendered).to have_selector '.items-col'
     expect(rendered).to have_selector '.text-col'
+  end
+
+  it 'uses the correct alt text' do
+    expect(rendered).to have_selector '.item-0 img[alt=""]'
+    expect(rendered).to have_selector '.item-1 img[alt="custom alt text"]'
+    expect(rendered).to have_selector '.item-2 img[alt="blah"]'
   end
 end
