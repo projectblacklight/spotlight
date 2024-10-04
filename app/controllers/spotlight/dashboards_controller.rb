@@ -46,13 +46,13 @@ module Spotlight
     protected
 
     def attach_analytics_breadcrumbs
-      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.curation.sidebar.analytics'), analytics_exhibit_dashboard_path(@exhibit)
+      add_breadcrumb(t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit)
+      add_breadcrumb(t(:'spotlight.curation.sidebar.analytics'), analytics_exhibit_dashboard_path(@exhibit))
     end
 
     def attach_dashboard_breadcrumbs
-      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.curation.sidebar.dashboard'), exhibit_dashboard_path(@exhibit)
+      add_breadcrumb(t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit)
+      add_breadcrumb(t(:'spotlight.curation.sidebar.dashboard'), exhibit_dashboard_path(@exhibit))
     end
 
     def load_recent_solr_documents(count)

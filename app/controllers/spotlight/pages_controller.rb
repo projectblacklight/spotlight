@@ -162,7 +162,7 @@ module Spotlight
 
     def attach_breadcrumbs
       if view_context.current_page? '/'
-        add_breadcrumb t(:'spotlight.curation.nav.home', title: current_exhibit.title), main_app.root_path
+        add_breadcrumb(t(:'spotlight.curation.nav.home', title: current_exhibit.title), main_app.root_path)
       elsif @page
         # Use curator-accessible i18n key for user-facing breadcrumb
         breadcrumb_to_exhibit_root(:'spotlight.curation.nav.home')
@@ -187,7 +187,7 @@ module Spotlight
     end
 
     def breadcrumb_to_exhibit_root(key)
-      add_breadcrumb t(key, title: current_exhibit.title), spotlight.exhibit_root_path(current_exhibit)
+      add_breadcrumb(t(key, title: current_exhibit.title), spotlight.exhibit_root_path(current_exhibit))
     end
 
     # Only allow trusted parameters through.

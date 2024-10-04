@@ -12,11 +12,11 @@ module Spotlight
 
     def new
       @custom_field.field_type ||= 'text'
-      add_breadcrumb t(:'helpers.action.spotlight/custom_field.create'), new_exhibit_custom_field_path(@exhibit)
+      add_breadcrumb(t(:'helpers.action.spotlight/custom_field.create'), new_exhibit_custom_field_path(@exhibit))
     end
 
     def edit
-      add_breadcrumb @custom_field.label, edit_exhibit_custom_field_path(@custom_field.exhibit, @custom_field)
+      add_breadcrumb(@custom_field.label, edit_exhibit_custom_field_path(@custom_field.exhibit, @custom_field))
     end
 
     def create
@@ -50,9 +50,9 @@ module Spotlight
     protected
 
     def attach_breadcrumbs
-      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit)
-      add_breadcrumb t(:'spotlight.metadata_configurations.edit.header'), edit_exhibit_metadata_configuration_path(@exhibit)
+      add_breadcrumb(t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit)
+      add_breadcrumb(t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit))
+      add_breadcrumb(t(:'spotlight.metadata_configurations.edit.header'), edit_exhibit_metadata_configuration_path(@exhibit))
     end
 
     def custom_field_params

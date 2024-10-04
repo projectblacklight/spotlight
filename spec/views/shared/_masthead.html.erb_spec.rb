@@ -10,6 +10,7 @@ describe 'shared/_masthead', type: :view do
                                     current_masthead: masthead,
                                     masthead_heading_content: exhibit.title,
                                     masthead_subheading_content: exhibit.subtitle,
+                                    breadcrumbs: nil,
                                     resource_masthead?: false)
   end
 

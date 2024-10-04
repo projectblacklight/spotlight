@@ -27,15 +27,6 @@ module Spotlight
   # rubocop:disable Metrics/ClassLength
   class Engine < ::Rails::Engine
     isolate_namespace Spotlight
-    # Breadcrumbs on rails must be required outside of an initializer or it doesn't get loaded.
-    require 'breadcrumbs_on_rails/breadcrumbs'
-    require 'breadcrumbs_on_rails/action_controller'
-
-    initializer 'breadcrumbs_on_rails.initialize' do
-      ActiveSupport.on_load(:action_controller) do
-        include BreadcrumbsOnRails::ActionController
-      end
-    end
 
     require 'carrierwave'
     require 'redcarpet' # required for markdown support in github/markup https://github.com/github/markup#markups

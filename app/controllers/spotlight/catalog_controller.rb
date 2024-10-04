@@ -8,6 +8,7 @@ module Spotlight
   # rubocop:disable Metrics/ClassLength
   class CatalogController < ::CatalogController
     include Spotlight::Concerns::ApplicationController
+
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit, prepend: true
     include Blacklight::Catalog
     include Spotlight::Catalog
@@ -85,8 +86,8 @@ module Spotlight
     end
 
     def admin
-      add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
-      add_breadcrumb t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_path(@exhibit)
+      add_breadcrumb(t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit))
+      add_breadcrumb(t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_path(@exhibit))
       (@response,) = search_service.search_results
       @filters = params[:f] || []
 
@@ -148,10 +149,10 @@ module Spotlight
 
     def attach_breadcrumbs
       if view_context.current_page?({ action: :admin })
-        add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), exhibit_root_path(@exhibit)
+        add_breadcrumb(t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), exhibit_root_path(@exhibit))
       else
         # When not on the admin page, get the translated value for the "Home" breadcrumb
-        add_breadcrumb t(:'spotlight.curation.nav.home', title: @exhibit.title), exhibit_root_path(@exhibit)
+        add_breadcrumb(t(:'spotlight.curation.nav.home', title: @exhibit.title), exhibit_root_path(@exhibit))
       end
     end
 
@@ -227,21 +228,21 @@ module Spotlight
     def add_breadcrumb_with_search_params
       return unless has_search_parameters?
 
-      add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), spotlight.search_exhibit_catalog_path(params.to_unsafe_h), current: action_name == 'index'
+      add_breadcrumb(t(:'spotlight.catalog.breadcrumb.index'), spotlight.search_exhibit_catalog_path(params.to_unsafe_h), current: action_name == 'index')
     end
 
     # rubocop:disable Metrics/AbcSize
     def add_document_breadcrumbs(document)
       if current_browse_category
-        add_breadcrumb current_browse_category.exhibit.main_navigations.browse.label_or_default, exhibit_browse_index_path(current_browse_category.exhibit)
-        add_breadcrumb current_browse_category.title, exhibit_browse_path(current_browse_category.exhibit, current_browse_category)
+        add_breadcrumb(current_browse_category.exhibit.main_navigations.browse.label_or_default, exhibit_browse_index_path(current_browse_category.exhibit))
+        add_breadcrumb(current_browse_category.title, exhibit_browse_path(current_browse_category.exhibit, current_browse_category))
       elsif current_page_context&.title&.present? && !current_page_context.is_a?(Spotlight::HomePage)
-        add_breadcrumb current_page_context.title, [current_page_context.exhibit, current_page_context]
+        add_breadcrumb(current_page_context.title, [current_page_context.exhibit, current_page_context])
       elsif current_search_session && !current_page_context&.is_a?(Spotlight::HomePage)
-        add_breadcrumb t(:'spotlight.catalog.breadcrumb.index'), search_action_url(current_search_session.query_params)
+        add_breadcrumb(t(:'spotlight.catalog.breadcrumb.index'), search_action_url(current_search_session.query_params))
       end
 
-      add_breadcrumb view_context.document_presenter(document).heading, polymorphic_path([current_exhibit, document])
+      add_breadcrumb(view_context.document_presenter(document).heading, polymorphic_path([current_exhibit, document]))
     end
     # rubocop:enable Metrics/AbcSize
 
