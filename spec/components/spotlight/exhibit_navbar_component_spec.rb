@@ -132,7 +132,7 @@ RSpec.describe Spotlight::ExhibitNavbarComponent, type: :component do
   end
 
   context 'with prepend section' do
-    it "displays the prepend section text" do
+    it 'displays the prepend section text' do
       allow(component).to receive_messages(prepend_to_search_bar: 'prepend text')
       expect(rendered).to have_content('prepend text')
     end
