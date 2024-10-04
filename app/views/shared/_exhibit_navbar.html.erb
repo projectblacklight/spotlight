@@ -1,24 +1,2 @@
-<div id="exhibit-navbar" class="exhibit-navbar navbar navbar-light navbar-expand-md" role="navigation" aria-label="<%= t('spotlight.exhibitnavbar.label') %>">
-  <div class="container flex-column flex-md-row">
-    <% if resource_masthead? %>
-      <%= link_to(current_exhibit.title, spotlight.exhibit_path(current_exhibit), class: 'navbar-brand') %>
-    <% end %>
-
-    <ul class="navbar-nav <%= resource_masthead? ? 'justify-content-md-end' : 'mr-auto me-auto' %>">
-      <li class="nav-item <%= "active" if current_page?([spotlight, current_exhibit]) %>"><%= link_to t(:'spotlight.curation.nav.home'), [spotlight, current_exhibit], class: 'nav-link' %></li>
-      <% current_exhibit.main_navigations.displayable.each do |navigation| %>
-        <%= render partial: "shared/#{navigation.nav_type}_navbar", locals: { navigation: navigation } %>
-      <% end %>
-    </ul>
-    <% if should_render_spotlight_search_bar? %>
-      <div class="navbar-right navbar-nav exhibit-search-form mt-3 mt-md-0">
-        <%= render Blacklight::SearchBarComponent.new(
-          url: search_action_url,
-          advanced_search_url: search_action_url(action: 'advanced_search'),
-          params: search_state.params_for_search.except(:qt),
-          autocomplete_path: suggest_index_catalog_path
-        ) %>
-      </div>
-    <% end %>
-  </div>
-</div>
+<%= render (blacklight_config&.view_config(document_index_view_type)&.exhibit_navbar_component || Spotlight::ExhibitNavbarComponent).new %>
+<% Spotlight.deprecator.warn("_exhibit_navbar.html.erb will be deprecated in future versions. Please use Blacklight configuration to specify your ExhibitNavbarComponent.") %>
