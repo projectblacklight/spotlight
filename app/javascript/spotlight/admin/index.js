@@ -8,7 +8,6 @@ import 'Path.Drag'
 
 import AddAnother from 'spotlight/admin/add_another'
 import AddNewButton from 'spotlight/admin/add_new_button'
-import Appearance from 'spotlight/admin/appearance'
 import BlacklightConfiguration from 'spotlight/admin/blacklight_configuration'
 import CopyEmailAddress from 'spotlight/admin/copy_email_addresses'
 import Croppable from 'spotlight/admin/croppable'
@@ -60,7 +59,6 @@ export default class {
   connect() {
     new AddAnother().connect()
     new AddNewButton().connect()
-    new Appearance().connect()
     new CopyEmailAddress().connect()
     new Croppable().connect()
     new EditInPlace().connect()

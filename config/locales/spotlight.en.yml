@@ -707,6 +707,8 @@ en:
         select_all: Select all
         view:
           show: Item details
+      metadata_field:
+        restore_default: Restore default
     pages:
       edit:
         header: Edit page
