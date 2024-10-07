@@ -1,11 +1,14 @@
 <% if body.present? %>
   <%= body %>
-<% elsif partials? %>
-  <% partials.each do |partial| %>
-    <%= partial %>
+<% elsif partials? || embed? %>
+  <% partial_content = capture do %>
+    <% partials.each do |partial| %>
+      <%= partial %>
+    <% end %>
   <% end %>
-<% elsif embed? %>
-  <%= embed %>
+
+  <%= partial_content if partial_content.present? %>
+  <%= embed if embed? && partial_content.blank? %>
 <% elsif thumbnail? %>
   <%= thumbnail %>
 <% end %>
