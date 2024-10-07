@@ -7948,7 +7948,7 @@ class FormObserver {
   connect() {
     // Instantiate the singleton SerializedForm plugin
     var serializedForm = $.SerializedForm();
-    $(window).on('beforeunload page:before-change turbolinks:before-visit', function(event) {
+    $(window).on('beforeunload page:before-change turbolinks:before-visit turbo:before-visit', function(event) {
       // Don't handle the same event twice #turbolinks
       if (event.handled !== true) {
         if ( serializedForm.observedFormsStatusHasChanged() ) {
