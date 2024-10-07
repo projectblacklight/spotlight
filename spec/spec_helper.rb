@@ -14,6 +14,8 @@ require 'rspec/its'
 require 'rspec/rails'
 require 'rspec/active_model/mocks'
 require 'paper_trail/frameworks/rspec'
+require 'view_component/test_helpers'
+require 'view_component/system_test_helpers'
 
 require 'selenium-webdriver'
 require 'webmock/rspec'
@@ -60,6 +62,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   config.include ViewComponent::TestHelpers, type: :component
+  config.include ViewComponent::SystemTestHelpers, type: :component
 
   if defined? Devise::Test::ControllerHelpers
     config.include Devise::Test::ControllerHelpers, type: :controller
