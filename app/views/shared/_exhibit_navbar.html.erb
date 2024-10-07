@@ -1,2 +1,2 @@
 <%= render (blacklight_config&.view_config(document_index_view_type)&.exhibit_navbar_component || Spotlight::ExhibitNavbarComponent).new %>
-<% Spotlight.deprecator.warn("_exhibit_navbar.html.erb will be deprecated in future versions. Please use Blacklight configuration to specify your ExhibitNavbarComponent.") %>
+<% Spotlight.deprecator.warn("_exhibit_navbar.html.erb will be deprecated in future versions. Please use the catalog controller's exhibit_navbar_component setting.") %>
