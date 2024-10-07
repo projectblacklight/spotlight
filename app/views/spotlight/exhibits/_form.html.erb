@@ -3,7 +3,7 @@
   <%= f.text_field :title, disabled: !default_language?, help: !default_language? ? t('.uneditable_non_default_language') : '' %>
   <%= f.text_field :subtitle %>
   <%= f.text_area :description %>
-  <%= f.text_field :tag_list, value: f.object.tag_list.to_s %>
+  <%= render Spotlight::TagListFormComponent.new(form: f) %>
   <%= f.form_group(:contact_emails, label: { text: nil, class: nil, for: 'exhibit_contact_email_0' }, class: 'form-group mb-3', help: nil) do %>
     <%= f.fields_for :contact_emails do |contact| %> 
       <%= render partial: 'contact', locals: {exhibit: @exhibit, contact: contact} %>

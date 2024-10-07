@@ -138,4 +138,39 @@ describe 'Exhibit Administration', type: :feature do
       expect(page).to have_css("##{hidden_input_id_0}~div span.contact-email-delete-error", text: 'Problem deleting recipient: Not Found')
     end
   end
+
+  describe 'Tag list' do
+    before do
+      allow(Spotlight::Engine.config).to receive(:site_tags).and_return(site_tags)
+    end
+
+    context 'site_tags are set to a list' do
+      let(:site_tags) { ['tag 1', 'tag 2', 'tag 3'] }
+
+      it 'site_tags listed on the page', js: true do
+        visit spotlight.edit_exhibit_path(exhibit)
+        expect(page).to have_css('#exhibit_tag_list_tag_1')
+        find('label', text: 'tag 1').click
+        find('label', text: 'tag 3').click
+        click_button 'Save changes'
+        expect(page).to have_content('The exhibit was successfully updated.')
+        expect(find_field('exhibit_tag_list_tag_1').checked?).to be true
+        expect(find_field('exhibit_tag_list_tag_2').checked?).to be false
+        expect(find_field('exhibit_tag_list_tag_3').checked?).to be true
+      end
+    end
+
+    context 'site_tags are set to nil' do
+      let(:site_tags) { nil }
+
+      it 'has free text tag_list field', js: true do
+        visit spotlight.edit_exhibit_path(exhibit)
+        expect(page).to have_css('#exhibit_tag_list')
+        fill_in 'exhibit_tag_list', with: 'tag 1, tag 2'
+        click_button 'Save changes'
+        expect(page).to have_content('The exhibit was successfully updated.')
+        expect(find_field('exhibit_tag_list').value).to eq 'tag 1, tag 2'
+      end
+    end
+  end
 end

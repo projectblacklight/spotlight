@@ -1,7 +1,7 @@
 <%= bootstrap_form_for @exhibit, url: ((spotlight.exhibit_path(@exhibit) if @exhibit.persisted?) || spotlight.exhibits_path), layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-10' do |f| %>
   <%= f.text_field :title, label: t(:'.fields.title.label'), help: t(:'.fields.title.help_block') %>
   <%= f.text_field :slug, label: t(:'.fields.slug.label'), help: t(:'.fields.slug.help_block') %>
-  <%= f.text_field :tag_list %>
+  <%= render Spotlight::TagListFormComponent.new(form: f) %>
 
   <%= render 'initial_resources_form', locals: { f: f } %>
 
