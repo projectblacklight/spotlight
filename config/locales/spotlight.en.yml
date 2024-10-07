@@ -723,6 +723,8 @@ en:
       index:
         about_pages:
           header: About pages
+        bulk_updates:
+          header: Bulk updates
         feature_pages:
           header: Feature pages
           home_pages_header: Homepage
