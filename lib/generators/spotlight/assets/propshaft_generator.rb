@@ -104,6 +104,12 @@ module Spotlight
                   'esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --main-fields=main,module'
       end
 
+      # Build the app frontend assets
+      def build_assets
+        run 'yarn build'
+        run 'yarn build:css'
+      end
+
       private
 
       # Support the gem version format e.g.,  `~> 5.3` for consistency.
