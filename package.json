@@ -3,6 +3,7 @@
   "version": "4.2.0",
   "description": "Exhibits plugin for blacklight",
   "main": "app/assets/javascripts/spotlight",
+  "type": "module",
   "scripts": {
     "prepare": "rollup --config rollup.config.js --sourcemap && ESM=true rollup --config rollup.config.js --sourcemap"
   },
