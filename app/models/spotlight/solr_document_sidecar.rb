@@ -8,7 +8,8 @@ module Spotlight
 
     acts_as_taggable
 
-    belongs_to :exhibit, optional: false
+    # The "touch: true" ensures the exhibit's cache is invalidated when the document is updated
+    belongs_to :exhibit, optional: false, touch: true
     belongs_to :resource, optional: true
     belongs_to :document, optional: false, polymorphic: true
 

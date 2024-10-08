@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Resource, type: :model do
+RSpec.describe Spotlight::Resource, type: :model do
   subject(:resource) { described_class.create(id: 123, exhibit: exhibit) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
@@ -113,7 +113,7 @@ describe Spotlight::Resource, type: :model do
 
       indexed_document
 
-      expect(exhibit).to have_received(:touch)
+      expect(exhibit).to have_received(:touch).twice
     end
 
     context 'with touch: false' do
