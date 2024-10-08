@@ -45,7 +45,14 @@ module Spotlight
       def install_gems
         gem 'jsbundling-rails'
         gem 'cssbundling-rails'
-        run 'bundle install'
+      end
+
+      def bundle_install
+        inside destination_root do
+          Bundler.with_unbundled_env do
+            run 'bundle install'
+          end
+        end
       end
 
       def install_javascript_bundler
@@ -58,7 +65,9 @@ module Spotlight
 
       # Pick a version of the frontend asset package and install it.
       def add_frontend
-        if options[:test]
+        if ENV['CI']
+          run "yarn add file:#{Spotlight::Engine.root}"
+        elsif options[:test]
           link_spotlight_frontend
 
         # If a branch was specified (e.g. you are running a template.rb build
@@ -95,6 +104,12 @@ module Spotlight
         gsub_file 'package.json',
                   'esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets',
                   'esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --main-fields=main,module'
+      end
+
+      # Build the app frontend assets
+      def build_assets
+        run 'yarn build'
+        run 'yarn build:css'
       end
 
       private

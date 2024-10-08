@@ -4,13 +4,6 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.L, global.Clipboard, global.Blacklight, global.SirTrevor));
 })(this, (function (require$$0, Clipboard, Blacklight, SirTrevor) { 'use strict';
 
-  const _interopDefaultLegacy = e => e && typeof e === 'object' && 'default' in e ? e : { default: e };
-
-  const require$$0__default = /*#__PURE__*/_interopDefaultLegacy(require$$0);
-  const Clipboard__default = /*#__PURE__*/_interopDefaultLegacy(Clipboard);
-  const Blacklight__default = /*#__PURE__*/_interopDefaultLegacy(Blacklight);
-  const SirTrevor__default = /*#__PURE__*/_interopDefaultLegacy(SirTrevor);
-
   // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
   // Includes "export default tns" at the end of the file for spotlight/user/browse_group_categories.js
   var tns = (function (){
@@ -7235,7 +7228,7 @@
 
   // This allows us to configure Spotlight in app/views/layouts/base.html.erb
   window.Spotlight = Spotlight$1;
-  window.SirTrevor = SirTrevor__default.default;
+  window.SirTrevor = SirTrevor;
 
   Blacklight.onLoad(function() {
     Spotlight$1.activate();
@@ -7956,7 +7949,7 @@
     connect() {
       // Instantiate the singleton SerializedForm plugin
       var serializedForm = $.SerializedForm();
-      $(window).on('beforeunload page:before-change turbolinks:before-visit', function(event) {
+      $(window).on('beforeunload page:before-change turbolinks:before-visit turbo:before-visit', function(event) {
         // Don't handle the same event twice #turbolinks
         if (event.handled !== true) {
           if ( serializedForm.observedFormsStatusHasChanged() ) {
@@ -8153,7 +8146,7 @@
 
   class Pages {
     connect(){
-      SirTrevor__default.default.setDefaults({
+      SirTrevor.setDefaults({
         iconUrl: Spotlight.sirTrevorIcon,
         uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint'),
         ajaxOptions: {
@@ -8164,14 +8157,14 @@
         }
       });
 
-      SirTrevor__default.default.Blocks.Heading.prototype.toolbarEnabled = true;
-      SirTrevor__default.default.Blocks.Quote.prototype.toolbarEnabled = true;
-      SirTrevor__default.default.Blocks.Text.prototype.toolbarEnabled = true;
+      SirTrevor.Blocks.Heading.prototype.toolbarEnabled = true;
+      SirTrevor.Blocks.Quote.prototype.toolbarEnabled = true;
+      SirTrevor.Blocks.Text.prototype.toolbarEnabled = true;
 
       var instance = $('.js-st-instance').first();
 
       if (instance.length) {
-        var editor = new SirTrevor__default.default.Editor({
+        var editor = new SirTrevor.Editor({
           el: instance[0],
           blockTypes: instance.data('blockTypes'),
           defaultType:["Text"],
@@ -8623,7 +8616,7 @@
   }
 
   (function ($){
-    SirTrevor__default.default.BlockMixins.Autocompleteable = {
+    SirTrevor.BlockMixins.Autocompleteable = {
       mixinName: "Autocompleteable",
       preload: true,
 
@@ -8688,11 +8681,11 @@
     },
 
 
-    SirTrevor__default.default.Block.prototype.availableMixins.push("autocompleteable");
+    SirTrevor.Block.prototype.availableMixins.push("autocompleteable");
   })(jQuery);
 
   (function ($){
-    SirTrevor__default.default.BlockMixins.Formable = {
+    SirTrevor.BlockMixins.Formable = {
       mixinName: "Formable",
       preload: true,
 
@@ -8735,7 +8728,7 @@
       loadData: function(data){
         if (this.hasTextBlock()) {
           if (data.text && data.text.length > 0 && this.options.convertFromMarkdown && data.format !== "html") {
-            this.setTextBlockHTML(SirTrevor__default.default.toHTML(data.text, this.type));
+            this.setTextBlockHTML(SirTrevor.toHTML(data.text, this.type));
           } else {
             this.setTextBlockHTML(data.text);
           }
@@ -8767,17 +8760,17 @@
     },
 
 
-    SirTrevor__default.default.Block.prototype.availableMixins.push("formable");
+    SirTrevor.Block.prototype.availableMixins.push("formable");
   })(jQuery);
 
   (function ($){
-    SirTrevor__default.default.BlockMixins.Plustextable = {
+    SirTrevor.BlockMixins.Plustextable = {
       mixinName: "Textable",
       preload: true,
 
       initializeTextable: function() {
         if (this['formId'] === undefined) {
-          this.withMixin(SirTrevor__default.default.BlockMixins.Formable);
+          this.withMixin(SirTrevor.BlockMixins.Formable);
         }
         
         if (this['show_heading'] === undefined) {
@@ -8826,11 +8819,11 @@
     };
     
 
-    SirTrevor__default.default.Block.prototype.availableMixins.push("plustextable");
+    SirTrevor.Block.prototype.availableMixins.push("plustextable");
   })(jQuery);
 
   (function ($){
-    Spotlight$1.Block = SirTrevor__default.default.Block.extend({
+    Spotlight$1.Block = SirTrevor.Block.extend({
       scribeOptions: {
         allowBlockElements: true,
         tags: { p: true }
@@ -8841,8 +8834,8 @@
       },
       beforeBlockRender: function() {
         this.availableMixins.forEach(function(mixin) {
-          if (this[mixin] && SirTrevor__default.default.BlockMixins[this.capitalize(mixin)].preload) {
-            this.withMixin(SirTrevor__default.default.BlockMixins[this.capitalize(mixin)]);
+          if (this[mixin] && SirTrevor.BlockMixins[this.capitalize(mixin)].preload) {
+            this.withMixin(SirTrevor.BlockMixins[this.capitalize(mixin)]);
           }
         }, this);
       },
@@ -9080,7 +9073,7 @@
 
   })();
 
-  SirTrevor__default.default.Blocks.Browse = (function(){
+  SirTrevor.Blocks.Browse = (function(){
 
     return Spotlight$1.Block.Resources.extend({
       type: "browse",
@@ -9174,7 +9167,7 @@
     Sir Trevor BrowseGroupCategories
   */
 
-  SirTrevor__default.default.Blocks.BrowseGroupCategories = (function(){
+  SirTrevor.Blocks.BrowseGroupCategories = (function(){
 
     return Spotlight$1.Block.Resources.extend({
       type: "browse_group_categories",
@@ -9271,9 +9264,9 @@
     and displays them.
   */
 
-  SirTrevor__default.default.Blocks.Iframe = (function(){
+  SirTrevor.Blocks.Iframe = (function(){
 
-    return SirTrevor__default.default.Block.extend({
+    return SirTrevor.Block.extend({
       type: "Iframe",
       formable: true,
       
@@ -9293,9 +9286,9 @@
     });
   })();
 
-  SirTrevor__default.default.Blocks.LinkToSearch = (function(){
+  SirTrevor.Blocks.LinkToSearch = (function(){
 
-    return SirTrevor__default.default.Blocks.Browse.extend({
+    return SirTrevor.Blocks.Browse.extend({
 
       type: "link_to_search",
 
@@ -9317,7 +9310,7 @@
     and displays them.
   */
 
-  SirTrevor__default.default.Blocks.Oembed =  (function(){
+  SirTrevor.Blocks.Oembed =  (function(){
 
     return Spotlight$1.Block.extend({
       plustextable: true,
@@ -9349,7 +9342,7 @@
     });
   })();
 
-  SirTrevor__default.default.Blocks.FeaturedPages = (function(){
+  SirTrevor.Blocks.FeaturedPages = (function(){
 
     return Spotlight$1.Block.Resources.extend({
       type: "featured_pages",
@@ -9383,9 +9376,9 @@
     and displays them.
   */
 
-  SirTrevor__default.default.Blocks.Rule = (function(){
+  SirTrevor.Blocks.Rule = (function(){
 
-    return SirTrevor__default.default.Block.extend({
+    return SirTrevor.Block.extend({
       type: "rule",
       
       title: function() { return i18n.t('blocks:rule:title'); },
@@ -9400,9 +9393,9 @@
 
   //= require spotlight/admin/blocks/browse_block
 
-  SirTrevor__default.default.Blocks.SearchResults =  (function(){
+  SirTrevor.Blocks.SearchResults =  (function(){
 
-    return SirTrevor__default.default.Blocks.Browse.extend({
+    return SirTrevor.Blocks.Browse.extend({
 
       type: "search_results",
 
@@ -9441,7 +9434,7 @@
     });
   })();
 
-  SirTrevor__default.default.Blocks.SolrDocumentsBase = (function(){
+  SirTrevor.Blocks.SolrDocumentsBase = (function(){
 
     return Spotlight$1.Block.Resources.extend({
       plustextable: true,
@@ -9557,9 +9550,9 @@
 
   //= require spotlight/admin/blocks/solr_documents_base_block
 
-  SirTrevor__default.default.Blocks.SolrDocuments = (function(){
+  SirTrevor.Blocks.SolrDocuments = (function(){
 
-    return SirTrevor__default.default.Blocks.SolrDocumentsBase.extend({
+    return SirTrevor.Blocks.SolrDocumentsBase.extend({
       type: "solr_documents",
 
       icon_name: "items",
@@ -9583,9 +9576,9 @@
 
   //= require spotlight/admin/blocks/solr_documents_base_block
 
-  SirTrevor__default.default.Blocks.SolrDocumentsCarousel = (function(){
+  SirTrevor.Blocks.SolrDocumentsCarousel = (function(){
 
-    return SirTrevor__default.default.Blocks.SolrDocumentsBase.extend({
+    return SirTrevor.Blocks.SolrDocumentsBase.extend({
       plustextable: false,
       type: "solr_documents_carousel",
 
@@ -9684,9 +9677,9 @@
 
   //= require spotlight/admin/blocks/solr_documents_base_block
 
-  SirTrevor__default.default.Blocks.SolrDocumentsEmbed = (function(){
+  SirTrevor.Blocks.SolrDocumentsEmbed = (function(){
 
-    return SirTrevor__default.default.Blocks.SolrDocumentsBase.extend({
+    return SirTrevor.Blocks.SolrDocumentsBase.extend({
       type: "solr_documents_embed",
       show_alt_text: false,
       icon_name: "item_embed",
@@ -9702,9 +9695,9 @@
 
   //= require spotlight/admin/blocks/solr_documents_base_block
 
-  SirTrevor__default.default.Blocks.SolrDocumentsFeatures = (function(){
+  SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
 
-    return SirTrevor__default.default.Blocks.SolrDocumentsBase.extend({
+    return SirTrevor.Blocks.SolrDocumentsBase.extend({
       plustextable: false,
       type: "solr_documents_features",
 
@@ -9744,9 +9737,9 @@
 
   //= require spotlight/admin/blocks/solr_documents_base_block
 
-  SirTrevor__default.default.Blocks.SolrDocumentsGrid = (function(){
+  SirTrevor.Blocks.SolrDocumentsGrid = (function(){
 
-    return SirTrevor__default.default.Blocks.SolrDocumentsBase.extend({
+    return SirTrevor.Blocks.SolrDocumentsBase.extend({
       type: "solr_documents_grid",
 
       icon_name: "item_grid",
@@ -9757,7 +9750,7 @@
 
   })();
 
-  SirTrevor__default.default.Blocks.UploadedItems = (function(){
+  SirTrevor.Blocks.UploadedItems = (function(){
     return Spotlight$1.Block.Resources.extend({
       plustextable: true,
       uploadable: true,
@@ -9935,7 +9928,7 @@
       img.setAttribute('role', 'img');
 
       var use = document.createElement('use');
-      use.setAttributeNS('https://www.w3.org/1999/xlink', 'href', SirTrevor__default.default.config.defaults.iconUrl + "#" + block.icon_name);
+      use.setAttributeNS('https://www.w3.org/1999/xlink', 'href', SirTrevor.config.defaults.iconUrl + "#" + block.icon_name);
       img.appendChild(use);
       el.appendChild(img);
       el.appendChild(document.createTextNode(block.title()));
@@ -10003,7 +9996,7 @@
     Spotlight$1.BlockControls = function() { };
     Spotlight$1.BlockControls.create = function(editor) {
       // REFACTOR - should probably not know about blockManager
-      var el = render(SirTrevor__default.default.Blocks, editor.blockManager.blockTypes);
+      var el = render(SirTrevor.Blocks, editor.blockManager.blockTypes);
 
       function hide() {
         var parent = el.parentNode;
@@ -10048,8 +10041,8 @@
   };
 
   Spotlight$1.BlockLimits.prototype.addEditorCallbacks = function(editor) {
-    SirTrevor__default.default.EventBus.on('block:create:new', this.checkBlockTypeLimitOnAdd());
-    SirTrevor__default.default.EventBus.on('block:remove', this.checkGlobalBlockTypeLimit());
+    SirTrevor.EventBus.on('block:create:new', this.checkBlockTypeLimitOnAdd());
+    SirTrevor.EventBus.on('block:remove', this.checkGlobalBlockTypeLimit());
   };
 
   Spotlight$1.BlockLimits.prototype.checkBlockTypeLimitOnAdd = function() {
@@ -10068,7 +10061,7 @@
 
     return function() {
       $.each(editor.blockManager.blockTypes, function(i, type) {
-        var block_type = SirTrevor__default.default.Blocks[type].prototype;
+        var block_type = SirTrevor.Blocks[type].prototype;
 
         var control = $(editor.blockControls.el).find(".st-block-controls__button[data-type='" + block_type.type + "']");
         control.prop("disabled", !editor.blockManager.canCreateBlock(type));
@@ -10076,7 +10069,7 @@
     };
   };
 
-  SirTrevor__default.default.Locales.en.blocks = $.extend(SirTrevor__default.default.Locales.en.blocks, {
+  SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
     autocompleteable: {
       placeholder: "Enter a title..."
     },
