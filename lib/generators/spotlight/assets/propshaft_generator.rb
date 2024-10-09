@@ -34,7 +34,7 @@ module Spotlight
       end
 
       def add_bootstrap
-        run "yarn add bootstrap@\"~#{bootstrap_yarn_version}\""
+        run "yarn add bootstrap@\"^#{bootstrap_yarn_version}\""
         if bootstrap4?
           run 'yarn add popper.js'
         else
