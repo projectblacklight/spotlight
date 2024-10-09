@@ -9,6 +9,7 @@ module Spotlight
     include MetaHelper
     include CropHelper
     include LanguagesHelper
+    include ActioncableHelper
 
     ##
     # Give the application name a chance to include the exhibit title
