@@ -120,4 +120,18 @@ describe Spotlight::PagesHelper, type: :helper do
       expect(helper.render_contact_email_address('local.part@example.com')).to have_css 'wbr', count: 3, visible: false
     end
   end
+
+  describe '#resource_alt_text' do
+    it 'returns an empty string if the decorative option is present' do
+      expect(helper.resource_alt_text({ decorative: 'on', alt_text: 'custom alt text' }, nil)).to eq ''
+    end
+
+    it 'returns the custom alt text if it is present' do
+      expect(helper.resource_alt_text({ alt_text: 'custom alt text' }, nil)).to eq 'custom alt text'
+    end
+
+    it 'returns the default if the custom alt text is not present' do
+      expect(helper.resource_alt_text({}, 'default alt text')).to eq 'default alt text'
+    end
+  end
 end

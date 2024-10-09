@@ -37,4 +37,19 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_block.html.erb', type: :vi
       expect(rendered).to have_selector 'img[src="http://example.com"]'
     end
   end
+
+  context 'with multiple documents' do
+    before do
+      allow(block).to receive(:each_document).and_yield({ thumbnail_image_url: 'http://example.com', decorative: 'on' }, doc)
+                                             .and_yield({ thumbnail_image_url: 'http://example.com', alt_text: 'custom alt text' }, doc)
+                                             .and_yield({ thumbnail_image_url: 'http://example.com' }, doc)
+    end
+
+    it 'uses the correct alt text' do
+      render partial: p, locals: { solr_documents_block: block }
+      expect(rendered).to have_selector 'img[alt=""]'
+      expect(rendered).to have_selector 'img[alt="custom alt text"]'
+      expect(rendered).to have_selector 'img[alt="blah"]'
+    end
+  end
 end

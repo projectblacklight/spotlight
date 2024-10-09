@@ -24,4 +24,10 @@ describe 'Solr Documents Embed Block', js: true, type: :feature do
       expect(html).to have_css('source[media="openseadragon"][src="https://stacks.stanford.edu/image/iiif/dq287tq6352%2Fdq287tq6352_05_0001/info.json"]')
     end
   end
+
+  it 'does not have alt text customization fields', js: true do
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
+    expect(page).to have_no_field('Alternative text')
+    expect(page).to have_no_field('Decorative')
+  end
 end

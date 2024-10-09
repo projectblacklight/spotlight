@@ -51,6 +51,11 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
       drag: "Drag",
       display: "Display?",
       remove: "Remove"
+    },
+    alt_text: {
+      decorative: "Decorative",
+      alternative_text: "Alternative text",
+      placeholder: "Enter alt text for this item..."
     }
   },
 
