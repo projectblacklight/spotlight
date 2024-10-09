@@ -13,8 +13,8 @@ jobs:
       matrix:
         rails_version: ["~> 7.2"]
         ruby: ["3.2", "3.3"]
-        bootstrap_version: ["~> 4.0"]
-        blacklight_version: ["~> 7.34"]
+        bootstrap_version: ["~> 4.3"]
+        blacklight_version: ["~> 7.38"]
         additional_engine_cart_rails_options: [""]
         additional_name: [""]
         include:
@@ -26,12 +26,12 @@ jobs:
           - rails_version: "7.1.4"
             ruby: "3.2"
             blacklight_version: "~> 7.38"
-            bootstrap_version: "~> 4.0"
+            bootstrap_version: "~> 4.3"
             additional_name: Rails 7.1
           - rails_version: "~> 7.2"
             ruby: "3.3"
             blacklight_version: "~> 8.0"
-            bootstrap_version: "~> 4.0"
+            bootstrap_version: "~> 4.3"
             additional_name: Blacklight 8
     env:
       RAILS_VERSION: ${{ matrix.rails_version }}

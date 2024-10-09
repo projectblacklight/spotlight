@@ -86,7 +86,7 @@ namespace :spotlight do
 
             Bundler.with_unbundled_env do
               IO.popen({ 'SPOTLIGHT_GEM' => File.dirname(__FILE__) },
-                       ['rails', version, 'new', 'internal', '--skip-spring', '-m', template_path] +
+                       ['rails', version, 'new', 'internal', '--skip-spring', '--skip-javascript', '-m', template_path] +
                           [err: %i[child out]]) do |io|
                 IO.copy_stream(io, $stderr)
 

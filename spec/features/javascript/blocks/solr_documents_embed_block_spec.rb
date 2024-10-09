@@ -18,6 +18,8 @@ describe 'Solr Documents Embed Block', js: true, type: :feature do
 
     save_page_changes
 
+    sleep 2 # Test is flappy without this after move to Propshaft?
+
     expect(page).to have_css('.openseadragon-container')
     expect(page).to have_css('picture')
     within('picture') do
