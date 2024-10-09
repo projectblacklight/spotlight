@@ -20,6 +20,7 @@ module Spotlight
       def install_dependencies
         copy_file 'package.json', 'package.json' unless File.exist?('package.json')
         run 'yarn add @hotwired/turbo-rails'
+        run 'yarn add @hotwired/stimulus'
         run 'yarn add clipboard'
         run 'yarn add jquery'
         run 'yarn add jquery-serializejson'
@@ -55,8 +56,24 @@ module Spotlight
         end
       end
 
+      def edit_relative_controllers_path
+        # Tell the app to look for controllers with relative path
+        gsub_file 'app/javascript/application.js', 'import "controllers"', 'import "./controllers"'
+        rails_command 'stimulus:manifest:update'
+      end
+
       def install_javascript_bundler
         rails_command 'javascript:install:esbuild'
+      end
+
+      def add_javascript
+        append_to_file 'app/javascript/application.js', "\n// Bootstrap\nimport * as Bootstrap from 'bootstrap'\n"
+
+        if Blacklight::VERSION.start_with?('7')
+          append_to_file 'app/javascript/application.js', "\n// Blacklight\nimport \"blacklight-frontend/app/assets/javascripts/blacklight/blacklight.js\"\n"
+        end
+
+        append_to_file 'app/javascript/application.js', "\n// Spotlight\nimport Spotlight from \"spotlight-frontend\"\n"
       end
 
       def install_sass_bundler
@@ -82,21 +99,15 @@ module Spotlight
         end
       end
 
-      def add_javascript
-        gsub_file 'app/javascript/application.js', 'import "controllers"', '// import "controllers"'
-
-        append_to_file 'app/javascript/application.js', "\n// Bootstrap\nimport * as Bootstrap from 'bootstrap'\n"
-
-        if Blacklight::VERSION.start_with?('7')
-          append_to_file 'app/javascript/application.js', "\n// Blacklight\nimport \"blacklight-frontend/app/assets/javascripts/blacklight/blacklight.js\"\n"
-        end
-
-        append_to_file 'app/javascript/application.js', "\n// Spotlight\nimport Spotlight from \"spotlight-frontend\"\n"
-      end
-
       def add_stylesheets
         copy_file 'assets/spotlight.scss', 'app/assets/stylesheets/spotlight.scss'
         append_to_file 'app/assets/stylesheets/application.sass.scss', "\n@import \"spotlight\";\n"
+      end
+
+      # Build the app frontend assets
+      def build_assets
+        run 'yarn build'
+        run 'yarn build:css'
       end
 
       # This resolves a bundling issue with bootstrap/popper on esbuild.
@@ -104,12 +115,6 @@ module Spotlight
         gsub_file 'package.json',
                   'esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets',
                   'esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --main-fields=main,module'
-      end
-
-      # Build the app frontend assets
-      def build_assets
-        run 'yarn build'
-        run 'yarn build:css'
       end
 
       private
