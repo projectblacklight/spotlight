@@ -30,7 +30,7 @@ module Spotlight
       end
 
       def add_blacklight_frontend
-        run "yarn add blacklight-frontend@#{Blacklight::VERSION}"
+        run "yarn add blacklight-frontend@#{blacklight_yarn_version}"
       end
 
       def add_bootstrap
@@ -113,6 +113,17 @@ module Spotlight
       end
 
       private
+
+      # Some versions of the blacklight gem do not have a corresponding blacklight-frontend package on npm.
+      # Assume we want the most recent version that is compatible with the major version of the gem.
+      def blacklight_yarn_version
+        versions = JSON.parse(`yarn info blacklight-frontend versions --json`)['data']
+        exact_match = versions.find { |v| v == Blacklight::VERSION }
+        return exact_match if exact_match
+
+        major_version = Gem::Version.new(Blacklight::VERSION).segments.first
+        "^#{major_version}"
+      end
 
       # Support the gem version format e.g.,  `~> 5.3` for consistency.
       def bootstrap_yarn_version
