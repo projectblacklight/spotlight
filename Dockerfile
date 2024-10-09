@@ -45,8 +45,9 @@ RUN bundle install --jobs "$(nproc)"
 RUN mkdir -p /spotlight/app
 WORKDIR /spotlight/app
 
-RUN SKIP_TRANSLATION=yes rails _${RAILS_VERSION}_ new . -a propshaft --force --template=../engine/template.rb
+RUN SKIP_TRANSLATION=yes rails _${RAILS_VERSION}_ new . -a propshaft --force --template=../engine/template.rb --skip-javascript
 RUN bundle add pg
+RUN yarn add file:${SPOTLIGHT_GEM}
 RUN yarn add @babel/plugin-proposal-private-methods --dev
 RUN yarn add @babel/plugin-proposal-private-property-in-object
 RUN SKIP_TRANSLATION=yes DB_ADAPTER=nulldb DATABASE_URL='postgresql://fake' bundle exec rake assets:precompile
