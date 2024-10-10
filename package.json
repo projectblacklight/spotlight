@@ -12,7 +12,8 @@
     "url": "git+https://github.com/projectblacklight/spotlight.git"
   },
   "files": [
-    "app/assets", "vendor/assets"
+    "app/assets",
+    "vendor/assets"
   ],
   "author": "",
   "license": "Apache-2.0",
@@ -29,5 +30,7 @@
     "not IE 11"
   ],
   "dependencies": {
+    "@rails/actioncable": "^7.2.100",
+    "@rollup/plugin-node-resolve": "^15.3.0"
   }
 }

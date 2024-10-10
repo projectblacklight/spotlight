@@ -1,7 +1,5 @@
 <% if can? :manage, Spotlight::Resource.new(exhibit: current_exhibit) %>
-  <div data-behavior='progress-panel' data-monitor-url="<%= monitor_exhibit_resources_path(current_exhibit) %>">
-    <%= render 'reindex_progress_panel' %>
-  </div>
+  <%= render Spotlight::ProgressBarComponent.new(exhibit: current_exhibit, translation_field: 'spotlight.catalog.reindex_progress_panel') %>
   <div class="add-items-nav clearfix">
     <div class="float-right float-end">
       <%= link_to t('.reindex'), reindex_all_exhibit_resources_path(current_exhibit), 

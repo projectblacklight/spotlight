@@ -5,6 +5,7 @@ module Spotlight
   # Reindex the given resources or exhibits
   class ReindexJob < Spotlight::ApplicationJob
     include Spotlight::JobTracking
+    include ActioncableHelper
     with_job_tracking(resource: ->(job) { job.exhibit })
 
     include Spotlight::LimitConcurrency
@@ -38,12 +39,20 @@ module Spotlight
         errors += 1
       end
 
+      started_at = Time.zone.now
+
       resource_list(exhibit_or_resources, start: start, finish: finish).each do |resource|
         resource.reindex(touch: false, commit: false, job_tracker: job_tracker, additional_data: job_data, on_error: error_handler) do |*|
           progress&.increment
+          data = { exhibit_id: resource.exhibit_id, finished: progress.progress == progress.total,
+                   completed: progress.progress, total: progress.total, errors: errors,
+                   updated_at: Time.zone.now, started_at: started_at, other: resource }
+          ws_broadcast('progress_channel', data)
         end
       rescue StandardError => e
         error_handler.call(Struct.new(:source).new(resource), e, nil)
+        data['errors'] = errors
+        ws_broadcast('progress_channel', data)
       end
 
       job_tracker.append_log_entry(

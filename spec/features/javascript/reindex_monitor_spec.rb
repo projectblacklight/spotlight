@@ -8,9 +8,12 @@ describe 'Reindex Monitor', default_max_wait_time: 10, js: true do
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
 
   before do
-    exhibit.job_trackers.create(resource: exhibit, status: 'completed', job_class: 'Spotlight::ReindexExhibitJob')
     login_as exhibit_curator
     visit spotlight.admin_exhibit_catalog_path(exhibit)
+    ActionCable.server.broadcast 'progress_channel',
+                                 { exhibit_id: exhibit.id, finished: true,
+                                   completed: 10, total: 10, errors: [],
+                                   updated_at: Time.zone.now, started_at:  Time.zone.now }
   end
 
   it 'is rendered on the item admin page' do

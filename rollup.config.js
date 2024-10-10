@@ -1,4 +1,5 @@
 import includePaths from 'rollup-plugin-includepaths';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 const BUNDLE = process.env.BUNDLE === 'true'
 const ESM = process.env.ESM === 'true'
@@ -24,7 +25,7 @@ const rollupConfig = {
     name: ESM ? undefined : 'Spotlight'
   },
   external,
-  plugins: [includePaths(includePathOptions)]
-};
+  plugins: [includePaths(includePathOptions), nodeResolve()]
+}
 
 export default rollupConfig
