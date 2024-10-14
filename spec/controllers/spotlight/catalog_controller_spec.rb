@@ -40,6 +40,7 @@ describe Spotlight::CatalogController, type: :controller do
 
       it 'shows the item with breadcrumbs to the browse page' do
         allow(controller).to receive_messages(current_browse_category: search)
+        controller.request.headers.merge({ HTTP_REFERER: '/spotlight/exhibit-title-1/browse' })
 
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
