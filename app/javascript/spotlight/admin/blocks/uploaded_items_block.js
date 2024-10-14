@@ -124,6 +124,8 @@ SirTrevor.Blocks.UploadedItems = (function(){
       return `<div class="form oembed-text-admin clearfix">
         <div class="widget-header">
           ${this.description()}
+          ${this.alt_text_guidelines()}
+          ${this.alt_text_guidelines_link()}
         </div>
         <div class="row">
           <div class="form-group mb-3 col-md-8">
