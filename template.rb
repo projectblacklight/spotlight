@@ -14,21 +14,19 @@ gem 'blacklight-spotlight', ENV['SPOTLIGHT_GEM'] ? { path: ENV['SPOTLIGHT_GEM'] 
 gem 'sidekiq'
 gem 'bootstrap_form', /(\d)(?:\.\d){0,2}/.match(bootstrap_version)[1].to_i == 5 ? '~> 5.4' : '~> 4.5'
 
-Bundler.with_unbundled_env do
-  run 'bundle install'
-end
+after_bundle do
+  # run the blacklight install generator
+  generate 'blacklight:install', blacklight_options
 
-# run the blacklight install generator
-generate 'blacklight:install', blacklight_options
+  # run the spotlight installer
+  generate 'spotlight:install', spotlight_options
+  rake 'spotlight:install:migrations'
 
-# run the spotlight installer
-generate 'spotlight:install', spotlight_options
-rake 'spotlight:install:migrations'
-
-# create an initial administrator (if we are running interactively..)
-if !options['quiet'] && yes?('Would you like to create an initial administrator?')
-  rake 'db:migrate' # we only need to run the migrations if we are creating an admin user
-  rake 'spotlight:initialize'
+  # create an initial administrator (if we are running interactively..)
+  if !options['quiet'] && yes?('Would you like to create an initial administrator?')
+    rake 'db:migrate' # we only need to run the migrations if we are creating an admin user
+    rake 'spotlight:initialize'
+  end
 end
 
 insert_into_file 'config/application.rb', after: "< Rails::Application\n" do
