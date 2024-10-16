@@ -39,7 +39,7 @@ module Spotlight
              else
                configuration
              end
-      conf['label']
+      conf['label'] || conf[:label]
     end
 
     def short_description=(short_description)
