@@ -1,3 +1,6 @@
+// Local customizations (import first, so that variables take precedence)
+@import 'customizations.scss';
+
 // Bootstrap (will use variables defined in customizations, if present)
 @import 'bootstrap/scss/bootstrap';
 @import 'spotlight-frontend/app/assets/stylesheets/spotlight/variables_bootstrap';
