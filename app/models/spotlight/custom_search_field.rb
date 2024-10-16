@@ -17,7 +17,7 @@ module Spotlight
     end
 
     def label
-      conf = if slug && blacklight_configuration && blacklight_configuration.search_fields.key?(slug)
+      conf = if slug && blacklight_configuration&.search_fields&.key?(slug)
                blacklight_configuration.search_fields[slug].reverse_merge(configuration)
              else
                configuration
@@ -32,7 +32,7 @@ module Spotlight
     end
 
     def update_blacklight_configuration_label(label)
-      return unless slug && blacklight_configuration && blacklight_configuration.search_fields.key?(slug)
+      return unless slug && blacklight_configuration&.search_fields&.key?(slug)
 
       blacklight_configuration.search_fields[slug]['label'] = label
       blacklight_configuration.save
