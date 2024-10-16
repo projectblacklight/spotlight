@@ -66,6 +66,11 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     end
   end
 
+  it 'displays alternative text guidelines', js: true do
+    expect(page).to have_content('For each item, please enter alternative text')
+    expect(page).to have_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
+  end
+
   it 'toggles alt text input when marking an image as decorative' do
     attach_file('uploaded_item_url', fixture_file1)
 

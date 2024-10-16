@@ -25,6 +25,11 @@ describe 'Solr Documents Embed Block', js: true, type: :feature do
     end
   end
 
+  it 'does not display alternative text guidelines', js: true do
+    expect(page).to have_no_content('For each item, please enter alternative text')
+    expect(page).to have_no_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
+  end
+
   it 'does not have alt text customization fields', js: true do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
     expect(page).to have_no_field('Alternative text')
