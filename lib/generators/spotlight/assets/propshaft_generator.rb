@@ -95,6 +95,7 @@ module Spotlight
       end
 
       def add_stylesheets
+        copy_file 'assets/_customizations.scss', 'app/assets/stylesheets/_customizations.scss'
         copy_file 'assets/spotlight.scss', 'app/assets/stylesheets/spotlight.scss'
         append_to_file 'app/assets/stylesheets/application.sass.scss', "\n@import \"spotlight\";\n"
       end
