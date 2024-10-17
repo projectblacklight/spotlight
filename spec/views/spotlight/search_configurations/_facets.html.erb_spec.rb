@@ -2,7 +2,7 @@
 
 describe 'spotlight/search_configurations/_facets', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let!(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit, label: 'Foobar', field_type: 'vocab') }
+  let!(:custom_field) { FactoryBot.create(:custom_field, exhibit:, label: 'Foobar', field_type: 'vocab') }
   let(:config) do
     exhibit.blacklight_configuration
   end
@@ -25,7 +25,7 @@ describe 'spotlight/search_configurations/_facets', type: :view do
     allow(field_metadata).to receive(:field).with('genre_ssim').and_return(empty_facet)
     allow(field_metadata).to receive(:field).with(custom_field.field).and_return(empty_facet)
     assign(:field_metadata, field_metadata)
-    render partial: 'spotlight/search_configurations/facets', locals: { f: f }
+    render partial: 'spotlight/search_configurations/facets', locals: { f: }
   end
 
   it 'shows the config for the non-empty personal name facet' do

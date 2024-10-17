@@ -19,7 +19,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
     end
 
     describe 'GET clone' do
-      let(:page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+      let(:page) { FactoryBot.create(:about_page, exhibit:) }
 
       it 'is not allowed' do
         get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
@@ -31,13 +31,13 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
 
   describe 'when signed in as a curator' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
-    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
     before { sign_in user }
 
     describe 'GET show' do
-      let(:page) { FactoryBot.create(:about_page, weight: 0, exhibit: exhibit) }
-      let(:page2) { FactoryBot.create(:about_page, weight: 5, exhibit: exhibit) }
+      let(:page) { FactoryBot.create(:about_page, weight: 0, exhibit:) }
+      let(:page2) { FactoryBot.create(:about_page, weight: 5, exhibit:) }
 
       describe 'on the main about page' do
         it 'is successful' do
@@ -66,7 +66,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
             :about_page,
             title: page.title,
             weight: 0,
-            exhibit: exhibit,
+            exhibit:,
             locale: 'es',
             default_locale_page: page
           )
@@ -80,11 +80,11 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
       end
 
       describe 'when "switching" locales for pages that have updated their title/slug' do
-        let(:page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+        let(:page) { FactoryBot.create(:about_page, exhibit:) }
         let!(:page_es) do
           FactoryBot.create(
             :about_page,
-            exhibit: exhibit,
+            exhibit:,
             title: 'Page in spanish',
             locale: 'es',
             default_locale_page: page
@@ -106,8 +106,8 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
     end
 
     describe 'GET edit' do
-      let!(:page) { FactoryBot.create(:about_page, weight: 0, exhibit: exhibit) }
-      let!(:page2) { FactoryBot.create(:about_page, weight: 5, exhibit: exhibit) }
+      let!(:page) { FactoryBot.create(:about_page, weight: 0, exhibit:) }
+      let!(:page2) { FactoryBot.create(:about_page, weight: 5, exhibit:) }
 
       describe 'on the main about page' do
         it 'is successful' do
@@ -132,7 +132,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
     end
 
     describe 'GET index' do
-      let!(:page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+      let!(:page) { FactoryBot.create(:about_page, exhibit:) }
 
       it 'is successful' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
@@ -154,7 +154,7 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
     end
 
     describe 'PUT update' do
-      let!(:page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+      let!(:page) { FactoryBot.create(:about_page, exhibit:) }
 
       it 'redirects to the about page' do
         put :update, params: { id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes }
@@ -165,9 +165,9 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
     end
 
     describe 'POST update_all' do
-      let!(:page1) { FactoryBot.create(:about_page, exhibit: exhibit) }
-      let!(:page2) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
-      let!(:page3) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
+      let!(:page1) { FactoryBot.create(:about_page, exhibit:) }
+      let!(:page2) { FactoryBot.create(:about_page, exhibit:, published: true) }
+      let!(:page3) { FactoryBot.create(:about_page, exhibit:, published: true) }
 
       it 'updates whether they are on the landing page' do
         post :update_all, params: {
@@ -189,8 +189,8 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
     end
 
     describe 'PATCH update_contacts' do
-      let!(:contact1) { FactoryBot.create(:contact, name: 'Aphra Behn', exhibit: exhibit) }
-      let!(:contact2) { FactoryBot.create(:contact, exhibit: exhibit) }
+      let!(:contact1) { FactoryBot.create(:contact, name: 'Aphra Behn', exhibit:) }
+      let!(:contact2) { FactoryBot.create(:contact, exhibit:) }
 
       it 'updates contacts' do
         patch :update_contacts, params: {
@@ -225,12 +225,12 @@ describe Spotlight::AboutPagesController, type: :controller, versioning: true do
     end
 
     describe 'GET clone' do
-      let(:page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+      let(:page) { FactoryBot.create(:about_page, exhibit:) }
 
       it 'calls the CloneTranslatedPageFromLocale service' do
         expect(
           Spotlight::CloneTranslatedPageFromLocale
-        ).to receive(:call).with(locale: 'es', page: page).and_call_original
+        ).to receive(:call).with(locale: 'es', page:).and_call_original
 
         get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
       end

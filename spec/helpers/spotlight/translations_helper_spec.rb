@@ -3,7 +3,7 @@
 RSpec.describe Spotlight::TranslationsHelper do
   describe '#non_custom_metadata_fields' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
-    let!(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit) }
+    let!(:custom_field) { FactoryBot.create(:custom_field, exhibit:) }
 
     before { allow(helper).to receive(:current_exhibit).and_return(exhibit) }
 

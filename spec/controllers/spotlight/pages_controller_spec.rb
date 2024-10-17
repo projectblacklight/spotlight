@@ -3,8 +3,8 @@
 describe Spotlight::PagesController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit, published: false) }
-  let(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit, published: false) }
+  let(:feature_page) { FactoryBot.create(:feature_page, exhibit:, published: false) }
+  let(:about_page) { FactoryBot.create(:about_page, exhibit:, published: false) }
   let(:update_all_params) do
     {
       exhibit: {
@@ -23,7 +23,7 @@ describe Spotlight::PagesController, type: :controller do
   end
 
   describe 'when signed in as a curator' do
-    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
     before do
       sign_in user

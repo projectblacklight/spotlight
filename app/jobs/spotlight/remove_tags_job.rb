@@ -19,12 +19,12 @@ module Spotlight
         document.reindex(update_params: {})
         progress&.increment
       rescue StandardError => e
-        job_tracker.append_log_entry(type: :error, exhibit: exhibit, message: e.to_s)
+        job_tracker.append_log_entry(type: :error, exhibit:, message: e.to_s)
         @errors += 1
         mark_job_as_failed!
       end
       exhibit.blacklight_config.repository.connection.commit
-      job_tracker.append_log_entry(type: :info, exhibit: exhibit, message: "#{progress.progress} of #{progress.total} (#{@errors} errors)")
+      job_tracker.append_log_entry(type: :info, exhibit:, message: "#{progress.progress} of #{progress.total} (#{@errors} errors)")
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end

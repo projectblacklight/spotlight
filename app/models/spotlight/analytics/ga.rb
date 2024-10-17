@@ -115,7 +115,7 @@ module Spotlight
 
         @report_data = report_data
 
-        OpenStruct.new({ rows: rows, totals: totals })
+        OpenStruct.new({ rows:, totals: })
       end
 
       private

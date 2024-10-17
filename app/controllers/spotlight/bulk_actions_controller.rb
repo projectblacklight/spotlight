@@ -23,7 +23,7 @@ module Spotlight
 
     def handle_bulk_action_with_job(job, i18n_key: action_name, **params)
       job.perform_later(
-        solr_params: solr_params,
+        solr_params:,
         exhibit: current_exhibit,
         user: current_user,
         **params

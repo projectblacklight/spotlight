@@ -4,7 +4,7 @@ RSpec.describe 'Display an item within the exhibit', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   context 'when signed in as an exhibit curator' do
-    let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
     before do
       login_as curator

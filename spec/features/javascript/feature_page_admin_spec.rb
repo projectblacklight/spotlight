@@ -2,19 +2,19 @@
 
 RSpec.describe 'Feature Pages Adminstration', js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let!(:page1) do
     FactoryBot.create(
       :feature_page,
       title: 'FeaturePage1',
-      exhibit: exhibit
+      exhibit:
     )
   end
   let!(:page2) do
     FactoryBot.create(
       :feature_page,
       title: 'FeaturePage2',
-      exhibit: exhibit,
+      exhibit:,
       display_sidebar: true
     )
   end

@@ -2,12 +2,12 @@
 
 describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:feature_page) do
     FactoryBot.create(
       :feature_page,
       title: 'FeaturePage1',
-      exhibit: exhibit
+      exhibit:
     )
   end
 

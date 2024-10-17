@@ -31,7 +31,7 @@ module Spotlight
     scope :at_top_level, -> { where(parent_page_id: nil) }
     scope :published, -> { where(published: true) }
     scope :recent, -> { order('updated_at DESC').limit(10) }
-    scope :for_locale, ->(locale = I18n.locale) { unscope(where: :locale).where(locale: locale) }
+    scope :for_locale, ->(locale = I18n.locale) { unscope(where: :locale).where(locale:) }
     scope :for_default_locale, -> { for_locale(I18n.default_locale) }
 
     has_one :lock, as: :on, dependent: :destroy
@@ -171,7 +171,7 @@ module Spotlight
         end
       end
 
-      translated_pages.update(weight: weight) if saved_change_to_weight?
+      translated_pages.update(weight:) if saved_change_to_weight?
     end
   end
 end

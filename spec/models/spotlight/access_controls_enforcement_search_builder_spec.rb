@@ -19,7 +19,7 @@ describe Spotlight::AccessControlsEnforcementSearchBuilder do
   subject { MockSearchBuilder.new blacklight_params, scope }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:scope) { double(current_exhibit: exhibit, context: { current_ability: current_ability }) }
+  let(:scope) { double(current_exhibit: exhibit, context: { current_ability: }) }
   let(:current_ability) { instance_double(Ability) }
   let(:solr_request) { Blacklight::Solr::Request.new }
   let(:blacklight_params) { {} }

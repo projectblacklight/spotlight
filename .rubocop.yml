@@ -12,7 +12,7 @@ AllCops:
     - 'db/**/*'
     - 'spec/internal/**/*'
     - 'vendor/**/*'
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 3.1
   DisplayCopNames: true
   SuggestExtensions: false
 
@@ -471,4 +471,6 @@ Rails/WhereNot: # new in 2.8
 Rails/WhereNotWithMultipleConditions: # new in 2.17
   Enabled: true
 Rails/WhereRange: # new in 2.25
+  Enabled: true
+Gemspec/AddRuntimeDependency: # new in 1.65
   Enabled: true

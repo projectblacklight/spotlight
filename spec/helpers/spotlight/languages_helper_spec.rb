@@ -5,7 +5,7 @@ RSpec.describe Spotlight::LanguagesHelper, type: :helper do
 
   describe '#add_exhibit_language_dropdown_options' do
     it 'returns a sorted Array of locales and their names' do
-      allow(helper).to receive_messages(current_exhibit: current_exhibit)
+      allow(helper).to receive_messages(current_exhibit:)
       expect(helper.add_exhibit_language_dropdown_options).to contain_exactly(
         ['Albanian', :sq],
         ['Arabic', :ar],
@@ -24,7 +24,7 @@ RSpec.describe Spotlight::LanguagesHelper, type: :helper do
   describe '#locale_selecter_dropown_options' do
     before do
       allow(helper).to receive_messages(current_ability: Ability.new(nil))
-      allow(helper).to receive_messages(current_exhibit: current_exhibit)
+      allow(helper).to receive_messages(current_exhibit:)
 
       current_exhibit.languages = [
         FactoryBot.create(:language, public: true, locale: 'es'),

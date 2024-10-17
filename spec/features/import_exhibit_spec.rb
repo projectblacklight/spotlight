@@ -4,7 +4,7 @@ require 'tempfile'
 
 describe 'Allow exhibit admins to import and export content from an exhibit', js: true, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+  let(:user) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
   before do
     login_as user

@@ -93,7 +93,7 @@ module Spotlight
                else
                  t(:'helpers.submit.page.batch_error', model: human_name)
                end
-      redirect_back fallback_location: spotlight.exhibit_dashboard_path(@exhibit), notice: notice
+      redirect_back fallback_location: spotlight.exhibit_dashboard_path(@exhibit), notice:
     end
 
     def clone

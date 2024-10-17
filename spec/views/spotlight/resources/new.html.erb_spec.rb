@@ -5,7 +5,7 @@ describe 'spotlight/resources/new.html.erb', type: :view do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
 
   before do
-    allow(view).to receive_messages(blacklight_config: blacklight_config)
+    allow(view).to receive_messages(blacklight_config:)
     allow(view).to receive(:current_exhibit).and_return(exhibit)
     allow(view).to receive_messages(current_page?: true)
     stub_template 'spotlight/shared/_curation_sidebar.html.erb' => ''

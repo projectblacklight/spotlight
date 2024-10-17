@@ -92,7 +92,7 @@ module Spotlight
     end
 
     def append_log_entry(type:, exhibit: nil, **args)
-      events.create(type: type, exhibit: exhibit, data: args)
+      events.create(type:, exhibit:, data: args)
     rescue StandardError => e
       Rails.logger.error("Unable to create log entry for job tracker #{id}: #{e}")
     end

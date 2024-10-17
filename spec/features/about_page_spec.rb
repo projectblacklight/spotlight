@@ -2,10 +2,10 @@
 
 describe 'About page', type: :feature, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
-  let!(:about_page1) { FactoryBot.create(:about_page, title: 'First Page', exhibit: exhibit) }
-  let!(:about_page2) { FactoryBot.create(:about_page, title: 'Second Page', exhibit: exhibit) }
-  let(:unpublished_page) { FactoryBot.create(:about_page, title: 'Unpublished Page', published: false, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
+  let!(:about_page1) { FactoryBot.create(:about_page, title: 'First Page', exhibit:) }
+  let!(:about_page2) { FactoryBot.create(:about_page, title: 'Second Page', exhibit:) }
+  let(:unpublished_page) { FactoryBot.create(:about_page, title: 'Unpublished Page', published: false, exhibit:) }
 
   describe 'sidebar' do
     it 'displays' do

@@ -32,10 +32,10 @@ describe Spotlight::SearchesController, type: :controller do
 
   describe 'when the user is a curator' do
     before do
-      sign_in FactoryBot.create(:exhibit_curator, exhibit: exhibit)
+      sign_in FactoryBot.create(:exhibit_curator, exhibit:)
     end
 
-    let(:search) { FactoryBot.create(:search, exhibit: exhibit) }
+    let(:search) { FactoryBot.create(:search, exhibit:) }
 
     it 'creates a saved search' do
       request.env['HTTP_REFERER'] = '/referring_url'
@@ -47,8 +47,8 @@ describe Spotlight::SearchesController, type: :controller do
     end
 
     describe 'GET index' do
-      let!(:search) { FactoryBot.create(:search, exhibit: exhibit) }
-      let(:group) { FactoryBot.create(:group, published: true, title: 'Good group', exhibit: exhibit, searches: [search]) }
+      let!(:search) { FactoryBot.create(:search, exhibit:) }
+      let(:group) { FactoryBot.create(:group, published: true, title: 'Good group', exhibit:, searches: [search]) }
 
       it 'shows all the items' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
@@ -79,11 +79,11 @@ describe Spotlight::SearchesController, type: :controller do
 
     describe 'GET autocomplete' do
       let(:search) do
-        FactoryBot.create(:search, exhibit: exhibit, title: 'New Mexico Maps', query_params: { q: 'New Mexico' })
+        FactoryBot.create(:search, exhibit:, title: 'New Mexico Maps', query_params: { q: 'New Mexico' })
       end
 
       let(:search_fq) do
-        FactoryBot.create(:search, exhibit: exhibit, title: 'New Mexico Maps', query_params: { f: { subject_geographic_ssim: ['Pacific Ocean'] } })
+        FactoryBot.create(:search, exhibit:, title: 'New Mexico Maps', query_params: { f: { subject_geographic_ssim: ['Pacific Ocean'] } })
       end
 
       it "shows all the items returned search's query_params" do
@@ -155,7 +155,7 @@ describe Spotlight::SearchesController, type: :controller do
     end
 
     describe 'DELETE destroy' do
-      let!(:search) { FactoryBot.create(:search, exhibit: exhibit) }
+      let!(:search) { FactoryBot.create(:search, exhibit:) }
 
       it 'removes it' do
         expect do
@@ -167,8 +167,8 @@ describe Spotlight::SearchesController, type: :controller do
     end
 
     describe 'POST update_all' do
-      let!(:search2) { FactoryBot.create(:search, exhibit: exhibit, published: true) }
-      let!(:search3) { FactoryBot.create(:search, exhibit: exhibit, published: true) }
+      let!(:search2) { FactoryBot.create(:search, exhibit:, published: true) }
+      let!(:search3) { FactoryBot.create(:search, exhibit:, published: true) }
 
       before { request.env['HTTP_REFERER'] = '/whatever' }
 

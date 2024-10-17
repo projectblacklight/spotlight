@@ -78,7 +78,7 @@ module Spotlight
                else
                  t(:'helpers.submit.search.batch_error', model: Spotlight::Search.model_name.human.pluralize.downcase)
                end
-      redirect_back fallback_location: fallback_url, notice: notice
+      redirect_back fallback_location: fallback_url, notice:
     end
 
     protected

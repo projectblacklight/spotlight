@@ -55,7 +55,7 @@ module Spotlight
     private
 
     def find_or_initialize_job_tracker
-      JobTracker.find_or_create_by(job_id: job_id) do |tracker|
+      JobTracker.find_or_create_by(job_id:) do |tracker|
         tracker.job_class = self.class.name
         tracker.status = 'enqueued'
       end

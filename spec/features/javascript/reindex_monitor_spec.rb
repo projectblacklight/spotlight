@@ -4,8 +4,8 @@ describe 'Reindex Monitor', default_max_wait_time: 10, js: true do
   let(:resources) do
     FactoryBot.create_list(:resource, 1)
   end
-  let(:exhibit) { FactoryBot.create(:exhibit, resources: resources) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit) { FactoryBot.create(:exhibit, resources:) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
   before do
     exhibit.job_trackers.create(resource: exhibit, status: 'completed', job_class: 'Spotlight::ReindexExhibitJob')

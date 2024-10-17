@@ -50,7 +50,7 @@ module Spotlight
                else
                  t(:'helpers.submit.group.batch_error', model: human_name)
                end
-      redirect_to spotlight.exhibit_searches_path(anchor: 'browse-groups'), notice: notice
+      redirect_to spotlight.exhibit_searches_path(anchor: 'browse-groups'), notice:
     end
 
     protected

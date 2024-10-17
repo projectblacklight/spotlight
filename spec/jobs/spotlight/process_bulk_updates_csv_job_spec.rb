@@ -10,7 +10,7 @@ describe Spotlight::ProcessBulkUpdatesCsvJob do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe 'visibility' do
-    let(:bulk_update) { FactoryBot.create(:bulk_update, exhibit: exhibit) }
+    let(:bulk_update) { FactoryBot.create(:bulk_update, exhibit:) }
 
     it 'is updated' do
       allow(SolrDocument.index.connection).to receive(:update).and_call_original
@@ -38,7 +38,7 @@ describe Spotlight::ProcessBulkUpdatesCsvJob do
     end
 
     context 'without a visibility column' do
-      let(:bulk_update) { FactoryBot.create(:bulk_update_no_cols, exhibit: exhibit) }
+      let(:bulk_update) { FactoryBot.create(:bulk_update_no_cols, exhibit:) }
 
       it 'does nothing with the data' do
         expect { subject.perform_now }.not_to(change { exhibit.reload.solr_document_sidecars.where(public: false).count })
@@ -47,7 +47,7 @@ describe Spotlight::ProcessBulkUpdatesCsvJob do
   end
 
   describe 'tags' do
-    let(:bulk_update) { FactoryBot.create(:tagged_bulk_update, exhibit: exhibit) }
+    let(:bulk_update) { FactoryBot.create(:tagged_bulk_update, exhibit:) }
 
     before do
       document = exhibit.blacklight_config.repository.find('cz507zk0531').documents.first
