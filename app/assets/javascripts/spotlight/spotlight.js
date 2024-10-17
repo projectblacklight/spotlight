@@ -5141,6 +5141,7 @@
   };
 
   // Place all the behaviors and hooks related to the matching controller here.
+  // All this logic will automatically be available in application.js.
 
   class Pages {
     connect(){
@@ -5607,6 +5608,8 @@
   }
 
   // Visibility toggle for items in an exhibit, based on Blacklight's bookmark toggle
+  // See: https://github.com/projectblacklight/blacklight/blob/main/app/javascript/blacklight/bookmark_toggle.js
+
 
   const VisibilityToggle = (e) => {
     if (e.target.matches('[data-checkboxsubmit-target="checkbox"]')) {
@@ -5937,7 +5940,20 @@
 
       title: function() { return i18n.t("blocks:" + this.type + ":title"); },
       description: function() { return i18n.t("blocks:" + this.type + ":description"); },
-
+      alt_text_guidelines: function() { 
+        if (this.show_alt_text) {
+          return i18n.t("blocks:alt_text_guidelines:intro"); 
+        }
+        return "";
+      },
+      alt_text_guidelines_link: function() {
+        if (this.show_alt_text) {
+          var link_url = i18n.t("blocks:alt_text_guidelines:link_url");
+          var link_label = i18n.t("blocks:alt_text_guidelines:link_label");
+          return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>'; 
+        }
+        return "";
+      },
       icon_name: "resources",
       blockGroup: function() { return i18n.t("blocks:group:items") },
 
@@ -6063,6 +6079,8 @@
         return `<div class="form resources-admin clearfix">
         <div class="widget-header">
           ${this.description()}
+          ${this.alt_text_guidelines()}
+          ${this.alt_text_guidelines_link()}
         </div>
         ${this.content()}
       </div>`
@@ -6938,6 +6956,8 @@
         return `<div class="form oembed-text-admin clearfix">
         <div class="widget-header">
           ${this.description()}
+          ${this.alt_text_guidelines()}
+          ${this.alt_text_guidelines_link()}
         </div>
         <div class="row">
           <div class="form-group mb-3 col-md-8">
@@ -7255,6 +7275,12 @@
     group: {
       undefined: "Standard widgets",
       items: "Exhibit item widgets"
+    },
+
+    alt_text_guidelines: {
+      intro: 'For each item, please enter alternative text or appropriately check the decorative box.',
+      link_label: 'Guidelines for writing alt text.',
+      link_url: 'https://www.w3.org/WAI/tutorials/images/' 
     }
   });
 

@@ -12,7 +12,20 @@ Core.Block.Resources = (function(){
 
     title: function() { return i18n.t("blocks:" + this.type + ":title"); },
     description: function() { return i18n.t("blocks:" + this.type + ":description"); },
-
+    alt_text_guidelines: function() { 
+      if (this.show_alt_text) {
+        return i18n.t("blocks:alt_text_guidelines:intro"); 
+      }
+      return "";
+    },
+    alt_text_guidelines_link: function() {
+      if (this.show_alt_text) {
+        var link_url = i18n.t("blocks:alt_text_guidelines:link_url");
+        var link_label = i18n.t("blocks:alt_text_guidelines:link_label");
+        return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>'; 
+      }
+      return "";
+    },
     icon_name: "resources",
     blockGroup: function() { return i18n.t("blocks:group:items") },
 
@@ -138,6 +151,8 @@ Core.Block.Resources = (function(){
       return `<div class="form resources-admin clearfix">
         <div class="widget-header">
           ${this.description()}
+          ${this.alt_text_guidelines()}
+          ${this.alt_text_guidelines_link()}
         </div>
         ${this.content()}
       </div>`

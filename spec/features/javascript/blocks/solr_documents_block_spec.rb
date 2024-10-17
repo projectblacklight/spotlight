@@ -204,6 +204,11 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     end
   end
 
+  it 'displays alternative text guidelines', js: true do
+    expect(page).to have_content('For each item, please enter alternative text')
+    expect(page).to have_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
+  end
+
   it 'toggles alt text input when marking an image as decorative', js: true do
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
     # Flappy guard. Wait for the thumbnail src to be populated.
