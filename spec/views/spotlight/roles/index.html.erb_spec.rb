@@ -3,7 +3,7 @@
 describe 'spotlight/roles/index', type: :view do
   let(:user) { stub_model(Spotlight::Engine.user_class, email: 'jane@example.com') }
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:admin_role) { FactoryBot.create(:role, role: 'admin', user: user, resource: exhibit) }
+  let(:admin_role) { FactoryBot.create(:role, role: 'admin', user:, resource: exhibit) }
   let(:roles) { [admin_role] }
 
   before do

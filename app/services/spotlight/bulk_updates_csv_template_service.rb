@@ -12,9 +12,9 @@ module Spotlight
     end
 
     def template(view_context:, title: true, tags: true, visibility: true)
-      return to_enum(:template, view_context: view_context, title: title, tags: tags, visibility: visibility) unless block_given?
+      return to_enum(:template, view_context:, title:, tags:, visibility:) unless block_given?
 
-      yield ::CSV.generate_line(csv_headers(title: title, tags: tags, visibility: visibility))
+      yield ::CSV.generate_line(csv_headers(title:, tags:, visibility:))
       each_document do |document|
         sidecar = document.sidecar(exhibit)
         yield ::CSV.generate_line([

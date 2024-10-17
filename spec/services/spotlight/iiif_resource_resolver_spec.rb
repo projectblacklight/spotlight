@@ -10,7 +10,7 @@ describe Spotlight::IiifResourceResolver do
   let(:resource) do
     FactoryBot.create(
       :featured_image,
-      iiif_manifest_url: iiif_manifest_url,
+      iiif_manifest_url:,
       iiif_image_id: 'https://purl.stanford.edu/gk446cj2442/iiif/annotation/gk446cj2442_1',
       iiif_canvas_id: 'https://purl.stanford.edu/gk446cj2442/iiif/canvas/gk446cj2442_1',
       iiif_tilesource: 'https://stacks.stanford.edu/image/iiif/gk446cj2442%2Fgk446cj2442_05_0001/info.json'

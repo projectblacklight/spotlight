@@ -13,7 +13,7 @@ RSpec.describe Spotlight::Language do
 
   describe 'when being destroyed' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
-    let(:language) { described_class.create(locale: 'es', exhibit: exhibit) }
+    let(:language) { described_class.create(locale: 'es', exhibit:) }
 
     before { Translation.current_exhibit = exhibit }
 
@@ -30,7 +30,7 @@ RSpec.describe Spotlight::Language do
     end
 
     it 'also destroys its locale related translations' do
-      translation = FactoryBot.create(:translation, key: 'some.key', exhibit: exhibit, locale: 'es')
+      translation = FactoryBot.create(:translation, key: 'some.key', exhibit:, locale: 'es')
 
       expect do
         language.destroy

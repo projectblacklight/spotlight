@@ -16,7 +16,7 @@ describe Spotlight::BrowseCategorySearchBuilder do
   let(:blacklight_params) { { browse_category_id: search.id } }
 
   context 'with a facet as the basis of the browse category (no search query present)' do
-    let(:search) { FactoryBot.create(:search, exhibit: exhibit, query_params: { sort: 'type', f: { genre_ssim: ['genre facet'] } }) }
+    let(:search) { FactoryBot.create(:search, exhibit:, query_params: { sort: 'type', f: { genre_ssim: ['genre facet'] } }) }
 
     describe 'constructs params properly' do
       it 'adds facet to the solr params' do
@@ -36,7 +36,7 @@ describe Spotlight::BrowseCategorySearchBuilder do
   end
 
   context 'with a search query as part of the construction of the browse category' do
-    let(:search) { FactoryBot.create(:search, exhibit: exhibit, query_params: { sort: 'type', f: { genre_ssim: ['term'] }, q: 'search query' }) }
+    let(:search) { FactoryBot.create(:search, exhibit:, query_params: { sort: 'type', f: { genre_ssim: ['term'] }, q: 'search query' }) }
 
     describe 'constructs params properly' do
       it 'includes the facet and the seach term information in the params' do

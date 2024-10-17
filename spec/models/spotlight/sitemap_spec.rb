@@ -75,8 +75,8 @@ describe Spotlight::Sitemap do
   end
 
   describe '#add_pages' do
-    let!(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit, published: true) }
-    let!(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
+    let!(:feature_page) { FactoryBot.create(:feature_page, exhibit:, published: true) }
+    let!(:about_page) { FactoryBot.create(:about_page, exhibit:, published: true) }
 
     it 'adds feature pages' do
       subject.add_pages
@@ -103,7 +103,7 @@ describe Spotlight::Sitemap do
   end
 
   describe '#add_browse_categories' do
-    let!(:search) { FactoryBot.create(:published_search, exhibit: exhibit) }
+    let!(:search) { FactoryBot.create(:published_search, exhibit:) }
 
     it 'adds browse categories to the sitemap' do
       subject.add_browse_categories

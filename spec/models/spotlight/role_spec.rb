@@ -39,7 +39,7 @@ describe Spotlight::Role, type: :model do
         let(:user) { FactoryBot.create(:user) }
         let(:args) { { role: 'curator', user_key: user.email } }
 
-        before { described_class.create!(role: 'curator', user: user) }
+        before { described_class.create!(role: 'curator', user:) }
 
         it 'is valid' do
           expect(subject).not_to be_valid

@@ -20,7 +20,7 @@ namespace :spotlight do
     email = 'admin@localhost'
     password = 'testing'
 
-    u = Spotlight::Engine.user_class.find_or_create_by!(email: email) do |user|
+    u = Spotlight::Engine.user_class.find_or_create_by!(email:) do |user|
       user.password = password
     end
     Spotlight::Role.create(user: u, resource: Spotlight::Site.instance, role: 'admin')
@@ -33,7 +33,7 @@ namespace :spotlight do
     title = prompt_for_title
     slug = prompt_for_slug
 
-    exhibit = Spotlight::Exhibit.create!({ title: title, slug: slug })
+    exhibit = Spotlight::Exhibit.create!({ title:, slug: })
 
     puts 'Who can admin this exhibit?'
 
@@ -55,7 +55,7 @@ namespace :spotlight do
 
     slug = args[:exhibit_slug] || data['slug']
 
-    exhibit = Spotlight::Exhibit.find_or_create_by! slug: slug do |e|
+    exhibit = Spotlight::Exhibit.find_or_create_by!(slug:) do |e|
       e.title = data['title']
     end
 

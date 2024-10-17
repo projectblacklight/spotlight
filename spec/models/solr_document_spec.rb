@@ -100,7 +100,7 @@ describe SolrDocument, type: :model do
 
   describe '#to_solr' do
     before do
-      Spotlight::SolrDocumentSidecar.create! document: subject, exhibit: exhibit,
+      Spotlight::SolrDocumentSidecar.create! document: subject, exhibit:,
                                              data: { 'a_tesim' => 1, 'b_tesim' => 2, 'c_tesim' => 3 }
     end
 

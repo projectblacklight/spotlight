@@ -49,14 +49,14 @@ module Spotlight
       thumbnail.iiif_url
     end
 
-    def documents(&block)
+    def documents(&)
       start = 0
       response = repository.search(search_params.start(start))
 
       return to_enum(:documents) { response['response']['numFound'] } unless block_given?
 
       while response.documents.present?
-        response.documents.each(&block)
+        response.documents.each(&)
         start += response.documents.length
         response = repository.search(search_params.start(start))
       end

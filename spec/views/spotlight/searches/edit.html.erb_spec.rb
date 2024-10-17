@@ -8,7 +8,7 @@ describe 'spotlight/searches/edit.html.erb', type: :view do
   end
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:search) do
-    stub_model(Spotlight::Search, exhibit: exhibit,
+    stub_model(Spotlight::Search, exhibit:,
                                   id: 99, title: 'Title1', query_params: { f: { 'some_field' => ['xyz'] } })
   end
 

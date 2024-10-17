@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Spotlight::Resource, type: :model do
-  subject(:resource) { described_class.create(id: 123, exhibit: exhibit) }
+  subject(:resource) { described_class.create(id: 123, exhibit:) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
@@ -80,11 +80,11 @@ describe Spotlight::Resource, type: :model do
     end
 
     it 'applies exhibit-specific metadata from the sidecar' do
-      expect(indexed_document).to include Spotlight::SolrDocumentSidecar.new(document: SolrDocument.new(id: '123'), exhibit: exhibit).to_solr
+      expect(indexed_document).to include Spotlight::SolrDocumentSidecar.new(document: SolrDocument.new(id: '123'), exhibit:).to_solr
     end
 
     it 'includes metata from each sidecar' do
-      a = Spotlight::SolrDocumentSidecar.create(document: SolrDocument.new(id: '123'), exhibit: exhibit)
+      a = Spotlight::SolrDocumentSidecar.create(document: SolrDocument.new(id: '123'), exhibit:)
       b = Spotlight::SolrDocumentSidecar.create(document: SolrDocument.new(id: '123'), exhibit: FactoryBot.build(:exhibit))
 
       expect(indexed_document).to include(a.to_solr).and(include(b.to_solr))
@@ -93,7 +93,7 @@ describe Spotlight::Resource, type: :model do
     it 'persists a sidecar document' do
       expect { indexed_document }.to change(Spotlight::SolrDocumentSidecar, :count).by(1)
 
-      expect(Spotlight::SolrDocumentSidecar.last).to have_attributes(document_id: '123', exhibit: exhibit)
+      expect(Spotlight::SolrDocumentSidecar.last).to have_attributes(document_id: '123', exhibit:)
     end
 
     it 'applies application metadata' do

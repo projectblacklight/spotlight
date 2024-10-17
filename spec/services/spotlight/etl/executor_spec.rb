@@ -16,11 +16,11 @@ describe Spotlight::Etl::Executor do
 
   describe '#call' do
     it 'provides the context to the sources' do
-      pipeline.sources = [->(context, *) { [{ context: context }] }]
+      pipeline.sources = [->(context, *) { [{ context: }] }]
 
       executor.call
 
-      expect(arr).to eq [{ context: context }]
+      expect(arr).to eq [{ context: }]
     end
 
     it 'makes the current source available to transforms' do

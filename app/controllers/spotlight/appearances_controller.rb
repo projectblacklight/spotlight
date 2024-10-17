@@ -16,7 +16,7 @@ module Spotlight
     def update
       if @exhibit.update(exhibit_params)
         notice = t(:'helpers.submit.spotlight_default.updated', model: @exhibit.class.model_name.human.downcase)
-        redirect_to edit_exhibit_appearance_path(@exhibit), notice: notice
+        redirect_to edit_exhibit_appearance_path(@exhibit), notice:
       else
         render 'edit'
       end

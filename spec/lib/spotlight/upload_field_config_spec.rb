@@ -4,7 +4,7 @@ RSpec.describe Spotlight::UploadFieldConfig do
   describe '#label' do
     it 'accepts a proc and calls it' do
       label = -> { 'returned string' }
-      expect(described_class.new(field_name: 'something', label: label).label).to eq 'returned string'
+      expect(described_class.new(field_name: 'something', label:).label).to eq 'returned string'
     end
 
     it 'returns any non-proc value' do

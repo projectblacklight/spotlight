@@ -13,7 +13,7 @@ module Spotlight
     end
 
     def self.call(locale:, page:)
-      new(locale: locale, page: page).clone
+      new(locale:, page:).clone
     end
 
     def clone

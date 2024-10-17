@@ -19,17 +19,17 @@ module Spotlight
           @index ||= blacklight_config.repository_class.new(blacklight_config)
         end
 
-        def find_each(&block)
+        def find_each(&)
           return to_enum(:find_each) unless block_given?
 
           start = 0
           search_params = { q: '*:*', fl: 'id', facet: false }
-          response = index.search(search_params.merge(start: start))
+          response = index.search(search_params.merge(start:))
 
           while response.documents.present?
-            response.documents.each(&block)
+            response.documents.each(&)
             start += response.documents.length
-            response = index.search(search_params.merge(start: start))
+            response = index.search(search_params.merge(start:))
           end
         end
 

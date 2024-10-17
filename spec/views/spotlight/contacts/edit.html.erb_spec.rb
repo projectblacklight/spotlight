@@ -4,7 +4,7 @@ describe 'spotlight/contacts/edit.html.erb' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   let(:contact) do
-    Spotlight::Contact.new exhibit: exhibit
+    Spotlight::Contact.new exhibit:
   end
 
   before do

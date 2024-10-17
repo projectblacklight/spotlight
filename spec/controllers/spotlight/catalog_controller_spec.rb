@@ -26,7 +26,7 @@ describe Spotlight::CatalogController, type: :controller do
 
     describe 'GET show' do
       let(:document) { SolrDocument.new(id: 'dq287tq6352') }
-      let(:search) { FactoryBot.create(:search, exhibit: exhibit) }
+      let(:search) { FactoryBot.create(:search, exhibit:) }
 
       it 'shows the item' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit))
@@ -53,7 +53,7 @@ describe Spotlight::CatalogController, type: :controller do
       end
 
       it 'shows the item with breadcrumbs to the feature page' do
-        feature_page = FactoryBot.create(:feature_page, exhibit: exhibit)
+        feature_page = FactoryBot.create(:feature_page, exhibit:)
         allow(controller).to receive_messages(current_page_context: feature_page)
 
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit))
@@ -226,7 +226,7 @@ describe Spotlight::CatalogController, type: :controller do
   end
 
   describe 'when the user is a curator' do
-    before { sign_in FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    before { sign_in FactoryBot.create(:exhibit_curator, exhibit:) }
 
     it 'shows all the items' do
       expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit))
@@ -264,19 +264,19 @@ describe Spotlight::CatalogController, type: :controller do
       end
 
       it 'can update non-readonly fields' do
-        field = FactoryBot.create(:custom_field, exhibit: exhibit)
+        field = FactoryBot.create(:custom_field, exhibit:)
         patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } } }
         expect(assigns[:document].sidecar(exhibit).data).to eq(field.field => 'no')
       end
 
       it "can't update readonly fields" do
-        field = FactoryBot.create(:custom_field, exhibit: exhibit, readonly_field: true)
+        field = FactoryBot.create(:custom_field, exhibit:, readonly_field: true)
         patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => 'no' } } } }
         expect(assigns[:document].sidecar(exhibit).data).to eq({})
       end
 
       it 'can update multivalued fields' do
-        field = FactoryBot.create(:custom_field, exhibit: exhibit, is_multiple: true)
+        field = FactoryBot.create(:custom_field, exhibit:, is_multiple: true)
         patch :update, params: { exhibit_id: exhibit, id: 'dq287tq6352', solr_document: { sidecar: { data: { field.field => %w[1 2 3] } } } }
         expect(assigns[:document].sidecar(exhibit).data).to eq(field.field => %w[1 2 3])
       end
@@ -406,7 +406,7 @@ describe Spotlight::CatalogController, type: :controller do
     end
 
     context 'when arriving from a feature page' do
-      let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+      let(:page) { FactoryBot.create(:feature_page, exhibit:) }
       let(:search) do
         Search.new(query_params: { action: 'show', controller: 'spotlight/feature_pages', id: page.id }.with_indifferent_access)
       end
@@ -510,7 +510,7 @@ describe Spotlight::CatalogController, type: :controller do
   describe 'save_search rendering' do
     let(:current_exhibit) { FactoryBot.create(:exhibit) }
 
-    before { allow(controller).to receive_messages(current_exhibit: current_exhibit) }
+    before { allow(controller).to receive_messages(current_exhibit:) }
 
     describe 'render_curator_actions?' do
       it 'returns false if we are on the items admin screen' do
@@ -534,13 +534,13 @@ describe Spotlight::CatalogController, type: :controller do
 
   describe '#setup_next_and_previous_documents_from_browse_category' do
     let(:search_session) { { 'counter' => '1' } }
-    let(:current_browse_category) { FactoryBot.create(:search, exhibit: exhibit, query_params: { q: 'Search String' }) }
+    let(:current_browse_category) { FactoryBot.create(:search, exhibit:, query_params: { q: 'Search String' }) }
 
     before do
       allow(controller).to receive_messages(
         current_exhibit: exhibit,
-        search_session: search_session,
-        current_browse_category: current_browse_category
+        search_session:,
+        current_browse_category:
       )
     end
 

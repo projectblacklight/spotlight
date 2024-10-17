@@ -56,21 +56,21 @@ module Spotlight
 
         private
 
-        def recursive_manifests(thing, &block)
+        def recursive_manifests(thing, &)
           return to_enum(:recursive_manifests, thing) unless block_given?
 
-          thing.manifests.each(&block)
+          thing.manifests.each(&)
 
           return if thing.collections.blank?
 
           thing.collections.each do |collection|
-            recursive_manifests(collection, &block)
+            recursive_manifests(collection, &)
           end
         end
       end
 
       def create_iiif_manifest(manifest, collection = nil)
-        IiifManifest.new(url: manifest['@id'], manifest: manifest, collection: collection)
+        IiifManifest.new(url: manifest['@id'], manifest:, collection:)
       end
 
       def manifest?

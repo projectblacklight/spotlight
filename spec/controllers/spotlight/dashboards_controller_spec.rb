@@ -10,7 +10,7 @@ describe Spotlight::DashboardsController, type: :controller do
   end
 
   describe 'when logged in' do
-    let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
     before { sign_in curator }
 

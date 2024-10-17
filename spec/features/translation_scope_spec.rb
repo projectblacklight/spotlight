@@ -3,12 +3,12 @@
 describe 'Translations scope setting', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:other_exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
   describe 'exhibit route set' do
     before do
       login_as exhibit_curator
-      FactoryBot.create(:translation, exhibit: exhibit)
+      FactoryBot.create(:translation, exhibit:)
       FactoryBot.create(:translation, exhibit: other_exhibit)
     end
 

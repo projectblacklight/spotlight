@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 describe Spotlight::InviteUsersService do
-  subject { described_class.call(resource: resource) }
+  subject { described_class.call(resource:) }
 
   let(:resource) do
-    FactoryBot.create(:exhibit, roles: FactoryBot.create_list(:role, 1, user: user))
+    FactoryBot.create(:exhibit, roles: FactoryBot.create_list(:role, 1, user:))
   end
 
   context 'when the user was not created by an invite' do

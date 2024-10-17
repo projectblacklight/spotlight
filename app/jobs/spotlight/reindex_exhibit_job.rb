@@ -30,7 +30,7 @@ module Spotlight
 
     def perform_later_in_batches(exhibit, of:)
       last = 0
-      exhibit.resources.select(:id).in_batches(of: of) do |batch|
+      exhibit.resources.select(:id).in_batches(of:) do |batch|
         last = batch.last.id
         Spotlight::ReindexJob.perform_later(exhibit, reports_on: job_tracker, start: batch.first.id, finish: batch.last.id)
       end

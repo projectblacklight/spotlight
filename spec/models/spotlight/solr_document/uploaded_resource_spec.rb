@@ -22,7 +22,7 @@ describe Spotlight::SolrDocument::UploadedResource, type: :model do
   describe 'to_openseadragon' do
     subject(:osd) { valid_resource.to_openseadragon }
 
-    let(:uploaded_resource) { instance_double(Spotlight::Resources::Upload, upload: upload) }
+    let(:uploaded_resource) { instance_double(Spotlight::Resources::Upload, upload:) }
     let(:upload) { instance_double(Spotlight::FeaturedImage, iiif_tilesource: '/whatever/info.json') }
 
     before do

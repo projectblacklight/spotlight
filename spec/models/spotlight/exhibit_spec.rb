@@ -104,8 +104,8 @@ describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#main_about_page' do
-    let!(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit, published: false) }
-    let!(:about_page2) { FactoryBot.create(:about_page, exhibit: exhibit, published: true) }
+    let!(:about_page) { FactoryBot.create(:about_page, exhibit:, published: false) }
+    let!(:about_page2) { FactoryBot.create(:about_page, exhibit:, published: true) }
     let(:about_page2_es) { about_page2.clone_for_locale('es') }
 
     it 'is the first published about page' do

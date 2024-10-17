@@ -14,20 +14,20 @@ describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     end
 
     it 'has a placeholder thumbnail' do
-      render p, exhibit: exhibit
+      render(p, exhibit:)
 
       expect(rendered).to have_selector 'img.default-thumbnail'
     end
   end
 
   it 'has a thumbnail' do
-    render p, exhibit: exhibit
+    render(p, exhibit:)
 
     expect(rendered).to have_selector 'img'
   end
 
   it 'has a title' do
-    render p, exhibit: exhibit
+    render(p, exhibit:)
 
     expect(rendered).to have_selector '.card-title', text: exhibit.title
   end
@@ -38,7 +38,7 @@ describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     end
 
     it 'has an unpublished banner' do
-      render p, exhibit: exhibit
+      render(p, exhibit:)
 
       expect(rendered).to have_selector '.badge.unpublished', text: 'Unpublished'
     end

@@ -50,7 +50,7 @@ RSpec.describe Migration::IIIF do
   describe '#migrate_upload_images' do
     let(:file) { double }
     let(:exhibit) { FactoryBot.create(:exhibit) }
-    let!(:upload) { Spotlight::Resources::Upload.create(exhibit: exhibit) }
+    let!(:upload) { Spotlight::Resources::Upload.create(exhibit:) }
 
     before do
       allow(File).to receive(:exist?).and_return(true)

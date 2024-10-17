@@ -29,7 +29,7 @@ module Spotlight
       error_handler = lambda do |pipeline, exception, _data|
         job_tracker.append_log_entry(
           type: :error,
-          exhibit: exhibit,
+          exhibit:,
           message: exception.to_s,
           backtrace: exception.backtrace.first(5).join("\n"),
           resource_id: (pipeline.source.id if pipeline.source.respond_to?(:id))
@@ -38,8 +38,8 @@ module Spotlight
         errors += 1
       end
 
-      resource_list(exhibit_or_resources, start: start, finish: finish).each do |resource|
-        resource.reindex(touch: false, commit: false, job_tracker: job_tracker, additional_data: job_data, on_error: error_handler) do |*|
+      resource_list(exhibit_or_resources, start:, finish:).each do |resource|
+        resource.reindex(touch: false, commit: false, job_tracker:, additional_data: job_data, on_error: error_handler) do |*|
           progress&.increment
         end
       rescue StandardError => e
@@ -48,14 +48,14 @@ module Spotlight
 
       job_tracker.append_log_entry(
         type: :summary,
-        exhibit: exhibit,
+        exhibit:,
         message: I18n.t(
           'spotlight.job_trackers.show.messages.status.in_progress',
           progress: progress.progress,
           total: progress.total,
           errors: (I18n.t('spotlight.job_trackers.show.messages.errors', count: errors) if errors.positive?)
         ),
-        progress: progress.progress, total: progress.total, errors: errors
+        progress: progress.progress, total: progress.total, errors:
       )
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
@@ -85,7 +85,7 @@ module Spotlight
 
     def resource_list(exhibit_or_resources, start: nil, finish: nil)
       if exhibit_or_resources.is_a?(Spotlight::Exhibit)
-        exhibit_or_resources.resources.find_each(start: start, finish: finish)
+        exhibit_or_resources.resources.find_each(start:, finish:)
       else
         Array(exhibit_or_resources)
       end

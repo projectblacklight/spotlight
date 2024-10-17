@@ -3,7 +3,7 @@
 describe Spotlight::GroupsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let!(:group) { FactoryBot.create(:group, exhibit: exhibit) }
+  let!(:group) { FactoryBot.create(:group, exhibit:) }
 
   describe 'when the user is not authorized' do
     before do
@@ -37,7 +37,7 @@ describe Spotlight::GroupsController, type: :controller do
 
   describe 'when the user is a curator' do
     before do
-      sign_in FactoryBot.create(:exhibit_curator, exhibit: exhibit)
+      sign_in FactoryBot.create(:exhibit_curator, exhibit:)
     end
 
     describe 'GET index' do
@@ -71,8 +71,8 @@ describe Spotlight::GroupsController, type: :controller do
     end
 
     describe 'PATCH update_all' do
-      let!(:group2) { FactoryBot.create(:group, exhibit: exhibit, published: true) }
-      let!(:group3) { FactoryBot.create(:group, exhibit: exhibit, published: true) }
+      let!(:group2) { FactoryBot.create(:group, exhibit:, published: true) }
+      let!(:group3) { FactoryBot.create(:group, exhibit:, published: true) }
 
       it 'shows edit page' do
         patch :update_all, params: {

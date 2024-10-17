@@ -18,7 +18,7 @@ these collections.)
 
   s.files = Dir['{app,config,db,lib,vendor}/**/*', 'Rakefile', 'README.md', 'LICENSE', 'spec/{factories,fixtures}/*', 'spec/support/**/*']
 
-  s.required_ruby_version = '>= 2.6'
+  s.required_ruby_version = '>= 3.1'
 
   s.add_dependency 'activejob-status'
   s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 12'

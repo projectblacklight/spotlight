@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Spotlight::Search, type: :model do
-  subject { exhibit.searches.build(title: 'Search', query_params: query_params) }
+  subject { exhibit.searches.build(title: 'Search', query_params:) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
 

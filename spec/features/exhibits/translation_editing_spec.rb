@@ -2,7 +2,7 @@
 
 describe 'Translation editing', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit, title: 'Sample', subtitle: 'SubSample') }
-  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
   before(:all) do
     # mimics setting config.i18n.fallbacks = [I18n.default_locale] in the rails environment
@@ -10,8 +10,8 @@ describe 'Translation editing', type: :feature do
   end
 
   before do
-    FactoryBot.create(:language, exhibit: exhibit, locale: 'sq')
-    FactoryBot.create(:language, exhibit: exhibit, locale: 'fr')
+    FactoryBot.create(:language, exhibit:, locale: 'sq')
+    FactoryBot.create(:language, exhibit:, locale: 'fr')
     login_as admin
   end
 
@@ -122,8 +122,8 @@ describe 'Translation editing', type: :feature do
       end
 
       describe 'pages' do
-        let!(:about_page1) { FactoryBot.create(:about_page, title: 'First Page', exhibit: exhibit, locale: 'fr') }
-        let(:about_page2) { FactoryBot.create(:about_page, title: 'Second Page', exhibit: exhibit, locale: 'fr') }
+        let!(:about_page1) { FactoryBot.create(:about_page, title: 'First Page', exhibit:, locale: 'fr') }
+        let(:about_page2) { FactoryBot.create(:about_page, title: 'Second Page', exhibit:, locale: 'fr') }
 
         before do
           within '.translation-edit-form #general' do
@@ -208,7 +208,7 @@ describe 'Translation editing', type: :feature do
     end
 
     describe 'Exhibit-specific fields' do
-      let!(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit) }
+      let!(:custom_field) { FactoryBot.create(:custom_field, exhibit:) }
 
       before do
         visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
@@ -323,7 +323,7 @@ describe 'Translation editing', type: :feature do
 
   describe 'Browse categories' do
     before do
-      FactoryBot.create(:search, exhibit: exhibit, title: 'Browse Category 1')
+      FactoryBot.create(:search, exhibit:, title: 'Browse Category 1')
 
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
     end
@@ -380,8 +380,8 @@ describe 'Translation editing', type: :feature do
 
   describe 'Browse groups' do
     before do
-      FactoryBot.create(:group, exhibit: exhibit, title: 'Browse Group 1')
-      FactoryBot.create(:group, exhibit: exhibit, title: 'Browse Group 2')
+      FactoryBot.create(:group, exhibit:, title: 'Browse Group 1')
+      FactoryBot.create(:group, exhibit:, title: 'Browse Group 2')
 
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
     end
@@ -428,8 +428,8 @@ describe 'Translation editing', type: :feature do
   end
 
   describe 'home page translation table entry' do
-    let(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
-    let(:about_page) { FactoryBot.create(:about_page, exhibit: exhibit) }
+    let(:feature_page) { FactoryBot.create(:feature_page, exhibit:) }
+    let(:about_page) { FactoryBot.create(:about_page, exhibit:) }
 
     before do
       exhibit.home_page.clone_for_locale('fr').save
@@ -449,7 +449,7 @@ describe 'Translation editing', type: :feature do
 
   describe 'translation progress counter', js: true do
     before do
-      FactoryBot.create(:translation, exhibit: exhibit, locale: 'fr', key: "#{exhibit.slug}.title", value: 'Titre')
+      FactoryBot.create(:translation, exhibit:, locale: 'fr', key: "#{exhibit.slug}.title", value: 'Titre')
     end
 
     it 'counts existing and total available translations' do

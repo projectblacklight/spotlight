@@ -11,17 +11,17 @@ describe 'spotlight/browse/search', type: :view do
   end
 
   it 'displays the image' do
-    render partial: 'spotlight/browse/search', locals: { search: search }
+    render partial: 'spotlight/browse/search', locals: { search: }
     expect(response).to have_selector 'a img[src="/some/image"]'
   end
 
   it 'has a heading' do
-    render partial: 'spotlight/browse/search', locals: { search: search }
+    render partial: 'spotlight/browse/search', locals: { search: }
     expect(response).to have_link search.title, href: spotlight.exhibit_browse_path(exhibit, search)
   end
 
   it 'displays the item count' do
-    render partial: 'spotlight/browse/search', locals: { search: search }
+    render partial: 'spotlight/browse/search', locals: { search: }
     expect(response).to have_selector 'small', text: /#{search.count} items/i
   end
 end

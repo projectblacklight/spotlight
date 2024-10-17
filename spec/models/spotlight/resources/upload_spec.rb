@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Spotlight::Resources::Upload, type: :model do
-  subject(:upload) { described_class.new(id: 42, exhibit: exhibit) }
+  subject(:upload) { described_class.new(id: 42, exhibit:) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
@@ -74,8 +74,8 @@ describe Spotlight::Resources::Upload, type: :model do
     end
 
     it 'the sidecar is updated with the appropriate data from custom fields' do
-      FactoryBot.create(:custom_field, exhibit: exhibit, slug: 'custom_field_1')
-      FactoryBot.create(:custom_field, exhibit: exhibit, slug: 'custom_field_2')
+      FactoryBot.create(:custom_field, exhibit:, slug: 'custom_field_1')
+      FactoryBot.create(:custom_field, exhibit:, slug: 'custom_field_2')
 
       expect(upload.sidecar).to receive(:update).with(
         data: hash_including('custom_field_1' => 'Custom Field 1 Data', 'custom_field_2' => 'Custom Field 2 Data')

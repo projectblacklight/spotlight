@@ -36,10 +36,10 @@ describe Spotlight::BulkActionsController, type: :controller do
 
   describe 'when the user is a curator' do
     before do
-      sign_in FactoryBot.create(:exhibit_curator, exhibit: exhibit)
+      sign_in FactoryBot.create(:exhibit_curator, exhibit:)
     end
 
-    let(:search) { FactoryBot.create(:search, exhibit: exhibit) }
+    let(:search) { FactoryBot.create(:search, exhibit:) }
     let(:search_session) { instance_double('::Search', query_params: { q: 'map' }) }
 
     describe 'POST change_visibility' do

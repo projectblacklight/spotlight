@@ -28,7 +28,7 @@ describe Spotlight::AppearancesController, type: :controller do
   end
 
   describe 'when signed in' do
-    let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
     before { sign_in user }
 

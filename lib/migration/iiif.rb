@@ -32,7 +32,7 @@ module Migration
     def migrate_contact_avatars
       Spotlight::Contact.all.find_each do |contact|
         avatar = copy_contact_image_to_avatar(contact)
-        contact.update(avatar: avatar) if avatar
+        contact.update(avatar:) if avatar
       end
     end
 
@@ -70,7 +70,7 @@ module Migration
       old_file = File.new(filepath)
       image = contact.create_avatar { |i| i.image.store!(old_file) }
       iiif_tilesource = Spotlight::Engine.config.iiif_service.info_url(image)
-      image.update(iiif_tilesource: iiif_tilesource, iiif_region: avatar_coordinates(contact))
+      image.update(iiif_tilesource:, iiif_region: avatar_coordinates(contact))
       image
     end
 
@@ -84,7 +84,7 @@ module Migration
       old_file = File.new(filepath)
       image = upload.create_upload { |i| i.image.store!(old_file) }
       iiif_tilesource = Spotlight::Engine.config.iiif_service.info_url(image)
-      image.update(iiif_tilesource: iiif_tilesource)
+      image.update(iiif_tilesource:)
       upload.upload_id = image.id
       upload.save_and_index
     end
