@@ -29,22 +29,19 @@ services:
       SKIP_TRANSLATION: "yes"
     entrypoint: sh -c '/spotlight/engine/bin/db-migrate-seed.sh'
     depends_on:
-      - postgres
+      - db
     volumes:
       - .:/spotlight/engine
       - spotlight_app:/spotlight/app
     networks:
       - spotlight
 
-  postgres:
-    image: bitnami/postgresql:12.10.0
-    restart: always
-    env_file:
-      - .env
+  db:
+    image: postgres:13
+    ports:
+      - 5432:5432
     volumes:
-      - spotlight_db:/bitnami/postgresql
-    networks:
-      - spotlight
+      - spotlight_db/var/lib/postgresql/data
 
   solr:
     environment:
