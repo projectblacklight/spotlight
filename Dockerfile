@@ -45,7 +45,7 @@ RUN bundle install --jobs "$(nproc)"
 RUN mkdir -p /spotlight/app
 WORKDIR /spotlight/app
 
-RUN SKIP_TRANSLATION=yes rails _${RAILS_VERSION}_ new . -j webpack --force --template=../engine/template.rb
+RUN SKIP_TRANSLATION=yes rails _${RAILS_VERSION}_ new . --force --template=../engine/template.rb
 RUN bundle add pg
 RUN yarn add @babel/plugin-proposal-private-methods --dev
 RUN yarn add @babel/plugin-proposal-private-property-in-object
