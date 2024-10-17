@@ -19,7 +19,7 @@ Read more about what Spotlight is, our motivations for creating it, and how to i
 To bootstrap a new Rails application:
 
 ```
-$ SKIP_TRANSLATION=1 rails new app-name -m https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb -a propshaft --skip-javascript
+$ SKIP_TRANSLATION=1 rails new app-name -m https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb -a propshaft
 ```
 
 or from an existing Rails application:
