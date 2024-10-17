@@ -1,2 +1,2 @@
-<%- Spotlight.deprecator.warn("_exhibit_navbar.html.erb will be removed.  Customize the exhibit navbar using components instead.") %>
+<%- Spotlight.deprecator.warn("_exhibit_navbar.html.erb will be removed.  Customize the exhibit navbar using components instead.") if !blacklight_config.key?(:exhibit_navbar_component) %>
 <%= render (blacklight_config&.exhibit_navbar_component || Spotlight::ExhibitNavbarComponent).new %>
