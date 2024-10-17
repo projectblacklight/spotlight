@@ -68,7 +68,7 @@ module Spotlight
       end
 
       def custom_fields_data
-        data.slice(*exhibit.custom_fields.map(&:slug).map(&:to_s)).compact_blank
+        data.slice(*exhibit.custom_fields.map(&:field).map(&:to_s)).compact_blank
       end
 
       def configured_fields_data
