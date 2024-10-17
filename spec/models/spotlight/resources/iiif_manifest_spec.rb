@@ -13,7 +13,7 @@ class TestMetadataClass
 end
 
 describe Spotlight::Resources::IiifManifest do
-  subject { described_class.new(url: url, manifest: manifest, collection: collection) }
+  subject { described_class.new(url:, manifest:, collection:) }
 
   let(:url) { 'uri://to-manifest' }
 

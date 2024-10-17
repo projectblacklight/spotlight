@@ -14,9 +14,9 @@ describe Spotlight::ContactsController, type: :controller do
   end
 
   describe 'when signed in as a curator' do
-    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
     let(:exhibit) { FactoryBot.create(:exhibit) }
-    let(:contact) { FactoryBot.create(:contact, exhibit: exhibit, name: 'Andrew Carnegie') }
+    let(:contact) { FactoryBot.create(:contact, exhibit:, name: 'Andrew Carnegie') }
 
     before { sign_in user }
 
@@ -39,7 +39,7 @@ describe Spotlight::ContactsController, type: :controller do
       end
 
       it 'allows thumbnails to be updated' do
-        contact = FactoryBot.create(:contact, exhibit: exhibit, name: 'Andrew Carnegie')
+        contact = FactoryBot.create(:contact, exhibit:, name: 'Andrew Carnegie')
         patch :update, params: {
           id: contact,
           contact: {

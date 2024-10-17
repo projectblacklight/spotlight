@@ -123,7 +123,7 @@ describe Spotlight::BlacklightConfiguration, type: :model do
       before do
         # undo the stubbing we've used elsewhere..
         allow(subject).to receive(:default_blacklight_config).and_call_original
-        allow(Spotlight::Engine).to receive_messages blacklight_config: blacklight_config
+        allow(Spotlight::Engine).to receive_messages(blacklight_config:)
       end
 
       it 'injects a tags facet' do

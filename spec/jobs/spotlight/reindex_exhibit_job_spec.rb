@@ -4,7 +4,7 @@ describe Spotlight::ReindexExhibitJob do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do
-    FactoryBot.create_list(:resource, 10, exhibit: exhibit)
+    FactoryBot.create_list(:resource, 10, exhibit:)
     allow(Spotlight::ReindexJob).to receive(:perform_now)
     allow(Spotlight::ReindexJob).to receive(:perform_later)
   end

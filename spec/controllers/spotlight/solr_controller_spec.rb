@@ -19,8 +19,8 @@ describe Spotlight::SolrController, type: :controller do
     let(:admin) { FactoryBot.create(:site_admin) }
     let(:role) { admin.roles.first }
     let(:connection) { instance_double(RSolr::Client) }
-    let(:repository) { instance_double(Blacklight::Solr::Repository, connection: connection) }
-    let!(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit, slug: 'custom_field') }
+    let(:repository) { instance_double(Blacklight::Solr::Repository, connection:) }
+    let!(:custom_field) { FactoryBot.create(:custom_field, exhibit:, slug: 'custom_field') }
 
     before do
       sign_in admin
@@ -100,7 +100,7 @@ describe Spotlight::SolrController, type: :controller do
           expect(connection).to receive(:update) do |params|
             doc = JSON.parse(params[:data], symbolize_names: true)
           end
-          post :update, params: { resources_json_upload: { json: json }, exhibit_id: exhibit }
+          post :update, params: { resources_json_upload: { json: }, exhibit_id: exhibit }
 
           expect(response).to redirect_to exhibit_resources_path(exhibit)
           expect(doc.first).to include a: 1

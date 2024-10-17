@@ -16,7 +16,7 @@ describe Spotlight::RolesController, type: :controller do
   end
 
   describe 'when user is an admin' do
-    let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+    let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
     let(:user) { FactoryBot.create(:user) }
     let(:role) { admin.roles.first }
 

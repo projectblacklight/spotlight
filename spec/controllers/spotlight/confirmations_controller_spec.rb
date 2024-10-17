@@ -17,7 +17,7 @@ describe Spotlight::ConfirmationsController, type: :controller do
 
   describe 'GET show' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
-    let(:contact_email) { FactoryBot.create(:contact_email, email: 'justin@example.com', exhibit: exhibit) }
+    let(:contact_email) { FactoryBot.create(:contact_email, email: 'justin@example.com', exhibit:) }
     let(:raw_token) { contact_email.instance_variable_get(:@raw_confirmation_token) }
 
     describe 'when the token is invalid' do

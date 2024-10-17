@@ -2,18 +2,18 @@
 
 describe 'Browse Group Categories', js: true, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
-  let(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
-  let(:search1) { FactoryBot.create(:published_search, exhibit: exhibit, title: 'All of the good dogs') }
-  let(:search2) { FactoryBot.create(:published_search, exhibit: exhibit, title: 'All of the good cats') }
-  let(:search3) { FactoryBot.create(:published_search, exhibit: exhibit, title: 'All of the good birds') }
-  let(:search4) { FactoryBot.create(:published_search, exhibit: exhibit, title: 'All of the good pigs') }
-  let(:search5) { FactoryBot.create(:published_search, exhibit: exhibit, title: 'All of the good tigers') }
-  let(:search6) { FactoryBot.create(:published_search, exhibit: exhibit, title: 'All of the good ferrets') }
-  let(:search7) { FactoryBot.create(:search, exhibit: exhibit, title: 'All of the good turtles') }
-  let!(:group) { FactoryBot.create(:group, exhibit: exhibit, searches: [search1, search2, search3, search4, search5, search6], title: 'Pets', published: true) }
-  let!(:group2) { FactoryBot.create(:group, exhibit: exhibit, searches: [search1, search2], title: 'Good animals', published: true) }
+  let(:feature_page) { FactoryBot.create(:feature_page, exhibit:) }
+  let(:search1) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good dogs') }
+  let(:search2) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good cats') }
+  let(:search3) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good birds') }
+  let(:search4) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good pigs') }
+  let(:search5) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good tigers') }
+  let(:search6) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good ferrets') }
+  let(:search7) { FactoryBot.create(:search, exhibit:, title: 'All of the good turtles') }
+  let!(:group) { FactoryBot.create(:group, exhibit:, searches: [search1, search2, search3, search4, search5, search6], title: 'Pets', published: true) }
+  let!(:group2) { FactoryBot.create(:group, exhibit:, searches: [search1, search2], title: 'Good animals', published: true) }
 
   before do
     login_as exhibit_curator

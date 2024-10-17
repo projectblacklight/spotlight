@@ -2,7 +2,7 @@
 
 RSpec.describe Spotlight::Analytics::AggregationComponent, type: :component do
   subject(:rendered) do
-    Capybara::Node::Simple.new(render_inline(described_class.new(data: data, exclude_fields: exclude_fields)).to_s)
+    Capybara::Node::Simple.new(render_inline(described_class.new(data:, exclude_fields:)).to_s)
   end
 
   let(:data) do

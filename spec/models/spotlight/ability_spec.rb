@@ -10,12 +10,12 @@ describe Spotlight::Ability, type: :model do
   end
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:search) { FactoryBot.create(:published_search, exhibit: exhibit) }
-  let(:unpublished_search) { FactoryBot.create(:search, exhibit: exhibit) }
-  let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
-  let(:language) { FactoryBot.create(:language, exhibit: exhibit) }
-  let(:public_language) { FactoryBot.create(:language, exhibit: exhibit, public: true) }
-  let(:translation) { FactoryBot.create(:translation, exhibit: exhibit) }
+  let(:search) { FactoryBot.create(:published_search, exhibit:) }
+  let(:unpublished_search) { FactoryBot.create(:search, exhibit:) }
+  let(:page) { FactoryBot.create(:feature_page, exhibit:) }
+  let(:language) { FactoryBot.create(:language, exhibit:) }
+  let(:public_language) { FactoryBot.create(:language, exhibit:, public: true) }
+  let(:translation) { FactoryBot.create(:translation, exhibit:) }
 
   describe 'a user with no roles' do
     let(:user) { nil }
@@ -23,7 +23,7 @@ describe Spotlight::Ability, type: :model do
     it { is_expected.not_to be_able_to(:create, exhibit) }
     it { is_expected.to be_able_to(:read, exhibit) }
     it { is_expected.to be_able_to(:read, page) }
-    it { is_expected.not_to be_able_to(:create, Spotlight::Page.new(exhibit: exhibit)) }
+    it { is_expected.not_to be_able_to(:create, Spotlight::Page.new(exhibit:)) }
     it { is_expected.to be_able_to(:read, search) }
     it { is_expected.to be_able_to(:read, public_language) }
     it { is_expected.not_to be_able_to(:read, language) }
@@ -38,7 +38,7 @@ describe Spotlight::Ability, type: :model do
   end
 
   describe 'a user with admin role' do
-    let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_admin, exhibit:) }
     let(:role) { FactoryBot.create(:role, resource: exhibit) }
     let(:blacklight_config) { exhibit.blacklight_configuration }
 
@@ -56,8 +56,8 @@ describe Spotlight::Ability, type: :model do
   end
 
   describe 'a user with curate role' do
-    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
-    let(:contact) { FactoryBot.build_stubbed(:contact, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
+    let(:contact) { FactoryBot.build_stubbed(:contact, exhibit:) }
     let(:blacklight_config) { exhibit.blacklight_configuration }
 
     it { is_expected.not_to be_able_to(:update, exhibit) }
@@ -96,12 +96,12 @@ describe Spotlight::Ability, type: :model do
     end
 
     context 'with a user with a viewer role' do
-      let(:user) { FactoryBot.create(:user, :with_exhibit_role, role: 'viewer', exhibit: exhibit) }
+      let(:user) { FactoryBot.create(:user, :with_exhibit_role, role: 'viewer', exhibit:) }
 
       it { is_expected.not_to be_able_to(:create, exhibit) }
       it { is_expected.to be_able_to(:read, exhibit) }
       it { is_expected.to be_able_to(:read, page) }
-      it { is_expected.not_to be_able_to(:create, Spotlight::Page.new(exhibit: exhibit)) }
+      it { is_expected.not_to be_able_to(:create, Spotlight::Page.new(exhibit:)) }
       it { is_expected.to be_able_to(:read, search) }
       it { is_expected.to be_able_to(:read, public_language) }
       it { is_expected.not_to be_able_to(:read, language) }

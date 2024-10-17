@@ -3,11 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe Spotlight::CloneTranslatedPageFromLocale do
-  subject(:clone) { described_class.call(locale: language.locale, page: page) }
+  subject(:clone) { described_class.call(locale: language.locale, page:) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
-  let!(:language) { FactoryBot.create(:language, locale: 'es', exhibit: exhibit) }
+  let!(:page) { FactoryBot.create(:feature_page, exhibit:) }
+  let!(:language) { FactoryBot.create(:language, locale: 'es', exhibit:) }
 
   it 'clones the exhibit home page for a particular exhibit' do
     expect(Spotlight::Page.where(locale: 'es')).not_to be_present

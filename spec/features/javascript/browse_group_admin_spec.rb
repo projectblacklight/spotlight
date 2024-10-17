@@ -2,12 +2,12 @@
 
 describe 'Browse Group Adminstration', js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let!(:group1) do
     FactoryBot.create(
       :group,
       title: 'Good group 1',
-      exhibit: exhibit
+      exhibit:
     )
   end
 

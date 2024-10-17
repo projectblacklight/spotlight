@@ -2,11 +2,11 @@
 
 describe 'Link to Search Block', js: true, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
-  let!(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
-  let!(:search1) { FactoryBot.create(:published_search, exhibit: exhibit, title: 'Title1', published: true) }
-  let!(:search2) { FactoryBot.create(:published_search, exhibit: exhibit, title: 'Title2', published: true) }
+  let!(:feature_page) { FactoryBot.create(:feature_page, exhibit:) }
+  let!(:search1) { FactoryBot.create(:published_search, exhibit:, title: 'Title1', published: true) }
+  let!(:search2) { FactoryBot.create(:published_search, exhibit:, title: 'Title2', published: true) }
 
   before do
     login_as exhibit_curator

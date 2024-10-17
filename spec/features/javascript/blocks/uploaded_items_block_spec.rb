@@ -2,7 +2,7 @@
 
 describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:fixture_file1) { File.join(FIXTURES_PATH, '800x600.png') }
   let(:fixture_file2) { File.join(FIXTURES_PATH, 'avatar.png') }
 
@@ -39,7 +39,7 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     save_page_changes
 
     expect(page).to have_css('h3', text: heading)
-    expect(page).to have_css('p', text: text)
+    expect(page).to have_css('p', text:)
 
     within('.uploaded-items-block') do
       expect(page).to have_css('img[alt=""]', count: 1)

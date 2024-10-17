@@ -2,8 +2,8 @@
 
 RSpec.describe 'Locale Selector', js: true do
   let(:exhibit) { FactoryBot.create(:exhibit, published: true) }
-  let!(:language_es) { FactoryBot.create(:language, exhibit: exhibit, locale: 'es', public: true) }
-  let!(:language_zh) { FactoryBot.create(:language, exhibit: exhibit, locale: 'zh') }
+  let!(:language_es) { FactoryBot.create(:language, exhibit:, locale: 'es', public: true) }
+  let!(:language_zh) { FactoryBot.create(:language, exhibit:, locale: 'zh') }
 
   before { login_as user }
 
@@ -29,7 +29,7 @@ RSpec.describe 'Locale Selector', js: true do
   end
 
   context 'with an exhibit curator' do
-    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
     it 'can see any saved languages' do
       visit spotlight.exhibit_path(exhibit)

@@ -19,8 +19,8 @@ module Spotlight
 
     def headers
       {
-        to: to,
-        subject: I18n.t(:'spotlight.contact_form.subject', application_name: application_name),
+        to:,
+        subject: I18n.t(:'spotlight.contact_form.subject', application_name:),
         cc: contact_emails.join(', ')
       }
     end

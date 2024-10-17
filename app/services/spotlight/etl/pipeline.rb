@@ -59,7 +59,7 @@ module Spotlight
       # @yield (optioanlly..) each transformed document after it is transformed but before
       #        it is sent to the loaders
       def call(context, data: {}, cache: nil, &block)
-        executor(context, cache: cache).call(data: data, &block)
+        executor(context, cache:).call(data:, &block)
       end
 
       ##

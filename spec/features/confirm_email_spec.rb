@@ -2,7 +2,7 @@
 
 describe 'Confirming an email', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:contact_email) { Spotlight::ContactEmail.create!(email: 'justin@example.com', exhibit: exhibit) }
+  let(:contact_email) { Spotlight::ContactEmail.create!(email: 'justin@example.com', exhibit:) }
   let(:raw_token) { contact_email.instance_variable_get(:@raw_confirmation_token) }
 
   it 'resends confirmation instructions' do

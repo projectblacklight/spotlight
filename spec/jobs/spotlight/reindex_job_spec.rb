@@ -4,7 +4,7 @@ describe Spotlight::ReindexJob do
   include ActiveJob::TestHelper
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:resource) { FactoryBot.create(:resource, exhibit: exhibit) }
+  let(:resource) { FactoryBot.create(:resource, exhibit:) }
   let(:user) { FactoryBot.create(:user) }
 
   before do

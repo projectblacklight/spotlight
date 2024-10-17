@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Spotlight::PageConfigurations, type: :model do
-  subject(:page_config) { described_class.new(context: view_context, page: page) }
+  subject(:page_config) { described_class.new(context: view_context, page:) }
 
   let(:view_context) do
     double(
@@ -12,13 +12,13 @@ describe Spotlight::PageConfigurations, type: :model do
       document_show_link_field: 'document_show_link_field',
       index_field_label: 'index_field_label',
       index_fields: [],
-      spotlight: spotlight,
+      spotlight:,
       t: 'translated-content'
     )
   end
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+  let(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
   describe '#as_json' do
     it 'is a json-able object (hash)' do

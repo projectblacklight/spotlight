@@ -87,7 +87,7 @@ module Spotlight
     end
 
     def sidecar(exhibit)
-      sidecars.find_or_initialize_by exhibit: exhibit, document_id: id, document_type: self.class.to_s
+      sidecars.find_or_initialize_by exhibit:, document_id: id, document_type: self.class.to_s
     end
 
     def to_solr
@@ -156,12 +156,12 @@ module Spotlight
       deep_compact(attributes)
     end
 
-    def deep_transform_values(object, &block)
+    def deep_transform_values(object, &)
       # Available in Rails 6
       if object.respond_to?(:deep_transform_values)
-        object.deep_transform_values(&block)
+        object.deep_transform_values(&)
       else
-        _deep_transform_values(object, &block)
+        _deep_transform_values(object, &)
       end
     end
 

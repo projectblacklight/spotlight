@@ -7,7 +7,7 @@ describe 'Featured Pages Blocks', js: true, type: :feature do
       :feature_page,
       title: 'FeaturePage1 Title',
       weight: 1,
-      exhibit: exhibit
+      exhibit:
     )
   end
   let!(:feature_page2) do
@@ -15,11 +15,11 @@ describe 'Featured Pages Blocks', js: true, type: :feature do
       :feature_page,
       title: 'FeaturePage2 Title',
       weight: 0,
-      exhibit: exhibit
+      exhibit:
     )
   end
 
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
   before do
     login_as exhibit_curator

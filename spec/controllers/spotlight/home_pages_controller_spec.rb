@@ -7,7 +7,7 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
   let(:page) { exhibit.home_page }
 
   describe 'when signed in as a curator' do
-    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
     before do
       sign_in user
@@ -73,7 +73,7 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
 
     context 'when a non-default locale version of the page exists' do
       let!(:page) { exhibit.home_page }
-      let!(:page_es) { FactoryBot.create(:home_page, exhibit: exhibit, locale: 'es') }
+      let!(:page_es) { FactoryBot.create(:home_page, exhibit:, locale: 'es') }
 
       it 'is loaded' do
         get :show, params: { exhibit_id: exhibit, locale: 'es' }
@@ -100,7 +100,7 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
       end
 
       it 'redirects an authorized user to the signin path' do
-        user = FactoryBot.create(:exhibit_curator, exhibit: exhibit)
+        user = FactoryBot.create(:exhibit_curator, exhibit:)
         sign_in user
         get :show, params: { exhibit_id: exhibit }
         expect(response).to be_successful
@@ -109,7 +109,7 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
   end
 
   describe 'GET clone' do
-    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
     let(:page) { exhibit.home_page }
 
     before { sign_in user }
@@ -117,7 +117,7 @@ describe Spotlight::HomePagesController, type: :controller, versioning: true do
     it 'calls the CloneTranslatedPageFromLocale service' do
       expect(
         Spotlight::CloneTranslatedPageFromLocale
-      ).to receive(:call).with(locale: 'es', page: page).and_call_original
+      ).to receive(:call).with(locale: 'es', page:).and_call_original
 
       get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
     end

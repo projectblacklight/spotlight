@@ -9,7 +9,7 @@ describe Spotlight::PagesHelper, type: :helper do
   let!(:search) { FactoryBot.create(:search, exhibit: current_exhibit, query_params: { 'q' => 'query' }, published: true) }
 
   before do
-    allow(helper).to receive_messages(blacklight_config: blacklight_config)
+    allow(helper).to receive_messages(blacklight_config:)
   end
 
   describe 'disable_save_pages_button?' do

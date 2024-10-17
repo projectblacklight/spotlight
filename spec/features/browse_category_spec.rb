@@ -4,7 +4,7 @@ describe 'Browse pages' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   context 'a browse page' do
-    let!(:search) { FactoryBot.create(:search, title: 'Some Saved Search', exhibit: exhibit, published: true) }
+    let!(:search) { FactoryBot.create(:search, title: 'Some Saved Search', exhibit:, published: true) }
 
     let(:mock_documents) { [] }
     let(:mock_response) { Blacklight::Solr::Response.new({ response: { numFound: 10 } }, {}) }
@@ -131,7 +131,7 @@ describe 'Browse pages' do
     end
 
     context 'with category search box enabled' do
-      let(:search) { FactoryBot.create(:default_search, exhibit: exhibit, published: true, search_box: true) }
+      let(:search) { FactoryBot.create(:default_search, exhibit:, published: true, search_box: true) }
 
       it 'renders search box' do
         visit spotlight.exhibit_browse_path(exhibit, search)
@@ -158,7 +158,7 @@ describe 'Browse pages' do
   end
 
   context 'with a search field based browse category' do
-    let(:search) { FactoryBot.create(:search_field_search, title: 'Search field search', exhibit: exhibit, published: true, search_box: true) }
+    let(:search) { FactoryBot.create(:search_field_search, title: 'Search field search', exhibit:, published: true, search_box: true) }
 
     it 'conducts a search within the browse category' do
       visit spotlight.exhibit_browse_path(exhibit, search)
@@ -171,7 +171,7 @@ describe 'Browse pages' do
   end
 
   context 'with a facet based browse category' do
-    let(:search) { FactoryBot.create(:facet_search, title: 'Facet search', exhibit: exhibit, published: true, search_box: true) }
+    let(:search) { FactoryBot.create(:facet_search, title: 'Facet search', exhibit:, published: true, search_box: true) }
 
     it 'conducts a search within the browse category' do
       visit spotlight.exhibit_browse_path(exhibit, search)

@@ -14,7 +14,7 @@ describe Spotlight::Resources::UploadController, type: :controller do
   end
 
   describe 'when signed in as a curator' do
-    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
     before { sign_in user }
 
@@ -46,7 +46,7 @@ describe Spotlight::Resources::UploadController, type: :controller do
       end
 
       it 'can add multivalued fields' do
-        field = FactoryBot.create(:custom_field, exhibit: exhibit, is_multiple: true)
+        field = FactoryBot.create(:custom_field, exhibit:, is_multiple: true)
         post :create, params: { exhibit_id: exhibit, resources_upload: { data: { field.slug => %w[1 2 3] } } }
         expect(assigns[:resource].sidecar.data).to include(field.slug => %w[1 2 3])
       end

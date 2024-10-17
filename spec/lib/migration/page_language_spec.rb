@@ -5,7 +5,7 @@ require 'migration/page_language'
 RSpec.describe Migration::PageLanguage do
   describe '#migrate_pages' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
-    let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+    let(:page) { FactoryBot.create(:feature_page, exhibit:) }
     let(:slug) { FriendlyId::Slug.find(page.id) }
 
     before do

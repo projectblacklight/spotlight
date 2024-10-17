@@ -5,7 +5,7 @@ describe 'spotlight/resources/_external_resources_form.html.erb', type: :view do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
 
   before do
-    allow(view).to receive_messages(blacklight_config: blacklight_config)
+    allow(view).to receive_messages(blacklight_config:)
     allow(view).to receive(:current_exhibit).and_return(exhibit)
     allow(view).to receive_messages(current_page?: true)
     # Assumes that the second backend is the "Simple"
