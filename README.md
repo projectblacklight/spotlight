@@ -78,9 +78,9 @@ See more detailed instructions for development environment setup at ["Contributi
 ## With Docker
 
 ```sh
-# because of how docker-compose handles named images, running `docker-compose up --build` will error when the Rails images have not been built locally
-docker-compose build
-docker-compose up
+# because of how docker compose handles named images, running `docker compose up --build` will error when the Rails images have not been built locally
+docker compose build
+docker compose up
 ```
 
 ## Tests
