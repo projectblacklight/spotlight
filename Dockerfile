@@ -20,7 +20,6 @@ RUN apk --no-cache upgrade && \
   libxslt-dev \
   nodejs \
   npm \
-  postgresql-dev \
   shared-mime-info \
   sqlite-dev \
   tini \
@@ -46,10 +45,7 @@ RUN mkdir -p /spotlight/app
 WORKDIR /spotlight/app
 
 RUN SKIP_TRANSLATION=yes rails _${RAILS_VERSION}_ new . --force --template=../engine/template.rb
-RUN bundle add pg
-RUN yarn add @babel/plugin-proposal-private-methods --dev
-RUN yarn add @babel/plugin-proposal-private-property-in-object
-RUN SKIP_TRANSLATION=yes DB_ADAPTER=nulldb DATABASE_URL='postgresql://fake' bundle exec rake assets:precompile
+RUN SKIP_TRANSLATION=yes DB_ADAPTER=nulldb  bundle exec rake assets:precompile
 
 ENTRYPOINT ["/sbin/tini", "--", "/spotlight/engine/bin/docker-entrypoint.sh"]
 CMD ["bundle", "exec", "puma", "-b", "tcp://0.0.0.0:3000"]
