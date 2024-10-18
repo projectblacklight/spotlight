@@ -182,9 +182,7 @@ module Spotlight
     private
 
     def bundle_install
-      inside destination_root do
-        Bundler.with_unbundled_env { run 'bundle install' }
-      end
+      Bundler.with_original_env { system 'bundle install' }
     end
   end
 end
