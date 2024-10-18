@@ -39,6 +39,9 @@ task ci: ['engine_cart:generate'] do
   SolrWrapper.wrap(port: '8983') do |solr|
     solr.with_collection(name: 'blacklight-core', dir: 'lib/generators/spotlight/templates/solr/conf') do
       Rake::Task['spotlight:fixtures'].invoke
+      within_test_app do
+        system 'bin/rake spec:prepare'
+      end
 
       # run the tests
       Rake::Task['spec'].invoke

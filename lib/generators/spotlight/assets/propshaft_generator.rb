@@ -106,12 +106,6 @@ module Spotlight
                   'esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --main-fields=main,module'
       end
 
-      # Build the app frontend assets
-      def build_assets
-        run 'yarn build'
-        run 'yarn build:css'
-      end
-
       private
 
       # Some versions of the blacklight gem do not have a corresponding blacklight-frontend package on npm.
