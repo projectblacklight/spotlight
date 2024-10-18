@@ -6,7 +6,7 @@ DEFAULT_BLACKLIGHT_OPTIONS = '--devise'
 DEFAULT_SPOTLIGHT_OPTIONS = '-f --openseadragon --mailer_default_url_host=localhost:3000'
 blacklight_options = ENV.fetch('BLACKLIGHT_INSTALL_OPTIONS', DEFAULT_BLACKLIGHT_OPTIONS)
 spotlight_options = ENV.fetch('SPOTLIGHT_INSTALL_OPTIONS', DEFAULT_SPOTLIGHT_OPTIONS)
-bootstrap_version = ENV.fetch('BOOTSTRAP_VERSION', '4')
+bootstrap_version = ENV.fetch('BOOTSTRAP_VERSION', '~> 5.3')
 
 # Add gem dependencies to the application
 gem 'blacklight', ' ~> 7.38'
