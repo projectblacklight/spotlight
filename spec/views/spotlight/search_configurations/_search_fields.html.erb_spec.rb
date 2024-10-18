@@ -19,7 +19,7 @@ describe 'spotlight/search_configurations/_search_fields', type: :view do
     allow(view).to receive_messages(current_exhibit: exhibit)
     exhibit.blacklight_config.add_search_field 'some_hidden_field', include_in_simple_select: false
     exhibit.blacklight_config.add_search_field 'some_field with_a_space'
-    render partial: 'spotlight/search_configurations/search_fields', locals: { f: f }
+    render partial: 'spotlight/search_configurations/search_fields', locals: { f: }
   end
 
   it 'has a fieldset with an appropriate legend' do

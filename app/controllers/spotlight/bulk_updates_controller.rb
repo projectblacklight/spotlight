@@ -46,7 +46,7 @@ module Spotlight
     def csv_template
       boolean = ActiveModel::Type::Boolean.new
       Spotlight::BulkUpdatesCsvTemplateService.new(exhibit: current_exhibit).template(
-        view_context: view_context,
+        view_context:,
         title: boolean.cast(reference_field_params[:item_title]),
         tags: boolean.cast(updatable_field_params[:tags]),
         visibility: boolean.cast(updatable_field_params[:visibility])

@@ -6,19 +6,19 @@ describe 'spotlight/about_pages/index.html.erb', type: :view do
       stub_model(Spotlight::AboutPage,
                  title: 'Title1',
                  content: '[]',
-                 exhibit: exhibit),
+                 exhibit:),
       stub_model(Spotlight::AboutPage,
                  title: 'Title2',
                  content: '[]',
-                 exhibit: exhibit)
+                 exhibit:)
     ]
   end
   let(:contacts) do
     [
       stub_model(Spotlight::Contact,
-                 exhibit: exhibit),
+                 exhibit:),
       stub_model(Spotlight::Contact,
-                 exhibit: exhibit)
+                 exhibit:)
     ]
   end
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
@@ -29,7 +29,7 @@ describe 'spotlight/about_pages/index.html.erb', type: :view do
     allow(view).to receive(:update_all_exhibit_about_pages_path).and_return('/exhibit/about/update_all')
     allow(view).to receive(:exhibit_contacts_path).and_return('/exhibit/1/contacts')
     allow(view).to receive(:nestable_data_attributes).and_return('data-behavior="nestable"')
-    allow(exhibit).to receive_messages(contacts: contacts)
+    allow(exhibit).to receive_messages(contacts:)
     assign(:page, Spotlight::AboutPage.new)
     assign(:exhibit, exhibit)
     allow(view).to receive(:current_exhibit).and_return(exhibit)

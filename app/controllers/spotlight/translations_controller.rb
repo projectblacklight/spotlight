@@ -21,7 +21,7 @@ module Spotlight
       if current_exhibit.update(exhibit_params)
         I18n.reload! # reload since we're memoizing
         notice = t(:'helpers.submit.spotlight_default.updated', model: current_exhibit.class.model_name.human.downcase)
-        redirect_to edit_exhibit_translations_path(current_exhibit, language: @language, tab: @tab), notice: notice
+        redirect_to edit_exhibit_translations_path(current_exhibit, language: @language, tab: @tab), notice:
       else
         render 'edit'
       end
@@ -31,7 +31,7 @@ module Spotlight
       if current_exhibit.update(import_exhibit_params)
         I18n.reload! # reload since we're memoizing
         notice = t(:'helpers.submit.spotlight_default.updated', model: current_exhibit.class.model_name.human.downcase)
-        redirect_to edit_exhibit_translations_path(current_exhibit, language: @language), notice: notice
+        redirect_to edit_exhibit_translations_path(current_exhibit, language: @language), notice:
       else
         render 'edit'
       end

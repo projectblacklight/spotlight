@@ -92,7 +92,7 @@ describe Spotlight::CustomField, type: :model do
 
     let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:custom_field) do
-      described_class.create(exhibit: exhibit, configuration: { 'label' => 'xyz' })
+      described_class.create(exhibit:, configuration: { 'label' => 'xyz' })
     end
 
     it 'is auto-generated from the field label' do

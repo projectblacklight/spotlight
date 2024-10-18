@@ -24,7 +24,7 @@ module Spotlight
       if @exhibit.update(exhibit_params)
         notice = any_deleted ? t(:'helpers.submit.role.destroyed') : t(:'helpers.submit.role.updated')
         Spotlight::InviteUsersService.call(resource: @exhibit)
-        redirect_to exhibit_roles_path(@exhibit), notice: notice
+        redirect_to exhibit_roles_path(@exhibit), notice:
       else
         flash[:alert] = t(:'helpers.submit.role.batch_error', count: exhibit_params[:roles_attributes].to_unsafe_h.size)
         render action: 'index'

@@ -15,7 +15,7 @@ describe Spotlight::TranslationsController do
     context 'when signed in as curator' do
       before { sign_in user }
 
-      let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+      let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
       it 'is successful' do
         get :edit, params: { exhibit_id: exhibit }
@@ -46,8 +46,8 @@ describe Spotlight::TranslationsController do
     context 'when signed in as curator' do
       before { sign_in user }
 
-      let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
-      let(:translation) { FactoryBot.create(:translation, exhibit: exhibit, value: 'foo') }
+      let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
+      let(:translation) { FactoryBot.create(:translation, exhibit:, value: 'foo') }
 
       it 'updates successfully' do
         patch :update, params: {
@@ -82,7 +82,7 @@ describe Spotlight::TranslationsController do
     render_views
     before do
       sign_in user
-      FactoryBot.create(:translation, exhibit: exhibit, locale: 'es', key: "#{exhibit.slug}.title", value: 'Titulo')
+      FactoryBot.create(:translation, exhibit:, locale: 'es', key: "#{exhibit.slug}.title", value: 'Titulo')
     end
 
     let(:user) { FactoryBot.create(:site_admin) }
@@ -118,7 +118,7 @@ describe Spotlight::TranslationsController do
         f.write({ en: { exhibit.slug => { title: 'Imported title' } } }.deep_stringify_keys.to_yaml)
         f.rewind
         file = Rack::Test::UploadedFile.new(f.path, 'text/plain')
-        patch :import, params: { exhibit_id: exhibit, file: file }
+        patch :import, params: { exhibit_id: exhibit, file: }
       ensure
         f.close
         f.unlink

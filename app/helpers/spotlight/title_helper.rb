@@ -15,7 +15,7 @@ module Spotlight
     def page_title(section, title = nil)
       title ||= t(:'.header', default: '').presence
 
-      head_content = t(:'spotlight.html_admin_title', section: section, title: title) if section && title
+      head_content = t(:'spotlight.html_admin_title', section:, title:) if section && title
       head_content ||= section || title
       set_html_page_title(head_content)
 
@@ -28,7 +28,7 @@ module Spotlight
     end
 
     def set_html_page_title(title = nil)
-      @page_title = strip_tags(t(:'spotlight.html_title', title: title || t(:'.title', default: :'.header'), application_name: application_name)).html_safe
+      @page_title = strip_tags(t(:'spotlight.html_title', title: title || t(:'.title', default: :'.header'), application_name:)).html_safe
     end
   end
 end

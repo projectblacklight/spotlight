@@ -23,7 +23,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_grid_block', type: :view d
                                                          [{ thumbnail_image_url: 'http://example.com' }, SolrDocument.new(id: 3)]
                                                        ])
     allow(view).to receive_messages(
-      blacklight_config: blacklight_config,
+      blacklight_config:,
       document_presenter: stub_presenter,
       document_link_params: {}
     )

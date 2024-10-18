@@ -37,7 +37,7 @@ module Spotlight
       initial_exception = nil
 
       ([self] + additional_locale_routing_scopes).each do |scope|
-        return scope.public_send(:url_for, params.to_unsafe_h.merge(locale: locale))
+        return scope.public_send(:url_for, params.to_unsafe_h.merge(locale:))
       rescue ActionController::UrlGenerationError => e
         initial_exception ||= e
       end
@@ -51,7 +51,7 @@ module Spotlight
 
     # Can search for named routes directly in the main app, omitting
     # the "main_app." prefix
-    def method_missing(method, *args, &block)
+    def method_missing(method, *args, &)
       if main_app_url_helper?(method)
         main_app.send(method, *args)
       else

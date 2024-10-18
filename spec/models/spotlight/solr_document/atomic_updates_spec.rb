@@ -8,7 +8,7 @@ describe Spotlight::SolrDocument::AtomicUpdates, type: :model do
   let(:blacklight_solr) { double }
 
   before do
-    allow(subject).to receive_messages(blacklight_solr: blacklight_solr)
+    allow(subject).to receive_messages(blacklight_solr:)
   end
 
   describe '#reindex' do

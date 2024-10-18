@@ -19,7 +19,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.erb', 
     allow(block).to receive(:each_document).and_return([doc1, doc2, doc3])
     allow(block).to receive_messages(documents?: true)
     allow(view).to receive_messages(solr_documents_features_block: block)
-    allow(view).to receive_messages(blacklight_config: blacklight_config)
+    allow(view).to receive_messages(blacklight_config:)
     allow(view).to receive_messages(document_link_params: {})
     allow_any_instance_of(Blacklight::ThumbnailPresenter).to receive_messages(exists?: true, thumbnail_tag: 'thumb')
   end

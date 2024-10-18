@@ -121,7 +121,7 @@ describe Spotlight::ExhibitsController, type: :controller do
   end
 
   describe 'when signed in as an exhibit admin' do
-    let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
     before { sign_in user }
 
@@ -140,7 +140,7 @@ describe Spotlight::ExhibitsController, type: :controller do
           f.write '{ "title": "Foo", "subtitle": "Bar"}'
           f.rewind
           file = Rack::Test::UploadedFile.new(f.path, 'application/json')
-          patch :process_import, params: { id: exhibit, file: file }
+          patch :process_import, params: { id: exhibit, file: }
         ensure
           f.close
           f.unlink

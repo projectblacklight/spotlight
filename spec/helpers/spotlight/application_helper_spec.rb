@@ -111,7 +111,7 @@ describe Spotlight::ApplicationHelper, type: :helper do
     let(:document) { SolrDocument.new(some_field: 'Some data') }
 
     before do
-      allow(helper).to receive_messages(current_exhibit: current_exhibit)
+      allow(helper).to receive_messages(current_exhibit:)
       allow(helper).to receive_messages(blacklight_config: Blacklight::Configuration.new do |config|
         config.show.display_type_field = :some_field # Blacklight 7.4+
         config.index.display_type_field = :some_field # pre Blacklight 7.4
@@ -133,7 +133,7 @@ describe Spotlight::ApplicationHelper, type: :helper do
     let(:blacklight_config) { Blacklight::Configuration.new }
 
     before do
-      allow(helper).to receive_messages(blacklight_config: blacklight_config)
+      allow(helper).to receive_messages(blacklight_config:)
     end
 
     it 'uses the configuration-provided label' do

@@ -2,11 +2,11 @@
 
 describe 'Feature page', type: :feature, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
   describe 'viewing the page' do
     let!(:feature_page) do
-      FactoryBot.create(:feature_page, title: 'Parent Page', exhibit: exhibit)
+      FactoryBot.create(:feature_page, title: 'Parent Page', exhibit:)
     end
 
     it 'has <meta> tags' do
@@ -24,13 +24,13 @@ describe 'Feature page', type: :feature, versioning: true do
 
   describe 'sidebar' do
     let!(:parent_feature_page) do
-      FactoryBot.create(:feature_page, title: 'Parent Page', exhibit: exhibit)
+      FactoryBot.create(:feature_page, title: 'Parent Page', exhibit:)
     end
     let!(:child_feature_page) do
       FactoryBot.create(
         :feature_page,
         title: 'Child Page',
-        parent_page: parent_feature_page, exhibit: exhibit
+        parent_page: parent_feature_page, exhibit:
       )
     end
 
@@ -81,7 +81,7 @@ describe 'Feature page', type: :feature, versioning: true do
     before { login_as exhibit_curator }
 
     describe 'publish' do
-      let!(:unpublished_page) { FactoryBot.create(:feature_page, published: false, exhibit: exhibit) }
+      let!(:unpublished_page) { FactoryBot.create(:feature_page, published: false, exhibit:) }
 
       it 'is updatable from the edit page' do
         expect(unpublished_page).not_to be_published
@@ -100,7 +100,7 @@ describe 'Feature page', type: :feature, versioning: true do
     end
 
     describe 'display_sidebar' do
-      let!(:feature_page) { FactoryBot.create(:feature_page, display_sidebar: false, exhibit: exhibit) }
+      let!(:feature_page) { FactoryBot.create(:feature_page, display_sidebar: false, exhibit:) }
 
       before { feature_page.update display_sidebar: false }
 
@@ -124,7 +124,7 @@ describe 'Feature page', type: :feature, versioning: true do
   describe 'page locking' do
     before { login_as exhibit_curator }
 
-    let!(:feature_page) { FactoryBot.create(:feature_page, display_sidebar: false, exhibit: exhibit) }
+    let!(:feature_page) { FactoryBot.create(:feature_page, display_sidebar: false, exhibit:) }
 
     it 'shows a lock message if someone is currently editing the page' do
       # open the edit page

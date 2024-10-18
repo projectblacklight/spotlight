@@ -20,7 +20,7 @@ describe Spotlight::TagsController, type: :controller do
   end
 
   describe 'when signed in as a curator' do
-    before { sign_in FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    before { sign_in FactoryBot.create(:exhibit_curator, exhibit:) }
 
     describe 'GET index' do
       it 'is successful' do

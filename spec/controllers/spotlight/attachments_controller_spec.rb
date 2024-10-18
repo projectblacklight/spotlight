@@ -14,7 +14,7 @@ describe Spotlight::AttachmentsController, type: :controller do
   end
 
   describe 'when signed in as a curator' do
-    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
     before { sign_in user }
 

@@ -9,7 +9,7 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
     let(:exhibit) { FactoryBot.create(:exhibit) }
 
     describe 'GET clone' do
-      let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+      let(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
       it 'is not allowed' do
         get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
@@ -25,12 +25,12 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
 
   describe 'when signed in as a curator' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
-    let(:user) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
     before { sign_in user }
 
     describe 'GET index' do
-      let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+      let!(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
       it 'assigns all feature pages as @pages' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
@@ -44,7 +44,7 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
 
     describe 'GET show' do
       describe 'on a top level page' do
-        let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+        let(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
         it 'assigns the requested page as @page' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
@@ -55,7 +55,7 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
       end
 
       describe 'on a sub-page' do
-        let(:page) { FactoryBot.create(:feature_subpage, exhibit: exhibit) }
+        let(:page) { FactoryBot.create(:feature_subpage, exhibit:) }
 
         it 'assigns the requested page as @page' do
           expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
@@ -69,11 +69,11 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
       end
 
       describe 'when "switching" locales for pages that have updated their title/slug' do
-        let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+        let(:page) { FactoryBot.create(:feature_page, exhibit:) }
         let!(:page_es) do
           FactoryBot.create(
             :feature_page,
-            exhibit: exhibit,
+            exhibit:,
             title: 'Page in spanish',
             locale: 'es',
             default_locale_page: page
@@ -94,7 +94,7 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
       end
 
       context 'when the sidebar is set to not display' do
-        let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit, published: true) }
+        let(:page) { FactoryBot.create(:feature_page, exhibit:, published: true) }
 
         before { page.update(display_sidebar: false) }
 
@@ -114,7 +114,7 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
     end
 
     describe 'GET edit' do
-      let(:page) { FactoryBot.create(:feature_subpage, exhibit: exhibit) }
+      let(:page) { FactoryBot.create(:feature_subpage, exhibit:) }
 
       it 'assigns the requested page as @page' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
@@ -166,7 +166,7 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
     end
 
     describe 'PUT update' do
-      let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+      let(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
       describe 'with valid params' do
         it 'updates the requested page' do
@@ -205,7 +205,7 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
     end
 
     describe 'POST update_all' do
-      let!(:page1) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+      let!(:page1) { FactoryBot.create(:feature_page, exhibit:) }
       let!(:page2) { FactoryBot.create(:feature_page, exhibit: page1.exhibit) }
       let!(:page3) { FactoryBot.create(:feature_page, exhibit: page1.exhibit, parent_page_id: page1.id) }
 
@@ -222,7 +222,7 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
     end
 
     describe 'DELETE destroy' do
-      let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+      let!(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
       it 'destroys the requested page' do
         expect do
@@ -237,12 +237,12 @@ describe Spotlight::FeaturePagesController, type: :controller, versioning: true 
     end
 
     describe 'GET clone' do
-      let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+      let!(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
       it 'calls the CloneTranslatedPageFromLocale service' do
         expect(
           Spotlight::CloneTranslatedPageFromLocale
-        ).to receive(:call).with(locale: 'es', page: page).and_call_original
+        ).to receive(:call).with(locale: 'es', page:).and_call_original
 
         get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
       end

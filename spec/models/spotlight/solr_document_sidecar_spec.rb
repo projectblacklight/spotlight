@@ -4,7 +4,7 @@ describe Spotlight::SolrDocumentSidecar, type: :model do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do
-    allow(subject).to receive_messages exhibit: exhibit
+    allow(subject).to receive_messages(exhibit:)
     allow(subject).to receive_messages document: SolrDocument.new(id: 'doc_id')
   end
 

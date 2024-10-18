@@ -29,11 +29,11 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
   before do
     allow(block).to receive(:each_document).and_yield({}, doc)
     allow(block).to receive(:documents?).and_return(true)
-    allow(view).to receive_messages(blacklight_config: blacklight_config, document_presenter: stub_presenter)
+    allow(view).to receive_messages(blacklight_config:, document_presenter: stub_presenter)
   end
 
   it 'has a embed block' do
-    expect(view).to receive(:render_document_partials).with(doc, %w[a b c], hash_including(a: 1, block: block)).and_return('OSD')
+    expect(view).to receive(:render_document_partials).with(doc, %w[a b c], hash_including(a: 1, block:)).and_return('OSD')
     render partial: p, locals: { solr_documents_embed_block: block }
     expect(rendered).to have_selector 'h3', text: 'Some title'
     expect(rendered).to have_content 'Some text'
@@ -49,7 +49,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
     end
 
     it 'does not have a two column layout' do
-      expect(view).to receive(:render_document_partials).with(doc, %w[a b c], hash_including(a: 1, block: block)).and_return('OSD')
+      expect(view).to receive(:render_document_partials).with(doc, %w[a b c], hash_including(a: 1, block:)).and_return('OSD')
       render partial: p, locals: { solr_documents_embed_block: block }
       expect(rendered).to have_selector '.col-md-12'
       expect(rendered).to have_selector '.items-col h3', text: 'Some title'

@@ -2,8 +2,8 @@
 
 RSpec.describe 'Multi image selector', default_max_wait_time: 5, js: true, type: :feature, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
-  let(:feature_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
+  let(:feature_page) { FactoryBot.create(:feature_page, exhibit:) }
 
   before { login_as exhibit_curator }
 

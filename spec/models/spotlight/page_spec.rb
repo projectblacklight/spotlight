@@ -2,8 +2,8 @@
 
 describe Spotlight::Page, type: :model do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let!(:parent_page) { Spotlight::FeaturePage.create! exhibit: exhibit, published: true }
-  let!(:child_page) { Spotlight::FeaturePage.create! exhibit: exhibit, published: false, parent_page: parent_page }
+  let!(:parent_page) { Spotlight::FeaturePage.create! exhibit:, published: true }
+  let!(:child_page) { Spotlight::FeaturePage.create! exhibit:, published: false, parent_page: }
 
   describe '.at_top_level' do
     it 'scopes results to only top level pages' do
@@ -133,7 +133,7 @@ describe Spotlight::Page, type: :model do
   end
 
   describe 'thumbnail_image_url' do
-    subject(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+    subject(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
     let(:thumbnail) { FactoryBot.create(:featured_image) }
 
@@ -157,9 +157,9 @@ describe Spotlight::Page, type: :model do
   end
 
   describe 'translated_pages' do
-    subject!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+    subject!(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
-    let!(:page_es) { FactoryBot.create(:feature_page, exhibit: exhibit, locale: 'es', default_locale_page: page) }
+    let!(:page_es) { FactoryBot.create(:feature_page, exhibit:, locale: 'es', default_locale_page: page) }
 
     it 'is a relation of the other pages that indicate they belong to this page' do
       expect(page.translated_pages.length).to eq 1
@@ -170,7 +170,7 @@ describe Spotlight::Page, type: :model do
   describe 'clone_for_locale' do
     subject!(:cloned_page) { page.clone_for_locale('es') }
 
-    let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit, published: true) }
+    let(:page) { FactoryBot.create(:feature_page, exhibit:, published: true) }
 
     it 'creates a new page' do
       expect do
@@ -192,7 +192,7 @@ describe Spotlight::Page, type: :model do
     end
 
     context 'when cloning a child page' do
-      let(:parent_page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+      let(:parent_page) { FactoryBot.create(:feature_page, exhibit:) }
       let(:parent_cloned_page) { parent_page.clone_for_locale('es') }
 
       before do
@@ -206,8 +206,8 @@ describe Spotlight::Page, type: :model do
     end
 
     context 'when cloning a page that has been deleted with a FriendlyId UUID added' do
-      let(:feature_page_static_title) { FactoryBot.create(:feature_page_static_title, exhibit: exhibit) }
-      let(:feature_page_static_title_two) { FactoryBot.create(:feature_page_static_title, exhibit: exhibit) }
+      let(:feature_page_static_title) { FactoryBot.create(:feature_page_static_title, exhibit:) }
+      let(:feature_page_static_title_two) { FactoryBot.create(:feature_page_static_title, exhibit:) }
 
       it 'translated page has the same UUID' do
         expect(feature_page_static_title.slug).to eq 'featurepage'
@@ -234,7 +234,7 @@ describe Spotlight::Page, type: :model do
     let!(:parent_page_es) do
       FactoryBot.create(
         :feature_page,
-        exhibit: exhibit,
+        exhibit:,
         locale: 'es',
         default_locale_page: parent_page
       )
@@ -242,7 +242,7 @@ describe Spotlight::Page, type: :model do
     let!(:child_page_es) do
       FactoryBot.create(
         :feature_page,
-        exhibit: exhibit,
+        exhibit:,
         locale: 'es',
         default_locale_page: child_page,
         parent_page: parent_page_es
@@ -251,13 +251,13 @@ describe Spotlight::Page, type: :model do
     let!(:another_translated_page_es) do
       FactoryBot.create(
         :feature_page,
-        exhibit: exhibit,
+        exhibit:,
         locale: 'es',
         default_locale_page: another_translated_page
       )
     end
-    let!(:another_page) { Spotlight::FeaturePage.create exhibit: exhibit, published: true }
-    let!(:another_translated_page) { Spotlight::FeaturePage.create exhibit: exhibit, published: true }
+    let!(:another_page) { Spotlight::FeaturePage.create exhibit:, published: true }
+    let!(:another_translated_page) { Spotlight::FeaturePage.create exhibit:, published: true }
 
     it 'updates the translated pages weight' do
       expect(parent_page_es.weight).not_to be 5

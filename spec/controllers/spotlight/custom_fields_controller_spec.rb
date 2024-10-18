@@ -5,7 +5,7 @@ describe Spotlight::CustomFieldsController, type: :controller do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe 'when signed in as an exhibit admin' do
-    let(:user) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+    let(:user) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
     before { sign_in user }
 
@@ -21,7 +21,7 @@ describe Spotlight::CustomFieldsController, type: :controller do
     end
 
     describe 'GET edit' do
-      let(:field) { FactoryBot.create(:custom_field, exhibit: exhibit) }
+      let(:field) { FactoryBot.create(:custom_field, exhibit:) }
 
       it 'assigns the requested custom_field' do
         expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)

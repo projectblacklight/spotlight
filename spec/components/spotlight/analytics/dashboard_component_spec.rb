@@ -5,7 +5,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
     Capybara::Node::Simple.new(render_inline(component).to_s)
   end
 
-  let(:component) { described_class.new(current_exhibit: current_exhibit) }
+  let(:component) { described_class.new(current_exhibit:) }
 
   let(:current_exhibit) { instance_double(Spotlight::Exhibit, page_analytics: data, analytics: data) }
   let(:data) do

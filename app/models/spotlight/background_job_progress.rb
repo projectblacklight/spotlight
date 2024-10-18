@@ -20,7 +20,7 @@ module Spotlight
         finished_at: localized_finish_time,
         updated_at: localized_updated_time,
         total: [total, completed].max,
-        completed: completed,
+        completed:,
         finished: finished?,
         errored: errored?
       }

@@ -6,9 +6,9 @@ describe 'spotlight/search_configurations/_facet_metadata', type: :view do
 
   before do
     render partial: 'spotlight/search_configurations/facet_metadata', locals: {
-      blacklight_config: blacklight_config,
-      field_config: field_config,
-      metadata: metadata
+      blacklight_config:,
+      field_config:,
+      metadata:
     }
   end
 

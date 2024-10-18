@@ -44,7 +44,7 @@ module Spotlight
 
         resource = Spotlight::Resources::Upload.new(
           data: row,
-          exhibit: exhibit
+          exhibit:
         )
         resource.build_upload(remote_image_url: url) unless url == '~'
 

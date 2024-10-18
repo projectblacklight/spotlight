@@ -2,7 +2,7 @@
 
 describe 'Editing the Home Page', js: true, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
   before { login_as admin }
 

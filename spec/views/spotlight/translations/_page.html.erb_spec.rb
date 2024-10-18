@@ -2,7 +2,7 @@
 
 describe 'spotlight/translations/_page.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
+  let(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
   before do
     allow(view).to receive_messages(
@@ -13,7 +13,7 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
       edit_exhibit_home_page_path: '/',
       exhibit_feature_page_path: '/',
       f: instance_double('form', fields_for: {}), # mockform builder
-      page: page
+      page:
     )
     assign(:language, 'es')
   end
@@ -26,7 +26,7 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
   end
 
   context 'when there is a translated page' do
-    let!(:page_es) { FactoryBot.create(:feature_page, exhibit: exhibit, locale: 'es', default_locale_page: page) }
+    let!(:page_es) { FactoryBot.create(:feature_page, exhibit:, locale: 'es', default_locale_page: page) }
 
     it 'links to the translated page' do
       render

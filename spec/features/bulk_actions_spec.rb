@@ -2,7 +2,7 @@
 
 describe 'Bulk actions', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
   before do
     login_as curator
