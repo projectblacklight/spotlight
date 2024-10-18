@@ -11,11 +11,17 @@ module Spotlight
     class_option :mailer_default_url_host, type: :string, default: '' # e.g. localhost:3000
 
     def add_manifest
-      append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
       append_to_file 'app/assets/config/manifest.js', "\n//= link spotlight/manifest.js"
 
-      # Rails installed importmap by default, but we don't have importmap + Blacklight 7 working yet.
-      remove_file 'app/javascript/application.js'
+      if Blacklight.version.to_i > 7 && defined? Importmap
+        append_to_file 'app/javascript/application.js', "\nimport Spotlight from \"spotlight\"\n"
+      else
+        append_to_file 'app/assets/javascripts/application.js', "\n//= require_tree .\n"
+
+        # Rails installed importmap by default, but Blacklight 7 doesn't support importmap.
+        # We must remove the importmap entrypoint or Sprockets will have a double link error with two files named application.js
+        remove_file 'app/javascript/application.js'
+      end
     end
 
     def inject_spotlight_routes
