@@ -42,19 +42,6 @@ module Spotlight
         end
       end
 
-      def install_gems
-        gem 'jsbundling-rails'
-        gem 'cssbundling-rails'
-      end
-
-      def bundle_install
-        inside destination_root do
-          Bundler.with_unbundled_env do
-            run 'bundle install'
-          end
-        end
-      end
-
       def install_javascript_bundler
         rails_command 'javascript:install:esbuild'
       end

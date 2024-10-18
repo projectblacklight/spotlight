@@ -14,6 +14,11 @@ gem 'blacklight-spotlight', ENV['SPOTLIGHT_GEM'] ? { path: ENV['SPOTLIGHT_GEM'] 
 gem 'sidekiq'
 gem 'bootstrap_form', /(\d)(?:\.\d){0,2}/.match(bootstrap_version)[1].to_i == 5 ? '~> 5.4' : '~> 4.5'
 
+if options[:asset_pipeline] == 'propshaft'
+  gem 'jsbundling-rails'
+  gem 'cssbundling-rails'
+end
+
 after_bundle do
   # run the blacklight install generator
   generate 'blacklight:install', blacklight_options
