@@ -56,15 +56,15 @@ module Spotlight
 
         private
 
-        def recursive_manifests(thing, &)
+        def recursive_manifests(thing, &block)
           return to_enum(:recursive_manifests, thing) unless block_given?
 
-          thing.manifests.each(&)
+          thing.manifests.each(&block)
 
           return if thing.collections.blank?
 
           thing.collections.each do |collection|
-            recursive_manifests(collection, &)
+            recursive_manifests(collection, &block)
           end
         end
       end

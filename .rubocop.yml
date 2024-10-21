@@ -223,13 +223,13 @@ Lint/UselessRuby2Keywords: # new in 1.23
 Metrics/CollectionLiteralLength: # new in 1.47
   Enabled: true
 Naming/BlockForwarding: # new in 1.24
-  Enabled: true
+  Enabled: false # Too many false positives and autocorrect breaks the application
 Security/CompoundHash: # new in 1.28
   Enabled: true
 Security/IoMethods: # new in 1.22
   Enabled: true
 Style/ArgumentsForwarding: # new in 1.1
-  Enabled: true
+  Enabled: false # Too many false positives and autocorrect breaks the application
 Style/ArrayIntersect: # new in 1.40
   Enabled: true
 Style/CollectionCompact: # new in 1.2

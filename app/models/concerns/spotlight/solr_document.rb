@@ -156,12 +156,12 @@ module Spotlight
       deep_compact(attributes)
     end
 
-    def deep_transform_values(object, &)
+    def deep_transform_values(object, &block)
       # Available in Rails 6
       if object.respond_to?(:deep_transform_values)
-        object.deep_transform_values(&)
+        object.deep_transform_values(&block)
       else
-        _deep_transform_values(object, &)
+        _deep_transform_values(object, &block)
       end
     end
 
