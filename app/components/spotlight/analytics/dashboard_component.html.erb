@@ -1,6 +1,22 @@
+<% if note %>
+  <p><%= note %></p>
+<% end %>
+
+<%= form_with url: helpers.analytics_exhibit_dashboard_path(current_exhibit), class: 'mb-3 d-flex', method: :get do |form| %>
+  <div>
+    <%= form.label :start_date, I18n.t("spotlight.dashboards.analytics.start_date_label") %>
+    <%= form.date_field :start_date, value: dates['start_date'], min: min_date, max: max_date %>
+    <%= form.label :end_date, I18n.t("spotlight.dashboards.analytics.end_date_label"), class: 'ml-2 ms-2' %>
+    <%= form.date_field :end_date, value: dates['end_date'], min: min_date, max: max_date %>
+  </div>
+  <div class="ml-auto ms-auto">
+    <%= form.submit I18n.t("spotlight.dashboards.analytics.submit_date_label"), class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
 <% if results? %>
-<%= cache current_exhibit, expires_in: 1.hour do %>
-  <h2><%= I18n.t("spotlight.dashboards.analytics.reporting_period_heading") %></h2>
+  <h2><%= heading %></h2>
+
   <h3 class="h5 mt-4"><%= I18n.t("spotlight.dashboards.analytics.visitor_header") %></h3>
   <%= render Spotlight::Analytics::AggregationComponent.new(data: page_analytics.totals) %>
 
@@ -8,43 +24,42 @@
   <%= render Spotlight::Analytics::AggregationComponent.new(data: search_analytics.totals, exclude_fields: [:eventCount] ) %>
 
   <% unless page_analytics.rows.empty? %>
-  <h3 class="h5 mt-4"><%= I18n.t("spotlight.dashboards.analytics.pages.header") %></h4>
-  <table class="table table-striped popular-pages">
-    <thead>
-      <tr>
-        <th><%= I18n.t("spotlight.dashboards.analytics.pagetitle") %></th>
-        <th class="text-right text-end"><%= I18n.t("spotlight.dashboards.analytics.pageviews") %></th>
-      </tr>
-    </thead>
-    <% page_analytics.rows.each do |p| %>
-      <tr>
-        <td><%= link_to p.pageTitle, p.pagePath %></td>
-        <td class="text-right text-end"><%= p.screenPageViews %></td>
-      </tr>
-    <% end %>
-  </table>
-  <% end %>
-
-  <% unless search_analytics.rows.empty? %>
-  <h3 class="h5 mt-4"><%= I18n.t("spotlight.dashboards.analytics.searches.header") %></h4>
-  <table class="table table-striped popular-pages">
-    <thead>
-      <tr>
-        <th><%= I18n.t("spotlight.dashboards.analytics.searches.term") %></th>
-        <th class="text-right text-end"><%= I18n.t("spotlight.dashboards.analytics.searches.views") %></th>
-      </tr>
-    </thead>
-    <% search_analytics.rows.each do |p| %>
-      <% if p.searchTerm.present? %>
+    <h3 class="h5 mt-4"><%= I18n.t("spotlight.dashboards.analytics.pages.header") %></h4>
+    <table class="table table-striped popular-pages">
+      <thead>
         <tr>
-          <td><%= p.searchTerm %></td>
-          <td class="text-right text-end"><%= p.eventCount %></td>
+          <th><%= I18n.t("spotlight.dashboards.analytics.pagetitle") %></th>
+          <th class="text-right text-end"><%= I18n.t("spotlight.dashboards.analytics.pageviews") %></th>
+        </tr>
+      </thead>
+      <% page_analytics.rows.each do |p| %>
+        <tr>
+          <td><%= link_to p.pageTitle, p.pagePath %></td>
+          <td class="text-right text-end"><%= p.screenPageViews %></td>
         </tr>
       <% end %>
+    </table>
     <% end %>
-  </table>
+
+    <% unless search_analytics.rows.empty? %>
+    <h3 class="h5 mt-4"><%= I18n.t("spotlight.dashboards.analytics.searches.header") %></h4>
+    <table class="table table-striped popular-pages">
+      <thead>
+        <tr>
+          <th><%= I18n.t("spotlight.dashboards.analytics.searches.term") %></th>
+          <th class="text-right text-end"><%= I18n.t("spotlight.dashboards.analytics.searches.views") %></th>
+        </tr>
+      </thead>
+      <% search_analytics.rows.each do |p| %>
+        <% if p.searchTerm.present? %>
+          <tr>
+            <td><%= p.searchTerm %></td>
+            <td class="text-right text-end"><%= p.eventCount %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
   <% end %>
-<% end %>
 <% else %>
-  <%= I18n.t("spotlight.dashboards.analytics.no_results", pageurl: page_url) %>
+  <p><%= I18n.t("spotlight.dashboards.analytics.no_results", pageurl: page_url) %></p>
 <% end %>
