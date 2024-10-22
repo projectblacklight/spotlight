@@ -16,16 +16,13 @@
     <%= javascript_tag "window.sirTrevorIcon = '#{asset_path('spotlight/blocks/sir-trevor-icons.svg')}'" %>
 
     <% if defined? Propshaft %>
-      <%= javascript_include_tag 'jquery/dist/jquery', "data-turbo-track": "reload", defer: true %>
-      <%= javascript_include_tag 'jquery-serializejson/jquery.serializejson', "data-turbo-track": "reload", defer: true %>
-      <% if Gem.loaded_specs['bootstrap_form'].version.segments.first == 4 %>
-        <%= javascript_include_tag 'bootstrap/dist/js/bootstrap.bundle', "data-turbo-track": "reload", defer: true %>
-      <% end %>
-      <%= javascript_include_tag 'leaflet/dist/leaflet', "data-turbo-track": "reload", defer: true %>
-      <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-      <%= javascript_include_tag 'openseadragon/openseadragon', "data-turbo-track": "reload", defer: true %>
-      <%= javascript_include_tag 'openseadragon/jquery', "data-turbo-track": "reload", defer: true %>
-      <%= javascript_include_tag 'openseadragon/rails', "data-turbo-track": "reload", defer: true %>
+      <%= javascript_include_tag 'jquery/dist/jquery', "data-turbo-track": "reload", defer: false %>
+      <%= javascript_include_tag 'jquery-serializejson/jquery.serializejson', "data-turbo-track": "reload", defer: false %>
+      <%= javascript_include_tag 'leaflet/dist/leaflet', "data-turbo-track": "reload", defer: false %>
+      <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: false %>
+      <%= javascript_include_tag 'openseadragon/openseadragon', "data-turbo-track": "reload", defer: false %>
+      <%= javascript_include_tag 'openseadragon/jquery', "data-turbo-track": "reload", defer: false %>
+      <%= javascript_include_tag 'openseadragon/rails', "data-turbo-track": "reload", defer: false %>
     <% else %>
       <%= javascript_include_tag "application" %>
     <% end %>
