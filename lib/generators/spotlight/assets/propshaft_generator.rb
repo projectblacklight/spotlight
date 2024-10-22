@@ -83,9 +83,10 @@ module Spotlight
       end
 
       def add_javascript
+        copy_file 'javascript/jquery-shim.js', 'app/javascript/jquery-shim.js'
         gsub_file 'app/javascript/application.js', 'import "controllers"', '// import "controllers"'
 
-        append_to_file 'app/javascript/application.js', "\n// Bootstrap\nimport * as Bootstrap from 'bootstrap'\n" unless bootstrap4?
+        append_to_file 'app/javascript/application.js', "\n// Bootstrap\nimport * as Bootstrap from 'bootstrap'\n"
 
         if Blacklight::VERSION.start_with?('7')
           append_to_file 'app/javascript/application.js', "\n// Blacklight\nimport \"blacklight-frontend/app/assets/javascripts/blacklight/blacklight.js\"\n"
@@ -99,11 +100,12 @@ module Spotlight
         append_to_file 'app/assets/stylesheets/application.sass.scss', "\n@import \"spotlight\";\n"
       end
 
-      # This resolves a bundling issue with bootstrap/popper on esbuild.
       def configure_esbuild
+        # The main-fields option resolves a bundling issue with bootstrap/popper on esbuild.
+        custom_options = '--main-fields=main,module --alias:jquery=./app/javascript/jquery-shim.js'
         gsub_file 'package.json',
                   'esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets',
-                  'esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --main-fields=main,module'
+                  "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets #{custom_options}"
       end
 
       private
