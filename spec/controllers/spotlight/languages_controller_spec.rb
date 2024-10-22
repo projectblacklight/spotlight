@@ -45,7 +45,7 @@ describe Spotlight::LanguagesController do
 
   describe '#destroy' do
     let(:exhibit) { FactoryBot.create(:exhibit) }
-    let(:language) { FactoryBot.create(:language, exhibit: exhibit) }
+    let(:language) { FactoryBot.create(:language, exhibit:) }
 
     context 'when not signed in' do
       it 'is not successful' do

@@ -10,7 +10,7 @@ describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
   let(:document) { stub_model(SolrDocument) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit) }
+  let(:custom_field) { FactoryBot.create(:custom_field, exhibit:) }
 
   before do
     allow(view).to receive(:uploaded_field_label) do |config|
@@ -18,7 +18,7 @@ describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
     end
     expect(view).to receive_messages(exhibit_tags_path: 'autocomplete-path.json')
     expect(view).to receive_messages(current_exhibit: exhibit)
-    expect(view).to receive_messages(document: document)
+    expect(view).to receive_messages(document:)
     expect(view).to receive(:can?).at_least(:once).and_return(true)
   end
 

@@ -7,6 +7,7 @@ class CatalogController < ApplicationController
 
   configure_blacklight do |config|
     config.header_component = Spotlight::HeaderComponent
+    config.exhibit_navbar_component = Spotlight::ExhibitNavbarComponent
     config.view.gallery(document_component: Blacklight::Gallery::DocumentComponent, icon: Blacklight::Gallery::Icons::GalleryComponent)
     # config.view.gallery.classes = 'row-cols-2 row-cols-md-3'
     config.view.masonry(document_component: Blacklight::Gallery::DocumentComponent, icon: Blacklight::Gallery::Icons::MasonryComponent)

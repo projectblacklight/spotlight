@@ -2,7 +2,7 @@
 
 describe 'Home page', type: :feature, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
   before { login_as exhibit_curator }
 
@@ -71,7 +71,7 @@ describe 'Home page', type: :feature, versioning: true do
 
   describe 'page options on edit form' do
     describe 'show title' do
-      let(:home_page) { FactoryBot.create(:home_page, display_title: false, exhibit: exhibit) }
+      let(:home_page) { FactoryBot.create(:home_page, display_title: false, exhibit:) }
 
       it 'is updatable from the edit page' do
         expect(home_page.display_title).to be_falsey

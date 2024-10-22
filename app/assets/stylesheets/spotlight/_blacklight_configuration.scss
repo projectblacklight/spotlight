@@ -18,7 +18,6 @@
       padding: 0.75rem 0.75rem 0.75rem 40px;
       margin: 0;
       margin-top: -1px;
-
     }
 
     .dd3-handle:before {
@@ -48,9 +47,27 @@
   }
 }
 
+.metadata-configuration {
+  td, th {
+    padding: 0.75rem 0.25rem;
+  }
+  th {
+    font-size: $font-size-sm;
+  }
+  .metadata-label-edit {
+    max-width: fit-content;
+  }
+  .restore-default .btn {
+    text-wrap: nowrap;
+    margin-left: 0.5rem;
+  }
+}
+
+// the table id
 #nested-fields {
   margin-bottom: 1em;
 
+  // the tbody class
   .metadata_fields {
     .checkbox-cell {
       vertical-align: middle;
@@ -59,6 +76,7 @@
 
   .metadata-select {
     display: inline-block;
+    text-wrap: nowrap;
     min-width: 72px;
   }
 }

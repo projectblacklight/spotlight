@@ -9,13 +9,13 @@ module Spotlight
     load_and_authorize_resource
 
     def edit
-      add_breadcrumb t(:'spotlight.sites.home'), root_url
-      add_breadcrumb t(:'spotlight.sites.edit.page_title')
+      add_breadcrumb(t(:'spotlight.sites.home'), root_url)
+      add_breadcrumb(t(:'spotlight.sites.edit.page_title'))
     end
 
     def edit_exhibits
-      add_breadcrumb t(:'spotlight.sites.home'), root_url
-      add_breadcrumb t(:'spotlight.sites.edit_exhibits.page_title')
+      add_breadcrumb(t(:'spotlight.sites.home'), root_url)
+      add_breadcrumb(t(:'spotlight.sites.edit_exhibits.page_title'))
     end
 
     def update

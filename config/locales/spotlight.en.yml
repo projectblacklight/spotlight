@@ -707,6 +707,8 @@ en:
         select_all: Select all
         view:
           show: Item details
+      metadata_field:
+        restore_default: Restore default
     pages:
       edit:
         header: Edit page
@@ -721,6 +723,8 @@ en:
       index:
         about_pages:
           header: About pages
+        bulk_updates:
+          header: Bulk updates
         feature_pages:
           header: Feature pages
           home_pages_header: Homepage

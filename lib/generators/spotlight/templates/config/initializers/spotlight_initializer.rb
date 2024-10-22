@@ -83,6 +83,10 @@
 #   Spotlight::Engine.config.ga_debug_mode = false
 # end
 
+# ==> Customizable settings for site tags
+# When set the free text tag list field becomes multiple selection checklist
+# Spotlight::Engine.config.site_tags = []
+
 # ==> Sir Trevor Widget Configuration
 # These are set by default by Spotlight's configuration,
 # but you can customize them here, or in the SirTrevorRails::Block#custom_block_types method

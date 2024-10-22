@@ -2,7 +2,7 @@
 
 describe 'Roles Admin', js: true, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+  let(:exhibit_admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
   before do
     login_as exhibit_admin

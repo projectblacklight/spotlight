@@ -34,8 +34,8 @@ module Spotlight
 
     def new
       build_initial_exhibit_contact_emails
-      add_breadcrumb t(:'spotlight.sites.home'), root_url
-      add_breadcrumb t(:'spotlight.exhibits.new.page_title')
+      add_breadcrumb(t(:'spotlight.sites.home'), root_url)
+      add_breadcrumb(t(:'spotlight.exhibits.new.page_title'))
     end
 
     def process_import
@@ -47,9 +47,9 @@ module Spotlight
     end
 
     def edit
-      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit)
-      add_breadcrumb t(:'spotlight.configuration.sidebar.settings'), edit_exhibit_path(@exhibit)
+      add_breadcrumb(t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit)
+      add_breadcrumb(t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit))
+      add_breadcrumb(t(:'spotlight.configuration.sidebar.settings'), edit_exhibit_path(@exhibit))
       build_initial_exhibit_contact_emails
     end
 
@@ -94,6 +94,7 @@ module Spotlight
         :description,
         :published,
         :tag_list,
+        tag_list: [],
         contact_emails_attributes: %i[id email],
         languages_attributes: %i[id public]
       )

@@ -6,10 +6,11 @@
           <div class="contents">
             <% if file[:link].present? %>
               <%= link_to file[:link], rel: 'ugc' do %>
-                <%= image_tag file[:url], class: 'img-thumbnail', alt: file[:caption] %>
+                <%= image_tag file[:url], class: 'img-thumbnail', alt: resource_alt_text(file, file[:caption]) %>
               <% end %>
             <% else %>
-              <%= image_tag file[:url], class: 'img-thumbnail', alt: '', role: 'presentation' %>
+              <% alt_text = resource_alt_text(file, '') %>
+              <%= image_tag file[:url], class: 'img-thumbnail', alt: alt_text, role: alt_text.present? ? nil : 'presentation' %>
             <% end %>
             <% if file[:caption].present? %>
               <div class="caption">

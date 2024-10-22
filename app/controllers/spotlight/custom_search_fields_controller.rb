@@ -11,12 +11,12 @@ module Spotlight
 
     # GET /custom_search_fields/new
     def new
-      add_breadcrumb t(:'helpers.action.spotlight/custom_search_field.create'), new_exhibit_custom_search_field_path(@exhibit)
+      add_breadcrumb(t(:'helpers.action.spotlight/custom_search_field.create'), new_exhibit_custom_search_field_path(@exhibit))
     end
 
     # GET /custom_search_fields/1/edit
     def edit
-      add_breadcrumb @custom_search_field.label, edit_exhibit_custom_search_field_path(@custom_search_field.exhibit, @custom_search_field)
+      add_breadcrumb(@custom_search_field.label, edit_exhibit_custom_search_field_path(@custom_search_field.exhibit, @custom_search_field))
     end
 
     # POST /custom_search_fields
@@ -52,9 +52,9 @@ module Spotlight
     private
 
     def attach_breadcrumbs
-      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit)
-      add_breadcrumb t(:'spotlight.configuration.sidebar.search_configuration'), edit_exhibit_search_configuration_path(@exhibit)
+      add_breadcrumb(t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit)
+      add_breadcrumb(t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit))
+      add_breadcrumb(t(:'spotlight.configuration.sidebar.search_configuration'), edit_exhibit_search_configuration_path(@exhibit))
     end
 
     # Only allow trusted parameters through.

@@ -82,7 +82,7 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
     },
 
     item_options: function() { return `
-      '<label>
+      <label>
         <input type="hidden" name="display-item-counts" value="false" />
         <input type="checkbox" name="display-item-counts" value="true" checked />
         ${i18n.t("blocks:browse_group_categories:item_counts")}

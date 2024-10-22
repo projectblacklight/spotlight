@@ -35,7 +35,7 @@ module Spotlight
 
     def initialize_main_navigation
       default_main_navigations.each_with_index do |nav_type, weight|
-        main_navigations.create nav_type: nav_type, weight: weight
+        main_navigations.create nav_type:, weight:
       end
     end
 

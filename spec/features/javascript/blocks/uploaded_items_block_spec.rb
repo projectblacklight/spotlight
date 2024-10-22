@@ -2,7 +2,7 @@
 
 describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:fixture_file1) { File.join(FIXTURES_PATH, '800x600.png') }
   let(:fixture_file2) { File.join(FIXTURES_PATH, 'avatar.png') }
 
@@ -39,7 +39,7 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     save_page_changes
 
     expect(page).to have_css('h3', text: heading)
-    expect(page).to have_css('p', text: text)
+    expect(page).to have_css('p', text:)
 
     within('.uploaded-items-block') do
       expect(page).to have_css('img[alt=""]', count: 1)
@@ -66,15 +66,28 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     end
   end
 
+  it 'displays alternative text guidelines', js: true do
+    expect(page).to have_content('For each item, please enter alternative text')
+    expect(page).to have_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
+  end
+
+  it 'toggles alt text input when marking an image as decorative' do
+    attach_file('uploaded_item_url', fixture_file1)
+
+    fill_in 'Alternative text', with: 'custom alt text'
+    check 'Decorative'
+    expect(page).to have_field('Alternative text', type: 'textarea', disabled: true, placeholder: '', with: '')
+    uncheck 'Decorative'
+    expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
+  end
+
   it 'may have ZPR links' do
     attach_file('uploaded_item_url', fixture_file1)
+    expect(page).to have_selector('li[data-id="file_0"] .img-thumbnail[src^="/"]')
     attach_file('uploaded_item_url', fixture_file2)
+    expect(page).to have_selector('li[data-id="file_1"] .img-thumbnail[src^="/"]')
 
     check 'Offer "View larger" option'
-
-    # Flappy guards. Wait for the thumbnail src to be populated.
-    expect(page).to have_selector('li[data-id="file_0"] .img-thumbnail[src^="/"]')
-    expect(page).to have_selector('li[data-id="file_1"] .img-thumbnail[src^="/"]')
 
     save_page_changes
 

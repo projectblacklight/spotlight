@@ -4,9 +4,9 @@ describe SirTrevorRails::Blocks::BrowseGroupCategoriesBlock do
   subject { described_class.new({ type: '', data: block_data }, page) }
 
   let!(:exhibit) { FactoryBot.create(:exhibit) }
-  let!(:page) { FactoryBot.create(:feature_page, exhibit: exhibit) }
-  let!(:group1) { FactoryBot.create(:group, exhibit: exhibit, title: 'abc123', published: true) }
-  let!(:group2) { FactoryBot.create(:group, exhibit: exhibit, title: 'xyz321', published: true) }
+  let!(:page) { FactoryBot.create(:feature_page, exhibit:) }
+  let!(:group1) { FactoryBot.create(:group, exhibit:, title: 'abc123', published: true) }
+  let!(:group2) { FactoryBot.create(:group, exhibit:, title: 'xyz321', published: true) }
 
   let(:block_data) { {} }
 

@@ -5,7 +5,7 @@ describe Spotlight::MetaHelper, type: :helper do
     let(:current_exhibit) { FactoryBot.create(:exhibit) }
 
     before do
-      allow(helper).to receive_messages(current_exhibit: current_exhibit)
+      allow(helper).to receive_messages(current_exhibit:)
       allow(helper).to receive(:site_title).and_return('some title')
       current_exhibit.subtitle = 'xyz'
       current_exhibit.description = 'abc'

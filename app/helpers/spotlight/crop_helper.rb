@@ -11,7 +11,7 @@ module Spotlight
         concat f.hidden_field(:iiif_image_id)
         concat f.hidden_field(:iiif_region)
         concat f.hidden_field(:iiif_tilesource)
-        concat iiif_cropper_tag(f, initial_crop_selection: initial_crop_selection)
+        concat iiif_cropper_tag(f, initial_crop_selection:)
       end
     end
 

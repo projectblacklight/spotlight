@@ -8,8 +8,13 @@ module Spotlight
   class BulkUpdatesController < Spotlight::ApplicationController
     before_action :authenticate_user!
     before_action :check_authorization
+    load_and_authorize_resource :exhibit, class: 'Spotlight::Exhibit'
 
-    def edit; end
+    def edit
+      add_breadcrumb(t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit)
+      add_breadcrumb(t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit))
+      add_breadcrumb(t(:'spotlight.pages.index.bulk_updates.header'), edit_exhibit_bulk_updates_path(@exhibit))
+    end
 
     def download_template
       # Set Last-Modified as a work-around for https://github.com/rack/rack/issues/1619
@@ -41,7 +46,7 @@ module Spotlight
     def csv_template
       boolean = ActiveModel::Type::Boolean.new
       Spotlight::BulkUpdatesCsvTemplateService.new(exhibit: current_exhibit).template(
-        view_context: view_context,
+        view_context:,
         title: boolean.cast(reference_field_params[:item_title]),
         tags: boolean.cast(updatable_field_params[:tags]),
         visibility: boolean.cast(updatable_field_params[:visibility])

@@ -32,7 +32,7 @@ module Spotlight
     #    validates :user, uniqueness: { scope: :exhibit}
     # but it puts the error message on the user_key instead of user so that the form will render correctly
     def user_must_be_unique
-      errors.add(:user_key, 'already a member of this exhibit') if Spotlight::Role.where(resource: resource, user: user).where.not(id: id).any?
+      errors.add(:user_key, 'already a member of this exhibit') if Spotlight::Role.where(resource:, user:).where.not(id:).any?
     end
   end
 end

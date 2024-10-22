@@ -42,4 +42,4 @@
   <%= masthead_navbar unless resource_masthead? %>
 </header>
 
-<%= render 'shared/breadcrumbs' unless resource_masthead? %>
+<%= render Spotlight::BreadcrumbsComponent.new(breadcrumbs:) %>

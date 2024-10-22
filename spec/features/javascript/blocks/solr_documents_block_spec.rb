@@ -2,12 +2,12 @@
 
 describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:feature_page) do
     FactoryBot.create(
       :feature_page,
       title: 'FeaturePage1',
-      exhibit: exhibit
+      exhibit:
     )
   end
 
@@ -202,6 +202,36 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
       end
       expect(page).to have_css('.items-col.float-right.float-end')
     end
+  end
+
+  it 'displays alternative text guidelines', js: true do
+    expect(page).to have_content('For each item, please enter alternative text')
+    expect(page).to have_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
+  end
+
+  it 'toggles alt text input when marking an image as decorative', js: true do
+    fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
+    # Flappy guard. Wait for the thumbnail src to be populated.
+    expect(page).to have_selector('li[data-resource-id="gk446cj2442"] .img-thumbnail[src^="http"]')
+
+    fill_in 'Alternative text', with: 'custom alt text'
+    check 'Decorative'
+    expect(page).to have_field('Alternative text', type: 'textarea', disabled: true, placeholder: '', with: '')
+    uncheck 'Decorative'
+    expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
+  end
+
+  it 'retains custom alt text after marking as decorative and saving', js: true do
+    fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
+    # Flappy guard. Wait for the thumbnail src to be populated.
+    expect(page).to have_selector('li[data-resource-id="gk446cj2442"] .img-thumbnail[src^="http"]')
+
+    fill_in 'Alternative text', with: 'custom alt text'
+    check 'Decorative'
+    save_page_changes
+    click_on 'Edit'
+    uncheck 'Decorative'
+    expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
   end
 
   it 'round-trip data', js: true do

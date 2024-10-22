@@ -2,8 +2,8 @@
 
 describe 'Browse Category Administration', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:curator) { FactoryBot.create(:exhibit_curator, exhibit: exhibit) }
-  let!(:search) { FactoryBot.create(:search, exhibit: exhibit, query_params: { f: { 'genre_ssim' => ['Value'] } }) }
+  let(:curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
+  let!(:search) { FactoryBot.create(:search, exhibit:, query_params: { f: { 'genre_ssim' => ['Value'] } }) }
 
   before { login_as curator }
 
@@ -49,7 +49,7 @@ describe 'Browse Category Administration', type: :feature do
     end
 
     describe 'with a group present' do
-      let!(:group) { FactoryBot.create(:group, exhibit: exhibit, title: 'Good group') }
+      let!(:group) { FactoryBot.create(:group, exhibit:, title: 'Good group') }
 
       it 'enables group selection' do
         visit spotlight.edit_exhibit_search_path(exhibit, search)

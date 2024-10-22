@@ -19,9 +19,9 @@ module Spotlight
     end
 
     def edit
-      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit)
-      add_breadcrumb t(:'spotlight.configuration.sidebar.search_configuration'), edit_exhibit_search_configuration_path(@exhibit)
+      add_breadcrumb(t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit)
+      add_breadcrumb(t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit))
+      add_breadcrumb(t(:'spotlight.configuration.sidebar.search_configuration'), edit_exhibit_search_configuration_path(@exhibit))
 
       @field_metadata = Spotlight::FieldMetadata.new(current_exhibit, blacklight_config.repository, @blacklight_configuration.blacklight_config)
     end

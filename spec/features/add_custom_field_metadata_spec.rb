@@ -2,8 +2,8 @@
 
 describe 'Adding custom metadata field data', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
-  let(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit) }
+  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
+  let(:custom_field) { FactoryBot.create(:custom_field, exhibit:) }
   let(:config) { exhibit.blacklight_configuration }
 
   before do
@@ -32,7 +32,7 @@ describe 'Adding custom metadata field data', type: :feature do
   end
 
   context 'when given a read-only field' do
-    let(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit, readonly_field: true) }
+    let(:custom_field) { FactoryBot.create(:custom_field, exhibit:, readonly_field: true) }
 
     it 'can not be edited' do
       visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
@@ -46,7 +46,7 @@ describe 'Adding custom metadata field data', type: :feature do
   end
 
   context 'with a multivalued field', js: true do
-    let(:custom_field) { FactoryBot.create(:custom_field, exhibit: exhibit, is_multiple: true) }
+    let(:custom_field) { FactoryBot.create(:custom_field, exhibit:, is_multiple: true) }
 
     it 'can add multiple values' do
       visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')

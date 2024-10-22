@@ -27,15 +27,6 @@ module Spotlight
   # rubocop:disable Metrics/ClassLength
   class Engine < ::Rails::Engine
     isolate_namespace Spotlight
-    # Breadcrumbs on rails must be required outside of an initializer or it doesn't get loaded.
-    require 'breadcrumbs_on_rails/breadcrumbs'
-    require 'breadcrumbs_on_rails/action_controller'
-
-    initializer 'breadcrumbs_on_rails.initialize' do
-      ActiveSupport.on_load(:action_controller) do
-        include BreadcrumbsOnRails::ActionController
-      end
-    end
 
     require 'carrierwave'
     require 'redcarpet' # required for markdown support in github/markup https://github.com/github/markup#markups
@@ -144,6 +135,8 @@ module Spotlight
     # Set to nil if you don't want to pull thumbnails from the index
     config.full_image_field = :full_image_url_ssm
     config.thumbnail_field = :thumbnail_url_ssm
+
+    Spotlight::Engine.config.site_tags = nil
 
     # Defaults to the blacklight_config.index.title_field:
     config.upload_title_field = nil # UploadFieldConfig.new(...)
@@ -337,23 +330,10 @@ module Spotlight
 
     config.exhibit_roles = %w[admin curator viewer]
     # PaperTrail serializes objects to YAML, so we need to permit these classes to be deserialized
-    if ActiveRecord.respond_to?(:yaml_column_permitted_classes)
-      # Rails >= 7.0
-      ActiveRecord.yaml_column_permitted_classes ||= []
-      ActiveRecord.yaml_column_permitted_classes += [Symbol,
-                                                     ActiveSupport::HashWithIndifferentAccess,
-                                                     ActiveSupport::TimeWithZone,
-                                                     ActiveSupport::TimeZone,
-                                                     Time]
-    elsif ActiveRecord::Base.respond_to?(:yaml_column_permitted_classes)
-      # Rails 6.1
-      ActiveRecord::Base.yaml_column_permitted_classes ||= []
-      ActiveRecord::Base.yaml_column_permitted_classes += [Symbol,
-                                                           ActiveSupport::HashWithIndifferentAccess,
-                                                           ActiveSupport::TimeWithZone,
-                                                           ActiveSupport::TimeZone,
-                                                           Time]
-    end
+    ActiveRecord.yaml_column_permitted_classes += [ActiveSupport::HashWithIndifferentAccess,
+                                                   ActiveSupport::TimeWithZone,
+                                                   ActiveSupport::TimeZone,
+                                                   Time]
   end
   # rubocop:enable Metrics/ClassLength
 end

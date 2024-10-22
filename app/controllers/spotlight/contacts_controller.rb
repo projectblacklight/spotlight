@@ -11,11 +11,11 @@ module Spotlight
     before_action :attach_breadcrumbs
 
     def new
-      add_breadcrumb t(:'helpers.action.spotlight/contact.create'), new_exhibit_contact_path(@exhibit)
+      add_breadcrumb(t(:'helpers.action.spotlight/contact.create'), new_exhibit_contact_path(@exhibit))
     end
 
     def edit
-      add_breadcrumb @contact.name, edit_exhibit_contact_path(@contact.exhibit, @contact)
+      add_breadcrumb(@contact.name, edit_exhibit_contact_path(@contact.exhibit, @contact))
     end
 
     def create
@@ -42,9 +42,9 @@ module Spotlight
     protected
 
     def attach_breadcrumbs
-      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit)
-      add_breadcrumb t(:'spotlight.pages.index.about_pages.header'), exhibit_about_pages_path(@exhibit)
+      add_breadcrumb(t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit)
+      add_breadcrumb(t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit))
+      add_breadcrumb(t(:'spotlight.pages.index.about_pages.header'), exhibit_about_pages_path(@exhibit))
     end
 
     def contact_params

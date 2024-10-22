@@ -14,7 +14,6 @@ module Spotlight
         view.send(:extend, Spotlight::CropHelper)
         view.send(:extend, Spotlight::PagesHelper)
         view.send(:extend, Blacklight::ComponentHelperBehavior)
-        view.send(:extend, BreadcrumbsOnRails::ActionController::HelperMethods)
       end
     end
   end

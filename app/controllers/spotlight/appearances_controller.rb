@@ -8,15 +8,15 @@ module Spotlight
     load_and_authorize_resource id_param: :exhibit_id, instance_name: 'exhibit', class: 'Spotlight::Exhibit', parent: false
 
     def edit
-      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit)
-      add_breadcrumb t(:'spotlight.configuration.sidebar.appearance'), edit_exhibit_appearance_path(@exhibit)
+      add_breadcrumb(t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit)
+      add_breadcrumb(t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit))
+      add_breadcrumb(t(:'spotlight.configuration.sidebar.appearance'), edit_exhibit_appearance_path(@exhibit))
     end
 
     def update
       if @exhibit.update(exhibit_params)
         notice = t(:'helpers.submit.spotlight_default.updated', model: @exhibit.class.model_name.human.downcase)
-        redirect_to edit_exhibit_appearance_path(@exhibit), notice: notice
+        redirect_to edit_exhibit_appearance_path(@exhibit), notice:
       else
         render 'edit'
       end

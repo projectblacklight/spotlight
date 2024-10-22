@@ -6,11 +6,11 @@
           <% doc_presenter = document_presenter(document) %>
           <div class="box item-<%= index %>" data-id="<%= document.id %>">
             <% if block_options[:thumbnail_image_url].present? %>
-              <%= link_to_document(document, image_tag(block_options[:thumbnail_image_url], class: 'img-thumbnail', alt: doc_presenter.heading, skip_pipeline: true), counter: -1) %>
+              <%= link_to_document(document, image_tag(block_options[:thumbnail_image_url], class: 'img-thumbnail', alt: resource_alt_text(block_options, doc_presenter.heading), skip_pipeline: true), counter: -1) %>
             <% elsif block_options[:iiif_tilesource_base].present?  %>
-              <%= link_to_document(document, image_tag(block_options[:iiif_tilesource_base] + '/full/!400,400/0/default.jpg', class: 'img-thumbnail', alt: doc_presenter.heading, skip_pipeline: true), counter: -1) %>
+              <%= link_to_document(document, image_tag(block_options[:iiif_tilesource_base] + '/full/!400,400/0/default.jpg', class: 'img-thumbnail', alt: resource_alt_text(block_options, doc_presenter.heading), skip_pipeline: true), counter: -1) %>
             <% elsif doc_presenter.thumbnail.exists? %>
-              <%= doc_presenter.thumbnail.thumbnail_tag({ class: 'img-thumbnail', alt: doc_presenter.heading }, document_counter: -1) %>
+              <%= doc_presenter.thumbnail.thumbnail_tag({ class: 'img-thumbnail', alt: resource_alt_text(block_options, doc_presenter.heading) }, document_counter: -1) %>
             <% end %>
           </div>
         <% end %>

@@ -2,7 +2,7 @@
 
 RSpec.describe 'Manage exhibit users and roles', js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
   before do
     login_as(admin)

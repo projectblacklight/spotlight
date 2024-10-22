@@ -7,7 +7,7 @@ module Spotlight
 
     def create
       if @featured_image.save && @featured_image.file_present?
-        render json: { tilesource: tilesource, id: @featured_image.id }
+        render json: { tilesource:, id: @featured_image.id }
       else
         render json: { error: 'unable to create image' }, status: :bad_request
       end

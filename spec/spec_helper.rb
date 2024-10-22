@@ -14,6 +14,8 @@ require 'rspec/its'
 require 'rspec/rails'
 require 'rspec/active_model/mocks'
 require 'paper_trail/frameworks/rspec'
+require 'view_component/test_helpers'
+require 'view_component/system_test_helpers'
 
 require 'selenium-webdriver'
 require 'webmock/rspec'
@@ -46,7 +48,7 @@ require 'spotlight'
 Spotlight::Engine.config.reindexing_batch_count = 1
 Spotlight::Engine.config.assign_default_roles_to_first_user = false
 
-Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
+Dir['./spec/support/**/*.rb'].each { |f| require f }
 
 FactoryBot.definition_file_paths = [File.expand_path('factories', __dir__)]
 FactoryBot.find_definitions
@@ -60,6 +62,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   config.include ViewComponent::TestHelpers, type: :component
+  config.include ViewComponent::SystemTestHelpers, type: :component
 
   if defined? Devise::Test::ControllerHelpers
     config.include Devise::Test::ControllerHelpers, type: :controller

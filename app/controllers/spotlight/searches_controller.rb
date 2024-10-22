@@ -30,7 +30,7 @@ module Spotlight
 
     def edit
       @groups = @exhibit.groups
-      add_breadcrumb @search.full_title, edit_exhibit_search_path(@search.exhibit, @search)
+      add_breadcrumb(@search.full_title, edit_exhibit_search_path(@search.exhibit, @search))
       @exhibit = @search.exhibit
     end
 
@@ -78,7 +78,7 @@ module Spotlight
                else
                  t(:'helpers.submit.search.batch_error', model: Spotlight::Search.model_name.human.pluralize.downcase)
                end
-      redirect_back fallback_location: fallback_url, notice: notice
+      redirect_back fallback_location: fallback_url, notice:
     end
 
     protected
@@ -94,9 +94,9 @@ module Spotlight
 
     def attach_breadcrumbs
       e = @exhibit || @search&.exhibit
-      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: e.title), e
-      add_breadcrumb t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(e)
-      add_breadcrumb t(:'spotlight.curation.sidebar.browse'), exhibit_searches_path(e)
+      add_breadcrumb(t(:'spotlight.exhibits.breadcrumb', title: e.title), e)
+      add_breadcrumb(t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(e))
+      add_breadcrumb(t(:'spotlight.curation.sidebar.browse'), exhibit_searches_path(e))
     end
 
     def batch_search_params

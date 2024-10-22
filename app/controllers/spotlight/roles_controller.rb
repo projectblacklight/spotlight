@@ -13,9 +13,9 @@ module Spotlight
       role = @exhibit.roles.build
       authorize! :edit, role
 
-      add_breadcrumb t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit
-      add_breadcrumb t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit)
-      add_breadcrumb t(:'spotlight.configuration.sidebar.users'), exhibit_roles_path(@exhibit)
+      add_breadcrumb(t(:'spotlight.exhibits.breadcrumb', title: @exhibit.title), @exhibit)
+      add_breadcrumb(t(:'spotlight.configuration.sidebar.header'), exhibit_dashboard_path(@exhibit))
+      add_breadcrumb(t(:'spotlight.configuration.sidebar.users'), exhibit_roles_path(@exhibit))
     end
 
     def update_all
@@ -24,7 +24,7 @@ module Spotlight
       if @exhibit.update(exhibit_params)
         notice = any_deleted ? t(:'helpers.submit.role.destroyed') : t(:'helpers.submit.role.updated')
         Spotlight::InviteUsersService.call(resource: @exhibit)
-        redirect_to exhibit_roles_path(@exhibit), notice: notice
+        redirect_to exhibit_roles_path(@exhibit), notice:
       else
         flash[:alert] = t(:'helpers.submit.role.batch_error', count: exhibit_params[:roles_attributes].to_unsafe_h.size)
         render action: 'index'

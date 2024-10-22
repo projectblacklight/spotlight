@@ -291,7 +291,7 @@ describe Spotlight::ExhibitImportExportService do
     context 'with a browse category' do
       let(:masthead) { FactoryBot.create(:masthead) }
       let(:thumbnail) { FactoryBot.create(:featured_image) }
-      let!(:search) { FactoryBot.create(:search, exhibit: source_exhibit, masthead: masthead, thumbnail: thumbnail) }
+      let!(:search) { FactoryBot.create(:search, exhibit: source_exhibit, masthead:, thumbnail:) }
       let!(:existing_search) { FactoryBot.create(:search, slug: search.slug, exhibit: destination_exhibit) }
 
       before do

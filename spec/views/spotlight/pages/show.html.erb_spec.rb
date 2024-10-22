@@ -4,7 +4,7 @@ describe 'spotlight/pages/show', type: :view do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   let(:page) do
     stub_model(Spotlight::FeaturePage,
-               exhibit: exhibit,
+               exhibit:,
                title: 'Title',
                content: '[]')
   end
@@ -35,7 +35,7 @@ describe 'spotlight/pages/show', type: :view do
   end
 
   context 'when rendering with layout' do
-    let(:blacklight_config) { Blacklight::Configuration.new }
+    let(:blacklight_config) { Blacklight::Configuration.new header_component: Spotlight::HeaderComponent }
     let(:document) { SolrDocument.new id: 'xyz', format: 'a' }
     let(:presenter) { Blacklight::ShowPresenter.new(document, view, blacklight_config) }
 
@@ -45,7 +45,7 @@ describe 'spotlight/pages/show', type: :view do
       stub_template 'shared/_analytics.html.erb' => 'analytics'
       stub_template 'shared/_user_util_links.html.erb' => ''
       stub_template 'shared/_masthead.html.erb' => ''
-      allow(view).to receive_messages(document_presenter: presenter, action_name: 'show', blacklight_config: blacklight_config)
+      allow(view).to receive_messages(document_presenter: presenter, action_name: 'show', blacklight_config:)
       allow(view).to receive(:search_action_url).and_return('/catalog')
       render template: 'spotlight/pages/show', layout: 'layouts/spotlight/spotlight'
     end

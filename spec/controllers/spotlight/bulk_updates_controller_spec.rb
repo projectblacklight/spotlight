@@ -28,7 +28,7 @@ describe Spotlight::BulkUpdatesController, type: :controller do
 
   describe 'when the user is a curator' do
     before do
-      sign_in FactoryBot.create(:exhibit_curator, exhibit: exhibit)
+      sign_in FactoryBot.create(:exhibit_curator, exhibit:)
     end
 
     describe 'GET edit' do

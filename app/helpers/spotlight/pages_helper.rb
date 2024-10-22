@@ -86,5 +86,12 @@ module Spotlight
 
       view_config.document_presenter_class.new(document, self, view_config: view_config)
     end
+
+    def resource_alt_text(options, default)
+      return '' if options[:decorative].present?
+      return options[:alt_text] if options[:alt_text].present?
+
+      default
+    end
   end
 end

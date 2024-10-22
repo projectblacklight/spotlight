@@ -3,17 +3,17 @@
 describe 'Dashboard', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:parent_feature_page) do
-    FactoryBot.create(:feature_page, title: 'Parent Page', exhibit: exhibit)
+    FactoryBot.create(:feature_page, title: 'Parent Page', exhibit:)
   end
   let!(:child_feature_page) do
     FactoryBot.create(
       :feature_page,
       title: 'Child Page',
       parent_page: parent_feature_page,
-      exhibit: exhibit
+      exhibit:
     )
   end
-  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit: exhibit) }
+  let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
   before do
     login_as(admin)

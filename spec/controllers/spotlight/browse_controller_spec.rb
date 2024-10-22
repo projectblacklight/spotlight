@@ -3,10 +3,10 @@
 describe Spotlight::BrowseController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let!(:search) { FactoryBot.create(:published_search, exhibit: exhibit) }
-  let(:group) { FactoryBot.create(:group, published: true, title: 'Good group', exhibit: exhibit, searches: [search]) }
-  let(:group_unpublished) { FactoryBot.create(:group, title: 'Secret group', exhibit: exhibit, searches: [search]) }
-  let!(:unpublished) { FactoryBot.create(:search, exhibit: exhibit) }
+  let!(:search) { FactoryBot.create(:published_search, exhibit:) }
+  let(:group) { FactoryBot.create(:group, published: true, title: 'Good group', exhibit:, searches: [search]) }
+  let(:group_unpublished) { FactoryBot.create(:group, title: 'Secret group', exhibit:, searches: [search]) }
+  let!(:unpublished) { FactoryBot.create(:search, exhibit:) }
   let(:admin) { FactoryBot.create(:site_admin) }
 
   describe 'protected methods' do

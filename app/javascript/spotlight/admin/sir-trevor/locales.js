@@ -51,6 +51,11 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
       drag: "Drag",
       display: "Display?",
       remove: "Remove"
+    },
+    alt_text: {
+      decorative: "Decorative",
+      alternative_text: "Alternative text",
+      placeholder: "Enter alt text for this item..."
     }
   },
 
@@ -116,5 +121,11 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
   group: {
     undefined: "Standard widgets",
     items: "Exhibit item widgets"
+  },
+
+  alt_text_guidelines: {
+    intro: 'For each item, please enter alternative text or appropriately check the decorative box. ',
+    link_label: 'Guidelines for writing alt text.',
+    link_url: 'https://www.w3.org/WAI/tutorials/images/' 
   }
 });

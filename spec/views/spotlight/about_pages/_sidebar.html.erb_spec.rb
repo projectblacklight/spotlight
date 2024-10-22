@@ -2,9 +2,9 @@
 
 describe 'spotlight/about_pages/_sidebar.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let!(:page1) { FactoryBot.create(:about_page, title: 'One', weight: 4, exhibit: exhibit) }
-  let!(:page2) { FactoryBot.create(:about_page, exhibit: exhibit, title: 'Two', published: false) }
-  let!(:page3) { FactoryBot.create(:about_page, exhibit: exhibit, title: 'Three', weight: 3) }
+  let!(:page1) { FactoryBot.create(:about_page, title: 'One', weight: 4, exhibit:) }
+  let!(:page2) { FactoryBot.create(:about_page, exhibit:, title: 'Two', published: false) }
+  let!(:page3) { FactoryBot.create(:about_page, exhibit:, title: 'Three', weight: 3) }
 
   before do
     allow(view).to receive_messages(current_exhibit: exhibit)

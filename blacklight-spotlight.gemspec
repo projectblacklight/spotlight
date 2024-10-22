@@ -18,7 +18,7 @@ these collections.)
 
   s.files = Dir['{app,config,db,lib,vendor}/**/*', 'Rakefile', 'README.md', 'LICENSE', 'spec/{factories,fixtures}/*', 'spec/support/**/*']
 
-  s.required_ruby_version = '>= 2.6'
+  s.required_ruby_version = '>= 3.1'
 
   s.add_dependency 'activejob-status'
   s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 12'
@@ -26,7 +26,6 @@ these collections.)
   s.add_dependency 'blacklight', '>= 7.19', '< 9'
   s.add_dependency 'blacklight-gallery', '>= 3.0', '< 5'
   s.add_dependency 'bootstrap_form', '>= 4.1', '< 6'
-  s.add_dependency 'breadcrumbs_on_rails', '>= 3.0', '< 5'
   s.add_dependency 'cancancan'
   s.add_dependency 'carrierwave', '~> 2.2'
   s.add_dependency 'clipboard-rails', '~> 1.5'
