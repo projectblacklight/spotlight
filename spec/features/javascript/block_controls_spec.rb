@@ -25,6 +25,12 @@ describe 'Block controls' do
     # click to add widget
     click_add_widget
 
+    # Check if the Sir Trevor icons are loading. They are in the same SVG so a single check should be sufficient.
+    within('.st-block-replacer') do
+      href_value = find('use')['xlink:href']
+      expect(href_value).to match(/.+\.svg#add-block$/)
+    end
+
     within('.spotlight-block-controls') do
       expect(page).to have_css('.st-controls-group', count: 2)
 
