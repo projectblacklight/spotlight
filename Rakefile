@@ -30,8 +30,11 @@ require 'engine_cart/rake_task'
 
 require 'spotlight/version'
 
-# Ensure the app generates with Propshaft; sprockets is no longer supported
-ENV['ENGINE_CART_RAILS_OPTIONS'] = "#{ENV.fetch('ENGINE_CART_RAILS_OPTIONS', nil)} -a propshaft"
+# Build with our opinionated defaults if none are provided.
+rails_options = ENV.fetch('ENGINE_CART_RAILS_OPTIONS', '')
+rails_options = "#{rails_options} -a propshaft" unless rails_options.match?(/-a\s|--asset-pipeline/)
+rails_options = "#{rails_options} -j esbuild" unless rails_options.match?(/-j\s|--javascript/)
+ENV['ENGINE_CART_RAILS_OPTIONS'] = rails_options
 
 task ci: ['engine_cart:generate'] do
   ENV['environment'] = 'test'
