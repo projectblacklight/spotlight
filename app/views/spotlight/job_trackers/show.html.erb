@@ -8,7 +8,7 @@
   <div class="modal-header border-0">
     <h2 class="modal-title"><%= job_status_icon(@job_tracker) %> <%= t @job_tracker.job_class, default: @job_tracker.job_class %> <small class="text-monospace font-monospace font-weight-lighter fw-lighter"><%= @job_tracker.job_id&.truncate(8, omission: '') %></small></h2>
 
-    <button type="button" class="blacklight-modal-close close btn-close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="<%= t('blacklight.modal.close') %>">
+    <button type="button" class="blacklight-modal-close close btn-close" data-dismiss="modal" data-bs-dismiss="modal" data-bl-dismiss="modal" aria-label="<%= t('blacklight.modal.close') %>">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
