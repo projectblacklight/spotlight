@@ -23,7 +23,7 @@ else
   if ENV['RAILS_VERSION']
     if ENV['RAILS_VERSION'] == 'edge'
       gem 'rails', github: 'rails/rails'
-      ENV['ENGINE_CART_RAILS_OPTIONS'] = '--edge --skip-turbolinks -a propshaft'
+      ENV['ENGINE_CART_RAILS_OPTIONS'] = '--edge --skip-turbolinks'
     else
       gem 'rails', ENV['RAILS_VERSION']
     end
