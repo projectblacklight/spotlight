@@ -33,10 +33,15 @@ module Spotlight
     def destroy
       @language.destroy
 
-      redirect_to(
-        spotlight.edit_exhibit_path(@exhibit, tab: 'language'),
-        notice: t(:'helpers.submit.language.destroyed', model: @language.model_name.human.downcase)
-      )
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.remove(@language) }
+        format.html do
+          redirect_to(
+            spotlight.edit_exhibit_path(@exhibit, tab: 'language'),
+            notice: t(:'helpers.submit.language.destroyed', model: @language.model_name.human.downcase)
+          )
+        end
+      end
     end
 
     private
