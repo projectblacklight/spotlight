@@ -1,0 +1,31 @@
+<div data-behavior='progress-panel' data-exhibit-id="<%= exhibit.id %>" data-monitor-url="<%= helpers.actioncable? ? false : helpers.monitor_exhibit_bulk_updates_path(exhibit) %>">
+  <div class="card index-status border-info mb-3">
+    <h3 class="card-header bg-info text-white h4"><%= t("heading", scope: translation_field) %></h3>
+    <div class="card-body">
+      <p data-behavior='monitor-start'>
+        <span class="text-muted" data-behavior='date'></span> <%= t("begin_html", scope: translation_field) %>
+      </p>
+
+      <% if I18n.exists?("current_html", scope: translation_field) %>
+        <p data-behavior='monitor-current'>
+          <span class="text-muted" data-behavior='date'></span> <%= t("current_html", scope: translation_field) %>
+        </p>
+      <% end %>
+      <% if I18n.exists?("completed_html", scope: translation_field) %>
+        <p data-behavior='monitor-completed'>
+          <span class="text-muted" data-behavior='date'></span> <%= t("completed_html", scope: translation_field) %>
+        </p>
+      <% end %>
+
+      <p class="bg-warning" data-behavior='monitor-error' style='display:none;'>
+        <%= t("error", scope: translation_field) %>
+      </p>
+
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      

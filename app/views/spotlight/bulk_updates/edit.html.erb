@@ -4,9 +4,7 @@
 
 <%= curation_page_title t(:".header") %>
 
-<div data-behavior='progress-panel' data-monitor-url="<%= monitor_exhibit_bulk_updates_path(current_exhibit) %>">
-  <%= render 'progress_panel' %>
-</div>
+%= render Spotlight::ProgressBarComponent.new(exhibit: current_exhibit, translation_field: 'spotlight.bulk_updates.progress_panel') %>
 
 <div role="tabpanel">
   <ul class="nav nav-tabs" role="tablist">

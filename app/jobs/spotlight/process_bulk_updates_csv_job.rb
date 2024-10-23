@@ -6,6 +6,7 @@ module Spotlight
   ###
   class ProcessBulkUpdatesCsvJob < Spotlight::ApplicationJob
     include Spotlight::JobTracking
+    include ActioncableHelper
     with_job_tracking(resource: ->(job) { job.arguments.first })
 
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -13,15 +14,22 @@ module Spotlight
       errors = 0
       header_converter = ->(header) { header } # Use raw header for columns (since they are configured)
       csv_path = bulk_update.file.current_path
+      started_at = Time.zone.now
       File.open(csv_path) do |f|
         progress&.total = f.each_line.count(&:present?) - 1 # ignore the header
 
         ::CSV.table(f, header_converters: header_converter).each do |row|
           process_row(exhibit, row)
           progress&.increment
+          data = { exhibit_id: exhibit.id, finished: progress.progress == progress.total,
+                   completed: progress.progress, total: progress.total, errors: errors,
+                   updated_at: Time.zone.now, started_at: started_at }
+          ws_broadcast('progress_channel', data)
         rescue StandardError => e
           job_tracker.append_log_entry(type: :error, exhibit: exhibit, message: e.to_s)
           errors += 1
+          data['errors'] = errors
+          ws_broadcast('progress_channel', data)
           mark_job_as_failed!
         end
 

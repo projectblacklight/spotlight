@@ -15,7 +15,8 @@ const external = [
   'jquery-serializejson',
   'jquery',
   'leaflet',
-  'sir-trevor'
+  'sir-trevor',
+  //'channels/consumer'
 ]
 const globals = {
   'blacklight-frontend': 'Blacklight',

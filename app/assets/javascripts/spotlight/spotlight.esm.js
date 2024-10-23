@@ -8187,10 +8187,11 @@ class Pages {
   }
 }
 
+//import consumer from "channels/consumer"
+
 class ProgressMonitor {
   connect() {
     var monitorElements = $('[data-behavior="progress-panel"]');
-    var defaultRefreshRate = 3000;
     var panelContainer;
     var pollers = [];
 
@@ -8198,12 +8199,21 @@ class ProgressMonitor {
       panelContainer = $(this);
       panelContainer.hide();
       var monitorUrl = panelContainer.data('monitorUrl');
-      var refreshRate = panelContainer.data('refreshRate') || defaultRefreshRate;
-      pollers.push(
-        setInterval(function() {
-          checkMonitorUrl(monitorUrl);
-        }, refreshRate)
-      );
+      if (monitorUrl){
+        var refreshRate = panelContainer.data('refreshRate') || 3000;
+        pollers.push(
+          setInterval(function() {
+            checkMonitorUrl(monitorUrl);
+          }, refreshRate)
+        );
+      } else {
+        consumer.subscriptions.create({ channel: "ProgressChannel"}, {
+          received(data) {
+            if (data.exhibit_id != panelContainer.data('exhibit-id')) return;
+            updateMonitorPanel(data);
+          }
+        });
+      }
     });
 
     // Clear the intervals on turbolink:click event (e.g. when the user navigates away from the page)

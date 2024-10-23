@@ -77,6 +77,11 @@ module Spotlight
       end
     end
 
+    def add_actioncable
+      system 'rails generate channel ProgressChannel'
+      gsub_file 'app/channels/progress_channel.rb', '# stream_from "some_channel"', 'stream_from "progress_channel"'
+    end
+
     def add_model_mixin
       if File.exist? File.expand_path('app/models/solr_document.rb', destination_root)
         inject_into_file 'app/models/solr_document.rb', after: 'include Blacklight::Solr::Document' do
