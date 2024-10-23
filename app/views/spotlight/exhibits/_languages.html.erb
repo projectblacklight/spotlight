@@ -30,7 +30,8 @@
             <tbody>
               <% current_exhibit.languages.each do |language| %>
                 <%= f.fields_for :languages, language do |languages| %>
-                  <tr>
+                  <tr id="<%= dom_id(language) %>">
+                    <%= languages.hidden_field :id %>
                     <td><%= t("locales.#{language.locale}") %></td>
                     <td class='text-center'>
                       <div class='checkbox'>
@@ -38,7 +39,7 @@
                         <%= languages.check_box_without_bootstrap :public %>
                       </div>
                       </td>
-                    <td class='text-center'><%= link_to t('.remove'), exhibit_language_path(current_exhibit, language), method: :delete, data: { confirm: t('.modal.confirm') }, class: 'btn btn-sm btn-danger' %></td>
+                    <td class='text-center'><%= link_to t('.remove'), spotlight.exhibit_language_path(current_exhibit, language), data: { turbo_method: :delete, turbo_confirm: t('.modal.confirm')}, class: 'btn btn-sm btn-danger' %></td>
                   </tr>
                 <% end %>
               <% end %>
