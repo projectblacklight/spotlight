@@ -201,6 +201,7 @@ module Spotlight
     config.ga_property_id = nil
     config.ga_analytics_options = {}
     config.ga_page_analytics_options = config.ga_analytics_options.merge(limit: 5)
+    config.ga_date_range = { 'start_date' => nil, 'end_date' => nil }
     config.ga_debug_mode = false
 
     config.max_pages = 1000

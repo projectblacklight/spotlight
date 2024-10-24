@@ -482,14 +482,18 @@ en:
     dashboards:
       analytics:
         activeUsers: unique visits
+        end_date_label: End date
         engagementRate: engagement rate
+        error_heading: "%{date} does not constitute a valid date range. Please enter a valid date range."
         header: Analytics
         no_results: There are no analytics for the path "%{pageurl}"
+        note:
         pages:
           header: Most popular pages
         pagetitle: Page title
         pageviews: Page views
         reporting_period_heading: User activity over the past year
+        reporting_period_heading_dynamic: User activity from %{start_date} to %{end_date}
         screenPageViews: page views
         screenPageViewsPerSession: pages per session
         searches:
@@ -498,6 +502,8 @@ en:
           views: Searches
         session_header: Sessions
         sessions: sessions
+        start_date_label: Start date
+        submit_date_label: Submit
         totalUsers: visitors
         users: unique visits
         visitor_header: Visitors
