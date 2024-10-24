@@ -6329,7 +6329,7 @@
       },
 
       item_options: function() { return `
-      '<label>
+      <label>
         <input type="hidden" name="display-item-counts" value="false" />
         <input type="checkbox" name="display-item-counts" value="true" checked />
         ${i18n.t("blocks:browse_group_categories:item_counts")}
@@ -7278,7 +7278,7 @@
     },
 
     alt_text_guidelines: {
-      intro: 'For each item, please enter alternative text or appropriately check the decorative box.',
+      intro: 'For each item, please enter alternative text or appropriately check the decorative box. ',
       link_label: 'Guidelines for writing alt text.',
       link_url: 'https://www.w3.org/WAI/tutorials/images/' 
     }
