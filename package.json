@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/projectblacklight/spotlight#readme",
   "devDependencies": {
-    "rollup": "^3.29.5",
+    "rollup": "^4.0.0",
     "rollup-plugin-includepaths": "^0.2.4"
   },
   "browserslist": [

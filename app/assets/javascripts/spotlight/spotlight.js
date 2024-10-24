@@ -787,7 +787,7 @@
               retval = this;
 
           var generateUid = function (separator) {
-              var delim = separator || "-";
+              var delim = "-";
 
               function S4() {
                   return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
