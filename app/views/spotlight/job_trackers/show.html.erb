@@ -3,77 +3,74 @@
   <%= render 'spotlight/shared/exhibit_sidebar' %>
 <% end %>
 
-<div data-blacklight-modal="container">
-
-  <div class="modal-header border-0">
+<%= render Blacklight::System::ModalComponent.new do |c| %>
+  <% c.with_header do %>
     <h2 class="modal-title"><%= job_status_icon(@job_tracker) %> <%= t @job_tracker.job_class, default: @job_tracker.job_class %> <small class="text-monospace font-monospace font-weight-lighter fw-lighter"><%= @job_tracker.job_id&.truncate(8, omission: '') %></small></h2>
+  <% end %>
 
-    <button type="button" class="blacklight-modal-close close btn-close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="<%= t('blacklight.modal.close') %>">
-      <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
-  </div>
+  <% c.with_body do %>
+    <div class="modal-body row">
+      <p class="mx-2 text-small">
+        <%= t(:".summary.#{@job_tracker.status}", default: '', last_updated: time_ago_in_words(@job_tracker.updated_at, include_seconds: true), created_at: time_ago_in_words(@job_tracker.updated_at, include_seconds: true), duration: distance_of_time_in_words(@job_tracker.created_at, @job_tracker.updated_at)) %>
+      </p>
 
-  <div class="modal-body row">
-    <p class="mx-2 text-small">
-      <%= t(:".summary.#{@job_tracker.status}", default: '', last_updated: time_ago_in_words(@job_tracker.updated_at, include_seconds: true), created_at: time_ago_in_words(@job_tracker.updated_at, include_seconds: true), duration: distance_of_time_in_words(@job_tracker.created_at, @job_tracker.updated_at)) %>
-    </p>
+      <table class="table table-striped">
+        <thead>
+          <th></th>
+          <th><%= t('.headers.message') %></th>
+          <th><%= t('.headers.details') %></th>
+        </thead>
 
-    <table class="table table-striped">
-      <thead>
-        <th></th>
-        <th><%= t('.headers.message') %></th>
-        <th><%= t('.headers.details') %></th>
-      </thead>
-
-      <tbody>
-        <% row_number = 0 %>
-        <tr>
-          <th scope="row" title="<%= l @job_tracker.created_at, format: :long %>"><%= row_number += 1 %></th>
-          <td><%= t('.messages.started') %></td>
-          <td><%= l @job_tracker.updated_at, format: :long %></td>
-        </tr>
-
-        <% if @job_tracker.user %>
-        <tr>
-          <th scope="row" title="<%= l @job_tracker.created_at, format: :long %>"><%= row_number += 1 %></th>
-          <td><%= t('.messages.created_by', user: @job_tracker.user.email) %></td>
-          <td></td>
-        </tr>
-        <% end %>
-
-        <% @job_tracker.events.order(:created_at, :collation_key).find_each do |e| %>
-          <tr class="<%= job_tracker_event_table_row_class(e) %>">
-            <th scope="row" title="<%= l e.created_at, format: :long %>"><%= row_number += 1 %></th>
-            <td><%= e.data[:message] %></td>
-            <td><pre><%= JSON.pretty_generate(e.data.except(:message)) %></pre></td>
-          </tr>
-        <% end %>
-
-        <% @job_tracker.subevents.where.not(type: :summary).order(:created_at, :collation_key).find_each do |e| %>
-          <tr class="<%= job_tracker_event_table_row_class(e) %>">
-            <th scope="row" title="<%= l e.created_at, format: :long %>"><%= row_number += 1 %></th>
-            <td><%= e.data[:message] %></td>
-            <td><pre><%= JSON.pretty_generate(e.data.except(:message)) %></pre></td>
-          </tr>
-        <% end %>
-
-        <% error_count = @job_tracker.subevents.where(type: :summary).find_each.sum { |e| e.data[:errors] } %>
-        <tr>
-          <th scope="row" title="<%= l @job_tracker.updated_at, format: :long %>"><%= row_number += 1 %></th>
-          <td>
-            <%= t('.messages.progress', progress: @job_tracker.progress, total: @job_tracker.total, errors: (t('.messages.errors', count: error_count) if error_count.positive?)) %>
-          </td>
-          <td></td>
-        </tr>
-
-        <% unless @job_tracker.in_progress? %>
+        <tbody>
+          <% row_number = 0 %>
           <tr>
-            <th scope="row" title="<%= l @job_tracker.updated_at, format: :long %>"><%= row_number += 1 %></th>
-            <td><%= t(@job_tracker.status, scope: 'spotlight.job_trackers.show.messages.status', default: :'spotlight.job_trackers.show.messages.status.missing') %></td>
+            <th scope="row" title="<%= l @job_tracker.created_at, format: :long %>"><%= row_number += 1 %></th>
+            <td><%= t('.messages.started') %></td>
             <td><%= l @job_tracker.updated_at, format: :long %></td>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+
+          <% if @job_tracker.user %>
+          <tr>
+            <th scope="row" title="<%= l @job_tracker.created_at, format: :long %>"><%= row_number += 1 %></th>
+            <td><%= t('.messages.created_by', user: @job_tracker.user.email) %></td>
+            <td></td>
+          </tr>
+          <% end %>
+
+          <% @job_tracker.events.order(:created_at, :collation_key).find_each do |e| %>
+            <tr class="<%= job_tracker_event_table_row_class(e) %>">
+              <th scope="row" title="<%= l e.created_at, format: :long %>"><%= row_number += 1 %></th>
+              <td><%= e.data[:message] %></td>
+              <td><pre><%= JSON.pretty_generate(e.data.except(:message)) %></pre></td>
+            </tr>
+          <% end %>
+
+          <% @job_tracker.subevents.where.not(type: :summary).order(:created_at, :collation_key).find_each do |e| %>
+            <tr class="<%= job_tracker_event_table_row_class(e) %>">
+              <th scope="row" title="<%= l e.created_at, format: :long %>"><%= row_number += 1 %></th>
+              <td><%= e.data[:message] %></td>
+              <td><pre><%= JSON.pretty_generate(e.data.except(:message)) %></pre></td>
+            </tr>
+          <% end %>
+
+          <% error_count = @job_tracker.subevents.where(type: :summary).find_each.sum { |e| e.data[:errors] } %>
+          <tr>
+            <th scope="row" title="<%= l @job_tracker.updated_at, format: :long %>"><%= row_number += 1 %></th>
+            <td>
+              <%= t('.messages.progress', progress: @job_tracker.progress, total: @job_tracker.total, errors: (t('.messages.errors', count: error_count) if error_count.positive?)) %>
+            </td>
+            <td></td>
+          </tr>
+
+          <% unless @job_tracker.in_progress? %>
+            <tr>
+              <th scope="row" title="<%= l @job_tracker.updated_at, format: :long %>"><%= row_number += 1 %></th>
+              <td><%= t(@job_tracker.status, scope: 'spotlight.job_trackers.show.messages.status', default: :'spotlight.job_trackers.show.messages.status.missing') %></td>
+              <td><%= l @job_tracker.updated_at, format: :long %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>
