@@ -66,6 +66,9 @@ module Spotlight
 
       authenticate_user! && authorize!(:curate, current_exhibit) if @document.private? current_exhibit
 
+      session[@document.id] ||= {}
+      @previous_page = request.referer
+
       add_document_breadcrumbs(@document)
     end
 
@@ -231,11 +234,12 @@ module Spotlight
       add_breadcrumb(t(:'spotlight.catalog.breadcrumb.index'), spotlight.search_exhibit_catalog_path(params.to_unsafe_h), current: action_name == 'index')
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def add_document_breadcrumbs(document)
-      if current_browse_category
-        add_breadcrumb(current_browse_category.exhibit.main_navigations.browse.label_or_default, exhibit_browse_index_path(current_browse_category.exhibit))
-        add_breadcrumb(current_browse_category.title, exhibit_browse_path(current_browse_category.exhibit, current_browse_category))
+      if current_browse_category && @previous_page&.include?('browse')
+        browse_breadcrumbs = breadcrumbs_from_session(document) || breadcrumbs_from_browse(document)
+        add_breadcrumb(browse_breadcrumbs[:browse_label], browse_breadcrumbs[:browse_link])
+        add_breadcrumb(browse_breadcrumbs[:category_label], browse_breadcrumbs[:category_link])
       elsif current_page_context&.title&.present? && !current_page_context.is_a?(Spotlight::HomePage)
         add_breadcrumb(current_page_context.title, [current_page_context.exhibit, current_page_context])
       elsif current_search_session && !current_page_context&.is_a?(Spotlight::HomePage)
@@ -244,7 +248,32 @@ module Spotlight
 
       add_breadcrumb(view_context.document_presenter(document).heading, polymorphic_path([current_exhibit, document]))
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+    def breadcrumbs_from_session(document)
+      return unless session[document.id]['search_id'].present? && session[document.id]['search_id'] != current_search_session&.id
+
+      searches_from_history.find(session[document.id]['search_id']).query_params
+    end
+
+    def breadcrumbs_from_browse(document)
+      browse_breadcrumbs = { browse_label: current_browse_category.exhibit.main_navigations.browse.label_or_default,
+                             browse_link: exhibit_browse_index_path(current_browse_category.exhibit),
+                             category_label: current_browse_category.title,
+                             category_link: exhibit_browse_path(current_browse_category.exhibit, current_browse_category) }
+      update_session_breadcrumbs(browse_breadcrumbs, document.id)
+      browse_breadcrumbs
+    end
+
+    # This adds breadcrumbs to the session information
+    # Allows for multiple browse tabs to be open (issue #3242)
+    def update_session_breadcrumbs(browse_breadcrumbs, doc_id)
+      return if current_search_session&.query_params.blank?
+
+      current_search_session.query_params = current_search_session.query_params.merge(browse_breadcrumbs)
+      current_search_session.save
+      session[doc_id]['search_id'] = current_search_session.id
+    end
 
     def additional_export_formats(document, format)
       super
