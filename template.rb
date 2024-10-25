@@ -16,6 +16,8 @@ gem 'bootstrap_form', /(\d)(?:\.\d){0,2}/.match(bootstrap_version)[1].to_i == 5 
 gem 'cssbundling-rails' unless options[:asset_pipeline] == 'sprockets'
 
 after_bundle do
+  run 'yarn init -y' unless File.exist?('package.json')
+
   # run the blacklight install generator
   generate 'blacklight:install', blacklight_options
 
