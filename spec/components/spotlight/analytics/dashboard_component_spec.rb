@@ -13,13 +13,14 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
                    totals: OpenStruct.new(screenPageViews: 1, users: 2, sessions: 3))
   end
 
-  let(:default_start_date) { 1.year.ago.to_date.to_s }
-  let(:default_end_date) { Time.zone.today.to_date.to_s }
+  let(:default_start_date) { '2023-10-24' }
+  let(:default_end_date) { '2024-10-24' }
   let(:default_min_date) { '2015-08-14' } # This is the minimum date GA's API will allow
 
   before do
     allow_any_instance_of(SpotlightHelper).to receive(:exhibit_root_path).and_return('/path')
     allow_any_instance_of(Rails.application.routes.url_helpers).to receive(:analytics_exhibit_dashboard_path).and_return('/path')
+    allow(Time).to receive(:now).and_return(Time.zone.local(2024, 10, 24))
   end
 
   def get_min_max(field)
@@ -69,7 +70,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
       expect(get_min_max('end_date')).to eq({ max: default_end_date, min: default_min_date })
       expect(rendered).to have_field('start_date', with: start_date)
       expect(rendered).to have_field('end_date', with: end_date)
-      expect(rendered).to have_content "User activity from #{component.formatted_date(start_date)} to #{component.formatted_date(end_date)}"
+      expect(rendered).to have_content 'User activity from 01/01/2024 to 01/02/2024'
     end
   end
 
@@ -81,7 +82,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
       expect(get_min_max('end_date')).to eq({ max: default_end_date, min: default_min_date })
       expect(rendered).to have_field('start_date', with: default_start_date)
       expect(rendered).to have_field('end_date', with: default_end_date)
-      expect(rendered).to have_content "User activity from #{component.formatted_date(default_start_date)} to #{component.formatted_date(default_end_date)}"
+      expect(rendered).to have_content 'User activity from 10/24/2023 to 10/24/2024'
     end
   end
 
@@ -93,16 +94,16 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
       expect(get_min_max('end_date')).to eq({ max: default_end_date, min: default_min_date })
       expect(rendered).to have_field('start_date', with: default_start_date)
       expect(rendered).to have_field('end_date', with: default_end_date)
-      expect(rendered).to have_content "User activity from #{component.formatted_date(default_start_date)} to #{component.formatted_date(default_end_date)}"
+      expect(rendered).to have_content 'User activity from 10/24/2023 to 10/24/2024'
     end
   end
 
   context 'Spotlight::Engine.config.ga_date_range is set' do
-    let(:start_date) { 6.months.ago.to_date.to_s }
-    let(:end_date) { 3.months.ago.to_date.to_s }
+    let(:start_date) { '2024-04-24' }
+    let(:end_date) { '2024-07-24' }
 
     before do
-      Spotlight::Engine.config.ga_date_range = { 'start_date' => 6.months.ago, 'end_date' => 3.months.ago }
+      Spotlight::Engine.config.ga_date_range = { 'start_date' => Date.new(2024, 4, 24), 'end_date' => Date.new(2024, 7, 24) }
     end
 
     after do
@@ -124,7 +125,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
       expect(get_min_max('end_date')).to eq({ max: end_date, min: start_date })
       expect(rendered).to have_field('start_date', with: start_date)
       expect(rendered).to have_field('end_date', with: end_date)
-      expect(rendered).to have_content "User activity from #{component.formatted_date(start_date)} to #{component.formatted_date(end_date)}"
+      expect(rendered).to have_content 'User activity from 04/24/2024 to 07/24/2024'
     end
   end
 
