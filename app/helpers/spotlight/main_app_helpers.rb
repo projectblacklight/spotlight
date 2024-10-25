@@ -4,6 +4,11 @@ module Spotlight
   ##
   # Helpers that are injected into the main application (because they used in layouts)
   module MainAppHelpers
+    if Blacklight.version < '8'
+      include Blacklight::BlacklightHelperBehavior
+    else
+      include Blacklight::DocumentHelperBehavior
+    end
     include Spotlight::NavbarHelper
     include Spotlight::MastheadHelper
 
@@ -22,6 +27,11 @@ module Spotlight
     def link_back_to_catalog(opts = { label: nil })
       opts[:route_set] ||= spotlight if (current_search_session&.query_params || {}).fetch(:controller, '').starts_with? 'spotlight'
       super
+    end
+
+    # Expecting to upstream this override in https://github.com/projectblacklight/blacklight/pull/3343/files
+    def document_presenter(document, view_config: nil, **kwargs)
+      (view_config&.document_presenter_class || document_presenter_class(document)).new(document, self, view_config: view_config, **kwargs)
     end
 
     def document_presenter_class(_document)
