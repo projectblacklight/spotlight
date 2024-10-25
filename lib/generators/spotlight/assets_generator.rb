@@ -8,10 +8,13 @@ module Spotlight
                         desc: 'Indicates that app will be installed in a test environment'
     class_option :'bootstrap-version', type: :string, default: ENV.fetch('BOOTSTRAP_VERSION', '~> 5.3'), desc: "Set the generated app's bootstrap version"
 
-    # Hardcoded to propshaft until we add importmap support
     def run_asset_pipeline_specific_generator
       generated_options = '--test=true' if options[:test]
-      generator = 'spotlight:assets:propshaft'
+      generator = if defined?(Importmap)
+                    'spotlight:assets:importmap'
+                  elsif defined?(Propshaft)
+                    'spotlight:assets:propshaft'
+                  end
 
       generate generator, generated_options
     end
