@@ -1,11 +1,3 @@
-// These scripts are in the vendor directory
-import 'nestable'
-import 'bootstrap-tagsinput'
-import 'typeahead.bundle.min'
-import 'leaflet-iiif'
-import 'Leaflet.Editable'
-import 'Path.Drag'
-
 import AddAnother from 'spotlight/admin/add_another'
 import AddNewButton from 'spotlight/admin/add_new_button'
 import Appearance from 'spotlight/admin/appearance'

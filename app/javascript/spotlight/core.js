@@ -1,4 +1,3 @@
-import Blacklight from "blacklight-frontend"
 import SirTrevor from "sir-trevor"
 
 const Spotlight = function() {
@@ -29,7 +28,3 @@ const Spotlight = function() {
 window.Spotlight = Spotlight
 window.SirTrevor = SirTrevor
 export default Spotlight
-
-Blacklight.onLoad(function() {
-  Spotlight.activate();
-});
