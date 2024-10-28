@@ -74,11 +74,6 @@ module Spotlight
         gsub_file 'app/javascript/application.js', 'import "controllers"', '// import "controllers"'
 
         append_to_file 'app/javascript/application.js', "\n// Bootstrap\nimport * as Bootstrap from 'bootstrap'\n"
-
-        if Blacklight::VERSION.start_with?('7')
-          append_to_file 'app/javascript/application.js', "\n// Blacklight\nimport \"blacklight-frontend/app/assets/javascripts/blacklight/blacklight.js\"\n"
-        end
-
         append_to_file 'app/javascript/application.js', "\n// Spotlight\nimport Spotlight from \"spotlight-frontend\"\n"
       end
 
