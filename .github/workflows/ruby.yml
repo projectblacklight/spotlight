@@ -14,25 +14,20 @@ jobs:
         rails_version: ["~> 7.2"]
         ruby: ["3.2", "3.3"]
         bootstrap_version: ["~> 4.0"]
-        blacklight_version: ["~> 7.34"]
+        blacklight_version: ["~> 8.0"]
         additional_engine_cart_rails_options: ["-a propshaft -j esbuild"]
         additional_name: [""]
         include:
           - rails_version: "~> 7.2"
             ruby: "3.3"
-            blacklight_version: "~> 7.38"
+            blacklight_version: "~> 8.0"
             bootstrap_version: "~> 5.0"
             additional_name: Bootstrap 5
           - rails_version: "7.1.4"
             ruby: "3.2"
-            blacklight_version: "~> 7.38"
-            bootstrap_version: "~> 4.0"
-            additional_name: Rails 7.1
-          - rails_version: "~> 7.2"
-            ruby: "3.3"
             blacklight_version: "~> 8.0"
             bootstrap_version: "~> 4.0"
-            additional_name: Blacklight 8
+            additional_name: Rails 7.1
     env:
       RAILS_VERSION: ${{ matrix.rails_version }}
       BLACKLIGHT_VERSION: ${{ matrix.blacklight_version }}
