@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 require 'fileutils'
+require_relative 'generator_common_utilities'
 
 module Spotlight
   module Assets
     # Spotlight Propshaft Generator
     class PropshaftGenerator < Rails::Generators::Base
+      include GeneratorCommonUtilities
+
       source_root Spotlight::Engine.root.join('lib', 'generators', 'spotlight', 'templates')
 
       class_option :test, type: :boolean, default: false, aliases: '-t', desc: 'Indicates that app will be installed in a test environment'
@@ -18,15 +21,10 @@ module Spotlight
       DESCRIPTION
 
       def install_dependencies
-        copy_file 'package.json', 'package.json' unless File.exist?('package.json')
         run 'yarn add @hotwired/turbo-rails'
         run 'yarn add clipboard'
-        run 'yarn add jquery'
-        run 'yarn add jquery-serializejson'
         run 'yarn add leaflet'
-        run 'yarn add leaflet-iiif'
         run 'yarn add sir-trevor'
-        run 'yarn install'
       end
 
       def add_blacklight_frontend
@@ -73,8 +71,23 @@ module Spotlight
         copy_file 'javascript/jquery-shim.js', 'app/javascript/jquery-shim.js'
         gsub_file 'app/javascript/application.js', 'import "controllers"', '// import "controllers"'
 
-        append_to_file 'app/javascript/application.js', "\n// Bootstrap\nimport * as Bootstrap from 'bootstrap'\n"
-        append_to_file 'app/javascript/application.js', "\n// Spotlight\nimport Spotlight from \"spotlight-frontend\"\n"
+        append_to_file 'app/javascript/application.js' do
+          <<~CONTENT
+            import * as bootstrap from "bootstrap"
+
+            import Blacklight from "blacklight-frontend"
+          CONTENT
+        end
+
+        append_to_file 'app/javascript/application.js' do
+          <<~CONTENT
+            import Spotlight from "spotlight-frontend"
+
+            Blacklight.onLoad(function() {
+              Spotlight.activate();
+            });
+          CONTENT
+        end
       end
 
       def add_stylesheets
@@ -88,37 +101,6 @@ module Spotlight
         gsub_file 'package.json',
                   'esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets',
                   "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets #{custom_options}"
-      end
-
-      private
-
-      # Some versions of the blacklight gem do not have a corresponding blacklight-frontend package on npm.
-      # Assume we want the most recent version that is compatible with the major version of the gem.
-      def blacklight_yarn_version
-        versions = JSON.parse(`yarn info blacklight-frontend versions --json`)['data']
-        exact_match = versions.find { |v| v == Blacklight::VERSION }
-        return exact_match if exact_match
-
-        major_version = Gem::Version.new(Blacklight::VERSION).segments.first
-        "^#{major_version}"
-      end
-
-      # Support the gem version format e.g.,  `~> 5.3` for consistency.
-      def bootstrap_yarn_version
-        options[:'bootstrap-version'].match(/(\d+(\.\d+)*)/)[0]
-      end
-
-      def bootstrap4?
-        bootstrap_yarn_version.start_with?('4')
-      end
-
-      # Yarn link was including so many files (and a circular reference) that Propshaft was having a bad time.
-      def link_spotlight_frontend
-        empty_directory 'node_modules/spotlight-frontend'
-        empty_directory 'node_modules/spotlight-frontend/app'
-        File.symlink Spotlight::Engine.root.join('package.json'), 'node_modules/spotlight-frontend/package.json'
-        File.symlink Spotlight::Engine.root.join('vendor'), 'node_modules/spotlight-frontend/vendor'
-        File.symlink Spotlight::Engine.root.join('app/assets'), 'node_modules/spotlight-frontend/app/assets'
       end
     end
   end
