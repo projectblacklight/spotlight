@@ -3,4 +3,3 @@
 collection:
   dir: lib/generators/spotlight/templates/solr/conf
   name: blacklight-core
-version: 9.6.1
