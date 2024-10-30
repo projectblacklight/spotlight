@@ -5,6 +5,14 @@ require 'rails/generators'
 class TestAppGenerator < Rails::Generators::Base
   source_root '../spec/test_app_templates'
 
+  def create_package_json
+    return if File.exist?('package.json')
+
+    run 'yarn init -y'
+    # Fixes: error package.json: Name can't start with a dot
+    gsub_file 'package.json', '.internal_test_app', 'internal_test_app'
+  end
+
   def use_capybara3
     gsub_file 'Gemfile', /gem 'capybara'/, '# gem \'capybara\''
   end
