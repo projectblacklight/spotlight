@@ -1,5 +1,5 @@
 import Clipboard from 'clipboard';
-import SirTrevor from 'sir-trevor';
+import SirTrevor$1 from 'sir-trevor';
 
 // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
 // Includes "export default tns" at the end of the file for spotlight/user/browse_group_categories.js
@@ -3670,7 +3670,7 @@ const Spotlight$1 = function() {
 
 // This allows us to configure Spotlight in app/views/layouts/base.html.erb
 window.Spotlight = Spotlight$1;
-window.SirTrevor = SirTrevor;
+window.SirTrevor = SirTrevor$1;
 
 class Crop {
   constructor(cropArea) {

@@ -1,5 +1,4 @@
 import Core from 'spotlight/core'
-import SirTrevor from 'sir-trevor'
 
 (function() {
   var BLOCK_REPLACER_CONTROL_TEMPLATE = function(block) {
