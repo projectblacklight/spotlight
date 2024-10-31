@@ -1,5 +1,4 @@
 //= require spotlight/admin/blocks/browse_block
-import SirTrevor from 'sir-trevor'
 
 SirTrevor.Blocks.SearchResults =  (function(){
 

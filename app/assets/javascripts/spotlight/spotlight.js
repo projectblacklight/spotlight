@@ -2,7 +2,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('clipboard'), require('sir-trevor')) :
   typeof define === 'function' && define.amd ? define(['clipboard', 'sir-trevor'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.Clipboard, global.SirTrevor));
-})(this, (function (Clipboard, SirTrevor) { 'use strict';
+})(this, (function (Clipboard, SirTrevor$1) { 'use strict';
 
   // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
   // Includes "export default tns" at the end of the file for spotlight/user/browse_group_categories.js
@@ -3673,7 +3673,7 @@
 
   // This allows us to configure Spotlight in app/views/layouts/base.html.erb
   window.Spotlight = Spotlight$1;
-  window.SirTrevor = SirTrevor;
+  window.SirTrevor = SirTrevor$1;
 
   class Crop {
     constructor(cropArea) {

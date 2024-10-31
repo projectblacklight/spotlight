@@ -1,5 +1,4 @@
 import Core from 'spotlight/core'
-import SirTrevor from 'sir-trevor'
 
 SirTrevor.Blocks.FeaturedPages = (function(){
 
