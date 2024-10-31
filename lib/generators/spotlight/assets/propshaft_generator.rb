@@ -74,13 +74,7 @@ module Spotlight
         append_to_file 'app/javascript/application.js' do
           <<~CONTENT
             import * as bootstrap from "bootstrap"
-
             import Blacklight from "blacklight-frontend"
-          CONTENT
-        end
-
-        append_to_file 'app/javascript/application.js' do
-          <<~CONTENT
             import Spotlight from "spotlight-frontend"
 
             Blacklight.onLoad(function() {
