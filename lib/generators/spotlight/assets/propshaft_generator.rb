@@ -92,6 +92,7 @@ module Spotlight
       def configure_esbuild
         # The main-fields option resolves a bundling issue with bootstrap/popper on esbuild.
         custom_options = '--main-fields=main,module --alias:jquery=./app/javascript/jquery-shim.js'
+        custom_options = "#{custom_options} --preserve-symlinks" if options[:test]
         gsub_file 'package.json',
                   'esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets',
                   "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets #{custom_options}"
