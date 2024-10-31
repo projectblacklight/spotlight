@@ -67,7 +67,7 @@ module Spotlight
         # Otherwise, pick the version from npm that matches the Spotlight
         # gem version
         else
-          run "yarn add spotlight-frontend@#{Spotlight::VERSION}"
+          run "yarn add spotlight-frontend@#{spotlight_yarn_version}"
         end
       end
 
