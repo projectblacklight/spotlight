@@ -1,6 +1,6 @@
 export default class {
   delete_lock(el) {
-    $.ajax({ url: $(el).data('lock'), type: 'POST', data: { _method: "delete" }, async: false});
+    $.ajax({ url: $(el).data('lock'), type: 'POST', data: { _method: "delete" }, headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') }, async: false});
     $(el).removeAttr('data-lock');
   }
 
