@@ -91,7 +91,7 @@ import Core from 'spotlight/core'
     }
 
     function destroy() {
-      window.SirTrevor = null;
+      SirTrevor = null;
       el = null;
     }
 

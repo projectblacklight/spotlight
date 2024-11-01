@@ -6445,7 +6445,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
     }
 
     function destroy() {
-      window.SirTrevor = null;
+      SirTrevor = null;
       el = null;
     }
 
