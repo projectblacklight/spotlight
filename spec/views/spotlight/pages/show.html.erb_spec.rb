@@ -13,9 +13,10 @@ describe 'spotlight/pages/show', type: :view do
     allow(view).to receive(:current_exhibit).and_return(exhibit)
     allow(view).to receive(:blacklight_config).and_return(Blacklight.default_configuration)
     allow(view).to receive(:render_body_class).and_return('')
+    allow(view).to receive(:add_page_meta_content).and_return('')
+    allow(view).to receive(:description).and_return('')
     assign(:page, page)
     stub_template 'spotlight/pages/_sidebar.html.erb' => 'Sidebar'
-    stub_template 'spotlight/pages/_tophat.html.erb' => ''
   end
 
   it 'renders the title as a heading' do
@@ -47,6 +48,7 @@ describe 'spotlight/pages/show', type: :view do
       stub_template 'shared/_masthead.html.erb' => ''
       allow(view).to receive_messages(document_presenter: presenter, action_name: 'show', blacklight_config:)
       allow(view).to receive(:search_action_url).and_return('/catalog')
+      allow(view).to receive(:add_exhibit_meta_content).and_return('')
       render template: 'spotlight/pages/show', layout: 'layouts/spotlight/spotlight'
     end
 

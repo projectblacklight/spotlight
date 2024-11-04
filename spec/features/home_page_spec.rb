@@ -58,14 +58,12 @@ describe 'Home page', type: :feature, versioning: true do
   end
 
   it 'has <meta> tags' do
-    TopHat.current['twitter_card'] = nil
-    TopHat.current['opengraph'] = nil
     Spotlight::Site.instance.update(title: 'some title')
 
     visit spotlight.exhibit_home_page_path(exhibit)
 
-    expect(page).to have_css "meta[name='twitter:card'][value='summary']", visible: false
-    expect(page).to have_css "meta[name='twitter:url'][value='#{spotlight.exhibit_root_url(exhibit)}']", visible: false
+    expect(page).to have_css "meta[name='twitter:card'][content='summary']", visible: false
+    expect(page).to have_css "meta[name='twitter:url'][content='#{spotlight.exhibit_root_url(exhibit)}']", visible: false
     expect(page).to have_css "meta[property='og:site_name'][content='#{Spotlight::Site.instance.title}']", visible: false
   end
 

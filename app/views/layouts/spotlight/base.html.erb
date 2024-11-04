@@ -16,11 +16,15 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= content_for(:head) %>
-    <%= description %>
-    <%= twitter_card %>
-    <%= opengraph %>
     <%= javascript_tag "Spotlight.sirTrevorIcon = '#{asset_path('spotlight/blocks/sir-trevor-icons.svg')}'" %>
     <%= javascript_tag '$.fx.off = true;' if Rails.env.test? %>
+    <% if @document %>
+      <% add_document_meta_content(@document) %>
+    <% elsif current_exhibit %>
+      <% description(current_exhibit.description) if current_exhibit %>
+      <% add_exhibit_meta_content %>
+    <% end %>
+    <%= yield(:meta) %>
   </head>
   <body class="<%= render_body_class %>">
     <%= render partial: 'shared/body_preamble' %>

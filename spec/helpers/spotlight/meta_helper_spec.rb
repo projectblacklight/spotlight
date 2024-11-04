@@ -9,8 +9,6 @@ describe Spotlight::MetaHelper, type: :helper do
       allow(helper).to receive(:site_title).and_return('some title')
       current_exhibit.subtitle = 'xyz'
       current_exhibit.description = 'abc'
-      TopHat.current['twitter_card'] = nil
-      TopHat.current['opengraph'] = nil
     end
 
     it 'generates a twitter card for the exhibit' do
@@ -19,15 +17,13 @@ describe Spotlight::MetaHelper, type: :helper do
 
       helper.add_exhibit_meta_content
 
-      card = helper.twitter_card
-      expect(card).to have_css "meta[name='twitter:card'][value='summary']", visible: false
-      expect(card).to have_css "meta[name='twitter:url'][value='some/url']", visible: false
-      expect(card).to have_css "meta[name='twitter:title'][value='#{current_exhibit.title}']", visible: false
-      expect(card).to have_css "meta[name='twitter:description'][value='#{current_exhibit.subtitle}']", visible: false
-      expect(card).to have_css "meta[name='twitter:image'][value='https://test.host/images/7777/full/400,300/0/default.jpg']", visible: false
+      expect(view.content_for(:meta)).to include('<meta name="twitter:card" content="summary">')
+      expect(view.content_for(:meta)).to include('<meta name="twitter:url" content="some/url">')
+      expect(view.content_for(:meta)).to include("<meta name=\"twitter:title\" content=\"#{current_exhibit.title}\">")
+      expect(view.content_for(:meta)).to include("<meta name=\"twitter:description\" content=\"#{current_exhibit.subtitle}\">")
+      expect(view.content_for(:meta)).to include('<meta name="twitter:image" content="https://test.host/images/7777/full/400,300/0/default.jpg">')
 
-      graph = helper.opengraph
-      expect(graph).to have_css "meta[property='og:site_name'][content='some title']", visible: false
+      expect(view.content_for(:meta)).to include('<meta property="og:site_name" content="some title">')
     end
   end
 end

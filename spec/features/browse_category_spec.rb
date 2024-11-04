@@ -146,12 +146,9 @@ describe 'Browse pages' do
     end
 
     it 'has <meta> tags' do
-      TopHat.current['twitter_card'] = nil
-      TopHat.current['opengraph'] = nil
-
       visit spotlight.exhibit_browse_path(exhibit, search)
 
-      expect(page).to have_css "meta[name='twitter:title'][value='#{search.title}']", visible: false
+      expect(page).to have_css "meta[name='twitter:title'][content='#{search.title}']", visible: false
       expect(page).to have_css "meta[property='og:site_name']", visible: false
       expect(page).to have_css "meta[property='og:title'][content='#{search.title}']", visible: false
     end

@@ -34,8 +34,7 @@ RSpec.describe 'Display an item within the exhibit', type: :feature do
   end
 
   it 'has <meta> tags' do
-    TopHat.current['twitter_card'] = nil
-    TopHat.current['opengraph'] = nil
+    Spotlight::Site.instance.update(title: 'some title')
 
     visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
 
