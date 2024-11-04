@@ -16,7 +16,6 @@ require 'paper_trail'
 require 'riiif'
 require 'spotlight/riiif_service'
 require 'spotlight/upload_field_config'
-require 'tophat'
 
 module Spotlight
   ##

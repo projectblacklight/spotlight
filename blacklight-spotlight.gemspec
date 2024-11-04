@@ -51,7 +51,6 @@ these collections.)
   s.add_dependency 'roar', '~> 1.1'
   s.add_dependency 'roar-rails'
   s.add_dependency 'signet'
-  s.add_dependency 'tophat'
   s.add_dependency 'view_component', '>= 2.66', '< 4'
 
   if defined?(Sprockets)

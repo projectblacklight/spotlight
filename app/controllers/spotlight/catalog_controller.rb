@@ -30,7 +30,6 @@ module Spotlight
         if Blacklight::VERSION > '8'
           blacklight_config.show.document_component = Spotlight::DocumentComponent
         else
-          blacklight_config.show.partials.unshift 'tophat'
           blacklight_config.show.partials.unshift 'curation_mode_toggle'
         end
       end
