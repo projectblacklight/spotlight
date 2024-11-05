@@ -15,15 +15,14 @@ module Spotlight
       class_option :'bootstrap-version', type: :string, default: ENV.fetch('BOOTSTRAP_VERSION', '~> 5.3'), desc: "Set the generated app's bootstrap version"
 
       desc <<-DESCRIPTION
-        This generator sets up the app to use importmap to manage the javascript,
-        and cssbundling-rails to manage the styles.
+        This generator configures the Spotlight app to use importmap for
+        javascript and bundling for the styles:
 
-        SCSS stylesheets are installed via yarn and built into a single CSS
-        stylesheet.
-
-        JS sources from the Blacklight and Spotlight gems are delivered via
-        importmap, and their dependencies are pinned to versions delivered via
-        CDN.
+        - Adds the frontend style dependencies, including spotlight-frontend,
+          via yarn
+        - Configures cssbundling-rails to build the styles
+        - Javascript from gems such as Blacklight and Spotlight are delivered
+          via importmap/the asset pipeline without the need for bundling
       DESCRIPTION
 
       def add_stylesheet_dependencies

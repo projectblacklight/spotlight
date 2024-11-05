@@ -15,9 +15,12 @@ module Spotlight
       class_option :'bootstrap-version', type: :string, default: ENV.fetch('BOOTSTRAP_VERSION', '~> 5.3'), desc: "Set the generated app's bootstrap version"
 
       desc <<-DESCRIPTION
-      The Spotlight frontend assets are installed from the npm package. In
-      local development they automatically reference the versions from the
-      outer directory (the Spotlight repository) via a yarn symlink.
+        This generator configures the Spotlight app to use bundling for both
+        javascript and styles:
+
+        - Adds frontend dependencies, including spotlight-frontend, via yarn
+        - Configures jsbundling-rails (w/ esbuild) to bundle the JS
+        - Configures cssbundling-rails to build the styles
       DESCRIPTION
 
       def install_dependencies
