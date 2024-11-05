@@ -1,0 +1,13 @@
+<div class="<%= classes %>">
+  <% if page.is_a?(Spotlight::HomePage) %>
+    <%= helpers.exhibit_view_link page, helpers.exhibit_root_path(page.exhibit) %> &middot;
+    <%= helpers.exhibit_edit_link page, helpers.edit_exhibit_home_page_path(page.exhibit), data: { turbolinks: false,
+        turbo: false } %>
+  <% else %>
+    <%= helpers.exhibit_view_link page %> &middot;
+    <%= helpers.exhibit_edit_link page, data: { turbolinks: false, turbo: false } %>
+  <% end %>
+  <% if delete_link %>
+    &middot; <%= helpers.exhibit_delete_link page %>
+  <% end %>
+</div>

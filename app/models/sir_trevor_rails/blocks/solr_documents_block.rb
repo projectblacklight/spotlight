@@ -13,6 +13,10 @@ module SirTrevorRails
         @solr_helper = solr_helper
       end
 
+      def self.alt_text?
+        true
+      end
+
       def each_document
         return to_enum(:each_document) unless block_given?
 

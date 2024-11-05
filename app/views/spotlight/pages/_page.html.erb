@@ -1,11 +1,7 @@
 <% page = f.object %>
 <%= render layout: 'spotlight/shared/dd3_item', locals: { id: page.id.to_s, field: f, label: page.title, label_method: :title, enabled_method: :published } do |_, section| %>
   <% case section when :additional_options %>
-    <div class="page-links">
-      <%= exhibit_view_link page %> &middot;
-      <%= exhibit_edit_link page, data: { turbolinks: false, turbo: false } %> &middot;
-      <%= exhibit_delete_link page %>
-    </div>
+    <%= render Spotlight::EditViewLinksComponent.new(page:, delete_link: true) %>
     <%- if page.feature_page? -%>
       <%= f.hidden_field :parent_page_id, data: {property: "parent_page"} %>
     <% end %>

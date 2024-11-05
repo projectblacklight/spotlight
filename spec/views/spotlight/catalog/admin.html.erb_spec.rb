@@ -10,6 +10,7 @@ describe 'spotlight/catalog/admin.html.erb', type: :view do
     allow(view).to receive(:spotlight_page_path_for).and_return(nil)
     allow(view).to receive(:current_exhibit).and_return(exhibit)
     allow(view).to receive(:new_exhibit_resource_path).and_return('')
+    allow(view).to receive(:exhibit_alt_text_path).and_return('')
     allow(view).to receive(:reindex_all_exhibit_resources_path).and_return('')
     allow(view).to receive(:monitor_exhibit_resources_path).and_return('')
     assign(:exhibit, exhibit)

@@ -25,6 +25,7 @@ export default class {
       var editor = new SirTrevor.Editor({
         el: instance[0],
         blockTypes: instance.data('blockTypes'),
+        altTextSettings: instance.data('altTextSettings'),
         defaultType:["Text"],
         onEditorRender: function() {
           $.SerializedForm();
