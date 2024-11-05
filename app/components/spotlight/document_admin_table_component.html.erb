@@ -21,7 +21,7 @@
       </div>
 
       <div class="page-links">
-        <%= helpers.view_link presenter.document, helpers.link_to_document(presenter.document) %> &middot;
+        <%= helpers.view_link presenter.document, helpers.search_state.url_for_document(presenter.document) %> &middot;
         <%= helpers.exhibit_edit_link presenter.document, [:edit, helpers.current_exhibit, presenter.document] %>
       </div>
     </td>
