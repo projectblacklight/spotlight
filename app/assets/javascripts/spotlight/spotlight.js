@@ -4424,7 +4424,7 @@
 
   // Module to add multi-image selector to widget panels
 
-  (function($, _){
+  (function(){
     $.fn.multiImageSelector = function(image_versions, clickCallback, activeImageId) {
       var changeLink          = $("<a href='javascript:;'>Change</a>"),
           thumbsListContainer = $("<div class='thumbs-list' style='display:none'></div>"),
