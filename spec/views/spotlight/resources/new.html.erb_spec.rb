@@ -7,7 +7,7 @@ describe 'spotlight/resources/new.html.erb', type: :view do
   before do
     allow(view).to receive_messages(blacklight_config:)
     allow(view).to receive(:current_exhibit).and_return(exhibit)
-    allow(view).to receive_messages(current_page?: true)
+    allow(view).to receive_messages(current_page?: true, exhibit_alt_text_path: '')
     stub_template 'spotlight/shared/_curation_sidebar.html.erb' => ''
   end
 

@@ -18,10 +18,22 @@ module SirTrevorRails
       send(:[], :format).present? ? send(:[], :format).to_sym : DEFAULT_FORMAT
     end
 
+    def alt_text?
+      self.class.alt_text?
+    end
+
+    def self.alt_text?
+      false
+    end
+
     # Sets a list of custom block types to speed up lookup at runtime.
     def self.custom_block_types
       # You can define your custom block types directly here or in your engine config.
       Spotlight::Engine.config.sir_trevor_widgets
+    end
+
+    def self.custom_block_type_alt_text_settings
+      custom_block_types.index_with { |block_type| SirTrevorRails::Block.block_class(block_type).alt_text? }
     end
 
     def initialize(hash, parent)

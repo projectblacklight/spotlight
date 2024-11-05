@@ -74,6 +74,8 @@ Spotlight::Engine.routes.draw do
       get :analytics
     end
 
+    get '/accessibility/alt-text', to: 'accessibility#alt_text', as: 'alt_text'
+
     resources :resources do
       collection do
         get :monitor

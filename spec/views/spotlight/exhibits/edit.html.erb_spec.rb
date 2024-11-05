@@ -12,6 +12,7 @@ describe 'spotlight/exhibits/edit', type: :view do
       get_exhibit_path: '/',
       exhibit_filters_path: '/',
       exhibit_languages_path: '/',
+      exhibit_alt_text_path: '/',
       add_exhibit_language_dropdown_options: [],
       default_language?: true
     )

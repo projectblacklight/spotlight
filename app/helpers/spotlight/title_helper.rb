@@ -8,6 +8,10 @@ module Spotlight
       page_title t(:'spotlight.curation.header'), title
     end
 
+    def accessibility_page_title(title = nil)
+      page_title t(:'spotlight.accessibility.header'), title
+    end
+
     def configuration_page_title(title = nil)
       page_title t(:'spotlight.configuration.header'), title
     end
