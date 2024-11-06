@@ -781,7 +781,7 @@ class UserIndex {
             retval = this;
 
         var generateUid = function (separator) {
-            var delim = "-";
+            var delim = separator || "-";
 
             function S4() {
                 return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -5135,7 +5135,6 @@ jQuery.fn.scrollStop = function(callback) {
 };
 
 // Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
 
 class Pages {
   connect(){
@@ -5602,8 +5601,6 @@ class CheckboxSubmit {
 }
 
 // Visibility toggle for items in an exhibit, based on Blacklight's bookmark toggle
-// See: https://github.com/projectblacklight/blacklight/blob/main/app/javascript/blacklight/bookmark_toggle.js
-
 
 const VisibilityToggle = (e) => {
   if (e.target.matches('[data-checkboxsubmit-target="checkbox"]')) {
