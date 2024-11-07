@@ -16,14 +16,24 @@
             <div>
               <%= t :'.view.show' %>
             </div>
-            <%= select_deselect_button %>
+            <div class="text-center">
+               <%= label_tag t(:'.view.select_id'), class: 'select-label'  do %>
+                  <%= select_deselect_action(t :'.view.select_id') %>
+                  <%= t(:'.select_check') %>
+                <% end %>
+             </div>
           </th>
           <% available_view_fields.keys.each do |type| %>
             <th class="text-center">
-              <div>
+              <div> 
                 <%= t :".view.#{type}", default: t("blacklight.search.view.#{type}", default: type.to_s.humanize.titleize) %>
               </div>
-              <%= select_deselect_button %>
+              <div class="text-center">
+                <%= label_tag t(:'.deselect_all') + type.to_s, class: 'select-label'  do %>
+                  <%= select_deselect_action(t(:'.deselect_all') + type.to_s) %>
+                  <%= t(:'.select_check') %>
+                <% end %>
+              </div>
             </th>
           <% end %>
         </tr>

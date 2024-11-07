@@ -701,6 +701,7 @@ en:
       curated_features: Curated features
     metadata_configurations:
       edit:
+        select_check: All
         deselect_all: Deselect all
         exhibit_specific:
           header: Exhibit-specific fields
@@ -710,9 +711,9 @@ en:
         header: Metadata
         instructions: Select metadata fields to display on each type of page. Select a field name to edit its display label. Drag and drop fields to specify the order in which they are displayed.
         order_header: Display and order metadata fields
-        select_all: Select all
         view:
           show: Item details
+          select_id: item_details
       metadata_field:
         restore_default: Restore default
     pages:
