@@ -66,7 +66,12 @@ See the [Spotlight wiki](https://github.com/projectblacklight/spotlight/wiki) fo
 
 # Developing Spotlight
 
-Spotlight:
+## Branches
+
+* The `main` branch is for development of the upcoming 5.0 release.
+* The `4.x` series is on the [release-4.x](https://github.com/projectblacklight/spotlight/tree/release-4.x) branch for backports of features and bug fixes.
+
+## Spotlight
 
 * is a Rails engine and needs to be used in the context of a Rails application. We use [engine_cart](https://github.com/cbeer/engine_cart) to create an internal test application at .internal_test_app/
 * uses Solr as part of its integration tests. We use [solr_wrapper](https://github.com/cbeer/solr_wrapper) to manage the Solr instance used for development and test.
