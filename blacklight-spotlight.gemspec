@@ -55,6 +55,8 @@ these collections.)
   s.add_dependency 'roar-rails'
   s.add_dependency 'signet'
   s.add_dependency 'tophat'
+  # pinned so CI will pass until https://github.com/carrierwaveuploader/carrierwave/issues/2759 is fixed
+  s.add_dependency 'uri', '< 1'
   s.add_dependency 'view_component', '>= 2.66', '< 4'
 
   s.add_development_dependency 'capybara', '~> 3.31'
