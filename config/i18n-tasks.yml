@@ -47,7 +47,7 @@ ignore_unused:
   - spotlight.{resources,contacts,pages}.new.{title,header} # app/helpers/spotlight/title_helper.rb
   - spotlight.{searches,roles}.index.{title,header} # app/helpers/spotlight/title_helper.rb
   - spotlight.{appearances,search_configurations}.edit.header # app/helpers/spotlight.title_helper.rb
-  - spotlight.metadata_configurations.edit.{select_all,deselect_all} # app/helpers/spotlight/application_helper.rb
+  - spotlight.metadata_configurations.edit.{deselect_all} # app/helpers/spotlight/application_helper.rb
   - spotlight.featured_images.upload_form.{non_iiif_alert_html,source.exhibit.help,source.exhibit.label} # app/views/spotlight/featured_images/_form.html.erb
   - spotlight.feature_pages.page_options.published # app/views/spotlight/feature_pages/_page_options.html.erb
   - spotlight.{exhibits,custom_fields,custom_search_fields}.{new,edit}.header # configuration_page_title
