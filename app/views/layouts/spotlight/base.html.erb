@@ -13,14 +13,31 @@
     <% else %>
       <%= stylesheet_link_tag "application" %>
     <% end %>
-    <%= javascript_include_tag "application" %>
+    <%= javascript_tag "window.sirTrevorIcon = '#{asset_path('spotlight/blocks/sir-trevor-icons.svg')}'" %>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.2.1/jquery.serializejson.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <%= javascript_include_tag 'nestable', "data-turbo-track": "reload", defer: false %>
+    <%= javascript_include_tag 'bootstrap-tagsinput', "data-turbo-track": "reload", defer: false %>
+    <%= javascript_include_tag 'typeahead.bundle.min', "data-turbo-track": "reload", defer: false %>
+    <%= javascript_include_tag 'leaflet-iiif', "data-turbo-track": "reload", defer: true %>
+    <%= javascript_include_tag 'Leaflet.Editable', "data-turbo-track": "reload", defer: true %>
+    <%= javascript_include_tag 'Path.Drag', "data-turbo-track": "reload", defer: true %>
+    <%= javascript_include_tag 'openseadragon/openseadragon', "data-turbo-track": "reload", defer: true %>
+    <%= javascript_include_tag 'openseadragon/jquery', "data-turbo-track": "reload", defer: true %>
+    <% if defined? Importmap %>
+      <%= javascript_importmap_tags %>
+    <% else %>
+      <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <% end %>
+    <%= javascript_include_tag 'openseadragon/rails', "data-turbo-track": "reload", defer: true %>
     <%= csrf_meta_tags %>
     <%= content_for(:head) %>
     <%= description %>
     <%= twitter_card %>
     <%= opengraph %>
-    <%= javascript_tag "Spotlight.sirTrevorIcon = '#{asset_path('spotlight/blocks/sir-trevor-icons.svg')}'" %>
-    <%= javascript_tag '$.fx.off = true;' if Rails.env.test? %>
+    <%= javascript_tag "window.addEventListener('load', () => $.fx.off = true)" if Rails.env.test? %>
   </head>
   <body class="<%= render_body_class %>">
     <%= render partial: 'shared/body_preamble' %>

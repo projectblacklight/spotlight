@@ -51,7 +51,23 @@ export default class {
       errSpan.find('.error-msg').first().text(error || event.detail[1]);
     });
 
-    $('.btn-with-tooltip').tooltip();
+    document.addEventListener('turbo:submit-end', (event) => {
+      const response = event.detail.fetchResponse;
+      if (!response.succeeded && response.response.status === 404) {
+        const path = new URL(event.target.action).pathname;
+        const deleteButton = document.querySelector(`.contact-email-delete[href="${path}"]`);
+        if (deleteButton) {
+          const errSpan = deleteButton.closest('.contact').querySelector('.contact-email-delete-error');
+          const errorMsg = errSpan.querySelector('.error-msg');
+          errSpan.style.display = 'block';
+          errorMsg.textContent = 'Not Found';
+        }
+      }
+    });
+
+    if ($.fn.tooltip) {
+      $('.btn-with-tooltip').tooltip();
+    }
 
     // Put focus in saved search title input when Save this search modal is shown
     $('#save-modal').on('shown.bs.modal', function () {

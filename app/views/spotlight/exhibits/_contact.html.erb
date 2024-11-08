@@ -1,3 +1,4 @@
+        <%= turbo_frame_tag dom_id(contact.object) do %>
         <div class="row contact">
           <%= contact.hidden_field :id %>
           <div class="col-md-8<%= ' has-error' if contact.object.errors[:email].present? %>">
@@ -12,11 +13,8 @@
           <div class="col-md-4">
             <% if contact.object.id %>
               <span class="contact-email-delete-wrapper">
-                <%= link_to exhibit_contact_email_path(exhibit_id: exhibit.id, id: contact.object.id), class: 'contact-email-delete btn btn-sm btn-danger', 
-                            data: { method: :delete, turbo_method: :delete,
-                                    confirm: t('.email_delete_confirmation'),
-                                    turbo_confirm: t('.email_delete_confirmation'),
-                                    remote: true } do %>
+                <%= link_to exhibit_contact_email_path(exhibit_id: exhibit.id, id: contact.object.id), class: 'contact-email-delete btn btn-sm btn-danger',
+                            data: { turbo_method: :delete, turbo_confirm: t('.email_delete_confirmation') } do %>
                   <%= t('.email_delete_button') %>
                 <% end %>
               </span>
@@ -24,3 +22,4 @@
             <%= render partial: 'confirmation_status', locals: {contact_email: contact.object} unless contact.object.new_record? %>
           </div>
         </div>
+        <% end %>

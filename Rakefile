@@ -30,12 +30,21 @@ require 'engine_cart/rake_task'
 
 require 'spotlight/version'
 
+# Build with our opinionated defaults if none are provided.
+rails_options = ENV.fetch('ENGINE_CART_RAILS_OPTIONS', '')
+rails_options = "#{rails_options} -a propshaft" unless rails_options.match?(/-a\s|--asset-pipeline/)
+rails_options = "#{rails_options} -j importmap" unless rails_options.match?(/-j\s|--javascript/)
+ENV['ENGINE_CART_RAILS_OPTIONS'] = rails_options
+
 task ci: ['engine_cart:generate'] do
   ENV['environment'] = 'test'
 
   SolrWrapper.wrap(port: '8983') do |solr|
     solr.with_collection(name: 'blacklight-core', dir: 'lib/generators/spotlight/templates/solr/conf') do
       Rake::Task['spotlight:fixtures'].invoke
+      within_test_app do
+        system 'bin/rake spec:prepare'
+      end
 
       # run the tests
       Rake::Task['spec'].invoke
@@ -63,7 +72,7 @@ namespace :spotlight do
             system 'bin/rails spotlight:initialize spotlight_test:solr:seed'
             File.open('.initialized', 'w') {}
           end
-          system 'bin/rails s'
+          system 'bin/dev'
         end
       end
     end

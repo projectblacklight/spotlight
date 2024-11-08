@@ -22,13 +22,11 @@ these collections.)
 
   s.add_dependency 'activejob-status'
   s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 12'
-  s.add_dependency 'autoprefixer-rails'
-  s.add_dependency 'blacklight', '>= 7.40', '< 9'
+  s.add_dependency 'blacklight', '~> 8.0'
   s.add_dependency 'blacklight-gallery', '>= 3.0', '< 5'
   s.add_dependency 'bootstrap_form', '>= 4.1', '< 6'
   s.add_dependency 'cancancan'
   s.add_dependency 'carrierwave', '~> 2.2'
-  s.add_dependency 'clipboard-rails', '~> 1.5'
   s.add_dependency 'csv'
   s.add_dependency 'devise', '~> 4.9'
   s.add_dependency 'devise_invitable'
@@ -41,11 +39,10 @@ these collections.)
   s.add_dependency 'i18n-active_record'
   s.add_dependency 'iiif_manifest'
   s.add_dependency 'iiif-presentation'
-  s.add_dependency 'leaflet-rails'
   s.add_dependency 'mini_magick'
   s.add_dependency 'nokogiri'
   s.add_dependency 'oauth2'
-  s.add_dependency 'openseadragon'
+  s.add_dependency 'openseadragon', '>= 0.8.0'
   s.add_dependency 'ostruct', '!= 0.3.0', '!= 0.3.1', '!= 0.3.2'
   s.add_dependency 'paper_trail', '>= 11.0', '< 16'
   s.add_dependency 'rails', '>= 7.0', '< 8'
@@ -56,6 +53,11 @@ these collections.)
   s.add_dependency 'signet'
   s.add_dependency 'tophat'
   s.add_dependency 'view_component', '>= 2.66', '< 4'
+
+  if defined?(Sprockets)
+    s.add_dependency 'clipboard-rails', '~> 1.5'
+    s.add_dependency 'leaflet-rails'
+  end
 
   s.add_development_dependency 'capybara', '~> 3.31'
   s.add_development_dependency 'engine_cart', '~> 2.0'

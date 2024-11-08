@@ -1,3 +1,5 @@
+import tns from 'tiny-slider'
+
 export default class {
   connect() {
     var $container, slider;

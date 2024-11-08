@@ -16,10 +16,16 @@ Read more about what Spotlight is, our motivations for creating it, and how to i
 
 ## Installation
 
-To bootstrap a new Rails application:
+To bootstrap a new Rails application using [importmap-rails](https://github.com/rails/importmap-rails):
 
 ```
-$ SKIP_TRANSLATION=1 rails new app-name -m https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb
+$ SKIP_TRANSLATION=1 rails new app-name -m https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb -a propshaft -j importmap
+```
+
+or using [jsbundling-rails](https://github.com/rails/jsbundling-rails) with [esbuild](https://esbuild.github.io/):
+
+```
+$ SKIP_TRANSLATION=1 rails new app-name -m https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb -a propshaft -j esbuild
 ```
 
 or from an existing Rails application:
