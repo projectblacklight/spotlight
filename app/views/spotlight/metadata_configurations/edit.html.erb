@@ -19,7 +19,7 @@
             <div class="text-center">
                <%= label_tag 'item_details', class: 'select-label'  do %>
                   <%= select_deselect_action(t :'.view.select_id') %>
-                  <%= t(:'.select_check') %>
+                  <%= t(:'.select_all') %>
                 <% end %>
              </div>
           </th>
@@ -31,7 +31,7 @@
               <div class="text-center">
                 <%= label_tag t(:'.deselect_all') + type.to_s, class: 'select-label'  do %>
                   <%= select_deselect_action(t(:'.deselect_all') + type.to_s) %>
-                  <%= t(:'.select_check') %>
+                  <%= t(:'.select_all') %>
                 <% end %>
               </div>
             </th>
