@@ -28,6 +28,7 @@ module Spotlight
         run 'yarn add clipboard'
         run 'yarn add leaflet'
         run 'yarn add sir-trevor'
+        run 'yarn add sortablejs'
       end
 
       def add_blacklight_frontend
