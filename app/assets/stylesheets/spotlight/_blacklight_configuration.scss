@@ -77,7 +77,10 @@
   .metadata-select {
     display: inline-block;
     text-wrap: nowrap;
-    min-width: 72px;
+  }
+
+  .select-label {
+    font-weight: normal;
   }
 }
 
