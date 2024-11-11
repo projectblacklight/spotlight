@@ -24,6 +24,7 @@ module Spotlight
       DESCRIPTION
 
       def install_dependencies
+        run 'yarn add @github/auto-complete-element'
         run 'yarn add @hotwired/turbo-rails'
         run 'yarn add clipboard'
         run 'yarn add leaflet'
@@ -77,6 +78,7 @@ module Spotlight
 
         append_to_file 'app/javascript/application.js' do
           <<~CONTENT
+            import githubAutoCompleteElement from "@github/auto-complete-element"
             import * as bootstrap from "bootstrap"
             import Blacklight from "blacklight-frontend"
             import Spotlight from "spotlight-frontend"
