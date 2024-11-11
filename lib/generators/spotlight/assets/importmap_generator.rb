@@ -25,14 +25,6 @@ module Spotlight
           via importmap/the asset pipeline without the need for bundling
       DESCRIPTION
 
-      def import_javascript_assets
-        append_to_file 'config/importmap.rb' do
-          <<~CONTENT
-            pin "sortablejs", to: "https://cdn.skypack.dev/sortablejs"
-          CONTENT
-        end
-      end
-
       def add_stylesheet_dependencies
         run "yarn add blacklight-frontend@#{blacklight_yarn_version}"
         run "yarn add bootstrap@\"^#{bootstrap_yarn_version}\""
