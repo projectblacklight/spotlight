@@ -5,6 +5,10 @@ describe 'Confirming an email', type: :feature do
   let(:contact_email) { Spotlight::ContactEmail.create!(email: 'justin@example.com', exhibit:) }
   let(:raw_token) { contact_email.instance_variable_get(:@raw_confirmation_token) }
 
+  before do
+    allow_any_instance_of(ApplicationHelper).to receive(:content?).and_return(true)
+  end
+
   it 'resends confirmation instructions' do
     visit spotlight.new_contact_email_confirmation_url(confirmation_token: contact_email.confirmation_token)
     expect(page).to have_content('Resend confirmation instructions')

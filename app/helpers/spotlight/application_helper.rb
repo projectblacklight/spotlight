@@ -30,6 +30,13 @@ module Spotlight
       current_site.title.presence
     end
 
+    def content?(field)
+      return content_for?(field) unless Rails.configuration.action_view.annotate_rendered_view_with_filenames
+
+      stripped_content = content_for(field).gsub(/<!-- BEGIN .+? -->/, '').gsub(/<!-- END .+? -->/, '').strip
+      stripped_content.present?
+    end
+
     # Returns the url for the current page in the new locale. This may be
     # overridden in downstream applications where our naive use of `url_for`
     # is insufficient to generate the expected routes
