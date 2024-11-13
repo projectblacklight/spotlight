@@ -26,8 +26,8 @@ module Spotlight
     before_action only: :show do
       # Substitute the default document component with the custom one for Blacklight 8,
       # and add the necessary partials for Blacklight 7 (if they haven't configured the document component)
-      if blacklight_config.show.document_component.nil? || blacklight_config.show.document_component == Blacklight::DocumentComponent
-        if Blacklight::VERSION > '8'
+      if blacklight_config.show.document_component.nil? || blacklight_config.show.document_component.to_s == 'Blacklight::DocumentComponent'
+        if Blacklight::VERSION.to_i > 7
           blacklight_config.show.document_component = Spotlight::DocumentComponent
         else
           blacklight_config.show.partials.unshift 'tophat'
