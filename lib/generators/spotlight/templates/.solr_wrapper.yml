@@ -3,4 +3,3 @@
 collection:
   dir: solr/conf
   name: blacklight-core
-version: 9.6.1
