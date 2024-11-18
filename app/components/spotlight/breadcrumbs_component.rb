@@ -15,9 +15,7 @@ module Spotlight
     end
 
     def path(path)
-      return path unless path.instance_of?(::Spotlight::Exhibit)
-
-      helpers.exhibit_path(path)
+      helpers.url_for(path)
     end
   end
 end
