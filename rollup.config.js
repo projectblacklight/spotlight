@@ -6,6 +6,7 @@ const ESM = process.env.ESM === 'true'
 
 const fileDest = `spotlight${ESM ? '.esm' : ''}`
 const external = [
+  '@github/auto-complete-element',
   'blacklight-frontend',
   'clipboard',
   'jquery-serializejson',
@@ -15,6 +16,7 @@ const external = [
   'sortablejs'
 ]
 const globals = {
+  '@github/auto-complete-element': 'AutoCompleteElement',
   'blacklight-frontend': 'Blacklight',
   clipboard: 'Clipboard',
   jquery: 'jQuery',

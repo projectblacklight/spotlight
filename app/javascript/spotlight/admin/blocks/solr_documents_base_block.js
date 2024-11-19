@@ -5,11 +5,11 @@ SirTrevor.Blocks.SolrDocumentsBase = (function(){
 
   return Core.Block.Resources.extend({
     plustextable: true,
-    autocomplete_url: function() { return this.$instance().closest('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path').replace("%25QUERY", "%QUERY"); },
+    autocomplete_url: function() { return this.$instance().closest('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path') },
     autocomplete_template: function(obj) {
       const thumbnail = obj.thumbnail ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail}" /></div>` : ''
       return `<div class="autocomplete-item${obj.private ? ' blacklight-private' : ''}">${thumbnail}
-      <span class="autocomplete-title">${obj.title}</span><br/><small>&nbsp;&nbsp;${obj.description}</small></div>`
+      <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/><small>&nbsp;&nbsp;${this.highlight(obj.description)}</small></div>`
     },
     transform_autocomplete_results: function(response) {
       return $.map(response['docs'], function(doc) {

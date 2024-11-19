@@ -69,7 +69,7 @@ module Spotlight
     end
 
     def exhibit_autocomplete_endpoint
-      spotlight.autocomplete_exhibit_catalog_path(current_exhibit, q: '%QUERY', format: 'json')
+      spotlight.autocomplete_exhibit_catalog_path(current_exhibit, format: 'json')
     end
 
     def page_autocomplete_endpoint
