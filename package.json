@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/projectblacklight/spotlight#readme",
   "devDependencies": {
-    "rollup": "^4.0.0",
     "@rollup/plugin-commonjs": "^26.0.1",
+    "rollup": "^4.0.0",
     "rollup-plugin-includepaths": "^0.2.4"
   },
   "browserslist": [
@@ -39,6 +39,7 @@
     "jquery-serializejson": "^3.2.1",
     "leaflet": "^1.9.4",
     "leaflet-iiif": "^3.0.0",
-    "sir-trevor": "^0.8.2"
+    "sir-trevor": "^0.8.2",
+    "sortablejs": "^1.15.3"
   }
 }
