@@ -269,6 +269,7 @@ module Spotlight
 
         Blacklight::Configuration.default_values[:search_state_fields] ||= []
         Blacklight::Configuration.default_values[:search_state_fields] += %i[id exhibit_id browse_category_id]
+        Blacklight::Configuration.default_values[:skip_link_component] = Spotlight::SkipLinkComponent
       end
     else
       config.to_prepare do
