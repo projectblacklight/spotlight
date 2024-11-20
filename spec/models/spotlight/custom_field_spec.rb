@@ -27,6 +27,14 @@ describe Spotlight::CustomField, type: :model do
     end
   end
 
+  describe ':label' do
+    subject { described_class.new configuration: { label: 'the configured label' }, field: 'foo_tesim' }
+
+    describe "when the exhibit doesn't have a config" do
+      its(:label) { is_expected.to eq 'the configured label' }
+    end
+  end
+
   describe '#label=' do
     subject { described_class.new field: 'foo_tesim' }
 
