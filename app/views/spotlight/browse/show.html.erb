@@ -1,5 +1,5 @@
 <% set_html_page_title @search.title %>
-<% render partial: 'tophat' %>
+<% add_browse_meta_content(@search) %>
 
 <%= exhibit_edit_link @search, class: 'edit-button float-right float-end btn btn-primary' if can? :edit, @search %>
 <% if resource_masthead? %>

@@ -33,9 +33,13 @@
     <%= javascript_include_tag 'openseadragon/rails', "data-turbo-track": "reload", defer: true %>
     <%= csrf_meta_tags %>
     <%= content_for(:head) %>
-    <%= description %>
-    <%= twitter_card %>
-    <%= opengraph %>
+    <% if @document %>
+      <% add_document_meta_content(@document) %>
+    <% elsif current_exhibit %>
+      <% description(current_exhibit.description) if current_exhibit %>
+      <% add_exhibit_meta_content %>
+    <% end %>
+    <%= yield(:meta) %>
     <%= javascript_tag "window.addEventListener('load', () => $.fx.off = true)" if Rails.env.test? %>
   </head>
   <body class="<%= render_body_class %>">

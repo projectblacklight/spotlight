@@ -1,5 +1,5 @@
 <% set_html_page_title @page.title if @page.should_display_title? %>
-<% render 'tophat' %>
+<% add_page_meta_content(@page) %>
 
 <% content_for(:sidebar) do %>
   <%= render 'sidebar' %>

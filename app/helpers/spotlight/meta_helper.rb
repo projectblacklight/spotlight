@@ -3,17 +3,37 @@
 module Spotlight
   # HTML <meta> tag helpers
   module MetaHelper
+    def description(description)
+      content_for(:meta) { ActionController::Base.helpers.tag.meta(name: 'description', content: description) } if description
+    end
+
+    def card(type, &block)
+      card = {}
+      block.call(card) if block_given?
+      content_for(:meta) { build_tags(card, type) }
+    end
+
+    # rubocop:disable Rails/OutputSafety
+    def build_tags(attributes, tag_field)
+      type_fields = { 'og' => 'property', 'twitter' => 'name' }
+      attributes.map do |key, value|
+        ActionController::Base.helpers.tag.meta("#{type_fields[tag_field]}": "#{tag_field}:#{key}", content: value) if value
+      end.compact.join("\n").html_safe
+    end
+    # rubocop:enable Rails/OutputSafety
+
     def add_exhibit_meta_content
       exhibit_twitter_card_content
       exhibit_opengraph_content
     end
 
     def exhibit_twitter_card_content
-      twitter_card('summary') do |card|
-        card.url exhibit_root_url(current_exhibit)
-        card.title current_exhibit.title
-        card.description current_exhibit.subtitle
-        card.image meta_image if current_exhibit.thumbnail
+      card('twitter') do |card|
+        card['card'] = 'summary'
+        card['url'] = exhibit_root_url(current_exhibit)
+        card['title'] = current_exhibit.title
+        card['description'] = current_exhibit.subtitle
+        card['image'] = meta_image if current_exhibit.thumbnail
       end
     end
 
@@ -22,10 +42,10 @@ module Spotlight
     end
 
     def exhibit_opengraph_content
-      opengraph do |graph|
-        graph.title current_exhibit.title
-        graph.image meta_image if current_exhibit.thumbnail
-        graph.site_name site_title
+      card('og') do |graph|
+        graph['title'] = current_exhibit.title
+        graph['image'] = meta_image if current_exhibit.thumbnail
+        graph['site_name'] = site_title
       end
     end
 
@@ -35,20 +55,21 @@ module Spotlight
     end
 
     def page_twitter_card_content(page)
-      twitter_card('summary_large_image') do |card|
-        card.title page.title
-        card.image page.thumbnail.iiif_url if page.thumbnail
+      card('twitter') do |card|
+        card['card'] = 'summary_large_image'
+        card['title'] = page.title
+        card['image'] = page.thumbnail.iiif_url if page.thumbnail
       end
     end
 
     def page_opengraph_content(page)
-      opengraph do |graph|
-        graph.type 'article'
-        graph.site_name application_name
-        graph.title page.title
-        graph.send('image', page.thumbnail.iiif_url) if page.thumbnail
-        graph.send('article:published_time', page.created_at.iso8601)
-        graph.send('article:modified_time', page.updated_at.iso8601)
+      card('og') do |graph|
+        graph['type'] = 'article'
+        graph['site_name'] = application_name
+        graph['title'] = page.title
+        graph['image'] = page.thumbnail.iiif_url if page.thumbnail
+        graph['article:published_time'] = page.created_at.iso8601
+        graph['article:modified_time'] = page.updated_at.iso8601
       end
     end
 
@@ -58,20 +79,21 @@ module Spotlight
     end
 
     def browse_twitter_card_content(browse)
-      twitter_card('summary_large_image') do |card|
-        card.title browse.title
-        card.image browse.thumbnail.iiif_url if browse.thumbnail
+      card('twitter') do |card|
+        card['card'] = 'summary_large_image'
+        card['title'] = browse.title
+        card['image'] = browse.thumbnail.iiif_url if browse.thumbnail
       end
     end
 
     def browse_opengraph_content(browse)
-      opengraph do |graph|
-        graph.type 'article'
-        graph.site_name application_name
-        graph.title browse.title
-        graph.send('image', browse.thumbnail.iiif_url) if browse.thumbnail
-        graph.send('article:published_time', browse.created_at.iso8601)
-        graph.send('article:modified_time', browse.updated_at.iso8601)
+      card('og') do |graph|
+        graph['type'] = 'article'
+        graph['site_name'] = application_name
+        graph['title'] = browse.title
+        graph['image'] = browse.thumbnail.iiif_url if browse.thumbnail
+        graph['article:published_time'] = browse.created_at.iso8601
+        graph['article:modified_time'] = browse.updated_at.iso8601
       end
     end
 
@@ -83,19 +105,20 @@ module Spotlight
     def document_twitter_card_content(document)
       presenter = document_presenter(document)
 
-      twitter_card('summary_large_image') do |card|
-        card.title presenter.heading
-        card.image document.first(blacklight_config.index.thumbnail_field)
+      card('twitter') do |card|
+        card['card'] = 'summary_large_image'
+        card['title'] = presenter.heading
+        card['image'] = document.first(blacklight_config.index.thumbnail_field)
       end
     end
 
     def document_opengraph_content(document)
       presenter = document_presenter(document)
 
-      opengraph do |graph|
-        graph.site_name application_name
-        graph.title presenter.heading
-        graph.send('image', document.first(blacklight_config.index.thumbnail_field))
+      card('og') do |graph|
+        graph['site_name'] = application_name
+        graph['title'] = presenter.heading
+        graph['image'] = document.first(blacklight_config.index.thumbnail_field)
       end
     end
   end
