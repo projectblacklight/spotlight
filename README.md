@@ -9,9 +9,9 @@ Read more about what Spotlight is, our motivations for creating it, and how to i
 
 ## Requirements
 
-1. Ruby (2.7 or greater)
-2. Rails (5.2 or greater)
-3. Java (7 or greater) *for Solr*
+1. [Ruby](https://www.ruby-lang.org/) 3.1+
+2. [Ruby on Rails](https://rubyonrails.org/) 7.x
+3. Java (11 or greater) *for Solr*
 4. ImageMagick (http://www.imagemagick.org/script/index.php) due to [carrierwave](https://github.com/carrierwaveuploader/carrierwave#adding-versions)
 
 ## Installation
@@ -57,7 +57,7 @@ $ solr_wrapper
 and the Rails development server:
 
 ```
-$ rails server
+$ bin/dev
 ```
 
 Go to http://localhost:3000 in your browser.
@@ -66,7 +66,7 @@ Go to http://localhost:3000 in your browser.
 
 ### Default ActionMailer configuration
 
-Spotlight introduces functionality that depends on being able to send emails to exhibit curators and contacts. Be sure to configure your application's environments appropriately (see the Rails Guide for [Action Mailer Configuration](http://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration)).
+Spotlight introduces functionality that depends on being able to send emails to exhibit curators and contacts. Be sure to configure your application's environments appropriately (see the Rails Guide for [Action Mailer Configuration](https://guides.rubyonrails.org/v7.2/action_mailer_basics.html#action-mailer-configuration)).
 
 See the [Spotlight wiki](https://github.com/projectblacklight/spotlight/wiki) for more detailed information on configuring Spotlight.
 
@@ -82,11 +82,18 @@ See the [Spotlight wiki](https://github.com/projectblacklight/spotlight/wiki) fo
 * is a Rails engine and needs to be used in the context of a Rails application. We use [engine_cart](https://github.com/cbeer/engine_cart) to create an internal test application at .internal_test_app/
 * uses Solr as part of its integration tests. We use [solr_wrapper](https://github.com/cbeer/solr_wrapper) to manage the Solr instance used for development and test.
 
-Our `$ rake ci` and `$ rake spotlight:server` tasks utilize Solr and the testing rails app automatically.
-
 See more detailed instructions for development environment setup at ["Contributing to Spotlight"](https://github.com/projectblacklight/spotlight/wiki/Contributing-to-Spotlight)
 
-## With Docker
+## Run a development server
+
+### With EngineCart
+```
+$ rake spotlight:server
+```
+
+Then visit http://localhost:3000. A Solr instance will be running on port 8983. When using importmap (the default configuration), JavaScript changes in development should not require [bundling](#updating-the-javascript-bundle) or a server restart.
+
+### With Docker
 
 ```sh
 # because of how docker compose handles named images, running `docker compose up --build` will error when the Rails images have not been built locally
@@ -145,4 +152,4 @@ You only need to update `package.json` and prepare/publish the JavaScript packag
 5. Push the release to rubygems and GitHub: `bundle exec rake release`
 6. Run `npm publish` to push the JavaScript package to https://npmjs.org/package/spotlight-frontend
 
-See "Updating the JavaScript bundle" above for more details.
+See [Updating the JavaScript bundle](#updating-the-javascript-bundle) above for more details.
