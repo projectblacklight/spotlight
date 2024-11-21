@@ -47,6 +47,7 @@ describe 'spotlight/pages/show', type: :view do
       stub_template 'shared/_user_util_links.html.erb' => ''
       stub_template 'shared/_masthead.html.erb' => ''
       allow(view).to receive_messages(document_presenter: presenter, action_name: 'show', blacklight_config:)
+      allow(view).to receive(:content?).and_return(true)
       allow(view).to receive(:search_action_url).and_return('/catalog')
       allow(view).to receive(:add_exhibit_meta_content).and_return('')
       render template: 'spotlight/pages/show', layout: 'layouts/spotlight/spotlight'

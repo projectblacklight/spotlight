@@ -1,5 +1,5 @@
 <% content_for(:content) do %>
-  <% if content_for? :sidebar %>
+  <% if content? :sidebar %>
     <section id="content" class="<%= main_content_classes %> <%= content_for(:content_position) || 'order-last' %>" aria-label="<%= t('blacklight.search.search_results') %>">
       <%= yield %>
     </section>
