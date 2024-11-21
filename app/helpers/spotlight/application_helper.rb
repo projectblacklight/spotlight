@@ -31,7 +31,7 @@ module Spotlight
     end
 
     def content?(field)
-      return content_for?(field) unless Rails.configuration.action_view.annotate_rendered_view_with_filenames
+      return content_for?(field) unless Rails.configuration.action_view.annotate_rendered_view_with_filenames && content_for(field).present?
 
       stripped_content = content_for(field).gsub(/<!-- BEGIN .+? -->/, '').gsub(/<!-- END .+? -->/, '').strip
       stripped_content.present?
