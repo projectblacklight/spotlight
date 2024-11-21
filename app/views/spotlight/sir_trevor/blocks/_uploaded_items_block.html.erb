@@ -1,5 +1,5 @@
-<div class="content-block item-text row d-block clearfix">
-  <div class="items-col spotlight-flexbox <%= 'col-md-6' if uploaded_items_block.text? %> col-12 <%= uploaded_items_block.content_align == 'right'  ? 'float-right float-end' : 'float-left float-start'  %> uploaded-items-block">
+<div class="content-block items-block item-text row d-block clearfix">
+  <div class="items-col spotlight-flexbox <%= uploaded_items_block.text? ? "col-md-6" : "col-md-12" %> <%= uploaded_items_block.content_align == 'right'  ? 'float-right float-end' : 'float-left float-start' %> uploaded-items-block">
     <% if uploaded_items_block.files.present? %>
       <% uploaded_items_block.files.each do |file| %>
         <div class="box" data-id="<%= file[:id] %>">
