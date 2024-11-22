@@ -7,12 +7,7 @@ module Spotlight
     before_action :authenticate_user!
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
-    include Spotlight::Base
-    include Spotlight::SearchHelper
-
     def alt_text
-      authorize! :curate, @exhibit
-
       @limit = 5
       # Sort by newest except for the homepage, which is always first
       pages_with_alt = @exhibit.pages.order(Arel.sql('id = 1 DESC, created_at DESC')).select { |elem| elem.content.any?(&:alt_text?) }
