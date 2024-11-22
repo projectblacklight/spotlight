@@ -3274,10 +3274,10 @@
   class ClearFormButton {
     connect() {
       var $clearBtn = $('.btn-reset');
-      var $input = $clearBtn.parent().prev('input');
+      var $input = $clearBtn.prev('#browse_q');
       var btnCheck = function(){
         if ($input.val() !== '') {
-          $clearBtn.css('display', 'inline-block');
+          $clearBtn.css('display', 'block');
         } else {
           $clearBtn.css('display', 'none');
         }
