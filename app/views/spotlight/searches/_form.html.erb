@@ -35,8 +35,8 @@
         <%= f.text_field :title, control_col: "col-sm-5" %>
         <%= f.text_field :subtitle, control_col: "col-sm-5" %>
         <%= f.text_area :long_description, rows: 5 %>
-        <%= f.form_group :search_box, label: { text: t(:'.search_box.label'), class: 'pt-0' }, help: t(:'.search_box.help_block') do %>
-          <%= f.check_box :search_box, label: t(:'.search_box.checkbox_label') %>
+        <%= f.form_group :search_box, label: { text: t(:'.search_box.label'), class: 'pt-0 col-md-2 col-sm-2 col-form-label' }, help: t(:'.search_box.help_block') do %>
+          <%= f.check_box_without_bootstrap :search_box %>
         <% end %>
         <%= f.form_group label: { text: t(:".default_index_view_type"), class: 'pt-0' } do %>
           <% available_document_index_views.each do |key, view| %>
