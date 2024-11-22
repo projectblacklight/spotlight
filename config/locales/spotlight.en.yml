@@ -191,6 +191,16 @@ en:
         instructions: Enter details for each librarian, curator or other contact person for this exhibit. Select the contacts you want to be show in the sidebar of the about pages. Drag and drop contacts to specify the order in which they are shown in the sidebar.
       page_options:
         published: Publish
+    accessibility:
+      alt_text:
+        header: Alternative text
+        note: Items displayed via Item Embed are excluded from these totals, as it not currently possible to add alt text using this widget.
+        table:
+          can_have_alt_text: Total items on page
+          has_alt_text: Items with alt text
+          page_title: Page title
+        total_items: Of the items displayed via widgets, <b>%{has_alt_text} of %{total_alt_items}</b> have entered alt text (or a checked decorative box).
+      header: Accessibility
     admin_users:
       create:
         error: There was a problem adding the user as an exhibits adminstrator

@@ -11,7 +11,7 @@ describe 'spotlight/tags/index.html.erb', type: :view do
     allow(view).to receive_messages(exhibit_tag_path: '/tags')
     allow(view).to receive(:current_exhibit).and_return(exhibit)
     allow(view).to receive(:url_to_tag_facet, &:first)
-    allow(view).to receive_messages(update_all_exhibit_tags_path: '/update_all')
+    allow(view).to receive_messages(update_all_exhibit_tags_path: '/update_all', exhibit_alt_text_path: '/alt-text')
     allow(view).to receive(:exhibit_path)
   end
 

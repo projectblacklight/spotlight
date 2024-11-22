@@ -19,6 +19,7 @@ describe 'spotlight/searches/edit.html.erb', type: :view do
     allow(view).to receive(:featured_images_path).and_return('/featured_images')
     allow(view).to receive(:exhibit_search_path).and_return('/search')
     allow(view).to receive(:exhibit_searches_path).and_return('/searches')
+    allow(view).to receive(:exhibit_alt_text_path).and_return('/alt-text')
     allow(view).to receive(:blacklight_config).and_return(blacklight_config)
     allow(controller).to receive(:search_state_class).and_return(Blacklight::SearchState)
 

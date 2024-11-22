@@ -1,15 +1,7 @@
 <tr class="d-flex">
   <td class="col-6">
     <h4 class="h5 mb-0"><%= page.title %></h4>
-    <div class="page-links pt-0">
-      <% if page.is_a?(Spotlight::HomePage) %>
-          <%= link_to action_default_value(page, :view), current_exhibit %> &middot;
-          <%= exhibit_edit_link page, edit_exhibit_home_page_path(page.exhibit), data: { turbolinks: false, turbo: false } %>
-      <% else %>
-        <%= exhibit_view_link page %> &middot;
-        <%= exhibit_edit_link page, data: { turbolinks: false, turbo: false } %>
-      <% end %>
-    </div>
+    <%= render Spotlight::EditViewLinksComponent.new(page:, classes: 'page-links pt-0') %>
   </td>
   <td class="col-4"><%= page.last_edited_by.to_s if page.last_edited_by %></td>
   <td class="col-2"><%= l page.updated_at, format: :long %></td>

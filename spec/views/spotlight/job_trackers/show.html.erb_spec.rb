@@ -9,7 +9,7 @@ describe 'spotlight/job_trackers/show', type: :view do
     assign(:exhibit, exhibit)
     assign(:job_tracker, job_tracker)
 
-    allow(view).to receive_messages(current_exhibit: exhibit)
+    allow(view).to receive_messages(current_exhibit: exhibit, exhibit_alt_text_path: '')
   end
 
   it 'displays the type of job' do

@@ -17,6 +17,7 @@ describe 'spotlight/pages/index.html.erb', type: :view do
 
   before do
     allow(view).to receive(:page_collection_name).and_return(:feature_pages)
+    allow(view).to receive(:exhibit_alt_text_path).and_return('/')
     allow(view).to receive(:update_all_exhibit_feature_pages_path).and_return('/exhibit/features/update_all')
     assign(:page, Spotlight::FeaturePage.new)
     assign(:exhibit, exhibit)

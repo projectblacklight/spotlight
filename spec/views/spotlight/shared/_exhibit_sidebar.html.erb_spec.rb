@@ -4,7 +4,7 @@ describe 'spotlight/shared/_exhibit_sidebar', type: :view do
   let(:current_exhibit) { FactoryBot.create(:exhibit) }
 
   before do
-    allow(view).to receive_messages(current_exhibit:, exhibit_root_path: '/some/path')
+    allow(view).to receive_messages(current_exhibit:, exhibit_root_path: '/some/path', exhibit_alt_text_path: '/some/path')
   end
 
   context 'with a configured analytics integration' do
