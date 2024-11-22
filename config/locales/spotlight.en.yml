@@ -899,9 +899,8 @@ en:
           help_secondary: To create a browse category-specific masthead, you should use an image that is at least 120 pixels tall and 1200 pixels wide. For best results use an image at least 1800 pixels wide. You can crop larger images using the cropping tool below.
         query_params: Search parameters
         search_box:
-          checkbox_label: Display
           help_block: Displays a search box that enables users to search within the browse category results
-          label: Search box
+          label: Display search box
         search_description: Description
         search_group: Group
         search_masthead: Masthead
