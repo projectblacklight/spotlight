@@ -1,21 +1,19 @@
 <div class="search-box-container">
   <%= form_tag exhibit_browse_path(current_exhibit, search), method: :get, class: 'browse-search-form search-query-form form-horizontal', role: 'search', 'aria-labelledby' => 'browse-search-form' do %>
     <%= render Blacklight::HiddenSearchStateComponent.new(params: search_state.params_for_search.except(:q, :search_field, :exhibit_id, :qt, :page)) %>
-    <div class="form-group mb-3 row">
+    <div class="form-group mb-5 row">
       <label id="browse-search-form" class="col-sm-4 col-form-label h6" for="browse_q"><%= t(:'.label') %></label>
       <div class="col-sm-6">
         <div class="input-group">
           <%= text_field_tag :q, params[:q], placeholder: t(:'.placeholder'), class: "form-control", id: "browse_q" %>
-            <span class="input-group-btn input-group-append">
-              <button class="btn btn-reset btn-sm" type="reset">
-                <span class="sr-only visually-hidden"><%= t(:'.reset') %></span>
-                <%= blacklight_icon('highlight_off') %>
-              </button>
-              <button type="submit" class="btn btn-primary search-btn" id="browse-search">
-                <span class="submit-search-text"><%= t(:'.submit') %></span>
-                <%= blacklight_icon('search', aria_hidden: true) %>
-              </button>
-            </span>
+            <button class="btn btn-reset btn-sm" type="reset">
+              <span class="sr-only visually-hidden"><%= t(:'.reset') %></span>
+              <%= blacklight_icon('highlight_off') %>
+            </button>
+            <button type="submit" class="btn btn-primary search-btn" id="browse-search">
+              <span class="submit-search-text"><%= t(:'.submit') %></span>
+              <%= blacklight_icon('search', aria_hidden: true) %>
+            </button>
         </div>
       </div>
     </div>
