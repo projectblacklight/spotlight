@@ -164,6 +164,7 @@ module Spotlight
 
       hash[:custom_fields].each do |attr|
         ar = exhibit.custom_fields.find_or_initialize_by(slug: attr[:slug])
+        attr[:configuration] = attr[:configuration].clone.transform_keys(&:to_s)
         ar.update(attr)
       end
 
