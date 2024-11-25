@@ -58,10 +58,10 @@ class Carousel {
 class ClearFormButton {
   connect() {
     var $clearBtn = $('.btn-reset');
-    var $input = $clearBtn.parent().prev('input');
+    var $input = $clearBtn.prev('#browse_q');
     var btnCheck = function(){
       if ($input.val() !== '') {
-        $clearBtn.css('display', 'inline-block');
+        $clearBtn.css('display', 'block');
       } else {
         $clearBtn.css('display', 'none');
       }
@@ -781,7 +781,7 @@ class UserIndex {
             retval = this;
 
         var generateUid = function (separator) {
-            var delim = "-";
+            var delim = separator || "-";
 
             function S4() {
                 return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -5609,7 +5609,7 @@ const VisibilityToggle = (e) => {
   if (e.target.matches('[data-checkboxsubmit-target="checkbox"]')) {
     const form = e.target.closest('form');
     if (form) {
-      new CheckboxSubmit(form).clicked(e);
+      if (!Blacklight.BookmarkToggle) new CheckboxSubmit(form).clicked(e);
 
       // Add/remove the "private" label to the document row when visibility is toggled
       const docRow = form.closest('tr');
