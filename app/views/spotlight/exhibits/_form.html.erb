@@ -11,8 +11,8 @@
     <button id='another-email' class="btn btn-sm btn-info"><%= t('.add_contact_email_button') %></button>
     <div class="form-text text-muted mb-3"><%= t(:'.fields.contact_emails.help_block') %></div>
   <% end %>
-  <%= f.form_group :published, label: { text: nil, class: 'pt-0' }, help: nil do %>
-    <%= f.check_box :published, label: "" %>
+  <%= f.form_group :published, label: { class: 'pt-0 col-md-2 col-form-label' }, help: nil do %>
+    <%= f.check_box_without_bootstrap :published %>
     <div class="form-text text-muted mb-3"><%= t(:'.fields.published.help_block') %></div>
   <% end %>
 
