@@ -6,3 +6,12 @@
     outline: $input-focus-border-color auto 5px;
   }
 }
+
+// CSS for accessibility dashboard
+.alt-text-status .bi-exclamation-triangle-fill {
+  fill: $warning;
+}
+
+.alt-text-status .bi-check-circle-fill {
+  fill: $success;
+}
