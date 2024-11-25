@@ -11,10 +11,7 @@
             <%= p.hidden_field :title, value: page.title , class: 'form-control form-control-sm title-field', data: {:"edit-field-target" => 'true'} %>
           </h3>
         </div>
-        <div class="page-links">
-          <%= exhibit_view_link page, exhibit_root_path(page.exhibit) %> &middot;
-          <%= exhibit_edit_link page, edit_exhibit_home_page_path(page.exhibit), data: { turbolinks: false } %>
-        </div>
+        <%= render Spotlight::EditViewLinksComponent.new(page:) %>
       </div>
     </div>
   </div>

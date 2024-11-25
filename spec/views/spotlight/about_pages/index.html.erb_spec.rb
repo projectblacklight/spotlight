@@ -28,6 +28,7 @@ describe 'spotlight/about_pages/index.html.erb', type: :view do
     allow(view).to receive(:page_collection_name).and_return(:about_pages)
     allow(view).to receive(:update_all_exhibit_about_pages_path).and_return('/exhibit/about/update_all')
     allow(view).to receive(:exhibit_contacts_path).and_return('/exhibit/1/contacts')
+    allow(view).to receive(:exhibit_alt_text_path).and_return('/exhibit/1/alt-text')
     allow(view).to receive(:nestable_data_attributes).and_return('data-behavior="nestable"')
     allow(exhibit).to receive_messages(contacts:)
     assign(:page, Spotlight::AboutPage.new)

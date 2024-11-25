@@ -4,7 +4,7 @@ describe 'spotlight/searches/index.html.erb', type: :view do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
 
   before do
-    allow(view).to receive_messages(update_all_exhibit_searches_path: '/')
+    allow(view).to receive_messages(update_all_exhibit_searches_path: '/', exhibit_alt_text_path: '/')
     allow(view).to receive(:current_exhibit).and_return(exhibit)
     assign(:exhibit, exhibit)
   end

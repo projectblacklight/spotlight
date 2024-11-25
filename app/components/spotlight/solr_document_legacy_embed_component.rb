@@ -12,7 +12,7 @@ module Spotlight
     end
 
     def before_render
-      set_slot(:embed, nil, block_context: block_context) unless embed
+      set_slot(:embed, nil, block_context:) unless embed
 
       super
     end
