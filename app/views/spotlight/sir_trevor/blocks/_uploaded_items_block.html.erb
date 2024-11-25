@@ -1,4 +1,4 @@
-<div class="content-block items-block item-text row d-block clearfix">
+<div class="content-block item-text row d-block clearfix">
   <div class="items-col spotlight-flexbox <%= uploaded_items_block.text? ? "col-md-6" : "col-md-12" %> <%= uploaded_items_block.content_align == 'right'  ? 'float-right float-end' : 'float-left float-start' %> uploaded-items-block">
     <% if uploaded_items_block.files.present? %>
       <% uploaded_items_block.files.each do |file| %>
@@ -28,7 +28,7 @@
   </div>
 
   <% if uploaded_items_block.text? %>
-    <div class="text-col col-md-6 mw-100">
+    <div class="text-col col-md-6 mw-100 w-auto">
       <%= content_tag(:h3, uploaded_items_block.title) if uploaded_items_block.title.present? %>
       <%= sir_trevor_markdown uploaded_items_block.text %>
     </div>
