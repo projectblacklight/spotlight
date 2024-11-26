@@ -781,7 +781,7 @@ class UserIndex {
             retval = this;
 
         var generateUid = function (separator) {
-            var delim = separator || "-";
+            var delim = "-";
 
             function S4() {
                 return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -5160,6 +5160,7 @@ class Pages {
       var editor = new SirTrevor.Editor({
         el: instance[0],
         blockTypes: instance.data('blockTypes'),
+        altTextSettings: instance.data('altTextSettings'),
         defaultType:["Text"],
         onEditorRender: function() {
           $.SerializedForm();
@@ -5930,18 +5931,16 @@ Spotlight$1.Block.Resources = (function(){
     formable: true,
     autocompleteable: true,
     show_heading: true,
-    show_alt_text: true,
-
     title: function() { return i18n.t("blocks:" + this.type + ":title"); },
     description: function() { return i18n.t("blocks:" + this.type + ":description"); },
-    alt_text_guidelines: function() { 
-      if (this.show_alt_text) {
+    alt_text_guidelines: function() {
+      if (this.showAltText()) {
         return i18n.t("blocks:alt_text_guidelines:intro"); 
       }
       return "";
     },
     alt_text_guidelines_link: function() {
-      if (this.show_alt_text) {
+      if (this.showAltText()) {
         var link_url = i18n.t("blocks:alt_text_guidelines:link_url");
         var link_label = i18n.t("blocks:alt_text_guidelines:link_label");
         return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>'; 
@@ -5967,10 +5966,21 @@ Spotlight$1.Block.Resources = (function(){
     },
 
     _altTextFieldsHTML: function(index, data) {
-      if (this.show_alt_text) {
+      if (this.showAltText()) {
         return this.altTextHTML(index, data);
       }
       return "";
+    },
+
+    showAltText: function() {
+      return this.editorOptions.altTextSettings[this._typeAsCamelCase()]
+    },
+
+    _typeAsCamelCase: function() {
+      return this.type
+          .split('_')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join('');
     },
 
     _itemPanel: function(data) {
@@ -6110,7 +6120,7 @@ Spotlight$1.Block.Resources = (function(){
     },
 
     attachAltTextHandlers: function(panel) {
-      if (this.show_alt_text) {
+      if (this.showAltText()) {
         const decorativeCheckbox = $('input[name$="[decorative]"]', panel);
         const altTextInput = $('textarea[name$="[alt_text]"]', panel);
         const altTextBackupInput = $('input[name$="[alt_text_backup]"]', panel);
@@ -6758,7 +6768,6 @@ SirTrevor.Blocks.SolrDocumentsEmbed = (function(){
 
   return SirTrevor.Blocks.SolrDocumentsBase.extend({
     type: "solr_documents_embed",
-    show_alt_text: false,
     icon_name: "item_embed",
 
     item_options: function() { return "" },
