@@ -31,13 +31,12 @@ module Spotlight
       has_alt_text = 0
       page.content.each do |content|
         content.item&.each_value do |item|
-          next if item['alt_text_backup'].nil?
-
           can_have_alt_text += 1
           has_alt_text += 1 if item['alt_text'].present? || item['decorative'].present?
         end
       end
-      { can_have_alt_text:, has_alt_text:, page: }
+      complete = can_have_alt_text.zero? || has_alt_text / can_have_alt_text == 1
+      { can_have_alt_text:, has_alt_text:, page:, status: has_alt_text, complete: }
     end
 
     def attach_alt_text_breadcrumbs
