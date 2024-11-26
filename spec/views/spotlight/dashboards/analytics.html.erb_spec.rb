@@ -12,8 +12,7 @@ describe 'spotlight/dashboards/analytics.html.erb', type: :view do
     allow(current_exhibit).to receive(:page_analytics).and_return(data)
     allow(current_exhibit).to receive(:analytics).and_return(data)
     allow(current_exhibit).to receive(:analytics_provider).and_return(double(Spotlight::Analytics::Ga, enabled?: enabled))
-    allow(view).to receive_messages(current_exhibit:, exhibit_root_path: '/some/path', analytics_exhibit_dashboard_path: '/some/path',
-                                    exhibit_alt_text_path: '/alt-text')
+    allow(view).to receive_messages(current_exhibit:, exhibit_root_path: '/some/path', analytics_exhibit_dashboard_path: '/some/path')
   end
 
   context 'without a configured analytics integration' do
