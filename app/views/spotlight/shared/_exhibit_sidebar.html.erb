@@ -4,7 +4,7 @@
   <% if current_exhibit.analytics_provider&.enabled? %>
   <%= nav_link t(:'spotlight.curation.sidebar.analytics'), spotlight.analytics_exhibit_dashboard_path(current_exhibit) %>
   <% end %>
-  <%= nav_link t(:'spotlight.accessibility.header'), exhibit_alt_text_path(@exhibit) %>
+  <%= nav_link t(:'spotlight.accessibility.header'), spotlight.exhibit_alt_text_path(current_exhibit) %>
 </ul>
 <%= render 'spotlight/shared/configuration_sidebar' if can? :update, current_exhibit %>
 <%= render 'spotlight/shared/curation_sidebar' %>
