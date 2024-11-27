@@ -27,5 +27,12 @@
         <%= field.check_box_without_bootstrap type, checked: config.send(type), disabled: !config.immutable.send(type).nil?, hide_label: true %>
       </td>
     <% end %>
+    <td class="text-center">
+      <% if config.type %>
+        <%= t(:".types.#{config.type}") %>
+      <% end %>
+    </td>
+
+
   <% end %>
 </tr>

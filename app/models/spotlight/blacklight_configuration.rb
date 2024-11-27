@@ -253,7 +253,7 @@ module Spotlight
         original_config = blacklight_config.index_fields[custom_field.field] || {}
         field = Blacklight::Configuration::IndexField.new original_config.merge(
           custom_field.configuration.merge(
-            key: custom_field.field, field: custom_field.solr_field, custom_field: true
+            key: custom_field.field, field: custom_field.solr_field, custom_field: true, type: 'custom-field'
           )
         )
         [custom_field.field, field]
@@ -358,6 +358,7 @@ module Spotlight
 
       options = f.blacklight_options || {}
       options[:label] = f.label if f.label
+      options[:type] = 'uploaded'
 
       config.add_index_field key, options
     end
