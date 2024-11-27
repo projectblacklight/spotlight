@@ -23,7 +23,7 @@
         <% group.searches.published.each_with_index do |search, index| %>
           <div class="box category-1 justify-content-center justify-content-md-space-around">
             <%= link_to spotlight.exhibit_browse_group_path(current_exhibit, group, search), class: 'justify-content-center' do %>
-              <div class="browse-category" style='background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url("<%= search.thumbnail.iiif_url if search.thumbnail %>")'>
+              <div class="browse-category" style='background-image: url("<%= search.thumbnail.iiif_url if search.thumbnail %>")'>
                 <div class="category-caption">
                   <p class="category-title">
                     <%= search.title %>

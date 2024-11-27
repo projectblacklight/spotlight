@@ -61,12 +61,14 @@ $xl-sidebar-five-tile-width: ($container-xl-sidebar * 0.2) - $tile-margin;
   position: relative;
 
   .category-caption {
-    bottom: 16px; // assumes default font-size of 16px, using browser default of 1 rem == 16px
+    bottom: 0px;
     color: $featured-browse-category-caption-color;
     position: absolute;
     text-align: center;
-    text-shadow: 0 1px 0 $black;
     width: 100%;
+    padding: 35px 15px 15px;
+    background: linear-gradient(0deg, rgba(46, 45, 41, 0.7) 70%, rgba(46, 45, 41, 0) 100%);
+    border-radius: $border-radius-lg;
   }
 
   .category-title {
