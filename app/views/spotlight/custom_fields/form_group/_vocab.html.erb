@@ -18,6 +18,6 @@
         <%= f.text_field_without_bootstrap field.slug, multiple: field.is_multiple?, value: nil, class: "form-control field-#{field.slug}" %>
       </div>
     <% end %>
-    <%= content_tag :button, t('helpers.action.add_another'), class: 'btn btn-info btn-sm h-100', data: { action: 'add-another', template_id: "spotlight-field-template-#{field.slug}" } %>
+    <%= content_tag :button, t('helpers.action.add_another'), class: 'btn btn-info btn-sm col-auto h-100', data: { action: 'add-another', template_id: "spotlight-field-template-#{field.slug}" } %>
   <% end %>
 </div>
