@@ -5,7 +5,7 @@ module Spotlight
   # Feature pages
   class FeaturePage < Spotlight::Page
     extend FriendlyId
-    friendly_id :title, use: %i[slugged scoped finders history], scope: %i[exhibit locale] do |config|
+    friendly_id :title, use: %i[slugged scoped finders history], scope: %i[exhibit locale type] do |config|
       config.reserved_words&.concat(%w[update_all])
     end
 
