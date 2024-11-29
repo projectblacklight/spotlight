@@ -47,20 +47,9 @@ jobs:
       ENGINE_CART_RAILS_OPTIONS: "--skip-git --skip-listen --skip-spring --skip-keeps --skip-coffee --skip-test ${{ matrix.additional_engine_cart_rails_options }}"
     steps:
       - uses: actions/checkout@v4
-      # Remove these Chrome steps after https://issues.chromium.org/issues/351858989 is fixed
-      - name: Setup a specific version of Chrome
-        uses: browser-actions/setup-chrome@v1
-        id: setup-chrome
-        with:
-          chrome-version: 126
-          install-chromedriver: true
-          install-dependencies: true
-      - name: Set CHROME_BIN environment variable
-        run: echo "CHROME_BIN=${{ steps.setup-chrome.outputs.chrome-path }}" >> $GITHUB_ENV
       - name: Set up Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
         with:
-          bundler-cache: false
           bundler: "latest"
           ruby-version: ${{ matrix.ruby }}
       - name: Install dependencies
