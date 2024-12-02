@@ -13,7 +13,9 @@ describe 'Alt text dashboard', type: :feature do
                                             \"item_3\":{\"decorative\":\"on\",\"alt_text_backup\":\"\"}}}}]}")
     FactoryBot.create(:feature_page, exhibit:, content: "{\"data\":[{\"type\":\"solr_documents\",\"data\":{\"show-primary-caption\":\"false\",
                                                           \"primary-caption-field\":\"\",\"show-secondary-caption\":\"false\",\"secondary-caption-field\":\"\",
-                                                          \"format\":\"html\",\"item\":{}}}]}")
+                                                          \"format\":\"html\",\"item\":{}}}, {\"type\":\"block\",\"data\":{\"show-primary-caption\":\"false\",
+                                                          \"primary-caption-field\":\"\",\"show-secondary-caption\":\"false\",\"secondary-caption-field\":\"\",
+                                                          \"format\":\"html\",\"item\":{\"item_0\":{ \"alt_text_backup\":\"\",\"alt_text\":\"\"}}}}]}")
     login_as curator
   end
 
