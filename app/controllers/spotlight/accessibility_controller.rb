@@ -25,6 +25,8 @@ module Spotlight
       can_have_alt_text = 0
       has_alt_text = 0
       page.content.each do |content|
+        next unless content.alt_text?
+
         content.item&.each_value do |item|
           can_have_alt_text += 1
           has_alt_text += 1 if item['alt_text'].present? || item['decorative'].present?
