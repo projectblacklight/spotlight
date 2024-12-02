@@ -2,8 +2,8 @@
   <% page = p.object %>
   <div class="home_page">
     <h2><%= t('spotlight.pages.index.feature_pages.home_pages_header') %></h2>
-    <div class="card d-flex">
-      <div class="card-body d-flex bg-light page main">
+    <div class="card d-flex bg-light">
+      <div class="card-body d-flex page main">
         <div class="flex-grow-1 align-self-center">
           <%= p.hidden_field :id, value: page.id , class: 'form-control form-control-sm' %>
           <h3 class="h6 card-title" data-in-place-edit-target=".edit-in-place" data-in-place-edit-field-target="[data-edit-field-target='true']">
