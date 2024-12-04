@@ -45,7 +45,7 @@ RUN mkdir -p /spotlight/app
 WORKDIR /spotlight/app
 
 RUN yarn add file:${SPOTLIGHT_GEM}
-RUN SKIP_TRANSLATION=yes rails _${RAILS_VERSION}_ new . -a propshaft --force --template=../engine/template.rb
+RUN SKIP_TRANSLATION=yes rails _${RAILS_VERSION}_ new . -a propshaft --css bootstrap --force --template=../engine/template.rb
 RUN SKIP_TRANSLATION=yes DB_ADAPTER=nulldb  bundle exec rake assets:precompile
 
 ENTRYPOINT ["/sbin/tini", "--", "/spotlight/engine/bin/docker-entrypoint.sh"]

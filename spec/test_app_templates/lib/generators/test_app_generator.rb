@@ -20,7 +20,6 @@ class TestAppGenerator < Rails::Generators::Base
   def add_gems
     gem 'blacklight', ENV['BLACKLIGHT_VERSION'] || '~> 8.0' unless Bundler.locked_gems.dependencies.key? 'blacklight'
     gem 'blacklight-gallery', '~> 4.5' unless Bundler.locked_gems.dependencies.key? 'blacklight-gallery'
-    gem 'cssbundling-rails' unless defined?(Sprockets)
 
     unless Bundler.locked_gems.dependencies.key? 'bootstrap_form'
       bootstrap_version = ENV.fetch('BOOTSTRAP_VERSION', '~> 5.3')
@@ -65,7 +64,7 @@ class TestAppGenerator < Rails::Generators::Base
     copy_file 'fixture.png', 'app/assets/images/spotlight/themes/modern_preview.png'
 
     copy_file 'fixture.css', 'app/assets/stylesheets/application_modern.css'
-    append_to_file 'config/initializers/assets.rb', 'Rails.application.config.assets.precompile += %w( application_modern.css )'
+    append_to_file 'config/initializers/assets.rb', "\nRails.application.config.assets.precompile += %w( application_modern.css )"
 
     append_to_file 'config/initializers/spotlight_initializer.rb', "\nSpotlight::Engine.config.exhibit_themes = %w[default modern]"
   end

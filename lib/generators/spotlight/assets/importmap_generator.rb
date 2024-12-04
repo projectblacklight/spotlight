@@ -31,26 +31,6 @@ module Spotlight
         run 'yarn add leaflet'
       end
 
-      # Until https://github.com/projectblacklight/blacklight/pull/3340 is released for BL8 that changes the order of the asset generators,
-      # we need to replicate some of the behavior of Blacklight::Assets::ImportmapGenerator here, because likely the PropshaftGenerator ran.
-      def import_blacklight_javascript_assets
-        pins = {
-          '@github/auto-complete-element' => 'https://cdn.skypack.dev/@github/auto-complete-element',
-          '@popperjs/core' => 'https://ga.jspm.io/npm:@popperjs/core@2.11.6/dist/umd/popper.min.js',
-          'bootstrap' => "https://ga.jspm.io/npm:bootstrap@#{(defined?(Bootstrap) && Bootstrap::VERSION) || bootstrap_frontend_version}/dist/js/bootstrap.js"
-        }
-
-        existing_pins = File.readlines('config/importmap.rb')
-        pins.each do |name, url|
-          pin_line = "pin \"#{name}\", to: \"#{url}\""
-          append_to_file 'config/importmap.rb', "#{pin_line}\n" unless existing_pins.any? { |line| line.include?(name) }
-        end
-      end
-
-      def install_sass_bundler
-        rails_command 'css:install:sass'
-      end
-
       # Needed for the stylesheets
       def add_frontend
         if ENV['CI']
@@ -70,23 +50,10 @@ module Spotlight
         end
       end
 
-      # Until https://github.com/projectblacklight/blacklight/pull/3340 is released for BL8 that changes the order of the asset generators,
-      # we need to replicate some of the behavior of Blacklight::Assets::ImportmapGenerator here, because likely the PropshaftGenerator ran.
-      def add_blacklight_javascript
-        application_js = File.read('app/javascript/application.js')
-
-        imports = [
-          'import bootstrap from "bootstrap"',
-          'import githubAutoCompleteElement from "@github/auto-complete-element"',
-          'import Blacklight from "blacklight"'
-        ]
-
-        imports.each do |import_line|
-          append_to_file 'app/javascript/application.js', "#{import_line}\n" unless application_js.include?(import_line)
-        end
-      end
-
       def add_javascript
+        # This may have been added from Blacklight, but it is a Spotlight dependency so ensure it is present.
+        insert_into_file 'app/javascript/application.js', "import githubAutoCompleteElement from \"@github/auto-complete-element\"\n"
+
         append_to_file 'app/javascript/application.js' do
           <<~CONTENT
 
@@ -101,7 +68,7 @@ module Spotlight
 
       def add_stylesheets
         copy_file 'assets/spotlight.scss', 'app/assets/stylesheets/spotlight.scss'
-        append_to_file 'app/assets/stylesheets/application.sass.scss' do
+        append_to_file 'app/assets/stylesheets/application.bootstrap.scss' do
           <<~CONTENT
             @import "spotlight";
           CONTENT
