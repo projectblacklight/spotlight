@@ -3,7 +3,7 @@
     <% featured_pages_block.pages.each_with_index do |page, index| %>
       <div class="box category-<%= (index + 1) %>">
         <%= link_to [spotlight, current_exhibit, page] do %>
-          <div class="browse-category" style='background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)) <%= ", url(\"#{page.thumbnail_image_url}\")" if page.thumbnail_image_url %>'>
+          <div class="browse-category" style='background-image: <%= "url(\"#{page.thumbnail_image_url}\")" if page.thumbnail_image_url %>'>
             <div class="category-caption">
               <p class="category-title">
                 <%= page.title %>
