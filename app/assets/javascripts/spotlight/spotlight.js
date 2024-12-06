@@ -3983,6 +3983,10 @@
 
   class Croppable {
     connect() {
+     this.initializeExistingCropper();
+    }
+
+    initializeExistingCropper() {
       $('[data-behavior="iiif-cropper"]').each(function() {
         var cropElement = $(this);
         new Crop(cropElement).render();
@@ -4605,6 +4609,7 @@
         var editor = new SirTrevor.Editor({
           el: instance[0],
           blockTypes: instance.data('blockTypes'),
+          altTextSettings: instance.data('altTextSettings'),
           defaultType:["Text"],
           onEditorRender: function() {
             $.SerializedForm();
@@ -5454,18 +5459,17 @@
       formable: true,
       autocompleteable: true,
       show_heading: true,
-      show_alt_text: true,
-
+      show_image_selection: true,
       title: function() { return i18n.t("blocks:" + this.type + ":title"); },
       description: function() { return i18n.t("blocks:" + this.type + ":description"); },
-      alt_text_guidelines: function() { 
-        if (this.show_alt_text) {
+      alt_text_guidelines: function() {
+        if (this.showAltText()) {
           return i18n.t("blocks:alt_text_guidelines:intro"); 
         }
         return "";
       },
       alt_text_guidelines_link: function() {
-        if (this.show_alt_text) {
+        if (this.showAltText()) {
           var link_url = i18n.t("blocks:alt_text_guidelines:link_url");
           var link_label = i18n.t("blocks:alt_text_guidelines:link_label");
           return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>'; 
@@ -5491,12 +5495,29 @@
       },
 
       _altTextFieldsHTML: function(index, data) {
-        if (this.show_alt_text) {
+        if (this.showAltText()) {
           return this.altTextHTML(index, data);
         }
         return "";
       },
 
+      showAltText: function() {
+        return this.editorOptions.altTextSettings[this._typeAsCamelCase()]
+      },
+
+      _typeAsCamelCase: function() {
+        return this.type
+            .split('_')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join('');
+      },
+      _itemSelectImageLink: function(data) {
+        var markup = `
+        <div>
+          <a name="selectimage" href="${data.url}/select_image" data-blacklight-modal="trigger">Select image</a>
+        </div>`;
+        return markup;
+      },
       _itemPanel: function(data) {
         var index = "item_" + this.globalIndex++;
         var checked;
@@ -5523,7 +5544,8 @@
                     </div>
                     <div class="pic">
                       <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
-                    </div>
+                      ${this._itemSelectImageLink(data)}
+                      </div>
                     <div class="main">
                       <div class="title card-title">${data.title}</div>
                       <div>${(data.slug || data.id)}</div>
@@ -5555,7 +5577,7 @@
       },
 
       afterPanelRender: function(data, panel) {
-
+         
       },
 
       afterPanelDelete: function() {
@@ -5563,6 +5585,8 @@
       },
 
       createItemPanel: function(data) {
+        console.log("Create Item Panel");
+        console.log(data);
         var panel = this._itemPanel(data);
         this.attachAltTextHandlers(panel);
         $(panel).appendTo($('.panels > ol', this.inner));
@@ -5634,7 +5658,7 @@
       },
 
       attachAltTextHandlers: function(panel) {
-        if (this.show_alt_text) {
+        if (this.showAltText()) {
           const decorativeCheckbox = $('input[name$="[decorative]"]', panel);
           const altTextInput = $('textarea[name$="[alt_text]"]', panel);
           const altTextBackupInput = $('input[name$="[alt_text_backup]"]', panel);
@@ -5669,7 +5693,52 @@
         $.each(Object.keys(data.item || {}).map(function(k) { return data.item[k]}).sort(function(a,b) { return a.weight - b.weight; }), function(index, item) {
           context.createItemPanel(item);
         });
+        // For resource blocks that allow for selection of region for images for items
+        if(this.show_image_selection) {
+          this.attachModalHandler();
+        }
       },
+
+      attachModalHandler: function() {
+        var context  = this;
+        document.addEventListener('show.blacklight.blacklight-modal', function(e) {
+          context.setCropperFields();
+          var c = new Croppable();
+          c.initializeExistingCropper();
+        });
+        
+      },
+
+      setCropperFields: function() {
+        var dataCropperDiv = $('#blacklight-modal [data-cropper]');
+        var prefix = dataCropperDiv.data('form-prefix');
+        var idField = $('#' + prefix + '_id');
+        var id = idField.val();
+        // The elements in the blacklight modal
+        var iiifUrlField = $('#' + prefix + '_iiif_tilesource');
+        var iiifRegionField = $('#' + prefix + '_iiif_region');
+        var iiifManifestField = $('#' + prefix + '_iiif_manifest_url');
+        var iiifCanvasField = $('#' + prefix + '_iiif_canvas_id');
+        var iiifImageField = $('#' + prefix + '_iiif_image_id');
+
+        //With the ID, get the hidden inputs related to this particular element in the form
+        var itemPanelInfo = $("li[data-resource-id='" + id + "']");
+        var dataId = itemPanelInfo.data('id');
+        var itemPrefix = "input[name='item[" + dataId + "]";
+        // Get values from the item panel which already includes the IIIF values needed
+        var url = $(itemPrefix + "[iiif_tilesource]'").val();
+        var region = $(itemPrefix + "[iiif_region]'").val();
+        var manifest = $(itemPrefix + "[iiif_manifest_url]'").val();
+        var canvas = $(itemPrefix + "[iiif_canvas_id]'").val();
+        var image = $(itemPrefix + "[iiif_image_id]'").val();
+
+        // Set the values in the blacklight modal window
+        iiifUrlField.val(url);
+        iiifRegionField.val(region);
+        iiifManifestField.val(manifest);
+        iiifCanvasField.val(canvas);
+        iiifImageField.val(image);
+      }
     });
 
   })();
@@ -6103,7 +6172,7 @@
         $(panel).find('[name$="[iiif_canvas_id]"]').val(manifest_data.canvasId);
         $(panel).find('img.img-thumbnail').attr('src', manifest_data.thumbnail_image_url || manifest_data.tilesource.replace("/info.json", "/full/100,100/0/default.jpg"));
       },
-      afterPanelRender: function(data, panel) {
+      afterPanelRender: function(data, panel) {      
         var context = this;
         var manifestUrl = data.iiif_manifest || data.iiif_manifest_url;
 
@@ -6270,8 +6339,8 @@
 
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
       type: "solr_documents_embed",
-      show_alt_text: false,
       icon_name: "item_embed",
+      show_image_selection: false,
 
       item_options: function() { return "" },
 

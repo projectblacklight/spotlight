@@ -1,0 +1,35 @@
+<%= render Blacklight::System::ModalComponent.new do |component| %>
+  <% component.with_title { "Select Image Section" } %>
+  <% component.with_body do %>
+    
+  <%# @document.inspect %>
+  <!--form>
+    <div data-cropper="doccropper" data-form-prefix = "i">
+        <input type="hidden" id="i_id" value="dy396mt9665">
+        <input type="hidden" id="i_title" value="a Map of the Middle Part of AMERICA">
+        <input type="hidden" id="i_thumbnail_image_url" value="">
+        <input type="hidden" id="i_full_image_url" value="">
+        <input type="hidden" id="i_iiif_tilesource" value="https://stacks.stanford.edu/image/iiif/dy396mt9665/dy396mt9665_05_0001/info.json">
+        <input type="hidden" id="i_iiif_manifest_url" value="https://purl.stanford.edu/dy396mt9665/iiif/manifest.json">
+        <input type="hidden" id="i_iiif_canvas_id" value="https://purl.stanford.edu/dy396mt9665/iiif/canvas/cocina-fileSet-dy396mt9665-dy396mt9665_1">
+        <input type="hidden" id="i_iiif_image_id" value="https://purl.stanford.edu/dy396mt9665/iiif/annotation/cocina-fileSet-dy396mt9665-dy396mt9665_1">
+        <div id="i_iiif_cropper" data-behavior="iiif-cropper" data-cropper-key="doccropper" data-crop-width="500" data-crop-height="500">
+        </div>
+    </div>
+  </form-->
+  <%= bootstrap_form_for @document, url: "#" do |m| %>
+    <%= m.fields_for(:thumbnail, @exhibit.thumbnail || @exhibit.build_thumbnail) do |f| %>
+      <div data-cropper="<%= f.object.model_name.singular_route_key %>" data-form-prefix="<%= helpers.form_prefix(f) %>">
+        <%= f.hidden_field :id, value: @id %>
+        <%= field_set_tag(t(:'.source.remote.header')) do %>
+          <p class="instructions"><%= t(:'.crop_area.help_html', thing: :thumbnail) %></p>
+          <%= helpers.iiif_cropper_tags f, initial_crop_selection: Spotlight::Engine.config.thumbnail_initial_crop_selection %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+
+    
+  <% end %>
+<% end %>
+

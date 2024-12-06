@@ -134,6 +134,13 @@ module Spotlight
       end
     end
 
+    def select_image
+      @select_id = params[:id]
+      @select_exhibit = params[:exhibit_id]
+      load_document
+      respond_to :html
+    end
+
     protected
 
     def load_document

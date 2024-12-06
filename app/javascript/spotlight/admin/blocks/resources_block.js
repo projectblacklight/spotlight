@@ -1,5 +1,7 @@
 import Core from 'spotlight/core'
 import SpotlightNestable from 'spotlight/admin/spotlight_nestable'
+import { addImageSelector } from 'spotlight/admin/add_image_selector'
+import Croppable from 'spotlight/admin/croppable'
 
 Core.Block.Resources = (function(){
 
@@ -8,6 +10,7 @@ Core.Block.Resources = (function(){
     formable: true,
     autocompleteable: true,
     show_heading: true,
+    show_image_selection: true,
     title: function() { return i18n.t("blocks:" + this.type + ":title"); },
     description: function() { return i18n.t("blocks:" + this.type + ":description"); },
     alt_text_guidelines: function() {
@@ -59,7 +62,13 @@ Core.Block.Resources = (function(){
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join('');
     },
-
+    _itemSelectImageLink: function(data) {
+      var markup = `
+        <div>
+          <a name="selectimage" href="${data.url}/select_image" data-blacklight-modal="trigger">Select image</a>
+        </div>`;
+      return markup;
+    },
     _itemPanel: function(data) {
       var index = "item_" + this.globalIndex++;
       var checked;
@@ -70,7 +79,7 @@ Core.Block.Resources = (function(){
       }
       var resource_id = data.slug || data.id;
       var markup = `
-          <li class="field form-inline dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+          <li class="field form-inline dd-item dd3-item" data-cropper="select_image" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][title]" value="${data.title}" />
             ${this._itemPanelIiifFields(index, data)}
@@ -86,7 +95,8 @@ Core.Block.Resources = (function(){
                     </div>
                     <div class="pic">
                       <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
-                    </div>
+                      ${this._itemSelectImageLink(data)}
+                      </div>
                     <div class="main">
                       <div class="title card-title">${data.title}</div>
                       <div>${(data.slug || data.id)}</div>
@@ -118,7 +128,7 @@ Core.Block.Resources = (function(){
     },
 
     afterPanelRender: function(data, panel) {
-
+       
     },
 
     afterPanelDelete: function() {
@@ -126,6 +136,8 @@ Core.Block.Resources = (function(){
     },
 
     createItemPanel: function(data) {
+      console.log("Create Item Panel");
+      console.log(data);
       var panel = this._itemPanel(data);
       this.attachAltTextHandlers(panel);
       $(panel).appendTo($('.panels > ol', this.inner));
@@ -232,7 +244,59 @@ Core.Block.Resources = (function(){
       $.each(Object.keys(data.item || {}).map(function(k) { return data.item[k]}).sort(function(a,b) { return a.weight - b.weight; }), function(index, item) {
         context.createItemPanel(item);
       });
+      // For resource blocks that allow for selection of region for images for items
+      if(this.show_image_selection) {
+        this.attachModalHandler();
+      }
     },
+
+    attachModalHandler: function() {
+      var context  = this;
+      document.addEventListener('show.blacklight.blacklight-modal', function(e) {
+        //Will be changing this
+        context.setCropperFields();
+        //context.setCropperDiv();
+        //console.log("Creating new croppable object and initializing");
+        var c = new Croppable();
+        c.initializeExistingCropper();
+      });
+      
+    },
+
+    setCropperDiv: function() {
+      // Set properties on the div instead
+    },
+
+    setCropperFields: function() {
+      var dataCropperDiv = $('#blacklight-modal [data-cropper]');
+      var prefix = dataCropperDiv.data('form-prefix');
+      var idField = $('#' + prefix + '_id');
+      var id = idField.val();
+      // The elements in the blacklight modal
+      var iiifUrlField = $('#' + prefix + '_iiif_tilesource');
+      var iiifRegionField = $('#' + prefix + '_iiif_region');
+      var iiifManifestField = $('#' + prefix + '_iiif_manifest_url');
+      var iiifCanvasField = $('#' + prefix + '_iiif_canvas_id');
+      var iiifImageField = $('#' + prefix + '_iiif_image_id');
+
+      //With the ID, get the hidden inputs related to this particular element in the form
+      var itemPanelInfo = $("li[data-resource-id='" + id + "']");
+      var dataId = itemPanelInfo.data('id');
+      var itemPrefix = "input[name='item[" + dataId + "]";
+      // Get values from the item panel which already includes the IIIF values needed
+      var url = $(itemPrefix + "[iiif_tilesource]'").val();
+      var region = $(itemPrefix + "[iiif_region]'").val();
+      var manifest = $(itemPrefix + "[iiif_manifest_url]'").val();
+      var canvas = $(itemPrefix + "[iiif_canvas_id]'").val();
+      var image = $(itemPrefix + "[iiif_image_id]'").val();
+
+      // Set the values in the blacklight modal window
+      iiifUrlField.val(url);
+      iiifRegionField.val(region);
+      iiifManifestField.val(manifest);
+      iiifCanvasField.val(canvas);
+      iiifImageField.val(image);
+    }
   });
 
 })();
