@@ -4605,6 +4605,7 @@
         var editor = new SirTrevor.Editor({
           el: instance[0],
           blockTypes: instance.data('blockTypes'),
+          altTextSettings: instance.data('altTextSettings'),
           defaultType:["Text"],
           onEditorRender: function() {
             $.SerializedForm();
@@ -5454,18 +5455,16 @@
       formable: true,
       autocompleteable: true,
       show_heading: true,
-      show_alt_text: true,
-
       title: function() { return i18n.t("blocks:" + this.type + ":title"); },
       description: function() { return i18n.t("blocks:" + this.type + ":description"); },
-      alt_text_guidelines: function() { 
-        if (this.show_alt_text) {
+      alt_text_guidelines: function() {
+        if (this.showAltText()) {
           return i18n.t("blocks:alt_text_guidelines:intro"); 
         }
         return "";
       },
       alt_text_guidelines_link: function() {
-        if (this.show_alt_text) {
+        if (this.showAltText()) {
           var link_url = i18n.t("blocks:alt_text_guidelines:link_url");
           var link_label = i18n.t("blocks:alt_text_guidelines:link_label");
           return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>'; 
@@ -5491,10 +5490,21 @@
       },
 
       _altTextFieldsHTML: function(index, data) {
-        if (this.show_alt_text) {
+        if (this.showAltText()) {
           return this.altTextHTML(index, data);
         }
         return "";
+      },
+
+      showAltText: function() {
+        return this.editorOptions.altTextSettings[this._typeAsCamelCase()]
+      },
+
+      _typeAsCamelCase: function() {
+        return this.type
+            .split('_')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join('');
       },
 
       _itemPanel: function(data) {
@@ -5634,7 +5644,7 @@
       },
 
       attachAltTextHandlers: function(panel) {
-        if (this.show_alt_text) {
+        if (this.showAltText()) {
           const decorativeCheckbox = $('input[name$="[decorative]"]', panel);
           const altTextInput = $('textarea[name$="[alt_text]"]', panel);
           const altTextBackupInput = $('input[name$="[alt_text_backup]"]', panel);
@@ -6270,7 +6280,6 @@
 
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
       type: "solr_documents_embed",
-      show_alt_text: false,
       icon_name: "item_embed",
 
       item_options: function() { return "" },
@@ -6475,8 +6484,8 @@
           </div>
           <div class="col-md-4">
             <input name="${this.zpr_key}" type="hidden" value="false" />
-            <input name="${this.zpr_key}" id="${this.formId(this.zpr_key)}" data-key=${this.zpr_key}" type="checkbox" value="true" />
-            <label for="${this.formId(this.zpr_key)}">${ i18n.t("blocks:solr_documents:zpr:title")}</label>
+            <input name="${this.zpr_key}" id="${this.formId(this.zpr_key)}" data-key="${this.zpr_key}" type="checkbox" value="true" />
+            <label for="${this.formId(this.zpr_key)}">${i18n.t("blocks:solr_documents:zpr:title")}</label>
           </div>
         </div>
         ${this.text_area()}

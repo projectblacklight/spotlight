@@ -137,8 +137,8 @@ SirTrevor.Blocks.UploadedItems = (function(){
           </div>
           <div class="col-md-4">
             <input name="${this.zpr_key}" type="hidden" value="false" />
-            <input name="${this.zpr_key}" id="${this.formId(this.zpr_key)}" data-key=${this.zpr_key}" type="checkbox" value="true" />
-            <label for="${this.formId(this.zpr_key)}">${ i18n.t("blocks:solr_documents:zpr:title")}</label>
+            <input name="${this.zpr_key}" id="${this.formId(this.zpr_key)}" data-key="${this.zpr_key}" type="checkbox" value="true" />
+            <label for="${this.formId(this.zpr_key)}">${i18n.t("blocks:solr_documents:zpr:title")}</label>
           </div>
         </div>
         ${this.text_area()}
