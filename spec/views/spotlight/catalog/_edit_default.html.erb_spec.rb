@@ -16,7 +16,6 @@ describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
     allow(view).to receive(:uploaded_field_label) do |config|
       "#{config.field_name} label"
     end
-    expect(view).to receive_messages(exhibit_tags_path: 'autocomplete-path.json')
     expect(view).to receive_messages(current_exhibit: exhibit)
     expect(view).to receive_messages(document:)
     expect(view).to receive(:can?).at_least(:once).and_return(true)
@@ -25,7 +24,6 @@ describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
   it 'has a edit tag form' do
     render
     expect(rendered).to have_field 'solr_document_exhibit_tag_list'
-    expect(rendered).to have_selector '#solr_document_exhibit_tag_list[@data-autocomplete-url="autocomplete-path.json"]'
   end
 
   it 'does not have special metadata editing fields for non-uploaded resources' do

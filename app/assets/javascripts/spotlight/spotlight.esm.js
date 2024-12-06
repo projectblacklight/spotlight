@@ -1,6 +1,7 @@
 import Clipboard from 'clipboard';
 import SirTrevor$1 from 'sir-trevor';
 import Sortable from 'sortablejs';
+import { Controller } from '@hotwired/stimulus';
 
 // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
 // Includes "export default tns" at the end of the file for spotlight/user/browse_group_categories.js
@@ -4063,46 +4064,6 @@ class EditInPlace {
   }
 }
 
-class ExhibitTagAutocomplete {
-  connect() {
-    $('[data-autocomplete-tag="true"]').each(function(_i, el) {
-      var $el = $(el);
-      // By default tags input binds on page ready to [data-role=tagsinput],
-      // however, that doesn't work with Turbolinks. So we init manually:
-      $el.tagsinput();
-
-      var tags = new Bloodhound({
-        datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 100,
-        prefetch: {
-          url: $el.data('autocomplete-url'),
-          ttl: 1,
-          filter: function(list) {
-            // Let the dom know that the response has been returned
-            $el.attr('data-autocomplete-fetched', true);
-            return $.map(list, function(tag) { return { name: tag }; });
-          }
-        }
-      });
-
-      tags.initialize();
-
-      $el.tagsinput('input').typeahead({highlight: true, hint: false}, {
-        name: 'tags',
-        displayKey: 'name',
-        source: tags.ttAdapter()
-      }).bind('typeahead:selected', $.proxy(function (obj, datum) {
-        $el.tagsinput('add', datum.name);
-        $el.tagsinput('input').typeahead('val', '');
-      })).bind('blur', function() {
-        $el.tagsinput('add', $el.tagsinput('input').typeahead('val'));
-        $el.tagsinput('input').typeahead('val', '');
-      });
-    });
-  }
-}
-
 /*
 https://gist.github.com/pjambet/3710461
 */
@@ -4603,6 +4564,7 @@ class Pages {
       var editor = new SirTrevor.Editor({
         el: instance[0],
         blockTypes: instance.data('blockTypes'),
+        altTextSettings: instance.data('altTextSettings'),
         defaultType:["Text"],
         onEditorRender: function() {
           $.SerializedForm();
@@ -5452,18 +5414,16 @@ Spotlight$1.Block.Resources = (function(){
     formable: true,
     autocompleteable: true,
     show_heading: true,
-    show_alt_text: true,
-
     title: function() { return i18n.t("blocks:" + this.type + ":title"); },
     description: function() { return i18n.t("blocks:" + this.type + ":description"); },
-    alt_text_guidelines: function() { 
-      if (this.show_alt_text) {
+    alt_text_guidelines: function() {
+      if (this.showAltText()) {
         return i18n.t("blocks:alt_text_guidelines:intro"); 
       }
       return "";
     },
     alt_text_guidelines_link: function() {
-      if (this.show_alt_text) {
+      if (this.showAltText()) {
         var link_url = i18n.t("blocks:alt_text_guidelines:link_url");
         var link_label = i18n.t("blocks:alt_text_guidelines:link_label");
         return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>'; 
@@ -5489,10 +5449,21 @@ Spotlight$1.Block.Resources = (function(){
     },
 
     _altTextFieldsHTML: function(index, data) {
-      if (this.show_alt_text) {
+      if (this.showAltText()) {
         return this.altTextHTML(index, data);
       }
       return "";
+    },
+
+    showAltText: function() {
+      return this.editorOptions.altTextSettings[this._typeAsCamelCase()]
+    },
+
+    _typeAsCamelCase: function() {
+      return this.type
+          .split('_')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join('');
     },
 
     _itemPanel: function(data) {
@@ -5632,7 +5603,7 @@ Spotlight$1.Block.Resources = (function(){
     },
 
     attachAltTextHandlers: function(panel) {
-      if (this.show_alt_text) {
+      if (this.showAltText()) {
         const decorativeCheckbox = $('input[name$="[decorative]"]', panel);
         const altTextInput = $('textarea[name$="[alt_text]"]', panel);
         const altTextBackupInput = $('input[name$="[alt_text_backup]"]', panel);
@@ -6268,7 +6239,6 @@ SirTrevor.Blocks.SolrDocumentsEmbed = (function(){
 
   return SirTrevor.Blocks.SolrDocumentsBase.extend({
     type: "solr_documents_embed",
-    show_alt_text: false,
     icon_name: "item_embed",
 
     item_options: function() { return "" },
@@ -6795,7 +6765,6 @@ class AdminIndex {
     new CopyEmailAddress().connect();
     new Croppable().connect();
     new EditInPlace().connect();
-    new ExhibitTagAutocomplete().connect();
     new Exhibits().connect();
     new FormObserver().connect();
     new Locks().connect();
@@ -6812,7 +6781,243 @@ class AdminIndex {
   }
 }
 
+class TagSelectorController extends Controller {
+
+  static targets = [
+    'addNewTagWrapper',
+    'dropdownContent',
+    'initialTags',
+    'newTag',
+    'searchResultTags',
+    'selectedTags',
+    'tagControlWrapper',
+    'tagSearch',
+    'tagsField',
+    'tagSearchDropdown',
+    'tagSearchInputWrapper'
+  ]
+
+  static values = {
+    tags: Array,
+    translations: Object
+  }
+
+  tagDropdown (event) {
+    const isHidden = this.dropdownContentTarget.classList.contains('d-none');
+    this.dropdownContentTarget.classList.toggle('d-none');
+    this.tagSearchDropdownTarget.querySelector('.dropdown-toggle').innerHTML = `<i class="bi bi-caret-${isHidden ? 'up' : 'down'}">`;
+  }
+
+  clickOutside (event) {
+    const isShown = !this.dropdownContentTarget.classList.contains('d-none');
+    const inSelected = event.target.classList.contains('pill-close');
+    const inContainer = this.tagControlWrapperTarget.contains(event.target);
+    if (!inContainer && !inSelected && isShown) {
+      this.tagDropdown(event);
+    }
+  }
+
+  handleKeydown (event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const hidden = this.dropdownContentTarget.classList.contains('d-none');
+      if (hidden) return;
+
+      const tagElementToAdd = this.dropdownContentTarget.querySelector('.active')?.firstElementChild;
+      if (tagElementToAdd) tagElementToAdd.click();
+    }
+
+    if (event.key === ',') {
+      event.preventDefault();
+      if (this.tagSearchTarget.value.length === 0) return
+
+      if (!this.addNewTagWrapperTarget.classList.contains('d-none')) {
+        this.addNewTagWrapperTarget.click();
+        this.tagSearchTarget.focus();
+        return
+      }
+
+      const exactMatch = this.dropdownContentTarget.querySelector('.active')?.firstElementChild;
+      if (exactMatch?.checked === false) {
+        exactMatch.click();
+        this.resetSearch(event);
+      }
+      this.tagSearchTarget.focus();
+    }
+  }
+
+  addNewTag (event) {
+    if (this.addNewTagWrapperTarget.classList.contains('d-none') || this.newTagTarget.dataset.tag.length === 0) {
+      return
+    }
+
+    this.tagsValue = this.tagsValue.concat([this.newTagTarget.dataset.tag]);
+    this.resetSearch(event);
+  }
+
+  resetSearch(event) {
+    this.tagSearchTarget.value = '';
+    this.newTagTarget.innerHTML = '';
+    this.newTagTarget.dataset.tag = '';
+    this.newTagTarget.disabled = true;
+    this.addNewTagWrapperTarget.classList.remove('d-block');
+    this.addNewTagWrapperTarget.classList.add('d-none');
+
+    this.searchResultTagsTargets.forEach(target => {
+      target.parentElement.classList.add('d-block');
+      target.parentElement.classList.remove('d-none');
+    });
+  }
+
+  tagUpdate (event) {
+    const target = event.target ? event.target : event;
+    if (target.checked) {
+      this.tagsValue = this.tagsValue.concat([target.dataset.tag]);
+    } else {
+      this.tagsValue = this.tagsValue.filter(tag => tag !== target.dataset.tag);
+    }
+  }
+
+  updateSearchResultsPlaceholder(event) {
+    const placeholderElement = this.dropdownContentTarget.querySelector('.no-results');
+    if (!placeholderElement) return
+
+    const visibleTags = this.dropdownContentTarget.querySelectorAll('label:not(.d-none):not(.no-results)');
+    if (visibleTags.length === 0) {
+      placeholderElement.classList.remove('d-none');
+    } else {
+      placeholderElement.classList.add('d-none');
+    }
+  }
+
+  tagCreate(event) {
+    event.preventDefault();
+    const newTagCheckbox = document.createElement('label');
+    newTagCheckbox.classList.add('d-block');
+    newTagCheckbox.innerHTML = `<input type="checkbox" checked data-action="click->${this.identifier}#tagUpdate" data-tag-selector-target="searchResultTags" data-tag="${this.newTagTarget.dataset.tag}"> ${this.newTagTarget.dataset.tag}`;
+
+    const existingTags = Array.from(this.dropdownContentTarget.querySelectorAll('label:not(#add-new-tag-wrapper)'));
+    const insertPosition = existingTags.findIndex(tag => tag.textContent.trim().localeCompare(this.newTagTarget.dataset.tag) > 0);
+    if (insertPosition === -1) {
+      this.addNewTagWrapperTarget.insertAdjacentElement('beforebegin', newTagCheckbox);
+    } else {
+      existingTags[insertPosition].insertAdjacentElement('beforebegin', newTagCheckbox);
+    }
+
+    this.tagsValue = this.tagsValue.concat([this.newTagTarget.dataset.tag]);
+    this.tagSearchTarget.value = '';
+    this.tagSearchTarget.dispatchEvent(new Event('input'));
+  }
+
+  tagsValueChanged () {
+    if (this.tagsValue.length === 0) {
+      this.selectedTagsTarget.classList.add('d-none');
+      this.tagSearchInputWrapperTarget.classList.add('rounded');
+      this.tagSearchInputWrapperTarget.classList.remove('rounded-bottom');
+    } else {
+      this.selectedTagsTarget.classList.remove('d-none');
+      this.tagSearchInputWrapperTarget.classList.add('rounded-bottom');
+      this.tagSearchInputWrapperTarget.classList.remove('rounded');
+      this.selectedTagsTarget.innerHTML = `<ul class="list-unstyled border rounded-top mb-0 p-1">${this.renderTagPills()}</ul>`;
+    }
+
+    // The backend expects the comma with the space. If we're not careful here, observedFormsStatusHasChanged
+    // will return true and warn the user that the form has changed, even when it really hasn't.
+    const newValue = this.tagsValue.join(', ');
+    if (this.tagsFieldTarget.value !== newValue) {
+      this.tagsFieldTarget.value = newValue;
+    }
+  }
+
+  normalizeTag (tag) {
+    const normalizeRegex = /[^\w\s]/gi;
+    return tag.replace(normalizeRegex, '').toLowerCase().trim()
+  }
+
+  search (event) {
+    const searchTerm = this.normalizeTag(event.target.value);
+    let exactMatch = false;
+    this.dropdownContentTarget.classList.remove('d-none');
+
+    this.searchResultTagsTargets.forEach(target => {
+      target.parentElement.classList.remove('active');
+      const compareTerm = this.normalizeTag(target.dataset.tag);
+      if (compareTerm.includes(searchTerm)) {
+        target.parentElement.classList.add('d-block');
+        target.parentElement.classList.remove('d-none');
+        if (compareTerm === searchTerm) exactMatch = true;
+      } else {
+        target.parentElement.classList.add('d-none');
+        target.parentElement.classList.remove('d-block');
+      }
+    });
+
+    if (searchTerm.length > 0 && !exactMatch) {
+      this.addNewTagWrapperTarget.classList.remove('d-none');
+      this.addNewTagWrapperTarget.classList.add('d-block');
+    } else {
+      this.addNewTagWrapperTarget.classList.add('d-none');
+      this.addNewTagWrapperTarget.classList.remove('d-block');
+    }
+    this.addNewTagWrapperTarget.classList.remove('active');
+
+    const firstVisibleTag = this.dropdownContentTarget.querySelector('label.d-block');
+    if (firstVisibleTag) {
+      firstVisibleTag.classList.add('active');
+    }
+  }
+
+  updateTagToAdd (event) {
+    const tagAlreadyAdded = this.tagsValue.some(tag =>
+      this.normalizeTag(tag) === this.normalizeTag(event.target.value)
+    );
+    this.newTagTarget.dataset.tag = event.target.value.trim();
+    this.newTagTarget.nextSibling.textContent = ` ${this.translationsValue.add_new_tag}: ${event.target.value}`;
+    this.newTagTarget.disabled = !this.newTagTarget.dataset.tag.length || tagAlreadyAdded;
+  }
+
+  deselect (event) {
+    event.preventDefault();
+
+    const clickedTag = event.target.closest('button');
+    const target = this.searchResultTagsTargets.find((tag) => tag.dataset.tag === clickedTag.dataset.tag);
+    if (target) {
+      target.checked = false;
+      this.tagUpdate(target);
+    } else {
+      this.tagsValue = this.tagsValue.filter(tag => tag !== clickedTag.dataset.tag);
+    }
+  }
+
+  renderTagPills () {
+    return this.tagsValue.map((tag) => {
+      return `
+        <li class="d-inline-flex gap-2 align-items-center my-2">
+          <span class="bg-light badge rounded-pill border selected-item d-inline-flex align-items-center text-dark">
+            <span class="selected-item-label d-inline-flex">${tag}</span>
+            <button
+              type="button"
+              data-action="${this.identifier}#deselect"
+              data-tag="${tag}"
+              class="btn-close close ms-1 ml-1"
+              aria-label="${this.translationsValue.remove} ${tag}"
+            ><span aria-hidden="true" class="visually-hidden">&times;</span></button>
+          </span>
+        </li>
+      `
+    }).join('')
+  }
+}
+
+class SpotlightControllers {
+  connect() {
+    if (typeof Stimulus === "undefined") return
+    Stimulus.register('tag-selector', TagSelectorController);
+  }
+}
+
 Spotlight$1.onLoad(() => {
+  new SpotlightControllers().connect();
   new UserIndex().connect();
   new AdminIndex().connect();
 });
