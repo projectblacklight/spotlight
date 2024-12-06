@@ -56,9 +56,3 @@
     <% end %>
   </tbody>
 </table>
-
-<% unless params[:show_all] || @pages.length < @limit %>
-  <%= link_to '?show_all=true', class: 'ml-3' do %>
-    Show all<%= blacklight_icon('chevron_right') %>
-  <% end %>
-<% end %>
