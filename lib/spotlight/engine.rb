@@ -188,6 +188,13 @@ module Spotlight
       end
     end
 
+    initializer 'components.initialize' do
+      ActiveSupport::Reloader.to_prepare do
+        Spotlight::Engine.config.spotlight = OpenStruct.new
+        Spotlight::Engine.config.spotlight.header_navigation_link_component = Spotlight::HeaderNavigationLinkComponent
+      end
+    end
+
     # After creating a property for your site on Google Analytics, you need to:
     # a) Enable Google Analytics API in https://console.cloud.google.com/
     # b) generate and download the JSON key and make it accessible to your application
