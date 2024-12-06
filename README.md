@@ -10,7 +10,7 @@ Read more about what Spotlight is, our motivations for creating it, and how to i
 ## Requirements
 
 1. [Ruby](https://www.ruby-lang.org/) 3.1+
-2. [Ruby on Rails](https://rubyonrails.org/) 7.x
+2. [Ruby on Rails](https://rubyonrails.org/) 7.1+
 3. Java (11 or greater) *for Solr*
 4. ImageMagick (http://www.imagemagick.org/script/index.php) due to [carrierwave](https://github.com/carrierwaveuploader/carrierwave#adding-versions)
 
@@ -19,13 +19,13 @@ Read more about what Spotlight is, our motivations for creating it, and how to i
 To bootstrap a new Rails application using [importmap-rails](https://github.com/rails/importmap-rails):
 
 ```
-$ SKIP_TRANSLATION=1 rails new app-name -m https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb -a propshaft -j importmap
+$ SKIP_TRANSLATION=1 rails new app-name -m https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb -a propshaft --css bootstrap
 ```
 
 or using [jsbundling-rails](https://github.com/rails/jsbundling-rails) with [esbuild](https://esbuild.github.io/):
 
 ```
-$ SKIP_TRANSLATION=1 rails new app-name -m https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb -a propshaft -j esbuild
+$ SKIP_TRANSLATION=1 rails new app-name -m https://raw.githubusercontent.com/projectblacklight/spotlight/main/template.rb -a propshaft -j esbuild --css bootstrap
 ```
 
 or from an existing Rails application:

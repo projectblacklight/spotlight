@@ -45,14 +45,6 @@ module Spotlight
         end
       end
 
-      def install_javascript_bundler
-        rails_command 'javascript:install:esbuild'
-      end
-
-      def install_sass_bundler
-        rails_command 'css:install:sass'
-      end
-
       # Pick a version of the frontend asset package and install it.
       def add_frontend
         if ENV['CI']
@@ -76,11 +68,11 @@ module Spotlight
         copy_file 'javascript/jquery-shim.js', 'app/javascript/jquery-shim.js'
         gsub_file 'app/javascript/application.js', 'import "controllers"', '// import "controllers"'
 
+        # This may have been added from Blacklight, but it is a Spotlight dependency so ensure it is present.
+        insert_into_file 'app/javascript/application.js', "import githubAutoCompleteElement from \"@github/auto-complete-element\";\n"
+
         append_to_file 'app/javascript/application.js' do
           <<~CONTENT
-            import githubAutoCompleteElement from "@github/auto-complete-element"
-            import * as bootstrap from "bootstrap"
-            import Blacklight from "blacklight-frontend"
             import Spotlight from "spotlight-frontend"
 
             Blacklight.onLoad(function() {
@@ -92,7 +84,7 @@ module Spotlight
 
       def add_stylesheets
         copy_file 'assets/spotlight.scss', 'app/assets/stylesheets/spotlight.scss'
-        append_to_file 'app/assets/stylesheets/application.sass.scss', "\n@import \"spotlight\";\n"
+        append_to_file 'app/assets/stylesheets/application.bootstrap.scss', "\n@import \"spotlight\";\n"
       end
 
       def configure_esbuild
