@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Browse pages' do
+RSpec.describe 'Browse pages' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:search) { FactoryBot.create(:search, title: 'Some Saved Search', exhibit:, published: true) }
   let!(:search_2) { FactoryBot.create(:search, title: 'Some Other Saved Search', exhibit:, published: true) }
@@ -37,7 +37,7 @@ describe 'Browse pages' do
         expect(page).to have_css 'li.nav-item a.nav-link.active', text: group.title
       end
       click_link 'Some Saved Search'
-      expect(page).to have_css 'ul.breadcrumb li.breadcrumb-item', count: 4
+      expect(page).to have_css 'ol.breadcrumb li.breadcrumb-item', count: 4
       expect(page).to have_css 'li.breadcrumb-item', text: 'Awesome group'
     end
   end
