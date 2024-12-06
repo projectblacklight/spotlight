@@ -8,7 +8,7 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
 
   describe 'IIIF Integration' do
     context 'for items that include a IIIF manifest' do
-      it 'instantiates a cropper and persists all levels of the IIIF manifest' do
+      it 'instantiates a cropper and persists all levels of the IIIF manifest', default_max_wait_time: 10 do
         visit spotlight.edit_exhibit_appearance_path(exhibit)
         click_link 'Exhibit masthead'
 
@@ -21,7 +21,6 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
         expect(page).to have_css('.leaflet-container', visible: true)
 
         click_button 'Save changes'
-        sleep 1 # Test fails without this after move to Propshaft.
 
         featured_image = Spotlight::FeaturedImage.last
 
@@ -32,7 +31,7 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
         expect(featured_image.iiif_tilesource).to eq 'https://stacks.stanford.edu/image/iiif/gk446cj2442/gk446cj2442_05_0001/info.json'
       end
 
-      it 'instantiates the multi-image selector when an multi-image item is chosen in the typeahead (and again on edit)' do
+      it 'instantiates the multi-image selector when an multi-image item is chosen in the typeahead (and again on edit)', default_max_wait_time: 10 do
         allow(Spotlight::Engine.config).to receive(:exhibit_themes).and_return(['default'])
 
         visit spotlight.edit_exhibit_appearance_path(exhibit)
@@ -40,7 +39,6 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
         check 'Show background image in masthead'
 
         fill_in_typeahead_field(with: 'xd327cm9378', type: 'featured-image')
-        sleep 1 # HACK: that seems to mysteriously work.
 
         expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
 
