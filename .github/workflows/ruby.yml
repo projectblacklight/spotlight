@@ -18,6 +18,11 @@ jobs:
         additional_engine_cart_rails_options: [""]
         additional_name: [""]
         include:
+          - rails_version: "~> 8.0"
+            ruby: "3.3"
+            blacklight_version: "~> 8.0"
+            bootstrap_version: "~> 5.0"
+            additional_name: Rails 8
           - rails_version: "~> 7.2"
             ruby: "3.3"
             blacklight_version: "~> 7.34"
