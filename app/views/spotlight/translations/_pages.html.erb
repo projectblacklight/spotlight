@@ -3,17 +3,14 @@
 
   <%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, :pages]), layout: :horizontal, control_col: 'col-sm-10', html: {:'data-form-observer' => true} do |f| %>
     <div class="translation-home-page-settings">
-      <h2 class="translation-subheading">
-        <%= t('.home_page.label') %>
-      </h2>
+      <%= render Spotlight::Translations::SubheadingComponent.new(key: 'pages.home_page.label') %>
+
       <%= render 'pages_table', pages: [current_exhibit.home_page], f: f %>
     </div>
 
     <% if current_exhibit.feature_pages.any? %>
       <div class="translation-feature-page-settings">
-        <h2 class="translation-subheading">
-          <%= t('.feature_pages.label') %>
-        </h2>
+        <%= render Spotlight::Translations::SubheadingComponent.new(key: 'pages.feature_pages.label') %>
 
         <%= render 'pages_table', pages: current_exhibit.feature_pages.for_default_locale, f: f %>
       </div>
@@ -21,9 +18,7 @@
 
     <% if current_exhibit.about_pages.any? %>
       <div class="translation-about-page-settings">
-        <h2 class="translation-subheading">
-          <%= t('.about_pages.label') %>
-        </h2>
+        <%= render Spotlight::Translations::SubheadingComponent.new(key: 'pages.about_pages.label') %>
 
         <%= render 'pages_table', pages: current_exhibit.about_pages.for_default_locale, f: f %>
       </div>
