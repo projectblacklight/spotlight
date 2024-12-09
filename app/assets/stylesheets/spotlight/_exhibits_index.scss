@@ -1,5 +1,4 @@
 $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
-$exhibit-card-overlay-opacity: var(--exhibit-card-overlay-opacity) !default;
 
 .exhibit-card {
   overflow-y: hidden;
@@ -34,9 +33,10 @@ $exhibit-card-overlay-opacity: var(--exhibit-card-overlay-opacity) !default;
   }
 
   .card-img-overlay {
+    --exhibit-card-overlay-rgb: 255, 255, 255;
     --exhibit-card-overlay-bg: rgba(
-      var(--bs-card-bg),
-      #{$exhibit-card-overlay-opacity}
+      var(--exhibit-card-overlay-rgb),
+      var(--exhibit-card-overlay-opacity)
     );
     background: var(--exhibit-card-overlay-bg);
     border-bottom-left-radius: calc(0.25rem - 1px);
@@ -74,6 +74,7 @@ $exhibit-card-overlay-opacity: var(--exhibit-card-overlay-opacity) !default;
   }
 
   &:hover {
+    --exhibit-card-overlay-opacity: .7;
     .exhibit-description {
       max-height: 450px;
     }
