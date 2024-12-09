@@ -1,15 +1,10 @@
-.submit-search-text {
-  @extend .sr-only !optional;
-  @extend .visually-hidden !optional;
-}
-
 .search-query-form {
   z-index: 1;
 
   .input-group {
     width: 100%;
   }
-  
+
   .search-btn {
     max-height: 2.375rem;
   }
