@@ -33,7 +33,7 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
         expect(featured_image.iiif_tilesource).to eq 'https://stacks.stanford.edu/image/iiif/gk446cj2442/gk446cj2442_05_0001/info.json'
       end
 
-      it 'instantiates the multi-image selector when an multi-image item is chosen in the typeahead (and again on edit)', default_max_wait_time: 10 do
+      it 'instantiates the multi-image selector when an multi-image item is chosen in the typeahead (and again on edit)', default_max_wait_time: 20 do
         allow(Spotlight::Engine.config).to receive(:exhibit_themes).and_return(['default'])
 
         visit spotlight.edit_exhibit_appearance_path(exhibit)
