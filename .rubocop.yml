@@ -7,11 +7,11 @@ require:
 
 AllCops:
   Exclude:
-    - '.internal_test_app/**/*'
-    - 'bin/**/*'
-    - 'db/**/*'
-    - 'spec/internal/**/*'
-    - 'vendor/**/*'
+    - ".internal_test_app/**/*"
+    - "bin/**/*"
+    - "db/**/*"
+    - "spec/internal/**/*"
+    - "vendor/**/*"
   TargetRubyVersion: 3.1
   DisplayCopNames: true
   SuggestExtensions: false
@@ -42,62 +42,62 @@ Lint/StructNewOverride:
 
 Metrics/AbcSize:
   Exclude:
-    - 'app/controllers/spotlight/home_pages_controller.rb'
-    - 'app/services/spotlight/exhibit_import_export_service.rb'
+    - "app/controllers/spotlight/home_pages_controller.rb"
+    - "app/services/spotlight/exhibit_import_export_service.rb"
 
 Metrics/ModuleLength:
   Exclude:
-    - 'app/helpers/spotlight/application_helper.rb'
-    - 'app/models/concerns/spotlight/solr_document.rb'
-    - 'spec/fixtures/**/*'
+    - "app/helpers/spotlight/application_helper.rb"
+    - "app/models/concerns/spotlight/solr_document.rb"
+    - "spec/fixtures/**/*"
 
 Metrics/BlockLength:
   Exclude:
     - Rakefile
     - blacklight-spotlight.gemspec
     - config/**/*
-    - 'lib/tasks/*'
-    - 'spec/**/*'
-    - 'app/models/spotlight/blacklight_configuration.rb'
-    - 'app/models/spotlight/resource.rb'
+    - "lib/tasks/*"
+    - "spec/**/*"
+    - "app/models/spotlight/blacklight_configuration.rb"
+    - "app/models/spotlight/resource.rb"
 
 Metrics/ClassLength:
   Max: 150
   Exclude:
-    - 'app/models/spotlight/resources/iiif_manifest.rb'
-    - 'app/controllers/spotlight/browse_controller.rb'
-    - 'app/services/spotlight/exhibit_import_export_service.rb'
-    - 'lib/generators/spotlight/**/*' # Generators tend to have longer class lengths due to their lengthy public API
+    - "app/models/spotlight/resources/iiif_manifest.rb"
+    - "app/controllers/spotlight/browse_controller.rb"
+    - "app/services/spotlight/exhibit_import_export_service.rb"
+    - "lib/generators/spotlight/**/*" # Generators tend to have longer class lengths due to their lengthy public API
 
 Naming/PredicateName:
   Exclude:
-    - 'app/models/concerns/spotlight/ar_light.rb'
+    - "app/models/concerns/spotlight/ar_light.rb"
 
 Metrics/MethodLength:
   Exclude:
-    - 'app/controllers/spotlight/home_pages_controller.rb'
-    - 'app/services/spotlight/exhibit_import_export_service.rb'
-    - 'lib/generators/spotlight/**/*'
-    - 'spec/fixtures/**/*'
+    - "app/controllers/spotlight/home_pages_controller.rb"
+    - "app/services/spotlight/exhibit_import_export_service.rb"
+    - "lib/generators/spotlight/**/*"
+    - "spec/fixtures/**/*"
 
 Metrics/CyclomaticComplexity:
   Exclude:
-    - 'app/controllers/spotlight/home_pages_controller.rb'
-    - 'app/services/spotlight/exhibit_import_export_service.rb'
+    - "app/controllers/spotlight/home_pages_controller.rb"
+    - "app/services/spotlight/exhibit_import_export_service.rb"
 
 Metrics/PerceivedComplexity:
   Exclude:
-    - 'app/controllers/spotlight/home_pages_controller.rb'
-    - 'app/services/spotlight/exhibit_import_export_service.rb'
+    - "app/controllers/spotlight/home_pages_controller.rb"
+    - "app/services/spotlight/exhibit_import_export_service.rb"
 
 Rails:
   Enabled: true
 
 RSpec/DescribeClass:
   Exclude:
-    - 'spec/features/**/*'
-    - 'spec/views/**/*'
-    - 'spec/i18n_spec.rb'
+    - "spec/features/**/*"
+    - "spec/views/**/*"
+    - "spec/i18n_spec.rb"
 
 # Configuration parameters: CountAsOne.
 RSpec/ExampleLength:
@@ -109,7 +109,7 @@ RSpec/NestedGroups:
 RSpec/MultipleExpectations:
   Max: 9
   Exclude:
-    - 'spec/features/**/*'
+    - "spec/features/**/*"
 
 Style/ExponentialNotation:
   Enabled: true
@@ -132,7 +132,7 @@ Style/StringLiterals:
 
 Style/Documentation:
   Exclude:
-  - 'spec/**/*'
+    - "spec/**/*"
 
 Style/DoubleNegation:
   Enabled: false
@@ -473,4 +473,38 @@ Rails/WhereNotWithMultipleConditions: # new in 2.17
 Rails/WhereRange: # new in 2.25
   Enabled: true
 Gemspec/AddRuntimeDependency: # new in 1.65
+  Enabled: true
+Lint/DuplicateSetElement: # new in 1.67
+  Enabled: true
+Lint/HashNewWithKeywordArgumentsAsDefault: # new in 1.69
+  Enabled: true
+Lint/NumericOperationWithConstantResult: # new in 1.69
+  Enabled: true
+Lint/UnescapedBracketInRegexp: # new in 1.68
+  Enabled: true
+Lint/UselessDefined: # new in 1.69
+  Enabled: true
+Lint/UselessNumericOperation: # new in 1.66
+  Enabled: true
+Style/AmbiguousEndlessMethodDefinition: # new in 1.68
+  Enabled: true
+Style/BitwisePredicate: # new in 1.68
+  Enabled: true
+Style/CombinableDefined: # new in 1.68
+  Enabled: true
+Style/DigChain: # new in 1.69
+  Enabled: true
+Style/FileNull: # new in 1.69
+  Enabled: true
+Style/FileTouch: # new in 1.69
+  Enabled: true
+Style/KeywordArgumentsMerging: # new in 1.68
+  Enabled: true
+Style/RedundantInterpolationUnfreeze: # new in 1.66
+  Enabled: true
+Style/SafeNavigationChainLength: # new in 1.68
+  Enabled: true
+RSpec/StringAsInstanceDoubleConstant: # new in 3.1
+  Enabled: true
+Rails/EnumSyntax: # new in 2.26
   Enabled: true

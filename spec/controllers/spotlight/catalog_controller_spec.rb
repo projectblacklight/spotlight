@@ -555,7 +555,7 @@ describe Spotlight::CatalogController, type: :controller do
     it 'sets instance variables for the previous and next documents based on the return of previous_and_next_documents_for_search' do
       allow_any_instance_of(controller.search_service_class).to receive(:previous_and_next_documents_for_search).with(
         0, current_browse_category.query_params
-      ).and_return([instance_double('SolrResponse', total: '100'), [nil, SolrDocument.new]])
+      ).and_return([instance_double(Blacklight::Solr::Response, total: '100'), [nil, SolrDocument.new]])
 
       controller.send(:setup_next_and_previous_documents_from_browse_category)
       expect(controller.instance_variable_get(:@previous_document)).to be_nil
