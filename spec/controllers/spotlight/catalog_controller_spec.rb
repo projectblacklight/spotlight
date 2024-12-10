@@ -144,6 +144,8 @@ describe Spotlight::CatalogController, type: :controller do
             uploaded_resource.save_and_index
           end
 
+          sleep(5) # wait for the document to be indexed
+
           get :manifest, params: { exhibit_id: uploaded_resource.exhibit, id: compound_id }
 
           expect(response).to be_successful
