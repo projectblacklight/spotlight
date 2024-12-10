@@ -18,12 +18,19 @@
     </div>
   </form-->
   <div>
+    <input type="hidden" name="select_image_region">
     <p class="instructions"><%= help_text %></p>
     <div id="solr_document_widget_iiif_cropper" data-behavior="iiif-cropper" data-cropper-key="select_image_<%=@id%>" data-index-id="<%=@index_id%>" data-crop-width="120" data-crop-height="120">
   </div>
 
 
     
+  <% end %>
+   <% component.with_footer do %>
+    <div> 
+      <input id='saveimage' type='button' class='btn btn-primary' value='Save changes'> 
+      <input type='button' class='btn btn-primary-outline' value='Cancel'> 
+    </div>
   <% end %>
 <% end %>
 

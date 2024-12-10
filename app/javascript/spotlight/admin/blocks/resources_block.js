@@ -66,9 +66,10 @@ Core.Block.Resources = (function(){
       // If image selection is not possible for this block, then do not show
       // image selection link
       if (!this.show_image_selection) return ``;
+      var url = $('form[data-exhibit-path]').data('exhibit-path') + '/catalog/' + data['id'];
       var markup = `
         <div>
-          <a name="selectimage" href="${data.url}/select_image?index_id=${index}" data-blacklight-modal="trigger">Select image</a>
+          <a name="selectimage" href="${url}/select_image?index_id=${index}" data-blacklight-modal="trigger">Select image</a>
         </div>`;
       return markup;
     },
