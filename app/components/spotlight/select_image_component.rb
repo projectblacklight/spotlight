@@ -4,11 +4,12 @@ module Spotlight
   # Component to select section of 
   class SelectImageComponent < ViewComponent::Base
 
-    def initialize(document, exhibit)
+    def initialize(document, exhibit, index_id)
       super
       @document = document
       @id = document.id
       @exhibit = exhibit
+      @index_id = index_id
     end
 
     def render?

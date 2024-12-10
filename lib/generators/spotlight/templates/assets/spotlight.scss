@@ -1,14 +1,8 @@
-// Bootstrap (will use variables defined in customizations, if present)
-@import 'bootstrap/scss/bootstrap';
-@import 'spotlight-frontend/app/assets/stylesheets/spotlight/variables_bootstrap';
-
-// Blacklight, imported from blacklight-frontend package
-@import 'blacklight-frontend/app/assets/stylesheets/blacklight/blacklight';
-
 // Leaflet
 @import 'leaflet/dist/leaflet';
 
 // Spotlight, imported from spotlight-frontend package
+@import 'spotlight-frontend/app/assets/stylesheets/spotlight/variables_bootstrap';
 @import 'spotlight-frontend/vendor/assets/stylesheets/bootstrap-tagsinput';
 @import 'spotlight-frontend/vendor/assets/stylesheets/sir-trevor/main';
 @import 'spotlight-frontend/app/assets/stylesheets/spotlight/spotlight';

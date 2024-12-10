@@ -10,6 +10,9 @@
       </ul>
     </li>
   <% else %>
-    <li class="nav-item <%= "active" if current_page?(url_for([spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first])) %>"><%= link_to published_top_level_feature_pages.first.title, [spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first], class: 'nav-link' %></li>
+    <%= render Spotlight::Engine.config.spotlight.header_navigation_link_component.new(active: current_page?(url_for([spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first])),
+                                                              label: published_top_level_feature_pages.first.title,
+                                                              path: [spotlight, published_top_level_feature_pages.first.exhibit, published_top_level_feature_pages.first]) %>
+
   <% end %>
 <% end %>

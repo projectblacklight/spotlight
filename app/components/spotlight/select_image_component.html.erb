@@ -17,17 +17,11 @@
         </div>
     </div>
   </form-->
-  <%= bootstrap_form_for @document, url: "#" do |m| %>
-    <%= m.fields_for(:thumbnail, @exhibit.thumbnail || @exhibit.build_thumbnail) do |f| %>
-      <div data-cropper="<%= f.object.model_name.singular_route_key %>" data-form-prefix="<%= helpers.form_prefix(f) %>">
-        <%= f.hidden_field :id, value: @id %>
-        <%= field_set_tag(t(:'.source.remote.header')) do %>
-          <p class="instructions"><%= t(:'.crop_area.help_html', thing: :thumbnail) %></p>
-          <%= helpers.iiif_cropper_tags f, initial_crop_selection: Spotlight::Engine.config.thumbnail_initial_crop_selection %>
-        <% end %>
-      </div>
-    <% end %>
-  <% end %>
+  <div>
+    <p class="instructions"><%= help_text %></p>
+    <div id="solr_document_widget_iiif_cropper" data-behavior="iiif-cropper" data-cropper-key="select_image_<%=@id%>" data-index-id="<%=@index_id%>" data-crop-width="120" data-crop-height="120">
+  </div>
+
 
     
   <% end %>

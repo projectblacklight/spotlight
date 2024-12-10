@@ -62,10 +62,13 @@ Core.Block.Resources = (function(){
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join('');
     },
-    _itemSelectImageLink: function(data) {
+    _itemSelectImageLink: function(data, index) {
+      // If image selection is not possible for this block, then do not show
+      // image selection link
+      if (!this.show_image_selection) return ``;
       var markup = `
         <div>
-          <a name="selectimage" href="${data.url}/select_image" data-blacklight-modal="trigger">Select image</a>
+          <a name="selectimage" href="${data.url}/select_image?index_id=${index}" data-blacklight-modal="trigger">Select image</a>
         </div>`;
       return markup;
     },
@@ -79,7 +82,7 @@ Core.Block.Resources = (function(){
       }
       var resource_id = data.slug || data.id;
       var markup = `
-          <li class="field form-inline dd-item dd3-item" data-cropper="select_image" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+          <li class="field form-inline dd-item dd3-item" data-cropper="select_image_${resource_id}" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][title]" value="${data.title}" />
             ${this._itemPanelIiifFields(index, data)}
@@ -95,7 +98,7 @@ Core.Block.Resources = (function(){
                     </div>
                     <div class="pic">
                       <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
-                      ${this._itemSelectImageLink(data)}
+                      ${this._itemSelectImageLink(data, index)}
                       </div>
                     <div class="main">
                       <div class="title card-title">${data.title}</div>
@@ -136,8 +139,6 @@ Core.Block.Resources = (function(){
     },
 
     createItemPanel: function(data) {
-      console.log("Create Item Panel");
-      console.log(data);
       var panel = this._itemPanel(data);
       this.attachAltTextHandlers(panel);
       $(panel).appendTo($('.panels > ol', this.inner));
@@ -235,7 +236,6 @@ Core.Block.Resources = (function(){
 
     onBlockRender: function() {
       SpotlightNestable.init($('[data-behavior="nestable"]', this.inner));
-
       $('[data-input-select-target]', this.inner).selectRelatedInput();
     },
 
@@ -244,27 +244,7 @@ Core.Block.Resources = (function(){
       $.each(Object.keys(data.item || {}).map(function(k) { return data.item[k]}).sort(function(a,b) { return a.weight - b.weight; }), function(index, item) {
         context.createItemPanel(item);
       });
-      // For resource blocks that allow for selection of region for images for items
-      if(this.show_image_selection) {
-        this.attachModalHandler();
-      }
-    },
-
-    attachModalHandler: function() {
-      var context  = this;
-      document.addEventListener('show.blacklight.blacklight-modal', function(e) {
-        //Will be changing this
-        context.setCropperFields();
-        //context.setCropperDiv();
-        //console.log("Creating new croppable object and initializing");
-        var c = new Croppable();
-        c.initializeExistingCropper();
-      });
-      
-    },
-
-    setCropperDiv: function() {
-      // Set properties on the div instead
+     
     },
 
     setCropperFields: function() {

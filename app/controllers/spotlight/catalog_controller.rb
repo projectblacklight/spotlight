@@ -137,6 +137,9 @@ module Spotlight
     def select_image
       @select_id = params[:id]
       @select_exhibit = params[:exhibit_id]
+      @index_id = params[:index_id]
+      puts "SELECT IMAGE CC: "
+      puts @index_id
       load_document
       respond_to :html
     end

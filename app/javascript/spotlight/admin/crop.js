@@ -2,18 +2,25 @@ import { addImageSelector } from 'spotlight/admin/add_image_selector'
 import Core from 'spotlight/core'
 
 export default class Crop {
-  constructor(cropArea) {
+  constructor(cropArea, iiifFields = null) {
     this.cropArea = cropArea;
     this.cropArea.data('iiifCropper', this);
     this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
     this.cropTool = $(this.cropSelector);
-    this.formPrefix = this.cropTool.data('form-prefix');
-    this.iiifUrlField = $('#' + this.formPrefix + '_iiif_tilesource');
-    this.iiifRegionField = $('#' + this.formPrefix + '_iiif_region');
-    this.iiifManifestField = $('#' + this.formPrefix + '_iiif_manifest_url');
-    this.iiifCanvasField = $('#' + this.formPrefix + '_iiif_canvas_id');
-    this.iiifImageField = $('#' + this.formPrefix + '_iiif_image_id');
-
+    if(iiifFields == null) {
+      this.formPrefix = this.cropTool.data('form-prefix');
+      this.iiifUrlField = $('#' + this.formPrefix + '_iiif_tilesource');
+      this.iiifRegionField = $('#' + this.formPrefix + '_iiif_region');
+      this.iiifManifestField = $('#' + this.formPrefix + '_iiif_manifest_url');
+      this.iiifCanvasField = $('#' + this.formPrefix + '_iiif_canvas_id');
+      this.iiifImageField = $('#' + this.formPrefix + '_iiif_image_id');
+    } else {
+      this.iiifUrlField = iiifFields["iiifUrlField"];
+      this.iiifRegionField = iiifFields["iiifRegionField"];
+      this.iiifManifestField = iiifFields["iiifManifestField"];
+      this.iiifCanvasField = iiifFields["iiifCanvasField"];
+      this.iiifImageField = iiifFields["iiifImageField"];
+    }
     this.form = cropArea.closest('form');
     this.tileSource = null;
   }

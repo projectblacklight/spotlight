@@ -1,19 +1,13 @@
-<div class="container breadcrumbs-container" role="navigation" aria-label="<%= t('spotlight.breadcrumb.label') %>">
-  <div class="row">
-    <div class="col-md-12">
-      <nav>
-        <ul class="breadcrumb list-unstyled d-flex">
-          <% breadcrumbs.each do |crumb| %>
-          <li class="breadcrumb-item <%= crumb == breadcrumbs.last ? 'active' : '' %>">
-            <% if crumb.link? && crumb != breadcrumbs.last %>
-              <%= link_to crumb.name, path(crumb.path) %>
-            <% else %>
-              <%= crumb.name %>
-            <% end %>
-          </li>
-          <% end %>
-        </ul>
-      </nav>
-    </div>
-  </div>
-</div>
+<nav class="container breadcrumbs-container" aria-label="<%= t('spotlight.breadcrumb.label') %>">
+  <ol class="breadcrumb">
+    <% breadcrumbs.each do |crumb| %>
+    <li class="breadcrumb-item <%= crumb == breadcrumbs.last ? 'active' : '' %>">
+      <% if crumb.link? && crumb != breadcrumbs.last %>
+        <%= link_to crumb.name, path(crumb.path) %>
+      <% else %>
+        <%= crumb.name %>
+      <% end %>
+    </li>
+    <% end %>
+  </ol>
+</nav>

@@ -8,11 +8,9 @@ module Spotlight
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
 
     def alt_text
-      @limit = 5
       # Sort by newest except for the homepage, which is always first
       pages_with_alt = @exhibit.pages.order(Arel.sql('id = 1 DESC, created_at DESC')).select { |elem| elem.content.any?(&:alt_text?) }
-      pages = params[:show_all] ? pages_with_alt : pages_with_alt.first(@limit)
-      @pages = pages.map { |page| get_alt_info(page) }
+      @pages = pages_with_alt.map { |page| get_alt_info(page) }
       @has_alt_text = @pages.sum { |page| page[:has_alt_text] }
       @total_alt_items = @pages.sum { |page| page[:can_have_alt_text] }
 

@@ -12,7 +12,7 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
       edit_exhibit_feature_page_path: '/',
       edit_exhibit_home_page_path: '/',
       exhibit_feature_page_path: '/',
-      f: instance_double('form', fields_for: {}), # mockform builder
+      f: double('form', fields_for: {}), # mockform builder
       page:
     )
     assign(:language, 'es')

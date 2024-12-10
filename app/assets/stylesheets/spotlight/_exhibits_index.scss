@@ -1,9 +1,6 @@
 $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
-$exhibit-card-overlay-opacity: 0.85 !default;
-$exhibit-card-bg: $card-bg !default;
 
 .exhibit-card {
-  background: $exhibit-card-bg;
   overflow-y: hidden;
   padding-bottom: 3rem;
 
@@ -36,7 +33,12 @@ $exhibit-card-bg: $card-bg !default;
   }
 
   .card-img-overlay {
-    background: rgba($exhibit-card-bg, $exhibit-card-overlay-opacity);
+    --exhibit-card-overlay-rgb: 255, 255, 255;
+    --exhibit-card-overlay-bg: rgba(
+      var(--exhibit-card-overlay-rgb),
+      var(--exhibit-card-overlay-opacity)
+    );
+    background: var(--exhibit-card-overlay-bg);
     border-bottom-left-radius: calc(0.25rem - 1px);
     border-bottom-right-radius: calc(0.25rem - 1px);
     display: flex;
@@ -72,6 +74,7 @@ $exhibit-card-bg: $card-bg !default;
   }
 
   &:hover {
+    --exhibit-card-overlay-opacity: .7;
     .exhibit-description {
       max-height: 450px;
     }
@@ -82,7 +85,7 @@ $exhibit-card-bg: $card-bg !default;
     outline: $input-focus-border-color auto 5px;
 
     // Use WebKit focus styles if available
-    @supports (-webkit-appearance:none) {
+    @supports (-webkit-appearance: none) {
       outline-color: -webkit-focus-ring-color;
     }
 

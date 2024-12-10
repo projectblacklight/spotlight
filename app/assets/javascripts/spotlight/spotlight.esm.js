@@ -3671,18 +3671,25 @@ window.Spotlight = Spotlight$1;
 window.SirTrevor = SirTrevor$1;
 
 class Crop {
-  constructor(cropArea) {
+  constructor(cropArea, iiifFields = null) {
     this.cropArea = cropArea;
     this.cropArea.data('iiifCropper', this);
     this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
     this.cropTool = $(this.cropSelector);
-    this.formPrefix = this.cropTool.data('form-prefix');
-    this.iiifUrlField = $('#' + this.formPrefix + '_iiif_tilesource');
-    this.iiifRegionField = $('#' + this.formPrefix + '_iiif_region');
-    this.iiifManifestField = $('#' + this.formPrefix + '_iiif_manifest_url');
-    this.iiifCanvasField = $('#' + this.formPrefix + '_iiif_canvas_id');
-    this.iiifImageField = $('#' + this.formPrefix + '_iiif_image_id');
-
+    if(iiifFields == null) {
+      this.formPrefix = this.cropTool.data('form-prefix');
+      this.iiifUrlField = $('#' + this.formPrefix + '_iiif_tilesource');
+      this.iiifRegionField = $('#' + this.formPrefix + '_iiif_region');
+      this.iiifManifestField = $('#' + this.formPrefix + '_iiif_manifest_url');
+      this.iiifCanvasField = $('#' + this.formPrefix + '_iiif_canvas_id');
+      this.iiifImageField = $('#' + this.formPrefix + '_iiif_image_id');
+    } else {
+      this.iiifUrlField = iiifFields["iiifUrlField"];
+      this.iiifRegionField = iiifFields["iiifRegionField"];
+      this.iiifManifestField = iiifFields["iiifManifestField"];
+      this.iiifCanvasField = iiifFields["iiifCanvasField"];
+      this.iiifImageField = iiifFields["iiifImageField"];
+    }
     this.form = cropArea.closest('form');
     this.tileSource = null;
   }
@@ -3981,14 +3988,69 @@ class Crop {
 
 class Croppable {
   connect() {
-   this.initializeExistingCropper();
-  }
-
-  initializeExistingCropper() {
+    // For exhibit masthead or thumbnail pages, where
+    // the div exists on page load
     $('[data-behavior="iiif-cropper"]').each(function() {
       var cropElement = $(this);
       new Crop(cropElement).render();
     });
+
+    // In the case of individual document thumbnails, selection
+    // of the image is through a modal. Here we attach the event
+    this.attachModalHandler();
+  }
+
+  attachModalHandler() {
+    console.log("Attaching modal handler");
+    var context  = this;
+    document.addEventListener('show.blacklight.blacklight-modal', function(e) {
+      console.log("Attach Modal Handler");
+      
+      var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
+      
+      if(dataCropperDiv) {
+        var dataCropperKey = dataCropperDiv.data("cropper-key");
+        console.log(dataCropperKey);
+        var itemIndex = dataCropperDiv.data("index-id");
+        console.log("itemIndex " + itemIndex);
+        console.log("Get iiif fields");
+        var iiifFields = context.getIIIFObject(dataCropperKey, itemIndex);
+        new Crop(dataCropperDiv, iiifFields).render();
+      }
+      
+    });
+    
+  }
+
+  getIIIFObject(dataCropperKey, itemIndex) {
+    var iiifFields = {};
+
+    //Retrieve the fields from the main page with the itemIndex
+
+    var itemElement = $('[data-cropper="' + dataCropperKey + '"]');
+    var itemPrefix = 'input[name="item[' + itemIndex + ']';
+    console.log(itemPrefix);
+
+    iiifFields['iiifUrlField'] = this.iiifInputField(itemIndex, 'iiif_tilesource', itemElement);
+    iiifFields['iiifRegionField'] = this.iiifInputField(itemIndex, 'iiif_region', itemElement);
+    iiifFields['iiifManifestField'] = this.iiifInputField(itemIndex, 'iiif_manifest_url', itemElement);
+    iiifFields['iiifCanvasField'] = this.iiifInputField(itemIndex, 'iiif_canvas_id', itemElement);
+    iiifFields['iiifImageField'] = this.iiifInputField(itemIndex, 'iiif_image_id', itemElement);
+
+    var testUrlField = this.iiifInputField(itemIndex, 'iiif_tilesource', itemElement);
+    console.log("test url field");
+    console.log(testUrlField);
+    console.log("resulting iiif fields");
+    console.log(iiifFields);
+    return iiifFields;
+    
+  }
+
+  iiifInputField(itemIndex, fieldName, parentElement) {
+    var itemPrefix = 'item[' + itemIndex + ']';
+    var selector = 'input[name="' + itemPrefix + '[' + fieldName + ']"]';
+    console.log(selector);
+    return $(selector, parentElement);
   }
 }
 
@@ -5509,10 +5571,13 @@ Spotlight$1.Block.Resources = (function(){
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join('');
     },
-    _itemSelectImageLink: function(data) {
+    _itemSelectImageLink: function(data, index) {
+      // If image selection is not possible for this block, then do not show
+      // image selection link
+      if (!this.show_image_selection) return ``;
       var markup = `
         <div>
-          <a name="selectimage" href="${data.url}/select_image" data-blacklight-modal="trigger">Select image</a>
+          <a name="selectimage" href="${data.url}/select_image?index_id=${index}" data-blacklight-modal="trigger">Select image</a>
         </div>`;
       return markup;
     },
@@ -5526,7 +5591,7 @@ Spotlight$1.Block.Resources = (function(){
       }
       var resource_id = data.slug || data.id;
       var markup = `
-          <li class="field form-inline dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+          <li class="field form-inline dd-item dd3-item" data-cropper="select_image_${resource_id}" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][title]" value="${data.title}" />
             ${this._itemPanelIiifFields(index, data)}
@@ -5542,7 +5607,7 @@ Spotlight$1.Block.Resources = (function(){
                     </div>
                     <div class="pic">
                       <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
-                      ${this._itemSelectImageLink(data)}
+                      ${this._itemSelectImageLink(data, index)}
                       </div>
                     <div class="main">
                       <div class="title card-title">${data.title}</div>
@@ -5583,8 +5648,6 @@ Spotlight$1.Block.Resources = (function(){
     },
 
     createItemPanel: function(data) {
-      console.log("Create Item Panel");
-      console.log(data);
       var panel = this._itemPanel(data);
       this.attachAltTextHandlers(panel);
       $(panel).appendTo($('.panels > ol', this.inner));
@@ -5682,7 +5745,6 @@ Spotlight$1.Block.Resources = (function(){
 
     onBlockRender: function() {
       Module.init($('[data-behavior="nestable"]', this.inner));
-
       $('[data-input-select-target]', this.inner).selectRelatedInput();
     },
 
@@ -5691,20 +5753,7 @@ Spotlight$1.Block.Resources = (function(){
       $.each(Object.keys(data.item || {}).map(function(k) { return data.item[k]}).sort(function(a,b) { return a.weight - b.weight; }), function(index, item) {
         context.createItemPanel(item);
       });
-      // For resource blocks that allow for selection of region for images for items
-      if(this.show_image_selection) {
-        this.attachModalHandler();
-      }
-    },
-
-    attachModalHandler: function() {
-      var context  = this;
-      document.addEventListener('show.blacklight.blacklight-modal', function(e) {
-        context.setCropperFields();
-        var c = new Croppable();
-        c.initializeExistingCropper();
-      });
-      
+     
     },
 
     setCropperFields: function() {
@@ -6542,8 +6591,8 @@ SirTrevor.Blocks.UploadedItems = (function(){
           </div>
           <div class="col-md-4">
             <input name="${this.zpr_key}" type="hidden" value="false" />
-            <input name="${this.zpr_key}" id="${this.formId(this.zpr_key)}" data-key=${this.zpr_key}" type="checkbox" value="true" />
-            <label for="${this.formId(this.zpr_key)}">${ i18n.t("blocks:solr_documents:zpr:title")}</label>
+            <input name="${this.zpr_key}" id="${this.formId(this.zpr_key)}" data-key="${this.zpr_key}" type="checkbox" value="true" />
+            <label for="${this.formId(this.zpr_key)}">${i18n.t("blocks:solr_documents:zpr:title")}</label>
           </div>
         </div>
         ${this.text_area()}

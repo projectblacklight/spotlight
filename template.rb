@@ -9,11 +9,10 @@ spotlight_options = ENV.fetch('SPOTLIGHT_INSTALL_OPTIONS', DEFAULT_SPOTLIGHT_OPT
 bootstrap_version = ENV.fetch('BOOTSTRAP_VERSION', '~> 5.3')
 
 # Add gem dependencies to the application
-gem 'blacklight', '~> 8.0'
+gem 'blacklight', '>= 8.7.0', '< 9'
 gem 'blacklight-spotlight', ENV['SPOTLIGHT_GEM'] ? { path: ENV['SPOTLIGHT_GEM'] } : { github: 'projectblacklight/spotlight' }
 gem 'sidekiq'
 gem 'bootstrap_form', /(\d)(?:\.\d){0,2}/.match(bootstrap_version)[1].to_i == 5 ? '~> 5.4' : '~> 4.5'
-gem 'cssbundling-rails' unless options[:asset_pipeline] == 'sprockets'
 
 after_bundle do
   run 'yarn init -y' unless File.exist?('package.json')
