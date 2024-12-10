@@ -245,37 +245,6 @@ Core.Block.Resources = (function(){
         context.createItemPanel(item);
       });
      
-    },
-
-    setCropperFields: function() {
-      var dataCropperDiv = $('#blacklight-modal [data-cropper]');
-      var prefix = dataCropperDiv.data('form-prefix');
-      var idField = $('#' + prefix + '_id');
-      var id = idField.val();
-      // The elements in the blacklight modal
-      var iiifUrlField = $('#' + prefix + '_iiif_tilesource');
-      var iiifRegionField = $('#' + prefix + '_iiif_region');
-      var iiifManifestField = $('#' + prefix + '_iiif_manifest_url');
-      var iiifCanvasField = $('#' + prefix + '_iiif_canvas_id');
-      var iiifImageField = $('#' + prefix + '_iiif_image_id');
-
-      //With the ID, get the hidden inputs related to this particular element in the form
-      var itemPanelInfo = $("li[data-resource-id='" + id + "']");
-      var dataId = itemPanelInfo.data('id');
-      var itemPrefix = "input[name='item[" + dataId + "]";
-      // Get values from the item panel which already includes the IIIF values needed
-      var url = $(itemPrefix + "[iiif_tilesource]'").val();
-      var region = $(itemPrefix + "[iiif_region]'").val();
-      var manifest = $(itemPrefix + "[iiif_manifest_url]'").val();
-      var canvas = $(itemPrefix + "[iiif_canvas_id]'").val();
-      var image = $(itemPrefix + "[iiif_image_id]'").val();
-
-      // Set the values in the blacklight modal window
-      iiifUrlField.val(url);
-      iiifRegionField.val(region);
-      iiifManifestField.val(manifest);
-      iiifCanvasField.val(canvas);
-      iiifImageField.val(image);
     }
   });
 
