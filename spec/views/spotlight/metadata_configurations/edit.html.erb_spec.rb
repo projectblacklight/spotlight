@@ -11,7 +11,7 @@ describe 'spotlight/metadata_configurations/edit', type: :view do
       blacklight_config: exhibit.blacklight_configuration.blacklight_config,
       available_view_fields: { some_view_type: 1, another_view_type: 2 },
       exhibit_alt_text_path: '/',
-      select_deselect_button: nil
+      select_deselect_action: nil
     )
     allow(controller).to receive(:enabled_in_spotlight_view_type_configuration?).and_return(true)
   end
