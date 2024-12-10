@@ -55,6 +55,8 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
   end
 
   it 'stays in curation mode if a user has unsaved data' do
+    skip('Chromedriver automatically dismisses alerts so cancel button cannot be found')
+
     visit spotlight.edit_exhibit_feature_page_path(page1.exhibit, page1)
 
     fill_in('Title', with: 'Some Fancy Title')
@@ -66,6 +68,8 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
   end
 
   it 'stays in curation mode if a user has unsaved contenteditable data' do
+    skip('Chromedriver automatically dismisses alerts so cancel button cannot be found')
+
     visit spotlight.edit_exhibit_feature_page_path(page1.exhibit, page1)
 
     add_widget 'solr_documents'
