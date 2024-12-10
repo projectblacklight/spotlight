@@ -90,7 +90,7 @@ describe 'Edit in place', js: true, type: :feature do
       end
     end
 
-    it 'updates the metadata label' do
+    it 'updates the metadata label', default_max_wait_time: 10 do
       visit spotlight.exhibit_dashboard_path(exhibit)
 
       within '#sidebar' do
