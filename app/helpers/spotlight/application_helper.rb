@@ -124,14 +124,13 @@ module Spotlight
       end.keys.map(&:to_s)
     end
 
-    def select_deselect_button
-      button_tag(
-        t(:'.deselect_all'),
-        class: 'btn btn-secondary btn-sm metadata-select',
+    # Create checkbox for selecting/deselecting metadata fields for a given view in metadata configuration
+    def select_deselect_action(id)
+      check_box_tag(
+        id,
+        class: 'metadata-select',
         data: {
-          behavior: 'metadata-select',
-          'deselect-text' => t(:'.deselect_all'),
-          'select-text' => t(:'.select_all')
+          behavior: 'metadata-select'
         }
       )
     end
