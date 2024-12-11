@@ -1,12 +1,3 @@
-<div class="dropdown bulk-actions-dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="bulk-actions-button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <%= t(:'spotlight.bulk_actions.label') %>
-  </button>
-  <div class="dropdown-menu" aria-labelledby="bulk-actions-button">
-    <% blacklight_config.bulk_actions.each do |key, _config| %>
-      <%= link_to t("spotlight.bulk_actions.#{key}.heading"), '#', class: 'dropdown-item', data: { toggle: "modal", "bs-toggle": "modal", target: "##{key.to_s.dasherize}-modal", "bs-target": "##{key.to_s.dasherize}-modal" } %>
-    <% end %>
-  </div>
-</div>
+<%= render Spotlight::BulkActionComponent.new(bulk_actions: blacklight_config.bulk_actions) %>
 
 <%= render_filtered_partials(blacklight_config.bulk_actions) %>
