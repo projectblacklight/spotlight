@@ -44,7 +44,7 @@ these collections.)
   s.add_dependency 'oauth2'
   s.add_dependency 'openseadragon', '>= 0.8.0'
   s.add_dependency 'ostruct', '!= 0.3.0', '!= 0.3.1', '!= 0.3.2'
-  s.add_dependency 'paper_trail', '>= 11.0', '< 16'
+  s.add_dependency 'paper_trail', '>= 11.0', '< 17'
   s.add_dependency 'rails', '>= 7.1', '< 8'
   s.add_dependency 'redcarpet', '>= 2.0.1', '< 4'
   s.add_dependency 'riiif', '~> 2.0'
