@@ -42,7 +42,7 @@ $image-overlay-max-height: 300px;
   margin-bottom: $spacer;
 
   .nav-link {
-    margin-bottom: $spacer * .75;
+    margin-bottom: $spacer * 0.75;
   }
 }
 
@@ -61,8 +61,13 @@ $image-overlay-max-height: 300px;
     overflow: hidden;
     position: relative;
 
-    img {
+    .img-responsive {
+      transition: all 0.5s ease;
       width: 100%;
+
+      &:hover {
+        filter: brightness(70%);
+      }
     }
   }
 
@@ -71,7 +76,11 @@ $image-overlay-max-height: 300px;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(0deg, rgba(46, 45, 41, 0.7) 70%, rgba(46, 45, 41, 0) 100%);
+    background: linear-gradient(
+      0deg,
+      rgba(46, 45, 41, 0.7) 70%,
+      rgba(46, 45, 41, 0) 100%
+    );
     color: $white;
     padding: 50px 20px 20px 20px;
     text-align: center;
@@ -93,10 +102,6 @@ $image-overlay-max-height: 300px;
         text-transform: uppercase;
       }
     }
-
-    &:hover {
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
-    }
   }
 
   @media screen and (max-width: breakpoint-max("sm")) {
@@ -106,19 +111,29 @@ $image-overlay-max-height: 300px;
       max-height: $image-overlay-max-height;
       max-width: 350px;
     }
-    .text-overlay .browse-category-title {font-size: $h3-font-size;}
+    .text-overlay .browse-category-title {
+      font-size: $h3-font-size;
+    }
   }
   @media screen and (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("md")) {
     $image-overlay-max-height: 240px;
-    .image-overlay {max-height: $image-overlay-max-height;}
+    .image-overlay {
+      max-height: $image-overlay-max-height;
+    }
   }
   @media screen and (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
     $image-overlay-max-height: 250px;
-    .text-overlay .browse-category-title {font-size: $h4-font-size;}
-    .image-overlay {max-height: $image-overlay-max-height;}
+    .text-overlay .browse-category-title {
+      font-size: $h4-font-size;
+    }
+    .image-overlay {
+      max-height: $image-overlay-max-height;
+    }
   }
   @media screen and (min-width: breakpoint-min("lg")) {
-    .image-overlay {max-height: $image-overlay-max-height;}
+    .image-overlay {
+      max-height: $image-overlay-max-height;
+    }
   }
 }
 
