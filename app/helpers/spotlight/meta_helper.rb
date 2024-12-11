@@ -30,7 +30,7 @@ module Spotlight
     def exhibit_twitter_card_content
       card('twitter') do |card|
         card['card'] = 'summary'
-        card['url'] = exhibit_root_url(current_exhibit)
+        card['url'] = spotlight.exhibit_root_url(current_exhibit)
         card['title'] = current_exhibit.title
         card['description'] = current_exhibit.subtitle
         card['image'] = meta_image if current_exhibit.thumbnail

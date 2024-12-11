@@ -12,7 +12,7 @@ describe Spotlight::MetaHelper, type: :helper do
     end
 
     it 'generates a twitter card for the exhibit' do
-      allow(helper).to receive(:exhibit_root_url).and_return('some/url')
+      allow(helper).to receive(:spotlight).and_return(double(exhibit_root_url: 'some/url'))
       allow(current_exhibit).to receive(:thumbnail).and_return(double(iiif_url: 'https://test.host/images/7777/full/400,300/0/default.jpg'))
 
       helper.add_exhibit_meta_content
