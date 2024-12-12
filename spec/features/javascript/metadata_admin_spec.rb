@@ -6,35 +6,42 @@ describe 'Metadata Administration', js: true do
 
   before { login_as admin }
 
-  describe 'Select/Deselect all button' do
+  describe 'Select/Deselect all checkbox' do
     it 'deselects all checkboxes when all are selected' do
       visit spotlight.edit_exhibit_metadata_configuration_path exhibit
-      # No checkboxes should be unchecked
+
+      # All checkboxes in the item details column should checked
       expect(page).to have_no_css("tr td:nth-child(2) input[type='checkbox']:not(:checked)")
+      # In the scope of the th element which contains the checkbox
       within('tr th:nth-child(2)') do
-        click_button 'Deselect all'
-        expect(page).to have_css('button', text: 'Select all', visible: true)
+        find("input[type='checkbox']").set(false)
       end
-      # No checkboxes should be checked
+      # After unchecking the all checkbox, all checkboxes in the item details column should be unchecked
       expect(page).to have_no_css("tr td:nth-child(2) input[type='checkbox']:checked")
     end
 
     it 'selects all checkboxes when any are unselected' do
       visit spotlight.edit_exhibit_metadata_configuration_path exhibit
+
       # No checkboxes should be unchecked
       expect(page).to have_no_css("tr td:nth-child(2) input[type='checkbox']:not(:checked)")
-      first_button_area = find('tr th:nth-child(2)')
-      within first_button_area do
-        expect(page).to have_css('button', text: 'Deselect all')
+      # Find the "All" checkbox in the th field for the item details column
+      first_checkbox_area = find('tr th:nth-child(2)')
+      within first_checkbox_area do
+        expect(page).to have_css("input[type='checkbox']")
+        expect(page).to have_css('label', text: 'All')
       end
-      # Uncheck first checkbox
+      # Uncheck first metadata field checkbox in the item details column
       find("tr:first-child td:nth-child(2) input[type='checkbox']").set(false)
-      # A checkbox should be checked
+      # Unchecking the first metadata checkbox should not uncheck other metadata field checkboxes
       expect(page).to have_css("tr td:nth-child(2) input[type='checkbox']:checked")
-      within first_button_area do
-        click_button 'Select all'
+      within first_checkbox_area do
+        # Unchecking one of the checkboxes should also uncheck "All"
+        expect(page).to have_css("input[type='checkbox']:not(:checked)")
+        # Check the "All" checkbox for the item details column
+        find("input[type='checkbox']").set(true)
       end
-      # No checkboxes should be unchecked
+      # After clicking "All", all checkboxes should be checked
       expect(page).to have_no_css("tr td:nth-child(2) input[type='checkbox']:not(:checked)")
     end
   end

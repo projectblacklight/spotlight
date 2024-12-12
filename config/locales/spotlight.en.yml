@@ -720,7 +720,7 @@ en:
         header: Metadata
         instructions: Select metadata fields to display on each type of page. Select a field name to edit its display label. Drag and drop fields to specify the order in which they are displayed.
         order_header: Display and order metadata fields
-        select_all: Select all
+        select_all: All
         type_label: Type
         view:
           show: Item details
