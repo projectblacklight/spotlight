@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 module Spotlight
-  # Component to select section of 
+  # Component to select section of image
   class SelectImageComponent < ViewComponent::Base
-
     def initialize(document, exhibit, index_id)
       super
       @document = document
