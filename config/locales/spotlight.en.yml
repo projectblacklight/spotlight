@@ -740,6 +740,14 @@ en:
         thumbnail:
           help: You can select and crop an image to visually represent this page. It will be used as the thumbnail image if you include this page in the Pages widget.
         title_placeholder: Title
+        select_image: Select image area
+        instructions_html: |
+          Adjust the image so that the rectangle contains the area you want to display to exhibit visitors. 
+          <ol> 
+            <li>Click-and-drag to adjust position</li>
+            <li> Adjust zoom-level</li>
+          </ol> 
+          Select Save changes to save the image area.
       index:
         about_pages:
           header: About pages

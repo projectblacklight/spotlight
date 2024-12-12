@@ -21,7 +21,7 @@ module Spotlight
     end
 
     def help_text
-      t(:'spotlight.featured_images.form.crop_area.help_html', thing: :thumbnail)
+      t(:'spotlight.pages.form.instructions_html', thing: :thumbnail)
     end
   end
 end

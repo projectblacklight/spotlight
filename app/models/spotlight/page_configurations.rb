@@ -40,7 +40,8 @@ module Spotlight
         'autocomplete-exhibit-pages-path': page_autocomplete_endpoint,
         'autocomplete-exhibit-browse-groups-path': browse_groups_autocomplete_endpoint,
         'autocomplete-exhibit-searches-path': search_autocomplete_endpoint,
-        'preview-url': page_preview_url
+        'preview-url': page_preview_url,
+        'exhibit-path': spotlight.exhibit_path(current_exhibit)
       }.merge(downstream_parameters)
     end
 

@@ -2,7 +2,7 @@
   # TODO: the "if @page.persisted?" business below could possibly be done w/ some clever polymorphic routing.
   # Leaving as-is for now since technically you can't get to the new page form anyway.
 %>
-<%= bootstrap_form_for(@page, url: url_for([spotlight, @page.exhibit, @page, format: nil]), role: 'form', html: { data: configurations_for_current_page.merge('form-observer': true).merge('exhibit-path': spotlight.exhibit_path(@page.exhibit))}) do |f| %>
+<%= bootstrap_form_for(@page, url: url_for([spotlight, @page.exhibit, @page, format: nil]), role: 'form', html: { data: configurations_for_current_page.merge('form-observer': true) }) do |f| %>
   <%= render @page.lock if @page.lock and not @page.lock.stale? and not @page.lock.current_session? %>
   <% if @page.errors.any? %>
     <div id="error_explanation">

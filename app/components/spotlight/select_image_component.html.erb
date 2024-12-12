@@ -1,35 +1,16 @@
 <%= render Blacklight::System::ModalComponent.new do |component| %>
-  <% component.with_title { "Select Image Section" } %>
+  <% component.with_title { t('spotlight.pages.form.select_image') } %>
   <% component.with_body do %>
-    
-  <%# @document.inspect %>
-  <!--form>
-    <div data-cropper="doccropper" data-form-prefix = "i">
-        <input type="hidden" id="i_id" value="dy396mt9665">
-        <input type="hidden" id="i_title" value="a Map of the Middle Part of AMERICA">
-        <input type="hidden" id="i_thumbnail_image_url" value="">
-        <input type="hidden" id="i_full_image_url" value="">
-        <input type="hidden" id="i_iiif_tilesource" value="https://stacks.stanford.edu/image/iiif/dy396mt9665/dy396mt9665_05_0001/info.json">
-        <input type="hidden" id="i_iiif_manifest_url" value="https://purl.stanford.edu/dy396mt9665/iiif/manifest.json">
-        <input type="hidden" id="i_iiif_canvas_id" value="https://purl.stanford.edu/dy396mt9665/iiif/canvas/cocina-fileSet-dy396mt9665-dy396mt9665_1">
-        <input type="hidden" id="i_iiif_image_id" value="https://purl.stanford.edu/dy396mt9665/iiif/annotation/cocina-fileSet-dy396mt9665-dy396mt9665_1">
-        <div id="i_iiif_cropper" data-behavior="iiif-cropper" data-cropper-key="doccropper" data-crop-width="500" data-crop-height="500">
-        </div>
+    <div class='p-3 m-2'>
+      <input type="hidden" name="select_image_region">
+      <p class="instructions"><%= help_text.html_safe %></p>
+      <div class="mx-3" id="solr_document_widget_iiif_cropper" data-behavior="iiif-cropper" data-cropper-key="select_image_<%=@id%>" data-index-id="<%=@index_id%>" data-crop-width="120" data-crop-height="120">
     </div>
-  </form-->
-  <div>
-    <input type="hidden" name="select_image_region">
-    <p class="instructions"><%= help_text %></p>
-    <div id="solr_document_widget_iiif_cropper" data-behavior="iiif-cropper" data-cropper-key="select_image_<%=@id%>" data-index-id="<%=@index_id%>" data-crop-width="120" data-crop-height="120">
-  </div>
-
-
-    
   <% end %>
    <% component.with_footer do %>
     <div> 
-      <input id='saveimage' type='button' class='btn btn-primary' value='Save changes'> 
-      <input type='button' class='btn btn-primary-outline' value='Cancel'> 
+      <input type='button' class='btn btn-outline-primary' value='Cancel' data-bl-dismiss='modal'>
+      <input id='saveimage' type='button' class='btn btn-primary' value='Save changes' data-bl-dismiss='modal'>  
     </div>
   <% end %>
 <% end %>

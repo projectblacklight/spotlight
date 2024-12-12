@@ -68,9 +68,8 @@ Core.Block.Resources = (function(){
       if (!this.show_image_selection) return ``;
       var url = $('form[data-exhibit-path]').data('exhibit-path') + '/catalog/' + data['id'];
       var markup = `
-        <div>
-          <a name="selectimage" href="${url}/select_image?index_id=${index}" data-blacklight-modal="trigger">Select image</a>
-        </div>`;
+          <a name="selectimage" href="${url}/select_image?index_id=${index}" data-blacklight-modal="trigger">Select image area</a>
+        `;
       return markup;
     },
     _itemPanel: function(data) {
@@ -92,15 +91,21 @@ Core.Block.Resources = (function(){
                 <div class="dd-handle dd3-handle">${i18n.t("blocks:resources:panel:drag")}</div>
                 <div class="card-header item-grid">
                   <div class="d-flex">
-                    <div class="checkbox">
-                      <input name="item[${index}][display]" type="hidden" value="false" />
-                      <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                      <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
-                    </div>
-                    <div class="pic">
-                      <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
-                      ${this._itemSelectImageLink(data, index)}
+                    <div class="d-inline-block">
+                      <div class="d-flex">
+                        <div class="checkbox">
+                          <input name="item[${index}][display]" type="hidden" value="false" />
+                          <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                          <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                        </div>
+                        <div class="pic">
+                          <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
+                        </div>
                       </div>
+                      <div class="d-inline-block">
+                        ${this._itemSelectImageLink(data, index)}
+                      </div>
+                    </div>
                     <div class="main">
                       <div class="title card-title">${data.title}</div>
                       <div>${(data.slug || data.id)}</div>
