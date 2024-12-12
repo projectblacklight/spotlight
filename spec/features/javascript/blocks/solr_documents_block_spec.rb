@@ -86,17 +86,11 @@ RSpec.describe 'Solr Document Block', default_max_wait_time: 30, feature: true, 
   it 'allows you to toggle visibility of solr documents', js: true do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
-    # Flappy guard. Wait for the thumbnail src to be populated.
-    expect(page).to have_selector('li[data-resource-id="dq287tq6352"] .img-thumbnail[src^="http"]')
-
     within(:css, '.card') do
       uncheck 'Display?'
     end
 
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
-
-    # Flappy guard. Wait for the thumbnail src to be populated.
-    expect(page).to have_selector('li[data-resource-id="gk446cj2442"] .img-thumbnail[src^="http"]')
 
     # display the title as the primary caption
     within('.primary-caption') do
@@ -111,6 +105,7 @@ RSpec.describe 'Solr Document Block', default_max_wait_time: 30, feature: true, 
     expect(page).to have_no_content "L'AMERIQUE"
 
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
+    wait_for_sir_trevor
     # display the title as the primary caption
     within('.primary-caption') do
       uncheck('Primary caption')
@@ -149,9 +144,6 @@ RSpec.describe 'Solr Document Block', default_max_wait_time: 30, feature: true, 
   it 'allows you to optionally display a ZPR link with the image', js: true do
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
-    # Flappy guard. Wait for the thumbnail src to be populated.
-    expect(page).to have_selector('li[data-resource-id="gk446cj2442"] .img-thumbnail[src^="http"]')
-
     check 'Offer "View larger" option'
 
     save_page_changes
@@ -182,9 +174,6 @@ RSpec.describe 'Solr Document Block', default_max_wait_time: 30, feature: true, 
   it 'allows you to choose which side the text will be on', js: true do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
-    # Flappy guard. Wait for the thumbnail src to be populated.
-    expect(page).to have_selector('li[data-resource-id="dq287tq6352"] .img-thumbnail[src^="http"]')
-
     # Select to align the text right
     choose 'Left'
 
@@ -211,8 +200,6 @@ RSpec.describe 'Solr Document Block', default_max_wait_time: 30, feature: true, 
 
   it 'toggles alt text input when marking an image as decorative', js: true do
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
-    # Flappy guard. Wait for the thumbnail src to be populated.
-    expect(page).to have_selector('li[data-resource-id="gk446cj2442"] .img-thumbnail[src^="http"]')
 
     fill_in 'Alternative text', with: 'custom alt text'
     check 'Decorative'
@@ -223,13 +210,12 @@ RSpec.describe 'Solr Document Block', default_max_wait_time: 30, feature: true, 
 
   it 'retains custom alt text after marking as decorative and saving', js: true do
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
-    # Flappy guard. Wait for the thumbnail src to be populated.
-    expect(page).to have_selector('li[data-resource-id="gk446cj2442"] .img-thumbnail[src^="http"]')
 
     fill_in 'Alternative text', with: 'custom alt text'
     check 'Decorative'
     save_page_changes
     click_on 'Edit'
+    wait_for_sir_trevor
     uncheck 'Decorative'
     expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
   end
@@ -237,17 +223,11 @@ RSpec.describe 'Solr Document Block', default_max_wait_time: 30, feature: true, 
   it 'round-trip data', js: true do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
-    # Flappy guard. Wait for the thumbnail src to be populated.
-    expect(page).to have_selector('li[data-resource-id="dq287tq6352"] .img-thumbnail[src^="http"]')
-
     within(:css, '.card') do
       uncheck 'Display?'
     end
 
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
-
-    # Flappy guard. Wait for the thumbnail src to be populated.
-    expect(page).to have_selector('li[data-resource-id="gk446cj2442"] .img-thumbnail[src^="http"]')
 
     # display the title as the primary caption
     within('.primary-caption') do
