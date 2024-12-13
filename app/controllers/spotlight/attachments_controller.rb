@@ -12,12 +12,11 @@ module Spotlight
     def create
       @attachment.attributes = attachment_params
       @attachment.save!
-      puts "CREATE ATTACHMENT"
       attachment_json = @attachment.as_json
       attachment_json['tilesource'] = tilesource
       render json: attachment_json
     end
-    
+
     private
 
     def tilesource

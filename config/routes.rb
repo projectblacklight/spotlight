@@ -196,5 +196,4 @@ Spotlight::Engine.routes.draw do
 
   get '/:exhibit_id/catalog/:id/select_image' => 'catalog#select_image'
   get '/:exhibit_id/select_upload_image' => 'catalog#select_image'
-
 end

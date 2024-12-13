@@ -2,7 +2,7 @@ import { addImageSelector } from 'spotlight/admin/add_image_selector'
 import Core from 'spotlight/core'
 
 export default class Crop {
-  constructor(cropArea, iiifFields = null) {
+  constructor(cropArea, iiifFields = null, preserveAspectRatio = true) {
     this.cropArea = cropArea;
     this.cropArea.data('iiifCropper', this);
     this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';

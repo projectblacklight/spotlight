@@ -140,9 +140,7 @@ module Spotlight
       @index_id = params[:index_id]
       @block_item_id = params[:block_item_id]
       @type = params.key?(:type) ? params[:type] : 'default'
-      if @type != 'upload'
-        load_document
-      end
+      load_document unless @type == 'upload'
       respond_to :html
     end
 
