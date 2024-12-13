@@ -7,6 +7,7 @@ export default class Crop {
     this.cropArea.data('iiifCropper', this);
     this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
     this.cropTool = $(this.cropSelector);
+    this.preserveAspectRatio = preserveAspectRatio;
     if(iiifFields == null) {
       this.formPrefix = this.cropTool.data('form-prefix');
       this.iiifUrlField = $('#' + this.formPrefix + '_iiif_tilesource');
@@ -159,15 +160,21 @@ export default class Crop {
     if (this.cropperMap) {
       return;
     }
-    this.cropperMap = L.map(this.cropArea.attr('id'), {
+
+    var cropperOptions = {
       editable: true,
       center: [0, 0],
       crs: L.CRS.Simple,
-      zoom: 0,
-      editOptions: {
+      zoom: 0
+    }
+
+    if(this.preserveAspectRatio) {
+      cropperOptions['editOptions'] = {
         rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(this.aspectRatio())
-      }
-    });
+      };
+    }
+
+    this.cropperMap = L.map(this.cropArea.attr('id'), cropperOptions);
     this.invalidateMapSizeOnTabToggle();
   }
 

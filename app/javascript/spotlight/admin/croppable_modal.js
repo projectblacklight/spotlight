@@ -21,7 +21,7 @@ export default class CroppableModal {
         var iiifFields = context.getIIIFObject(dataCropperKey, itemIndex);
         // The region field is set separately within the modal div
         iiifFields['iiifRegionField'] = context.setRegionField(dataCropperKey, itemIndex);
-        new Crop(dataCropperDiv, iiifFields).render();
+        new Crop(dataCropperDiv, iiifFields, false).render();
         //context.attachModalSaveHandler(dataCropperKey);
       }
 
