@@ -139,8 +139,7 @@ module Spotlight
       @select_exhibit = params[:exhibit_id]
       @index_id = params[:index_id]
       @block_item_id = params[:block_item_id]
-      @type = params.key?(:type) ? params[:type] : 'default'
-      load_document unless @type == 'upload'
+      load_document
       respond_to :html
     end
 

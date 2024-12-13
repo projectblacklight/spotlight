@@ -15,7 +15,7 @@ export default class CroppableModal {
     document.addEventListener('show.blacklight.blacklight-modal', function(e) {      
       var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
       
-      if(dataCropperDiv && dataCropperDiv.data('type') != 'upload') {
+      if(dataCropperDiv) {
         var dataCropperKey = dataCropperDiv.data('cropper-key');
         var itemIndex = dataCropperDiv.data('index-id');
         var iiifFields = context.getIIIFObject(dataCropperKey, itemIndex);
@@ -23,10 +23,6 @@ export default class CroppableModal {
         iiifFields['iiifRegionField'] = context.setRegionField(dataCropperKey, itemIndex);
         new Crop(dataCropperDiv, iiifFields, false).render();
         //context.attachModalSaveHandler(dataCropperKey);
-      }
-
-      if(dataCropperDiv && dataCropperDiv.data('type') == 'upload') {
-        // Handle upload
       }
     });
   }
@@ -82,12 +78,6 @@ export default class CroppableModal {
     var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
 
     if(dataCropperDiv) {
-      var itemType = dataCropperDiv.data('type');
-
-      if(itemType == 'upload') {
-        context.handleUpload();
-        return;
-      }
       var dataCropperKey = dataCropperDiv.data("cropper-key");
       var itemIndex = dataCropperDiv.data("index-id");
       // Get the element on the main edit page whose select image link opened up the modal
@@ -110,9 +100,5 @@ export default class CroppableModal {
       var itemImage = $('img.img-thumbnail', itemElement);      
       itemImage.attr('src', url);
     }
-  }
-
-  handleUpload() {
-    // handle upload
   }
 }
