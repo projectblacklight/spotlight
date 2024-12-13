@@ -12,10 +12,17 @@ module Spotlight
     def create
       @attachment.attributes = attachment_params
       @attachment.save!
-      render json: @attachment
+      puts "CREATE ATTACHMENT"
+      attachment_json = @attachment.as_json
+      attachment_json['tilesource'] = tilesource
+      render json: attachment_json
     end
-
+    
     private
+
+    def tilesource
+      Spotlight::Engine.config.iiif_service.info_url(@attachment, request.host)
+    end
 
     # Only allow trusted parameters through.
     def attachment_params

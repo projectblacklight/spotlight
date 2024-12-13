@@ -195,4 +195,6 @@ Spotlight::Engine.routes.draw do
   post 'versions/:id/revert' => 'versions#revert', as: :revert_version
 
   get '/:exhibit_id/catalog/:id/select_image' => 'catalog#select_image'
+  get '/:exhibit_id/select_upload_image' => 'catalog#select_image'
+
 end

@@ -6,6 +6,7 @@ module Spotlight
     load_and_authorize_resource instance_name: :featured_image, class: 'Spotlight::TemporaryImage'
 
     def create
+      puts ">>Featured Images Controller"
       if @featured_image.save && @featured_image.file_present?
         render json: { tilesource:, id: @featured_image.id }
       else

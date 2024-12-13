@@ -68,12 +68,14 @@ SirTrevor.Blocks.UploadedItems = (function(){
       var dataId = data.id || data.uid;
       var dataTitle = data.title || data.name;
       var dataUrl = data.url || data.file.url;
+      var dataTilesource = data['iiif_tilesource'] || '';
 
       var markup = `
           <li class="field form-inline dd-item dd3-item" data-id="${index}" id="${this.formId("item_" + dataId)}">
             <input type="hidden" name="item[${index}][id]" value="${dataId}" />
             <input type="hidden" name="item[${index}][title]" value="${dataTitle}" />
             <input type="hidden" name="item[${index}][url]" data-item-grid-thumbnail="true"  value="${dataUrl}"/>
+            <input type="hidden" name="item[${index}][iiif_tilesource]" value="${dataTilesource}"/>
             <input data-property="weight" type="hidden" name="item[${index}][weight]" value="${data.weight}" />
             <div class="card d-flex dd3-content">
               <div class="dd-handle dd3-handle">${i18n.t("blocks:resources:panel:drag")}</div>
@@ -85,6 +87,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
                 </div>
                 <div class="pic">
                   <img class="img-thumbnail" src="${dataUrl}" />
+                  ${this._itemSelectImageLink(data, index)}
                 </div>
                 <div class="main form-horizontal">
                   <div class="title card-title">${dataTitle}</div>
@@ -118,6 +121,14 @@ SirTrevor.Blocks.UploadedItems = (function(){
       this.afterPanelRender(data, panel);
 
       return panel;
+    },
+
+    _itemSelectImageLink: function(data, index) {
+      var url = $('form[data-exhibit-path]').data('exhibit-path') + '/select_upload_image'
+      var markup = `
+          <a name="selectimage" href="${url}?type=upload&index_id=${index}" data-blacklight-modal="trigger">Select image area</a>
+        `;
+      return markup;
     },
 
     editorHTML: function() {

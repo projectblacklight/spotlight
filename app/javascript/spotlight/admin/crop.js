@@ -264,6 +264,7 @@ export default class Crop {
     var url = this.fileInput.data('endpoint')
     // Every post creates a new image/masthead.
     // Because they create IIIF urls which are heavily cached.
+    var data = this.getData();
     $.ajax({
       url: url,  //Server script to process data
       type: 'POST',

@@ -62,13 +62,13 @@ Core.Block.Resources = (function(){
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join('');
     },
-    _itemSelectImageLink: function(data, index) {
+    _itemSelectImageLink: function(block_item_id, doc_id, index) {
       // If image selection is not possible for this block, then do not show
       // image selection link
       if (!this.show_image_selection) return ``;
-      var url = $('form[data-exhibit-path]').data('exhibit-path') + '/catalog/' + data['id'];
+      var url = $('form[data-exhibit-path]').data('exhibit-path') + '/catalog/' + doc_id;
       var markup = `
-          <a name="selectimage" href="${url}/select_image?index_id=${index}" data-blacklight-modal="trigger">Select image area</a>
+          <a name="selectimage" href="${url}/select_image?block_item_id=${block_item_id}&index_id=${index}&type=${this.type}" data-blacklight-modal="trigger">Select image area</a>
         `;
       return markup;
     },
@@ -81,8 +81,9 @@ Core.Block.Resources = (function(){
         checked = "";
       }
       var resource_id = data.slug || data.id;
+      var block_item_id = this.formId("item_" + data.id);
       var markup = `
-          <li class="field form-inline dd-item dd3-item" data-cropper="select_image_${resource_id}" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+          <li class="field form-inline dd-item dd3-item" data-cropper="select_image_${block_item_id}" data-resource-id="${resource_id}" data-id="${index}" id="${block_item_id}">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][title]" value="${data.title}" />
             ${this._itemPanelIiifFields(index, data)}
@@ -103,7 +104,7 @@ Core.Block.Resources = (function(){
                         </div>
                       </div>
                       <div class="d-inline-block">
-                        ${this._itemSelectImageLink(data, index)}
+                        ${this._itemSelectImageLink(block_item_id,data.id, index)}
                       </div>
                     </div>
                     <div class="main">

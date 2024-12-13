@@ -15,14 +15,18 @@ export default class CroppableModal {
     document.addEventListener('show.blacklight.blacklight-modal', function(e) {      
       var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
       
-      if(dataCropperDiv) {
-        var dataCropperKey = dataCropperDiv.data("cropper-key");
-        var itemIndex = dataCropperDiv.data("index-id");
+      if(dataCropperDiv && dataCropperDiv.data('type') != 'upload') {
+        var dataCropperKey = dataCropperDiv.data('cropper-key');
+        var itemIndex = dataCropperDiv.data('index-id');
         var iiifFields = context.getIIIFObject(dataCropperKey, itemIndex);
         // The region field is set separately within the modal div
         iiifFields['iiifRegionField'] = context.setRegionField(dataCropperKey, itemIndex);
         new Crop(dataCropperDiv, iiifFields).render();
         //context.attachModalSaveHandler(dataCropperKey);
+      }
+
+      if(dataCropperDiv && dataCropperDiv.data('type') == 'upload') {
+        // Handle upload
       }
     });
   }
@@ -78,12 +82,19 @@ export default class CroppableModal {
     var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
 
     if(dataCropperDiv) {
+      var itemType = dataCropperDiv.data('type');
+
+      if(itemType == 'upload') {
+        context.handleUpload();
+        return;
+      }
       var dataCropperKey = dataCropperDiv.data("cropper-key");
       var itemIndex = dataCropperDiv.data("index-id");
       // Get the element on the main edit page whose select image link opened up the modal
       var itemElement = $('[data-cropper="' + dataCropperKey + '"]');
       // Get the hidden input field on the main edit page corresponding to this item
       var thumbnailSaveField = context.iiifInputField(itemIndex, 'thumbnail_image_url', itemElement);
+      var fullimageSaveField = context.iiifInputField(itemIndex, 'full_image_url', itemElement);
       var iiifTilesource = context.iiifInputField(itemIndex, 'iiif_tilesource', itemElement).val();
       // Get the region value saved in the modal for the selected area
       var regionElement = $('#blacklight-modal input[name="select_image_region"]');
@@ -92,10 +103,16 @@ export default class CroppableModal {
       var urlPrefix = iiifTilesource.substring(0, iiifTilesource.lastIndexOf('/info.json'));
       var url = urlPrefix + "/" + regionValue + "/400,400/0/default.jpg";
       // Set the hidden inpt value to the thumbnail URL
+      // Also set the full image - which may not be necessary for all widgets
       thumbnailSaveField.val(url);
+      fullimageSaveField.val(url);
       // Also change img url for thumbnail image
       var itemImage = $('img.img-thumbnail', itemElement);      
       itemImage.attr('src', url);
     }
+  }
+
+  handleUpload() {
+    // handle upload
   }
 }
