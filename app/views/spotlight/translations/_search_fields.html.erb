@@ -5,9 +5,7 @@
     <%= hidden_field_tag :tab, 'search_fields', id: nil %>
 
     <div class='translation-field-based-search-fields'>
-      <h2 class='translation-subheading'>
-        <%= t('.field_based_search_fields.label') %>
-      </h2>
+      <%= render Spotlight::Translations::SubheadingComponent.new(key: 'search_fields.field_based_search_fields.label') %>
 
       <% current_exhibit.blacklight_config.search_fields.select { |_, config| config.if }.each do |key, search_config| %>
         <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "blacklight.search.fields.search.#{key}", locale: @language) %>
@@ -35,9 +33,7 @@
     </div>
 
     <div class='translation-facet-fields'>
-      <h2 class='translation-subheading'>
-        <%= t('.facet_fields.label') %>
-      </h2>
+      <%= render Spotlight::Translations::SubheadingComponent.new(key: 'search_fields.facet_fields.label') %>
 
       <% current_exhibit.blacklight_config.facet_fields.each do |key, facet_config| %>
         <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "blacklight.search.fields.facet.#{key}", locale: @language) %>
@@ -65,9 +61,7 @@
     </div>
 
     <div class='translation-sort-fields'>
-      <h2 class='translation-subheading'>
-        <%= t('.sort_fields.label') %>
-      </h2>
+      <%= render Spotlight::Translations::SubheadingComponent.new(key: 'search_fields.sort_fields.label') %>
 
       <% current_exhibit.blacklight_config.sort_fields.each do |key, sort_config| %>
         <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "blacklight.search.fields.sort.#{key}", locale: @language) %>

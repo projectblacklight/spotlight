@@ -4,9 +4,7 @@
     <%= hidden_field_tag :language, @language %>
 
     <div class='translation-basic-settings'>
-      <h2 class='translation-subheading'>
-        <%= t('.basic_settings.label') %>
-      </h2>
+      <%= render Spotlight::Translations::SubheadingComponent.new(key: 'general.basic_settings.label') %>
 
       <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "#{current_exhibit.slug}.title", locale: @language) %>
       <%= f.fields_for :translations, translation do |translation_fields| %>
@@ -73,9 +71,7 @@
       <% end %>
     </div>
     <div class='translation-main-menu'>
-      <h2 class='translation-subheading'>
-        <%= t('.main_menu.label') %>
-      </h2>
+      <%= render Spotlight::Translations::SubheadingComponent.new(key: 'general.main_menu.label') %>
 
       <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "spotlight.curation.nav.home", locale: @language) %>
       <%= f.fields_for :translations, translation do |translation_fields| %>
