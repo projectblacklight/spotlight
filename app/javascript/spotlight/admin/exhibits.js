@@ -51,18 +51,17 @@ export default class {
       errSpan.find('.error-msg').first().text(error || event.detail[1]);
     });
 
-    document.addEventListener('turbo:submit-end', (event) => {
-      const response = event.detail.fetchResponse;
-      if (!response.succeeded && response.response.status === 404) {
-        const path = new URL(event.target.action).pathname;
-        const deleteButton = document.querySelector(`.contact-email-delete[href="${path}"]`);
-        if (deleteButton) {
-          const errSpan = deleteButton.closest('.contact').querySelector('.contact-email-delete-error');
-          const errorMsg = errSpan.querySelector('.error-msg');
-          errSpan.style.display = 'block';
-          errorMsg.textContent = 'Not Found';
-        }
-      }
+    document.addEventListener('turbo:submit-end', function(event) {
+      const deleteButtonTurboFrameId = event.target.dataset.turboFrame;
+      const errSpan = document.querySelector(`#${deleteButtonTurboFrameId} .contact-email-delete-error`);
+      if (!deleteButtonTurboFrameId || !errSpan) return;
+
+      const { fetchResponse } = event.detail;
+      const isNotFoundError = fetchResponse && !fetchResponse.succeeded && fetchResponse.response.status === 404;
+      if (!isNotFoundError) return;
+
+      errSpan.style.display = 'block';
+      errSpan.querySelector('.error-msg').textContent = 'Not Found';
     });
 
     if ($.fn.tooltip) {
