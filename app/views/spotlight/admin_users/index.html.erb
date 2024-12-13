@@ -53,7 +53,7 @@
   <div class="mb-4">
     <h3 class="instructions"><%= t :'.admins_curators' %></h3>
     <div id="admins_curators" class="card card-body bg-light">
-      <div class='btn-toolbar float-right float-end'>
+      <div class='btn-toolbar float-right align-self-end'>
         <button class="btn btn-sm btn-secondary copy-email-addresses" data-clipboard-target="#admins_curators">
             <%= t('.copy') %>
         </button>
@@ -87,7 +87,7 @@
                       data: { method: :delete, turbo_method: :delete },
                       class: 'btn btn-sm btn-danger') unless user == current_user %>
               <% else %>
-                <%= link_to(t('.update'), admin_user_path(user), 
+                <%= link_to(t('.update'), admin_user_path(user),
                       data: { method: :patch, turbo_method: :patch },
                       class: 'btn btn-sm btn-secondary') %>
               <% end %>
