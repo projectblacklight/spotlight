@@ -135,11 +135,8 @@ module Spotlight
     end
 
     def select_image
-      @select_id = params[:id]
-      @select_exhibit = params[:exhibit_id]
       @index_id = params[:index_id]
       @block_item_id = params[:block_item_id]
-      load_document
       respond_to :html
     end
 

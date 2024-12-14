@@ -234,6 +234,16 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
   end
 
+  it 'displays the select image area link to open up a modal for cropping', js: true do
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
+
+    item_id = page.find('li[data-resource-id="dq287tq6352"]')[:id]
+    index_id = page.find('li[data-resource-id="dq287tq6352"]')['data-id']
+    image_selection_url = "/spotlight/#{exhibit.slug}/select_image?block_item_id=#{item_id}&index_id=#{index_id}"
+    # Verify that select image area link is visible
+    expect(page).to have_link('Select image area', href: image_selection_url)
+  end
+
   it 'round-trip data', js: true do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 

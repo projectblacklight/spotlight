@@ -4,7 +4,7 @@
     <div class='p-3 m-2'>
       <input type="hidden" name="select_image_region">
       <p class="instructions"><%= help_text.html_safe %></p>
-      <div class="mx-3" id="solr_document_widget_iiif_cropper" data-behavior="iiif-cropper" data-cropper-key="select_image_<%=@block_item_id%>" data-index-id="<%=@index_id%>" data-crop-width="120" data-crop-height="120">
+      <div class="mx-3" id="resource_block_iiif_cropper" data-behavior="iiif-cropper" data-cropper-key="select_image_<%=@block_item_id%>" data-index-id="<%=@index_id%>" data-crop-width="120" data-crop-height="120">
     </div>
   <% end %>
    <% component.with_footer do %>

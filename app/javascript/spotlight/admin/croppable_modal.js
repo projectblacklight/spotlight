@@ -91,14 +91,14 @@ export default class CroppableModal {
       var regionValue = regionElement.val();
       // Extract the region string to incorporate into the thumbnail URL
       var urlPrefix = iiifTilesource.substring(0, iiifTilesource.lastIndexOf('/info.json'));
-      var url = urlPrefix + "/" + regionValue + "/400,400/0/default.jpg";
+      var thumbnailUrl = urlPrefix + '/' + regionValue + '/!400,400/0/default.jpg';
       // Set the hidden inpt value to the thumbnail URL
-      // Also set the full image - which may not be necessary for all widgets
-      thumbnailSaveField.val(url);
-      fullimageSaveField.val(url);
+      // Also set the full image - which is used by widgets like carousel or slideshow
+      thumbnailSaveField.val(thumbnailUrl);
+      fullimageSaveField.val(urlPrefix + '/' + regionValue + '/!800,800/0/default.jpg');
       // Also change img url for thumbnail image
       var itemImage = $('img.img-thumbnail', itemElement);      
-      itemImage.attr('src', url);
+      itemImage.attr('src', thumbnailUrl);
     }
   }
 }

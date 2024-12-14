@@ -3,11 +3,8 @@
 module Spotlight
   # Component to select section of image
   class SelectImageComponent < ViewComponent::Base
-    def initialize(document, exhibit, index_id, block_item_id)
+    def initialize(index_id, block_item_id)
       super
-      @document = document
-      @id = document.present? ? document.id : nil
-      @exhibit = exhibit
       @index_id = index_id
       @block_item_id = block_item_id
     end
