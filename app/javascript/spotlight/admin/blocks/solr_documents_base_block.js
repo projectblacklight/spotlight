@@ -81,7 +81,7 @@ SirTrevor.Blocks.SolrDocumentsBase = (function(){
       $(panel).find('[name$="[iiif_canvas_id]"]').val(manifest_data.canvasId);
       $(panel).find('img.img-thumbnail').attr('src', manifest_data.thumbnail_image_url || manifest_data.tilesource.replace("/info.json", "/full/100,100/0/default.jpg"));
     },
-    afterPanelRender: function(data, panel) {      
+    afterPanelRender: function(data, panel) {
       var context = this;
       var manifestUrl = data.iiif_manifest || data.iiif_manifest_url;
 

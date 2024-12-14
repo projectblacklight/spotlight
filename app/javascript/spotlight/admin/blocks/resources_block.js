@@ -1,7 +1,5 @@
 import Core from 'spotlight/core'
 import SpotlightNestable from 'spotlight/admin/spotlight_nestable'
-import { addImageSelector } from 'spotlight/admin/add_image_selector'
-import Croppable from 'spotlight/admin/croppable'
 
 Core.Block.Resources = (function(){
 
