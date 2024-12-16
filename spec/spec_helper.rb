@@ -28,6 +28,7 @@ Capybara.register_driver :selenium_chrome_headless do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
 
+Capybara.default_max_wait_time = ENV['CI'] ? 10 : 2
 Capybara.javascript_driver = :selenium_chrome_headless
 
 allowed_sites = ['chromedriver.storage.googleapis.com']
