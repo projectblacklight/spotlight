@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Report a Problem', type: :feature do
+RSpec.describe 'Report a Problem', type: :feature do
   let!(:exhibit) { FactoryBot.create(:exhibit) }
   let(:honeypot_field_name) { Spotlight::Engine.config.spambot_honeypot_email_field }
 
@@ -42,7 +42,7 @@ describe 'Report a Problem', type: :feature do
 
       expect do
         click_on 'Send'
-        sleep 1 # Test fails without this after move to Propshaft.
+        expect(page).to have_content('Thanks. Your feedback has been sent.')
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Solr Documents Embed Block', js: true, type: :feature do
+RSpec.describe 'Solr Documents Embed Block', js: true, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
@@ -17,8 +17,6 @@ describe 'Solr Documents Embed Block', js: true, type: :feature do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     save_page_changes
-
-    sleep 2 # Test is flappy without this after move to Propshaft?
 
     expect(page).to have_css('.openseadragon-container')
     expect(page).to have_css('picture')
