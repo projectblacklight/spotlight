@@ -10,7 +10,6 @@ describe 'spotlight/catalog/edit.html.erb', type: :view do
     allow(view).to receive_messages(current_exhibit: stub_model(Spotlight::Exhibit))
     assign(:document, document)
     allow(view).to receive(:document_counter)
-    allow(view).to receive(:render_document_partials)
     render
   end
 
