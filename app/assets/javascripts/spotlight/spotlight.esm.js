@@ -5457,7 +5457,7 @@ Spotlight$1.Block.Resources = (function(){
     description: function() { return i18n.t("blocks:" + this.type + ":description"); },
     alt_text_guidelines: function() {
       if (this.showAltText()) {
-        return i18n.t("blocks:alt_text_guidelines:intro"); 
+        return i18n.t("blocks:alt_text_guidelines:intro");
       }
       return "";
     },
@@ -5465,7 +5465,7 @@ Spotlight$1.Block.Resources = (function(){
       if (this.showAltText()) {
         var link_url = i18n.t("blocks:alt_text_guidelines:link_url");
         var link_label = i18n.t("blocks:alt_text_guidelines:link_label");
-        return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>'; 
+        return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>';
       }
       return "";
     },
@@ -5515,7 +5515,7 @@ Spotlight$1.Block.Resources = (function(){
       }
       var resource_id = data.slug || data.id;
       var markup = `
-          <li class="field form-inline dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+          <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][title]" value="${data.title}" />
             ${this._itemPanelIiifFields(index, data)}
@@ -5628,7 +5628,7 @@ Spotlight$1.Block.Resources = (function(){
           <div class="me-2 mr-2">
             <label class="col-form-label pb-0 pt-1" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
             <div class="form-check mb-1 justify-content-end">
-              <input class="form-check-input" type="checkbox" 
+              <input class="form-check-input" type="checkbox"
                 id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
               <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
             </div>
@@ -5714,7 +5714,7 @@ SirTrevor.Blocks.Browse = (function(){
       }
       var resource_id = data.slug || data.id;
       var markup = `
-           <li class="field form-inline dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+           <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][full_title]" value="${(data.full_title || data.title)}" />
             <input data-property="weight" type="hidden" name="item[${index}][weight]" value="${data.weight}" />
@@ -5791,7 +5791,7 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
       <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/></div>`
     },
 
-    autocomplete_url: function() { 
+    autocomplete_url: function() {
       return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-browse-groups-path]').dataset.autocompleteExhibitBrowseGroupsPath;
     },
     autocomplete_fetch: function(url) {
@@ -5807,7 +5807,7 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
       }
       var resource_id = data.slug || data.id;
       var markup = `
-        <li class="field form-inline dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+        <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
           <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
           <input type="hidden" name="item[${index}][title]" value="${data.title}" />
           <input data-property="weight" type="hidden" name="item[${index}][weight]" value="${data.weight}" />
@@ -6415,7 +6415,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
       var dataUrl = data.url || data.file.url;
 
       var markup = `
-          <li class="field form-inline dd-item dd3-item" data-id="${index}" id="${this.formId("item_" + dataId)}">
+          <li class="field dd-item dd3-item" data-id="${index}" id="${this.formId("item_" + dataId)}">
             <input type="hidden" name="item[${index}][id]" value="${dataId}" />
             <input type="hidden" name="item[${index}][title]" value="${dataTitle}" />
             <input type="hidden" name="item[${index}][url]" data-item-grid-thumbnail="true"  value="${dataUrl}"/>
@@ -6497,7 +6497,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
         <div class="col-lg-3 ps-md-2 pl-md-2">
           <label class="col-form-label text-nowrap pb-0 pt-1 justify-content-md-start justify-content-lg-end d-flex" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
           <div class="form-check d-flex justify-content-md-start justify-content-lg-end">
-            <input class="form-check-input" type="checkbox" 
+            <input class="form-check-input" type="checkbox"
               id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
             <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
           </div>

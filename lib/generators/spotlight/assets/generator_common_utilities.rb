@@ -23,13 +23,13 @@ module Spotlight
         package_yarn_version('spotlight-frontend', Spotlight::VERSION)
       end
 
-      # Support the gem version format e.g.,  `~> 5.3` for consistency.
-      def bootstrap_yarn_version
-        options[:'bootstrap-version'].match(/(\d+(\.\d+)*)/)[0]
+      def bootstrap_version
+        options[:'bootstrap-version'].presence || '~> 5.3'
       end
 
-      def bootstrap4?
-        bootstrap_yarn_version.start_with?('4')
+      # Support the gem version format e.g., `~> 5.3` for consistency.
+      def bootstrap_yarn_version
+        bootstrap_version.match(/(\d+(\.\d+)*)/)[0]
       end
 
       # Yarn link was including so many files (and a circular reference) that Propshaft was having a bad time.

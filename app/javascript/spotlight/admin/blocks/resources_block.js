@@ -12,7 +12,7 @@ Core.Block.Resources = (function(){
     description: function() { return i18n.t("blocks:" + this.type + ":description"); },
     alt_text_guidelines: function() {
       if (this.showAltText()) {
-        return i18n.t("blocks:alt_text_guidelines:intro"); 
+        return i18n.t("blocks:alt_text_guidelines:intro");
       }
       return "";
     },
@@ -20,7 +20,7 @@ Core.Block.Resources = (function(){
       if (this.showAltText()) {
         var link_url = i18n.t("blocks:alt_text_guidelines:link_url");
         var link_label = i18n.t("blocks:alt_text_guidelines:link_label");
-        return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>'; 
+        return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>';
       }
       return "";
     },
@@ -70,7 +70,7 @@ Core.Block.Resources = (function(){
       }
       var resource_id = data.slug || data.id;
       var markup = `
-          <li class="field form-inline dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+          <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][title]" value="${data.title}" />
             ${this._itemPanelIiifFields(index, data)}
@@ -183,7 +183,7 @@ Core.Block.Resources = (function(){
           <div class="me-2 mr-2">
             <label class="col-form-label pb-0 pt-1" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
             <div class="form-check mb-1 justify-content-end">
-              <input class="form-check-input" type="checkbox" 
+              <input class="form-check-input" type="checkbox"
                 id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
               <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
             </div>
