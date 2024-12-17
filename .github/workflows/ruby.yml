@@ -38,7 +38,7 @@ jobs:
             blacklight_version: "~> 8.0"
             bootstrap_version: ~> 4.0
             additional_name: Blacklight 8
-            additional_engine_cart_rails_options: "-j rollup -a sprockets"
+            additional_engine_cart_rails_options: "-j rollup --css bootstrap"
     env:
       RAILS_VERSION: ${{ matrix.rails_version }}
       BLACKLIGHT_VERSION: ${{ matrix.blacklight_version }}
