@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Site users management', js: true do
+RSpec.describe 'Site users management', js: true do
   let(:user) { FactoryBot.create(:site_admin) }
   let!(:existing_user) { FactoryBot.create(:exhibit_visitor) }
   let!(:exhibit_admin) { FactoryBot.create(:exhibit_admin) }
@@ -60,7 +60,7 @@ describe 'Site users management', js: true do
 
     expect do
       click_button 'Add role'
-      sleep 1 # Test fails without this after move to Propshaft.
+      expect(page).to have_content('Added user as an adminstrator')
     end.to change { Devise::Mailer.deliveries.count }.by(1)
     expect(User.where(email: 'a-user-that-did-not-exist@example.com').first.invitation_sent_at).to be_present
   end
