@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versioning: true do
+RSpec.describe 'Solr Document Block', default_max_wait_time: 30, feature: true, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:feature_page) do
@@ -52,7 +52,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     expect(page).to have_selector '.items-block .box', count: 2, visible: true
   end
 
-  it 'allows you to choose from a multi-image solr document (and persist through edits)', default_max_wait_time: 30, js: true do
+  it 'allows you to choose from a multi-image solr document (and persist through edits)', js: true do
     fill_in_solr_document_block_typeahead_field with: 'xd327cm9378'
 
     expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
