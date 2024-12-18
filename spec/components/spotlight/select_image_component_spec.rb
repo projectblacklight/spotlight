@@ -17,7 +17,7 @@ RSpec.describe Spotlight::SelectImageComponent, type: :component do
   end
 
   it 'has a save button' do
-    expect(rendered).to have_css('input#saveimage[type="button"]')
+    expect(rendered).to have_css('input#save-cropping-selection[type="button"]')
   end
 
   it 'has a cancel button' do
