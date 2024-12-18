@@ -30,8 +30,6 @@ module Spotlight
 
     def click_add_widget
       if all('.st-block-replacer').blank?
-        puts "CLICK ADD WIDGET"
-        puts page.body
         expect(page).to have_css('.st-block-addition')
         first('.st-block-addition').click
       end
