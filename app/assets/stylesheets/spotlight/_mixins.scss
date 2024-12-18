@@ -1,5 +1,5 @@
 @mixin edit-in-place-highlighting() {
-  background: #F7F7D0;
+  background: #f7f7d0;
   cursor: text;
 }
 
@@ -10,9 +10,8 @@
 @mixin private-label() {
   &:after {
     @extend .badge;
-    @extend .badge-warning !optional;
-    @extend .bg-warning !optional;
-    content: 'Private';
+    @extend .bg-warning;
+    content: "Private";
     margin-left: 3px;
     color: black;
   }
