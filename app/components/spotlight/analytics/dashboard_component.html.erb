@@ -6,10 +6,10 @@
   <div>
     <%= form.label :start_date, I18n.t("spotlight.dashboards.analytics.start_date_label") %>
     <%= form.date_field :start_date, value: dates['start_date'], min: min_date, max: max_date %>
-    <%= form.label :end_date, I18n.t("spotlight.dashboards.analytics.end_date_label"), class: 'ml-2 ms-2' %>
+    <%= form.label :end_date, I18n.t("spotlight.dashboards.analytics.end_date_label"), class: 'ms-2' %>
     <%= form.date_field :end_date, value: dates['end_date'], min: min_date, max: max_date %>
   </div>
-  <div class="ml-auto ms-auto">
+  <div class="ms-auto">
     <%= form.submit I18n.t("spotlight.dashboards.analytics.submit_date_label"), class: 'btn btn-primary' %>
   </div>
 <% end %>

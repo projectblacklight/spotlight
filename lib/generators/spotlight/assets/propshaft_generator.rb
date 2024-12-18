@@ -38,11 +38,7 @@ module Spotlight
 
       def add_bootstrap
         run "yarn add bootstrap@\"^#{bootstrap_yarn_version}\""
-        if bootstrap4?
-          run 'yarn add popper.js'
-        else
-          run 'yarn add @popperjs/core'
-        end
+        run 'yarn add @popperjs/core'
       end
 
       # Pick a version of the frontend asset package and install it.

@@ -22,7 +22,7 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
       <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/></div>`
     },
 
-    autocomplete_url: function() { 
+    autocomplete_url: function() {
       return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-browse-groups-path]').dataset.autocompleteExhibitBrowseGroupsPath;
     },
     autocomplete_fetch: function(url) {
@@ -38,7 +38,7 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
       }
       var resource_id = data.slug || data.id;
       var markup = `
-        <li class="field form-inline dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+        <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
           <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
           <input type="hidden" name="item[${index}][title]" value="${data.title}" />
           <input data-property="weight" type="hidden" name="item[${index}][weight]" value="${data.weight}" />

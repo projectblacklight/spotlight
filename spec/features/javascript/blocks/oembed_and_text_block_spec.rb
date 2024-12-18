@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Oembed and text block', default_max_wait_time: 15, feature: true, versioning: true do
+describe 'Oembed and text block', feature: true, max_wait_time: 15, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:feature_page) do

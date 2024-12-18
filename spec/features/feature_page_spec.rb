@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Feature page', type: :feature, versioning: true do
+RSpec.describe 'Feature page', type: :feature, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
@@ -141,7 +141,6 @@ describe 'Feature page', type: :feature, versioning: true do
       visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
 
       click_on 'Cancel'
-      sleep 2
 
       # and then open the edit page again
       visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)

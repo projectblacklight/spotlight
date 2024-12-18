@@ -12,8 +12,7 @@
 }
 
 .primary-actions {
-  @extend .float-right !optional;
-  @extend .float-end !optional;
+  @extend .float-end;
 }
 
 #nested-pages {
@@ -71,7 +70,7 @@
 
     li {
       margin-bottom: 1rem;
-      margin-top: $spacer * .5;
+      margin-top: $spacer * 0.5;
       word-break: break-word;
       .name {
         font-weight: bold;
@@ -82,7 +81,7 @@
   ol.sidenav {
     li {
       color: $gray-900;
-      margin-top: $spacer * .5;
+      margin-top: $spacer * 0.5;
     }
 
     ol.subsection {
@@ -117,7 +116,9 @@
 }
 
 .item-grid-block {
-  h3 { margin-top: 0; }
+  h3 {
+    margin-top: 0;
+  }
 
   .text-col {
     float: none;
@@ -180,7 +181,8 @@
   }
 }
 
-.preview-btn, .preview-exit-btn {
+.preview-btn,
+.preview-exit-btn {
   float: left;
   width: 100px;
 }
@@ -200,7 +202,8 @@
   h2 {
     margin-top: 0;
   }
-  p, ol > li {
+  p,
+  ol > li {
     padding: $spacer * 0.5;
   }
   ol > li:last-child {
@@ -221,7 +224,6 @@
 }
 
 .items-block {
-
   .text-col {
     float: none;
     width: auto;
@@ -279,5 +281,5 @@
 
 .zpr-link {
   @extend .btn-sm;
-  margin-top: $spacer * .75;
+  margin-top: $spacer * 0.75;
 }

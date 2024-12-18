@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Browse Category Administration', type: :feature do
+RSpec.describe 'Browse Category Administration', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let!(:search) { FactoryBot.create(:search, exhibit:, query_params: { f: { 'genre_ssim' => ['Value'] } }) }
@@ -21,10 +21,9 @@ describe 'Browse Category Administration', type: :feature do
       expect(page).to have_css('#save-modal')
       fill_in 'search_title', with: 'Some search'
       expect do
-        find('input[name="commit"]').click
-        sleep 1 # Test fails without this after move to Propshaft.
+        click_on 'Save'
+        expect(page).to have_content('The browse category was created.')
         exhibit.searches.reload
-        sleep 1 # Test fails without this after move to Propshaft.
       end.to change { exhibit.searches.count }.by 1
       expect(exhibit.searches.last.query_params).to eq 'q' => 'xyz'
     end
@@ -34,8 +33,8 @@ describe 'Browse Category Administration', type: :feature do
       click_button 'Save this search'
       expect(page).to have_css('#save-modal')
       select search.title, from: 'id'
-      find('input[name="commit"]').click
-      sleep 1 # Test fails without this after move to Propshaft.
+      click_on 'Save'
+      expect(page).to have_content('The browse category was created.')
       expect(search.reload.query_params).to eq 'q' => 'xyz'
     end
   end

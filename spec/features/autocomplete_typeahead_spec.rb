@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Autocomplete typeahead', js: true, type: :feature do
+RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
@@ -21,7 +21,7 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
         expect(page).to have_css('.leaflet-container', visible: true)
 
         click_button 'Save changes'
-        sleep 1 # Test fails without this after move to Propshaft.
+        expect(page).to have_content 'The exhibit was successfully updated.'
 
         featured_image = Spotlight::FeaturedImage.last
 
@@ -40,9 +40,7 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
         check 'Show background image in masthead'
 
         fill_in_typeahead_field(with: 'xd327cm9378', type: 'featured-image')
-        sleep 1 # HACK: that seems to mysteriously work.
-
-        expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
+        expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/)
 
         # Open the multi-image selector and choose the last one
         click_link('Change')
@@ -53,7 +51,7 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
 
         expect(page).to have_content('The exhibit was successfully updated.')
 
-        expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/, visible: true)
+        expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/)
       end
 
       it 'removes the multi-image selector when a non multi-image item is selected' do

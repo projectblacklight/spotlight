@@ -71,7 +71,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
       var dataUrl = data.url || data.file.url;
 
       var markup = `
-          <li class="field form-inline dd-item dd3-item" data-id="${index}" id="${this.formId("item_" + dataId)}">
+          <li class="field dd-item dd3-item" data-id="${index}" id="${this.formId("item_" + dataId)}">
             <input type="hidden" name="item[${index}][id]" value="${dataId}" />
             <input type="hidden" name="item[${index}][title]" value="${dataTitle}" />
             <input type="hidden" name="item[${index}][url]" data-item-grid-thumbnail="true"  value="${dataUrl}"/>
@@ -153,7 +153,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
         <div class="col-lg-3 ps-md-2 pl-md-2">
           <label class="col-form-label text-nowrap pb-0 pt-1 justify-content-md-start justify-content-lg-end d-flex" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
           <div class="form-check d-flex justify-content-md-start justify-content-lg-end">
-            <input class="form-check-input" type="checkbox" 
+            <input class="form-check-input" type="checkbox"
               id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
             <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
           </div>

@@ -4,7 +4,6 @@
   .thumbnail-column {
     box-sizing: content-box;
     min-width: 60px;
-
   }
 
   .document-thumbnail {
@@ -20,7 +19,9 @@
     object-fit: cover;
   }
 
-  .document-counter {display: none;}
+  .document-counter {
+    display: none;
+  }
 
   .index_title {
     margin-top: 0;
@@ -43,8 +44,7 @@
     text-align: center;
     li {
       @extend .badge;
-      @extend .badge-secondary !optional;
-      @extend .bg-secondary !optional;
+      @extend .bg-secondary;
       a {
         color: #fff;
       }
@@ -52,9 +52,15 @@
   }
 }
 
-.document, tr.doc-row, li.dd-item, .autocomplete-item {
+.document,
+tr.doc-row,
+li.dd-item,
+.autocomplete-item {
   &.blacklight-private {
-    .index_title, h1, .card-title, .autocomplete-title {
+    .index_title,
+    h1,
+    .card-title,
+    .autocomplete-title {
       @include private-label;
     }
   }
@@ -99,12 +105,14 @@ form.edit_solr_document {
   }
 }
 
-.blacklight-catalog-edit, .blacklight-catalog-show {
+.blacklight-catalog-edit,
+.blacklight-catalog-show {
   .img-thumbnail {
     @extend .col-md-6;
   }
 
-  .tags, .dl-horizontal {
+  .tags,
+  .dl-horizontal {
     @extend .col-md-6;
   }
 
@@ -127,7 +135,8 @@ form.edit_solr_document {
   width: 60%;
   margin-left: -1 * $spacer * 0.1;
 
-  .btn, .btn-group {
+  .btn,
+  .btn-group {
     margin-left: $spacer * 0.1;
     margin-top: $spacer * 0.25;
   }
@@ -148,28 +157,26 @@ form.edit_solr_document {
 .document {
   .blacklight-exhibit_tags a {
     @extend .badge;
-    @extend .badge-secondary !optional;
-    @extend .bg-secondary !optional;
+    @extend .bg-secondary;
 
     &:not(:last-child) {
-      @extend .mr-2 !optional;
-      @extend .me-2 !optional;
+      @extend .me-2;
     }
   }
 }
 
 .visibility-toggle {
-	.no-js & {
-		input[type="submit"] {
-			display: inline
-		}
+  .no-js & {
+    input[type="submit"] {
+      display: inline;
+    }
 
-		div.toggle-visibility {
-			display: none
-		}
-	}
+    div.toggle-visibility {
+      display: none;
+    }
+  }
 
-	input[type="submit"] {
-		display: none;
-	}
+  input[type="submit"] {
+    display: none;
+  }
 }

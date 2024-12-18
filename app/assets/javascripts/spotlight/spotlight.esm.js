@@ -3671,28 +3671,35 @@ window.Spotlight = Spotlight$1;
 window.SirTrevor = SirTrevor$1;
 
 class Crop {
-  constructor(cropArea, iiifFields = null, preserveAspectRatio = true) {
+  constructor(cropArea, preserveAspectRatio = true) {
     this.cropArea = cropArea;
     this.cropArea.data('iiifCropper', this);
+    // This element will also have the IIIF input elements contained
+    // There may be multiple elements with data-cropper attributes, but
+    // there should only one element with this data-cropper attribute value.
     this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
     this.cropTool = $(this.cropSelector);
+    // Exhibit and masthead cropping preserves aspect ratio, while item 
+    // and other widget related cropping does not preserve aspect ratio in the cropping area. 
     this.preserveAspectRatio = preserveAspectRatio;
-    if(iiifFields == null) {
-      this.formPrefix = this.cropTool.data('form-prefix');
-      this.iiifUrlField = $('#' + this.formPrefix + '_iiif_tilesource');
-      this.iiifRegionField = $('#' + this.formPrefix + '_iiif_region');
-      this.iiifManifestField = $('#' + this.formPrefix + '_iiif_manifest_url');
-      this.iiifCanvasField = $('#' + this.formPrefix + '_iiif_canvas_id');
-      this.iiifImageField = $('#' + this.formPrefix + '_iiif_image_id');
-    } else {
-      this.iiifUrlField = iiifFields["iiifUrlField"];
-      this.iiifRegionField = iiifFields["iiifRegionField"];
-      this.iiifManifestField = iiifFields["iiifManifestField"];
-      this.iiifCanvasField = iiifFields["iiifCanvasField"];
-      this.iiifImageField = iiifFields["iiifImageField"];
-    }
+    this.formPrefix = this.cropTool.data('form-prefix');
+    // Get the IIIF input elements used to store/reference IIIF information
+    this.inputPrefix = this.cropTool.data('input-prefix');
+    this.iiifUrlField = this.iiifInputElement(this.inputPrefix, 'iiif_tilesource', this.cropTool);
+    this.iiifRegionField = this.iiifInputElement(this.inputPrefix, 'iiif_region', this.cropTool);
+    this.iiifManifestField = this.iiifInputElement(this.inputPrefix, 'iiif_manifest_url', this.cropTool);
+    this.iiifCanvasField = this.iiifInputElement(this.inputPrefix, 'iiif_canvas_id', this.cropTool);
+    this.iiifImageField = this.iiifInputElement(this.inputPrefix, 'iiif_image_id', this.cropTool);
+    // Get the closest form element
     this.form = cropArea.closest('form');
     this.tileSource = null;
+  }
+
+  // Return the iiif input element based on the fieldname.
+  // Multiple input fields with the same name on the page may be related 
+  // to a cropper. We thus need to pass in a parent element. 
+  iiifInputElement(inputPrefix, fieldName, inputParentElement) {
+    return $('input[name="' + inputPrefix + '[' + fieldName + ']"]', inputParentElement);
   }
 
   // Render the cropper environment and add hooks into the autocomplete and upload forms
@@ -3940,7 +3947,6 @@ class Crop {
     var url = this.fileInput.data('endpoint');
     // Every post creates a new image/masthead.
     // Because they create IIIF urls which are heavily cached.
-    this.getData();
     $.ajax({
       url: url,  //Server script to process data
       type: 'POST',
@@ -4004,18 +4010,17 @@ class CroppableModal {
   }
 
   attachModalLoadBehavior() {
-    var context = this;
     // Listen for event thrown when modal is displayed with content
     document.addEventListener('show.blacklight.blacklight-modal', function(e) {      
       var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
       
       if(dataCropperDiv) {
-        var dataCropperKey = dataCropperDiv.data('cropper-key');
-        var itemIndex = dataCropperDiv.data('index-id');
-        var iiifFields = context.getIIIFObject(dataCropperKey, itemIndex);
+        dataCropperDiv.data('cropper-key');
+        dataCropperDiv.data('index-id');
+        //var iiifFields = context.getIIIFObject(dataCropperKey, itemIndex);
         // The region field is set separately within the modal div
-        iiifFields['iiifRegionField'] = context.setRegionField(dataCropperKey, itemIndex);
-        new Crop(dataCropperDiv, iiifFields, false).render();
+        //iiifFields['iiifRegionField'] = context.setRegionField(dataCropperKey, itemIndex);
+        new Crop(dataCropperDiv, false).render();
         //context.attachModalSaveHandler(dataCropperKey);
       }
     });
@@ -4058,10 +4063,11 @@ class CroppableModal {
 
   attachModalSaveHandler() {
     var context = this;
-    document.addEventListener('click', function(e) { 
-      if(e.target.matches('#blacklight-modal input#saveimage')) {
+   
+    document.addEventListener('show.blacklight.blacklight-modal', function(e) {
+      $('#save-cropping-selection').on('click', () => {
         context.saveCroppedRegion();
-      }
+      });
     });
   }
 
@@ -4081,8 +4087,9 @@ class CroppableModal {
       var fullimageSaveField = context.iiifInputField(itemIndex, 'full_image_url', itemElement);
       var iiifTilesource = context.iiifInputField(itemIndex, 'iiif_tilesource', itemElement).val();
       // Get the region value saved in the modal for the selected area
-      var regionElement = $('#blacklight-modal input[name="select_image_region"]');
-      var regionValue = regionElement.val();
+      //var regionElement = $('#blacklight-modal input[name="select_image_region"]');
+      //var regionValue = regionElement.val();
+      var regionValue = context.iiifInputField(itemIndex, 'iiif_region', itemElement).val();
       // Extract the region string to incorporate into the thumbnail URL
       var urlPrefix = iiifTilesource.substring(0, iiifTilesource.lastIndexOf('/info.json'));
       var thumbnailUrl = urlPrefix + '/' + regionValue + '/!400,400/0/default.jpg';
@@ -5582,7 +5589,7 @@ Spotlight$1.Block.Resources = (function(){
     description: function() { return i18n.t("blocks:" + this.type + ":description"); },
     alt_text_guidelines: function() {
       if (this.showAltText()) {
-        return i18n.t("blocks:alt_text_guidelines:intro"); 
+        return i18n.t("blocks:alt_text_guidelines:intro");
       }
       return "";
     },
@@ -5590,7 +5597,7 @@ Spotlight$1.Block.Resources = (function(){
       if (this.showAltText()) {
         var link_url = i18n.t("blocks:alt_text_guidelines:link_url");
         var link_label = i18n.t("blocks:alt_text_guidelines:link_label");
-        return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>'; 
+        return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>';
       }
       return "";
     },
@@ -5650,7 +5657,7 @@ Spotlight$1.Block.Resources = (function(){
       var resource_id = data.slug || data.id;
       var block_item_id = this.formId("item_" + data.id);
       var markup = `
-          <li class="field form-inline dd-item dd3-item" data-cropper="select_image_${block_item_id}" data-resource-id="${resource_id}" data-id="${index}" id="${block_item_id}">
+          <li class="field dd-item dd3-item" data-cropper="select_image_${block_item_id}" data-resource-id="${resource_id}" data-id="${index}" id="${block_item_id}" data-input-prefix="item[${index}]">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][title]" value="${data.title}" />
             ${this._itemPanelIiifFields(index, data)}
@@ -5770,7 +5777,7 @@ Spotlight$1.Block.Resources = (function(){
           <div class="me-2 mr-2">
             <label class="col-form-label pb-0 pt-1" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
             <div class="form-check mb-1 justify-content-end">
-              <input class="form-check-input" type="checkbox" 
+              <input class="form-check-input" type="checkbox"
                 id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
               <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
             </div>
@@ -5856,7 +5863,7 @@ SirTrevor.Blocks.Browse = (function(){
       }
       var resource_id = data.slug || data.id;
       var markup = `
-           <li class="field form-inline dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+           <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][full_title]" value="${(data.full_title || data.title)}" />
             <input data-property="weight" type="hidden" name="item[${index}][weight]" value="${data.weight}" />
@@ -5933,7 +5940,7 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
       <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/></div>`
     },
 
-    autocomplete_url: function() { 
+    autocomplete_url: function() {
       return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-browse-groups-path]').dataset.autocompleteExhibitBrowseGroupsPath;
     },
     autocomplete_fetch: function(url) {
@@ -5949,7 +5956,7 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
       }
       var resource_id = data.slug || data.id;
       var markup = `
-        <li class="field form-inline dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+        <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
           <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
           <input type="hidden" name="item[${index}][title]" value="${data.title}" />
           <input data-property="weight" type="hidden" name="item[${index}][weight]" value="${data.weight}" />
@@ -6222,16 +6229,21 @@ SirTrevor.Blocks.SolrDocumentsBase = (function(){
 
     // Sets the first version of the IIIF information from autocomplete data.
     _itemPanelIiifFields: function(index, autocomplete_data) {
-      return [
-        // '<input type="hidden" name="item[' + index + '][iiif_region]" value="' + (data.iiif_region) + '"/>',
-        // for legacy compatiblity:
+      var iiifFields = [
         '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" value="' + (autocomplete_data.thumbnail_image_url || autocomplete_data.thumbnail || "") + '"/>',
         '<input type="hidden" name="item[' + index + '][full_image_url]" value="' + (autocomplete_data.full_image_url || autocomplete_data.thumbnail_image_url || autocomplete_data.thumbnail || "") + '"/>',
         '<input type="hidden" name="item[' + index + '][iiif_tilesource]" value="' + (autocomplete_data.iiif_tilesource) + '"/>',
         '<input type="hidden" name="item[' + index + '][iiif_manifest_url]" value="' + (autocomplete_data.iiif_manifest_url) + '"/>',
         '<input type="hidden" name="item[' + index + '][iiif_canvas_id]" value="' + (autocomplete_data.iiif_canvas_id) + '"/>',
         '<input type="hidden" name="item[' + index + '][iiif_image_id]" value="' + (autocomplete_data.iiif_image_id) + '"/>',
-      ].join("\n");
+      ];
+
+      // The region input is required for widgets that enable image cropping but not otherwise
+      if(this.show_image_selection) {
+        iiifFields.push('<input type="hidden" name="item[' + index + '][iiif_region]" value="' + (autocomplete_data.iiif_region || "") + '"/>');
+      }
+
+      return iiifFields.join("\n");
     },
     // Overwrites the hidden inputs from _itemPanelIiifFields with data from the
     // manifest. Called by afterPanelRender - the manifest_data here is built
@@ -6559,7 +6571,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
       var dataUrl = data.url || data.file.url;
 
       var markup = `
-          <li class="field form-inline dd-item dd3-item" data-id="${index}" id="${this.formId("item_" + dataId)}">
+          <li class="field dd-item dd3-item" data-id="${index}" id="${this.formId("item_" + dataId)}">
             <input type="hidden" name="item[${index}][id]" value="${dataId}" />
             <input type="hidden" name="item[${index}][title]" value="${dataTitle}" />
             <input type="hidden" name="item[${index}][url]" data-item-grid-thumbnail="true"  value="${dataUrl}"/>
@@ -6641,7 +6653,7 @@ SirTrevor.Blocks.UploadedItems = (function(){
         <div class="col-lg-3 ps-md-2 pl-md-2">
           <label class="col-form-label text-nowrap pb-0 pt-1 justify-content-md-start justify-content-lg-end d-flex" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
           <div class="form-check d-flex justify-content-md-start justify-content-lg-end">
-            <input class="form-check-input" type="checkbox" 
+            <input class="form-check-input" type="checkbox"
               id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
             <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
           </div>

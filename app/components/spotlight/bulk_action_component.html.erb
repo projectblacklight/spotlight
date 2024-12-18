@@ -1,0 +1,8 @@
+<div class="dropdown bulk-actions-dropdown">
+  <%= button %>
+  <div class="dropdown-menu" aria-labelledby="bulk-actions-button">
+    <% bulk_actions.each do |key, _config| %>
+      <%= link_to t("spotlight.bulk_actions.#{key}.heading"), '#', class: 'dropdown-item', data: { toggle: "modal", "bs-toggle": "modal", target: "##{key.to_s.dasherize}-modal", "bs-target": "##{key.to_s.dasherize}-modal" } %>
+    <% end %>
+  </div>
+</div>

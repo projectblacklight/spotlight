@@ -31,9 +31,7 @@
 
     <% if current_exhibit.custom_fields.any? %>
       <div class='translation-exhibit-specific-fields'>
-        <h2 class='translation-subheading'>
-          <%= t('.exhibit_specific_fields.label') %>
-        </h2>
+        <%= render Spotlight::Translations::SubheadingComponent.new(key: 'metadata.exhibit_specific_fields.label') %>
 
         <% current_exhibit.custom_fields.each do |custom_field| %>
           <% translation = Translation.find_or_initialize_by(exhibit: current_exhibit, key: "blacklight.search.fields.#{custom_field.field}", locale: @language) %>
