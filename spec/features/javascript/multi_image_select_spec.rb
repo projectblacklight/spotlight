@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Multi image selector', default_max_wait_time: 5, js: true, type: :feature, versioning: true do
+RSpec.describe 'Multi image selector', js: true, max_wait_time: 5, type: :feature, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:feature_page) { FactoryBot.create(:feature_page, exhibit:) }
