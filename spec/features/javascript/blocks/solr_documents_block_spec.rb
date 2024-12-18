@@ -87,6 +87,10 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     # Flappy guard. Wait for the thumbnail src to be populated.
+    expect(page).to have_selector('li[data-resource-id="dq287tq6352"]')
+    expect(page).to have_selector('.img-thumbnail')
+
+    puts page.body
     expect(page).to have_selector('li[data-resource-id="dq287tq6352"] .img-thumbnail[src^="http"]')
 
     within(:css, '.card') do

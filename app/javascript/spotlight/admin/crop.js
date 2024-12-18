@@ -13,7 +13,6 @@ export default class Crop {
     // Exhibit and masthead cropping preserves aspect ratio, while item 
     // and other widget related cropping does not preserve aspect ratio in the cropping area. 
     this.preserveAspectRatio = preserveAspectRatio;
-    this.formPrefix = this.cropTool.data('form-prefix');
     // Get the IIIF input elements used to store/reference IIIF information
     this.inputPrefix = this.cropTool.data('input-prefix');
     this.iiifUrlField = this.iiifInputElement(this.inputPrefix, 'iiif_tilesource', this.cropTool);
@@ -301,7 +300,11 @@ export default class Crop {
   }
 
   setUploadId(id) {
-    $('#' + this.formPrefix + "_upload_id").val(id);
+    // This input is currently used for exhibit masthead or thumbnail image upload.
+    // The name should be sufficient in this case, as we don't use this part of the
+    // code for solr document widgets where we enable cropping. 
+    // If we require more specificity, we can scope this to this.cropTool. 
+    $('input[name="' + this.inputPrefix + '[upload_id]"]').val(id);
   }
 
   aspectRatioPreservingRectangleEditor(aspect) {
