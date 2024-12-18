@@ -21,7 +21,24 @@
   <% end %>
 
   <%= masthead_navbar if resource_masthead? %>
-  <%= render Spotlight::Engine.config.spotlight.title_component.new(title: content_for(:masthead) || masthead_heading_content, subtitle: masthead_subheading_content) %>
+
+  <div class="container site-title-container">
+    <div class="site-title-wrapper">
+      <% if content_for? :masthead %>
+        <h1 class="site-title h2">
+          <%= content_for :masthead %>
+        </h1>
+      <% else %>
+        <h1 class="site-title h2">
+          <%= masthead_heading_content %>
+        </h1>
+        <% if masthead_subheading_content %>
+          <small class="d-none d-md-block py-2 fs-4"><%= masthead_subheading_content %></small>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
   <%= masthead_navbar unless resource_masthead? %>
 </header>
 

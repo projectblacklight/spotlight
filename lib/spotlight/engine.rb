@@ -192,7 +192,6 @@ module Spotlight
       ActiveSupport::Reloader.to_prepare do
         Spotlight::Engine.config.spotlight = OpenStruct.new
         Spotlight::Engine.config.spotlight.header_navigation_link_component = Spotlight::HeaderNavigationLinkComponent
-        Spotlight::Engine.config.spotlight.title_component = Spotlight::TitleComponent
       end
     end
 
