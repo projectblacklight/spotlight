@@ -2,28 +2,35 @@ import { addImageSelector } from 'spotlight/admin/add_image_selector'
 import Core from 'spotlight/core'
 
 export default class Crop {
-  constructor(cropArea, iiifFields = null, preserveAspectRatio = true) {
+  constructor(cropArea, preserveAspectRatio = true) {
     this.cropArea = cropArea;
     this.cropArea.data('iiifCropper', this);
+    // This element will also have the IIIF input elements contained
+    // There may be multiple elements with data-cropper attributes, but
+    // there should only one element with this data-cropper attribute value.
     this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
     this.cropTool = $(this.cropSelector);
+    // Exhibit and masthead cropping preserves aspect ratio, while item 
+    // and other widget related cropping does not preserve aspect ratio in the cropping area. 
     this.preserveAspectRatio = preserveAspectRatio;
-    if(iiifFields == null) {
-      this.formPrefix = this.cropTool.data('form-prefix');
-      this.iiifUrlField = $('#' + this.formPrefix + '_iiif_tilesource');
-      this.iiifRegionField = $('#' + this.formPrefix + '_iiif_region');
-      this.iiifManifestField = $('#' + this.formPrefix + '_iiif_manifest_url');
-      this.iiifCanvasField = $('#' + this.formPrefix + '_iiif_canvas_id');
-      this.iiifImageField = $('#' + this.formPrefix + '_iiif_image_id');
-    } else {
-      this.iiifUrlField = iiifFields["iiifUrlField"];
-      this.iiifRegionField = iiifFields["iiifRegionField"];
-      this.iiifManifestField = iiifFields["iiifManifestField"];
-      this.iiifCanvasField = iiifFields["iiifCanvasField"];
-      this.iiifImageField = iiifFields["iiifImageField"];
-    }
+    this.formPrefix = this.cropTool.data('form-prefix');
+    // Get the IIIF input elements used to store/reference IIIF information
+    this.inputPrefix = this.cropTool.data('input-prefix');
+    this.iiifUrlField = this.iiifInputElement(this.inputPrefix, 'iiif_tilesource', this.cropTool);
+    this.iiifRegionField = this.iiifInputElement(this.inputPrefix, 'iiif_region', this.cropTool);
+    this.iiifManifestField = this.iiifInputElement(this.inputPrefix, 'iiif_manifest_url', this.cropTool);
+    this.iiifCanvasField = this.iiifInputElement(this.inputPrefix, 'iiif_canvas_id', this.cropTool);
+    this.iiifImageField = this.iiifInputElement(this.inputPrefix, 'iiif_image_id', this.cropTool);
+    // Get the closest form element
     this.form = cropArea.closest('form');
     this.tileSource = null;
+  }
+
+  // Return the iiif input element based on the fieldname.
+  // Multiple input fields with the same name on the page may be related 
+  // to a cropper. We thus need to pass in a parent element. 
+  iiifInputElement(inputPrefix, fieldName, inputParentElement) {
+    return $('input[name="' + inputPrefix + '[' + fieldName + ']"]', inputParentElement);
   }
 
   // Render the cropper environment and add hooks into the autocomplete and upload forms
@@ -271,7 +278,6 @@ export default class Crop {
     var url = this.fileInput.data('endpoint')
     // Every post creates a new image/masthead.
     // Because they create IIIF urls which are heavily cached.
-    var data = this.getData();
     $.ajax({
       url: url,  //Server script to process data
       type: 'POST',

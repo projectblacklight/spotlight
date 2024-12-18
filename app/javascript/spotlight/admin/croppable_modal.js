@@ -18,10 +18,10 @@ export default class CroppableModal {
       if(dataCropperDiv) {
         var dataCropperKey = dataCropperDiv.data('cropper-key');
         var itemIndex = dataCropperDiv.data('index-id');
-        var iiifFields = context.getIIIFObject(dataCropperKey, itemIndex);
+        //var iiifFields = context.getIIIFObject(dataCropperKey, itemIndex);
         // The region field is set separately within the modal div
-        iiifFields['iiifRegionField'] = context.setRegionField(dataCropperKey, itemIndex);
-        new Crop(dataCropperDiv, iiifFields, false).render();
+        //iiifFields['iiifRegionField'] = context.setRegionField(dataCropperKey, itemIndex);
+        new Crop(dataCropperDiv, false).render();
         //context.attachModalSaveHandler(dataCropperKey);
       }
     });
@@ -64,10 +64,11 @@ export default class CroppableModal {
 
   attachModalSaveHandler() {
     var context = this;
-    document.addEventListener('click', function(e) { 
-      if(e.target.matches('#blacklight-modal input#saveimage')) {
+   
+    document.addEventListener('show.blacklight.blacklight-modal', function(e) {
+      $('#save-cropping-selection').on('click', () => {
         context.saveCroppedRegion();
-      }
+      });
     });
   }
 
@@ -87,8 +88,9 @@ export default class CroppableModal {
       var fullimageSaveField = context.iiifInputField(itemIndex, 'full_image_url', itemElement);
       var iiifTilesource = context.iiifInputField(itemIndex, 'iiif_tilesource', itemElement).val();
       // Get the region value saved in the modal for the selected area
-      var regionElement = $('#blacklight-modal input[name="select_image_region"]');
-      var regionValue = regionElement.val();
+      //var regionElement = $('#blacklight-modal input[name="select_image_region"]');
+      //var regionValue = regionElement.val();
+      var regionValue = context.iiifInputField(itemIndex, 'iiif_region', itemElement).val();
       // Extract the region string to incorporate into the thumbnail URL
       var urlPrefix = iiifTilesource.substring(0, iiifTilesource.lastIndexOf('/info.json'));
       var thumbnailUrl = urlPrefix + '/' + regionValue + '/!400,400/0/default.jpg';

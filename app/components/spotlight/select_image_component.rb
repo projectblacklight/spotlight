@@ -18,7 +18,7 @@ module Spotlight
     end
 
     def help_text
-      t(:'spotlight.pages.form.instructions_html', thing: :thumbnail)
+      t(:'spotlight.pages.form.instructions_html')
     end
   end
 end

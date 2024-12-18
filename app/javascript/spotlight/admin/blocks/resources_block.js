@@ -81,7 +81,7 @@ Core.Block.Resources = (function(){
       var resource_id = data.slug || data.id;
       var block_item_id = this.formId("item_" + data.id);
       var markup = `
-          <li class="field form-inline dd-item dd3-item" data-cropper="select_image_${block_item_id}" data-resource-id="${resource_id}" data-id="${index}" id="${block_item_id}">
+          <li class="field form-inline dd-item dd3-item" data-cropper="select_image_${block_item_id}" data-resource-id="${resource_id}" data-id="${index}" id="${block_item_id}" data-input-prefix="item[${index}]">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][title]" value="${data.title}" />
             ${this._itemPanelIiifFields(index, data)}
