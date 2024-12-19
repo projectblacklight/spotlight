@@ -5,19 +5,17 @@ module Spotlight
     def fill_in_typeahead_field(opts = {})
       type = opts[:type] || 'default'
 
-      # This first click here is not needed in terms of user interaction, but it
-      # makes the test more reliable. Otherwise the fill_in can happen prior
-      # to auto-complete-element being fully initialized and the test will fail.
-      find("auto-complete [data-#{type}-typeahead]").click
-      find("auto-complete[open] [data-#{type}-typeahead]").fill_in(with: opts[:with])
+      # Role=combobox indicates that the auto-complete is initialized
+      expect(page).to have_css("auto-complete [data-#{type}-typeahead][role='combobox']")
+      find("auto-complete [data-#{type}-typeahead]").fill_in(with: opts[:with])
       find('auto-complete[open] [role="option"]', text: opts[:with], match: :first).click
     end
 
     # just like #fill_in_typeahead_field, but wait for the
-    # form fields to show up on the page too
+    # form fields/thumbnail preview to show up on the page too
     def fill_in_solr_document_block_typeahead_field(opts)
       fill_in_typeahead_field(opts)
-      expect(page).to have_css('li[data-resource-id="' + opts[:with] + '"]')
+      expect(page).to have_css('li[data-resource-id="' + opts[:with] + '"] .img-thumbnail[src^="http"]')
     end
 
     def add_widget(type)
@@ -37,12 +35,17 @@ module Spotlight
       first('.st-block-replacer').click
     end
 
+    def wait_for_sir_trevor
+      expect(page).to have_selector('.st-blocks.st-ready')
+      sleep 1
+    end
+
     def save_page_changes
-      page.execute_script <<-EOF
-        SirTrevor.getInstance().onFormSubmit();
-      EOF
+      wait_for_sir_trevor
       click_button('Save changes')
-      # verify that the page was created
+      # Load bearing sleep. Remove or reduce at your own risk. Revisit if Sir Trevor is removed.
+      sleep 3 if ENV['CI']
+      # verify that the page was created.
       expect(page).to have_no_selector('.alert-danger')
       expect(page).to have_selector('.alert-info', text: 'page was successfully updated')
     end
