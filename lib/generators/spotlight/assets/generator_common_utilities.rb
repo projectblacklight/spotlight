@@ -31,15 +31,6 @@ module Spotlight
       def bootstrap_yarn_version
         bootstrap_version.match(/(\d+(\.\d+)*)/)[0]
       end
-
-      # Yarn link was including so many files (and a circular reference) that Propshaft was having a bad time.
-      def link_spotlight_frontend
-        empty_directory 'node_modules/spotlight-frontend'
-        empty_directory 'node_modules/spotlight-frontend/app'
-        File.symlink Spotlight::Engine.root.join('package.json'), 'node_modules/spotlight-frontend/package.json'
-        File.symlink Spotlight::Engine.root.join('vendor'), 'node_modules/spotlight-frontend/vendor'
-        File.symlink Spotlight::Engine.root.join('app/assets'), 'node_modules/spotlight-frontend/app/assets'
-      end
     end
   end
 end

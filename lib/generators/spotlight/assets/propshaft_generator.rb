@@ -46,7 +46,7 @@ module Spotlight
         if ENV['CI']
           run "yarn add file:#{Spotlight::Engine.root}"
         elsif options[:test]
-          link_spotlight_frontend
+          run 'yarn link spotlight-frontend'
 
         # If a branch was specified (e.g. you are running a template.rb build
         # against a test branch), use the latest version available on npm
