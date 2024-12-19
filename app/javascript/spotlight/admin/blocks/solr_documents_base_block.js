@@ -50,16 +50,21 @@ SirTrevor.Blocks.SolrDocumentsBase = (function(){
 
     // Sets the first version of the IIIF information from autocomplete data.
     _itemPanelIiifFields: function(index, autocomplete_data) {
-      return [
-        // '<input type="hidden" name="item[' + index + '][iiif_region]" value="' + (data.iiif_region) + '"/>',
-        // for legacy compatiblity:
+      var iiifFields = [
         '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" value="' + (autocomplete_data.thumbnail_image_url || autocomplete_data.thumbnail || "") + '"/>',
         '<input type="hidden" name="item[' + index + '][full_image_url]" value="' + (autocomplete_data.full_image_url || autocomplete_data.thumbnail_image_url || autocomplete_data.thumbnail || "") + '"/>',
         '<input type="hidden" name="item[' + index + '][iiif_tilesource]" value="' + (autocomplete_data.iiif_tilesource) + '"/>',
         '<input type="hidden" name="item[' + index + '][iiif_manifest_url]" value="' + (autocomplete_data.iiif_manifest_url) + '"/>',
         '<input type="hidden" name="item[' + index + '][iiif_canvas_id]" value="' + (autocomplete_data.iiif_canvas_id) + '"/>',
         '<input type="hidden" name="item[' + index + '][iiif_image_id]" value="' + (autocomplete_data.iiif_image_id) + '"/>',
-      ].join("\n");
+      ];
+
+      // The region input is required for widgets that enable image cropping but not otherwise
+      if(this.show_image_selection) {
+        iiifFields.push('<input type="hidden" name="item[' + index + '][iiif_region]" value="' + (autocomplete_data.iiif_region || "") + '"/>');
+      }
+
+      return iiifFields.join("\n");
     },
     // Overwrites the hidden inputs from _itemPanelIiifFields with data from the
     // manifest. Called by afterPanelRender - the manifest_data here is built
