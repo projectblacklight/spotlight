@@ -8,6 +8,7 @@ Core.Block.Resources = (function(){
     formable: true,
     autocompleteable: true,
     show_heading: true,
+    show_image_selection: true,
     title: function() { return i18n.t("blocks:" + this.type + ":title"); },
     description: function() { return i18n.t("blocks:" + this.type + ":description"); },
     alt_text_guidelines: function() {
@@ -59,7 +60,16 @@ Core.Block.Resources = (function(){
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join('');
     },
-
+    _itemSelectImageLink: function(block_item_id, doc_id, index) {
+      // If image selection is not possible for this block, then do not show
+      // image selection link
+      if (!this.show_image_selection) return ``;
+      var url = $('form[data-exhibit-path]').data('exhibit-path') + '/select_image?';
+      var markup = `
+          <a name="selectimage" href="${url}block_item_id=${block_item_id}&index_id=${index}" data-blacklight-modal="trigger">Select image area</a>
+        `;
+      return markup;
+    },
     _itemPanel: function(data) {
       var index = "item_" + this.globalIndex++;
       var checked;
@@ -69,8 +79,9 @@ Core.Block.Resources = (function(){
         checked = "";
       }
       var resource_id = data.slug || data.id;
+      var block_item_id = this.formId("item_" + data.id);
       var markup = `
-          <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+          <li class="field dd-item dd3-item" data-cropper="select_image_${block_item_id}" data-resource-id="${resource_id}" data-id="${index}" id="${block_item_id}" data-input-prefix="item[${index}]">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][title]" value="${data.title}" />
             ${this._itemPanelIiifFields(index, data)}
@@ -79,13 +90,20 @@ Core.Block.Resources = (function(){
                 <div class="dd-handle dd3-handle">${i18n.t("blocks:resources:panel:drag")}</div>
                 <div class="card-header item-grid">
                   <div class="d-flex">
-                    <div class="checkbox">
-                      <input name="item[${index}][display]" type="hidden" value="false" />
-                      <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                      <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
-                    </div>
-                    <div class="pic">
-                      <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
+                    <div class="d-inline-block">
+                      <div class="d-flex">
+                        <div class="checkbox">
+                          <input name="item[${index}][display]" type="hidden" value="false" />
+                          <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                          <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                        </div>
+                        <div class="pic">
+                          <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
+                        </div>
+                      </div>
+                      <div class="d-inline-block">
+                        ${this._itemSelectImageLink(block_item_id,data.id, index)}
+                      </div>
                     </div>
                     <div class="main">
                       <div class="title card-title">${data.title}</div>
@@ -118,7 +136,7 @@ Core.Block.Resources = (function(){
     },
 
     afterPanelRender: function(data, panel) {
-
+       
     },
 
     afterPanelDelete: function() {
@@ -223,7 +241,6 @@ Core.Block.Resources = (function(){
 
     onBlockRender: function() {
       SpotlightNestable.init($('[data-behavior="nestable"]', this.inner));
-
       $('[data-input-select-target]', this.inner).selectRelatedInput();
     },
 
@@ -232,7 +249,8 @@ Core.Block.Resources = (function(){
       $.each(Object.keys(data.item || {}).map(function(k) { return data.item[k]}).sort(function(a,b) { return a.weight - b.weight; }), function(index, item) {
         context.createItemPanel(item);
       });
-    },
+     
+    }
   });
 
 })();

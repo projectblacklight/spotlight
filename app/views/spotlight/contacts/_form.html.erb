@@ -7,7 +7,7 @@
   <% end %>
 
   <%= f.fields_for :avatar, (@contact.avatar || @contact.build_avatar) do |af| %>
-    <div data-cropper="<%= af.object.model_name.singular_route_key %>" data-form-prefix="<%= form_prefix(af) %>">
+    <div data-cropper="<%= af.object.model_name.singular_route_key %>" data-input-prefix="<%= input_prefix(af) %>">
     <%= field_set_tag(t(:'.avatar.header')) do %>
       <p class="instructions"><%= t(:'featured_images.form.crop_area.help_html', scope: [:spotlight], thing: 'contact photo') %></p>
 

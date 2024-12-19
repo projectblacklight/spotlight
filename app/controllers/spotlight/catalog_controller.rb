@@ -134,6 +134,12 @@ module Spotlight
       end
     end
 
+    def select_image
+      @index_id = params[:index_id]
+      @block_item_id = params[:block_item_id]
+      respond_to :html
+    end
+
     protected
 
     def load_document

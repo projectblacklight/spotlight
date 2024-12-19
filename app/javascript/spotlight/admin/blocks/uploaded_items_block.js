@@ -6,7 +6,8 @@ SirTrevor.Blocks.UploadedItems = (function(){
     plustextable: true,
     uploadable: true,
     autocompleteable: false,
-
+    show_image_selection: false,
+    
     id_key: 'file',
 
     type: 'uploaded_items',
