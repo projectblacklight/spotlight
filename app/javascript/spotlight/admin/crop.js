@@ -10,8 +10,9 @@ export default class Crop {
     // there should only one element with this data-cropper attribute value.
     this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
     this.cropTool = $(this.cropSelector);
-    // Exhibit and masthead cropping preserves aspect ratio, while item 
-    // and other widget related cropping does not preserve aspect ratio in the cropping area. 
+    // Exhibit and masthead cropping requires the ratio between image width and height
+    // to be consistent, whereas item widget cropping allows any combination of 
+    // image width and height.
     this.preserveAspectRatio = preserveAspectRatio;
     // Get the IIIF input elements used to store/reference IIIF information
     this.inputPrefix = this.cropTool.data('input-prefix');
