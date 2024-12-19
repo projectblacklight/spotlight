@@ -62,7 +62,6 @@ module Spotlight
 
     initializer 'spotlight.assets.precompile' do |app|
       app.config.assets.paths << Engine.root.join('app/javascript')
-      app.config.assets.paths << Rails.root.join('node_modules')
       app.config.assets.precompile += PRECOMPILE_ASSETS
     end
 
