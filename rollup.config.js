@@ -7,6 +7,7 @@ const ESM = process.env.ESM === 'true'
 const fileDest = `spotlight${ESM ? '.esm' : ''}`
 const external = [
   '@github/auto-complete-element',
+  '@hotwired/stimulus',
   'blacklight-frontend',
   'clipboard',
   'jquery-serializejson',
@@ -17,6 +18,7 @@ const external = [
 ]
 const globals = {
   '@github/auto-complete-element': 'AutoCompleteElement',
+  '@hotwired/stimulus': 'Stimulus',
   'blacklight-frontend': 'Blacklight',
   clipboard: 'Clipboard',
   jquery: 'jQuery',
@@ -24,10 +26,9 @@ const globals = {
   'sir-trevor': 'SirTrevor',
   'sortablejs': 'Sortable'
 }
-
 let includePathOptions = {
   include: {},
-  paths: ['app/javascript', 'vendor/assets/javascripts'],
+  paths: ['app/javascript', 'app/javascript/controllers', 'vendor/assets/javascripts'],
   external: [],
   extensions: ['.js', '.es6']
 };
