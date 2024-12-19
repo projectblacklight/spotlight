@@ -18,11 +18,7 @@ export default class CroppableModal {
       if(dataCropperDiv) {
         var dataCropperKey = dataCropperDiv.data('cropper-key');
         var itemIndex = dataCropperDiv.data('index-id');
-        //var iiifFields = context.getIIIFObject(dataCropperKey, itemIndex);
-        // The region field is set separately within the modal div
-        //iiifFields['iiifRegionField'] = context.setRegionField(dataCropperKey, itemIndex);
         new Crop(dataCropperDiv, false).render();
-        //context.attachModalSaveHandler(dataCropperKey);
       }
     });
   }
@@ -87,9 +83,6 @@ export default class CroppableModal {
       var thumbnailSaveField = context.iiifInputField(itemIndex, 'thumbnail_image_url', itemElement);
       var fullimageSaveField = context.iiifInputField(itemIndex, 'full_image_url', itemElement);
       var iiifTilesource = context.iiifInputField(itemIndex, 'iiif_tilesource', itemElement).val();
-      // Get the region value saved in the modal for the selected area
-      //var regionElement = $('#blacklight-modal input[name="select_image_region"]');
-      //var regionValue = regionElement.val();
       var regionValue = context.iiifInputField(itemIndex, 'iiif_region', itemElement).val();
       // Extract the region string to incorporate into the thumbnail URL
       var urlPrefix = iiifTilesource.substring(0, iiifTilesource.lastIndexOf('/info.json'));
