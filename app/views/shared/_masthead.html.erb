@@ -4,25 +4,15 @@
   </div>
 <% end %>
 
-<%- masthead_navbar = capture do %>
-  <% if content_for? :masthead_navbar %>
-    <%= content_for :masthead_navbar %>
-  <% elsif current_exhibit %>
-    <%= render 'shared/exhibit_navbar' %>
-  <% else %>
-    <%= render 'shared/site_navbar' %>
-  <% end %>
-<% end %>
-
 <header class="masthead <%= 'image-masthead' if current_masthead %> <%= 'resource-masthead' if resource_masthead? %>">
   <% if current_masthead %>
     <span class='background-container' style="background-image: url('<%= current_masthead.iiif_url %>')"></span>
     <span class='background-container-gradient'></span>
   <% end %>
 
-  <%= masthead_navbar if resource_masthead? %>
+  <%= render current_exhibit ? 'shared/exhibit_navbar' : 'shared/site_navbar' if resource_masthead? %>
   <%= render Spotlight::Engine.config.spotlight.title_component.new(title: content_for(:masthead) || masthead_heading_content, subtitle: masthead_subheading_content) %>
-  <%= masthead_navbar unless resource_masthead? %>
+  <%= render current_exhibit ? 'shared/exhibit_navbar' : 'shared/site_navbar' unless resource_masthead? %>
 </header>
 
 <%= render Spotlight::BreadcrumbsComponent.new(breadcrumbs:) %>
