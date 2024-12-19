@@ -45,7 +45,8 @@ RSpec.describe 'spotlight/pages/show', type: :view do
       allow_any_instance_of(Spotlight::Exhibit).to receive(:searchable?).and_return(true)
       stub_template 'shared/_analytics.html.erb' => 'analytics'
       stub_template 'shared/_user_util_links.html.erb' => ''
-      stub_template 'shared/_masthead.html.erb' => ''
+      allow(view).to receive_messages(current_masthead: nil, resource_masthead?: false)
+      allow(Spotlight::MastheadComponent).to receive(:new).and_return(instance_double(Spotlight::MastheadComponent, render_in: ''))
       allow(view).to receive_messages(document_presenter: presenter, action_name: 'show', blacklight_config:)
       allow(view).to receive(:content?).and_return(true)
       allow(view).to receive(:search_action_url).and_return('/catalog')
