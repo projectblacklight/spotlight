@@ -39,6 +39,7 @@
     "jquery-serializejson": "^3.2.1",
     "leaflet": "^1.9.4",
     "leaflet-iiif": "^3.0.0",
+    "openseadragon-rails": "^1.0.1",
     "sir-trevor": "^0.8.2",
     "sortablejs": "^1.15.3"
   }

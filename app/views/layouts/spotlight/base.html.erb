@@ -24,14 +24,11 @@
     <%= javascript_include_tag 'leaflet-iiif', "data-turbo-track": "reload", defer: true %>
     <%= javascript_include_tag 'Leaflet.Editable', "data-turbo-track": "reload", defer: true %>
     <%= javascript_include_tag 'Path.Drag', "data-turbo-track": "reload", defer: true %>
-    <%= javascript_include_tag 'openseadragon/openseadragon', "data-turbo-track": "reload", defer: true %>
-    <%= javascript_include_tag 'openseadragon/jquery', "data-turbo-track": "reload", defer: true %>
     <% if defined? Importmap %>
       <%= javascript_importmap_tags %>
     <% else %>
       <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
     <% end %>
-    <%= javascript_include_tag 'openseadragon/rails', "data-turbo-track": "reload", defer: true %>
     <%= csrf_meta_tags %>
     <%= content_for(:head) %>
     <% if @document %>
