@@ -248,9 +248,12 @@ export default class Crop {
     }
 
     var input = $('[data-behavior="autocomplete"]', this.cropTool);
-    var panel = $(input.data('target-panel'));
-
-    addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+    
+    // Not every page which uses this module has autocomplete linked directly to the cropping tool
+    if(input.length) {
+      var panel = $(input.data('target-panel'));
+      addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+    }
   }
 
   invalidateMapSizeOnTabToggle() {
