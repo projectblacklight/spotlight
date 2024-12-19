@@ -64,7 +64,8 @@ Core.Block.Resources = (function(){
       // If image selection is not possible for this block, then do not show
       // image selection link
       if (!this.show_image_selection) return ``;
-      var url = $('form[data-exhibit-path]').data('exhibit-path') + '/select_image?';
+      var url = document.querySelector('form[data-exhibit-path]').dataset.exhibitPath + '/select_image?';
+      console.log("Item select image link: " + url);
       var markup = `
           <a name="selectimage" href="${url}block_item_id=${block_item_id}&index_id=${index}" data-blacklight-modal="trigger">Select image area</a>
         `;

@@ -4,17 +4,19 @@ import Core from 'spotlight/core'
 export default class Crop {
   constructor(cropArea, preserveAspectRatio = true) {
     this.cropArea = cropArea;
-    this.cropArea.data('iiifCropper', this);
+    //this.cropArea.data('iiifCropper', this);
+    this.cropArea.dataset.iiifCropper = this;
     // This element will also have the IIIF input elements contained
     // There may be multiple elements with data-cropper attributes, but
     // there should only one element with this data-cropper attribute value.
     this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
-    this.cropTool = $(this.cropSelector);
-    // Exhibit and masthead cropping preserves aspect ratio, while item 
-    // and other widget related cropping does not preserve aspect ratio in the cropping area. 
+    this.cropTool = document.querySelector(this.cropSelector);
+    // Exhibit and masthead image cropping limits the possible width and height for the
+    // image to preserve the ratio between width and height, while item widget 
+    // cropping enables any combination of width and height.  
     this.preserveAspectRatio = preserveAspectRatio;
     // Get the IIIF input elements used to store/reference IIIF information
-    this.inputPrefix = this.cropTool.data('input-prefix');
+    this.inputPrefix = this.cropTool.dataset.inputPrefix;
     this.iiifUrlField = this.iiifInputElement(this.inputPrefix, 'iiif_tilesource', this.cropTool);
     this.iiifRegionField = this.iiifInputElement(this.inputPrefix, 'iiif_region', this.cropTool);
     this.iiifManifestField = this.iiifInputElement(this.inputPrefix, 'iiif_manifest_url', this.cropTool);
@@ -29,7 +31,9 @@ export default class Crop {
   // Multiple input fields with the same name on the page may be related 
   // to a cropper. We thus need to pass in a parent element. 
   iiifInputElement(inputPrefix, fieldName, inputParentElement) {
-    return $('input[name="' + inputPrefix + '[' + fieldName + ']"]', inputParentElement);
+    //return $('input[name="' + inputPrefix + '[' + fieldName + ']"]', inputParentElement);
+    return inputParentElement.querySelector(`input[name="${inputPrefix}[${fieldName}]"]`);
+
   }
 
   // Render the cropper environment and add hooks into the autocomplete and upload forms
@@ -42,12 +46,12 @@ export default class Crop {
   // Setup the cropper on page load if the field
   // that holds the IIIF url is populated
   setupExistingIiifCropper() {
-    if(this.iiifUrlField.val() === '') {
+    if(this.iiifUrlField.value === '') {
       return;
     }
 
     this.addImageSelectorToExistingCropTool();
-    this.setTileSource(this.iiifUrlField.val());
+    this.setTileSource(this.iiifUrlField.value);
   }
 
   // Display the IIIF Cropper map with the current IIIF Layer (and cropbox, once the layer is available)
@@ -82,10 +86,10 @@ export default class Crop {
 
   // Get (or initialize) the current crop region from the form data
   getCropRegion() {
-    var regionFieldValue = this.iiifRegionField.val();
+    var regionFieldValue = this.iiifRegionField.value;
     if(!regionFieldValue || regionFieldValue === '') {
       var region = this.defaultCropRegion();
-      this.iiifRegionField.val(region);
+      this.iiifRegionField.value = region;
       return region;
     } else {
       return regionFieldValue.split(',');
@@ -136,9 +140,12 @@ export default class Crop {
   // the appropriate IIIF URL or identifier
   setIiifFields(iiifObject) {
     this.setTileSource(iiifObject.tilesource);
-    this.iiifManifestField.val(iiifObject.manifest);
-    this.iiifCanvasField.val(iiifObject.canvasId);
-    this.iiifImageField.val(iiifObject.imageId);
+    this.iiifManifestField.value = iiifObject.manifest;
+    this.iiifCanvasField.value = iiifObject.canvasId;
+    this.iiifImageField.value = iiifObject.imageId;
+    //this.iiifManifestField.val(iiifObject.manifest);
+    //this.iiifCanvasField.val(iiifObject.canvasId);
+    //this.iiifImageField.val(iiifObject.imageId);
   }
 
   // Set the Crop tileSource and setup the cropper
@@ -153,11 +160,11 @@ export default class Crop {
     }
 
     if (this.cropBox) {
-      this.iiifRegionField.val("");
+      this.iiifRegionField.value = "";
     }
 
     this.tileSource = source;
-    this.iiifUrlField.val(source);
+    this.iiifUrlField.val = source;
     this.setupIiifCropper();
   }
 
@@ -196,7 +203,7 @@ export default class Crop {
       var bounds = e.layer.getBounds();
       var region = self.projectBoundsToIIIFRegion(bounds);
 
-      self.iiifRegionField.val(region.join(','));
+      self.iiifRegionField.value = region.join(',');
     });
   }
 
@@ -243,7 +250,7 @@ export default class Crop {
   }
 
   addImageSelectorToExistingCropTool() {
-    if(this.iiifManifestField.val() === '') {
+    if(this.iiifManifestField.value === '') {
       return;
     }
 
@@ -251,8 +258,11 @@ export default class Crop {
     
     // Not every page which uses this module has autocomplete linked directly to the cropping tool
     if(input.length) {
+      var paneltest = document.querySelector(input.dataset.targetPanel);
+      console.log("Panel test");
+      console.log(paneltest);
       var panel = $(input.data('target-panel'));
-      addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+      addImageSelector(input, panel, this.iiifManifestField.value, !this.iiifImageField.value);
     }
   }
 
@@ -307,7 +317,10 @@ export default class Crop {
     // The name should be sufficient in this case, as we don't use this part of the
     // code for solr document widgets where we enable cropping. 
     // If we require more specificity, we can scope this to this.cropTool. 
-    $('input[name="' + this.inputPrefix + '[upload_id]"]').val(id);
+    var testval = document.querySelector('input[name="${this.inputPrefix}[upload_id]"]');
+    console.log("set upload id");
+    console.log(testval);
+    $('input[name="' + this.inputPrefix + '[upload_id]"]').value = id;
   }
 
   aspectRatioPreservingRectangleEditor(aspect) {

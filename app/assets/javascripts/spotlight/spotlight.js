@@ -3681,10 +3681,10 @@
       // there should only one element with this data-cropper attribute value.
       this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
       this.cropTool = $(this.cropSelector);
-      // Exhibit and masthead cropping preserves aspect ratio, while item 
-      // and other widget related cropping does not preserve aspect ratio in the cropping area. 
+      // Exhibit and masthead image cropping limits the possible width and height for the
+      // image to preserve the ratio between width and height, while item widget 
+      // cropping enables any combination of width and height.  
       this.preserveAspectRatio = preserveAspectRatio;
-      this.formPrefix = this.cropTool.data('form-prefix');
       // Get the IIIF input elements used to store/reference IIIF information
       this.inputPrefix = this.cropTool.data('input-prefix');
       this.iiifUrlField = this.iiifInputElement(this.inputPrefix, 'iiif_tilesource', this.cropTool);
@@ -3701,6 +3701,9 @@
     // Multiple input fields with the same name on the page may be related 
     // to a cropper. We thus need to pass in a parent element. 
     iiifInputElement(inputPrefix, fieldName, inputParentElement) {
+      var inputValue = inputParentElement.querySelector('input[name="${inputPrefix}[${fieldName}]"]');
+      console.log("iiif input element");
+      console.log(inputValue);
       return $('input[name="' + inputPrefix + '[' + fieldName + ']"]', inputParentElement);
     }
 
@@ -3920,9 +3923,15 @@
       }
 
       var input = $('[data-behavior="autocomplete"]', this.cropTool);
-      var panel = $(input.data('target-panel'));
-
-      addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+      
+      // Not every page which uses this module has autocomplete linked directly to the cropping tool
+      if(input.length) {
+        var paneltest = document.querySelector(input.dataset.targetPanel);
+        console.log("Panel test");
+        console.log(paneltest);
+        var panel = $(input.data('target-panel'));
+        addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+      }
     }
 
     invalidateMapSizeOnTabToggle() {
@@ -3972,7 +3981,14 @@
     }
 
     setUploadId(id) {
-      $('#' + this.formPrefix + "_upload_id").val(id);
+      // This input is currently used for exhibit masthead or thumbnail image upload.
+      // The name should be sufficient in this case, as we don't use this part of the
+      // code for solr document widgets where we enable cropping. 
+      // If we require more specificity, we can scope this to this.cropTool. 
+      var testval = document.querySelector('input[name="${this.inputPrefix}[upload_id]"]');
+      console.log("set upload id");
+      console.log(testval);
+      $('input[name="' + this.inputPrefix + '[upload_id]"]').val(id);
     }
 
     aspectRatioPreservingRectangleEditor(aspect) {
@@ -4015,34 +4031,15 @@
       // Listen for event thrown when modal is displayed with content
       document.addEventListener('show.blacklight.blacklight-modal', function(e) {      
         var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
-        
+        document.querySelector('#blacklight-modal [data-behavior="iiif-cropper"]');
+        console.log('attac load modal behavior');
+        console.log(dataCropperDivTest);
         if(dataCropperDiv) {
           dataCropperDiv.data('cropper-key');
           dataCropperDiv.data('index-id');
-          //var iiifFields = context.getIIIFObject(dataCropperKey, itemIndex);
-          // The region field is set separately within the modal div
-          //iiifFields['iiifRegionField'] = context.setRegionField(dataCropperKey, itemIndex);
           new Crop(dataCropperDiv, false).render();
-          //context.attachModalSaveHandler(dataCropperKey);
         }
       });
-    }
-
-    setRegionField(dataCropperKey, itemIndex) {
-      var regionField = $('#blacklight-modal input[name="select_image_region');
-      var itemElement = $('[data-cropper="' + dataCropperKey + '"]');
-      var thumbnailUrl = this.iiifInputField(itemIndex, 'thumbnail_image_url', itemElement).val();
-      var region = this.extractRegionField(thumbnailUrl);
-      regionField.val(region);
-      return regionField;
-    }
-    //When editing an existing/saved item, extract region values based on url
-    extractRegionField(iiifThumbnailUrl) {
-      if (iiifThumbnailUrl != null && iiifThumbnailUrl.length == 0) return null;
-
-      var regex = /\/[0-9]+,[0-9]+,[0-9]+,[0-9]+\//;
-      var match = iiifThumbnailUrl.match(regex);
-      return match[0].replaceAll('/', '');
     }
 
     getIIIFObject(dataCropperKey, itemIndex) {
@@ -4060,6 +4057,9 @@
     iiifInputField(itemIndex, fieldName, parentElement) {
       var itemPrefix = 'item[' + itemIndex + ']';
       var selector = 'input[name="' + itemPrefix + '[' + fieldName + ']"]';
+      var test = parentElement.querySelector(selector);
+      console.log("iiif input field");
+      console.log(test);
       return $(selector, parentElement);
     }
 
@@ -4077,6 +4077,9 @@
       //On hitting "save changes", we need to copy over the value
       //to the iiif thumbnail url input field as well as the image source itself
       var context = this;
+      var dataCropperdivTest = document.querySelector('#blacklight-modal [data-behavior="iiif-cropper"]');
+      console.log("save cropped region");
+      console.log(dataCropperdivTest);
       var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
 
       if(dataCropperDiv) {
@@ -4088,9 +4091,6 @@
         var thumbnailSaveField = context.iiifInputField(itemIndex, 'thumbnail_image_url', itemElement);
         var fullimageSaveField = context.iiifInputField(itemIndex, 'full_image_url', itemElement);
         var iiifTilesource = context.iiifInputField(itemIndex, 'iiif_tilesource', itemElement).val();
-        // Get the region value saved in the modal for the selected area
-        //var regionElement = $('#blacklight-modal input[name="select_image_region"]');
-        //var regionValue = regionElement.val();
         var regionValue = context.iiifInputField(itemIndex, 'iiif_region', itemElement).val();
         // Extract the region string to incorporate into the thumbnail URL
         var urlPrefix = iiifTilesource.substring(0, iiifTilesource.lastIndexOf('/info.json'));
@@ -5642,7 +5642,8 @@
         // If image selection is not possible for this block, then do not show
         // image selection link
         if (!this.show_image_selection) return ``;
-        var url = $('form[data-exhibit-path]').data('exhibit-path') + '/select_image?';
+        var url = document.querySelector('form[data-exhibit-path]').dataset.exhibitPath + '/select_image?';
+        console.log("Item select image link: " + url);
         var markup = `
           <a name="selectimage" href="${url}block_item_id=${block_item_id}&index_id=${index}" data-blacklight-modal="trigger">Select image area</a>
         `;

@@ -13,31 +13,14 @@ export default class CroppableModal {
     var context = this;
     // Listen for event thrown when modal is displayed with content
     document.addEventListener('show.blacklight.blacklight-modal', function(e) {      
-      var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
-      
+      //var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
+      var dataCropperDiv = document.querySelector('#blacklight-modal [data-behavior="iiif-cropper"]');
       if(dataCropperDiv) {
-        var dataCropperKey = dataCropperDiv.data('cropper-key');
-        var itemIndex = dataCropperDiv.data('index-id');
+        var dataCropperKey = dataCropperDiv.dataset.cropperKey;
+        var itemIndex = dataCropperDiv.dataset.indexId;
         new Crop(dataCropperDiv, false).render();
       }
     });
-  }
-
-  setRegionField(dataCropperKey, itemIndex) {
-    var regionField = $('#blacklight-modal input[name="select_image_region');
-    var itemElement = $('[data-cropper="' + dataCropperKey + '"]');
-    var thumbnailUrl = this.iiifInputField(itemIndex, 'thumbnail_image_url', itemElement).val();
-    var region = this.extractRegionField(thumbnailUrl);
-    regionField.val(region);
-    return regionField;
-  }
-  //When editing an existing/saved item, extract region values based on url
-  extractRegionField(iiifThumbnailUrl) {
-    if (iiifThumbnailUrl != null && iiifThumbnailUrl.length == 0) return null;
-
-    var regex = /\/[0-9]+,[0-9]+,[0-9]+,[0-9]+\//;
-    var match = iiifThumbnailUrl.match(regex);
-    return match[0].replaceAll('/', '');
   }
 
   getIIIFObject(dataCropperKey, itemIndex) {
@@ -55,6 +38,9 @@ export default class CroppableModal {
   iiifInputField(itemIndex, fieldName, parentElement) {
     var itemPrefix = 'item[' + itemIndex + ']';
     var selector = 'input[name="' + itemPrefix + '[' + fieldName + ']"]';
+    var test = parentElement.querySelector(selector);
+    console.log("iiif input field");
+    console.log(test);
     return $(selector, parentElement);
   }
 
@@ -72,28 +58,37 @@ export default class CroppableModal {
     //On hitting "save changes", we need to copy over the value
     //to the iiif thumbnail url input field as well as the image source itself
     var context = this;
-    var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
+    var dataCropperdivTest = document.querySelector('#blacklight-modal [data-behavior="iiif-cropper"]');
+    console.log("save cropped region");
+    console.log(dataCropperdivTest);
+    //var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
+    var dataCropperDiv = document.querySelector('#blacklight-modal [data-behavior="iiif-cropper"]');
 
     if(dataCropperDiv) {
-      var dataCropperKey = dataCropperDiv.data("cropper-key");
-      var itemIndex = dataCropperDiv.data("index-id");
+      //var dataCropperKey = dataCropperDiv.data("cropper-key");
+      var dataCropperKey = dataCropperDiv.dataset.cropperKey;
+      //var itemIndex = dataCropperDiv.data("index-id");
+      var itemIndex = dataCropperDiv.dataset.indexId;
       // Get the element on the main edit page whose select image link opened up the modal
-      var itemElement = $('[data-cropper="' + dataCropperKey + '"]');
+      //var itemElement = $('[data-cropper="' + dataCropperKey + '"]');
+      var itemElement = document.querySelector('[data-cropper="' + dataCropperKey + '"]');
       // Get the hidden input field on the main edit page corresponding to this item
       var thumbnailSaveField = context.iiifInputField(itemIndex, 'thumbnail_image_url', itemElement);
       var fullimageSaveField = context.iiifInputField(itemIndex, 'full_image_url', itemElement);
-      var iiifTilesource = context.iiifInputField(itemIndex, 'iiif_tilesource', itemElement).val();
-      var regionValue = context.iiifInputField(itemIndex, 'iiif_region', itemElement).val();
+      var iiifTilesource = context.iiifInputField(itemIndex, 'iiif_tilesource', itemElement).value;
+      var regionValue = context.iiifInputField(itemIndex, 'iiif_region', itemElement).value;
       // Extract the region string to incorporate into the thumbnail URL
       var urlPrefix = iiifTilesource.substring(0, iiifTilesource.lastIndexOf('/info.json'));
       var thumbnailUrl = urlPrefix + '/' + regionValue + '/!400,400/0/default.jpg';
       // Set the hidden inpt value to the thumbnail URL
       // Also set the full image - which is used by widgets like carousel or slideshow
-      thumbnailSaveField.val(thumbnailUrl);
-      fullimageSaveField.val(urlPrefix + '/' + regionValue + '/!800,800/0/default.jpg');
+      thumbnailSaveField.value = thumbnailUrl;
+      fullimageSaveField.valye = urlPrefix + '/' + regionValue + '/!800,800/0/default.jpg';
       // Also change img url for thumbnail image
-      var itemImage = $('img.img-thumbnail', itemElement);      
-      itemImage.attr('src', thumbnailUrl);
+      //var itemImage = $('img.img-thumbnail', itemElement);      
+      //itemImage.attr('src', thumbnailUrl);
+      var itemImage = itemElement.querySelector('img.img-thumbnail');  
+      itemImage.setAttribute('src', thumbnailUrl);
     }
   }
 }
