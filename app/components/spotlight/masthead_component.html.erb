@@ -1,0 +1,18 @@
+<% if show_contact_form? && (current_exhibit.nil? || !current_page?(spotlight.new_exhibit_contact_form_path(current_exhibit))) %>
+  <div id="report-problem-form">
+    <%= render 'spotlight/shared/report_a_problem' %>
+  </div>
+<% end %>
+
+<header class="masthead <%= 'image-masthead' if current_masthead %> <%= 'resource-masthead' if resource_masthead? %>">
+  <% if current_masthead %>
+    <span class='background-container' style="background-image: url('<%= current_masthead.iiif_url %>')"></span>
+    <span class='background-container-gradient'></span>
+  <% end %>
+
+  <%= masthead_navbar if resource_masthead? %>
+  <%= render Spotlight::Engine.config.spotlight.title_component.new(title: content_for(:masthead) || masthead_heading_content, subtitle: masthead_subheading_content) %>
+  <%= masthead_navbar unless resource_masthead? %>
+</header>
+
+<%= render Spotlight::BreadcrumbsComponent.new(breadcrumbs:) %>
