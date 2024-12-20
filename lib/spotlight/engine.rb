@@ -62,7 +62,6 @@ module Spotlight
 
     initializer 'spotlight.assets.precompile' do |app|
       app.config.assets.paths << Engine.root.join('app/javascript')
-      app.config.assets.paths << Rails.root.join('node_modules')
       app.config.assets.precompile += PRECOMPILE_ASSETS
     end
 
@@ -192,6 +191,7 @@ module Spotlight
       ActiveSupport::Reloader.to_prepare do
         Spotlight::Engine.config.spotlight = OpenStruct.new
         Spotlight::Engine.config.spotlight.header_navigation_link_component = Spotlight::HeaderNavigationLinkComponent
+        Spotlight::Engine.config.spotlight.title_component = Spotlight::TitleComponent
       end
     end
 
