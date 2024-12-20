@@ -43,8 +43,7 @@ RSpec.describe 'Bulk actions', type: :feature do
     click_link 'Add tags'
     expect(page).to have_css 'h4', text: 'Add tags', visible: true
     within '#add-tags-modal' do
-      find('[data-autocomplete-fetched="true"]', visible: false)
-      find('.tt-input').set('good,stuff')
+      find('.tag-selection-search-bar input').send_keys('good,stuff', :enter)
     end
     accept_confirm 'All items in the result set will be updated. Are you sure?' do
       click_button 'Add'
@@ -60,8 +59,7 @@ RSpec.describe 'Bulk actions', type: :feature do
     click_link 'Remove tags'
     expect(page).to have_css 'h4', text: 'Remove tags', visible: true
     within '#remove-tags-modal' do
-      find('[data-autocomplete-fetched="true"]', visible: false)
-      find('.tt-input').set('foo')
+      find('.tag-selection-search-bar input').send_keys('foo', :enter)
     end
     accept_confirm 'All items in the result set will be updated. Are you sure?' do
       click_button 'Remove'

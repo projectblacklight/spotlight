@@ -1,0 +1,34 @@
+.tag-selector {
+  .tag-selection-search-bar input {
+    border: none;
+    outline: none;
+  }
+
+  .tag-selector-input {
+    display: none;
+  }
+
+  .dropdown-content {
+    overflow-y: auto;
+    max-height: 180px;
+    label {
+      padding: 5px 10px;
+      cursor: pointer;
+
+      &:hover,
+      &.active {
+        background-color: $light;
+      }
+    }
+  }
+}
+
+.no-js .tag-selector {
+  .tag-selector-input {
+    display: block;
+  }
+
+  .tag-selection-wrapper {
+    display: none;
+  }
+}
