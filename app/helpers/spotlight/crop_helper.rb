@@ -34,5 +34,9 @@ module Spotlight
     def form_prefix(f)
       f.object_name.parameterize(separator: '_')
     end
+
+    def input_prefix(f)
+      f.object_name
+    end
   end
 end

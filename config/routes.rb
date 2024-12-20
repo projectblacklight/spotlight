@@ -193,4 +193,6 @@ Spotlight::Engine.routes.draw do
 
   get '/:exhibit_id' => 'home_pages#show', as: :exhibit_root
   post 'versions/:id/revert' => 'versions#revert', as: :revert_version
+
+  get '/:exhibit_id/select_image' => 'catalog#select_image'
 end

@@ -1,10 +1,17 @@
 import Crop from 'spotlight/admin/crop';
+import CroppableModal from 'spotlight/admin/croppable_modal';
 
-export default class {
+export default class Croppable {
   connect() {
+    // For exhibit masthead or thumbnail pages, where
+    // the div exists on page load
     $('[data-behavior="iiif-cropper"]').each(function() {
       var cropElement = $(this)
       new Crop(cropElement).render()
     })
+
+    // In the case of individual document thumbnails, selection
+    // of the image is through a modal. Here we attach the event
+    new CroppableModal().attachModalHandlers();
   }
 }

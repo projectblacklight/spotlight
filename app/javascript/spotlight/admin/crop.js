@@ -2,20 +2,35 @@ import { addImageSelector } from 'spotlight/admin/add_image_selector'
 import Core from 'spotlight/core'
 
 export default class Crop {
-  constructor(cropArea) {
+  constructor(cropArea, preserveAspectRatio = true) {
     this.cropArea = cropArea;
     this.cropArea.data('iiifCropper', this);
+    // This element will also have the IIIF input elements contained
+    // There may be multiple elements with data-cropper attributes, but
+    // there should only one element with this data-cropper attribute value.
     this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
     this.cropTool = $(this.cropSelector);
-    this.formPrefix = this.cropTool.data('form-prefix');
-    this.iiifUrlField = $('#' + this.formPrefix + '_iiif_tilesource');
-    this.iiifRegionField = $('#' + this.formPrefix + '_iiif_region');
-    this.iiifManifestField = $('#' + this.formPrefix + '_iiif_manifest_url');
-    this.iiifCanvasField = $('#' + this.formPrefix + '_iiif_canvas_id');
-    this.iiifImageField = $('#' + this.formPrefix + '_iiif_image_id');
-
+    // Exhibit and masthead cropping requires the ratio between image width and height
+    // to be consistent, whereas item widget cropping allows any combination of 
+    // image width and height.
+    this.preserveAspectRatio = preserveAspectRatio;
+    // Get the IIIF input elements used to store/reference IIIF information
+    this.inputPrefix = this.cropTool.data('input-prefix');
+    this.iiifUrlField = this.iiifInputElement(this.inputPrefix, 'iiif_tilesource', this.cropTool);
+    this.iiifRegionField = this.iiifInputElement(this.inputPrefix, 'iiif_region', this.cropTool);
+    this.iiifManifestField = this.iiifInputElement(this.inputPrefix, 'iiif_manifest_url', this.cropTool);
+    this.iiifCanvasField = this.iiifInputElement(this.inputPrefix, 'iiif_canvas_id', this.cropTool);
+    this.iiifImageField = this.iiifInputElement(this.inputPrefix, 'iiif_image_id', this.cropTool);
+    // Get the closest form element
     this.form = cropArea.closest('form');
     this.tileSource = null;
+  }
+
+  // Return the iiif input element based on the fieldname.
+  // Multiple input fields with the same name on the page may be related 
+  // to a cropper. We thus need to pass in a parent element. 
+  iiifInputElement(inputPrefix, fieldName, inputParentElement) {
+    return $('input[name="' + inputPrefix + '[' + fieldName + ']"]', inputParentElement);
   }
 
   // Render the cropper environment and add hooks into the autocomplete and upload forms
@@ -152,15 +167,21 @@ export default class Crop {
     if (this.cropperMap) {
       return;
     }
-    this.cropperMap = L.map(this.cropArea.attr('id'), {
+
+    var cropperOptions = {
       editable: true,
       center: [0, 0],
       crs: L.CRS.Simple,
-      zoom: 0,
-      editOptions: {
+      zoom: 0
+    }
+
+    if(this.preserveAspectRatio) {
+      cropperOptions['editOptions'] = {
         rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(this.aspectRatio())
-      }
-    });
+      };
+    }
+
+    this.cropperMap = L.map(this.cropArea.attr('id'), cropperOptions);
     this.invalidateMapSizeOnTabToggle();
   }
 
@@ -228,9 +249,12 @@ export default class Crop {
     }
 
     var input = $('[data-behavior="autocomplete"]', this.cropTool);
-    var panel = $(input.data('target-panel'));
-
-    addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+    
+    // Not every page which uses this module has autocomplete linked directly to the cropping tool
+    if(input.length) {
+      var panel = $(input.data('target-panel'));
+      addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+    }
   }
 
   invalidateMapSizeOnTabToggle() {
@@ -280,7 +304,11 @@ export default class Crop {
   }
 
   setUploadId(id) {
-    $('#' + this.formPrefix + "_upload_id").val(id);
+    // This input is currently used for exhibit masthead or thumbnail image upload.
+    // The name should be sufficient in this case, as we don't use this part of the
+    // code for solr document widgets where we enable cropping. 
+    // If we require more specificity, we can scope this to this.cropTool. 
+    $('input[name="' + this.inputPrefix + '[upload_id]"]').val(id);
   }
 
   aspectRatioPreservingRectangleEditor(aspect) {

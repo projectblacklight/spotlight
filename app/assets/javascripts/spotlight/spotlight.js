@@ -3673,20 +3673,35 @@
   window.SirTrevor = SirTrevor$1;
 
   class Crop {
-    constructor(cropArea) {
+    constructor(cropArea, preserveAspectRatio = true) {
       this.cropArea = cropArea;
       this.cropArea.data('iiifCropper', this);
+      // This element will also have the IIIF input elements contained
+      // There may be multiple elements with data-cropper attributes, but
+      // there should only one element with this data-cropper attribute value.
       this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
       this.cropTool = $(this.cropSelector);
-      this.formPrefix = this.cropTool.data('form-prefix');
-      this.iiifUrlField = $('#' + this.formPrefix + '_iiif_tilesource');
-      this.iiifRegionField = $('#' + this.formPrefix + '_iiif_region');
-      this.iiifManifestField = $('#' + this.formPrefix + '_iiif_manifest_url');
-      this.iiifCanvasField = $('#' + this.formPrefix + '_iiif_canvas_id');
-      this.iiifImageField = $('#' + this.formPrefix + '_iiif_image_id');
-
+      // Exhibit and masthead cropping requires the ratio between image width and height
+      // to be consistent, whereas item widget cropping allows any combination of 
+      // image width and height.
+      this.preserveAspectRatio = preserveAspectRatio;
+      // Get the IIIF input elements used to store/reference IIIF information
+      this.inputPrefix = this.cropTool.data('input-prefix');
+      this.iiifUrlField = this.iiifInputElement(this.inputPrefix, 'iiif_tilesource', this.cropTool);
+      this.iiifRegionField = this.iiifInputElement(this.inputPrefix, 'iiif_region', this.cropTool);
+      this.iiifManifestField = this.iiifInputElement(this.inputPrefix, 'iiif_manifest_url', this.cropTool);
+      this.iiifCanvasField = this.iiifInputElement(this.inputPrefix, 'iiif_canvas_id', this.cropTool);
+      this.iiifImageField = this.iiifInputElement(this.inputPrefix, 'iiif_image_id', this.cropTool);
+      // Get the closest form element
       this.form = cropArea.closest('form');
       this.tileSource = null;
+    }
+
+    // Return the iiif input element based on the fieldname.
+    // Multiple input fields with the same name on the page may be related 
+    // to a cropper. We thus need to pass in a parent element. 
+    iiifInputElement(inputPrefix, fieldName, inputParentElement) {
+      return $('input[name="' + inputPrefix + '[' + fieldName + ']"]', inputParentElement);
     }
 
     // Render the cropper environment and add hooks into the autocomplete and upload forms
@@ -3823,15 +3838,21 @@
       if (this.cropperMap) {
         return;
       }
-      this.cropperMap = L.map(this.cropArea.attr('id'), {
+
+      var cropperOptions = {
         editable: true,
         center: [0, 0],
         crs: L.CRS.Simple,
-        zoom: 0,
-        editOptions: {
+        zoom: 0
+      };
+
+      if(this.preserveAspectRatio) {
+        cropperOptions['editOptions'] = {
           rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(this.aspectRatio())
-        }
-      });
+        };
+      }
+
+      this.cropperMap = L.map(this.cropArea.attr('id'), cropperOptions);
       this.invalidateMapSizeOnTabToggle();
     }
 
@@ -3899,9 +3920,12 @@
       }
 
       var input = $('[data-behavior="autocomplete"]', this.cropTool);
-      var panel = $(input.data('target-panel'));
-
-      addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+      
+      // Not every page which uses this module has autocomplete linked directly to the cropping tool
+      if(input.length) {
+        var panel = $(input.data('target-panel'));
+        addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+      }
     }
 
     invalidateMapSizeOnTabToggle() {
@@ -3951,7 +3975,11 @@
     }
 
     setUploadId(id) {
-      $('#' + this.formPrefix + "_upload_id").val(id);
+      // This input is currently used for exhibit masthead or thumbnail image upload.
+      // The name should be sufficient in this case, as we don't use this part of the
+      // code for solr document widgets where we enable cropping. 
+      // If we require more specificity, we can scope this to this.cropTool. 
+      $('input[name="' + this.inputPrefix + '[upload_id]"]').val(id);
     }
 
     aspectRatioPreservingRectangleEditor(aspect) {
@@ -3981,12 +4009,85 @@
     }
   }
 
+  class CroppableModal {
+
+    attachModalHandlers() {
+      // Attach handler for when modal first loads, to show the cropper
+      this.attachModalLoadBehavior();
+      // Attach handler for save by checking if clicking in the modal is on a save button
+      this.attachModalSaveHandler();
+    }
+
+    attachModalLoadBehavior() {
+      // Listen for event thrown when modal is displayed with content
+      document.addEventListener('show.blacklight.blacklight-modal', function(e) {      
+        var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
+        
+        if(dataCropperDiv) {
+          new Crop(dataCropperDiv, false).render();
+        }
+      });
+    }
+
+    // Field names are of the format item[item_0][iiif_image_id]
+    iiifInputField(itemIndex, fieldName, parentElement) {
+      var itemPrefix = 'item[' + itemIndex + ']';
+      var selector = 'input[name="' + itemPrefix + '[' + fieldName + ']"]';
+      return $(selector, parentElement);
+    }
+
+    attachModalSaveHandler() {
+      var context = this;
+     
+      document.addEventListener('show.blacklight.blacklight-modal', function(e) {
+        $('#save-cropping-selection').on('click', () => {
+          context.saveCroppedRegion();
+        });
+      });
+    }
+
+    saveCroppedRegion() {
+      //On hitting "save changes", we need to copy over the value
+      //to the iiif thumbnail url input field as well as the image source itself
+      var context = this;
+      var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
+
+      if(dataCropperDiv) {
+        var dataCropperKey = dataCropperDiv.data("cropper-key");
+        var itemIndex = dataCropperDiv.data("index-id");
+        // Get the element on the main edit page whose select image link opened up the modal
+        var itemElement = $('[data-cropper="' + dataCropperKey + '"]');
+        // Get the hidden input field on the main edit page corresponding to this item
+        var thumbnailSaveField = context.iiifInputField(itemIndex, 'thumbnail_image_url', itemElement);
+        var fullimageSaveField = context.iiifInputField(itemIndex, 'full_image_url', itemElement);
+        var iiifTilesource = context.iiifInputField(itemIndex, 'iiif_tilesource', itemElement).val();
+        var regionValue = context.iiifInputField(itemIndex, 'iiif_region', itemElement).val();
+        // Extract the region string to incorporate into the thumbnail URL
+        var urlPrefix = iiifTilesource.substring(0, iiifTilesource.lastIndexOf('/info.json'));
+        var thumbnailUrl = urlPrefix + '/' + regionValue + '/!400,400/0/default.jpg';
+        // Set the hidden input value to the thumbnail URL
+        // Also set the full image - which is used by widgets like carousel or slideshow
+        thumbnailSaveField.val(thumbnailUrl);
+        fullimageSaveField.val(urlPrefix + '/' + regionValue + '/!800,800/0/default.jpg');
+        // Also change img url for thumbnail image
+        var itemImage = $('img.img-thumbnail', itemElement);      
+        itemImage.attr('src', thumbnailUrl);
+      }
+    }
+  }
+
   class Croppable {
     connect() {
+      // For exhibit masthead or thumbnail pages, where
+      // the div exists on page load
       $('[data-behavior="iiif-cropper"]').each(function() {
         var cropElement = $(this);
         new Crop(cropElement).render();
       });
+
+      // In the case of individual document thumbnails, selection
+      // of the image is through a modal. Here we attach the event
+      new CroppableModal().attachModalHandlers();
     }
   }
 
@@ -5455,6 +5556,7 @@
       formable: true,
       autocompleteable: true,
       show_heading: true,
+      show_image_selection: true,
       title: function() { return i18n.t("blocks:" + this.type + ":title"); },
       description: function() { return i18n.t("blocks:" + this.type + ":description"); },
       alt_text_guidelines: function() {
@@ -5506,7 +5608,16 @@
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join('');
       },
-
+      _itemSelectImageLink: function(block_item_id, doc_id, index) {
+        // If image selection is not possible for this block, then do not show
+        // image selection link
+        if (!this.show_image_selection) return ``;
+        var url = $('form[data-exhibit-path]').data('exhibit-path') + '/select_image?';
+        var markup = `
+          <a name="selectimage" href="${url}block_item_id=${block_item_id}&index_id=${index}" data-blacklight-modal="trigger">Select image area</a>
+        `;
+        return markup;
+      },
       _itemPanel: function(data) {
         var index = "item_" + this.globalIndex++;
         var checked;
@@ -5516,8 +5627,9 @@
           checked = "";
         }
         var resource_id = data.slug || data.id;
+        var block_item_id = this.formId("item_" + data.id);
         var markup = `
-          <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+          <li class="field dd-item dd3-item" data-cropper="select_image_${block_item_id}" data-resource-id="${resource_id}" data-id="${index}" id="${block_item_id}" data-input-prefix="item[${index}]">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][title]" value="${data.title}" />
             ${this._itemPanelIiifFields(index, data)}
@@ -5526,13 +5638,20 @@
                 <div class="dd-handle dd3-handle">${i18n.t("blocks:resources:panel:drag")}</div>
                 <div class="card-header item-grid">
                   <div class="d-flex">
-                    <div class="checkbox">
-                      <input name="item[${index}][display]" type="hidden" value="false" />
-                      <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                      <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
-                    </div>
-                    <div class="pic">
-                      <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
+                    <div class="d-inline-block">
+                      <div class="d-flex">
+                        <div class="checkbox">
+                          <input name="item[${index}][display]" type="hidden" value="false" />
+                          <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                          <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                        </div>
+                        <div class="pic">
+                          <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
+                        </div>
+                      </div>
+                      <div class="d-inline-block">
+                        ${this._itemSelectImageLink(block_item_id,data.id, index)}
+                      </div>
                     </div>
                     <div class="main">
                       <div class="title card-title">${data.title}</div>
@@ -5565,7 +5684,7 @@
       },
 
       afterPanelRender: function(data, panel) {
-
+         
       },
 
       afterPanelDelete: function() {
@@ -5670,7 +5789,6 @@
 
       onBlockRender: function() {
         Module.init($('[data-behavior="nestable"]', this.inner));
-
         $('[data-input-select-target]', this.inner).selectRelatedInput();
       },
 
@@ -5679,7 +5797,8 @@
         $.each(Object.keys(data.item || {}).map(function(k) { return data.item[k]}).sort(function(a,b) { return a.weight - b.weight; }), function(index, item) {
           context.createItemPanel(item);
         });
-      },
+       
+      }
     });
 
   })();
@@ -6082,16 +6201,21 @@
 
       // Sets the first version of the IIIF information from autocomplete data.
       _itemPanelIiifFields: function(index, autocomplete_data) {
-        return [
-          // '<input type="hidden" name="item[' + index + '][iiif_region]" value="' + (data.iiif_region) + '"/>',
-          // for legacy compatiblity:
+        var iiifFields = [
           '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" value="' + (autocomplete_data.thumbnail_image_url || autocomplete_data.thumbnail || "") + '"/>',
           '<input type="hidden" name="item[' + index + '][full_image_url]" value="' + (autocomplete_data.full_image_url || autocomplete_data.thumbnail_image_url || autocomplete_data.thumbnail || "") + '"/>',
           '<input type="hidden" name="item[' + index + '][iiif_tilesource]" value="' + (autocomplete_data.iiif_tilesource) + '"/>',
           '<input type="hidden" name="item[' + index + '][iiif_manifest_url]" value="' + (autocomplete_data.iiif_manifest_url) + '"/>',
           '<input type="hidden" name="item[' + index + '][iiif_canvas_id]" value="' + (autocomplete_data.iiif_canvas_id) + '"/>',
           '<input type="hidden" name="item[' + index + '][iiif_image_id]" value="' + (autocomplete_data.iiif_image_id) + '"/>',
-        ].join("\n");
+        ];
+
+        // The region input is required for widgets that enable image cropping but not otherwise
+        if(this.show_image_selection) {
+          iiifFields.push('<input type="hidden" name="item[' + index + '][iiif_region]" value="' + (autocomplete_data.iiif_region || "") + '"/>');
+        }
+
+        return iiifFields.join("\n");
       },
       // Overwrites the hidden inputs from _itemPanelIiifFields with data from the
       // manifest. Called by afterPanelRender - the manifest_data here is built
@@ -6281,6 +6405,7 @@
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
       type: "solr_documents_embed",
       icon_name: "item_embed",
+      show_image_selection: false,
 
       item_options: function() { return "" },
 
@@ -6353,7 +6478,8 @@
       plustextable: true,
       uploadable: true,
       autocompleteable: false,
-
+      show_image_selection: false,
+      
       id_key: 'file',
 
       type: 'uploaded_items',
