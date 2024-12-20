@@ -121,10 +121,10 @@ module Spotlight
         config.default_per_page = default_per_page if default_per_page
 
         config.view.embed!
-        # This is blacklight-gallery's openseadragon partial
+        # This is blacklight-gallery's openseadragon component
         unless config.view.embed.document_component
-          config.view.embed.partials ||= ['openseadragon']
           config.view.embed.document_component = Spotlight::SolrDocumentLegacyEmbedComponent
+          config.view.embed.embed_component = Blacklight::Gallery::OpenseadragonEmbedComponent
         end
         config.view.embed.if = false
 
