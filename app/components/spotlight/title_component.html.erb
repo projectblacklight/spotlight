@@ -1,6 +1,8 @@
   <div class="container site-title-container">
     <div class="site-title-wrapper">
-      <%= title %>
-      <%= subtitle %>
+      <a href="<%= helpers.current_exhibit ? helpers.spotlight.exhibit_path(helpers.current_exhibit) : helpers.spotlight.exhibits_path %>" class="link-unstyled">
+        <%= title %>
+        <%= subtitle %>
+      </a>
     </div>
   </div>
