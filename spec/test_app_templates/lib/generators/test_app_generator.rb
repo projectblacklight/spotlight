@@ -56,7 +56,7 @@ class TestAppGenerator < Rails::Generators::Base
     copy_file 'fixture.png', 'app/assets/images/spotlight/themes/modern_preview.png'
 
     copy_file 'fixture.css', 'app/assets/stylesheets/application_modern.css'
-    append_to_file 'config/initializers/assets.rb', 'Rails.application.config.assets.precompile += %w( application_modern.css )'
+    append_to_file 'config/initializers/assets.rb', "\nRails.application.config.assets.precompile += %w( application_modern.css )"
 
     append_to_file 'config/initializers/spotlight_initializer.rb', "\nSpotlight::Engine.config.exhibit_themes = %w[default modern]"
   end
