@@ -11,7 +11,7 @@ export default class CroppableModal {
 
   attachModalLoadBehavior() {
     // Listen for event thrown when modal is displayed with content
-    document.addEventListener('show.blacklight.blacklight-modal', function(e) {      
+    document.addEventListener('loaded.blacklight.blacklight-modal', function(e) {
       var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
       
       if(dataCropperDiv) {
