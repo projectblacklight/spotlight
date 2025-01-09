@@ -143,3 +143,16 @@
     width: 1px;
   }
 }
+
+.link-unstyled {
+  &,
+  &:visited,
+  &:hover,
+  &:active,
+  &:focus,
+  &:active:hover {
+    color: inherit;
+    text-decoration: none;
+    font-weight: inherit;
+  }
+}
