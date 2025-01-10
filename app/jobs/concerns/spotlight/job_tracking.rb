@@ -44,7 +44,7 @@ module Spotlight
     end
 
     def finalize_job_tracker!
-      return unless job_tracker.status == 'in_progress' || job_tracker.status == 'enqueued'
+      return unless %w[in_progress enqueued].include?(job_tracker.status)
 
       job_tracker.update(
         status: @failed ? 'failed' : 'completed',
