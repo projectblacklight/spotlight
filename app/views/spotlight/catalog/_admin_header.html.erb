@@ -6,7 +6,7 @@
     <div class="float-right float-end">
       <%= link_to t('.reindex'), reindex_all_exhibit_resources_path(current_exhibit), 
           data: { method: :post, turbo_method: :post },
-          class: 'btn btn-secondary' %>
+          class: 'btn btn-outline-primary' %>
       <% if Spotlight::Engine.config.resource_partials.any? %>
         <%= link_to t('.new_resource'), new_exhibit_resource_path(current_exhibit), class: 'btn btn-primary' %>
       <% end %>

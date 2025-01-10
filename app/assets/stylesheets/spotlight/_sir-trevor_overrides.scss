@@ -75,8 +75,8 @@
 
 .st-block-controls__button {
   @extend .btn;
-  @extend .btn-secondary;
-  @extend .btn-outline-secondary;
+  @extend .btn-primary;
+  @extend .btn-outline-primary;
 
   border: 1px solid $gray-700;
 

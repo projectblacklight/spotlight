@@ -19,7 +19,7 @@
             <% end %>
 
             <% if uploaded_items_block.zpr_link? %>
-              <%= button_tag t('.zpr_link_html', title: file[:caption]), class: 'btn btn-secondary zpr-link', data: { 'iiif-tilesource' => { type: 'image', url: file[:url] }.to_json } %>
+              <%= button_tag t('.zpr_link_html', title: file[:caption]), class: 'btn btn-primary zpr-link', data: { 'iiif-tilesource' => { type: 'image', url: file[:url] }.to_json } %>
             <% end %>
           </div>
         </div>
