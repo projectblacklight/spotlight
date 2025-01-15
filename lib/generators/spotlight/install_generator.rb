@@ -125,7 +125,7 @@ module Spotlight
     def configure_osd_for_sprockets
       return unless defined?(Sprockets)
 
-      append_to_file 'app/assets/javascripts/application.js', "\n//= require openseadragon\n//= require openseadragon-rails/index\n"
+      append_to_file 'app/assets/javascripts/application.js', "\n//= require openseadragon\n//= require openseadragon-rails/openseadragon-rails\n"
 
       append_to_file 'config/initializers/assets.rb' do
         <<~CONTENT
