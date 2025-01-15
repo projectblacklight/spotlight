@@ -122,6 +122,25 @@ module Spotlight
       generate 'blacklight_gallery:install'
     end
 
+    def configure_osd_for_sprockets
+      return unless defined?(Sprockets)
+
+      append_to_file 'app/assets/javascripts/application.js', "\n//= require openseadragon\n//= require openseadragon-rails/openseadragon-rails\n"
+
+      append_to_file 'config/initializers/assets.rb' do
+        <<~CONTENT
+          Rails.application.config.assets.paths << Rails.root.join('node_modules/openseadragon/build/openseadragon')
+          Rails.application.config.assets.paths << Rails.root.join('node_modules/openseadragon/build/openseadragon/images')
+        CONTENT
+      end
+
+      append_to_file 'app/assets/config/manifest.js', "//= link_tree ../../../node_modules/openseadragon/build/openseadragon/images\n"
+
+      inject_into_file 'app/controllers/application_controller.rb', after: 'class ApplicationController < ActionController::Base' do
+        "\n  helper Openseadragon::OpenseadragonHelper\n"
+      end
+    end
+
     def add_oembed
       unless Bundler.locked_gems.dependencies.key? 'blacklight-oembed'
         gem 'blacklight-oembed', '~> 1.0'
@@ -129,6 +148,12 @@ module Spotlight
       end
       generate 'blacklight_oembed:install'
       copy_file 'config/initializers/oembed.rb'
+
+      return unless defined?(Sprockets)
+
+      # Use the rolled up assets from blacklight-oembed for sprockets
+      gsub_file 'app/assets/javascripts/blacklight_oembed.js', "import oembed from 'blacklight_oembed/oembed'",
+                '//= require blacklight_oembed/oembed'
     end
 
     def add_mailer_defaults
