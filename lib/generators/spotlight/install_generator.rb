@@ -129,8 +129,8 @@ module Spotlight
 
       append_to_file 'config/initializers/assets.rb' do
         <<~CONTENT
-          Rails.application.config.assets.paths << Rails.root.join('node_modules/openseadragon/build/openseadragon')
           Rails.application.config.assets.paths << Rails.root.join('node_modules/openseadragon/build/openseadragon/images')
+          Rails.application.config.assets.paths << Rails.root.join('node_modules/openseadragon/build/openseadragon')
         CONTENT
       end
 
