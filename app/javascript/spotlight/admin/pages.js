@@ -5,7 +5,7 @@ import Core from 'spotlight/core'
 export default class {
   connect(){
     SirTrevor.setDefaults({
-      iconUrl: Spotlight.sirTrevorIcon,
+      iconUrl: Spotlight.sirTrevorIcon || window.sirTrevorIcon,
       uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint'),
       ajaxOptions: {
         headers: {
