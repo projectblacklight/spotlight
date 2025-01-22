@@ -12,7 +12,7 @@ module SirTrevorRails
         (item || {}).map { |_, file| file }.select { |file| file[:display].to_s == 'true' }
       end
 
-      def self.alt_text?
+      def self.supports_alt_text?
         true
       end
 

@@ -13,7 +13,7 @@ module SirTrevorRails
         @solr_helper = solr_helper
       end
 
-      def self.alt_text?
+      def self.supports_alt_text?
         true
       end
 
