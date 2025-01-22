@@ -56,8 +56,8 @@ $xl-sidebar-five-tile-width: ($container-xl-sidebar * 0.2) - $tile-margin;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border: 2px solid $featured-browse-category-border-color;
-  border-radius: $border-radius-lg;
+  border: var(--bs-border-width) solid var(--bs-border-color-translucent);
+  border-radius: var(--bs-border-radius);
   position: relative;
 
   .category-caption {
@@ -69,7 +69,7 @@ $xl-sidebar-five-tile-width: ($container-xl-sidebar * 0.2) - $tile-margin;
     width: 100%;
     padding: 5%;
     background: linear-gradient(0deg, rgba(46, 45, 41, 0.7) 45%, rgba(46, 45, 41, 0) 100%);
-    border-radius: $border-radius-lg;
+    border-radius: var(--bs-border-radius);
     display: flex;
     flex-direction: column; 
     justify-content: flex-end;

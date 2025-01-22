@@ -54,8 +54,8 @@ $image-overlay-max-height: 300px;
   }
 
   .image-overlay {
-    border: 2px solid $gray-600;
-    border-radius: $border-radius-lg;
+    border: var(--bs-border-width) solid var(--bs-border-color-translucent);
+    border-radius: var(--bs-border-radius);
     max-height: 240px;
     min-height: 140px;
     overflow: hidden;
