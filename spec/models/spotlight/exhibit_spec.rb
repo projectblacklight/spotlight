@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Exhibit, type: :model do
+RSpec.describe Spotlight::Exhibit, type: :model do
   subject(:exhibit) { FactoryBot.build(:exhibit, title: 'Sample') }
 
   it 'has a title' do

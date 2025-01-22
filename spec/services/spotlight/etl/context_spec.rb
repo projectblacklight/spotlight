@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Etl::Context do
+RSpec.describe Spotlight::Etl::Context do
   subject(:context) { described_class.new(resource, **context_args) }
 
   let(:resource) { instance_double(Spotlight::Resource, id: 123, document_model: SolrDocument) }

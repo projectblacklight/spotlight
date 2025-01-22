@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::FieldMetadata do
+RSpec.describe Spotlight::FieldMetadata do
   subject { described_class.new(exhibit, repository, blacklight_config) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }

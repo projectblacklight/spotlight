@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::ContactImage do
+RSpec.describe Spotlight::ContactImage do
   subject(:contact_image) do
     described_class.new(iiif_tilesource: 'http://example.com/iiif/abc123/info.json')
   end

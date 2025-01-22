@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe SirTrevorRails::Blocks::SolrDocumentsBlock do
+RSpec.describe SirTrevorRails::Blocks::SolrDocumentsBlock do
   subject { described_class.new({ type: '', data: block_data }, page) }
 
   let(:page) { FactoryBot.create(:feature_page) }

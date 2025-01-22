@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Translation, type: :model do
+RSpec.describe Translation, type: :model do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe 'is unique by key, locale, and exhibit' do

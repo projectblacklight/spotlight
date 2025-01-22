@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::BulkActionsController, type: :controller do
+RSpec.describe Spotlight::BulkActionsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:skinny_exhibit) }
 

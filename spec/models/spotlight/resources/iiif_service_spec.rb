@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spotlight::Resources::IiifService do
+RSpec.describe Spotlight::Resources::IiifService do
   subject { described_class.new(url) }
 
   let(:url) { 'uri://for-top-level-collection' }

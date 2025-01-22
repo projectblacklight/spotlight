@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/shared/_exhibit_sidebar', type: :view do
+RSpec.describe 'spotlight/shared/_exhibit_sidebar', type: :view do
   let(:current_exhibit) { FactoryBot.create(:exhibit) }
 
   before do

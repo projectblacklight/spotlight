@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Home page', type: :feature, versioning: true do
+RSpec.describe 'Home page', type: :feature, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 

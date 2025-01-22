@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::JobTrackersController, type: :controller do
+RSpec.describe Spotlight::JobTrackersController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:job_tracker) { FactoryBot.create(:job_tracker, on: exhibit) }
   let(:exhibit) { FactoryBot.create(:exhibit) }

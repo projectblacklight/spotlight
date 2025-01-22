@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::RemoveTagsJob do
+RSpec.describe Spotlight::RemoveTagsJob do
   subject { described_class.new(solr_params:, exhibit:, tags:) }
 
   let(:solr_params) { { q: 'map' } }

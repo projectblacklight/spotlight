@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Uploading a non-repository item', type: :feature do
+RSpec.describe 'Uploading a non-repository item', type: :feature do
   include ActiveJob::TestHelper
 
   let!(:exhibit) { FactoryBot.create(:exhibit) }

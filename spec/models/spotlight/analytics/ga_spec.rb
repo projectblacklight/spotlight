@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Analytics::Ga do
+RSpec.describe Spotlight::Analytics::Ga do
   it 'does not be enabled without configuration' do
     expect(subject).not_to be_enabled
   end

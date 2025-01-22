@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::SolrDocument::AtomicUpdates, type: :model do
+RSpec.describe Spotlight::SolrDocument::AtomicUpdates, type: :model do
   subject do
     SolrDocument.new.extend(described_class)
   end

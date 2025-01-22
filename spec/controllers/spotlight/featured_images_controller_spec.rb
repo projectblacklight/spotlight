@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::FeaturedImagesController, type: :controller do
+RSpec.describe Spotlight::FeaturedImagesController, type: :controller do
   routes { Spotlight::Engine.routes }
 
   describe 'when the user is not authorized' do

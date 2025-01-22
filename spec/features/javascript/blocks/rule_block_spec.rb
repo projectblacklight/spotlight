@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Horizontal rule block', js: true, type: :feature, versioning: true do
+RSpec.describe 'Horizontal rule block', js: true, type: :feature, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let!(:feature_page) { FactoryBot.create(:feature_page, exhibit:) }

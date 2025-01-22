@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/catalog/edit.html.erb', type: :view do
+RSpec.describe 'spotlight/catalog/edit.html.erb', type: :view do
   let(:blacklight_config) { Blacklight::Configuration.new }
 
   let(:document) { stub_model(SolrDocument) }

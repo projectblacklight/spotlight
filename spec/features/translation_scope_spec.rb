@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Translations scope setting', type: :feature do
+RSpec.describe 'Translations scope setting', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:other_exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }

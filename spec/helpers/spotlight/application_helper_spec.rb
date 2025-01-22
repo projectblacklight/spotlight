@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::ApplicationHelper, type: :helper do
+RSpec.describe Spotlight::ApplicationHelper, type: :helper do
   describe '#application_name' do
     let(:site) { Spotlight::Site.instance }
 

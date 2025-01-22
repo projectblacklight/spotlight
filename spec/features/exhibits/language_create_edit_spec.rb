@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Language', type: :feature do
+RSpec.describe 'Language', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 

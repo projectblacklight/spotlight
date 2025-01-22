@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::MastheadHelper, type: :helper do
+RSpec.describe Spotlight::MastheadHelper, type: :helper do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:site) { Spotlight::Site.instance }
 

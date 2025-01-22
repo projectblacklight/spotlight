@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Filter do
+RSpec.describe Spotlight::Filter do
   context 'with a simple string field' do
     subject { described_class.new(field: 'x', value: 'y') }
 

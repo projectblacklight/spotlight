@@ -12,7 +12,7 @@ class TestMetadataClass
   def label; end
 end
 
-describe Spotlight::Resources::IiifManifest do
+RSpec.describe Spotlight::Resources::IiifManifest do
   subject { described_class.new(url:, manifest:, collection:) }
 
   let(:url) { 'uri://to-manifest' }

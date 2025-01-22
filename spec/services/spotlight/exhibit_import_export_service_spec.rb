@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::ExhibitImportExportService do
+RSpec.describe Spotlight::ExhibitImportExportService do
   subject { JSON.parse(described_class.new(source_exhibit).to_json) }
 
   let!(:source_exhibit) { FactoryBot.create(:exhibit) }

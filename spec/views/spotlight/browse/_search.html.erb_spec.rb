@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/browse/search', type: :view do
+RSpec.describe 'spotlight/browse/search', type: :view do
   let(:search) { FactoryBot.create(:search) }
   let(:exhibit) { FactoryBot.create(:exhibit) }
 

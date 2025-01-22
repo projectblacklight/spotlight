@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/search_configurations/_search_fields', type: :view do
+RSpec.describe 'spotlight/search_configurations/_search_fields', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:f) do
     form_helper = nil

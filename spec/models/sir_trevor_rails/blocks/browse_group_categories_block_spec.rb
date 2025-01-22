@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe SirTrevorRails::Blocks::BrowseGroupCategoriesBlock do
+RSpec.describe SirTrevorRails::Blocks::BrowseGroupCategoriesBlock do
   subject { described_class.new({ type: '', data: block_data }, page) }
 
   let!(:exhibit) { FactoryBot.create(:exhibit) }

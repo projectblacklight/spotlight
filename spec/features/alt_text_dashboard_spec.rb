@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Alt text dashboard', type: :feature do
+RSpec.describe 'Alt text dashboard', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 

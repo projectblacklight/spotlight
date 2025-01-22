@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Masthead, type: :model do
+RSpec.describe Spotlight::Masthead, type: :model do
   let(:masthead) { stub_model(described_class) }
 
   describe '#iiif_url' do

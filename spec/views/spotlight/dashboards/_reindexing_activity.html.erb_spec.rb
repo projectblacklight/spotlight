@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
+RSpec.describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view do
   let(:p) { 'spotlight/dashboards/reindexing_activity' }
   let(:exhibit) { FactoryBot.build(:exhibit) }
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Etl::Pipeline do
+RSpec.describe Spotlight::Etl::Pipeline do
   let(:mock_executor) { instance_double(Spotlight::Etl::Executor, call: 'result', estimated_size: 10) }
   let(:context) { instance_double(Spotlight::Etl::Context) }
 

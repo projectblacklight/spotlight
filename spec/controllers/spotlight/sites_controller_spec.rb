@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::SitesController, type: :controller do
+RSpec.describe Spotlight::SitesController, type: :controller do
   routes { Spotlight::Engine.routes }
 
   describe 'when user does not have access' do

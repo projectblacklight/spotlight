@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'adding IIIF Manifest', type: :feature do
+RSpec.describe 'adding IIIF Manifest', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 

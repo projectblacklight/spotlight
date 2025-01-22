@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/search_configurations/_facets', type: :view do
+RSpec.describe 'spotlight/search_configurations/_facets', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:custom_field) { FactoryBot.create(:custom_field, exhibit:, label: 'Foobar', field_type: 'vocab') }
   let(:config) do

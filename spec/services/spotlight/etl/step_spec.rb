@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Etl::Step do
+RSpec.describe Spotlight::Etl::Step do
   subject(:step) { described_class.new(definition, **step_args) }
 
   let(:definition) { ->(a = nil) { a || 'value' } }

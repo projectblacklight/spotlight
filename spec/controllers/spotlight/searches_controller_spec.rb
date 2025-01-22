@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::SearchesController, type: :controller do
+RSpec.describe Spotlight::SearchesController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
 

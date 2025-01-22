@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::RenameSidecarFieldJob do
+RSpec.describe Spotlight::RenameSidecarFieldJob do
   include ActiveJob::TestHelper
 
   let(:exhibit) { FactoryBot.create(:exhibit) }

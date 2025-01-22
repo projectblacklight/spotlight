@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::SolrDocumentSidecar, type: :model do
+RSpec.describe Spotlight::SolrDocumentSidecar, type: :model do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do

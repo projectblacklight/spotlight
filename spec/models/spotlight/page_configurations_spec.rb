@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::PageConfigurations, type: :model do
+RSpec.describe Spotlight::PageConfigurations, type: :model do
   subject(:page_config) { described_class.new(context: view_context, page:) }
 
   let(:view_context) do

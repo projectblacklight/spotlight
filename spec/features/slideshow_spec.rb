@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Slideshow', js: true, type: :feature do
+RSpec.describe 'Slideshow', js: true, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit:) }
 

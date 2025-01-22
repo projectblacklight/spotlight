@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Link to Search Block', js: true, type: :feature do
+RSpec.describe 'Link to Search Block', js: true, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 

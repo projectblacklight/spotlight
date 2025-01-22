@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Add and update the site masthead', type: :feature do
+RSpec.describe 'Add and update the site masthead', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit:) }
 

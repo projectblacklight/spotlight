@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe SirTrevorRails::Blocks::Textable do
+RSpec.describe SirTrevorRails::Blocks::Textable do
   class TextableTestClass
     include SirTrevorRails::Blocks::Textable
     attr_accessor :text

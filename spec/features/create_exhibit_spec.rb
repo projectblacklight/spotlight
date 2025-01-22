@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Create a new exhibit', type: :feature do
+RSpec.describe 'Create a new exhibit', type: :feature do
   let(:user) { FactoryBot.create(:site_admin) }
 
   before do

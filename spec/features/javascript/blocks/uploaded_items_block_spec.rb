@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
+RSpec.describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:fixture_file1) { File.join(FIXTURES_PATH, '800x600.png') }

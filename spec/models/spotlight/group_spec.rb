@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Group, type: :model do
+RSpec.describe Spotlight::Group, type: :model do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe '#searches' do

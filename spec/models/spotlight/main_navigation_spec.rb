@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::MainNavigation, type: :model do
+RSpec.describe Spotlight::MainNavigation, type: :model do
   before do
     subject.exhibit = FactoryBot.create(:exhibit)
   end

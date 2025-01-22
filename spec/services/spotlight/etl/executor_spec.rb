@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Etl::Executor do
+RSpec.describe Spotlight::Etl::Executor do
   subject(:executor) { described_class.new(pipeline, context) }
 
   let(:pipeline) do

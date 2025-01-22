@@ -2,7 +2,7 @@
 
 require 'rack/test'
 
-describe Spotlight::ExhibitsController, type: :controller do
+RSpec.describe Spotlight::ExhibitsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
 

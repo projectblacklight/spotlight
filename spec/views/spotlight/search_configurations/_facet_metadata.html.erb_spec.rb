@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/search_configurations/_facet_metadata', type: :view do
+RSpec.describe 'spotlight/search_configurations/_facet_metadata', type: :view do
   let(:field_config) { nil }
   let(:blacklight_config) { nil }
 

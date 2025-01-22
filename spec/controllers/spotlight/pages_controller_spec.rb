@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::PagesController, type: :controller do
+RSpec.describe Spotlight::PagesController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:feature_page) { FactoryBot.create(:feature_page, exhibit:, published: false) }

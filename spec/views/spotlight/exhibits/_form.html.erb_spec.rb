@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/exhibits/_form', type: :view do
+RSpec.describe 'spotlight/exhibits/_form', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do

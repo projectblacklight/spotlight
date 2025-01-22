@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::DefaultThumbnailJob do
+RSpec.describe Spotlight::DefaultThumbnailJob do
   subject { described_class.new(thumbnailable) }
 
   let(:thumbnailable) { double('Thumbnailable') }
