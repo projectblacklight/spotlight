@@ -1,4 +1,4 @@
-<%= bootstrap_form_for [@search.exhibit, @search], layout: :horizontal, label_col: 'col-md-2 col-sm-2', control_col: 'col-md-7 col-sm-7', data: {form_observer: 'true', autocomplete_exhibit_catalog_path: spotlight.autocomplete_exhibit_search_path(@search.exhibit, @search, q: "%QUERY", format: "json")}, html: {id: 'edit-search'} do |f| %>
+<%= bootstrap_form_for [@search.exhibit, @search], layout: :horizontal, label_col: 'col-md-2 col-sm-2', control_col: 'col-md-7 col-sm-7', data: {form_observer: 'true', autocomplete_exhibit_catalog_path: spotlight.autocomplete_exhibit_search_path(@search.exhibit, @search, q: "%QUERY", format: "json"), turbo: 'false'}, html: {id: 'edit-search'} do |f| %>
   <% if @search.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@search.errors.count, "error") %> prohibited this page from being saved:</h2>

@@ -50,6 +50,17 @@ RSpec.describe 'Browse Category Administration', type: :feature do
       end
     end
 
+    context 'when a reserved word is used to title a browse category' do
+      let(:title) { 'images' }
+
+      it 'displays an error message', js: true do
+        visit spotlight.edit_exhibit_search_path(exhibit, search)
+        fill_in 'search_title', with: title
+        click_button 'Save changes'
+        expect(page).to have_content('1 error prohibited this page from being saved')
+      end
+    end
+
     describe 'with a group present' do
       let!(:group) { FactoryBot.create(:group, exhibit:, title: 'Good group') }
 
