@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# Testing docker
+
 begin
   require 'bundler/setup'
 rescue LoadError
