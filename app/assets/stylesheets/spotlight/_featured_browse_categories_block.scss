@@ -65,15 +65,24 @@ $xl-sidebar-five-tile-width: ($container-xl-sidebar * 0.2) - $tile-margin;
     color: $featured-browse-category-caption-color;
     position: absolute;
     text-align: center;
+    height: 100%;
     width: 100%;
-    padding: 35px 15px 15px;
-    background: linear-gradient(0deg, rgba(46, 45, 41, 0.7) 70%, rgba(46, 45, 41, 0) 100%);
+    padding: 5%;
+    background: linear-gradient(0deg, rgba(46, 45, 41, 0.7) 45%, rgba(46, 45, 41, 0) 100%);
     border-radius: $border-radius-lg;
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-end;
+  
+    &:hover {
+      background: linear-gradient(rgba(46, 45, 41, 0.7), 0%, rgba(46, 45, 41, 0.7) 100%); 
+    }
   }
 
   .category-title {
     font-size: $h4-font-size;
     line-height: 1.2;
+    text-align: center;
     margin: 0;
     padding: $spacer * 0.25;
 

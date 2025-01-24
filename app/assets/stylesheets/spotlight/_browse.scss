@@ -62,12 +62,7 @@ $image-overlay-max-height: 300px;
     position: relative;
 
     .img-responsive {
-      transition: all 0.5s ease;
       width: 100%;
-
-      &:hover {
-        filter: brightness(70%);
-      }
     }
   }
 
@@ -75,21 +70,22 @@ $image-overlay-max-height: 300px;
     position: absolute;
     bottom: 0;
     left: 0;
+    height: 100%;
     width: 100%;
-    background: linear-gradient(
-      0deg,
-      rgba(46, 45, 41, 0.7) 70%,
-      rgba(46, 45, 41, 0) 100%
-    );
+    background: linear-gradient(0deg, rgba(46, 45, 41, 0.7) 45%, rgba(46, 45, 41, 0) 100%);
     color: $white;
-    padding: 50px 20px 20px 20px;
-    text-align: center;
+    padding: 5%;
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-end;
 
-    // prevents potential blur caused by the vertical-align technique
-    transform-style: preserve-3d;
+    &:hover {
+      background: linear-gradient(rgba(46, 45, 41, 0.7), 0%, rgba(46, 45, 41, 0.7) 100%); 
+    }
 
     .browse-category-title {
       font-size: $h3-font-size;
+      text-align: center;
 
       .category-subtitle {
         display: block;
