@@ -4437,13 +4437,23 @@
 
   class Locks {
     delete_lock(el) {
-      $.ajax({ url: $(el).data('lock'), type: 'POST', data: { _method: "delete" }, async: false});
-      $(el).removeAttr('data-lock');
+      const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+      
+      fetch(el.dataset.lock, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-Token': csrfToken
+        }
+      });
+      
+      el.removeAttribute('data-lock');
     }
 
     connect() {
-      $('[data-lock]').on('click', (e) => {
-        this.delete_lock(e.target);
+      document.querySelectorAll('[data-lock]').forEach(element => {
+        element.addEventListener('click', (e) => {
+          this.delete_lock(e.target);
+        });
       });
     }
   }
