@@ -5,7 +5,7 @@ module SirTrevorRails
     ##
     # Embed documents (using a special blacklight view configuration) and text block
     class SolrDocumentsEmbedBlock < SirTrevorRails::Blocks::SolrDocumentsBlock
-      def self.alt_text?
+      def self.supports_alt_text?
         false
       end
     end

@@ -9,7 +9,7 @@ module Spotlight
 
     def alt_text
       # Sort by newest except for the homepage, which is always first
-      pages_with_alt = @exhibit.pages.order(Arel.sql('id = 1 DESC, created_at DESC')).select { |elem| elem.content.any?(&:alt_text?) }
+      pages_with_alt = @exhibit.pages.order(Arel.sql('id = 1 DESC, created_at DESC')).select { |elem| elem.content.any?(&:supports_alt_text?) }
       @pages = pages_with_alt.map { |page| get_alt_info(page) }
       @has_alt_text = @pages.sum { |page| page[:has_alt_text] }
       @total_alt_items = @pages.sum { |page| page[:can_have_alt_text] }
@@ -23,7 +23,7 @@ module Spotlight
       can_have_alt_text = 0
       has_alt_text = 0
       page.content.each do |content|
-        next unless content.alt_text?
+        next unless content.supports_alt_text?
 
         content.item&.each_value do |item|
           can_have_alt_text += 1

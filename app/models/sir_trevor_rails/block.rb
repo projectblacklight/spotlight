@@ -18,11 +18,12 @@ module SirTrevorRails
       send(:[], :format).present? ? send(:[], :format).to_sym : DEFAULT_FORMAT
     end
 
-    def alt_text?
-      self.class.alt_text?
+    def supports_alt_text?
+      self.class.supports_alt_text?
     end
 
-    def self.alt_text?
+    # By default we don't support alt text, but some subclasses do
+    def self.supports_alt_text?
       false
     end
 
@@ -33,7 +34,7 @@ module SirTrevorRails
     end
 
     def self.custom_block_type_alt_text_settings
-      custom_block_types.index_with { |block_type| SirTrevorRails::Block.block_class(block_type).alt_text? }
+      custom_block_types.index_with { |block_type| SirTrevorRails::Block.block_class(block_type).supports_alt_text? }
     end
 
     def initialize(hash, parent)
