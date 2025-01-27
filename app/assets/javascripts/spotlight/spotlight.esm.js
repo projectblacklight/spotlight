@@ -4971,6 +4971,8 @@ const Module = (function() {
         nestedSortables.forEach(sortable => {
           new Sortable(sortable, { ...sortableOptions, group: group });
         });
+
+        updateWeightsAndRelationships(container);
       });
     }
   };
