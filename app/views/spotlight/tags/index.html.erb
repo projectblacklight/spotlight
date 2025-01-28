@@ -13,9 +13,8 @@
         <%= f.fields_for :owned_tags_attributes, tag, index: index do |p| %>
           <%= render partial: 'tag', locals: { f: p } %>
         <% end %>
-      </ul>
-    <% end %>
-
+      <% end %>
+    </ul>
     <div class="float-right float-end">
       <%= submit_tag t(:'helpers.action.update_all'), class: "btn btn-primary" %>
     </div>
