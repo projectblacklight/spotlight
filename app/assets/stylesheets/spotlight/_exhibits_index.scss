@@ -33,6 +33,7 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
   }
 
   .card-img-overlay {
+    --exhibit-card-overlay-opacity: .7;
     --exhibit-card-overlay-rgb: 255, 255, 255;
     --exhibit-card-overlay-bg: rgba(
       var(--exhibit-card-overlay-rgb),
@@ -74,7 +75,6 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
   }
 
   &:hover {
-    --exhibit-card-overlay-opacity: .7;
     .exhibit-description {
       max-height: 450px;
     }
