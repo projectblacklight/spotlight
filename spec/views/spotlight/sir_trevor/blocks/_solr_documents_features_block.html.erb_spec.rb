@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.erb', type: :view do
+RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.erb', type: :view do
   let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_features_block' }
   let(:block) do
     SirTrevorRails::Blocks::SolrDocumentsFeaturesBlock.new({ type: 'block', data: { 'show-primary-caption' => true, 'primary-caption-field' => 'x' } }, page)

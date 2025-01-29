@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/job_trackers/show', type: :view do
+RSpec.describe 'spotlight/job_trackers/show', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:job_tracker) { FactoryBot.create(:job_tracker, job_class: 'Spotlight::ReindexExhibitJob', on: exhibit, user:) }
   let(:user) { FactoryBot.create(:user) }

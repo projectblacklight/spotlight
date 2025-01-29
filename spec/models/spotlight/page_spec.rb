@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Page, type: :model do
+RSpec.describe Spotlight::Page, type: :model do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:parent_page) { Spotlight::FeaturePage.create! exhibit:, published: true }
   let!(:child_page) { Spotlight::FeaturePage.create! exhibit:, published: false, parent_page: }

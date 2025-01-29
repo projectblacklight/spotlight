@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/featured_images/_upload_form', type: :view do
+RSpec.describe 'spotlight/featured_images/_upload_form', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit, :with_thumbnail) }
   let(:builder) { ActionView::Helpers::FormBuilder.new 'z', exhibit.thumbnail, view, {} }
 

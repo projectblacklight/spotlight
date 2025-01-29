@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::TranslationsController do
+RSpec.describe Spotlight::TranslationsController do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
 

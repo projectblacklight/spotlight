@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'shared/_analytics', type: :view do
+RSpec.describe 'shared/_analytics', type: :view do
   it 'is empty without Google Analytics configured' do
     render
     expect(rendered).to be_empty

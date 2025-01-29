@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::FeaturedImage do
+RSpec.describe Spotlight::FeaturedImage do
   subject(:featured_image) { described_class.new }
 
   let(:temp_image) { FactoryBot.create(:temporary_image) }

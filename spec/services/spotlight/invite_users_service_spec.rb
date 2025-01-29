@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::InviteUsersService do
+RSpec.describe Spotlight::InviteUsersService do
   subject { described_class.call(resource:) }
 
   let(:resource) do

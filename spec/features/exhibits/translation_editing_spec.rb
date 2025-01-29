@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Translation editing', type: :feature do
+RSpec.describe 'Translation editing', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit, title: 'Sample', subtitle: 'SubSample') }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 

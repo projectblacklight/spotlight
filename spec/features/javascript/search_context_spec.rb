@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Search contexts' do
+RSpec.describe 'Search contexts' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:feature_page) do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::AddUploadsFromCsv do
+RSpec.describe Spotlight::AddUploadsFromCsv do
   subject(:job) { described_class.new(data, exhibit, user) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }

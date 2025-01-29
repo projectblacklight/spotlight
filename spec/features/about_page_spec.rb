@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'About page', type: :feature, versioning: true do
+RSpec.describe 'About page', type: :feature, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let!(:about_page1) { FactoryBot.create(:about_page, title: 'First Page', exhibit:) }

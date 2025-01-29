@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::BrowseCategorySearchBuilder do
+RSpec.describe Spotlight::BrowseCategorySearchBuilder do
   class BrowseCategoryMockSearchBuilder < Blacklight::SearchBuilder
     include Blacklight::Solr::SearchBuilderBehavior
     include Spotlight::BrowseCategorySearchBuilder

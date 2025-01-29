@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::AccessControlsEnforcementSearchBuilder do
+RSpec.describe Spotlight::AccessControlsEnforcementSearchBuilder do
   class MockSearchBuilder < Blacklight::SearchBuilder
     attr_reader :blacklight_params, :scope
 

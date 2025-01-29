@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::FeaturePagesController, type: :controller, versioning: true do
+RSpec.describe Spotlight::FeaturePagesController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
 
   let(:valid_attributes) { { 'title' => 'MyString', thumbnail_attributes: { iiif_url: '' } } }

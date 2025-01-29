@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::CropHelper do
+RSpec.describe Spotlight::CropHelper do
   describe '#form_prefix' do
     let(:form) { double(object_name: 'Spotlight::Exhibit') }
 

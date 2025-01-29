@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::ReindexJob do
+RSpec.describe Spotlight::ReindexJob do
   include ActiveJob::TestHelper
 
   let(:exhibit) { FactoryBot.create(:exhibit) }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::FiltersController do
+RSpec.describe Spotlight::FiltersController do
   routes { Spotlight::Engine.routes }
 
   describe '#create' do

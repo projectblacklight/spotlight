@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/metadata_configurations/edit', type: :view do
+RSpec.describe 'spotlight/metadata_configurations/edit', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do

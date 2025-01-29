@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Resource, type: :model do
+RSpec.describe Spotlight::Resource, type: :model do
   subject(:resource) { described_class.create(id: 123, exhibit:) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }

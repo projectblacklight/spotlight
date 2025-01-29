@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::IiifResourceResolver do
+RSpec.describe Spotlight::IiifResourceResolver do
   subject(:resolver) { described_class.new(resource) }
 
   let(:fixture_json) do

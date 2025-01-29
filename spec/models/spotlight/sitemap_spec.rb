@@ -2,7 +2,7 @@
 
 require 'sitemap_generator'
 
-describe Spotlight::Sitemap do
+RSpec.describe Spotlight::Sitemap do
   subject { described_class.new(sitemap, exhibit) }
 
   let(:sitemap) { SitemapGenerator::Interpreter.new }

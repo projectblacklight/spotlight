@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Etl::SolrLoader do
+RSpec.describe Spotlight::Etl::SolrLoader do
   subject(:loader) { described_class.new(batch_size: 5, solr_connection: mock_connection) }
 
   let(:mock_connection) { instance_double(RSolr::Client, commit: nil, update: nil) }

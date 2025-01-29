@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Dashboard', type: :feature do
+RSpec.describe 'Dashboard', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:parent_feature_page) do
     FactoryBot.create(:feature_page, title: 'Parent Page', exhibit:)

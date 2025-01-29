@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::HomePage, type: :model do
+RSpec.describe Spotlight::HomePage, type: :model do
   let(:home_page) { FactoryBot.create(:home_page) }
 
   it { is_expected.not_to be_feature_page }

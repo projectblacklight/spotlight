@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::ChangeVisibilityJob do
+RSpec.describe Spotlight::ChangeVisibilityJob do
   subject { described_class.new(solr_params:, exhibit:, visibility:) }
 
   let(:solr_params) { { q: 'map' } }

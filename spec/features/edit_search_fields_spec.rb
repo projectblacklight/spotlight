@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Search Administration', type: :feature do
+RSpec.describe 'Search Administration', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 

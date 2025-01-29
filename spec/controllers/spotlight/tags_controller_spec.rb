@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::TagsController, type: :controller do
+RSpec.describe Spotlight::TagsController, type: :controller do
   include ActiveJob::TestHelper
 
   routes { Spotlight::Engine.routes }

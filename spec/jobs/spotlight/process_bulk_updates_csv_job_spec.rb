@@ -4,7 +4,7 @@ def tag_names(exhibit, id)
   exhibit.blacklight_config.repository.find(id).documents.first.sidecar(exhibit).taggings.includes(:tag).map { |tagging| tagging&.tag&.name }
 end
 
-describe Spotlight::ProcessBulkUpdatesCsvJob do
+RSpec.describe Spotlight::ProcessBulkUpdatesCsvJob do
   subject { described_class.new(exhibit, bulk_update) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }

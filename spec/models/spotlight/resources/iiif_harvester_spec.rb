@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spotlight::Resources::IiifHarvester do
+RSpec.describe Spotlight::Resources::IiifHarvester do
   subject(:harvester) { described_class.create(exhibit_id: exhibit.id, url:) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }

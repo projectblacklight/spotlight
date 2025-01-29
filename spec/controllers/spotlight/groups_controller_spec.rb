@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::GroupsController, type: :controller do
+RSpec.describe Spotlight::GroupsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:group) { FactoryBot.create(:group, exhibit:) }

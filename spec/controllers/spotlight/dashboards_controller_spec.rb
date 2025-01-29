@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::DashboardsController, type: :controller do
+RSpec.describe Spotlight::DashboardsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:repository) { double }

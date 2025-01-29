@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Add and update the site masthead', type: :feature do
+RSpec.describe 'Add and update the site masthead', type: :feature do
   let(:user) { FactoryBot.create(:site_admin) }
 
   before { login_as user }

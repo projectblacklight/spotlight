@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Add tags to an item in an exhibit', type: :feature do
+RSpec.describe 'Add tags to an item in an exhibit', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:custom_field) { FactoryBot.build_stubbed(:custom_field, exhibit:) }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::CustomFieldsController, type: :controller do
+RSpec.describe Spotlight::CustomFieldsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
 

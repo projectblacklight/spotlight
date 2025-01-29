@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::AttachmentsController, type: :controller do
+RSpec.describe Spotlight::AttachmentsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Resources::Upload, type: :model do
+RSpec.describe Spotlight::Resources::Upload, type: :model do
   subject(:upload) { described_class.new(id: 42, exhibit:) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }

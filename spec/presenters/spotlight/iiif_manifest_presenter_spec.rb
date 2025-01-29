@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::IiifManifestPresenter do
+RSpec.describe Spotlight::IiifManifestPresenter do
   require 'iiif_manifest'
 
   let(:resource) { SolrDocument.new(id: '1-1') }

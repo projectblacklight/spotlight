@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/feature_pages/_empty.html.erb', type: :view do
+RSpec.describe 'spotlight/feature_pages/_empty.html.erb', type: :view do
   let(:can?) { false }
 
   before do

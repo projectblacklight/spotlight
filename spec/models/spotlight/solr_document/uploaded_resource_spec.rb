@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::SolrDocument::UploadedResource, type: :model do
+RSpec.describe Spotlight::SolrDocument::UploadedResource, type: :model do
   let(:valid_resource) do
     SolrDocument.new(id: '123',
                      full_image_url_ssm: ['http://example.com/png.png'],

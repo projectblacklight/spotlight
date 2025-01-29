@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Browse pages' do
+RSpec.describe 'Browse pages' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   context 'a browse page' do

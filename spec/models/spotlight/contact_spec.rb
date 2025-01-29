@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::Contact, type: :model do
+RSpec.describe Spotlight::Contact, type: :model do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do

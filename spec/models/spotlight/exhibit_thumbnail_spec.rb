@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::ExhibitThumbnail do
+RSpec.describe Spotlight::ExhibitThumbnail do
   subject(:exhibit_thumbnail) { described_class.new }
 
   it 'includes the appropriate size in the iiif_url' do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Block controls' do
+RSpec.describe 'Block controls' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 

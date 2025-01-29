@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::CustomSearchField, type: :model do
+RSpec.describe Spotlight::CustomSearchField, type: :model do
   describe '#label' do
     subject { described_class.new configuration: { 'label' => 'the configured label' }, slug: 'foo' }
 

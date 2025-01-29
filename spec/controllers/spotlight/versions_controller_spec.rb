@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::VersionsController, type: :controller, versioning: true do
+RSpec.describe Spotlight::VersionsController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
 
   describe 'when not logged in' do

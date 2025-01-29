@@ -94,6 +94,8 @@ RSpec.configure do |config|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
+  config.disable_monkey_patching!
+
   config.default_formatter = 'doc' if config.files_to_run.one?
 
   config.shared_context_metadata_behavior = :apply_to_host_groups

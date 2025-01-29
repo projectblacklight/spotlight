@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Exhibits index page', type: :feature do
+RSpec.describe 'Exhibits index page', type: :feature do
   context 'with multiple exhibits' do
     let!(:exhibit) { FactoryBot.create(:exhibit, title: 'Some Exhibit Title') }
     let!(:other_exhibit) { FactoryBot.create(:exhibit, title: 'Some Other Title') }

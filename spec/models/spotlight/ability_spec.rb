@@ -2,7 +2,7 @@
 
 require 'cancan/matchers'
 
-describe Spotlight::Ability, type: :model do
+RSpec.describe Spotlight::Ability, type: :model do
   subject { Ability.new(user) }
 
   before do

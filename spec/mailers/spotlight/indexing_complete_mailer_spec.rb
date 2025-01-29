@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::IndexingCompleteMailer do
+RSpec.describe Spotlight::IndexingCompleteMailer do
   subject { described_class.documents_indexed [1, 2, 3], exhibit, user, indexed_count: 3 }
 
   let(:user) { double(email: 'test@example.com') }

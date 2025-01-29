@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/resources/new.html.erb', type: :view do
+RSpec.describe 'spotlight/resources/new.html.erb', type: :view do
   let(:blacklight_config) { Blacklight::Configuration.new }
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
 

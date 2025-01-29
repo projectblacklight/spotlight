@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/feature_pages/_sidebar.html.erb', type: :view do
+RSpec.describe 'spotlight/feature_pages/_sidebar.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:parent1) { FactoryBot.create(:feature_page, exhibit:, title: 'Parent Page') }
   let!(:parent2) { FactoryBot.create(:feature_page, exhibit:, title: 'Two') }

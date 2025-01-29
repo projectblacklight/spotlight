@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/home_pages/_empty.html.erb', type: :view do
+RSpec.describe 'spotlight/home_pages/_empty.html.erb', type: :view do
   describe 'resource providers' do
     before do
       allow(view).to receive_messages(current_exhibit: FactoryBot.create(:exhibit),

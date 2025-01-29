@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::CustomTranslationExtension do
+RSpec.describe Spotlight::CustomTranslationExtension do
   subject do
     Class.new(ActiveRecord::Base) do
       include Spotlight::CustomTranslationExtension

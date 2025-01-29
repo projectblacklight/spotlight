@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::SearchConfigurationsHelper, type: :helper do
+RSpec.describe Spotlight::SearchConfigurationsHelper, type: :helper do
   describe '#translate_sort_fields' do
     let(:sort_config) do
       Blacklight::OpenStructWithHashAccess.new(sort: 'score asc, sort_title_ssi desc')

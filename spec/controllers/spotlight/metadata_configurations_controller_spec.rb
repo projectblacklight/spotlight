@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::MetadataConfigurationsController, type: :controller do
+RSpec.describe Spotlight::MetadataConfigurationsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
 

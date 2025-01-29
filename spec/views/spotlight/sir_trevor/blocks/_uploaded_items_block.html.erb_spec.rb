@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'spotlight/sir_trevor/blocks/_uploaded_items_block', type: :view do
+RSpec.describe 'spotlight/sir_trevor/blocks/_uploaded_items_block', type: :view do
   let(:p) { 'spotlight/sir_trevor/blocks/uploaded_items_block' }
   let(:page) { double('Page') }
   let(:block) do

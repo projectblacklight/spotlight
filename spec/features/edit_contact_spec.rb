@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Add a contact to an exhibit', type: :feature do
+RSpec.describe 'Add a contact to an exhibit', type: :feature do
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:about_page) { FactoryBot.create(:about_page, exhibit:) }
