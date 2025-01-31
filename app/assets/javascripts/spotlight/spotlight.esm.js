@@ -4312,29 +4312,9 @@ class Exhibits {
       $(inputContainer).insertAfter(contacts.last());
     });
 
-    $('.contact-email-delete').on('ajax:success', function() {
-      $(this).closest('.contact').fadeOut(250, function() { $(this).remove(); });
-    });
-
-    $('.contact-email-delete').on('ajax:error', function(event, _xhr, _status, error) {
-      var errSpan = $(this).closest('.contact').find('.contact-email-delete-error');
-      errSpan.show();
-      errSpan.find('.error-msg').first().text(error || event.detail[1]);
-    });
-
-    document.addEventListener('turbo:submit-end', (event) => {
-      const response = event.detail.fetchResponse;
-      if (!response.succeeded && response.response.status === 404) {
-        const path = new URL(event.target.action).pathname;
-        const deleteButton = document.querySelector(`.contact-email-delete[href="${path}"]`);
-        if (deleteButton) {
-          const errSpan = deleteButton.closest('.contact').querySelector('.contact-email-delete-error');
-          const errorMsg = errSpan.querySelector('.error-msg');
-          errSpan.style.display = 'block';
-          errorMsg.textContent = 'Not Found';
-        }
-      }
-    });
+    if (document.getElementById('another-email')) {
+      document.addEventListener('turbo:submit-end', this.contactToDeleteNotFoundHandler);
+    }
 
     if ($.fn.tooltip) {
       $('.btn-with-tooltip').tooltip();
@@ -4344,6 +4324,15 @@ class Exhibits {
     $('#save-modal').on('shown.bs.modal', function () {
         $('#search_title').focus();
     });
+  }
+
+  contactToDeleteNotFoundHandler(e) {
+    const contact = e.detail.formSubmission?.delegate?.element?.querySelector('.contact');
+    if (contact && e.detail?.fetchResponse?.response?.status === 404) {
+      const error = contact.querySelector('.contact-email-delete-error');
+      error.style.display = 'block';
+      error.querySelector('.error-msg').textContent = 'Not Found';
+    }
   }
 }
 
