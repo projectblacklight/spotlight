@@ -5556,7 +5556,7 @@
           checked = "";
         }
         var resource_id = data.slug || data.id;
-        var block_item_id = this.formId("item_" + data.id);
+        var block_item_id = this.formId(index);
         var markup = `
           <li class="field dd-item dd3-item" data-cropper="select_image_${block_item_id}" data-resource-id="${resource_id}" data-id="${index}" id="${block_item_id}" data-input-prefix="item[${index}]">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
@@ -5764,7 +5764,7 @@
         }
         var resource_id = data.slug || data.id;
         var markup = `
-           <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+           <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId(index)}">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
             <input type="hidden" name="item[${index}][full_title]" value="${(data.full_title || data.title)}" />
             <input data-property="weight" type="hidden" name="item[${index}][weight]" value="${data.weight}" />
@@ -5857,7 +5857,7 @@
         }
         var resource_id = data.slug || data.id;
         var markup = `
-        <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId("item_" + data.id)}">
+        <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId(index)}">
           <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
           <input type="hidden" name="item[${index}][title]" value="${data.title}" />
           <input data-property="weight" type="hidden" name="item[${index}][weight]" value="${data.weight}" />
@@ -6472,7 +6472,7 @@
         var dataUrl = data.url || data.file.url;
 
         var markup = `
-          <li class="field dd-item dd3-item" data-id="${index}" id="${this.formId("item_" + dataId)}">
+          <li class="field dd-item dd3-item" data-id="${index}" id="${this.formId(index)}">
             <input type="hidden" name="item[${index}][id]" value="${dataId}" />
             <input type="hidden" name="item[${index}][title]" value="${dataTitle}" />
             <input type="hidden" name="item[${index}][url]" data-item-grid-thumbnail="true"  value="${dataUrl}"/>
