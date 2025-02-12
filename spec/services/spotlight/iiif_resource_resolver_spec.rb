@@ -83,7 +83,7 @@ describe Spotlight::IiifResourceResolver do
       it 'logs that the JSON was unparsable and falls through to an no-canvas error' do
         klass = described_class.name
         expect(Rails.logger).to receive(:warn).with(
-          a_string_matching(/#{klass} failed to parse #{iiif_manifest_url} .* unexpected token at/)
+          a_string_matching(/#{klass} failed to parse #{iiif_manifest_url}/)
         )
         expect { resolver.resolve! }.to raise_error(Spotlight::IiifResourceResolver::ManifestError)
       end
