@@ -83,3 +83,10 @@
     margin-bottom: $spacer;
   }
 }
+
+// In various admin views we use leaflet maps and autocomplete. They both set
+// the same z-index value, so we need to override the leaflet z-index to make
+// sure the leaflet controls don't appear over the autocomplete dropdown.
+.leaflet-top, .leaflet-bottom {
+  z-index: 950;
+}
