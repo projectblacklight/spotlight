@@ -3,7 +3,7 @@
 module Spotlight
   # Displays the "Bulk actions" button and dropdown
   class BulkActionComponent < ViewComponent::Base
-    def initialize(bulk_actions:, button_classes: 'btn btn-secondary dropdown-toggle')
+    def initialize(bulk_actions:, button_classes: 'btn btn-primary dropdown-toggle')
       @bulk_actions = bulk_actions
       @button_classes = button_classes
       super

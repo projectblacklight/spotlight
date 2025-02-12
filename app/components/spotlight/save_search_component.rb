@@ -3,7 +3,7 @@
 module Spotlight
   # Displays the "Save this search" button and modal
   class SaveSearchComponent < ViewComponent::Base
-    def initialize(button_classes: 'btn btn-secondary')
+    def initialize(button_classes: 'btn btn-outline-primary')
       @button_classes = button_classes
       super
     end

@@ -33,7 +33,7 @@
 
       <% if default_value %>
         <div class="">
-          <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn restore-default btn-secondary btn-sm #{'d-none' if label.blank? || label == default_value}" %>
+          <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn restore-default btn-primary btn-sm #{'d-none' if label.blank? || label == default_value}" %>
         </div>
       <% end %>
 

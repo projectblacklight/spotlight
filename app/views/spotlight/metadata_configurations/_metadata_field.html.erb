@@ -14,7 +14,7 @@
         </div>
         <% if default_field_label %>
           <div class="restore-default">
-            <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn btn-secondary btn-sm #{'d-none' if config.display_label == default_field_label}" %>
+            <%= button_tag t(:'.restore_default'), data: {:"restore-default" => true}, class: "btn btn-primary btn-sm #{'d-none' if config.display_label == default_field_label}" %>
           </div>
         <% end %>
       </div>

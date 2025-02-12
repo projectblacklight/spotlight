@@ -45,7 +45,7 @@
 
     <div class="form-actions">
       <div class="primary-actions">
-        <%= link_to(t('.create'), 'javascript:;', class: 'btn btn-secondary', data: { behavior: 'new-user' }) %>
+        <%= link_to(t('.create'), 'javascript:;', class: 'btn btn-primary', data: { behavior: 'new-user' }) %>
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@
     <h3 class="instructions"><%= t :'.admins_curators' %></h3>
     <div id="admins_curators" class="card card-body bg-light">
       <div class='btn-toolbar float-right align-self-end'>
-        <button class="btn btn-sm btn-secondary copy-email-addresses" data-clipboard-target="#admins_curators">
+        <button class="btn btn-sm btn-primary copy-email-addresses" data-clipboard-target="#admins_curators">
             <%= t('.copy') %>
         </button>
       </div>
@@ -89,7 +89,7 @@
               <% else %>
                 <%= link_to(t('.update'), admin_user_path(user),
                       data: { method: :patch, turbo_method: :patch },
-                      class: 'btn btn-sm btn-secondary') %>
+                      class: 'btn btn-sm btn-primary') %>
               <% end %>
             </td>
           </tr>
