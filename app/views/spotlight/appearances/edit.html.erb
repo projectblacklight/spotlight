@@ -71,7 +71,7 @@
           <div class="card-group dd main_navigation_admin col-sm-7" id="nested-navigation" data-behavior="nestable" data-max-depth="1">
             <ol class="dd-list">
               <%= f.fields_for :main_navigations do |label| %>
-                <%= render layout: 'spotlight/shared/dd3_item', locals: { id: label.object.nav_type, field: label, label: label.object.label_or_default, default_value: label.object.default_label, enabled_method: :display } do; end %>
+                <%= render layout: 'spotlight/shared/dd3_item', locals: { id: label.object.nav_type, field: label, label: label.object.label_or_default, default_value: label.object.default_label, index: label.index, enabled_method: :display } do; end %>
               <% end %>
             </ol>
           </div>
