@@ -365,7 +365,7 @@ module Spotlight
       (json[:feature_pages] || []).each do |page|
         p = exhibit.feature_pages.find_by(slug: page[:slug])
         page[:content] = p.read_attribute(:content)
-        (page[:translated_pages]).each do |translated_page|
+        page[:translated_pages].each do |translated_page|
           translated_page[:content] = p.translated_page_for(translated_page[:locale]).read_attribute(:content)
         end
       end
@@ -373,7 +373,7 @@ module Spotlight
       (json[:about_pages] || []).each do |page|
         p = exhibit.about_pages.find_by(slug: page[:slug])
         page[:content] = p.read_attribute(:content)
-        (page[:translated_pages]).each do |translated_page|
+        page[:translated_pages].each do |translated_page|
           translated_page[:content] = p.translated_page_for(translated_page[:locale]).read_attribute(:content)
         end
       end
