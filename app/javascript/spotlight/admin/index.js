@@ -27,6 +27,7 @@ import 'spotlight/admin/blocks/block'
 import 'spotlight/admin/blocks/resources_block' // This is a base class of several other blocks, so must come first
 import 'spotlight/admin/blocks/browse_block'
 import 'spotlight/admin/blocks/browse_group_categories_block'
+import 'spotlight/admin/blocks/heading_block'
 import 'spotlight/admin/blocks/iframe_block'
 import 'spotlight/admin/blocks/link_to_search_block'
 import 'spotlight/admin/blocks/oembed_block'

@@ -5903,6 +5903,14 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
   });
 })();
 
+SirTrevor.Blocks.Heading = (function () {
+  return SirTrevor.Blocks.Heading.extend({
+    editorHTML: function() {
+      return `<p>${i18n.t("blocks:heading:description")}</p><hr><h2 class="st-required st-text-block st-text-block--heading" contenteditable="true"></h2>`;
+    }
+  });
+})();
+
 /*
   Sir Trevor ItemText Block.
   This block takes an ID,
@@ -6735,6 +6743,10 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
     title: "Browse Group Categories",
     description: "This widget displays all browse categories associated with a selected browse group as a horizontally-scrolling row. Each selected browse group is displayed as a separate row. Each displayed category in a group links to the corresponding browse category results page.",
     item_counts: "Include category item counts?"
+  },
+
+  heading: {
+    description: "This widget produces an H2 heading"
   },
 
   link_to_search: {
