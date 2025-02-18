@@ -18,9 +18,7 @@ module SirTrevorRails
       send(:[], :format).present? ? send(:[], :format).to_sym : DEFAULT_FORMAT
     end
 
-    def supports_alt_text?
-      self.class.supports_alt_text?
-    end
+    delegate :supports_alt_text?, to: :class
 
     # By default we don't support alt text, but some subclasses do
     def self.supports_alt_text?

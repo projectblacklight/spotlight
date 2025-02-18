@@ -1,3 +1,5 @@
+import OpenSeadragon from 'openseadragon';
+
 export default class {
   connect() {
     $('.zpr-link').on('click', function() {
