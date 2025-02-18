@@ -1,5 +1,5 @@
-<div class="content-block item-text row d-block clearfix">
-  <div class="<%= 'col-md-6' if oembed_block.text? %> col-12 <%= oembed_block.content_align == 'right' ? 'float-right float-end' : 'float-left float-start' %> oembed-block">
+<div class="content-block items-block row d-block clearfix">
+  <div class="items-col <%= oembed_block.text? ? 'col-md-6' : 'col-md-12' %> <%= oembed_block.content_align == 'right' ? 'float-right float-end' : 'float-left float-start' %> oembed-block">
     <%= render_oembed_tag oembed_block.url %>
   </div>
 
