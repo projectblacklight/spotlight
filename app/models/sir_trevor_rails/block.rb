@@ -18,9 +18,7 @@ module SirTrevorRails
       send(:[], :format).present? ? send(:[], :format).to_sym : DEFAULT_FORMAT
     end
 
-    def alt_text?
-      self.class.alt_text?
-    end
+    delegate :alt_text?, to: :class
 
     def self.alt_text?
       false
