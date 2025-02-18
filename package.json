@@ -1,6 +1,6 @@
 {
   "name": "spotlight-frontend",
-  "version": "5.0.0-alpha1",
+  "version": "5.0.0-alpha2",
   "description": "Exhibits plugin for blacklight",
   "main": "app/assets/javascripts/spotlight",
   "type": "module",
