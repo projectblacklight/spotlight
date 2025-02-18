@@ -5,9 +5,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="save-modal-label"><%= t(:'spotlight.saved_search.label') %></h4>
-        <button type="button" class="blacklight-modal-close close btn-close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="<%= t('blacklight.modal.close') %>">
-          <span aria-hidden="true" class="visually-hidden">&times;</span>
-        </button>
+        <button type="button" class="blacklight-modal-close close btn-close" data-bs-dismiss="modal" aria-label="<%= t('blacklight.modal.close') %>"></button>
       </div>
       <div class="modal-body">
         <%= f.text_field :title, label: t(:'spotlight.saved_search.title') %>
@@ -17,7 +15,7 @@
       </div>
       <div class="modal-footer d-flex flex-row-reverse justify-content-start">
         <%= f.submit nil, class: 'btn btn-primary' %>
-        <button type="button" class="btn btn-link" data-dismiss="modal" data-bs-dismiss="modal"><%= t :cancel %></button>
+        <button type="button" class="btn btn-link" data-bs-dismiss="modal"><%= t :cancel %></button>
       </div>
     </div>
     <% end %>

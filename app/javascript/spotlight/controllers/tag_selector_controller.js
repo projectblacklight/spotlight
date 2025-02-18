@@ -194,7 +194,7 @@ export default class extends Controller {
               data-tag="${tag}"
               class="btn-close close ms-1 ml-1"
               aria-label="${this.translationsValue.remove} ${tag}"
-            ><span aria-hidden="true" class="visually-hidden">&times;</span></button>
+            ></button>
           </span>
         </li>
       `

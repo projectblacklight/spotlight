@@ -3305,7 +3305,7 @@
         modalContent.html('<div id="osd-modal-container"></div>');
         var controls = `<div class="controls d-flex justify-content-center justify-content-md-end">
           <div class="custom-close-controls pr-3 pe-3 pt-3">
-            <button type="button" class="btn btn-dark" data-dismiss="modal" data-bs-dismiss="modal" aria-hidden="true">${Spotlight.ZprLinks.close}</button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-hidden="true">${Spotlight.ZprLinks.close}</button>
           </div>
           <div class="zoom-controls mb-3 mr-md-3 me-md-3">
             <button id="osd-zoom-in" type="button" class="btn btn-dark">${Spotlight.ZprLinks.zoomIn}</button>
@@ -7069,7 +7069,7 @@
               data-tag="${tag}"
               class="btn-close close ms-1 ml-1"
               aria-label="${this.translationsValue.remove} ${tag}"
-            ><span aria-hidden="true" class="visually-hidden">&times;</span></button>
+            ></button>
           </span>
         </li>
       `
