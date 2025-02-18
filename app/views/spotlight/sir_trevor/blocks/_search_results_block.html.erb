@@ -11,13 +11,13 @@
       <% views = blacklight_view_config_for_search_block(search_results_block) %>
       <% if views.length > 1 -%>
       <div id="sortAndPerPage" class="clearfix my-3" role="navigation" aria-label="<%= t('blacklight.search.per_page.aria_label', default: 'Results navigation')%>">
-        <div class="search-widgets float-right float-end">
+        <div class="search-widgets float-end">
           <%= render partial: 'view_type_group', locals: { block: search_results_block } %>
         </div>
       </div>
       <% end %>
 
-      <h2 class="sr-only visually-hidden"><%= t('blacklight.search.search_results') %></h2>
+      <h2 class="visually-hidden"><%= t('blacklight.search.search_results') %></h2>
       <%= render_document_index_with_view(block_document_index_view_type(search_results_block), response.documents) %>
       <%= render 'results_pagination' %>
   <%- end %>

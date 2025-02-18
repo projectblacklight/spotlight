@@ -3304,10 +3304,10 @@
         modalDialog.addClass('modal-xl');
         modalContent.html('<div id="osd-modal-container"></div>');
         var controls = `<div class="controls d-flex justify-content-center justify-content-md-end">
-          <div class="custom-close-controls pr-3 pe-3 pt-3">
+          <div class="custom-close-controls pe-3 pt-3">
             <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-hidden="true">${Spotlight.ZprLinks.close}</button>
           </div>
-          <div class="zoom-controls mb-3 mr-md-3 me-md-3">
+          <div class="zoom-controls mb-3 me-md-3">
             <button id="osd-zoom-in" type="button" class="btn btn-dark">${Spotlight.ZprLinks.zoomIn}</button>
             <button id="osd-zoom-out" type="button" class="btn btn-dark">${Spotlight.ZprLinks.zoomOut}</button>
           </div>
@@ -5246,7 +5246,7 @@
           <auto-complete src="${this.autocomplete_url()}" for="${autocompleteID}-popup" fetch-on-empty>
             <input type="text" name="${autocompleteID}" placeholder="${i18n.t("blocks:autocompleteable:placeholder")}" data-default-typeahead>
             <ul id="${autocompleteID}-popup"></ul>
-            <div id="${autocompleteID}-popup-feedback" class="sr-only visually-hidden"></div>
+            <div id="${autocompleteID}-popup-feedback" class="visually-hidden"></div>
           </auto-complete>
         ` };
         }
@@ -5570,7 +5570,7 @@
                         <div class="checkbox">
                           <input name="item[${index}][display]" type="hidden" value="false" />
                           <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                          <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                          <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                         </div>
                         <div class="pic">
                           <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
@@ -5585,7 +5585,7 @@
                       <div>${(data.slug || data.id)}</div>
                       ${this._altTextFieldsHTML(index, data)}
                     </div>
-                    <div class="remove float-right float-end">
+                    <div class="remove float-end">
                       <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
                     </div>
                   </div>
@@ -5673,7 +5673,7 @@
       altTextHTML: function(index, data) {
         const { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr } = this._altTextData(data);
         return `<div class="mt-2 pt-2 d-flex">
-          <div class="me-2 mr-2">
+          <div class="me-2">
             <label class="col-form-label pb-0 pt-1" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
             <div class="form-check mb-1 justify-content-end">
               <input class="form-check-input" type="checkbox"
@@ -5773,7 +5773,7 @@
                     <div class="checkbox">
                       <input name="item[${index}][display]" type="hidden" value="false" />
                       <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                      <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                      <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                     </div>
                     <div class="pic">
                       <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
@@ -5782,7 +5782,7 @@
                       <div class="title card-title">${(data.full_title || data.title)}</div>
                       <div>${(data.slug || data.id)}</div>
                     </div>
-                    <div class="remove float-right float-end">
+                    <div class="remove float-end">
                       <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
                     </div>
                   </div>
@@ -5831,7 +5831,7 @@
         return `<auto-complete src="${this.autocomplete_url()}" for="${autocompleteID}-popup" fetch-on-empty>
         <input type="text" name="${autocompleteID}" placeholder="${i18n.t("blocks:browse_group_categories:autocomplete")}" data-default-typeahead>
         <ul id="${autocompleteID}-popup"></ul>
-        <div id="${autocompleteID}-popup-feedback" class="sr-only visually-hidden"></div>
+        <div id="${autocompleteID}-popup-feedback" class="visually-hidden"></div>
       </auto-complete>`
       },
       autocomplete_template: function(obj) {
@@ -5866,7 +5866,7 @@
                   <div class="checkbox">
                     <input name="item[${index}][display]" type="hidden" value="false" />
                     <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                    <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                    <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                   </div>
                   <div class="main">
                     <div class="title card-title">${data.title}</div>
@@ -6480,24 +6480,24 @@
                 <div class="checkbox">
                   <input name="item[${index}][display]" type="hidden" value="false" />
                   <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + dataId)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                  <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + dataId)}">${i18n.t("blocks:resources:panel:display")}</label>
+                  <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + dataId)}">${i18n.t("blocks:resources:panel:display")}</label>
                 </div>
                 <div class="pic">
                   <img class="img-thumbnail" src="${dataUrl}" />
                 </div>
                 <div class="main form-horizontal">
                   <div class="title card-title">${dataTitle}</div>
-                  <div class="field row mr-3 me-3">
+                  <div class="field row me-3">
                     <label for="${this.formId('caption_' + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:caption")}</label>
                     <input type="text" class="form-control col" id="${this.formId('caption_' + dataId)}" name="item[${index}][caption]" data-field="caption"/>
                   </div>
-                  <div class="field row mr-3 me-3">
+                  <div class="field row me-3">
                     <label for="${this.formId('link_' + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:link")}</label>
                     <input type="text" class="form-control col" id="${this.formId('link_' + dataId)}" name="item[${index}][link]" data-field="link"/>
                   </div>
                   ${this._altTextFieldsHTML(index, data)}
                 </div>
-                <div class="remove float-right float-end">
+                <div class="remove float-end">
                   <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
                 </div>
               </div>
@@ -6547,8 +6547,8 @@
       altTextHTML: function(index, data) {
         const { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr } = this._altTextData(data);
         return `
-      <div class="field row mr-3 me-3">
-        <div class="col-lg-3 ps-md-2 pl-md-2">
+      <div class="field row me-3">
+        <div class="col-lg-3 ps-md-2">
           <label class="col-form-label text-nowrap pb-0 pt-1 justify-content-md-start justify-content-lg-end d-flex" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
           <div class="form-check d-flex justify-content-md-start justify-content-lg-end">
             <input class="form-check-input" type="checkbox"
@@ -7066,7 +7066,7 @@
               type="button"
               data-action="${this.identifier}#deselect"
               data-tag="${tag}"
-              class="btn-close close ms-1 ml-1"
+              class="btn-close close ms-1"
               aria-label="${this.translationsValue.remove} ${tag}"
             ></button>
           </span>

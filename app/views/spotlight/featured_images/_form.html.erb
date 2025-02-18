@@ -14,7 +14,7 @@
       <auto-complete id="<%= form_prefix(f) %>-auto-complete" for="<%= form_prefix(f) %>-auto-complete-popup" fetch-on-empty>
         <%= text_field_tag(:document_title, (document_presenter(f.object.document).heading if f.object.document), class: "form-control", data: { input_select_target: "##{form_prefix(f)}_source_exhibit", 'behavior': 'autocomplete', featured_image_typeahead: true, target_panel: "##{form_prefix(f)}-target-panel", :'id-field' => "##{form_prefix(f)}_document_global_id" }) %>
         <ul id="<%= form_prefix(f) %>-auto-complete-popup"></ul>
-        <div id="<%= form_prefix(f) %>-auto-complete-feedback" class="sr-only visually-hidden"></div>
+        <div id="<%= form_prefix(f) %>-auto-complete-feedback" class="visually-hidden"></div>
       </auto-complete>
       <div id="<%= form_prefix(f) %>-target-panel" style="display:none">
         <div class="card-header">

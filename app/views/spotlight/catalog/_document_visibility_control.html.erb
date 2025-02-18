@@ -13,7 +13,7 @@
   <div class="checkbox toggle-visibility">
     <label class="toggle-visibility" data-checkboxsubmit-target="label">
       <input type="checkbox" class="toggle-visibility" data-checkboxsubmit-target="checkbox" <%= 'checked="checked"' if document.public?(current_exhibit) %>>
-      <span data-checkboxsubmit-target="span" class="sr-only visually-hidden">
+      <span data-checkboxsubmit-target="span" class="visually-hidden">
         <%= document.private?(current_exhibit) ? t('.make_public') : t('.make_private') %>
       </span>
     </label>

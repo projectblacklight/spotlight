@@ -29,13 +29,13 @@
       <thead>
         <tr>
           <th><%= I18n.t("spotlight.dashboards.analytics.pagetitle") %></th>
-          <th class="text-right text-end"><%= I18n.t("spotlight.dashboards.analytics.pageviews") %></th>
+          <th class="text-end"><%= I18n.t("spotlight.dashboards.analytics.pageviews") %></th>
         </tr>
       </thead>
       <% page_analytics.rows.each do |p| %>
         <tr>
           <td><%= link_to p.pageTitle, p.pagePath %></td>
-          <td class="text-right text-end"><%= p.screenPageViews %></td>
+          <td class="text-end"><%= p.screenPageViews %></td>
         </tr>
       <% end %>
     </table>
@@ -47,14 +47,14 @@
       <thead>
         <tr>
           <th><%= I18n.t("spotlight.dashboards.analytics.searches.term") %></th>
-          <th class="text-right text-end"><%= I18n.t("spotlight.dashboards.analytics.searches.views") %></th>
+          <th class="text-end"><%= I18n.t("spotlight.dashboards.analytics.searches.views") %></th>
         </tr>
       </thead>
       <% search_analytics.rows.each do |p| %>
         <% if p.searchTerm.present? %>
           <tr>
             <td><%= p.searchTerm %></td>
-            <td class="text-right text-end"><%= p.eventCount %></td>
+            <td class="text-end"><%= p.eventCount %></td>
           </tr>
         <% end %>
       <% end %>

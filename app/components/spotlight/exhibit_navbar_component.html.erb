@@ -4,7 +4,7 @@
       <%= link_to(helpers.current_exhibit.title, helpers.spotlight.exhibit_path(helpers.current_exhibit), class: 'navbar-brand') %>
     <% end %>
 
-    <ul class="navbar-nav <%= helpers.resource_masthead? ? 'justify-content-md-end' : 'mr-auto me-auto' %>">
+    <ul class="navbar-nav <%= helpers.resource_masthead? ? 'justify-content-md-end' : 'me-auto' %>">
       <li class="nav-item <%= "active" if helpers.current_page?([helpers.spotlight, helpers.current_exhibit]) %>"><%= link_to t(:'spotlight.curation.nav.home'), [helpers.spotlight, helpers.current_exhibit], class: 'nav-link' %></li>
       <% helpers.current_exhibit.main_navigations.displayable.each do |navigation| %>
         <%= render partial: "shared/#{navigation.nav_type}_navbar", locals: { navigation: navigation } %>

@@ -190,7 +190,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
       within('.text-col') do
         expect(page).to have_content 'zzz'
       end
-      expect(page).to have_css('.items-col.float-right.float-end')
+      expect(page).to have_css('.items-col.float-end')
     end
   end
 

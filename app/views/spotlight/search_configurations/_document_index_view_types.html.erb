@@ -1,4 +1,4 @@
-<%= f.form_group :document_index_view_types, label: { text: t(:'.label'), class: 'pt-0 col-md-3 text-md-right text-md-end' } do %>
+<%= f.form_group :document_index_view_types, label: { text: t(:'.label'), class: 'pt-0 col-md-3 text-md-end' } do %>
   <%= f.fields_for :document_index_view_types, @blacklight_configuration.document_index_view_types_selected_hash do |vt| %>
     <% @blacklight_configuration.default_blacklight_config.view.select { |_k, v| v.if != false }.each do |key, view| %>
       <div class="row">

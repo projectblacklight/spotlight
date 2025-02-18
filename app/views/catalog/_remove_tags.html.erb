@@ -14,7 +14,7 @@
           <h5><%= t(:'spotlight.bulk_actions.remove_tags.assigned') %></h5>
         <% end %>
         <% facet.items.each do |facet_item| %>
-          <div class="badge badge-info bg-info">
+          <div class="badge bg-info">
             <%= "#{facet_item.value} (#{facet_item.hits})" %>
           </div>
         <% end %>

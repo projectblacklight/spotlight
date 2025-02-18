@@ -14,7 +14,7 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
       return `<auto-complete src="${this.autocomplete_url()}" for="${autocompleteID}-popup" fetch-on-empty>
         <input type="text" name="${autocompleteID}" placeholder="${i18n.t("blocks:browse_group_categories:autocomplete")}" data-default-typeahead>
         <ul id="${autocompleteID}-popup"></ul>
-        <div id="${autocompleteID}-popup-feedback" class="sr-only visually-hidden"></div>
+        <div id="${autocompleteID}-popup-feedback" class="visually-hidden"></div>
       </auto-complete>`
     },
     autocomplete_template: function(obj) {
@@ -49,7 +49,7 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
                   <div class="checkbox">
                     <input name="item[${index}][display]" type="hidden" value="false" />
                     <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                    <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                    <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                   </div>
                   <div class="main">
                     <div class="title card-title">${data.title}</div>
