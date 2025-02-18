@@ -154,6 +154,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
 
     within '.modal-content' do
       expect(page).to have_css('#osd-modal-container')
+      expect(page).to have_css('.openseadragon-container')
     end
   end
 

@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('clipboard'), require('sir-trevor'), require('sortablejs'), require('@hotwired/stimulus')) :
-  typeof define === 'function' && define.amd ? define(['clipboard', 'sir-trevor', 'sortablejs', '@hotwired/stimulus'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.Clipboard, global.SirTrevor, global.Sortable, global.Stimulus));
-})(this, (function (Clipboard, SirTrevor$1, Sortable, stimulus) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('openseadragon'), require('clipboard'), require('sir-trevor'), require('sortablejs'), require('@hotwired/stimulus')) :
+  typeof define === 'function' && define.amd ? define(['openseadragon', 'clipboard', 'sir-trevor', 'sortablejs', '@hotwired/stimulus'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.OpenSeadragon, global.Clipboard, global.SirTrevor, global.Sortable, global.Stimulus));
+})(this, (function (OpenSeadragon, Clipboard, SirTrevor$1, Sortable, stimulus) { 'use strict';
 
   // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
   // Includes "export default tns" at the end of the file for spotlight/user/browse_group_categories.js

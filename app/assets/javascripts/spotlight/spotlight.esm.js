@@ -1,3 +1,4 @@
+import OpenSeadragon from 'openseadragon';
 import Clipboard from 'clipboard';
 import SirTrevor$1 from 'sir-trevor';
 import Sortable from 'sortablejs';
