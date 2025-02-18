@@ -13,6 +13,7 @@ const external = [
   'jquery-serializejson',
   'jquery',
   'leaflet',
+  'openseadragon',
   'sir-trevor',
   'sortablejs'
 ]
@@ -23,6 +24,7 @@ const globals = {
   clipboard: 'Clipboard',
   jquery: 'jQuery',
   leaflet: 'L',
+  openseadragon: 'OpenSeadragon',
   'sir-trevor': 'SirTrevor',
   'sortablejs': 'Sortable'
 }
