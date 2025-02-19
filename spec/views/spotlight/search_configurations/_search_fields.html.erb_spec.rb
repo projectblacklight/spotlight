@@ -27,8 +27,7 @@ RSpec.describe 'spotlight/search_configurations/_search_fields', type: :view do
   end
 
   it 'has a checkbox to enable or disable fielded search' do
-    expect(rendered).to have_selector 'input[data-behavior="enable-feature"][data-target="#search_fields"], ' \
-                                      'input[data-behavior="enable-feature"][data-bs-target="#search_fields"]'
+    expect(rendered).to have_selector 'input[data-behavior="enable-feature"][data-target="#search_fields"]'
   end
 
   it 'has a read-only "everything" search option' do

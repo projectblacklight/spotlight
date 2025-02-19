@@ -22,8 +22,7 @@ RSpec.describe 'spotlight/roles/index', type: :view do
       assert_select "tr[data-edit-for='#{admin_role.id}']"
       assert_select 'td', /jane@example.com/
       assert_select 'td', 'Admin'
-      assert_select "input[type='submit'][data-behavior='destroy-user'][data-target='#{admin_role.id}']," \
-                    "input[type='submit'][data-behavior='destroy-user'][data-bs-target='#{admin_role.id}']"
+      assert_select "input[type='submit'][data-behavior='destroy-user'][data-target='#{admin_role.id}']"
       assert_select "input[type='hidden'][data-destroy-for='#{admin_role.id}']"
       assert_select "a[data-behavior='cancel-edit']"
       assert_select "input[type='submit'][value='Save changes']"

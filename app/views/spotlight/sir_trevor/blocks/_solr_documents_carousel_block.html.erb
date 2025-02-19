@@ -29,7 +29,7 @@
         </div>
       </div>
       <% indicators << capture do %>
-        <li data-target="#<%= html_id %>" data-bs-target="#<%= html_id %>" data-slide-to="<%= index %>" data-bs-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>"></li>
+        <li data-bs-target="#<%= html_id %>" data-bs-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>"></li>
       <% end %>
     <% end %>
     </div>
@@ -40,10 +40,10 @@
     </ol>
 
     <!-- Controls -->
-    <a class="left carousel-control-prev" href="#<%= html_id %>" data-slide="prev" data-bs-slide="prev">
+    <a class="left carousel-control-prev" href="#<%= html_id %>" data-bs-slide="prev">
       <%= blacklight_icon('arrow_back_ios') %>
     </a>
-    <a class="right carousel-control-next" href="#<%= html_id %>" data-slide="next" data-bs-slide="next">
+    <a class="right carousel-control-next" href="#<%= html_id %>" data-bs-slide="next">
       <%= blacklight_icon('arrow_forward_ios') %>
     </a>
   </div>

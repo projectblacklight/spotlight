@@ -13,7 +13,7 @@ module Spotlight
 
     def button
       button_tag t(:'spotlight.bulk_actions.label'), id: 'bulk-actions-button', class: button_classes,
-                                                     data: { toggle: 'dropdown', 'bs-toggle': 'dropdown' },
+                                                     data: { 'bs-toggle': 'dropdown' },
                                                      aria: { haspopup: true, expanded: false }
     end
   end
