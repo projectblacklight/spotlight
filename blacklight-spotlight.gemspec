@@ -52,12 +52,6 @@ these collections.)
   s.add_dependency 'roar-rails'
   s.add_dependency 'signet'
   s.add_dependency 'view_component', '>= 2.66', '< 4'
-
-  if defined?(Sprockets)
-    s.add_dependency 'clipboard-rails', '~> 1.5'
-    s.add_dependency 'leaflet-rails'
-  end
-
   s.add_development_dependency 'capybara', '~> 3.31'
   s.add_development_dependency 'engine_cart', '~> 2.0'
   s.add_development_dependency 'factory_bot', '~> 6.0'
