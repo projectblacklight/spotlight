@@ -3,6 +3,7 @@
 RSpec.describe 'spotlight/catalog/admin.html.erb', type: :view do
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
   let(:blacklight_config) { CatalogController.blacklight_config }
+  let(:search_header_component) { instance_double(Blacklight::SearchHeaderComponent, render_in: true) }
 
   before do
     allow(view).to receive(:blacklight_config).and_return(blacklight_config)
@@ -15,15 +16,20 @@ RSpec.describe 'spotlight/catalog/admin.html.erb', type: :view do
     allow(view).to receive(:monitor_exhibit_resources_path).and_return('')
     assign(:exhibit, exhibit)
     assign(:response, [])
-    stub_template '_search_header.html.erb' => 'header'
     stub_template '_zero_results.html.erb' => 'nuffin'
     stub_template '_results_pagination.html.erb' => '0'
+    allow(blacklight_config.view_config(:admin_table).search_header_component).to receive(:new).and_return(search_header_component)
     allow(view).to receive(:can?).and_return(true)
   end
 
   it 'renders the sidebar' do
     render
     expect(view.content_for(:sidebar)).to have_link 'Browse'
+  end
+
+  it 'renders the search header' do
+    expect(search_header_component).to receive(:render_in)
+    render
   end
 
   it "renders the 'add items' link if any repository sources are configured" do
