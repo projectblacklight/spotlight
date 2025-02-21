@@ -5147,7 +5147,7 @@ class Users {
     function edit_user(event) {
       event.preventDefault();
       $(this).closest('tr').hide();
-      const id = $(this).attr('data-target') || $(this).attr('data-bs-target');
+      const id = $(this).attr('data-target');
       const edit_view = $("[data-edit-for='"+id+"']", container).show();
       $.each(edit_view.find('input[type="text"], select'), function() {
         // Cache original values incase editing is canceled
@@ -5178,7 +5178,7 @@ class Users {
     }
 
     function destroy_user(event) {
-      const id = $(this).attr('data-target') || $(this).attr('data-bs-target');
+      const id = $(this).attr('data-target');
       $("[data-destroy-for='"+id+"']", container).val('1');
     }
 
@@ -6301,10 +6301,10 @@ SirTrevor.Blocks.SolrDocumentsCarousel = (function(){
       var clickHandler = function (e) {
         var href;
         var $this   = $(this);
-        var $target = $($this.attr('data-target') || $this.attr('data-bs-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
+        var $target = $($this.attr('data-bs-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
         if (!$target.hasClass('carousel')) return
         var options = $.extend({}, $target.data(), $this.data());
-        var slideIndex = $this.attr('data-slide-to') || $this.attr('data-bs-slide-to');
+        var slideIndex = $this.attr('data-bs-slide-to');
         if (slideIndex) options.interval = false;
 
         $.fn.carousel.call($target, options);
@@ -6317,8 +6317,8 @@ SirTrevor.Blocks.SolrDocumentsCarousel = (function(){
       };
 
       $(this.inner).find('.carousel')
-        .on('click.bs.carousel.data-api', '[data-slide], [data-bs-slide]', clickHandler)
-        .on('click.bs.carousel.data-api', '[data-slide-to], [data-bs-slide-to]', clickHandler);
+        .on('click.bs.carousel.data-api', '[data-bs-slide]', clickHandler)
+        .on('click.bs.carousel.data-api', '[data-bs-slide-to]', clickHandler);
     }
 
   });
@@ -6361,10 +6361,10 @@ SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
       var clickHandler = function (e) {
         var href;
         var $this   = $(this);
-        var $target = $($this.attr('data-target') || $this.attr('data-bs-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
+        var $target = $($this.attr('data-bs-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
         if (!$target.hasClass('carousel')) return
         var options = $.extend({}, $target.data(), $this.data());
-        var slideIndex = $this.attr('data-slide-to') || $this.attr('data-bs-slide-to');
+        var slideIndex =$this.attr('data-bs-slide-to');
         if (slideIndex) options.interval = false;
 
         $.fn.carousel.call($target, options);
@@ -6377,8 +6377,7 @@ SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
       };
 
       $(this.inner).find('.carousel')
-        .on('click.bs.carousel.data-api', '[data-slide], [data-bs-slide]', clickHandler)
-        .on('click.bs.carousel.data-api', '[data-slide-to], [data-bs-slide-to]', clickHandler);
+        .on('click.bs.carousel.data-api', '[data-bs-slide-to]', clickHandler);
     }
 
   });

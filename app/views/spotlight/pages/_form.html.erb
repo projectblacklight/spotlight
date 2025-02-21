@@ -19,15 +19,15 @@
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="nav-item">
-        <a href="#page-content" class="nav-link active" aria-controls="page-content" role="tab" data-toggle="tab" data-bs-toggle="tab"><%= t(:'.page_content') %></a>
+        <a href="#page-content" class="nav-link active" aria-controls="page-content" role="tab" data-bs-toggle="tab"><%= t(:'.page_content') %></a>
       </li>
 
       <li role="presentation" class="nav-item">
-        <a href="#page-options" class="nav-link" aria-controls="page-options" role="tab" data-toggle="tab" data-bs-toggle="tab"><%= t(:'.page_options') %></a>
+        <a href="#page-options" class="nav-link" aria-controls="page-options" role="tab" data-bs-toggle="tab"><%= t(:'.page_options') %></a>
       </li>
       <% if @page.respond_to? :thumbnail %>
       <li role="presentation" class="nav-item">
-        <a href="#page-thumbnail" class="nav-link" aria-controls="page-thumbnail" role="tab" data-toggle="tab" data-bs-toggle="tab"><%= t(:'.page_thumbnail') %></a>
+        <a href="#page-thumbnail" class="nav-link" aria-controls="page-thumbnail" role="tab" data-bs-toggle="tab"><%= t(:'.page_thumbnail') %></a>
       </li>
       <% end %>
     </ul>

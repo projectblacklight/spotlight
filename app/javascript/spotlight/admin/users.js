@@ -4,7 +4,7 @@ export default class {
     function edit_user(event) {
       event.preventDefault();
       $(this).closest('tr').hide();
-      const id = $(this).attr('data-target') || $(this).attr('data-bs-target');
+      const id = $(this).attr('data-target');
       const edit_view = $("[data-edit-for='"+id+"']", container).show();
       $.each(edit_view.find('input[type="text"], select'), function() {
         // Cache original values incase editing is canceled
@@ -35,7 +35,7 @@ export default class {
     }
 
     function destroy_user(event) {
-      const id = $(this).attr('data-target') || $(this).attr('data-bs-target');
+      const id = $(this).attr('data-target');
       $("[data-destroy-for='"+id+"']", container).val('1');
     }
 

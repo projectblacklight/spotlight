@@ -15,7 +15,7 @@ module Spotlight
 
     def button
       button_tag t(:'spotlight.saved_search.label'), id: 'save-this-search', class: button_classes,
-                                                     data: { toggle: 'modal', 'bs-toggle': 'modal', target: '#save-modal', 'bs-target': '#save-modal' }
+                                                     data: { 'bs-toggle': 'modal', 'bs-target': '#save-modal' }
     end
 
     def form_path
