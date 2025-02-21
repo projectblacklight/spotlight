@@ -5,7 +5,7 @@
 <%= curation_page_title %>
 
 <%= render 'admin_header' %>
-<%= render 'search_header' %>
+<%= render blacklight_config.view_config(document_index_view_type).search_header_component.new %>
 
 <%- if @response.empty? %>
   <%= render "zero_results" %>
