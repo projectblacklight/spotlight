@@ -82,24 +82,24 @@ SirTrevor.Blocks.UploadedItems = (function(){
                 <div class="checkbox">
                   <input name="item[${index}][display]" type="hidden" value="false" />
                   <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + dataId)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                  <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + dataId)}">${i18n.t("blocks:resources:panel:display")}</label>
+                  <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + dataId)}">${i18n.t("blocks:resources:panel:display")}</label>
                 </div>
                 <div class="pic">
                   <img class="img-thumbnail" src="${dataUrl}" />
                 </div>
                 <div class="main form-horizontal">
                   <div class="title card-title">${dataTitle}</div>
-                  <div class="field row mr-3 me-3">
+                  <div class="field row me-3">
                     <label for="${this.formId('caption_' + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:caption")}</label>
                     <input type="text" class="form-control col" id="${this.formId('caption_' + dataId)}" name="item[${index}][caption]" data-field="caption"/>
                   </div>
-                  <div class="field row mr-3 me-3">
+                  <div class="field row me-3">
                     <label for="${this.formId('link_' + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:link")}</label>
                     <input type="text" class="form-control col" id="${this.formId('link_' + dataId)}" name="item[${index}][link]" data-field="link"/>
                   </div>
                   ${this._altTextFieldsHTML(index, data)}
                 </div>
-                <div class="remove float-right float-end">
+                <div class="remove float-end">
                   <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
                 </div>
               </div>
@@ -149,8 +149,8 @@ SirTrevor.Blocks.UploadedItems = (function(){
     altTextHTML: function(index, data) {
       const { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr } = this._altTextData(data);
       return `
-      <div class="field row mr-3 me-3">
-        <div class="col-lg-3 ps-md-2 pl-md-2">
+      <div class="field row me-3">
+        <div class="col-lg-3 ps-md-2">
           <label class="col-form-label text-nowrap pb-0 pt-1 justify-content-md-start justify-content-lg-end d-flex" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
           <div class="form-check d-flex justify-content-md-start justify-content-lg-end">
             <input class="form-check-input" type="checkbox"

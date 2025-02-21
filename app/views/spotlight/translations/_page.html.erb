@@ -30,7 +30,7 @@
   <td class="text-center">
     <%= f.fields_for :pages, translated_page do |p| %>
       <%= p.hidden_field :id %>
-      <%= p.label :published, class: 'sr-only visually-hidden' %>
+      <%= p.label :published, class: 'visually-hidden' %>
       <%= p.check_box_without_bootstrap :published, disabled: p.object.home_page? %>
     <% end if translated_page %>
   </td>

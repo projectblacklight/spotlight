@@ -13,12 +13,12 @@
           <tr>
             <td class="<%= 'invite-pending' if user.invite_pending? %>">
               <%= user.email %>
-              <span class='badge badge-warning bg-warning pending-label'><%= t('.pending') %></span>
+              <span class='badge bg-warning pending-label'><%= t('.pending') %></span>
             </td>
             <td>
               <%= link_to(t('.destroy'), admin_user_path(user),
                     data: { method: :delete, turbo_method: :delete },
-                    class: 'btn btn-sm btn-danger float-right float-end') unless user == current_user %>
+                    class: 'btn btn-sm btn-danger float-end') unless user == current_user %>
             </td>
           </tr>
         <% end %>
@@ -53,7 +53,7 @@
   <div class="mb-4">
     <h3 class="instructions"><%= t :'.admins_curators' %></h3>
     <div id="admins_curators" class="card card-body bg-light">
-      <div class='btn-toolbar float-right align-self-end'>
+      <div class='btn-toolbar align-self-end'>
         <button class="btn btn-sm btn-primary copy-email-addresses" data-clipboard-target="#admins_curators">
             <%= t('.copy') %>
         </button>
@@ -76,12 +76,12 @@
           <tr>
             <td class="<%= 'invite-pending' if user.invite_pending? %>">
               <%= user.email %>
-              <span class='badge badge-warning bg-warning pending-label'><%= t('.pending') %></span>
+              <span class='badge bg-warning pending-label'><%= t('.pending') %></span>
             </td>
             <td class="role">
               <%= user.roles.map { |r| r.role.titleize }.uniq.join(", ") %>
             </td>
-            <td class="text-right text-end">
+            <td class="text-end">
               <% if user.superadmin? %>
                 <%= link_to(t('.destroy'), admin_user_path(user),
                       data: { method: :delete, turbo_method: :delete },

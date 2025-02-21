@@ -43,7 +43,7 @@ SirTrevor.Blocks.Browse = (function(){
                     <div class="checkbox">
                       <input name="item[${index}][display]" type="hidden" value="false" />
                       <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                      <label class="sr-only visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                      <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                     </div>
                     <div class="pic">
                       <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
@@ -52,7 +52,7 @@ SirTrevor.Blocks.Browse = (function(){
                       <div class="title card-title">${(data.full_title || data.title)}</div>
                       <div>${(data.slug || data.id)}</div>
                     </div>
-                    <div class="remove float-right float-end">
+                    <div class="remove float-end">
                       <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
                     </div>
                   </div>

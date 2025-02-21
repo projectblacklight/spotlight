@@ -24,7 +24,7 @@ RSpec.describe 'Roles Admin', js: true, type: :feature do
   end
 
   it 'persists invited users to the exhibits user list' do
-    expect(page).to have_no_css('.badge-warning pending-label', text: 'pending', visible: true)
+    expect(page).to have_no_css('.bg-warning pending-label', text: 'pending', visible: true)
 
     click_link 'Add a new user'
     fill_in 'User key', with: 'user@example.com'
@@ -32,7 +32,7 @@ RSpec.describe 'Roles Admin', js: true, type: :feature do
 
     within('tr.invite-pending') do
       expect(page).to have_css('td', text: 'user@example.com')
-      expect(page).to have_css('.badge-warning.pending-label', text: 'pending', visible: true)
+      expect(page).to have_css('.bg-warning.pending-label', text: 'pending', visible: true)
     end
   end
 end

@@ -3,7 +3,7 @@
     <%= render 'reindex_progress_panel' %>
   </div>
   <div class="add-items-nav clearfix">
-    <div class="float-right float-end">
+    <div class="float-end">
       <%= link_to t('.reindex'), reindex_all_exhibit_resources_path(current_exhibit), 
           data: { method: :post, turbo_method: :post },
           class: 'btn btn-outline-primary' %>

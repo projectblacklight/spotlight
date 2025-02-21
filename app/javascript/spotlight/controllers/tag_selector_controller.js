@@ -192,7 +192,7 @@ export default class extends Controller {
               type="button"
               data-action="${this.identifier}#deselect"
               data-tag="${tag}"
-              class="btn-close close ms-1 ml-1"
+              class="btn-close close ms-1"
               aria-label="${this.translationsValue.remove} ${tag}"
             ></button>
           </span>

@@ -27,7 +27,7 @@
         <tr data-show-for="<%= r.object.id %>" class="<%= 'invite-pending' if r.object.user.invite_pending? %>">
           <td>
             <%= r.object.user.to_s %>
-            <span class='badge badge-warning bg-warning pending-label'><%= t('.invite_pending') %></span>
+            <span class='badge bg-warning pending-label'><%= t('.invite_pending') %></span>
           </td>
           <td><%= r.object.role.humanize %></td>
           <td>

@@ -6,7 +6,7 @@
       <%= bootstrap_form_for current_exhibit, url: spotlight.import_exhibit_translations_path(current_exhibit), html: { class: 'mb-3', multipart: true } do |f| %>
         <div class="container-fluid">
           <div class="row">
-            <div class="col-12 col-md-3 text-md-right text-md-end">
+            <div class="col-12 col-md-3 text-md-end">
               <%= f.label :value, t(".import_label"), class: 'col-form-label' %>
             </div>
             <div class="col-12 col-md-9">
@@ -23,11 +23,11 @@
       <% end %>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-form-label col-12 col-md-3 text-md-right text-md-end">
+          <div class="col-form-label col-12 col-md-3 text-md-end">
             <%= content_tag :span, t(".export_label") %>
           </div>
           <div class="col-12 col-md-9">
-            <%= link_to t(:'.export_current_locale', language: t(:"locales.#{@language}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: @language), class: 'btn btn-primary mr-3 me-3', data: { turbo: false } %>
+            <%= link_to t(:'.export_current_locale', language: t(:"locales.#{@language}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: @language), class: 'btn btn-primary me-3', data: { turbo: false } %>
             <%= link_to t(:'.export_default_locale', language: t(:"locales.#{I18n.default_locale}")), spotlight.exhibit_translations_path(current_exhibit, format: "yaml", locale: I18n.default_locale), class: 'btn btn-primary', data: { turbo: false } %>
           </div>
         </div>

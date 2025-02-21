@@ -7,11 +7,11 @@
         <div class="input-group">
           <%= text_field_tag :q, params[:q], placeholder: t(:'.placeholder'), class: "form-control", id: "browse_q" %>
           <button class="btn btn-reset btn-sm" type="reset">
-            <span class="sr-only visually-hidden"><%= t(:'.reset') %></span>
+            <span class="visually-hidden"><%= t(:'.reset') %></span>
             <%= blacklight_icon('highlight_off') %>
           </button>
           <button type="submit" class="btn btn-primary search-btn" id="browse-search">
-            <span class="submit-search-text sr-only visually-hidden"><%= t(:'.submit') %></span>
+            <span class="submit-search-text visually-hidden"><%= t(:'.submit') %></span>
             <%= blacklight_icon('search', aria_hidden: true) %>
           </button>
         </div>

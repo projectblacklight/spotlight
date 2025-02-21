@@ -3,7 +3,7 @@
 <div class="content-block items-block row d-block clearfix">
   <% if solr_documents_block.documents? %>
 
-    <div class="items-col spotlight-flexbox <%= solr_documents_block.text? ? "col-md-6" : "col-md-12" %> <%= solr_documents_block.content_align == 'right' ? 'float-right float-end' : 'float-left float-start' %>">
+    <div class="items-col spotlight-flexbox <%= solr_documents_block.text? ? "col-md-6" : "col-md-12" %> <%= solr_documents_block.content_align == 'right' ? 'float-end' : 'float-start' %>">
       <% solr_documents_block.each_document do |block_options, document| %>
         <% doc_presenter = document_presenter(document) %>
         <div class="box" data-id="<%= document.id %>">

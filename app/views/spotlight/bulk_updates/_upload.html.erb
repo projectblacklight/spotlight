@@ -2,7 +2,7 @@
 
 <%= bootstrap_form_with(url: exhibit_bulk_updates_path, method: :patch, html: { multipart: true }) do |f| %>
   <div class="row">
-    <div class="col-12 col-md-3 text-md-right text-md-end">
+    <div class="col-12 col-md-3 text-md-end">
       <%= f.label :file, t('.file_label'), class: 'col-form-label' %>
     </div>
     <div class="col-12 col-md-9">

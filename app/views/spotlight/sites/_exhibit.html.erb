@@ -11,8 +11,8 @@
      </div>
 
   </td>
-  <td class="text-right text-end"><%= exhibit.published? ? t(:'.published') : t(:'.unpublished') %></td>
-  <td class="text-right text-end"><%= exhibit.requested_by %></td>
-  <td class="text-right text-end"><%= l exhibit.created_at, format: :long %></td>
-  <td class="text-right text-end"><%= l exhibit.updated_at, format: :long %></td>
+  <td class="text-end"><%= exhibit.published? ? t(:'.published') : t(:'.unpublished') %></td>
+  <td class="text-end"><%= exhibit.requested_by %></td>
+  <td class="text-end"><%= l exhibit.created_at, format: :long %></td>
+  <td class="text-end"><%= l exhibit.updated_at, format: :long %></td>
 </tr>

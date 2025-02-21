@@ -35,7 +35,7 @@ import { fetchAutocompleteJSON } from 'spotlight/admin/search_typeahead';
           <auto-complete src="${this.autocomplete_url()}" for="${autocompleteID}-popup" fetch-on-empty>
             <input type="text" name="${autocompleteID}" placeholder="${i18n.t("blocks:autocompleteable:placeholder")}" data-default-typeahead>
             <ul id="${autocompleteID}-popup"></ul>
-            <div id="${autocompleteID}-popup-feedback" class="sr-only visually-hidden"></div>
+            <div id="${autocompleteID}-popup-feedback" class="visually-hidden"></div>
           </auto-complete>
         ` };
       }
