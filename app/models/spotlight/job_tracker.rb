@@ -9,7 +9,7 @@ module Spotlight
 
     belongs_to :on, polymorphic: true
     belongs_to :resource, polymorphic: true
-    belongs_to :user, optional: true, class_name: Spotlight::Engine.config.user_class # rubocop:disable Rails/ReflectionClassName
+    belongs_to :user, optional: true, class_name: Spotlight::Engine.config.user_class
     has_many :events, as: :resource, dependent: :delete_all
     has_many :job_trackers, as: :on, dependent: Rails.version > '6.1' ? :destroy_async : :destroy
     has_many :subevents, through: :job_trackers, source: :events
