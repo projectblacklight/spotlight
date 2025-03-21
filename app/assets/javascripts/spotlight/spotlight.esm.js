@@ -3556,10 +3556,11 @@ class Iiif {
     it[Symbol.iterator] = function*() {
       for (let canvas of context.canvases()) {
         for (let image of canvas.images) {
-          var iiifService = image.resource.service['@id'];
+          var iiifService = image.resource?.service || image.resource?.default?.service;
+          var iiifServiceId = iiifService['@id'];
           yield {
-            'thumb': iiifService + '/full/!100,100/0/default.jpg',
-            'tilesource': iiifService + '/info.json',
+            'thumb': iiifServiceId + '/full/!100,100/0/default.jpg',
+            'tilesource': iiifServiceId + '/info.json',
             'manifest': context.manifestUrl,
             'canvasId': canvas['@id'],
             'imageId': image['@id']
