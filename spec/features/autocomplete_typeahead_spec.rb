@@ -29,7 +29,7 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
         # TODO: this data is fetched by a javascript widget and thus isn't captured by webmock see #2817
         expect(featured_image.iiif_canvas_id).to eq 'https://purl.stanford.edu/gk446cj2442/iiif/canvas/cocina-fileSet-gk446cj2442-gk446cj2442_1'
         expect(featured_image.iiif_image_id).to eq 'https://purl.stanford.edu/gk446cj2442/iiif/annotation/cocina-fileSet-gk446cj2442-gk446cj2442_1'
-        expect(featured_image.iiif_tilesource).to eq 'https://stacks.stanford.edu/image/iiif/gk446cj2442/gk446cj2442_05_0001/info.json'
+        expect(featured_image.iiif_tilesource).to eq 'https://stacks.stanford.edu/image/iiif/gk446cj2442%2Fgk446cj2442_05_0001/info.json'
       end
 
       it 'instantiates the multi-image selector when an multi-image item is chosen in the typeahead (and again on edit)' do
