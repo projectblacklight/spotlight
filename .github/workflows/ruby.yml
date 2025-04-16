@@ -28,6 +28,11 @@ jobs:
             blacklight_version: "~> 8.0"
             additional_engine_cart_rails_options: "-a propshaft -j esbuild"
             additional_name: "Rails 7.2 / esbuild"
+          - rails_version: "~> 8.0"
+            ruby: "3.4"
+            blacklight_version: "9.0.0.beta1"
+            additional_engine_cart_rails_options: "-a propshaft -j importmap"
+            additional_name: "Blacklight 9 beta"
     env:
       RAILS_VERSION: ${{ matrix.rails_version }}
       BLACKLIGHT_VERSION: ${{ matrix.blacklight_version }}
