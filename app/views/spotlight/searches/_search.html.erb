@@ -1,5 +1,5 @@
 <% search = f.object %>
-<%= render layout: 'spotlight/shared/dd3_item', locals: { id: search.id.to_s, field: f, dd3_content_classes: "search" , enabled_method: :published, label_method: :title, label: search.title } do |_, section| %>
+<%= render layout: 'spotlight/shared/dd3_item', locals: { id: search.id.to_s, field: f, index: f.index, dd3_content_classes: "search" , enabled_method: :published, label_method: :title, label: search.title } do |_, section| %>
   <% case section when nil %>
   <div class="d-flex flex-grow-1">
     <div>

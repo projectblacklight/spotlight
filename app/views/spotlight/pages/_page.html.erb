@@ -1,5 +1,5 @@
 <% page = f.object %>
-<%= render layout: 'spotlight/shared/dd3_item', locals: { id: page.id.to_s, field: f, label: page.title, label_method: :title, enabled_method: :published } do |_, section| %>
+<%= render layout: 'spotlight/shared/dd3_item', locals: { id: page.id.to_s, index: f.index, field: f, label: page.title, label_method: :title, enabled_method: :published } do |_, section| %>
   <% case section when :additional_options %>
     <%= render Spotlight::EditViewLinksComponent.new(page:, delete_link: true) %>
     <%- if page.feature_page? -%>

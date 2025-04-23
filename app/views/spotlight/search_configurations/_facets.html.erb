@@ -6,7 +6,7 @@
         <% metadata = @field_metadata.field(key) %>
         <% next unless metadata[:document_count] > 0 || config.custom_field %>
         <%= idxf.fields_for key, config do |facet| %>
-          <%= render layout: 'spotlight/shared/dd3_item', locals: { id: key, field: facet, dd3_content_classes: "facet-config-#{key.parameterize} page" , enabled_method: :show, label_method: :label, label: facet_field_label(key) } do |_, section| %>
+          <%= render layout: 'spotlight/shared/dd3_item', locals: { id: key, field: facet, index: facet.index, dd3_content_classes: "facet-config-#{key.parameterize} page" , enabled_method: :show, label_method: :label, label: facet_field_label(key) } do |_, section| %>
             <% case section when :additional_content %>
               <div class="mt-2">
                 <%= facet.form_group :terms, label_col: 'col-md-2 offset-md-1', label: { text: t(:'spotlight.search_configurations.facets.sort_by.label') } do %>
