@@ -35,7 +35,7 @@ module Spotlight
     end
 
     def create
-      @search.assign_attributes(search_params.except((:title unless @search.new_record?)))
+      @search.assign_attributes(search_params.except(:title unless @search.new_record?))
       @search.query_params = query_params
 
       if @search.save
