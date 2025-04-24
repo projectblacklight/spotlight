@@ -1,5 +1,5 @@
 <% group = f.object %>
-<%= render layout: 'spotlight/shared/dd3_item', locals: { id: group.id.to_s, field: f, dd3_content_classes: "group" , enabled_method: :published, label_method: :title, label: group.title } do |_, section| %>
+<%= render layout: 'spotlight/shared/dd3_item', locals: { id: group.id.to_s, index: f.index, field: f, dd3_content_classes: "group" , enabled_method: :published, label_method: :title, label: group.title } do |_, section| %>
   <% case section when nil %>
   <div class="d-flex flex-grow-1">
     <div>

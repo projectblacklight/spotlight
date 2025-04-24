@@ -1,6 +1,6 @@
 <% tag = f.object %>
 
-<%= render layout: 'spotlight/shared/dd3_item', locals: { id: tag.id.to_s, field: f, dd3_content_classes: "tag" , enabled_method: :present?, label_method: :name, label: tag.name } do |_, section| %>
+<%= render layout: 'spotlight/shared/dd3_item', locals: { id: tag.id.to_s, field: f, index: f.index, dd3_content_classes: "tag" , enabled_method: :present?, label_method: :name, label: tag.name } do |_, section| %>
   <% case section when nil %>
   <div class="d-flex flex-grow-1">
     <div class="flex-grow-1 mx-2 main">
