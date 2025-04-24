@@ -73,7 +73,7 @@ module Spotlight
     end
 
     def attach_search_breadcrumb
-      add_breadcrumb(@search.full_title, (@group.present? ? exhibit_browse_group_path(@exhibit, @group, @search) : exhibit_browse_path(@exhibit, @search)))
+      add_breadcrumb(@search.full_title, @group.present? ? exhibit_browse_group_path(@exhibit, @group, @search) : exhibit_browse_path(@exhibit, @search))
     end
 
     def _prefixes
@@ -89,7 +89,7 @@ module Spotlight
     end
 
     def resource_masthead?
-      @search&.masthead && @search.masthead.display?
+      @search&.masthead&.display?
     end
 
     # This is overidden for the browse controller context from where it is defined in a helper

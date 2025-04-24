@@ -20,7 +20,8 @@ module SirTrevorRails
       private
 
       def item_values
-        Array((item.values if item.present?))
+        values = item.values if item.present?
+        Array(values)
       end
     end
   end
