@@ -43,6 +43,9 @@
                 </svg>
               <% end %>
             </span>
+            <% unless page.published? %>
+              <div class="badge bg-info unpublished align-baseline p-1"><%= t('.unpublished') %></div>
+            <% end %>
           </h4>
           <%= render Spotlight::EditViewLinksComponent.new(page:, classes:'page-links pt-0') %>
         </td>
