@@ -1,33 +1,38 @@
 <%= curation_page_title t(:"spotlight.pages.index.#{page_collection_name}.header") %>
-<%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, page_collection_name.to_sym]), layout: :horizontal, control_col: 'col-sm-10', html: {:'data-form-observer' => true} do |f| %>
+<%# These fields are translatable and should only be edited here in the default locale %>
+<% if default_language? %>
+  <%= bootstrap_form_for @exhibit, url: polymorphic_path([:update_all, @exhibit, page_collection_name.to_sym]), layout: :horizontal, control_col: 'col-sm-10', html: {:'data-form-observer' => true} do |f| %>
 
-    <%= render partial: 'header', locals: {f: f} %>
-    <h2 class="mt-4"><%= t :'.pages_header' %></h2>
-    <p class="instructions"><%= t :'.instructions' %></p>
-    <div class="panel-group dd <%= page_collection_name %>_admin" id="nested-pages" data-behavior="nestable" <%= nestable_data_attributes(page_collection_name).html_safe %> >
-      <ol class="dd-list">
-        <%= f.fields_for page_collection_name do |p| %>
-          <%- if p.object.about_page? || p.object.top_level_page? -%>
-            <%= render partial: 'page', locals: {f: p, parent_form: f} %>
-          <%- end -%>
-        <% end %>
-      </ol>
-    </div>
-    <div class="form-actions float-end">
-      <div class="primary-actions">
-        <%= button_tag action_label(page_collection_name, :update_all), class: "btn btn-primary", disabled: disable_save_pages_button? %>
+      <%= render partial: 'header', locals: {f: f} %>
+      <h2 class="mt-4"><%= t :'.pages_header' %></h2>
+      <p class="instructions"><%= t :'.instructions' %></p>
+      <div class="panel-group dd <%= page_collection_name %>_admin" id="nested-pages" data-behavior="nestable" <%= nestable_data_attributes(page_collection_name).html_safe %> >
+        <ol class="dd-list">
+          <%= f.fields_for page_collection_name do |p| %>
+            <%- if p.object.about_page? || p.object.top_level_page? -%>
+              <%= render partial: 'page', locals: {f: p, parent_form: f} %>
+            <%- end -%>
+          <% end %>
+        </ol>
       </div>
-    </div>
-<%- end -%>
-<div>
-  <%= form_for @page, url: spotlight.polymorphic_path([@exhibit, page_collection_name.to_sym]), html: {class: "expanded-add-button"} do |f|%>
-    <a href='#add-new' class="btn btn-primary" data-turbo="false" data-turbolinks="false" data-expanded-add-button="true" data-field-target="[data-title-field]">
-      <%= t(:'.new_page') %> <%= blacklight_icon('chevron_right') %>
-      <span data-title-field="true" class="input-field">
-        <%= f.text_field(:title) %>
-        <%= f.submit t(:'.save'), data: {behavior: "save"} %>
-        <%= f.submit t(:'.cancel'), data: {behavior: "cancel"} %>
-      </span>
-    </a>
+      <div class="form-actions float-end">
+        <div class="primary-actions">
+          <%= button_tag action_label(page_collection_name, :update_all), class: "btn btn-primary", disabled: disable_save_pages_button? %>
+        </div>
+      </div>
   <%- end -%>
-</div>
+  <div>
+    <%= form_for @page, url: spotlight.polymorphic_path([@exhibit, page_collection_name.to_sym]), html: {class: "expanded-add-button"} do |f|%>
+      <a href='#add-new' class="btn btn-primary" data-turbo="false" data-turbolinks="false" data-expanded-add-button="true" data-field-target="[data-title-field]">
+        <%= t(:'.new_page') %> <%= blacklight_icon('chevron_right') %>
+        <span data-title-field="true" class="input-field">
+          <%= f.text_field(:title) %>
+          <%= f.submit t(:'.save'), data: {behavior: "save"} %>
+          <%= f.submit t(:'.cancel'), data: {behavior: "cancel"} %>
+        </span>
+      </a>
+    <%- end -%>
+  </div>
+<% else %>
+  <%= render Spotlight::UneditableNonDefaultLanguageComponent.new(current_exhibit:, current_language: I18n.locale)%>
+<% end %>

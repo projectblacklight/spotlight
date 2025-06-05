@@ -4,14 +4,14 @@
 
 <%= curation_page_title %>
 
-<% if @searches.empty? %>
+<% if @searches.empty? && default_language? %>
   <%= t :'.no_saved_searches' %>
   <% unless @exhibit.searchable? %>
     <p class="instructions alert-warning">
       <%= t(:'.not_searchable_html', href: link_to(t(:'spotlight.configuration.sidebar.search_configuration'), spotlight.edit_exhibit_search_configuration_path(@exhibit))) %>
     </p>
   <% end %>
-<% else %>
+<% elsif default_language? %>
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="nav-item">
@@ -74,4 +74,6 @@
       </div>
     </div>
   </div>
+<% else %>
+  <%= render Spotlight::UneditableNonDefaultLanguageComponent.new(current_exhibit:, current_language: I18n.locale) %>
 <% end %>
