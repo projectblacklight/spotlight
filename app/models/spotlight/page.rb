@@ -52,6 +52,13 @@ module Spotlight
       translated_page_for(I18n.locale)&.title || super
     end
 
+    # Returns the title of the page in the default locale regardless of the current locale.
+    def default_locale_title
+      return self[:title] if I18n.locale == I18n.default_locale || default_locale_page.blank?
+
+      default_locale_page[:title]
+    end
+
     def content_changed!
       @content = nil
     end
