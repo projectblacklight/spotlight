@@ -22,6 +22,7 @@ RSpec.describe 'spotlight/about_pages/index.html.erb', type: :view do
     ]
   end
   let(:exhibit) { stub_model(Spotlight::Exhibit) }
+  let(:default_language) { true }
 
   before do
     allow(view).to receive(:disable_save_pages_button?).and_return(false)
@@ -30,6 +31,7 @@ RSpec.describe 'spotlight/about_pages/index.html.erb', type: :view do
     allow(view).to receive(:exhibit_contacts_path).and_return('/exhibit/1/contacts')
     allow(view).to receive(:exhibit_alt_text_path).and_return('/exhibit/1/alt-text')
     allow(view).to receive(:nestable_data_attributes).and_return('data-behavior="nestable"')
+    allow(view).to receive(:default_language?).and_return(default_language)
     allow(exhibit).to receive_messages(contacts:)
     assign(:page, Spotlight::AboutPage.new)
     assign(:exhibit, exhibit)
@@ -65,6 +67,22 @@ RSpec.describe 'spotlight/about_pages/index.html.erb', type: :view do
       render
       expect(rendered).to have_no_selector 'button[disabled]', text: 'Save changes'
       expect(rendered).to have_selector 'button', text: 'Save changes'
+    end
+  end
+
+  describe 'when a locale other than the default is set' do
+    let(:default_language) { false }
+
+    before do
+      assign(:pages, pages)
+      allow(exhibit).to receive(:about_pages).and_return pages
+      render
+    end
+
+    it 'removes the form and displays a translations message' do
+      expect(rendered).to have_text 'Please use the translations editor'
+      expect(rendered).to have_no_selector '.card-title', text: 'Title1'
+      expect(rendered).to have_no_selector '.card-title', text: 'Title2'
     end
   end
 end

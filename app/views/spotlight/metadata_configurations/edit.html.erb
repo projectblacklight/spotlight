@@ -3,59 +3,59 @@
 <% end %>
 
 <%= configuration_page_title %>
-<%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_metadata_configuration_path(@exhibit), layout: :horizontal, label_col: 'col-md-3 col-sm-3', control_col: 'col-md-5 col-sm-5' do |f| %>
-    <h2><%= t(:'.order_header') %></h2>
+<%# These fields are translatable and should only be edited here in the default locale %>
+<% if default_language? %>
+  <%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_metadata_configuration_path(@exhibit), layout: :horizontal, label_col: 'col-md-3 col-sm-3', control_col: 'col-md-5 col-sm-5' do |f| %>
+      <h2><%= t(:'.order_header') %></h2>
 
-    <p class="instructions"><%= t :'.instructions' %></p>
+      <p class="instructions"><%= t :'.instructions' %></p>
 
-    <table id="nested-fields" class="metadata-configuration table table-striped dd-table">
-      <thead>
-        <tr>
-          <th class="w-50"><%= t :'.field.label' %></th>
-          <th class="text-center">
-            <div>
-              <%= t :'.view.show' %>
-            </div>
-            <div class="text-center">
-               <%= label_tag 'item_details', class: 'select-label'  do %>
-                  <%= select_deselect_action(t :'.view.select_id') %>
-                  <%= t(:'.select_all') %>
-                <% end %>
-             </div>
-          </th>
-          <% available_view_fields.keys.each do |type| %>
+      <table id="nested-fields" class="metadata-configuration table table-striped dd-table">
+        <thead>
+          <tr>
+            <th class="w-50"><%= t :'.field.label' %></th>
             <th class="text-center">
-              <div> 
-                <%= t :".view.#{type}", default: t("blacklight.search.view.#{type}", default: type.to_s.humanize.titleize) %>
+              <div>
+                <%= t :'.view.show' %>
               </div>
               <div class="text-center">
-                <%= label_tag t(:'.deselect_all') + type.to_s, class: 'select-label'  do %>
-                  <%= select_deselect_action(t(:'.deselect_all') + type.to_s) %>
-                  <%= t(:'.select_all') %>
-                <% end %>
+                <%= label_tag 'item_details', class: 'select-label'  do %>
+                    <%= select_deselect_action(t :'.view.select_id') %>
+                    <%= t(:'.select_all') %>
+                  <% end %>
               </div>
             </th>
+            <% available_view_fields.keys.each do |type| %>
+              <th class="text-center">
+                <div> 
+                  <%= t :".view.#{type}", default: t("blacklight.search.view.#{type}", default: type.to_s.humanize.titleize) %>
+                </div>
+                <div class="text-center">
+                  <%= label_tag t(:'.deselect_all') + type.to_s, class: 'select-label'  do %>
+                    <%= select_deselect_action(t(:'.deselect_all') + type.to_s) %>
+                    <%= t(:'.select_all') %>
+                  <% end %>
+                </div>
+              </th>
+            <% end %>
+            <th class="text-center"><%= t :'.type_label' %></th>
+          </tr>
+        </thead>
+        <tbody class="metadata_fields dd dd-list" data-behavior="nestable" data-max-depth="1" data-list-node-name="tbody" data-item-node-name="tr" data-expand-btn-HTML=" " data-collapse-btn-HTML=" ">
+          <%= f.fields_for :index_fields do |idxf| %>
+            <% @blacklight_configuration.blacklight_config.index_fields.select { |k, v| blacklight_configuration_context.evaluate_if_unless_configuration(v.original) }.each do |key, config| %>
+              <%= render partial: 'metadata_field', locals: { key: key, config: config, f: idxf } %>
+            <% end %>
           <% end %>
-          <th class="text-center"><%= t :'.type_label' %></th>
-        </tr>
-      </thead>
-      <tbody class="metadata_fields dd dd-list" data-behavior="nestable" data-max-depth="1" data-list-node-name="tbody" data-item-node-name="tr" data-expand-btn-HTML=" " data-collapse-btn-HTML=" ">
-        <%= f.fields_for :index_fields do |idxf| %>
-          <% @blacklight_configuration.blacklight_config.index_fields.select { |k, v| blacklight_configuration_context.evaluate_if_unless_configuration(v.original) }.each do |key, config| %>
-            <%= render partial: 'metadata_field', locals: { key: key, config: config, f: idxf } %>
-          <% end %>
-        <% end %>
-     </tbody>
-  </table>
+      </tbody>
+    </table>
 
-  <div class="form-actions">
-    <div class="primary-actions">
-      <%= f.submit nil, class: 'btn btn-primary' %>
+    <div class="form-actions">
+      <div class="primary-actions">
+        <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
     </div>
-  </div>
-<% end %>
-
-
+  <% end %>
     <h2 class="mt-4"><%= t(:'.exhibit_specific.header') %></h2>
     <p class="instructions"><%= t(:'.exhibit_specific.instructions') %></p>
 
@@ -80,4 +80,7 @@
     </table>
 
 
-<%= exhibit_create_link Spotlight::CustomField.new, class: 'btn btn-primary' %>
+  <%= exhibit_create_link Spotlight::CustomField.new, class: 'btn btn-primary' %>
+<% else %>
+  <%= render Spotlight::UneditableNonDefaultLanguageComponent.new(current_exhibit:, current_language: I18n.locale) %>
+<% end %>

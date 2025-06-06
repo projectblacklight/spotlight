@@ -3,45 +3,51 @@
 <% end %>
 
 <%= configuration_page_title %>
-<%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_search_configuration_path(@exhibit), layout: :horizontal, label_col: 'col-md-3 col-sm-3', control_col: 'col-md-5 col-sm-5' do |f| %>
 
-  <div role="tabpanel">
-    <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="nav-item">
-        <a href="#options" aria-controls="options" role="tab" data-bs-toggle="tab" class="nav-link active"><%= t(:'.tab.options') %></a>
-      </li>
-      <li role="presentation" class="nav-item">
-        <a href="#facets" aria-controls="facets" role="tab" data-bs-toggle="tab" class="nav-link"><%= t(:'.tab.facets') %></a>
-      </li>
-      <li role="presentation" class="nav-item">
-        <a href="#results" aria-controls="results" role="tab" data-bs-toggle="tab" class="nav-link"><%= t(:'.tab.results') %></a>
-      </li>
-    </ul>
-    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="options">
-        <%= render 'search_fields', f: f %>
+<%# These fields are translatable and should only be edited here in the default locale %>
+<% if default_language? %>
+  <%= bootstrap_form_for @blacklight_configuration, url: spotlight.exhibit_search_configuration_path(@exhibit), layout: :horizontal, label_col: 'col-md-3 col-sm-3', control_col: 'col-md-5 col-sm-5' do |f| %>
+
+    <div role="tabpanel">
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="nav-item">
+          <a href="#options" aria-controls="options" role="tab" data-bs-toggle="tab" class="nav-link active"><%= t(:'.tab.options') %></a>
+        </li>
+        <li role="presentation" class="nav-item">
+          <a href="#facets" aria-controls="facets" role="tab" data-bs-toggle="tab" class="nav-link"><%= t(:'.tab.facets') %></a>
+        </li>
+        <li role="presentation" class="nav-item">
+          <a href="#results" aria-controls="results" role="tab" data-bs-toggle="tab" class="nav-link"><%= t(:'.tab.results') %></a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="options">
+          <%= render 'search_fields', f: f %>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="facets">
+          <%= render 'facets', f: f %>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="results">
+          <%= field_set_tag do %>
+            <%= render 'document_index_view_types', f: f %>
+            <%= render 'default_per_page', f: f %>
+          <% end %>
+
+          <%= render 'sort', f: f %>
+        </div>
+
       </div>
-
-      <div role="tabpanel" class="tab-pane" id="facets">
-        <%= render 'facets', f: f %>
-      </div>
-
-      <div role="tabpanel" class="tab-pane" id="results">
-        <%= field_set_tag do %>
-          <%= render 'document_index_view_types', f: f %>
-          <%= render 'default_per_page', f: f %>
-        <% end %>
-
-        <%= render 'sort', f: f %>
-      </div>
-
     </div>
-  </div>
 
-  <div class="form-actions">
-    <div class="primary-actions">
-      <%= f.submit nil, class: 'btn btn-primary' %>
+    <div class="form-actions">
+      <div class="primary-actions">
+        <%= f.submit nil, class: 'btn btn-primary' %>
+      </div>
     </div>
-  </div>
 
+  <% end %>
+<% else %>
+  <%= render Spotlight::UneditableNonDefaultLanguageComponent.new(current_exhibit:, current_language: I18n.locale)%>
 <% end %>
