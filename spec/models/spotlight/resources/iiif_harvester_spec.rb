@@ -7,10 +7,17 @@ RSpec.describe Spotlight::Resources::IiifHarvester do
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
+  let(:faraday_double) { instance_double(Faraday::Connection) }
+
+  before do
+    allow(Spotlight::Resources::IiifService).to receive(:http_client).and_return(faraday_double)
+  end
+
   describe 'Validation' do
     context 'when given an invalid URL' do
       before do
-        stub_request(:head, 'http://example.com').to_return(status: 200, headers: { 'Content-Type' => 'text/html' })
+        head_response = instance_double(Faraday::Response, status: 200, headers: { 'content-type' => 'text/html' }, success?: true)
+        allow(faraday_double).to receive(:head).with('http://example.com').and_return(head_response)
       end
 
       let(:url) { 'http://example.com' }
@@ -24,8 +31,11 @@ RSpec.describe Spotlight::Resources::IiifHarvester do
 
     context 'when not responding to a HEAD request' do
       before do
-        stub_request(:head, 'http://example.com').to_return(status: 405, headers: { 'Content-Type' => 'text/html' })
-        stub_request(:get, 'http://example.com').to_return(status: 200, headers: { 'Content-Type' => ' application/ld+json' })
+        head_response = instance_double(Faraday::Response, status: 405, headers: { 'content-type' => 'text/html' }, success?: false)
+        allow(faraday_double).to receive(:head).with('http://example.com').and_return(head_response)
+
+        get_response = instance_double(Faraday::Response, status: 200, headers: { 'content-type' => 'application/ld+json' }, success?: true)
+        allow(faraday_double).to receive(:get).with('http://example.com').and_return(get_response)
       end
 
       let(:url) { 'http://example.com' }
