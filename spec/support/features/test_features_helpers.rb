@@ -14,7 +14,9 @@ module Spotlight
     # just like #fill_in_typeahead_field, but wait for the
     # form fields/thumbnail preview to show up on the page too
     def fill_in_solr_document_block_typeahead_field(opts)
+      wait_for_sir_trevor
       fill_in_typeahead_field(opts)
+      expect(page).to have_css('input[value="' + opts[:with] + '"]', visible: false)
       expect(page).to have_css('li[data-resource-id="' + opts[:with] + '"] .img-thumbnail[src^="http"]')
     end
 
@@ -37,17 +39,13 @@ module Spotlight
 
     def wait_for_sir_trevor
       expect(page).to have_selector('.st-blocks.st-ready')
-      sleep 1
     end
 
     def save_page_changes
-      wait_for_sir_trevor
       click_button('Save changes')
-      # Load bearing sleep. Remove or reduce at your own risk. Revisit if Sir Trevor is removed.
-      sleep 3 if ENV['CI']
       # verify that the page was created.
+      expect(page).to have_selector('.alert-info', text: 'was successfully updated')
       expect(page).to have_no_selector('.alert-danger')
-      expect(page).to have_selector('.alert-info', text: 'page was successfully updated')
     end
 
     RSpec::Matchers.define :have_breadcrumbs do |*expected|
