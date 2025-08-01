@@ -215,6 +215,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
 
     fill_in 'Alternative text', with: 'custom alt text'
     check 'Decorative'
+    expect(page).to have_css 'textarea[disabled]'
     save_page_changes
     click_on 'Edit'
 
@@ -222,6 +223,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     wait_for_sir_trevor
     expect(page).to have_text '[World map]'
     uncheck 'Decorative'
+    expect(page).to have_no_css 'textarea[disabled]'
 
     expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
   end
