@@ -104,7 +104,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     expect(page).to have_content '[World map]'
     expect(page).to have_no_content "L'AMERIQUE"
 
-    visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
+    click_on 'Edit'
     wait_for_sir_trevor
     # display the title as the primary caption
     within('.primary-caption') do
