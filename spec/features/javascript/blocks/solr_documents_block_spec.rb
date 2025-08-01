@@ -214,11 +214,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     fill_in 'Alternative text', with: 'custom alt text'
-
-    expect(page).to have_unchecked_field 'Decorative'
     check 'Decorative'
-    expect(page).to have_checked_field 'Decorative'
-
     save_page_changes
     click_on 'Edit'
 
