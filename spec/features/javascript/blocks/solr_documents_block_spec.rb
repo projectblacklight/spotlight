@@ -222,6 +222,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     click_on 'Edit'
     wait_for_sir_trevor
 
+    expect(page).to have_text '[World map]' # additional wait
     expect(page).to have_checked_field 'Decorative'
     uncheck 'Decorative'
     expect(page).to have_unchecked_field 'Decorative'
