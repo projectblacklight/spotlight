@@ -96,6 +96,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     within('.primary-caption') do
       check('Primary caption')
       select('Title', from: 'primary-caption-field')
+      expect(page).to have_checked_field('Primary caption')
     end
 
     save_page_changes
@@ -109,6 +110,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     # display the title as the primary caption
     within('.primary-caption') do
       uncheck('Primary caption')
+      expect(page).to have_unchecked_field('Primary caption')
     end
 
     save_page_changes
