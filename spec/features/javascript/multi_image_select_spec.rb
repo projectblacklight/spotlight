@@ -30,12 +30,11 @@ RSpec.describe 'Multi image selector', js: true, max_wait_time: 5, type: :featur
     click_link('Edit')
     wait_for_sir_trevor
 
-    within('.card') do
-      expect(page).to have_content(/Image \d of \d/)
-      find('a', text: 'Change').click
-    end
+    expect(page).to have_content(/Image \d of \d/)
+    click_on 'Change'
 
-    expect(page).to have_css('.thumbs-list', visible: true)
+    # Wait for the animation to finish
+    expect(page).to have_css('.thumbs-list[style=""]', visible: true)
     within('.thumbs-list ul') do
       all('li')[1].click
     end
