@@ -93,10 +93,8 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     # display the title as the primary caption
-    # expect(page).to have_unchecked_field 'Primary caption'
     check('Primary caption')
     select('Title', from: 'primary-caption-field')
-    # expect(page).to have_checked_field 'Primary caption'
 
     save_page_changes
 
@@ -112,9 +110,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     expect(page).to have_content "L'AMERIQUE"
 
     # display the title as the primary caption
-    # expect(page).to have_checked_field 'Primary caption'
     uncheck('Primary caption')
-    # expect(page).to have_unchecked_field 'Primary caption'
 
     save_page_changes
 
@@ -229,9 +225,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     # Wait for the item to be rendered
     wait_for_sir_trevor
     expect(page).to have_text '[World map]'
-    # expect(page).to have_checked_field 'Decorative'
     uncheck 'Decorative'
-    # expect(page).to have_unchecked_field 'Decorative'
 
     expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
   end
