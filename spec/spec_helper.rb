@@ -33,7 +33,7 @@ Capybara.javascript_driver = :selenium_chrome_headless
 
 allowed_sites = ['chromedriver.storage.googleapis.com']
 
-WebMock.disable_net_connect!(net_http_connect_on_start: true, allow_localhost: true, allow: allowed_sites)
+WebMock.disable_net_connect!(allow_localhost: true, allow: allowed_sites)
 
 if ENV['COVERAGE'] || ENV['CI']
   require 'simplecov'
