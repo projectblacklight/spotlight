@@ -14,6 +14,7 @@ module Spotlight
     # just like #fill_in_typeahead_field, but wait for the
     # form fields/thumbnail preview to show up on the page too
     def fill_in_solr_document_block_typeahead_field(opts)
+      wait_for_sir_trevor
       fill_in_typeahead_field(opts)
       expect(page).to have_css('input[value="' + opts[:with] + '"]', visible: false)
       expect(page).to have_css('li[data-resource-id="' + opts[:with] + '"] .img-thumbnail[src^="http"]')
@@ -41,7 +42,6 @@ module Spotlight
     end
 
     def save_page_changes
-      wait_for_sir_trevor
       click_button('Save changes')
       # verify that the page was created.
       expect(page).to have_selector('.alert-info', text: 'page was successfully updated')
