@@ -29,6 +29,7 @@ RSpec.describe 'Multi image selector', js: true, max_wait_time: 5, type: :featur
     expect(page).to have_no_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0002/full/!400,400/0/default.jpg']")
 
     click_link('Edit')
+    wait_for_sir_trevor
 
     within('.card') do
       expect(page).to have_content(/Image \d of \d/)
