@@ -53,10 +53,7 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
         expect(page).to have_css('input[value="https://purl.stanford.edu/xd327cm9378/iiif/canvas/cocina-fileSet-xd327cm9378-xd327cm9378_2"]', visible: false)
         expect(page).to have_css('.leaflet-container', visible: true)
 
-        click_button 'Save changes'
-        # Wait for the page reload
-        expect(page).to have_no_link 'Close'
-        expect(page).to have_content('The exhibit was successfully updated.')
+        save_page_changes
 
         expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/)
       end

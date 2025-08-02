@@ -44,7 +44,8 @@ module Spotlight
     def save_page_changes
       click_button('Save changes')
       # verify that the page was created.
-      expect(page).to have_selector('.alert-info', text: 'page was successfully updated')
+      sleep 1
+      expect(page).to have_selector('.alert-info', text: 'was successfully updated')
       expect(page).to have_no_selector('.alert-danger')
     end
 
