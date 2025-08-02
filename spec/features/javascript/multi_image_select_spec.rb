@@ -23,24 +23,25 @@ RSpec.describe 'Multi image selector', js: true, max_wait_time: 5, type: :featur
 
     save_page_changes
 
-    visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
     expect(page).to have_css("[data-id='xd327cm9378']")
     expect(page).to have_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0001/full/!400,400/0/default.jpg']")
     expect(page).to have_no_css("img[src='https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0002/full/!400,400/0/default.jpg']")
 
     click_link('Edit')
+    wait_for_sir_trevor
 
-    within('.card') do
-      expect(page).to have_content(/Image \d of \d/)
-      find('a', text: 'Change').click
-    end
+    expect(page).to have_content(/Image \d of \d/)
+    click_link 'Change'
 
-    expect(page).to have_css('.thumbs-list ul', visible: true)
-
+    # Wait for the animation to finish
+    expect(page).to have_css('.thumbs-list[style=""]', visible: true)
     within('.thumbs-list ul') do
       all('li')[1].click
     end
 
+    # Wait for the hidden input to be updated before saving
+    expect(page).to have_css('input[name="item[item_0][iiif_canvas_id]"][value="https://purl.stanford.edu/xd327cm9378/iiif/canvas/cocina-fileSet-xd327cm9378-xd327cm9378_2"]',
+                             visible: false)
     save_page_changes
 
     expect(page).to have_css("[data-id='xd327cm9378']")
