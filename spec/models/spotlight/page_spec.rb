@@ -132,6 +132,24 @@ RSpec.describe Spotlight::Page, type: :model do
     end
   end
 
+  describe '#default_locale_title' do
+    let(:page) { FactoryBot.create(:feature_page, exhibit:) }
+    let(:translated_page) { FactoryBot.create(:feature_page, exhibit:, locale: 'es', default_locale_page: page) }
+
+    before do
+      translated_page.update(title: 'Translated Title')
+      translated_page.save
+    end
+
+    around do |example|
+      I18n.with_locale(:es) { example.run }
+    end
+
+    it 'returns the title of the default locale page' do
+      expect(translated_page.default_locale_title).to eq page['title']
+    end
+  end
+
   describe 'thumbnail_image_url' do
     subject(:page) { FactoryBot.create(:feature_page, exhibit:) }
 

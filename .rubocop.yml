@@ -69,7 +69,7 @@ Metrics/ClassLength:
     - "app/services/spotlight/exhibit_import_export_service.rb"
     - "lib/generators/spotlight/**/*" # Generators tend to have longer class lengths due to their lengthy public API
 
-Naming/PredicateName:
+Naming/PredicatePrefix:
   Exclude:
     - "app/models/concerns/spotlight/ar_light.rb"
 
@@ -89,6 +89,10 @@ Metrics/PerceivedComplexity:
   Exclude:
     - "app/controllers/spotlight/home_pages_controller.rb"
     - "app/services/spotlight/exhibit_import_export_service.rb"
+
+Style/SafeNavigation:
+  Exclude:
+    - "lib/generators/spotlight/assets/importmap_generator.rb"
 
 Rails:
   Enabled: true

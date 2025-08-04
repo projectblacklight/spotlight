@@ -433,7 +433,10 @@ RSpec.describe 'Translation editing', type: :feature do
 
     before do
       exhibit.home_page.clone_for_locale('fr').save
-      about_page.clone_for_locale('fr').tap { |p| p.published = true }.save
+      about_page.clone_for_locale('fr').tap do |p|
+        p.published = true
+        p.title = 'French title'
+      end.save
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr', tab: 'pages')
     end
 
@@ -444,6 +447,11 @@ RSpec.describe 'Translation editing', type: :feature do
       expect(page).to have_no_css('.translation-feature-page-settings input[type="checkbox"]')
       # about page should have a checked checkbox
       expect(page).to have_css('.translation-about-page-settings input[type="checkbox"][checked]')
+    end
+
+    it 'renders the default title and the translated title' do
+      expect(page).to have_text 'French title'
+      expect(page).to have_text 'About page'
     end
   end
 

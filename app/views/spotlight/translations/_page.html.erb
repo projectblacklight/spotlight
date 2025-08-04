@@ -1,7 +1,7 @@
 <% translated_page = page.translated_page_for(@language) %>
 <tr data-translation-progress-item="true">
   <td>
-    <%= link_to page.title, polymorphic_path([spotlight, current_exhibit, page]) %>
+    <%= link_to page.default_locale_title, polymorphic_path([spotlight, current_exhibit, page], locale: I18n.default_locale) %>
     <p class="<%= 'default-page-outdated' if page.updated_after? translated_page %>">
       <%= l(page.updated_at, format: :long) %>
     </p>

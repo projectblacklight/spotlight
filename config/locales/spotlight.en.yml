@@ -200,6 +200,7 @@ en:
           has_alt_text: Items with alt text
           page_title: Page title
         total_items: Of the items displayed via widgets, <b>%{has_alt_text} of %{total_alt_items}</b> have entered alt text (or a checked decorative box).
+        unpublished: Unpublished
       header: Accessibility
     admin_users:
       create:
@@ -575,6 +576,10 @@ en:
           published:
             help_block: ''
         uneditable_non_default_language: This field is not editable in the current language. Switch to the default language to edit it.
+        uneditable_non_default_language_form:
+          default_language: Switch to default language
+          instructions: Please use the translations editor or switch to the default language to make configuration changes.
+          translations: Edit translations
       groups:
         all: All
       import:
