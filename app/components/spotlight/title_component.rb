@@ -6,7 +6,7 @@ module Spotlight
     def initialize(title:, subtitle:)
       @title = title
       @subtitle = subtitle
-      super
+      super()
     end
 
     def title

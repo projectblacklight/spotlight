@@ -6,7 +6,7 @@ module Spotlight
     class SubheadingComponent < ViewComponent::Base
       def initialize(key:)
         @key = key
-        super
+        super()
       end
 
       def text

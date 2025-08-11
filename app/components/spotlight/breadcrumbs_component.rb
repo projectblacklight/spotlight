@@ -7,7 +7,7 @@ module Spotlight
 
     def initialize(breadcrumbs: [])
       @breadcrumbs = breadcrumbs
-      super
+      super()
     end
 
     def render?

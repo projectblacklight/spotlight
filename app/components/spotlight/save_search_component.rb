@@ -5,7 +5,7 @@ module Spotlight
   class SaveSearchComponent < ViewComponent::Base
     def initialize(button_classes: 'btn btn-outline-primary')
       @button_classes = button_classes
-      super
+      super()
     end
 
     attr_reader :button_classes

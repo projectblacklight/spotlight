@@ -8,7 +8,7 @@ module Spotlight
       @path = path
       @active = active
       @label = label
-      super
+      super()
     end
   end
 end

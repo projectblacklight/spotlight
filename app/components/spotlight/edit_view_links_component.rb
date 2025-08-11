@@ -6,7 +6,7 @@ module Spotlight
     attr_reader :page, :classes, :delete_link
 
     def initialize(page:, classes: 'page-links', delete_link: false)
-      super
+      super()
 
       @page = page
       @classes = classes

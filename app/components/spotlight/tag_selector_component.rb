@@ -11,7 +11,7 @@ module Spotlight
       @selected_tags_value = selected_tags_value || ''
       @all_tags = all_tags&.sort_by { |tag| (tag.respond_to?(:name) ? tag.name : tag).downcase }
 
-      super
+      super()
     end
 
     def selected_tags
