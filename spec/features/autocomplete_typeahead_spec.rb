@@ -45,11 +45,14 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
         # Open the multi-image selector and choose the last one
         click_link('Change')
         find('.thumbs-list li:last-child').click
-        sleep 1
+
+        # Wait for the hidden input to be updated
+        canvas_id = find('input[name="exhibit[masthead_attributes][iiif_canvas_id]"]', visible: false)
+        expect(canvas_id.value).to include('xd327cm9378_2')
+
         expect(page).to have_css('.leaflet-container', visible: true)
 
         click_button 'Save changes'
-        sleep 1
 
         expect(page).to have_content('The exhibit was successfully updated.')
 
