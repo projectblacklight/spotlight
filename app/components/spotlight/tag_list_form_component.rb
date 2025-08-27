@@ -7,7 +7,7 @@ module Spotlight
 
     def initialize(form:)
       @form = form
-      super
+      super()
     end
   end
 end

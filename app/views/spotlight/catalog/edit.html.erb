@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <%- view_config = blacklight_config.view_config(action_name: :edit) %>
-    <%= render (view_config.document_component || Blacklight::DocumentComponent).new((Blacklight.version > '8.0' ? :document : :presenter) => document_presenter(@document), classes: ['col-md-8'], component: :div, show: true, actions: false, partials: view_config.partials) do |component| %>
+    <%= render (view_config.document_component || Blacklight::DocumentComponent).new((Blacklight.version > '8.0' ? :document : :presenter) => document_presenter(@document), classes: ['col-md-8'], component: :div, show: true, partials: view_config.partials) do |component| %>
       <% component.with_title(as: 'h1', classes: '', link_to_document: false) %>
       <% component.with_body do %>
         <% view_config.partials.each do |view_partial| %>

@@ -5,7 +5,7 @@ module Spotlight
     # Display Analytics aggregations as table
     class AggregationComponent < ViewComponent::Base
       def initialize(data:, exclude_fields: nil)
-        super
+        super()
         @exclude_fields = exclude_fields
         @data = data
       end

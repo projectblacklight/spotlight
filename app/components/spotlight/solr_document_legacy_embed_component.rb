@@ -6,13 +6,13 @@ module Spotlight
     attr_reader :block_context
 
     def initialize(*args, block: nil, **kwargs)
-      super
+      super(*args, **kwargs)
 
       @block_context = block
     end
 
     def before_render
-      set_slot(:embed, nil, block_context:) unless embed
+      with_embed(block_context) unless embed
 
       super
     end

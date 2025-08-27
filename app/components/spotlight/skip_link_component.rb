@@ -6,7 +6,7 @@ module Spotlight
     def initialize(render_search_link: true)
       @render_search_link = render_search_link
 
-      super
+      super()
     end
 
     def link_to_search

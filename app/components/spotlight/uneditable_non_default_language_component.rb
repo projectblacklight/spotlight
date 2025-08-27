@@ -7,7 +7,7 @@ module Spotlight
     def initialize(current_exhibit:, current_language:)
       @current_exhibit = current_exhibit
       @current_language = current_language
-      super
+      super()
     end
 
     def edit_translations_button

@@ -7,7 +7,7 @@ module Spotlight
       attr_reader :current_exhibit, :dates
 
       def initialize(current_exhibit:)
-        super
+        super()
         @current_exhibit = current_exhibit
         @default_start_date = [min_date, 1.year.ago].max
         @default_end_date = [max_date, Time.zone.today].min
