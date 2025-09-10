@@ -9,7 +9,7 @@ Read more about what Spotlight is, our motivations for creating it, and how to i
 
 ## Requirements
 
-1. [Ruby](https://www.ruby-lang.org/) 3.1+
+1. [Ruby](https://www.ruby-lang.org/) 3.2+
 2. [Ruby on Rails](https://rubyonrails.org/) 7.1+
 3. Java (11 or greater) *for Solr*
 4. ImageMagick (http://www.imagemagick.org/script/index.php) due to [carrierwave](https://github.com/carrierwaveuploader/carrierwave#adding-versions)
