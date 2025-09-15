@@ -41,7 +41,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: false
-          bundler: "latest"
+          bundler: "2.7.1"
           ruby-version: ${{ matrix.ruby }}
       - name: Install dependencies
         run: bundle install
