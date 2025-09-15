@@ -9,6 +9,8 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
   describe 'IIIF Integration' do
     context 'for items that include a IIIF manifest' do
       it 'instantiates a cropper and persists all levels of the IIIF manifest' do
+        skip "The data on Purl for annotations has changed; let's fix this via #2817"
+
         visit spotlight.edit_exhibit_appearance_path(exhibit)
         click_link 'Exhibit masthead'
 
