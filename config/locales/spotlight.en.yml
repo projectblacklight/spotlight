@@ -772,6 +772,15 @@ en:
           add_item: Add item
           file_label: CSV file
           help_html: "%{link}"
+          instructions_html: |
+            <p><b>Tips for uploading items via CSV</b></p>
+            <ul>
+              <li>Only .jpg, .jpeg, or .png files can be uploaded as items.</li>
+              <li>Each item file must be under 10 MB.</li>
+              <li>Images from phones/tablets may display sideways or upside-down. Re-saving the image in Photoshop or another editor can help correct this.</li>
+              <li>Rows with a blank URL field will be skipped. Use ~ to skip the field but still index the item.</li>
+              <li>CSVs saved from Excel may include hidden characters. Use a plain text editor to clean and re-save the file if errors occur.</li>
+            </ul>
           template: Download template
           title: Upload multiple items
       external_resources_form:
