@@ -13,6 +13,16 @@ class TestAppGenerator < Rails::Generators::Base
     gsub_file 'package.json', '.internal_test_app', 'internal_test_app'
   end
 
+  # This makes the assets available in the test app so that changes made in
+  # local development can be picked up automatically
+  def link_frontend
+    # This generator is run from inside the test app; we have to get back up
+    # to spotlight root to link the right project
+    inside('..') do
+      run 'yarn link'
+    end
+  end
+
   def use_capybara3
     gsub_file 'Gemfile', /gem 'capybara'/, '# gem \'capybara\''
   end
@@ -25,12 +35,6 @@ class TestAppGenerator < Rails::Generators::Base
     Bundler.with_unbundled_env do
       run 'bundle install'
     end
-  end
-
-  # This makes the assets available in the test app so that changes made in
-  # local development can be picked up automatically
-  def link_frontend
-    run 'yarn link'
   end
 
   def run_blacklight_generator
