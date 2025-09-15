@@ -122,6 +122,7 @@ module Spotlight
     def add_oembed
       unless Bundler.locked_gems.dependencies.key? 'blacklight-oembed'
         gem 'blacklight-oembed', '~> 1.0'
+        gem 'ruby-oembed'
         bundle_install
       end
       generate 'blacklight_oembed:install'
