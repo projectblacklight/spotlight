@@ -25,8 +25,7 @@ RSpec.describe 'Featured Pages Blocks', js: true, type: :feature do
     login_as exhibit_curator
   end
 
-  pending 'saves the selected exhibits' do
-    pending('Prefetched autocomplete does not work the same way as solr-backed autocompletes')
+  it 'saves the selected exhibits' do
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
 
     click_link('Edit')
