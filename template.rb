@@ -9,7 +9,7 @@ spotlight_options = ENV.fetch('SPOTLIGHT_INSTALL_OPTIONS', DEFAULT_SPOTLIGHT_OPT
 
 # Add gem dependencies to the application
 gem 'blacklight', '>= 8.7.0', '< 9'
-gem 'blacklight-spotlight', ENV['SPOTLIGHT_GEM'] ? { path: ENV['SPOTLIGHT_GEM'] } : { github: 'projectblacklight/spotlight' }
+gem 'blacklight-spotlight', ENV['SPOTLIGHT_GEM'] ? { path: ENV['SPOTLIGHT_GEM'] } : { github: 'projectblacklight/spotlight', branch: 'main' }
 gem 'sidekiq'
 gem 'bootstrap_form'
 
