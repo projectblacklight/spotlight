@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # Declare dependencies in spotlight.gemspec.
-gemspec
+gemspec path: File.expand_path(__dir__)
 
 # BEGIN ENGINE_CART BLOCK
 # engine_cart: 2.5.0
