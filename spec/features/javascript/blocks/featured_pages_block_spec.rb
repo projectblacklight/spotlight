@@ -40,7 +40,7 @@ RSpec.describe 'Featured Pages Blocks', js: true, type: :feature do
     expect(page).to have_content feature_page2.title
   end
 
-  it 'does not display the select image area link', js: true do
+  it 'does not display the select image area link' do
     visit spotlight.edit_exhibit_home_page_path(exhibit)
 
     add_widget 'featured_pages'
