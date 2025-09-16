@@ -19,11 +19,10 @@ RSpec.describe 'Featured Pages Blocks', js: true, type: :feature do
     )
   end
 
-  # TODO: Change to exhibit curator role once issue #3249 is fixed
-  let(:site_admin) { FactoryBot.create(:site_admin) }
+  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
   before do
-    login_as site_admin
+    login_as exhibit_curator
   end
 
   it 'saves the selected exhibits' do
