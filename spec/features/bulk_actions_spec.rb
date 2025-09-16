@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Bulk actions', type: :feature do
+  with_queue_adapter :inline
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
