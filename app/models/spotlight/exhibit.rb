@@ -87,8 +87,6 @@ module Spotlight
     accepts_nested_attributes_for :contact_emails, reject_if: proc { |attr| attr['email'].blank? }
     accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc { |attr| attr['user_key'].blank? && attr['id'].blank? }
 
-    before_save :sanitize_description, if: :description_changed?
-
     def main_about_page
       @main_about_page ||= about_pages.for_locale.published.first
     end
@@ -144,12 +142,6 @@ module Spotlight
 
     def available_locales
       @available_locales ||= languages.pluck(:locale)
-    end
-
-    protected
-
-    def sanitize_description
-      self.description = ::Rails::Html::FullSanitizer.new.sanitize(description)
     end
 
     private

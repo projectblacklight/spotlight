@@ -28,7 +28,7 @@
 
           <% if exhibit.description %>
             <p class="description">
-              <%= exhibit.description %>
+              <%= strip_tags(exhibit.description) %>
             </p>
           <% end %>
         <% end %>

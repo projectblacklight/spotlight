@@ -32,6 +32,18 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     expect(rendered).to have_selector '.card-title', text: exhibit.title
   end
 
+  context 'for an exhibit with a description' do
+    before do
+      exhibit.update(description: 'Test <b>description</b> & more.')
+    end
+
+    it 'has a description that strips html tags' do
+      render(p, exhibit:)
+
+      expect(rendered).to have_selector '.description', text: 'Test description & more.'
+    end
+  end
+
   context 'for an unpublished exhibit' do
     before do
       exhibit.update(published: false)

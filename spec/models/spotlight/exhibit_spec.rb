@@ -13,12 +13,6 @@ RSpec.describe Spotlight::Exhibit, type: :model do
     expect(subject.subtitle).to eq 'Test subtitle'
   end
 
-  it 'has a description that strips html tags' do
-    subject.description = 'Test <b>description</b>'
-    subject.save!
-    expect(subject.description).to eq 'Test description'
-  end
-
   it 'has reserved slugs' do
     subject.slug = 'site'
 
