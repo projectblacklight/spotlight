@@ -19,14 +19,14 @@ RSpec.describe 'Featured Pages Blocks', js: true, type: :feature do
     )
   end
 
-  let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
+  # TODO: Change to exhibit curator role once issue #3249 is fixed
+  let(:site_admin) { FactoryBot.create(:site_admin) }
 
   before do
-    login_as exhibit_curator
+    login_as site_admin
   end
 
-  pending 'saves the selected exhibits' do
-    pending('Prefetched autocomplete does not work the same way as solr-backed autocompletes')
+  it 'saves the selected exhibits' do
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
 
     click_link('Edit')
@@ -38,6 +38,17 @@ RSpec.describe 'Featured Pages Blocks', js: true, type: :feature do
     save_page_changes
 
     expect(page).to have_content feature_page2.title
+  end
+
+  it 'does not display the select image area link' do
+    visit spotlight.edit_exhibit_home_page_path(exhibit)
+
+    add_widget 'featured_pages'
+
+    fill_in_typeahead_field with: feature_page2.title
+
+    # Verify that select image area link is not visible
+    expect(page).to have_no_link('Select image area')
   end
 
   pending 'persists the user selected sort order' do
