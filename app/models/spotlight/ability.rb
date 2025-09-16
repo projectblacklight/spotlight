@@ -42,7 +42,7 @@ module Spotlight
       can %i[read curate tag bulk_update], Spotlight::Exhibit, id: user.exhibit_roles.pluck(:resource_id)
 
       # public
-      can :read, Spotlight::HomePage
+      can :read, Spotlight::HomePage, published: true
       can :read, Spotlight::Exhibit, published: true
       can :read, Spotlight::Page, published: true
       can :read, Spotlight::Search, published: true

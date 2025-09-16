@@ -22,6 +22,31 @@ RSpec.describe Spotlight::PagesController, type: :controller do
     }
   end
 
+  describe '#index' do
+    let!(:published_feature_page) { FactoryBot.create(:feature_page, exhibit:, published: true) }
+    let!(:unpublished_feature_page) { FactoryBot.create(:feature_page, exhibit:, published: false) }
+    let!(:published_about_page) { FactoryBot.create(:about_page, exhibit:, published: true) }
+
+    before do
+      sign_in user
+    end
+
+    context 'as JSON' do
+      context 'as a curator' do
+        let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
+
+        it 'returns all the published exhibit pages' do
+          get :index, params: { exhibit_id: exhibit, format: 'json' }
+          expect(response).to be_successful
+          pages = response.parsed_body
+          expect(pages.length).to eq(3) # the two published pages above + the home page
+          page_ids = pages.pluck('id')
+          expect(page_ids).not_to include(unpublished_feature_page.id)
+        end
+      end
+    end
+  end
+
   describe 'when signed in as a curator' do
     let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
