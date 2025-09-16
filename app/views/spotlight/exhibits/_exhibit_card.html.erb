@@ -28,7 +28,7 @@
 
           <% if exhibit.description %>
             <p class="description">
-              <%= exhibit.description %>
+              <%= sanitize(exhibit.description, tags: [], attributes: []) %>
             </p>
           <% end %>
         <% end %>
