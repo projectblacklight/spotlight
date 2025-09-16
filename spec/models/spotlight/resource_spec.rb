@@ -38,17 +38,6 @@ RSpec.describe Spotlight::Resource, type: :model do
   end
 
   describe '#reindex_later' do
-    around do |block|
-      old = ActiveJob::Base.queue_adapter
-      begin
-        ActiveJob::Base.queue_adapter = :test
-
-        block.call
-      ensure
-        ActiveJob::Base.queue_adapter = old
-      end
-    end
-
     it 'passes through reindexing options' do
       expect { subject.reindex_later(whatever: true) }.to have_enqueued_job(Spotlight::ReindexJob).with(subject, whatever: true, 'validity_token' => nil)
     end

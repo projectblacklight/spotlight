@@ -53,10 +53,6 @@ RSpec.describe Spotlight::BulkUpdatesController, type: :controller do
     end
 
     describe 'PATCH download_template' do
-      before { ActiveJob::Base.queue_adapter = :test }
-
-      after { ActiveJob::Base.queue_adapter = :inline }
-
       it 'uploads the given CSV template and passes it to a job' do
         expect do
           patch :update, params: {
