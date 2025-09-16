@@ -93,10 +93,8 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     # display the title as the primary caption
-    within('.primary-caption') do
-      check('Primary caption')
-      select('Title', from: 'primary-caption-field')
-    end
+    check('Primary caption')
+    select('Title', from: 'primary-caption-field')
 
     save_page_changes
 
@@ -104,12 +102,15 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     expect(page).to have_content '[World map]'
     expect(page).to have_no_content "L'AMERIQUE"
 
-    visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
+    click_on 'Edit'
+
+    # Wait for both items to be rendered
     wait_for_sir_trevor
+    expect(page).to have_content '[World map]'
+    expect(page).to have_content "L'AMERIQUE"
+
     # display the title as the primary caption
-    within('.primary-caption') do
-      uncheck('Primary caption')
-    end
+    uncheck('Primary caption')
 
     save_page_changes
 
@@ -214,10 +215,16 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
 
     fill_in 'Alternative text', with: 'custom alt text'
     check 'Decorative'
+    expect(page).to have_css 'textarea[disabled]'
     save_page_changes
     click_on 'Edit'
+
+    # Wait for the item to be rendered
     wait_for_sir_trevor
+    expect(page).to have_text '[World map]'
     uncheck 'Decorative'
+    expect(page).to have_no_css 'textarea[disabled]'
+
     expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
   end
 

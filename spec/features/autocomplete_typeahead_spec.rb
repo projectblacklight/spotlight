@@ -45,15 +45,18 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
         expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/)
 
         # Open the multi-image selector and choose the last one
-        click_link('Change')
-        find('.thumbs-list li:last-child').click
+        click_link 'Change'
+
+        # Wait for the animation to finish
+        expect(page).to have_css('.thumbs-list[style=""]', visible: true)
         sleep 1
+        find('.thumbs-list li:last-child').click
+
+        # Wait for the hidden input to be updated before saving
+        expect(page).to have_css('input[value="https://purl.stanford.edu/xd327cm9378/iiif/canvas/cocina-fileSet-xd327cm9378-xd327cm9378_2"]', visible: false)
         expect(page).to have_css('.leaflet-container', visible: true)
 
-        click_button 'Save changes'
-        sleep 1
-
-        expect(page).to have_content('The exhibit was successfully updated.')
+        save_page_changes
 
         expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/)
       end
