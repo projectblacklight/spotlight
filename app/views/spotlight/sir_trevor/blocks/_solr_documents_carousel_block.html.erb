@@ -5,9 +5,24 @@
 <% if solr_documents_carousel_block.documents? %>
   <div id="<%= html_id %>" class="carousel slide" <%= "data-bs-ride=carousel data-bs-interval=#{solr_documents_carousel_block.interval}" if solr_documents_carousel_block.autoplay? %>>
     <div class="carousel-inner text-center">
+    <% slides = solr_documents_carousel_block.each_document.to_a %>
+    <pre><%= debug(slides) %></pre>
     <% solr_documents_carousel_block.each_document.each_with_index do |(block_options, document), index| %>
       <% doc_presenter = document_presenter(document) %>
-      <div class="carousel-item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
+      <% # Determine each carousel item's neighboring items, save that data to be used in the aria-describedby attribute %>
+      <% prev_id = if index > 0
+            "carousel-caption-#{slides[index - 1][1].id}"
+          else
+            "carousel-caption-#{slides.last[1].id}"
+          end %>
+      <% next_id = if index < solr_documents_carousel_block.each_document.to_a.size - 1
+            "carousel-caption-#{slides[index + 1][1].id}"
+          else
+            "carousel-caption-#{slides.first[1].id}"
+          end %>
+
+      <div class="carousel-item <%= 'active' if index == 0 %>" data-id="<%= document.id %>"
+       data-prev-id="<%= prev_id %>" data-next-id="<%= next_id %>">
         <% if block_options[:full_image_url].present? %>
           <%= link_to_document(document, image_tag(block_options[:full_image_url], alt: resource_alt_text(block_options, doc_presenter.heading), skip_pipeline: true), counter: -1) %>
         <% elsif block_options[:iiif_tilesource_base].present?  %>
@@ -15,7 +30,7 @@
         <% elsif doc_presenter.thumbnail.exists? %>
           <%= doc_presenter.thumbnail.thumbnail_tag({ alt: resource_alt_text(block_options, doc_presenter.heading) }, document_counter: -1) %>
         <% end %>
-        <div class="carousel-caption">
+        <div class="carousel-caption" id="carousel-caption-<%= document.id %>">
           <% if solr_documents_carousel_block.primary_caption? %>
             <h3 class="primary">
               <%= solr_documents_carousel_block.document_caption(doc_presenter, solr_documents_carousel_block.primary_caption_field) %>
@@ -40,10 +55,12 @@
     </ol>
 
     <!-- Controls -->
-    <a class="left carousel-control-prev" href="#<%= html_id %>" data-bs-slide="prev">
+    <a class="left carousel-control-prev" href="#<%= html_id %>" data-bs-slide="prev"
+      aria-label="<%= t('spotlight.sir_trevor.blocks.solr_documents_carousel_block.controls.previous_item') %>">
       <%= blacklight_icon('arrow_back_ios') %>
     </a>
-    <a class="right carousel-control-next" href="#<%= html_id %>" data-bs-slide="next">
+    <a class="right carousel-control-next" href="#<%= html_id %>" data-bs-slide="next"
+      aria-label="<%= t('spotlight.sir_trevor.blocks.solr_documents_carousel_block.controls.next_item') %>">
       <%= blacklight_icon('arrow_forward_ios') %>
     </a>
   </div>
