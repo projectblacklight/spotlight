@@ -26,7 +26,7 @@ these collections.)
   s.add_dependency 'blacklight-gallery', '>= 3.0', '< 5'
   s.add_dependency 'bootstrap_form', '>= 5.4', '< 6'
   s.add_dependency 'cancancan'
-  s.add_dependency 'carrierwave', '~> 2.2'
+  s.add_dependency 'carrierwave', '> 2.2.1', '< 3'
   s.add_dependency 'csv'
   s.add_dependency 'devise', '~> 4.9'
   s.add_dependency 'devise_invitable'
