@@ -152,24 +152,28 @@ module Spotlight
     end
 
     def clone_for_locale(locale)
-      dup.tap do |np|
-        np.locale = locale
-        np.default_locale_page = self
-        np.published = false
-        np.slug = slug
+      dup.tap do |new_page|
+        new_page.locale = locale
+        new_page.default_locale_page = self
+        new_page.published = false
+        new_page.slug = slug
 
         if !top_level_page? && (parent_translation = parent_page.translated_page_for(locale)).present?
-          np.parent_page = parent_translation
+          new_page.parent_page = parent_translation
         end
 
-        child_pages.for_locale(locale).update(parent_page: np) if top_level_page? && respond_to?(:child_pages)
+        child_pages.for_locale(locale).update(parent_page: new_page) if top_level_page? && respond_to?(:child_pages)
       end
     end
 
     private
 
+    def default_locale?
+      locale.to_sym == I18n.default_locale
+    end
+
     def update_translated_pages_weights_and_parent_page
-      return unless locale.to_sym == I18n.default_locale
+      return unless default_locale?
 
       if saved_change_to_parent_page_id?
         translated_pages.find_each do |translated_page|

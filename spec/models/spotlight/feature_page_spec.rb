@@ -83,5 +83,33 @@ RSpec.describe Spotlight::FeaturePage, type: :model do
       expect(child1).not_to be_top_level_page
       expect(child2).not_to be_top_level_page
     end
+
+    context 'with a missing parent translation' do
+      let(:child1_es) { child1.clone_for_locale('es') }
+
+      before { child1_es.save }
+
+      it 'parent pages should have child_pages matching the parent locale' do
+        expect(parent.child_pages.length).to eq 2
+        expect(parent.child_pages.map(&:id)).to eq [child1.id, child2.id]
+      end
+    end
+
+    context 'with a parent translation' do
+      let(:parent_es) { parent.clone_for_locale('es') }
+      let(:child1_es) { child1.clone_for_locale('es') }
+
+      before do
+        parent_es.save
+        child1_es.save
+      end
+
+      it 'parent pages should have child_pages matching the parent locale' do
+        expect(parent.child_pages.length).to eq 2
+        expect(parent.child_pages.map(&:id)).to eq [child1.id, child2.id]
+        expect(parent_es.child_pages.length).to eq 1
+        expect(parent_es.child_pages.map(&:id)).to eq [child1_es.id]
+      end
+    end
   end
 end
