@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Spotlight::RenderingHelper, type: :helper do
-  describe '#sir_trevor_markdown' do
+  describe '#render_markdown' do
     it 'renders basic markdown as html' do
       expect(helper.render_markdown('Here is some **styled text**.').chomp).to match(%r{<p>Here is some <strong>styled text</strong>.</p>})
     end
