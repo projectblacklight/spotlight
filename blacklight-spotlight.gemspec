@@ -33,7 +33,6 @@ these collections.)
   s.add_dependency 'faraday'
   s.add_dependency 'faraday-follow_redirects'
   s.add_dependency 'friendly_id', '~> 5.5'
-  s.add_dependency 'github-markup'
   s.add_dependency 'google-analytics-data'
   s.add_dependency 'i18n'
   s.add_dependency 'i18n-active_record'

@@ -25,8 +25,7 @@ module Spotlight
     isolate_namespace Spotlight
 
     require 'carrierwave'
-    require 'redcarpet' # required for markdown support in github/markup https://github.com/github/markup#markups
-    require 'github/markup'
+    require 'redcarpet' # required for markdown support
     require 'openseadragon'
 
     config.assets.precompile += %w[spotlight/fallback/*.png] if defined?(Sprockets)
