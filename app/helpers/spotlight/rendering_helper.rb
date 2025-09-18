@@ -3,7 +3,7 @@
 module Spotlight
   module RenderingHelper # :nodoc:
     def render_markdown(text)
-      # Extend Redcarpet renderer to strip images and to add HTML anchors to each heading in the output HTML
+      # Extend Redcarpet renderer to add HTML anchors to each heading in the output HTML
       renderer = Redcarpet::Render::HTML.new(with_toc_data: true)
       # Use Redcarpet to render markdown as html
       html = Redcarpet::Markdown.new(renderer).render(text)
