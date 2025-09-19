@@ -151,33 +151,41 @@ module Spotlight
       translated_pages.for_locale(locale).first
     end
 
-    def clone_for_locale(locale)
-      dup.tap do |np|
-        np.locale = locale
-        np.default_locale_page = self
-        np.published = false
-        np.slug = slug
+    def clone_for_locale(clone_locale)
+      dup.tap do |new_page|
+        new_page.locale = clone_locale
+        new_page.default_locale_page = self
+        new_page.published = false
+        new_page.slug = slug
+        new_page.parent_page = parent_page_for(clone_locale) unless top_level_page?
+        next unless respond_to?(:child_pages)
 
-        if !top_level_page? && (parent_translation = parent_page.translated_page_for(locale)).present?
-          np.parent_page = parent_translation
+        child_pages.find_each do |default_locale_child_page|
+          default_locale_child_page.translated_page_for(clone_locale)&.update(parent_page: new_page)
         end
-
-        child_pages.for_locale(locale).update(parent_page: np) if top_level_page? && respond_to?(:child_pages)
       end
     end
 
     private
 
-    def update_translated_pages_weights_and_parent_page
-      return unless locale.to_sym == I18n.default_locale
+    def default_locale?
+      locale.to_sym == I18n.default_locale
+    end
 
-      if saved_change_to_parent_page_id?
-        translated_pages.find_each do |translated_page|
-          parent_translation = parent_page&.translated_page_for(translated_page.locale)
-          translated_page.update(parent_page_id: parent_translation&.id)
-        end
+    def parent_page_for(locale)
+      parent_page&.translated_page_for(locale)
+    end
+
+    def update_translated_pages_parents
+      translated_pages.find_each do |translated_page|
+        translated_page.update(parent_page_id: parent_page_for(translated_page.locale)&.id)
       end
+    end
 
+    def update_translated_pages_weights_and_parent_page
+      return unless default_locale?
+
+      update_translated_pages_parents if saved_change_to_parent_page_id?
       translated_pages.update(weight:) if saved_change_to_weight?
     end
   end
