@@ -2,6 +2,10 @@
 
 Spotlight is a collaborative, open source project produced by developers, designers, product owners from several organizations. Spotlight mostly uses the [contribution model](https://github.com/projectblacklight/blacklight/blob/main/CONTRIBUTING.md) from its parent project [Blacklight](https://github.com/projectblacklight/blacklight). There are a few differences from the Blacklight process that this document will highlight.
 
+## Becoming a Committer
+
+Anyone can contribute to Spotlight using pull requests, the issue tracker, and participating in community slack channels. Being a committer means that you contribute to an extent that requires greater repository access. Currently the only defined way to be added as a committer is to participate in a community sprint.
+
 ## User experience changes
 
 Spotlight has been designed by a team of user experience designers. While there are a lot of great opportunities to improve the user experience, sometimes contributions that seem to make sense in a specific context can negatively affect the broader user experience of Spotlight that we've worked hard over the years to improve. When contributing updates or changes to the Spotlight user experience here are some useful guidelines to follow.
