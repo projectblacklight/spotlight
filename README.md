@@ -18,7 +18,7 @@ If you have questions or are interested in contributing, please reach out to the
 
 ## Installation
 
-The following installation instructions are for setting up a new instance of Spotlight. To set up an environment for Spotlight development, see [Developing Spotlight](#contributing-to-spotlight).
+The following installation instructions are for setting up a new instance of Spotlight. To set up an environment for Spotlight development, see [Developing Spotlight](#developing-spotlight).
 
 To bootstrap a new Rails application using [importmap-rails](https://github.com/rails/importmap-rails):
 
