@@ -11,7 +11,7 @@ Anyone can contribute to Spotlight using pull requests, the issue tracker, and p
 Spotlight has been designed by a team of user experience designers. While there are a lot of great opportunities to improve the user experience, sometimes contributions that seem to make sense in a specific context can negatively affect the broader user experience of Spotlight that we've worked hard over the years to improve. When contributing updates or changes to the Spotlight user experience here are some useful guidelines to follow.
  - Determine if there is a way to contribute this in a backwards compatible or configurable way
  - [Open an issue](https://github.com/projectblacklight/spotlight/issues/new) on the project as a way to engage with core UX designers and developers on your proposed change or update
- - Contribute user stories to an issue or engage with the Spotlight community through the [Blacklight Development Google group](https://groups.google.com/forum/#!forum/blacklight-development)
+ - Contribute user stories to an issue or engage with the [Spotlight community](/README.md#spotlight-community)
 
 
 ## Other notes
