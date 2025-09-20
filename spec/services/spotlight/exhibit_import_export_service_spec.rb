@@ -60,7 +60,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
     expect(subject['solr_document_sidecars']).to have_at_least(1).item
     expect(subject['solr_document_sidecars']).to have(source_exhibit.solr_document_sidecars.count).items
 
-    expect(subject['solr_document_sidecars'].first).to include('document_id', 'public')
+    expect(subject['solr_document_sidecars'].first).to include('document_id', 'public', 'data')
     expect(subject['solr_document_sidecars'].first).not_to include 'id'
   end
 
@@ -98,7 +98,9 @@ RSpec.describe Spotlight::ExhibitImportExportService do
     end
 
     before do
-      sidecar = source_exhibit.solr_document_sidecars.create! document: SolrDocument.new(id: 1), public: false
+      sidecar = source_exhibit.solr_document_sidecars.create! document: SolrDocument.new(id: 1),
+                                                              public: false,
+                                                              data: { 'configured_fields' => { 'full_title_tesim' => 'Test Title' } }
       source_exhibit.tag(sidecar, with: 'xyz', on: :tags)
     end
 
@@ -147,6 +149,10 @@ RSpec.describe Spotlight::ExhibitImportExportService do
 
     it 'has sidecars' do
       expect(SolrDocument.new(id: 1)).not_to be_public(subject)
+    end
+
+    it 'has sidecar data with string keys' do
+      expect(subject.solr_document_sidecars.first.data['configured_fields']['full_title_tesim']).to eq 'Test Title'
     end
 
     context 'for an exhibit with contacts' do
@@ -275,10 +281,11 @@ RSpec.describe Spotlight::ExhibitImportExportService do
     end
 
     it 'assigns STI resources the correct class' do
-      resource = FactoryBot.create(:uploaded_resource, exhibit: source_exhibit)
+      resource = FactoryBot.create(:uploaded_resource, exhibit: source_exhibit, data: { 'full_title_tesim' => 'my title' })
       expect(subject.resources.length).to eq 1
       expect(subject.resources.first.class).to eq Spotlight::Resources::Upload
       expect(subject.resources.first.upload.image.path).not_to eq resource.upload.image.path
+      expect(subject.resources.first.data['full_title_tesim']).to eq 'my title'
     end
 
     it 'assigns normal resources the correct class' do
