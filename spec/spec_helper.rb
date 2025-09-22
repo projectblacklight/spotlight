@@ -17,6 +17,7 @@ require 'paper_trail/frameworks/rspec'
 require 'view_component/test_helpers'
 require 'view_component/system_test_helpers'
 
+require 'axe-rspec'
 require 'selenium-webdriver'
 require 'webmock/rspec'
 

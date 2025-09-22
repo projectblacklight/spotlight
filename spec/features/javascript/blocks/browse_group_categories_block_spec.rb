@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Browse Group Categories', js: true, type: :feature do
+RSpec.describe 'Browse Group Categories', :js, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
@@ -60,5 +60,13 @@ RSpec.describe 'Browse Group Categories', js: true, type: :feature do
 
     expect(page).to have_css 'h2', text: 'Pets'
     expect(page).to have_css '.box.category-1', count: 6, visible: false
+  end
+
+  it 'is accessible' do
+    pending 'focusable hidden content fix, see https://github.com/projectblacklight/spotlight/issues/3578'
+    fill_in_typeahead_field with: 'Pets'
+    save_page_changes
+    expect(page).to have_css 'h2', text: 'Pets'
+    expect(page).to be_axe_clean.within '#content'
   end
 end

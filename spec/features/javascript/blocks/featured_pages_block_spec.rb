@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Featured Pages Blocks', js: true, type: :feature do
+RSpec.describe 'Featured Pages Blocks', :js, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:feature_page1) do
     FactoryBot.create(
@@ -37,6 +37,8 @@ RSpec.describe 'Featured Pages Blocks', js: true, type: :feature do
     save_page_changes
 
     expect(page).to have_content feature_page2.title
+
+    expect(page).to be_axe_clean.within '#content'
   end
 
   it 'does not display the select image area link' do

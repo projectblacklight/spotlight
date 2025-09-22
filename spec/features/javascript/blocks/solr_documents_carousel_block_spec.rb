@@ -26,4 +26,14 @@ RSpec.describe 'Solr Documents Carousel Block', js: true, type: :feature do
       expect(page).to have_css('.carousel-caption .primary', text: "L'AMERIQUE")
     end
   end
+
+  it 'is accessible' do
+    pending 'heading updates from https://github.com/projectblacklight/spotlight/issues/3535'
+    fill_in_typeahead_field with: 'dq287tq6352'
+    check 'Primary caption'
+    select 'Title', from: 'primary-caption-field'
+    save_page_changes
+
+    expect(page).to be_axe_clean.within '#content'
+  end
 end

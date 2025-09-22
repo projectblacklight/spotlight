@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Solr Documents Embed Block', js: true, type: :feature do
+RSpec.describe 'Solr Documents Embed Block', :js, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
@@ -13,7 +13,7 @@ RSpec.describe 'Solr Documents Embed Block', js: true, type: :feature do
     add_widget 'solr_documents_embed'
   end
 
-  it 'allows you to add a solr documents embed block widget', js: true do
+  it 'allows you to add a solr documents embed block widget' do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     save_page_changes
@@ -25,14 +25,23 @@ RSpec.describe 'Solr Documents Embed Block', js: true, type: :feature do
     end
   end
 
-  it 'does not display alternative text guidelines', js: true do
+  it 'does not display alternative text guidelines' do
     expect(page).to have_no_content('For each item, please enter alternative text')
     expect(page).to have_no_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
   end
 
-  it 'does not have alt text customization fields', js: true do
+  it 'does not have alt text customization fields' do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
     expect(page).to have_no_field('Alternative text')
     expect(page).to have_no_field('Decorative')
+  end
+
+  it 'is accessible' do
+    pending 'heading updates from https://github.com/projectblacklight/spotlight/issues/3535'
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
+    fill_in 'Heading', with: 'A Heading'
+    save_page_changes
+
+    expect(page).to be_axe_clean.within '#content'
   end
 end

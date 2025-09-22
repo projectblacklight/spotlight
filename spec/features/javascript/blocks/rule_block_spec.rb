@@ -19,5 +19,7 @@ RSpec.describe 'Horizontal rule block', js: true, type: :feature, versioning: tr
     save_page_changes
 
     expect(page).to have_css('hr')
+
+    expect(page).to be_axe_clean.within '#content'
   end
 end

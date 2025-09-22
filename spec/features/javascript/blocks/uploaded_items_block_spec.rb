@@ -41,6 +41,8 @@ RSpec.describe 'Uploaded Items Block', feature: true, js: true, versioning: true
     expect(page).to have_css('h3', text: heading)
     expect(page).to have_css('p', text:)
 
+    expect(page).to be_axe_clean.within '#content'
+
     within('.uploaded-items-block') do
       expect(page).to have_css('img[alt=""]', count: 1)
       expect(page).to have_css('img[alt="Some caption text"]', count: 1)

@@ -35,5 +35,7 @@ RSpec.describe 'Search Result Block', js: true, type: :feature do
 
     # Documents should exist
     expect(page).to have_css('.documents-gallery .document')
+
+    expect(page).to be_axe_clean.within '#content'
   end
 end
