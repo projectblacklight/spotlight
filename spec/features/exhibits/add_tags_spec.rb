@@ -30,6 +30,6 @@ RSpec.describe 'Add tags to an item in an exhibit', type: :feature do
 
     click_on 'Two and a half'
 
-    expect(page).to have_content 'Remove constraint Exhibit Tags: Two and a half'
+    expect(page).to have_content 'Remove constraint Exhibit tags: Two and a half'
   end
 end
