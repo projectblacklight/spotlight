@@ -5,7 +5,7 @@
 
       <%= render partial: 'header', locals: {f: f} %>
       <h2 class="mt-4"><%= t :'.pages_header' %></h2>
-      <p class="instructions"><%= t :'.instructions' %></p>
+      <div class="instructions"><%= t :'.instructions_html' %></div>
       <div class="panel-group dd <%= page_collection_name %>_admin" id="nested-pages" data-behavior="nestable" <%= nestable_data_attributes(page_collection_name).html_safe %> >
         <ol class="dd-list">
           <%= f.fields_for page_collection_name do |p| %>
