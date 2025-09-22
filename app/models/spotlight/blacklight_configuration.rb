@@ -337,12 +337,12 @@ module Spotlight
         config.add_show_field :exhibit_tags, field: config.document_model.solr_field_for_tagger(exhibit),
                                              link_to_facet: true,
                                              separator_options: { words_connector: nil, two_words_connector: nil, last_word_connector: nil },
-                                             label: I18n.t('spotlight.search.fields.facet.exhibit_tags', default: 'Exhibit Tags')
+                                             label: I18n.t('spotlight.search.fields.exhibit_tags', default: 'Exhibit tags')
       end
 
       unless config.facet_fields.include? :exhibit_tags
         config.add_facet_field :exhibit_tags, field: config.document_model.solr_field_for_tagger(exhibit),
-                                              label: I18n.t('spotlight.search.fields.facet.exhibit_tags', default: 'Exhibit Tags'),
+                                              label: I18n.t('spotlight.search.fields.facet.exhibit_tags', default: 'Exhibit tags'),
                                               limit: true
       end
       # rubocop:enable Style/GuardClause
