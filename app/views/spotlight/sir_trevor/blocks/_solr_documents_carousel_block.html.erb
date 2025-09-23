@@ -5,23 +5,9 @@
 <% if solr_documents_carousel_block.documents? %>
   <div id="<%= html_id %>" class="carousel slide" <%= "data-bs-ride=carousel data-bs-interval=#{solr_documents_carousel_block.interval}" if solr_documents_carousel_block.autoplay? %>>
     <div class="carousel-inner text-center">
-    <% slides = solr_documents_carousel_block.each_document.to_a %>
     <% solr_documents_carousel_block.each_document.each_with_index do |(block_options, document), index| %>
       <% doc_presenter = document_presenter(document) %>
-      <%# Determine each carousel item's neighboring items, save that data to be used in the aria-describedby attribute %>
-      <% if index > 0 %>
-        <% prev_id = "carousel-caption-#{slides[index - 1][1].id}" %>
-      <% else %>
-        <% prev_id = "carousel-caption-#{slides.last[1].id}" %>
-      <% end %>
-      <% if index < solr_documents_carousel_block.each_document.to_a.size - 1 %>
-        <% next_id = "carousel-caption-#{slides[index + 1][1].id}" %>
-      <% else %>
-        <% next_id = "carousel-caption-#{slides.first[1].id}" %>
-      <% end %>
-
-      <div class="carousel-item <%= 'active' if index == 0 %>" data-id="<%= document.id %>"
-        data-prev-id="<%= prev_id %>" data-next-id="<%= next_id %>">
+      <div class="carousel-item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
         <% if block_options[:full_image_url].present? %>
           <%= link_to_document(document, image_tag(block_options[:full_image_url], alt: resource_alt_text(block_options, doc_presenter.heading), skip_pipeline: true), counter: -1) %>
         <% elsif block_options[:iiif_tilesource_base].present?  %>

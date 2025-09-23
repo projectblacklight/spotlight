@@ -37,10 +37,4 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_carousel_block.html.
     expect(rendered).to have_selector '.carousel-item img[alt="custom alt text"]'
     expect(rendered).to have_selector '.carousel-item img[alt="blah"]'
   end
-
-  it 'has correct data atttributes that will be used by aria-describedby' do
-    expect(rendered).to have_selector '.carousel-item[data-id="1"][data-prev-id="carousel-caption-3"][data-next-id="carousel-caption-2"]'
-    expect(rendered).to have_selector '.carousel-item[data-id="2"][data-prev-id="carousel-caption-1"][data-next-id="carousel-caption-3"]'
-    expect(rendered).to have_selector '.carousel-item[data-id="3"][data-prev-id="carousel-caption-2"][data-next-id="carousel-caption-1"]'
-  end
 end

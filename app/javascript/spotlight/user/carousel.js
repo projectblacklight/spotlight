@@ -6,13 +6,18 @@ export default class {
       // updates the aria-describedby on the next and prev btns
       const updateAriaDescribedBy = function ($carousel) {
         const $activeItem = $carousel.find('.carousel-item.active');
-        const prevId = $activeItem.data('prev-id');
-        const nextId = $activeItem.data('next-id');
-        if (prevId) {
-          $carousel.find('.carousel-control-prev').attr('aria-describedby', prevId);
+        const $items = $carousel.find('.carousel-item');
+        const curIndex = $items.index($activeItem);
+        const prevIndex = (curIndex - 1 + $items.length) % $items.length;
+        const nextIndex = (curIndex + 1) % $items.length;
+
+        const prevDataId = $items.eq(prevIndex).data('id');
+        const nextDataId = $items.eq(nextIndex).data('id');
+        if (prevDataId) {
+          $carousel.find('.carousel-control-prev').attr('aria-describedby', 'carousel-caption-' + prevDataId);
         }
-        if (nextId) {
-          $carousel.find('.carousel-control-next').attr('aria-describedby', nextId);
+        if (nextDataId) {
+          $carousel.find('.carousel-control-next').attr('aria-describedby', 'carousel-caption-' + nextDataId);
         }
       };
 
