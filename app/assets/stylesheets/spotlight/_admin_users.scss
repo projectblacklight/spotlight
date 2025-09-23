@@ -1,0 +1,28 @@
+.site-admin-label {
+  display: none;
+}
+
+.site-admin {
+  .site-admin-label {
+    display: inline;
+  }
+}
+
+.user-emails {
+  min-width: 300px;
+}
+
+.user-exhibit-roles {
+  width: 50%;
+
+  details {
+    ul {
+      overflow-y: auto;
+      max-height: 200px;
+    }
+
+    .exhibit-title {
+      font-style: italic;
+    }
+  }
+}

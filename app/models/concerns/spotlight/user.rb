@@ -18,6 +18,10 @@ module Spotlight
       roles.where(role: 'admin', resource: Spotlight::Site.instance).any?
     end
 
+    def all_exhibit_roles
+      roles.includes(:resource).where(resource_type: 'Spotlight::Exhibit')
+    end
+
     def exhibit_roles
       roles.where(resource_type: 'Spotlight::Exhibit').where.not(role: 'viewer')
     end

@@ -2,7 +2,7 @@
 
 module Spotlight
   ##
-  # A controller to handle the adminstration of site admin users
+  # A controller to handle the administration of users
   class AdminUsersController < Spotlight::ApplicationController
     before_action :authenticate_user!
     before_action :load_site
@@ -41,6 +41,16 @@ module Spotlight
     def destroy
       user = Spotlight::Engine.user_class.find(params[:id])
       if user.roles.where(resource: @site).first.destroy
+        flash[:notice] = t('.success')
+      else
+        flash[:error] = t('.error')
+      end
+      redirect_to spotlight.admin_users_path
+    end
+
+    def remove_exhibit_roles
+      user = Spotlight::Engine.user_class.find(params[:id])
+      if user.all_exhibit_roles.destroy_all
         flash[:notice] = t('.success')
       else
         flash[:error] = t('.error')

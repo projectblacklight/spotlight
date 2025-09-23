@@ -5,20 +5,26 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th colspan="2"><%= Spotlight::Engine.user_class.human_attribute_name(:email)  %></th>
+          <th scope="col"><%= Spotlight::Engine.user_class.human_attribute_name(:email) %></th>
+          <th scope="col"><%= t('.site_admin') %></th>
         </tr>
       </thead>
-      <tbody class="table">
+      <tbody>
         <% @site.roles.map(&:user).each do |user| %>
           <tr>
-            <td class="<%= 'invite-pending' if user.invite_pending? %>">
+            <td class="<%= user_badge_classes(user) %>">
               <%= user.email %>
+              <span class="badge bg-secondary site-admin-label"><%= t('.site_admin').downcase %></span>
               <span class='badge bg-warning pending-label'><%= t('.pending') %></span>
             </td>
             <td>
-              <%= link_to(t('.destroy'), admin_user_path(user),
-                    data: { method: :delete, turbo_method: :delete },
-                    class: 'btn btn-sm btn-danger float-end') unless user == current_user %>
+              <%= link_to(t('.destroy'), spotlight.admin_user_path(user),
+                    data: {
+                      method: :delete,
+                      turbo_method: :delete,
+                      turbo_confirm: t('.destroy_confirm', email: user.email)
+                    },
+                    class: 'btn btn-sm btn-danger') unless user == current_user %>
             </td>
           </tr>
         <% end %>
@@ -67,29 +73,63 @@
     <table class="table table-striped ">
       <thead>
         <tr>
-          <th><%= Spotlight::Engine.user_class.human_attribute_name(:email)  %></th>
-          <th><%= Spotlight::Engine.user_class.human_attribute_name(:role)  %></th>
+          <th scope="col"><%= Spotlight::Engine.user_class.human_attribute_name(:email) %></th>
+          <th scope="col"><%= t('.site_admin') %></th>
+          <th scope="col"><%= t('.exhibit_roles') %></th>
         </tr>
       </thead>
-      <tbody class="table">
+      <tbody>
         <% @users.each do |user| %>
           <tr>
-            <td class="<%= 'invite-pending' if user.invite_pending? %>">
-              <%= user.email %>
-              <span class='badge bg-warning pending-label'><%= t('.pending') %></span>
+            <td class="user-emails <%= user_badge_classes(user) %>">
+              <span class="text-break"><%= user.email %></span>
+              <span class="badge bg-secondary site-admin-label"><%= t('.site_admin').downcase %></span>
+              <span class="badge bg-warning pending-label"><%= t('.pending') %></span>
             </td>
-            <td class="role">
-              <%= user.roles.map { |r| r.role.titleize }.uniq.join(", ") %>
-            </td>
-            <td class="text-end">
+            <td>
               <% if user.superadmin? %>
-                <%= link_to(t('.destroy'), admin_user_path(user),
-                      data: { method: :delete, turbo_method: :delete },
-                      class: 'btn btn-sm btn-danger') unless user == current_user %>
+                <%= link_to(t('.destroy'), spotlight.admin_user_path(user),
+                      data: {
+                        method: :delete,
+                        turbo_method: :delete,
+                        turbo_confirm: t('.destroy_confirm', email: user.email)
+                      },
+                      class: 'btn btn-sm btn-danger text-nowrap') unless user == current_user %>
               <% else %>
-                <%= link_to(t('.update'), admin_user_path(user),
+                <%= link_to(t('.update'), spotlight.admin_user_path(user),
                       data: { method: :patch, turbo_method: :patch },
-                      class: 'btn btn-sm btn-primary') %>
+                      class: 'btn btn-sm btn-primary text-nowrap') %>
+              <% end %>
+            </td>
+            <td class="user-exhibit-roles">
+              <% sorted_exhibit_roles = sorted_exhibit_roles(user) %>
+              <% if sorted_exhibit_roles.present? %>
+                <div class="d-flex justify-content-between">
+                  <div><%= sorted_exhibit_roles.map { |r| r.role.titleize }.uniq.join(", ") %></div>
+                  <div>
+                    <%= link_to(t('.remove_roles'), spotlight.remove_exhibit_roles_admin_user_path(user),
+                          data: {
+                            method: :delete,
+                            turbo_method: :delete,
+                            turbo_confirm: t('.remove_roles_confirm', email: user.email)
+                          },
+                          class: 'btn btn-sm btn-danger ms-3 mb-3 text-nowrap') %>
+                  </div>
+                </div>
+                <details>
+                  <summary><%= t('.show_exhibit_roles') %></summary>
+                  <ul>
+                    <% sorted_exhibit_roles.each do |exhibit_role| %>
+                      <li>
+                        <span class="exhibit-title">
+                          <%= link_to(exhibit_role.resource.title, spotlight.exhibit_roles_path(exhibit_role.resource),
+                                target: :_blank) %>
+                        </span>
+                        (<%= exhibit_role.role.titleize %>)
+                      </li>
+                    <% end %>
+                  </ul>
+                </details>
               <% end %>
             </td>
           </tr>
