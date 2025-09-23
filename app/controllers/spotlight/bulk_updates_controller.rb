@@ -24,7 +24,7 @@ module Spotlight
       headers['Content-Disposition'] = "attachment; filename=\"#{current_exhibit.slug}-bulk-update-template.csv\""
       headers.delete('Content-Length')
 
-      self.response_body = csv_template
+      self.response_body = csv_template.to_a
     end
 
     def update

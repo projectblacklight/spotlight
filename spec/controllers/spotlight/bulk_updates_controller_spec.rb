@@ -46,8 +46,7 @@ RSpec.describe Spotlight::BulkUpdatesController, type: :controller do
           updatable_fields: { tags: 0, visibility: 1 }
         }
 
-        body_content = response.body.is_a?(Enumerator) ? response.body.to_a.join : response.body
-        content = CSV.parse(body_content)
+        content = CSV.parse(response.body)
         expect(content.length).to eq(56)
         expect(content[0]).to eq ['Item ID', 'Item Title', 'Visibility']
       end
