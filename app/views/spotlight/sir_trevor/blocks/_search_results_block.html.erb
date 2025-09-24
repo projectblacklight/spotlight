@@ -1,12 +1,12 @@
 <% if search_results_block.searches? %>
 <div class="content-block documents">
-  <% response, document_list = get_search_widget_search_results(search_results_block) %>
+  <% response = get_search_widget_search_results(search_results_block) %>
   <%- unless response.documents.present? %>
     <div class="alert alert-warning">
       <strong>No items to display.</strong> There are currently no items in this exhibit that match the curator's search criteria.
     </div>
   <%- else %>
-      <% @response, @document_list = [response, document_list] %>
+      <% @response = response %>
 
       <% views = blacklight_view_config_for_search_block(search_results_block) %>
       <% if views.length > 1 -%>

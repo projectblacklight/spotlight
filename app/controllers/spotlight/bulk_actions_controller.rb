@@ -39,7 +39,7 @@ module Spotlight
 
     def solr_response
       @solr_response ||= begin
-        response, _docs = search_service.search_results do |builder|
+        response = search_service.search_results do |builder|
           builder.merge(fl: 'id', rows: 0)
         end
 

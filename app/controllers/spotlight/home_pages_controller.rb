@@ -17,7 +17,7 @@ module Spotlight
     end
 
     def show
-      @response, @document_list = search_service.search_results if @page.display_sidebar?
+      @response = search_service.search_results if @page.display_sidebar?
 
       if @page.nil? || !@page.published?
         render '/catalog/index'
