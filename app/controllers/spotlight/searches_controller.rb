@@ -49,7 +49,7 @@ module Spotlight
 
     def autocomplete
       search_params = autocomplete_params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field)
-      (response, _document_list) = search_service.search_results do |builder|
+      response = search_service.search_results do |builder|
         builder.with(search_params)
       end
 

@@ -346,7 +346,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
 
     context 'with search parameters' do
       before do
-        allow(subject).to receive(:search_results).and_return([])
+        allow(subject).to receive(:search_results).and_return(double)
       end
 
       it 'preserves query parameters' do

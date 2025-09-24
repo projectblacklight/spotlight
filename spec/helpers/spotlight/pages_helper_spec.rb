@@ -43,7 +43,7 @@ RSpec.describe Spotlight::PagesHelper, type: :helper do
       SirTrevorRails::Blocks::SearchResultsBlock.new(content, home_page)
     end
 
-    let(:search_result) { [double('response'), double('documents')] }
+    let(:search_result) { double('response') }
 
     it 'returns the results for a given search browse category' do
       expect(helper).to receive(:search_results).with({ 'q' => 'query' }).and_return(search_result)

@@ -73,7 +73,7 @@ module Spotlight
     # setup within their index analyzer. This will ensure that this method returns
     # results when a partial match is passed in the "q" parameter.
     def autocomplete
-      @response, = search_service.search_results do |builder|
+      @response = search_service.search_results do |builder|
         builder.with(builder.blacklight_params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field, public: true, rows: 100))
       end
 
@@ -87,7 +87,7 @@ module Spotlight
     def admin
       add_breadcrumb(t(:'spotlight.curation.sidebar.header'), exhibit_dashboard_path(@exhibit))
       add_breadcrumb(t(:'spotlight.curation.sidebar.items'), admin_exhibit_catalog_path(@exhibit))
-      (@response,) = search_service.search_results
+      @response = search_service.search_results
       @filters = params[:f] || []
 
       respond_to do |format|

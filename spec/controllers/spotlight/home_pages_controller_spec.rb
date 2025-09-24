@@ -49,7 +49,7 @@ RSpec.describe Spotlight::HomePagesController, type: :controller, versioning: tr
 
   describe 'GET show' do
     it 'gets search results for display facets' do
-      allow(controller).to receive_messages(search_results: [double, double])
+      allow(controller).to receive_messages(search_results: double)
       get :show, params: { exhibit_id: exhibit }
       expect(assigns[:response]).not_to be_blank
       expect(assigns[:response]&.documents).not_to be_blank
@@ -58,7 +58,7 @@ RSpec.describe Spotlight::HomePagesController, type: :controller, versioning: tr
 
     it 'does not render breadcrumbs' do
       expect(controller).not_to receive(:add_breadcrumb)
-      allow(controller).to receive_messages(search_results: [double, double])
+      allow(controller).to receive_messages(search_results: double)
       get :show, params: { exhibit_id: exhibit }
       expect(response).to be_successful
     end
@@ -66,7 +66,7 @@ RSpec.describe Spotlight::HomePagesController, type: :controller, versioning: tr
     it 'does not do the search when the sidebar is hidden' do
       page.display_sidebar = false
       page.save
-      allow(controller).to receive_messages(search_results: [double, double])
+      allow(controller).to receive_messages(search_results: double)
       get :show, params: { exhibit_id: exhibit }
       expect(assigns).not_to have_key :response
     end
