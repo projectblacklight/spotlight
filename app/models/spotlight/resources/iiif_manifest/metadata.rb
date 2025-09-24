@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spotlight
   module Resources
     ###
@@ -6,6 +8,7 @@ module Spotlight
     #  This is intended to be overriden by an
     #  application if a different metadata
     #  strucure is used by the consumer
+    #  override with Spotlight::Engine.config.iiif_metadata_class
     class IiifManifest::Metadata
       def initialize(manifest)
         @manifest = manifest
