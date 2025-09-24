@@ -762,7 +762,11 @@ en:
         header: New page
       order_pages:
         cancel: Cancel
-        instructions: Add new pages below. Drag and drop pages to change the order in which they are displayed in the sidebar.
+        instructions_html: |
+          <p>Add new pages below. Drag and drop pages to change the order in which they are displayed in the sidebar.</p>
+          <p><b>Note About Page Titles and URLs</b></p>
+          <p>When renaming pages, keep in mind that Spotlight automatically creates a unique URL (called a slug) based on the page title. If another page is already using that slug—even if it has been renamed—the new page's URL will include extra characters to make it unique.</p>
+          <p><b>Tip:</b> If you want a new or renamed page to have a clean URL (e.g., /collection-highlights), make sure to delete the original page that first used that title before renaming.</p>
         new_page: Add new page
         pages_header: Custom pages
         save: Save
