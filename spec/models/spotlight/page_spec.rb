@@ -241,9 +241,10 @@ RSpec.describe Spotlight::Page, type: :model do
       before { child_page_es.save }
 
       it 'updates the translated child pages with the correct parent association' do
-        expect(child_page_es.parent_page).to eq parent_page
+        expect(child_page_es.parent_page).to be_nil
         parent_page_es.save
         expect(child_page_es.reload.parent_page).to eq parent_page_es
+        expect(child_page.reload.parent_page).to eq parent_page
       end
     end
   end
@@ -294,7 +295,7 @@ RSpec.describe Spotlight::Page, type: :model do
       expect(child_page_es.reload.parent_page).to be_nil
     end
 
-    it 'removes the parent page id when the child page is set to an as-yet-untranslated parent page' do
+    it 'resets the parent page id when the child page is set to an as-yet-untranslated parent page' do
       child_page.update(parent_page: another_page)
       expect(child_page_es.reload.parent_page).to be_nil
     end
