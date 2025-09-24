@@ -2,66 +2,13 @@
 
 module Spotlight
   module Resources
-    ##
-    # A PORO to construct a solr hash for a given IiifManifest
-    class IiifManifest
-      attr_reader :collection
-
-      def initialize(attrs = {})
-        @url = attrs[:url]
-        @manifest = attrs[:manifest]
-        @collection = attrs[:collection]
-        @solr_hash = {}
-      end
-
-      def to_solr(exhibit: nil)
-        @exhibit = exhibit if exhibit
-
-        add_document_id
-        add_label
-        add_thumbnail_url
-        add_full_image_urls
-        add_manifest_url
-        add_image_urls
-        add_metadata
-        add_collection_id
-        solr_hash
-      end
-
-      def with_exhibit(e)
-        @exhibit = e
-      end
-
-      def compound_id
-        Digest::MD5.hexdigest("#{exhibit.id}-#{url}")
-      end
-
+    class IiifManifestV3 < Spotlight::Resources::IiifManifest
       private
-
-      attr_reader :url, :manifest, :exhibit, :solr_hash
-
-      delegate :blacklight_config, to: :exhibit
-
-      def add_document_id
-        solr_hash[exhibit.blacklight_config.document_model.unique_key.to_sym] = compound_id
-      end
-
-      def add_collection_id
-        solr_hash[collection_id_field] = [collection.compound_id] if collection
-      end
-
-      def collection_id_field
-        Spotlight::Engine.config.iiif_collection_id_field
-      end
-
-      def add_manifest_url
-        solr_hash[Spotlight::Engine.config.iiif_manifest_field] = url
-      end
 
       def add_thumbnail_url
         return unless thumbnail_field && manifest['thumbnail'].present?
 
-        solr_hash[thumbnail_field] = manifest['thumbnail']['@id']
+        solr_hash[thumbnail_field] = manifest.thumbnail.map(&:id)
       end
 
       def add_full_image_urls
@@ -121,24 +68,28 @@ module Spotlight
       end
 
       def image_urls
-        @image_urls ||= resources.map do |resource|
-          next unless resource && !resource.service.empty?
-
-          image_url = resource.service['@id']
+        resources.map do |resource|
+          image_url = (resource['id'] || resource['@id']).dup # break reference, otherwise it changes values of other fields
           image_url << '/info.json' unless image_url.downcase.ends_with?('/info.json')
           image_url
         end
       end
 
       def full_image_url
-        resources.first.try(:[], '@id')
+        resources.first.try(:[], 'id') || resources.first.try(:[], '@id')
       end
 
       def resources
-        @resources ||= sequences
-                       .flat_map(&:canvases)
-                       .flat_map(&:images)
-                       .flat_map(&:resource)
+        @resources ||=
+          canvases
+          .flat_map(&:items).select { |item| item.type == 'AnnotationPage' }
+          .flat_map(&:items).select { |item| item.motivation == 'painting' }
+          .flat_map(&:body)
+          .flat_map(&:service)
+      end
+
+      def canvases
+        manifest.try(:items).select { |canvas| canvas.type == 'Canvas' }
       end
 
       def sequences

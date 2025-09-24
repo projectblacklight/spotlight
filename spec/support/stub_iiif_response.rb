@@ -17,6 +17,7 @@ module StubIiifResponse
     stub_iiif_response_for_url('uri://for-manifest2', test_manifest2)
     stub_iiif_response_for_url('uri://for-manifest3', test_manifest3)
     stub_iiif_response_for_url('uri://for-manifest4', test_manifest4)
+    stub_iiif_response_for_url('uri://for-v3-manifest', test_v3_manifest)
   end
 end
 

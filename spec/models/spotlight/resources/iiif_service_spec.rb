@@ -37,21 +37,53 @@ RSpec.describe Spotlight::Resources::IiifService do
   end
 
   describe '#parse' do
-    let(:manifests) { described_class.parse(url) }
+    let(:parsed) { described_class.parse(url) }
 
-    it 'recursively traverses all all the collections and returns manifests' do
-      expect(manifests).to be_all do |manifest|
-        manifest.is_a?(Spotlight::Resources::IiifManifest)
+    context 'for a collection manifest' do
+      it 'recursively traverses all all the collections and returns manifests' do
+        expect(parsed).to be_all do |manifest|
+          manifest.is_a?(Spotlight::Resources::IiifManifest)
+        end
+      end
+
+      it 'returns manifests representing collection documents' do
+        expect(parsed.count).to eq 8
+      end
+
+      it 'keeps track of the parent collection' do
+        arr = parsed.to_a
+        expect(arr[1].collection).to eq arr[0]
       end
     end
 
-    it 'returns manifests representing collection documents' do
-      expect(manifests.count).to eq 8
+    context 'for a v3 manifest' do
+      let(:url) { 'uri://for-v3-manifest' }
+
+      it 'returns a v3 manifest object' do
+        klass = parsed.first.class
+        expect(klass).to eq Spotlight::Resources::IiifManifestV3
+      end
+    end
+  end
+
+  # TODO: remove this, it's a protected method, just supporting development
+  describe '#object' do
+    let(:object) { described_class.new(url).send(:object) }
+
+    context 'for a v2 manifest' do
+      let(:url) { 'uri://for-manifest1' }
+
+      it 'returns a v2 manifest object' do
+        expect(object.class).to eq IIIF::Presentation::Manifest
+      end
     end
 
-    it 'keeps track of the parent collection' do
-      arr = manifests.to_a
-      expect(arr[1].collection).to eq arr[0]
+    context 'for a v3 manifest' do
+      let(:url) { 'uri://for-v3-manifest' }
+
+      it 'returns a v3 manifest object' do
+        expect(object.class).to eq IIIF::V3::Presentation::Manifest
+      end
     end
   end
 end
