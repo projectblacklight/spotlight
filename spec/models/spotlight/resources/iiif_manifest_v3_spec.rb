@@ -80,7 +80,7 @@ RSpec.describe Spotlight::Resources::IiifManifestV3 do
     describe 'metadata' do
       it 'includes the top-level attribution' do
         expect(subject.to_solr['readonly_attribution_tesim']).to eq [
-          '<span>Glen Robson, IIIF Technical Coordinator. <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a> <a href="https://creativecommons.org/licenses/by-sa/3.0" title="CC BY-SA 3.0"><img src="https://licensebuttons.net/l/by-sa/3.0/88x31.png"/></a></span>'
+          '<span>Glen Robson, IIIF Technical Coordinator. <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>'
         ]
       end
 
