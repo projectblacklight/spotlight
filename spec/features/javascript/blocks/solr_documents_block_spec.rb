@@ -140,6 +140,8 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
       expect(page).to have_css('.primary-caption', text: '[World map]')
       expect(page).to have_css('.secondary-caption', text: 'Latin')
     end
+
+    expect(page).to be_axe_clean.within '#content'
   end
 
   it 'allows you to optionally display a ZPR link with the image', js: true do
@@ -149,6 +151,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
 
     save_page_changes
 
+    expect(page).to be_axe_clean.within '#content'
     within '.contents' do
       click_button 'View [World map] larger'
     end

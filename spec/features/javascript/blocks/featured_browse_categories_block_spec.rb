@@ -32,6 +32,8 @@ RSpec.describe 'Featured Browse Category Block', js: true, type: :feature do
     expect(page).to have_no_css('.category-title', text: search1.title)
     expect(page).to have_css('.category-title', text: search2.title)
     expect(page).to have_css('.item-count', text: /\d+ items/i)
+
+    expect(page).to be_axe_clean.within '#content'
   end
 
   it 'allows the curator to omit document counts' do
