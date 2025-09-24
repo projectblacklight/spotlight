@@ -15,7 +15,7 @@
         <% elsif doc_presenter.thumbnail.exists? %>
           <%= doc_presenter.thumbnail.thumbnail_tag({ alt: resource_alt_text(block_options, doc_presenter.heading) }, document_counter: -1) %>
         <% end %>
-        <div class="carousel-caption">
+        <div class="carousel-caption" id="carousel-caption-<%= document.id %>">
           <% if solr_documents_carousel_block.primary_caption? %>
             <h3 class="primary">
               <%= solr_documents_carousel_block.document_caption(doc_presenter, solr_documents_carousel_block.primary_caption_field) %>
@@ -40,10 +40,12 @@
     </ol>
 
     <!-- Controls -->
-    <a class="left carousel-control-prev" href="#<%= html_id %>" data-bs-slide="prev">
+    <a class="left carousel-control-prev" href="#<%= html_id %>" data-bs-slide="prev"
+      aria-label="<%= t('spotlight.sir_trevor.blocks.solr_documents_carousel_block.controls.previous_item') %>">
       <%= blacklight_icon('arrow_back_ios') %>
     </a>
-    <a class="right carousel-control-next" href="#<%= html_id %>" data-bs-slide="next">
+    <a class="right carousel-control-next" href="#<%= html_id %>" data-bs-slide="next"
+      aria-label="<%= t('spotlight.sir_trevor.blocks.solr_documents_carousel_block.controls.next_item') %>">
       <%= blacklight_icon('arrow_forward_ios') %>
     </a>
   </div>

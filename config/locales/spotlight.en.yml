@@ -994,6 +994,10 @@ en:
             other: "%{count} items"
         solr_documents_block:
           zpr_link_html: View <span class="visually-hidden">%{title}</span> larger
+        solr_documents_carousel_block:
+          controls:
+            next_item: Next item
+            previous_item: Previous item
         uploaded_items_block:
           zpr_link_html: View <span class="visually-hidden">%{title}</span> larger
     sites:
