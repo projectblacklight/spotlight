@@ -24,7 +24,7 @@ module Spotlight
       headers['Content-Disposition'] = "attachment; filename=\"#{current_exhibit.slug}-bulk-update-template.csv\""
       headers.delete('Content-Length')
 
-      self.response_body = csv_template
+      stream_csv_template
     end
 
     def update
@@ -43,14 +43,29 @@ module Spotlight
 
     private
 
+    def stream_csv_template
+      csv_template.each do |row|
+        response.stream.write row
+      end
+    ensure
+      response.stream.close
+    end
+
     def csv_template
-      boolean = ActiveModel::Type::Boolean.new
-      Spotlight::BulkUpdatesCsvTemplateService.new(exhibit: current_exhibit).template(
-        view_context:,
-        title: boolean.cast(reference_field_params[:item_title]),
-        tags: boolean.cast(updatable_field_params[:tags]),
-        visibility: boolean.cast(updatable_field_params[:visibility])
+      @csv_template ||= csv_template_service.template(
+        view_context: view_context,
+        title: active_model_boolean.cast(reference_field_params[:item_title]),
+        visibility: active_model_boolean.cast(updatable_field_params[:visibility]),
+        tags: active_model_boolean.cast(updatable_field_params[:tags])
       )
+    end
+
+    def csv_template_service
+      @csv_template_service ||= Spotlight::BulkUpdatesCsvTemplateService.new(exhibit: current_exhibit)
+    end
+
+    def active_model_boolean
+      @active_model_boolean ||= ActiveModel::Type::Boolean.new
     end
 
     def reference_field_params
