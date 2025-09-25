@@ -213,13 +213,22 @@ en:
         admins_curators: Administrators and curators of all exhibits
         all_users: All registered users
         copy: Copy
-        create: Add new administrator
-        destroy: Remove from admin role
-        instructions: Existing exhibits administrators
+        create: Add new site admin
+        destroy: Remove site admin role
+        destroy_confirm: Are you sure you want to remove the site admin role for %{email}?
+        exhibit_roles: Exhibit roles
+        instructions: Existing exhibits site administrators
         page_title: Manage users
         pending: pending
+        remove_roles: Remove all exhibit roles
+        remove_roles_confirm: Are you sure you want to remove all exhibit roles for %{email}?
         save: Add role
-        update: Make user an administrator
+        show_exhibit_roles: Show exhibit title (role)
+        site_admin: Site admin
+        update: Make user a site admin
+      remove_exhibit_roles:
+        error: There was a problem removing the user's exhibit roles
+        success: Removed all exhibit roles for user
     appearances:
       edit:
         header: Appearance

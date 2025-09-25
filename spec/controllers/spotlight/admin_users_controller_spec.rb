@@ -39,6 +39,17 @@ RSpec.describe Spotlight::AdminUsersController, type: :controller do
       end
     end
 
+    describe 'DELETE remove_exhibit_roles' do
+      let(:exhibit_admin) { FactoryBot.create(:exhibit_admin) }
+
+      it 'removes all exhibit roles from the given user' do
+        delete :remove_exhibit_roles, params: { id: exhibit_admin.id }
+        expect(response).to redirect_to(admin_users_path)
+        expect(flash[:notice]).to eq 'Removed all exhibit roles for user'
+        expect(exhibit_admin.roles.where(resource_type: 'Spotlight::Exhibit')).to be_none
+      end
+    end
+
     describe 'PATCH update' do
       let(:non_admin) { FactoryBot.create(:exhibit_visitor) }
 

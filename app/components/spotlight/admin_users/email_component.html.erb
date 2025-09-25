@@ -1,0 +1,5 @@
+<%= content_tag :div, class: user_badge_classes do %>
+  <span class="text-break"><%= user.email %></span>
+  <span class="badge bg-secondary site-admin-label"><%= t('spotlight.admin_users.index.site_admin').downcase %></span>
+  <span class="badge bg-warning pending-label"><%= t('spotlight.admin_users.index.pending') %></span>
+<% end %>

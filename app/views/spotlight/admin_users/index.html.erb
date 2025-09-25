@@ -5,20 +5,18 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th colspan="2"><%= Spotlight::Engine.user_class.human_attribute_name(:email)  %></th>
+          <th scope="col"><%= Spotlight::Engine.user_class.human_attribute_name(:email) %></th>
+          <th scope="col"><%= t('.site_admin') %></th>
         </tr>
       </thead>
-      <tbody class="table">
+      <tbody>
         <% @site.roles.map(&:user).each do |user| %>
           <tr>
-            <td class="<%= 'invite-pending' if user.invite_pending? %>">
-              <%= user.email %>
-              <span class='badge bg-warning pending-label'><%= t('.pending') %></span>
+            <td>
+              <%= render Spotlight::AdminUsers::EmailComponent.new(user:) %>
             </td>
             <td>
-              <%= link_to(t('.destroy'), admin_user_path(user),
-                    data: { method: :delete, turbo_method: :delete },
-                    class: 'btn btn-sm btn-danger float-end') unless user == current_user %>
+              <%= render Spotlight::AdminUsers::SiteAdminComponent.new(user:) %>
             </td>
           </tr>
         <% end %>
@@ -67,30 +65,22 @@
     <table class="table table-striped ">
       <thead>
         <tr>
-          <th><%= Spotlight::Engine.user_class.human_attribute_name(:email)  %></th>
-          <th><%= Spotlight::Engine.user_class.human_attribute_name(:role)  %></th>
+          <th scope="col"><%= Spotlight::Engine.user_class.human_attribute_name(:email) %></th>
+          <th scope="col"><%= t('.site_admin') %></th>
+          <th scope="col"><%= t('.exhibit_roles') %></th>
         </tr>
       </thead>
-      <tbody class="table">
+      <tbody>
         <% @users.each do |user| %>
           <tr>
-            <td class="<%= 'invite-pending' if user.invite_pending? %>">
-              <%= user.email %>
-              <span class='badge bg-warning pending-label'><%= t('.pending') %></span>
+            <td class="user-emails">
+              <%= render Spotlight::AdminUsers::EmailComponent.new(user:) %>
             </td>
-            <td class="role">
-              <%= user.roles.map { |r| r.role.titleize }.uniq.join(", ") %>
+            <td>
+              <%= render Spotlight::AdminUsers::SiteAdminComponent.new(user:) %>
             </td>
-            <td class="text-end">
-              <% if user.superadmin? %>
-                <%= link_to(t('.destroy'), admin_user_path(user),
-                      data: { method: :delete, turbo_method: :delete },
-                      class: 'btn btn-sm btn-danger') unless user == current_user %>
-              <% else %>
-                <%= link_to(t('.update'), admin_user_path(user),
-                      data: { method: :patch, turbo_method: :patch },
-                      class: 'btn btn-sm btn-primary') %>
-              <% end %>
+            <td class="user-exhibit-roles">
+              <%= render Spotlight::AdminUsers::ExhibitRolesComponent.new(user:) %>
             </td>
           </tr>
         <% end %>

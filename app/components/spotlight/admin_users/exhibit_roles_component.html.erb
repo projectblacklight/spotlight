@@ -1,0 +1,28 @@
+<% if sorted_exhibit_roles.present? %>
+  <div class="d-flex justify-content-between">
+    <div><%= sorted_exhibit_roles.map { |r| r.role.titleize }.uniq.join(", ") %></div>
+    <div>
+      <%= link_to(t('spotlight.admin_users.index.remove_roles'), helpers.spotlight.remove_exhibit_roles_admin_user_path(user),
+            data: {
+              method: :delete,
+              turbo_method: :delete,
+              turbo_confirm: t('spotlight.admin_users.index.remove_roles_confirm', email: user.email)
+            },
+            class: 'btn btn-sm btn-danger ms-3 mb-3 text-nowrap') %>
+    </div>
+  </div>
+  <details>
+    <summary><%= t('spotlight.admin_users.index.show_exhibit_roles') %></summary>
+    <ul>
+      <% sorted_exhibit_roles.each do |exhibit_role| %>
+        <li>
+          <span class="exhibit-title">
+            <%= link_to(exhibit_role.resource.title, helpers.spotlight.exhibit_roles_path(exhibit_role.resource),
+                  target: :_blank) %>
+          </span>
+          (<%= exhibit_role.role.titleize %>)
+        </li>
+      <% end %>
+    </ul>
+  </details>
+<% end %>

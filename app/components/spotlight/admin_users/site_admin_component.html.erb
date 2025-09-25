@@ -1,0 +1,13 @@
+<% if user.superadmin? %>
+  <%= link_to(t('spotlight.admin_users.index.destroy'), helpers.admin_user_path(user),
+        data: {
+          method: :delete,
+          turbo_method: :delete,
+          turbo_confirm: t('spotlight.admin_users.index.destroy_confirm', email: user.email)
+        },
+        class: 'btn btn-sm btn-danger text-nowrap') unless user == current_user %>
+<% else %>
+  <%= link_to(t('spotlight.admin_users.index.update'), helpers.admin_user_path(user),
+        data: { method: :patch, turbo_method: :patch },
+        class: 'btn btn-sm btn-primary text-nowrap') %>
+<% end %>
