@@ -12,8 +12,12 @@ class CatalogController < ApplicationController
     # config.view.gallery.classes = 'row-cols-2 row-cols-md-3'
     config.view.masonry(document_component: Blacklight::Gallery::DocumentComponent, icon: Blacklight::Gallery::Icons::MasonryComponent)
     config.view.slideshow(document_component: Blacklight::Gallery::SlideshowComponent, icon: Blacklight::Gallery::Icons::SlideshowComponent)
+    config.view.embed(if: false,
+                      partials: [],
+                      document_component: Spotlight::SolrDocumentLegacyEmbedComponent,
+                      embed_component: Blacklight::Gallery::OpenseadragonEmbedComponent)
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
-    config.show.partials.insert(1, :openseadragon)
+    config.show.embed_component = Blacklight::Gallery::OpenseadragonEmbedComponent
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = {
       qt: 'search',

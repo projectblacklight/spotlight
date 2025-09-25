@@ -121,11 +121,7 @@ module Spotlight
         config.default_per_page = default_per_page if default_per_page
 
         config.view.embed!
-        # This is blacklight-gallery's openseadragon partial
-        unless config.view.embed.document_component
-          config.view.embed.partials ||= ['openseadragon']
-          config.view.embed.document_component = Spotlight::SolrDocumentLegacyEmbedComponent
-        end
+        config.view.embed.document_component = Spotlight::SolrDocumentLegacyEmbedComponent unless config.view.embed.document_component
         config.view.embed.if = false
 
         # blacklight-gallery requires tile_source_field
