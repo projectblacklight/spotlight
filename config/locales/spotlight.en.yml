@@ -770,6 +770,8 @@ en:
         new_page: Add new page
         pages_header: Custom pages
         save: Save
+      show:
+        default_page_title: Main Content
     resources:
       csv_upload:
         form:

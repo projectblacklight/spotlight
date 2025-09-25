@@ -37,7 +37,6 @@ RSpec.describe 'Solr Documents Embed Block', :js, type: :feature do
   end
 
   it 'is accessible' do
-    pending 'heading updates from https://github.com/projectblacklight/spotlight/issues/3535'
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
     fill_in 'Heading', with: 'A Heading'
     save_page_changes
