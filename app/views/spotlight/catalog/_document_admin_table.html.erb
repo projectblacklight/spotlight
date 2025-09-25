@@ -10,10 +10,6 @@
     </tr>
   </thead>
 
-  <% if Blacklight.version < '8.0' %>
-    <%= render (view_config.document_component || Spotlight::DocumentAdminTableComponent).with_collection(documents) %>
-  <% else %>
-    <% document_presenters = documents.map { |doc| document_presenter(doc) } -%>
-    <%= render view_config.document_component.with_collection(document_presenters) %>
-  <% end %>
+  <% document_presenters = documents.map { |doc| document_presenter(doc) } -%>
+  <%= render view_config.document_component.with_collection(document_presenters) %>
 </table>

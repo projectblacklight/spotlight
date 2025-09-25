@@ -4,11 +4,7 @@ module Spotlight
   ##
   # Helpers that are injected into the main application (because they used in layouts)
   module MainAppHelpers
-    if Blacklight.version < '8'
-      include Blacklight::BlacklightHelperBehavior
-    else
-      include Blacklight::DocumentHelperBehavior
-    end
+    include Blacklight::DocumentHelperBehavior
     include Spotlight::NavbarHelper
     include Spotlight::MastheadHelper
 

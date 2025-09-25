@@ -79,13 +79,6 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
         expect(response).to be_successful
       end
 
-      it 'adds the curation widget for legacy applications' do
-        skip if Blacklight::VERSION > '8'
-
-        get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
-        expect(controller.blacklight_config.show.partials.first).to eq 'curation_mode_toggle'
-      end
-
       it 'does not have a solr_json serialization' do
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352', format: :solr_json }
         expect(response).not_to be_successful

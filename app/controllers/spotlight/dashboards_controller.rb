@@ -16,11 +16,7 @@ module Spotlight
 
       blacklight_config.index.document_component = Spotlight::DocumentAdminTableComponent
       blacklight_config.index.document_actions = []
-      if Blacklight::VERSION > '8'
-        blacklight_config.track_search_session.storage = false
-      else
-        blacklight_config.track_search_session = false
-      end
+      blacklight_config.track_search_session.storage = false
     end
 
     def show
