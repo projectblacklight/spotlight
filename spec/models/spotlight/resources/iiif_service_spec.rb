@@ -65,25 +65,4 @@ RSpec.describe Spotlight::Resources::IiifService do
       end
     end
   end
-
-  # TODO: remove this, it's a protected method, just supporting development
-  describe '#object' do
-    let(:object) { described_class.new(url).send(:object) }
-
-    context 'for a v2 manifest' do
-      let(:url) { 'uri://for-manifest1' }
-
-      it 'returns a v2 manifest object' do
-        expect(object.class).to eq IIIF::Presentation::Manifest
-      end
-    end
-
-    context 'for a v3 manifest' do
-      let(:url) { 'uri://for-v3-manifest' }
-
-      it 'returns a v3 manifest object' do
-        expect(object.class).to eq IIIF::V3::Presentation::Manifest
-      end
-    end
-  end
 end

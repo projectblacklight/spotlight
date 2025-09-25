@@ -67,13 +67,13 @@ RSpec.describe Spotlight::Resources::IiifManifestV3 do
 
     describe 'full size image url' do
       it 'is included in the solr document' do
-        expect(subject.to_solr[:full_image_url_ssm]).to eq 'https://iiif-cloud.princeton.edu/iiif/2/e2%2Fba%2F71%2Fe2ba715dae604c948c5380ed731ba01f%2Fintermediate_file'
+        expect(subject.to_solr[:full_image_url_ssm]).to eq 'https://iiif-cloud.example.org/iiif/2/for-v3-manifest/image-1/intermediate_file'
       end
     end
 
     describe 'info url' do
       it 'is included in the solr document when present' do
-        expect(subject.to_solr[:content_metadata_image_iiif_info_ssm]).to eq ['https://iiif-cloud.princeton.edu/iiif/2/e2%2Fba%2F71%2Fe2ba715dae604c948c5380ed731ba01f%2Fintermediate_file/info.json']
+        expect(subject.to_solr[:content_metadata_image_iiif_info_ssm]).to eq ['https://iiif-cloud.example.org/iiif/2/for-v3-manifest/image-1/intermediate_file/info.json']
       end
     end
 
@@ -106,11 +106,11 @@ RSpec.describe Spotlight::Resources::IiifManifestV3 do
       end
 
       it 'exhibit custom fields are created for the necessary fields' do
-        expect { subject.to_solr }.to change(Spotlight::CustomField, :count).by(20)
+        expect { subject.to_solr }.to change(Spotlight::CustomField, :count).by(8)
       end
 
       it 'creates read-only custom fields' do
-        expect { subject.to_solr }.to change(Spotlight::CustomField.where(readonly_field: true), :count).by(20)
+        expect { subject.to_solr }.to change(Spotlight::CustomField.where(readonly_field: true), :count).by(8)
       end
 
       context 'custom class' do

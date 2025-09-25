@@ -314,12 +314,10 @@ module IiifResponses
     {
       '@context' => [
         'http://www.w3.org/ns/anno.jsonld',
-        'http://iiif.io/api/presentation/3/context.json',
-        'http://iiif.io/api/extension/navplace/context.json'
+        'http://iiif.io/api/presentation/3/context.json'
       ],
       'type' => 'Manifest',
       'id' => 'uri://for-v3-manifest',
-      # 'id' => 'https://figgy.princeton.edu/concern/scanned_maps/3c184604-3f83-4b42-a1f5-96e417a9cd39/manifest',
       'label' => {
         'eng' => [
           'A Map of the British and French settlements in North America'
@@ -336,18 +334,6 @@ module IiifResponses
         'individuals'
       ],
       'metadata' => [
-        {
-          'label' => {
-            'eng' => [
-              'Alternative'
-            ]
-          },
-          'value' => {
-            'eng' => [
-              'Fort Frederick at Crown Point built by the French, 1731'
-            ]
-          }
-        },
         {
           'label' => {
             'eng' => [
@@ -376,18 +362,6 @@ module IiifResponses
         {
           'label' => {
             'eng' => [
-              'Provenance'
-            ]
-          },
-          'value' => {
-            'eng' => [
-              'Princeton'
-            ]
-          }
-        },
-        {
-          'label' => {
-            'eng' => [
               'Contributor'
             ]
           },
@@ -400,85 +374,12 @@ module IiifResponses
         {
           'label' => {
             'eng' => [
-              'Date'
-            ]
-          },
-          'value' => {
-            'eng' => [
-              '1755'
-            ]
-          }
-        },
-        {
-          'label' => {
-            'eng' => [
-              'Language'
-            ]
-          },
-          'value' => {
-            'eng' => [
-              'English'
-            ]
-          }
-        },
-        {
-          'label' => {
-            'eng' => [
-              'Local Identifier'
-            ]
-          },
-          'value' => {
-            'eng' => %w[
-              p02873d24h
-              PUmap_9170
-            ]
-          }
-        },
-        {
-          'label' => {
-            'eng' => [
-              'Publisher'
-            ]
-          },
-          'value' => {
-            'eng' => [
-              '[London] J. Hinton [1755]'
-            ]
-          }
-        },
-        {
-          'label' => {
-            'eng' => [
-              'Subject'
-            ]
-          },
-          'value' => {
-            'eng' => [
-              'France—Colonies—America—Maps—Early works to 1800'
-            ]
-          }
-        },
-        {
-          'label' => {
-            'eng' => [
               'Cartographic Scale'
             ]
           },
           'value' => {
             'eng' => [
               'Scale [ca. 1:10,000,000].'
-            ]
-          }
-        },
-        {
-          'label' => {
-            'eng' => [
-              'Source Metadata Identifier'
-            ]
-          },
-          'value' => {
-            'eng' => [
-              '9952772633506421'
             ]
           }
         },
@@ -505,57 +406,6 @@ module IiifResponses
               'Electronic Resource'
             ]
           }
-        },
-        {
-          'label' => {
-            'eng' => [
-              'Location'
-            ]
-          },
-          'value' => {
-            'eng' => [
-              'MAP HMC01.1058',
-              'MAP Electronic Resource',
-              'ELF1 HMC01.1058',
-              'ELF1 Electronic Resource'
-            ]
-          }
-        },
-        {
-          'label' => {
-            'eng' => [
-              'Downloadable'
-            ]
-          },
-          'value' => {
-            'eng' => [
-              'public'
-            ]
-          }
-        },
-        {
-          'label' => {
-            'eng' => [
-              'Held By'
-            ]
-          },
-          'value' => {
-            'eng' => [
-              'Princeton'
-            ]
-          }
-        },
-        {
-          'label' => {
-            'eng' => [
-              'Ark'
-            ]
-          },
-          'value' => {
-            'eng' => [
-              'http://arks.princeton.edu/ark:/88435/z603r034k'
-            ]
-          }
         }
       ],
       'rendering' => [
@@ -567,10 +417,10 @@ module IiifResponses
             ]
           },
           'format' => 'application/pdf',
-          'id' => 'https://figgy.princeton.edu/concern/scanned_maps/3c184604-3f83-4b42-a1f5-96e417a9cd39/pdf'
+          'id' => 'https://example.org/concern/scanned_maps/for-v3-manifest/pdf'
         },
         {
-          'id' => 'http://arks.princeton.edu/ark:/88435/z603r034k',
+          'id' => 'http://example.org/for-v3-manifest/permanent-link',
           'format' => 'text/html',
           'type' => 'Text',
           'label' => {
@@ -583,7 +433,7 @@ module IiifResponses
       'items' => [
         {
           'type' => 'Canvas',
-          'id' => 'https://figgy.princeton.edu/concern/scanned_maps/3c184604-3f83-4b42-a1f5-96e417a9cd39/manifest/canvas/e6069b67-5662-466b-afd4-66cd43b2002b',
+          'id' => 'https://example.org/concern/scanned_maps/for-v3-manifest/manifest/canvas/image-1',
           'items' => [
             {
               'type' => 'AnnotationPage',
@@ -592,23 +442,23 @@ module IiifResponses
                   'type' => 'Annotation',
                   'motivation' => 'painting',
                   'body' => {
-                    'id' => 'https://iiif-cloud.princeton.edu/iiif/2/e2%2Fba%2F71%2Fe2ba715dae604c948c5380ed731ba01f%2Fintermediate_file/full/1000,/0/default.jpg',
+                    'id' => 'https://iiif-cloud.example.org/iiif/2/for-v3-manifest/image-1/intermediate_file/full/1000,/0/default.jpg',
                     'type' => 'Image',
                     'height' => 4468,
                     'width' => 5998,
                     'format' => 'image/jpeg',
                     'service' =>
                       {
-                        '@id' => 'https://iiif-cloud.princeton.edu/iiif/2/e2%2Fba%2F71%2Fe2ba715dae604c948c5380ed731ba01f%2Fintermediate_file',
+                        '@id' => 'https://iiif-cloud.example.org/iiif/2/for-v3-manifest/image-1/intermediate_file',
                         'profile' => 'http://iiif.io/api/image/2/level2.json',
                         '@type' => 'ImageService2'
                       }
                   },
-                  'id' => 'https://figgy.princeton.edu/concern/scanned_maps/3c184604-3f83-4b42-a1f5-96e417a9cd39/manifest/canvas/e6069b67-5662-466b-afd4-66cd43b2002b/annotation_page/145c3782-b2b0-4e5c-8f1f-4b465f661530/annotation/73519466-bb68-4238-aea9-6256a67280c9',
-                  'target' => 'https://figgy.princeton.edu/concern/scanned_maps/3c184604-3f83-4b42-a1f5-96e417a9cd39/manifest/canvas/e6069b67-5662-466b-afd4-66cd43b2002b'
+                  'id' => 'https://example.org/concern/scanned_maps/for-v3-manifest/manifest/canvas/image-1/annotation_page/page-1/annotation/annotation-1',
+                  'target' => 'https://example.org/concern/scanned_maps/for-v3-manifest/manifest/canvas/image-1'
                 }
               ],
-              'id' => 'https://figgy.princeton.edu/concern/scanned_maps/3c184604-3f83-4b42-a1f5-96e417a9cd39/manifest/canvas/e6069b67-5662-466b-afd4-66cd43b2002b/annotation_page/145c3782-b2b0-4e5c-8f1f-4b465f661530'
+              'id' => 'https://example.org/concern/scanned_maps/for-v3-manifest/manifest/canvas/image-1/annotation_page/page-1'
             }
           ],
           'label' => {
@@ -618,14 +468,14 @@ module IiifResponses
           },
           'thumbnail' => [
             {
-              'id' => 'https://iiif-cloud.princeton.edu/iiif/2/e2%2Fba%2F71%2Fe2ba715dae604c948c5380ed731ba01f%2Fintermediate_file/full/!200,200/0/default.jpg',
+              'id' => 'https://iiif-cloud.example.org/iiif/2/for-v3-manifest/image-1/intermediate_file/full/!200,200/0/default.jpg',
               'type' => 'Image',
               'height' => 149,
               'width' => 200,
               'format' => 'image/jpeg',
               'service' =>
                 {
-                  '@id' => 'https://iiif-cloud.princeton.edu/iiif/2/e2%2Fba%2F71%2Fe2ba715dae604c948c5380ed731ba01f%2Fintermediate_file',
+                  '@id' => 'https://iiif-cloud.example.org/iiif/2/for-v3-manifest/image-1/intermediate_file',
                   'profile' => 'http://iiif.io/api/image/2/level2.json',
                   '@type' => 'ImageService2'
                 }
@@ -634,7 +484,7 @@ module IiifResponses
           'local_identifier' => 'p6w926v351',
           'rendering' => [
             {
-              'id' => 'https://figgy.princeton.edu/downloads/e6069b67-5662-466b-afd4-66cd43b2002b/file/3f25a806-11fd-4ae3-b54f-275752376ef9',
+              'id' => 'https://example.org/downloads/for-v3-manifest/file/image-1',
               'format' => 'image/tiff',
               'type' => 'Dataset',
               'label' => {
@@ -654,18 +504,6 @@ module IiifResponses
           'type' => 'Image',
           'format' => 'image/jpeg',
           'height' => 150
-        }
-      ],
-      'seeAlso' => [
-        {
-          'id' => 'https://figgy.princeton.edu/catalog/3c184604-3f83-4b42-a1f5-96e417a9cd39.jsonld',
-          'type' => 'Dataset',
-          'format' => 'application/ld+json'
-        },
-        {
-          'id' => 'https://catalog.princeton.edu/catalog/9952772633506421.marcxml',
-          'type' => 'Dataset',
-          'format' => 'text/xml'
         }
       ],
       'rights' => 'http://rightsstatements.org/vocab/NKC/1.0/',
@@ -692,7 +530,7 @@ module IiifResponses
           },
           'logo' => [
             {
-              'id' => 'https://figgy.princeton.edu/pul_logo_icon.png',
+              'id' => 'https://example.org/pul_logo_icon.png',
               'type' => 'Image',
               'format' => 'image/png',
               'height' => 100,
