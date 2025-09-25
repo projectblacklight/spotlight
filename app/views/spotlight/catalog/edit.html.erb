@@ -1,13 +1,8 @@
 <div class="container">
   <div class="row">
     <%- view_config = blacklight_config.view_config(action_name: :edit) %>
-    <%= render (view_config.document_component || Blacklight::DocumentComponent).new((Blacklight.version > '8.0' ? :document : :presenter) => document_presenter(@document), classes: ['col-md-8'], component: :div, show: true, partials: view_config.partials) do |component| %>
+    <%= render (view_config.document_component || Blacklight::DocumentComponent).new(document: document_presenter(@document), classes: ['col-md-8'], component: :div, show: true, partials: view_config.partials) do |component| %>
       <% component.with_title(as: 'h1', classes: '', link_to_document: false) %>
-      <% component.with_body do %>
-        <% view_config.partials.each do |view_partial| %>
-          <%= render_document_partial @document, view_partial, component: component, document_counter: 1 %>
-        <% end %>
-      <% end if Blacklight.version < '8.0' && view_config.document_component.blank? %>
     <% end %>
     <div class="col-md-4">
       <%= render 'edit_default', document: @document %>

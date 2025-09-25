@@ -264,31 +264,16 @@ module Spotlight
 
     config.spambot_honeypot_email_field = :email_address
 
-    if Blacklight::VERSION > '8'
-      Blacklight::Configuration.default_configuration do
-        # Field containing the last modified date for a Solr document
-        Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
+    Blacklight::Configuration.default_configuration do
+      # Field containing the last modified date for a Solr document
+      Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
 
-        # Default configuration for the browse view
-        Blacklight::Configuration.property :browse, default: Blacklight::OpenStructWithHashAccess.new(document_actions: [])
+      # Default configuration for the browse view
+      Blacklight::Configuration.property :browse, default: Blacklight::OpenStructWithHashAccess.new(document_actions: [])
 
-        Blacklight::Configuration.default_values[:search_state_fields] ||= []
-        Blacklight::Configuration.default_values[:search_state_fields] += %i[id exhibit_id browse_category_id]
-        Blacklight::Configuration.default_values[:skip_link_component] = Spotlight::SkipLinkComponent
-      end
-    else
-      config.to_prepare do
-        Blacklight::Configuration.try(:initialize_default_configuration) unless Blacklight::Configuration.try(:initialized_default_configuration?)
-
-        # Field containing the last modified date for a Solr document
-        Blacklight::Configuration.default_values[:index].timestamp_field ||= 'timestamp'
-
-        # Default configuration for the browse view
-        Blacklight::Configuration.default_values[:browse] ||= Blacklight::OpenStructWithHashAccess.new(document_actions: [])
-
-        Blacklight::Configuration.default_values[:search_state_fields] ||= []
-        Blacklight::Configuration.default_values[:search_state_fields] += %i[id exhibit_id browse_category_id]
-      end
+      Blacklight::Configuration.default_values[:search_state_fields] ||= []
+      Blacklight::Configuration.default_values[:search_state_fields] += %i[id exhibit_id browse_category_id]
+      Blacklight::Configuration.default_values[:skip_link_component] = Spotlight::SkipLinkComponent
     end
 
     # make blacklight configuration play nice with bootstrap_form

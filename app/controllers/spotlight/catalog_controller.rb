@@ -24,14 +24,10 @@ module Spotlight
     before_action :load_document, only: %i[edit update make_private make_public manifest]
 
     before_action only: :show do
-      # Substitute the default document component with the custom one for Blacklight 8,
-      # and add the necessary partials for Blacklight 7 (if they haven't configured the document component)
+      # Substitute the default document component with the custom one for Blacklight 8
+      # (if they haven't configured the document component)
       if blacklight_config.show.document_component.nil? || blacklight_config.show.document_component == Blacklight::DocumentComponent
-        if Blacklight::VERSION > '8'
-          blacklight_config.show.document_component = Spotlight::DocumentComponent
-        else
-          blacklight_config.show.partials.unshift 'curation_mode_toggle'
-        end
+        blacklight_config.show.document_component = Spotlight::DocumentComponent
       end
     end
 
@@ -42,13 +38,9 @@ module Spotlight
                                            partials: [:index_compact],
                                            document_actions: [])
       end
-      blacklight_config.view.admin_table.document_component ||= Spotlight::DocumentAdminTableComponent
 
-      if Blacklight::VERSION > '8'
-        blacklight_config.track_search_session.storage = false
-      else
-        blacklight_config.track_search_session = false
-      end
+      blacklight_config.view.admin_table.document_component ||= Spotlight::DocumentAdminTableComponent
+      blacklight_config.track_search_session.storage = false
 
       unless blacklight_config.sort_fields.key? :timestamp
         blacklight_config.add_sort_field :timestamp, default: true,
