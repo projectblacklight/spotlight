@@ -28,7 +28,6 @@ RSpec.describe 'Solr Documents Carousel Block', js: true, type: :feature do
   end
 
   it 'is accessible' do
-    pending 'heading updates from https://github.com/projectblacklight/spotlight/issues/3535'
     fill_in_typeahead_field with: 'dq287tq6352'
     check 'Primary caption'
     select 'Title', from: 'primary-caption-field'

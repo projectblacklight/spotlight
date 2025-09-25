@@ -26,8 +26,6 @@ RSpec.feature 'Heading block', :js do
 
     context 'when combined with other blocks that render headings' do
       it 'is accessible' do
-        pending 'heading updates from https://github.com/projectblacklight/spotlight/issues/3535'
-
         add_widget 'heading'
         find('.st-text-block.st-text-block--heading').set('My Feature Page Heading')
 
