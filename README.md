@@ -184,7 +184,9 @@ cd .internal_test_app && rake spec:prepare && cd - # not needed if you ran the d
 rspec
 ```
 
-Using rspec directly allows you to run individual test files / lines. You can delete these tests again with `rake assets:clobber`.
+Using rspec directly allows you to run individual test files / lines.
+
+The `spec:prepare` task generates css assets for use by the tests. You can delete these assets with `rake assets:clobber`.
 
 Once you are set up, you can also run `rubocop` to enforce consistent coding style.
 

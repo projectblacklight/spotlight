@@ -2,9 +2,18 @@
 
 Spotlight is a collaborative, open source project produced by developers, designers, product owners from several organizations. Spotlight mostly uses the [contribution model](https://github.com/projectblacklight/blacklight/blob/main/CONTRIBUTING.md) from its parent project [Blacklight](https://github.com/projectblacklight/blacklight). There are a few differences from the Blacklight process that this document will highlight.
 
-## Becoming a Committer
+## Code contributions
 
-Anyone can contribute to Spotlight using pull requests, the issue tracker, and participating in community slack channels. Being a committer means that you contribute to an extent that requires greater repository access. Currently the only defined way to be added as a committer is to participate in a community sprint.
+* Fork the project. Committers can skip this step and use the project directly.
+* Start a feature/bugfix branch.
+* Commit and push until you are happy with your contribution.
+* Make sure to add tests for it. This is important so we don't break it in a future version unintentionally.
+* After making your changes, be sure to run the tests to make sure everything works.
+* Make sure your changes pass [RuboCop](https://github.com/bbatsov/rubocop).
+* Submit your change as a [[Pull Request|http://help.github.com/pull-requests/]].
+ * Make sure a clear and atomic commit history is represented in a pull request. Commit messages should say why changes were made.
+
+Please note that backwards compatibility and deprecation notices are preferred for breaking API and user facing changes
 
 ## User experience changes
 
@@ -13,12 +22,6 @@ Spotlight has been designed by a team of user experience designers. While there 
  - [Open an issue](https://github.com/projectblacklight/spotlight/issues/new) on the project as a way to engage with core UX designers and developers on your proposed change or update
  - Contribute user stories to an issue or engage with the [Spotlight community](/README.md#spotlight-community)
 
+## Becoming a Committer
 
-## Other notes
-
-Because Spotlight is a large codebase that has been developed and maintained over several years, we encourage some additional guidelines around contributing.
-
- - Make sure a clear and atomic commit history is represented in a pull request. Not every thought needs to be expressed but commits should demonstrate why. Summarized by @eileencodes very well here: https://twitter.com/eileencodes/status/1179767021363486722
- - Use of `git rebase` is encouraged to maintain future readers of your Git history
- - Backwards compatibility and deprecation notices are preferred for breaking API and user facing changes
- 
+Anyone can contribute to Spotlight using pull requests, the issue tracker, and participating in community slack channels. Being a committer means that you contribute to an extent that requires greater repository access. Currently the only defined way to be added as a committer is to participate in a community sprint.
