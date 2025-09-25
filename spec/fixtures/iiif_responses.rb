@@ -447,12 +447,13 @@ module IiifResponses
                     'height' => 4468,
                     'width' => 5998,
                     'format' => 'image/jpeg',
-                    'service' =>
+                    'service' => [
                       {
                         '@id' => 'https://iiif-cloud.example.org/iiif/2/for-v3-manifest/image-1/intermediate_file',
                         'profile' => 'http://iiif.io/api/image/2/level2.json',
                         '@type' => 'ImageService2'
                       }
+                    ]
                   },
                   'id' => 'https://example.org/concern/scanned_maps/for-v3-manifest/manifest/canvas/image-1/annotation_page/page-1/annotation/annotation-1',
                   'target' => 'https://example.org/concern/scanned_maps/for-v3-manifest/manifest/canvas/image-1'
@@ -473,12 +474,13 @@ module IiifResponses
               'height' => 149,
               'width' => 200,
               'format' => 'image/jpeg',
-              'service' =>
+              'service' => [
                 {
                   '@id' => 'https://iiif-cloud.example.org/iiif/2/for-v3-manifest/image-1/intermediate_file',
                   'profile' => 'http://iiif.io/api/image/2/level2.json',
                   '@type' => 'ImageService2'
                 }
+              ]
             }
           ],
           'local_identifier' => 'p6w926v351',
@@ -634,12 +636,13 @@ module IiifResponses
                     'format' => 'image/jpeg',
                     'width' => 1114,
                     'height' => 991,
-                    'service' =>
+                    'service' => [
                       {
                         'id' => 'https://iiif.io/api/image/3.0/example/reference/329817fc8a251a01c393f517d8a17d87-Whistlers_Mother',
                         'profile' => 'level1',
                         'type' => 'ImageService3'
                       }
+                    ]
                   },
                   'target' => 'https://iiif.io/api/cookbook/recipe/0006-text-language/canvas/p1'
                 }
