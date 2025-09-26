@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'iiif/presentation'
+require 'iiif/v3/presentation'
 module Spotlight
   module Resources
     ###
@@ -20,6 +21,8 @@ module Spotlight
       def manifests
         @manifests ||= if manifest?
                          [create_iiif_manifest(object)]
+                       elsif v3_manifest?
+                         [create_iiif_v3_manifest(object)]
                        else
                          build_collection_manifest.to_a
                        end
@@ -39,12 +42,25 @@ module Spotlight
       protected
 
       def object
-        @object ||= IIIF::Service.parse(response)
+        # If it's a v3 manifest, the v2 library will parse it as an OrderedHash
+        @object ||= parse_v2? ? manifest_v2 : manifest_v3
       end
 
       private
 
       attr_reader :url
+
+      def parse_v2?
+        manifest_v2.is_a?(IIIF::Presentation::Manifest) || manifest_v2.is_a?(IIIF::Presentation::Collection)
+      end
+
+      def manifest_v2
+        @manifest_v2 ||= IIIF::Presentation::Service.parse(response)
+      end
+
+      def manifest_v3
+        IIIF::V3::Presentation::Service.parse(response)
+      end
 
       class << self
         def iiif_response(url)
@@ -73,8 +89,16 @@ module Spotlight
         IiifManifest.new(url: manifest['@id'], manifest:, collection:)
       end
 
+      def create_iiif_v3_manifest(manifest, collection = nil)
+        IiifManifestV3.new(url: manifest['id'], manifest:, collection:)
+      end
+
       def manifest?
         object.is_a?(IIIF::Presentation::Manifest)
+      end
+
+      def v3_manifest?
+        object.is_a?(IIIF::V3::Presentation::Manifest)
       end
 
       def collection?
