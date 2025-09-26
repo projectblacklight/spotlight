@@ -1,0 +1,212 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "https://purl.stanford.edu/xd327cm9378/iiif/manifest",
+  "@type": "sc:Manifest",
+  "label": "Mapa mundi, con los meridianos, y paralelos, iguales como los del globo tere- y arreglado a las mejores, y ultimas relaciones",
+  "attribution": "This work has been identified as being free of known restrictions under copyright law, including all related and neighboring rights. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.",
+  "logo": {
+    "@id": "https://stacks.stanford.edu/image/iiif/wy534zh7137/SULAIR_rosette/full/400,/0/default.jpg",
+    "service": {
+      "@context": "http://iiif.io/api/image/2/context.json",
+      "@id": "https://stacks.stanford.edu/image/iiif/wy534zh7137/SULAIR_rosette",
+      "profile": "http://iiif.io/api/image/2/level2.json"
+    }
+  },
+  "seeAlso": {
+    "@id": "https://purl.stanford.edu/xd327cm9378.mods",
+    "format": "application/mods+xml"
+  },
+  "metadata": [
+    {
+      "label": "Available Online",
+      "value": "<a href='https://purl.stanford.edu/xd327cm9378'>https://purl.stanford.edu/xd327cm9378</a>"
+    },
+    {
+      "label": "Title",
+      "value": "Mapa mundi, con los meridianos, y paralelos, iguales como los del globo tere- y arreglado a las mejores, y ultimas relaciones"
+    },
+    {
+      "label": "Contributor",
+      "value": "Minguet é Irol, Pablo, -1801?"
+    },
+    {
+      "label": "Type",
+      "value": "map"
+    },
+    {
+      "label": "Type",
+      "value": "Early maps"
+    },
+    {
+      "label": "Type",
+      "value": "Digital maps"
+    },
+    {
+      "label": "Type",
+      "value": "Maps"
+    },
+    {
+      "label": "Format",
+      "value": "1 map : hand col. ; 2 hemispheres each 8.4 cm. in diam., on sheet 30 x 20.1 cm. + 1 page."
+    },
+    {
+      "label": "Language",
+      "value": "spa"
+    },
+    {
+      "label": "Description",
+      "value": "por Pablo Minguet, Gravador de Sellos, Laminas, Firmas, y otras cosas."
+    },
+    {
+      "label": "Description",
+      "value": "California shown as a labeled island with a rounded oblong shape. Include place name G. Mendocino."
+    },
+    {
+      "label": "Description",
+      "value": "Includes 4 solar charts at bottom--Ptolomeo, Copérnico, Tycho Brahe and Capela."
+    },
+    {
+      "label": "Description",
+      "value": "Includes 2 wind charts between hemispheres--Ocean and Mediterranean."
+    },
+    {
+      "label": "Description",
+      "value": "Text in Spanish below and on second page. Top of text on page 1. \"Explicacion del globo terrestre, de los mapas, de lost sixtemas, y otras curiosidades.\" Top of text on page 2. \"Plan historico de las noticias mas curiosas de la Africa, y la America.\""
+    },
+    {
+      "label": "Description",
+      "value": "Text in Spanish."
+    },
+    {
+      "label": "Subject",
+      "value": "World maps"
+    },
+    {
+      "label": "Subject",
+      "value": "World maps--Early works to 1800"
+    },
+    {
+      "label": "Subject",
+      "value": "G3200 1760 .M56"
+    },
+    {
+      "label": "Coverage",
+      "value": "Scale [ca. 1:300,000,000]"
+    },
+    {
+      "label": "Coverage",
+      "value": "W 180°--E 180°/N 90°--S 90°"
+    },
+    {
+      "label": "Date",
+      "value": "1760"
+    },
+    {
+      "label": "Publisher",
+      "value": "Pablo Minguet"
+    },
+    {
+      "label": "Identifier",
+      "value": "https://purl.stanford.edu/xd327cm9378"
+    },
+    {
+      "label": "Relation",
+      "value": "The Glen McLaughlin Map Collection of California as an Island"
+    },
+    {
+      "label": "PublishDate",
+      "value": "2025-09-10T01:50:48Z"
+    }
+  ],
+  "description": "por Pablo Minguet, Gravador de Sellos, Laminas, Firmas, y otras cosas.",
+  "thumbnail": {
+    "@id": "https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0001/full/!400,400/0/default.jpg",
+    "@type": "dctypes:Image",
+    "format": "image/jpeg",
+    "service": {
+      "@context": "http://iiif.io/api/image/2/context.json",
+      "@id": "https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0001",
+      "profile": "http://iiif.io/api/image/2/level2.json"
+    },
+    "width": 285,
+    "height": 400
+  },
+  "sequences": [
+    {
+      "@id": "https://purl.stanford.edu/xd327cm9378/iiif/manifest#sequence-1",
+      "@type": "sc:Sequence",
+      "label": "Current order",
+      "viewingDirection": "left-to-right",
+      "canvases": [
+        {
+          "@id": "https://purl.stanford.edu/xd327cm9378/iiif/canvas/cocina-fileSet-xd327cm9378-xd327cm9378_1",
+          "@type": "sc:Canvas",
+          "label": "mclaughlin_xd327cm9378",
+          "height": 7284,
+          "width": 5184,
+          "rendering": [
+            {
+              "@id": "https://stacks.stanford.edu/file/xd327cm9378/xd327cm9378_05_0001.jp2",
+              "label": "Original source file (6.77 MB)",
+              "format": "image/jp2"
+            }
+          ],
+          "images": [
+            {
+              "@id": "https://purl.stanford.edu/xd327cm9378/iiif/annotation/https:%2F%2Fcocina.sul.stanford.edu%2Ffile%2Fxd327cm9378-xd327cm9378_1%2Fxd327cm9378_05_0001.jp2",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "on": "https://purl.stanford.edu/xd327cm9378/iiif/canvas/cocina-fileSet-xd327cm9378-xd327cm9378_1",
+              "resource": {
+                "@id": "https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0001/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "height": 7284,
+                "width": 5184,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0001",
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "@id": "https://purl.stanford.edu/xd327cm9378/iiif/canvas/cocina-fileSet-xd327cm9378-xd327cm9378_2",
+          "@type": "sc:Canvas",
+          "label": "mclaughlin_xd327cm9378",
+          "height": 7284,
+          "width": 5184,
+          "rendering": [
+            {
+              "@id": "https://stacks.stanford.edu/file/xd327cm9378/xd327cm9378_05_0002.jp2",
+              "label": "Original source file (6.77 MB)",
+              "format": "image/jp2"
+            }
+          ],
+          "images": [
+            {
+              "@id": "https://purl.stanford.edu/xd327cm9378/iiif/annotation/https:%2F%2Fcocina.sul.stanford.edu%2Ffile%2Fxd327cm9378-xd327cm9378_2%2Fxd327cm9378_05_0002.jp2",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "on": "https://purl.stanford.edu/xd327cm9378/iiif/canvas/cocina-fileSet-xd327cm9378-xd327cm9378_2",
+              "resource": {
+                "@id": "https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0002/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "height": 7284,
+                "width": 5184,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://stacks.stanford.edu/image/iiif/xd327cm9378%2Fxd327cm9378_05_0002",
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

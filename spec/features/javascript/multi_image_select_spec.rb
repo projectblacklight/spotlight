@@ -1,11 +1,28 @@
 # frozen_string_literal: true
 
+require_relative '../../support/interceptor'
+
 RSpec.describe 'Multi image selector', js: true, max_wait_time: 5, type: :feature, versioning: true do
+  include Interceptor
+
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:feature_page) { FactoryBot.create(:feature_page, exhibit:) }
 
-  before { login_as exhibit_curator }
+  before do
+    login_as exhibit_curator
+    start_intercepting
+    intercept(url: 'https://stacks.stanford.edu')
+    intercept(
+      url: 'https://purl.stanford.edu',
+      response: File.read(File.expand_path(File.join('..', 'spec', 'fixtures', 'xd327cm9378-manifest.json'), Rails.root)),
+      headers: { 'Content-Type' => 'application/ld+json; charset=UTF-8' }
+    )
+  end
+
+  after do
+    stop_intercepting
+  end
 
   it 'allows the user to select which image in a multi image object to display' do
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)

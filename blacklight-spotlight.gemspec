@@ -65,6 +65,7 @@ these collections.)
   s.add_development_dependency 'rubocop-capybara'
   s.add_development_dependency 'rubocop-rails'
   s.add_development_dependency 'rubocop-rspec'
+  s.add_development_dependency 'selenium-devtools'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'simplecov', '~> 0.12'
   s.add_development_dependency 'sitemap_generator'
