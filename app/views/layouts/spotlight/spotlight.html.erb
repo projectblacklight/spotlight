@@ -1,8 +1,11 @@
 <% content_for(:content) do %>
   <% if content? :sidebar %>
-    <aside id="sidebar" class="<%= sidebar_classes %> <%= content_for(:sidebar_position) %>" aria-label="<%= t('blacklight.search.documents.aria.limit_search') %>">
+    <% sidebar_tag = content_for(:sidebar_type) == 'nav' ? 'nav' : 'aside' %>
+    <% sidebar_label = content_for(:sidebar_type) == 'nav' ? t('spotlight.secondary.label') : t('blacklight.search.documents.aria.limit_search') %>
+   
+    <<%= sidebar_tag %> id="sidebar" class="<%= sidebar_classes %> <%= content_for(:sidebar_position) %>" aria-label="<%= sidebar_label %>">
       <%= content_for(:sidebar) %>
-    </aside>
+    </<%= sidebar_tag %>>
 
     <section id="content" class="<%= main_content_classes %> <%= content_for(:content_position) %>" aria-label="<%= t('blacklight.search.search_results') %>">
       <%= yield %>
