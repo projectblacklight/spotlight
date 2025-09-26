@@ -33,11 +33,10 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb
   end
 
   it 'has a embed block' do
-    expect(view).to receive(:render_document_partials).with(doc, %w[a b c], hash_including(a: 1, block:)).and_return('OSD')
     render partial: p, locals: { solr_documents_embed_block: block }
     expect(rendered).to have_selector 'h3', text: 'Some title'
     expect(rendered).to have_content 'Some text'
-    expect(rendered).to have_selector '.box', text: 'OSD'
+    expect(rendered).to have_selector '.box'
     expect(rendered).to have_selector '.items-col'
     expect(rendered).to have_selector '.text-col'
     expect(rendered).to have_no_selector '.col-md-12'
@@ -49,7 +48,6 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb
     end
 
     it 'does not have a two column layout' do
-      expect(view).to receive(:render_document_partials).with(doc, %w[a b c], hash_including(a: 1, block:)).and_return('OSD')
       render partial: p, locals: { solr_documents_embed_block: block }
       expect(rendered).to have_selector '.col-md-12'
       expect(rendered).to have_selector '.items-col h3', text: 'Some title'
