@@ -74,7 +74,7 @@ Lint/Debugger:
 Lint/DuplicateBranch:
   Exclude:
     - 'app/controllers/spotlight/concerns/application_controller.rb'
-    - 'app/models/spotlight/resources/iiif_manifest/metadata.rb'
+    - 'app/models/spotlight/resources/iiif_manifest_metadata.rb'
 
 # Offense count: 2
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
@@ -536,10 +536,6 @@ Rails/UnknownEnv:
 Rails/UnusedRenderContent:
   Exclude:
     - 'app/controllers/spotlight/lock_controller.rb'
-
-Style/ClassAndModuleChildren:
-  Exclude:
-    - 'app/models/spotlight/resources/iiif_manifest/metadata.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).

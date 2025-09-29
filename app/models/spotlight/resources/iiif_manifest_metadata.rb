@@ -9,7 +9,7 @@ module Spotlight
     #  application if a different metadata
     #  strucure is used by the consumer
     #  override with Spotlight::Engine.config.iiif_metadata_class
-    class IiifManifest::Metadata
+    class IiifManifestMetadata
       def initialize(manifest)
         @manifest = manifest
       end
