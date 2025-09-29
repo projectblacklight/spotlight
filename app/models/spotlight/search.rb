@@ -5,6 +5,7 @@ module Spotlight
   # Exhibit saved searches
   class Search < ActiveRecord::Base
     include Spotlight::Translatables
+    include Blacklight::Searchable
     include Spotlight::SearchHelper
 
     extend FriendlyId
