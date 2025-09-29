@@ -22,6 +22,7 @@ module Spotlight
     paginates_per 48
 
     extend FriendlyId
+
     friendly_id :title, use: %i[slugged finders] do |config|
       config.reserved_words&.concat(%w[site])
     end

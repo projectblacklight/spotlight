@@ -5,6 +5,7 @@ module Spotlight
   # Process a CSV upload into new Spotlight::Resource::Upload objects
   class AddUploadsFromCsv < Spotlight::ApplicationJob
     include Spotlight::JobTracking
+
     with_job_tracking(resource: ->(job) { job.arguments[1] })
 
     attr_reader :count, :errors

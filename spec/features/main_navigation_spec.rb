@@ -67,7 +67,7 @@ RSpec.describe 'Main navigation labels are settable', type: :feature do
       click_link 'Main menu'
 
       within '.main_navigation_admin' do
-        within all('li').first do
+        within first('li') do
           expect(page).to have_no_css('button.restore-default', visible: true)
         end
 

@@ -5,6 +5,7 @@ module Spotlight
   # Spotlight user mixins for roles
   module User
     extend ActiveSupport::Concern
+
     included do
       has_many :roles, class_name: 'Spotlight::Role', dependent: :destroy
       has_many :exhibits, class_name: 'Spotlight::Exhibit', through: :roles, source: 'resource', source_type: 'Spotlight::Exhibit'

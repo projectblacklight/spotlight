@@ -7,6 +7,7 @@ module Spotlight
     include Spotlight::Translatables
 
     extend FriendlyId
+
     friendly_id :title, use: %i[slugged scoped finders history], scope: [:exhibit]
     translates :title
 

@@ -3,6 +3,7 @@
 RSpec.describe SirTrevorRails::Blocks::Textable do
   class TextableTestClass
     include SirTrevorRails::Blocks::Textable
+
     attr_accessor :text
   end
   let(:subject) { TextableTestClass.new }

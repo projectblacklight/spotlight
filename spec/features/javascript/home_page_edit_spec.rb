@@ -24,7 +24,7 @@ RSpec.describe 'Editing the Home Page', js: true, versioning: true do
     expect(page).to have_css('*[contenteditable=true]')
     expect(page).to have_css('div.st-list-block__editor[contenteditable=true]', count: 1)
 
-    first_element = page.all('div.st-list-block__editor[contenteditable=true]').first
+    first_element = page.first('div.st-list-block__editor[contenteditable=true]')
     first_element.set('one')
 
     click_button 'Save changes'

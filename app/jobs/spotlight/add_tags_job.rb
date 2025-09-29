@@ -5,6 +5,7 @@ module Spotlight
   class AddTagsJob < Spotlight::ApplicationJob
     include Spotlight::JobTracking
     include Spotlight::GatherDocuments
+
     with_job_tracking(resource: ->(job) { job.arguments.last[:exhibit] })
 
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

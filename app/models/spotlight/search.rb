@@ -8,6 +8,7 @@ module Spotlight
     include Spotlight::SearchHelper
 
     extend FriendlyId
+
     friendly_id :title, use: %i[slugged scoped finders history], scope: :exhibit
 
     self.table_name = 'spotlight_searches'

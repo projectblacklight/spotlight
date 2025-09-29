@@ -2,6 +2,7 @@
 
 RSpec.describe Spotlight::CatalogController, type: :controller do
   include ActiveJob::TestHelper
+
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
