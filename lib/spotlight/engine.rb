@@ -157,7 +157,7 @@ module Spotlight
     ]
 
     config.iiif_manifest_field = :iiif_manifest_url_ssi
-    config.iiif_metadata_class = -> { Spotlight::Resources::IiifManifest::Metadata }
+    config.iiif_metadata_class = -> { Spotlight::Resources::IiifManifestMetadata }
     config.iiif_collection_id_field = :collection_id_ssim
     config.iiif_title_fields = nil
     config.default_json_ld_language = 'en'

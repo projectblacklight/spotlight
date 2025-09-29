@@ -37,7 +37,7 @@ these collections.)
   s.add_dependency 'i18n'
   s.add_dependency 'i18n-active_record'
   s.add_dependency 'iiif_manifest'
-  s.add_dependency 'iiif-presentation'
+  s.add_dependency 'iiif-presentation', '>=1.4.1'
   s.add_dependency 'mini_magick'
   s.add_dependency 'nokogiri'
   s.add_dependency 'oauth2'

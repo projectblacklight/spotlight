@@ -74,7 +74,7 @@ Lint/Debugger:
 Lint/DuplicateBranch:
   Exclude:
     - 'app/controllers/spotlight/concerns/application_controller.rb'
-    - 'app/models/spotlight/resources/iiif_manifest.rb'
+    - 'app/models/spotlight/resources/iiif_manifest_metadata.rb'
 
 # Offense count: 2
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
