@@ -8,6 +8,7 @@ module Spotlight
     include Spotlight::SearchHelper
 
     extend FriendlyId
+
     friendly_id :title, use: %i[slugged scoped finders history], scope: :exhibit
 
     self.table_name = 'spotlight_searches'
@@ -25,7 +26,7 @@ module Spotlight
         serialize :query_params, Hash
       end
     end
-    default_scope { order('weight ASC') }
+    default_scope { order(:weight) }
     scope :published, -> { where(published: true) }
     scope :unpublished, -> { where(published: [nil, false]) }
     validates :title, presence: true

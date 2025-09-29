@@ -2,6 +2,7 @@
 
 class CatalogController < ApplicationController
   include Blacklight::Catalog
+
   helper Openseadragon::OpenseadragonHelper
   before_action :set_paper_trail_whodunnit
 

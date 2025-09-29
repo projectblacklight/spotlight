@@ -9,6 +9,7 @@ module Spotlight
   # workflows with exhibit-specific content
   class SolrController < Spotlight::ApplicationController
     include Spotlight::SearchHelper
+
     before_action :authenticate_user!
     before_action :validate_writable_index!
 

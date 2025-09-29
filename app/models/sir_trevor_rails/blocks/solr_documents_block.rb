@@ -7,6 +7,7 @@ module SirTrevorRails
     class SolrDocumentsBlock < SirTrevorRails::Block
       include Textable
       include Displayable
+
       attr_reader :solr_helper
 
       def with_solr_helper(solr_helper)

@@ -6,13 +6,14 @@ module Spotlight
   class Contact < ActiveRecord::Base
     belongs_to :exhibit, touch: true, optional: true
     scope :published, -> { where(show_in_sidebar: true) }
-    default_scope { order('weight ASC') }
+    default_scope { order(:weight) }
     if Rails.version > '7.1'
       serialize :contact_info, type: Hash, coder: YAML
     else
       serialize :contact_info, Hash, coder: YAML
     end
     extend FriendlyId
+
     friendly_id :name, use: %i[slugged scoped finders], scope: :exhibit
 
     belongs_to :avatar, class_name: 'Spotlight::ContactImage', dependent: :destroy, optional: true

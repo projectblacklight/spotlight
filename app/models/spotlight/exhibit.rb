@@ -17,11 +17,12 @@ module Spotlight
 
     scope :published, -> { where(published: true) }
     scope :unpublished, -> { where(published: false) }
-    scope :ordered_by_weight, -> { order('weight ASC') }
+    scope :ordered_by_weight, -> { order(:weight) }
 
     paginates_per 48
 
     extend FriendlyId
+
     friendly_id :title, use: %i[slugged finders] do |config|
       config.reserved_words&.concat(%w[site])
     end

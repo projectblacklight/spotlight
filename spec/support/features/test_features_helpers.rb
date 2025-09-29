@@ -8,7 +8,7 @@ module Spotlight
       # Role=combobox indicates that the auto-complete is initialized
       expect(page).to have_css("auto-complete [data-#{type}-typeahead][role='combobox']")
       find("auto-complete [data-#{type}-typeahead]").fill_in(with: opts[:with])
-      find('auto-complete[open] [role="option"]', text: opts[:with], match: :first).click
+      first('auto-complete[open] [role="option"]', text: opts[:with]).click
     end
 
     # just like #fill_in_typeahead_field, but wait for the

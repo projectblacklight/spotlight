@@ -5,6 +5,7 @@ module Spotlight
   # Reindex the given resources or exhibits
   class ReindexJob < Spotlight::ApplicationJob
     include Spotlight::JobTracking
+
     with_job_tracking(resource: ->(job) { job.exhibit })
 
     include Spotlight::LimitConcurrency

@@ -12,6 +12,7 @@ module Spotlight
     belongs_to :exhibit, optional: true
 
     extend FriendlyId
+
     friendly_id :slug_candidates, use: %i[slugged scoped finders], scope: :exhibit
 
     scope :facetable, -> { where(field_type: Spotlight::Engine.config.custom_field_types.select { |_k, v| v[:facetable] }.keys) }

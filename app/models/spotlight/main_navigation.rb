@@ -7,7 +7,7 @@ module Spotlight
     include Spotlight::Translatables
 
     belongs_to :exhibit, touch: true
-    default_scope { order('weight ASC') }
+    default_scope { order(:weight) }
     scope :browse, -> { find_by(nav_type: 'browse') }
     scope :about, -> { find_by(nav_type: 'about') }
     scope :curated_features, -> { find_by(nav_type: 'curated_features') }

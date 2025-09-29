@@ -6,6 +6,7 @@ module Spotlight
   ###
   class ProcessBulkUpdatesCsvJob < Spotlight::ApplicationJob
     include Spotlight::JobTracking
+
     with_job_tracking(resource: ->(job) { job.arguments.first })
 
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

@@ -5,6 +5,7 @@ module Spotlight
   # Administrative CRUD actions for an exhibit
   class ExhibitsController < Spotlight::ApplicationController
     include Spotlight::SearchHelper
+
     before_action :authenticate_user!, except: [:index]
     before_action :set_tab, only: %i[edit update]
 

@@ -1,6 +1,6 @@
 inherit_from: .rubocop_todo.yml
 
-require:
+plugins:
   - rubocop-capybara
   - rubocop-rspec
   - rubocop-rails
@@ -511,4 +511,62 @@ Style/SafeNavigationChainLength: # new in 1.68
 RSpec/VerifiedDoubleReference: # new in 3.1
   Enabled: true
 Rails/EnumSyntax: # new in 2.26
+  Enabled: true
+Gemspec/AttributeAssignment: # new in 1.77
+  Enabled: true
+Layout/EmptyLinesAfterModuleInclusion: # new in 1.79
+  Enabled: true
+Lint/ArrayLiteralInRegexp: # new in 1.71
+  Enabled: true
+Lint/ConstantReassignment: # new in 1.70
+  Enabled: true
+Lint/CopDirectiveSyntax: # new in 1.72
+  Enabled: true
+Lint/RedundantTypeConversion: # new in 1.72
+  Enabled: true
+Lint/SharedMutableDefault: # new in 1.70
+  Enabled: true
+Lint/SuppressedExceptionInNumberConversion: # new in 1.72
+  Enabled: true
+Lint/UselessConstantScoping: # new in 1.72
+  Enabled: true
+Lint/UselessDefaultValueArgument: # new in 1.76
+  Enabled: true
+Lint/UselessOr: # new in 1.76
+  Enabled: true
+Naming/PredicateMethod: # new in 1.76
+  Enabled: true
+Style/ArrayIntersectWithSingleElement: # new in 1.81
+  Enabled: true
+Style/CollectionQuerying: # new in 1.77
+  Enabled: true
+Style/ComparableBetween: # new in 1.74
+  Enabled: true
+Style/EmptyStringInsideInterpolation: # new in 1.76
+  Enabled: true
+Style/HashFetchChain: # new in 1.75
+  Enabled: true
+Style/HashSlice: # new in 1.71
+  Enabled: true
+Style/ItAssignment: # new in 1.70
+  Enabled: true
+Style/ItBlockParameter: # new in 1.75
+  Enabled: true
+Style/RedundantArrayFlatten: # new in 1.76
+  Enabled: true
+Style/RedundantFormat: # new in 1.72
+  Enabled: true
+Capybara/FindAllFirst: # new in 2.22
+  Enabled: true
+Capybara/NegationMatcherAfterVisit: # new in 2.22
+  Enabled: true
+Rails/MultipleRoutePaths: # new in 2.29
+  Enabled: true
+Rails/StrongParametersExpect: # new in 2.29
+  Enabled: false
+RSpec/IncludeExamples: # new in 3.6
+  Enabled: true
+Rails/FindByOrAssignmentMemoization: # new in 2.33
+  Enabled: true
+Rails/OrderArguments: # new in 2.33
   Enabled: true

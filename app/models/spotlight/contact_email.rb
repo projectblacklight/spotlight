@@ -5,6 +5,7 @@ module Spotlight
   # Exhibit feedback contacts
   class ContactEmail < ActiveRecord::Base
     extend Devise::Models
+
     devise :confirmable
     belongs_to :exhibit
     validate :valid_email

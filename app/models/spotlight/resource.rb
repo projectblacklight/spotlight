@@ -17,6 +17,7 @@ module Spotlight
     end)
 
     extend ActiveModel::Callbacks
+
     define_model_callbacks :index
 
     class_attribute :weight

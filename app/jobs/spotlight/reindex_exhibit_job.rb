@@ -5,6 +5,7 @@ module Spotlight
   # Reindex an exhibit by parallelizing resource indexing into multiple batches of reindex jobs
   class ReindexExhibitJob < Spotlight::ApplicationJob
     include Spotlight::JobTracking
+
     with_job_tracking(resource: ->(job) { job.arguments.first })
 
     include Spotlight::LimitConcurrency
