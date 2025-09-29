@@ -15,7 +15,7 @@ module Spotlight
     belongs_to :exhibit
     has_many :group_members
     has_many :searches, through: :group_members, source: :member, source_type: 'Spotlight::Search'
-    default_scope { order('weight ASC') }
+    default_scope { order(:weight) }
     scope :published, -> { where(published: true) }
     accepts_nested_attributes_for :group_members
     accepts_nested_attributes_for :searches

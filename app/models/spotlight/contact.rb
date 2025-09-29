@@ -6,7 +6,7 @@ module Spotlight
   class Contact < ActiveRecord::Base
     belongs_to :exhibit, touch: true, optional: true
     scope :published, -> { where(show_in_sidebar: true) }
-    default_scope { order('weight ASC') }
+    default_scope { order(:weight) }
     if Rails.version > '7.1'
       serialize :contact_info, type: Hash, coder: YAML
     else

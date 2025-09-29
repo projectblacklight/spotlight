@@ -26,7 +26,7 @@ module Spotlight
         serialize :query_params, Hash
       end
     end
-    default_scope { order('weight ASC') }
+    default_scope { order(:weight) }
     scope :published, -> { where(published: true) }
     scope :unpublished, -> { where(published: [nil, false]) }
     validates :title, presence: true

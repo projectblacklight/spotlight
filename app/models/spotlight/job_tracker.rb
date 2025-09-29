@@ -3,7 +3,7 @@
 module Spotlight
   # Associate background jobs with records
   class JobTracker < ActiveRecord::Base
-    scope :recent, -> { order('updated_at DESC').limit(5) }
+    scope :recent, -> { order(updated_at: :desc).limit(5) }
     scope :in_progress, -> { where.not(status: %w[completed failed]) }
     scope :completed, -> { where(status: %w[completed failed]) }
 

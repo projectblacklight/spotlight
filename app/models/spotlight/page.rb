@@ -28,10 +28,10 @@ module Spotlight
 
     validates :weight, allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: Spotlight::Page::MAX_PAGES }
 
-    default_scope { order('weight ASC') }
+    default_scope { order(:weight) }
     scope :at_top_level, -> { where(parent_page_id: nil) }
     scope :published, -> { where(published: true) }
-    scope :recent, -> { order('updated_at DESC').limit(10) }
+    scope :recent, -> { order(updated_at: :desc).limit(10) }
     scope :for_locale, ->(locale = I18n.locale) { unscope(where: :locale).where(locale:) }
     scope :for_default_locale, -> { for_locale(I18n.default_locale) }
 
