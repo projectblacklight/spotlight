@@ -3,6 +3,6 @@
   <%= render (view_config.document_component || Spotlight::SolrDocumentLegacyEmbedComponent).new(document: document_presenter(document, view_config: view_config), counter: nil, block: local_assigns[:block]) do |component| %>
     <% component.with_partial do %>
       <%= render_document_partials document, view_config.partials, component: component, document_counter: nil, view_config: view_config, block: local_assigns[:block], **(view_config.locals) %>
-    <% end if view_config&.partials&.any? %>
+    <% end if Blacklight.version < '9.0' && view_config&.partials&.any? %>
   <% end %>
 </div>

@@ -12,7 +12,7 @@ module Spotlight
     end
 
     def before_render
-      with_embed(block_context) unless embed
+      with_embed(block_context: block_context) unless embed
 
       super
     end
