@@ -1,5 +1,5 @@
-ARG RUBY_VERSION=3.3.6
-ARG ALPINE_VERSION=3.21
+ARG RUBY_VERSION=3.4.6
+ARG ALPINE_VERSION=3.22
 FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION
 
 ARG RAILS_VERSION=7.2.1
@@ -24,6 +24,7 @@ RUN apk --no-cache upgrade && \
   sqlite-dev \
   tini \
   tzdata \
+  yaml-dev \
   yarn \
   zip
 
