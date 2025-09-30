@@ -62,10 +62,11 @@ RSpec.describe 'spotlight/pages/show', type: :view do
     end
   end
 
-  it 'does not include the page title' do
+  it 'includes a default visually hidden title if the page does not display a title' do
     allow(page).to receive_messages(should_display_title?: false)
     expect(view).not_to receive(:set_html_page_title)
     render
+    expect(rendered).to have_css('.visually-hidden', text: 'Main Content')
   end
 
   it 'renders attributes in <p>' do
