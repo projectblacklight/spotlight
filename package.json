@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/projectblacklight/spotlight#readme",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-commonjs": "^29.0.0",
     "rollup": "^4.0.0",
     "rollup-plugin-includepaths": "^0.2.4"
   },
