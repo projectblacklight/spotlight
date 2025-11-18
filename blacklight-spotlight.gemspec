@@ -21,7 +21,7 @@ these collections.)
   s.required_ruby_version = '>= 3.1'
 
   s.add_dependency 'activejob-status'
-  s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 13'
+  s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 14'
   s.add_dependency 'blacklight', '>= 8.7.0', '< 9'
   s.add_dependency 'blacklight-gallery', '>= 3.0', '< 7'
   s.add_dependency 'bootstrap_form', '>= 5.4', '< 6'
@@ -43,7 +43,7 @@ these collections.)
   s.add_dependency 'oauth2'
   s.add_dependency 'openseadragon', '>= 0.8.0'
   s.add_dependency 'ostruct', '!= 0.3.0', '!= 0.3.1', '!= 0.3.2'
-  s.add_dependency 'paper_trail', '>= 11.0', '< 17'
+  s.add_dependency 'paper_trail', '>= 11.0', '< 18'
   s.add_dependency 'rails', '>= 7.1', '< 9'
   s.add_dependency 'redcarpet', '>= 2.0.1', '< 4'
   s.add_dependency 'riiif', '~> 2.0'
