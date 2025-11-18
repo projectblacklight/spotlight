@@ -24,7 +24,7 @@ module Spotlight
     private
 
     def destroy
-      page.translated_page_for(locale).destroy if page.translated_page_for(locale).present?
+      page.translated_page_for(locale).presence&.destroy
     end
   end
 end
