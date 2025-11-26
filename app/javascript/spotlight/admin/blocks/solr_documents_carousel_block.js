@@ -1,5 +1,3 @@
-//= require spotlight/admin/blocks/solr_documents_base_block
-
 SirTrevor.Blocks.SolrDocumentsCarousel = (function(){
 
   return SirTrevor.Blocks.SolrDocumentsBase.extend({

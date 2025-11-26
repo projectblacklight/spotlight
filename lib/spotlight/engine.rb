@@ -28,8 +28,6 @@ module Spotlight
     require 'redcarpet' # required for markdown support
     require 'openseadragon'
 
-    config.assets.precompile += %w[spotlight/fallback/*.png] if defined?(Sprockets)
-
     config.autoload_paths += %W[
       #{config.root}/app/builders
       #{config.root}/app/controllers/concerns

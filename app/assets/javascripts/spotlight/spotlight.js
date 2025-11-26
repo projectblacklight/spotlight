@@ -6069,8 +6069,6 @@
     });
   })();
 
-  //= require spotlight/admin/blocks/browse_block
-
   SirTrevor.Blocks.SearchResults =  (function(){
 
     return SirTrevor.Blocks.Browse.extend({
@@ -6231,8 +6229,6 @@
 
   })();
 
-  //= require spotlight/admin/blocks/solr_documents_base_block
-
   SirTrevor.Blocks.SolrDocuments = (function(){
 
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
@@ -6256,8 +6252,6 @@
     });
 
   })();
-
-  //= require spotlight/admin/blocks/solr_documents_base_block
 
   SirTrevor.Blocks.SolrDocumentsCarousel = (function(){
 
@@ -6358,8 +6352,6 @@
 
   })();
 
-  //= require spotlight/admin/blocks/solr_documents_base_block
-
   SirTrevor.Blocks.SolrDocumentsEmbed = (function(){
 
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
@@ -6375,8 +6367,6 @@
     });
 
   })();
-
-  //= require spotlight/admin/blocks/solr_documents_base_block
 
   SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
 
@@ -6416,8 +6406,6 @@
     });
 
   })();
-
-  //= require spotlight/admin/blocks/solr_documents_base_block
 
   SirTrevor.Blocks.SolrDocumentsGrid = (function(){
 
