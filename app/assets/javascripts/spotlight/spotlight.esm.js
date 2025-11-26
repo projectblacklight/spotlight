@@ -1,5 +1,4 @@
 import OpenSeadragon from 'openseadragon';
-import Clipboard from 'clipboard';
 import SirTrevor$1 from 'sir-trevor';
 import Sortable from 'sortablejs';
 import { Controller } from '@hotwired/stimulus';
@@ -3545,12 +3544,6 @@ class BlacklightConfiguration {
   }
 }
 
-class CopyEmailAddress {
-    connect() {
-        new Clipboard('.copy-email-addresses');
-    }
-}
-
 class Iiif {
   constructor(manifestUrl, manifest) {
     this.manifestUrl = manifestUrl;
@@ -6876,7 +6869,6 @@ class AdminIndex {
   connect() {
     new AddAnother().connect();
     new AddNewButton().connect();
-    new CopyEmailAddress().connect();
     new Croppable().connect();
     new EditInPlace().connect();
     new Exhibits().connect();
@@ -6892,6 +6884,19 @@ class AdminIndex {
     new Users().connect();
     addAutocompletetoFeaturedImage();
     Module.init();
+  }
+}
+
+// Connects to data-controller="clipboard"
+class ClipboardController extends Controller {
+  static targets = ["text"]
+
+  async copy(event) {
+    try {
+      await navigator.clipboard.write([new ClipboardItem({ "text/html": this.textTarget.innerHTML, "text/plain": this.textTarget.innerText })]);
+    } catch (err) {
+      console.error('Clipboard controller failed to copy with error:', err);
+    }
   }
 }
 
@@ -7100,6 +7105,7 @@ class TagSelectorController extends Controller {
 class SpotlightControllers {
   connect() {
     if (typeof Stimulus === "undefined") return
+    Stimulus.register('clipboard', ClipboardController);
     Stimulus.register('tag-selector', TagSelectorController);
   }
 }
