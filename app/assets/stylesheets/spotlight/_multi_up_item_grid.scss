@@ -1,38 +1,34 @@
 .item-grid-admin {
   .field {
-    input[type='text'] {
+    input[type="text"] {
       width: 89%;
     }
 
-    .twitter-typeahead {  
-      margin-bottom: 2*$spacer;
+    .twitter-typeahead {
+      margin-bottom: 2 * $spacer;
     }
   }
   .field-select {
-    margin-top: 2*$spacer;
+    margin-top: 2 * $spacer;
     select {
       display: inline;
       width: auto;
     }
   }
   .dd3-item {
-    margin-bottom: 2*$spacer;
+    margin-bottom: 2 * $spacer;
   }
 }
 // Hide the secondary caption field
 // for the Features block so we can
 // re-use the rest from the generic
 // multi-up item grid.
-[data-type='item-features'] {
+[data-type="item-features"] {
   .secondary-caption {
     display: none;
   }
 }
 .spotlight-flexbox {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
   flex-flow: row wrap;
 
@@ -43,7 +39,7 @@
 
     @media (max-width: breakpoint-max("sm")) {
       min-width: 200px;
-      -webkit-flex: 1 1 200px;
+      flex: 1 1 200px;
     }
 
     .caption {
@@ -53,11 +49,6 @@
     img {
       max-width: 100%;
     }
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
     flex: 1;
-    -webkit-flex: 1 1 125px;
   }
 }
