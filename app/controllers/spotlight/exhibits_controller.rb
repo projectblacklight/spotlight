@@ -54,6 +54,7 @@ module Spotlight
       build_initial_exhibit_contact_emails
     end
 
+    # rubocop:disable Metrics/AbcSize
     def create
       @exhibit.attributes = exhibit_params
 
@@ -61,9 +62,12 @@ module Spotlight
         @exhibit.roles.create user: current_user, role: 'admin' if current_user
         redirect_to spotlight.exhibit_dashboard_path(@exhibit), notice: t(:'helpers.submit.exhibit.created', model: @exhibit.class.model_name.human.downcase)
       else
-        render action: :new
+        flash.now[:alert] = t('spotlight.exhibits.new_exhibit_form.errors.slug_taken') if @exhibit.errors[:slug].present?
+
+        render :new, status: :unprocessable_entity
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def update
       if @exhibit.update(exhibit_params)
