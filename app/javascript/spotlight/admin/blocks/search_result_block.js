@@ -1,5 +1,3 @@
-//= require spotlight/admin/blocks/browse_block
-
 SirTrevor.Blocks.SearchResults =  (function(){
 
   return SirTrevor.Blocks.Browse.extend({
