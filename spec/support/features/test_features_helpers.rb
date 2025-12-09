@@ -6,8 +6,9 @@ module Spotlight
       type = opts[:type] || 'default'
 
       # Role=combobox indicates that the auto-complete is initialized
-      expect(page).to have_css("auto-complete [data-#{type}-typeahead][role='combobox']")
-      find("auto-complete [data-#{type}-typeahead]").fill_in(with: opts[:with])
+      find("auto-complete [data-#{type}-typeahead][role='combobox']").fill_in(with: opts[:with])
+      # Wait for the autocomplete to show both 'open' and 'aria-expanded="true"' or the results might be stale
+      expect(page).to have_css("auto-complete[open] [data-#{type}-typeahead][role='combobox'][aria-expanded='true']")
       first('auto-complete[open] [role="option"]', text: opts[:with]).click
     end
 
