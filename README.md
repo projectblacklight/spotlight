@@ -112,7 +112,7 @@ See [Updating the JavaScript bundle](#updating-the-javascript-bundle) above for 
 
 ### Branches
 
-* The `main` branch is for development of the upcoming 5.0 release.
+* The `main` branch is for development of the 5.x series.
 * The `4.x` series is on the [release-4.x](https://github.com/projectblacklight/spotlight/tree/release-4.x) branch for backports of features and bug fixes.
 
 ### Tooling
