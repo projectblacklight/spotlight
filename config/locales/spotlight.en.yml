@@ -23,6 +23,12 @@ en:
       spotlight/page:
         display_sidebar?: Show sidebar
         display_title: Show title
+    errors:
+      models:
+        spotlight/exhibit:
+          attributes:
+            slug:
+              taken: Slug is already taken.
     help:
       spotlight/exhibit:
         tag_list: Enter tags separated by commas.
@@ -616,6 +622,8 @@ en:
       new:
         page_title: Create a new exhibit
       new_exhibit_form:
+        errors:
+          slug_taken: Slug is already taken. Please choose another.
         fields:
           slug:
             help_block: A hyphenated name to be displayed in the URL for the exhibit (e.g., "maps-of-africa").

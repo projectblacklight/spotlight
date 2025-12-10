@@ -136,7 +136,7 @@ RSpec.describe 'Feature page', type: :feature, versioning: true do
       end
     end
 
-    it 'releases the lock when the lock holder cancels edits', js: true do
+    it 'releases the lock when the lock holder cancels edits', :js do
       # open the edit page
       visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
 

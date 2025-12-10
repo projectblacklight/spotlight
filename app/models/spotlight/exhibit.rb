@@ -28,7 +28,7 @@ module Spotlight
     end
 
     validates :title, presence: true, if: -> { I18n.locale == I18n.default_locale }
-    validates :slug, uniqueness: true
+    validates :slug, uniqueness: { message: I18n.t('spotlight.exhibits.new_exhibit_form.errors.slug_taken') }
     validates :theme, inclusion: { in: Spotlight::Engine.config.exhibit_themes }, allow_blank: true
 
     after_validation :move_friendly_id_error_to_slug

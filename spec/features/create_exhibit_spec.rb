@@ -60,7 +60,7 @@ RSpec.describe 'Create a new exhibit', type: :feature do
 
     find('input[name="commit"]').click
 
-    expect(page).to have_content 'has already been taken'
+    expect(page).to have_content 'Slug is already taken'
   end
 
   it 'suggests a slug based on the title', js: true do
