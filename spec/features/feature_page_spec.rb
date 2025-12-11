@@ -139,6 +139,7 @@ RSpec.describe 'Feature page', type: :feature, versioning: true do
     it 'releases the lock when the lock holder cancels edits', :js do
       # open the edit page
       visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
+      wait_for_sir_trevor
 
       click_on 'Cancel'
 
