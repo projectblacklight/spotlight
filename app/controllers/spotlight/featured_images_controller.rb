@@ -5,6 +5,8 @@ module Spotlight
   class FeaturedImagesController < Spotlight::ApplicationController
     load_and_authorize_resource instance_name: :featured_image, class: 'Spotlight::TemporaryImage'
 
+    rescue_from CarrierWave::UploadError, with: :handle_upload_error
+
     def create
       if @featured_image.save && @featured_image.file_present?
         render json: { tilesource:, id: @featured_image.id }
@@ -14,6 +16,10 @@ module Spotlight
     end
 
     private
+
+    def handle_upload_error(exception)
+      render json: { error: [exception.message] }, status: :unprocessable_entity
+    end
 
     def tilesource
       Spotlight::Engine.config.iiif_service.info_url(@featured_image, request.host)

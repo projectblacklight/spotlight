@@ -27,6 +27,7 @@ module Spotlight
     def iiif_upload_tag(f)
       content_tag(:div) do
         concat f.file_field_without_bootstrap :file, name: 'featured_image[image]', data: { endpoint: polymorphic_path(f.object.model_name.route_key) }
+        concat content_tag(:div, '', class: 'featured-image invalid-feedback')
         concat f.hidden_field :upload_id
       end
     end
