@@ -3955,7 +3955,7 @@ class Crop {
       url: url,  //Server script to process data
       type: 'POST',
       success: (data, stat, xhr) => this.successHandler(data, stat, xhr),
-      // error: errorHandler,
+      error: (xhr, stat, error) => this.errorHandler(xhr, stat, error),
       // Form data
       data: this.getData(),
       headers: {
@@ -3971,6 +3971,39 @@ class Crop {
   successHandler(data, stat, xhr) {
     this.setIiifFields({ tilesource: data.tilesource });
     this.setUploadId(data.id);
+    this.clearUploadErrors();
+  }
+
+  errorHandler(xhr, stat, error) {
+    let errorMessage = "Upload failed";
+    if (xhr.responseJSON) {
+      if (xhr.responseJSON.errors) {
+        errorMessage = xhr.responseJSON.errors.join(', ');
+      } else if (xhr.responseJSON.error) {
+        errorMessage = xhr.responseJSON.error;
+      }
+    }
+    this.showUploadError(errorMessage);
+  }
+
+  getUploadErrorsElement() {
+    return this.cropTool.find(".featured-image.invalid-feedback")
+  }
+
+  showUploadError(errorMessage) {
+    const errorsElement = this.getUploadErrorsElement();
+    if (errorsElement) {
+      errorsElement.text(errorMessage).show();
+    } else {
+      console.error("uploadFile", error, errorMessage);
+    }
+  }
+
+  clearUploadErrors() {
+    const errorsElement = this.getUploadErrorsElement();
+    if (errorsElement) {
+      errorsElement.text("").hide();
+    }
   }
 
   setUploadId(id) {

@@ -73,5 +73,21 @@ RSpec.describe Spotlight::FeaturedImagesController, type: :controller do
         expect(response.body).to match %r{\{"tilesource":"/images/\d+-.+/info\.json","id":\d+\}}
       end
     end
+
+    describe 'POST create with an upload error' do
+      it 'handles CarrierWave::UploadError' do
+        allow_any_instance_of(Spotlight::TemporaryImage).to receive(:save)
+          .and_raise(CarrierWave::UploadError, 'File size too large')
+
+        post :create, params: {
+          featured_image: {
+            image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
+          }
+        }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body).to eq({ 'error' => ['File size too large'] })
+      end
+    end
   end
 end
