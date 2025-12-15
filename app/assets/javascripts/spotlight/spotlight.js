@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('openseadragon'), require('clipboard'), require('sir-trevor'), require('sortablejs'), require('@hotwired/stimulus')) :
-  typeof define === 'function' && define.amd ? define(['openseadragon', 'clipboard', 'sir-trevor', 'sortablejs', '@hotwired/stimulus'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.OpenSeadragon, global.Clipboard, global.SirTrevor, global.Sortable, global.Stimulus));
-})(this, (function (OpenSeadragon, Clipboard, SirTrevor$1, Sortable, stimulus) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('openseadragon'), require('sir-trevor'), require('sortablejs'), require('@hotwired/stimulus')) :
+  typeof define === 'function' && define.amd ? define(['openseadragon', 'sir-trevor', 'sortablejs', '@hotwired/stimulus'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.OpenSeadragon, global.SirTrevor, global.Sortable, global.Stimulus));
+})(this, (function (OpenSeadragon, SirTrevor$1, Sortable, stimulus) { 'use strict';
 
   // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
   // Includes "export default tns" at the end of the file for spotlight/user/browse_group_categories.js
@@ -3545,12 +3545,6 @@
     }
   }
 
-  class CopyEmailAddress {
-      connect() {
-          new Clipboard('.copy-email-addresses');
-      }
-  }
-
   class Iiif {
     constructor(manifestUrl, manifest) {
       this.manifestUrl = manifestUrl;
@@ -6876,7 +6870,6 @@
     connect() {
       new AddAnother().connect();
       new AddNewButton().connect();
-      new CopyEmailAddress().connect();
       new Croppable().connect();
       new EditInPlace().connect();
       new Exhibits().connect();
@@ -6892,6 +6885,19 @@
       new Users().connect();
       addAutocompletetoFeaturedImage();
       Module.init();
+    }
+  }
+
+  // Connects to data-controller="clipboard"
+  class ClipboardController extends stimulus.Controller {
+    static targets = ["text"]
+
+    async copy(event) {
+      try {
+        await navigator.clipboard.write([new ClipboardItem({ "text/html": this.textTarget.innerHTML, "text/plain": this.textTarget.innerText })]);
+      } catch (err) {
+        console.error('Clipboard controller failed to copy with error:', err);
+      }
     }
   }
 
@@ -7100,6 +7106,7 @@
   class SpotlightControllers {
     connect() {
       if (typeof Stimulus === "undefined") return
+      Stimulus.register('clipboard', ClipboardController);
       Stimulus.register('tag-selector', TagSelectorController);
     }
   }

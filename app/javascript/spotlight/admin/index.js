@@ -1,7 +1,6 @@
 import AddAnother from 'spotlight/admin/add_another'
 import AddNewButton from 'spotlight/admin/add_new_button'
 import BlacklightConfiguration from 'spotlight/admin/blacklight_configuration'
-import CopyEmailAddress from 'spotlight/admin/copy_email_addresses'
 import Croppable from 'spotlight/admin/croppable'
 import EditInPlace from 'spotlight/admin/edit_in_place'
 import Exhibits from 'spotlight/admin/exhibits'
@@ -50,7 +49,6 @@ export default class {
   connect() {
     new AddAnother().connect()
     new AddNewButton().connect()
-    new CopyEmailAddress().connect()
     new Croppable().connect()
     new EditInPlace().connect()
     new Exhibits().connect()

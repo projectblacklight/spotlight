@@ -50,13 +50,15 @@
 
   <div class="mb-4">
     <h3 class="instructions"><%= t :'.admins_curators' %></h3>
-    <div id="admins_curators" class="card card-body bg-light">
+    <div id="admins_curators" class="card card-body bg-light" data-controller="clipboard">
       <div class='btn-toolbar align-self-end'>
-        <button class="btn btn-sm btn-primary copy-email-addresses" data-clipboard-target="#admins_curators">
+        <button class="btn btn-sm btn-primary copy-email-addresses" data-action="click->clipboard#copy">
             <%= t('.copy') %>
         </button>
       </div>
-      <%= Spotlight::Engine.user_class.with_roles.pluck(:email).sort.join(', ') %>
+      <div data-clipboard-target="text">
+        <%= Spotlight::Engine.user_class.with_roles.pluck(:email).sort.join(', ') %>
+      </div>
     </div>
   </div>
 
