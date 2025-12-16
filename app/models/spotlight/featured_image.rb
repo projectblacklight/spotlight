@@ -25,7 +25,7 @@ module Spotlight
     end
 
     after_save do
-      if image.present?
+      if image.present? && saved_change_to_image?
         image.cache! unless image.cached?
         image.store!
       end
