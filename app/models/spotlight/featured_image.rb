@@ -24,13 +24,6 @@ module Spotlight
       Spotlight::TemporaryImage.find(upload_id).delete if upload_id.present?
     end
 
-    after_save do
-      if image.present?
-        image.cache! unless image.cached?
-        image.store!
-      end
-    end
-
     after_save :bust_containing_resource_caches
 
     attr_accessor :upload_id
