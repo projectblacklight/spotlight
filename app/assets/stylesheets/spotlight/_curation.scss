@@ -80,28 +80,6 @@
   }
 }
 
-
-.card.page-admin {
-  &:hover {
-    @include panel-hover-highlighting;
-  }
-  .card-title {
-    @extend .mb-0;
-    @extend .py-2;
-  }
-
-  .page-links, .contact-links {
-    text-align: right;
-    a {
-      padding: 0 2px;
-    }
-  }
-  .main {
-    width: 99%;
-    vertical-align: text-top;
-  }
-}
-
 .contacts_admin .card-header.page .main {
   width: 95%;
 }
