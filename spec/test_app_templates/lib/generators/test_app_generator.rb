@@ -43,6 +43,67 @@ class TestAppGenerator < Rails::Generators::Base
     generate :'blacklight:install', '--devise'
   end
 
+  def add_solid_queue_for_rails7
+    return unless Rails.version < '8'
+
+    gem 'solid_queue'
+    bundle_install
+    generate 'solid_queue:install'
+  end
+
+  def configure_solid_queue_database # rubocop:disable Metrics/MethodLength
+    gsub_file 'config/database.yml', /^development:\n  <<: \*default\n  database: .*\n/ do
+      <<~YAML
+        development:
+          primary:
+            <<: *default
+            database: storage/development.sqlite3
+          queue:
+            <<: *default
+            database: storage/development_queue.sqlite3
+            migrations_paths: db/queue_migrate
+      YAML
+    end
+
+    inject_into_file 'config/database.yml', after: /^development:\n  primary:\n    <<: \*default\n    database: .*\n/ do
+      <<-YAML
+
+  queue:
+    <<: *default
+    database: storage/development_queue.sqlite3
+    migrations_paths: db/queue_migrate
+      YAML
+    end
+  end
+
+  def use_solid_queue_in_development
+    inject_into_file 'config/environments/development.rb', before: /^end/ do
+      <<-RUBY
+
+  # Use Solid Queue in Development
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue } }
+      RUBY
+    end
+  end
+
+  def use_solid_queue_puma_plugin_in_development
+    return unless File.exist? File.expand_path('config/puma.rb')
+
+    gsub_file 'config/puma.rb',
+              'plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]',
+              'plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"] || Rails.env.development?'
+  end
+
+  def use_mission_control
+    gem 'mission_control-jobs'
+    Bundler.with_unbundled_env { run 'bundle install' }
+    inject_into_file 'config/environments/development.rb', before: /^end/ do
+      "  config.mission_control.jobs.http_basic_auth_enabled = false\n"
+    end
+    route 'mount MissionControl::Jobs::Engine, at: "/jobs"'
+  end
+
   def run_spotlight_migrations
     rake 'spotlight:install:migrations'
     rake 'db:migrate'
