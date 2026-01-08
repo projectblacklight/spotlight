@@ -100,7 +100,7 @@ RSpec.describe 'Uploaded Items Block', feature: true, js: true, versioning: true
     within first('.contents') do
       data = find('button')['data-iiif-tilesource']
       expect(data).to be_present
-      expect(JSON.parse(data).with_indifferent_access).to include type: 'image', url: end_with('800x600.png')
+      expect(JSON.parse(data).with_indifferent_access).to include type: 'image', url: end_with('800x600(2).png')
       click_button 'View larger'
     end
 
