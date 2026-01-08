@@ -43,6 +43,64 @@ class TestAppGenerator < Rails::Generators::Base
     generate :'blacklight:install', '--devise'
   end
 
+  def preconfigure_solid_queue_for_development
+    return if ENV['CI']
+
+    add_solid_queue_for_rails7
+    configure_solid_queue_database
+    use_solid_queue_in_development
+    use_solid_queue_puma_plugin_in_development
+    use_mission_control
+  end
+
+  def run_spotlight_migrations
+    rake 'spotlight:install:migrations'
+    rake 'db:migrate'
+  end
+
+  def add_spotlight_routes_and_assets
+    generate :'spotlight:install', '-f --mailer_default_url_host=localhost:3000 --test'
+  end
+
+  def install_test_catalog_controller
+    copy_file 'catalog_controller.rb', 'app/controllers/catalog_controller.rb', force: true
+  end
+
+  def add_rake_tasks_to_app
+    rakefile 'spotlight_test.rake', File.read(find_in_source_paths('spotlight_test.rake'))
+  end
+
+  def disable_carrierwave_processing
+    copy_file 'carrierwave.rb', 'config/initializers/carrierwave.rb'
+  end
+
+  def add_theme_assets
+    copy_file 'fixture.png', 'app/assets/images/spotlight/themes/default_preview.png'
+    copy_file 'fixture.png', 'app/assets/images/spotlight/themes/modern_preview.png'
+
+    copy_file 'fixture.css', 'app/assets/stylesheets/application_modern.css'
+    append_to_file 'config/initializers/assets.rb', "\nRails.application.config.assets.precompile += %w( application_modern.css )"
+
+    append_to_file 'config/initializers/spotlight_initializer.rb', "\nSpotlight::Engine.config.exhibit_themes = %w[default modern]"
+  end
+
+  def disable_filter_resources_by_exhibit
+    initializer 'disable_filter_resources_by_exhibit.rb' do
+      <<-EOF
+      # Setting this to false when running tests so that we don't have to set up
+      # exhibit specific solr documents for tests that don't use the default exhibit.
+      Spotlight::Engine.config.filter_resources_by_exhibit = false
+      EOF
+    end
+  end
+
+  def raise_on_missing_translation
+    uncomment_lines 'config/environments/development.rb', /config.action_view.raise_on_missing_translations/
+    uncomment_lines 'config/environments/test.rb', /config.action_view.raise_on_missing_translations/
+  end
+
+  private
+
   def add_solid_queue_for_rails7
     return unless Rails.version < '8'
 
@@ -102,51 +160,5 @@ class TestAppGenerator < Rails::Generators::Base
       "  config.mission_control.jobs.http_basic_auth_enabled = false\n"
     end
     route 'mount MissionControl::Jobs::Engine, at: "/jobs"'
-  end
-
-  def run_spotlight_migrations
-    rake 'spotlight:install:migrations'
-    rake 'db:migrate'
-  end
-
-  def add_spotlight_routes_and_assets
-    generate :'spotlight:install', '-f --mailer_default_url_host=localhost:3000 --test'
-  end
-
-  def install_test_catalog_controller
-    copy_file 'catalog_controller.rb', 'app/controllers/catalog_controller.rb', force: true
-  end
-
-  def add_rake_tasks_to_app
-    rakefile 'spotlight_test.rake', File.read(find_in_source_paths('spotlight_test.rake'))
-  end
-
-  def disable_carrierwave_processing
-    copy_file 'carrierwave.rb', 'config/initializers/carrierwave.rb'
-  end
-
-  def add_theme_assets
-    copy_file 'fixture.png', 'app/assets/images/spotlight/themes/default_preview.png'
-    copy_file 'fixture.png', 'app/assets/images/spotlight/themes/modern_preview.png'
-
-    copy_file 'fixture.css', 'app/assets/stylesheets/application_modern.css'
-    append_to_file 'config/initializers/assets.rb', "\nRails.application.config.assets.precompile += %w( application_modern.css )"
-
-    append_to_file 'config/initializers/spotlight_initializer.rb', "\nSpotlight::Engine.config.exhibit_themes = %w[default modern]"
-  end
-
-  def disable_filter_resources_by_exhibit
-    initializer 'disable_filter_resources_by_exhibit.rb' do
-      <<-EOF
-      # Setting this to false when running tests so that we don't have to set up
-      # exhibit specific solr documents for tests that don't use the default exhibit.
-      Spotlight::Engine.config.filter_resources_by_exhibit = false
-      EOF
-    end
-  end
-
-  def raise_on_missing_translation
-    uncomment_lines 'config/environments/development.rb', /config.action_view.raise_on_missing_translations/
-    uncomment_lines 'config/environments/test.rb', /config.action_view.raise_on_missing_translations/
   end
 end
