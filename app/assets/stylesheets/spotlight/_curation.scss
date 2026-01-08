@@ -27,7 +27,7 @@
     display: none;
   }
   [data-expanded-add-button] {
-    text-align: left;
+    text-align: start;
   }
 }
 
@@ -158,7 +158,7 @@ h1,h2,h3,h4,h5,h6 {
 .facet-metadata {
   @extend .text-muted;
   font-size: $font-size-base;
-  text-align: right;
+  text-align: end;
 }
 
 table#exhibit-specific-fields {
@@ -188,7 +188,7 @@ table.users {
 
 table.tags {
   td:nth-child(2), th:nth-child(2) {
-    text-align: right;
+    text-align: end;
   }
   td:nth-child(3), th:nth-child(3) {
     text-align: center;

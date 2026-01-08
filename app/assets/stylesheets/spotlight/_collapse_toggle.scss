@@ -3,12 +3,12 @@
 .btn.collapse-toggle {
   & + .collapse-chevron {
     display: inline-block;
-    text-align: right;
+    text-align: end;
     transform: rotate(90deg);
     width: 16px;
   }
   &.collapsed + .collapse-chevron {
-    text-align: left;
+    text-align: start;
     transform: none;
   }
 }
