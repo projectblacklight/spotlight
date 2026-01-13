@@ -8,6 +8,20 @@ module Spotlight
     include Spotlight::NavbarHelper
     include Spotlight::MastheadHelper
 
+    def html_tag_attributes
+      return {} unless rtl_enabled?
+
+      rtl_locale? ? { dir: 'rtl' } : {}
+    end
+
+    def rtl_enabled?
+      Spotlight::Engine.config.rtl_enabled || false
+    end
+
+    def rtl_locale?
+      Spotlight::Engine.config.rtl_locales.include?(I18n.locale.to_sym)
+    end
+
     def on_browse_page?
       params[:controller] == 'spotlight/browse'
     end

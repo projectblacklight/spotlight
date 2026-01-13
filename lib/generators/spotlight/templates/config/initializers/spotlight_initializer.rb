@@ -103,3 +103,8 @@
 # Spotlight::Engine.config.page_configurations = {
 #   'my-local-config': ->(context) { context.my_custom_data_path(context.current_exhibit) }
 # }
+#
+# ==> RTL (right-to-left) configuration
+# When enabled, adds dir="rtl" to html_tag_attributes for locales listed in rtl_locales.
+# Spotlight::Engine.config.rtl_enabled = true
+# Spotlight::Engine.config.rtl_locales = %i[ar]
