@@ -230,6 +230,10 @@ module Spotlight
     # add could add an available locale which could break things if unexpected.
     config.i18n.available_locales = config.i18n_locales.keys
 
+    # When enabled, adds dir="rtl" to html_tag_attributes for locales listed in rtl_locales.
+    config.rtl_enabled = false
+    config.rtl_locales = %i[ar]
+
     # Copy of JbuilderHandler tweaked to spit out YAML for translation exports
     class TranslationYamlHandler
       cattr_accessor :default_format
