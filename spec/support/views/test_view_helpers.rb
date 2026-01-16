@@ -12,6 +12,7 @@ module Spotlight
         view.send(:extend, Spotlight::TitleHelper)
         view.send(:extend, Spotlight::NavbarHelper)
         view.send(:extend, Spotlight::CropHelper)
+        view.send(:extend, Spotlight::ExhibitThemeHelper)
         view.send(:extend, Spotlight::PagesHelper)
         view.send(:extend, Blacklight::ComponentHelperBehavior)
       end
