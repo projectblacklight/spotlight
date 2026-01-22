@@ -4,6 +4,7 @@ module Spotlight
   ##
   # Exhibit resources
   class Resource < ActiveRecord::Base
+    # rubocop:disable Style/RedundantParentheses
     class_attribute :indexing_pipeline, default: (Spotlight::Etl::Pipeline.new do |pipeline|
       pipeline.sources = [Spotlight::Etl::Sources::IdentitySource]
       pipeline.transforms = [
@@ -15,6 +16,7 @@ module Spotlight
       ]
       pipeline.loaders = [Spotlight::Etl::SolrLoader]
     end)
+    # rubocop:enable Style/RedundantParentheses
 
     extend ActiveModel::Callbacks
 
