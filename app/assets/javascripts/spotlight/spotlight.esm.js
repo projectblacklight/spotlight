@@ -5275,36 +5275,41 @@ class Users {
   }
 }
 
-(function ($){
+(function () {
   SirTrevor.BlockMixins.Autocompleteable = {
     mixinName: "Autocompleteable",
     preload: true,
 
-    initializeAutocompleteable: function() {
+    initializeAutocompleteable: function () {
       this.on("onRender", this.addAutocompletetoSirTrevorForm);
 
-      if (this['autocomplete_url'] === undefined) {
-        this.autocomplete_url = function() { return $('form[data-autocomplete-url]').data('autocomplete-url'); };
-      }
-
-      if (this['autocomplete_fetch'] === undefined) {
-        this.autocomplete_fetch = this.fetchAutocompleteResults;
-      }
-
-      if (this['transform_autocomplete_results'] === undefined) {
-        this.transform_autocomplete_results = (val) => val;
-      }
-
-      if (this['highlight'] === undefined) {
-        this.highlight = function(value) {
-          if (!value) return '';
-          const queryValue = this.getQueryValue().trim();
-          return queryValue ? value.replace(new RegExp(queryValue, 'gi'), '<strong>$&</strong>') : value;
+      if (this["autocomplete_url"] === undefined) {
+        this.autocomplete_url = function () {
+          const form = document.querySelector("form[data-autocomplete-url]");
+          return form ? form.dataset.autocompleteUrl : null
         };
       }
 
-      if (this['autocomplete_control'] === undefined) {
-        this.autocomplete_control = function() {
+      if (this["autocomplete_fetch"] === undefined) {
+        this.autocomplete_fetch = this.fetchAutocompleteResults;
+      }
+
+      if (this["transform_autocomplete_results"] === undefined) {
+        this.transform_autocomplete_results = val => val;
+      }
+
+      if (this["highlight"] === undefined) {
+        this.highlight = function (value) {
+          if (!value) return ""
+          const queryValue = this.getQueryValue().trim();
+          return queryValue
+            ? value.replace(new RegExp(queryValue, "gi"), "<strong>$&</strong>")
+            : value
+        };
+      }
+
+      if (this["autocomplete_control"] === undefined) {
+        this.autocomplete_control = function () {
           const autocompleteID = this.autocompleteID();
           return `
           <auto-complete src="${this.autocomplete_url()}" for="${autocompleteID}-popup" fetch-on-empty>
@@ -5312,116 +5317,143 @@ class Users {
             <ul id="${autocompleteID}-popup"></ul>
             <div id="${autocompleteID}-popup-feedback" class="visually-hidden"></div>
           </auto-complete>
-        ` };
+        `
+        };
       }
 
-      if (this['autocomplete_element_template'] === undefined) {
-        this.autocomplete_element_template = function(item) {
+      if (this["autocomplete_element_template"] === undefined) {
+        this.autocomplete_element_template = function (item) {
           return `<li role="option" data-autocomplete-value="${item.id}">${this.autocomplete_template(item)}</li>`
         };
       }
     },
 
-    queryTokenizer: function(query) {
-      return query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    queryTokenizer: function (query) {
+      return query.trim().toLowerCase().split(/\s+/).filter(Boolean)
     },
 
-    filterResults: function(data, query) {
+    filterResults: function (data, query) {
       const queryStrings = this.queryTokenizer(query);
       return data.filter(item => {
         const lowerTitle = item.title.toLowerCase();
-        return queryStrings.some(queryString => lowerTitle.includes(queryString));
-      });
+        return queryStrings.some(queryString =>
+          lowerTitle.includes(queryString)
+        )
+      })
     },
 
-    fetchAutocompleteResults: async function(url) {
+    fetchAutocompleteResults: async function (url) {
       const result = await fetchAutocompleteJSON(url);
       const transformed = this.transform_autocomplete_results(result);
       this.fetchedData = {};
-      transformed.map(item => this.fetchedData[item.id] = item);
-      return transformed.map(item => this.autocomplete_element_template(item)).join('');
+      transformed.map(item => (this.fetchedData[item.id] = item));
+      return transformed
+        .map(item => this.autocomplete_element_template(item))
+        .join("")
     },
 
-    fetchOnceAndFilterLocalResults: async function(url) {
+    fetchOnceAndFilterLocalResults: async function (url) {
       if (this.fetchedData === undefined) {
         await this.fetchAutocompleteResults(url);
       }
-      const query = url.searchParams.get('q');
+      const query = url.searchParams.get("q");
       const data = Object.values(this.fetchedData);
       const filteredData = query ? this.filterResults(data, query) : data;
-      return filteredData.map(item => this.autocomplete_element_template(item)).join('');
+      return filteredData
+        .map(item => this.autocomplete_element_template(item))
+        .join("")
     },
 
-    autocompleteID: function() {
-      return this.blockID + '-autocomplete';
+    autocompleteID: function () {
+      return this.blockID + "-autocomplete"
     },
 
-    getQueryValue: function() {
+    getQueryValue: function () {
       const completer = this.inner.querySelector("auto-complete > input");
-      return completer.value;
+      return completer.value
     },
 
-    addAutocompletetoSirTrevorForm: function() {
+    addAutocompletetoSirTrevorForm: function () {
       const completer = this.inner.querySelector("auto-complete");
       completer.fetchResult = this.autocomplete_fetch.bind(this);
-      completer.addEventListener('auto-complete-change', (e) => {
+      completer.addEventListener("auto-complete-change", e => {
         const data = this.fetchedData[e.relatedTarget.value];
         if (e.relatedTarget.value && data) {
-          e.value = e.relatedTarget.value = '';
+          e.value = e.relatedTarget.value = "";
           this.createItemPanel({ ...data, display: "true" });
         }
       });
-    },
-  },
-
+    }
+  };
 
   SirTrevor.Block.prototype.availableMixins.push("autocompleteable");
-})(jQuery);
+})();
 
-(function ($){
+(function () {
   SirTrevor.BlockMixins.Formable = {
     mixinName: "Formable",
     preload: true,
 
-    initializeFormable: function() {
-
-      if (this['afterLoadData'] === undefined) {
-        this['afterLoadData'] = function(data) { };
+    initializeFormable: function () {
+      if (this["afterLoadData"] === undefined) {
+        this["afterLoadData"] = function (data) {};
       }
     },
 
-    formId: function(id) {
-      return this.blockID + "_" + id;
+    formId: function (id) {
+      return this.blockID + "_" + id
     },
 
-    _serializeData: function() {
+    _serializeData: function () {
+      const data = {};
+      const formElements = this.inner.querySelectorAll(
+        ":input,textarea,select:not(input[type=radio])"
+      );
 
-      var data = $(":input,textarea,select", this.inner).not(':input:radio').serializeJSON();
-
-      $(':input:radio:checked', this.inner).each(function(index, input) {
-        var key = $(input).data('key') || input.getAttribute('name');
-
-        if (!key.match("\\[")) {
-          data[key] = $(input).val();
+      // Process regular form elements (except radio buttons)
+      formElements.forEach(element => {
+        if (element.name) {
+          // Handle simple case
+          data[element.name] = element.value;
         }
       });
 
-      /* Simple to start. Add conditions later */
+      // Process checked radio buttons
+      const checkedRadios = this.inner.querySelectorAll(
+        "input[type=radio]:checked"
+      );
+      checkedRadios.forEach(radio => {
+        const key = radio.dataset.key || radio.getAttribute("name");
+        if (!key.match("\\[")) {
+          data[key] = radio.value;
+        }
+      });
+
+      // Handle text blocks
       if (this.hasTextBlock()) {
         data.text = this.getTextBlockHTML();
-        data.format = 'html';
-        if (data.text && data.text.length > 0 && this.options.convertToMarkdown) {
+        data.format = "html";
+        if (
+          data.text &&
+          data.text.length > 0 &&
+          this.options.convertToMarkdown
+        ) {
           data.text = stToMarkdown(data.text, this.type);
-          data.format = 'markdown';
+          data.format = "markdown";
         }
       }
 
-      return data;
+      return data
     },
 
-    loadData: function(data){
+    loadData: function (data) {
       if (this.hasTextBlock()) {
-        if (data.text && data.text.length > 0 && this.options.convertFromMarkdown && data.format !== "html") {
+        if (
+          data.text &&
+          data.text.length > 0 &&
+          this.options.convertFromMarkdown &&
+          data.format !== "html"
+        ) {
           this.setTextBlockHTML(SirTrevor.toHTML(data.text, this.type));
         } else {
           this.setTextBlockHTML(data.text);
@@ -5431,52 +5463,62 @@ class Users {
       this.afterLoadData(data);
     },
 
-    loadFormDataByKey: function(data) {
-      $(':input', this.inner).not('button,:input[type=hidden]').each(function(index, input) {
-        var key = $(input).data('key') || input.getAttribute('name');
+    loadFormDataByKey: function (data) {
+      const inputs = this.inner.querySelectorAll(
+        ":input:not(button):not([type=hidden])"
+      );
+
+      inputs.forEach(input => {
+        const key = input.dataset.key || input.getAttribute("name");
 
         if (key) {
-
-          if (key.match("\\[\\]$")) {
-            key = key.replace("[]", "");
+          let processedKey = key;
+          if (processedKey.match("\\[\\]$")) {
+            processedKey = processedKey.replace("[]", "");
           }
 
-          // by wrapping it in an array, this'll "just work" for radio and checkbox fields too
-          var input_data = data[key];
+          let inputData = data[processedKey];
+          if (inputData !== undefined) {
+            // Convert to array if not already
+            if (!(inputData instanceof Array)) {
+              inputData = [inputData];
+            }
 
-          if (!(input_data instanceof Array)) {
-            input_data = [input_data];
+            // Set value based on input type
+            if (input.type === "checkbox" || input.type === "radio") {
+              input.checked = inputData.includes(input.value);
+            } else {
+              input.value = inputData[0] !== undefined ? inputData[0] : "";
+            }
           }
-          $(this).val(input_data);
         }
       });
-    },
-  },
-
+    }
+  };
 
   SirTrevor.Block.prototype.availableMixins.push("formable");
-})(jQuery);
+})();
 
-(function ($){
+(function () {
   SirTrevor.BlockMixins.Plustextable = {
     mixinName: "Textable",
     preload: true,
 
-    initializeTextable: function() {
-      if (this['formId'] === undefined) {
+    initializeTextable: function () {
+      if (this["formId"] === undefined) {
         this.withMixin(SirTrevor.BlockMixins.Formable);
       }
-      
-      if (this['show_heading'] === undefined) {
+
+      if (this["show_heading"] === undefined) {
         this.show_heading = true;
       }
     },
-    
-    align_key:"text-align",
-    text_key:"item-text",
+
+    align_key: "text-align",
+    text_key: "item-text",
     heading_key: "title",
-    
-    text_area: function() { 
+
+    text_area: function () {
       return `
       <div class="row">
         <div class="col-md-8">
@@ -5499,22 +5541,21 @@ class Users {
         </div>
       </div>`
     },
-    
-    heading: function() {
-      if(this.show_heading) {
+
+    heading: function () {
+      if (this.show_heading) {
         return `<div class="field">
           <label for="${this.formId(this.heading_key)}" class="col-form-label">${i18n.t("blocks:textable:heading")}</label>
           <input type="text" class="form-control" id="${this.formId(this.heading_key)}" name="${this.heading_key}" />
         </div>`
       } else {
-        return "";
+        return ""
       }
-    },
+    }
   };
-  
 
   SirTrevor.Block.prototype.availableMixins.push("plustextable");
-})(jQuery);
+})();
 
 (function ($){
   Spotlight$1.Block = SirTrevor.Block.extend({
