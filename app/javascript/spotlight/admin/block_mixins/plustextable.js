@@ -1,23 +1,23 @@
-(function ($){
+;(function () {
   SirTrevor.BlockMixins.Plustextable = {
     mixinName: "Textable",
     preload: true,
 
-    initializeTextable: function() {
-      if (this['formId'] === undefined) {
-        this.withMixin(SirTrevor.BlockMixins.Formable);
+    initializeTextable: function () {
+      if (this["formId"] === undefined) {
+        this.withMixin(SirTrevor.BlockMixins.Formable)
       }
-      
-      if (this['show_heading'] === undefined) {
-        this.show_heading = true;
+
+      if (this["show_heading"] === undefined) {
+        this.show_heading = true
       }
     },
-    
-    align_key:"text-align",
-    text_key:"item-text",
+
+    align_key: "text-align",
+    text_key: "item-text",
     heading_key: "title",
-    
-    text_area: function() { 
+
+    text_area: function () {
       return `
       <div class="row">
         <div class="col-md-8">
@@ -40,19 +40,18 @@
         </div>
       </div>`
     },
-    
-    heading: function() {
-      if(this.show_heading) {
+
+    heading: function () {
+      if (this.show_heading) {
         return `<div class="field">
           <label for="${this.formId(this.heading_key)}" class="col-form-label">${i18n.t("blocks:textable:heading")}</label>
           <input type="text" class="form-control" id="${this.formId(this.heading_key)}" name="${this.heading_key}" />
         </div>`
       } else {
-        return "";
+        return ""
       }
-    },
-  };
-  
+    }
+  }
 
-  SirTrevor.Block.prototype.availableMixins.push("plustextable");
-})(jQuery);
+  SirTrevor.Block.prototype.availableMixins.push("plustextable")
+})()
