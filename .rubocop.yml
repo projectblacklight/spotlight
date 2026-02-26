@@ -12,6 +12,7 @@ AllCops:
     - "db/**/*"
     - "spec/internal/**/*"
     - "vendor/**/*"
+    - "node_modules/**/*"
   TargetRubyVersion: 3.1
   DisplayCopNames: true
   SuggestExtensions: false
