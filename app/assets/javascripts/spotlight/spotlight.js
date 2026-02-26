@@ -3609,38 +3609,136 @@
   function addImageSelector(input, panel, manifestUrl, initialize) {
     if (!manifestUrl) {
       showNonIiifAlert(input);
-      return;
+      return
     }
-    var cropper = input.data('iiifCropper');
-    $.ajax(manifestUrl).done(
-      function(manifest) {
-        var iiifManifest = new Iiif(manifestUrl, manifest);
 
-        var thumbs = iiifManifest.imagesArray();
+    // Get the cropper from the input element's data
+    let cropper = input.dataset.iiifCropper;
+    if (typeof cropper === "string") {
+      try {
+        cropper = JSON.parse(cropper);
+      } catch (e) {
+        // Handle parsing error if needed
+      }
+    }
+
+    // Use fetch instead of $.ajax
+    fetch(manifestUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`)
+        }
+        return response.json()
+      })
+      .then(manifest => {
+        const iiifManifest = new Iiif(manifestUrl, manifest);
+        const thumbs = iiifManifest.imagesArray();
 
         hideNonIiifAlert(input);
 
         if (initialize) {
           cropper.setIiifFields(thumbs[0]);
-          panel.multiImageSelector(); // Clears out existing selector
+
+          // Assuming multiImageSelector is a custom function that needs to be called on panel
+          if (typeof panel.multiImageSelector === "function") {
+            panel.multiImageSelector(); // Clears out existing selector
+          } else {
+            // If panel is a DOM element and not a custom object
+            const multiImageSelector = panel.querySelector(
+              '[data-behavior="multi-image-selector"]'
+            );
+            if (multiImageSelector) {
+              // Clear the selector
+              multiImageSelector.innerHTML = "";
+            }
+          }
         }
 
-        if(thumbs.length > 1) {
-          panel.show();
-          panel.multiImageSelector(thumbs, function(selectorImage) {
-            cropper.setIiifFields(selectorImage);
-          }, cropper.iiifImageField.val());
+        if (thumbs.length > 1) {
+          // Show panel
+          panel.style.display = "block";
+
+          // Call multiImageSelector with parameters
+          if (typeof panel.multiImageSelector === "function") {
+            panel.multiImageSelector(
+              thumbs,
+              function (selectorImage) {
+                cropper.setIiifFields(selectorImage);
+              },
+              cropper.iiifImageField.value
+            );
+          } else {
+            // If panel is a DOM element, implement the selector functionality
+            const multiImageSelector = panel.querySelector(
+              '[data-behavior="multi-image-selector"]'
+            );
+            if (multiImageSelector) {
+              createMultiImageSelector(
+                multiImageSelector,
+                thumbs,
+                function (selectorImage) {
+                  cropper.setIiifFields(selectorImage);
+                },
+                cropper.iiifImageField.value
+              );
+            }
+          }
         }
+      })
+      .catch(error => {
+        console.error("Error fetching manifest:", error);
+      });
+  }
+
+  function showNonIiifAlert(input) {
+    const alert = input.parentNode.previousElementSibling;
+    if (alert && alert.dataset.behavior === "non-iiif-alert") {
+      alert.style.display = "block";
+    }
+  }
+
+  function hideNonIiifAlert(input) {
+    const alert = input.parentNode.previousElementSibling;
+    if (alert && alert.dataset.behavior === "non-iiif-alert") {
+      alert.style.display = "none";
+    }
+  }
+
+  // Helper function to implement multiImageSelector functionality
+  function createMultiImageSelector(container, thumbs, callback, selectedValue) {
+    // Clear existing content
+    container.innerHTML = "";
+
+    // Create image selector elements
+    thumbs.forEach(thumb => {
+      const imgElement = document.createElement("img");
+      imgElement.src = thumb.thumbnail || thumb.url;
+      imgElement.alt = thumb.label || "";
+      imgElement.classList.add("iiif-image");
+
+      // Add selected class if this is the selected value
+      if (
+        selectedValue &&
+        (selectedValue === thumb.id || selectedValue === thumb.url)
+      ) {
+        imgElement.classList.add("selected");
       }
-    );
-  }
 
-  function showNonIiifAlert(input){
-    input.parent().prev('[data-behavior="non-iiif-alert"]').show();
-  }
+      imgElement.addEventListener("click", function () {
+        // Remove selected class from all images
+        container.querySelectorAll(".iiif-image").forEach(img => {
+          img.classList.remove("selected");
+        });
 
-  function hideNonIiifAlert(input){
-    input.parent().prev('[data-behavior="non-iiif-alert"]').hide();
+        // Add selected class to clicked image
+        imgElement.classList.add("selected");
+
+        // Call the callback with the selected image data
+        callback(thumb);
+      });
+
+      container.appendChild(imgElement);
+    });
   }
 
   const Spotlight$1 = function() {
@@ -3674,33 +3772,56 @@
   class Crop {
     constructor(cropArea, preserveAspectRatio = true) {
       this.cropArea = cropArea;
-      this.cropArea.data('iiifCropper', this);
+      this.cropArea.data("iiifCropper", this);
       // This element will also have the IIIF input elements contained
       // There may be multiple elements with data-cropper attributes, but
       // there should only one element with this data-cropper attribute value.
-      this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
+      this.cropSelector = '[data-cropper="' + cropArea.data("cropperKey") + '"]';
       this.cropTool = $(this.cropSelector);
       // Exhibit and masthead cropping requires the ratio between image width and height
-      // to be consistent, whereas item widget cropping allows any combination of 
+      // to be consistent, whereas item widget cropping allows any combination of
       // image width and height.
       this.preserveAspectRatio = preserveAspectRatio;
       // Get the IIIF input elements used to store/reference IIIF information
-      this.inputPrefix = this.cropTool.data('input-prefix');
-      this.iiifUrlField = this.iiifInputElement(this.inputPrefix, 'iiif_tilesource', this.cropTool);
-      this.iiifRegionField = this.iiifInputElement(this.inputPrefix, 'iiif_region', this.cropTool);
-      this.iiifManifestField = this.iiifInputElement(this.inputPrefix, 'iiif_manifest_url', this.cropTool);
-      this.iiifCanvasField = this.iiifInputElement(this.inputPrefix, 'iiif_canvas_id', this.cropTool);
-      this.iiifImageField = this.iiifInputElement(this.inputPrefix, 'iiif_image_id', this.cropTool);
+      this.inputPrefix = this.cropTool.data("input-prefix");
+      this.iiifUrlField = this.iiifInputElement(
+        this.inputPrefix,
+        "iiif_tilesource",
+        this.cropTool
+      );
+      this.iiifRegionField = this.iiifInputElement(
+        this.inputPrefix,
+        "iiif_region",
+        this.cropTool
+      );
+      this.iiifManifestField = this.iiifInputElement(
+        this.inputPrefix,
+        "iiif_manifest_url",
+        this.cropTool
+      );
+      this.iiifCanvasField = this.iiifInputElement(
+        this.inputPrefix,
+        "iiif_canvas_id",
+        this.cropTool
+      );
+      this.iiifImageField = this.iiifInputElement(
+        this.inputPrefix,
+        "iiif_image_id",
+        this.cropTool
+      );
       // Get the closest form element
-      this.form = cropArea.closest('form');
+      this.form = cropArea.closest("form");
       this.tileSource = null;
     }
 
     // Return the iiif input element based on the fieldname.
-    // Multiple input fields with the same name on the page may be related 
-    // to a cropper. We thus need to pass in a parent element. 
+    // Multiple input fields with the same name on the page may be related
+    // to a cropper. We thus need to pass in a parent element.
     iiifInputElement(inputPrefix, fieldName, inputParentElement) {
-      return $('input[name="' + inputPrefix + '[' + fieldName + ']"]', inputParentElement);
+      return $(
+        'input[name="' + inputPrefix + "[" + fieldName + ']"]',
+        inputParentElement
+      )
     }
 
     // Render the cropper environment and add hooks into the autocomplete and upload forms
@@ -3713,8 +3834,8 @@
     // Setup the cropper on page load if the field
     // that holds the IIIF url is populated
     setupExistingIiifCropper() {
-      if(this.iiifUrlField.val() === '') {
-        return;
+      if (this.iiifUrlField.val() === "") {
+        return
       }
 
       this.addImageSelectorToExistingCropTool();
@@ -3731,8 +3852,8 @@
         // Force a broken layer's container to be an element before removing.
         // Code in leaflet-iiif land calls delete on the image layer's container when removing,
         // which errors if there is an issue fetching the info.json and stops further necessary steps to execute.
-        if(!this.imageLayer._container) {
-          this.imageLayer._container = $('<div></div>');
+        if (!this.imageLayer._container) {
+          this.imageLayer._container = $("<div></div>");
         }
         this.cropperMap.removeLayer(this.imageLayer);
       }
@@ -3740,7 +3861,7 @@
       this.imageLayer = L.tileLayer.iiif(this.tileSource).addTo(this.cropperMap);
 
       var self = this;
-      this.imageLayer.on('load', function() {
+      this.imageLayer.on("load", function () {
         if (!self.loaded) {
           var region = self.getCropRegion();
           self.positionIiifCropBox(region);
@@ -3748,18 +3869,18 @@
         }
       });
 
-      this.cropArea.data('initiallyVisible', this.cropArea.is(':visible'));
+      this.cropArea.data("initiallyVisible", this.cropArea.is(":visible"));
     }
 
     // Get (or initialize) the current crop region from the form data
     getCropRegion() {
       var regionFieldValue = this.iiifRegionField.val();
-      if(!regionFieldValue || regionFieldValue === '') {
+      if (!regionFieldValue || regionFieldValue === "") {
         var region = this.defaultCropRegion();
         this.iiifRegionField.val(region);
-        return region;
+        return region
       } else {
-        return regionFieldValue.split(',');
+        return regionFieldValue.split(",")
       }
     }
 
@@ -3776,14 +3897,14 @@
         Math.floor((imageHeight - boxHeight) / 2),
         boxWidth,
         boxHeight
-      ];
+      ]
     }
 
     // Calculate the required aspect ratio for the crop area
     aspectRatio() {
-      var cropWidth = parseInt(this.cropArea.data('crop-width'));
-      var cropHeight = parseInt(this.cropArea.data('crop-height'));
-      return cropWidth / cropHeight;
+      var cropWidth = parseInt(this.cropArea.data("crop-width"));
+      var cropHeight = parseInt(this.cropArea.data("crop-height"));
+      return cropWidth / cropHeight
     }
 
     // Position the IIIF Crop Box at the given IIIF region
@@ -3815,12 +3936,12 @@
     // Set the Crop tileSource and setup the cropper
     setTileSource(source) {
       if (source == this.tileSource) {
-        return;
+        return
       }
 
       if (source === null || source === undefined) {
-        console.error('No tilesource provided when setting up IIIF Cropper');
-        return;
+        console.error("No tilesource provided when setting up IIIF Cropper");
+        return
       }
 
       if (this.cropBox) {
@@ -3835,7 +3956,7 @@
     // Render the Leaflet Map into the crop area
     renderCropperMap() {
       if (this.cropperMap) {
-        return;
+        return
       }
 
       var cropperOptions = {
@@ -3845,13 +3966,15 @@
         zoom: 0
       };
 
-      if(this.preserveAspectRatio) {
-        cropperOptions['editOptions'] = {
-          rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(this.aspectRatio())
+      if (this.preserveAspectRatio) {
+        cropperOptions["editOptions"] = {
+          rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(
+            this.aspectRatio()
+          )
         };
       }
 
-      this.cropperMap = L.map(this.cropArea.attr('id'), cropperOptions);
+      this.cropperMap = L.map(this.cropArea.attr("id"), cropperOptions);
       this.invalidateMapSizeOnTabToggle();
     }
 
@@ -3860,21 +3983,26 @@
       this.cropBox = L.rectangle(initialBounds);
       this.cropBox.addTo(this.cropperMap);
       this.cropBox.enableEdit();
-      this.cropBox.on('dblclick', L.DomEvent.stop).on('dblclick', this.cropBox.toggleEdit);
+      this.cropBox
+        .on("dblclick", L.DomEvent.stop)
+        .on("dblclick", this.cropBox.toggleEdit);
 
       var self = this;
-      this.cropperMap.on('editable:dragend editable:vertex:dragend', function(e) {
-        var bounds = e.layer.getBounds();
-        var region = self.projectBoundsToIIIFRegion(bounds);
+      this.cropperMap.on(
+        "editable:dragend editable:vertex:dragend",
+        function (e) {
+          var bounds = e.layer.getBounds();
+          var region = self.projectBoundsToIIIFRegion(bounds);
 
-        self.iiifRegionField.val(region.join(','));
-      });
+          self.iiifRegionField.val(region.join(","));
+        }
+      );
     }
 
     // Get the maximum zoom level for the IIIF Layer (always 1:1 image pixel to canvas?)
     maxZoom() {
-      if(this.imageLayer) {
-        return this.imageLayer.maxZoom;
+      if (this.imageLayer) {
+        return this.imageLayer.maxZoom
       }
     }
 
@@ -3887,17 +4015,20 @@
         Math.max(Math.floor(min.y), 0),
         Math.floor(max.x - min.x),
         Math.floor(max.y - min.y)
-      ];
+      ]
     }
 
     // Take a IIIF [x, y, w, h] region and transform it into a Leaflet LatLngBounds
     unprojectIIIFRegionToBounds(region) {
       var minPoint = L.point(parseInt(region[0]), parseInt(region[1]));
-      var maxPoint = L.point(parseInt(region[0]) + parseInt(region[2]), parseInt(region[1]) + parseInt(region[3]));
+      var maxPoint = L.point(
+        parseInt(region[0]) + parseInt(region[2]),
+        parseInt(region[1]) + parseInt(region[3])
+      );
 
       var min = this.cropperMap.unproject(minPoint, this.maxZoom());
       var max = this.cropperMap.unproject(maxPoint, this.maxZoom());
-      return L.latLngBounds(min, max);
+      return L.latLngBounds(min, max)
     }
 
     // TODO: Add accessors to update hidden inputs with IIIF uri/ids?
@@ -3905,7 +4036,7 @@
     // Setup autocomplete inputs to have the iiif_cropper context
     setupAutoCompletes() {
       var input = $('[data-behavior="autocomplete"]', this.cropTool);
-      input.data('iiifCropper', this);
+      input.data("iiifCropper", this);
     }
 
     setupAjaxFileUpload() {
@@ -3914,28 +4045,36 @@
     }
 
     addImageSelectorToExistingCropTool() {
-      if(this.iiifManifestField.val() === '') {
-        return;
+      if (this.iiifManifestField.val() === "") {
+        return
       }
 
       var input = $('[data-behavior="autocomplete"]', this.cropTool);
-      
+
       // Not every page which uses this module has autocomplete linked directly to the cropping tool
-      if(input.length) {
-        var panel = $(input.data('target-panel'));
-        addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+      if (input.length) {
+        var panel = $(input.data("target-panel"));
+        addImageSelector(
+          input[0],
+          panel[0],
+          this.iiifManifestField.val(),
+          !this.iiifImageField.val()
+        );
       }
     }
 
     invalidateMapSizeOnTabToggle() {
       var tabs = $('[role="tablist"]', this.form);
       var self = this;
-      tabs.on('shown.bs.tab', function() {
-        if(self.cropArea.data('initiallyVisible') === false && self.cropArea.is(':visible')) {
+      tabs.on("shown.bs.tab", function () {
+        if (
+          self.cropArea.data("initiallyVisible") === false &&
+          self.cropArea.is(":visible")
+        ) {
           self.cropperMap.invalidateSize();
           // Because the map size is 0,0 when image is loading (not visible) we need to refit the bounds of the layer
           self.imageLayer._fitBounds();
-          self.cropArea.data('initiallyVisible', null);
+          self.cropArea.data("initiallyVisible", null);
         }
       });
     }
@@ -3943,23 +4082,23 @@
     // Get all the form data with the exception of the _method field.
     getData() {
       var data = new FormData(this.form[0]);
-      data.append('_method', null);
-      return data;
+      data.append("_method", null);
+      return data
     }
 
     uploadFile() {
-      var url = this.fileInput.data('endpoint');
+      var url = this.fileInput.data("endpoint");
       // Every post creates a new image/masthead.
       // Because they create IIIF urls which are heavily cached.
       $.ajax({
-        url: url,  //Server script to process data
-        type: 'POST',
+        url: url, //Server script to process data
+        type: "POST",
         success: (data, stat, xhr) => this.successHandler(data, stat, xhr),
         error: (xhr, stat, error) => this.errorHandler(xhr, stat, error),
         // Form data
         data: this.getData(),
         headers: {
-          'X-CSRF-Token': Spotlight$1.csrfToken() || ''
+          "X-CSRF-Token": Spotlight$1.csrfToken() || ""
         },
         //Options to tell jQuery not to process data or worry about content-type.
         cache: false,
@@ -3978,7 +4117,7 @@
       let errorMessage = "Upload failed";
       if (xhr.responseJSON) {
         if (xhr.responseJSON.errors) {
-          errorMessage = xhr.responseJSON.errors.join(', ');
+          errorMessage = xhr.responseJSON.errors.join(", ");
         } else if (xhr.responseJSON.error) {
           errorMessage = xhr.responseJSON.error;
         }
@@ -4009,8 +4148,8 @@
     setUploadId(id) {
       // This input is currently used for exhibit masthead or thumbnail image upload.
       // The name should be sufficient in this case, as we don't use this part of the
-      // code for solr document widgets where we enable cropping. 
-      // If we require more specificity, we can scope this to this.cropTool. 
+      // code for solr document widgets where we enable cropping.
+      // If we require more specificity, we can scope this to this.cropTool.
       $('input[name="' + this.inputPrefix + '[upload_id]"]').val(id);
     }
 
@@ -4018,17 +4157,23 @@
       return L.Editable.RectangleEditor.extend({
         extendBounds: function (e) {
           var index = e.vertex.getIndex(),
-              next = e.vertex.getNext(),
-              previous = e.vertex.getPrevious(),
-              oppositeIndex = (index + 2) % 4,
-              opposite = e.vertex.latlngs[oppositeIndex];
+            next = e.vertex.getNext(),
+            previous = e.vertex.getPrevious(),
+            oppositeIndex = (index + 2) % 4,
+            opposite = e.vertex.latlngs[oppositeIndex];
 
-          if ((index % 2) == 1) {
+          if (index % 2 == 1) {
             // calculate horiz. displacement
-            e.latlng.update([opposite.lat + ((1 / aspect) * (opposite.lng - e.latlng.lng)), e.latlng.lng]);
+            e.latlng.update([
+              opposite.lat + (1 / aspect) * (opposite.lng - e.latlng.lng),
+              e.latlng.lng
+            ]);
           } else {
             // calculate vert. displacement
-            e.latlng.update([e.latlng.lat, (opposite.lng - (aspect * (opposite.lat - e.latlng.lat)))]);
+            e.latlng.update([
+              e.latlng.lat,
+              opposite.lng - aspect * (opposite.lat - e.latlng.lat)
+            ]);
           }
           var bounds = new L.LatLngBounds(e.latlng, opposite);
           // Update latlngs by hand to preserve order.
@@ -4037,7 +4182,7 @@
           this.updateBounds(bounds);
           this.refreshVertexMarkers();
         }
-      });
+      })
     }
   }
 
@@ -4871,73 +5016,85 @@
   const docStore = new Map();
 
   function highlight(value, query) {
-    if (query.trim() === '') return value;
+    if (query.trim() === "") return value
     const queryValue = query.trim();
-    return queryValue ? value.replace(new RegExp(queryValue, 'gi'), '<strong>$&</strong>') : value;
+    return queryValue
+      ? value.replace(new RegExp(queryValue, "gi"), "<strong>$&</strong>")
+      : value
   }
 
   function templateFunc(obj, query) {
-    const thumbnail = obj.thumbnail ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail}" /></div>` : '';
-    const privateClass = obj.private ? ' blacklight-private' : '';
+    const thumbnail = obj.thumbnail
+      ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail}" /></div>`
+      : "";
+    const privateClass = obj.private ? " blacklight-private" : "";
     const title = highlight(obj.title, query);
-    const description = obj.description ? `<small>&nbsp;&nbsp;${highlight(obj.description, query)}</small>` : '';
+    const description = obj.description
+      ? `<small>&nbsp;&nbsp;${highlight(obj.description, query)}</small>`
+      : "";
     return `<div class="autocomplete-item${privateClass}">${thumbnail}
             <span class="autocomplete-title">${title}</span><br/>${description}
-          </div>`;
+          </div>`
   }
 
   function autoCompleteElementTemplate(obj, query) {
-    return `<li role="option" data-autocomplete-value="${obj.id}">${templateFunc(obj, query)}</li>`;
+    return `<li role="option" data-autocomplete-value="${obj.id}">${templateFunc(obj, query)}</li>`
   }
 
   function getAutoCompleteElementDataMap(autoCompleteElement) {
     if (!docStore.has(autoCompleteElement.id)) {
       docStore.set(autoCompleteElement.id, new Map());
     }
-    return docStore.get(autoCompleteElement.id);
+    return docStore.get(autoCompleteElement.id)
   }
 
   async function fetchResult(url) {
     const result = await fetchAutocompleteJSON(url);
     const docs = result.docs || [];
-    const query = this.querySelector('input').value || '';
+    const query = this.querySelector("input").value || "";
     const autoCompleteElementDataMap = getAutoCompleteElementDataMap(this);
-    return docs.map(doc => {
-      autoCompleteElementDataMap.set(doc.id, doc);
-      return autoCompleteElementTemplate(doc, query);
-    }).join('');
+    return docs
+      .map(doc => {
+        autoCompleteElementDataMap.set(doc.id, doc);
+        return autoCompleteElementTemplate(doc, query)
+      })
+      .join("")
   }
 
-  function addAutocompletetoFeaturedImage(){
-    const autocompletePath = $('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path');
-    const featuredImageTypeaheads = $('[data-featured-image-typeahead]');
-    if (featuredImageTypeaheads.length === 0) return;
+  function addAutocompletetoFeaturedImage() {
+    const autocompletePath = $(
+      "form[data-autocomplete-exhibit-catalog-path]"
+    ).data("autocomplete-exhibit-catalog-path");
+    const featuredImageTypeaheads = $("[data-featured-image-typeahead]");
+    if (featuredImageTypeaheads.length === 0) return
 
-    $.each(featuredImageTypeaheads, function(index, autoCompleteInput) {
-      const autoCompleteElement = autoCompleteInput.closest('auto-complete');
+    $.each(featuredImageTypeaheads, function (index, autoCompleteInput) {
+      const autoCompleteElement = autoCompleteInput.closest("auto-complete");
 
-      autoCompleteElement.setAttribute('src', autocompletePath);
+      autoCompleteElement.setAttribute("src", autocompletePath);
       autoCompleteElement.fetchResult = fetchResult;
-      autoCompleteElement.addEventListener('auto-complete-change', e => {
-        const data = getAutoCompleteElementDataMap(autoCompleteElement).get(e.relatedTarget.value);
-        if (!data) return;
+      autoCompleteElement.addEventListener("auto-complete-change", e => {
+        const data = getAutoCompleteElementDataMap(autoCompleteElement).get(
+          e.relatedTarget.value
+        );
+        if (!data) return
 
         const inputElement = $(e.relatedTarget);
         const panel = document.querySelector(e.relatedTarget.dataset.targetPanel);
         e.relatedTarget.value = data.title;
-        addImageSelector(inputElement, $(panel), data.iiif_manifest, true);
-        $(inputElement.data('id-field')).val(data['global_id']);
-        inputElement.attr('type', 'text');
+        addImageSelector(inputElement[0], panel, data.iiif_manifest, true);
+        $(inputElement.data("id-field")).val(data["global_id"]);
+        inputElement.attr("type", "text");
       });
     });
   }
 
   async function fetchAutocompleteJSON(url) {
-    const res = await(fetch(url.toString()));
+    const res = await fetch(url.toString());
     if (!res.ok) {
-      throw new Error(await res.text());
+      throw new Error(await res.text())
     }
-    return await res.json();
+    return await res.json()
   }
 
   /*
