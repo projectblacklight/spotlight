@@ -121,7 +121,7 @@ namespace :spotlight do
             Bundler.with_unbundled_env do
               IO.popen({ 'SPOTLIGHT_GEM' => File.dirname(__FILE__) },
                        ['rails', version, 'new', 'internal', '--skip-spring', '-m', template_path] +
-                          [err: %i[child out]]) do |io|
+                          [{ err: %i[child out] }]) do |io|
                 IO.copy_stream(io, $stderr)
 
                 _, exit_status = Process.wait2(io.pid)

@@ -28,8 +28,8 @@ module Spotlight
         @resources ||=
           canvases
           .flat_map(&:items).select { |item| item.type == 'AnnotationPage' }
-          .flat_map(&:items).select { |item| item.motivation == 'painting' }
-          .flat_map(&:body)
+                            .flat_map(&:items).select { |item| item.motivation == 'painting' }
+                                              .flat_map(&:body)
           .flat_map(&:service)
       end
 

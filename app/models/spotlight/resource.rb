@@ -7,11 +7,13 @@ module Spotlight
     class_attribute :indexing_pipeline, default: (Spotlight::Etl::Pipeline.new do |pipeline|
       pipeline.sources = [Spotlight::Etl::Sources::IdentitySource]
       pipeline.transforms = [
-        reject_blank: Spotlight::Etl::Transforms::RejectBlank,
-        reject_missing: Spotlight::Etl::Transforms::RejectMissingUniqueId,
-        apply_exhibit_metadata: Spotlight::Etl::Transforms::ApplyExhibitMetadata,
-        apply_application_metadata: Spotlight::Etl::Transforms::ApplyApplicationMetadata,
-        apply_pipeline_metadata: Spotlight::Etl::Transforms::ApplyPipelineMetadata
+        {
+          reject_blank: Spotlight::Etl::Transforms::RejectBlank,
+          reject_missing: Spotlight::Etl::Transforms::RejectMissingUniqueId,
+          apply_exhibit_metadata: Spotlight::Etl::Transforms::ApplyExhibitMetadata,
+          apply_application_metadata: Spotlight::Etl::Transforms::ApplyApplicationMetadata,
+          apply_pipeline_metadata: Spotlight::Etl::Transforms::ApplyPipelineMetadata
+        }
       ]
       pipeline.loaders = [Spotlight::Etl::SolrLoader]
     end)
