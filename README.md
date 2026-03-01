@@ -190,6 +190,7 @@ The `spec:prepare` task generates css assets for use by the tests. You can delet
 
 Once you are set up, you can also run `rubocop` to enforce consistent coding style.
 
+The test app comes with [Solid Queue](https://github.com/rails/solid_queue) configured as the backend for [Active Job](https://edgeguides.rubyonrails.org/active_job_basics.html). [Mission Control - Jobs](https://github.com/rails/mission_control-jobs), the jobs dashboard, is available at http://localhost:3000/jobs.
 
 ### Individual commands
 
