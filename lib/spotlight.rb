@@ -7,6 +7,6 @@ require 'spotlight/engine'
 # Spotlight
 module Spotlight
   def self.deprecator
-    @deprecator ||= ActiveSupport::Deprecation.new('5.0', 'blacklight-spotlight')
+    @deprecator ||= ActiveSupport::Deprecation.new('6.0', 'blacklight-spotlight')
   end
 end
