@@ -10,7 +10,7 @@ Spotlight is a collaborative, open source project produced by developers, design
 * Make sure to add tests for it. This is important so we don't break it in a future version unintentionally.
 * After making your changes, be sure to run the tests to make sure everything works.
 * Make sure your changes pass [RuboCop](https://github.com/bbatsov/rubocop).
-* Submit your change as a [[Pull Request|http://help.github.com/pull-requests/]].
+* Submit your change as a [Pull Request](http://help.github.com/pull-requests/).
  * Make sure a clear and atomic commit history is represented in a pull request. Commit messages should say why changes were made.
 
 Please note that backwards compatibility and deprecation notices are preferred for breaking API and user facing changes
@@ -24,4 +24,22 @@ Spotlight has been designed by a team of user experience designers. While there 
 
 ## Becoming a Committer
 
-Anyone can contribute to Spotlight using pull requests, the issue tracker, and participating in community slack channels. Being a committer means that you contribute to an extent that requires greater repository access. Currently the only defined way to be added as a committer is to participate in a community sprint.
+Anyone can contribute to Spotlight using pull requests, the issue tracker, and by participating in community communication channels. Being a contributor means that you take an active interest in the project and contribute regularly in some way, including asking sensible questions and providing new features as patches.
+
+If you participate in a community sprint or become an active, valued contributor to the project you may be invited to become a committer. 
+
+Committers should be:
+
+  * technically adept
+  * constructive, positive members of the Spotlight software community
+  * committed to producing useful, practical code for the community
+
+You're expected to:
+
+  * contribute patches and new functionality to Spotlight
+  * actively participate in technical discussions on the email list, Slack, and GitHub
+  * answer user support questions via the various channels
+  * review pull requests from fellow committers and the community
+  * test-drive new release candidates against your own institution's Blacklight applications
+  * participate in community meetings, usually in the form of conference calls, to coordinate development and direction
+
