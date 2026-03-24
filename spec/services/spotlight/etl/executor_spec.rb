@@ -115,6 +115,8 @@ RSpec.describe Spotlight::Etl::Executor do
       it 'resets the step cache' do
         pipeline.transforms = [
           Class.new do
+            # See https://github.com/rubocop/rubocop/issues/15058
+            # rubocop:disable Lint/DuplicateMethods
             def initialize
               @count = 0
             end
@@ -124,6 +126,7 @@ RSpec.describe Spotlight::Etl::Executor do
 
               data.merge(count: @count)
             end
+            # rubocop:enable Lint/DuplicateMethods
           end
         ]
 
