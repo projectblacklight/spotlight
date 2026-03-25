@@ -28,7 +28,7 @@ these collections.)
   s.add_dependency 'cancancan'
   s.add_dependency 'carrierwave', '> 2.2.1', '< 4'
   s.add_dependency 'csv'
-  s.add_dependency 'devise', '~> 4.9'
+  s.add_dependency 'devise', '>= 4.9', '< 6'
   s.add_dependency 'devise_invitable'
   s.add_dependency 'faraday'
   s.add_dependency 'faraday-follow_redirects'
