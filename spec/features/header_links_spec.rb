@@ -17,10 +17,10 @@ RSpec.describe 'header links', type: :feature do
 
       visit main_app.root_path
 
-      expect(page).to have_selector '#user-util-collapse', text: 'Site administration'
-      expect(page).to have_selector '#user-util-collapse', text: 'Create new exhibit'
-      expect(page).to have_selector '#user-util-collapse', text: 'Change Password'
-      expect(page).to have_selector '#user-util-collapse', text: 'Sign out'
+      expect(page).to have_css '#user-util-collapse', text: 'Site administration'
+      expect(page).to have_css '#user-util-collapse', text: 'Create new exhibit'
+      expect(page).to have_css '#user-util-collapse', text: 'Change Password'
+      expect(page).to have_css '#user-util-collapse', text: 'Sign out'
     end
   end
 end

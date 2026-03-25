@@ -45,11 +45,11 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
   it 'allows you to add multiple solr documents to the widget', js: true do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
-    expect(page).to have_selector '.panels li', count: 2, visible: true
+    expect(page).to have_css '.panels li', count: 2, visible: true
 
     save_page_changes
 
-    expect(page).to have_selector '.items-block .box', count: 2, visible: true
+    expect(page).to have_css '.items-block .box', count: 2, visible: true
   end
 
   it 'allows you to choose from a multi-image solr document (and persist through edits)', js: true do
@@ -98,7 +98,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
 
     save_page_changes
 
-    expect(page).to have_selector '.items-block .box', count: 1, visible: true
+    expect(page).to have_css '.items-block .box', count: 1, visible: true
     expect(page).to have_content '[World map]'
     expect(page).to have_no_content "L'AMERIQUE"
 
@@ -114,7 +114,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
 
     save_page_changes
 
-    expect(page).to have_selector '.items-block .box', count: 1, visible: true
+    expect(page).to have_css '.items-block .box', count: 1, visible: true
     expect(page).to have_no_content '[World map]'
   end
 
@@ -266,7 +266,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
 
     click_on 'Edit'
 
-    expect(page).to have_selector '.card', count: 2, visible: true
+    expect(page).to have_css '.card', count: 2, visible: true
 
     # for some reason, the text area above isn't getting filled in
     # expect(page).to have_selector ".st-text-block", text: "zzz"

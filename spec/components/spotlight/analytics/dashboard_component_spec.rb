@@ -48,9 +48,9 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
     end
 
     it 'has metric values' do
-      expect(rendered).to have_selector '.value.screenPageViews', text: 1
-      expect(rendered).to have_selector '.value.users', text: 2
-      expect(rendered).to have_selector '.value.sessions', text: 3
+      expect(rendered).to have_css '.value.screenPageViews', text: 1
+      expect(rendered).to have_css '.value.users', text: 2
+      expect(rendered).to have_css '.value.sessions', text: 3
     end
 
     it 'has page-level data' do

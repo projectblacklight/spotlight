@@ -16,20 +16,20 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     it 'has a placeholder thumbnail' do
       render(p, exhibit:)
 
-      expect(rendered).to have_selector 'img.default-thumbnail'
+      expect(rendered).to have_css 'img.default-thumbnail'
     end
   end
 
   it 'has a thumbnail' do
     render(p, exhibit:)
 
-    expect(rendered).to have_selector 'img'
+    expect(rendered).to have_css 'img'
   end
 
   it 'has a title' do
     render(p, exhibit:)
 
-    expect(rendered).to have_selector '.card-title', text: exhibit.title
+    expect(rendered).to have_css '.card-title', text: exhibit.title
   end
 
   context 'for an exhibit with a description' do
@@ -40,7 +40,7 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     it 'has a description that strips html tags' do
       render(p, exhibit:)
 
-      expect(rendered).to have_selector '.description', text: 'Test description & more.'
+      expect(rendered).to have_css '.description', text: 'Test description & more.'
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     it 'has an unpublished banner' do
       render(p, exhibit:)
 
-      expect(rendered).to have_selector '.badge.unpublished', text: 'Unpublished'
+      expect(rendered).to have_css '.badge.unpublished', text: 'Unpublished'
     end
   end
 end

@@ -13,7 +13,7 @@ RSpec.describe 'Create a new exhibit', type: :feature do
     within '.dropdown-menu' do
       click_link 'Create new exhibit'
     end
-    expect(page).to have_selector 'h1', text: 'Create a new exhibit'
+    expect(page).to have_css 'h1', text: 'Create a new exhibit'
   end
 
   it 'allows admins to create a new exhibit' do

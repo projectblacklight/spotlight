@@ -23,20 +23,20 @@ RSpec.describe 'spotlight/search_configurations/_search_fields', type: :view do
   end
 
   it 'has a fieldset with an appropriate legend' do
-    expect(rendered).to have_selector 'fieldset legend', text: 'Field-based search'
+    expect(rendered).to have_css 'fieldset legend', text: 'Field-based search'
   end
 
   it 'has a checkbox to enable or disable fielded search' do
-    expect(rendered).to have_selector 'input[data-behavior="enable-feature"][data-target="#search_fields"]'
+    expect(rendered).to have_css 'input[data-behavior="enable-feature"][data-target="#search_fields"]'
   end
 
   it 'has a read-only "everything" search option' do
-    expect(rendered).to have_selector "input[name='blacklight_configuration[search_fields][all_fields][enabled]'][data-readonly='true']"
+    expect(rendered).to have_css "input[name='blacklight_configuration[search_fields][all_fields][enabled]'][data-readonly='true']"
   end
 
   it 'has search options for available search fields' do
-    expect(rendered).to have_selector "input[name='blacklight_configuration[search_fields][title][enabled]']"
-    expect(rendered).to have_selector "input[name='blacklight_configuration[search_fields][author][enabled]']"
+    expect(rendered).to have_css "input[name='blacklight_configuration[search_fields][title][enabled]']"
+    expect(rendered).to have_css "input[name='blacklight_configuration[search_fields][author][enabled]']"
   end
 
   it 'excludes search options that do not show up in the search dropdown' do
@@ -49,6 +49,6 @@ RSpec.describe 'spotlight/search_configurations/_search_fields', type: :view do
   end
 
   it 'parameterizes the data-id attribute for search field key' do
-    expect(rendered).to have_selector '[data-id="some_field-with_a_space"]'
+    expect(rendered).to have_css '[data-id="some_field-with_a_space"]'
   end
 end

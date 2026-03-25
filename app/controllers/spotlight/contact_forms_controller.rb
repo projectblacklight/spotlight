@@ -15,7 +15,7 @@ module Spotlight
       if @contact_form.valid?
         ContactMailer.report_problem(@contact_form).deliver_now
 
-        redirect_back fallback_location: spotlight.new_exhibit_contact_form_path(current_exhibit), notice: t(:'helpers.submit.contact_form.created')
+        redirect_back_or_to(spotlight.new_exhibit_contact_form_path(current_exhibit), notice: t(:'helpers.submit.contact_form.created'))
       else
         render 'new'
       end

@@ -18,8 +18,8 @@ RSpec.describe 'spotlight/browse/show', type: :view do
 
   it 'has a heading and item count when there is no current search masthead' do
     render
-    expect(response).to have_selector 'h1', text: search.title
-    expect(response).to have_selector '.item-count', text: "#{search.count} items"
+    expect(response).to have_css 'h1', text: search.title
+    expect(response).to have_css '.item-count', text: "#{search.count} items"
   end
 
   it 'does not have the heading and item count when there is a current search masthead' do
@@ -32,26 +32,26 @@ RSpec.describe 'spotlight/browse/show', type: :view do
   it 'has an edit button' do
     allow(view).to receive_messages(can?: true)
     render
-    expect(response).to have_selector '.btn', text: 'Edit'
+    expect(response).to have_css '.btn', text: 'Edit'
   end
 
   it 'displays the long description' do
     allow(search).to receive_messages(long_description: 'Long description')
     render
-    expect(response).to have_selector '.long-description-text p', text: search.long_description
+    expect(response).to have_css '.long-description-text p', text: search.long_description
     expect(response).to have_no_selector '.very-long-description-text'
   end
 
   it 'adds markup for very long descriptions' do
     allow(search).to receive_messages(long_description: 'A' * 601)
     render
-    expect(response).to have_selector '.very-long-description-text p'
+    expect(response).to have_css '.very-long-description-text p'
   end
 
   it 'renders the long description as markdown' do
     allow(search).to receive_messages(long_description: '[some link](/somewhere)')
     render
-    expect(response).to have_selector 'p a', text: 'some link'
+    expect(response).to have_css 'p a', text: 'some link'
   end
 
   it 'displays search results actions' do

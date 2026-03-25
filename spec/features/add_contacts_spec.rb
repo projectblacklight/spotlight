@@ -35,11 +35,11 @@ RSpec.describe 'Add a contact to an exhibit', type: :feature do
     end
 
     within '#sidebar .contacts' do
-      expect(page).to have_selector '.name', text: 'Marcus Aurelius'
-      expect(page).to have_selector 'div', text: 'marcus@rome.gov'
-      expect(page).to have_selector 'div', text: 'Emperor'
-      expect(page).to have_selector 'div', text: 'Rome'
-      expect(page).to have_selector 'div', text: '(555) 555-5555 ext. 12345 (mobile)'
+      expect(page).to have_css '.name', text: 'Marcus Aurelius'
+      expect(page).to have_css 'div', text: 'marcus@rome.gov'
+      expect(page).to have_css 'div', text: 'Emperor'
+      expect(page).to have_css 'div', text: 'Rome'
+      expect(page).to have_css 'div', text: '(555) 555-5555 ext. 12345 (mobile)'
       expect(page).to have_no_selector 'img.contact-photo'
     end
   end
@@ -57,7 +57,7 @@ RSpec.describe 'Add a contact to an exhibit', type: :feature do
       click_button 'Save'
     end
     expect(page).to have_content 'The contact was created.'
-    expect(page).to have_selector 'img.contact-photo'
+    expect(page).to have_css 'img.contact-photo'
     expect(Spotlight::Contact.last.avatar.iiif_url).to be_present
   end
 end

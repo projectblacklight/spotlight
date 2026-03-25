@@ -23,9 +23,9 @@ RSpec.describe 'Add tags to an item in an exhibit', type: :feature do
     visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
 
     within('dd.blacklight-exhibit_tags') do
-      expect(page).to have_selector 'a', text: 'One'
-      expect(page).to have_selector 'a', text: 'Two and a half'
-      expect(page).to have_selector 'a', text: 'Three'
+      expect(page).to have_css 'a', text: 'One'
+      expect(page).to have_css 'a', text: 'Two and a half'
+      expect(page).to have_css 'a', text: 'Three'
     end
 
     click_on 'Two and a half'

@@ -29,6 +29,6 @@ RSpec.describe 'Dashboard', type: :feature do
   it 'includes a list of recently indexed items' do
     visit spotlight.exhibit_dashboard_path(exhibit)
     expect(page).to have_content 'Recently updated items'
-    expect(page).to have_selector('#documents')
+    expect(page).to have_css('#documents')
   end
 end

@@ -12,7 +12,7 @@ RSpec.describe 'spotlight/browse/search', type: :view do
 
   it 'displays the image' do
     render partial: 'spotlight/browse/search', locals: { search: }
-    expect(response).to have_selector 'a img[src="/some/image"]'
+    expect(response).to have_css 'a img[src="/some/image"]'
   end
 
   it 'has a heading' do
@@ -22,6 +22,6 @@ RSpec.describe 'spotlight/browse/search', type: :view do
 
   it 'displays the item count' do
     render partial: 'spotlight/browse/search', locals: { search: }
-    expect(response).to have_selector 'small', text: /#{search.count} items/i
+    expect(response).to have_css 'small', text: /#{search.count} items/i
   end
 end

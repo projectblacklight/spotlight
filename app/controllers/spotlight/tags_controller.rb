@@ -43,7 +43,7 @@ module Spotlight
 
       rename_tags_later!(tags_to_rename)
 
-      redirect_back fallback_location: fallback_url, notice: t(:'helpers.submit.tags.batch_updated', count: tags_to_rename.count)
+      redirect_back_or_to(fallback_url, notice: t(:'helpers.submit.tags.batch_updated', count: tags_to_rename.count))
     end
 
     private

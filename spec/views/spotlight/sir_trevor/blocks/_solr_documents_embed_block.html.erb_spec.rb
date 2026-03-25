@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', type: :view do
-  let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_embed_block' }
+  let(:partial) { 'spotlight/sir_trevor/blocks/solr_documents_embed_block' }
   let(:page) { double('Page') }
   let(:block) do
     SirTrevorRails::Blocks::SolrDocumentsEmbedBlock.new({ type: 'block', data: { title: 'Some title', text: 'Some text', 'text-align' => 'right' } }, page)
@@ -33,12 +33,12 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb
   end
 
   it 'has a embed block' do
-    render partial: p, locals: { solr_documents_embed_block: block }
-    expect(rendered).to have_selector 'h3', text: 'Some title'
+    render partial:, locals: { solr_documents_embed_block: block }
+    expect(rendered).to have_css 'h3', text: 'Some title'
     expect(rendered).to have_content 'Some text'
-    expect(rendered).to have_selector '.box'
-    expect(rendered).to have_selector '.items-col'
-    expect(rendered).to have_selector '.text-col'
+    expect(rendered).to have_css '.box'
+    expect(rendered).to have_css '.items-col'
+    expect(rendered).to have_css '.text-col'
     expect(rendered).to have_no_selector '.col-md-12'
   end
 
@@ -48,9 +48,9 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb
     end
 
     it 'does not have a two column layout' do
-      render partial: p, locals: { solr_documents_embed_block: block }
-      expect(rendered).to have_selector '.col-md-12'
-      expect(rendered).to have_selector '.items-col h3', text: 'Some title'
+      render partial:, locals: { solr_documents_embed_block: block }
+      expect(rendered).to have_css '.col-md-12'
+      expect(rendered).to have_css '.items-col h3', text: 'Some title'
     end
   end
 end

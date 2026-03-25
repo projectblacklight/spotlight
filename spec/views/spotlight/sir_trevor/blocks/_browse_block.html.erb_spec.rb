@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe 'spotlight/sir_trevor/blocks/_browse_block.html.erb', type: :view do
-  let(:p) { 'spotlight/sir_trevor/blocks/browse_block' }
+  let(:partial) { 'spotlight/sir_trevor/blocks/browse_block' }
   let(:page) { double('Page', display_sidebar?: true) }
   let(:search) { FactoryBot.create(:search) }
   let(:block) do
@@ -14,7 +14,7 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_browse_block.html.erb', type: :view
   end
 
   it 'links to the search' do
-    render partial: p, locals: { browse_block: block }
+    render partial:, locals: { browse_block: block }
     expect(rendered).to have_link search.title, href: spotlight.exhibit_browse_path(search.exhibit, search)
   end
 end

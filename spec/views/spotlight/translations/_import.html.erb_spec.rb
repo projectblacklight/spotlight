@@ -18,7 +18,7 @@ RSpec.describe 'spotlight/translations/_import.html.erb', type: :view do
 
   it 'has a form to import the translation data' do
     render
-    expect(rendered).to have_selector "form[action='#{spotlight.import_exhibit_translations_path(exhibit_id: exhibit)}']"
-    expect(rendered).to have_selector 'input[name="file"]'
+    expect(rendered).to have_css "form[action='#{spotlight.import_exhibit_translations_path(exhibit_id: exhibit)}']"
+    expect(rendered).to have_css 'input[name="file"]'
   end
 end

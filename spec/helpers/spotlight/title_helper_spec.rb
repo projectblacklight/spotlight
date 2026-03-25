@@ -14,8 +14,8 @@ RSpec.describe Spotlight::TitleHelper, type: :helper do
 
     it 'renders the section title and the page title' do
       title = helper.page_title('Section', 'Title')
-      expect(title).to have_selector 'h1', text: 'Section'
-      expect(title).to have_selector 'h1 small', text: 'Title'
+      expect(title).to have_css 'h1', text: 'Section'
+      expect(title).to have_css 'h1 small', text: 'Title'
     end
 
     it 'renders just the section title if that was all that was provided' do
@@ -24,7 +24,7 @@ RSpec.describe Spotlight::TitleHelper, type: :helper do
 
       title = helper.page_title('Section')
 
-      expect(title).to have_selector 'h1', text: 'Section'
+      expect(title).to have_css 'h1', text: 'Section'
       expect(title).to have_no_selector 'h1 small'
 
       title = helper.instance_variable_get(:@page_title)
@@ -49,16 +49,16 @@ RSpec.describe Spotlight::TitleHelper, type: :helper do
   describe '#curation_page_title' do
     it 'renders a page title in the curation section' do
       title = helper.curation_page_title 'Some title'
-      expect(title).to have_selector 'h1', text: 'Curation'
-      expect(title).to have_selector 'h1 small', text: 'Some title'
+      expect(title).to have_css 'h1', text: 'Curation'
+      expect(title).to have_css 'h1 small', text: 'Some title'
     end
   end
 
   describe '#configuration_page_title' do
     it 'renders a page title in the configuration section' do
       title = helper.configuration_page_title 'Some title'
-      expect(title).to have_selector 'h1', text: 'Configuration'
-      expect(title).to have_selector 'h1 small', text: 'Some title'
+      expect(title).to have_css 'h1', text: 'Configuration'
+      expect(title).to have_css 'h1 small', text: 'Some title'
     end
   end
 end

@@ -29,7 +29,7 @@ RSpec.describe 'Bulk actions', type: :feature do
     click_button 'Bulk actions'
     click_link 'Change item visibility'
     # Wait for modal
-    expect(page).to have_selector('#change-visibility-modal', visible: true)
+    expect(page).to have_css('#change-visibility-modal', visible: true)
     expect(page).to have_css 'h4', text: 'Change item visibility', visible: true
     choose 'Private'
     accept_confirm 'All items in the result set will be updated. Are you sure?' do
@@ -44,7 +44,7 @@ RSpec.describe 'Bulk actions', type: :feature do
 
     click_button 'Bulk actions'
     click_link 'Add tags'
-    expect(page).to have_selector('#add-tags-modal', visible: true)
+    expect(page).to have_css('#add-tags-modal', visible: true)
     # Wait for modal
     expect(page).to have_css 'h4', text: 'Add tags', visible: true
     find('.tag-selection-search-bar input').send_keys('good,stuff', :enter)
@@ -61,7 +61,7 @@ RSpec.describe 'Bulk actions', type: :feature do
     click_button 'Bulk actions'
     click_link 'Remove tags'
     # wait for modal
-    expect(page).to have_selector('#remove-tags-modal', visible: true)
+    expect(page).to have_css('#remove-tags-modal', visible: true)
     expect(page).to have_css 'h4', text: 'Remove tags', visible: true
     find('.tag-selection-search-bar input').send_keys('foo', :enter)
     accept_confirm 'All items in the result set will be updated. Are you sure?' do

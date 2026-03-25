@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_block.html.erb', type: :view do
-  let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_block' }
+  let(:partial) { 'spotlight/sir_trevor/blocks/solr_documents_block' }
   let(:page) { double('Page') }
   let(:block) do
     SirTrevorRails::Blocks::SolrDocumentsBlock.new({ type: 'block', data: { title: 'Some title', text: 'Some text', 'text-align' => 'right' } }, page)
@@ -33,8 +33,8 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_block.html.erb', typ
     end
 
     it 'uses the provided thumbnail url' do
-      render partial: p, locals: { solr_documents_block: block }
-      expect(rendered).to have_selector 'img[src="http://example.com"]'
+      render partial:, locals: { solr_documents_block: block }
+      expect(rendered).to have_css 'img[src="http://example.com"]'
     end
   end
 
@@ -46,10 +46,10 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_block.html.erb', typ
     end
 
     it 'uses the correct alt text' do
-      render partial: p, locals: { solr_documents_block: block }
-      expect(rendered).to have_selector 'img[alt=""]'
-      expect(rendered).to have_selector 'img[alt="custom alt text"]'
-      expect(rendered).to have_selector 'img[alt="blah"]'
+      render partial:, locals: { solr_documents_block: block }
+      expect(rendered).to have_css 'img[alt=""]'
+      expect(rendered).to have_css 'img[alt="custom alt text"]'
+      expect(rendered).to have_css 'img[alt="blah"]'
     end
   end
 end

@@ -109,7 +109,7 @@ RSpec.describe 'Edit in place', js: true, type: :feature do
       expect(page).to have_button('Save changes', disabled: false) # Wait for new page
       within('.metadata_fields') do
         expect(page).to have_css('a[href="#edit-in-place"]', text: 'Brand new name')
-        expect(page).to have_selector('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default', visible: true)
+        expect(page).to have_css('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default', visible: true)
       end
 
       click_button 'Restore default'

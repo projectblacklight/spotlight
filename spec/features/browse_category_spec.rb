@@ -19,7 +19,7 @@ RSpec.describe 'Browse pages' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
         within '#main-container' do
-          expect(page).to have_selector 'h1', text: 'Some Saved Search'
+          expect(page).to have_css 'h1', text: 'Some Saved Search'
         end
 
         expect(page).to have_no_selector '.masthead .h2', text: 'Some Saved Search'
@@ -28,13 +28,13 @@ RSpec.describe 'Browse pages' do
       it 'shows the search bar' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
-        expect(page).to have_selector '.search-query-form'
+        expect(page).to have_css '.search-query-form'
       end
 
       it 'has breadcrumbs' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
-        expect(page).to have_selector '.breadcrumbs-container'
+        expect(page).to have_css '.breadcrumbs-container'
       end
 
       context 'when the exhibit is configured to not display the search bar' do
@@ -59,13 +59,13 @@ RSpec.describe 'Browse pages' do
       it 'has a contextual masthead with the title and resource count' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
-        expect(page).to have_selector '.masthead .h2', text: 'Some Saved Search'
+        expect(page).to have_css '.masthead .h2', text: 'Some Saved Search'
 
         within '#main-container' do
           expect(page).to have_no_selector 'h1', text: 'Some Saved Search'
         end
 
-        expect(page).to have_selector '.masthead small.item-count', text: /\d+ items/
+        expect(page).to have_css '.masthead small.item-count', text: /\d+ items/
       end
 
       it 'does not show the search bar' do
@@ -113,8 +113,8 @@ RSpec.describe 'Browse pages' do
     context 'without a curator-selected view' do
       it 'renders the gallery view' do
         visit spotlight.exhibit_browse_path(exhibit, search)
-        expect(page).to have_selector '.view-type-gallery.active'
-        expect(page).to have_selector '#documents.documents-gallery'
+        expect(page).to have_css '.view-type-gallery.active'
+        expect(page).to have_css '#documents.documents-gallery'
       end
     end
 
@@ -125,8 +125,8 @@ RSpec.describe 'Browse pages' do
 
       it 'renders the selected view' do
         visit spotlight.exhibit_browse_path(exhibit, search)
-        expect(page).to have_selector '.view-type-list.active'
-        expect(page).to have_selector '#documents.documents-list'
+        expect(page).to have_css '.view-type-list.active'
+        expect(page).to have_css '#documents.documents-list'
       end
     end
 
@@ -135,7 +135,7 @@ RSpec.describe 'Browse pages' do
 
       it 'renders search box' do
         visit spotlight.exhibit_browse_path(exhibit, search)
-        expect(page).to have_selector '.browse-search-form'
+        expect(page).to have_css '.browse-search-form'
         expect(page).to have_no_css '.browse-search-expand'
 
         fill_in 'Search within this browse category', with: 'SEPTENTRIONALE'

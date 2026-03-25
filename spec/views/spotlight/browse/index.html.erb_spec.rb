@@ -9,7 +9,7 @@ RSpec.describe 'spotlight/browse/index', type: :view do
   it 'has a title' do
     assign :groups, []
     render
-    expect(response).to have_selector 'h1', text: 'Browse'
+    expect(response).to have_css 'h1', text: 'Browse'
   end
 
   it 'renders the collection of searches' do

@@ -64,7 +64,7 @@ module Spotlight
       else
         flash.now[:alert] = t('spotlight.exhibits.new_exhibit_form.errors.slug_taken') if @exhibit.errors[:slug].present?
 
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
     # rubocop:enable Metrics/AbcSize

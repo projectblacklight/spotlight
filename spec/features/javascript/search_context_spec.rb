@@ -39,7 +39,7 @@ RSpec.describe 'Search contexts' do
 
     find('.items-block a').click
 
-    expect(page).to have_selector '.breadcrumb a', text: 'Home'
+    expect(page).to have_css '.breadcrumb a', text: 'Home'
   end
 
   it 'adds context breadcrumb back to the feature page when navigating to an item from a feature page', js: true do
@@ -68,7 +68,7 @@ RSpec.describe 'Search contexts' do
 
     find('.items-block a').click
 
-    expect(page).to have_selector '.breadcrumb a', text: 'Home'
+    expect(page).to have_css '.breadcrumb a', text: 'Home'
     expect(page).to have_link 'FeaturePage1', href: spotlight.exhibit_feature_page_path(exhibit, feature_page)
   end
 

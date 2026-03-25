@@ -41,7 +41,7 @@ RSpec.describe 'Adding custom metadata field data', type: :feature do
 
       click_on 'Edit'
 
-      expect(page).to have_selector 'textarea[readonly]'
+      expect(page).to have_css 'textarea[readonly]'
     end
   end
 
@@ -76,7 +76,7 @@ RSpec.describe 'Adding custom metadata field data', type: :feature do
 
     click_on 'Save changes'
 
-    expect(page).to have_selector '.blacklight-private'
+    expect(page).to have_css '.blacklight-private'
 
     click_on 'Edit'
 

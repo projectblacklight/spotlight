@@ -11,15 +11,15 @@ RSpec.describe 'spotlight/sites/edit_exhibits', type: :view do
 
   it 'has columns for the exhibit data' do
     render
-    expect(rendered).to have_selector 'th', text: 'Title'
-    expect(rendered).to have_selector 'th', text: 'Published?'
-    expect(rendered).to have_selector 'th', text: 'Requested by'
-    expect(rendered).to have_selector 'th', text: 'Created at'
-    expect(rendered).to have_selector 'th', text: 'Updated at'
+    expect(rendered).to have_css 'th', text: 'Title'
+    expect(rendered).to have_css 'th', text: 'Published?'
+    expect(rendered).to have_css 'th', text: 'Requested by'
+    expect(rendered).to have_css 'th', text: 'Created at'
+    expect(rendered).to have_css 'th', text: 'Updated at'
   end
 
   it 'has draggable rows for each exhibit' do
     render
-    expect(rendered).to have_selector 'tr .dd-handle', count: 2
+    expect(rendered).to have_css 'tr .dd-handle', count: 2
   end
 end

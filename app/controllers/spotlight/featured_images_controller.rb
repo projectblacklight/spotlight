@@ -18,7 +18,7 @@ module Spotlight
     private
 
     def handle_upload_error(exception)
-      render json: { error: [exception.message] }, status: :unprocessable_entity
+      render json: { error: [exception.message] }, status: :unprocessable_content
     end
 
     def tilesource

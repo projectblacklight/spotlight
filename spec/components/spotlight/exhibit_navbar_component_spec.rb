@@ -30,7 +30,7 @@ RSpec.describe Spotlight::ExhibitNavbarComponent, type: :component do
 
     it 'links to the exhibit home page (as branding) when there is a current search masthead' do
       allow(vc_test_controller).to receive_messages(resource_masthead?: true)
-      expect(rendered).to have_selector('a.navbar-brand', text: current_exhibit.title)
+      expect(rendered).to have_css('a.navbar-brand', text: current_exhibit.title)
     end
 
     it 'links to the search page if no home page is defined' do
@@ -50,7 +50,7 @@ RSpec.describe Spotlight::ExhibitNavbarComponent, type: :component do
     it 'provides a dropdown of multiple feature pages' do
       feature_page
       another_page = FactoryBot.create(:feature_page, exhibit: current_exhibit)
-      expect(rendered).to have_selector '.dropdown .dropdown-toggle', text: 'Curated features'
+      expect(rendered).to have_css '.dropdown .dropdown-toggle', text: 'Curated features'
       expect(rendered).to have_link feature_page.title, visible: false, href: spotlight.exhibit_feature_page_path(current_exhibit, feature_page)
       expect(rendered).to have_link another_page.title, visible: false, href: spotlight.exhibit_feature_page_path(current_exhibit, another_page)
     end
@@ -116,7 +116,7 @@ RSpec.describe Spotlight::ExhibitNavbarComponent, type: :component do
     end
 
     it "marks the browse button as active if we're on a browse page" do
-      expect(rendered).to have_selector 'li.active', text: 'Browse'
+      expect(rendered).to have_css 'li.active', text: 'Browse'
     end
   end
 
@@ -127,7 +127,7 @@ RSpec.describe Spotlight::ExhibitNavbarComponent, type: :component do
     end
 
     it "marks the about button as active if we're on an about page" do
-      expect(rendered).to have_selector 'li.active', text: 'About'
+      expect(rendered).to have_css 'li.active', text: 'About'
     end
   end
 

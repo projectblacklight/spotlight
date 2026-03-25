@@ -40,7 +40,7 @@ RSpec.describe 'spotlight/search_configurations/_facets', type: :view do
     expect(rendered).to have_no_content 'Genre'
   end
 
-  describe do
+  context 'when a facet is configured not to display' do
     before do
       original_config = Spotlight::Engine.blacklight_config.deep_dup
       allow(Spotlight::Engine).to receive(:blacklight_config).and_return(original_config)
