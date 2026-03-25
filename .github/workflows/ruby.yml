@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         rails_version: ["~> 8.1"]
-        ruby: ["3.2", "3.3", "3.4"]
+        ruby: ["3.3", "3.4", "4.0"]
         bootstrap_version: ["~> 5.0"]
         blacklight_version: ["~> 8.0"]
         additional_engine_cart_rails_options: ["-j importmap"]
