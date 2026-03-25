@@ -11,7 +11,7 @@ RSpec.describe 'Manage exhibit users and roles', js: true do
 
   it 'admins can add a new user' do
     click_on 'Add a new user'
-    expect(page).to have_selector('[data-edit-for="new"]')
+    expect(page).to have_css('[data-edit-for="new"]')
     fill_in 'User key', with: 'email@myemail.edu'
     click_button 'Save changes'
     expect(page).to have_content 'User has been updated.'
@@ -19,12 +19,12 @@ RSpec.describe 'Manage exhibit users and roles', js: true do
 
   it 'admins can edit existing roles' do
     find("[data-behavior='edit-user'][data-target='#{admin.id}']").click
-    expect(page).to have_selector("[data-edit-for='#{admin.id}']")
+    expect(page).to have_css("[data-edit-for='#{admin.id}']")
   end
 
   it 'admins can cancel adding a new user' do
     click_on 'Add a new user'
-    expect(page).to have_selector('[data-edit-for="new"]')
+    expect(page).to have_css('[data-edit-for="new"]')
     click_on 'Cancel'
     expect(page).to have_no_selector('[data-edit-for="new"]')
   end

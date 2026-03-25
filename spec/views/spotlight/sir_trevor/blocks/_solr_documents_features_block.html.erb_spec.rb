@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.erb', type: :view do
-  let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_features_block' }
+  let(:partial) { 'spotlight/sir_trevor/blocks/solr_documents_features_block' }
   let(:block) do
     SirTrevorRails::Blocks::SolrDocumentsFeaturesBlock.new({ type: 'block', data: { 'show-primary-caption' => true, 'primary-caption-field' => 'x' } }, page)
   end
@@ -25,20 +25,20 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.
   end
 
   it 'has a slideshow block' do
-    render partial: p, locals: { item_carousel_block: block }
-    expect(rendered).to have_selector '.item-features'
-    expect(rendered).to have_selector '.carousel-item img', count: 3
-    expect(rendered).to have_selector '.carousel-indicators'
-    expect(rendered).to have_selector '.carousel-indicators li', count: 3
+    render partial:, locals: { item_carousel_block: block }
+    expect(rendered).to have_css '.item-features'
+    expect(rendered).to have_css '.carousel-item img', count: 3
+    expect(rendered).to have_css '.carousel-indicators'
+    expect(rendered).to have_css '.carousel-indicators li', count: 3
   end
 
   it 'truncates long titles' do
-    render partial: p, locals: { item_carousel_block: block }
-    expect(rendered).to have_selector '.item-features'
-    expect(rendered).to have_selector '.carousel-item img', count: 3
-    expect(rendered).to have_selector '.carousel-indicators'
-    expect(rendered).to have_selector '.carousel-indicators li', count: 3
-    expect(rendered).to have_selector '.carousel-indicators li', text: ('a' * 92) + '...'
+    render partial:, locals: { item_carousel_block: block }
+    expect(rendered).to have_css '.item-features'
+    expect(rendered).to have_css '.carousel-item img', count: 3
+    expect(rendered).to have_css '.carousel-indicators'
+    expect(rendered).to have_css '.carousel-indicators li', count: 3
+    expect(rendered).to have_css '.carousel-indicators li', text: ('a' * 92) + '...'
   end
 
   describe 'without a primary caption' do
@@ -47,16 +47,16 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_features_block.html.
     end
 
     it 'falls back to the regular document title for the caption' do
-      render partial: p, locals: { item_carousel_block: block }
-      expect(rendered).to have_selector '.item-features'
-      expect(rendered).to have_selector '.carousel-indicators li', text: 'full_title'
+      render partial:, locals: { item_carousel_block: block }
+      expect(rendered).to have_css '.item-features'
+      expect(rendered).to have_css '.carousel-indicators li', text: 'full_title'
     end
   end
 
   it 'uses the correct alt text' do
-    render partial: p, locals: { item_carousel_block: block }
-    expect(rendered).to have_selector '.carousel-item img[alt=""]'
-    expect(rendered).to have_selector '.carousel-item img[alt="full_title"]'
-    expect(rendered).to have_selector '.carousel-item img[alt="custom alt text"]'
+    render partial:, locals: { item_carousel_block: block }
+    expect(rendered).to have_css '.carousel-item img[alt=""]'
+    expect(rendered).to have_css '.carousel-item img[alt="full_title"]'
+    expect(rendered).to have_css '.carousel-item img[alt="custom alt text"]'
   end
 end

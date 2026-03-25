@@ -21,8 +21,8 @@ RSpec.describe 'Adding custom search fields', type: :feature do
 
     expect(page).to have_content 'The custom search field was created.'
     within '#exhibit-specific-fields' do
-      expect(page).to have_selector '.field-label', text: 'My new custom field'
-      expect(page).to have_selector '.field-description', text: 'title^50'
+      expect(page).to have_css '.field-label', text: 'My new custom field'
+      expect(page).to have_css '.field-description', text: 'title^50'
       # Edit
       click_link 'Edit'
     end
@@ -38,8 +38,8 @@ RSpec.describe 'Adding custom search fields', type: :feature do
     expect(page).to have_content 'The custom search field was successfully updated.'
 
     within '#exhibit-specific-fields' do
-      expect(page).to have_selector '.field-label', text: 'My new custom field'
-      expect(page).to have_selector '.field-description', text: 'title^50 description^26'
+      expect(page).to have_css '.field-label', text: 'My new custom field'
+      expect(page).to have_css '.field-description', text: 'title^50 description^26'
       # Destroy
       click_link 'Delete'
     end

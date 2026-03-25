@@ -20,8 +20,8 @@ RSpec.describe 'spotlight/metadata_configurations/edit', type: :view do
 
   it 'has columns for the available view types' do
     render
-    expect(rendered).to have_selector 'th', text: 'Some View Type'
-    expect(rendered).to have_selector 'th', text: 'Another View Type'
+    expect(rendered).to have_css 'th', text: 'Some View Type'
+    expect(rendered).to have_css 'th', text: 'Another View Type'
   end
 
   describe 'when a locale other than the default is set' do

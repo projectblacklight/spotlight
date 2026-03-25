@@ -85,9 +85,9 @@ RSpec.describe 'Uploaded Items Block', feature: true, js: true, versioning: true
 
   it 'may have ZPR links' do
     attach_file('uploaded_item_url', fixture_file1)
-    expect(page).to have_selector('li[data-id="file_0"] .img-thumbnail[src^="/"]')
+    expect(page).to have_css('li[data-id="file_0"] .img-thumbnail[src^="/"]')
     attach_file('uploaded_item_url', fixture_file2)
-    expect(page).to have_selector('li[data-id="file_1"] .img-thumbnail[src^="/"]')
+    expect(page).to have_css('li[data-id="file_1"] .img-thumbnail[src^="/"]')
 
     check 'Offer "View larger" option'
 

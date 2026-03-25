@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_grid_block', type: :view do
-  let(:p) { 'spotlight/sir_trevor/blocks/solr_documents_grid_block' }
+  let(:partial) { 'spotlight/sir_trevor/blocks/solr_documents_grid_block' }
   let(:page) { double('Page') }
   let(:block) do
     SirTrevorRails::Blocks::SolrDocumentsGridBlock.new({ type: 'block', data: { title: 'Some title', text: 'Some text', 'text-align' => 'right' } }, page)
@@ -27,20 +27,20 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_grid_block', type: :
       document_presenter: stub_presenter,
       document_link_params: {}
     )
-    render partial: p, locals: { solr_documents_grid_block: block }
+    render partial:, locals: { solr_documents_grid_block: block }
   end
 
   it 'has a slideshow block' do
-    expect(rendered).to have_selector 'h3', text: 'Some title'
+    expect(rendered).to have_css 'h3', text: 'Some title'
     expect(rendered).to have_content 'Some text'
-    expect(rendered).to have_selector '.box img', count: 3
-    expect(rendered).to have_selector '.items-col'
-    expect(rendered).to have_selector '.text-col'
+    expect(rendered).to have_css '.box img', count: 3
+    expect(rendered).to have_css '.items-col'
+    expect(rendered).to have_css '.text-col'
   end
 
   it 'uses the correct alt text' do
-    expect(rendered).to have_selector '.item-0 img[alt=""]'
-    expect(rendered).to have_selector '.item-1 img[alt="custom alt text"]'
-    expect(rendered).to have_selector '.item-2 img[alt="blah"]'
+    expect(rendered).to have_css '.item-0 img[alt=""]'
+    expect(rendered).to have_css '.item-1 img[alt="custom alt text"]'
+    expect(rendered).to have_css '.item-2 img[alt="blah"]'
   end
 end

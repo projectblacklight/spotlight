@@ -39,6 +39,6 @@ RSpec.describe 'spotlight/contacts/edit.html.erb' do
     render
     expect(rendered).to have_content 'Upload an image'
     expect(rendered).to have_css '.form-text', text: 'Help!'
-    expect(rendered).to have_selector '#contact_avatar_attributes_iiif_cropper'
+    expect(rendered).to have_css '#contact_avatar_attributes_iiif_cropper'
   end
 end

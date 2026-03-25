@@ -17,6 +17,6 @@ RSpec.describe 'Slideshow', js: true, type: :feature do
     end
 
     find('.grid [data-bs-slide-to="1"] img').click
-    expect(page).to have_selector '#slideshow', visible: true
+    expect(page).to have_css '#slideshow', visible: true
   end
 end

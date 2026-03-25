@@ -40,10 +40,9 @@ module Spotlight
       @search.query_params = query_params
 
       if @search.save
-        redirect_back fallback_location: fallback_url,
-                      notice: t(:'helpers.submit.search.created', model: @search.class.model_name.human.downcase)
+        redirect_back_or_to(fallback_url, notice: t(:'helpers.submit.search.created', model: @search.class.model_name.human.downcase))
       else
-        redirect_back fallback_location: fallback_url, alert: @search.errors.full_messages.join('<br>'.html_safe)
+        redirect_back_or_to(fallback_url, alert: @search.errors.full_messages.join('<br>'.html_safe))
       end
     end
 
@@ -79,7 +78,7 @@ module Spotlight
                else
                  t(:'helpers.submit.search.batch_error', model: Spotlight::Search.model_name.human.pluralize.downcase)
                end
-      redirect_back fallback_location: fallback_url, notice:
+      redirect_back_or_to(fallback_url, notice:)
     end
 
     protected

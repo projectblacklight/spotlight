@@ -16,8 +16,8 @@ RSpec.describe 'shared/_masthead', type: :view do
 
   it 'has the site title and subtitle' do
     render
-    expect(rendered).to have_selector '.h2', text: exhibit.title
-    expect(rendered).to have_selector 'small', text: exhibit.subtitle
+    expect(rendered).to have_css '.h2', text: exhibit.title
+    expect(rendered).to have_css 'small', text: exhibit.subtitle
   end
 
   context 'for an exhibit without a subtitle' do
@@ -49,13 +49,13 @@ RSpec.describe 'shared/_masthead', type: :view do
 
     it 'adds a class to the masthead' do
       render
-      expect(rendered).to have_selector '.masthead.image-masthead'
+      expect(rendered).to have_css '.masthead.image-masthead'
     end
 
     it 'has a background image' do
       render
-      expect(rendered).to have_selector '.background-container'
-      expect(rendered).to have_selector '.background-container-gradient'
+      expect(rendered).to have_css '.background-container'
+      expect(rendered).to have_css '.background-container-gradient'
       expect(rendered).to match(/background-image: url\('#{iiif_url}'\)/)
     end
   end
@@ -69,7 +69,7 @@ RSpec.describe 'shared/_masthead', type: :view do
 
     it 'adds a class to the masthead' do
       render
-      expect(rendered).to have_selector '.masthead.resource-masthead'
+      expect(rendered).to have_css '.masthead.resource-masthead'
     end
 
     it 'puts the navbar before the title' do

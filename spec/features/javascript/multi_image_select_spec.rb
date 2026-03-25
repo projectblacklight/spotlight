@@ -14,7 +14,7 @@ RSpec.describe 'Multi image selector', js: true, max_wait_time: 5, type: :featur
 
     fill_in_typeahead_field with: 'xd327cm9378'
 
-    expect(page).to have_selector '.card'
+    expect(page).to have_css '.card'
 
     within('.card') do
       expect(page).to have_content(/Image \d of \d/)

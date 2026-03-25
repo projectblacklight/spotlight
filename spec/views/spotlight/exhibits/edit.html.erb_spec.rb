@@ -22,8 +22,8 @@ RSpec.describe 'spotlight/exhibits/edit', type: :view do
   it 'renders the edit page form' do
     render
 
-    expect(rendered).to have_selector "form[action=\"#{spotlight.exhibit_path(exhibit)}\"]"
-    expect(rendered).to have_selector '.alert.alert-danger'
+    expect(rendered).to have_css "form[action=\"#{spotlight.exhibit_path(exhibit)}\"]"
+    expect(rendered).to have_css '.alert.alert-danger'
     expect(rendered).to have_content 'This action is irreversible'
     expect(rendered).to have_link 'Export data', href: spotlight.edit_exhibit_path(exhibit, anchor: 'export')
     expect(rendered).to have_button 'Import data'
@@ -36,9 +36,9 @@ RSpec.describe 'spotlight/exhibits/edit', type: :view do
 
     it 'disables the input for translatable fields' do
       expect(rendered).to have_text 'This field is not editable in the current language'
-      expect(rendered).to have_selector '#exhibit_title[disabled]'
-      expect(rendered).to have_selector '#exhibit_subtitle[disabled]'
-      expect(rendered).to have_selector '#exhibit_description[disabled]'
+      expect(rendered).to have_css '#exhibit_title[disabled]'
+      expect(rendered).to have_css '#exhibit_subtitle[disabled]'
+      expect(rendered).to have_css '#exhibit_description[disabled]'
     end
   end
 end

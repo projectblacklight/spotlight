@@ -9,8 +9,8 @@ RSpec.describe 'Home page', type: :feature, versioning: true do
   it 'exists by default on exhibits' do
     visit spotlight.exhibit_dashboard_path(exhibit)
     click_link 'Feature pages'
-    expect(page).to have_selector 'h2', text: 'Homepage'
-    expect(page).to have_selector 'h3.card-title', text: 'Exhibit home'
+    expect(page).to have_css 'h2', text: 'Homepage'
+    expect(page).to have_css 'h3.card-title', text: 'Exhibit home'
   end
 
   it 'allows users to edit the home page title' do
@@ -28,7 +28,7 @@ RSpec.describe 'Home page', type: :feature, versioning: true do
     end
     click_link 'Feature pages'
     expect(page).to have_content 'New Home Page Title'
-    expect(page).to have_selector '.card-title a', text: 'New Home Page Title'
+    expect(page).to have_css '.card-title a', text: 'New Home Page Title'
   end
 
   it 'redirects back to the correct home page URL after updating (no format param to interfere w/ faceting)' do

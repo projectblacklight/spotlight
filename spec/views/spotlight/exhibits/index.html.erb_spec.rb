@@ -23,7 +23,7 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
     it 'renders the published exhibits' do
       render
 
-      expect(rendered).to have_selector('.exhibit-card', count: 2)
+      expect(rendered).to have_css('.exhibit-card', count: 2)
       expect(rendered).to have_text exhibit_a.title
       expect(rendered).to have_text exhibit_b.title
       expect(rendered).to have_no_text exhibit_c.title
@@ -75,7 +75,7 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
       it 'renders pagination controls' do
         render
 
-        expect(rendered).to have_selector '.pagination'
+        expect(rendered).to have_css '.pagination'
         expect(rendered).to have_link 'Next', href: '/?page=2'
       end
     end
@@ -86,7 +86,7 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
       it 'includes a tab with the exhibits curated by the user' do
         render
 
-        expect(rendered).to have_selector '.nav-tabs'
+        expect(rendered).to have_css '.nav-tabs'
         expect(rendered).to have_link 'Your exhibits'
         expect(rendered).to have_text user.exhibits.first.title
       end
@@ -94,7 +94,7 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
       it 'does not include a tab for unpublished exhibits' do
         render
 
-        expect(rendered).to have_selector '.nav-tabs'
+        expect(rendered).to have_css '.nav-tabs'
         expect(rendered).to have_no_link 'Unpublished exhibits'
       end
     end
@@ -109,7 +109,7 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
       it 'includes a tab with unpublished exhibits' do
         render
 
-        expect(rendered).to have_selector '.nav-tabs'
+        expect(rendered).to have_css '.nav-tabs'
         expect(rendered).to have_link 'Unpublished exhibits'
         expect(rendered).to have_text exhibit_c.title
       end
@@ -134,7 +134,7 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
     it 'has a sidebar with a button to create a new exhibit' do
       render
 
-      expect(view.content_for(:sidebar)).to have_selector '.btn', text: 'Create a new exhibit'
+      expect(view.content_for(:sidebar)).to have_css '.btn', text: 'Create a new exhibit'
     end
   end
 end

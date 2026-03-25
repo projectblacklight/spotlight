@@ -27,7 +27,7 @@ module Spotlight
       end
 
       if params[:resources_json_upload]
-        redirect_back fallback_location: exhibit_resources_path(@exhibit)
+        redirect_back_or_to(exhibit_resources_path(@exhibit))
       else
         head :ok
       end

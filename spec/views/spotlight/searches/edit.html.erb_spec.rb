@@ -30,13 +30,13 @@ RSpec.describe 'spotlight/searches/edit.html.erb', type: :view do
 
   it 'renders a form w/ the appropriate autocomplete data attribute' do
     render
-    expect(rendered).to have_selector 'form[data-autocomplete-exhibit-catalog-path]'
+    expect(rendered).to have_css 'form[data-autocomplete-exhibit-catalog-path]'
   end
 
   it 'renders active search constraints' do
     render
-    expect(rendered).to have_selector '.appliedParams .constraint-value'
-    expect(rendered).to have_selector '.appliedParams .constraint-value .filter-name', text: 'Some Field'
-    expect(rendered).to have_selector '.appliedParams .constraint-value .filter-value', text: 'xyz'
+    expect(rendered).to have_css '.appliedParams .constraint-value'
+    expect(rendered).to have_css '.appliedParams .constraint-value .filter-name', text: 'Some Field'
+    expect(rendered).to have_css '.appliedParams .constraint-value .filter-value', text: 'xyz'
   end
 end

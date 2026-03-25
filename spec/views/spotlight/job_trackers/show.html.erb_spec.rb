@@ -14,7 +14,7 @@ RSpec.describe 'spotlight/job_trackers/show', type: :view do
 
   it 'displays the type of job' do
     render
-    expect(rendered).to have_selector 'h2', text: 'Spotlight::ReindexExhibitJob'
+    expect(rendered).to have_css 'h2', text: 'Spotlight::ReindexExhibitJob'
   end
 
   it 'displays the job status for enqueued jobs' do
@@ -39,12 +39,12 @@ RSpec.describe 'spotlight/job_trackers/show', type: :view do
 
   it 'display job started events' do
     render
-    expect(rendered).to have_selector 'tr', text: '1 job started', normalize_ws: true
+    expect(rendered).to have_css 'tr', text: '1 job started', normalize_ws: true
   end
 
   it 'records who started the job' do
     render
-    expect(rendered).to have_selector 'tr', text: "2 job created by #{user.email}", normalize_ws: true
+    expect(rendered).to have_css 'tr', text: "2 job created by #{user.email}", normalize_ws: true
   end
 
   it 'displays logged messages' do
@@ -52,8 +52,8 @@ RSpec.describe 'spotlight/job_trackers/show', type: :view do
     job_tracker.events.create(data: { message: 'and so is this' })
 
     render
-    expect(rendered).to have_selector 'tr', text: 'this is a useful log message'
-    expect(rendered).to have_selector 'tr', text: 'and so is this'
+    expect(rendered).to have_css 'tr', text: 'this is a useful log message'
+    expect(rendered).to have_css 'tr', text: 'and so is this'
   end
 
   it 'displays job progress information' do

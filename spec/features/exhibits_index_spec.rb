@@ -8,7 +8,7 @@ RSpec.describe 'Exhibits index page', type: :feature do
     it 'shows some cards for each published exhibit' do
       visit spotlight.exhibits_path
 
-      expect(page).to have_selector '.exhibit-card h2', text: 'Some Exhibit Title'
+      expect(page).to have_css '.exhibit-card h2', text: 'Some Exhibit Title'
     end
 
     context 'with tagged exhibits' do
@@ -23,22 +23,22 @@ RSpec.describe 'Exhibits index page', type: :feature do
       it 'shows controls to filter exhibits by tags' do
         visit spotlight.exhibits_path
 
-        expect(page).to have_selector '.exhibit-card', count: 2
+        expect(page).to have_css '.exhibit-card', count: 2
 
         within '.tags' do
-          expect(page).to have_selector '.active', text: 'All'
+          expect(page).to have_css '.active', text: 'All'
 
           click_link 'a'
         end
 
-        expect(page).to have_selector '.exhibit-card', count: 2
+        expect(page).to have_css '.exhibit-card', count: 2
 
         within '.tags' do
-          expect(page).to have_selector '.active', text: 'a'
+          expect(page).to have_css '.active', text: 'a'
           click_link 'b'
         end
 
-        expect(page).to have_selector '.exhibit-card', count: 1
+        expect(page).to have_css '.exhibit-card', count: 1
       end
     end
   end

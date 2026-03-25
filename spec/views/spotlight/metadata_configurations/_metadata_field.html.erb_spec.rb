@@ -3,7 +3,7 @@
 RSpec.describe 'spotlight/metadata_configurations/_metadata_field', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:field) { Blacklight::Configuration::Field.new label: 'Some label', immutable: OpenStruct.new(another_view_type: false) }
-  let(:p) { 'spotlight/metadata_configurations/metadata_field' }
+  let(:partial) { 'spotlight/metadata_configurations/metadata_field' }
   let(:f) do
     form_helper = nil
     controller.view_context.bootstrap_form_for('z', url: '/update') do |f|
@@ -24,13 +24,13 @@ RSpec.describe 'spotlight/metadata_configurations/_metadata_field', type: :view 
   end
 
   it 'uses the metadata field label' do
-    render partial: p, locals: { key: 'some_key', config: field, f: }
-    expect(rendered).to have_selector '.field-label', text: 'Some label'
+    render partial:, locals: { key: 'some_key', config: field, f: }
+    expect(rendered).to have_css '.field-label', text: 'Some label'
   end
 
   it 'marks views as disabled if they are immutable' do
     allow(controller).to receive(:enabled_in_spotlight_view_type_configuration?).and_return(true)
-    render partial: p, locals: { key: 'some_key', config: field, f: }
-    expect(rendered).to have_selector 'input[disabled][name="z[some_key][another_view_type]"]'
+    render partial:, locals: { key: 'some_key', config: field, f: }
+    expect(rendered).to have_css 'input[disabled][name="z[some_key][another_view_type]"]'
   end
 end

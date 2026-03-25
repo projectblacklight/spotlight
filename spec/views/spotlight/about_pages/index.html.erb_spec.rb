@@ -44,13 +44,13 @@ RSpec.describe 'spotlight/about_pages/index.html.erb', type: :view do
     assign(:pages, pages)
     allow(exhibit).to receive(:about_pages).and_return pages
     render
-    expect(rendered).to have_selector '.card-title', text: 'Title1'
-    expect(rendered).to have_selector '.card-title', text: 'Title2'
+    expect(rendered).to have_css '.card-title', text: 'Title1'
+    expect(rendered).to have_css '.card-title', text: 'Title2'
 
-    expect(rendered).to have_selector '.contacts_admin ol.dd-list li[data-id]', count: 2
-    expect(rendered).to have_selector '.contacts_admin ol.dd-list li input[data-property=weight]', visible: false, count: 2
-    expect(rendered).to have_selector '.contacts_admin ol.dd-list li input#exhibit_contacts_attributes_0_id', visible: false
-    expect(rendered).to have_selector '.contacts_admin ol.dd-list li input#exhibit_contacts_attributes_1_id', visible: false
+    expect(rendered).to have_css '.contacts_admin ol.dd-list li[data-id]', count: 2
+    expect(rendered).to have_css '.contacts_admin ol.dd-list li input[data-property=weight]', visible: false, count: 2
+    expect(rendered).to have_css '.contacts_admin ol.dd-list li input#exhibit_contacts_attributes_0_id', visible: false
+    expect(rendered).to have_css '.contacts_admin ol.dd-list li input#exhibit_contacts_attributes_1_id', visible: false
   end
 
   describe 'Save button' do
@@ -58,7 +58,7 @@ RSpec.describe 'spotlight/about_pages/index.html.erb', type: :view do
       allow(view).to receive(:disable_save_pages_button?).and_return(true)
       assign(:pages, [])
       render
-      expect(rendered).to have_selector 'button[disabled]', text: 'Save changes'
+      expect(rendered).to have_css 'button[disabled]', text: 'Save changes'
     end
 
     it 'does not be disabled the when there are pages' do
@@ -66,7 +66,7 @@ RSpec.describe 'spotlight/about_pages/index.html.erb', type: :view do
       assign(:pages, [{}])
       render
       expect(rendered).to have_no_selector 'button[disabled]', text: 'Save changes'
-      expect(rendered).to have_selector 'button', text: 'Save changes'
+      expect(rendered).to have_css 'button', text: 'Save changes'
     end
   end
 

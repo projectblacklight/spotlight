@@ -29,8 +29,8 @@ module Spotlight
         **params
       )
 
-      redirect_back fallback_location: spotlight.search_exhibit_catalog_path(current_search_session.query_params),
-                    notice: t(:"spotlight.bulk_actions.#{i18n_key}.changed", count: solr_response.total)
+      redirect_back_or_to(spotlight.search_exhibit_catalog_path(current_search_session.query_params),
+                          notice: t(:"spotlight.bulk_actions.#{i18n_key}.changed", count: solr_response.total))
     end
 
     def solr_params

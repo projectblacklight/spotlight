@@ -39,13 +39,13 @@ module Spotlight
     end
 
     def wait_for_sir_trevor
-      expect(page).to have_selector('.st-blocks.st-ready')
+      expect(page).to have_css('.st-blocks.st-ready')
     end
 
     def save_page_changes
       click_button('Save changes')
       # verify that the page was created.
-      expect(page).to have_selector('.alert-info', text: 'was successfully updated')
+      expect(page).to have_css('.alert-info', text: 'was successfully updated')
       expect(page).to have_no_selector('.alert-danger')
     end
 

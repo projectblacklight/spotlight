@@ -26,7 +26,7 @@ RSpec.describe Spotlight::CrudLinkHelpers, type: :helper do
     end
 
     it 'accepts link_to options' do
-      expect(helper.exhibit_view_link(some_model, '#', class: 'btn')).to have_selector 'a.btn'
+      expect(helper.exhibit_view_link(some_model, '#', class: 'btn')).to have_css 'a.btn'
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe Spotlight::CrudLinkHelpers, type: :helper do
     end
 
     it 'accepts link_to options' do
-      expect(helper.exhibit_create_link(some_model, '#', class: 'btn')).to have_selector 'a.btn'
+      expect(helper.exhibit_create_link(some_model, '#', class: 'btn')).to have_css 'a.btn'
     end
   end
 
@@ -70,7 +70,7 @@ RSpec.describe Spotlight::CrudLinkHelpers, type: :helper do
     end
 
     it 'accepts link_to options' do
-      expect(helper.exhibit_edit_link(some_model, '#', class: 'btn')).to have_selector 'a.btn'
+      expect(helper.exhibit_edit_link(some_model, '#', class: 'btn')).to have_css 'a.btn'
     end
   end
 
@@ -89,7 +89,7 @@ RSpec.describe Spotlight::CrudLinkHelpers, type: :helper do
     end
 
     it 'accepts link_to options' do
-      expect(helper.exhibit_delete_link(some_model, '#', class: 'btn')).to have_selector 'a.btn'
+      expect(helper.exhibit_delete_link(some_model, '#', class: 'btn')).to have_css 'a.btn'
     end
   end
 

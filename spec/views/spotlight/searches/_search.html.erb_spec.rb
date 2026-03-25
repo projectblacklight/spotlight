@@ -29,9 +29,9 @@ RSpec.describe 'spotlight/searches/_search.html.erb', type: :view do
     # rubocop:disable RSpec/InstanceVariable
     render partial: 'spotlight/searches/search', locals: { f: @f }
     # rubocop:enable RSpec/InstanceVariable
-    expect(rendered).to have_selector "li[data-id='99']"
-    expect(rendered).to have_selector '.card-title', text: 'Title1'
-    expect(rendered).to have_selector 'img[src="/images/7777/full/400,300/0/default.jpg"]'
-    expect(rendered).to have_selector 'input[type=hidden][data-property=weight]', visible: false
+    expect(rendered).to have_css "li[data-id='99']"
+    expect(rendered).to have_css '.card-title', text: 'Title1'
+    expect(rendered).to have_css 'img[src="/images/7777/full/400,300/0/default.jpg"]'
+    expect(rendered).to have_css 'input[type=hidden][data-property=weight]', visible: false
   end
 end

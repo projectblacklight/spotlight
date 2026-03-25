@@ -16,7 +16,7 @@ RSpec.describe 'spotlight/exhibits/_form', type: :view do
 
     it 'allows an editable title' do
       render
-      expect(rendered).to have_selector 'input[name="exhibit[title]"]'
+      expect(rendered).to have_css 'input[name="exhibit[title]"]'
       expect(rendered).to have_no_selector 'input[name="exhibit[title]"][disabled="disabled"]'
       expect(rendered).to have_no_content 'This field is not editable in the current language. Switch to the default language to edit it.'
     end
@@ -31,7 +31,7 @@ RSpec.describe 'spotlight/exhibits/_form', type: :view do
 
     it 'disables editable title with help text' do
       render
-      expect(rendered).to have_selector 'input[name="exhibit[title]"][disabled="disabled"]'
+      expect(rendered).to have_css 'input[name="exhibit[title]"][disabled="disabled"]'
       expect(rendered).to have_content 'This field is not editable in the current language. Switch to the default language to edit it.'
     end
   end
