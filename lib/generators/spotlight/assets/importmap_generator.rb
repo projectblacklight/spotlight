@@ -23,6 +23,8 @@ module Spotlight
         - Configures cssbundling-rails to build the styles
         - Javascript from gems such as Blacklight and Spotlight are delivered
           via importmap/the asset pipeline without the need for bundling
+        - Jquery (which was added by the blacklight-gallery gem) is removed from the importmap
+          because it is loaded in the head of the HTML as a global.
       DESCRIPTION
 
       def add_stylesheet_dependencies
@@ -64,6 +66,8 @@ module Spotlight
             });
           CONTENT
         end
+
+        gsub_file 'app/javascript/application.js', /import\s+'jquery'.*\n/, ''
       end
 
       def add_stylesheets
