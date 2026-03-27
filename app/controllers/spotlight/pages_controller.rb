@@ -121,7 +121,7 @@ module Spotlight
     # @param [Hash] the query parameters
     # @return [Object] the search results object from the configured search service
     def search_results(user_params)
-      search_service(user_params).search_results
+      search_service(search_state: Blacklight::SearchState.new(user_params, blacklight_config)).search_results
     end
 
     def undo_link
