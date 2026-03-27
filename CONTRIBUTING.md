@@ -2,6 +2,8 @@
 
 Spotlight is a collaborative, open source project produced by developers, designers, product owners from several organizations. Spotlight mostly uses the [contribution model](https://github.com/projectblacklight/blacklight/blob/main/CONTRIBUTING.md) from its parent project [Blacklight](https://github.com/projectblacklight/blacklight). There are a few differences from the Blacklight process that this document will highlight.
 
+We always welcome contributions from the community, especially to add new features, review pull requests, address bugs or defects, update documentation, and clarify existing code for future developers.
+
 ## Code contributions
 
 * Fork the project. Committers can skip this step and use the project directly.
@@ -17,14 +19,14 @@ Please note that backwards compatibility and deprecation notices are preferred f
 
 ## User experience changes
 
-Spotlight has been designed by a team of user experience designers. While there are a lot of great opportunities to improve the user experience, sometimes contributions that seem to make sense in a specific context can negatively affect the broader user experience of Spotlight that we've worked hard over the years to improve. When contributing updates or changes to the Spotlight user experience here are some useful guidelines to follow.
+Spotlight's design is guided by input from user experience designers. When contributing user experience changes to Spotlight, it’s important to consider how those changes might impact the broader Spotlight community. Here are some helpful guidelines to follow.
  - Determine if there is a way to contribute this in a backwards compatible or configurable way
  - [Open an issue](https://github.com/projectblacklight/spotlight/issues/new) on the project as a way to engage with core UX designers and developers on your proposed change or update
  - Contribute user stories to an issue or engage with the [Spotlight community](/README.md#spotlight-community)
 
 ## Becoming a Committer
 
-Anyone can contribute to Spotlight using pull requests, the issue tracker, and by participating in community communication channels. Being a contributor means that you take an active interest in the project and contribute regularly in some way, including asking sensible questions and providing new features as patches.
+Anyone can contribute to Spotlight by forking the repository, making pull requests, creating and commenting on issues, and by participating in community communication channels. Being a contributor means that you take an active interest in the project and contribute regularly in some way, including asking sensible questions and providing new features as patches.
 
 If you participate in a community sprint or become an active, valued contributor to the project you may be invited to become a committer. 
 
@@ -38,8 +40,7 @@ You're expected to:
 
   * contribute patches and new functionality to Spotlight
   * actively participate in technical discussions on the email list, Slack, and GitHub
-  * answer user support questions via the various channels
+  * answer support questions via the various channels
   * review pull requests from fellow committers and the community
-  * test-drive new release candidates against your own institution's Blacklight applications
+  * test-drive new release candidates against your own institution's Spotlight applications
   * participate in community meetings, usually in the form of conference calls, to coordinate development and direction
-
