@@ -2,6 +2,8 @@
 
 Spotlight is a collaborative, open source project produced by developers, designers, product owners from several organizations. Spotlight mostly uses the [contribution model](https://github.com/projectblacklight/blacklight/blob/main/CONTRIBUTING.md) from its parent project [Blacklight](https://github.com/projectblacklight/blacklight). There are a few differences from the Blacklight process that this document will highlight.
 
+We always welcome contributions from the community, especially to add new features, review pull requests, address bugs or defects, update documentation, and clarify existing code for future developers.
+
 ## Code contributions
 
 * Fork the project. Committers can skip this step and use the project directly.
@@ -10,18 +12,35 @@ Spotlight is a collaborative, open source project produced by developers, design
 * Make sure to add tests for it. This is important so we don't break it in a future version unintentionally.
 * After making your changes, be sure to run the tests to make sure everything works.
 * Make sure your changes pass [RuboCop](https://github.com/bbatsov/rubocop).
-* Submit your change as a [[Pull Request|http://help.github.com/pull-requests/]].
+* Submit your change as a [Pull Request](http://help.github.com/pull-requests/).
  * Make sure a clear and atomic commit history is represented in a pull request. Commit messages should say why changes were made.
 
 Please note that backwards compatibility and deprecation notices are preferred for breaking API and user facing changes
 
 ## User experience changes
 
-Spotlight has been designed by a team of user experience designers. While there are a lot of great opportunities to improve the user experience, sometimes contributions that seem to make sense in a specific context can negatively affect the broader user experience of Spotlight that we've worked hard over the years to improve. When contributing updates or changes to the Spotlight user experience here are some useful guidelines to follow.
+Spotlight's design is guided by input from user experience designers. When contributing user experience changes to Spotlight, it’s important to consider how those changes might impact the broader Spotlight community. Here are some helpful guidelines to follow.
  - Determine if there is a way to contribute this in a backwards compatible or configurable way
  - [Open an issue](https://github.com/projectblacklight/spotlight/issues/new) on the project as a way to engage with core UX designers and developers on your proposed change or update
  - Contribute user stories to an issue or engage with the [Spotlight community](/README.md#spotlight-community)
 
 ## Becoming a Committer
 
-Anyone can contribute to Spotlight using pull requests, the issue tracker, and participating in community slack channels. Being a committer means that you contribute to an extent that requires greater repository access. Currently the only defined way to be added as a committer is to participate in a community sprint.
+Anyone can contribute to Spotlight by forking the repository, making pull requests, creating and commenting on issues, and by participating in community communication channels. Being a contributor means that you take an active interest in the project and contribute regularly in some way, including asking sensible questions and providing new features as patches.
+
+If you participate in a community sprint or become an active, valued contributor to the project you may be invited to become a committer. 
+
+Committers should be:
+
+  * technically adept
+  * constructive, positive members of the Spotlight software community
+  * committed to producing useful, practical code for the community
+
+You're expected to:
+
+  * contribute patches and new functionality to Spotlight
+  * actively participate in technical discussions on the email list, Slack, and GitHub
+  * answer support questions via the various channels
+  * review pull requests from fellow committers and the community
+  * test-drive new release candidates against your own institution's Spotlight applications
+  * participate in community meetings, usually in the form of conference calls, to coordinate development and direction
