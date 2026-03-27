@@ -85,7 +85,7 @@ RSpec.describe Spotlight::FeaturedImagesController, type: :controller do
           }
         }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body).to eq({ 'error' => ['File size too large'] })
       end
     end
