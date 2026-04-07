@@ -1,0 +1,12 @@
+<% items = Array(toc_block['items']) %>
+<% if items.any? %>
+  <nav class="editor-js-toc" aria-label="<%= t('spotlight.editor_js.blocks.toc.aria_label', default: 'Table of contents') %>">
+    <ol class="editor-js-toc__list">
+      <% items.each do |item| %>
+        <li class="editor-js-toc__item editor-js-toc__item--level-<%= item['level'] || 2 %>">
+          <a href="#<%= item['reference'] %>"><%= item['text'] %></a>
+        </li>
+      <% end %>
+    </ol>
+  </nav>
+<% end %>

@@ -45,6 +45,7 @@ import 'spotlight/admin/sir-trevor/block_controls'
 import 'spotlight/admin/sir-trevor/block_limits'
 import 'spotlight/admin/sir-trevor/locales'
 
+import EditorJs from 'spotlight/admin/editor_js'
 
 export default class {
   connect() {
@@ -66,5 +67,6 @@ export default class {
     new Users().connect()
     addAutocompletetoFeaturedImage()
     SpotlightNestable.init();
+    new EditorJs().connect()
   }
 }

@@ -6,6 +6,9 @@ const ESM = process.env.ESM === 'true'
 
 const fileDest = `spotlight${ESM ? '.esm' : ''}`
 const external = [
+  '@editorjs/editorjs',
+  '@editorjs/header',
+  '@phigoro/editorjs-toc',
   '@github/auto-complete-element',
   '@hotwired/stimulus',
   'blacklight-frontend',
@@ -18,6 +21,9 @@ const external = [
   'sortablejs'
 ]
 const globals = {
+  '@editorjs/editorjs': 'EditorJS',
+  '@editorjs/header': 'Header',
+  '@phigoro/editorjs-toc': 'TOC',
   '@github/auto-complete-element': 'AutoCompleteElement',
   '@hotwired/stimulus': 'Stimulus',
   'blacklight-frontend': 'Blacklight',

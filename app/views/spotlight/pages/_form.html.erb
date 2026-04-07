@@ -40,7 +40,16 @@
         </div>
         <div class="form-group mb-3">
           <%= f.label :content, class: 'visually-hidden' %>
-          <%= f.text_area_without_bootstrap :content, value: { data: f.object.content.as_json }.to_json, class: content_editor_class(f.object), data: { 'block-types': SirTrevorRails::Block.custom_block_types, 'alt-text-settings': SirTrevorRails::Block.custom_block_type_alt_text_settings } %>
+          <%
+            # Editor.js pages store content in :editor_js_content, leaving the
+            # original Sir Trevor :content column untouched for safe reversion.
+            editor_content_value = if f.object.content_type == 'EditorJs'
+              f.object.read_attribute(:editor_js_content).presence || '{"blocks":[]}'
+            else
+              { data: f.object.content.as_json }.to_json
+            end
+          %>
+          <%= f.text_area_without_bootstrap :content, value: editor_content_value, class: content_editor_class(f.object), data: { 'block-types': SirTrevorRails::Block.custom_block_types, 'alt-text-settings': SirTrevorRails::Block.custom_block_type_alt_text_settings } %>
         </div>
       </div>
 

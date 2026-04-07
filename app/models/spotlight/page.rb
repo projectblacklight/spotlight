@@ -64,17 +64,27 @@ module Spotlight
       @content = nil
     end
 
+    # Returns the column that holds this page's editable content.
+    # EditorJs pages store their content in a dedicated column so that the
+    # original Sir Trevor JSON in :content is never overwritten, making it
+    # safe to revert content_type back to 'SirTrevor' at any time.
+    def content_attribute
+      content_type == 'EditorJs' ? :editor_js_content : :content
+    end
+
     def content
-      @content ||= Spotlight::PageContent.for(self, :content)
+      @content ||= Spotlight::PageContent.for(self, content_attribute)
     end
 
     def content_type
       self[:content_type] || Spotlight::Engine.config.default_page_content_type
     end
 
-    def content=(content)
-      if content.is_a? Array
-        super content.to_json
+    def content=(value)
+      if content_type == 'EditorJs'
+        self.editor_js_content = value
+      elsif value.is_a?(Array)
+        super value.to_json
       else
         super
       end
@@ -82,7 +92,7 @@ module Spotlight
     end
 
     def content?
-      self[:content].present? && content.present?
+      self[content_attribute].present? && content.present?
     end
     alias has_content? content?
 
