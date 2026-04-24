@@ -14,8 +14,8 @@ If you have questions or are interested in contributing, please reach out to the
 - [Ruby](https://www.ruby-lang.org/) 3.2+
 - [Ruby on Rails](https://rubyonrails.org/) 7.1+
 - Java (11 or greater) *for Solr*
-- [ImageMagick](http://www.imagemagick.org/script/index.php) if using [riiif](https://github.com/sul-dlss/riiif) (current default for `config.iiif_service`)
-  - See [riiif] configuration instructions for alternatives to ImageMagick (ex. libvips)
+- [ImageMagick](http://www.imagemagick.org/script/index.php) if using riiif (current default for `config.iiif_service`)
+  - See [riiif](https://github.com/sul-dlss/riiif) configuration instructions for alternatives to ImageMagick (ex. libvips)
   - May also be needed if adding custom [carrierwave](https://github.com/carrierwaveuploader/carrierwave) uploaders to Spotlight
 
 
