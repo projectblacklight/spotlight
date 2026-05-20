@@ -346,7 +346,9 @@ Style/SwapValues: # new in 1.1
   Enabled: true
 Style/YAMLFileRead: # new in 1.53
   Enabled: true
-Capybara/MatchStyle: # new in 2.17
+Capybara/AssertStyle:
+  Enabled: true
+Capybara/RSpec/MatchStyle: # new in 2.17
   Enabled: true
 Capybara/RSpec/NegationMatcher: # new in 2.14
   Enabled: true
