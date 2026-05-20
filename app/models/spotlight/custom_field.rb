@@ -127,7 +127,7 @@ module Spotlight
     end
 
     def update_sidecar_data_after_field_name_change
-      Spotlight::RenameSidecarFieldJob.perform_later(exhibit, field_before_last_save, self.field, slug_before_last_save, slug)
+      Spotlight::RenameSidecarFieldJob.perform_later(exhibit, field_before_last_save, field, slug_before_last_save, slug)
     end
 
     def document_model
