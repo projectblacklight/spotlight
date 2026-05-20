@@ -22,7 +22,7 @@ Bundler/DuplicatedGem:
 Bundler/OrderedGems:
   Enabled: false
 
-Capybara/VisibilityMatcher:
+Capybara/RSpec/VisibilityMatcher:
   Enabled: false
 
 Layout/EmptyLinesAroundAttributeAccessor:
@@ -348,7 +348,7 @@ Style/YAMLFileRead: # new in 1.53
   Enabled: true
 Capybara/MatchStyle: # new in 2.17
   Enabled: true
-Capybara/NegationMatcher: # new in 2.14
+Capybara/RSpec/NegationMatcher: # new in 2.14
   Enabled: true
 Capybara/RedundantWithinFind: # new in 2.20
   Enabled: true
