@@ -16,7 +16,7 @@ module Spotlight
     end
 
     def stale?
-      created_at < (12.hours.ago)
+      created_at < 12.hours.ago
     end
   end
 end

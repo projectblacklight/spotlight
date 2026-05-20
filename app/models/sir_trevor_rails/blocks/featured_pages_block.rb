@@ -8,7 +8,7 @@ module SirTrevorRails
       include Displayable
 
       def page_options(id)
-        (items.detect { |x| x[:id] == id }) || {}
+        items.detect { |x| x[:id] == id } || {}
       end
 
       def pages

@@ -57,7 +57,7 @@ module Spotlight
     end
 
     def exhibit_masthead?
-      current_exhibit&.masthead && current_exhibit.masthead.display?
+      current_exhibit&.masthead&.display?
     end
 
     def set_locale
