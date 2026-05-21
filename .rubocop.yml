@@ -1,6 +1,6 @@
 inherit_from: .rubocop_todo.yml
 
-require:
+plugins:
   - rubocop-capybara
   - rubocop-rspec
   - rubocop-rails
@@ -22,7 +22,7 @@ Bundler/DuplicatedGem:
 Bundler/OrderedGems:
   Enabled: false
 
-Capybara/VisibilityMatcher:
+Capybara/RSpec/VisibilityMatcher:
   Enabled: false
 
 Layout/EmptyLinesAroundAttributeAccessor:
@@ -346,9 +346,11 @@ Style/SwapValues: # new in 1.1
   Enabled: true
 Style/YAMLFileRead: # new in 1.53
   Enabled: true
-Capybara/MatchStyle: # new in 2.17
+Capybara/AssertStyle:
   Enabled: true
-Capybara/NegationMatcher: # new in 2.14
+Capybara/RSpec/MatchStyle: # new in 2.17
+  Enabled: true
+Capybara/RSpec/NegationMatcher: # new in 2.14
   Enabled: true
 Capybara/RedundantWithinFind: # new in 2.20
   Enabled: true

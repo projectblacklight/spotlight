@@ -55,7 +55,7 @@ module Spotlight
 
     def resource_params
       params.require(:resource).tap { |x| x['type'] ||= resource_class.name }
-            .permit(:url, :type, *resource_class.stored_attributes[:data], data: params[:resource][:data].try(:keys))
+                               .permit(:url, :type, *resource_class.stored_attributes[:data], data: params[:resource][:data].try(:keys))
     end
   end
 end
