@@ -34,7 +34,7 @@ RSpec.describe Spotlight::UploadFieldConfig do
     end
 
     it 'supports configuring a lambda to pre-process data for a field' do
-      expect(described_class.new(field_name: 'something', solr_fields: [int_field: ->(value) { value.to_i }]).data_to_solr('123value')).to eq int_field: 123
+      expect(described_class.new(field_name: 'something', solr_fields: [{ int_field: ->(value) { value.to_i } }]).data_to_solr('123value')).to eq int_field: 123
     end
   end
 end
