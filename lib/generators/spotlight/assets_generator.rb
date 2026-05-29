@@ -18,5 +18,12 @@ module Spotlight
 
       generate generator, generated_options
     end
+
+    def add_openseadragon_images
+      append_file 'config/initializers/assets.rb', <<~RUBY
+
+        Rails.application.config.assets.paths << Rails.root.join('node_modules/openseadragon/build/openseadragon/images')
+      RUBY
+    end
   end
 end
