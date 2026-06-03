@@ -44,7 +44,7 @@ module Spotlight
       views = @blacklight_configuration.default_blacklight_config.view.keys | [:show]
 
       @blacklight_configuration.blacklight_config.index_fields.keys.index_with do |_element|
-        (%i[enabled label weight] | views)
+        %i[enabled label weight] | views
       end
     end
   end

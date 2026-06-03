@@ -14,7 +14,7 @@ module SirTrevorRails
       end
 
       def search_options(id)
-        (items.detect { |x| x[:id] == id }) || {}
+        items.detect { |x| x[:id] == id } || {}
       end
 
       def searches

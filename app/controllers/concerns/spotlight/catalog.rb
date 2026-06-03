@@ -34,7 +34,7 @@ module Spotlight
     # rubocop:enable Metrics/MethodLength
 
     def render_curator_actions?
-      (current_exhibit && can?(:curate, current_exhibit)) &&
+      current_exhibit && can?(:curate, current_exhibit) &&
         !(params[:controller] == 'spotlight/catalog' && params[:action] == 'admin')
     end
   end

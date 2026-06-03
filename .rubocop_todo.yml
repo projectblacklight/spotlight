@@ -19,7 +19,7 @@ Capybara/RSpec/HaveSelector:
   Enabled: false
 
 # Offense count: 41
-Capybara/SpecificMatcher:
+Capybara/RSpec/SpecificMatcher:
   Enabled: false
 
 # Offense count: 19
