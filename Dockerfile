@@ -34,7 +34,7 @@ RUN addgroup --gid 10001 --system spotlight && \
 RUN npm i -g npx
 
 USER spotlight
-RUN gem update bundler
+RUN gem install bundler -v "~> 2.7"
 RUN gem install --no-document rails -v "${RAILS_VERSION}"
 
 COPY --chown=10000:10001 . /spotlight/engine
