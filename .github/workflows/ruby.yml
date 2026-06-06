@@ -18,6 +18,11 @@ jobs:
         additional_engine_cart_rails_options: ["-j importmap"]
         additional_name: [""]
         include:
+          - rails_version: "~> 8.0"
+            ruby: "3.4"
+            blacklight_version: "~> 9.0.0"
+            additional_engine_cart_rails_options: "-j importmap"
+            additional_name: Blacklight 9
           - rails_version: "~> 7.2"
             ruby: "3.3"
             blacklight_version: "~> 8.0"
