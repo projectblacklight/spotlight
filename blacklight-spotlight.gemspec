@@ -41,7 +41,6 @@ these collections.)
   s.add_dependency 'mini_magick'
   s.add_dependency 'multi_json' # Peer dependency of Roar
   s.add_dependency 'nokogiri'
-  s.add_dependency 'oauth2'
   s.add_dependency 'openseadragon', '>= 0.8.0'
   s.add_dependency 'ostruct', '!= 0.3.0', '!= 0.3.1', '!= 0.3.2'
   s.add_dependency 'paper_trail', '>= 11.0', '< 18'
