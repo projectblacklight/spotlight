@@ -51,8 +51,6 @@ these collections.)
   s.add_dependency 'rails', '>= 7.0', '< 8'
   s.add_dependency 'redcarpet', '>= 2.0.1', '< 4'
   s.add_dependency 'riiif', '~> 2.0'
-  s.add_dependency 'roar', '~> 1.1'
-  s.add_dependency 'roar-rails'
   s.add_dependency 'signet'
   s.add_dependency 'tophat'
   s.add_dependency 'view_component', '>= 2.66', '< 4'
