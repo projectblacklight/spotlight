@@ -39,7 +39,6 @@ these collections.)
   s.add_dependency 'iiif_manifest'
   s.add_dependency 'iiif-presentation', '>=1.4.1'
   s.add_dependency 'mini_magick'
-  s.add_dependency 'multi_json' # Peer dependency of Roar
   s.add_dependency 'nokogiri'
   s.add_dependency 'oauth2'
   s.add_dependency 'openseadragon', '>= 0.8.0'
