@@ -6,6 +6,6 @@ RSpec.describe Spotlight::ContactImage do
   end
 
   it 'has the appropriate contact image size' do
-    expect(contact_image.iiif_url).to match(%r{/full/70,70/})
+    expect(contact_image.iiif_url).to include('/full/70,70/')
   end
 end

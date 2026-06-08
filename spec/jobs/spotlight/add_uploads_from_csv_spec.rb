@@ -50,7 +50,7 @@ RSpec.describe Spotlight::AddUploadsFromCsv do
         indexed_count: 1,
         errors: {
           1 => array_including(match(Regexp.union(/relative URI: x/, /URI scheme '' not in whitelist:/))),
-          2 => array_including(match(/Upload is invalid/))
+          2 => array_including(include('Upload is invalid'))
         }
       )
     end

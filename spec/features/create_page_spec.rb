@@ -15,7 +15,7 @@ RSpec.describe 'Creating a page', type: :feature do
       within '#sidebar' do
         click_link 'About pages'
       end
-      expect(page).to have_content 'A new one'
+      expect(page).to have_text 'A new one'
     end
   end
 end

@@ -7,7 +7,7 @@ RSpec.describe Spotlight::RenderingHelper, type: :helper do
     end
 
     it 'add heading ids automatically' do
-      expect(helper.render_markdown('## Test Header').chomp).to match(%r{<h2 id="test-header">Test Header</h2>})
+      expect(helper.render_markdown('## Test Header').chomp).to include('<h2 id="test-header">Test Header</h2>')
     end
   end
 end

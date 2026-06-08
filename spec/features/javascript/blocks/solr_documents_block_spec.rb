@@ -18,19 +18,19 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
   end
 
   it 'allows you to add the solr document block widget', js: true do
-    expect(page).to have_content 'This widget displays exhibit items in a horizontal row.'
-    expect(page).to have_content 'Optionally, you can add a heading and/or text to be displayed adjacent to the items.'
-    expect(page).to have_content 'Primary caption'
-    expect(page).to have_content 'Secondary caption'
-    expect(page).to have_content 'Display text on'
-    expect(page).to have_content 'Heading'
-    expect(page).to have_content 'Text'
+    expect(page).to have_text 'This widget displays exhibit items in a horizontal row.'
+    expect(page).to have_text 'Optionally, you can add a heading and/or text to be displayed adjacent to the items.'
+    expect(page).to have_text 'Primary caption'
+    expect(page).to have_text 'Secondary caption'
+    expect(page).to have_text 'Display text on'
+    expect(page).to have_text 'Heading'
+    expect(page).to have_text 'Text'
   end
 
   it 'allows you to add a solr document to the widget', js: true do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
     within(:css, '.card') do
-      expect(page).to have_content "L'AMERIQUE"
+      expect(page).to have_text "L'AMERIQUE"
     end
 
     save_page_changes
@@ -66,7 +66,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
 
     # The thumbnail on the rendered block should be correct
     thumb = find('.img-thumbnail')
-    expect(thumb['src']).to match(%r{xd327cm9378_05_0002/full})
+    expect(thumb['src']).to include('xd327cm9378_05_0002/full')
 
     # revisit the edit page
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
@@ -74,13 +74,13 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     # Expect the image on the rendered edit screen to be correct
     expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/, visible: true)
     thumb = find('.pic .img-thumbnail')
-    expect(thumb['src']).to match(%r{xd327cm9378_05_0002/full})
+    expect(thumb['src']).to include('xd327cm9378_05_0002/full')
 
     save_page_changes
 
     # Expect that the original image selection was retained
     thumb = find('.img-thumbnail')
-    expect(thumb['src']).to match(%r{xd327cm9378_05_0002/full})
+    expect(thumb['src']).to include('xd327cm9378_05_0002/full')
   end
 
   it 'allows you to toggle visibility of solr documents', js: true do
@@ -99,15 +99,15 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     save_page_changes
 
     expect(page).to have_css '.items-block .box', count: 1, visible: true
-    expect(page).to have_content '[World map]'
-    expect(page).to have_no_content "L'AMERIQUE"
+    expect(page).to have_text '[World map]'
+    expect(page).to have_no_text "L'AMERIQUE"
 
     click_on 'Edit'
 
     # Wait for both items to be rendered
     wait_for_sir_trevor
-    expect(page).to have_content '[World map]'
-    expect(page).to have_content "L'AMERIQUE"
+    expect(page).to have_text '[World map]'
+    expect(page).to have_text "L'AMERIQUE"
 
     # display the title as the primary caption
     uncheck('Primary caption')
@@ -115,7 +115,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     save_page_changes
 
     expect(page).to have_css '.items-block .box', count: 1, visible: true
-    expect(page).to have_no_content '[World map]'
+    expect(page).to have_no_text '[World map]'
   end
 
   it 'allows you to optionally display captions with the image', js: true do
@@ -172,7 +172,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     # visit the show page for the document we just saved
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, '.items-block', visible: true) do
-      expect(page).to have_content 'zzz'
+      expect(page).to have_text 'zzz'
     end
   end
 
@@ -192,14 +192,14 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, '.items-block') do
       within('.text-col') do
-        expect(page).to have_content 'zzz'
+        expect(page).to have_text 'zzz'
       end
       expect(page).to have_css('.items-col.float-end')
     end
   end
 
   it 'displays alternative text guidelines', js: true do
-    expect(page).to have_content('For each item, please enter alternative text')
+    expect(page).to have_text('For each item, please enter alternative text')
     expect(page).to have_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
   end
 

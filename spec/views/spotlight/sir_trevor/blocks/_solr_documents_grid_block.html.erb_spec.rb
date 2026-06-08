@@ -32,7 +32,7 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_grid_block', type: :
 
   it 'has a slideshow block' do
     expect(rendered).to have_css 'h3', text: 'Some title'
-    expect(rendered).to have_content 'Some text'
+    expect(rendered).to have_text 'Some text'
     expect(rendered).to have_css '.box img', count: 3
     expect(rendered).to have_css '.items-col'
     expect(rendered).to have_css '.text-col'

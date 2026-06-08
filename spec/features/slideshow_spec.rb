@@ -11,7 +11,7 @@ RSpec.describe 'Slideshow', js: true, type: :feature do
 
   it 'has slideshow' do
     visit spotlight.search_exhibit_catalog_path(exhibit, f: { genre_ssim: ['map'] })
-    expect(page).to have_content 'You searched for:'
+    expect(page).to have_text 'You searched for:'
     within '.view-type' do
       click_link 'Slideshow'
     end

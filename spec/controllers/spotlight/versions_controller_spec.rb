@@ -49,7 +49,7 @@ RSpec.describe Spotlight::VersionsController, type: :controller, versioning: tru
         expect(page.title).not_to eq 'xyz'
         expect(response).to redirect_to [exhibit, page]
         expect(flash[:notice]).to be_present
-        expect(flash[:notice]).to match(/Redo changes/)
+        expect(flash[:notice]).to include('Redo changes')
       end
     end
   end

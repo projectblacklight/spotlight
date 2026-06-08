@@ -14,7 +14,7 @@ RSpec.describe 'adding IIIF Manifest', type: :feature do
 
     expect(page).to have_link('IIIF URL') # tab name
     expect(page).to have_css("input[id='resource_url'][type='text']")
-    expect(page).to have_content 'Add the URL of a IIIF manifest or collection'
+    expect(page).to have_text 'Add the URL of a IIIF manifest or collection'
     expect(page).to have_button 'Add IIIF items'
   end
 

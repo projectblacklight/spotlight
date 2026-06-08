@@ -11,12 +11,12 @@ RSpec.describe 'Update the site theme', type: :feature do
   it 'updates the exhibit theme' do
     visit spotlight.edit_exhibit_appearance_path(exhibit)
 
-    expect(page).to have_content('Visual theme')
+    expect(page).to have_text('Visual theme')
     choose 'Modern'
 
     click_button 'Save changes'
 
-    expect(page).to have_content('The exhibit was successfully updated.')
+    expect(page).to have_text('The exhibit was successfully updated.')
 
     within '#sidebar' do
       click_link 'Appearance'

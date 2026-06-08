@@ -21,14 +21,14 @@ RSpec.describe 'Dashboard', type: :feature do
 
   it 'includes a list of recently edited feature pages' do
     visit spotlight.exhibit_dashboard_path(exhibit)
-    expect(page).to have_content 'Recent site building activity'
-    expect(page).to have_content 'Parent Page'
-    expect(page).to have_content 'Child Page'
+    expect(page).to have_text 'Recent site building activity'
+    expect(page).to have_text 'Parent Page'
+    expect(page).to have_text 'Child Page'
   end
 
   it 'includes a list of recently indexed items' do
     visit spotlight.exhibit_dashboard_path(exhibit)
-    expect(page).to have_content 'Recently updated items'
+    expect(page).to have_text 'Recently updated items'
     expect(page).to have_css('#documents')
   end
 end

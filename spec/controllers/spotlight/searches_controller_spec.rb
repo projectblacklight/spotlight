@@ -104,7 +104,7 @@ RSpec.describe Spotlight::SearchesController, type: :controller do
         expect(docs.length).to eq 1
         expect(docs.first['id']).to eq 'sn161bw2027'
         expect(docs.first['description']).to eq 'sn161bw2027'
-        expect(docs.first['title']).to match(/Pas-caart van Zuyd-Zee/)
+        expect(docs.first['title']).to include('Pas-caart van Zuyd-Zee')
         expect(docs.first).to have_key('thumbnail')
         expect(docs.first).to have_key('url')
       end

@@ -11,7 +11,7 @@ RSpec.describe 'Confirming an email', type: :feature do
 
   it 'resends confirmation instructions' do
     visit spotlight.new_contact_email_confirmation_url(confirmation_token: contact_email.confirmation_token)
-    expect(page).to have_content('Resend confirmation instructions')
+    expect(page).to have_text('Resend confirmation instructions')
     within '#new_contact_email' do
       fill_in 'Email', with: contact_email.email
       click_button 'Resend confirmation instructions'
@@ -20,6 +20,6 @@ RSpec.describe 'Confirming an email', type: :feature do
 
   it 'confirms email' do
     visit spotlight.contact_email_confirmation_url(confirmation_token: raw_token)
-    expect(page).to have_content('successfully confirmed')
+    expect(page).to have_text('successfully confirmed')
   end
 end

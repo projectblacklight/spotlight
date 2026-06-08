@@ -56,6 +56,6 @@ RSpec.describe 'spotlight/browse/show', type: :view do
 
   it 'displays search results actions' do
     render
-    expect(response).to have_content 'Sort and Per Page actions'
+    expect(response).to have_text 'Sort and Per Page actions'
   end
 end

@@ -17,7 +17,7 @@ RSpec.describe 'Multi image selector', js: true, max_wait_time: 5, type: :featur
     expect(page).to have_css '.card'
 
     within('.card') do
-      expect(page).to have_content(/Image \d of \d/)
+      expect(page).to have_text(/Image \d of \d/)
       expect(page).to have_link 'Change'
     end
 
@@ -30,7 +30,7 @@ RSpec.describe 'Multi image selector', js: true, max_wait_time: 5, type: :featur
     click_link('Edit')
     wait_for_sir_trevor
 
-    expect(page).to have_content(/Image \d of \d/)
+    expect(page).to have_text(/Image \d of \d/)
     click_link 'Change'
 
     # Wait for the animation to finish

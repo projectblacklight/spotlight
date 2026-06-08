@@ -21,7 +21,7 @@ RSpec.describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view
     end
 
     it 'displays an explanatory message when there are no reindexing attempts in the log' do
-      expect(rendered).to have_content 'There has been no reindexing activity'
+      expect(rendered).to have_text 'There has been no reindexing activity'
     end
   end
 

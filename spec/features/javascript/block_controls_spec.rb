@@ -16,7 +16,7 @@ RSpec.describe 'Block controls' do
 
     expect(page).to have_css('h3', text: 'My New Feature Page')
 
-    expect(page).to have_content('The feature page was created.')
+    expect(page).to have_text('The feature page was created.')
     within('li.dd-item') do
       click_link 'Edit'
     end
@@ -35,12 +35,12 @@ RSpec.describe 'Block controls' do
       expect(page).to have_css('.st-controls-group', count: 2)
 
       within(first('.st-controls-group')) do
-        expect(page).to have_content 'Standard widgets'
+        expect(page).to have_text 'Standard widgets'
         expect(page).to have_css('.st-block-controls__button')
       end
 
       within(all('.st-controls-group').last) do
-        expect(page).to have_content 'Exhibit item widgets'
+        expect(page).to have_text 'Exhibit item widgets'
         expect(page).to have_css('.st-block-controls__button')
       end
     end

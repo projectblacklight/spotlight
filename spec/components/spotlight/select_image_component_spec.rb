@@ -8,7 +8,7 @@ RSpec.describe Spotlight::SelectImageComponent, type: :component do
   let(:component) { described_class.new(1, 'st_block_abcd') }
 
   it 'has instructions for cropping the image' do
-    expect(rendered).to have_content 'Adjust the image so that the rectangle'
+    expect(rendered).to have_text 'Adjust the image so that the rectangle'
   end
 
   it 'has the correct attributes for the cropper modal javascript' do

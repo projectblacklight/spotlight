@@ -17,7 +17,7 @@ RSpec.describe 'spotlight/searches/index.html.erb', type: :view do
       assign(:searches, [])
       expect(exhibit).to receive(:searchable?).and_return(true)
       render
-      expect(rendered).to have_content 'You can save search results'
+      expect(rendered).to have_text 'You can save search results'
     end
   end
 
@@ -45,7 +45,7 @@ of the Configuration > Search page.)
 
     it 'removes the form and displays a translations message' do
       expect(rendered).to have_text 'Please use the translations editor'
-      expect(rendered).to have_no_content 'You can save search results'
+      expect(rendered).to have_no_text 'You can save search results'
     end
   end
 end

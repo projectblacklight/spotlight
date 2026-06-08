@@ -23,7 +23,7 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
         expect(page).to have_css('.leaflet-container', visible: true)
 
         click_button 'Save changes'
-        expect(page).to have_content 'The exhibit was successfully updated.'
+        expect(page).to have_text 'The exhibit was successfully updated.'
 
         featured_image = Spotlight::FeaturedImage.last
 
