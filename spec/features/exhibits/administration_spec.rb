@@ -29,7 +29,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       visit spotlight.edit_exhibit_path(exhibit)
       fill_in email_id_0, with: email_address_0
       click_button 'Save changes'
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_text('The exhibit was successfully updated.')
       visit spotlight.edit_exhibit_path(exhibit)
       expect(find_field(email_id_0).value).to eq email_address_0
     end
@@ -53,7 +53,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       fill_in email_id_1, with: email_address_1
       click_button 'Save changes'
 
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_text('The exhibit was successfully updated.')
       visit spotlight.edit_exhibit_path(exhibit)
 
       expect(find_field(email_id_0).value).to eq email_address_0
@@ -108,7 +108,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       visit spotlight.edit_exhibit_path(exhibit)
       fill_in email_id_0, with: email_address_0
       click_button 'Save changes'
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_text('The exhibit was successfully updated.')
 
       click_button 'Add new recipient'
       expect(find_field(email_id_0).value).to eq email_address_0
@@ -130,7 +130,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       find_by_id('another-email').click
       fill_in email_id_1, with: email_address_1
       click_button 'Save changes'
-      expect(page).to have_content('The exhibit was successfully updated.')
+      expect(page).to have_text('The exhibit was successfully updated.')
 
       Spotlight::ContactEmail.all.first.destroy
       page.accept_confirm do
@@ -155,7 +155,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
         find('label', text: 'tag 1').click
         find('label', text: 'tag 3').click
         click_button 'Save changes'
-        expect(page).to have_content('The exhibit was successfully updated.')
+        expect(page).to have_text('The exhibit was successfully updated.')
         expect(find_field('exhibit_tag_list_tag_1').checked?).to be true
         expect(find_field('exhibit_tag_list_tag_2').checked?).to be false
         expect(find_field('exhibit_tag_list_tag_3').checked?).to be true
@@ -170,7 +170,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
         expect(page).to have_css('#exhibit_tag_list')
         fill_in 'exhibit_tag_list', with: 'tag 1, tag 2'
         click_button 'Save changes'
-        expect(page).to have_content('The exhibit was successfully updated.')
+        expect(page).to have_text('The exhibit was successfully updated.')
         expect(find_field('exhibit_tag_list').value).to eq 'tag 1, tag 2'
       end
     end

@@ -29,8 +29,8 @@ RSpec.describe 'spotlight/resources/_external_resources_form.html.erb', type: :v
     stub_template '_b.html.erb' => 'b_template'
     stub_template '_c.html.erb' => 'c_template'
     render
-    expect(rendered).to have_content 'a_template'
-    expect(rendered).to have_content 'b_template'
-    expect(rendered).to have_content 'c_template'
+    expect(rendered).to have_text 'a_template'
+    expect(rendered).to have_text 'b_template'
+    expect(rendered).to have_text 'c_template'
   end
 end

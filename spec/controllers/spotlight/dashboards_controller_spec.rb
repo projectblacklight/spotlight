@@ -61,7 +61,7 @@ RSpec.describe Spotlight::DashboardsController, type: :controller do
         get :show, params: { exhibit_id: exhibit.id }
         expect(response).to redirect_to(main_app.new_user_session_path)
         expect(flash[:alert]).to be_present
-        expect(flash[:alert]).to match(/You need to sign in/)
+        expect(flash[:alert]).to include('You need to sign in')
       end
     end
   end

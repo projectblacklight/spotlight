@@ -32,7 +32,7 @@ RSpec.describe 'Site users management', js: true do
 
     click_button 'Add role'
 
-    expect(page).to have_content('not-an-existing-user@example.com site admin pending')
+    expect(page).to have_text('not-an-existing-user@example.com site admin pending')
   end
 
   it 'allows the admin to remove the admin role from the user' do
@@ -51,7 +51,7 @@ RSpec.describe 'Site users management', js: true do
       end
     end
 
-    expect(page).to have_content 'User removed from site adminstrator role'
+    expect(page).to have_text 'User removed from site adminstrator role'
     expect(page).to have_css('a', text: 'Remove site admin role', count: 0)
   end
 
@@ -63,7 +63,7 @@ RSpec.describe 'Site users management', js: true do
       end
     end
 
-    expect(page).to have_content 'Removed all exhibit roles for user'
+    expect(page).to have_text 'Removed all exhibit roles for user'
     expect(page).to have_css('td.user-exhibit-roles a.btn', text: 'Remove all exhibit roles', count: 1)
   end
 
@@ -74,7 +74,7 @@ RSpec.describe 'Site users management', js: true do
 
     expect do
       click_button 'Add role'
-      expect(page).to have_content('Added user as an adminstrator')
+      expect(page).to have_text('Added user as an adminstrator')
     end.to change { Devise::Mailer.deliveries.count }.by(1)
     expect(User.where(email: 'a-user-that-did-not-exist@example.com').first.invitation_sent_at).to be_present
   end

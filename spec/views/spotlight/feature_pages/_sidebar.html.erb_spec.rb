@@ -38,7 +38,7 @@ RSpec.describe 'spotlight/feature_pages/_sidebar.html.erb', type: :view do
     expect(rendered).to have_css 'li', text: 'Parent Page'
     expect(rendered).to have_css 'ol.sidenav li:nth-child(1) a', text: 'Five'
     expect(rendered).to have_css 'ol.sidenav li:nth-child(2) a', text: 'Three'
-    expect(rendered).to have_content 'Two' # not selected page
+    expect(rendered).to have_text 'Two' # not selected page
     expect(rendered).to have_link 'Four' # different parent
     expect(rendered).to have_no_link 'Six' # not published
   end

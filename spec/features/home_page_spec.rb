@@ -21,13 +21,13 @@ RSpec.describe 'Home page', type: :feature, versioning: true do
     end
     fill_in 'home_page_title', with: 'New Home Page Title'
     click_button 'Save changes'
-    expect(page).to have_content('The home page was successfully updated.')
+    expect(page).to have_text('The home page was successfully updated.')
 
     within '.dropdown-menu' do
       click_link 'Exhibit dashboard'
     end
     click_link 'Feature pages'
-    expect(page).to have_content 'New Home Page Title'
+    expect(page).to have_text 'New Home Page Title'
     expect(page).to have_css '.card-title a', text: 'New Home Page Title'
   end
 
@@ -44,8 +44,8 @@ RSpec.describe 'Home page', type: :feature, versioning: true do
     visit spotlight.exhibit_home_page_path(exhibit)
     click_button 'Genre'
     click_link 'map'
-    expect(page).to have_content exhibit.title
-    expect(page).to have_content 'You searched for: Genre map'
+    expect(page).to have_text exhibit.title
+    expect(page).to have_text 'You searched for: Genre map'
   end
 
   it 'has a search box' do
@@ -53,8 +53,8 @@ RSpec.describe 'Home page', type: :feature, versioning: true do
     fill_in 'q', with: 'query'
     click_button 'Search'
 
-    expect(page).to have_content exhibit.title
-    expect(page).to have_content 'You searched for: query'
+    expect(page).to have_text exhibit.title
+    expect(page).to have_text 'You searched for: query'
   end
 
   it 'has <meta> tags' do

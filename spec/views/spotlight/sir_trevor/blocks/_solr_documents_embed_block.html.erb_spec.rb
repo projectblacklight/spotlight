@@ -35,7 +35,7 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb
   it 'has a embed block' do
     render partial:, locals: { solr_documents_embed_block: block }
     expect(rendered).to have_css 'h3', text: 'Some title'
-    expect(rendered).to have_content 'Some text'
+    expect(rendered).to have_text 'Some text'
     expect(rendered).to have_css '.box'
     expect(rendered).to have_css '.items-col'
     expect(rendered).to have_css '.text-col'

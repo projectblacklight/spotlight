@@ -21,7 +21,7 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_uploaded_items_block', type: :view 
 
   it 'has an uploaded items block' do
     expect(rendered).to have_css 'h3', text: 'Some title'
-    expect(rendered).to have_content 'Some text'
+    expect(rendered).to have_text 'Some text'
     expect(rendered).to have_css '.caption', text: 'Caption 1'
     expect(rendered).to have_css '.caption', text: 'Caption 3'
     expect(rendered).to have_css 'a[href="http://example.com/link1"]'

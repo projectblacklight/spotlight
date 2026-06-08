@@ -20,7 +20,7 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
 
     click_button 'Save changes'
 
-    expect(page).to have_content('The site was successfully updated.')
+    expect(page).to have_text('The site was successfully updated.')
 
     visit spotlight.edit_site_path
     click_link 'Site masthead'
@@ -45,7 +45,7 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
 
     click_button 'Save changes'
 
-    expect(page).to have_content('The site was successfully updated.')
+    expect(page).to have_text('The site was successfully updated.')
 
     visit spotlight.edit_site_path
     click_link 'Site masthead'
@@ -69,7 +69,7 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
     end
 
     click_button 'Save changes'
-    expect(page).to have_content('The site was successfully updated.')
+    expect(page).to have_text('The site was successfully updated.')
     expect(page).to have_css('.image-masthead .background-container')
   end
 
@@ -85,7 +85,7 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
     end
 
     click_button 'Save changes'
-    expect(page).to have_content('The site was successfully updated.')
+    expect(page).to have_text('The site was successfully updated.')
     expect(page).to have_no_css('.image-masthead .background-container')
   end
 end

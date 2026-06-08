@@ -12,7 +12,7 @@ RSpec.describe Spotlight::BreadcrumbsComponent, type: :component do
   end
 
   it 'has the last breadcrumb as text' do
-    expect(rendered).to have_content 'breadcrumb 2'
+    expect(rendered).to have_text 'breadcrumb 2'
   end
 
   it 'has 2 breadcrumbs' do

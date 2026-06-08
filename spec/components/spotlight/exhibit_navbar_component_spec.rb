@@ -94,12 +94,12 @@ RSpec.describe Spotlight::ExhibitNavbarComponent, type: :component do
 
     it 'includes the search bar when the exhibit is searchable' do
       expect(current_exhibit).to receive(:searchable?).and_return(true)
-      expect(rendered).to have_content 'Search'
+      expect(rendered).to have_text 'Search'
     end
 
     it 'does not include the search bar when the exhibit is not searchable' do
       expect(current_exhibit).to receive(:searchable?).and_return(false)
-      expect(rendered).to have_no_content 'Search'
+      expect(rendered).to have_no_text 'Search'
     end
 
     it 'does not include any navigation menu items that are not configured' do
@@ -134,7 +134,7 @@ RSpec.describe Spotlight::ExhibitNavbarComponent, type: :component do
   context 'with prepend section' do
     it 'displays the prepend section text' do
       allow(component).to receive_messages(prepend_to_search_bar: 'prepend text')
-      expect(rendered).to have_content('prepend text')
+      expect(rendered).to have_text('prepend text')
     end
   end
 end

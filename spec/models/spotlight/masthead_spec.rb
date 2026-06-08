@@ -6,7 +6,7 @@ RSpec.describe Spotlight::Masthead, type: :model do
   describe '#iiif_url' do
     it 'inlcudes the appropriate size' do
       masthead.iiif_tilesource = 'http://example.com/iiif/abc123/info.json'
-      expect(masthead.iiif_url).to match(%r{/full/1800,180/})
+      expect(masthead.iiif_url).to include('/full/1800,180/')
     end
   end
 

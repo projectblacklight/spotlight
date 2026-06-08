@@ -23,8 +23,8 @@ RSpec.describe 'spotlight/resources/new.html.erb', type: :view do
     stub_template 'spotlight/resources/upload/_form.html.erb' => 'b_template'
     stub_template 'spotlight/resources/csv_upload/_form.html.erb' => 'c_template'
     render
-    expect(rendered).to have_content 'a_template'
-    expect(rendered).to have_content 'b_template'
-    expect(rendered).to have_content 'c_template'
+    expect(rendered).to have_text 'a_template'
+    expect(rendered).to have_text 'b_template'
+    expect(rendered).to have_text 'c_template'
   end
 end

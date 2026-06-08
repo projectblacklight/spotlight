@@ -67,7 +67,7 @@ RSpec.describe Spotlight::FeaturedImage do
       end
 
       it 'is "full" when not present' do
-        expect(subject.iiif_url).to match(%r{/abc123/full/})
+        expect(subject.iiif_url).to include('/abc123/full/')
       end
     end
   end

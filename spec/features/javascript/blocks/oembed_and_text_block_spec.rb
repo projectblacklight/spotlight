@@ -18,10 +18,10 @@ RSpec.describe 'Oembed and text block', feature: true, max_wait_time: 15, versio
   end
 
   it 'allows you to add the oembed block widget', js: true do
-    expect(page).to have_content 'This widget embeds an oEmbed-supported web resource and a text block to the left or right of it.'
-    expect(page).to have_content 'Examples of oEmbed-supported resources include those from YouTube, Twitter, Flickr, and SlideShare.'
-    expect(page).to have_content 'Display text on'
-    expect(page).to have_content 'URL'
-    expect(page).to have_content 'Text'
+    expect(page).to have_text 'This widget embeds an oEmbed-supported web resource and a text block to the left or right of it.'
+    expect(page).to have_text 'Examples of oEmbed-supported resources include those from YouTube, Twitter, Flickr, and SlideShare.'
+    expect(page).to have_text 'Display text on'
+    expect(page).to have_text 'URL'
+    expect(page).to have_text 'Text'
   end
 end

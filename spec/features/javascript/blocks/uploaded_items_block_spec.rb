@@ -69,7 +69,7 @@ RSpec.describe 'Uploaded Items Block', feature: true, js: true, versioning: true
   end
 
   it 'displays alternative text guidelines', js: true do
-    expect(page).to have_content('For each item, please enter alternative text')
+    expect(page).to have_text('For each item, please enter alternative text')
     expect(page).to have_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
   end
 

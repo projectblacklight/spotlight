@@ -9,7 +9,7 @@ RSpec.describe 'Editing metadata fields', type: :feature do
   it 'allows admins to configure which index fields display in certain contexts' do
     visit spotlight.edit_exhibit_metadata_configuration_path exhibit
 
-    expect(page).to have_content 'Display and order metadata fields'
+    expect(page).to have_text 'Display and order metadata fields'
 
     check :blacklight_configuration_index_fields_language_ssm_show
     check :blacklight_configuration_index_fields_abstract_tesim_show

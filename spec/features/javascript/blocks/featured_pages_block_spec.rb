@@ -36,7 +36,7 @@ RSpec.describe 'Featured Pages Blocks', :js, type: :feature do
 
     save_page_changes
 
-    expect(page).to have_content feature_page2.title
+    expect(page).to have_text feature_page2.title
 
     expect(page).to be_axe_clean.within '#content'
   end
