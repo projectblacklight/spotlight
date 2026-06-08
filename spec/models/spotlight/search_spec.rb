@@ -65,6 +65,16 @@ RSpec.describe Spotlight::Search, type: :model do
     end
   end
 
+  describe '#search_state' do
+    it 'returns a Blacklight::SearchState' do
+      expect(subject.search_state).to be_a(Blacklight::SearchState)
+    end
+
+    it 'reflects the saved query_params' do
+      expect(subject.search_state.to_h).to include('f' => hash_including('genre_ssim' => ['map']))
+    end
+  end
+
   describe '#search_params' do
     it 'maps the search to the appropriate facet values' do
       expect(subject.search_params.to_hash).to include 'fq' => array_including('{!term f=genre_ssim}map')
