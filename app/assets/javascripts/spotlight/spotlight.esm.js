@@ -2,6 +2,7 @@ import OpenSeadragon from 'openseadragon';
 import Clipboard from 'clipboard';
 import SirTrevor$1 from 'sir-trevor';
 import Sortable from 'sortablejs';
+import bootstrap from 'bootstrap';
 import { Controller } from '@hotwired/stimulus';
 
 // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
@@ -5168,9 +5169,20 @@ const Module = (function() {
 
 class Tabs {
   connect() {
-    if ($('[role=tabpanel]').length > 0 && window.location.hash) {
-      var tabpanel = $(window.location.hash).closest('[role=tabpanel]');
-      $('a[role=tab][href="#'+tabpanel.attr('id')+'"]').tab('show');
+    if (document.querySelector("[role=tabpanel]") && window.location.hash) {
+      const targetId = window.location.hash.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (!targetElement) return
+
+      const tabpanel = targetElement.closest("[role=tabpanel]");
+      if (!tabpanel) return
+
+      const tabElement = document.querySelector(
+        `a[role=tab][href="#${tabpanel.id}"]`
+      );
+      if (!tabElement) return
+
+      bootstrap.Tab.getOrCreateInstance(tabElement).show();
     }
   }
 }
