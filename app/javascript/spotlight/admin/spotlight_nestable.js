@@ -154,10 +154,7 @@ const Module = (function () {
         )
         emptySortableElement.className = nestedSortableClass
         draggableElement.appendChild(emptySortableElement)
-        new Sortable(emptySortableElement, {
-          ...sortableOptions,
-          group: group,
-        })
+        new Sortable(emptySortableElement, { ...sortableOptions, group: group })
       }
       makeEmptyChildSortablesForEligibleParents(
         draggableElement,
