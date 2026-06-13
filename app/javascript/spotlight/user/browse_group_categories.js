@@ -1,52 +1,54 @@
-import tns from 'tiny-slider'
+import tns from "tiny-slider"
 
 export default class {
   connect() {
-    var $container, slider;
+    function itemCount(items, sidebar) {
+      if (items < 3) {
+        return items
+      }
+      return sidebar ? 3 : 4
+    }
 
-    function init() {
-      var data = $container.data();
-      var sidebar = $container.data().sidebar;
-      var items = data.browseGroupCategoriesCount;
-      var dir = $('html').attr('dir');
-      var controls = $container.parent().find('.browse-group-categories-controls')[0];
+    const containers = document.querySelectorAll(
+      "[data-browse-group-categories-carousel]"
+    )
 
-      slider = tns({
-        container: $container[0],
+    containers.forEach(container => {
+      const sidebar = container.dataset.sidebar === "true"
+      const items =
+        parseInt(container.dataset.browseGroupCategoriesCount, 10) || 0
+      const dir = document.documentElement.getAttribute("dir") || "ltr"
+
+      const parent = container.parentElement
+      const controls = parent
+        ? parent.querySelector(".browse-group-categories-controls")
+        : null
+
+      const slider = tns({
+        container: container,
         controlsContainer: controls,
         loop: false,
         nav: false,
         items: 1,
-        slideBy: 'page',
+        slideBy: "page",
         textDirection: dir,
         responsive: {
           576: {
             items: itemCount(items, sidebar)
           }
         }
-      });
-    }
+      })
 
-    // Destroy the slider instance, as tns will change the dom elements, causing some issues with turbolinks
-    function setupDestroy() {
-      document.addEventListener('turbolinks:before-cache', function() {
-        if (slider && slider.destroy) {
-          slider.destroy();
+      const destroySlider = () => {
+        if (slider && typeof slider.destroy === "function") {
+          slider.destroy()
         }
-      });
-    }
-
-    function itemCount(items, sidebar) {
-      if (items < 3) {
-        return items;
+        document.removeEventListener("turbolinks:before-cache", destroySlider)
+        document.removeEventListener("turbo:before-cache", destroySlider)
       }
-      return sidebar ? 3 : 4;
-    }
 
-    return $('[data-browse-group-categories-carousel]').each(function() {
-      $container = $(this);
-      init();
-      setupDestroy();
-    });
+      document.addEventListener("turbolinks:before-cache", destroySlider)
+      document.addEventListener("turbo:before-cache", destroySlider)
+    })
   }
 }
