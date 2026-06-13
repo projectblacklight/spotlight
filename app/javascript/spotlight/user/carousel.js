@@ -1,37 +1,58 @@
+import bootstrap from "bootstrap"
+
 export default class {
   connect() {
-    if ($.fn.carousel) {
-      const $carousel = $('.carousel');
+    if (bootstrap && bootstrap.Carousel) {
+      const carousels = document.querySelectorAll(".carousel")
 
       // updates the aria-describedby on the next and prev btns
-      const updateAriaDescribedBy = function ($carousel) {
-        const $activeItem = $carousel.find('.carousel-item.active');
-        const $items = $carousel.find('.carousel-item');
-        const curIndex = $items.index($activeItem);
-        const prevIndex = (curIndex - 1 + $items.length) % $items.length;
-        const nextIndex = (curIndex + 1) % $items.length;
+      const updateAriaDescribedBy = function (carouselEl) {
+        const activeItem = carouselEl.querySelector(".carousel-item.active")
+        if (!activeItem) return
 
-        const prevDataId = $items.eq(prevIndex).data('id');
-        const nextDataId = $items.eq(nextIndex).data('id');
+        const items = Array.from(carouselEl.querySelectorAll(".carousel-item"))
+        const curIndex = items.indexOf(activeItem)
+        if (curIndex === -1) return
+
+        const prevIndex = (curIndex - 1 + items.length) % items.length
+        const nextIndex = (curIndex + 1) % items.length
+
+        const prevItem = items[prevIndex]
+        const nextItem = items[nextIndex]
+
+        const prevDataId = prevItem ? prevItem.dataset.id : null
+        const nextDataId = nextItem ? nextItem.dataset.id : null
+
         if (prevDataId) {
-          $carousel.find('.carousel-control-prev').attr('aria-describedby', 'carousel-caption-' + prevDataId);
+          const prevControl = carouselEl.querySelector(".carousel-control-prev")
+          if (prevControl) {
+            prevControl.setAttribute(
+              "aria-describedby",
+              "carousel-caption-" + prevDataId
+            )
+          }
         }
         if (nextDataId) {
-          $carousel.find('.carousel-control-next').attr('aria-describedby', 'carousel-caption-' + nextDataId);
+          const nextControl = carouselEl.querySelector(".carousel-control-next")
+          if (nextControl) {
+            nextControl.setAttribute(
+              "aria-describedby",
+              "carousel-caption-" + nextDataId
+            )
+          }
         }
-      };
+      }
 
       // on initial page load, set the aria-describedby on the btns for each carousel
-      $carousel.each(function () {
-        const $this = $(this);
-        $this.carousel();
-        updateAriaDescribedBy($this);
-      });
+      carousels.forEach(carouselEl => {
+        bootstrap.Carousel.getOrCreateInstance(carouselEl)
+        updateAriaDescribedBy(carouselEl)
 
-      // on slide change
-      $carousel.on('slid.bs.carousel', function () {
-        updateAriaDescribedBy($(this));
-      });
+        // on slide change
+        carouselEl.addEventListener("slid.bs.carousel", () => {
+          updateAriaDescribedBy(carouselEl)
+        })
+      })
     }
   }
 }

@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('openseadragon'), require('clipboard'), require('sir-trevor'), require('sortablejs'), require('bootstrap'), require('@hotwired/stimulus')) :
-  typeof define === 'function' && define.amd ? define(['openseadragon', 'clipboard', 'sir-trevor', 'sortablejs', 'bootstrap', '@hotwired/stimulus'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.OpenSeadragon, global.Clipboard, global.SirTrevor, global.Sortable, global.bootstrap, global.Stimulus));
-})(this, (function (OpenSeadragon, Clipboard, SirTrevor$1, Sortable, bootstrap, stimulus) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('bootstrap'), require('openseadragon'), require('clipboard'), require('sir-trevor'), require('sortablejs'), require('@hotwired/stimulus')) :
+  typeof define === 'function' && define.amd ? define(['bootstrap', 'openseadragon', 'clipboard', 'sir-trevor', 'sortablejs', '@hotwired/stimulus'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.bootstrap, global.OpenSeadragon, global.Clipboard, global.SirTrevor, global.Sortable, global.Stimulus));
+})(this, (function (bootstrap, OpenSeadragon, Clipboard, SirTrevor$1, Sortable, stimulus) { 'use strict';
 
   // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
   // Includes "export default tns" at the end of the file for spotlight/user/browse_group_categories.js
@@ -3214,22 +3214,35 @@
 
   class BrowseGroupCateogries {
     connect() {
-      var $container, slider;
+      function itemCount(items, sidebar) {
+        if (items < 3) {
+          return items
+        }
+        return sidebar ? 3 : 4
+      }
 
-      function init() {
-        var data = $container.data();
-        var sidebar = $container.data().sidebar;
-        var items = data.browseGroupCategoriesCount;
-        var dir = $('html').attr('dir');
-        var controls = $container.parent().find('.browse-group-categories-controls')[0];
+      const containers = document.querySelectorAll(
+        "[data-browse-group-categories-carousel]"
+      );
 
-        slider = tns({
-          container: $container[0],
+      containers.forEach(container => {
+        const sidebar = container.dataset.sidebar === "true";
+        const items =
+          parseInt(container.dataset.browseGroupCategoriesCount, 10) || 0;
+        const dir = document.documentElement.getAttribute("dir") || "ltr";
+
+        const parent = container.parentElement;
+        const controls = parent
+          ? parent.querySelector(".browse-group-categories-controls")
+          : null;
+
+        const slider = tns({
+          container: container,
           controlsContainer: controls,
           loop: false,
           nav: false,
           items: 1,
-          slideBy: 'page',
+          slideBy: "page",
           textDirection: dir,
           responsive: {
             576: {
@@ -3237,65 +3250,73 @@
             }
           }
         });
-      }
 
-      // Destroy the slider instance, as tns will change the dom elements, causing some issues with turbolinks
-      function setupDestroy() {
-        document.addEventListener('turbolinks:before-cache', function() {
-          if (slider && slider.destroy) {
+        const destroySlider = () => {
+          if (slider && typeof slider.destroy === "function") {
             slider.destroy();
           }
-        });
-      }
+          document.removeEventListener("turbolinks:before-cache", destroySlider);
+          document.removeEventListener("turbo:before-cache", destroySlider);
+        };
 
-      function itemCount(items, sidebar) {
-        if (items < 3) {
-          return items;
-        }
-        return sidebar ? 3 : 4;
-      }
-
-      return $('[data-browse-group-categories-carousel]').each(function() {
-        $container = $(this);
-        init();
-        setupDestroy();
+        document.addEventListener("turbolinks:before-cache", destroySlider);
+        document.addEventListener("turbo:before-cache", destroySlider);
       });
     }
   }
 
   class Carousel {
     connect() {
-      if ($.fn.carousel) {
-        const $carousel = $('.carousel');
+      if (bootstrap && bootstrap.Carousel) {
+        const carousels = document.querySelectorAll(".carousel");
 
         // updates the aria-describedby on the next and prev btns
-        const updateAriaDescribedBy = function ($carousel) {
-          const $activeItem = $carousel.find('.carousel-item.active');
-          const $items = $carousel.find('.carousel-item');
-          const curIndex = $items.index($activeItem);
-          const prevIndex = (curIndex - 1 + $items.length) % $items.length;
-          const nextIndex = (curIndex + 1) % $items.length;
+        const updateAriaDescribedBy = function (carouselEl) {
+          const activeItem = carouselEl.querySelector(".carousel-item.active");
+          if (!activeItem) return
 
-          const prevDataId = $items.eq(prevIndex).data('id');
-          const nextDataId = $items.eq(nextIndex).data('id');
+          const items = Array.from(carouselEl.querySelectorAll(".carousel-item"));
+          const curIndex = items.indexOf(activeItem);
+          if (curIndex === -1) return
+
+          const prevIndex = (curIndex - 1 + items.length) % items.length;
+          const nextIndex = (curIndex + 1) % items.length;
+
+          const prevItem = items[prevIndex];
+          const nextItem = items[nextIndex];
+
+          const prevDataId = prevItem ? prevItem.dataset.id : null;
+          const nextDataId = nextItem ? nextItem.dataset.id : null;
+
           if (prevDataId) {
-            $carousel.find('.carousel-control-prev').attr('aria-describedby', 'carousel-caption-' + prevDataId);
+            const prevControl = carouselEl.querySelector(".carousel-control-prev");
+            if (prevControl) {
+              prevControl.setAttribute(
+                "aria-describedby",
+                "carousel-caption-" + prevDataId
+              );
+            }
           }
           if (nextDataId) {
-            $carousel.find('.carousel-control-next').attr('aria-describedby', 'carousel-caption-' + nextDataId);
+            const nextControl = carouselEl.querySelector(".carousel-control-next");
+            if (nextControl) {
+              nextControl.setAttribute(
+                "aria-describedby",
+                "carousel-caption-" + nextDataId
+              );
+            }
           }
         };
 
         // on initial page load, set the aria-describedby on the btns for each carousel
-        $carousel.each(function () {
-          const $this = $(this);
-          $this.carousel();
-          updateAriaDescribedBy($this);
-        });
+        carousels.forEach(carouselEl => {
+          bootstrap.Carousel.getOrCreateInstance(carouselEl);
+          updateAriaDescribedBy(carouselEl);
 
-        // on slide change
-        $carousel.on('slid.bs.carousel', function () {
-          updateAriaDescribedBy($(this));
+          // on slide change
+          carouselEl.addEventListener("slid.bs.carousel", () => {
+            updateAriaDescribedBy(carouselEl);
+          });
         });
       }
     }
@@ -3327,35 +3348,86 @@
 
   class ZprLinks {
     connect() {
-      $('.zpr-link').on('click', function() {
-        var modalDialog = $('#blacklight-modal .modal-dialog');
-        var modalContent = modalDialog.find('.modal-content');
-        modalDialog.removeClass('modal-lg');
-        modalDialog.addClass('modal-xl');
-        modalContent.html('<div id="osd-modal-container"></div>');
-        var controls = `<div class="controls d-flex justify-content-center justify-content-md-end">
+      document.addEventListener("click", e => {
+        const zprLink = e.target.closest(".zpr-link");
+        if (!zprLink) return
+
+        e.preventDefault();
+
+        const modalElement = document.getElementById("blacklight-modal");
+        if (!modalElement) return
+
+        const modalDialog = modalElement.querySelector(".modal-dialog");
+        const modalContent = modalDialog
+          ? modalDialog.querySelector(".modal-content")
+          : null;
+
+        if (modalDialog) {
+          modalDialog.classList.remove("modal-lg");
+          modalDialog.classList.add("modal-xl");
+        }
+
+        if (modalContent) {
+          modalContent.innerHTML = '<div id="osd-modal-container"></div>';
+        }
+
+        const closeText =
+          (typeof Spotlight !== "undefined" &&
+            Spotlight.ZprLinks &&
+            Spotlight.ZprLinks.close) ||
+          "Close";
+        const zoomInText =
+          (typeof Spotlight !== "undefined" &&
+            Spotlight.ZprLinks &&
+            Spotlight.ZprLinks.zoomIn) ||
+          "Zoom in";
+        const zoomOutText =
+          (typeof Spotlight !== "undefined" &&
+            Spotlight.ZprLinks &&
+            Spotlight.ZprLinks.zoomOut) ||
+          "Zoom out";
+
+        const controls = `<div class="controls d-flex justify-content-center justify-content-md-end">
           <div class="custom-close-controls pe-3 pt-3">
-            <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-hidden="true">${Spotlight.ZprLinks.close}</button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-hidden="true">${closeText}</button>
           </div>
           <div class="zoom-controls mb-3 me-md-3">
-            <button id="osd-zoom-in" type="button" class="btn btn-dark">${Spotlight.ZprLinks.zoomIn}</button>
-            <button id="osd-zoom-out" type="button" class="btn btn-dark">${Spotlight.ZprLinks.zoomOut}</button>
+            <button id="osd-zoom-in" type="button" class="btn btn-dark">${zoomInText}</button>
+            <button id="osd-zoom-out" type="button" class="btn btn-dark">${zoomOutText}</button>
           </div>
           <div id="empty-div-required-by-osd"></div>
         </div>`;
 
-        $('#osd-modal-container').append('<div id="osd-div"></div>');
-        $('#osd-modal-container').append(controls);
+        const osdModalContainer = document.getElementById("osd-modal-container");
+        if (osdModalContainer) {
+          const osdDiv = document.createElement("div");
+          osdDiv.id = "osd-div";
+          osdModalContainer.appendChild(osdDiv);
+          osdModalContainer.insertAdjacentHTML("beforeend", controls);
+        }
 
-        $('#blacklight-modal').modal('show');
-        
-        $('#blacklight-modal').one('hidden.bs.modal', function (event) {
-          modalDialog.removeClass('modal-xl');
-          modalDialog.addClass('modal-lg');
-        });
+        const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
+        modalInstance.show();
+
+        const handleHiddenModal = () => {
+          if (modalDialog) {
+            modalDialog.classList.remove("modal-xl");
+            modalDialog.classList.add("modal-lg");
+          }
+          modalElement.removeEventListener("hidden.bs.modal", handleHiddenModal);
+        };
+        modalElement.addEventListener("hidden.bs.modal", handleHiddenModal);
+
+        let tileSource;
+        const rawSource = zprLink.getAttribute("data-iiif-tilesource") || "";
+        try {
+          tileSource = JSON.parse(rawSource);
+        } catch (err) {
+          tileSource = rawSource;
+        }
 
         OpenSeadragon({
-          id: 'osd-div',
+          id: "osd-div",
           zoomInButton: "osd-zoom-in",
           zoomOutButton: "osd-zoom-out",
           // This is a hack where OpenSeadragon (if using mapped buttons) requires you
@@ -3364,7 +3436,7 @@
           fullPageButton: "empty-div-required-by-osd",
           nextButton: "empty-div-required-by-osd",
           previousButton: "empty-div-required-by-osd",
-          tileSources: [$(this).data('iiif-tilesource')]
+          tileSources: [tileSource]
         });
       });
     }
@@ -4339,64 +4411,122 @@
   class Exhibits {
     connect() {
       // auto-fill the exhibit slug on the new exhibit form
-      $('#new_exhibit').each(function() {
-        $('#exhibit_title').on('change keyup', function() {
-          $('#exhibit_slug').attr('placeholder', URLify($(this).val(), $(this).val().length));
-        });
+      const newExhibit = document.getElementById("new_exhibit");
+      if (newExhibit) {
+        const exhibitTitle = document.getElementById("exhibit_title");
+        const exhibitSlug = document.getElementById("exhibit_slug");
 
-        $('#exhibit_slug').on('focus', function() {
-          if ($(this).val() === '') {
-            $(this).val($(this).attr('placeholder'));
-          }
-        });
-      });
+        if (exhibitTitle && exhibitSlug) {
+          const updatePlaceholder = () => {
+            const val = exhibitTitle.value || "";
+            exhibitSlug.placeholder = URLify(val, val.length);
+          };
 
-      $("#another-email").on("click", function(e) {
-        e.preventDefault();
+          exhibitTitle.addEventListener("change", updatePlaceholder);
+          exhibitTitle.addEventListener("keyup", updatePlaceholder);
 
-        var container = $(this).closest('.form-group');
-        var contacts = container.find('.contact');
-        var inputContainer = contacts.first().clone();
-
-        // wipe out any values from the inputs
-        inputContainer.find('input').each(function() {
-          $(this).val('');
-          $(this).attr('id', $(this).attr('id').replace('0', contacts.length));
-          $(this).attr('name', $(this).attr('name').replace('0', contacts.length));
-          if ($(this).attr('aria-label')) {
-            $(this).attr('aria-label', $(this).attr('aria-label').replace('1', contacts.length + 1));
-          }
-        });
-
-        inputContainer.find('.contact-email-delete-wrapper').remove();
-        inputContainer.find('.confirmation-status').remove();
-
-        // bootstrap does not render input-groups with only one value in them correctly.
-        inputContainer.find('.input-group input:only-child').closest('.input-group').removeClass('input-group');
-
-        $(inputContainer).insertAfter(contacts.last());
-      });
-
-      if (document.getElementById('another-email')) {
-        document.addEventListener('turbo:submit-end', this.contactToDeleteNotFoundHandler);
+          exhibitSlug.addEventListener("focus", () => {
+            if (exhibitSlug.value === "") {
+              exhibitSlug.value = exhibitSlug.placeholder || "";
+            }
+          });
+        }
       }
 
-      if ($.fn.tooltip) {
-        $('.btn-with-tooltip').tooltip();
+      const anotherEmail = document.getElementById("another-email");
+      if (anotherEmail) {
+        anotherEmail.addEventListener("click", e => {
+          e.preventDefault();
+
+          const container = anotherEmail.closest(".form-group");
+          if (!container) return
+
+          const contacts = container.querySelectorAll(".contact");
+          if (contacts.length === 0) return
+
+          const firstContact = contacts[0];
+          const inputContainer = firstContact.cloneNode(true);
+
+          // wipe out any values from the inputs
+          const inputs = inputContainer.querySelectorAll("input");
+          inputs.forEach(input => {
+            input.value = "";
+            const originalId = input.getAttribute("id");
+            if (originalId) {
+              input.setAttribute(
+                "id",
+                originalId.replace("0", contacts.length.toString())
+              );
+            }
+            const originalName = input.getAttribute("name");
+            if (originalName) {
+              input.setAttribute(
+                "name",
+                originalName.replace("0", contacts.length.toString())
+              );
+            }
+            const originalAriaLabel = input.getAttribute("aria-label");
+            if (originalAriaLabel) {
+              input.setAttribute(
+                "aria-label",
+                originalAriaLabel.replace("1", (contacts.length + 1).toString())
+              );
+            }
+          });
+
+          inputContainer
+            .querySelectorAll(".contact-email-delete-wrapper")
+            .forEach(el => el.remove());
+          inputContainer
+            .querySelectorAll(".confirmation-status")
+            .forEach(el => el.remove());
+
+          // bootstrap does not render input-groups with only one value in them correctly.
+          const onlyChildInputs = inputContainer.querySelectorAll(
+            ".input-group input:only-child"
+          );
+          onlyChildInputs.forEach(input => {
+            const group = input.closest(".input-group");
+            if (group) {
+              group.classList.remove("input-group");
+            }
+          });
+
+          contacts[contacts.length - 1].after(inputContainer);
+        });
+      }
+
+      if (document.getElementById("another-email")) {
+        document.addEventListener(
+          "turbo:submit-end",
+          this.contactToDeleteNotFoundHandler
+        );
       }
 
       // Put focus in saved search title input when Save this search modal is shown
-      $('#save-modal').on('shown.bs.modal', function () {
-          $('#search_title').focus();
-      });
+      const saveModal = document.getElementById("save-modal");
+      if (saveModal) {
+        saveModal.addEventListener("shown.bs.modal", () => {
+          const searchTitle = document.getElementById("search_title");
+          if (searchTitle) {
+            searchTitle.focus();
+          }
+        });
+      }
     }
 
     contactToDeleteNotFoundHandler(e) {
-      const contact = e.detail.formSubmission?.delegate?.element?.querySelector('.contact');
+      const contact =
+        e.detail.formSubmission?.delegate?.element?.querySelector(".contact");
       if (contact && e.detail?.fetchResponse?.response?.status === 404) {
-        const error = contact.querySelector('.contact-email-delete-error');
-        error.style.display = 'block';
-        error.querySelector('.error-msg').textContent = 'Not Found';
+        const error = contact.querySelector(".contact-email-delete-error");
+        if (error) {
+          error.style.display = "block";
+          const errorMsg = error.querySelector(".error-msg");
+          if (errorMsg) {
+            errorMsg.textContent = "Not Found";
+          }
+        }
       }
     }
   }
