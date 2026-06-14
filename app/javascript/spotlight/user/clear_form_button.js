@@ -1,23 +1,33 @@
 export default class {
   connect() {
-    var $clearBtn = $('.btn-reset');
-    var $input = $clearBtn.prev('#browse_q');
-    var btnCheck = function(){
-      if ($input.val() !== '') {
-        $clearBtn.css('display', 'block');
-      } else {
-        $clearBtn.css('display', 'none');
+    const clearButtons = document.querySelectorAll(".btn-reset")
+
+    clearButtons.forEach(clearBtn => {
+      const input =
+        clearBtn.previousElementSibling &&
+        clearBtn.previousElementSibling.id === "browse_q"
+          ? clearBtn.previousElementSibling
+          : null
+
+      if (!input) return
+
+      const btnCheck = () => {
+        if (input.value !== "") {
+          clearBtn.style.display = "block"
+        } else {
+          clearBtn.style.display = "none"
+        }
       }
-    };
 
-    btnCheck();
-    $input.on('keyup', function() {
-      btnCheck();
-    });
+      btnCheck()
 
-    $clearBtn.on('click', function(event) {
-      event.preventDefault();
-      $input.val('');
-    });
+      input.addEventListener("keyup", btnCheck)
+
+      clearBtn.addEventListener("click", event => {
+        event.preventDefault()
+        input.value = ""
+        btnCheck()
+      })
+    })
   }
 }
