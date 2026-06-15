@@ -20,22 +20,22 @@
             </td>
           </tr>
         <% end %>
-        <tr data-edit-for='new'>
+        <tr data-edit-for="new">
           <td>
             <%= f.email_field :email, hide_label: true %>
-            <span data-user-role='admin'></span>
+            <span data-user-role="admin"></span>
           </td>
           <td>
             <div class="form-actions">
               <div class="primary-actions">
               <%= cancel_link f.object, '#', class: 'btn btn-link', role: 'button', data: { behavior: 'cancel-edit' } %>
-              <%= f.submit t('.save'), class: 'btn btn-primary'%>
+              <%= f.submit t('.save'), class: 'btn btn-primary' %>
               </div>
             </div>
           </td>
         </tr>
-        <tr data-edit-for='new'>
-          <td colspan='2'>
+        <tr data-edit-for="new">
+          <td colspan="2">
           </td>
         </tr>
       </tbody>
@@ -51,7 +51,7 @@
   <div class="mb-4">
     <h3 class="instructions"><%= t :'.admins_curators' %></h3>
     <div id="admins_curators" class="card card-body bg-light">
-      <div class='btn-toolbar align-self-end'>
+      <div class="btn-toolbar align-self-end">
         <button class="btn btn-sm btn-primary copy-email-addresses" data-clipboard-target="#admins_curators">
             <%= t('.copy') %>
         </button>

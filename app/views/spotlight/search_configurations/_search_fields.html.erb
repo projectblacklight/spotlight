@@ -19,7 +19,7 @@
                 <%= vt.fields_for default_field.key, default_field do |field| %>
                   <%= field.check_box_without_bootstrap :enabled, data: { readonly: true }, class: 'disabled' %>
                   <%= field.hidden_field :label, readonly: true %>
-                  <%= field.hidden_field :weight, value: "-1", readonly: true  %>
+                  <%= field.hidden_field :weight, value: "-1", readonly: true %>
                   <%= default_field.label %>
                 <% end %>
               </h3>

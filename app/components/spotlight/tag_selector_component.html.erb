@@ -5,8 +5,8 @@
     <%= form.text_field field_name, value: selected_tags_value, class: 'tag-selector-input', placeholder: t('.no_js_placeholder'), data: { tag_selector_target: "tagsField" } %>
   <% end %>
   <input type="hidden" value="<%= selected_tags_value %>" data-tag-selector-target="initialTags">
-    
-  <div class='mb-3'>
+
+  <div class="mb-3">
     <div class="tag-selection-wrapper" data-tag-selector-target="tagControlWrapper">
       <div class="dropdown w-100 mb-3 d-inline-block" data-action="click@window->tag-selector#clickOutside">
         <div data-tag-selector-target="tagSearchDropdown">

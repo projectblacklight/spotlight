@@ -1,5 +1,5 @@
 <%= bootstrap_form_for([current_exhibit, @resource]) do |f| %>
-  <%= f.text_field :url  %>
+  <%= f.text_field :url %>
   <div class="form-actions">
     <div class="primary-actions">
       <%= cancel_link @resource, :back, class: 'btn btn-link', role: 'button' %>

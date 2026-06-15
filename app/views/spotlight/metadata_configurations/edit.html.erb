@@ -27,7 +27,7 @@
             </th>
             <% available_view_fields.keys.each do |type| %>
               <th class="text-center">
-                <div> 
+                <div>
                   <%= t :".view.#{type}", default: t("blacklight.search.view.#{type}", default: type.to_s.humanize.titleize) %>
                 </div>
                 <div class="text-center">

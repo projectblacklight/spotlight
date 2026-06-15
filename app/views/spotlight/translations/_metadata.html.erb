@@ -1,6 +1,6 @@
 <div role="tabpanel" class="tab-pane <%= 'active' if @tab == 'metadata' %>" id="metadata">
   <%= bootstrap_form_for current_exhibit, url: spotlight.exhibit_translations_path(current_exhibit), layout: :horizontal do |f| %>
-    <% # Add a hidden field for the language so the redirect knows how to come back here %>
+    <%# Add a hidden field for the language so the redirect knows how to come back here %>
     <%= hidden_field_tag :language, @language %>
     <%= hidden_field_tag :tab, 'metadata', id: nil %>
 
@@ -10,15 +10,15 @@
         <%= translation_fields.hidden_field :key %>
         <%= translation_fields.hidden_field :locale %>
 
-        <div data-translation-progress-item='true' class='row form-group mb-3 translation-form'>
+        <div data-translation-progress-item="true" class="row form-group mb-3 translation-form">
           <%= translation_fields.label :value, t("spotlight.search.fields.#{key}", default: field_config.label, locale: I18n.default_locale), class: 'col-form-label col-12 col-sm-2' %>
-          <div class='col-11 col-sm-9 card card-body panel-translation'>
+          <div class="col-11 col-sm-9 card card-body panel-translation">
             <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
             <div class="form-text text-muted mb-3">
               <%= field_config.label %>
             </div>
           </div>
-          <div class='col-1'>
+          <div class="col-1">
             <% if translation.value.present? %>
               <span data-translation-present="true">
                 <%= blacklight_icon('check', classes: 'translation-complete') %>
@@ -30,7 +30,7 @@
     <% end %>
 
     <% if current_exhibit.custom_fields.any? %>
-      <div class='translation-exhibit-specific-fields'>
+      <div class="translation-exhibit-specific-fields">
         <%= render Spotlight::Translations::SubheadingComponent.new(key: 'metadata.exhibit_specific_fields.label') %>
 
         <% current_exhibit.custom_fields.each do |custom_field| %>
@@ -39,15 +39,15 @@
             <%= translation_fields.hidden_field :key %>
             <%= translation_fields.hidden_field :locale %>
 
-            <div data-translation-progress-item='true' class='row form-group mb-3 translation-form'>
+            <div data-translation-progress-item="true" class="row form-group mb-3 translation-form">
               <%= translation_fields.label :value, t("spotlight.search.fields.#{custom_field.field}", default: custom_field.configuration['label'], locale: I18n.default_locale), class: 'col-form-label col-12 col-sm-2' %>
-              <div class='col-11 col-sm-9 card card-body panel-translation'>
+              <div class="col-11 col-sm-9 card card-body panel-translation">
                 <%= translation_fields.text_field_without_bootstrap :value, class: 'form-control' %>
                 <div class="form-text text-muted mb-3">
                   <%= custom_field.configuration['label'] %>
                 </div>
               </div>
-              <div class='col-1'>
+              <div class="col-1">
                 <% if translation.value.present? %>
                   <span data-translation-present="true">
                     <%= blacklight_icon('check', classes: 'translation-complete') %>

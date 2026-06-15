@@ -2,11 +2,11 @@
   <%= render 'spotlight/shared/exhibit_sidebar' %>
 <% end %>
 
-<div class='translation-edit-form'>
+<div class="translation-edit-form">
   <%= curation_page_title t('.title') %>
 
-  <div class='text-center'>
-    <ul class='nav nav-pills'>
+  <div class="text-center">
+    <ul class="nav nav-pills">
       <% current_exhibit.available_locales.each do |language| %>
         <li role="presentation" class="nav-item">
           <%= link_to spotlight.edit_exhibit_translations_path(current_exhibit, language: language), class: "nav-link #{'active' if @language == language}" do %>
@@ -20,9 +20,9 @@
   <%= render partial: 'import' %>
 
   <div role="tabpanel">
-    <ul class='nav nav-tabs' role="tablist">
+    <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="nav-item">
-        <a href='#general' class="nav-link <%= 'active' if @tab.blank? %>" aria-controls="general" role="tab" data-bs-toggle="tab" data-behavior="translation-progress">
+        <a href="#general" class="nav-link <%= 'active' if @tab.blank? %>" aria-controls="general" role="tab" data-bs-toggle="tab" data-behavior="translation-progress">
           <%= t('spotlight.translations.general.label') %> <span class="badge"></span>
         </a>
       </li>
