@@ -5358,71 +5358,151 @@
 
   class Users {
     connect() {
-      var container;
-      function edit_user(event) {
-        event.preventDefault();
-        $(this).closest('tr').hide();
-        const id = $(this).attr('data-target');
-        const edit_view = $("[data-edit-for='"+id+"']", container).show();
-        $.each(edit_view.find('input[type="text"], select'), function() {
-          // Cache original values incase editing is canceled
-          $(this).data('orig', $(this).val());
+      document
+        .querySelectorAll(".edit_exhibit, .admin-users")
+        .forEach(container => {
+          const edit_user = event => {
+            event.preventDefault();
+            const button = event.currentTarget;
+            const row = button.closest("tr");
+            row.style.display = "none";
+
+            const id = button.getAttribute("data-target");
+            const edit_view = container.querySelector(`[data-edit-for='${id}']`);
+            edit_view.style.display = "";
+
+            // Cache original values in case editing is canceled
+            edit_view
+              .querySelectorAll('input[type="text"], select')
+              .forEach(input => {
+                input.dataset.orig = input.value;
+              });
+          };
+
+          const cancel_edit = event => {
+            event.preventDefault();
+            const button = event.currentTarget;
+            const edit_view = button.closest("tr[data-edit-for]");
+            const id = edit_view.getAttribute("data-edit-for");
+
+            // Hide all rows with this id
+            container.querySelectorAll(`[data-edit-for='${id}']`).forEach(row => {
+              row.style.display = "none";
+            });
+
+            clear_errors(edit_view);
+            rollback_changes(edit_view);
+
+            const show_view = container.querySelector(`[data-show-for='${id}']`);
+            if (show_view) {
+              show_view.style.display = "";
+            }
+          };
+
+          const clear_errors = element => {
+            element.querySelectorAll(".has-error").forEach(errorElement => {
+              errorElement.classList.remove("has-error");
+            });
+            element.querySelectorAll(".form-text").forEach(formText => {
+              formText.remove();
+            });
+          };
+
+          const rollback_changes = element => {
+            element
+              .querySelectorAll('input[type="text"], select')
+              .forEach(input => {
+                if (input.dataset.orig !== undefined) {
+                  input.value = input.dataset.orig;
+                  input.dispatchEvent(new Event("change", { bubbles: true }));
+                }
+              });
+          };
+
+          const destroy_user = event => {
+            const button = event.currentTarget;
+            const id = button.getAttribute("data-target");
+            const destroyInput = container.querySelector(
+              `[data-destroy-for='${id}']`
+            );
+            if (destroyInput) {
+              destroyInput.value = "1";
+            }
+          };
+
+          const new_user = event => {
+            event.preventDefault();
+            // Show ALL rows with data-edit-for='new'
+            container
+              .querySelectorAll(`[data-edit-for='new']`)
+              .forEach(edit_view => {
+                edit_view.style.display = "";
+
+                // Cache original values in case editing is canceled
+                edit_view
+                  .querySelectorAll('input[type="text"], select')
+                  .forEach(input => {
+                    input.dataset.orig = input.value;
+                  });
+              });
+          };
+
+          const open_errors = () => {
+            // Find all rows with errors within this container
+            const allErrorElements = container.querySelectorAll(".has-error");
+            const rowsToShow = new Set();
+
+            allErrorElements.forEach(errorElement => {
+              const edit_row = errorElement.closest("[data-edit-for]");
+              if (edit_row) {
+                // Show all rows with the same data-edit-for value
+                const id = edit_row.getAttribute("data-edit-for");
+                container
+                  .querySelectorAll(`[data-edit-for='${id}']`)
+                  .forEach(row => {
+                    rowsToShow.add(row);
+                  });
+              }
+            });
+
+            rowsToShow.forEach(row => {
+              row.style.display = "";
+            });
+          };
+
+          // First, hide all edit views
+          container.querySelectorAll("[data-edit-for]").forEach(element => {
+            element.style.display = "none";
+          });
+
+          // Then show any with errors
+          open_errors();
+
+          // Attach event listeners
+          container
+            .querySelectorAll("[data-behavior='edit-user']")
+            .forEach(button => {
+              button.addEventListener("click", edit_user);
+            });
+
+          container
+            .querySelectorAll("[data-behavior='cancel-edit']")
+            .forEach(button => {
+              button.addEventListener("click", cancel_edit);
+            });
+
+          container
+            .querySelectorAll("[data-behavior='destroy-user']")
+            .forEach(button => {
+              button.addEventListener("click", destroy_user);
+            });
+
+          container
+            .querySelectorAll("[data-behavior='new-user']")
+            .forEach(button => {
+              button.addEventListener("click", new_user);
+            });
         });
-      }
-
-      function cancel_edit(event) {
-        event.preventDefault();
-        const id = $(this).closest('tr').attr('data-edit-for');
-        const edit_view = $("[data-edit-for='"+id+"']", container).hide();
-        clear_errors(edit_view);
-        rollback_changes(edit_view);
-        $("[data-show-for='"+id+"']", container).show();
-      }
-
-      function clear_errors(element) {
-        element.find('.has-error')
-               .removeClass('has-error')
-               .find('.form-text')
-               .remove(); // Remove the error messages
-      }
-
-      function rollback_changes(element) {
-        $.each(element.find('input[type="text"], select'), function() {
-          $(this).val($(this).data('orig')).trigger('change');
-        });
-      }
-
-      function destroy_user(event) {
-        const id = $(this).attr('data-target');
-        $("[data-destroy-for='"+id+"']", container).val('1');
-      }
-
-      function new_user(event) {
-        event.preventDefault();
-        const edit_view = $("[data-edit-for='new']", container).show();
-        $.each(edit_view.find('input[type="text"], select'), function() {
-          // Cache original values incase editing is canceled
-          $(this).data('orig', $(this).val());
-        });
-      }
-
-      function open_errors() {
-        const edit_row = container.find('.has-error').closest('[data-edit-for]');
-        edit_row.show();
-        // The following row has the controls, so show it too.
-        edit_row.next().show();
-      }
-
-      $('.edit_exhibit, .admin-users').each(function() {
-
-        container = $(this);
-        $('[data-edit-for]', container).hide();
-        open_errors();
-        $("[data-behavior='edit-user']", container).on('click', edit_user);
-        $("[data-behavior='cancel-edit']", container).on('click', cancel_edit);
-        $("[data-behavior='destroy-user']", container).on('click', destroy_user);
-        $("[data-behavior='new-user']", container).on('click', new_user);
-      });
     }
   }
 
