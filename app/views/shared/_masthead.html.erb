@@ -6,8 +6,8 @@
 
 <header class="masthead <%= 'image-masthead' if current_masthead %> <%= 'resource-masthead' if resource_masthead? %>">
   <% if current_masthead %>
-    <span class='background-container' style="background-image: url('<%= current_masthead.iiif_url %>')"></span>
-    <span class='background-container-gradient'></span>
+    <span class="background-container" style="background-image: url('<%= current_masthead.iiif_url %>')"></span>
+    <span class="background-container-gradient"></span>
   <% end %>
 
   <%= render current_exhibit ? 'shared/exhibit_navbar' : 'shared/site_navbar' if resource_masthead? %>

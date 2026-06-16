@@ -16,10 +16,10 @@
         <%= render partial: 'edit_fields', locals: {f: r} %>
         <tr data-edit-for="new">
           <td></td>
-          <td colspan=2>
+          <td colspan="2">
             <div class="form-actions d-flex justify-content-end">
               <%= cancel_link r.object, '#', class: 'btn btn-link', role: 'button', data: { behavior: 'cancel-edit' } %>
-              <%=f.submit nil, class: 'btn btn-primary'%>
+              <%= f.submit nil, class: 'btn btn-primary' %>
             </div>
           </td>
         </tr>
@@ -27,7 +27,7 @@
         <tr data-show-for="<%= r.object.id %>" class="<%= 'invite-pending' if r.object.user.invite_pending? %>">
           <td>
             <%= r.object.user.to_s %>
-            <span class='badge bg-warning pending-label'><%= t('.invite_pending') %></span>
+            <span class="badge bg-warning pending-label"><%= t('.invite_pending') %></span>
           </td>
           <td><%= r.object.role.humanize %></td>
           <td>
@@ -41,10 +41,10 @@
           <td><%= f.submit action_label(r.object, :destroy), class: 'btn btn-danger', data: { behavior: 'destroy-user', target: r.object.id} %>
           <%= r.hidden_field :_destroy, data: {'destroy-for' => r.object.id} %>
           </td>
-          <td colspan=2>
+          <td colspan="2">
             <div class="form-actions d-flex justify-content-end">
               <%= cancel_link r.object, '#', class: 'btn btn-link', role: 'button', data: { behavior: 'cancel-edit' } %>
-              <%=f.submit nil, class: 'btn btn-primary'%>
+              <%= f.submit nil, class: 'btn btn-primary' %>
             </div>
           </td>
         </tr>

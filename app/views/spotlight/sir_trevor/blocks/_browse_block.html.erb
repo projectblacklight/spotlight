@@ -1,7 +1,7 @@
 <% browse_block.with_solr_helper(self) %>
 
 <% if browse_block.searches? %>
-  <div class="spotlight-flexbox browse-categories categories-<%= browse_block.searches.length %>" data-sidebar='<%= @page.display_sidebar? %>'>
+  <div class="spotlight-flexbox browse-categories categories-<%= browse_block.searches.length %>" data-sidebar="<%= @page.display_sidebar? %>">
     <% browse_block.searches.each_with_index do |search, index| %>
       <div class="box category-<%= (index + 1) %>">
         <%= link_to spotlight.exhibit_browse_path(search.exhibit, search) do %>

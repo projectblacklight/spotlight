@@ -16,7 +16,7 @@
     <div class="dd-handle dd3-handle"><%= t :drag %></div>
     <%= content_tag :div, class: "d-flex card-header", data: card_data do %>
       <%= field.hidden_field :id %>
-        <% if main_content.present?  %>
+        <% if main_content.present? %>
           <%= main_content %>
         <% else %>
           <div class="flex-grow-1 align-self-center">

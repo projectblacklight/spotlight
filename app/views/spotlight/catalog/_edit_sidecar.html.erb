@@ -11,7 +11,7 @@
     <%# Using `includes(:exhibit)` to ensure all fields are using the same exhibit object to take advantage of memoization %>
     <% current_exhibit.custom_fields.includes(:exhibit).each do |field| %>
       <% data = document.sidecar(current_exhibit).data %>
-      <%= render partial: "spotlight/custom_fields/form_group/#{field.field_type}", locals: { f: d, field: field, value: data[field.slug.to_s] || data[field.field.to_s] }  %>
+      <%= render partial: "spotlight/custom_fields/form_group/#{field.field_type}", locals: { f: d, field: field, value: data[field.slug.to_s] || data[field.field.to_s] } %>
 
       <% unless field.configured_to_display? %>
         <p class="bg-warning form-text">

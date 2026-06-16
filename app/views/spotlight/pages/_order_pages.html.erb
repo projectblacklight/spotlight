@@ -22,8 +22,8 @@
       </div>
   <%- end -%>
   <div>
-    <%= form_for @page, url: spotlight.polymorphic_path([@exhibit, page_collection_name.to_sym]), html: {class: "expanded-add-button"} do |f|%>
-      <a href='#add-new' class="btn btn-primary" data-turbo="false" data-turbolinks="false" data-expanded-add-button="true" data-field-target="[data-title-field]">
+    <%= form_for @page, url: spotlight.polymorphic_path([@exhibit, page_collection_name.to_sym]), html: {class: "expanded-add-button"} do |f| %>
+      <a href="#add-new" class="btn btn-primary" data-turbo="false" data-turbolinks="false" data-expanded-add-button="true" data-field-target="[data-title-field]">
         <%= t(:'.new_page') %> <%= blacklight_icon('chevron_right') %>
         <span data-title-field="true" class="input-field">
           <%= f.text_field(:title) %>
@@ -34,5 +34,5 @@
     <%- end -%>
   </div>
 <% else %>
-  <%= render Spotlight::UneditableNonDefaultLanguageComponent.new(current_exhibit:, current_language: I18n.locale)%>
+  <%= render Spotlight::UneditableNonDefaultLanguageComponent.new(current_exhibit:, current_language: I18n.locale) %>
 <% end %>
