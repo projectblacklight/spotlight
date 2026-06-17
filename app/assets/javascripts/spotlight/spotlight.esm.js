@@ -3809,34 +3809,93 @@ window.SirTrevor = SirTrevor$1;
 
 class Crop {
   constructor(cropArea, preserveAspectRatio = true) {
-    this.cropArea = cropArea;
-    this.cropArea.data('iiifCropper', this);
-    // This element will also have the IIIF input elements contained
-    // There may be multiple elements with data-cropper attributes, but
-    // there should only one element with this data-cropper attribute value.
-    this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
-    this.cropTool = $(this.cropSelector);
+    // Extract raw DOM element if cropArea is a jQuery object
+    this.cropArea = cropArea && cropArea.jquery ? cropArea[0] : cropArea;
+    if (this.cropArea) {
+      this.cropArea.iiifCropper = this;
+      if (typeof jQuery !== "undefined") {
+        jQuery(this.cropArea).data("iiifCropper", this);
+      }
+    }
+
+    // Get the cropper key and find the crop tool element
+    const cropperKey = this.cropArea
+      ? this.cropArea.dataset.cropperKey ||
+        this.cropArea.getAttribute("data-cropper-key")
+      : null;
+    this.cropSelector = '[data-cropper="' + cropperKey + '"]';
+    this.cropTool = document.querySelector(this.cropSelector);
+
     // Exhibit and masthead cropping requires the ratio between image width and height
-    // to be consistent, whereas item widget cropping allows any combination of 
+    // to be consistent, whereas item widget cropping allows any combination of
     // image width and height.
     this.preserveAspectRatio = preserveAspectRatio;
+
     // Get the IIIF input elements used to store/reference IIIF information
-    this.inputPrefix = this.cropTool.data('input-prefix');
-    this.iiifUrlField = this.iiifInputElement(this.inputPrefix, 'iiif_tilesource', this.cropTool);
-    this.iiifRegionField = this.iiifInputElement(this.inputPrefix, 'iiif_region', this.cropTool);
-    this.iiifManifestField = this.iiifInputElement(this.inputPrefix, 'iiif_manifest_url', this.cropTool);
-    this.iiifCanvasField = this.iiifInputElement(this.inputPrefix, 'iiif_canvas_id', this.cropTool);
-    this.iiifImageField = this.iiifInputElement(this.inputPrefix, 'iiif_image_id', this.cropTool);
+    this.inputPrefix = this.cropTool
+      ? this.cropTool.dataset.inputPrefix ||
+        this.cropTool.getAttribute("data-input-prefix")
+      : null;
+    this.iiifUrlField = this.iiifInputElement(
+      this.inputPrefix,
+      "iiif_tilesource",
+      this.cropTool
+    );
+    this.iiifRegionField = this.iiifInputElement(
+      this.inputPrefix,
+      "iiif_region",
+      this.cropTool
+    );
+    this.iiifManifestField = this.iiifInputElement(
+      this.inputPrefix,
+      "iiif_manifest_url",
+      this.cropTool
+    );
+    this.iiifCanvasField = this.iiifInputElement(
+      this.inputPrefix,
+      "iiif_canvas_id",
+      this.cropTool
+    );
+    this.iiifImageField = this.iiifInputElement(
+      this.inputPrefix,
+      "iiif_image_id",
+      this.cropTool
+    );
+
     // Get the closest form element
-    this.form = cropArea.closest('form');
+    this.form = this.cropArea ? this.cropArea.closest("form") : null;
     this.tileSource = null;
   }
 
   // Return the iiif input element based on the fieldname.
-  // Multiple input fields with the same name on the page may be related 
-  // to a cropper. We thus need to pass in a parent element. 
+  // Multiple input fields with the same name on the page may be related
+  // to a cropper. We thus need to pass in a parent element.
   iiifInputElement(inputPrefix, fieldName, inputParentElement) {
-    return $('input[name="' + inputPrefix + '[' + fieldName + ']"]', inputParentElement);
+    if (inputParentElement && inputPrefix) {
+      const selector = 'input[name="' + inputPrefix + "[" + fieldName + ']"]';
+      const element = inputParentElement.querySelector(selector);
+      if (element) {
+        if (!element.val) {
+          element.val = function (value) {
+            if (value === undefined) {
+              return this.value
+            } else {
+              this.value = value;
+              return this
+            }
+          };
+        }
+        return element
+      }
+    }
+    // Return a dummy object to prevent null-pointer exceptions
+    return {
+      value: undefined,
+      val: function (value) {
+        if (value === undefined) return undefined
+        return this
+      }
+    }
   }
 
   // Render the cropper environment and add hooks into the autocomplete and upload forms
@@ -3849,8 +3908,8 @@ class Crop {
   // Setup the cropper on page load if the field
   // that holds the IIIF url is populated
   setupExistingIiifCropper() {
-    if(this.iiifUrlField.val() === '') {
-      return;
+    if (this.iiifUrlField.val() === "") {
+      return
     }
 
     this.addImageSelectorToExistingCropTool();
@@ -3867,8 +3926,8 @@ class Crop {
       // Force a broken layer's container to be an element before removing.
       // Code in leaflet-iiif land calls delete on the image layer's container when removing,
       // which errors if there is an issue fetching the info.json and stops further necessary steps to execute.
-      if(!this.imageLayer._container) {
-        this.imageLayer._container = $('<div></div>');
+      if (!this.imageLayer._container) {
+        this.imageLayer._container = document.createElement("div");
       }
       this.cropperMap.removeLayer(this.imageLayer);
     }
@@ -3876,7 +3935,7 @@ class Crop {
     this.imageLayer = L.tileLayer.iiif(this.tileSource).addTo(this.cropperMap);
 
     var self = this;
-    this.imageLayer.on('load', function() {
+    this.imageLayer.on("load", function () {
       if (!self.loaded) {
         var region = self.getCropRegion();
         self.positionIiifCropBox(region);
@@ -3884,18 +3943,27 @@ class Crop {
       }
     });
 
-    this.cropArea.data('initiallyVisible', this.cropArea.is(':visible'));
+    this.cropAreaInitiallyVisible = this.isCropAreaVisible();
+  }
+
+  isCropAreaVisible() {
+    if (!this.cropArea) return false
+    return !!(
+      this.cropArea.offsetWidth ||
+      this.cropArea.offsetHeight ||
+      this.cropArea.getClientRects().length
+    )
   }
 
   // Get (or initialize) the current crop region from the form data
   getCropRegion() {
     var regionFieldValue = this.iiifRegionField.val();
-    if(!regionFieldValue || regionFieldValue === '') {
+    if (!regionFieldValue || regionFieldValue === "") {
       var region = this.defaultCropRegion();
       this.iiifRegionField.val(region);
-      return region;
+      return region
     } else {
-      return regionFieldValue.split(',');
+      return regionFieldValue.split(",")
     }
   }
 
@@ -3912,14 +3980,21 @@ class Crop {
       Math.floor((imageHeight - boxHeight) / 2),
       boxWidth,
       boxHeight
-    ];
+    ]
   }
 
   // Calculate the required aspect ratio for the crop area
   aspectRatio() {
-    var cropWidth = parseInt(this.cropArea.data('crop-width'));
-    var cropHeight = parseInt(this.cropArea.data('crop-height'));
-    return cropWidth / cropHeight;
+    if (!this.cropArea) return 1
+    var cropWidth = parseInt(
+      this.cropArea.dataset.cropWidth ||
+        this.cropArea.getAttribute("data-crop-width")
+    );
+    var cropHeight = parseInt(
+      this.cropArea.dataset.cropHeight ||
+        this.cropArea.getAttribute("data-crop-height")
+    );
+    return cropWidth / cropHeight
   }
 
   // Position the IIIF Crop Box at the given IIIF region
@@ -3951,12 +4026,12 @@ class Crop {
   // Set the Crop tileSource and setup the cropper
   setTileSource(source) {
     if (source == this.tileSource) {
-      return;
+      return
     }
 
     if (source === null || source === undefined) {
-      console.error('No tilesource provided when setting up IIIF Cropper');
-      return;
+      console.error("No tilesource provided when setting up IIIF Cropper");
+      return
     }
 
     if (this.cropBox) {
@@ -3970,8 +4045,8 @@ class Crop {
 
   // Render the Leaflet Map into the crop area
   renderCropperMap() {
-    if (this.cropperMap) {
-      return;
+    if (this.cropperMap || !this.cropArea) {
+      return
     }
 
     var cropperOptions = {
@@ -3981,13 +4056,18 @@ class Crop {
       zoom: 0
     };
 
-    if(this.preserveAspectRatio) {
-      cropperOptions['editOptions'] = {
-        rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(this.aspectRatio())
+    if (this.preserveAspectRatio) {
+      cropperOptions["editOptions"] = {
+        rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(
+          this.aspectRatio()
+        )
       };
     }
 
-    this.cropperMap = L.map(this.cropArea.attr('id'), cropperOptions);
+    this.cropperMap = L.map(
+      this.cropArea.getAttribute("id") || this.cropArea.id,
+      cropperOptions
+    );
     this.invalidateMapSizeOnTabToggle();
   }
 
@@ -3996,21 +4076,26 @@ class Crop {
     this.cropBox = L.rectangle(initialBounds);
     this.cropBox.addTo(this.cropperMap);
     this.cropBox.enableEdit();
-    this.cropBox.on('dblclick', L.DomEvent.stop).on('dblclick', this.cropBox.toggleEdit);
+    this.cropBox
+      .on("dblclick", L.DomEvent.stop)
+      .on("dblclick", this.cropBox.toggleEdit);
 
     var self = this;
-    this.cropperMap.on('editable:dragend editable:vertex:dragend', function(e) {
-      var bounds = e.layer.getBounds();
-      var region = self.projectBoundsToIIIFRegion(bounds);
+    this.cropperMap.on(
+      "editable:dragend editable:vertex:dragend",
+      function (e) {
+        var bounds = e.layer.getBounds();
+        var region = self.projectBoundsToIIIFRegion(bounds);
 
-      self.iiifRegionField.val(region.join(','));
-    });
+        self.iiifRegionField.val(region.join(","));
+      }
+    );
   }
 
   // Get the maximum zoom level for the IIIF Layer (always 1:1 image pixel to canvas?)
   maxZoom() {
-    if(this.imageLayer) {
-      return this.imageLayer.maxZoom;
+    if (this.imageLayer) {
+      return this.imageLayer.maxZoom
     }
   }
 
@@ -4023,85 +4108,143 @@ class Crop {
       Math.max(Math.floor(min.y), 0),
       Math.floor(max.x - min.x),
       Math.floor(max.y - min.y)
-    ];
+    ]
   }
 
   // Take a IIIF [x, y, w, h] region and transform it into a Leaflet LatLngBounds
   unprojectIIIFRegionToBounds(region) {
     var minPoint = L.point(parseInt(region[0]), parseInt(region[1]));
-    var maxPoint = L.point(parseInt(region[0]) + parseInt(region[2]), parseInt(region[1]) + parseInt(region[3]));
+    var maxPoint = L.point(
+      parseInt(region[0]) + parseInt(region[2]),
+      parseInt(region[1]) + parseInt(region[3])
+    );
 
     var min = this.cropperMap.unproject(minPoint, this.maxZoom());
     var max = this.cropperMap.unproject(maxPoint, this.maxZoom());
-    return L.latLngBounds(min, max);
+    return L.latLngBounds(min, max)
   }
 
   // TODO: Add accessors to update hidden inputs with IIIF uri/ids?
 
   // Setup autocomplete inputs to have the iiif_cropper context
   setupAutoCompletes() {
-    var input = $('[data-behavior="autocomplete"]', this.cropTool);
-    input.data('iiifCropper', this);
+    if (!this.cropTool) return
+    var input = this.cropTool.querySelector('[data-behavior="autocomplete"]');
+    if (input) {
+      input.iiifCropper = this;
+      if (typeof jQuery !== "undefined") {
+        jQuery(input).data("iiifCropper", this);
+      }
+    }
   }
 
   setupAjaxFileUpload() {
-    this.fileInput = $('input[type="file"]', this.cropTool);
-    this.fileInput.change(() => this.uploadFile());
+    if (!this.cropTool) return
+    this.fileInput = this.cropTool.querySelector('input[type="file"]');
+    if (this.fileInput) {
+      this.fileInput.addEventListener("change", () => this.uploadFile());
+    }
   }
 
   addImageSelectorToExistingCropTool() {
-    if(this.iiifManifestField.val() === '') {
-      return;
+    if (this.iiifManifestField.val() === "") {
+      return
     }
 
-    var input = $('[data-behavior="autocomplete"]', this.cropTool);
-    
+    if (!this.cropTool || typeof jQuery === "undefined") {
+      return
+    }
+
+    var inputElement = this.cropTool.querySelector(
+      '[data-behavior="autocomplete"]'
+    );
+
     // Not every page which uses this module has autocomplete linked directly to the cropping tool
-    if(input.length) {
-      var panel = $(input.data('target-panel'));
-      addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+    if (inputElement) {
+      var input = jQuery(inputElement);
+      var targetPanel =
+        inputElement.dataset.targetPanel ||
+        inputElement.getAttribute("data-target-panel");
+      var panelElement = document.querySelector(targetPanel);
+      if (panelElement) {
+        var panel = jQuery(panelElement);
+        addImageSelector(
+          input,
+          panel,
+          this.iiifManifestField.val(),
+          !this.iiifImageField.val()
+        );
+      }
     }
   }
 
   invalidateMapSizeOnTabToggle() {
-    var tabs = $('[role="tablist"]', this.form);
+    if (!this.form) return
+    var tabs = this.form.querySelectorAll('[role="tablist"]');
     var self = this;
-    tabs.on('shown.bs.tab', function() {
-      if(self.cropArea.data('initiallyVisible') === false && self.cropArea.is(':visible')) {
+    var onTabShown = function () {
+      if (self.cropAreaInitiallyVisible === false && self.isCropAreaVisible()) {
         self.cropperMap.invalidateSize();
         // Because the map size is 0,0 when image is loading (not visible) we need to refit the bounds of the layer
         self.imageLayer._fitBounds();
-        self.cropArea.data('initiallyVisible', null);
+        self.cropAreaInitiallyVisible = null;
       }
+    };
+
+    tabs.forEach(tab => {
+      tab.addEventListener("shown.bs.tab", onTabShown);
     });
+
+    if (typeof jQuery !== "undefined") {
+      jQuery(tabs).on("shown.bs.tab", onTabShown);
+    }
   }
 
   // Get all the form data with the exception of the _method field.
   getData() {
-    var data = new FormData(this.form[0]);
-    data.append('_method', null);
-    return data;
+    if (!this.form) return null
+    var data = new FormData(this.form);
+    data.append("_method", null);
+    return data
   }
 
   uploadFile() {
-    var url = this.fileInput.data('endpoint');
+    if (!this.fileInput) return
+    var url =
+      this.fileInput.dataset.endpoint ||
+      this.fileInput.getAttribute("data-endpoint");
     // Every post creates a new image/masthead.
     // Because they create IIIF urls which are heavily cached.
-    $.ajax({
-      url: url,  //Server script to process data
-      type: 'POST',
-      success: (data, stat, xhr) => this.successHandler(data, stat, xhr),
-      error: (xhr, stat, error) => this.errorHandler(xhr, stat, error),
-      // Form data
-      data: this.getData(),
+    fetch(url, {
+      method: "POST",
       headers: {
-        'X-CSRF-Token': Spotlight$1.csrfToken() || ''
+        "X-CSRF-Token": Spotlight$1.csrfToken() || "",
+        Accept: "application/json"
       },
-      //Options to tell jQuery not to process data or worry about content-type.
-      cache: false,
-      contentType: false,
-      processData: false
-    });
+      body: this.getData()
+    })
+      .then(response => {
+        if (!response.ok) {
+          return response.json().then(
+            json => {
+              var fakeXhr = { responseJSON: json };
+              this.errorHandler(fakeXhr, "error", response.statusText);
+            },
+            () => {
+              this.errorHandler({}, "error", "Upload failed");
+            }
+          )
+        }
+        return response.json()
+      })
+      .then(data => {
+        if (data) {
+          this.successHandler(data, "success", null);
+        }
+      })
+      .catch(error => {
+        this.errorHandler({}, "error", error.message);
+      });
   }
 
   successHandler(data, stat, xhr) {
@@ -4114,7 +4257,7 @@ class Crop {
     let errorMessage = "Upload failed";
     if (xhr.responseJSON) {
       if (xhr.responseJSON.errors) {
-        errorMessage = xhr.responseJSON.errors.join(', ');
+        errorMessage = xhr.responseJSON.errors.join(", ");
       } else if (xhr.responseJSON.error) {
         errorMessage = xhr.responseJSON.error;
       }
@@ -4123,48 +4266,61 @@ class Crop {
   }
 
   getUploadErrorsElement() {
-    return this.cropTool.find(".featured-image.invalid-feedback")
+    if (!this.cropTool) return null
+    return this.cropTool.querySelector(".featured-image.invalid-feedback")
   }
 
   showUploadError(errorMessage) {
     const errorsElement = this.getUploadErrorsElement();
     if (errorsElement) {
-      errorsElement.text(errorMessage).show();
+      errorsElement.textContent = errorMessage;
+      errorsElement.style.display = "block";
     } else {
-      console.error("uploadFile", error, errorMessage);
+      console.error("uploadFile", errorMessage);
     }
   }
 
   clearUploadErrors() {
     const errorsElement = this.getUploadErrorsElement();
     if (errorsElement) {
-      errorsElement.text("").hide();
+      errorsElement.textContent = "";
+      errorsElement.style.display = "none";
     }
   }
 
   setUploadId(id) {
     // This input is currently used for exhibit masthead or thumbnail image upload.
     // The name should be sufficient in this case, as we don't use this part of the
-    // code for solr document widgets where we enable cropping. 
-    // If we require more specificity, we can scope this to this.cropTool. 
-    $('input[name="' + this.inputPrefix + '[upload_id]"]').val(id);
+    // code for solr document widgets where we enable cropping.
+    // If we require more specificity, we can scope this to this.cropTool.
+    const selector = 'input[name="' + this.inputPrefix + '[upload_id]"]';
+    const element = document.querySelector(selector);
+    if (element) {
+      element.value = id;
+    }
   }
 
   aspectRatioPreservingRectangleEditor(aspect) {
     return L.Editable.RectangleEditor.extend({
       extendBounds: function (e) {
         var index = e.vertex.getIndex(),
-            next = e.vertex.getNext(),
-            previous = e.vertex.getPrevious(),
-            oppositeIndex = (index + 2) % 4,
-            opposite = e.vertex.latlngs[oppositeIndex];
+          next = e.vertex.getNext(),
+          previous = e.vertex.getPrevious(),
+          oppositeIndex = (index + 2) % 4,
+          opposite = e.vertex.latlngs[oppositeIndex];
 
-        if ((index % 2) == 1) {
+        if (index % 2 == 1) {
           // calculate horiz. displacement
-          e.latlng.update([opposite.lat + ((1 / aspect) * (opposite.lng - e.latlng.lng)), e.latlng.lng]);
+          e.latlng.update([
+            opposite.lat + (1 / aspect) * (opposite.lng - e.latlng.lng),
+            e.latlng.lng
+          ]);
         } else {
           // calculate vert. displacement
-          e.latlng.update([e.latlng.lat, (opposite.lng - (aspect * (opposite.lat - e.latlng.lat)))]);
+          e.latlng.update([
+            e.latlng.lat,
+            opposite.lng - aspect * (opposite.lat - e.latlng.lat)
+          ]);
         }
         var bounds = new L.LatLngBounds(e.latlng, opposite);
         // Update latlngs by hand to preserve order.
@@ -4173,7 +4329,7 @@ class Crop {
         this.updateBounds(bounds);
         this.refreshVertexMarkers();
       }
-    });
+    })
   }
 }
 
