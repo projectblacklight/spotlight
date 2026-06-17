@@ -4,7 +4,7 @@ import Core from "spotlight/core"
 export default class Crop {
   constructor(cropArea, preserveAspectRatio = true) {
     // Extract raw DOM element if cropArea is a jQuery object
-    this.cropArea = cropArea && cropArea.jquery ? cropArea[0] : cropArea
+    this.cropArea = cropArea
     if (this.cropArea) {
       this.cropArea.iiifCropper = this
       if (typeof jQuery !== "undefined") {
