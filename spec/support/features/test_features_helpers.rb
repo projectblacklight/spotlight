@@ -9,7 +9,16 @@ module Spotlight
       find("auto-complete [data-#{type}-typeahead][role='combobox']").fill_in(with: opts[:with])
       # Wait for the autocomplete to show both 'open' and 'aria-expanded="true"' or the results might be stale
       expect(page).to have_css("auto-complete[open] [data-#{type}-typeahead][role='combobox'][aria-expanded='true']")
-      first('auto-complete[open] [role="option"]', text: opts[:with]).click
+      # The auto-complete element fires one fetch on focus and another debounced fetch on input. In CI
+      # they can land out of order, and whichever returns second replaces the results <ul> wholesale
+      # turning any <li> we just located into a stale reference. Retry find+click as one unit so each
+      # attempt resolves against the latest DOM.
+      page.document.synchronize(
+        Capybara.default_max_wait_time,
+        errors: [Selenium::WebDriver::Error::StaleElementReferenceError, Capybara::ElementNotFound]
+      ) do
+        first('auto-complete[open] [role="option"]', text: opts[:with], minimum: 1).click
+      end
     end
 
     # just like #fill_in_typeahead_field, but wait for the
