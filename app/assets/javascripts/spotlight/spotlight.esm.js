@@ -3810,7 +3810,7 @@ window.SirTrevor = SirTrevor$1;
 class Crop {
   constructor(cropArea, preserveAspectRatio = true) {
     // Extract raw DOM element if cropArea is a jQuery object
-    this.cropArea = cropArea && cropArea.jquery ? cropArea[0] : cropArea;
+    this.cropArea = cropArea;
     if (this.cropArea) {
       this.cropArea.iiifCropper = this;
       if (typeof jQuery !== "undefined") {
@@ -4461,10 +4461,11 @@ class Croppable {
   connect() {
     // For exhibit masthead or thumbnail pages, where
     // the div exists on page load
-    $('[data-behavior="iiif-cropper"]').each(function() {
-      var cropElement = $(this);
-      new Crop(cropElement).render();
-    });
+    document
+      .querySelectorAll('[data-behavior="iiif-cropper"]')
+      .forEach(cropElement => {
+        new Crop(cropElement).render();
+      });
 
     // In the case of individual document thumbnails, selection
     // of the image is through a modal. Here we attach the event
