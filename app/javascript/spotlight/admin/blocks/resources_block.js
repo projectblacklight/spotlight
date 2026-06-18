@@ -1,5 +1,6 @@
 import Core from "spotlight/core"
 import SpotlightNestable from "spotlight/admin/spotlight_nestable"
+import { selectRelatedInput } from "spotlight/admin/select_related_input"
 
 Core.Block.Resources = (function () {
   return Core.Block.extend({
@@ -269,7 +270,9 @@ Core.Block.Resources = (function () {
       SpotlightNestable.init(
         this.inner.querySelectorAll('[data-behavior="nestable"]')
       )
-      $("[data-input-select-target]", this.inner).selectRelatedInput()
+      selectRelatedInput(
+        this.inner.querySelectorAll("[data-input-select-target]")
+      )
     },
 
     afterLoadData: function (data) {
