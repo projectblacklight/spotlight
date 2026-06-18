@@ -156,25 +156,29 @@ SirTrevor.Blocks.SolrDocumentsBase = (function () {
         return
       }
 
-      $.ajax(manifestUrl).done(function (manifest) {
-        var iiifManifest = new Iiif(manifestUrl, manifest)
+      fetch(manifestUrl)
+        .then(function (response) {
+          return response.json()
+        })
+        .then(function (manifest) {
+          var iiifManifest = new Iiif(manifestUrl, manifest)
 
-        var thumbs = iiifManifest.imagesArray()
+          var thumbs = iiifManifest.imagesArray()
 
-        if (!data.iiif_image_id) {
-          context.setIiifFields(panel, thumbs[0], !!data.iiif_manifest_url)
-        }
+          if (!data.iiif_image_id) {
+            context.setIiifFields(panel, thumbs[0], !!data.iiif_manifest_url)
+          }
 
-        if (thumbs.length > 1) {
-          panel.multiImageSelector(
-            thumbs,
-            function (selectorImage) {
-              context.setIiifFields(panel, selectorImage, false)
-            },
-            data.iiif_image_id
-          )
-        }
-      })
+          if (thumbs.length > 1) {
+            panel.multiImageSelector(
+              thumbs,
+              function (selectorImage) {
+                context.setIiifFields(panel, selectorImage, false)
+              },
+              data.iiif_image_id
+            )
+          }
+        })
     }
   })
 })()

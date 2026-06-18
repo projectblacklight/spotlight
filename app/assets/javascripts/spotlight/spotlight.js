@@ -3744,11 +3744,14 @@
   function addImageSelector(input, panel, manifestUrl, initialize) {
     if (!manifestUrl) {
       showNonIiifAlert(input);
-      return;
+      return
     }
-    var cropper = input.data('iiifCropper');
-    $.ajax(manifestUrl).done(
-      function(manifest) {
+    var cropper = input.data("iiifCropper");
+    fetch(manifestUrl)
+      .then(function (response) {
+        return response.json()
+      })
+      .then(function (manifest) {
         var iiifManifest = new Iiif(manifestUrl, manifest);
 
         var thumbs = iiifManifest.imagesArray();
@@ -3760,21 +3763,24 @@
           panel.multiImageSelector(); // Clears out existing selector
         }
 
-        if(thumbs.length > 1) {
+        if (thumbs.length > 1) {
           panel.show();
-          panel.multiImageSelector(thumbs, function(selectorImage) {
-            cropper.setIiifFields(selectorImage);
-          }, cropper.iiifImageField.val());
+          panel.multiImageSelector(
+            thumbs,
+            function (selectorImage) {
+              cropper.setIiifFields(selectorImage);
+            },
+            cropper.iiifImageField.val()
+          );
         }
-      }
-    );
+      });
   }
 
-  function showNonIiifAlert(input){
+  function showNonIiifAlert(input) {
     input.parent().prev('[data-behavior="non-iiif-alert"]').show();
   }
 
-  function hideNonIiifAlert(input){
+  function hideNonIiifAlert(input) {
     input.parent().prev('[data-behavior="non-iiif-alert"]').hide();
   }
 
@@ -5195,22 +5201,22 @@
       var panelContainer;
       var pollers = [];
 
-      $(monitorElements).each(function() {
+      $(monitorElements).each(function () {
         panelContainer = $(this);
         panelContainer.hide();
-        var monitorUrl = panelContainer.data('monitorUrl');
-        var refreshRate = panelContainer.data('refreshRate') || defaultRefreshRate;
+        var monitorUrl = panelContainer.data("monitorUrl");
+        var refreshRate = panelContainer.data("refreshRate") || defaultRefreshRate;
         pollers.push(
-          setInterval(function() {
+          setInterval(function () {
             checkMonitorUrl(monitorUrl);
           }, refreshRate)
         );
       });
 
       // Clear the intervals on turbolink:click event (e.g. when the user navigates away from the page)
-      $(document).on('turbolinks:click', function() {
+      $(document).on("turbolinks:click", function () {
         if (pollers.length > 0) {
-          $.each(pollers, function() {
+          $.each(pollers, function () {
             clearInterval(this);
           });
           pollers = [];
@@ -5218,7 +5224,15 @@
       });
 
       function checkMonitorUrl(url) {
-        $.ajax(url).done(success).fail(fail);
+        fetch(url)
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error("Network response was not ok")
+            }
+            return response.json()
+          })
+          .then(success)
+          .catch(fail);
       }
 
       function success(data) {
@@ -5230,7 +5244,9 @@
         }
       }
 
-      function fail() { monitorPanel().hide(); }
+      function fail() {
+        monitorPanel().hide();
+      }
 
       function updateMonitorPanel(data) {
         panelStartDate().text(data.started_at);
@@ -5248,20 +5264,20 @@
       function updateProgressBar(data) {
         var percentage = calculatePercentage(data);
         progressBar()
-          .attr('aria-valuemax', data.total)
-          .attr('aria-valuenow', percentage)
-          .css('width', percentage + '%')
-          .text(percentage + '%');
+          .attr("aria-valuemax", data.total)
+          .attr("aria-valuenow", percentage)
+          .css("width", percentage + "%")
+          .text(percentage + "%");
 
         if (data.finished) {
-          progressBar().removeClass('active').removeClass('progress-bar-striped');
+          progressBar().removeClass("active").removeClass("progress-bar-striped");
         }
       }
 
       function updatePanelErrorMessage(data) {
         // We currently do not store this state,
         // but with this code we can in the future.
-        if ( data.errored ) {
+        if (data.errored) {
           panelErrorMessage().show();
         } else {
           panelErrorMessage().hide();
@@ -5269,54 +5285,54 @@
       }
 
       function updatePanelTotals(data) {
-        panelTotals().each(function() {
+        panelTotals().each(function () {
           $(this).text(data.total);
         });
       }
 
       function calculatePercentage(data) {
-        if (data.total == 0) return 0;
-        return Math.floor((data.completed / data.total) * 100);
+        if (data.total == 0) return 0
+        return Math.floor((data.completed / data.total) * 100)
       }
 
       function monitorPanel() {
-        return panelContainer.find('.index-status');
+        return panelContainer.find(".index-status")
       }
 
       function panelStartDate() {
         return monitorPanel()
-                 .find('[data-behavior="monitor-start"]')
-                 .find('[data-behavior="date"]');
+          .find('[data-behavior="monitor-start"]')
+          .find('[data-behavior="date"]')
       }
 
       function panelCurrentDate() {
         return monitorPanel()
-                 .find('[data-behavior="monitor-current"]')
-                 .find('[data-behavior="date"]');
+          .find('[data-behavior="monitor-current"]')
+          .find('[data-behavior="date"]')
       }
 
       function panelCompletedDate() {
         return monitorPanel()
-                 .find('[data-behavior="monitor-completed"]')
-                 .find('[data-behavior="date"]');
+          .find('[data-behavior="monitor-completed"]')
+          .find('[data-behavior="date"]')
       }
 
       function panelTotals() {
-        return monitorPanel().find('[data-behavior="total"]');
+        return monitorPanel().find('[data-behavior="total"]')
       }
 
       function panelCurrent() {
         return monitorPanel()
-                 .find('[data-behavior="monitor-current"]')
-                 .find('[data-behavior="completed"]');
+          .find('[data-behavior="monitor-current"]')
+          .find('[data-behavior="completed"]')
       }
 
       function progressBar() {
-        return monitorPanel().find('.progress-bar');
+        return monitorPanel().find(".progress-bar")
       }
 
       function panelErrorMessage() {
-        return monitorPanel().find('[data-behavior="monitor-error"]');
+        return monitorPanel().find('[data-behavior="monitor-error"]')
       }
 
       function setPanelCompleted(finished) {
@@ -5329,7 +5345,7 @@
         }
       }
 
-      return this;
+      return this
     }
   }
 
@@ -6879,25 +6895,29 @@
           return
         }
 
-        $.ajax(manifestUrl).done(function (manifest) {
-          var iiifManifest = new Iiif(manifestUrl, manifest);
+        fetch(manifestUrl)
+          .then(function (response) {
+            return response.json()
+          })
+          .then(function (manifest) {
+            var iiifManifest = new Iiif(manifestUrl, manifest);
 
-          var thumbs = iiifManifest.imagesArray();
+            var thumbs = iiifManifest.imagesArray();
 
-          if (!data.iiif_image_id) {
-            context.setIiifFields(panel, thumbs[0], !!data.iiif_manifest_url);
-          }
+            if (!data.iiif_image_id) {
+              context.setIiifFields(panel, thumbs[0], !!data.iiif_manifest_url);
+            }
 
-          if (thumbs.length > 1) {
-            panel.multiImageSelector(
-              thumbs,
-              function (selectorImage) {
-                context.setIiifFields(panel, selectorImage, false);
-              },
-              data.iiif_image_id
-            );
-          }
-        });
+            if (thumbs.length > 1) {
+              panel.multiImageSelector(
+                thumbs,
+                function (selectorImage) {
+                  context.setIiifFields(panel, selectorImage, false);
+                },
+                data.iiif_image_id
+              );
+            }
+          });
       }
     })
   })();
