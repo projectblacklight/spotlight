@@ -6081,26 +6081,31 @@
     SirTrevor.Block.prototype.availableMixins.push("plustextable");
   })(jQuery);
 
-  (function ($){
+  (function ($) {
     Spotlight$1.Block = SirTrevor.Block.extend({
       scribeOptions: {
         allowBlockElements: true,
         tags: { p: true }
       },
       formable: true,
-      editorHTML: function() {
-        return '';
+      editorHTML: function () {
+        return ""
       },
-      beforeBlockRender: function() {
-        this.availableMixins.forEach(function(mixin) {
-          if (this[mixin] && SirTrevor.BlockMixins[this.capitalize(mixin)].preload) {
+      beforeBlockRender: function () {
+        this.availableMixins.forEach(function (mixin) {
+          if (
+            this[mixin] &&
+            SirTrevor.BlockMixins[this.capitalize(mixin)].preload
+          ) {
             this.withMixin(SirTrevor.BlockMixins[this.capitalize(mixin)]);
           }
         }, this);
       },
-      $instance: function() { return $('#' + this.instanceID); },
-      capitalize: function(string) {
-        return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
+      instance: function () {
+        return document.getElementById(this.instanceID)
+      },
+      capitalize: function (string) {
+        return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase()
       }
     });
   })(jQuery);
@@ -6359,29 +6364,34 @@
 
   })();
 
-  SirTrevor.Blocks.Browse = (function(){
-
+  SirTrevor.Blocks.Browse = (function () {
     return Spotlight$1.Block.Resources.extend({
       type: "browse",
 
       icon_name: "browse",
 
-      autocomplete_url: function() {
-        return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-searches-path]').dataset.autocompleteExhibitSearchesPath;
+      autocomplete_url: function () {
+        return this.instance().closest(
+          "form[data-autocomplete-exhibit-searches-path]"
+        ).dataset.autocompleteExhibitSearchesPath
       },
 
-      autocomplete_fetch: function(url) {
-        return this.fetchOnceAndFilterLocalResults(url);
+      autocomplete_fetch: function (url) {
+        return this.fetchOnceAndFilterLocalResults(url)
       },
 
-      autocomplete_template: function(obj) {
-        const thumbnail = obj.thumbnail_image_url ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail_image_url}" /></div>` : '';
-        const description = obj.description ? `<small>&nbsp;&nbsp;${obj.description}</small>` : '';
-        return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">${thumbnail}
-      <span class="autocomplete-title">${this.highlight(obj.full_title)}</span>${description}</div>`;
+      autocomplete_template: function (obj) {
+        const thumbnail = obj.thumbnail_image_url
+          ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail_image_url}" /></div>`
+          : "";
+        const description = obj.description
+          ? `<small>&nbsp;&nbsp;${obj.description}</small>`
+          : "";
+        return `<div class="autocomplete-item${!obj.published ? " blacklight-private" : ""}">${thumbnail}
+      <span class="autocomplete-title">${this.highlight(obj.full_title)}</span>${description}</div>`
       },
 
-      _itemPanel: function(data) {
+      _itemPanel: function (data) {
         var index = "item_" + this.globalIndex++;
         var checked;
         if (data.display == "true") {
@@ -6393,7 +6403,7 @@
         var markup = `
            <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId(index)}">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
-            <input type="hidden" name="item[${index}][full_title]" value="${(data.full_title || data.title)}" />
+            <input type="hidden" name="item[${index}][full_title]" value="${data.full_title || data.title}" />
             <input data-property="weight" type="hidden" name="item[${index}][weight]" value="${data.weight}" />
               <div class="card d-flex dd3-content">
                 <div class="dd-handle dd3-handle">${i18n.t("blocks:resources:panel:drag")}</div>
@@ -6401,15 +6411,15 @@
                   <div class="d-flex">
                     <div class="checkbox">
                       <input name="item[${index}][display]" type="hidden" value="false" />
-                      <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                      <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                      <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + "_" + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                      <label class="visually-hidden" for="${this.formId(this.display_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                     </div>
                     <div class="pic">
-                      <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
+                      <img class="img-thumbnail" src="${data.thumbnail_image_url || (data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")}" />
                     </div>
                     <div class="main">
-                      <div class="title card-title">${(data.full_title || data.title)}</div>
-                      <div>${(data.slug || data.id)}</div>
+                      <div class="title card-title">${data.full_title || data.title}</div>
+                      <div>${data.slug || data.id}</div>
                     </div>
                     <div class="remove float-end">
                       <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
@@ -6422,59 +6432,59 @@
         var panel = $(markup);
         var context = this;
 
-        $('.remove a', panel).on('click', function(e) {
+        $(".remove a", panel).on("click", function (e) {
           e.preventDefault();
-          $(this).closest('.field').remove();
+          $(this).closest(".field").remove();
           context.afterPanelDelete();
-
         });
 
         this.afterPanelRender(data, panel);
 
-        return panel;
+        return panel
       },
 
-      item_options: function() { return `
+      item_options: function () {
+        return `
       <label>
         <input type="hidden" name="display-item-counts" value="false" />
         <input type="checkbox" name="display-item-counts" value="true" checked />
         ${i18n.t("blocks:browse:item_counts")}
       </label>`
-      },
-    });
-
+      }
+    })
   })();
 
   /*
     Sir Trevor BrowseGroupCategories
   */
 
-  SirTrevor.Blocks.BrowseGroupCategories = (function(){
-
+  SirTrevor.Blocks.BrowseGroupCategories = (function () {
     return Spotlight$1.Block.Resources.extend({
       type: "browse_group_categories",
       icon_name: "browse",
 
-      autocomplete_control: function() {
-        const autocompleteID = this.blockID + '-autocomplete';
+      autocomplete_control: function () {
+        const autocompleteID = this.blockID + "-autocomplete";
         return `<auto-complete src="${this.autocomplete_url()}" for="${autocompleteID}-popup" fetch-on-empty>
         <input type="text" name="${autocompleteID}" placeholder="${i18n.t("blocks:browse_group_categories:autocomplete")}" data-default-typeahead>
         <ul id="${autocompleteID}-popup"></ul>
         <div id="${autocompleteID}-popup-feedback" class="visually-hidden"></div>
       </auto-complete>`
       },
-      autocomplete_template: function(obj) {
-        return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">
+      autocomplete_template: function (obj) {
+        return `<div class="autocomplete-item${!obj.published ? " blacklight-private" : ""}">
       <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/></div>`
       },
 
-      autocomplete_url: function() {
-        return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-browse-groups-path]').dataset.autocompleteExhibitBrowseGroupsPath;
+      autocomplete_url: function () {
+        return this.instance().closest(
+          "form[data-autocomplete-exhibit-browse-groups-path]"
+        ).dataset.autocompleteExhibitBrowseGroupsPath
       },
-      autocomplete_fetch: function(url) {
-        return this.fetchOnceAndFilterLocalResults(url);
+      autocomplete_fetch: function (url) {
+        return this.fetchOnceAndFilterLocalResults(url)
       },
-      _itemPanel: function(data) {
+      _itemPanel: function (data) {
         var index = "item_" + this.globalIndex++;
         var checked;
         if (data.display == "true") {
@@ -6494,8 +6504,8 @@
                 <div class="d-flex flex-grow-1">
                   <div class="checkbox">
                     <input name="item[${index}][display]" type="hidden" value="false" />
-                    <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                    <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                    <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + "_" + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                    <label class="visually-hidden" for="${this.formId(this.display_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                   </div>
                   <div class="main">
                     <div class="title card-title">${data.title}</div>
@@ -6511,26 +6521,26 @@
         const panel = $(markup);
         var context = this;
 
-        $('a[data-item-grid-panel-remove]', panel).on('click', function(e) {
+        $("a[data-item-grid-panel-remove]", panel).on("click", function (e) {
           e.preventDefault();
-          $(this).closest('.field').remove();
+          $(this).closest(".field").remove();
           context.afterPanelDelete();
-
         });
 
         this.afterPanelRender(data, panel);
 
-        return panel;
+        return panel
       },
 
-      item_options: function() { return `
+      item_options: function () {
+        return `
       <label>
         <input type="hidden" name="display-item-counts" value="false" />
         <input type="checkbox" name="display-item-counts" value="true" checked />
         ${i18n.t("blocks:browse_group_categories:item_counts")}
       </label>`
-      },
-    });
+      }
+    })
   })();
 
   /*
@@ -6620,8 +6630,7 @@
     });
   })();
 
-  SirTrevor.Blocks.FeaturedPages = (function(){
-
+  SirTrevor.Blocks.FeaturedPages = (function () {
     return Spotlight$1.Block.Resources.extend({
       type: "featured_pages",
 
@@ -6629,18 +6638,25 @@
 
       show_image_selection: false,
 
-      autocomplete_url: function() { return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-pages-path]').dataset.autocompleteExhibitPagesPath; },
-      autocomplete_fetch: function(url) {
-        return this.fetchOnceAndFilterLocalResults(url);
+      autocomplete_url: function () {
+        return this.instance().closest(
+          "form[data-autocomplete-exhibit-pages-path]"
+        ).dataset.autocompleteExhibitPagesPath
       },
-      autocomplete_template: function(obj) {
-        const description = obj.description ? `<small>&nbsp;&nbsp;${obj.description}</small>` : '';
-        const thumbnail = obj.thumbnail_image_url ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail_image_url}" /></div>` : '';
-        return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">${thumbnail}
+      autocomplete_fetch: function (url) {
+        return this.fetchOnceAndFilterLocalResults(url)
+      },
+      autocomplete_template: function (obj) {
+        const description = obj.description
+          ? `<small>&nbsp;&nbsp;${obj.description}</small>`
+          : "";
+        const thumbnail = obj.thumbnail_image_url
+          ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail_image_url}" /></div>`
+          : "";
+        return `<div class="autocomplete-item${!obj.published ? " blacklight-private" : ""}">${thumbnail}
       <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/>${description}</div>`
-      },
-    });
-
+      }
+    })
   })();
 
   /*
@@ -6708,33 +6724,43 @@
     });
   })();
 
-  SirTrevor.Blocks.SolrDocumentsBase = (function(){
-
+  SirTrevor.Blocks.SolrDocumentsBase = (function () {
     return Spotlight$1.Block.Resources.extend({
       plustextable: true,
-      autocomplete_url: function() { return this.$instance().closest('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path') },
-      autocomplete_template: function(obj) {
-        const thumbnail = obj.thumbnail ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail}" /></div>` : '';
-        return `<div class="autocomplete-item${obj.private ? ' blacklight-private' : ''}">${thumbnail}
+      autocomplete_url: function () {
+        return this.instance().closest(
+          "form[data-autocomplete-exhibit-catalog-path]"
+        ).dataset.autocompleteExhibitCatalogPath
+      },
+      autocomplete_template: function (obj) {
+        const thumbnail = obj.thumbnail
+          ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail}" /></div>`
+          : "";
+        return `<div class="autocomplete-item${obj.private ? " blacklight-private" : ""}">${thumbnail}
       <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/><small>&nbsp;&nbsp;${this.highlight(obj.description)}</small></div>`
       },
-      transform_autocomplete_results: function(response) {
-        return $.map(response['docs'], function(doc) {
-          return doc;
+      transform_autocomplete_results: function (response) {
+        return $.map(response["docs"], function (doc) {
+          return doc
         })
       },
 
-      caption_option_values: function() {
-        var fields = $('[data-blacklight-configuration-index-fields]').data('blacklight-configuration-index-fields');
+      caption_option_values: function () {
+        var fields = $("[data-blacklight-configuration-index-fields]").data(
+          "blacklight-configuration-index-fields"
+        );
 
-        return $.map(fields, function(field) {
-          return $('<option />').val(field.key).text(field.label)[0].outerHTML;
-        }).join("\n");
+        return $.map(fields, function (field) {
+          return $("<option />").val(field.key).text(field.label)[0].outerHTML
+        }).join("\n")
       },
 
-      item_options: function() { return this.caption_options(); },
+      item_options: function () {
+        return this.caption_options()
+      },
 
-      caption_options: function() { return `
+      caption_options: function () {
+        return `
       <div class="field-select primary-caption" data-behavior="item-caption-admin">
         <input name="${this.show_primary_field_key}" type="hidden" value="false" />
         <input data-input-select-target="#${this.formId(this.primary_field_key)}" name="${this.show_primary_field_key}" id="${this.formId(this.show_primary_field_key)}" type="checkbox" value="true" />
@@ -6753,36 +6779,74 @@
           ${this.caption_option_values()}
         </select>
       </div>
-    `},
+    `
+      },
 
       // Sets the first version of the IIIF information from autocomplete data.
-      _itemPanelIiifFields: function(index, autocomplete_data) {
+      _itemPanelIiifFields: function (index, autocomplete_data) {
         var iiifFields = [
-          '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" value="' + (autocomplete_data.thumbnail_image_url || autocomplete_data.thumbnail || "") + '"/>',
-          '<input type="hidden" name="item[' + index + '][full_image_url]" value="' + (autocomplete_data.full_image_url || autocomplete_data.thumbnail_image_url || autocomplete_data.thumbnail || "") + '"/>',
-          '<input type="hidden" name="item[' + index + '][iiif_tilesource]" value="' + (autocomplete_data.iiif_tilesource || "") + '"/>',
-          '<input type="hidden" name="item[' + index + '][iiif_manifest_url]" value="' + (autocomplete_data.iiif_manifest_url || "") + '"/>',
-          '<input type="hidden" name="item[' + index + '][iiif_canvas_id]" value="' + (autocomplete_data.iiif_canvas_id || "") + '"/>',
-          '<input type="hidden" name="item[' + index + '][iiif_image_id]" value="' + (autocomplete_data.iiif_image_id || "") + '"/>',
+          '<input type="hidden" name="item[' +
+            index +
+            '][thumbnail_image_url]" value="' +
+            (autocomplete_data.thumbnail_image_url ||
+              autocomplete_data.thumbnail ||
+              "") +
+            '"/>',
+          '<input type="hidden" name="item[' +
+            index +
+            '][full_image_url]" value="' +
+            (autocomplete_data.full_image_url ||
+              autocomplete_data.thumbnail_image_url ||
+              autocomplete_data.thumbnail ||
+              "") +
+            '"/>',
+          '<input type="hidden" name="item[' +
+            index +
+            '][iiif_tilesource]" value="' +
+            (autocomplete_data.iiif_tilesource || "") +
+            '"/>',
+          '<input type="hidden" name="item[' +
+            index +
+            '][iiif_manifest_url]" value="' +
+            (autocomplete_data.iiif_manifest_url || "") +
+            '"/>',
+          '<input type="hidden" name="item[' +
+            index +
+            '][iiif_canvas_id]" value="' +
+            (autocomplete_data.iiif_canvas_id || "") +
+            '"/>',
+          '<input type="hidden" name="item[' +
+            index +
+            '][iiif_image_id]" value="' +
+            (autocomplete_data.iiif_image_id || "") +
+            '"/>'
         ];
 
         // The region input is required for widgets that enable image cropping but not otherwise
-        if(this.show_image_selection) {
-          iiifFields.push('<input type="hidden" name="item[' + index + '][iiif_region]" value="' + (autocomplete_data.iiif_region || "") + '"/>');
+        if (this.show_image_selection) {
+          iiifFields.push(
+            '<input type="hidden" name="item[' +
+              index +
+              '][iiif_region]" value="' +
+              (autocomplete_data.iiif_region || "") +
+              '"/>'
+          );
         }
 
-        return iiifFields.join("\n");
+        return iiifFields.join("\n")
       },
       // Overwrites the hidden inputs from _itemPanelIiifFields with data from the
       // manifest. Called by afterPanelRender - the manifest_data here is built
       // from canvases in the manifest, transformed by spotlight/admin/iiif.js in
       // the #images method.
-      setIiifFields: function(panel, manifest_data, initialize) {
-        var legacyThumbnailField = $(panel).find('[name$="[thumbnail_image_url]"]');
+      setIiifFields: function (panel, manifest_data, initialize) {
+        var legacyThumbnailField = $(panel).find(
+          '[name$="[thumbnail_image_url]"]'
+        );
         var legacyFullField = $(panel).find('[name$="[full_image_url]"]');
 
         if (initialize && legacyThumbnailField.val().length > 0) {
-          return;
+          return
         }
 
         legacyThumbnailField.val("");
@@ -6791,40 +6855,51 @@
         $(panel).find('[name$="[iiif_tilesource]"]').val(manifest_data.tilesource);
         $(panel).find('[name$="[iiif_manifest_url]"]').val(manifest_data.manifest);
         $(panel).find('[name$="[iiif_canvas_id]"]').val(manifest_data.canvasId);
-        $(panel).find('img.img-thumbnail').attr('src', manifest_data.thumbnail_image_url || manifest_data.tilesource.replace("/info.json", "/full/100,100/0/default.jpg"));
+        $(panel)
+          .find("img.img-thumbnail")
+          .attr(
+            "src",
+            manifest_data.thumbnail_image_url ||
+              manifest_data.tilesource.replace(
+                "/info.json",
+                "/full/100,100/0/default.jpg"
+              )
+          );
       },
-      afterPanelRender: function(data, panel) {
+      afterPanelRender: function (data, panel) {
         var context = this;
         var manifestUrl = data.iiif_manifest || data.iiif_manifest_url;
 
         if (!manifestUrl) {
-          $(panel).find('[name$="[thumbnail_image_url]"]').val(data.thumbnail_image_url || data.thumbnail);
+          $(panel)
+            .find('[name$="[thumbnail_image_url]"]')
+            .val(data.thumbnail_image_url || data.thumbnail);
           $(panel).find('[name$="[full_image_url]"]').val(data.full_image_url);
 
-          return;
+          return
         }
 
-        $.ajax(manifestUrl).done(
-          function(manifest) {
-            var iiifManifest = new Iiif(manifestUrl, manifest);
+        $.ajax(manifestUrl).done(function (manifest) {
+          var iiifManifest = new Iiif(manifestUrl, manifest);
 
-            var thumbs = iiifManifest.imagesArray();
+          var thumbs = iiifManifest.imagesArray();
 
-            if (!data.iiif_image_id) {
-              context.setIiifFields(panel, thumbs[0], !!data.iiif_manifest_url);
-            }
-
-
-            if(thumbs.length > 1) {
-              panel.multiImageSelector(thumbs, function(selectorImage) {
-                context.setIiifFields(panel, selectorImage, false);
-              }, data.iiif_image_id);
-            }
+          if (!data.iiif_image_id) {
+            context.setIiifFields(panel, thumbs[0], !!data.iiif_manifest_url);
           }
-        );
-      }
-    });
 
+          if (thumbs.length > 1) {
+            panel.multiImageSelector(
+              thumbs,
+              function (selectorImage) {
+                context.setIiifFields(panel, selectorImage, false);
+              },
+              data.iiif_image_id
+            );
+          }
+        });
+      }
+    })
   })();
 
   SirTrevor.Blocks.SolrDocuments = (function(){
