@@ -1,5 +1,6 @@
 import Iiif from "spotlight/admin/iiif"
 import Core from "spotlight/core"
+import multiImageSelector from "spotlight/admin/multi_image_selector"
 
 SirTrevor.Blocks.SolrDocumentsBase = (function () {
   return Core.Block.Resources.extend({
@@ -170,7 +171,8 @@ SirTrevor.Blocks.SolrDocumentsBase = (function () {
           }
 
           if (thumbs.length > 1) {
-            panel.multiImageSelector(
+            multiImageSelector(
+              panel,
               thumbs,
               function (selectorImage) {
                 context.setIiifFields(panel, selectorImage, false)

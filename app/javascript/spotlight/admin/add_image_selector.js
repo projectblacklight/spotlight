@@ -1,4 +1,5 @@
 import Iiif from "spotlight/admin/iiif"
+import multiImageSelector from "spotlight/admin/multi_image_selector"
 
 export function addImageSelector(input, panel, manifestUrl, initialize) {
   if (!manifestUrl) {
@@ -19,12 +20,13 @@ export function addImageSelector(input, panel, manifestUrl, initialize) {
 
       if (initialize) {
         cropper.setIiifFields(thumbs[0])
-        panel.multiImageSelector() // Clears out existing selector
+        multiImageSelector(panel) // Clears out existing selector
       }
 
       if (thumbs.length > 1) {
         panel.show()
-        panel.multiImageSelector(
+        multiImageSelector(
+          panel,
           thumbs,
           function (selectorImage) {
             cropper.setIiifFields(selectorImage)
