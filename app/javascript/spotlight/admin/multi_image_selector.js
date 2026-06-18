@@ -211,16 +211,14 @@ function initMultiImageSelector(
   }
 }
 
-// Attach to jQuery to preserve compatibility with other parts of the application calling $.fn.multiImageSelector
-if (window.jQuery) {
-  window.jQuery.fn.multiImageSelector = function (
-    image_versions,
-    clickCallback,
-    activeImageId
-  ) {
-    this.each(function () {
-      initMultiImageSelector(this, image_versions, clickCallback, activeImageId)
-    })
-    return this
-  }
+export default function multiImageSelector(
+  panel,
+  image_versions,
+  clickCallback,
+  activeImageId
+) {
+  const element = panel && panel.jquery ? panel[0] : panel
+  if (!element) return
+
+  initMultiImageSelector(element, image_versions, clickCallback, activeImageId)
 }
