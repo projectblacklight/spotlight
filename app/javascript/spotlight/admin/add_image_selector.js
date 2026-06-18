@@ -6,29 +6,33 @@ export function addImageSelector(input, panel, manifestUrl, initialize) {
     return
   }
   var cropper = input.data("iiifCropper")
-  $.ajax(manifestUrl).done(function (manifest) {
-    var iiifManifest = new Iiif(manifestUrl, manifest)
+  fetch(manifestUrl)
+    .then(function (response) {
+      return response.json()
+    })
+    .then(function (manifest) {
+      var iiifManifest = new Iiif(manifestUrl, manifest)
 
-    var thumbs = iiifManifest.imagesArray()
+      var thumbs = iiifManifest.imagesArray()
 
-    hideNonIiifAlert(input)
+      hideNonIiifAlert(input)
 
-    if (initialize) {
-      cropper.setIiifFields(thumbs[0])
-      panel.multiImageSelector() // Clears out existing selector
-    }
+      if (initialize) {
+        cropper.setIiifFields(thumbs[0])
+        panel.multiImageSelector() // Clears out existing selector
+      }
 
-    if (thumbs.length > 1) {
-      panel.show()
-      panel.multiImageSelector(
-        thumbs,
-        function (selectorImage) {
-          cropper.setIiifFields(selectorImage)
-        },
-        cropper.iiifImageField.val(),
-      )
-    }
-  })
+      if (thumbs.length > 1) {
+        panel.show()
+        panel.multiImageSelector(
+          thumbs,
+          function (selectorImage) {
+            cropper.setIiifFields(selectorImage)
+          },
+          cropper.iiifImageField.val(),
+        )
+      }
+    })
 }
 
 function showNonIiifAlert(input) {

@@ -28,7 +28,15 @@ export default class {
     })
 
     function checkMonitorUrl(url) {
-      $.ajax(url).done(success).fail(fail)
+      fetch(url)
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("Network response was not ok")
+          }
+          return response.json()
+        })
+        .then(success)
+        .catch(fail)
     }
 
     function success(data) {
