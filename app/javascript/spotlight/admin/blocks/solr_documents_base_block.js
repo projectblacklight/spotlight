@@ -5,9 +5,9 @@ SirTrevor.Blocks.SolrDocumentsBase = (function () {
   return Core.Block.Resources.extend({
     plustextable: true,
     autocomplete_url: function () {
-      return this.$instance()
-        .closest("form[data-autocomplete-exhibit-catalog-path]")
-        .data("autocomplete-exhibit-catalog-path")
+      return this.instance().closest(
+        "form[data-autocomplete-exhibit-catalog-path]",
+      ).dataset.autocompleteExhibitCatalogPath
     },
     autocomplete_template: function (obj) {
       const thumbnail = obj.thumbnail

@@ -3015,8 +3015,8 @@
           }
         }, this);
       },
-      $instance: function () {
-        return $("#" + this.instanceID)
+      instance: function () {
+        return document.getElementById(this.instanceID)
       },
       capitalize: function (string) {
         return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase()
@@ -3318,10 +3318,9 @@
       icon_name: "browse",
 
       autocomplete_url: function () {
-        return document
-          .getElementById(this.instanceID)
-          .closest("form[data-autocomplete-exhibit-searches-path]").dataset
-          .autocompleteExhibitSearchesPath
+        return this.instance().closest(
+          "form[data-autocomplete-exhibit-searches-path]",
+        ).dataset.autocompleteExhibitSearchesPath
       },
 
       autocomplete_fetch: function (url) {
@@ -3425,10 +3424,9 @@
       },
 
       autocomplete_url: function () {
-        return document
-          .getElementById(this.instanceID)
-          .closest("form[data-autocomplete-exhibit-browse-groups-path]").dataset
-          .autocompleteExhibitBrowseGroupsPath
+        return this.instance().closest(
+          "form[data-autocomplete-exhibit-browse-groups-path]",
+        ).dataset.autocompleteExhibitBrowseGroupsPath
       },
       autocomplete_fetch: function (url) {
         return this.fetchOnceAndFilterLocalResults(url)
@@ -3593,10 +3591,9 @@
       show_image_selection: false,
 
       autocomplete_url: function () {
-        return document
-          .getElementById(this.instanceID)
-          .closest("form[data-autocomplete-exhibit-pages-path]").dataset
-          .autocompleteExhibitPagesPath
+        return this.instance().closest(
+          "form[data-autocomplete-exhibit-pages-path]",
+        ).dataset.autocompleteExhibitPagesPath
       },
       autocomplete_fetch: function (url) {
         return this.fetchOnceAndFilterLocalResults(url)
@@ -3683,9 +3680,9 @@
     return Spotlight$1.Block.Resources.extend({
       plustextable: true,
       autocomplete_url: function () {
-        return this.$instance()
-          .closest("form[data-autocomplete-exhibit-catalog-path]")
-          .data("autocomplete-exhibit-catalog-path")
+        return this.instance().closest(
+          "form[data-autocomplete-exhibit-catalog-path]",
+        ).dataset.autocompleteExhibitCatalogPath
       },
       autocomplete_template: function (obj) {
         const thumbnail = obj.thumbnail

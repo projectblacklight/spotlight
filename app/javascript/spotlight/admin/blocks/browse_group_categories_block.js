@@ -22,10 +22,9 @@ SirTrevor.Blocks.BrowseGroupCategories = (function () {
     },
 
     autocomplete_url: function () {
-      return document
-        .getElementById(this.instanceID)
-        .closest("form[data-autocomplete-exhibit-browse-groups-path]").dataset
-        .autocompleteExhibitBrowseGroupsPath
+      return this.instance().closest(
+        "form[data-autocomplete-exhibit-browse-groups-path]",
+      ).dataset.autocompleteExhibitBrowseGroupsPath
     },
     autocomplete_fetch: function (url) {
       return this.fetchOnceAndFilterLocalResults(url)

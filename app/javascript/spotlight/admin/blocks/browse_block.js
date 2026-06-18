@@ -7,10 +7,9 @@ SirTrevor.Blocks.Browse = (function () {
     icon_name: "browse",
 
     autocomplete_url: function () {
-      return document
-        .getElementById(this.instanceID)
-        .closest("form[data-autocomplete-exhibit-searches-path]").dataset
-        .autocompleteExhibitSearchesPath
+      return this.instance().closest(
+        "form[data-autocomplete-exhibit-searches-path]",
+      ).dataset.autocompleteExhibitSearchesPath
     },
 
     autocomplete_fetch: function (url) {
