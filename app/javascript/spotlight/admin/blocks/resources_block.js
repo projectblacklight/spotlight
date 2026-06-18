@@ -266,7 +266,9 @@ Core.Block.Resources = (function () {
     },
 
     onBlockRender: function () {
-      SpotlightNestable.init($('[data-behavior="nestable"]', this.inner))
+      SpotlightNestable.init(
+        this.inner.querySelectorAll('[data-behavior="nestable"]'),
+      )
       $("[data-input-select-target]", this.inner).selectRelatedInput()
     },
 
