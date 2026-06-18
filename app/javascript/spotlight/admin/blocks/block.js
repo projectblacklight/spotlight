@@ -19,8 +19,8 @@ import Core from "spotlight/core"
         }
       }, this)
     },
-    $instance: function () {
-      return $("#" + this.instanceID)
+    instance: function () {
+      return document.getElementById(this.instanceID)
     },
     capitalize: function (string) {
       return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase()
