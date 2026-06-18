@@ -5469,63 +5469,68 @@ class SelectRelatedInput {
   }
 }
 
-const Module = (function() {
+const Module = (function () {
   const nestableContainerSelector = '[data-behavior="nestable"]';
   const sortableOptions = {
     animation: 150,
-    draggable: '.dd-item',
-    handle: '.dd-handle',
+    draggable: ".dd-item",
+    handle: ".dd-handle",
     fallbackOnBody: true,
     swapThreshold: 0.65,
     emptyInsertThreshold: 15,
     onStart: onStartHandler,
     onEnd: onEndHandler,
-    onMove: onMoveHandler,
+    onMove: onMoveHandler
   };
-  const draggableClass = 'dd-item';
-  const nestedSortableClass = 'dd-list';
-  const nestedSortableSelector = '.dd-list';
-  const nestedSortableNodeName = 'ol';
-  const findNode = (id, container) => container.querySelector(`[data-id="${id}"]`);
-  const setWeight = (node, weight) => weightField(node).value = weight;
-  const setParent = (node, parentId) => parentPageField(node).value = parentId;
+  const draggableClass = "dd-item";
+  const nestedSortableClass = "dd-list";
+  const nestedSortableSelector = ".dd-list";
+  const nestedSortableNodeName = "ol";
+  const findNode = (id, container) =>
+    container.querySelector(`[data-id="${id}"]`);
+  const setWeight = (node, weight) => (weightField(node).value = weight);
+  const setParent = (node, parentId) => (parentPageField(node).value = parentId);
   const weightField = node => findProperty(node, "weight");
   const parentPageField = node => findProperty(node, "parent_page");
-  const findProperty = (node, property) => node.querySelector(`input[data-property="${property}"]`);
+  const findProperty = (node, property) =>
+    node.querySelector(`input[data-property="${property}"]`);
   let nestedId = 0;
 
   return {
-    init: function(nestedContainers) {
+    init: function (nestedContainers) {
       if (nestedContainers === undefined) {
         nestedContainers = document.querySelectorAll(nestableContainerSelector);
       }
 
-      // nestedContainers could be a jQuery selector result, normalize to an array.
+      // nestedContainers is a list of DOM nodes, normalize to an array.
       const containersToInit = Array.from(nestedContainers);
-      containersToInit.forEach((container) => {
+      containersToInit.forEach(container => {
         // Sir Trevor listens for drag and drop events and will error on Sortable events.
         // Don't let them bubble past the Sortable wrapper.
-        container.addEventListener('drop', stopPropagationHandler);
-      
+        container.addEventListener("drop", stopPropagationHandler);
+
         const nestedSortables = [
           ...(container.matches(nestedSortableSelector) ? [container] : []),
           ...Array.from(container.querySelectorAll(nestedSortableSelector))
         ];
         const group = `nested-${nestedId++}`;
-        
+
         nestedSortables.forEach(sortable => {
           new Sortable(sortable, { ...sortableOptions, group: group });
         });
       });
     }
-  };
+  }
 
   function stopPropagationHandler(evt) {
     evt.stopPropagation();
   }
 
   function onStartHandler(evt) {
-    makeEmptyChildSortablesForEligibleParents(getNestableContainer(evt.item), getMaxNestingLevelSetting(evt.item));
+    makeEmptyChildSortablesForEligibleParents(
+      getNestableContainer(evt.item),
+      getMaxNestingLevelSetting(evt.item)
+    );
   }
 
   function onEndHandler(evt) {
@@ -5544,7 +5549,7 @@ const Module = (function() {
 
     // Be careful here. Returning true is different than returning nothing in SortableJS.
     if (newDepth > maxAllowedDepth) {
-      return false;
+      return false
     }
   }
 
@@ -5554,64 +5559,76 @@ const Module = (function() {
     let depth = 0;
     let parentSortableElement = sortableElement;
 
-    while ((parentSortableElement = parentSortableElement.parentElement.closest(nestedSortableSelector))) {
+    while (
+      (parentSortableElement = parentSortableElement.parentElement.closest(
+        nestedSortableSelector
+      ))
+    ) {
       const parentSortable = Sortable.get(parentSortableElement);
       if (parentSortable?.options.group.name === originatingGroup) {
         depth++;
       }
     }
 
-    return depth;
+    return depth
   }
 
   // Find the max child depth in the tree, starting from the draggableElement
   function findMaxDepth(draggableElement) {
-    const childSortableElement = draggableElement.querySelector(nestedSortableSelector);
+    const childSortableElement = draggableElement.querySelector(
+      nestedSortableSelector
+    );
     if (!childSortableElement) {
-      return 1;
+      return 1
     }
 
     const children = childSortableElement.querySelectorAll(`.${draggableClass}`);
     const childDepths = Array.from(children).map(findMaxDepth);
-    return 1 + Math.max(0, ...childDepths);
+    return 1 + Math.max(0, ...childDepths)
   }
 
   function getHeight(draggableElement) {
-    return findMaxDepth(draggableElement) - 1;
+    return findMaxDepth(draggableElement) - 1
   }
 
   function getNestableContainer(element) {
-    return element.closest(nestableContainerSelector);
+    return element.closest(nestableContainerSelector)
   }
 
   function getMaxNestingLevelSetting(element) {
-    return getNestableContainer(element).getAttribute('data-max-depth') || 1;
+    return getNestableContainer(element).getAttribute("data-max-depth") || 1
   }
 
   // Create empty child sortables for all potential parents as appropriate for the given nesting level
   function makeEmptyChildSortablesForEligibleParents(container, nestingLevel) {
     if (nestingLevel <= 1) {
-      return;
+      return
     }
 
     const sortableElement = container.querySelector(nestedSortableSelector);
     const sortable = Sortable.get(sortableElement);
     if (!sortable) {
-      return;
+      return
     }
 
     const group = sortable.options.group.name;
-    const draggableElements = Array.from(sortableElement.children)
-      .filter(child => child.classList.contains(draggableClass));
+    const draggableElements = Array.from(sortableElement.children).filter(
+      child => child.classList.contains(draggableClass)
+    );
 
     draggableElements.forEach(draggableElement => {
       if (!draggableElement.querySelector(nestedSortableSelector)) {
-        const emptySortableElement = document.createElement(nestedSortableNodeName);
+        const emptySortableElement = document.createElement(
+          nestedSortableNodeName
+        );
         emptySortableElement.className = nestedSortableClass;
         draggableElement.appendChild(emptySortableElement);
         new Sortable(emptySortableElement, { ...sortableOptions, group: group });
       }
-      makeEmptyChildSortablesForEligibleParents(draggableElement, nestingLevel - 1);
+      makeEmptyChildSortablesForEligibleParents(
+        draggableElement,
+        nestingLevel - 1
+      );
     });
   }
 
@@ -5619,7 +5636,7 @@ const Module = (function() {
   function removeEmptySortables(container) {
     const sortableElements = container.querySelectorAll(nestedSortableSelector);
     sortableElements.forEach(sortableElement => {
-      if (sortableElement.innerHTML.trim() === '') {
+      if (sortableElement.innerHTML.trim() === "") {
         const sortable = Sortable.get(sortableElement);
         if (sortable) {
           sortable.destroy();
@@ -5631,16 +5648,18 @@ const Module = (function() {
 
   // Traverse all sortables within a container and update the weight and parent_page inputs
   function updateWeightsAndRelationships(container) {
-    const sortableElement = container.matches(nestedSortableSelector) ? container : container.querySelector(nestedSortableSelector);
+    const sortableElement = container.matches(nestedSortableSelector)
+      ? container
+      : container.querySelector(nestedSortableSelector);
     const nestingLevelSetting = getMaxNestingLevelSetting(sortableElement);
     const sortable = Sortable.get(sortableElement);
-    const stack = [{nodes: sortable.toArray(), parentId: ''}];
+    const stack = [{ nodes: sortable.toArray(), parentId: "" }];
     let weight = 0;
 
     while (stack.length > 0) {
-      const {nodes, parentId} = stack.pop();
+      const { nodes, parentId } = stack.pop();
 
-      nodes.forEach((nodeId) => {
+      nodes.forEach(nodeId => {
         const node = findNode(nodeId, container);
         setWeight(node, weight++);
 
@@ -5649,7 +5668,7 @@ const Module = (function() {
           const children = node.querySelector(nestedSortableSelector);
           if (children) {
             const sortableElement = Sortable.get(children);
-            stack.push({nodes: sortableElement.toArray(), parentId: nodeId});
+            stack.push({ nodes: sortableElement.toArray(), parentId: nodeId });
           }
         }
       });
@@ -6127,32 +6146,39 @@ class Users {
   });
 })(jQuery);
 
-Spotlight$1.Block.Resources = (function(){
-
+Spotlight$1.Block.Resources = (function () {
   return Spotlight$1.Block.extend({
     type: "resources",
     formable: true,
     autocompleteable: true,
     show_heading: true,
     show_image_selection: true,
-    title: function() { return i18n.t("blocks:" + this.type + ":title"); },
-    description: function() { return i18n.t("blocks:" + this.type + ":description"); },
-    alt_text_guidelines: function() {
-      if (this.showAltText()) {
-        return i18n.t("blocks:alt_text_guidelines:intro");
-      }
-      return "";
+    title: function () {
+      return i18n.t("blocks:" + this.type + ":title")
     },
-    alt_text_guidelines_link: function() {
+    description: function () {
+      return i18n.t("blocks:" + this.type + ":description")
+    },
+    alt_text_guidelines: function () {
+      if (this.showAltText()) {
+        return i18n.t("blocks:alt_text_guidelines:intro")
+      }
+      return ""
+    },
+    alt_text_guidelines_link: function () {
       if (this.showAltText()) {
         var link_url = i18n.t("blocks:alt_text_guidelines:link_url");
         var link_label = i18n.t("blocks:alt_text_guidelines:link_label");
-        return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>';
+        return (
+          '<a target="_blank" href="' + link_url + '">' + link_label + "</a>"
+        )
       }
-      return "";
+      return ""
     },
     icon_name: "resources",
-    blockGroup: function() { return i18n.t("blocks:group:items") },
+    blockGroup: function () {
+      return i18n.t("blocks:group:items")
+    },
 
     primary_field_key: "primary-caption-field",
     show_primary_field_key: "show-primary-caption",
@@ -6165,38 +6191,39 @@ Spotlight$1.Block.Resources = (function(){
 
     globalIndex: 0,
 
-    _itemPanelIiifFields: function(index, data) {
-      return [];
+    _itemPanelIiifFields: function (index, data) {
+      return []
     },
 
-    _altTextFieldsHTML: function(index, data) {
+    _altTextFieldsHTML: function (index, data) {
       if (this.showAltText()) {
-        return this.altTextHTML(index, data);
+        return this.altTextHTML(index, data)
       }
-      return "";
+      return ""
     },
 
-    showAltText: function() {
+    showAltText: function () {
       return this.editorOptions.altTextSettings[this._typeAsCamelCase()]
     },
 
-    _typeAsCamelCase: function() {
+    _typeAsCamelCase: function () {
       return this.type
-          .split('_')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join('');
+        .split("_")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join("")
     },
-    _itemSelectImageLink: function(block_item_id, doc_id, index) {
+    _itemSelectImageLink: function (block_item_id, doc_id, index) {
       // If image selection is not possible for this block, then do not show
       // image selection link
-      if (!this.show_image_selection) return ``;
-      var url = $('form[data-exhibit-path]').data('exhibit-path') + '/select_image?';
+      if (!this.show_image_selection) return ``
+      var url =
+        $("form[data-exhibit-path]").data("exhibit-path") + "/select_image?";
       var markup = `
           <a name="selectimage" href="${url}block_item_id=${block_item_id}&index_id=${index}" data-blacklight-modal="trigger">Select image area</a>
         `;
-      return markup;
+      return markup
     },
-    _itemPanel: function(data) {
+    _itemPanel: function (data) {
       var index = "item_" + this.globalIndex++;
       var checked;
       if (data.display == "true") {
@@ -6220,20 +6247,20 @@ Spotlight$1.Block.Resources = (function(){
                       <div class="d-flex">
                         <div class="checkbox">
                           <input name="item[${index}][display]" type="hidden" value="false" />
-                          <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                          <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                          <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + "_" + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                          <label class="visually-hidden" for="${this.formId(this.display_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                         </div>
                         <div class="pic">
-                          <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
+                          <img class="img-thumbnail" src="${data.thumbnail_image_url || (data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")}" />
                         </div>
                       </div>
                       <div class="d-inline-block">
-                        ${this._itemSelectImageLink(block_item_id,data.id, index)}
+                        ${this._itemSelectImageLink(block_item_id, data.id, index)}
                       </div>
                     </div>
                     <div class="main">
                       <div class="title card-title">${data.title}</div>
-                      <div>${(data.slug || data.id)}</div>
+                      <div>${data.slug || data.id}</div>
                       ${this._altTextFieldsHTML(index, data)}
                     </div>
                     <div class="remove float-end">
@@ -6249,58 +6276,57 @@ Spotlight$1.Block.Resources = (function(){
       const panel = $(markup);
       var context = this;
 
-      $('.remove a', panel).on('click', function(e) {
+      $(".remove a", panel).on("click", function (e) {
         e.preventDefault();
-        $(this).closest('.field').remove();
+        $(this).closest(".field").remove();
         context.afterPanelDelete();
-
       });
 
       this.afterPanelRender(data, panel);
 
-      return panel;
+      return panel
     },
 
-    afterPanelRender: function(data, panel) {
-       
-    },
+    afterPanelRender: function (data, panel) {},
 
-    afterPanelDelete: function() {
+    afterPanelDelete: function () {},
 
-    },
-
-    createItemPanel: function(data) {
+    createItemPanel: function (data) {
       var panel = this._itemPanel(data);
       this.attachAltTextHandlers(panel);
-      $(panel).appendTo($('.panels > ol', this.inner));
-      $('[data-behavior="nestable"]', this.inner).trigger('change');
+      $(panel).appendTo($(".panels > ol", this.inner));
+      $('[data-behavior="nestable"]', this.inner).trigger("change");
     },
 
-    item_options: function() { return ""; },
+    item_options: function () {
+      return ""
+    },
 
-    content: function() {
+    content: function () {
       var templates = [this.items_selector()];
       if (this.plustextable) {
         templates.push(this.text_area());
       }
-      return templates.join("<hr />\n");
+      return templates.join("<hr />\n")
     },
 
-    items_selector: function() { return [
-    '<div class="row">',
-      '<div class="col-md-8">',
+    items_selector: function () {
+      return [
+        '<div class="row">',
+        '<div class="col-md-8">',
         '<div class="form-group mb-3">',
         '<div class="panels dd nestable-item-grid" data-behavior="nestable" data-max-depth="1"><ol class="dd-list"></ol></div>',
-          this.autocomplete_control(),
-        '</div>',
-      '</div>',
-      '<div class="col-md-4">',
+        this.autocomplete_control(),
+        "</div>",
+        "</div>",
+        '<div class="col-md-4">',
         this.item_options(),
-      '</div>',
-    '</div>'].join("\n")
+        "</div>",
+        "</div>"
+      ].join("\n")
     },
 
-    editorHTML: function() {
+    editorHTML: function () {
       return `<div class="form resources-admin clearfix">
         <div class="widget-header">
           ${this.description()}
@@ -6311,74 +6337,102 @@ Spotlight$1.Block.Resources = (function(){
       </div>`
     },
 
-    _altTextData: function(data) {
+    _altTextData: function (data) {
       const isDecorative = data.decorative;
-      const altText = isDecorative ? '' : (data.alt_text || '');
-      const altTextBackup = data.alt_text_backup || '';
-      const placeholderAttr = isDecorative ? '' : `placeholder="${i18n.t("blocks:resources:alt_text:placeholder")}"`;
-      const disabledAttr = isDecorative ? 'disabled' : '';
+      const altText = isDecorative ? "" : data.alt_text || "";
+      const altTextBackup = data.alt_text_backup || "";
+      const placeholderAttr = isDecorative
+        ? ""
+        : `placeholder="${i18n.t("blocks:resources:alt_text:placeholder")}"`;
+      const disabledAttr = isDecorative ? "disabled" : "";
 
-      return { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr };
+      return {
+        isDecorative,
+        altText,
+        altTextBackup,
+        placeholderAttr,
+        disabledAttr
+      }
     },
 
-    altTextHTML: function(index, data) {
-      const { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr } = this._altTextData(data);
+    altTextHTML: function (index, data) {
+      const {
+        isDecorative,
+        altText,
+        altTextBackup,
+        placeholderAttr,
+        disabledAttr
+      } = this._altTextData(data);
       return `<div class="mt-2 pt-2 d-flex">
           <div class="me-2">
-            <label class="col-form-label pb-0 pt-1" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
+            <label class="col-form-label pb-0 pt-1" for="${this.formId(this.alt_text_textarea + "_" + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
             <div class="form-check mb-1 justify-content-end">
               <input class="form-check-input" type="checkbox"
-                id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
-              <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
+                id="${this.formId(this.decorative_checkbox + "_" + data.id)}" name="item[${index}][decorative]" ${isDecorative ? "checked" : ""}>
+              <label class="form-check-label" for="${this.formId(this.decorative_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
             </div>
           </div>
           <div class="flex-grow-1 flex-fill d-flex">
             <input type="hidden" name="item[${index}][alt_text_backup]" value="${altTextBackup}" />
             <textarea class="form-control w-100" rows="2" ${placeholderAttr}
-              id="${this.formId(this.alt_text_textarea + '_' + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
+              id="${this.formId(this.alt_text_textarea + "_" + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
           </div>
         </div>`
     },
 
-    attachAltTextHandlers: function(panel) {
+    attachAltTextHandlers: function (panel) {
       if (this.showAltText()) {
         const decorativeCheckbox = $('input[name$="[decorative]"]', panel);
         const altTextInput = $('textarea[name$="[alt_text]"]', panel);
         const altTextBackupInput = $('input[name$="[alt_text_backup]"]', panel);
 
-        decorativeCheckbox.on('change', function() {
+        decorativeCheckbox.on("change", function () {
           const isDecorative = this.checked;
           if (isDecorative) {
             altTextBackupInput.val(altTextInput.val());
-            altTextInput.val('');
+            altTextInput.val("");
           } else {
             altTextInput.val(altTextBackupInput.val());
           }
           altTextInput
-            .prop('disabled', isDecorative)
-            .attr('placeholder', isDecorative ? '' : i18n.t("blocks:resources:alt_text:placeholder"));
+            .prop("disabled", isDecorative)
+            .attr(
+              "placeholder",
+              isDecorative
+                ? ""
+                : i18n.t("blocks:resources:alt_text:placeholder")
+            );
         });
 
-        altTextInput.on('input', function() {
-          $(this).data('lastValue', $(this).val());
+        altTextInput.on("input", function () {
+          $(this).data("lastValue", $(this).val());
         });
       }
     },
 
-    onBlockRender: function() {
-      Module.init($('[data-behavior="nestable"]', this.inner));
-      $('[data-input-select-target]', this.inner).selectRelatedInput();
+    onBlockRender: function () {
+      Module.init(
+        this.inner.querySelectorAll('[data-behavior="nestable"]')
+      );
+      $("[data-input-select-target]", this.inner).selectRelatedInput();
     },
 
-    afterLoadData: function(data) {
+    afterLoadData: function (data) {
       var context = this;
-      $.each(Object.keys(data.item || {}).map(function(k) { return data.item[k]}).sort(function(a,b) { return a.weight - b.weight; }), function(index, item) {
-        context.createItemPanel(item);
-      });
-     
+      $.each(
+        Object.keys(data.item || {})
+          .map(function (k) {
+            return data.item[k]
+          })
+          .sort(function (a, b) {
+            return a.weight - b.weight
+          }),
+        function (index, item) {
+          context.createItemPanel(item);
+        }
+      );
     }
-  });
-
+  })
 })();
 
 SirTrevor.Blocks.Browse = (function () {
@@ -7114,38 +7168,49 @@ SirTrevor.Blocks.SolrDocumentsGrid = (function(){
 
 })();
 
-SirTrevor.Blocks.UploadedItems = (function(){
+SirTrevor.Blocks.UploadedItems = (function () {
   return Spotlight$1.Block.Resources.extend({
     plustextable: true,
     uploadable: true,
     autocompleteable: false,
     show_image_selection: false,
-    
-    id_key: 'file',
 
-    type: 'uploaded_items',
+    id_key: "file",
 
-    icon_name: 'items',
+    type: "uploaded_items",
 
-    blockGroup: 'undefined',
+    icon_name: "items",
+
+    blockGroup: "undefined",
 
     // Clear out the default Uploadable upload options
     // since we will be using our own custom controls
-    upload_options: { html: '' },
+    upload_options: { html: "" },
 
-    fileInput: function() { return $(this.inner).find('input[type="file"]'); },
-
-    onBlockRender: function(){
-      Module.init($(this.inner).find('[data-behavior="nestable"]'));
-
-      this.fileInput().on('change', (function(ev) {
-        this.onDrop(ev.currentTarget);
-      }).bind(this));
+    fileInput: function () {
+      return $(this.inner).find('input[type="file"]')
     },
 
-    onDrop: function(transferData){
+    onBlockRender: function () {
+      Module.init(
+        this.inner.querySelectorAll('[data-behavior="nestable"]')
+      );
+
+      this.fileInput().on(
+        "change",
+        function (ev) {
+          this.onDrop(ev.currentTarget);
+        }.bind(this)
+      );
+    },
+
+    onDrop: function (transferData) {
       var file = transferData.files[0];
-          (typeof URL !== "undefined") ? URL : (typeof webkitURL !== "undefined") ? webkitURL : null;
+        typeof URL !== "undefined"
+            ? URL
+            : typeof webkitURL !== "undefined"
+              ? webkitURL
+              : null;
 
       // Handle one upload at a time
       if (/image/.test(file.type)) {
@@ -7153,30 +7218,34 @@ SirTrevor.Blocks.UploadedItems = (function(){
 
         this.uploader(
           file,
-          function(data) {
+          function (data) {
             this.createItemPanel(data);
-            this.fileInput().val('');
+            this.fileInput().val("");
             this.ready();
           },
-          function(error) {
-            this.addMessage(i18n.t('blocks:image:upload_error'));
+          function (error) {
+            this.addMessage(i18n.t("blocks:image:upload_error"));
             this.ready();
           }
         );
       }
     },
 
-    title: function() { return i18n.t('blocks:uploaded_items:title'); },
-    description: function() { return i18n.t('blocks:uploaded_items:description'); },
+    title: function () {
+      return i18n.t("blocks:uploaded_items:title")
+    },
+    description: function () {
+      return i18n.t("blocks:uploaded_items:description")
+    },
 
     globalIndex: 0,
 
-    _itemPanel: function(data) {
+    _itemPanel: function (data) {
       var index = "file_" + this.globalIndex++;
       var checked = 'checked="checked"';
 
-      if (data.display == 'false') {
-        checked = '';
+      if (data.display == "false") {
+        checked = "";
       }
 
       var dataId = data.id || data.uid;
@@ -7194,8 +7263,8 @@ SirTrevor.Blocks.UploadedItems = (function(){
               <div class="card-header d-flex item-grid">
                 <div class="checkbox">
                   <input name="item[${index}][display]" type="hidden" value="false" />
-                  <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + dataId)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                  <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + dataId)}">${i18n.t("blocks:resources:panel:display")}</label>
+                  <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + "_" + dataId)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                  <label class="visually-hidden" for="${this.formId(this.display_checkbox + "_" + dataId)}">${i18n.t("blocks:resources:panel:display")}</label>
                 </div>
                 <div class="pic">
                   <img class="img-thumbnail" src="${dataUrl}" />
@@ -7203,12 +7272,12 @@ SirTrevor.Blocks.UploadedItems = (function(){
                 <div class="main form-horizontal">
                   <div class="title card-title">${dataTitle}</div>
                   <div class="field row me-3">
-                    <label for="${this.formId('caption_' + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:caption")}</label>
-                    <input type="text" class="form-control col" id="${this.formId('caption_' + dataId)}" name="item[${index}][caption]" data-field="caption"/>
+                    <label for="${this.formId("caption_" + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:caption")}</label>
+                    <input type="text" class="form-control col" id="${this.formId("caption_" + dataId)}" name="item[${index}][caption]" data-field="caption"/>
                   </div>
                   <div class="field row me-3">
-                    <label for="${this.formId('link_' + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:link")}</label>
-                    <input type="text" class="form-control col" id="${this.formId('link_' + dataId)}" name="item[${index}][link]" data-field="link"/>
+                    <label for="${this.formId("link_" + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:link")}</label>
+                    <input type="text" class="form-control col" id="${this.formId("link_" + dataId)}" name="item[${index}][link]" data-field="link"/>
                   </div>
                   ${this._altTextFieldsHTML(index, data)}
                 </div>
@@ -7223,18 +7292,18 @@ SirTrevor.Blocks.UploadedItems = (function(){
       panel.find('[data-field="link"]').val(data.link);
       var context = this;
 
-      $('.remove a', panel).on('click', function(e) {
+      $(".remove a", panel).on("click", function (e) {
         e.preventDefault();
-        $(this).closest('.field').remove();
+        $(this).closest(".field").remove();
         context.afterPanelDelete();
       });
 
       this.afterPanelRender(data, panel);
 
-      return panel;
+      return panel
     },
 
-    editorHTML: function() {
+    editorHTML: function () {
       return `<div class="form oembed-text-admin clearfix">
         <div class="widget-header">
           ${this.description()}
@@ -7259,26 +7328,32 @@ SirTrevor.Blocks.UploadedItems = (function(){
       </div>`
     },
 
-    altTextHTML: function(index, data) {
-      const { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr } = this._altTextData(data);
+    altTextHTML: function (index, data) {
+      const {
+        isDecorative,
+        altText,
+        altTextBackup,
+        placeholderAttr,
+        disabledAttr
+      } = this._altTextData(data);
       return `
       <div class="field row me-3">
         <div class="col-lg-3 ps-md-2">
-          <label class="col-form-label text-nowrap pb-0 pt-1 justify-content-md-start justify-content-lg-end d-flex" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
+          <label class="col-form-label text-nowrap pb-0 pt-1 justify-content-md-start justify-content-lg-end d-flex" for="${this.formId(this.alt_text_textarea + "_" + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
           <div class="form-check d-flex justify-content-md-start justify-content-lg-end">
             <input class="form-check-input" type="checkbox"
-              id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
-            <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
+              id="${this.formId(this.decorative_checkbox + "_" + data.id)}" name="item[${index}][decorative]" ${isDecorative ? "checked" : ""}>
+            <label class="form-check-label" for="${this.formId(this.decorative_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
           </div>
         </div>
         <input type="hidden" name="item[${index}][alt_text_backup]" value="${altTextBackup}" />
         <textarea class="col-lg-9" rows="2" ${placeholderAttr}
-          id="${this.formId(this.alt_text_textarea + '_' + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
+          id="${this.formId(this.alt_text_textarea + "_" + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
       </div>`
     },
 
-    zpr_key: 'zpr_link'
-  });
+    zpr_key: "zpr_link"
+  })
 })();
 
 (function() {
