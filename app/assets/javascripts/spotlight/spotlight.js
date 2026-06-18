@@ -2351,7 +2351,7 @@
           nestedContainers = document.querySelectorAll(nestableContainerSelector);
         }
 
-        // nestedContainers could be a jQuery selector result, normalize to an array.
+        // nestedContainers is a list of DOM nodes, normalize to an array.
         const containersToInit = Array.from(nestedContainers);
         containersToInit.forEach((container) => {
           // Sir Trevor listens for drag and drop events and will error on Sortable events.
@@ -3301,7 +3301,9 @@
       },
 
       onBlockRender: function () {
-        Module.init($('[data-behavior="nestable"]', this.inner));
+        Module.init(
+          this.inner.querySelectorAll('[data-behavior="nestable"]'),
+        );
         $("[data-input-select-target]", this.inner).selectRelatedInput();
       },
 
@@ -4105,7 +4107,9 @@
       },
 
       onBlockRender: function () {
-        Module.init($(this.inner).find('[data-behavior="nestable"]'));
+        Module.init(
+          this.inner.querySelectorAll('[data-behavior="nestable"]'),
+        );
 
         this.fileInput().on(
           "change",

@@ -25,7 +25,9 @@ SirTrevor.Blocks.UploadedItems = (function () {
     },
 
     onBlockRender: function () {
-      SpotlightNestable.init($(this.inner).find('[data-behavior="nestable"]'))
+      SpotlightNestable.init(
+        this.inner.querySelectorAll('[data-behavior="nestable"]'),
+      )
 
       this.fileInput().on(
         "change",
