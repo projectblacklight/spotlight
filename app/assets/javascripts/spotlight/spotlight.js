@@ -24,7 +24,7 @@
   const bootstrap__namespace = /*#__PURE__*/_interopNamespaceDefault(bootstrap);
 
   // Bootstrap's ESM build exports Carousel by name; CDN-converted UMD builds (e.g. ga.jspm.io) only have a default export
-  const Carousel = bootstrap__namespace.Carousel ?? bootstrap__namespace.default?.Carousel;
+  const Carousel$2 = bootstrap__namespace.Carousel ?? bootstrap__namespace.default?.Carousel;
 
   // Sets up accessible autoplay controls (https://www.w3.org/WAI/ARIA/apg/patterns/carousel/)
   const setupAutoplay = function (carouselElement, carousel) {
@@ -116,12 +116,12 @@
     }
   };
 
-  class Carousel$1 {
+  class Carousel$3 {
     connect() {
-      if (!Carousel) return
+      if (!Carousel$2) return
 
       document.querySelectorAll(".carousel").forEach((carouselElement) => {
-        const carousel = Carousel.getOrCreateInstance(carouselElement);
+        const carousel = Carousel$2.getOrCreateInstance(carouselElement);
 
         // on initial page load, set the aria-describedby on the btns for each carousel
         updateAriaDescribedBy(carouselElement);
@@ -274,7 +274,7 @@
 
   class UserIndex {
     connect() {
-      new Carousel$1().connect();
+      new Carousel$3().connect();
       new ClearFormButton().connect();
       new ZprLinks().connect();
     }
@@ -3898,6 +3898,9 @@
     })
   })();
 
+  // Bootstrap's ESM build exports Carousel by name; CDN-converted UMD builds (e.g. ga.jspm.io) only have a default export
+  const Carousel$1 = bootstrap__namespace.Carousel ?? bootstrap__namespace.default?.Carousel;
+
   SirTrevor.Blocks.SolrDocumentsCarousel = (function () {
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
       plustextable: false,
@@ -3983,36 +3986,54 @@
         return html
       },
 
-      afterPreviewLoad: function (_options) {
-        $(this.inner).find(".carousel").carousel();
+      afterPreviewLoad: function (options) {
+        const carousels = this.inner.querySelectorAll(".carousel");
 
-        // the bootstrap carousel only initializes data-bs-slide widgets on page load, so we need
-        // to initialize them ourselves..
-        var clickHandler = function (e) {
-          var href;
-          var $this = $(this);
-          var $target = $(
-            $this.attr("data-bs-target") ||
-              ((href = $this.attr("href")) && href.replace(/.*(?=#[^\s]+$)/, "")),
-          ); // strip for ie7
-          if (!$target.hasClass("carousel")) return
-          var options = $.extend({}, $target.data(), $this.data());
-          var slideIndex = $this.attr("data-bs-slide-to");
-          if (slideIndex) options.interval = false;
+        const clickHandler = function (e) {
+          const button = e.currentTarget;
+          let target;
+          try {
+            const targetSelector =
+              button.getAttribute("data-bs-target") || button.getAttribute("href");
+            if (targetSelector) {
+              target = document.querySelector(targetSelector);
+            }
+          } catch (err) {
+            // ignore selector errors
+          }
 
-          $.fn.carousel.call($target, options);
+          if (!target) {
+            target = button.closest(".carousel");
+          }
 
-          if (slideIndex) {
-            $target.data("bs.carousel").to(slideIndex);
+          if (!target || !target.classList.contains("carousel")) return
+
+          const carousel = Carousel$1.getOrCreateInstance(target);
+          const slideIndex = button.getAttribute("data-bs-slide-to");
+
+          if (slideIndex !== null) {
+            carousel.to(parseInt(slideIndex, 10));
+          } else {
+            const slideAction = button.getAttribute("data-bs-slide");
+            if (slideAction === "next") {
+              carousel.next();
+            } else if (slideAction === "prev") {
+              carousel.prev();
+            }
           }
 
           e.preventDefault();
         };
 
-        $(this.inner)
-          .find(".carousel")
-          .on("click.bs.carousel.data-api", "[data-bs-slide]", clickHandler)
-          .on("click.bs.carousel.data-api", "[data-bs-slide-to]", clickHandler);
+        carousels.forEach(function (carouselEl) {
+          Carousel$1.getOrCreateInstance(carouselEl);
+
+          carouselEl
+            .querySelectorAll("[data-bs-slide], [data-bs-slide-to]")
+            .forEach(function (btn) {
+              btn.addEventListener("click", clickHandler);
+            });
+        });
       },
     })
   })();
@@ -4033,6 +4054,9 @@
     })
   })();
 
+  // Bootstrap's ESM build exports Carousel by name; CDN-converted UMD builds (e.g. ga.jspm.io) only have a default export
+  const Carousel = bootstrap__namespace.Carousel ?? bootstrap__namespace.default?.Carousel;
+
   SirTrevor.Blocks.SolrDocumentsFeatures = (function () {
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
       plustextable: false,
@@ -4041,34 +4065,53 @@
       icon_name: "item_features",
 
       afterPreviewLoad: function (_options) {
-        $(this.inner).find(".carousel").carousel();
+        const carousels = this.inner.querySelectorAll(".carousel");
 
-        // the bootstrap carousel only initializes data-bs-slide widgets on page load, so we need
-        // to initialize them ourselves..
-        var clickHandler = function (e) {
-          var href;
-          var $this = $(this);
-          var $target = $(
-            $this.attr("data-bs-target") ||
-              ((href = $this.attr("href")) && href.replace(/.*(?=#[^\s]+$)/, "")),
-          ); // strip for ie7
-          if (!$target.hasClass("carousel")) return
-          var options = $.extend({}, $target.data(), $this.data());
-          var slideIndex = $this.attr("data-bs-slide-to");
-          if (slideIndex) options.interval = false;
+        const clickHandler = function (e) {
+          const button = e.currentTarget;
+          let target;
+          try {
+            const targetSelector =
+              button.getAttribute("data-bs-target") || button.getAttribute("href");
+            if (targetSelector) {
+              target = document.querySelector(targetSelector);
+            }
+          } catch {
+            // ignore selector errors
+          }
 
-          $.fn.carousel.call($target, options);
+          if (!target) {
+            target = button.closest(".carousel");
+          }
 
-          if (slideIndex) {
-            $target.data("bs.carousel").to(slideIndex);
+          if (!target || !target.classList.contains("carousel")) return
+
+          const carousel = Carousel.getOrCreateInstance(target);
+          const slideIndex = button.getAttribute("data-bs-slide-to");
+
+          if (slideIndex !== null) {
+            carousel.to(parseInt(slideIndex, 10));
+          } else {
+            const slideAction = button.getAttribute("data-bs-slide");
+            if (slideAction === "next") {
+              carousel.next();
+            } else if (slideAction === "prev") {
+              carousel.prev();
+            }
           }
 
           e.preventDefault();
         };
 
-        $(this.inner)
-          .find(".carousel")
-          .on("click.bs.carousel.data-api", "[data-bs-slide-to]", clickHandler);
+        carousels.forEach(function (carouselEl) {
+          Carousel.getOrCreateInstance(carouselEl);
+
+          carouselEl
+            .querySelectorAll("[data-bs-slide-to]")
+            .forEach(function (btn) {
+              btn.addEventListener("click", clickHandler);
+            });
+        });
       },
     })
   })();
