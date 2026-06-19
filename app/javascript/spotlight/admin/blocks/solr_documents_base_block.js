@@ -18,19 +18,32 @@ SirTrevor.Blocks.SolrDocumentsBase = (function () {
       <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/><small>&nbsp;&nbsp;${this.highlight(obj.description)}</small></div>`
     },
     transform_autocomplete_results: function (response) {
-      return $.map(response["docs"], function (doc) {
+      return (response["docs"] || []).map(function (doc) {
         return doc
       })
     },
 
     caption_option_values: function () {
-      var fields = $("[data-blacklight-configuration-index-fields]").data(
-        "blacklight-configuration-index-fields"
+      const element = document.querySelector(
+        "[data-blacklight-configuration-index-fields]"
       )
+      const fieldsData = element
+        ? element.dataset.blacklightConfigurationIndexFields
+        : null
+      let fields = []
+      if (fieldsData) {
+        try {
+          fields = JSON.parse(fieldsData)
+        } catch (e) {
+          // ignore
+        }
+      }
 
-      return $.map(fields, function (field) {
-        return $("<option />").val(field.key).text(field.label)[0].outerHTML
-      }).join("\n")
+      return fields
+        .map(function (field) {
+          return `<option value="${field.key}">${field.label}</option>`
+        })
+        .join("\n")
     },
 
     item_options: function () {
@@ -118,41 +131,73 @@ SirTrevor.Blocks.SolrDocumentsBase = (function () {
     // from canvases in the manifest, transformed by spotlight/admin/iiif.js in
     // the #images method.
     setIiifFields: function (panel, manifest_data, initialize) {
-      var legacyThumbnailField = $(panel).find(
+      const el = panel.jquery ? panel[0] : panel
+      if (!el) return
+
+      const legacyThumbnailField = el.querySelector(
         '[name$="[thumbnail_image_url]"]'
       )
-      var legacyFullField = $(panel).find('[name$="[full_image_url]"]')
+      const legacyFullField = el.querySelector('[name$="[full_image_url]"]')
 
-      if (initialize && legacyThumbnailField.val().length > 0) {
+      if (
+        initialize &&
+        legacyThumbnailField &&
+        legacyThumbnailField.value.length > 0
+      ) {
         return
       }
 
-      legacyThumbnailField.val("")
-      legacyFullField.val("")
-      $(panel).find('[name$="[iiif_image_id]"]').val(manifest_data.imageId)
-      $(panel).find('[name$="[iiif_tilesource]"]').val(manifest_data.tilesource)
-      $(panel).find('[name$="[iiif_manifest_url]"]').val(manifest_data.manifest)
-      $(panel).find('[name$="[iiif_canvas_id]"]').val(manifest_data.canvasId)
-      $(panel)
-        .find("img.img-thumbnail")
-        .attr(
-          "src",
+      if (legacyThumbnailField) legacyThumbnailField.value = ""
+      if (legacyFullField) legacyFullField.value = ""
+
+      const iiifImageIdField = el.querySelector('[name$="[iiif_image_id]"]')
+      if (iiifImageIdField) iiifImageIdField.value = manifest_data.imageId || ""
+
+      const iiifTilesourceField = el.querySelector(
+        '[name$="[iiif_tilesource]"]'
+      )
+      if (iiifTilesourceField)
+        iiifTilesourceField.value = manifest_data.tilesource || ""
+
+      const iiifManifestUrlField = el.querySelector(
+        '[name$="[iiif_manifest_url]"]'
+      )
+      if (iiifManifestUrlField)
+        iiifManifestUrlField.value = manifest_data.manifest || ""
+
+      const iiifCanvasIdField = el.querySelector('[name$="[iiif_canvas_id]"]')
+      if (iiifCanvasIdField)
+        iiifCanvasIdField.value = manifest_data.canvasId || ""
+
+      const img = el.querySelector("img.img-thumbnail")
+      if (img) {
+        img.src =
           manifest_data.thumbnail_image_url ||
-            manifest_data.tilesource.replace(
-              "/info.json",
-              "/full/100,100/0/default.jpg"
-            )
-        )
+          (manifest_data.tilesource || "").replace(
+            "/info.json",
+            "/full/100,100/0/default.jpg"
+          )
+      }
     },
     afterPanelRender: function (data, panel) {
+      const el = panel.jquery ? panel[0] : panel
+      if (!el) return
+
       var context = this
       var manifestUrl = data.iiif_manifest || data.iiif_manifest_url
 
       if (!manifestUrl) {
-        $(panel)
-          .find('[name$="[thumbnail_image_url]"]')
-          .val(data.thumbnail_image_url || data.thumbnail)
-        $(panel).find('[name$="[full_image_url]"]').val(data.full_image_url)
+        const legacyThumbnailField = el.querySelector(
+          '[name$="[thumbnail_image_url]"]'
+        )
+        if (legacyThumbnailField) {
+          legacyThumbnailField.value =
+            data.thumbnail_image_url || data.thumbnail || ""
+        }
+        const legacyFullField = el.querySelector('[name$="[full_image_url]"]')
+        if (legacyFullField) {
+          legacyFullField.value = data.full_image_url || ""
+        }
 
         return
       }
