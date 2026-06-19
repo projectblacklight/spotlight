@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('bootstrap'), require('openseadragon'), require('clipboard'), require('sir-trevor'), require('sortablejs'), require('@hotwired/stimulus')) :
-  typeof define === 'function' && define.amd ? define(['bootstrap', 'openseadragon', 'clipboard', 'sir-trevor', 'sortablejs', '@hotwired/stimulus'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.bootstrap, global.OpenSeadragon, global.Clipboard, global.SirTrevor, global.Sortable, global.Stimulus));
-})(this, (function (bootstrap, OpenSeadragon, Clipboard, SirTrevor$1, Sortable, stimulus) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('bootstrap'), require('openseadragon'), require('clipboard'), require('sir-trevor'), require('sortablejs'), require('openseadragon-rails/dom'), require('@hotwired/stimulus')) :
+  typeof define === 'function' && define.amd ? define(['bootstrap', 'openseadragon', 'clipboard', 'sir-trevor', 'sortablejs', 'openseadragon-rails/dom', '@hotwired/stimulus'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.bootstrap, global.OpenSeadragon, global.Clipboard, global.SirTrevor, global.Sortable, null, global.Stimulus));
+})(this, (function (bootstrap, OpenSeadragon, Clipboard, SirTrevor$1, Sortable, dom, stimulus) { 'use strict';
 
   // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
   // Includes "export default tns" at the end of the file for spotlight/user/browse_group_categories.js
@@ -7184,20 +7184,20 @@
     })
   })();
 
-  SirTrevor.Blocks.SolrDocumentsEmbed = (function(){
-
+  SirTrevor.Blocks.SolrDocumentsEmbed = (function () {
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
       type: "solr_documents_embed",
       icon_name: "item_embed",
       show_image_selection: false,
 
-      item_options: function() { return "" },
+      item_options: function () {
+        return ""
+      },
 
-      afterPreviewLoad: function(options) {
-        $(this.inner).find('picture[data-openseadragon]').openseadragon();
+      afterPreviewLoad: function (options) {
+        this.inner.querySelectorAll("picture[data-openseadragon]").openseadragon();
       }
-    });
-
+    })
   })();
 
   SirTrevor.Blocks.SolrDocumentsFeatures = (function () {

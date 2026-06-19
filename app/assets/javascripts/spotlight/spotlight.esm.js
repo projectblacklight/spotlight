@@ -3,6 +3,7 @@ import OpenSeadragon from 'openseadragon';
 import Clipboard from 'clipboard';
 import SirTrevor$1 from 'sir-trevor';
 import Sortable from 'sortablejs';
+import 'openseadragon-rails/dom';
 import { Controller } from '@hotwired/stimulus';
 
 // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
@@ -7185,20 +7186,20 @@ SirTrevor.Blocks.SolrDocumentsCarousel = (function () {
   })
 })();
 
-SirTrevor.Blocks.SolrDocumentsEmbed = (function(){
-
+SirTrevor.Blocks.SolrDocumentsEmbed = (function () {
   return SirTrevor.Blocks.SolrDocumentsBase.extend({
     type: "solr_documents_embed",
     icon_name: "item_embed",
     show_image_selection: false,
 
-    item_options: function() { return "" },
+    item_options: function () {
+      return ""
+    },
 
-    afterPreviewLoad: function(options) {
-      $(this.inner).find('picture[data-openseadragon]').openseadragon();
+    afterPreviewLoad: function (options) {
+      this.inner.querySelectorAll("picture[data-openseadragon]").openseadragon();
     }
-  });
-
+  })
 })();
 
 SirTrevor.Blocks.SolrDocumentsFeatures = (function () {
