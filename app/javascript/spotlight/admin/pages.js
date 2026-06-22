@@ -1,6 +1,7 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 import Core from 'spotlight/core'
+import { SerializedForm } from 'spotlight/admin/form_observer'
 
 export default class {
   connect(){
@@ -28,7 +29,7 @@ export default class {
         altTextSettings: instance.data('altTextSettings'),
         defaultType:["Text"],
         onEditorRender: function() {
-          $.SerializedForm();
+          SerializedForm.init();
         },
         blockTypeLimits: {
           "SearchResults": 1
