@@ -3507,78 +3507,97 @@ class AddAnother {
 
 class AddNewButton {
   connect() {
-    $("[data-expanded-add-button]").each((_i, el) => this.addExpandBehaviorToButton($(el)));
+    document.querySelectorAll("[data-expanded-add-button]").forEach(el =>
+      this.addExpandBehaviorToButton(el)
+    );
   }
 
   addExpandBehaviorToButton(button){
     var settings = {
-      speed: (button.data('speed') || 450),
-      animate_width: (button.data('animate_width') || 425)
+      speed: parseInt(button.dataset.speed || "450", 10),
+      animate_width: parseInt(button.dataset.animateWidth || "425", 10)
     };
-    var target = $(button.data('field-target'));
-    var save   = $("input[data-behavior='save']", target);
-    var cancel = $("input[data-behavior='cancel']", target);
-    var input  = $("input[type='text']", target);
-    var original_width  = button.outerWidth();
+    var target = document.querySelector(button.dataset.fieldTarget);
+    var save   = target.querySelector("input[data-behavior='save']");
+    var cancel = target.querySelector("input[data-behavior='cancel']");
+    var input  = target.querySelector("input[type='text']");
+    var original_width  = button.offsetWidth;
     var expanded = false;
 
     // Animate button open when the mouse enters or
     // the button is given focus (i.e. clicked/tabbed)
-    button.on("mouseenter focus", function(){
-      expandButton();
-    });
+    button.addEventListener("mouseenter", expandButton);
+    button.addEventListener("focus", expandButton);
 
     // Don't allow blank titles
-    save.on('click', function(){
+    save.addEventListener("click", function(e){
       if ( inputEmpty() ) {
-        return false;
+        e.preventDefault();
+        e.stopPropagation();
       }
     });
 
     // Empty input and collapse
     // button on cancel click
-    cancel.on('click', function(e){
+    cancel.addEventListener("click", function(e){
       e.preventDefault();
-      input.val('');
+      input.value = '';
       collapseButton();
     });
 
     // Collapse the button on when
     // an empty input loses focus
-    input.on("blur", function(){
+    input.addEventListener("blur", function(){
       if ( inputEmpty() ) {
         collapseButton();
       }
     });
+
     function expandButton(){
-      // If this has not yet been expanded, recalculate original_width to 
+      // If this has not yet been expanded, recalculate original_width to
       // handle things that may have been originally hidden.
       if (!expanded) {
-        original_width  = button.outerWidth();
+        original_width  = button.offsetWidth;
       }
-      if(button.outerWidth() <= (original_width + 5)) {
+      if(button.offsetWidth <= (original_width + 5)) {
         expanded = true;
-        button.animate(
-          {width: settings.animate_width + 'px'}, settings.speed, function(){
-            target.show(0, function(){
-              input.focus();
-              // Set the button to auto width to make
-              // sure it has room for any inputs
-              button.width("auto");
-              // Explicitly set the width of the button
-              // so the close animation works properly
-              button.width(button.width());
-            });
-          }
+        var anim = button.animate(
+          { width: settings.animate_width + 'px' },
+          { duration: settings.speed }
         );
+        anim.onfinish = function(){
+          button.style.width = settings.animate_width + 'px';
+          showElement(target);
+          input.focus();
+          // Set the button to auto width to make
+          // sure it has room for any inputs
+          button.style.width = 'auto';
+          // Explicitly set the width of the button
+          // so the close animation works properly
+          button.style.width = button.offsetWidth + 'px';
+        };
       }
     }
     function collapseButton(){
-      target.hide();
-      button.animate({width: original_width + 'px'}, settings.speed);
+      target.style.display = 'none';
+      var anim = button.animate(
+        { width: original_width + 'px' },
+        { duration: settings.speed }
+      );
+      anim.onfinish = function(){
+        button.style.width = original_width + 'px';
+      };
+    }
+    // Show an element that may be hidden via a CSS class by overriding with an
+    // appropriate inline display value (mirrors jQuery's .show()).
+    function showElement(el){
+      el.style.display = '';
+      if (window.getComputedStyle(el).display === 'none') {
+        el.style.display = 'inline-block';
+      }
     }
     function inputEmpty(){
-      return $.trim(input.val()) == "";
+      return input.value.trim() == "";
     }
   }
 }
