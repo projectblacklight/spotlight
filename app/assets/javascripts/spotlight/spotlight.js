@@ -3971,7 +3971,7 @@
       showNonIiifAlert(input);
       return
     }
-    var cropper = input.data("iiifCropper");
+    var cropper = input.iiifCropper;
     fetch(manifestUrl)
       .then(function (response) {
         return response.json()
@@ -3989,7 +3989,7 @@
         }
 
         if (thumbs.length > 1) {
-          panel.show();
+          panel.style.display = "";
           multiImageSelector(
             panel,
             thumbs,
@@ -4002,12 +4002,23 @@
       });
   }
 
+  function findNonIiifAlert(input) {
+    if (!input || !input.parentElement) return null
+    var prev = input.parentElement.previousElementSibling;
+    if (prev && prev.matches('[data-behavior="non-iiif-alert"]')) {
+      return prev
+    }
+    return null
+  }
+
   function showNonIiifAlert(input) {
-    input.parent().prev('[data-behavior="non-iiif-alert"]').show();
+    var alert = findNonIiifAlert(input);
+    if (alert) alert.style.display = "";
   }
 
   function hideNonIiifAlert(input) {
-    input.parent().prev('[data-behavior="non-iiif-alert"]').hide();
+    var alert = findNonIiifAlert(input);
+    if (alert) alert.style.display = "none";
   }
 
   const Spotlight$1 = function() {
@@ -4041,12 +4052,9 @@
   class Crop {
     constructor(cropArea, preserveAspectRatio = true) {
       // Extract raw DOM element if cropArea is a jQuery object
-      this.cropArea = cropArea;
+      this.cropArea = cropArea && cropArea.jquery ? cropArea[0] : cropArea;
       if (this.cropArea) {
         this.cropArea.iiifCropper = this;
-        if (typeof jQuery !== "undefined") {
-          jQuery(this.cropArea).data("iiifCropper", this);
-        }
       }
 
       // Get the cropper key and find the crop tool element
@@ -4363,9 +4371,6 @@
       var input = this.cropTool.querySelector('[data-behavior="autocomplete"]');
       if (input) {
         input.iiifCropper = this;
-        if (typeof jQuery !== "undefined") {
-          jQuery(input).data("iiifCropper", this);
-        }
       }
     }
 
@@ -4382,7 +4387,7 @@
         return
       }
 
-      if (!this.cropTool || typeof jQuery === "undefined") {
+      if (!this.cropTool) {
         return
       }
 
@@ -4392,16 +4397,14 @@
 
       // Not every page which uses this module has autocomplete linked directly to the cropping tool
       if (inputElement) {
-        var input = jQuery(inputElement);
         var targetPanel =
           inputElement.dataset.targetPanel ||
           inputElement.getAttribute("data-target-panel");
         var panelElement = document.querySelector(targetPanel);
         if (panelElement) {
-          var panel = jQuery(panelElement);
           addImageSelector(
-            input,
-            panel,
+            inputElement,
+            panelElement,
             this.iiifManifestField.val(),
             !this.iiifImageField.val()
           );
@@ -4425,10 +4428,6 @@
       tabs.forEach(tab => {
         tab.addEventListener("shown.bs.tab", onTabShown);
       });
-
-      if (typeof jQuery !== "undefined") {
-        jQuery(tabs).on("shown.bs.tab", onTabShown);
-      }
     }
 
     // Get all the form data with the exception of the _method field.
@@ -5375,7 +5374,7 @@
   function highlight(value, query) {
     if (query.trim() === '') return value;
     const queryValue = query.trim();
-    return queryValue ? value.replace(new RegExp(queryValue, 'gi'), '<strong>$&</strong>') : value;
+    return queryValue ? value.replace(new RegExp(queryValue, 'gi'), '<strong>$&</strong>') : '';
   }
 
   function templateFunc(obj, query) {
@@ -5411,11 +5410,12 @@
   }
 
   function addAutocompletetoFeaturedImage(){
-    const autocompletePath = $('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path');
-    const featuredImageTypeaheads = $('[data-featured-image-typeahead]');
+    const autocompletePathElement = document.querySelector('form[data-autocomplete-exhibit-catalog-path]');
+    const autocompletePath = autocompletePathElement && autocompletePathElement.dataset.autocompleteExhibitCatalogPath;
+    const featuredImageTypeaheads = document.querySelectorAll('[data-featured-image-typeahead]');
     if (featuredImageTypeaheads.length === 0) return;
 
-    $.each(featuredImageTypeaheads, function(index, autoCompleteInput) {
+    featuredImageTypeaheads.forEach(autoCompleteInput => {
       const autoCompleteElement = autoCompleteInput.closest('auto-complete');
 
       autoCompleteElement.setAttribute('src', autocompletePath);
@@ -5424,12 +5424,16 @@
         const data = getAutoCompleteElementDataMap(autoCompleteElement).get(e.relatedTarget.value);
         if (!data) return;
 
-        const inputElement = $(e.relatedTarget);
-        const panel = document.querySelector(e.relatedTarget.dataset.targetPanel);
-        e.relatedTarget.value = data.title;
-        addImageSelector(inputElement, $(panel), data.iiif_manifest, true);
-        $(inputElement.data('id-field')).val(data['global_id']);
-        inputElement.attr('type', 'text');
+        const inputElement = e.relatedTarget;
+        const panel = document.querySelector(inputElement.dataset.targetPanel);
+        inputElement.value = data.title;
+        addImageSelector(inputElement, panel, data.iiif_manifest, true);
+        const idFieldSelector = inputElement.dataset.idField;
+        const idField = document.querySelector(idFieldSelector);
+        if (idField) {
+          idField.value = data['global_id'];
+        }
+        inputElement.setAttribute('type', 'text');
       });
     });
   }

@@ -4,12 +4,9 @@ import Core from "spotlight/core"
 export default class Crop {
   constructor(cropArea, preserveAspectRatio = true) {
     // Extract raw DOM element if cropArea is a jQuery object
-    this.cropArea = cropArea
+    this.cropArea = cropArea && cropArea.jquery ? cropArea[0] : cropArea
     if (this.cropArea) {
       this.cropArea.iiifCropper = this
-      if (typeof jQuery !== "undefined") {
-        jQuery(this.cropArea).data("iiifCropper", this)
-      }
     }
 
     // Get the cropper key and find the crop tool element
@@ -326,9 +323,6 @@ export default class Crop {
     var input = this.cropTool.querySelector('[data-behavior="autocomplete"]')
     if (input) {
       input.iiifCropper = this
-      if (typeof jQuery !== "undefined") {
-        jQuery(input).data("iiifCropper", this)
-      }
     }
   }
 
@@ -345,7 +339,7 @@ export default class Crop {
       return
     }
 
-    if (!this.cropTool || typeof jQuery === "undefined") {
+    if (!this.cropTool) {
       return
     }
 
@@ -355,16 +349,14 @@ export default class Crop {
 
     // Not every page which uses this module has autocomplete linked directly to the cropping tool
     if (inputElement) {
-      var input = jQuery(inputElement)
       var targetPanel =
         inputElement.dataset.targetPanel ||
         inputElement.getAttribute("data-target-panel")
       var panelElement = document.querySelector(targetPanel)
       if (panelElement) {
-        var panel = jQuery(panelElement)
         addImageSelector(
-          input,
-          panel,
+          inputElement,
+          panelElement,
           this.iiifManifestField.val(),
           !this.iiifImageField.val()
         )
@@ -388,10 +380,6 @@ export default class Crop {
     tabs.forEach(tab => {
       tab.addEventListener("shown.bs.tab", onTabShown)
     })
-
-    if (typeof jQuery !== "undefined") {
-      jQuery(tabs).on("shown.bs.tab", onTabShown)
-    }
   }
 
   // Get all the form data with the exception of the _method field.

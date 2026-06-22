@@ -6,7 +6,7 @@ export function addImageSelector(input, panel, manifestUrl, initialize) {
     showNonIiifAlert(input)
     return
   }
-  var cropper = input.data("iiifCropper")
+  var cropper = input.iiifCropper
   fetch(manifestUrl)
     .then(function (response) {
       return response.json()
@@ -24,7 +24,7 @@ export function addImageSelector(input, panel, manifestUrl, initialize) {
       }
 
       if (thumbs.length > 1) {
-        panel.show()
+        panel.style.display = ""
         multiImageSelector(
           panel,
           thumbs,
@@ -37,10 +37,21 @@ export function addImageSelector(input, panel, manifestUrl, initialize) {
     })
 }
 
+function findNonIiifAlert(input) {
+  if (!input || !input.parentElement) return null
+  var prev = input.parentElement.previousElementSibling
+  if (prev && prev.matches('[data-behavior="non-iiif-alert"]')) {
+    return prev
+  }
+  return null
+}
+
 function showNonIiifAlert(input) {
-  input.parent().prev('[data-behavior="non-iiif-alert"]').show()
+  var alert = findNonIiifAlert(input)
+  if (alert) alert.style.display = ""
 }
 
 function hideNonIiifAlert(input) {
-  input.parent().prev('[data-behavior="non-iiif-alert"]').hide()
+  var alert = findNonIiifAlert(input)
+  if (alert) alert.style.display = "none"
 }
