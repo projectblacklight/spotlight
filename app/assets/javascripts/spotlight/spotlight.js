@@ -4727,71 +4727,75 @@
   */
   class EditInPlace {
     connect() {
-      $('[data-in-place-edit-target]').each(function() {
-        $(this).on('click.inplaceedit', function() {
-          var $label = $(this).find($(this).data('in-place-edit-target'));
-          var $input = $(this).find($(this).data('in-place-edit-field-target'));
+      document.querySelectorAll('[data-in-place-edit-target]').forEach(function(container) {
+        var label = container.querySelector(container.dataset.inPlaceEditTarget);
+        var input = container.querySelector(container.dataset.inPlaceEditFieldTarget);
+        if (!label || !input) return;
 
+        container.addEventListener('click', function(e) {
           // hide the edit-in-place affordance icon while in edit mode
-          $(this).addClass('hide-edit-icon');
-          $label.hide();
-          $input.val($label.text());
-          $input.attr('type', 'text');
-          $input.select();
-          $input.focus();
+          container.classList.add('hide-edit-icon');
+          label.style.display = 'none';
+          input.value = label.textContent;
+          input.setAttribute('type', 'text');
+          input.select();
+          input.focus();
+          e.preventDefault();
+        });
 
-          $input.on('keypress', function(e) {
-            if(e.which == 13) {
-              $input.trigger('blur.inplaceedit');
-              return false;
-            }
+        input.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            input.blur();
+            e.preventDefault();
+          }
+        });
+
+        input.addEventListener('blur', function() {
+          var value = input.value;
+
+          if (value.trim().length == 0) {
+            input.value = label.textContent;
+          } else {
+            label.textContent = value;
+          }
+
+          label.style.display = '';
+          input.setAttribute('type', 'hidden');
+          // when leaving edit mode, should no longer hide edit-in-place affordance icon
+          document.querySelectorAll("[data-in-place-edit-target]").forEach(function(el) {
+            el.classList.remove('hide-edit-icon');
           });
-
-          $input.on('blur.inplaceedit', function() {
-            var value = $input.val();
-
-            if ($.trim(value).length == 0) {
-              $input.val($label.text());
-            } else {
-              $label.text(value);
-            }
-
-            $label.show();
-            $input.attr('type', 'hidden');
-            // when leaving edit mode, should no longer hide edit-in-place affordance icon
-            $("[data-in-place-edit-target]").removeClass('hide-edit-icon');
-
-            return false;
-          });
-
-          return false;
         });
       });
 
-      $("[data-behavior='restore-default']").each(function(){
-        var hidden = $("[data-default-value]", $(this));
-        var value = $($("[data-in-place-edit-target]", $(this)).data('in-place-edit-target'), $(this));
-        var button = $("[data-restore-default]", $(this));
+      document.querySelectorAll("[data-behavior='restore-default']").forEach(function(container) {
+        var hidden = container.querySelector("[data-default-value]");
+        var inPlaceEditContainer = container.querySelector("[data-in-place-edit-target]");
+        var button = container.querySelector("[data-restore-default]");
+        if (!hidden || !inPlaceEditContainer || !button) return;
 
-        hidden.on('keypress', function(e) {
-          if(e.which == 13) {
-            hidden.trigger('blur');
-            return false;
+        var value = container.querySelector(inPlaceEditContainer.dataset.inPlaceEditTarget);
+
+        hidden.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            hidden.blur();
+            e.preventDefault();
           }
         });
 
-        hidden.on('blur', function(){
-          if( $(this).val() == $(this).data('default-value') ) {
-            button.addClass('d-none');
+        hidden.addEventListener('blur', function() {
+          if (hidden.value == hidden.dataset.defaultValue) {
+            button.classList.add('d-none');
           } else {
-            button.removeClass('d-none');
+            button.classList.remove('d-none');
           }
         });
-        button.on('click', function(e){
+
+        button.addEventListener('click', function(e) {
           e.preventDefault();
-          hidden.val(hidden.data('default-value'));
-          value.text(hidden.data('default-value'));
-          button.hide();
+          hidden.value = hidden.dataset.defaultValue;
+          if (value) value.textContent = hidden.dataset.defaultValue;
+          button.style.display = 'none';
         });
       });
     }
