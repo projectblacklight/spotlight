@@ -65,14 +65,19 @@ SirTrevor.Blocks.Browse = (function () {
               </div>
             </li>`
 
-      var panel = $(markup)
+      var tempDiv = document.createElement("div")
+      tempDiv.innerHTML = markup.trim()
+      var panel = tempDiv.firstElementChild
       var context = this
 
-      $(".remove a", panel).on("click", function (e) {
-        e.preventDefault()
-        $(this).closest(".field").remove()
-        context.afterPanelDelete()
-      })
+      const removeLink = panel.querySelector(".remove a")
+      if (removeLink) {
+        removeLink.addEventListener("click", function (e) {
+          e.preventDefault()
+          this.closest(".field").remove()
+          context.afterPanelDelete()
+        })
+      }
 
       this.afterPanelRender(data, panel)
 
