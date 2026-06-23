@@ -5,9 +5,10 @@ import { SerializedForm } from 'spotlight/admin/form_observer'
 
 export default class {
   connect(){
+    var attachmentEndpointEl = document.querySelector('[data-attachment-endpoint]')
     SirTrevor.setDefaults({
       iconUrl: Spotlight.sirTrevorIcon,
-      uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint'),
+      uploadUrl: attachmentEndpointEl ? attachmentEndpointEl.dataset.attachmentEndpoint : undefined,
       ajaxOptions: {
         headers: {
           'X-CSRF-Token': Core.csrfToken() || ''
@@ -20,13 +21,13 @@ export default class {
     SirTrevor.Blocks.Quote.prototype.toolbarEnabled = true;
     SirTrevor.Blocks.Text.prototype.toolbarEnabled = true;
 
-    var instance = $('.js-st-instance').first();
+    var instance = document.querySelector('.js-st-instance');
 
-    if (instance.length) {
+    if (instance) {
       var editor = new SirTrevor.Editor({
-        el: instance[0],
-        blockTypes: instance.data('blockTypes'),
-        altTextSettings: instance.data('altTextSettings'),
+        el: instance,
+        blockTypes: JSON.parse(instance.dataset.blockTypes),
+        altTextSettings: JSON.parse(instance.dataset.altTextSettings),
         defaultType:["Text"],
         onEditorRender: function() {
           SerializedForm.init();
