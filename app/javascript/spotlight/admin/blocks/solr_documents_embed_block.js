@@ -10,6 +10,6 @@ SirTrevor.Blocks.SolrDocumentsEmbed = (function () {
 
     afterPreviewLoad: function (options) {
       this.inner.querySelector("picture[data-openseadragon]").openseadragon()
-    }
+    },
   })
 })()

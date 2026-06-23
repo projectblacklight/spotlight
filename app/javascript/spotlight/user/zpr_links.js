@@ -1,13 +1,13 @@
-import OpenSeadragon from 'openseadragon';
+import OpenSeadragon from "openseadragon"
 
 export default class {
   connect() {
-    $('.zpr-link').on('click', function() {
-      var modalDialog = $('#blacklight-modal .modal-dialog');
-      var modalContent = modalDialog.find('.modal-content')
-      modalDialog.removeClass('modal-lg')
-      modalDialog.addClass('modal-xl')
-      modalContent.html('<div id="osd-modal-container"></div>');
+    $(".zpr-link").on("click", function () {
+      var modalDialog = $("#blacklight-modal .modal-dialog")
+      var modalContent = modalDialog.find(".modal-content")
+      modalDialog.removeClass("modal-lg")
+      modalDialog.addClass("modal-xl")
+      modalContent.html('<div id="osd-modal-container"></div>')
       var controls = `<div class="controls d-flex justify-content-center justify-content-md-end">
           <div class="custom-close-controls pe-3 pt-3">
             <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-hidden="true">${Spotlight.ZprLinks.close}</button>
@@ -19,18 +19,18 @@ export default class {
           <div id="empty-div-required-by-osd"></div>
         </div>`
 
-      $('#osd-modal-container').append('<div id="osd-div"></div>');
-      $('#osd-modal-container').append(controls);
+      $("#osd-modal-container").append('<div id="osd-div"></div>')
+      $("#osd-modal-container").append(controls)
 
-      $('#blacklight-modal').modal('show');
-      
-      $('#blacklight-modal').one('hidden.bs.modal', function (event) {
-        modalDialog.removeClass('modal-xl')
-        modalDialog.addClass('modal-lg')
-      });
+      $("#blacklight-modal").modal("show")
+
+      $("#blacklight-modal").one("hidden.bs.modal", function (event) {
+        modalDialog.removeClass("modal-xl")
+        modalDialog.addClass("modal-lg")
+      })
 
       OpenSeadragon({
-        id: 'osd-div',
+        id: "osd-div",
         zoomInButton: "osd-zoom-in",
         zoomOutButton: "osd-zoom-out",
         // This is a hack where OpenSeadragon (if using mapped buttons) requires you
@@ -39,8 +39,8 @@ export default class {
         fullPageButton: "empty-div-required-by-osd",
         nextButton: "empty-div-required-by-osd",
         previousButton: "empty-div-required-by-osd",
-        tileSources: [$(this).data('iiif-tilesource')]
+        tileSources: [$(this).data("iiif-tilesource")],
       })
-    });
+    })
   }
 }

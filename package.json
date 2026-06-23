@@ -6,7 +6,9 @@
   "type": "module",
   "module": "app/assets/javascripts/spotlight/spotlight.esm.js",
   "scripts": {
-    "prepare": "rollup --config rollup.config.js --sourcemap && ESM=true rollup --config rollup.config.js --sourcemap"
+    "prepare": "rollup --config rollup.config.js --sourcemap && ESM=true rollup --config rollup.config.js --sourcemap",
+    "format": "prettier --write \"app/javascript/**/*.js\"",
+    "format:check": "prettier --check \"app/javascript/**/*.js\""
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,7 @@
   "homepage": "https://github.com/projectblacklight/spotlight#readme",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^26.0.1",
+    "prettier": "^3.8.4",
     "rollup": "^4.0.0",
     "rollup-plugin-includepaths": "^0.2.4"
   },

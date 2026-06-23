@@ -2,36 +2,36 @@
   Simple plugin to select form elements
   when other elements are clicked.
 */
-(function($) {
-  $.fn.selectRelatedInput = function() {
-    var clickElements = this;
+;(function ($) {
+  $.fn.selectRelatedInput = function () {
+    var clickElements = this
 
-    $(clickElements).each(function() {
-      var target = $($(this).data('input-select-target'));
+    $(clickElements).each(function () {
+      var target = $($(this).data("input-select-target"))
 
-      var event;
+      var event
 
       if ($(this).is("select")) {
-        event = 'change';
+        event = "change"
       } else {
-        event = 'click';
+        event = "click"
       }
 
-      $(this).on(event, function() {
+      $(this).on(event, function () {
         if (target.is(":checkbox") || target.is(":radio")) {
-          target.prop('checked', true);
+          target.prop("checked", true)
         } else {
-          target.focus();
+          target.focus()
         }
-      });
-    });
+      })
+    })
 
-    return this;
-  };
-})(jQuery);
+    return this
+  }
+})(jQuery)
 
 export default class {
   connect() {
-    $('[data-input-select-target]').selectRelatedInput();
+    $("[data-input-select-target]").selectRelatedInput()
   }
 }

@@ -61,3 +61,18 @@ jobs:
           context: .
           file: ./Dockerfile
           push: false
+
+  prettier:
+    runs-on: ubuntu-latest
+    name: prettier
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: Check formatting
+        run: npm run format:check
