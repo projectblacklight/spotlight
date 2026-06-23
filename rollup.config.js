@@ -10,7 +10,6 @@ const external = [
   "@hotwired/stimulus",
   "blacklight-frontend",
   "bootstrap",
-  "jquery-serializejson",
   "jquery",
   "leaflet",
   "openseadragon",
