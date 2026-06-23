@@ -7577,7 +7577,7 @@
         if (Blocks.hasOwnProperty(type) && Blocks[type].prototype.toolbarEnabled) {
           var blockGroup;
 
-          if ($.isFunction(Blocks[type].prototype.blockGroup)) {
+          if (typeof Blocks[type].prototype.blockGroup === "function") {
             blockGroup = Blocks[type].prototype.blockGroup();
           } else {
             blockGroup = Blocks[type].prototype.blockGroup;
@@ -7594,12 +7594,17 @@
 
       function generateBlock(groups, key) {
         var group   = groups[key];
-        var groupEl = $("<div class='st-controls-group'><div class='st-group-col-form-label'>" + key + "</div></div>");
+        var groupEl = document.createElement("div");
+        groupEl.className = "st-controls-group";
+        var label = document.createElement("div");
+        label.className = "st-group-col-form-label";
+        label.textContent = key;
+        groupEl.appendChild(label);
         var buttons = group.reduce(function(memo, btn) {
           return memo += btn;
         }, "");
-        groupEl.append(buttons);
-        return groupEl[0].outerHTML;
+        groupEl.insertAdjacentHTML("beforeend", buttons);
+        return groupEl.outerHTML;
       }
 
       var standardWidgets = generateBlock(groups, i18n.t("blocks:group:undefined"));
@@ -7627,6 +7632,15 @@
       return elButtons;
     }
 
+    function delegate(root, selector, eventName, handler) {
+      root.addEventListener(eventName, function(e) {
+        var matcher = e.target.closest(selector);
+        if (matcher) {
+          handler.call(matcher, e);
+        }
+      });
+    }
+
     Spotlight$1.BlockControls = function() { };
     Spotlight$1.BlockControls.create = function(editor) {
       // REFACTOR - should probably not know about blockManager
@@ -7650,12 +7664,15 @@
 
         var parent = this.parentNode;
         if (!parent || hide() === parent) { return; }
-        $('.st-block__inner', parent).after(el);
+        var inner = parent.querySelector('.st-block__inner');
+        if (inner) {
+          inner.insertAdjacentElement('afterend', el);
+        }
         parent.classList.add("st-block--controls-active");
       }
 
-      $(editor.wrapper).delegate(".st-block-replacer", "click", insert);
-      $(editor.wrapper).delegate(".st-block-controls__button", "click", insert);
+      delegate(editor.wrapper, ".st-block-replacer", "click", insert);
+      delegate(editor.wrapper, ".st-block-controls__button", "click", insert);
 
       return {
         el: el,
@@ -7683,9 +7700,11 @@
     var editor = this.editor;
 
     return function(block) {
-      var control = $(".st-block-controls__button[data-type='" + block.type + "']", editor.blockControls.el);
+      var control = editor.blockControls.el.querySelector(".st-block-controls__button[data-type='" + block.type + "']");
 
-      control.prop("disabled", !editor.blockManager.canCreateBlock(block.class()));
+      if (control) {
+        control.disabled = !editor.blockManager.canCreateBlock(block.class());
+      }
     };
   };
 
@@ -7694,16 +7713,18 @@
     var editor = this.editor;
 
     return function() {
-      $.each(editor.blockManager.blockTypes, function(i, type) {
+      editor.blockManager.blockTypes.forEach(function(type) {
         var block_type = SirTrevor.Blocks[type].prototype;
 
-        var control = $(editor.blockControls.el).find(".st-block-controls__button[data-type='" + block_type.type + "']");
-        control.prop("disabled", !editor.blockManager.canCreateBlock(type));
+        var control = editor.blockControls.el.querySelector(".st-block-controls__button[data-type='" + block_type.type + "']");
+        if (control) {
+          control.disabled = !editor.blockManager.canCreateBlock(type);
+        }
       });
     };
   };
 
-  SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
+  SirTrevor.Locales.en.blocks = Object.assign(SirTrevor.Locales.en.blocks, {
     autocompleteable: {
       placeholder: "Enter a title..."
     },
