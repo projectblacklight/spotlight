@@ -246,10 +246,9 @@ Core.Block.Resources = (function () {
 
     attachAltTextHandlers: function (panel) {
       if (this.showAltText()) {
-        const el = panel && panel.jquery ? panel[0] : panel
-        const decorativeCheckbox = el.querySelector('input[name$="[decorative]"]')
-        const altTextInput = el.querySelector('textarea[name$="[alt_text]"]')
-        const altTextBackupInput = el.querySelector('input[name$="[alt_text_backup]"]')
+        const decorativeCheckbox = panel.querySelector('input[name$="[decorative]"]')
+        const altTextInput = panel.querySelector('textarea[name$="[alt_text]"]')
+        const altTextBackupInput = panel.querySelector('input[name$="[alt_text_backup]"]')
 
         if (decorativeCheckbox) {
           decorativeCheckbox.addEventListener("change", function () {
