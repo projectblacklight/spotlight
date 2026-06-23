@@ -41,7 +41,7 @@ SirTrevor.Blocks.SolrDocumentsCarousel = (function () {
     addCarouselCycleOptions: function (options) {
       var html = ""
 
-      $.each(options.values, function (index, interval) {
+      options.values.forEach(function (interval) {
         var selected = interval === options.selected ? "selected" : "",
           intervalInMilliSeconds = parseInt(interval, 10) * 1000
 
@@ -62,7 +62,8 @@ SirTrevor.Blocks.SolrDocumentsCarousel = (function () {
       var html = "",
         _this = this
 
-      $.each(options.values, function (size, px) {
+      Object.keys(options.values).forEach(function (size) {
+        var px = options.values[size]
         var checked = size === options.selected ? "checked" : "",
           id = _this.formId(_this.max_height_key)
 
@@ -85,7 +86,7 @@ SirTrevor.Blocks.SolrDocumentsCarousel = (function () {
       return html
     },
 
-    afterPreviewLoad: function (options) {
+    afterPreviewLoad: function (_options) {
       const carousels = this.inner.querySelectorAll(".carousel")
 
       const clickHandler = function (e) {
@@ -97,7 +98,7 @@ SirTrevor.Blocks.SolrDocumentsCarousel = (function () {
           if (targetSelector) {
             target = document.querySelector(targetSelector)
           }
-        } catch (err) {
+        } catch {
           // ignore selector errors
         }
 
