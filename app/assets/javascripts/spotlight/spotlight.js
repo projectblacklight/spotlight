@@ -6159,34 +6159,32 @@
     SirTrevor.Block.prototype.availableMixins.push("plustextable");
   })(jQuery);
 
-  (function ($) {
-    Spotlight$1.Block = SirTrevor.Block.extend({
-      scribeOptions: {
-        allowBlockElements: true,
-        tags: { p: true }
-      },
-      formable: true,
-      editorHTML: function () {
-        return ""
-      },
-      beforeBlockRender: function () {
-        this.availableMixins.forEach(function (mixin) {
-          if (
-            this[mixin] &&
-            SirTrevor.BlockMixins[this.capitalize(mixin)].preload
-          ) {
-            this.withMixin(SirTrevor.BlockMixins[this.capitalize(mixin)]);
-          }
-        }, this);
-      },
-      instance: function () {
-        return document.getElementById(this.instanceID)
-      },
-      capitalize: function (string) {
-        return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase()
-      }
-    });
-  })(jQuery);
+  Spotlight$1.Block = SirTrevor.Block.extend({
+    scribeOptions: {
+      allowBlockElements: true,
+      tags: { p: true }
+    },
+    formable: true,
+    editorHTML: function () {
+      return ""
+    },
+    beforeBlockRender: function () {
+      this.availableMixins.forEach(function (mixin) {
+        if (
+          this[mixin] &&
+          SirTrevor.BlockMixins[this.capitalize(mixin)].preload
+        ) {
+          this.withMixin(SirTrevor.BlockMixins[this.capitalize(mixin)]);
+        }
+      }, this);
+    },
+    instance: function () {
+      return document.getElementById(this.instanceID)
+    },
+    capitalize: function (string) {
+      return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase()
+    }
+  });
 
   Spotlight$1.Block.Resources = (function () {
     return Spotlight$1.Block.extend({
@@ -6258,8 +6256,9 @@
         // If image selection is not possible for this block, then do not show
         // image selection link
         if (!this.show_image_selection) return ``
+        var formEl = document.querySelector("form[data-exhibit-path]");
         var url =
-          $("form[data-exhibit-path]").data("exhibit-path") + "/select_image?";
+          (formEl ? formEl.dataset.exhibitPath : "") + "/select_image?";
         var markup = `
           <a name="selectimage" href="${url}block_item_id=${block_item_id}&index_id=${index}" data-blacklight-modal="trigger">Select image area</a>
         `;
@@ -6315,14 +6314,19 @@
             </li>
       `;
 
-        const panel = $(markup);
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = markup.trim();
+        const panel = tempDiv.firstElementChild;
         var context = this;
 
-        $(".remove a", panel).on("click", function (e) {
-          e.preventDefault();
-          $(this).closest(".field").remove();
-          context.afterPanelDelete();
-        });
+        const removeLink = panel.querySelector(".remove a");
+        if (removeLink) {
+          removeLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            this.closest(".field").remove();
+            context.afterPanelDelete();
+          });
+        }
 
         this.afterPanelRender(data, panel);
 
@@ -6336,8 +6340,10 @@
       createItemPanel: function (data) {
         var panel = this._itemPanel(data);
         this.attachAltTextHandlers(panel);
-        $(panel).appendTo($(".panels > ol", this.inner));
-        $('[data-behavior="nestable"]', this.inner).trigger("change");
+        const ol = this.inner.querySelector(".panels > ol");
+        if (ol) ol.appendChild(panel);
+        const nestable = this.inner.querySelector('[data-behavior="nestable"]');
+        if (nestable) nestable.dispatchEvent(new Event("change"));
       },
 
       item_options: function () {
@@ -6424,31 +6430,35 @@
 
       attachAltTextHandlers: function (panel) {
         if (this.showAltText()) {
-          const decorativeCheckbox = $('input[name$="[decorative]"]', panel);
-          const altTextInput = $('textarea[name$="[alt_text]"]', panel);
-          const altTextBackupInput = $('input[name$="[alt_text_backup]"]', panel);
+          const el = panel && panel.jquery ? panel[0] : panel;
+          const decorativeCheckbox = el.querySelector('input[name$="[decorative]"]');
+          const altTextInput = el.querySelector('textarea[name$="[alt_text]"]');
+          const altTextBackupInput = el.querySelector('input[name$="[alt_text_backup]"]');
 
-          decorativeCheckbox.on("change", function () {
-            const isDecorative = this.checked;
-            if (isDecorative) {
-              altTextBackupInput.val(altTextInput.val());
-              altTextInput.val("");
-            } else {
-              altTextInput.val(altTextBackupInput.val());
-            }
-            altTextInput
-              .prop("disabled", isDecorative)
-              .attr(
+          if (decorativeCheckbox) {
+            decorativeCheckbox.addEventListener("change", function () {
+              const isDecorative = this.checked;
+              if (isDecorative) {
+                if (altTextBackupInput) altTextBackupInput.value = altTextInput.value;
+                altTextInput.value = "";
+              } else {
+                if (altTextBackupInput) altTextInput.value = altTextBackupInput.value;
+              }
+              altTextInput.disabled = isDecorative;
+              altTextInput.setAttribute(
                 "placeholder",
                 isDecorative
                   ? ""
                   : i18n.t("blocks:resources:alt_text:placeholder")
               );
-          });
+            });
+          }
 
-          altTextInput.on("input", function () {
-            $(this).data("lastValue", $(this).val());
-          });
+          if (altTextInput) {
+            altTextInput.addEventListener("input", function () {
+              this.dataset.lastValue = this.value;
+            });
+          }
         }
       },
 
@@ -6463,18 +6473,16 @@
 
       afterLoadData: function (data) {
         var context = this;
-        $.each(
-          Object.keys(data.item || {})
-            .map(function (k) {
-              return data.item[k]
-            })
-            .sort(function (a, b) {
-              return a.weight - b.weight
-            }),
-          function (index, item) {
+        Object.keys(data.item || {})
+          .map(function (k) {
+            return data.item[k]
+          })
+          .sort(function (a, b) {
+            return a.weight - b.weight
+          })
+          .forEach(function (item) {
             context.createItemPanel(item);
-          }
-        );
+          });
       }
     })
   })();
@@ -6544,14 +6552,19 @@
               </div>
             </li>`;
 
-        var panel = $(markup);
+        var tempDiv = document.createElement("div");
+        tempDiv.innerHTML = markup.trim();
+        var panel = tempDiv.firstElementChild;
         var context = this;
 
-        $(".remove a", panel).on("click", function (e) {
-          e.preventDefault();
-          $(this).closest(".field").remove();
-          context.afterPanelDelete();
-        });
+        const removeLink = panel.querySelector(".remove a");
+        if (removeLink) {
+          removeLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            this.closest(".field").remove();
+            context.afterPanelDelete();
+          });
+        }
 
         this.afterPanelRender(data, panel);
 
@@ -6633,14 +6646,19 @@
             </div>
           </li>`;
 
-        const panel = $(markup);
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = markup.trim();
+        const panel = tempDiv.firstElementChild;
         var context = this;
 
-        $("a[data-item-grid-panel-remove]", panel).on("click", function (e) {
-          e.preventDefault();
-          $(this).closest(".field").remove();
-          context.afterPanelDelete();
-        });
+        const removeLink = panel.querySelector("a[data-item-grid-panel-remove]");
+        if (removeLink) {
+          removeLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            this.closest(".field").remove();
+            context.afterPanelDelete();
+          });
+        }
 
         this.afterPanelRender(data, panel);
 
@@ -6816,9 +6834,18 @@
 
       item_options: function() {
         var block = this;
-        var fields = $('[data-blacklight-configuration-search-views]').data('blacklight-configuration-search-views');
+        var element = document.querySelector('[data-blacklight-configuration-search-views]');
+        var fieldsData = element ? element.dataset.blacklightConfigurationSearchViews : null;
+        var fields = [];
+        if (fieldsData) {
+          try {
+            fields = JSON.parse(fieldsData);
+          } catch (e) {
+            // ignore parse errors
+          }
+        }
 
-        return $.map(fields, function(field) {
+        return fields.map(function(field) {
           return `<div>
           <label for='${block.formId(block.view_key + field.key)}'>
             <input id='${block.formId(block.view_key + field.key)}' name='${block.view_key}[]' type='checkbox' value='${field.key}' />
@@ -6829,11 +6856,15 @@
       },
 
       afterPanelRender: function(data, panel) {
-        $(this.inner).find('.item-input-field').attr("disabled", "disabled");
+        this.inner.querySelectorAll('.item-input-field').forEach(function(el) {
+          el.disabled = true;
+        });
       },
 
       afterPanelDelete: function() {
-        $(this.inner).find('.item-input-field').removeAttr("disabled");
+        this.inner.querySelectorAll('.item-input-field').forEach(function(el) {
+          el.disabled = false;
+        });
       },
 
     });
@@ -7132,7 +7163,7 @@
       addCarouselCycleOptions: function (options) {
         var html = "";
 
-        $.each(options.values, function (index, interval) {
+        options.values.forEach(function (interval) {
           var selected = interval === options.selected ? "selected" : "",
             intervalInMilliSeconds = parseInt(interval, 10) * 1000;
 
@@ -7153,7 +7184,8 @@
         var html = "",
           _this = this;
 
-        $.each(options.values, function (size, px) {
+        Object.keys(options.values).forEach(function (size) {
+          var px = options.values[size];
           var checked = size === options.selected ? "checked" : "",
             id = _this.formId(_this.max_height_key);
 
