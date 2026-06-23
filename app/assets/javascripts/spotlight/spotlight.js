@@ -3220,8 +3220,10 @@
         var data = $container.data();
         var sidebar = $container.data().sidebar;
         var items = data.browseGroupCategoriesCount;
-        var dir = $('html').attr('dir');
-        var controls = $container.parent().find('.browse-group-categories-controls')[0];
+        var dir = $("html").attr("dir");
+        var controls = $container
+          .parent()
+          .find(".browse-group-categories-controls")[0];
 
         slider = tns({
           container: $container[0],
@@ -3229,19 +3231,19 @@
           loop: false,
           nav: false,
           items: 1,
-          slideBy: 'page',
+          slideBy: "page",
           textDirection: dir,
           responsive: {
             576: {
-              items: itemCount(items, sidebar)
-            }
-          }
+              items: itemCount(items, sidebar),
+            },
+          },
         });
       }
 
       // Destroy the slider instance, as tns will change the dom elements, causing some issues with turbolinks
       function setupDestroy() {
-        document.addEventListener('turbolinks:before-cache', function() {
+        document.addEventListener("turbolinks:before-cache", function () {
           if (slider && slider.destroy) {
             slider.destroy();
           }
@@ -3250,39 +3252,43 @@
 
       function itemCount(items, sidebar) {
         if (items < 3) {
-          return items;
+          return items
         }
-        return sidebar ? 3 : 4;
+        return sidebar ? 3 : 4
       }
 
-      return $('[data-browse-group-categories-carousel]').each(function() {
+      return $("[data-browse-group-categories-carousel]").each(function () {
         $container = $(this);
         init();
         setupDestroy();
-      });
+      })
     }
   }
 
   class Carousel {
     connect() {
       if ($.fn.carousel) {
-        const $carousel = $('.carousel');
+        const $carousel = $(".carousel");
 
         // updates the aria-describedby on the next and prev btns
         const updateAriaDescribedBy = function ($carousel) {
-          const $activeItem = $carousel.find('.carousel-item.active');
-          const $items = $carousel.find('.carousel-item');
+          const $activeItem = $carousel.find(".carousel-item.active");
+          const $items = $carousel.find(".carousel-item");
           const curIndex = $items.index($activeItem);
           const prevIndex = (curIndex - 1 + $items.length) % $items.length;
           const nextIndex = (curIndex + 1) % $items.length;
 
-          const prevDataId = $items.eq(prevIndex).data('id');
-          const nextDataId = $items.eq(nextIndex).data('id');
+          const prevDataId = $items.eq(prevIndex).data("id");
+          const nextDataId = $items.eq(nextIndex).data("id");
           if (prevDataId) {
-            $carousel.find('.carousel-control-prev').attr('aria-describedby', 'carousel-caption-' + prevDataId);
+            $carousel
+              .find(".carousel-control-prev")
+              .attr("aria-describedby", "carousel-caption-" + prevDataId);
           }
           if (nextDataId) {
-            $carousel.find('.carousel-control-next').attr('aria-describedby', 'carousel-caption-' + nextDataId);
+            $carousel
+              .find(".carousel-control-next")
+              .attr("aria-describedby", "carousel-caption-" + nextDataId);
           }
         };
 
@@ -3294,7 +3300,7 @@
         });
 
         // on slide change
-        $carousel.on('slid.bs.carousel', function () {
+        $carousel.on("slid.bs.carousel", function () {
           updateAriaDescribedBy($(this));
         });
       }
@@ -3303,35 +3309,35 @@
 
   class ClearFormButton {
     connect() {
-      var $clearBtn = $('.btn-reset');
-      var $input = $clearBtn.prev('#browse_q');
-      var btnCheck = function(){
-        if ($input.val() !== '') {
-          $clearBtn.css('display', 'block');
+      var $clearBtn = $(".btn-reset");
+      var $input = $clearBtn.prev("#browse_q");
+      var btnCheck = function () {
+        if ($input.val() !== "") {
+          $clearBtn.css("display", "block");
         } else {
-          $clearBtn.css('display', 'none');
+          $clearBtn.css("display", "none");
         }
       };
 
       btnCheck();
-      $input.on('keyup', function() {
+      $input.on("keyup", function () {
         btnCheck();
       });
 
-      $clearBtn.on('click', function(event) {
+      $clearBtn.on("click", function (event) {
         event.preventDefault();
-        $input.val('');
+        $input.val("");
       });
     }
   }
 
   class ZprLinks {
     connect() {
-      $('.zpr-link').on('click', function() {
-        var modalDialog = $('#blacklight-modal .modal-dialog');
-        var modalContent = modalDialog.find('.modal-content');
-        modalDialog.removeClass('modal-lg');
-        modalDialog.addClass('modal-xl');
+      $(".zpr-link").on("click", function () {
+        var modalDialog = $("#blacklight-modal .modal-dialog");
+        var modalContent = modalDialog.find(".modal-content");
+        modalDialog.removeClass("modal-lg");
+        modalDialog.addClass("modal-xl");
         modalContent.html('<div id="osd-modal-container"></div>');
         var controls = `<div class="controls d-flex justify-content-center justify-content-md-end">
           <div class="custom-close-controls pe-3 pt-3">
@@ -3344,18 +3350,18 @@
           <div id="empty-div-required-by-osd"></div>
         </div>`;
 
-        $('#osd-modal-container').append('<div id="osd-div"></div>');
-        $('#osd-modal-container').append(controls);
+        $("#osd-modal-container").append('<div id="osd-div"></div>');
+        $("#osd-modal-container").append(controls);
 
-        $('#blacklight-modal').modal('show');
-        
-        $('#blacklight-modal').one('hidden.bs.modal', function (event) {
-          modalDialog.removeClass('modal-xl');
-          modalDialog.addClass('modal-lg');
+        $("#blacklight-modal").modal("show");
+
+        $("#blacklight-modal").one("hidden.bs.modal", function () {
+          modalDialog.removeClass("modal-xl");
+          modalDialog.addClass("modal-lg");
         });
 
         OpenSeadragon({
-          id: 'osd-div',
+          id: "osd-div",
           zoomInButton: "osd-zoom-in",
           zoomOutButton: "osd-zoom-out",
           // This is a hack where OpenSeadragon (if using mapped buttons) requires you
@@ -3364,7 +3370,7 @@
           fullPageButton: "empty-div-required-by-osd",
           nextButton: "empty-div-required-by-osd",
           previousButton: "empty-div-required-by-osd",
-          tileSources: [$(this).data('iiif-tilesource')]
+          tileSources: [$(this).data("iiif-tilesource")],
         });
       });
     }
@@ -3381,23 +3387,30 @@
 
   class AddAnother {
     connect() {
-      $("[data-action='add-another']").on("click", function(event) {
+      $("[data-action='add-another']").on("click", function (event) {
         event.preventDefault();
 
-        var templateId = $(this).data('template-id');
+        var templateId = $(this).data("template-id");
 
-        var template = document.querySelector('#' + templateId);
+        var template = document.querySelector("#" + templateId);
         var clone = document.importNode(template.content, true);
 
-        var count = $(this).closest('.form-group').find('[name="' + $(clone).find('[name]').attr('name') + '"]').length + 1;
-        $(clone).find('[id]').each(function(index, el) {
-          $(el).attr('id', $(el).attr('id') + '_' + String(count));
-        });
+        var count =
+          $(this)
+            .closest(".form-group")
+            .find('[name="' + $(clone).find("[name]").attr("name") + '"]')
+            .length + 1;
+        $(clone)
+          .find("[id]")
+          .each(function (index, el) {
+            $(el).attr("id", $(el).attr("id") + "_" + String(count));
+          });
 
-        $(clone).find('[for]').each(function(index, el) {
-          $(el).attr('for', $(el).attr('for') + '_' + String(count));
-        });
-
+        $(clone)
+          .find("[for]")
+          .each(function (index, el) {
+            $(el).attr("for", $(el).attr("for") + "_" + String(count));
+          });
 
         $(clone).insertBefore(this);
       });
@@ -3406,60 +3419,64 @@
 
   class AddNewButton {
     connect() {
-      $("[data-expanded-add-button]").each((_i, el) => this.addExpandBehaviorToButton($(el)));
+      $("[data-expanded-add-button]").each((_i, el) =>
+        this.addExpandBehaviorToButton($(el)),
+      );
     }
 
-    addExpandBehaviorToButton(button){
+    addExpandBehaviorToButton(button) {
       var settings = {
-        speed: (button.data('speed') || 450),
-        animate_width: (button.data('animate_width') || 425)
+        speed: button.data("speed") || 450,
+        animate_width: button.data("animate_width") || 425,
       };
-      var target = $(button.data('field-target'));
-      var save   = $("input[data-behavior='save']", target);
+      var target = $(button.data("field-target"));
+      var save = $("input[data-behavior='save']", target);
       var cancel = $("input[data-behavior='cancel']", target);
-      var input  = $("input[type='text']", target);
-      var original_width  = button.outerWidth();
+      var input = $("input[type='text']", target);
+      var original_width = button.outerWidth();
       var expanded = false;
 
       // Animate button open when the mouse enters or
       // the button is given focus (i.e. clicked/tabbed)
-      button.on("mouseenter focus", function(){
+      button.on("mouseenter focus", function () {
         expandButton();
       });
 
       // Don't allow blank titles
-      save.on('click', function(){
-        if ( inputEmpty() ) {
-          return false;
+      save.on("click", function () {
+        if (inputEmpty()) {
+          return false
         }
       });
 
       // Empty input and collapse
       // button on cancel click
-      cancel.on('click', function(e){
+      cancel.on("click", function (e) {
         e.preventDefault();
-        input.val('');
+        input.val("");
         collapseButton();
       });
 
       // Collapse the button on when
       // an empty input loses focus
-      input.on("blur", function(){
-        if ( inputEmpty() ) {
+      input.on("blur", function () {
+        if (inputEmpty()) {
           collapseButton();
         }
       });
-      function expandButton(){
-        // If this has not yet been expanded, recalculate original_width to 
+      function expandButton() {
+        // If this has not yet been expanded, recalculate original_width to
         // handle things that may have been originally hidden.
         if (!expanded) {
-          original_width  = button.outerWidth();
+          original_width = button.outerWidth();
         }
-        if(button.outerWidth() <= (original_width + 5)) {
+        if (button.outerWidth() <= original_width + 5) {
           expanded = true;
           button.animate(
-            {width: settings.animate_width + 'px'}, settings.speed, function(){
-              target.show(0, function(){
+            { width: settings.animate_width + "px" },
+            settings.speed,
+            function () {
+              target.show(0, function () {
                 input.focus();
                 // Set the button to auto width to make
                 // sure it has room for any inputs
@@ -3468,16 +3485,16 @@
                 // so the close animation works properly
                 button.width(button.width());
               });
-            }
+            },
           );
         }
       }
-      function collapseButton(){
+      function collapseButton() {
         target.hide();
-        button.animate({width: original_width + 'px'}, settings.speed);
+        button.animate({ width: original_width + "px" }, settings.speed);
       }
-      function inputEmpty(){
-        return $.trim(input.val()) == "";
+      function inputEmpty() {
+        return $.trim(input.val()) == ""
       }
     }
   }
@@ -3488,57 +3505,71 @@
       this.addCheckboxToggleBehavior();
       this.addEnableToggleBehavior();
     }
-    
-    // Add Select/Deselect all behavior for metadata field names for a given view e.g. Item details. 
+
+    // Add Select/Deselect all behavior for metadata field names for a given view e.g. Item details.
     addCheckboxToggleBehavior() {
-      $("[data-behavior='metadata-select']").each(function(){
+      $("[data-behavior='metadata-select']").each(function () {
         var selectCheckbox = $(this);
         var parentCell = selectCheckbox.parents("th");
         var table = parentCell.closest("table");
-        var columnRows = $("tr td:nth-child(" + (parentCell.index() + 1) + ")", table);
+        var columnRows = $(
+          "tr td:nth-child(" + (parentCell.index() + 1) + ")",
+          table,
+        );
         var checkboxes = $("input[type='checkbox']", columnRows);
         updateSelectAllInput(selectCheckbox, columnRows);
         // Add the check/uncheck behavior to the select/deselect all checkbox
-        selectCheckbox.on('click', function(e){
+        selectCheckbox.on("click", function () {
           var allChecked = allCheckboxesChecked(columnRows);
-          columnRows.each(function(){
-            $("input[type='checkbox']", $(this)).prop('checked', !allChecked);
+          columnRows.each(function () {
+            $("input[type='checkbox']", $(this)).prop("checked", !allChecked);
           });
         });
         // When a single checkbox is selected/unselected, the "All" checkbox should be updated accordingly.
-        checkboxes.each(function(){
-          $(this).on('change', function(){
+        checkboxes.each(function () {
+          $(this).on("change", function () {
             updateSelectAllInput(selectCheckbox, columnRows);
           });
-        }); 
+        });
       });
 
       // Check number of checkboxes against the number of checked
       // checkboxes to determine if all of them are checked or not
       function allCheckboxesChecked(elements) {
-        return ($("input[type='checkbox']", elements).length == $("input[type='checkbox']:checked", elements).length)
+        return (
+          $("input[type='checkbox']", elements).length ==
+          $("input[type='checkbox']:checked", elements).length
+        )
       }
 
       // Check or uncheck the "All" checkbox for each view column, e.g. Item details, List, etc.
       function updateSelectAllInput(checkbox, elements) {
-        if ( allCheckboxesChecked(elements) ) {
-          checkbox.prop('checked', true);
+        if (allCheckboxesChecked(elements)) {
+          checkbox.prop("checked", true);
         } else {
-          checkbox.prop('checked', false);
+          checkbox.prop("checked", false);
         }
       }
     }
-      
-    addEnableToggleBehavior() {
-      $("[data-behavior='enable-feature']").each(function(){
-        var checkbox = $(this);
-        var target = $($(this).data('target'));
 
-        checkbox.on('change', function() {
-          if ($(this).is(':checked')) {
-            target.find('input:checkbox').not("[data-behavior='enable-feature']").prop('checked', true).attr('disabled', false);
+    addEnableToggleBehavior() {
+      $("[data-behavior='enable-feature']").each(function () {
+        var checkbox = $(this);
+        var target = $($(this).data("target"));
+
+        checkbox.on("change", function () {
+          if ($(this).is(":checked")) {
+            target
+              .find("input:checkbox")
+              .not("[data-behavior='enable-feature']")
+              .prop("checked", true)
+              .attr("disabled", false);
           } else {
-            target.find('input:checkbox').not("[data-behavior='enable-feature']").prop('checked', false).attr('disabled', true);
+            target
+              .find("input:checkbox")
+              .not("[data-behavior='enable-feature']")
+              .prop("checked", false)
+              .attr("disabled", true);
           }
         });
       });
@@ -3546,9 +3577,9 @@
   }
 
   class CopyEmailAddress {
-      connect() {
-          new Clipboard('.copy-email-addresses');
-      }
+    connect() {
+      new Clipboard(".copy-email-addresses");
+    }
   }
 
   class Iiif {
@@ -3560,45 +3591,47 @@
     sequences() {
       var it = {};
       var context = this;
-      it[Symbol.iterator] = function*() {
+      it[Symbol.iterator] = function* () {
         for (let sequence of context.manifest.sequences) {
           yield sequence;
-        }    };
-      return it;
+        }
+      };
+      return it
     }
 
     canvases() {
       var it = {};
       var context = this;
-      it[Symbol.iterator] = function*() {
+      it[Symbol.iterator] = function* () {
         for (let sequence of context.sequences()) {
           for (let canvas of sequence.canvases) {
             yield canvas;
           }
         }
       };
-      return it;
+      return it
     }
 
     images() {
       var it = {};
       var context = this;
-      it[Symbol.iterator] = function*() {
+      it[Symbol.iterator] = function* () {
         for (let canvas of context.canvases()) {
           for (let image of canvas.images) {
-            var iiifService = image.resource?.service || image.resource?.default?.service;
-            var iiifServiceId = iiifService['@id'];
+            var iiifService =
+              image.resource?.service || image.resource?.default?.service;
+            var iiifServiceId = iiifService["@id"];
             yield {
-              'thumb': iiifServiceId + '/full/!100,100/0/default.jpg',
-              'tilesource': iiifServiceId + '/info.json',
-              'manifest': context.manifestUrl,
-              'canvasId': canvas['@id'],
-              'imageId': image['@id']
+              thumb: iiifServiceId + "/full/!100,100/0/default.jpg",
+              tilesource: iiifServiceId + "/info.json",
+              manifest: context.manifestUrl,
+              canvasId: canvas["@id"],
+              imageId: image["@id"],
             };
           }
         }
       };
-      return it;
+      return it
     }
 
     imagesArray() {
@@ -3609,63 +3642,68 @@
   function addImageSelector(input, panel, manifestUrl, initialize) {
     if (!manifestUrl) {
       showNonIiifAlert(input);
-      return;
+      return
     }
-    var cropper = input.data('iiifCropper');
-    $.ajax(manifestUrl).done(
-      function(manifest) {
-        var iiifManifest = new Iiif(manifestUrl, manifest);
+    var cropper = input.data("iiifCropper");
+    $.ajax(manifestUrl).done(function (manifest) {
+      var iiifManifest = new Iiif(manifestUrl, manifest);
 
-        var thumbs = iiifManifest.imagesArray();
+      var thumbs = iiifManifest.imagesArray();
 
-        hideNonIiifAlert(input);
+      hideNonIiifAlert(input);
 
-        if (initialize) {
-          cropper.setIiifFields(thumbs[0]);
-          panel.multiImageSelector(); // Clears out existing selector
-        }
-
-        if(thumbs.length > 1) {
-          panel.show();
-          panel.multiImageSelector(thumbs, function(selectorImage) {
-            cropper.setIiifFields(selectorImage);
-          }, cropper.iiifImageField.val());
-        }
+      if (initialize) {
+        cropper.setIiifFields(thumbs[0]);
+        panel.multiImageSelector(); // Clears out existing selector
       }
-    );
+
+      if (thumbs.length > 1) {
+        panel.show();
+        panel.multiImageSelector(
+          thumbs,
+          function (selectorImage) {
+            cropper.setIiifFields(selectorImage);
+          },
+          cropper.iiifImageField.val(),
+        );
+      }
+    });
   }
 
-  function showNonIiifAlert(input){
+  function showNonIiifAlert(input) {
     input.parent().prev('[data-behavior="non-iiif-alert"]').show();
   }
 
-  function hideNonIiifAlert(input){
+  function hideNonIiifAlert(input) {
     input.parent().prev('[data-behavior="non-iiif-alert"]').hide();
   }
 
-  const Spotlight$1 = function() {
+  const Spotlight$1 = (function () {
     var buffer = [];
     return {
-      onLoad: function(func) {
+      onLoad: function (func) {
         buffer.push(func);
       },
 
-      activate: function() {
+      activate: function () {
         this.sirTrevorIcon = window.sirTrevorIcon;
-        for(var i = 0; i < buffer.length; i++) {
+        for (var i = 0; i < buffer.length; i++) {
           buffer[i].call();
         }
       },
       csrfToken: function () {
-        return document.querySelector('meta[name=csrf-token]')?.content
+        return document.querySelector("meta[name=csrf-token]")?.content
       },
       ZprLinks: {
-        close: "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M0 0h24v24H0V0z\" fill=\"none\"/><path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z\"/></svg>",
-        zoomIn: "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M0 0h24v24H0V0z\" fill=\"none\"/><path d=\"M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zm.5-7H9v2H7v1h2v2h1v-2h2V9h-2z\"/></svg>\n",
-        zoomOut: "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M0 0h24v24H0V0z\" fill=\"none\"/><path d=\"M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7V9z\"/></svg>\n"
-      }
-    };
-  }();
+        close:
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>',
+        zoomIn:
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zm.5-7H9v2H7v1h2v2h1v-2h2V9h-2z"/></svg>\n',
+        zoomOut:
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7V9z"/></svg>\n',
+      },
+    }
+  })();
 
   // This allows us to configure Spotlight in app/views/layouts/base.html.erb
   window.Spotlight = Spotlight$1;
@@ -3674,33 +3712,56 @@
   class Crop {
     constructor(cropArea, preserveAspectRatio = true) {
       this.cropArea = cropArea;
-      this.cropArea.data('iiifCropper', this);
+      this.cropArea.data("iiifCropper", this);
       // This element will also have the IIIF input elements contained
       // There may be multiple elements with data-cropper attributes, but
       // there should only one element with this data-cropper attribute value.
-      this.cropSelector = '[data-cropper="' + cropArea.data('cropperKey') + '"]';
+      this.cropSelector = '[data-cropper="' + cropArea.data("cropperKey") + '"]';
       this.cropTool = $(this.cropSelector);
       // Exhibit and masthead cropping requires the ratio between image width and height
-      // to be consistent, whereas item widget cropping allows any combination of 
+      // to be consistent, whereas item widget cropping allows any combination of
       // image width and height.
       this.preserveAspectRatio = preserveAspectRatio;
       // Get the IIIF input elements used to store/reference IIIF information
-      this.inputPrefix = this.cropTool.data('input-prefix');
-      this.iiifUrlField = this.iiifInputElement(this.inputPrefix, 'iiif_tilesource', this.cropTool);
-      this.iiifRegionField = this.iiifInputElement(this.inputPrefix, 'iiif_region', this.cropTool);
-      this.iiifManifestField = this.iiifInputElement(this.inputPrefix, 'iiif_manifest_url', this.cropTool);
-      this.iiifCanvasField = this.iiifInputElement(this.inputPrefix, 'iiif_canvas_id', this.cropTool);
-      this.iiifImageField = this.iiifInputElement(this.inputPrefix, 'iiif_image_id', this.cropTool);
+      this.inputPrefix = this.cropTool.data("input-prefix");
+      this.iiifUrlField = this.iiifInputElement(
+        this.inputPrefix,
+        "iiif_tilesource",
+        this.cropTool,
+      );
+      this.iiifRegionField = this.iiifInputElement(
+        this.inputPrefix,
+        "iiif_region",
+        this.cropTool,
+      );
+      this.iiifManifestField = this.iiifInputElement(
+        this.inputPrefix,
+        "iiif_manifest_url",
+        this.cropTool,
+      );
+      this.iiifCanvasField = this.iiifInputElement(
+        this.inputPrefix,
+        "iiif_canvas_id",
+        this.cropTool,
+      );
+      this.iiifImageField = this.iiifInputElement(
+        this.inputPrefix,
+        "iiif_image_id",
+        this.cropTool,
+      );
       // Get the closest form element
-      this.form = cropArea.closest('form');
+      this.form = cropArea.closest("form");
       this.tileSource = null;
     }
 
     // Return the iiif input element based on the fieldname.
-    // Multiple input fields with the same name on the page may be related 
-    // to a cropper. We thus need to pass in a parent element. 
+    // Multiple input fields with the same name on the page may be related
+    // to a cropper. We thus need to pass in a parent element.
     iiifInputElement(inputPrefix, fieldName, inputParentElement) {
-      return $('input[name="' + inputPrefix + '[' + fieldName + ']"]', inputParentElement);
+      return $(
+        'input[name="' + inputPrefix + "[" + fieldName + ']"]',
+        inputParentElement,
+      )
     }
 
     // Render the cropper environment and add hooks into the autocomplete and upload forms
@@ -3713,8 +3774,8 @@
     // Setup the cropper on page load if the field
     // that holds the IIIF url is populated
     setupExistingIiifCropper() {
-      if(this.iiifUrlField.val() === '') {
-        return;
+      if (this.iiifUrlField.val() === "") {
+        return
       }
 
       this.addImageSelectorToExistingCropTool();
@@ -3731,8 +3792,8 @@
         // Force a broken layer's container to be an element before removing.
         // Code in leaflet-iiif land calls delete on the image layer's container when removing,
         // which errors if there is an issue fetching the info.json and stops further necessary steps to execute.
-        if(!this.imageLayer._container) {
-          this.imageLayer._container = $('<div></div>');
+        if (!this.imageLayer._container) {
+          this.imageLayer._container = $("<div></div>");
         }
         this.cropperMap.removeLayer(this.imageLayer);
       }
@@ -3740,7 +3801,7 @@
       this.imageLayer = L.tileLayer.iiif(this.tileSource).addTo(this.cropperMap);
 
       var self = this;
-      this.imageLayer.on('load', function() {
+      this.imageLayer.on("load", function () {
         if (!self.loaded) {
           var region = self.getCropRegion();
           self.positionIiifCropBox(region);
@@ -3748,18 +3809,18 @@
         }
       });
 
-      this.cropArea.data('initiallyVisible', this.cropArea.is(':visible'));
+      this.cropArea.data("initiallyVisible", this.cropArea.is(":visible"));
     }
 
     // Get (or initialize) the current crop region from the form data
     getCropRegion() {
       var regionFieldValue = this.iiifRegionField.val();
-      if(!regionFieldValue || regionFieldValue === '') {
+      if (!regionFieldValue || regionFieldValue === "") {
         var region = this.defaultCropRegion();
         this.iiifRegionField.val(region);
-        return region;
+        return region
       } else {
-        return regionFieldValue.split(',');
+        return regionFieldValue.split(",")
       }
     }
 
@@ -3775,15 +3836,15 @@
         Math.floor((imageWidth - boxWidth) / 2),
         Math.floor((imageHeight - boxHeight) / 2),
         boxWidth,
-        boxHeight
-      ];
+        boxHeight,
+      ]
     }
 
     // Calculate the required aspect ratio for the crop area
     aspectRatio() {
-      var cropWidth = parseInt(this.cropArea.data('crop-width'));
-      var cropHeight = parseInt(this.cropArea.data('crop-height'));
-      return cropWidth / cropHeight;
+      var cropWidth = parseInt(this.cropArea.data("crop-width"));
+      var cropHeight = parseInt(this.cropArea.data("crop-height"));
+      return cropWidth / cropHeight
     }
 
     // Position the IIIF Crop Box at the given IIIF region
@@ -3815,12 +3876,12 @@
     // Set the Crop tileSource and setup the cropper
     setTileSource(source) {
       if (source == this.tileSource) {
-        return;
+        return
       }
 
       if (source === null || source === undefined) {
-        console.error('No tilesource provided when setting up IIIF Cropper');
-        return;
+        console.error("No tilesource provided when setting up IIIF Cropper");
+        return
       }
 
       if (this.cropBox) {
@@ -3835,23 +3896,25 @@
     // Render the Leaflet Map into the crop area
     renderCropperMap() {
       if (this.cropperMap) {
-        return;
+        return
       }
 
       var cropperOptions = {
         editable: true,
         center: [0, 0],
         crs: L.CRS.Simple,
-        zoom: 0
+        zoom: 0,
       };
 
-      if(this.preserveAspectRatio) {
-        cropperOptions['editOptions'] = {
-          rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(this.aspectRatio())
+      if (this.preserveAspectRatio) {
+        cropperOptions["editOptions"] = {
+          rectangleEditorClass: this.aspectRatioPreservingRectangleEditor(
+            this.aspectRatio(),
+          ),
         };
       }
 
-      this.cropperMap = L.map(this.cropArea.attr('id'), cropperOptions);
+      this.cropperMap = L.map(this.cropArea.attr("id"), cropperOptions);
       this.invalidateMapSizeOnTabToggle();
     }
 
@@ -3860,21 +3923,26 @@
       this.cropBox = L.rectangle(initialBounds);
       this.cropBox.addTo(this.cropperMap);
       this.cropBox.enableEdit();
-      this.cropBox.on('dblclick', L.DomEvent.stop).on('dblclick', this.cropBox.toggleEdit);
+      this.cropBox
+        .on("dblclick", L.DomEvent.stop)
+        .on("dblclick", this.cropBox.toggleEdit);
 
       var self = this;
-      this.cropperMap.on('editable:dragend editable:vertex:dragend', function(e) {
-        var bounds = e.layer.getBounds();
-        var region = self.projectBoundsToIIIFRegion(bounds);
+      this.cropperMap.on(
+        "editable:dragend editable:vertex:dragend",
+        function (e) {
+          var bounds = e.layer.getBounds();
+          var region = self.projectBoundsToIIIFRegion(bounds);
 
-        self.iiifRegionField.val(region.join(','));
-      });
+          self.iiifRegionField.val(region.join(","));
+        },
+      );
     }
 
     // Get the maximum zoom level for the IIIF Layer (always 1:1 image pixel to canvas?)
     maxZoom() {
-      if(this.imageLayer) {
-        return this.imageLayer.maxZoom;
+      if (this.imageLayer) {
+        return this.imageLayer.maxZoom
       }
     }
 
@@ -3886,18 +3954,21 @@
         Math.max(Math.floor(min.x), 0),
         Math.max(Math.floor(min.y), 0),
         Math.floor(max.x - min.x),
-        Math.floor(max.y - min.y)
-      ];
+        Math.floor(max.y - min.y),
+      ]
     }
 
     // Take a IIIF [x, y, w, h] region and transform it into a Leaflet LatLngBounds
     unprojectIIIFRegionToBounds(region) {
       var minPoint = L.point(parseInt(region[0]), parseInt(region[1]));
-      var maxPoint = L.point(parseInt(region[0]) + parseInt(region[2]), parseInt(region[1]) + parseInt(region[3]));
+      var maxPoint = L.point(
+        parseInt(region[0]) + parseInt(region[2]),
+        parseInt(region[1]) + parseInt(region[3]),
+      );
 
       var min = this.cropperMap.unproject(minPoint, this.maxZoom());
       var max = this.cropperMap.unproject(maxPoint, this.maxZoom());
-      return L.latLngBounds(min, max);
+      return L.latLngBounds(min, max)
     }
 
     // TODO: Add accessors to update hidden inputs with IIIF uri/ids?
@@ -3905,7 +3976,7 @@
     // Setup autocomplete inputs to have the iiif_cropper context
     setupAutoCompletes() {
       var input = $('[data-behavior="autocomplete"]', this.cropTool);
-      input.data('iiifCropper', this);
+      input.data("iiifCropper", this);
     }
 
     setupAjaxFileUpload() {
@@ -3914,28 +3985,36 @@
     }
 
     addImageSelectorToExistingCropTool() {
-      if(this.iiifManifestField.val() === '') {
-        return;
+      if (this.iiifManifestField.val() === "") {
+        return
       }
 
       var input = $('[data-behavior="autocomplete"]', this.cropTool);
-      
+
       // Not every page which uses this module has autocomplete linked directly to the cropping tool
-      if(input.length) {
-        var panel = $(input.data('target-panel'));
-        addImageSelector(input, panel, this.iiifManifestField.val(), !this.iiifImageField.val());
+      if (input.length) {
+        var panel = $(input.data("target-panel"));
+        addImageSelector(
+          input,
+          panel,
+          this.iiifManifestField.val(),
+          !this.iiifImageField.val(),
+        );
       }
     }
 
     invalidateMapSizeOnTabToggle() {
       var tabs = $('[role="tablist"]', this.form);
       var self = this;
-      tabs.on('shown.bs.tab', function() {
-        if(self.cropArea.data('initiallyVisible') === false && self.cropArea.is(':visible')) {
+      tabs.on("shown.bs.tab", function () {
+        if (
+          self.cropArea.data("initiallyVisible") === false &&
+          self.cropArea.is(":visible")
+        ) {
           self.cropperMap.invalidateSize();
           // Because the map size is 0,0 when image is loading (not visible) we need to refit the bounds of the layer
           self.imageLayer._fitBounds();
-          self.cropArea.data('initiallyVisible', null);
+          self.cropArea.data("initiallyVisible", null);
         }
       });
     }
@@ -3943,42 +4022,42 @@
     // Get all the form data with the exception of the _method field.
     getData() {
       var data = new FormData(this.form[0]);
-      data.append('_method', null);
-      return data;
+      data.append("_method", null);
+      return data
     }
 
     uploadFile() {
-      var url = this.fileInput.data('endpoint');
+      var url = this.fileInput.data("endpoint");
       // Every post creates a new image/masthead.
       // Because they create IIIF urls which are heavily cached.
       $.ajax({
-        url: url,  //Server script to process data
-        type: 'POST',
+        url: url, //Server script to process data
+        type: "POST",
         success: (data, stat, xhr) => this.successHandler(data, stat, xhr),
         error: (xhr, stat, error) => this.errorHandler(xhr, stat, error),
         // Form data
         data: this.getData(),
         headers: {
-          'X-CSRF-Token': Spotlight$1.csrfToken() || ''
+          "X-CSRF-Token": Spotlight$1.csrfToken() || "",
         },
         //Options to tell jQuery not to process data or worry about content-type.
         cache: false,
         contentType: false,
-        processData: false
+        processData: false,
       });
     }
 
-    successHandler(data, stat, xhr) {
+    successHandler(data, _stat, _xhr) {
       this.setIiifFields({ tilesource: data.tilesource });
       this.setUploadId(data.id);
       this.clearUploadErrors();
     }
 
-    errorHandler(xhr, stat, error) {
+    errorHandler(xhr, _stat, _error) {
       let errorMessage = "Upload failed";
       if (xhr.responseJSON) {
         if (xhr.responseJSON.errors) {
-          errorMessage = xhr.responseJSON.errors.join(', ');
+          errorMessage = xhr.responseJSON.errors.join(", ");
         } else if (xhr.responseJSON.error) {
           errorMessage = xhr.responseJSON.error;
         }
@@ -3995,7 +4074,7 @@
       if (errorsElement) {
         errorsElement.text(errorMessage).show();
       } else {
-        console.error("uploadFile", error, errorMessage);
+        console.error("uploadFile", errorMessage);
       }
     }
 
@@ -4009,8 +4088,8 @@
     setUploadId(id) {
       // This input is currently used for exhibit masthead or thumbnail image upload.
       // The name should be sufficient in this case, as we don't use this part of the
-      // code for solr document widgets where we enable cropping. 
-      // If we require more specificity, we can scope this to this.cropTool. 
+      // code for solr document widgets where we enable cropping.
+      // If we require more specificity, we can scope this to this.cropTool.
       $('input[name="' + this.inputPrefix + '[upload_id]"]').val(id);
     }
 
@@ -4018,17 +4097,23 @@
       return L.Editable.RectangleEditor.extend({
         extendBounds: function (e) {
           var index = e.vertex.getIndex(),
-              next = e.vertex.getNext(),
-              previous = e.vertex.getPrevious(),
-              oppositeIndex = (index + 2) % 4,
-              opposite = e.vertex.latlngs[oppositeIndex];
+            next = e.vertex.getNext(),
+            previous = e.vertex.getPrevious(),
+            oppositeIndex = (index + 2) % 4,
+            opposite = e.vertex.latlngs[oppositeIndex];
 
-          if ((index % 2) == 1) {
+          if (index % 2 == 1) {
             // calculate horiz. displacement
-            e.latlng.update([opposite.lat + ((1 / aspect) * (opposite.lng - e.latlng.lng)), e.latlng.lng]);
+            e.latlng.update([
+              opposite.lat + (1 / aspect) * (opposite.lng - e.latlng.lng),
+              e.latlng.lng,
+            ]);
           } else {
             // calculate vert. displacement
-            e.latlng.update([e.latlng.lat, (opposite.lng - (aspect * (opposite.lat - e.latlng.lat)))]);
+            e.latlng.update([
+              e.latlng.lat,
+              opposite.lng - aspect * (opposite.lat - e.latlng.lat),
+            ]);
           }
           var bounds = new L.LatLngBounds(e.latlng, opposite);
           // Update latlngs by hand to preserve order.
@@ -4036,13 +4121,12 @@
           next.latlng.update([opposite.lat, e.latlng.lng]);
           this.updateBounds(bounds);
           this.refreshVertexMarkers();
-        }
-      });
+        },
+      })
     }
   }
 
   class CroppableModal {
-
     attachModalHandlers() {
       // Attach handler for when modal first loads, to show the cropper
       this.attachModalLoadBehavior();
@@ -4052,27 +4136,32 @@
 
     attachModalLoadBehavior() {
       // Listen for event thrown when modal is displayed with content
-      document.addEventListener('loaded.blacklight.blacklight-modal', function(e) {
-        var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
-        
-        if(dataCropperDiv) {
-          new Crop(dataCropperDiv, false).render();
-        }
-      });
+      document.addEventListener(
+        "loaded.blacklight.blacklight-modal",
+        function () {
+          var dataCropperDiv = $(
+            '#blacklight-modal [data-behavior="iiif-cropper"]',
+          );
+
+          if (dataCropperDiv) {
+            new Crop(dataCropperDiv, false).render();
+          }
+        },
+      );
     }
 
     // Field names are of the format item[item_0][iiif_image_id]
     iiifInputField(itemIndex, fieldName, parentElement) {
-      var itemPrefix = 'item[' + itemIndex + ']';
-      var selector = 'input[name="' + itemPrefix + '[' + fieldName + ']"]';
-      return $(selector, parentElement);
+      var itemPrefix = "item[" + itemIndex + "]";
+      var selector = 'input[name="' + itemPrefix + "[" + fieldName + ']"]';
+      return $(selector, parentElement)
     }
 
     attachModalSaveHandler() {
       var context = this;
-     
-      document.addEventListener('show.blacklight.blacklight-modal', function(e) {
-        $('#save-cropping-selection').on('click', () => {
+
+      document.addEventListener("show.blacklight.blacklight-modal", function () {
+        $("#save-cropping-selection").on("click", () => {
           context.saveCroppedRegion();
         });
       });
@@ -4084,26 +4173,44 @@
       var context = this;
       var dataCropperDiv = $('#blacklight-modal [data-behavior="iiif-cropper"]');
 
-      if(dataCropperDiv) {
+      if (dataCropperDiv) {
         var dataCropperKey = dataCropperDiv.data("cropper-key");
         var itemIndex = dataCropperDiv.data("index-id");
         // Get the element on the main edit page whose select image link opened up the modal
         var itemElement = $('[data-cropper="' + dataCropperKey + '"]');
         // Get the hidden input field on the main edit page corresponding to this item
-        var thumbnailSaveField = context.iiifInputField(itemIndex, 'thumbnail_image_url', itemElement);
-        var fullimageSaveField = context.iiifInputField(itemIndex, 'full_image_url', itemElement);
-        var iiifTilesource = context.iiifInputField(itemIndex, 'iiif_tilesource', itemElement).val();
-        var regionValue = context.iiifInputField(itemIndex, 'iiif_region', itemElement).val();
+        var thumbnailSaveField = context.iiifInputField(
+          itemIndex,
+          "thumbnail_image_url",
+          itemElement,
+        );
+        var fullimageSaveField = context.iiifInputField(
+          itemIndex,
+          "full_image_url",
+          itemElement,
+        );
+        var iiifTilesource = context
+          .iiifInputField(itemIndex, "iiif_tilesource", itemElement)
+          .val();
+        var regionValue = context
+          .iiifInputField(itemIndex, "iiif_region", itemElement)
+          .val();
         // Extract the region string to incorporate into the thumbnail URL
-        var urlPrefix = iiifTilesource.substring(0, iiifTilesource.lastIndexOf('/info.json'));
-        var thumbnailUrl = urlPrefix + '/' + regionValue + '/!400,400/0/default.jpg';
+        var urlPrefix = iiifTilesource.substring(
+          0,
+          iiifTilesource.lastIndexOf("/info.json"),
+        );
+        var thumbnailUrl =
+          urlPrefix + "/" + regionValue + "/!400,400/0/default.jpg";
         // Set the hidden input value to the thumbnail URL
         // Also set the full image - which is used by widgets like carousel or slideshow
         thumbnailSaveField.val(thumbnailUrl);
-        fullimageSaveField.val(urlPrefix + '/' + regionValue + '/!800,800/0/default.jpg');
+        fullimageSaveField.val(
+          urlPrefix + "/" + regionValue + "/!800,800/0/default.jpg",
+        );
         // Also change img url for thumbnail image
-        var itemImage = $('img.img-thumbnail', itemElement);      
-        itemImage.attr('src', thumbnailUrl);
+        var itemImage = $("img.img-thumbnail", itemElement);
+        itemImage.attr("src", thumbnailUrl);
       }
     }
   }
@@ -4112,7 +4219,7 @@
     connect() {
       // For exhibit masthead or thumbnail pages, where
       // the div exists on page load
-      $('[data-behavior="iiif-cropper"]').each(function() {
+      $('[data-behavior="iiif-cropper"]').each(function () {
         var cropElement = $(this);
         new Crop(cropElement).render();
       });
@@ -4128,27 +4235,27 @@
   */
   class EditInPlace {
     connect() {
-      $('[data-in-place-edit-target]').each(function() {
-        $(this).on('click.inplaceedit', function() {
-          var $label = $(this).find($(this).data('in-place-edit-target'));
-          var $input = $(this).find($(this).data('in-place-edit-field-target'));
+      $("[data-in-place-edit-target]").each(function () {
+        $(this).on("click.inplaceedit", function () {
+          var $label = $(this).find($(this).data("in-place-edit-target"));
+          var $input = $(this).find($(this).data("in-place-edit-field-target"));
 
           // hide the edit-in-place affordance icon while in edit mode
-          $(this).addClass('hide-edit-icon');
+          $(this).addClass("hide-edit-icon");
           $label.hide();
           $input.val($label.text());
-          $input.attr('type', 'text');
+          $input.attr("type", "text");
           $input.select();
           $input.focus();
 
-          $input.on('keypress', function(e) {
-            if(e.which == 13) {
-              $input.trigger('blur.inplaceedit');
-              return false;
+          $input.on("keypress", function (e) {
+            if (e.which == 13) {
+              $input.trigger("blur.inplaceedit");
+              return false
             }
           });
 
-          $input.on('blur.inplaceedit', function() {
+          $input.on("blur.inplaceedit", function () {
             var value = $input.val();
 
             if ($.trim(value).length == 0) {
@@ -4158,40 +4265,43 @@
             }
 
             $label.show();
-            $input.attr('type', 'hidden');
+            $input.attr("type", "hidden");
             // when leaving edit mode, should no longer hide edit-in-place affordance icon
-            $("[data-in-place-edit-target]").removeClass('hide-edit-icon');
+            $("[data-in-place-edit-target]").removeClass("hide-edit-icon");
 
-            return false;
+            return false
           });
 
-          return false;
+          return false
         });
       });
 
-      $("[data-behavior='restore-default']").each(function(){
+      $("[data-behavior='restore-default']").each(function () {
         var hidden = $("[data-default-value]", $(this));
-        var value = $($("[data-in-place-edit-target]", $(this)).data('in-place-edit-target'), $(this));
+        var value = $(
+          $("[data-in-place-edit-target]", $(this)).data("in-place-edit-target"),
+          $(this),
+        );
         var button = $("[data-restore-default]", $(this));
 
-        hidden.on('keypress', function(e) {
-          if(e.which == 13) {
-            hidden.trigger('blur');
-            return false;
+        hidden.on("keypress", function (e) {
+          if (e.which == 13) {
+            hidden.trigger("blur");
+            return false
           }
         });
 
-        hidden.on('blur', function(){
-          if( $(this).val() == $(this).data('default-value') ) {
-            button.addClass('d-none');
+        hidden.on("blur", function () {
+          if ($(this).val() == $(this).data("default-value")) {
+            button.addClass("d-none");
           } else {
-            button.removeClass('d-none');
+            button.removeClass("d-none");
           }
         });
-        button.on('click', function(e){
+        button.on("click", function (e) {
           e.preventDefault();
-          hidden.val(hidden.data('default-value'));
-          value.text(hidden.data('default-value'));
+          hidden.val(hidden.data("default-value"));
+          value.text(hidden.data("default-value"));
           button.hide();
         });
       });
@@ -4339,125 +4449,143 @@
   class Exhibits {
     connect() {
       // auto-fill the exhibit slug on the new exhibit form
-      $('#new_exhibit').each(function() {
-        $('#exhibit_title').on('change keyup', function() {
-          $('#exhibit_slug').attr('placeholder', URLify($(this).val(), $(this).val().length));
+      $("#new_exhibit").each(function () {
+        $("#exhibit_title").on("change keyup", function () {
+          $("#exhibit_slug").attr(
+            "placeholder",
+            URLify($(this).val(), $(this).val().length),
+          );
         });
 
-        $('#exhibit_slug').on('focus', function() {
-          if ($(this).val() === '') {
-            $(this).val($(this).attr('placeholder'));
+        $("#exhibit_slug").on("focus", function () {
+          if ($(this).val() === "") {
+            $(this).val($(this).attr("placeholder"));
           }
         });
       });
 
-      $("#another-email").on("click", function(e) {
+      $("#another-email").on("click", function (e) {
         e.preventDefault();
 
-        var container = $(this).closest('.form-group');
-        var contacts = container.find('.contact');
+        var container = $(this).closest(".form-group");
+        var contacts = container.find(".contact");
         var inputContainer = contacts.first().clone();
 
         // wipe out any values from the inputs
-        inputContainer.find('input').each(function() {
-          $(this).val('');
-          $(this).attr('id', $(this).attr('id').replace('0', contacts.length));
-          $(this).attr('name', $(this).attr('name').replace('0', contacts.length));
-          if ($(this).attr('aria-label')) {
-            $(this).attr('aria-label', $(this).attr('aria-label').replace('1', contacts.length + 1));
+        inputContainer.find("input").each(function () {
+          $(this).val("");
+          $(this).attr("id", $(this).attr("id").replace("0", contacts.length));
+          $(this).attr("name", $(this).attr("name").replace("0", contacts.length));
+          if ($(this).attr("aria-label")) {
+            $(this).attr(
+              "aria-label",
+              $(this)
+                .attr("aria-label")
+                .replace("1", contacts.length + 1),
+            );
           }
         });
 
-        inputContainer.find('.contact-email-delete-wrapper').remove();
-        inputContainer.find('.confirmation-status').remove();
+        inputContainer.find(".contact-email-delete-wrapper").remove();
+        inputContainer.find(".confirmation-status").remove();
 
         // bootstrap does not render input-groups with only one value in them correctly.
-        inputContainer.find('.input-group input:only-child').closest('.input-group').removeClass('input-group');
+        inputContainer
+          .find(".input-group input:only-child")
+          .closest(".input-group")
+          .removeClass("input-group");
 
         $(inputContainer).insertAfter(contacts.last());
       });
 
-      if (document.getElementById('another-email')) {
-        document.addEventListener('turbo:submit-end', this.contactToDeleteNotFoundHandler);
+      if (document.getElementById("another-email")) {
+        document.addEventListener(
+          "turbo:submit-end",
+          this.contactToDeleteNotFoundHandler,
+        );
       }
 
       // Put focus in saved search title input when Save this search modal is shown
-      $('#save-modal').on('shown.bs.modal', function () {
-          $('#search_title').focus();
+      $("#save-modal").on("shown.bs.modal", function () {
+        $("#search_title").focus();
       });
     }
 
     contactToDeleteNotFoundHandler(e) {
-      const contact = e.detail.formSubmission?.delegate?.element?.querySelector('.contact');
+      const contact =
+        e.detail.formSubmission?.delegate?.element?.querySelector(".contact");
       if (contact && e.detail?.fetchResponse?.response?.status === 404) {
-        const error = contact.querySelector('.contact-email-delete-error');
-        error.style.display = 'block';
-        error.querySelector('.error-msg').textContent = 'Not Found';
+        const error = contact.querySelector(".contact-email-delete-error");
+        error.style.display = "block";
+        error.querySelector(".error-msg").textContent = "Not Found";
       }
     }
   }
 
-  (function($, _) {
+  (function ($, _) {
 
     /*
-    * SerializedForm is built as a singleton jQuery plugin. It needs to be able to
-    * handle instantiation from multiple sources, and use the [data-form-observer]
-    * as global state object.
-    */
+     * SerializedForm is built as a singleton jQuery plugin. It needs to be able to
+     * handle instantiation from multiple sources, and use the [data-form-observer]
+     * as global state object.
+     */
     $.SerializedForm = function () {
       var $serializedForm;
       var plugin = this;
 
       // Store form serialization in data attribute
-      function serializeFormStatus () {
-        $serializedForm.data('serialized-form', formSerialization($serializedForm));
+      function serializeFormStatus() {
+        $serializedForm.data(
+          "serialized-form",
+          formSerialization($serializedForm),
+        );
       }
 
       // Do custom serialization of the sir-trevor form data. This needs to be a
       // passed in argument for comparison later on.
-      function formSerialization (form) {
+      function formSerialization(form) {
         var content_editable = [];
         var i = 0;
-        $("[contenteditable='true']", form).each(function(){
-          content_editable.push('&contenteditable_' + i + '=' + $(this).text());
+        $("[contenteditable='true']", form).each(function () {
+          content_editable.push("&contenteditable_" + i + "=" + $(this).text());
         });
-        return form.serialize() + content_editable.join();
+        return form.serialize() + content_editable.join()
       }
 
       // Unbind observing form on submit (which we have to do because of turbolinks)
-      function unbindObservedFormSubmit () {
-        $serializedForm.on('submit', function () {
-          $(this).data('being-submitted', true);
+      function unbindObservedFormSubmit() {
+        $serializedForm.on("submit", function () {
+          $(this).data("being-submitted", true);
         });
       }
 
       // Get the stored serialized form status
-      function serializedFormStatus () {
-        return $serializedForm.data('serialized-form');
+      function serializedFormStatus() {
+        return $serializedForm.data("serialized-form")
       }
 
       // Check all observed forms on page for status change
       plugin.observedFormsStatusHasChanged = function () {
         var unsaved_changes = false;
-        $('[data-form-observer]').each(function (){
-          if ( !$(this).data("being-submitted") ) {
+        $("[data-form-observer]").each(function () {
+          if (!$(this).data("being-submitted")) {
             if (serializedFormStatus() != formSerialization($(this))) {
               unsaved_changes = true;
             }
           }
         });
-        return unsaved_changes;
+        return unsaved_changes
       };
 
-      function init () {
-        $serializedForm = $('[data-form-observer]');
+      function init() {
+        $serializedForm = $("[data-form-observer]");
         serializeFormStatus();
         unbindObservedFormSubmit();
       }
 
       init();
 
-      return plugin;
+      return plugin
     };
   })(jQuery);
 
@@ -4465,42 +4593,46 @@
     connect() {
       // Instantiate the singleton SerializedForm plugin
       var serializedForm = $.SerializedForm();
-      $(window).on('beforeunload page:before-change turbolinks:before-visit turbo:before-visit', function(event) {
-        // Don't handle the same event twice #turbolinks
-        if (event.handled !== true) {
-          if ( serializedForm.observedFormsStatusHasChanged() ) {
-            event.handled = true;
-            var message = "You have unsaved changes. Are you sure you want to leave this page?";
-            // There are variations in how Webkit browsers may handle this:
-            // https://developer.mozilla.org/en-US/docs/Web/Events/beforeunload
-            if ( event.type == "beforeunload" ) {
-              return message;
-            } else {
-              return confirm(message)
+      $(window).on(
+        "beforeunload page:before-change turbolinks:before-visit turbo:before-visit",
+        function (event) {
+          // Don't handle the same event twice #turbolinks
+          if (event.handled !== true) {
+            if (serializedForm.observedFormsStatusHasChanged()) {
+              event.handled = true;
+              var message =
+                "You have unsaved changes. Are you sure you want to leave this page?";
+              // There are variations in how Webkit browsers may handle this:
+              // https://developer.mozilla.org/en-US/docs/Web/Events/beforeunload
+              if (event.type == "beforeunload") {
+                return message
+              } else {
+                return confirm(message)
+              }
             }
           }
-        }
-      });
+        },
+      );
     }
   }
 
   class Locks {
     delete_lock(el) {
       const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
-      
+
       fetch(el.dataset.lock, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'X-CSRF-Token': csrfToken
-        }
+          "X-CSRF-Token": csrfToken,
+        },
       });
-      
-      el.removeAttribute('data-lock');
+
+      el.removeAttribute("data-lock");
     }
 
     connect() {
-      document.querySelectorAll('[data-lock]').forEach(element => {
-        element.addEventListener('click', (e) => {
+      document.querySelectorAll("[data-lock]").forEach((element) => {
+        element.addEventListener("click", (e) => {
           this.delete_lock(e.target);
         });
       });
@@ -4509,29 +4641,42 @@
 
   // Module to add multi-image selector to widget panels
 
-  (function(){
-    $.fn.multiImageSelector = function(image_versions, clickCallback, activeImageId) {
-      var changeLink          = $("<a href='javascript:;'>Change</a>"),
-          thumbsListContainer = $("<div class='thumbs-list' style='display:none'></div>"),
-          thumbList           = $("<ul></ul>"),
-          panel;
+  (function () {
+    $.fn.multiImageSelector = function (
+      image_versions,
+      clickCallback,
+      activeImageId,
+    ) {
+      var changeLink = $("<a href='javascript:;'>Change</a>"),
+        thumbsListContainer = $(
+          "<div class='thumbs-list' style='display:none'></div>",
+        ),
+        thumbList = $("<ul></ul>"),
+        panel;
 
-      var imageIds = $.map(image_versions, function(e) { return e['imageId']; });
+      var imageIds = $.map(image_versions, function (e) {
+        return e["imageId"]
+      });
 
-      return init(this);
+      return init(this)
 
       function init(el) {
         panel = el;
 
         destroyExistingImageSelector();
-        if(image_versions && image_versions.length > 1) {
+        if (image_versions && image_versions.length > 1) {
           addChangeLink();
           addThumbsList();
         }
       }
       function addChangeLink() {
-        $('[data-panel-image-pagination]', panel)
-          .html("Image <span data-current-image='true'>" + indexOf(activeImageId) + "</span> of " + image_versions.length)
+        $("[data-panel-image-pagination]", panel)
+          .html(
+            "Image <span data-current-image='true'>" +
+              indexOf(activeImageId) +
+              "</span> of " +
+              image_versions.length,
+          )
           .show()
           .append(" ")
           .append(changeLink);
@@ -4539,21 +4684,21 @@
       }
 
       function destroyExistingImageSelector() {
-        var pagination = $('[data-panel-image-pagination]', panel);
-        pagination.html('');
-        pagination.next('.' + thumbsListContainer.attr('class')).remove();
+        var pagination = $("[data-panel-image-pagination]", panel);
+        pagination.html("");
+        pagination.next("." + thumbsListContainer.attr("class")).remove();
       }
 
-      function indexOf(thumb){
+      function indexOf(thumb) {
         const index = imageIds.indexOf(thumb);
         if (index > -1) {
-          return index + 1;
+          return index + 1
         } else {
-          return 1;
+          return 1
         }
       }
       function addChangeLinkBehavior() {
-        changeLink.on('click', function(){
+        changeLink.on("click", function () {
           thumbsListContainer.slideToggle();
           updateThumbListWidth();
           addScrollBehavior();
@@ -4564,106 +4709,109 @@
       }
       function updateThumbListWidth() {
         var width = 0;
-        $('li', thumbList).each(function(){
+        $("li", thumbList).each(function () {
           width += $(this).outerWidth();
         });
         thumbList.width(width + 5);
       }
-      function loadVisibleThumbs(){
+      function loadVisibleThumbs() {
         var viewportWidth = thumbsListContainer.width();
         var width = 0;
-        $('li', thumbList).each(function(){
-          var thisThumb  = $(this),
-              image      = $('img', thisThumb),
-              totalWidth = width += thisThumb.width(),
-              position   = (thumbList.position().left + totalWidth) - thisThumb.width();
+        $("li", thumbList).each(function () {
+          var thisThumb = $(this),
+            image = $("img", thisThumb),
+            totalWidth = (width += thisThumb.width()),
+            position = thumbList.position().left + totalWidth - thisThumb.width();
 
-          if(position >= 0 && position < viewportWidth) {
-            image.prop('src', image.data('src'));
+          if (position >= 0 && position < viewportWidth) {
+            image.prop("src", image.data("src"));
           }
         });
       }
-      function addScrollBehavior(){
-        thumbsListContainer.scrollStop(function(){
+      function addScrollBehavior() {
+        thumbsListContainer.scrollStop(function () {
           loadVisibleThumbs();
         });
       }
-      function scrollToActiveThumb(){
-        var halfContainerWidth      = (thumbsListContainer.width() / 2),
-            activeThumbLeftPosition = ($('.active', thumbList).position() || $('li', thumbList).first().position()).left,
-            halfActiveThumbWidth    = ($('.active', thumbList).width() / 2);
+      function scrollToActiveThumb() {
+        var halfContainerWidth = thumbsListContainer.width() / 2,
+          activeThumbLeftPosition = (
+            $(".active", thumbList).position() ||
+            $("li", thumbList).first().position()
+          ).left,
+          halfActiveThumbWidth = $(".active", thumbList).width() / 2;
         thumbsListContainer.scrollLeft(
-          (activeThumbLeftPosition - halfContainerWidth) + halfActiveThumbWidth
+          activeThumbLeftPosition - halfContainerWidth + halfActiveThumbWidth,
         );
       }
       function addThumbsList() {
         addThumbsToList();
         updateActiveThumb();
-        $('.card-header', panel).append(
-          thumbsListContainer.append(
-            thumbList
-          )
-        );
+        $(".card-header", panel).append(thumbsListContainer.append(thumbList));
       }
-      function updateActiveThumb(){
-        $('li', thumbList).each(function(){
+      function updateActiveThumb() {
+        $("li", thumbList).each(function () {
           var item = $(this);
-          if($('img', item).data('image-id') == activeImageId){
-            item.addClass('active');
+          if ($("img", item).data("image-id") == activeImageId) {
+            item.addClass("active");
           }
         });
       }
-      function swapChangeLinkText(link){
-        link.text(
-          link.text() == 'Change' ? 'Close' : 'Change'
-        );
+      function swapChangeLinkText(link) {
+        link.text(link.text() == "Change" ? "Close" : "Change");
       }
 
-      function addThumbsToList(){
-        $.each(image_versions, function(i){
-          var listItem = $('<li data-index="' + i + '"><a href="javascript:;"><img src="' + image_versions[i]['thumb'] +'" data-image-id="' + image_versions[i]['imageId'] +'" /></a></li>');
-          listItem.on('click', function(){
+      function addThumbsToList() {
+        $.each(image_versions, function (i) {
+          var listItem = $(
+            '<li data-index="' +
+              i +
+              '"><a href="javascript:;"><img src="' +
+              image_versions[i]["thumb"] +
+              '" data-image-id="' +
+              image_versions[i]["imageId"] +
+              '" /></a></li>',
+          );
+          listItem.on("click", function () {
             // get the current image id
-            $('img', $(this)).data('image-id');
-            var src = $('img', $(this)).attr('src');
+            var src = $("img", $(this)).attr("src");
 
-            if (typeof clickCallback === 'function' ) {
+            if (typeof clickCallback === "function") {
               clickCallback(image_versions[i]);
             }
 
             // mark the current selection as active
-            $('li.active', thumbList).removeClass('active');
-            $(this).addClass('active');
+            $("li.active", thumbList).removeClass("active");
+            $(this).addClass("active");
 
             // update the multi-image selector image
             $(".pic img.img-thumbnail", panel).attr("src", src);
 
-            $('[data-panel-image-pagination] [data-current-image]', panel).text(
-              $('li', thumbList).index($(this)) + 1
+            $("[data-panel-image-pagination] [data-current-image]", panel).text(
+              $("li", thumbList).index($(this)) + 1,
             );
             scrollToActiveThumb();
           });
-          $("img", listItem).on('load', function() {
+          $("img", listItem).on("load", function () {
             updateThumbListWidth();
           });
           thumbList.append(listItem);
         });
       }
     };
-
   })(jQuery);
 
   // source: http://stackoverflow.com/questions/14035083/jquery-bind-event-on-scroll-stops
-  jQuery.fn.scrollStop = function(callback) {
-    $(this).scroll(function() {
-      var self  = this,
-      $this = $(self);
+  jQuery.fn.scrollStop = function (callback) {
+    $(this).scroll(function () {
+      var self = this,
+        $this = $(self);
 
-      if ($this.data('scrollTimeout')) {
-        clearTimeout($this.data('scrollTimeout'));
+      if ($this.data("scrollTimeout")) {
+        clearTimeout($this.data("scrollTimeout"));
       }
 
-      $this.data('scrollTimeout', setTimeout(callback, 250, self));
+      $this.data("scrollTimeout", setTimeout(callback, 250, self));
     });
   };
 
@@ -4671,36 +4819,36 @@
   // All this logic will automatically be available in application.js.
 
   class Pages {
-    connect(){
+    connect() {
       SirTrevor.setDefaults({
         iconUrl: Spotlight.sirTrevorIcon,
-        uploadUrl: $('[data-attachment-endpoint]').data('attachment-endpoint'),
+        uploadUrl: $("[data-attachment-endpoint]").data("attachment-endpoint"),
         ajaxOptions: {
           headers: {
-            'X-CSRF-Token': Spotlight$1.csrfToken() || ''
+            "X-CSRF-Token": Spotlight$1.csrfToken() || "",
           },
-          credentials: 'same-origin'
-        }
+          credentials: "same-origin",
+        },
       });
 
       SirTrevor.Blocks.Heading.prototype.toolbarEnabled = true;
       SirTrevor.Blocks.Quote.prototype.toolbarEnabled = true;
       SirTrevor.Blocks.Text.prototype.toolbarEnabled = true;
 
-      var instance = $('.js-st-instance').first();
+      var instance = $(".js-st-instance").first();
 
       if (instance.length) {
         var editor = new SirTrevor.Editor({
           el: instance[0],
-          blockTypes: instance.data('blockTypes'),
-          altTextSettings: instance.data('altTextSettings'),
-          defaultType:["Text"],
-          onEditorRender: function() {
+          blockTypes: instance.data("blockTypes"),
+          altTextSettings: instance.data("altTextSettings"),
+          defaultType: ["Text"],
+          onEditorRender: function () {
             $.SerializedForm();
           },
           blockTypeLimits: {
-            "SearchResults": 1
-          }
+            SearchResults: 1,
+          },
         });
 
         editor.blockControls = Spotlight$1.BlockControls.create(editor);
@@ -4717,22 +4865,22 @@
       var panelContainer;
       var pollers = [];
 
-      $(monitorElements).each(function() {
+      $(monitorElements).each(function () {
         panelContainer = $(this);
         panelContainer.hide();
-        var monitorUrl = panelContainer.data('monitorUrl');
-        var refreshRate = panelContainer.data('refreshRate') || defaultRefreshRate;
+        var monitorUrl = panelContainer.data("monitorUrl");
+        var refreshRate = panelContainer.data("refreshRate") || defaultRefreshRate;
         pollers.push(
-          setInterval(function() {
+          setInterval(function () {
             checkMonitorUrl(monitorUrl);
-          }, refreshRate)
+          }, refreshRate),
         );
       });
 
       // Clear the intervals on turbolink:click event (e.g. when the user navigates away from the page)
-      $(document).on('turbolinks:click', function() {
+      $(document).on("turbolinks:click", function () {
         if (pollers.length > 0) {
-          $.each(pollers, function() {
+          $.each(pollers, function () {
             clearInterval(this);
           });
           pollers = [];
@@ -4752,7 +4900,9 @@
         }
       }
 
-      function fail() { monitorPanel().hide(); }
+      function fail() {
+        monitorPanel().hide();
+      }
 
       function updateMonitorPanel(data) {
         panelStartDate().text(data.started_at);
@@ -4770,20 +4920,20 @@
       function updateProgressBar(data) {
         var percentage = calculatePercentage(data);
         progressBar()
-          .attr('aria-valuemax', data.total)
-          .attr('aria-valuenow', percentage)
-          .css('width', percentage + '%')
-          .text(percentage + '%');
+          .attr("aria-valuemax", data.total)
+          .attr("aria-valuenow", percentage)
+          .css("width", percentage + "%")
+          .text(percentage + "%");
 
         if (data.finished) {
-          progressBar().removeClass('active').removeClass('progress-bar-striped');
+          progressBar().removeClass("active").removeClass("progress-bar-striped");
         }
       }
 
       function updatePanelErrorMessage(data) {
         // We currently do not store this state,
         // but with this code we can in the future.
-        if ( data.errored ) {
+        if (data.errored) {
           panelErrorMessage().show();
         } else {
           panelErrorMessage().hide();
@@ -4791,54 +4941,54 @@
       }
 
       function updatePanelTotals(data) {
-        panelTotals().each(function() {
+        panelTotals().each(function () {
           $(this).text(data.total);
         });
       }
 
       function calculatePercentage(data) {
-        if (data.total == 0) return 0;
-        return Math.floor((data.completed / data.total) * 100);
+        if (data.total == 0) return 0
+        return Math.floor((data.completed / data.total) * 100)
       }
 
       function monitorPanel() {
-        return panelContainer.find('.index-status');
+        return panelContainer.find(".index-status")
       }
 
       function panelStartDate() {
         return monitorPanel()
-                 .find('[data-behavior="monitor-start"]')
-                 .find('[data-behavior="date"]');
+          .find('[data-behavior="monitor-start"]')
+          .find('[data-behavior="date"]')
       }
 
       function panelCurrentDate() {
         return monitorPanel()
-                 .find('[data-behavior="monitor-current"]')
-                 .find('[data-behavior="date"]');
+          .find('[data-behavior="monitor-current"]')
+          .find('[data-behavior="date"]')
       }
 
       function panelCompletedDate() {
         return monitorPanel()
-                 .find('[data-behavior="monitor-completed"]')
-                 .find('[data-behavior="date"]');
+          .find('[data-behavior="monitor-completed"]')
+          .find('[data-behavior="date"]')
       }
 
       function panelTotals() {
-        return monitorPanel().find('[data-behavior="total"]');
+        return monitorPanel().find('[data-behavior="total"]')
       }
 
       function panelCurrent() {
         return monitorPanel()
-                 .find('[data-behavior="monitor-current"]')
-                 .find('[data-behavior="completed"]');
+          .find('[data-behavior="monitor-current"]')
+          .find('[data-behavior="completed"]')
       }
 
       function progressBar() {
-        return monitorPanel().find('.progress-bar');
+        return monitorPanel().find(".progress-bar")
       }
 
       function panelErrorMessage() {
-        return monitorPanel().find('[data-behavior="monitor-error"]');
+        return monitorPanel().find('[data-behavior="monitor-error"]')
       }
 
       function setPanelCompleted(finished) {
@@ -4851,14 +5001,14 @@
         }
       }
 
-      return this;
+      return this
     }
   }
 
   class ReadonlyCheckbox {
     connect() {
-      // Don't allow unchecking of checkboxes with the data-readonly attribute 
-      $("input[type='checkbox'][data-readonly]").on("click", function(event) {
+      // Don't allow unchecking of checkboxes with the data-readonly attribute
+      $("input[type='checkbox'][data-readonly]").on("click", function (event) {
         event.preventDefault();
       });
     }
@@ -4867,119 +5017,131 @@
   const docStore = new Map();
 
   function highlight(value, query) {
-    if (query.trim() === '') return value;
+    if (query.trim() === "") return value
     const queryValue = query.trim();
-    return queryValue ? value.replace(new RegExp(queryValue, 'gi'), '<strong>$&</strong>') : value;
+    return queryValue
+      ? value.replace(new RegExp(queryValue, "gi"), "<strong>$&</strong>")
+      : value
   }
 
   function templateFunc(obj, query) {
-    const thumbnail = obj.thumbnail ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail}" /></div>` : '';
-    const privateClass = obj.private ? ' blacklight-private' : '';
+    const thumbnail = obj.thumbnail
+      ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail}" /></div>`
+      : "";
+    const privateClass = obj.private ? " blacklight-private" : "";
     const title = highlight(obj.title, query);
-    const description = obj.description ? `<small>&nbsp;&nbsp;${highlight(obj.description, query)}</small>` : '';
+    const description = obj.description
+      ? `<small>&nbsp;&nbsp;${highlight(obj.description, query)}</small>`
+      : "";
     return `<div class="autocomplete-item${privateClass}">${thumbnail}
             <span class="autocomplete-title">${title}</span><br/>${description}
-          </div>`;
+          </div>`
   }
 
   function autoCompleteElementTemplate(obj, query) {
-    return `<li role="option" data-autocomplete-value="${obj.id}">${templateFunc(obj, query)}</li>`;
+    return `<li role="option" data-autocomplete-value="${obj.id}">${templateFunc(obj, query)}</li>`
   }
 
   function getAutoCompleteElementDataMap(autoCompleteElement) {
     if (!docStore.has(autoCompleteElement.id)) {
       docStore.set(autoCompleteElement.id, new Map());
     }
-    return docStore.get(autoCompleteElement.id);
+    return docStore.get(autoCompleteElement.id)
   }
 
   async function fetchResult(url) {
     const result = await fetchAutocompleteJSON(url);
     const docs = result.docs || [];
-    const query = this.querySelector('input').value || '';
+    const query = this.querySelector("input").value || "";
     const autoCompleteElementDataMap = getAutoCompleteElementDataMap(this);
-    return docs.map(doc => {
-      autoCompleteElementDataMap.set(doc.id, doc);
-      return autoCompleteElementTemplate(doc, query);
-    }).join('');
+    return docs
+      .map((doc) => {
+        autoCompleteElementDataMap.set(doc.id, doc);
+        return autoCompleteElementTemplate(doc, query)
+      })
+      .join("")
   }
 
-  function addAutocompletetoFeaturedImage(){
-    const autocompletePath = $('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path');
-    const featuredImageTypeaheads = $('[data-featured-image-typeahead]');
-    if (featuredImageTypeaheads.length === 0) return;
+  function addAutocompletetoFeaturedImage() {
+    const autocompletePath = $(
+      "form[data-autocomplete-exhibit-catalog-path]",
+    ).data("autocomplete-exhibit-catalog-path");
+    const featuredImageTypeaheads = $("[data-featured-image-typeahead]");
+    if (featuredImageTypeaheads.length === 0) return
 
-    $.each(featuredImageTypeaheads, function(index, autoCompleteInput) {
-      const autoCompleteElement = autoCompleteInput.closest('auto-complete');
+    $.each(featuredImageTypeaheads, function (index, autoCompleteInput) {
+      const autoCompleteElement = autoCompleteInput.closest("auto-complete");
 
-      autoCompleteElement.setAttribute('src', autocompletePath);
+      autoCompleteElement.setAttribute("src", autocompletePath);
       autoCompleteElement.fetchResult = fetchResult;
-      autoCompleteElement.addEventListener('auto-complete-change', e => {
-        const data = getAutoCompleteElementDataMap(autoCompleteElement).get(e.relatedTarget.value);
-        if (!data) return;
+      autoCompleteElement.addEventListener("auto-complete-change", (e) => {
+        const data = getAutoCompleteElementDataMap(autoCompleteElement).get(
+          e.relatedTarget.value,
+        );
+        if (!data) return
 
         const inputElement = $(e.relatedTarget);
         const panel = document.querySelector(e.relatedTarget.dataset.targetPanel);
         e.relatedTarget.value = data.title;
         addImageSelector(inputElement, $(panel), data.iiif_manifest, true);
-        $(inputElement.data('id-field')).val(data['global_id']);
-        inputElement.attr('type', 'text');
+        $(inputElement.data("id-field")).val(data["global_id"]);
+        inputElement.attr("type", "text");
       });
     });
   }
 
   async function fetchAutocompleteJSON(url) {
-    const res = await(fetch(url.toString()));
+    const res = await fetch(url.toString());
     if (!res.ok) {
-      throw new Error(await res.text());
+      throw new Error(await res.text())
     }
-    return await res.json();
+    return await res.json()
   }
 
   /*
     Simple plugin to select form elements
     when other elements are clicked.
   */
-  (function($) {
-    $.fn.selectRelatedInput = function() {
+  (function ($) {
+    $.fn.selectRelatedInput = function () {
       var clickElements = this;
 
-      $(clickElements).each(function() {
-        var target = $($(this).data('input-select-target'));
+      $(clickElements).each(function () {
+        var target = $($(this).data("input-select-target"));
 
         var event;
 
         if ($(this).is("select")) {
-          event = 'change';
+          event = "change";
         } else {
-          event = 'click';
+          event = "click";
         }
 
-        $(this).on(event, function() {
+        $(this).on(event, function () {
           if (target.is(":checkbox") || target.is(":radio")) {
-            target.prop('checked', true);
+            target.prop("checked", true);
           } else {
             target.focus();
           }
         });
       });
 
-      return this;
+      return this
     };
   })(jQuery);
 
   class SelectRelatedInput {
     connect() {
-      $('[data-input-select-target]').selectRelatedInput();
+      $("[data-input-select-target]").selectRelatedInput();
     }
   }
 
-  const Module = (function() {
+  const Module = (function () {
     const nestableContainerSelector = '[data-behavior="nestable"]';
     const sortableOptions = {
       animation: 150,
-      draggable: '.dd-item',
-      handle: '.dd-handle',
+      draggable: ".dd-item",
+      handle: ".dd-handle",
       fallbackOnBody: true,
       swapThreshold: 0.65,
       emptyInsertThreshold: 15,
@@ -4987,20 +5149,22 @@
       onEnd: onEndHandler,
       onMove: onMoveHandler,
     };
-    const draggableClass = 'dd-item';
-    const nestedSortableClass = 'dd-list';
-    const nestedSortableSelector = '.dd-list';
-    const nestedSortableNodeName = 'ol';
-    const findNode = (id, container) => container.querySelector(`[data-id="${id}"]`);
-    const setWeight = (node, weight) => weightField(node).value = weight;
-    const setParent = (node, parentId) => parentPageField(node).value = parentId;
-    const weightField = node => findProperty(node, "weight");
-    const parentPageField = node => findProperty(node, "parent_page");
-    const findProperty = (node, property) => node.querySelector(`input[data-property="${property}"]`);
+    const draggableClass = "dd-item";
+    const nestedSortableClass = "dd-list";
+    const nestedSortableSelector = ".dd-list";
+    const nestedSortableNodeName = "ol";
+    const findNode = (id, container) =>
+      container.querySelector(`[data-id="${id}"]`);
+    const setWeight = (node, weight) => (weightField(node).value = weight);
+    const setParent = (node, parentId) => (parentPageField(node).value = parentId);
+    const weightField = (node) => findProperty(node, "weight");
+    const parentPageField = (node) => findProperty(node, "parent_page");
+    const findProperty = (node, property) =>
+      node.querySelector(`input[data-property="${property}"]`);
     let nestedId = 0;
 
     return {
-      init: function(nestedContainers) {
+      init: function (nestedContainers) {
         if (nestedContainers === undefined) {
           nestedContainers = document.querySelectorAll(nestableContainerSelector);
         }
@@ -5010,27 +5174,30 @@
         containersToInit.forEach((container) => {
           // Sir Trevor listens for drag and drop events and will error on Sortable events.
           // Don't let them bubble past the Sortable wrapper.
-          container.addEventListener('drop', stopPropagationHandler);
-        
+          container.addEventListener("drop", stopPropagationHandler);
+
           const nestedSortables = [
             ...(container.matches(nestedSortableSelector) ? [container] : []),
-            ...Array.from(container.querySelectorAll(nestedSortableSelector))
+            ...Array.from(container.querySelectorAll(nestedSortableSelector)),
           ];
           const group = `nested-${nestedId++}`;
-          
-          nestedSortables.forEach(sortable => {
+
+          nestedSortables.forEach((sortable) => {
             new Sortable(sortable, { ...sortableOptions, group: group });
           });
         });
-      }
-    };
+      },
+    }
 
     function stopPropagationHandler(evt) {
       evt.stopPropagation();
     }
 
     function onStartHandler(evt) {
-      makeEmptyChildSortablesForEligibleParents(getNestableContainer(evt.item), getMaxNestingLevelSetting(evt.item));
+      makeEmptyChildSortablesForEligibleParents(
+        getNestableContainer(evt.item),
+        getMaxNestingLevelSetting(evt.item),
+      );
     }
 
     function onEndHandler(evt) {
@@ -5049,7 +5216,7 @@
 
       // Be careful here. Returning true is different than returning nothing in SortableJS.
       if (newDepth > maxAllowedDepth) {
-        return false;
+        return false
       }
     }
 
@@ -5059,72 +5226,87 @@
       let depth = 0;
       let parentSortableElement = sortableElement;
 
-      while ((parentSortableElement = parentSortableElement.parentElement.closest(nestedSortableSelector))) {
+      while (
+        (parentSortableElement = parentSortableElement.parentElement.closest(
+          nestedSortableSelector,
+        ))
+      ) {
         const parentSortable = Sortable.get(parentSortableElement);
         if (parentSortable?.options.group.name === originatingGroup) {
           depth++;
         }
       }
 
-      return depth;
+      return depth
     }
 
     // Find the max child depth in the tree, starting from the draggableElement
     function findMaxDepth(draggableElement) {
-      const childSortableElement = draggableElement.querySelector(nestedSortableSelector);
+      const childSortableElement = draggableElement.querySelector(
+        nestedSortableSelector,
+      );
       if (!childSortableElement) {
-        return 1;
+        return 1
       }
 
       const children = childSortableElement.querySelectorAll(`.${draggableClass}`);
       const childDepths = Array.from(children).map(findMaxDepth);
-      return 1 + Math.max(0, ...childDepths);
+      return 1 + Math.max(0, ...childDepths)
     }
 
     function getHeight(draggableElement) {
-      return findMaxDepth(draggableElement) - 1;
+      return findMaxDepth(draggableElement) - 1
     }
 
     function getNestableContainer(element) {
-      return element.closest(nestableContainerSelector);
+      return element.closest(nestableContainerSelector)
     }
 
     function getMaxNestingLevelSetting(element) {
-      return getNestableContainer(element).getAttribute('data-max-depth') || 1;
+      return getNestableContainer(element).getAttribute("data-max-depth") || 1
     }
 
     // Create empty child sortables for all potential parents as appropriate for the given nesting level
     function makeEmptyChildSortablesForEligibleParents(container, nestingLevel) {
       if (nestingLevel <= 1) {
-        return;
+        return
       }
 
       const sortableElement = container.querySelector(nestedSortableSelector);
       const sortable = Sortable.get(sortableElement);
       if (!sortable) {
-        return;
+        return
       }
 
       const group = sortable.options.group.name;
-      const draggableElements = Array.from(sortableElement.children)
-        .filter(child => child.classList.contains(draggableClass));
+      const draggableElements = Array.from(sortableElement.children).filter(
+        (child) => child.classList.contains(draggableClass),
+      );
 
-      draggableElements.forEach(draggableElement => {
+      draggableElements.forEach((draggableElement) => {
         if (!draggableElement.querySelector(nestedSortableSelector)) {
-          const emptySortableElement = document.createElement(nestedSortableNodeName);
+          const emptySortableElement = document.createElement(
+            nestedSortableNodeName,
+          );
           emptySortableElement.className = nestedSortableClass;
           draggableElement.appendChild(emptySortableElement);
-          new Sortable(emptySortableElement, { ...sortableOptions, group: group });
+          new Sortable(emptySortableElement, {
+            ...sortableOptions,
+            group: group,
+          });
         }
-        makeEmptyChildSortablesForEligibleParents(draggableElement, nestingLevel - 1);
+        makeEmptyChildSortablesForEligibleParents(
+          draggableElement,
+          nestingLevel - 1,
+        );
       });
     }
 
     // Remove any empty sortables within the container. They could be empty lists, which are invalid for accessibility.
     function removeEmptySortables(container) {
       const sortableElements = container.querySelectorAll(nestedSortableSelector);
-      sortableElements.forEach(sortableElement => {
-        if (sortableElement.innerHTML.trim() === '') {
+      sortableElements.forEach((sortableElement) => {
+        if (sortableElement.innerHTML.trim() === "") {
           const sortable = Sortable.get(sortableElement);
           if (sortable) {
             sortable.destroy();
@@ -5136,14 +5318,16 @@
 
     // Traverse all sortables within a container and update the weight and parent_page inputs
     function updateWeightsAndRelationships(container) {
-      const sortableElement = container.matches(nestedSortableSelector) ? container : container.querySelector(nestedSortableSelector);
+      const sortableElement = container.matches(nestedSortableSelector)
+        ? container
+        : container.querySelector(nestedSortableSelector);
       const nestingLevelSetting = getMaxNestingLevelSetting(sortableElement);
       const sortable = Sortable.get(sortableElement);
-      const stack = [{nodes: sortable.toArray(), parentId: ''}];
+      const stack = [{ nodes: sortable.toArray(), parentId: "" }];
       let weight = 0;
 
       while (stack.length > 0) {
-        const {nodes, parentId} = stack.pop();
+        const { nodes, parentId } = stack.pop();
 
         nodes.forEach((nodeId) => {
           const node = findNode(nodeId, container);
@@ -5154,7 +5338,7 @@
             const children = node.querySelector(nestedSortableSelector);
             if (children) {
               const sortableElement = Sortable.get(children);
-              stack.push({nodes: sortableElement.toArray(), parentId: nodeId});
+              stack.push({ nodes: sortableElement.toArray(), parentId: nodeId });
             }
           }
         });
@@ -5173,7 +5357,7 @@
         if (!tabpanel) return
 
         const tabElement = document.querySelector(
-          `a[role=tab][href="#${tabpanel.id}"]`
+          `a[role=tab][href="#${tabpanel.id}"]`,
         );
         if (!tabElement) return
 
@@ -5188,13 +5372,19 @@
   // present (indicated by data attributes) in each tab's content
   class TranslationProgress {
     connect() {
-      $('[data-behavior="translation-progress"]').each(function(){
+      $('[data-behavior="translation-progress"]').each(function () {
         var currentTab = $(this);
-        var tabName = $(this).attr('aria-controls');
-        var translationFields = $('#' + tabName).find('[data-translation-progress-item="true"]');
-        var completedTranslations = $('#' + tabName).find('[data-translation-present="true"]');
+        var tabName = $(this).attr("aria-controls");
+        var translationFields = $("#" + tabName).find(
+          '[data-translation-progress-item="true"]',
+        );
+        var completedTranslations = $("#" + tabName).find(
+          '[data-translation-present="true"]',
+        );
 
-        currentTab.find('span').text(completedTranslations.length + '/' + translationFields.length);
+        currentTab
+          .find("span")
+          .text(completedTranslations.length + "/" + translationFields.length);
       });
     }
   }
@@ -5202,116 +5392,120 @@
   // Blacklight's BookmarkToggle is doing the real work, this only adds/removes the "blacklight-private" class.
   const VisibilityToggle = (e) => {
     if (e.target.matches('[data-checkboxsubmit-target="checkbox"]')) {
-      const form = e.target.closest('form');
+      const form = e.target.closest("form");
       if (form) {
         // Add/remove the "private" label to the document row when visibility is toggled
-        const docRow = form.closest('tr');
-        if (docRow) docRow.classList.toggle('blacklight-private');
+        const docRow = form.closest("tr");
+        if (docRow) docRow.classList.toggle("blacklight-private");
       }
     }
   };
-  document.addEventListener('click', VisibilityToggle);
+  document.addEventListener("click", VisibilityToggle);
 
   class Users {
     connect() {
       var container;
       function edit_user(event) {
         event.preventDefault();
-        $(this).closest('tr').hide();
-        const id = $(this).attr('data-target');
-        const edit_view = $("[data-edit-for='"+id+"']", container).show();
-        $.each(edit_view.find('input[type="text"], select'), function() {
+        $(this).closest("tr").hide();
+        const id = $(this).attr("data-target");
+        const edit_view = $("[data-edit-for='" + id + "']", container).show();
+        $.each(edit_view.find('input[type="text"], select'), function () {
           // Cache original values incase editing is canceled
-          $(this).data('orig', $(this).val());
+          $(this).data("orig", $(this).val());
         });
       }
 
       function cancel_edit(event) {
         event.preventDefault();
-        const id = $(this).closest('tr').attr('data-edit-for');
-        const edit_view = $("[data-edit-for='"+id+"']", container).hide();
+        const id = $(this).closest("tr").attr("data-edit-for");
+        const edit_view = $("[data-edit-for='" + id + "']", container).hide();
         clear_errors(edit_view);
         rollback_changes(edit_view);
-        $("[data-show-for='"+id+"']", container).show();
+        $("[data-show-for='" + id + "']", container).show();
       }
 
       function clear_errors(element) {
-        element.find('.has-error')
-               .removeClass('has-error')
-               .find('.form-text')
-               .remove(); // Remove the error messages
+        element
+          .find(".has-error")
+          .removeClass("has-error")
+          .find(".form-text")
+          .remove(); // Remove the error messages
       }
 
       function rollback_changes(element) {
-        $.each(element.find('input[type="text"], select'), function() {
-          $(this).val($(this).data('orig')).trigger('change');
+        $.each(element.find('input[type="text"], select'), function () {
+          $(this).val($(this).data("orig")).trigger("change");
         });
       }
 
-      function destroy_user(event) {
-        const id = $(this).attr('data-target');
-        $("[data-destroy-for='"+id+"']", container).val('1');
+      function destroy_user(_event) {
+        const id = $(this).attr("data-target");
+        $("[data-destroy-for='" + id + "']", container).val("1");
       }
 
       function new_user(event) {
         event.preventDefault();
         const edit_view = $("[data-edit-for='new']", container).show();
-        $.each(edit_view.find('input[type="text"], select'), function() {
+        $.each(edit_view.find('input[type="text"], select'), function () {
           // Cache original values incase editing is canceled
-          $(this).data('orig', $(this).val());
+          $(this).data("orig", $(this).val());
         });
       }
 
       function open_errors() {
-        const edit_row = container.find('.has-error').closest('[data-edit-for]');
+        const edit_row = container.find(".has-error").closest("[data-edit-for]");
         edit_row.show();
         // The following row has the controls, so show it too.
         edit_row.next().show();
       }
 
-      $('.edit_exhibit, .admin-users').each(function() {
-
+      $(".edit_exhibit, .admin-users").each(function () {
         container = $(this);
-        $('[data-edit-for]', container).hide();
+        $("[data-edit-for]", container).hide();
         open_errors();
-        $("[data-behavior='edit-user']", container).on('click', edit_user);
-        $("[data-behavior='cancel-edit']", container).on('click', cancel_edit);
-        $("[data-behavior='destroy-user']", container).on('click', destroy_user);
-        $("[data-behavior='new-user']", container).on('click', new_user);
+        $("[data-behavior='edit-user']", container).on("click", edit_user);
+        $("[data-behavior='cancel-edit']", container).on("click", cancel_edit);
+        $("[data-behavior='destroy-user']", container).on("click", destroy_user);
+        $("[data-behavior='new-user']", container).on("click", new_user);
       });
     }
   }
 
-  (function ($){
-    SirTrevor.BlockMixins.Autocompleteable = {
+  (function ($) {
+  ((SirTrevor.BlockMixins.Autocompleteable = {
       mixinName: "Autocompleteable",
       preload: true,
 
-      initializeAutocompleteable: function() {
+      initializeAutocompleteable: function () {
         this.on("onRender", this.addAutocompletetoSirTrevorForm);
 
-        if (this['autocomplete_url'] === undefined) {
-          this.autocomplete_url = function() { return $('form[data-autocomplete-url]').data('autocomplete-url'); };
-        }
-
-        if (this['autocomplete_fetch'] === undefined) {
-          this.autocomplete_fetch = this.fetchAutocompleteResults;
-        }
-
-        if (this['transform_autocomplete_results'] === undefined) {
-          this.transform_autocomplete_results = (val) => val;
-        }
-
-        if (this['highlight'] === undefined) {
-          this.highlight = function(value) {
-            if (!value) return '';
-            const queryValue = this.getQueryValue().trim();
-            return queryValue ? value.replace(new RegExp(queryValue, 'gi'), '<strong>$&</strong>') : value;
+        if (this["autocomplete_url"] === undefined) {
+          this.autocomplete_url = function () {
+            return $("form[data-autocomplete-url]").data("autocomplete-url")
           };
         }
 
-        if (this['autocomplete_control'] === undefined) {
-          this.autocomplete_control = function() {
+        if (this["autocomplete_fetch"] === undefined) {
+          this.autocomplete_fetch = this.fetchAutocompleteResults;
+        }
+
+        if (this["transform_autocomplete_results"] === undefined) {
+          this.transform_autocomplete_results = (val) => val;
+        }
+
+        if (this["highlight"] === undefined) {
+          this.highlight = function (value) {
+            if (!value) return ""
+            const queryValue = this.getQueryValue().trim();
+            return queryValue
+              ? value.replace(new RegExp(queryValue, "gi"), "<strong>$&</strong>")
+              : value
+          };
+        }
+
+        if (this["autocomplete_control"] === undefined) {
+          this.autocomplete_control = function () {
             const autocompleteID = this.autocompleteID();
             return `
           <auto-complete src="${this.autocomplete_url()}" for="${autocompleteID}-popup" fetch-on-empty>
@@ -5319,94 +5513,99 @@
             <ul id="${autocompleteID}-popup"></ul>
             <div id="${autocompleteID}-popup-feedback" class="visually-hidden"></div>
           </auto-complete>
-        ` };
+        `
+          };
         }
 
-        if (this['autocomplete_element_template'] === undefined) {
-          this.autocomplete_element_template = function(item) {
+        if (this["autocomplete_element_template"] === undefined) {
+          this.autocomplete_element_template = function (item) {
             return `<li role="option" data-autocomplete-value="${item.id}">${this.autocomplete_template(item)}</li>`
           };
         }
       },
 
-      queryTokenizer: function(query) {
-        return query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+      queryTokenizer: function (query) {
+        return query.trim().toLowerCase().split(/\s+/).filter(Boolean)
       },
 
-      filterResults: function(data, query) {
+      filterResults: function (data, query) {
         const queryStrings = this.queryTokenizer(query);
-        return data.filter(item => {
+        return data.filter((item) => {
           const lowerTitle = item.title.toLowerCase();
-          return queryStrings.some(queryString => lowerTitle.includes(queryString));
-        });
+          return queryStrings.some((queryString) =>
+            lowerTitle.includes(queryString),
+          )
+        })
       },
 
-      fetchAutocompleteResults: async function(url) {
+      fetchAutocompleteResults: async function (url) {
         const result = await fetchAutocompleteJSON(url);
         const transformed = this.transform_autocomplete_results(result);
         this.fetchedData = {};
-        transformed.map(item => this.fetchedData[item.id] = item);
-        return transformed.map(item => this.autocomplete_element_template(item)).join('');
+        transformed.map((item) => (this.fetchedData[item.id] = item));
+        return transformed
+          .map((item) => this.autocomplete_element_template(item))
+          .join("")
       },
 
-      fetchOnceAndFilterLocalResults: async function(url) {
+      fetchOnceAndFilterLocalResults: async function (url) {
         if (this.fetchedData === undefined) {
           await this.fetchAutocompleteResults(url);
         }
-        const query = url.searchParams.get('q');
+        const query = url.searchParams.get("q");
         const data = Object.values(this.fetchedData);
         const filteredData = query ? this.filterResults(data, query) : data;
-        return filteredData.map(item => this.autocomplete_element_template(item)).join('');
+        return filteredData
+          .map((item) => this.autocomplete_element_template(item))
+          .join("")
       },
 
-      autocompleteID: function() {
-        return this.blockID + '-autocomplete';
+      autocompleteID: function () {
+        return this.blockID + "-autocomplete"
       },
 
-      getQueryValue: function() {
+      getQueryValue: function () {
         const completer = this.inner.querySelector("auto-complete > input");
-        return completer.value;
+        return completer.value
       },
 
-      addAutocompletetoSirTrevorForm: function() {
+      addAutocompletetoSirTrevorForm: function () {
         const completer = this.inner.querySelector("auto-complete");
         completer.fetchResult = this.autocomplete_fetch.bind(this);
-        completer.addEventListener('auto-complete-change', (e) => {
+        completer.addEventListener("auto-complete-change", (e) => {
           const data = this.fetchedData[e.relatedTarget.value];
           if (e.relatedTarget.value && data) {
-            e.value = e.relatedTarget.value = '';
+            e.value = e.relatedTarget.value = "";
             this.createItemPanel({ ...data, display: "true" });
           }
         });
       },
-    },
-
-
-    SirTrevor.Block.prototype.availableMixins.push("autocompleteable");
+    }),
+      SirTrevor.Block.prototype.availableMixins.push("autocompleteable"));
   })(jQuery);
 
-  (function ($){
-    SirTrevor.BlockMixins.Formable = {
+  (function ($) {
+  ((SirTrevor.BlockMixins.Formable = {
       mixinName: "Formable",
       preload: true,
 
-      initializeFormable: function() {
-
-        if (this['afterLoadData'] === undefined) {
-          this['afterLoadData'] = function(data) { };
+      initializeFormable: function () {
+        if (this["afterLoadData"] === undefined) {
+          this["afterLoadData"] = function (_data) {};
         }
       },
 
-      formId: function(id) {
-        return this.blockID + "_" + id;
+      formId: function (id) {
+        return this.blockID + "_" + id
       },
 
-      _serializeData: function() {
+      _serializeData: function () {
+        var data = $(":input,textarea,select", this.inner)
+          .not(":input:radio")
+          .serializeJSON();
 
-        var data = $(":input,textarea,select", this.inner).not(':input:radio').serializeJSON();
-
-        $(':input:radio:checked', this.inner).each(function(index, input) {
-          var key = $(input).data('key') || input.getAttribute('name');
+        $(":input:radio:checked", this.inner).each(function (index, input) {
+          var key = $(input).data("key") || input.getAttribute("name");
 
           if (!key.match("\\[")) {
             data[key] = $(input).val();
@@ -5416,19 +5615,28 @@
         /* Simple to start. Add conditions later */
         if (this.hasTextBlock()) {
           data.text = this.getTextBlockHTML();
-          data.format = 'html';
-          if (data.text && data.text.length > 0 && this.options.convertToMarkdown) {
+          data.format = "html";
+          if (
+            data.text &&
+            data.text.length > 0 &&
+            this.options.convertToMarkdown
+          ) {
             data.text = stToMarkdown(data.text, this.type);
-            data.format = 'markdown';
+            data.format = "markdown";
           }
         }
 
-        return data;
+        return data
       },
 
-      loadData: function(data){
+      loadData: function (data) {
         if (this.hasTextBlock()) {
-          if (data.text && data.text.length > 0 && this.options.convertFromMarkdown && data.format !== "html") {
+          if (
+            data.text &&
+            data.text.length > 0 &&
+            this.options.convertFromMarkdown &&
+            data.format !== "html"
+          ) {
             this.setTextBlockHTML(SirTrevor.toHTML(data.text, this.type));
           } else {
             this.setTextBlockHTML(data.text);
@@ -5438,52 +5646,51 @@
         this.afterLoadData(data);
       },
 
-      loadFormDataByKey: function(data) {
-        $(':input', this.inner).not('button,:input[type=hidden]').each(function(index, input) {
-          var key = $(input).data('key') || input.getAttribute('name');
+      loadFormDataByKey: function (data) {
+        $(":input", this.inner)
+          .not("button,:input[type=hidden]")
+          .each(function (index, input) {
+            var key = $(input).data("key") || input.getAttribute("name");
 
-          if (key) {
+            if (key) {
+              if (key.match("\\[\\]$")) {
+                key = key.replace("[]", "");
+              }
 
-            if (key.match("\\[\\]$")) {
-              key = key.replace("[]", "");
+              // by wrapping it in an array, this'll "just work" for radio and checkbox fields too
+              var input_data = data[key];
+
+              if (!(input_data instanceof Array)) {
+                input_data = [input_data];
+              }
+              $(this).val(input_data);
             }
-
-            // by wrapping it in an array, this'll "just work" for radio and checkbox fields too
-            var input_data = data[key];
-
-            if (!(input_data instanceof Array)) {
-              input_data = [input_data];
-            }
-            $(this).val(input_data);
-          }
-        });
+          });
       },
-    },
-
-
-    SirTrevor.Block.prototype.availableMixins.push("formable");
+    }),
+      SirTrevor.Block.prototype.availableMixins.push("formable"));
   })(jQuery);
 
-  (function ($){
+  (function (_$) {
     SirTrevor.BlockMixins.Plustextable = {
       mixinName: "Textable",
       preload: true,
 
-      initializeTextable: function() {
-        if (this['formId'] === undefined) {
+      initializeTextable: function () {
+        if (this["formId"] === undefined) {
           this.withMixin(SirTrevor.BlockMixins.Formable);
         }
-        
-        if (this['show_heading'] === undefined) {
+
+        if (this["show_heading"] === undefined) {
           this.show_heading = true;
         }
       },
-      
-      align_key:"text-align",
-      text_key:"item-text",
+
+      align_key: "text-align",
+      text_key: "item-text",
       heading_key: "title",
-      
-      text_area: function() { 
+
+      text_area: function () {
         return `
       <div class="row">
         <div class="col-md-8">
@@ -5506,73 +5713,84 @@
         </div>
       </div>`
       },
-      
-      heading: function() {
-        if(this.show_heading) {
+
+      heading: function () {
+        if (this.show_heading) {
           return `<div class="field">
           <label for="${this.formId(this.heading_key)}" class="col-form-label">${i18n.t("blocks:textable:heading")}</label>
           <input type="text" class="form-control" id="${this.formId(this.heading_key)}" name="${this.heading_key}" />
         </div>`
         } else {
-          return "";
+          return ""
         }
       },
     };
-    
 
     SirTrevor.Block.prototype.availableMixins.push("plustextable");
   })(jQuery);
 
-  (function ($){
+  (function ($) {
     Spotlight$1.Block = SirTrevor.Block.extend({
       scribeOptions: {
         allowBlockElements: true,
-        tags: { p: true }
+        tags: { p: true },
       },
       formable: true,
-      editorHTML: function() {
-        return '';
+      editorHTML: function () {
+        return ""
       },
-      beforeBlockRender: function() {
-        this.availableMixins.forEach(function(mixin) {
-          if (this[mixin] && SirTrevor.BlockMixins[this.capitalize(mixin)].preload) {
+      beforeBlockRender: function () {
+        this.availableMixins.forEach(function (mixin) {
+          if (
+            this[mixin] &&
+            SirTrevor.BlockMixins[this.capitalize(mixin)].preload
+          ) {
             this.withMixin(SirTrevor.BlockMixins[this.capitalize(mixin)]);
           }
         }, this);
       },
-      $instance: function() { return $('#' + this.instanceID); },
-      capitalize: function(string) {
-        return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
-      }
+      $instance: function () {
+        return $("#" + this.instanceID)
+      },
+      capitalize: function (string) {
+        return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase()
+      },
     });
   })(jQuery);
 
-  Spotlight$1.Block.Resources = (function(){
-
+  Spotlight$1.Block.Resources = (function () {
     return Spotlight$1.Block.extend({
       type: "resources",
       formable: true,
       autocompleteable: true,
       show_heading: true,
       show_image_selection: true,
-      title: function() { return i18n.t("blocks:" + this.type + ":title"); },
-      description: function() { return i18n.t("blocks:" + this.type + ":description"); },
-      alt_text_guidelines: function() {
-        if (this.showAltText()) {
-          return i18n.t("blocks:alt_text_guidelines:intro");
-        }
-        return "";
+      title: function () {
+        return i18n.t("blocks:" + this.type + ":title")
       },
-      alt_text_guidelines_link: function() {
+      description: function () {
+        return i18n.t("blocks:" + this.type + ":description")
+      },
+      alt_text_guidelines: function () {
+        if (this.showAltText()) {
+          return i18n.t("blocks:alt_text_guidelines:intro")
+        }
+        return ""
+      },
+      alt_text_guidelines_link: function () {
         if (this.showAltText()) {
           var link_url = i18n.t("blocks:alt_text_guidelines:link_url");
           var link_label = i18n.t("blocks:alt_text_guidelines:link_label");
-          return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>';
+          return (
+            '<a target="_blank" href="' + link_url + '">' + link_label + "</a>"
+          )
         }
-        return "";
+        return ""
       },
       icon_name: "resources",
-      blockGroup: function() { return i18n.t("blocks:group:items") },
+      blockGroup: function () {
+        return i18n.t("blocks:group:items")
+      },
 
       primary_field_key: "primary-caption-field",
       show_primary_field_key: "show-primary-caption",
@@ -5585,38 +5803,39 @@
 
       globalIndex: 0,
 
-      _itemPanelIiifFields: function(index, data) {
-        return [];
+      _itemPanelIiifFields: function (_index, _data) {
+        return []
       },
 
-      _altTextFieldsHTML: function(index, data) {
+      _altTextFieldsHTML: function (index, data) {
         if (this.showAltText()) {
-          return this.altTextHTML(index, data);
+          return this.altTextHTML(index, data)
         }
-        return "";
+        return ""
       },
 
-      showAltText: function() {
+      showAltText: function () {
         return this.editorOptions.altTextSettings[this._typeAsCamelCase()]
       },
 
-      _typeAsCamelCase: function() {
+      _typeAsCamelCase: function () {
         return this.type
-            .split('_')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join('');
+          .split("_")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join("")
       },
-      _itemSelectImageLink: function(block_item_id, doc_id, index) {
+      _itemSelectImageLink: function (block_item_id, doc_id, index) {
         // If image selection is not possible for this block, then do not show
         // image selection link
-        if (!this.show_image_selection) return ``;
-        var url = $('form[data-exhibit-path]').data('exhibit-path') + '/select_image?';
+        if (!this.show_image_selection) return ``
+        var url =
+          $("form[data-exhibit-path]").data("exhibit-path") + "/select_image?";
         var markup = `
           <a name="selectimage" href="${url}block_item_id=${block_item_id}&index_id=${index}" data-blacklight-modal="trigger">Select image area</a>
         `;
-        return markup;
+        return markup
       },
-      _itemPanel: function(data) {
+      _itemPanel: function (data) {
         var index = "item_" + this.globalIndex++;
         var checked;
         if (data.display == "true") {
@@ -5640,20 +5859,20 @@
                       <div class="d-flex">
                         <div class="checkbox">
                           <input name="item[${index}][display]" type="hidden" value="false" />
-                          <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                          <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                          <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + "_" + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                          <label class="visually-hidden" for="${this.formId(this.display_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                         </div>
                         <div class="pic">
-                          <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
+                          <img class="img-thumbnail" src="${data.thumbnail_image_url || (data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")}" />
                         </div>
                       </div>
                       <div class="d-inline-block">
-                        ${this._itemSelectImageLink(block_item_id,data.id, index)}
+                        ${this._itemSelectImageLink(block_item_id, data.id, index)}
                       </div>
                     </div>
                     <div class="main">
                       <div class="title card-title">${data.title}</div>
-                      <div>${(data.slug || data.id)}</div>
+                      <div>${data.slug || data.id}</div>
                       ${this._altTextFieldsHTML(index, data)}
                     </div>
                     <div class="remove float-end">
@@ -5669,58 +5888,57 @@
         const panel = $(markup);
         var context = this;
 
-        $('.remove a', panel).on('click', function(e) {
+        $(".remove a", panel).on("click", function (e) {
           e.preventDefault();
-          $(this).closest('.field').remove();
+          $(this).closest(".field").remove();
           context.afterPanelDelete();
-
         });
 
         this.afterPanelRender(data, panel);
 
-        return panel;
+        return panel
       },
 
-      afterPanelRender: function(data, panel) {
-         
-      },
+      afterPanelRender: function (_data, _panel) {},
 
-      afterPanelDelete: function() {
+      afterPanelDelete: function () {},
 
-      },
-
-      createItemPanel: function(data) {
+      createItemPanel: function (data) {
         var panel = this._itemPanel(data);
         this.attachAltTextHandlers(panel);
-        $(panel).appendTo($('.panels > ol', this.inner));
-        $('[data-behavior="nestable"]', this.inner).trigger('change');
+        $(panel).appendTo($(".panels > ol", this.inner));
+        $('[data-behavior="nestable"]', this.inner).trigger("change");
       },
 
-      item_options: function() { return ""; },
+      item_options: function () {
+        return ""
+      },
 
-      content: function() {
+      content: function () {
         var templates = [this.items_selector()];
         if (this.plustextable) {
           templates.push(this.text_area());
         }
-        return templates.join("<hr />\n");
+        return templates.join("<hr />\n")
       },
 
-      items_selector: function() { return [
-      '<div class="row">',
-        '<div class="col-md-8">',
+      items_selector: function () {
+        return [
+          '<div class="row">',
+          '<div class="col-md-8">',
           '<div class="form-group mb-3">',
           '<div class="panels dd nestable-item-grid" data-behavior="nestable" data-max-depth="1"><ol class="dd-list"></ol></div>',
-            this.autocomplete_control(),
-          '</div>',
-        '</div>',
-        '<div class="col-md-4">',
+          this.autocomplete_control(),
+          "</div>",
+          "</div>",
+          '<div class="col-md-4">',
           this.item_options(),
-        '</div>',
-      '</div>'].join("\n")
+          "</div>",
+          "</div>",
+        ].join("\n")
       },
 
-      editorHTML: function() {
+      editorHTML: function () {
         return `<div class="form resources-admin clearfix">
         <div class="widget-header">
           ${this.description()}
@@ -5731,99 +5949,131 @@
       </div>`
       },
 
-      _altTextData: function(data) {
+      _altTextData: function (data) {
         const isDecorative = data.decorative;
-        const altText = isDecorative ? '' : (data.alt_text || '');
-        const altTextBackup = data.alt_text_backup || '';
-        const placeholderAttr = isDecorative ? '' : `placeholder="${i18n.t("blocks:resources:alt_text:placeholder")}"`;
-        const disabledAttr = isDecorative ? 'disabled' : '';
+        const altText = isDecorative ? "" : data.alt_text || "";
+        const altTextBackup = data.alt_text_backup || "";
+        const placeholderAttr = isDecorative
+          ? ""
+          : `placeholder="${i18n.t("blocks:resources:alt_text:placeholder")}"`;
+        const disabledAttr = isDecorative ? "disabled" : "";
 
-        return { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr };
+        return {
+          isDecorative,
+          altText,
+          altTextBackup,
+          placeholderAttr,
+          disabledAttr,
+        }
       },
 
-      altTextHTML: function(index, data) {
-        const { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr } = this._altTextData(data);
+      altTextHTML: function (index, data) {
+        const {
+          isDecorative,
+          altText,
+          altTextBackup,
+          placeholderAttr,
+          disabledAttr,
+        } = this._altTextData(data);
         return `<div class="mt-2 pt-2 d-flex">
           <div class="me-2">
-            <label class="col-form-label pb-0 pt-1" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
+            <label class="col-form-label pb-0 pt-1" for="${this.formId(this.alt_text_textarea + "_" + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
             <div class="form-check mb-1 justify-content-end">
               <input class="form-check-input" type="checkbox"
-                id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
-              <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
+                id="${this.formId(this.decorative_checkbox + "_" + data.id)}" name="item[${index}][decorative]" ${isDecorative ? "checked" : ""}>
+              <label class="form-check-label" for="${this.formId(this.decorative_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
             </div>
           </div>
           <div class="flex-grow-1 flex-fill d-flex">
             <input type="hidden" name="item[${index}][alt_text_backup]" value="${altTextBackup}" />
             <textarea class="form-control w-100" rows="2" ${placeholderAttr}
-              id="${this.formId(this.alt_text_textarea + '_' + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
+              id="${this.formId(this.alt_text_textarea + "_" + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
           </div>
         </div>`
       },
 
-      attachAltTextHandlers: function(panel) {
+      attachAltTextHandlers: function (panel) {
         if (this.showAltText()) {
           const decorativeCheckbox = $('input[name$="[decorative]"]', panel);
           const altTextInput = $('textarea[name$="[alt_text]"]', panel);
           const altTextBackupInput = $('input[name$="[alt_text_backup]"]', panel);
 
-          decorativeCheckbox.on('change', function() {
+          decorativeCheckbox.on("change", function () {
             const isDecorative = this.checked;
             if (isDecorative) {
               altTextBackupInput.val(altTextInput.val());
-              altTextInput.val('');
+              altTextInput.val("");
             } else {
               altTextInput.val(altTextBackupInput.val());
             }
             altTextInput
-              .prop('disabled', isDecorative)
-              .attr('placeholder', isDecorative ? '' : i18n.t("blocks:resources:alt_text:placeholder"));
+              .prop("disabled", isDecorative)
+              .attr(
+                "placeholder",
+                isDecorative
+                  ? ""
+                  : i18n.t("blocks:resources:alt_text:placeholder"),
+              );
           });
 
-          altTextInput.on('input', function() {
-            $(this).data('lastValue', $(this).val());
+          altTextInput.on("input", function () {
+            $(this).data("lastValue", $(this).val());
           });
         }
       },
 
-      onBlockRender: function() {
+      onBlockRender: function () {
         Module.init($('[data-behavior="nestable"]', this.inner));
-        $('[data-input-select-target]', this.inner).selectRelatedInput();
+        $("[data-input-select-target]", this.inner).selectRelatedInput();
       },
 
-      afterLoadData: function(data) {
+      afterLoadData: function (data) {
         var context = this;
-        $.each(Object.keys(data.item || {}).map(function(k) { return data.item[k]}).sort(function(a,b) { return a.weight - b.weight; }), function(index, item) {
-          context.createItemPanel(item);
-        });
-       
-      }
-    });
-
+        $.each(
+          Object.keys(data.item || {})
+            .map(function (k) {
+              return data.item[k]
+            })
+            .sort(function (a, b) {
+              return a.weight - b.weight
+            }),
+          function (index, item) {
+            context.createItemPanel(item);
+          },
+        );
+      },
+    })
   })();
 
-  SirTrevor.Blocks.Browse = (function(){
-
+  SirTrevor.Blocks.Browse = (function () {
     return Spotlight$1.Block.Resources.extend({
       type: "browse",
 
       icon_name: "browse",
 
-      autocomplete_url: function() {
-        return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-searches-path]').dataset.autocompleteExhibitSearchesPath;
+      autocomplete_url: function () {
+        return document
+          .getElementById(this.instanceID)
+          .closest("form[data-autocomplete-exhibit-searches-path]").dataset
+          .autocompleteExhibitSearchesPath
       },
 
-      autocomplete_fetch: function(url) {
-        return this.fetchOnceAndFilterLocalResults(url);
+      autocomplete_fetch: function (url) {
+        return this.fetchOnceAndFilterLocalResults(url)
       },
 
-      autocomplete_template: function(obj) {
-        const thumbnail = obj.thumbnail_image_url ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail_image_url}" /></div>` : '';
-        const description = obj.description ? `<small>&nbsp;&nbsp;${obj.description}</small>` : '';
-        return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">${thumbnail}
-      <span class="autocomplete-title">${this.highlight(obj.full_title)}</span>${description}</div>`;
+      autocomplete_template: function (obj) {
+        const thumbnail = obj.thumbnail_image_url
+          ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail_image_url}" /></div>`
+          : "";
+        const description = obj.description
+          ? `<small>&nbsp;&nbsp;${obj.description}</small>`
+          : "";
+        return `<div class="autocomplete-item${!obj.published ? " blacklight-private" : ""}">${thumbnail}
+      <span class="autocomplete-title">${this.highlight(obj.full_title)}</span>${description}</div>`
       },
 
-      _itemPanel: function(data) {
+      _itemPanel: function (data) {
         var index = "item_" + this.globalIndex++;
         var checked;
         if (data.display == "true") {
@@ -5835,7 +6085,7 @@
         var markup = `
            <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId(index)}">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
-            <input type="hidden" name="item[${index}][full_title]" value="${(data.full_title || data.title)}" />
+            <input type="hidden" name="item[${index}][full_title]" value="${data.full_title || data.title}" />
             <input data-property="weight" type="hidden" name="item[${index}][weight]" value="${data.weight}" />
               <div class="card d-flex dd3-content">
                 <div class="dd-handle dd3-handle">${i18n.t("blocks:resources:panel:drag")}</div>
@@ -5843,15 +6093,15 @@
                   <div class="d-flex">
                     <div class="checkbox">
                       <input name="item[${index}][display]" type="hidden" value="false" />
-                      <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                      <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                      <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + "_" + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                      <label class="visually-hidden" for="${this.formId(this.display_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                     </div>
                     <div class="pic">
-                      <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
+                      <img class="img-thumbnail" src="${data.thumbnail_image_url || (data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")}" />
                     </div>
                     <div class="main">
-                      <div class="title card-title">${(data.full_title || data.title)}</div>
-                      <div>${(data.slug || data.id)}</div>
+                      <div class="title card-title">${data.full_title || data.title}</div>
+                      <div>${data.slug || data.id}</div>
                     </div>
                     <div class="remove float-end">
                       <a data-item-grid-panel-remove="true" href="#">${i18n.t("blocks:resources:panel:remove")}</a>
@@ -5864,59 +6114,60 @@
         var panel = $(markup);
         var context = this;
 
-        $('.remove a', panel).on('click', function(e) {
+        $(".remove a", panel).on("click", function (e) {
           e.preventDefault();
-          $(this).closest('.field').remove();
+          $(this).closest(".field").remove();
           context.afterPanelDelete();
-
         });
 
         this.afterPanelRender(data, panel);
 
-        return panel;
+        return panel
       },
 
-      item_options: function() { return `
+      item_options: function () {
+        return `
       <label>
         <input type="hidden" name="display-item-counts" value="false" />
         <input type="checkbox" name="display-item-counts" value="true" checked />
         ${i18n.t("blocks:browse:item_counts")}
       </label>`
       },
-    });
-
+    })
   })();
 
   /*
     Sir Trevor BrowseGroupCategories
   */
 
-  SirTrevor.Blocks.BrowseGroupCategories = (function(){
-
+  SirTrevor.Blocks.BrowseGroupCategories = (function () {
     return Spotlight$1.Block.Resources.extend({
       type: "browse_group_categories",
       icon_name: "browse",
 
-      autocomplete_control: function() {
-        const autocompleteID = this.blockID + '-autocomplete';
+      autocomplete_control: function () {
+        const autocompleteID = this.blockID + "-autocomplete";
         return `<auto-complete src="${this.autocomplete_url()}" for="${autocompleteID}-popup" fetch-on-empty>
         <input type="text" name="${autocompleteID}" placeholder="${i18n.t("blocks:browse_group_categories:autocomplete")}" data-default-typeahead>
         <ul id="${autocompleteID}-popup"></ul>
         <div id="${autocompleteID}-popup-feedback" class="visually-hidden"></div>
       </auto-complete>`
       },
-      autocomplete_template: function(obj) {
-        return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">
+      autocomplete_template: function (obj) {
+        return `<div class="autocomplete-item${!obj.published ? " blacklight-private" : ""}">
       <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/></div>`
       },
 
-      autocomplete_url: function() {
-        return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-browse-groups-path]').dataset.autocompleteExhibitBrowseGroupsPath;
+      autocomplete_url: function () {
+        return document
+          .getElementById(this.instanceID)
+          .closest("form[data-autocomplete-exhibit-browse-groups-path]").dataset
+          .autocompleteExhibitBrowseGroupsPath
       },
-      autocomplete_fetch: function(url) {
-        return this.fetchOnceAndFilterLocalResults(url);
+      autocomplete_fetch: function (url) {
+        return this.fetchOnceAndFilterLocalResults(url)
       },
-      _itemPanel: function(data) {
+      _itemPanel: function (data) {
         var index = "item_" + this.globalIndex++;
         var checked;
         if (data.display == "true") {
@@ -5936,8 +6187,8 @@
                 <div class="d-flex flex-grow-1">
                   <div class="checkbox">
                     <input name="item[${index}][display]" type="hidden" value="false" />
-                    <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                    <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                    <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + "_" + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                    <label class="visually-hidden" for="${this.formId(this.display_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                   </div>
                   <div class="main">
                     <div class="title card-title">${data.title}</div>
@@ -5953,26 +6204,26 @@
         const panel = $(markup);
         var context = this;
 
-        $('a[data-item-grid-panel-remove]', panel).on('click', function(e) {
+        $("a[data-item-grid-panel-remove]", panel).on("click", function (e) {
           e.preventDefault();
-          $(this).closest('.field').remove();
+          $(this).closest(".field").remove();
           context.afterPanelDelete();
-
         });
 
         this.afterPanelRender(data, panel);
 
-        return panel;
+        return panel
       },
 
-      item_options: function() { return `
+      item_options: function () {
+        return `
       <label>
         <input type="hidden" name="display-item-counts" value="false" />
         <input type="checkbox" name="display-item-counts" value="true" checked />
         ${i18n.t("blocks:browse_group_categories:item_counts")}
       </label>`
       },
-    });
+    })
   })();
 
   /*
@@ -5984,41 +6235,41 @@
     and displays them.
   */
 
-  SirTrevor.Blocks.Iframe = (function(){
-
+  SirTrevor.Blocks.Iframe = (function () {
     return SirTrevor.Block.extend({
       type: "Iframe",
       formable: true,
-      
-      title: function() { return i18n.t('blocks:iframe:title'); },
-      description: function() { return i18n.t('blocks:iframe:description'); },
+
+      title: function () {
+        return i18n.t("blocks:iframe:title")
+      },
+      description: function () {
+        return i18n.t("blocks:iframe:description")
+      },
 
       icon_name: "iframe",
-      
-      editorHTML: function() {
+
+      editorHTML: function () {
         return `<div class="clearfix">
         <div class="widget-header">
           ${this.description()}
         </div>
         <textarea name="code" class="form-control" rows="5" placeholder="${i18n.t("blocks:iframe:placeholder")}"></textarea>
-      </div>`;
-      }
-    });
+      </div>`
+      },
+    })
   })();
 
-  SirTrevor.Blocks.LinkToSearch = (function(){
-
+  SirTrevor.Blocks.LinkToSearch = (function () {
     return SirTrevor.Blocks.Browse.extend({
-
       type: "link_to_search",
 
-      icon_name: 'search_results',
+      icon_name: "search_results",
 
       searches_key: "slug",
       view_key: "view",
       plustextable: false,
-
-    });
+    })
   })();
 
   /*
@@ -6030,17 +6281,20 @@
     and displays them.
   */
 
-  SirTrevor.Blocks.Oembed =  (function(){
-
+  SirTrevor.Blocks.Oembed = (function () {
     return Spotlight$1.Block.extend({
       plustextable: true,
 
-      id_key:"url",
+      id_key: "url",
 
       type: "oembed",
-      
-      title: function() { return i18n.t('blocks:oembed:title'); },
-      description: function() { return i18n.t('blocks:oembed:description'); },
+
+      title: function () {
+        return i18n.t("blocks:oembed:title")
+      },
+      description: function () {
+        return i18n.t("blocks:oembed:description")
+      },
 
       icon_name: "oembed",
       show_heading: false,
@@ -6058,12 +6312,11 @@
       </div>
       ${this.text_area()}
     </div>`
-      }
-    });
+      },
+    })
   })();
 
-  SirTrevor.Blocks.FeaturedPages = (function(){
-
+  SirTrevor.Blocks.FeaturedPages = (function () {
     return Spotlight$1.Block.Resources.extend({
       type: "featured_pages",
 
@@ -6071,18 +6324,26 @@
 
       show_image_selection: false,
 
-      autocomplete_url: function() { return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-pages-path]').dataset.autocompleteExhibitPagesPath; },
-      autocomplete_fetch: function(url) {
-        return this.fetchOnceAndFilterLocalResults(url);
+      autocomplete_url: function () {
+        return document
+          .getElementById(this.instanceID)
+          .closest("form[data-autocomplete-exhibit-pages-path]").dataset
+          .autocompleteExhibitPagesPath
       },
-      autocomplete_template: function(obj) {
-        const description = obj.description ? `<small>&nbsp;&nbsp;${obj.description}</small>` : '';
-        const thumbnail = obj.thumbnail_image_url ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail_image_url}" /></div>` : '';
-        return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">${thumbnail}
+      autocomplete_fetch: function (url) {
+        return this.fetchOnceAndFilterLocalResults(url)
+      },
+      autocomplete_template: function (obj) {
+        const description = obj.description
+          ? `<small>&nbsp;&nbsp;${obj.description}</small>`
+          : "";
+        const thumbnail = obj.thumbnail_image_url
+          ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail_image_url}" /></div>`
+          : "";
+        return `<div class="autocomplete-item${!obj.published ? " blacklight-private" : ""}">${thumbnail}
       <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/>${description}</div>`
       },
-    });
-
+    })
   })();
 
   /*
@@ -6094,89 +6355,99 @@
     and displays them.
   */
 
-  SirTrevor.Blocks.Rule = (function(){
-
+  SirTrevor.Blocks.Rule = (function () {
     return SirTrevor.Block.extend({
       type: "rule",
-      
-      title: function() { return i18n.t('blocks:rule:title'); },
+
+      title: function () {
+        return i18n.t("blocks:rule:title")
+      },
 
       icon_name: "rule",
-      
-      editorHTML: function() {
-        return '<hr />'
-      }
-    });
+
+      editorHTML: function () {
+        return "<hr />"
+      },
+    })
   })();
 
-  SirTrevor.Blocks.SearchResults =  (function(){
-
+  SirTrevor.Blocks.SearchResults = (function () {
     return SirTrevor.Blocks.Browse.extend({
-
       type: "search_results",
 
-      icon_name: 'search_results',
+      icon_name: "search_results",
 
       searches_key: "slug",
       view_key: "view",
       plustextable: false,
 
-      content: function() {
+      content: function () {
         return this.items_selector()
       },
 
-      item_options: function() {
+      item_options: function () {
         var block = this;
-        var fields = $('[data-blacklight-configuration-search-views]').data('blacklight-configuration-search-views');
+        var fields = $("[data-blacklight-configuration-search-views]").data(
+          "blacklight-configuration-search-views",
+        );
 
-        return $.map(fields, function(field) {
+        return $.map(fields, function (field) {
           return `<div>
           <label for='${block.formId(block.view_key + field.key)}'>
             <input id='${block.formId(block.view_key + field.key)}' name='${block.view_key}[]' type='checkbox' value='${field.key}' />
           ${field.label}
           </label>
         </div>`
-        }).join("\n");
+        }).join("\n")
       },
 
-      afterPanelRender: function(data, panel) {
-        $(this.inner).find('.item-input-field').attr("disabled", "disabled");
+      afterPanelRender: function (_data, _panel) {
+        $(this.inner).find(".item-input-field").attr("disabled", "disabled");
       },
 
-      afterPanelDelete: function() {
-        $(this.inner).find('.item-input-field').removeAttr("disabled");
+      afterPanelDelete: function () {
+        $(this.inner).find(".item-input-field").removeAttr("disabled");
       },
-
-    });
+    })
   })();
 
-  SirTrevor.Blocks.SolrDocumentsBase = (function(){
-
+  SirTrevor.Blocks.SolrDocumentsBase = (function () {
     return Spotlight$1.Block.Resources.extend({
       plustextable: true,
-      autocomplete_url: function() { return this.$instance().closest('form[data-autocomplete-exhibit-catalog-path]').data('autocomplete-exhibit-catalog-path') },
-      autocomplete_template: function(obj) {
-        const thumbnail = obj.thumbnail ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail}" /></div>` : '';
-        return `<div class="autocomplete-item${obj.private ? ' blacklight-private' : ''}">${thumbnail}
+      autocomplete_url: function () {
+        return this.$instance()
+          .closest("form[data-autocomplete-exhibit-catalog-path]")
+          .data("autocomplete-exhibit-catalog-path")
+      },
+      autocomplete_template: function (obj) {
+        const thumbnail = obj.thumbnail
+          ? `<div class="document-thumbnail"><img class="img-thumbnail" src="${obj.thumbnail}" /></div>`
+          : "";
+        return `<div class="autocomplete-item${obj.private ? " blacklight-private" : ""}">${thumbnail}
       <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/><small>&nbsp;&nbsp;${this.highlight(obj.description)}</small></div>`
       },
-      transform_autocomplete_results: function(response) {
-        return $.map(response['docs'], function(doc) {
-          return doc;
+      transform_autocomplete_results: function (response) {
+        return $.map(response["docs"], function (doc) {
+          return doc
         })
       },
 
-      caption_option_values: function() {
-        var fields = $('[data-blacklight-configuration-index-fields]').data('blacklight-configuration-index-fields');
+      caption_option_values: function () {
+        var fields = $("[data-blacklight-configuration-index-fields]").data(
+          "blacklight-configuration-index-fields",
+        );
 
-        return $.map(fields, function(field) {
-          return $('<option />').val(field.key).text(field.label)[0].outerHTML;
-        }).join("\n");
+        return $.map(fields, function (field) {
+          return $("<option />").val(field.key).text(field.label)[0].outerHTML
+        }).join("\n")
       },
 
-      item_options: function() { return this.caption_options(); },
+      item_options: function () {
+        return this.caption_options()
+      },
 
-      caption_options: function() { return `
+      caption_options: function () {
+        return `
       <div class="field-select primary-caption" data-behavior="item-caption-admin">
         <input name="${this.show_primary_field_key}" type="hidden" value="false" />
         <input data-input-select-target="#${this.formId(this.primary_field_key)}" name="${this.show_primary_field_key}" id="${this.formId(this.show_primary_field_key)}" type="checkbox" value="true" />
@@ -6195,36 +6466,74 @@
           ${this.caption_option_values()}
         </select>
       </div>
-    `},
+    `
+      },
 
       // Sets the first version of the IIIF information from autocomplete data.
-      _itemPanelIiifFields: function(index, autocomplete_data) {
+      _itemPanelIiifFields: function (index, autocomplete_data) {
         var iiifFields = [
-          '<input type="hidden" name="item[' + index + '][thumbnail_image_url]" value="' + (autocomplete_data.thumbnail_image_url || autocomplete_data.thumbnail || "") + '"/>',
-          '<input type="hidden" name="item[' + index + '][full_image_url]" value="' + (autocomplete_data.full_image_url || autocomplete_data.thumbnail_image_url || autocomplete_data.thumbnail || "") + '"/>',
-          '<input type="hidden" name="item[' + index + '][iiif_tilesource]" value="' + (autocomplete_data.iiif_tilesource || "") + '"/>',
-          '<input type="hidden" name="item[' + index + '][iiif_manifest_url]" value="' + (autocomplete_data.iiif_manifest_url || "") + '"/>',
-          '<input type="hidden" name="item[' + index + '][iiif_canvas_id]" value="' + (autocomplete_data.iiif_canvas_id || "") + '"/>',
-          '<input type="hidden" name="item[' + index + '][iiif_image_id]" value="' + (autocomplete_data.iiif_image_id || "") + '"/>',
+          '<input type="hidden" name="item[' +
+            index +
+            '][thumbnail_image_url]" value="' +
+            (autocomplete_data.thumbnail_image_url ||
+              autocomplete_data.thumbnail ||
+              "") +
+            '"/>',
+          '<input type="hidden" name="item[' +
+            index +
+            '][full_image_url]" value="' +
+            (autocomplete_data.full_image_url ||
+              autocomplete_data.thumbnail_image_url ||
+              autocomplete_data.thumbnail ||
+              "") +
+            '"/>',
+          '<input type="hidden" name="item[' +
+            index +
+            '][iiif_tilesource]" value="' +
+            (autocomplete_data.iiif_tilesource || "") +
+            '"/>',
+          '<input type="hidden" name="item[' +
+            index +
+            '][iiif_manifest_url]" value="' +
+            (autocomplete_data.iiif_manifest_url || "") +
+            '"/>',
+          '<input type="hidden" name="item[' +
+            index +
+            '][iiif_canvas_id]" value="' +
+            (autocomplete_data.iiif_canvas_id || "") +
+            '"/>',
+          '<input type="hidden" name="item[' +
+            index +
+            '][iiif_image_id]" value="' +
+            (autocomplete_data.iiif_image_id || "") +
+            '"/>',
         ];
 
         // The region input is required for widgets that enable image cropping but not otherwise
-        if(this.show_image_selection) {
-          iiifFields.push('<input type="hidden" name="item[' + index + '][iiif_region]" value="' + (autocomplete_data.iiif_region || "") + '"/>');
+        if (this.show_image_selection) {
+          iiifFields.push(
+            '<input type="hidden" name="item[' +
+              index +
+              '][iiif_region]" value="' +
+              (autocomplete_data.iiif_region || "") +
+              '"/>',
+          );
         }
 
-        return iiifFields.join("\n");
+        return iiifFields.join("\n")
       },
       // Overwrites the hidden inputs from _itemPanelIiifFields with data from the
       // manifest. Called by afterPanelRender - the manifest_data here is built
       // from canvases in the manifest, transformed by spotlight/admin/iiif.js in
       // the #images method.
-      setIiifFields: function(panel, manifest_data, initialize) {
-        var legacyThumbnailField = $(panel).find('[name$="[thumbnail_image_url]"]');
+      setIiifFields: function (panel, manifest_data, initialize) {
+        var legacyThumbnailField = $(panel).find(
+          '[name$="[thumbnail_image_url]"]',
+        );
         var legacyFullField = $(panel).find('[name$="[full_image_url]"]');
 
         if (initialize && legacyThumbnailField.val().length > 0) {
-          return;
+          return
         }
 
         legacyThumbnailField.val("");
@@ -6233,52 +6542,64 @@
         $(panel).find('[name$="[iiif_tilesource]"]').val(manifest_data.tilesource);
         $(panel).find('[name$="[iiif_manifest_url]"]').val(manifest_data.manifest);
         $(panel).find('[name$="[iiif_canvas_id]"]').val(manifest_data.canvasId);
-        $(panel).find('img.img-thumbnail').attr('src', manifest_data.thumbnail_image_url || manifest_data.tilesource.replace("/info.json", "/full/100,100/0/default.jpg"));
+        $(panel)
+          .find("img.img-thumbnail")
+          .attr(
+            "src",
+            manifest_data.thumbnail_image_url ||
+              manifest_data.tilesource.replace(
+                "/info.json",
+                "/full/100,100/0/default.jpg",
+              ),
+          );
       },
-      afterPanelRender: function(data, panel) {
+      afterPanelRender: function (data, panel) {
         var context = this;
         var manifestUrl = data.iiif_manifest || data.iiif_manifest_url;
 
         if (!manifestUrl) {
-          $(panel).find('[name$="[thumbnail_image_url]"]').val(data.thumbnail_image_url || data.thumbnail);
+          $(panel)
+            .find('[name$="[thumbnail_image_url]"]')
+            .val(data.thumbnail_image_url || data.thumbnail);
           $(panel).find('[name$="[full_image_url]"]').val(data.full_image_url);
 
-          return;
+          return
         }
 
-        $.ajax(manifestUrl).done(
-          function(manifest) {
-            var iiifManifest = new Iiif(manifestUrl, manifest);
+        $.ajax(manifestUrl).done(function (manifest) {
+          var iiifManifest = new Iiif(manifestUrl, manifest);
 
-            var thumbs = iiifManifest.imagesArray();
+          var thumbs = iiifManifest.imagesArray();
 
-            if (!data.iiif_image_id) {
-              context.setIiifFields(panel, thumbs[0], !!data.iiif_manifest_url);
-            }
-
-
-            if(thumbs.length > 1) {
-              panel.multiImageSelector(thumbs, function(selectorImage) {
-                context.setIiifFields(panel, selectorImage, false);
-              }, data.iiif_image_id);
-            }
+          if (!data.iiif_image_id) {
+            context.setIiifFields(panel, thumbs[0], !!data.iiif_manifest_url);
           }
-        );
-      }
-    });
 
+          if (thumbs.length > 1) {
+            panel.multiImageSelector(
+              thumbs,
+              function (selectorImage) {
+                context.setIiifFields(panel, selectorImage, false);
+              },
+              data.iiif_image_id,
+            );
+          }
+        });
+      },
+    })
   })();
 
-  SirTrevor.Blocks.SolrDocuments = (function(){
-
+  SirTrevor.Blocks.SolrDocuments = (function () {
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
       type: "solr_documents",
 
       icon_name: "items",
 
-      item_options: function() { return this.caption_options() + this.zpr_option(); },
+      item_options: function () {
+        return this.caption_options() + this.zpr_option()
+      },
 
-      zpr_option: function() {
+      zpr_option: function () {
         return `
         <div>
         <input name="${this.zpr_key}" type="hidden" value="false" />
@@ -6288,13 +6609,11 @@
       `
       },
 
-      zpr_key: 'zpr_link'
-    });
-
+      zpr_key: "zpr_link",
+    })
   })();
 
-  SirTrevor.Blocks.SolrDocumentsCarousel = (function(){
-
+  SirTrevor.Blocks.SolrDocumentsCarousel = (function () {
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
       plustextable: false,
       type: "solr_documents_carousel",
@@ -6306,16 +6625,16 @@
       max_height_key: "max-height",
 
       carouselCycleTimesInSeconds: {
-        values: [ 3, 5, 8, 12, 20 ],
-        selected: 5
+        values: [3, 5, 8, 12, 20],
+        selected: 5,
       },
 
       carouselMaxHeights: {
-        values: { 'Small': 'small', 'Medium': 'medium', 'Large': 'large' },
-        selected: 'Medium'
+        values: { Small: "small", Medium: "medium", Large: "large" },
+        selected: "Medium",
       },
 
-      item_options: function() {
+      item_options: function () {
         return `${this.caption_options()}
         <div class="field-select auto-cycle-images" data-behavior="auto-cycle-images">
           <input name="${this.auto_play_images_key}" type="hidden" value="false" />
@@ -6332,166 +6651,196 @@
         </div>`
       },
 
-      addCarouselCycleOptions: function(options) {
-        var html = '';
+      addCarouselCycleOptions: function (options) {
+        var html = "";
 
-        $.each(options.values, function(index, interval) {
-          var selected = (interval === options.selected) ? 'selected' : '',
-              intervalInMilliSeconds = parseInt(interval, 10) * 1000;
+        $.each(options.values, function (index, interval) {
+          var selected = interval === options.selected ? "selected" : "",
+            intervalInMilliSeconds = parseInt(interval, 10) * 1000;
 
-          html += '<option value="' + intervalInMilliSeconds + '" ' + selected + '>' + interval + ' seconds</option>';
+          html +=
+            '<option value="' +
+            intervalInMilliSeconds +
+            '" ' +
+            selected +
+            ">" +
+            interval +
+            " seconds</option>";
         });
 
-        return html;
+        return html
       },
 
-      addCarouselMaxHeightOptions: function(options) {
-        var html = '',
-            _this = this;
+      addCarouselMaxHeightOptions: function (options) {
+        var html = "",
+          _this = this;
 
-        $.each(options.values, function(size, px) {
-          var checked = (size === options.selected) ? 'checked' : '',
-              id = _this.formId(_this.max_height_key);
+        $.each(options.values, function (size, px) {
+          var checked = size === options.selected ? "checked" : "",
+            id = _this.formId(_this.max_height_key);
 
-          html += '<input data-key="' + _this.max_height_key + '" type="radio" name="' + id + '" value="' + px + '" id="' + id + '" ' + checked + '>';
-          html += '<label class="carousel-size" for="' + id + '">' + size + '</label>';
+          html +=
+            '<input data-key="' +
+            _this.max_height_key +
+            '" type="radio" name="' +
+            id +
+            '" value="' +
+            px +
+            '" id="' +
+            id +
+            '" ' +
+            checked +
+            ">";
+          html +=
+            '<label class="carousel-size" for="' + id + '">' + size + "</label>";
         });
 
-        return html;
+        return html
       },
 
-      afterPreviewLoad: function(options) {
-        $(this.inner).find('.carousel').carousel();
+      afterPreviewLoad: function (_options) {
+        $(this.inner).find(".carousel").carousel();
 
         // the bootstrap carousel only initializes data-bs-slide widgets on page load, so we need
         // to initialize them ourselves..
         var clickHandler = function (e) {
           var href;
-          var $this   = $(this);
-          var $target = $($this.attr('data-bs-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
-          if (!$target.hasClass('carousel')) return
+          var $this = $(this);
+          var $target = $(
+            $this.attr("data-bs-target") ||
+              ((href = $this.attr("href")) && href.replace(/.*(?=#[^\s]+$)/, "")),
+          ); // strip for ie7
+          if (!$target.hasClass("carousel")) return
           var options = $.extend({}, $target.data(), $this.data());
-          var slideIndex = $this.attr('data-bs-slide-to');
+          var slideIndex = $this.attr("data-bs-slide-to");
           if (slideIndex) options.interval = false;
 
           $.fn.carousel.call($target, options);
 
           if (slideIndex) {
-            $target.data('bs.carousel').to(slideIndex);
+            $target.data("bs.carousel").to(slideIndex);
           }
 
           e.preventDefault();
         };
 
-        $(this.inner).find('.carousel')
-          .on('click.bs.carousel.data-api', '[data-bs-slide]', clickHandler)
-          .on('click.bs.carousel.data-api', '[data-bs-slide-to]', clickHandler);
-      }
-
-    });
-
+        $(this.inner)
+          .find(".carousel")
+          .on("click.bs.carousel.data-api", "[data-bs-slide]", clickHandler)
+          .on("click.bs.carousel.data-api", "[data-bs-slide-to]", clickHandler);
+      },
+    })
   })();
 
-  SirTrevor.Blocks.SolrDocumentsEmbed = (function(){
-
+  SirTrevor.Blocks.SolrDocumentsEmbed = (function () {
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
       type: "solr_documents_embed",
       icon_name: "item_embed",
       show_image_selection: false,
 
-      item_options: function() { return "" },
+      item_options: function () {
+        return ""
+      },
 
-      afterPreviewLoad: function(options) {
-        $(this.inner).find('picture[data-openseadragon]').openseadragon();
-      }
-    });
-
+      afterPreviewLoad: function (_options) {
+        this.inner.querySelector("picture[data-openseadragon]").openseadragon();
+      },
+    })
   })();
 
-  SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
-
+  SirTrevor.Blocks.SolrDocumentsFeatures = (function () {
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
       plustextable: false,
       type: "solr_documents_features",
 
       icon_name: "item_features",
 
-      afterPreviewLoad: function(options) {
-        $(this.inner).find('.carousel').carousel();
+      afterPreviewLoad: function (_options) {
+        $(this.inner).find(".carousel").carousel();
 
         // the bootstrap carousel only initializes data-bs-slide widgets on page load, so we need
         // to initialize them ourselves..
         var clickHandler = function (e) {
           var href;
-          var $this   = $(this);
-          var $target = $($this.attr('data-bs-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
-          if (!$target.hasClass('carousel')) return
+          var $this = $(this);
+          var $target = $(
+            $this.attr("data-bs-target") ||
+              ((href = $this.attr("href")) && href.replace(/.*(?=#[^\s]+$)/, "")),
+          ); // strip for ie7
+          if (!$target.hasClass("carousel")) return
           var options = $.extend({}, $target.data(), $this.data());
-          var slideIndex =$this.attr('data-bs-slide-to');
+          var slideIndex = $this.attr("data-bs-slide-to");
           if (slideIndex) options.interval = false;
 
           $.fn.carousel.call($target, options);
 
           if (slideIndex) {
-            $target.data('bs.carousel').to(slideIndex);
+            $target.data("bs.carousel").to(slideIndex);
           }
 
           e.preventDefault();
         };
 
-        $(this.inner).find('.carousel')
-          .on('click.bs.carousel.data-api', '[data-bs-slide-to]', clickHandler);
-      }
-
-    });
-
+        $(this.inner)
+          .find(".carousel")
+          .on("click.bs.carousel.data-api", "[data-bs-slide-to]", clickHandler);
+      },
+    })
   })();
 
-  SirTrevor.Blocks.SolrDocumentsGrid = (function(){
-
+  SirTrevor.Blocks.SolrDocumentsGrid = (function () {
     return SirTrevor.Blocks.SolrDocumentsBase.extend({
       type: "solr_documents_grid",
 
       icon_name: "item_grid",
 
-
-      item_options: function() { return "" }
-    });
-
+      item_options: function () {
+        return ""
+      },
+    })
   })();
 
-  SirTrevor.Blocks.UploadedItems = (function(){
+  SirTrevor.Blocks.UploadedItems = (function () {
     return Spotlight$1.Block.Resources.extend({
       plustextable: true,
       uploadable: true,
       autocompleteable: false,
       show_image_selection: false,
-      
-      id_key: 'file',
 
-      type: 'uploaded_items',
+      id_key: "file",
 
-      icon_name: 'items',
+      type: "uploaded_items",
 
-      blockGroup: 'undefined',
+      icon_name: "items",
+
+      blockGroup: "undefined",
 
       // Clear out the default Uploadable upload options
       // since we will be using our own custom controls
-      upload_options: { html: '' },
+      upload_options: { html: "" },
 
-      fileInput: function() { return $(this.inner).find('input[type="file"]'); },
-
-      onBlockRender: function(){
-        Module.init($(this.inner).find('[data-behavior="nestable"]'));
-
-        this.fileInput().on('change', (function(ev) {
-          this.onDrop(ev.currentTarget);
-        }).bind(this));
+      fileInput: function () {
+        return $(this.inner).find('input[type="file"]')
       },
 
-      onDrop: function(transferData){
+      onBlockRender: function () {
+        Module.init($(this.inner).find('[data-behavior="nestable"]'));
+
+        this.fileInput().on(
+          "change",
+          function (ev) {
+            this.onDrop(ev.currentTarget);
+          }.bind(this),
+        );
+      },
+
+      onDrop: function (transferData) {
         var file = transferData.files[0];
-            (typeof URL !== "undefined") ? URL : (typeof webkitURL !== "undefined") ? webkitURL : null;
+          typeof URL !== "undefined"
+              ? URL
+              : typeof webkitURL !== "undefined"
+                ? webkitURL
+                : null;
 
         // Handle one upload at a time
         if (/image/.test(file.type)) {
@@ -6499,30 +6848,34 @@
 
           this.uploader(
             file,
-            function(data) {
+            function (data) {
               this.createItemPanel(data);
-              this.fileInput().val('');
+              this.fileInput().val("");
               this.ready();
             },
-            function(error) {
-              this.addMessage(i18n.t('blocks:image:upload_error'));
+            function (_error) {
+              this.addMessage(i18n.t("blocks:image:upload_error"));
               this.ready();
-            }
+            },
           );
         }
       },
 
-      title: function() { return i18n.t('blocks:uploaded_items:title'); },
-      description: function() { return i18n.t('blocks:uploaded_items:description'); },
+      title: function () {
+        return i18n.t("blocks:uploaded_items:title")
+      },
+      description: function () {
+        return i18n.t("blocks:uploaded_items:description")
+      },
 
       globalIndex: 0,
 
-      _itemPanel: function(data) {
+      _itemPanel: function (data) {
         var index = "file_" + this.globalIndex++;
         var checked = 'checked="checked"';
 
-        if (data.display == 'false') {
-          checked = '';
+        if (data.display == "false") {
+          checked = "";
         }
 
         var dataId = data.id || data.uid;
@@ -6540,8 +6893,8 @@
               <div class="card-header d-flex item-grid">
                 <div class="checkbox">
                   <input name="item[${index}][display]" type="hidden" value="false" />
-                  <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + dataId)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                  <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + dataId)}">${i18n.t("blocks:resources:panel:display")}</label>
+                  <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + "_" + dataId)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                  <label class="visually-hidden" for="${this.formId(this.display_checkbox + "_" + dataId)}">${i18n.t("blocks:resources:panel:display")}</label>
                 </div>
                 <div class="pic">
                   <img class="img-thumbnail" src="${dataUrl}" />
@@ -6549,12 +6902,12 @@
                 <div class="main form-horizontal">
                   <div class="title card-title">${dataTitle}</div>
                   <div class="field row me-3">
-                    <label for="${this.formId('caption_' + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:caption")}</label>
-                    <input type="text" class="form-control col" id="${this.formId('caption_' + dataId)}" name="item[${index}][caption]" data-field="caption"/>
+                    <label for="${this.formId("caption_" + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:caption")}</label>
+                    <input type="text" class="form-control col" id="${this.formId("caption_" + dataId)}" name="item[${index}][caption]" data-field="caption"/>
                   </div>
                   <div class="field row me-3">
-                    <label for="${this.formId('link_' + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:link")}</label>
-                    <input type="text" class="form-control col" id="${this.formId('link_' + dataId)}" name="item[${index}][link]" data-field="link"/>
+                    <label for="${this.formId("link_" + dataId)}" class="col-form-label col-md-3">${i18n.t("blocks:uploaded_items:link")}</label>
+                    <input type="text" class="form-control col" id="${this.formId("link_" + dataId)}" name="item[${index}][link]" data-field="link"/>
                   </div>
                   ${this._altTextFieldsHTML(index, data)}
                 </div>
@@ -6569,18 +6922,18 @@
         panel.find('[data-field="link"]').val(data.link);
         var context = this;
 
-        $('.remove a', panel).on('click', function(e) {
+        $(".remove a", panel).on("click", function (e) {
           e.preventDefault();
-          $(this).closest('.field').remove();
+          $(this).closest(".field").remove();
           context.afterPanelDelete();
         });
 
         this.afterPanelRender(data, panel);
 
-        return panel;
+        return panel
       },
 
-      editorHTML: function() {
+      editorHTML: function () {
         return `<div class="form oembed-text-admin clearfix">
         <div class="widget-header">
           ${this.description()}
@@ -6605,53 +6958,66 @@
       </div>`
       },
 
-      altTextHTML: function(index, data) {
-        const { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr } = this._altTextData(data);
+      altTextHTML: function (index, data) {
+        const {
+          isDecorative,
+          altText,
+          altTextBackup,
+          placeholderAttr,
+          disabledAttr,
+        } = this._altTextData(data);
         return `
       <div class="field row me-3">
         <div class="col-lg-3 ps-md-2">
-          <label class="col-form-label text-nowrap pb-0 pt-1 justify-content-md-start justify-content-lg-end d-flex" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
+          <label class="col-form-label text-nowrap pb-0 pt-1 justify-content-md-start justify-content-lg-end d-flex" for="${this.formId(this.alt_text_textarea + "_" + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
           <div class="form-check d-flex justify-content-md-start justify-content-lg-end">
             <input class="form-check-input" type="checkbox"
-              id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
-            <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
+              id="${this.formId(this.decorative_checkbox + "_" + data.id)}" name="item[${index}][decorative]" ${isDecorative ? "checked" : ""}>
+            <label class="form-check-label" for="${this.formId(this.decorative_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
           </div>
         </div>
         <input type="hidden" name="item[${index}][alt_text_backup]" value="${altTextBackup}" />
         <textarea class="col-lg-9" rows="2" ${placeholderAttr}
-          id="${this.formId(this.alt_text_textarea + '_' + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
+          id="${this.formId(this.alt_text_textarea + "_" + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
       </div>`
       },
 
-      zpr_key: 'zpr_link'
-    });
+      zpr_key: "zpr_link",
+    })
   })();
 
-  (function() {
-    var BLOCK_REPLACER_CONTROL_TEMPLATE = function(block) {
-      var el = document.createElement('button');
+  (function () {
+    var BLOCK_REPLACER_CONTROL_TEMPLATE = function (block) {
+      var el = document.createElement("button");
       el.className = "st-block-controls__button";
-      el.setAttribute('data-type', block.type);
+      el.setAttribute("data-type", block.type);
       el.type = "button";
 
-      var img = document.createElement('svg');
+      var img = document.createElement("svg");
       img.className = "st-icon";
-      img.setAttribute('role', 'img');
+      img.setAttribute("role", "img");
 
-      var use = document.createElement('use');
-      use.setAttributeNS('https://www.w3.org/1999/xlink', 'href', SirTrevor.config.defaults.iconUrl + "#" + block.icon_name);
+      var use = document.createElement("use");
+      use.setAttributeNS(
+        "https://www.w3.org/1999/xlink",
+        "href",
+        SirTrevor.config.defaults.iconUrl + "#" + block.icon_name,
+      );
       img.appendChild(use);
       el.appendChild(img);
       el.appendChild(document.createTextNode(block.title()));
 
-      return el.outerHTML;
+      return el.outerHTML
     };
 
     function generateBlocksHTML(Blocks, availableTypes) {
       var groups = {};
-      for(var i in availableTypes) {
+      for (var i in availableTypes) {
         var type = availableTypes[i];
-        if (Blocks.hasOwnProperty(type) && Blocks[type].prototype.toolbarEnabled) {
+        if (
+          Object.prototype.hasOwnProperty.call(Blocks, type) &&
+          Blocks[type].prototype.toolbarEnabled
+        ) {
           var blockGroup;
 
           if ($.isFunction(Blocks[type].prototype.blockGroup)) {
@@ -6660,64 +7026,78 @@
             blockGroup = Blocks[type].prototype.blockGroup;
           }
 
-          if (blockGroup == 'undefined' || blockGroup === undefined) {
+          if (blockGroup == "undefined" || blockGroup === undefined) {
             blockGroup = i18n.t("blocks:group:undefined");
           }
 
           groups[blockGroup] = groups[blockGroup] || [];
-          groups[blockGroup].push(BLOCK_REPLACER_CONTROL_TEMPLATE(Blocks[type].prototype));
+          groups[blockGroup].push(
+            BLOCK_REPLACER_CONTROL_TEMPLATE(Blocks[type].prototype),
+          );
         }
       }
 
       function generateBlock(groups, key) {
-        var group   = groups[key];
-        var groupEl = $("<div class='st-controls-group'><div class='st-group-col-form-label'>" + key + "</div></div>");
-        var buttons = group.reduce(function(memo, btn) {
-          return memo += btn;
+        var group = groups[key];
+        var groupEl = $(
+          "<div class='st-controls-group'><div class='st-group-col-form-label'>" +
+            key +
+            "</div></div>",
+        );
+        var buttons = group.reduce(function (memo, btn) {
+          return memo + btn
         }, "");
         groupEl.append(buttons);
-        return groupEl[0].outerHTML;
+        return groupEl[0].outerHTML
       }
 
-      var standardWidgets = generateBlock(groups, i18n.t("blocks:group:undefined"));
+      var standardWidgets = generateBlock(
+        groups,
+        i18n.t("blocks:group:undefined"),
+      );
 
-      var exhibitWidgets = Object.keys(groups).map(function(key) {
-        if (key !== i18n.t("blocks:group:undefined")) {
-          return generateBlock(groups, key);
-        }
-      }).filter(function (element) {
-        return element != null;
-      });
+      var exhibitWidgets = Object.keys(groups)
+        .map(function (key) {
+          if (key !== i18n.t("blocks:group:undefined")) {
+            return generateBlock(groups, key)
+          }
+        })
+        .filter(function (element) {
+          return element != null
+        });
 
       var blocks = [standardWidgets].concat(exhibitWidgets).join("<hr />");
-      return blocks;
+      return blocks
     }
 
-    function render(Blocks, availableTypes) {
-      var el = document.createElement('div');
+    function render(_Blocks, _availableTypes) {
+      var el = document.createElement("div");
       el.className = "st-block-controls__buttons";
       el.innerHTML = generateBlocksHTML.apply(null, arguments);
 
-      var elButtons = document.createElement('div');
+      var elButtons = document.createElement("div");
       elButtons.className = "spotlight-block-controls";
       elButtons.appendChild(el);
-      return elButtons;
+      return elButtons
     }
 
-    Spotlight$1.BlockControls = function() { };
-    Spotlight$1.BlockControls.create = function(editor) {
+    Spotlight$1.BlockControls = function () {};
+    Spotlight$1.BlockControls.create = function (editor) {
       // REFACTOR - should probably not know about blockManager
       var el = render(SirTrevor.Blocks, editor.blockManager.blockTypes);
 
       function hide() {
         var parent = el.parentNode;
-        if (!parent) { return; }
+        if (!parent) {
+          return
+        }
         parent.removeChild(el);
         parent.classList.remove("st-block--controls-active");
-        return parent;
+        return parent
       }
 
       function destroy() {
+        // eslint-disable-next-line no-global-assign
         SirTrevor = null;
         el = null;
       }
@@ -6726,8 +7106,10 @@
         e.stopPropagation();
 
         var parent = this.parentNode;
-        if (!parent || hide() === parent) { return; }
-        $('.st-block__inner', parent).after(el);
+        if (!parent || hide() === parent) {
+          return
+        }
+        $(".st-block__inner", parent).after(el);
         parent.classList.add("st-block--controls-active");
       }
 
@@ -6737,157 +7119,174 @@
       return {
         el: el,
         hide: hide,
-        destroy: destroy
-      };
+        destroy: destroy,
+      }
     };
   })();
 
-  Spotlight$1.BlockLimits = function(editor) {
+  Spotlight$1.BlockLimits = function (editor) {
     this.editor = editor;
   };
 
-  Spotlight$1.BlockLimits.prototype.enforceLimits = function(editor) {
+  Spotlight$1.BlockLimits.prototype.enforceLimits = function (editor) {
     this.addEditorCallbacks(editor);
     this.checkGlobalBlockTypeLimit()();
   };
 
-  Spotlight$1.BlockLimits.prototype.addEditorCallbacks = function(editor) {
-    SirTrevor.EventBus.on('block:create:new', this.checkBlockTypeLimitOnAdd());
-    SirTrevor.EventBus.on('block:remove', this.checkGlobalBlockTypeLimit());
+  Spotlight$1.BlockLimits.prototype.addEditorCallbacks = function (_editor) {
+    SirTrevor.EventBus.on("block:create:new", this.checkBlockTypeLimitOnAdd());
+    SirTrevor.EventBus.on("block:remove", this.checkGlobalBlockTypeLimit());
   };
 
-  Spotlight$1.BlockLimits.prototype.checkBlockTypeLimitOnAdd = function() {
+  Spotlight$1.BlockLimits.prototype.checkBlockTypeLimitOnAdd = function () {
     var editor = this.editor;
 
-    return function(block) {
-      var control = $(".st-block-controls__button[data-type='" + block.type + "']", editor.blockControls.el);
+    return function (block) {
+      var control = $(
+        ".st-block-controls__button[data-type='" + block.type + "']",
+        editor.blockControls.el,
+      );
 
       control.prop("disabled", !editor.blockManager.canCreateBlock(block.class()));
-    };
+    }
   };
 
-  Spotlight$1.BlockLimits.prototype.checkGlobalBlockTypeLimit = function() {
+  Spotlight$1.BlockLimits.prototype.checkGlobalBlockTypeLimit = function () {
     // we don't know what type of block was created or removed.. So, try them all.
     var editor = this.editor;
 
-    return function() {
-      $.each(editor.blockManager.blockTypes, function(i, type) {
+    return function () {
+      $.each(editor.blockManager.blockTypes, function (i, type) {
         var block_type = SirTrevor.Blocks[type].prototype;
 
-        var control = $(editor.blockControls.el).find(".st-block-controls__button[data-type='" + block_type.type + "']");
+        var control = $(editor.blockControls.el).find(
+          ".st-block-controls__button[data-type='" + block_type.type + "']",
+        );
         control.prop("disabled", !editor.blockManager.canCreateBlock(type));
       });
-    };
+    }
   };
 
   SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
     autocompleteable: {
-      placeholder: "Enter a title..."
+      placeholder: "Enter a title...",
     },
 
     browse: {
       title: "Browse Categories",
-      description: "This widget highlights browse categories. Each highlighted category links to the corresponding browse category results page.",
-      item_counts: "Include item counts?"
+      description:
+        "This widget highlights browse categories. Each highlighted category links to the corresponding browse category results page.",
+      item_counts: "Include item counts?",
     },
 
     browse_group_categories: {
       autocomplete: "Enter a browse group title...",
       title: "Browse Group Categories",
-      description: "This widget displays all browse categories associated with a selected browse group as a horizontally-scrolling row. Each selected browse group is displayed as a separate row. Each displayed category in a group links to the corresponding browse category results page.",
-      item_counts: "Include category item counts?"
+      description:
+        "This widget displays all browse categories associated with a selected browse group as a horizontally-scrolling row. Each selected browse group is displayed as a separate row. Each displayed category in a group links to the corresponding browse category results page.",
+      item_counts: "Include category item counts?",
     },
 
     link_to_search: {
       title: "Saved Searches",
-      description: "This widget highlights saved searches. Each highlighted saved search links to the search results page generated by the saved search parameters. Any saved search listed on the Curation > Browse categories page, whether published or not, can be highlighted as a saved search.",
-      item_counts: "Include item counts?"
+      description:
+        "This widget highlights saved searches. Each highlighted saved search links to the search results page generated by the saved search parameters. Any saved search listed on the Curation > Browse categories page, whether published or not, can be highlighted as a saved search.",
+      item_counts: "Include item counts?",
     },
 
     iframe: {
-      title:  "IFrame",
+      title: "IFrame",
       description: "This widget embeds iframe-based embed code into pages",
-      placeholder: "Enter embed code here. It should begin with e.g. '<iframe'"
+      placeholder: "Enter embed code here. It should begin with e.g. '<iframe'",
     },
 
     oembed: {
       title: "Embed + Text",
-      description: "This widget embeds an oEmbed-supported web resource and a text block to the left or right of it. Examples of oEmbed-supported resources include those from YouTube, Twitter, Flickr, and SlideShare.",
+      description:
+        "This widget embeds an oEmbed-supported web resource and a text block to the left or right of it. Examples of oEmbed-supported resources include those from YouTube, Twitter, Flickr, and SlideShare.",
       url: "URL",
     },
 
     uploaded_items: {
       title: "Uploaded Item Row",
-      description: "This widget displays uploaded items in a horizontal row. Optionally, you can add a heading and/or text to be displayed adjacent to the items. The item caption and link URL fields are also optional.",
-      caption: 'Caption',
-      link: 'Link URL'
+      description:
+        "This widget displays uploaded items in a horizontal row. Optionally, you can add a heading and/or text to be displayed adjacent to the items. The item caption and link URL fields are also optional.",
+      caption: "Caption",
+      link: "Link URL",
     },
 
     featured_pages: {
-      title:  "Pages",
-      description: "This widget highlights pages from this exhibit. Each highlighted item links to the corresponding page."
+      title: "Pages",
+      description:
+        "This widget highlights pages from this exhibit. Each highlighted item links to the corresponding page.",
     },
 
     resources: {
       panel: {
         drag: "Drag",
         display: "Display?",
-        remove: "Remove"
+        remove: "Remove",
       },
       alt_text: {
         decorative: "Decorative",
         alternative_text: "Alternative text",
-        placeholder: "Enter alt text for this item..."
-      }
+        placeholder: "Enter alt text for this item...",
+      },
     },
 
     rule: {
-      title: "Horizontal Rule"
+      title: "Horizontal Rule",
     },
 
     search_results: {
       title: "Search Results",
-      description: "This widget displays a set of search results on a page. Specify a search result set by selecting an existing browse category. You can also select the view types that are available to the user when viewing the result set."
+      description:
+        "This widget displays a set of search results on a page. Specify a search result set by selecting an existing browse category. You can also select the view types that are available to the user when viewing the result set.",
     },
 
     solr_documents: {
       title: "Item Row",
-      description: "This widget displays exhibit items in a horizontal row. Optionally, you can add a heading and/or text to be displayed adjacent to the items.",
+      description:
+        "This widget displays exhibit items in a horizontal row. Optionally, you can add a heading and/or text to be displayed adjacent to the items.",
       caption: {
         placeholder: "Select...",
         primary: "Primary caption",
-        secondary: "Secondary caption"
+        secondary: "Secondary caption",
       },
       zpr: {
-        title: 'Offer "View larger" option'
-      }
+        title: 'Offer "View larger" option',
+      },
     },
 
     solr_documents_carousel: {
       title: "Item Carousel",
-      description: "This widget displays exhibit items in a carousel. You can configure the item captions, how the images are cycled, and the size of the carousel.",
+      description:
+        "This widget displays exhibit items in a carousel. You can configure the item captions, how the images are cycled, and the size of the carousel.",
       interval: {
         title: "Automatically cycle images",
-        placeholder: "Select..."
+        placeholder: "Select...",
       },
       height: {
-        title: "Maximum carousel height"
-      }
+        title: "Maximum carousel height",
+      },
     },
 
     solr_documents_embed: {
       title: "Item Embed",
-      description: "This widget embeds an exhibit item in a viewer on a page. Optionally, you can add a heading to be displayed above the viewer and/or text to be displayed adjacent to the viewer.",
+      description:
+        "This widget embeds an exhibit item in a viewer on a page. Optionally, you can add a heading to be displayed above the viewer and/or text to be displayed adjacent to the viewer.",
     },
 
     solr_documents_features: {
       title: "Item Slideshow",
-      description: "This widget displays exhibit items in a static slideshow. The user will move between items in the slideshow using the field you select as the primary caption."
+      description:
+        "This widget displays exhibit items in a static slideshow. The user will move between items in the slideshow using the field you select as the primary caption.",
     },
 
     solr_documents_grid: {
       title: "Item Grid",
-      description: "This widget displays exhibit items in a multi-row grid. Optionally, you can add a heading and/or text to be displayed adjacent to the items."
+      description:
+        "This widget displays exhibit items in a multi-row grid. Optionally, you can add a heading and/or text to be displayed adjacent to the items.",
     },
 
     textable: {
@@ -6896,20 +7295,21 @@
       align: {
         title: "Display text on:",
         left: "Left",
-        right: "Right"
-      }
+        right: "Right",
+      },
     },
 
     group: {
       undefined: "Standard widgets",
-      items: "Exhibit item widgets"
+      items: "Exhibit item widgets",
     },
 
     alt_text_guidelines: {
-      intro: 'For each item, please enter alternative text or appropriately check the decorative box. ',
-      link_label: 'Guidelines for writing alt text.',
-      link_url: 'https://www.w3.org/WAI/tutorials/images/' 
-    }
+      intro:
+        "For each item, please enter alternative text or appropriately check the decorative box. ",
+      link_label: "Guidelines for writing alt text.",
+      link_url: "https://www.w3.org/WAI/tutorials/images/",
+    },
   });
 
   class AdminIndex {
@@ -6936,60 +7336,61 @@
   }
 
   class TagSelectorController extends stimulus.Controller {
-
     static targets = [
-      'addNewTagWrapper',
-      'dropdownContent',
-      'initialTags',
-      'newTag',
-      'searchResultTags',
-      'selectedTags',
-      'tagControlWrapper',
-      'tagSearch',
-      'tagsField',
-      'tagSearchDropdown',
-      'tagSearchInputWrapper'
+      "addNewTagWrapper",
+      "dropdownContent",
+      "initialTags",
+      "newTag",
+      "searchResultTags",
+      "selectedTags",
+      "tagControlWrapper",
+      "tagSearch",
+      "tagsField",
+      "tagSearchDropdown",
+      "tagSearchInputWrapper",
     ]
 
     static values = {
       tags: Array,
-      translations: Object
+      translations: Object,
     }
 
-    tagDropdown (event) {
-      this.dropdownContentTarget.classList.toggle('d-none');
+    tagDropdown(_event) {
+      this.dropdownContentTarget.classList.toggle("d-none");
     }
 
-    clickOutside (event) {
-      const isShown = !this.dropdownContentTarget.classList.contains('d-none');
-      const inSelected = event.target.classList.contains('pill-close');
+    clickOutside(event) {
+      const isShown = !this.dropdownContentTarget.classList.contains("d-none");
+      const inSelected = event.target.classList.contains("pill-close");
       const inContainer = this.tagControlWrapperTarget.contains(event.target);
       if (!inContainer && !inSelected && isShown) {
         this.tagDropdown(event);
       }
     }
 
-    handleKeydown (event) {
-      if (event.key === 'Enter') {
+    handleKeydown(event) {
+      if (event.key === "Enter") {
         event.preventDefault();
-        const hidden = this.dropdownContentTarget.classList.contains('d-none');
-        if (hidden) return;
+        const hidden = this.dropdownContentTarget.classList.contains("d-none");
+        if (hidden) return
 
-        const tagElementToAdd = this.dropdownContentTarget.querySelector('.active')?.firstElementChild;
+        const tagElementToAdd =
+          this.dropdownContentTarget.querySelector(".active")?.firstElementChild;
         if (tagElementToAdd) tagElementToAdd.click();
       }
 
-      if (event.key === ',') {
+      if (event.key === ",") {
         event.preventDefault();
         if (this.tagSearchTarget.value.length === 0) return
 
-        if (!this.addNewTagWrapperTarget.classList.contains('d-none')) {
+        if (!this.addNewTagWrapperTarget.classList.contains("d-none")) {
           this.addNewTagWrapperTarget.click();
           this.tagSearchTarget.focus();
           return
         }
 
-        const exactMatch = this.dropdownContentTarget.querySelector('.active')?.firstElementChild;
+        const exactMatch =
+          this.dropdownContentTarget.querySelector(".active")?.firstElementChild;
         if (exactMatch?.checked === false) {
           exactMatch.click();
           this.resetSearch();
@@ -6998,8 +7399,11 @@
       }
     }
 
-    addNewTag (event) {
-      if (this.addNewTagWrapperTarget.classList.contains('d-none') || this.newTagTarget.dataset.tag.length === 0) {
+    addNewTag(_event) {
+      if (
+        this.addNewTagWrapperTarget.classList.contains("d-none") ||
+        this.newTagTarget.dataset.tag.length === 0
+      ) {
         return
       }
 
@@ -7008,118 +7412,150 @@
     }
 
     resetSearch() {
-      this.tagSearchTarget.value = '';
-      this.newTagTarget.innerHTML = '';
-      this.newTagTarget.dataset.tag = '';
+      this.tagSearchTarget.value = "";
+      this.newTagTarget.innerHTML = "";
+      this.newTagTarget.dataset.tag = "";
       this.newTagTarget.disabled = true;
-      this.addNewTagWrapperTarget.classList.add('d-none');
-      this.searchResultTagsTargets.forEach(target => this.showElement(target.parentElement));
+      this.addNewTagWrapperTarget.classList.add("d-none");
+      this.searchResultTagsTargets.forEach((target) =>
+        this.showElement(target.parentElement),
+      );
     }
 
-    tagUpdate (event) {
+    tagUpdate(event) {
       const target = event.target ? event.target : event;
       if (target.checked) {
         this.tagsValue = this.tagsValue.concat([target.dataset.tag]);
       } else {
-        this.tagsValue = this.tagsValue.filter(tag => tag !== target.dataset.tag);
+        this.tagsValue = this.tagsValue.filter(
+          (tag) => tag !== target.dataset.tag,
+        );
       }
     }
 
-    updateSearchResultsPlaceholder(event) {
-      const placeholderElement = this.dropdownContentTarget.querySelector('.no-results');
+    updateSearchResultsPlaceholder(_event) {
+      const placeholderElement =
+        this.dropdownContentTarget.querySelector(".no-results");
       if (!placeholderElement) return
 
-      const hasVisibleTags = this.dropdownContentTarget.querySelector('label:not(.d-none):not(.no-results)');
-      placeholderElement.classList.toggle('d-none', hasVisibleTags);
+      const hasVisibleTags = this.dropdownContentTarget.querySelector(
+        "label:not(.d-none):not(.no-results)",
+      );
+      placeholderElement.classList.toggle("d-none", hasVisibleTags);
     }
 
     tagCreate(event) {
       event.preventDefault();
-      const newTagCheckbox = document.createElement('label');
+      const newTagCheckbox = document.createElement("label");
       newTagCheckbox.innerHTML = `<input type="checkbox" checked data-action="click->${this.identifier}#tagUpdate" data-tag-selector-target="searchResultTags" data-tag="${this.newTagTarget.dataset.tag}"> ${this.newTagTarget.dataset.tag}`;
-      const existingTags = Array.from(this.dropdownContentTarget.querySelectorAll('label:not(#add-new-tag-wrapper)'));
-      const insertPosition = existingTags.findIndex(tag => tag.textContent.trim().localeCompare(this.newTagTarget.dataset.tag) > 0);
+      const existingTags = Array.from(
+        this.dropdownContentTarget.querySelectorAll(
+          "label:not(#add-new-tag-wrapper)",
+        ),
+      );
+      const insertPosition = existingTags.findIndex(
+        (tag) =>
+          tag.textContent.trim().localeCompare(this.newTagTarget.dataset.tag) > 0,
+      );
       if (insertPosition === -1) {
-        this.addNewTagWrapperTarget.insertAdjacentElement('beforebegin', newTagCheckbox);
+        this.addNewTagWrapperTarget.insertAdjacentElement(
+          "beforebegin",
+          newTagCheckbox,
+        );
       } else {
-        existingTags[insertPosition].insertAdjacentElement('beforebegin', newTagCheckbox);
+        existingTags[insertPosition].insertAdjacentElement(
+          "beforebegin",
+          newTagCheckbox,
+        );
       }
 
       this.tagsValue = this.tagsValue.concat([this.newTagTarget.dataset.tag]);
-      this.tagSearchTarget.value = '';
-      this.tagSearchTarget.dispatchEvent(new Event('input'));
+      this.tagSearchTarget.value = "";
+      this.tagSearchTarget.dispatchEvent(new Event("input"));
     }
-
 
     tagsValueChanged() {
       const isEmpty = this.tagsValue.length === 0;
 
-      this.selectedTagsTarget.classList.toggle('d-none', isEmpty);
-      this.tagSearchInputWrapperTarget.classList.toggle('rounded', isEmpty);
-      this.tagSearchInputWrapperTarget.classList.toggle('rounded-bottom', !isEmpty);
+      this.selectedTagsTarget.classList.toggle("d-none", isEmpty);
+      this.tagSearchInputWrapperTarget.classList.toggle("rounded", isEmpty);
+      this.tagSearchInputWrapperTarget.classList.toggle(
+        "rounded-bottom",
+        !isEmpty,
+      );
 
       if (!isEmpty) {
         this.selectedTagsTarget.innerHTML = `<ul class="list-unstyled border rounded-top mb-0 p-1 px-2">${this.renderTagPills()}</ul>`;
       }
 
-      const newValue = this.tagsValue.join(', ');
+      const newValue = this.tagsValue.join(", ");
       if (this.tagsFieldTarget.value !== newValue) {
         this.tagsFieldTarget.value = newValue;
       }
     }
 
-    normalizeTag (tag) {
+    normalizeTag(tag) {
       const normalizeRegex = /[^\w\s]/gi;
-      return tag.replace(normalizeRegex, '').toLowerCase().trim()
+      return tag.replace(normalizeRegex, "").toLowerCase().trim()
     }
 
-    showElement (element) {
-      element.classList.add('d-block');
-      element.classList.remove('d-none');
+    showElement(element) {
+      element.classList.add("d-block");
+      element.classList.remove("d-none");
     }
 
-    hideElement (element) {
-      element.classList.remove('d-block');
-      element.classList.add('d-none');
+    hideElement(element) {
+      element.classList.remove("d-block");
+      element.classList.add("d-none");
     }
 
     search(event) {
       const searchTerm = this.normalizeTag(event.target.value);
-      this.dropdownContentTarget.classList.remove('d-none');
+      this.dropdownContentTarget.classList.remove("d-none");
 
-      const exactMatch = this.searchResultTagsTargets.some(target => {
+      const exactMatch = this.searchResultTagsTargets.some((target) => {
         const compareTerm = this.normalizeTag(target.dataset.tag);
         const isMatch = compareTerm.includes(searchTerm);
-        target.parentElement.classList.remove('active');
-        this[isMatch ? 'showElement' : 'hideElement'](target.parentElement);
+        target.parentElement.classList.remove("active");
+        this[isMatch ? "showElement" : "hideElement"](target.parentElement);
         return compareTerm === searchTerm
       });
 
-      this[searchTerm.length > 0 && !exactMatch ? 'showElement' : 'hideElement'](this.addNewTagWrapperTarget);
-      this.addNewTagWrapperTarget.classList.remove('active');
-      this.dropdownContentTarget.querySelector('label:not(.d-none)')?.classList.add('active');
+      this[searchTerm.length > 0 && !exactMatch ? "showElement" : "hideElement"](
+        this.addNewTagWrapperTarget,
+      );
+      this.addNewTagWrapperTarget.classList.remove("active");
+      this.dropdownContentTarget
+        .querySelector("label:not(.d-none)")
+        ?.classList.add("active");
     }
 
-    updateTagToAdd (event) {
-      const tagAlreadyAdded = this.tagsValue.some(tag =>
-        this.normalizeTag(tag) === this.normalizeTag(event.target.value)
+    updateTagToAdd(event) {
+      const tagAlreadyAdded = this.tagsValue.some(
+        (tag) => this.normalizeTag(tag) === this.normalizeTag(event.target.value),
       );
       this.newTagTarget.dataset.tag = event.target.value.trim();
       this.newTagTarget.nextSibling.textContent = ` ${this.translationsValue.add_new_tag}: ${event.target.value}`;
-      this.newTagTarget.disabled = !this.newTagTarget.dataset.tag.length || tagAlreadyAdded;
+      this.newTagTarget.disabled =
+        !this.newTagTarget.dataset.tag.length || tagAlreadyAdded;
     }
 
-    deselect (event) {
+    deselect(event) {
       event.preventDefault();
 
-      const clickedTag = event.target.closest('button').dataset.tag;
-      const target = this.searchResultTagsTargets.find((tag) => tag.dataset.tag === clickedTag);
-      target ? target.click() : this.tagsValue = this.tagsValue.filter(tag => tag !== clickedTag);
+      const clickedTag = event.target.closest("button").dataset.tag;
+      const target = this.searchResultTagsTargets.find(
+        (tag) => tag.dataset.tag === clickedTag,
+      );
+      target
+        ? target.click()
+        : (this.tagsValue = this.tagsValue.filter((tag) => tag !== clickedTag));
     }
 
-    renderTagPills () {
-      return this.tagsValue.map((tag) => {
-        return `
+    renderTagPills() {
+      return this.tagsValue
+        .map((tag) => {
+          return `
         <li class="d-inline-flex gap-2 align-items-center my-2">
           <span class="bg-light badge rounded-pill border selected-item d-inline-flex align-items-center text-dark">
             <span class="selected-item-label d-inline-flex">${tag}</span>
@@ -7133,14 +7569,15 @@
           </span>
         </li>
       `
-      }).join('')
+        })
+        .join("")
     }
   }
 
   class SpotlightControllers {
     connect() {
       if (typeof Stimulus === "undefined") return
-      Stimulus.register('tag-selector', TagSelectorController);
+      Stimulus.register("tag-selector", TagSelectorController);
     }
   }
 
