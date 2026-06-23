@@ -5920,246 +5920,371 @@ class Users {
   }
 }
 
-(function ($){
-  SirTrevor.BlockMixins.Autocompleteable = {
-    mixinName: "Autocompleteable",
-    preload: true,
+SirTrevor.BlockMixins.Autocompleteable = {
+  mixinName: "Autocompleteable",
+  preload: true,
 
-    initializeAutocompleteable: function() {
-      this.on("onRender", this.addAutocompletetoSirTrevorForm);
+  initializeAutocompleteable: function() {
+    this.on("onRender", this.addAutocompletetoSirTrevorForm);
 
-      if (this['autocomplete_url'] === undefined) {
-        this.autocomplete_url = function() { return $('form[data-autocomplete-url]').data('autocomplete-url'); };
-      }
+    if (this['autocomplete_url'] === undefined) {
+      this.autocomplete_url = function() {
+        var el = document.querySelector('form[data-autocomplete-url]');
+        return el ? el.dataset.autocompleteUrl : undefined;
+      };
+    }
 
-      if (this['autocomplete_fetch'] === undefined) {
-        this.autocomplete_fetch = this.fetchAutocompleteResults;
-      }
+    if (this['autocomplete_fetch'] === undefined) {
+      this.autocomplete_fetch = this.fetchAutocompleteResults;
+    }
 
-      if (this['transform_autocomplete_results'] === undefined) {
-        this.transform_autocomplete_results = (val) => val;
-      }
+    if (this['transform_autocomplete_results'] === undefined) {
+      this.transform_autocomplete_results = (val) => val;
+    }
 
-      if (this['highlight'] === undefined) {
-        this.highlight = function(value) {
-          if (!value) return '';
-          const queryValue = this.getQueryValue().trim();
-          return queryValue ? value.replace(new RegExp(queryValue, 'gi'), '<strong>$&</strong>') : value;
-        };
-      }
+    if (this['highlight'] === undefined) {
+      this.highlight = function(value) {
+        if (!value) return '';
+        const queryValue = this.getQueryValue().trim();
+        return queryValue ? value.replace(new RegExp(queryValue, 'gi'), '<strong>$&</strong>') : value;
+      };
+    }
 
-      if (this['autocomplete_control'] === undefined) {
-        this.autocomplete_control = function() {
-          const autocompleteID = this.autocompleteID();
-          return `
-          <auto-complete src="${this.autocomplete_url()}" for="${autocompleteID}-popup" fetch-on-empty>
-            <input type="text" name="${autocompleteID}" placeholder="${i18n.t("blocks:autocompleteable:placeholder")}" data-default-typeahead>
-            <ul id="${autocompleteID}-popup"></ul>
-            <div id="${autocompleteID}-popup-feedback" class="visually-hidden"></div>
-          </auto-complete>
-        ` };
-      }
+    if (this['autocomplete_control'] === undefined) {
+      this.autocomplete_control = function() {
+        const autocompleteID = this.autocompleteID();
+        return `
+        <auto-complete src="${this.autocomplete_url()}" for="${autocompleteID}-popup" fetch-on-empty>
+          <input type="text" name="${autocompleteID}" placeholder="${i18n.t("blocks:autocompleteable:placeholder")}" data-default-typeahead>
+          <ul id="${autocompleteID}-popup"></ul>
+          <div id="${autocompleteID}-popup-feedback" class="visually-hidden"></div>
+        </auto-complete>
+      ` };
+    }
 
-      if (this['autocomplete_element_template'] === undefined) {
-        this.autocomplete_element_template = function(item) {
-          return `<li role="option" data-autocomplete-value="${item.id}">${this.autocomplete_template(item)}</li>`
-        };
-      }
-    },
-
-    queryTokenizer: function(query) {
-      return query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-    },
-
-    filterResults: function(data, query) {
-      const queryStrings = this.queryTokenizer(query);
-      return data.filter(item => {
-        const lowerTitle = item.title.toLowerCase();
-        return queryStrings.some(queryString => lowerTitle.includes(queryString));
-      });
-    },
-
-    fetchAutocompleteResults: async function(url) {
-      const result = await fetchAutocompleteJSON(url);
-      const transformed = this.transform_autocomplete_results(result);
-      this.fetchedData = {};
-      transformed.map(item => this.fetchedData[item.id] = item);
-      return transformed.map(item => this.autocomplete_element_template(item)).join('');
-    },
-
-    fetchOnceAndFilterLocalResults: async function(url) {
-      if (this.fetchedData === undefined) {
-        await this.fetchAutocompleteResults(url);
-      }
-      const query = url.searchParams.get('q');
-      const data = Object.values(this.fetchedData);
-      const filteredData = query ? this.filterResults(data, query) : data;
-      return filteredData.map(item => this.autocomplete_element_template(item)).join('');
-    },
-
-    autocompleteID: function() {
-      return this.blockID + '-autocomplete';
-    },
-
-    getQueryValue: function() {
-      const completer = this.inner.querySelector("auto-complete > input");
-      return completer.value;
-    },
-
-    addAutocompletetoSirTrevorForm: function() {
-      const completer = this.inner.querySelector("auto-complete");
-      completer.fetchResult = this.autocomplete_fetch.bind(this);
-      completer.addEventListener('auto-complete-change', (e) => {
-        const data = this.fetchedData[e.relatedTarget.value];
-        if (e.relatedTarget.value && data) {
-          e.value = e.relatedTarget.value = '';
-          this.createItemPanel({ ...data, display: "true" });
-        }
-      });
-    },
+    if (this['autocomplete_element_template'] === undefined) {
+      this.autocomplete_element_template = function(item) {
+        return `<li role="option" data-autocomplete-value="${item.id}">${this.autocomplete_template(item)}</li>`
+      };
+    }
   },
 
-
-  SirTrevor.Block.prototype.availableMixins.push("autocompleteable");
-})(jQuery);
-
-(function ($){
-  SirTrevor.BlockMixins.Formable = {
-    mixinName: "Formable",
-    preload: true,
-
-    initializeFormable: function() {
-
-      if (this['afterLoadData'] === undefined) {
-        this['afterLoadData'] = function(data) { };
-      }
-    },
-
-    formId: function(id) {
-      return this.blockID + "_" + id;
-    },
-
-    _serializeData: function() {
-
-      var data = $(":input,textarea,select", this.inner).not(':input:radio').serializeJSON();
-
-      $(':input:radio:checked', this.inner).each(function(index, input) {
-        var key = $(input).data('key') || input.getAttribute('name');
-
-        if (!key.match("\\[")) {
-          data[key] = $(input).val();
-        }
-      });
-
-      /* Simple to start. Add conditions later */
-      if (this.hasTextBlock()) {
-        data.text = this.getTextBlockHTML();
-        data.format = 'html';
-        if (data.text && data.text.length > 0 && this.options.convertToMarkdown) {
-          data.text = stToMarkdown(data.text, this.type);
-          data.format = 'markdown';
-        }
-      }
-
-      return data;
-    },
-
-    loadData: function(data){
-      if (this.hasTextBlock()) {
-        if (data.text && data.text.length > 0 && this.options.convertFromMarkdown && data.format !== "html") {
-          this.setTextBlockHTML(SirTrevor.toHTML(data.text, this.type));
-        } else {
-          this.setTextBlockHTML(data.text);
-        }
-      }
-      this.loadFormDataByKey(data);
-      this.afterLoadData(data);
-    },
-
-    loadFormDataByKey: function(data) {
-      $(':input', this.inner).not('button,:input[type=hidden]').each(function(index, input) {
-        var key = $(input).data('key') || input.getAttribute('name');
-
-        if (key) {
-
-          if (key.match("\\[\\]$")) {
-            key = key.replace("[]", "");
-          }
-
-          // by wrapping it in an array, this'll "just work" for radio and checkbox fields too
-          var input_data = data[key];
-
-          if (!(input_data instanceof Array)) {
-            input_data = [input_data];
-          }
-          $(this).val(input_data);
-        }
-      });
-    },
+  queryTokenizer: function(query) {
+    return query.trim().toLowerCase().split(/\s+/).filter(Boolean);
   },
 
+  filterResults: function(data, query) {
+    const queryStrings = this.queryTokenizer(query);
+    return data.filter(item => {
+      const lowerTitle = item.title.toLowerCase();
+      return queryStrings.some(queryString => lowerTitle.includes(queryString));
+    });
+  },
 
-  SirTrevor.Block.prototype.availableMixins.push("formable");
-})(jQuery);
+  fetchAutocompleteResults: async function(url) {
+    const result = await fetchAutocompleteJSON(url);
+    const transformed = this.transform_autocomplete_results(result);
+    this.fetchedData = {};
+    transformed.map(item => this.fetchedData[item.id] = item);
+    return transformed.map(item => this.autocomplete_element_template(item)).join('');
+  },
 
-(function ($){
-  SirTrevor.BlockMixins.Plustextable = {
-    mixinName: "Textable",
-    preload: true,
+  fetchOnceAndFilterLocalResults: async function(url) {
+    if (this.fetchedData === undefined) {
+      await this.fetchAutocompleteResults(url);
+    }
+    const query = url.searchParams.get('q');
+    const data = Object.values(this.fetchedData);
+    const filteredData = query ? this.filterResults(data, query) : data;
+    return filteredData.map(item => this.autocomplete_element_template(item)).join('');
+  },
 
-    initializeTextable: function() {
-      if (this['formId'] === undefined) {
-        this.withMixin(SirTrevor.BlockMixins.Formable);
+  autocompleteID: function() {
+    return this.blockID + '-autocomplete';
+  },
+
+  getQueryValue: function() {
+    const completer = this.inner.querySelector("auto-complete > input");
+    return completer.value;
+  },
+
+  addAutocompletetoSirTrevorForm: function() {
+    const completer = this.inner.querySelector("auto-complete");
+    completer.fetchResult = this.autocomplete_fetch.bind(this);
+    completer.addEventListener('auto-complete-change', (e) => {
+      const data = this.fetchedData[e.relatedTarget.value];
+      if (e.relatedTarget.value && data) {
+        e.value = e.relatedTarget.value = '';
+        this.createItemPanel({ ...data, display: "true" });
       }
-      
-      if (this['show_heading'] === undefined) {
-        this.show_heading = true;
+    });
+  },
+};
+
+
+SirTrevor.Block.prototype.availableMixins.push("autocompleteable");
+
+// Vanilla JavaScript port of the default behavior of jquery.serializeJSON (v3.2.1).
+// Serializes form elements with bracket-notation names (e.g. "item[0][title]")
+// into a nested JavaScript object. Accepts a NodeList/array of elements.
+
+var rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i;
+var rcheckableType = /^(?:checkbox|radio)$/i;
+
+function splitInputNameIntoKeysArray(name) {
+  var keys = name.split("[");
+  keys = keys.map(function (key) { return key.replace(/\]/g, ""); });
+  if (keys[0] === "") { keys.shift(); }
+  return keys;
+}
+
+function deepGet(o, keys) {
+  if (o === undefined || keys === undefined || keys.length === 0 || typeof o !== "object") {
+    return o;
+  }
+  var key = keys[0];
+  if (key === "") return undefined;
+  if (keys.length === 1) return o[key];
+  return deepGet(o[key], keys.slice(1));
+}
+
+function deepSet(o, keys, value) {
+  if (keys.length === 0) return;
+
+  var key = keys[0];
+
+  if (keys.length === 1) {
+    if (key === "") {
+      o.push(value);
+    } else {
+      o[key] = value;
+    }
+    return;
+  }
+
+  var nextKey = keys[1];
+  var tailKeys = keys.slice(1);
+
+  if (key === "") {
+    var lastIdx = o.length - 1;
+    var lastVal = o[lastIdx];
+
+    if (typeof lastVal === "object" && lastVal !== null && deepGet(lastVal, tailKeys) === undefined) {
+      key = lastIdx;
+    } else {
+      key = lastIdx + 1;
+    }
+  }
+
+  if (nextKey === "") {
+    if (o[key] === undefined || !Array.isArray(o[key])) {
+      o[key] = [];
+    }
+  } else {
+    if (o[key] === undefined || typeof o[key] !== "object" || o[key] === null) {
+      o[key] = {};
+    }
+  }
+
+  deepSet(o[key], tailKeys, value);
+}
+
+function elementValue(el) {
+  var nodeName = el.nodeName.toLowerCase();
+  if (nodeName === "select" && el.multiple) {
+    var values = [];
+    Array.prototype.forEach.call(el.options, function (opt) {
+      if (opt.selected) values.push(opt.value);
+    });
+    return values;
+  }
+  return el.value;
+}
+
+function serializeJSON(elements) {
+  var data = {};
+
+  Array.prototype.forEach.call(elements, function (el) {
+    if (!el.name) return;
+    if (el.disabled) return;
+
+    var type = el.type || "";
+    var nodeName = el.nodeName.toLowerCase();
+
+    if (nodeName === "input" && rsubmitterTypes.test(type)) return;
+    if (rcheckableType.test(type) && !el.checked) return;
+
+    var val = elementValue(el);
+    if (val == null) return;
+
+    var assign = function (v) {
+      var value = String(v).replace(/\r?\n/g, "\r\n");
+      deepSet(data, splitInputNameIntoKeysArray(el.name), value);
+    };
+
+    if (Array.isArray(val)) {
+      val.forEach(assign);
+    } else {
+      assign(val);
+    }
+  });
+
+  return data;
+}
+
+function setElementValue(el, values) {
+  var type = el.type || "";
+  if (type === "checkbox" || type === "radio") {
+    el.checked = values.indexOf(el.value) !== -1;
+  } else if (el.nodeName.toLowerCase() === "select") {
+    Array.prototype.forEach.call(el.options, function (opt) {
+      opt.selected = values.indexOf(opt.value) !== -1;
+    });
+  } else {
+    el.value = values[0] != null ? values[0] : "";
+  }
+}
+
+SirTrevor.BlockMixins.Formable = {
+  mixinName: "Formable",
+  preload: true,
+
+  initializeFormable: function() {
+
+    if (this['afterLoadData'] === undefined) {
+      this['afterLoadData'] = function(data) { };
+    }
+  },
+
+  formId: function(id) {
+    return this.blockID + "_" + id;
+  },
+
+  _serializeData: function() {
+    var inputs = this.inner.querySelectorAll("input, select, textarea");
+    var nonRadioInputs = Array.prototype.filter.call(inputs, function(el) {
+      return el.type !== "radio";
+    });
+    var data = serializeJSON(nonRadioInputs);
+
+    this.inner.querySelectorAll("input[type='radio']:checked").forEach(function(input) {
+      var key = input.getAttribute('data-key') || input.getAttribute('name');
+
+      if (key && !/\[/.test(key)) {
+        data[key] = input.value;
       }
-    },
-    
-    align_key:"text-align",
-    text_key:"item-text",
-    heading_key: "title",
-    
-    text_area: function() { 
-      return `
-      <div class="row">
-        <div class="col-md-8">
-          <div class="form-group mb-3">
-            ${this.heading()}
-            <div class="field">
-              <label for="${this.formId(this.text_key)}" class="col-form-label">${i18n.t("blocks:textable:text")}</label>
-              <div id="${this.formId(this.text_key)}" class="st-text-block form-control" contenteditable="true"></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="text-align">
-            <p>${i18n.t("blocks:textable:align:title")}</p>
-            <input data-key="${this.align_key}" type="radio" name="${this.formId(this.align_key)}" id="${this.formId(this.align_key + "-left")}" value="left" checked="true">
-            <label for="${this.formId(this.align_key + "-left")}">${i18n.t("blocks:textable:align:left")}</label>
-            <input data-key="${this.align_key}" type="radio" name="${this.formId(this.align_key)}" id="${this.formId(this.align_key + "-right")}" value="right">
-            <label for="${this.formId(this.align_key + "-right")}">${i18n.t("blocks:textable:align:right")}</label>
-          </div>
-        </div>
-      </div>`
-    },
-    
-    heading: function() {
-      if(this.show_heading) {
-        return `<div class="field">
-          <label for="${this.formId(this.heading_key)}" class="col-form-label">${i18n.t("blocks:textable:heading")}</label>
-          <input type="text" class="form-control" id="${this.formId(this.heading_key)}" name="${this.heading_key}" />
-        </div>`
+    });
+
+    /* Simple to start. Add conditions later */
+    if (this.hasTextBlock()) {
+      data.text = this.getTextBlockHTML();
+      data.format = 'html';
+      if (data.text && data.text.length > 0 && this.options.convertToMarkdown) {
+        data.text = stToMarkdown(data.text, this.type);
+        data.format = 'markdown';
+      }
+    }
+
+    return data;
+  },
+
+  loadData: function(data){
+    if (this.hasTextBlock()) {
+      if (data.text && data.text.length > 0 && this.options.convertFromMarkdown && data.format !== "html") {
+        this.setTextBlockHTML(SirTrevor.toHTML(data.text, this.type));
       } else {
-        return "";
+        this.setTextBlockHTML(data.text);
       }
-    },
-  };
-  
+    }
+    this.loadFormDataByKey(data);
+    this.afterLoadData(data);
+  },
 
-  SirTrevor.Block.prototype.availableMixins.push("plustextable");
-})(jQuery);
+  loadFormDataByKey: function(data) {
+    var elements = this.inner.querySelectorAll("input, select, textarea");
+    Array.prototype.forEach.call(elements, function(input) {
+      var type = input.type || "";
+      if (type === "button" || type === "submit" || type === "hidden") return;
+
+      var key = input.getAttribute('data-key') || input.getAttribute('name');
+
+      if (key) {
+
+        if (/\[\]$/.test(key)) {
+          key = key.replace("[]", "");
+        }
+
+        // by wrapping it in an array, this'll "just work" for radio and checkbox fields too
+        var input_data = data[key];
+
+        if (!(input_data instanceof Array)) {
+          input_data = [input_data];
+        }
+        setElementValue(input, input_data);
+      }
+    });
+  },
+};
+
+
+SirTrevor.Block.prototype.availableMixins.push("formable");
+
+SirTrevor.BlockMixins.Plustextable = {
+  mixinName: "Textable",
+  preload: true,
+
+  initializeTextable: function() {
+    if (this['formId'] === undefined) {
+      this.withMixin(SirTrevor.BlockMixins.Formable);
+    }
+
+    if (this['show_heading'] === undefined) {
+      this.show_heading = true;
+    }
+  },
+
+  align_key:"text-align",
+  text_key:"item-text",
+  heading_key: "title",
+
+  text_area: function() {
+    return `
+    <div class="row">
+      <div class="col-md-8">
+        <div class="form-group mb-3">
+          ${this.heading()}
+          <div class="field">
+            <label for="${this.formId(this.text_key)}" class="col-form-label">${i18n.t("blocks:textable:text")}</label>
+            <div id="${this.formId(this.text_key)}" class="st-text-block form-control" contenteditable="true"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="text-align">
+          <p>${i18n.t("blocks:textable:align:title")}</p>
+          <input data-key="${this.align_key}" type="radio" name="${this.formId(this.align_key)}" id="${this.formId(this.align_key + "-left")}" value="left" checked="true">
+          <label for="${this.formId(this.align_key + "-left")}">${i18n.t("blocks:textable:align:left")}</label>
+          <input data-key="${this.align_key}" type="radio" name="${this.formId(this.align_key)}" id="${this.formId(this.align_key + "-right")}" value="right">
+          <label for="${this.formId(this.align_key + "-right")}">${i18n.t("blocks:textable:align:right")}</label>
+        </div>
+      </div>
+    </div>`
+  },
+
+  heading: function() {
+    if(this.show_heading) {
+      return `<div class="field">
+        <label for="${this.formId(this.heading_key)}" class="col-form-label">${i18n.t("blocks:textable:heading")}</label>
+        <input type="text" class="form-control" id="${this.formId(this.heading_key)}" name="${this.heading_key}" />
+      </div>`
+    } else {
+      return "";
+    }
+  },
+};
+
+
+SirTrevor.Block.prototype.availableMixins.push("plustextable");
 
 Spotlight$1.Block = SirTrevor.Block.extend({
   scribeOptions: {
