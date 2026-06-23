@@ -12,13 +12,13 @@ export default class CroppableModal {
     // Listen for event thrown when modal is displayed with content
     document.addEventListener(
       "loaded.blacklight.blacklight-modal",
-      function (e) {
+      function () {
         const dataCropperDiv = document.querySelector(
           '#blacklight-modal [data-behavior="iiif-cropper"]',
         )
 
         if (dataCropperDiv) {
-          new Crop($(dataCropperDiv), false).render()
+          new Crop(dataCropperDiv, false).render()
         }
       },
     )
@@ -34,7 +34,7 @@ export default class CroppableModal {
   attachModalSaveHandler() {
     const context = this
 
-    document.addEventListener("show.blacklight.blacklight-modal", function (e) {
+    document.addEventListener("show.blacklight.blacklight-modal", function () {
       const saveBtn = document.getElementById("save-cropping-selection")
       if (saveBtn) {
         saveBtn.addEventListener("click", () => {
