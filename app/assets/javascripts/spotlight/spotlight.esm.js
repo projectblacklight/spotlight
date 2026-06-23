@@ -6643,12 +6643,11 @@ Spotlight$1.Block.Resources = (function () {
 
     attachAltTextHandlers: function (panel) {
       if (this.showAltText()) {
-        const el = panel && panel.jquery ? panel[0] : panel;
-        const decorativeCheckbox = el.querySelector(
+        const decorativeCheckbox = panel.querySelector(
           'input[name$="[decorative]"]',
         );
-        const altTextInput = el.querySelector('textarea[name$="[alt_text]"]');
-        const altTextBackupInput = el.querySelector(
+        const altTextInput = panel.querySelector('textarea[name$="[alt_text]"]');
+        const altTextBackupInput = panel.querySelector(
           'input[name$="[alt_text_backup]"]',
         );
 
@@ -7128,7 +7127,7 @@ SirTrevor.Blocks.SolrDocumentsBase = (function () {
       if (fieldsData) {
         try {
           fields = JSON.parse(fieldsData);
-        } catch (e) {
+        } catch {
           // ignore
         }
       }
@@ -7225,13 +7224,12 @@ SirTrevor.Blocks.SolrDocumentsBase = (function () {
     // from canvases in the manifest, transformed by spotlight/admin/iiif.js in
     // the #images method.
     setIiifFields: function (panel, manifest_data, initialize) {
-      const el = panel.jquery ? panel[0] : panel;
-      if (!el) return
+      if (!panel) return
 
-      const legacyThumbnailField = el.querySelector(
+      const legacyThumbnailField = panel.querySelector(
         '[name$="[thumbnail_image_url]"]',
       );
-      const legacyFullField = el.querySelector('[name$="[full_image_url]"]');
+      const legacyFullField = panel.querySelector('[name$="[full_image_url]"]');
 
       if (
         initialize &&
@@ -7244,26 +7242,28 @@ SirTrevor.Blocks.SolrDocumentsBase = (function () {
       if (legacyThumbnailField) legacyThumbnailField.value = "";
       if (legacyFullField) legacyFullField.value = "";
 
-      const iiifImageIdField = el.querySelector('[name$="[iiif_image_id]"]');
+      const iiifImageIdField = panel.querySelector('[name$="[iiif_image_id]"]');
       if (iiifImageIdField) iiifImageIdField.value = manifest_data.imageId || "";
 
-      const iiifTilesourceField = el.querySelector(
+      const iiifTilesourceField = panel.querySelector(
         '[name$="[iiif_tilesource]"]',
       );
       if (iiifTilesourceField)
         iiifTilesourceField.value = manifest_data.tilesource || "";
 
-      const iiifManifestUrlField = el.querySelector(
+      const iiifManifestUrlField = panel.querySelector(
         '[name$="[iiif_manifest_url]"]',
       );
       if (iiifManifestUrlField)
         iiifManifestUrlField.value = manifest_data.manifest || "";
 
-      const iiifCanvasIdField = el.querySelector('[name$="[iiif_canvas_id]"]');
+      const iiifCanvasIdField = panel.querySelector(
+        '[name$="[iiif_canvas_id]"]',
+      );
       if (iiifCanvasIdField)
         iiifCanvasIdField.value = manifest_data.canvasId || "";
 
-      const img = el.querySelector("img.img-thumbnail");
+      const img = panel.querySelector("img.img-thumbnail");
       if (img) {
         img.src =
           manifest_data.thumbnail_image_url ||
@@ -7274,21 +7274,22 @@ SirTrevor.Blocks.SolrDocumentsBase = (function () {
       }
     },
     afterPanelRender: function (data, panel) {
-      const el = panel.jquery ? panel[0] : panel;
-      if (!el) return
+      if (!panel) return
 
       var context = this;
       var manifestUrl = data.iiif_manifest || data.iiif_manifest_url;
 
       if (!manifestUrl) {
-        const legacyThumbnailField = el.querySelector(
+        const legacyThumbnailField = panel.querySelector(
           '[name$="[thumbnail_image_url]"]',
         );
         if (legacyThumbnailField) {
           legacyThumbnailField.value =
             data.thumbnail_image_url || data.thumbnail || "";
         }
-        const legacyFullField = el.querySelector('[name$="[full_image_url]"]');
+        const legacyFullField = panel.querySelector(
+          '[name$="[full_image_url]"]',
+        );
         if (legacyFullField) {
           legacyFullField.value = data.full_image_url || "";
         }
