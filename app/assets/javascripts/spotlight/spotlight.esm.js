@@ -3981,10 +3981,9 @@ function multiImageSelector(
   clickCallback,
   activeImageId
 ) {
-  const element = panel && panel.jquery ? panel[0] : panel;
-  if (!element) return
+  if (!panel) return
 
-  initMultiImageSelector(element, image_versions, clickCallback, activeImageId);
+  initMultiImageSelector(panel, image_versions, clickCallback, activeImageId);
 }
 
 function addImageSelector(input, panel, manifestUrl, initialize) {
@@ -4017,7 +4016,7 @@ function addImageSelector(input, panel, manifestUrl, initialize) {
           function (selectorImage) {
             cropper.setIiifFields(selectorImage);
           },
-          cropper.iiifImageField.val()
+          cropper.iiifImageField.value
         );
       }
     });
@@ -4072,8 +4071,7 @@ window.SirTrevor = SirTrevor$1;
 
 class Crop {
   constructor(cropArea, preserveAspectRatio = true) {
-    // Extract raw DOM element if cropArea is a jQuery object
-    this.cropArea = cropArea && cropArea.jquery ? cropArea[0] : cropArea;
+    this.cropArea = cropArea;
     if (this.cropArea) {
       this.cropArea.iiifCropper = this;
     }
@@ -4135,27 +4133,11 @@ class Crop {
       const selector = 'input[name="' + inputPrefix + "[" + fieldName + ']"]';
       const element = inputParentElement.querySelector(selector);
       if (element) {
-        if (!element.val) {
-          element.val = function (value) {
-            if (value === undefined) {
-              return this.value
-            } else {
-              this.value = value;
-              return this
-            }
-          };
-        }
         return element
       }
     }
     // Return a dummy object to prevent null-pointer exceptions
-    return {
-      value: undefined,
-      val: function (value) {
-        if (value === undefined) return undefined
-        return this
-      }
-    }
+    return { value: undefined }
   }
 
   // Render the cropper environment and add hooks into the autocomplete and upload forms
@@ -4168,12 +4150,12 @@ class Crop {
   // Setup the cropper on page load if the field
   // that holds the IIIF url is populated
   setupExistingIiifCropper() {
-    if (this.iiifUrlField.val() === "") {
+    if (this.iiifUrlField.value === "") {
       return
     }
 
     this.addImageSelectorToExistingCropTool();
-    this.setTileSource(this.iiifUrlField.val());
+    this.setTileSource(this.iiifUrlField.value);
   }
 
   // Display the IIIF Cropper map with the current IIIF Layer (and cropbox, once the layer is available)
@@ -4217,10 +4199,10 @@ class Crop {
 
   // Get (or initialize) the current crop region from the form data
   getCropRegion() {
-    var regionFieldValue = this.iiifRegionField.val();
+    var regionFieldValue = this.iiifRegionField.value;
     if (!regionFieldValue || regionFieldValue === "") {
       var region = this.defaultCropRegion();
-      this.iiifRegionField.val(region);
+      this.iiifRegionField.value = region;
       return region
     } else {
       return regionFieldValue.split(",")
@@ -4278,9 +4260,9 @@ class Crop {
   // the appropriate IIIF URL or identifier
   setIiifFields(iiifObject) {
     this.setTileSource(iiifObject.tilesource);
-    this.iiifManifestField.val(iiifObject.manifest);
-    this.iiifCanvasField.val(iiifObject.canvasId);
-    this.iiifImageField.val(iiifObject.imageId);
+    this.iiifManifestField.value = iiifObject.manifest;
+    this.iiifCanvasField.value = iiifObject.canvasId;
+    this.iiifImageField.value = iiifObject.imageId;
   }
 
   // Set the Crop tileSource and setup the cropper
@@ -4295,11 +4277,11 @@ class Crop {
     }
 
     if (this.cropBox) {
-      this.iiifRegionField.val("");
+      this.iiifRegionField.value = "";
     }
 
     this.tileSource = source;
-    this.iiifUrlField.val(source);
+    this.iiifUrlField.value = source;
     this.setupIiifCropper();
   }
 
@@ -4347,7 +4329,7 @@ class Crop {
         var bounds = e.layer.getBounds();
         var region = self.projectBoundsToIIIFRegion(bounds);
 
-        self.iiifRegionField.val(region.join(","));
+        self.iiifRegionField.value = region.join(",");
       }
     );
   }
@@ -4404,7 +4386,7 @@ class Crop {
   }
 
   addImageSelectorToExistingCropTool() {
-    if (this.iiifManifestField.val() === "") {
+    if (this.iiifManifestField.value === "") {
       return
     }
 
@@ -4426,8 +4408,8 @@ class Crop {
         addImageSelector(
           inputElement,
           panelElement,
-          this.iiifManifestField.val(),
-          !this.iiifImageField.val()
+          this.iiifManifestField.value,
+          !this.iiifImageField.value
         );
       }
     }

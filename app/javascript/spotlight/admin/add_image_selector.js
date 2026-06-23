@@ -31,7 +31,7 @@ export function addImageSelector(input, panel, manifestUrl, initialize) {
           function (selectorImage) {
             cropper.setIiifFields(selectorImage)
           },
-          cropper.iiifImageField.val()
+          cropper.iiifImageField.value
         )
       }
     })

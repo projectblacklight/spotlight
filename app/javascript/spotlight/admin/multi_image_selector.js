@@ -217,8 +217,7 @@ export default function multiImageSelector(
   clickCallback,
   activeImageId
 ) {
-  const element = panel && panel.jquery ? panel[0] : panel
-  if (!element) return
+  if (!panel) return
 
-  initMultiImageSelector(element, image_versions, clickCallback, activeImageId)
+  initMultiImageSelector(panel, image_versions, clickCallback, activeImageId)
 }
