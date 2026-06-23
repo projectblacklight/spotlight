@@ -1,38 +1,57 @@
-import Iiif from 'spotlight/admin/iiif'
+import Iiif from "spotlight/admin/iiif"
+import multiImageSelector from "spotlight/admin/multi_image_selector"
 
 export function addImageSelector(input, panel, manifestUrl, initialize) {
   if (!manifestUrl) {
-    showNonIiifAlert(input);
-    return;
+    showNonIiifAlert(input)
+    return
   }
-  var cropper = input.data('iiifCropper');
-  $.ajax(manifestUrl).done(
-    function(manifest) {
-      var iiifManifest = new Iiif(manifestUrl, manifest);
+  var cropper = input.iiifCropper
+  fetch(manifestUrl)
+    .then(function (response) {
+      return response.json()
+    })
+    .then(function (manifest) {
+      var iiifManifest = new Iiif(manifestUrl, manifest)
 
-      var thumbs = iiifManifest.imagesArray();
+      var thumbs = iiifManifest.imagesArray()
 
-      hideNonIiifAlert(input);
+      hideNonIiifAlert(input)
 
       if (initialize) {
-        cropper.setIiifFields(thumbs[0]);
-        panel.multiImageSelector(); // Clears out existing selector
+        cropper.setIiifFields(thumbs[0])
+        multiImageSelector(panel) // Clears out existing selector
       }
 
-      if(thumbs.length > 1) {
-        panel.show();
-        panel.multiImageSelector(thumbs, function(selectorImage) {
-          cropper.setIiifFields(selectorImage);
-        }, cropper.iiifImageField.val());
+      if (thumbs.length > 1) {
+        panel.style.display = ""
+        multiImageSelector(
+          panel,
+          thumbs,
+          function (selectorImage) {
+            cropper.setIiifFields(selectorImage)
+          },
+          cropper.iiifImageField.value
+        )
       }
-    }
-  );
+    })
 }
 
-function showNonIiifAlert(input){
-  input.parent().prev('[data-behavior="non-iiif-alert"]').show();
+function findNonIiifAlert(input) {
+  if (!input || !input.parentElement) return null
+  var prev = input.parentElement.previousElementSibling
+  if (prev && prev.matches('[data-behavior="non-iiif-alert"]')) {
+    return prev
+  }
+  return null
 }
 
-function hideNonIiifAlert(input){
-  input.parent().prev('[data-behavior="non-iiif-alert"]').hide();
+function showNonIiifAlert(input) {
+  var alert = findNonIiifAlert(input)
+  if (alert) alert.style.display = ""
+}
+
+function hideNonIiifAlert(input) {
+  var alert = findNonIiifAlert(input)
+  if (alert) alert.style.display = "none"
 }

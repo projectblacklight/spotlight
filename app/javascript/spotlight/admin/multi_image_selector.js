@@ -1,159 +1,223 @@
 // Module to add multi-image selector to widget panels
 
-(function(){
-  $.fn.multiImageSelector = function(image_versions, clickCallback, activeImageId) {
-    var changeLink          = $("<a href='javascript:;'>Change</a>"),
-        thumbsListContainer = $("<div class='thumbs-list' style='display:none'></div>"),
-        thumbList           = $("<ul></ul>"),
-        panel;
+function initMultiImageSelector(
+  panel,
+  image_versions,
+  clickCallback,
+  activeImageId
+) {
+  const changeLink = document.createElement("a")
+  changeLink.href = "javascript:;"
+  changeLink.textContent = "Change"
 
-    var imageIds = $.map(image_versions, function(e) { return e['imageId']; });
+  const thumbsListContainer = document.createElement("div")
+  thumbsListContainer.className = "thumbs-list"
+  thumbsListContainer.style.display = "none"
 
-    return init(this);
+  const thumbList = document.createElement("ul")
 
-    function init(el) {
-      panel = el;
+  const imageIds = (image_versions || []).map(e => e["imageId"])
 
-      destroyExistingImageSelector();
-      if(image_versions && image_versions.length > 1) {
-        addChangeLink();
-        addThumbsList();
+  init()
+
+  function init() {
+    destroyExistingImageSelector()
+    if (image_versions && image_versions.length > 1) {
+      addChangeLink()
+      addThumbsList()
+    }
+  }
+
+  function addChangeLink() {
+    const pagination = panel.querySelector("[data-panel-image-pagination]")
+    if (pagination) {
+      pagination.innerHTML =
+        "Image <span data-current-image='true'>" +
+        indexOf(activeImageId) +
+        "</span> of " +
+        image_versions.length
+      pagination.style.display = ""
+      pagination.appendChild(document.createTextNode(" "))
+      pagination.appendChild(changeLink)
+    }
+    addChangeLinkBehavior()
+  }
+
+  function destroyExistingImageSelector() {
+    const pagination = panel.querySelector("[data-panel-image-pagination]")
+    if (pagination) {
+      pagination.innerHTML = ""
+      const nextEl = pagination.nextElementSibling
+      if (nextEl && nextEl.classList.contains("thumbs-list")) {
+        nextEl.remove()
       }
     }
-    function addChangeLink() {
-      $('[data-panel-image-pagination]', panel)
-        .html("Image <span data-current-image='true'>" + indexOf(activeImageId) + "</span> of " + image_versions.length)
-        .show()
-        .append(" ")
-        .append(changeLink);
-      addChangeLinkBehavior();
-    }
+  }
 
-    function destroyExistingImageSelector() {
-      var pagination = $('[data-panel-image-pagination]', panel);
-      pagination.html('');
-      pagination.next('.' + thumbsListContainer.attr('class')).remove();
+  function indexOf(thumb) {
+    const index = imageIds.indexOf(thumb)
+    if (index > -1) {
+      return index + 1
+    } else {
+      return 1
     }
+  }
 
-    function indexOf(thumb){
-      const index = imageIds.indexOf(thumb)
-      if (index > -1) {
-        return index + 1;
+  function addChangeLinkBehavior() {
+    changeLink.addEventListener("click", () => {
+      if (thumbsListContainer.style.display === "none") {
+        thumbsListContainer.style.display = ""
       } else {
-        return 1;
+        thumbsListContainer.style.display = "none"
       }
-    }
-    function addChangeLinkBehavior() {
-      changeLink.on('click', function(){
-        thumbsListContainer.slideToggle();
-        updateThumbListWidth();
-        addScrollBehavior();
-        scrollToActiveThumb();
-        loadVisibleThumbs();
-        swapChangeLinkText($(this));
-      });
-    }
-    function updateThumbListWidth() {
-      var width = 0;
-      $('li', thumbList).each(function(){
-        width += $(this).outerWidth();
-      });
-      thumbList.width(width + 5);
-    }
-    function loadVisibleThumbs(){
-      var viewportWidth = thumbsListContainer.width();
-      var width = 0;
-      $('li', thumbList).each(function(){
-        var thisThumb  = $(this),
-            image      = $('img', thisThumb),
-            totalWidth = width += thisThumb.width(),
-            position   = (thumbList.position().left + totalWidth) - thisThumb.width();
+      updateThumbListWidth()
+      addScrollBehavior()
+      scrollToActiveThumb()
+      loadVisibleThumbs()
+      swapChangeLinkText(changeLink)
+    })
+  }
 
-        if(position >= 0 && position < viewportWidth) {
-          image.prop('src', image.data('src'));
+  function updateThumbListWidth() {
+    let width = 0
+    thumbList.querySelectorAll("li").forEach(li => {
+      width += li.offsetWidth
+    })
+    thumbList.style.width = width + 5 + "px"
+  }
+
+  function loadVisibleThumbs() {
+    const viewportWidth = thumbsListContainer.clientWidth
+    let width = 0
+    thumbList.querySelectorAll("li").forEach(thisThumb => {
+      const image = thisThumb.querySelector("img")
+      if (!image) return
+      const thumbWidth = thisThumb.offsetWidth
+      width += thumbWidth
+      const totalWidth = width
+      const position = thumbList.offsetLeft + totalWidth - thumbWidth
+
+      if (position >= 0 && position < viewportWidth) {
+        const dataSrc = image.dataset.src || image.getAttribute("data-src")
+        if (dataSrc) {
+          image.src = dataSrc
         }
-      });
+      }
+    })
+  }
+
+  let scrollTimeout
+  function addScrollBehavior() {
+    thumbsListContainer.addEventListener("scroll", () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout)
+      }
+      scrollTimeout = setTimeout(() => {
+        loadVisibleThumbs()
+      }, 250)
+    })
+  }
+
+  function scrollToActiveThumb() {
+    const halfContainerWidth = thumbsListContainer.clientWidth / 2
+    const activeThumb =
+      thumbList.querySelector(".active") || thumbList.querySelector("li")
+    const activeThumbLeftPosition = activeThumb ? activeThumb.offsetLeft : 0
+    const halfActiveThumbWidth = activeThumb ? activeThumb.offsetWidth / 2 : 0
+
+    thumbsListContainer.scrollLeft =
+      activeThumbLeftPosition - halfContainerWidth + halfActiveThumbWidth
+  }
+
+  function addThumbsList() {
+    addThumbsToList()
+    updateActiveThumb()
+    thumbsListContainer.appendChild(thumbList)
+    const cardHeader = panel.querySelector(".card-header")
+    if (cardHeader) {
+      cardHeader.appendChild(thumbsListContainer)
     }
-    function addScrollBehavior(){
-      thumbsListContainer.scrollStop(function(){
-        loadVisibleThumbs();
-      });
-    }
-    function scrollToActiveThumb(){
-      var halfContainerWidth      = (thumbsListContainer.width() / 2),
-          activeThumbLeftPosition = ($('.active', thumbList).position() || $('li', thumbList).first().position()).left,
-          halfActiveThumbWidth    = ($('.active', thumbList).width() / 2);
-      thumbsListContainer.scrollLeft(
-        (activeThumbLeftPosition - halfContainerWidth) + halfActiveThumbWidth
-      );
-    }
-    function addThumbsList() {
-      addThumbsToList();
-      updateActiveThumb();
-      $('.card-header', panel).append(
-        thumbsListContainer.append(
-          thumbList
+  }
+
+  function updateActiveThumb() {
+    thumbList.querySelectorAll("li").forEach(item => {
+      const img = item.querySelector("img")
+      if (
+        img &&
+        (img.dataset.imageId == activeImageId ||
+          img.getAttribute("data-image-id") == activeImageId)
+      ) {
+        item.classList.add("active")
+      }
+    })
+  }
+
+  function swapChangeLinkText(link) {
+    link.textContent = link.textContent === "Change" ? "Close" : "Change"
+  }
+
+  function addThumbsToList() {
+    ;(image_versions || []).forEach((version, i) => {
+      const listItem = document.createElement("li")
+      listItem.setAttribute("data-index", i.toString())
+
+      const anchor = document.createElement("a")
+      anchor.href = "javascript:;"
+
+      const img = document.createElement("img")
+      img.src = version["thumb"]
+      img.setAttribute("data-image-id", version["imageId"])
+
+      if (version["src"]) {
+        img.setAttribute("data-src", version["src"])
+      }
+
+      anchor.appendChild(img)
+      listItem.appendChild(anchor)
+
+      listItem.addEventListener("click", () => {
+        const src = img.getAttribute("src")
+
+        if (typeof clickCallback === "function") {
+          clickCallback(version)
+        }
+
+        const activeItem = thumbList.querySelector("li.active")
+        if (activeItem) {
+          activeItem.classList.remove("active")
+        }
+        listItem.classList.add("active")
+
+        const panelImg = panel.querySelector(".pic img.img-thumbnail")
+        if (panelImg) {
+          panelImg.setAttribute("src", src)
+        }
+
+        const currentImgSpan = panel.querySelector(
+          "[data-panel-image-pagination] [data-current-image]"
         )
-      );
-    }
-    function updateActiveThumb(){
-      $('li', thumbList).each(function(){
-        var item = $(this);
-        if($('img', item).data('image-id') == activeImageId){
-          item.addClass('active');
+        if (currentImgSpan) {
+          currentImgSpan.textContent = (i + 1).toString()
         }
-      });
-    }
-    function swapChangeLinkText(link){
-      link.text(
-        link.text() == 'Change' ? 'Close' : 'Change'
-      )
-    }
+        scrollToActiveThumb()
+      })
 
-    function addThumbsToList(){
-      $.each(image_versions, function(i){
-        var listItem = $('<li data-index="' + i + '"><a href="javascript:;"><img src="' + image_versions[i]['thumb'] +'" data-image-id="' + image_versions[i]['imageId'] +'" /></a></li>');
-        listItem.on('click', function(){
-          // get the current image id
-          var imageid = $('img', $(this)).data('image-id');
-          var src = $('img', $(this)).attr('src');
+      img.addEventListener("load", () => {
+        updateThumbListWidth()
+      })
 
-          if (typeof clickCallback === 'function' ) {
-            clickCallback(image_versions[i]);
-          }
+      thumbList.appendChild(listItem)
+    })
+  }
+}
 
-          // mark the current selection as active
-          $('li.active', thumbList).removeClass('active');
-          $(this).addClass('active');
+export default function multiImageSelector(
+  panel,
+  image_versions,
+  clickCallback,
+  activeImageId
+) {
+  if (!panel) return
 
-          // update the multi-image selector image
-          $(".pic img.img-thumbnail", panel).attr("src", src);
-
-          $('[data-panel-image-pagination] [data-current-image]', panel).text(
-            $('li', thumbList).index($(this)) + 1
-          );
-          scrollToActiveThumb();
-        });
-        $("img", listItem).on('load', function() {
-          updateThumbListWidth();
-        });
-        thumbList.append(listItem);
-      });
-    }
-  };
-
-})(jQuery);
-
-// source: http://stackoverflow.com/questions/14035083/jquery-bind-event-on-scroll-stops
-jQuery.fn.scrollStop = function(callback) {
-  $(this).scroll(function() {
-    var self  = this,
-    $this = $(self);
-
-    if ($this.data('scrollTimeout')) {
-      clearTimeout($this.data('scrollTimeout'));
-    }
-
-    $this.data('scrollTimeout', setTimeout(callback, 250, self));
-  });
-};
+  initMultiImageSelector(panel, image_versions, clickCallback, activeImageId)
+}

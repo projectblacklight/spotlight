@@ -1,38 +1,60 @@
-SirTrevor.Blocks.SolrDocumentsFeatures = (function(){
+import bootstrap from "bootstrap"
 
+SirTrevor.Blocks.SolrDocumentsFeatures = (function () {
   return SirTrevor.Blocks.SolrDocumentsBase.extend({
     plustextable: false,
     type: "solr_documents_features",
 
     icon_name: "item_features",
 
-    afterPreviewLoad: function(options) {
-      $(this.inner).find('.carousel').carousel();
+    afterPreviewLoad: function (options) {
+      const carousels = this.inner.querySelectorAll(".carousel")
 
-      // the bootstrap carousel only initializes data-bs-slide widgets on page load, so we need
-      // to initialize them ourselves..
-      var clickHandler = function (e) {
-        var href
-        var $this   = $(this)
-        var $target = $($this.attr('data-bs-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) // strip for ie7
-        if (!$target.hasClass('carousel')) return
-        var options = $.extend({}, $target.data(), $this.data())
-        var slideIndex =$this.attr('data-bs-slide-to')
-        if (slideIndex) options.interval = false
+      const clickHandler = function (e) {
+        const button = e.currentTarget
+        let target
+        try {
+          const targetSelector =
+            button.getAttribute("data-bs-target") || button.getAttribute("href")
+          if (targetSelector) {
+            target = document.querySelector(targetSelector)
+          }
+        } catch (err) {
+          // ignore selector errors
+        }
 
-        $.fn.carousel.call($target, options)
+        if (!target) {
+          target = button.closest(".carousel")
+        }
 
-        if (slideIndex) {
-          $target.data('bs.carousel').to(slideIndex)
+        if (!target || !target.classList.contains("carousel")) return
+
+        const carousel = bootstrap.Carousel.getOrCreateInstance(target)
+        const slideIndex = button.getAttribute("data-bs-slide-to")
+
+        if (slideIndex !== null) {
+          carousel.to(parseInt(slideIndex, 10))
+        } else {
+          const slideAction = button.getAttribute("data-bs-slide")
+          if (slideAction === "next") {
+            carousel.next()
+          } else if (slideAction === "prev") {
+            carousel.prev()
+          }
         }
 
         e.preventDefault()
       }
 
-      $(this.inner).find('.carousel')
-        .on('click.bs.carousel.data-api', '[data-bs-slide-to]', clickHandler)
+      carousels.forEach(function (carouselEl) {
+        bootstrap.Carousel.getOrCreateInstance(carouselEl)
+
+        carouselEl
+          .querySelectorAll("[data-bs-slide-to]")
+          .forEach(function (btn) {
+            btn.addEventListener("click", clickHandler)
+          })
+      })
     }
-
-  });
-
-})();
+  })
+})()

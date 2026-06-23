@@ -1,24 +1,41 @@
 export default class {
   connect() {
-    $("[data-action='add-another']").on("click", function(event) {
-      event.preventDefault();
+    document.querySelectorAll("[data-action='add-another']").forEach(button => {
+      button.addEventListener("click", event => {
+        event.preventDefault()
 
-      var templateId = $(this).data('template-id');
+        const templateId = button.dataset.templateId
+        if (!templateId) return
 
-      var template = document.querySelector('#' + templateId);
-      var clone = document.importNode(template.content, true);
+        const template = document.getElementById(templateId)
+        if (!template) return
 
-      var count = $(this).closest('.form-group').find('[name="' + $(clone).find('[name]').attr('name') + '"]').length + 1;
-      $(clone).find('[id]').each(function(index, el) {
-        $(el).attr('id', $(el).attr('id') + '_' + String(count));
-      });
+        const clone = document.importNode(template.content, true)
 
-      $(clone).find('[for]').each(function(index, el) {
-        $(el).attr('for', $(el).attr('for') + '_' + String(count));
-      });
+        const formGroup = button.closest(".form-group")
+        if (!formGroup) return
 
+        const firstNamedElement = clone.querySelector("[name]")
+        if (!firstNamedElement) return
 
-      $(clone).insertBefore(this);
-    });
+        const nameAttr = firstNamedElement.getAttribute("name")
+        const existingElements = formGroup.querySelectorAll(
+          `[name="${nameAttr}"]`
+        )
+        const count = existingElements.length + 1
+
+        clone.querySelectorAll("[id]").forEach(el => {
+          const currentId = el.getAttribute("id")
+          el.setAttribute("id", `${currentId}_${count}`)
+        })
+
+        clone.querySelectorAll("[for]").forEach(el => {
+          const currentFor = el.getAttribute("for")
+          el.setAttribute("for", `${currentFor}_${count}`)
+        })
+
+        button.parentNode.insertBefore(clone, button)
+      })
+    })
   }
 }
