@@ -18,7 +18,7 @@ export default class CroppableModal {
         )
 
         if (dataCropperDiv) {
-          new Crop($(dataCropperDiv), false).render()
+          new Crop(dataCropperDiv, false).render()
         }
       }
     )

@@ -4602,7 +4602,7 @@ class CroppableModal {
         );
 
         if (dataCropperDiv) {
-          new Crop($(dataCropperDiv), false).render();
+          new Crop(dataCropperDiv, false).render();
         }
       }
     );
@@ -5388,8 +5388,10 @@ class ProgressMonitor {
 class ReadonlyCheckbox {
   connect() {
     // Don't allow unchecking of checkboxes with the data-readonly attribute 
-    $("input[type='checkbox'][data-readonly]").on("click", function(event) {
-      event.preventDefault();
+    document.querySelectorAll("input[type='checkbox'][data-readonly]").forEach(function(el) {
+      el.addEventListener("click", function(event) {
+        event.preventDefault();
+      });
     });
   }
 }
