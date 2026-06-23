@@ -1414,13 +1414,13 @@
       // Listen for event thrown when modal is displayed with content
       document.addEventListener(
         "loaded.blacklight.blacklight-modal",
-        function (e) {
+        function () {
           const dataCropperDiv = document.querySelector(
             '#blacklight-modal [data-behavior="iiif-cropper"]',
           );
 
           if (dataCropperDiv) {
-            new Crop($(dataCropperDiv), false).render();
+            new Crop(dataCropperDiv, false).render();
           }
         },
       );
@@ -1436,7 +1436,7 @@
     attachModalSaveHandler() {
       const context = this;
 
-      document.addEventListener("show.blacklight.blacklight-modal", function (e) {
+      document.addEventListener("show.blacklight.blacklight-modal", function () {
         const saveBtn = document.getElementById("save-cropping-selection");
         if (saveBtn) {
           saveBtn.addEventListener("click", () => {
@@ -2229,9 +2229,13 @@
   class ReadonlyCheckbox {
     connect() {
       // Don't allow unchecking of checkboxes with the data-readonly attribute
-      $("input[type='checkbox'][data-readonly]").on("click", function (event) {
-        event.preventDefault();
-      });
+      document
+        .querySelectorAll("input[type='checkbox'][data-readonly]")
+        .forEach(function (el) {
+          el.addEventListener("click", function (event) {
+            event.preventDefault();
+          });
+        });
     }
   }
 
