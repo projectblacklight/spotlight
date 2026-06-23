@@ -35,7 +35,7 @@ export default class {
       })
     }
 
-    function destroy_user(event) {
+    function destroy_user(_event) {
       const id = $(this).attr("data-target")
       $("[data-destroy-for='" + id + "']", container).val("1")
     }

@@ -1,4 +1,4 @@
-;(function ($) {
+;(function (_$) {
   SirTrevor.BlockMixins.Plustextable = {
     mixinName: "Textable",
     preload: true,

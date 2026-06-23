@@ -339,13 +339,13 @@ export default class Crop {
     })
   }
 
-  successHandler(data, stat, xhr) {
+  successHandler(data, _stat, _xhr) {
     this.setIiifFields({ tilesource: data.tilesource })
     this.setUploadId(data.id)
     this.clearUploadErrors()
   }
 
-  errorHandler(xhr, stat, error) {
+  errorHandler(xhr, _stat, _error) {
     let errorMessage = "Upload failed"
     if (xhr.responseJSON) {
       if (xhr.responseJSON.errors) {
@@ -366,7 +366,7 @@ export default class Crop {
     if (errorsElement) {
       errorsElement.text(errorMessage).show()
     } else {
-      console.error("uploadFile", error, errorMessage)
+      console.error("uploadFile", errorMessage)
     }
   }
 

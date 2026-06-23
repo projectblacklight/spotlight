@@ -28,7 +28,7 @@ SirTrevor.Blocks.SearchResults = (function () {
       }).join("\n")
     },
 
-    afterPanelRender: function (data, panel) {
+    afterPanelRender: function (_data, _panel) {
       $(this.inner).find(".item-input-field").attr("disabled", "disabled")
     },
 

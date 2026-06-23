@@ -9,7 +9,7 @@ Core.BlockLimits.prototype.enforceLimits = function (editor) {
   this.checkGlobalBlockTypeLimit()()
 }
 
-Core.BlockLimits.prototype.addEditorCallbacks = function (editor) {
+Core.BlockLimits.prototype.addEditorCallbacks = function (_editor) {
   SirTrevor.EventBus.on("block:create:new", this.checkBlockTypeLimitOnAdd())
   SirTrevor.EventBus.on("block:remove", this.checkGlobalBlockTypeLimit())
 }

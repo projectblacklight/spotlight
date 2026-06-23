@@ -62,9 +62,9 @@ jobs:
           file: ./Dockerfile
           push: false
 
-  prettier:
+  javascript:
     runs-on: ubuntu-latest
-    name: prettier
+    name: javascript (prettier & eslint)
     steps:
       - uses: actions/checkout@v4
       - name: Set up Node
@@ -76,3 +76,5 @@ jobs:
         run: npm ci
       - name: Check formatting
         run: npm run format:check
+      - name: Lint
+        run: npm run lint

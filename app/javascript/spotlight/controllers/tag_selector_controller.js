@@ -20,7 +20,7 @@ export default class extends Controller {
     translations: Object,
   }
 
-  tagDropdown(event) {
+  tagDropdown(_event) {
     this.dropdownContentTarget.classList.toggle("d-none")
   }
 
@@ -64,7 +64,7 @@ export default class extends Controller {
     }
   }
 
-  addNewTag(event) {
+  addNewTag(_event) {
     if (
       this.addNewTagWrapperTarget.classList.contains("d-none") ||
       this.newTagTarget.dataset.tag.length === 0
@@ -98,7 +98,7 @@ export default class extends Controller {
     }
   }
 
-  updateSearchResultsPlaceholder(event) {
+  updateSearchResultsPlaceholder(_event) {
     const placeholderElement =
       this.dropdownContentTarget.querySelector(".no-results")
     if (!placeholderElement) return

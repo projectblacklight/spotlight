@@ -133,7 +133,6 @@
         )
         listItem.on("click", function () {
           // get the current image id
-          var imageid = $("img", $(this)).data("image-id")
           var src = $("img", $(this)).attr("src")
 
           if (typeof clickCallback === "function") {

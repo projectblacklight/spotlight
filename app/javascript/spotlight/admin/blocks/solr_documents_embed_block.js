@@ -8,7 +8,7 @@ SirTrevor.Blocks.SolrDocumentsEmbed = (function () {
       return ""
     },
 
-    afterPreviewLoad: function (options) {
+    afterPreviewLoad: function (_options) {
       this.inner.querySelector("picture[data-openseadragon]").openseadragon()
     },
   })

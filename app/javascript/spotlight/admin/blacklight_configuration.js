@@ -18,7 +18,7 @@ export default class {
       var checkboxes = $("input[type='checkbox']", columnRows)
       updateSelectAllInput(selectCheckbox, columnRows)
       // Add the check/uncheck behavior to the select/deselect all checkbox
-      selectCheckbox.on("click", function (e) {
+      selectCheckbox.on("click", function () {
         var allChecked = allCheckboxesChecked(columnRows)
         columnRows.each(function () {
           $("input[type='checkbox']", $(this)).prop("checked", !allChecked)

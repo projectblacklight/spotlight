@@ -46,7 +46,7 @@ Core.Block.Resources = (function () {
 
     globalIndex: 0,
 
-    _itemPanelIiifFields: function (index, data) {
+    _itemPanelIiifFields: function (_index, _data) {
       return []
     },
 
@@ -142,7 +142,7 @@ Core.Block.Resources = (function () {
       return panel
     },
 
-    afterPanelRender: function (data, panel) {},
+    afterPanelRender: function (_data, _panel) {},
 
     afterPanelDelete: function () {},
 

@@ -28,7 +28,7 @@ import Core from "spotlight/core"
     for (var i in availableTypes) {
       var type = availableTypes[i]
       if (
-        Blocks.hasOwnProperty(type) &&
+        Object.prototype.hasOwnProperty.call(Blocks, type) &&
         Blocks[type].prototype.toolbarEnabled
       ) {
         var blockGroup
@@ -58,7 +58,7 @@ import Core from "spotlight/core"
           "</div></div>",
       )
       var buttons = group.reduce(function (memo, btn) {
-        return (memo += btn)
+        return memo + btn
       }, "")
       groupEl.append(buttons)
       return groupEl[0].outerHTML
@@ -83,7 +83,7 @@ import Core from "spotlight/core"
     return blocks
   }
 
-  function render(Blocks, availableTypes) {
+  function render(_Blocks, _availableTypes) {
     var el = document.createElement("div")
     el.className = "st-block-controls__buttons"
     el.innerHTML = generateBlocksHTML.apply(null, arguments)
@@ -110,6 +110,7 @@ import Core from "spotlight/core"
     }
 
     function destroy() {
+      // eslint-disable-next-line no-global-assign
       SirTrevor = null
       el = null
     }
@@ -123,14 +124,6 @@ import Core from "spotlight/core"
       }
       $(".st-block__inner", parent).after(el)
       parent.classList.add("st-block--controls-active")
-    }
-
-    function replaceBlock() {
-      SirTrevor.mediator.trigger(
-        "block:replace",
-        el.parentNode,
-        this.getAttribute("data-type"),
-      )
     }
 
     $(editor.wrapper).delegate(".st-block-replacer", "click", insert)

@@ -24,7 +24,7 @@ export default class {
 
       $("#blacklight-modal").modal("show")
 
-      $("#blacklight-modal").one("hidden.bs.modal", function (event) {
+      $("#blacklight-modal").one("hidden.bs.modal", function () {
         modalDialog.removeClass("modal-xl")
         modalDialog.addClass("modal-lg")
       })

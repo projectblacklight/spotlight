@@ -37,7 +37,7 @@ SirTrevor.Blocks.UploadedItems = (function () {
 
     onDrop: function (transferData) {
       var file = transferData.files[0],
-        urlAPI =
+        _urlAPI =
           typeof URL !== "undefined"
             ? URL
             : typeof webkitURL !== "undefined"
@@ -55,7 +55,7 @@ SirTrevor.Blocks.UploadedItems = (function () {
             this.fileInput().val("")
             this.ready()
           },
-          function (error) {
+          function (_error) {
             this.addMessage(i18n.t("blocks:image:upload_error"))
             this.ready()
           },

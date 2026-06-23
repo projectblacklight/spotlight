@@ -83,7 +83,7 @@ SirTrevor.Blocks.SolrDocumentsCarousel = (function () {
       return html
     },
 
-    afterPreviewLoad: function (options) {
+    afterPreviewLoad: function (_options) {
       $(this.inner).find(".carousel").carousel()
 
       // the bootstrap carousel only initializes data-bs-slide widgets on page load, so we need
