@@ -125,7 +125,6 @@ module Spotlight
         bundle_install
       end
       generate 'blacklight_oembed:install'
-      copy_file 'config/initializers/oembed.rb'
     end
 
     def add_mailer_defaults
