@@ -21,6 +21,8 @@ Bundler::GemHelper.install_tasks
 require 'solr_wrapper'
 require 'open3'
 
+ENV['SOLR_MODULES'] ||= 'analysis-extras'
+
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 

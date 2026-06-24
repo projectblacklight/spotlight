@@ -196,24 +196,26 @@
     <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
     <fieldType name="rand" class="solr.RandomSortField" omitNorms="true"/>
 
-    <!-- Default numeric field types.  -->
-    <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
-    <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
-    <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
-    <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
+    <!-- Default numeric field types. Point-based fields are used; the Trie-based
+         numeric field types were deprecated in Solr 6 and removed in Solr 8.0. -->
+    <fieldType name="int" class="solr.IntField" positionIncrementGap="0"/>
+    <fieldType name="float" class="solr.FloatField" positionIncrementGap="0"/>
+    <fieldType name="long" class="solr.LongField" positionIncrementGap="0"/>
+    <fieldType name="double" class="solr.DoubleField" positionIncrementGap="0"/>
 
-    <!-- trie numeric field types for faster range queries -->
-    <fieldType name="tint" class="solr.TrieIntField" precisionStep="8" positionIncrementGap="0"/>
-    <fieldType name="tfloat" class="solr.TrieFloatField" precisionStep="8" positionIncrementGap="0"/>
-    <fieldType name="tlong" class="solr.TrieLongField" precisionStep="8" positionIncrementGap="0"/>
-    <fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" positionIncrementGap="0"/>
+    <!-- point numeric field types kept under the trie suffix names for backwards
+         compatibility with existing dynamic field definitions -->
+    <fieldType name="tint" class="solr.IntField" positionIncrementGap="0"/>
+    <fieldType name="tfloat" class="solr.FloatField" positionIncrementGap="0"/>
+    <fieldType name="tlong" class="solr.LongField" positionIncrementGap="0"/>
+    <fieldType name="tdouble" class="solr.DoubleField" positionIncrementGap="0"/>
 
     <!-- The format for this date field is of the form 1995-12-31T23:59:59Z
          Optional fractional seconds are allowed: 1995-12-31T23:59:59.999Z
       -->
-    <fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
-    <!-- A Trie based date field for faster date range queries and date faceting. -->
-    <fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
+    <fieldType name="date" class="solr.DatePointField" positionIncrementGap="0"/>
+    <!-- A point based date field for faster date range queries and date faceting. -->
+    <fieldType name="tdate" class="solr.DatePointField" positionIncrementGap="0"/>
 
 
     <!-- This point type indexes the coordinates as separate fields (subFields)
@@ -334,7 +336,7 @@
     <!-- queries for paths match documents at that path, or in ancestor paths -->
     <fieldType name="ancestor_path" class="solr.TextField">
       <analyzer type="index">
-        <tokenizer class="solr.KeywordTokenizerFactory" />
+        <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/" />
       </analyzer>
       <analyzer type="query">
         <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/" />
