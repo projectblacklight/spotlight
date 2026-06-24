@@ -59,9 +59,9 @@ module Spotlight
 
     # Can search for named routes directly in the main app, omitting
     # the "main_app." prefix
-    def method_missing(method, *args, &)
+    def method_missing(method, *, &)
       if main_app_url_helper?(method)
-        main_app.send(method, *args)
+        main_app.send(method, *)
       else
         super
       end
