@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('openseadragon'), require('clipboard'), require('sir-trevor'), require('sortablejs'), require('@hotwired/stimulus')) :
-  typeof define === 'function' && define.amd ? define(['openseadragon', 'clipboard', 'sir-trevor', 'sortablejs', '@hotwired/stimulus'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.OpenSeadragon, global.Clipboard, global.SirTrevor, global.Sortable, global.Stimulus));
-})(this, (function (OpenSeadragon, Clipboard, SirTrevor$1, Sortable, stimulus) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('openseadragon'), require('clipboard'), require('sir-trevor'), require('sortablejs'), require('bootstrap'), require('@hotwired/stimulus')) :
+  typeof define === 'function' && define.amd ? define(['openseadragon', 'clipboard', 'sir-trevor', 'sortablejs', 'bootstrap', '@hotwired/stimulus'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.OpenSeadragon, global.Clipboard, global.SirTrevor, global.Sortable, global.bootstrap, global.Stimulus));
+})(this, (function (OpenSeadragon, Clipboard, SirTrevor$1, Sortable, bootstrap, stimulus) { 'use strict';
 
   // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
   // Includes "export default tns" at the end of the file for spotlight/user/browse_group_categories.js
@@ -4381,10 +4381,6 @@
         document.addEventListener('turbo:submit-end', this.contactToDeleteNotFoundHandler);
       }
 
-      if ($.fn.tooltip) {
-        $('.btn-with-tooltip').tooltip();
-      }
-
       // Put focus in saved search title input when Save this search modal is shown
       $('#save-modal').on('shown.bs.modal', function () {
           $('#search_title').focus();
@@ -5168,9 +5164,20 @@
 
   class Tabs {
     connect() {
-      if ($('[role=tabpanel]').length > 0 && window.location.hash) {
-        var tabpanel = $(window.location.hash).closest('[role=tabpanel]');
-        $('a[role=tab][href="#'+tabpanel.attr('id')+'"]').tab('show');
+      if (document.querySelector("[role=tabpanel]") && window.location.hash) {
+        const targetId = window.location.hash.substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (!targetElement) return
+
+        const tabpanel = targetElement.closest("[role=tabpanel]");
+        if (!tabpanel) return
+
+        const tabElement = document.querySelector(
+          `a[role=tab][href="#${tabpanel.id}"]`
+        );
+        if (!tabElement) return
+
+        bootstrap.Tab.getOrCreateInstance(tabElement).show();
       }
     }
   }

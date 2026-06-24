@@ -18,7 +18,7 @@
         <% end %>
       <% end %>
 
-      <% if exhibit.subtitle || exhibit.description  %>
+      <% if exhibit.subtitle || exhibit.description %>
         <%= content_tag :div, id: "exhibit-description-#{exhibit.to_param}", class: 'card-text exhibit-description' do %>
           <% if exhibit.subtitle %>
             <p class="subtitle">

@@ -15,7 +15,7 @@
         <% end %>
         <% facet.items.each do |facet_item| %>
           <div class="badge bg-info">
-            <%= "#{facet_item.value} (#{facet_item.hits})" %>
+            <%= facet_item.value %> (<%= facet_item.hits %>)
           </div>
         <% end %>
 

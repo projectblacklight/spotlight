@@ -2,11 +2,11 @@
   <p class="instructions"><%= t :'spotlight.exhibits.languages.selection_instructions' %></p>
 
   <%= bootstrap_form_for [current_exhibit, Spotlight::Language.new], layout: :horizontal, html: { class: 'row' }, label_col: "col-sm-3", control_col: "col-sm-9" do |f| %>
-    <div class='col-sm-6'>
+    <div class="col-sm-6">
       <%= f.select('locale', add_exhibit_language_dropdown_options, prompt: t('.selection_prompt')) %>
       <%= hidden_field_tag :tab, 'language', id: nil %>
     </div>
-    <div class='col-sm-6'>
+    <div class="col-sm-6">
       <%= f.submit nil, class: 'btn btn-primary' %>
     </div>
   <% end %>
@@ -23,8 +23,8 @@
             <thead>
               <tr>
                 <th scope="col"><%= t('.table_heading.language') %></th>
-                <th scope="col" class='text-center'><%= t('.table_heading.public') %></th>
-                <th scope="col" class='text-center'><%= t('.table_heading.action') %></th>
+                <th scope="col" class="text-center"><%= t('.table_heading.public') %></th>
+                <th scope="col" class="text-center"><%= t('.table_heading.action') %></th>
               </tr>
             </thead>
             <tbody>
@@ -33,13 +33,13 @@
                   <tr id="<%= dom_id(language) %>">
                     <%= languages.hidden_field :id %>
                     <td><%= t("locales.#{language.locale}") %></td>
-                    <td class='text-center'>
-                      <div class='checkbox'>
+                    <td class="text-center">
+                      <div class="checkbox">
                         <%= languages.label :public, class: 'visually-hidden' %>
                         <%= languages.check_box_without_bootstrap :public %>
                       </div>
                       </td>
-                    <td class='text-center'><%= link_to t('.remove'), spotlight.exhibit_language_path(current_exhibit, language), data: { turbo_method: :delete, turbo_confirm: t('.modal.confirm')}, class: 'btn btn-sm btn-danger' %></td>
+                    <td class="text-center"><%= link_to t('.remove'), spotlight.exhibit_language_path(current_exhibit, language), data: { turbo_method: :delete, turbo_confirm: t('.modal.confirm')}, class: 'btn btn-sm btn-danger' %></td>
                   </tr>
                 <% end %>
               <% end %>

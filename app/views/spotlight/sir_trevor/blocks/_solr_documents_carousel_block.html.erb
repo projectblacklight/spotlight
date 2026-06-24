@@ -10,7 +10,7 @@
       <div class="carousel-item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
         <% if block_options[:full_image_url].present? %>
           <%= link_to_document(document, image_tag(block_options[:full_image_url], alt: resource_alt_text(block_options, doc_presenter.heading), skip_pipeline: true), counter: -1) %>
-        <% elsif block_options[:iiif_tilesource_base].present?  %>
+        <% elsif block_options[:iiif_tilesource_base].present? %>
           <%= link_to_document(document, image_tag(block_options[:iiif_tilesource_base] + '/full/!800,800/0/default.jpg', alt: resource_alt_text(block_options, doc_presenter.heading), skip_pipeline: true), counter: -1) %>
         <% elsif doc_presenter.thumbnail.exists? %>
           <%= doc_presenter.thumbnail.thumbnail_tag({ alt: resource_alt_text(block_options, doc_presenter.heading) }, document_counter: -1) %>
