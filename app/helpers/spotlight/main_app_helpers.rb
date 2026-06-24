@@ -27,8 +27,8 @@ module Spotlight
     end
 
     # Expecting to upstream this override in https://github.com/projectblacklight/blacklight/pull/3343/files
-    def document_presenter(document, view_config: nil, **kwargs)
-      (view_config&.document_presenter_class || document_presenter_class(document)).new(document, self, view_config:, **kwargs)
+    def document_presenter(document, view_config: nil, **)
+      (view_config&.document_presenter_class || document_presenter_class(document)).new(document, self, view_config:, **)
     end
 
     def document_presenter_class(_document)

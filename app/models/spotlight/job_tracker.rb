@@ -107,8 +107,8 @@ module Spotlight
 
     private
 
-    def number_with_delimiter(*args)
-      ActiveSupport::NumberHelper.number_to_delimited(*args)
+    def number_with_delimiter(*)
+      ActiveSupport::NumberHelper.number_to_delimited(*)
     end
   end
 end
