@@ -14,7 +14,7 @@ describe 'spotlight/searches/index.html.erb', type: :view do
       assign(:searches, [])
       expect(exhibit).to receive(:searchable?).and_return(true)
       render
-      expect(rendered).to have_content 'You can save search results'
+      expect(rendered).to have_text 'You can save search results'
     end
   end
 

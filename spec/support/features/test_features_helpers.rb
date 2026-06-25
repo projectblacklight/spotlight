@@ -12,7 +12,7 @@ module Spotlight
         $(".tt-suggestion").click();
       EOF
 
-      find('.tt-suggestion', text: opts[:with], match: :first).click
+      first('.tt-suggestion', text: opts[:with]).click
     end
 
     ##

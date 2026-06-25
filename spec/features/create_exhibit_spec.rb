@@ -26,7 +26,7 @@ describe 'Create a new exhibit', type: :feature do
 
     find('input[name="commit"]').click
 
-    expect(page).to have_content 'The exhibit was created.'
+    expect(page).to have_text 'The exhibit was created.'
     expect(Spotlight::Exhibit.last.slug).to eq 'my-exhibit-title'
   end
 
@@ -41,7 +41,7 @@ describe 'Create a new exhibit', type: :feature do
 
     find('input[name="commit"]').click
 
-    expect(page).to have_content 'The exhibit was created.'
+    expect(page).to have_text 'The exhibit was created.'
     expect(Spotlight::Exhibit.last.slug).to eq 'custom-slug'
   end
 
@@ -60,7 +60,7 @@ describe 'Create a new exhibit', type: :feature do
 
     find('input[name="commit"]').click
 
-    expect(page).to have_content 'has already been taken'
+    expect(page).to have_text 'has already been taken'
   end
 
   it 'suggests a slug based on the title', js: true do

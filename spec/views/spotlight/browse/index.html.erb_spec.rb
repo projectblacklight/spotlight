@@ -17,6 +17,6 @@ describe 'spotlight/browse/index', type: :view do
     assign :searches, [search, another_search]
     stub_template 'spotlight/browse/_search.html.erb' => '<%= search.id %> <br/>'
     render
-    expect(response).to have_content "#{search.id} #{another_search.id}"
+    expect(response).to have_text "#{search.id} #{another_search.id}"
   end
 end

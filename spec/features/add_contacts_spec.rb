@@ -19,7 +19,7 @@ describe 'Add a contact to an exhibit', type: :feature do
 
       find('input[name="commit"]').click
     end
-    expect(page).to have_content 'The contact was created.'
+    expect(page).to have_text 'The contact was created.'
 
     within '.contacts_admin' do
       check 'exhibit_contacts_attributes_0_show_in_sidebar'
@@ -28,7 +28,7 @@ describe 'Add a contact to an exhibit', type: :feature do
       click_button 'Save changes'
     end
 
-    expect(page).to have_content 'Contacts were successfully updated.'
+    expect(page).to have_text 'Contacts were successfully updated.'
 
     within '#nested-pages' do
       click_link 'View'
@@ -56,7 +56,7 @@ describe 'Add a contact to an exhibit', type: :feature do
       attach_file('contact_avatar_attributes_file', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
       click_button 'Save'
     end
-    expect(page).to have_content 'The contact was created.'
+    expect(page).to have_text 'The contact was created.'
     expect(page).to have_selector 'img.contact-photo'
     expect(Spotlight::Contact.last.avatar.iiif_url).to be_present
   end

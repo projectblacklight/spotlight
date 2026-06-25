@@ -50,7 +50,7 @@ the export option behind a bootstrap tab)))
       file.close
       file.unlink
     end
-    expect(page).to have_content 'The exhibit was successfully updated.'
-    expect(page).to have_content 'A better title'
+    expect(page).to have_text 'The exhibit was successfully updated.'
+    expect(page).to have_text 'A better title'
   end
 end

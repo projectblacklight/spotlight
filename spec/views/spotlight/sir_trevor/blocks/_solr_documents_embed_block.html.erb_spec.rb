@@ -36,7 +36,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb', typ
     expect(view).to receive(:render_document_partials).with(doc, %w[a b c], hash_including(a: 1, block:)).and_return('OSD')
     render partial: p, locals: { solr_documents_embed_block: block }
     expect(rendered).to have_selector 'h3', text: 'Some title'
-    expect(rendered).to have_content 'Some text'
+    expect(rendered).to have_text 'Some text'
     expect(rendered).to have_selector '.box', text: 'OSD'
     expect(rendered).to have_selector '.items-col'
     expect(rendered).to have_selector '.text-col'

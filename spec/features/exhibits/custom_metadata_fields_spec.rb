@@ -18,7 +18,7 @@ describe 'Adding custom metadata fields', type: :feature do
 
     click_on 'Save'
 
-    expect(page).to have_content 'The custom field was created.'
+    expect(page).to have_text 'The custom field was created.'
     within '#exhibit-specific-fields' do
       expect(page).to have_selector '.field-label', text: 'My new custom field'
       expect(page).to have_selector '.field-description', text: 'Helps to remind me what this field is for'
@@ -33,7 +33,7 @@ describe 'Adding custom metadata fields', type: :feature do
 
     click_button 'Save changes'
 
-    expect(page).to have_content 'The custom field was successfully updated.'
+    expect(page).to have_text 'The custom field was successfully updated.'
 
     within '#exhibit-specific-fields' do
       expect(page).to have_selector '.field-label', text: 'My new custom field'
@@ -42,7 +42,7 @@ describe 'Adding custom metadata fields', type: :feature do
       click_link 'Delete'
     end
 
-    expect(page).to have_content 'The custom field was deleted.'
+    expect(page).to have_text 'The custom field was deleted.'
   end
 
   it 'has breadcrumbs' do
@@ -59,7 +59,7 @@ describe 'Adding custom metadata fields', type: :feature do
     choose 'Controlled vocabulary'
     click_on 'Save'
 
-    expect(page).to have_content 'The custom field was created.'
+    expect(page).to have_text 'The custom field was created.'
     within '#exhibit-specific-fields' do
       # Edit
       click_link 'Edit'
@@ -69,7 +69,7 @@ describe 'Adding custom metadata fields', type: :feature do
     expect(page).to have_unchecked_field 'Free text'
 
     visit spotlight.edit_exhibit_search_configuration_path exhibit
-    expect(page).to have_content 'My new custom field'
+    expect(page).to have_text 'My new custom field'
   end
 
   it 'can be multivalued' do
@@ -81,7 +81,7 @@ describe 'Adding custom metadata fields', type: :feature do
     check 'custom_field_is_multiple'
     click_on 'Save'
 
-    expect(page).to have_content 'The custom field was created.'
+    expect(page).to have_text 'The custom field was created.'
     within '#exhibit-specific-fields' do
       # Edit
       click_link 'Edit'
@@ -92,6 +92,6 @@ describe 'Adding custom metadata fields', type: :feature do
     expect(page).to have_checked_field 'custom_field_is_multiple', disabled: true
 
     visit spotlight.edit_exhibit_search_configuration_path exhibit
-    expect(page).to have_content 'My multivalued custom field'
+    expect(page).to have_text 'My multivalued custom field'
   end
 end

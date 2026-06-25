@@ -16,6 +16,6 @@ describe 'Add a contact to an exhibit', type: :feature do
     end
 
     click_button 'Save'
-    expect(page).to have_content 'The contact was successfully updated.'
+    expect(page).to have_text 'The contact was successfully updated.'
   end
 end

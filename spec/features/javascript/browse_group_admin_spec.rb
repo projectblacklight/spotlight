@@ -18,7 +18,7 @@ describe 'Browse Group Adminstration', js: true do
 
     add_new_via_button('My New Group')
 
-    expect(page).to have_content 'The browse group was created.'
+    expect(page).to have_text 'The browse group was created.'
     expect(page).to have_css('li.dd-item')
     expect(page).to have_css('h4', text: 'My New Group')
   end
@@ -28,7 +28,7 @@ describe 'Browse Group Adminstration', js: true do
 
     within("[data-id='#{group1.id}']") do
       within('h4') do
-        expect(page).to have_content('Good group 1')
+        expect(page).to have_text('Good group 1')
         expect(page).to have_css('.title-field', visible: false)
         click_link('Good group 1')
         expect(page).to have_css('.title-field', visible: true)
@@ -38,7 +38,7 @@ describe 'Browse Group Adminstration', js: true do
     click_button('Save changes')
     within("[data-id='#{group1.id}']") do
       within('h4') do
-        expect(page).to have_content('New good group 1')
+        expect(page).to have_text('New good group 1')
       end
     end
   end

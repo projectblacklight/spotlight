@@ -20,21 +20,21 @@ describe 'spotlight/job_trackers/show', type: :view do
   it 'displays the job status for enqueued jobs' do
     job_tracker.update(status: 'enqueued')
     render
-    expect(rendered).to have_content '⏱'
+    expect(rendered).to have_text '⏱'
   end
 
   it 'displays the job status for failed jobs' do
     job_tracker.update(status: 'failed')
     render
-    expect(rendered).to have_content '🟥'
-    expect(rendered).to have_content 'job failed'
+    expect(rendered).to have_text '🟥'
+    expect(rendered).to have_text 'job failed'
   end
 
   it 'displays the job status for successful jobs' do
     job_tracker.update(status: 'completed')
     render
-    expect(rendered).to have_content '✅'
-    expect(rendered).to have_content 'job completed'
+    expect(rendered).to have_text '✅'
+    expect(rendered).to have_text 'job completed'
   end
 
   it 'display job started events' do
@@ -60,6 +60,6 @@ describe 'spotlight/job_trackers/show', type: :view do
     allow(job_tracker).to receive_messages(progress: 37, total: 51)
 
     render
-    expect(rendered).to have_content 'processed 37 / 51'
+    expect(rendered).to have_text 'processed 37 / 51'
   end
 end

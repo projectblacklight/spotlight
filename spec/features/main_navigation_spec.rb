@@ -35,13 +35,13 @@ describe 'Main navigation labels are settable', type: :feature do
 
   it 'has the configured browse page label visible in the breadcrumb of the browse index page' do
     visit spotlight.exhibit_browse_index_path(exhibit, exhibit.searches.first)
-    expect(page).to have_content('New Browse Label')
+    expect(page).to have_text('New Browse Label')
     expect(page).to have_css('.breadcrumb li', text: 'New Browse Label')
   end
 
   it 'has the configured browse page label visible in the breadcrumb of the browse show page' do
     visit spotlight.exhibit_browse_path(exhibit, exhibit.searches.first)
-    expect(page).to have_content('New Browse Label')
+    expect(page).to have_text('New Browse Label')
     expect(page).to have_css('.breadcrumb li', text: 'New Browse Label')
   end
 
@@ -67,7 +67,7 @@ describe 'Main navigation labels are settable', type: :feature do
       click_link 'Main menu'
 
       within '.main_navigation_admin' do
-        within all('li').first do
+        within first('li') do
           expect(page).to have_no_css('button.restore-default', visible: true)
         end
 

@@ -84,12 +84,12 @@ describe Spotlight::Page, type: :model do
 
     it 'does not have content when the page is empty' do
       page.content = []
-      expect(page).not_to have_content # rubocop:disable Capybara/RSpec/NegationMatcher
+      expect(page).not_to have_text # rubocop:disable Capybara/RSpec/NegationMatcher
     end
 
     it 'has content when the page has a widget' do
       page.content = [{ type: 'rule' }]
-      expect(page).to have_content
+      expect(page).to have_text
     end
   end
 

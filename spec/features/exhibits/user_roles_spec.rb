@@ -14,7 +14,7 @@ RSpec.describe 'Manage exhibit users and roles', js: true do
     expect(page).to have_selector('[data-edit-for="new"]')
     fill_in 'User key', with: 'email@myemail.edu'
     click_button 'Save changes'
-    expect(page).to have_content 'User has been updated.'
+    expect(page).to have_text 'User has been updated.'
   end
 
   it 'admins can edit existing roles' do

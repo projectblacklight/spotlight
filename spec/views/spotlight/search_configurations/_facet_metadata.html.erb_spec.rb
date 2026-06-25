@@ -16,7 +16,7 @@ describe 'spotlight/search_configurations/_facet_metadata', type: :view do
     let(:metadata) { { document_count: 0 } }
 
     it 'shows there are no documents' do
-      expect(rendered).to have_content '0 items'
+      expect(rendered).to have_text '0 items'
     end
   end
 
@@ -24,8 +24,8 @@ describe 'spotlight/search_configurations/_facet_metadata', type: :view do
     let(:metadata) { { document_count: 1, value_count: 3, terms: %w[a b c] } }
 
     it 'shows the number of unique values' do
-      expect(rendered).to have_content '1 item'
-      expect(rendered).to have_content '3 unique values'
+      expect(rendered).to have_text '1 item'
+      expect(rendered).to have_text '3 unique values'
     end
   end
 
@@ -33,7 +33,7 @@ describe 'spotlight/search_configurations/_facet_metadata', type: :view do
     let(:metadata) { { document_count: 1, value_count: 21, terms: %w[] } }
 
     it 'shows there are many unique values' do
-      expect(rendered).to have_content '20+ unique values'
+      expect(rendered).to have_text '20+ unique values'
     end
   end
 
@@ -42,7 +42,7 @@ describe 'spotlight/search_configurations/_facet_metadata', type: :view do
     let(:field_config) { Blacklight::Configuration::FacetField.new(limit: 10) }
 
     it 'shows there are many unique values' do
-      expect(rendered).to have_content '10+ unique values'
+      expect(rendered).to have_text '10+ unique values'
     end
   end
 
@@ -52,7 +52,7 @@ describe 'spotlight/search_configurations/_facet_metadata', type: :view do
     let(:field_config) { Blacklight::Configuration::FacetField.new(limit: true) }
 
     it 'shows there are many unique values' do
-      expect(rendered).to have_content '10+ unique values'
+      expect(rendered).to have_text '10+ unique values'
     end
   end
 end

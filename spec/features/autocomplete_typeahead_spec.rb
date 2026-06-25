@@ -50,7 +50,7 @@ describe 'Autocomplete typeahead', js: true, type: :feature do
 
         click_button 'Save changes'
 
-        expect(page).to have_content('The exhibit was successfully updated.')
+        expect(page).to have_text('The exhibit was successfully updated.')
 
         expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/, visible: true)
       end

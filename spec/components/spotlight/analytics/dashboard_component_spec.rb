@@ -34,17 +34,17 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
       expect(get_min_max('end_date')).to eq({ max: default_end_date, min: default_min_date })
       expect(rendered).to have_field('start_date', with: default_start_date)
       expect(rendered).to have_field('end_date', with: default_end_date)
-      expect(rendered).to have_content 'User activity over the past year'
+      expect(rendered).to have_text 'User activity over the past year'
     end
 
     it 'shows translated header' do
-      expect(rendered).to have_content 'User activity over the past year'
+      expect(rendered).to have_text 'User activity over the past year'
     end
 
     it 'has metric labels' do
-      expect(rendered).to have_content 'page views'
-      expect(rendered).to have_content 'unique visits'
-      expect(rendered).to have_content 'sessions'
+      expect(rendered).to have_text 'page views'
+      expect(rendered).to have_text 'unique visits'
+      expect(rendered).to have_text 'sessions'
     end
 
     it 'has metric values' do
@@ -54,9 +54,9 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
     end
 
     it 'has page-level data' do
-      expect(rendered).to have_content 'Most popular pages'
+      expect(rendered).to have_text 'Most popular pages'
       expect(rendered).to have_link 'title', href: '/path'
-      expect(rendered).to have_content '123'
+      expect(rendered).to have_text '123'
     end
   end
 
@@ -70,7 +70,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
       expect(get_min_max('end_date')).to eq({ max: default_end_date, min: default_min_date })
       expect(rendered).to have_field('start_date', with: start_date)
       expect(rendered).to have_field('end_date', with: end_date)
-      expect(rendered).to have_content 'User activity from 01/01/2024 to 01/02/2024'
+      expect(rendered).to have_text 'User activity from 01/01/2024 to 01/02/2024'
     end
   end
 
@@ -82,7 +82,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
       expect(get_min_max('end_date')).to eq({ max: default_end_date, min: default_min_date })
       expect(rendered).to have_field('start_date', with: default_start_date)
       expect(rendered).to have_field('end_date', with: default_end_date)
-      expect(rendered).to have_content 'User activity from 10/24/2023 to 10/24/2024'
+      expect(rendered).to have_text 'User activity from 10/24/2023 to 10/24/2024'
     end
   end
 
@@ -94,7 +94,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
       expect(get_min_max('end_date')).to eq({ max: default_end_date, min: default_min_date })
       expect(rendered).to have_field('start_date', with: default_start_date)
       expect(rendered).to have_field('end_date', with: default_end_date)
-      expect(rendered).to have_content 'User activity from 10/24/2023 to 10/24/2024'
+      expect(rendered).to have_text 'User activity from 10/24/2023 to 10/24/2024'
     end
   end
 
@@ -115,7 +115,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
       expect(get_min_max('end_date')).to eq({ max: end_date, min: start_date })
       expect(rendered).to have_field('start_date', with: start_date)
       expect(rendered).to have_field('end_date', with: end_date)
-      expect(rendered).to have_content 'User activity over the past year'
+      expect(rendered).to have_text 'User activity over the past year'
     end
 
     it 'has invalid start and end date params' do
@@ -125,7 +125,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
       expect(get_min_max('end_date')).to eq({ max: end_date, min: start_date })
       expect(rendered).to have_field('start_date', with: start_date)
       expect(rendered).to have_field('end_date', with: end_date)
-      expect(rendered).to have_content 'User activity from 04/24/2024 to 07/24/2024'
+      expect(rendered).to have_text 'User activity from 04/24/2024 to 07/24/2024'
     end
   end
 
@@ -133,7 +133,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
     let(:data) { OpenStruct.new(rows: [], totals: OpenStruct.new) }
 
     it 'has a no analytics message' do
-      expect(rendered).to have_content I18n.t('spotlight.dashboards.analytics.no_results', pageurl: '/path')
+      expect(rendered).to have_text I18n.t('spotlight.dashboards.analytics.no_results', pageurl: '/path')
     end
   end
 end

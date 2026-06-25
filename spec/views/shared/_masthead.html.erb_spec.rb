@@ -33,7 +33,7 @@ describe 'shared/_masthead', type: :view do
 
   it 'includes a navbar' do
     render
-    expect(rendered).to have_content 'navbar'
+    expect(rendered).to have_text 'navbar'
   end
 
   context 'with an exhibit masthead' do
