@@ -34,7 +34,7 @@ describe 'spotlight/dashboards/analytics.html.erb', type: :view do
     it 'has analytics data' do
       render
 
-      expect(rendered).to have_content 'User activity over the past year'
+      expect(rendered).to have_text 'User activity over the past year'
     end
   end
 end

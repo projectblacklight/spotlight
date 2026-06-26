@@ -2,32 +2,45 @@
 
 module Spotlight
   module TestFeaturesHelpers
-    def fill_in_typeahead_field(opts = {})
+    def fill_in_typeahead_field(opts = {}) # rubocop:disable Metrics/MethodLength
       type = opts[:type] || 'twitter'
-      # Poltergeist / Capybara doesn't fire the events typeahead.js
-      # is listening for, so we help it out a little:
+      # Trigger the input event the typeahead lib listens for and open the menu.
       page.execute_script <<-EOF
         $("[data-#{type}-typeahead]:visible").val("#{opts[:with]}").trigger("input");
         $("[data-#{type}-typeahead]:visible").typeahead("open");
-        $(".tt-suggestion").click();
       EOF
 
-      find('.tt-suggestion', text: opts[:with], match: :first).click
+      # Wait for the suggestion to render before clicking. Without this the next
+      # line races against bloodhound's async fetch resolving.
+      expect(page).to have_css('.tt-suggestion', text: opts[:with])
+
+      page.document.synchronize(
+        Capybara.default_max_wait_time,
+        errors: [Selenium::WebDriver::Error::StaleElementReferenceError, Capybara::ElementNotFound]
+      ) do
+        first('.tt-suggestion', text: opts[:with], minimum: 1).click
+      end
     end
 
     ##
     # For typeahead "prefetched" fields, we need to wait for a resolved selector
     # before proceeding.
-    def fill_in_prefetched_typeahead_field(opts)
+    def fill_in_prefetched_typeahead_field(opts) # rubocop:disable Metrics/MethodLength
       type = opts[:type] || 'twitter'
-      # Poltergeist / Capybara doesn't fire the events typeahead.js
-      # is listening for, so we help it out a little:
       find(opts[:wait_for]) if opts[:wait_for]
       page.execute_script <<-EOF
         $("[data-#{type}-typeahead]:visible").val("#{opts[:with]}").trigger("input");
         $("[data-#{type}-typeahead]:visible").typeahead("open");
-        $(".tt-suggestion").click();
       EOF
+
+      expect(page).to have_css('.tt-suggestion', text: opts[:with])
+
+      page.document.synchronize(
+        Capybara.default_max_wait_time,
+        errors: [Selenium::WebDriver::Error::StaleElementReferenceError, Capybara::ElementNotFound]
+      ) do
+        first('.tt-suggestion', text: opts[:with], minimum: 1).click
+      end
     end
 
     # just like #fill_in_typeahead_field, but wait for the
@@ -42,7 +55,7 @@ module Spotlight
 
       # click the item + image widget
       expect(page).to have_css("button[data-type='#{type}']")
-      find("button[data-type='#{type}']").click
+      first("button[data-type='#{type}']").click
     end
 
     def click_add_widget

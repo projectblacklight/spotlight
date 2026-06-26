@@ -2,9 +2,6 @@
 
 source 'https://rubygems.org'
 
-# Declare dependencies in spotlight.gemspec.
-gemspec
-
 # BEGIN ENGINE_CART BLOCK
 # engine_cart: 2.5.0
 # engine_cart stanza: 2.5.0
@@ -16,9 +13,12 @@ if File.exist?(file)
   rescue Bundler::GemfileError => e
     Bundler.ui.warn '[EngineCart] Skipping Rails application dependencies:'
     Bundler.ui.warn e.message
+    gemspec
   end
 else
   Bundler.ui.warn "[EngineCart] Unable to find test application dependencies in #{file}, using placeholder dependencies"
+
+  gemspec
 
   if ENV['RAILS_VERSION']
     if ENV['RAILS_VERSION'] == 'edge'

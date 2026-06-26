@@ -17,7 +17,7 @@ RSpec.describe 'Multi image selector', default_max_wait_time: 5, js: true, type:
     expect(page).to have_selector '.card'
 
     within('.card') do
-      expect(page).to have_content(/Image \d of \d/)
+      expect(page).to have_text(/Image \d of \d/)
       expect(page).to have_link 'Change'
     end
 
@@ -31,7 +31,7 @@ RSpec.describe 'Multi image selector', default_max_wait_time: 5, js: true, type:
     click_link('Edit')
 
     within('.card') do
-      expect(page).to have_content(/Image \d of \d/)
+      expect(page).to have_text(/Image \d of \d/)
       find('a', text: 'Change').click
     end
 

@@ -61,7 +61,7 @@ describe 'Feature page', type: :feature, versioning: true do
         it 'is present anyway' do
           visit spotlight.exhibit_feature_page_path(parent_feature_page.exhibit, parent_feature_page)
           expect(page).to have_css('#sidebar')
-          expect(page).to have_content(child_feature_page.title)
+          expect(page).to have_text(child_feature_page.title)
         end
       end
 
@@ -71,7 +71,7 @@ describe 'Feature page', type: :feature, versioning: true do
         it 'does not be present' do
           visit spotlight.exhibit_feature_page_path(parent_feature_page.exhibit, parent_feature_page)
           expect(page).to have_no_css('#sidebar')
-          expect(page).to have_no_content(child_feature_page.title)
+          expect(page).to have_no_text(child_feature_page.title)
         end
       end
     end
@@ -135,7 +135,7 @@ describe 'Feature page', type: :feature, versioning: true do
 
       expect(page).to have_css '.alert'
       within '.alert' do
-        expect(page).to have_content 'This page is currently being edited by ' + exhibit_curator.to_s
+        expect(page).to have_text 'This page is currently being edited by ' + exhibit_curator.to_s
       end
     end
 

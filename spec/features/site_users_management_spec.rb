@@ -32,7 +32,7 @@ describe 'Site users management', js: true do
 
     click_button 'Add role'
 
-    expect(page).to have_content('not-an-existing-user@example.com pending')
+    expect(page).to have_text('not-an-existing-user@example.com pending')
   end
 
   it 'allows the admin to remove the admin role from the user' do
@@ -49,7 +49,7 @@ describe 'Site users management', js: true do
       click_link 'Remove from admin role'
     end
 
-    expect(page).to have_content 'User removed from site adminstrator role'
+    expect(page).to have_text 'User removed from site adminstrator role'
     expect(page).to have_css('a', text: 'Remove from admin role', count: 0)
   end
 

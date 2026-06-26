@@ -18,19 +18,19 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
   end
 
   it 'allows you to add the solr document block widget', js: true do
-    expect(page).to have_content 'This widget displays exhibit items in a horizontal row.'
-    expect(page).to have_content 'Optionally, you can add a heading and/or text to be displayed adjacent to the items.'
-    expect(page).to have_content 'Primary caption'
-    expect(page).to have_content 'Secondary caption'
-    expect(page).to have_content 'Display text on'
-    expect(page).to have_content 'Heading'
-    expect(page).to have_content 'Text'
+    expect(page).to have_text 'This widget displays exhibit items in a horizontal row.'
+    expect(page).to have_text 'Optionally, you can add a heading and/or text to be displayed adjacent to the items.'
+    expect(page).to have_text 'Primary caption'
+    expect(page).to have_text 'Secondary caption'
+    expect(page).to have_text 'Display text on'
+    expect(page).to have_text 'Heading'
+    expect(page).to have_text 'Text'
   end
 
   it 'allows you to add a solr document to the widget', js: true do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
     within(:css, '.card') do
-      expect(page).to have_content "L'AMERIQUE"
+      expect(page).to have_text "L'AMERIQUE"
     end
 
     save_page_changes
@@ -107,8 +107,8 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     save_page_changes
 
     expect(page).to have_selector '.items-block .box', count: 1, visible: true
-    expect(page).to have_content '[World map]'
-    expect(page).to have_no_content "L'AMERIQUE"
+    expect(page).to have_text '[World map]'
+    expect(page).to have_no_text "L'AMERIQUE"
 
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
     # display the title as the primary caption
@@ -119,7 +119,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     save_page_changes
 
     expect(page).to have_selector '.items-block .box', count: 1, visible: true
-    expect(page).to have_no_content '[World map]'
+    expect(page).to have_no_text '[World map]'
   end
 
   it 'allows you to optionally display captions with the image', js: true do
@@ -175,7 +175,7 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     # visit the show page for the document we just saved
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, '.items-block', visible: true) do
-      expect(page).to have_content 'zzz'
+      expect(page).to have_text 'zzz'
     end
   end
 
@@ -198,14 +198,14 @@ describe 'Solr Document Block', default_max_wait_time: 15, feature: true, versio
     # verify that the item + image widget is displaying image and title from the requested document.
     within(:css, '.items-block') do
       within('.text-col') do
-        expect(page).to have_content 'zzz'
+        expect(page).to have_text 'zzz'
       end
       expect(page).to have_css('.items-col.float-right.float-end')
     end
   end
 
   it 'displays alternative text guidelines', js: true do
-    expect(page).to have_content('For each item, please enter alternative text')
+    expect(page).to have_text('For each item, please enter alternative text')
     expect(page).to have_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
   end
 

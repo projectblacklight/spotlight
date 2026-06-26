@@ -30,8 +30,8 @@ describe 'Search Result Block', js: true, type: :feature do
 
     save_page_changes
 
-    expect(page).to have_no_content 'per page'
-    expect(page).to have_no_content 'Sort by'
+    expect(page).to have_no_text 'per page'
+    expect(page).to have_no_text 'Sort by'
 
     # The two configured view types should be
     # present and the one not selected should not be

@@ -57,7 +57,7 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
     expect(find('input[name="item[file_0][display]"]')).to be_present
 
     # Uncheck the first checkbox
-    all('input[type="checkbox"]').first.click
+    first('input[type="checkbox"]').click
 
     save_page_changes
 
@@ -67,7 +67,7 @@ describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
   end
 
   it 'displays alternative text guidelines', js: true do
-    expect(page).to have_content('For each item, please enter alternative text')
+    expect(page).to have_text('For each item, please enter alternative text')
     expect(page).to have_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
   end
 

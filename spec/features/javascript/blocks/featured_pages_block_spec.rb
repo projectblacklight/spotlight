@@ -37,7 +37,7 @@ describe 'Featured Pages Blocks', js: true, type: :feature do
 
     save_page_changes
 
-    expect(page).to have_content feature_page2.title
+    expect(page).to have_text feature_page2.title
   end
 
   pending 'persists the user selected sort order' do

@@ -21,16 +21,16 @@ describe 'Search Administration', type: :feature do
       it 'displays information about the facets' do
         visit spotlight.edit_exhibit_search_configuration_path(exhibit)
         within("[data-id='genre_ssim']") do
-          expect(page).to have_content('Genre')
-          expect(page).to have_content(/\d+ items/)
-          expect(page).to have_content(/([\d+]+) unique values/)
+          expect(page).to have_text('Genre')
+          expect(page).to have_text(/\d+ items/)
+          expect(page).to have_text(/([\d+]+) unique values/)
         end
       end
 
       it 'allows curators to select and unselect facets for display' do
         visit spotlight.edit_exhibit_search_configuration_path exhibit
 
-        expect(page).to have_content "Configuration Search\nOptions Facets Results"
+        expect(page).to have_text "Configuration Search\nOptions Facets Results"
         expect(page).to have_button 'Save'
 
         uncheck 'blacklight_configuration_facet_fields_language_ssim_show' # Language
@@ -47,7 +47,7 @@ describe 'Search Administration', type: :feature do
     describe 'sort' do
       it 'displays the sort fields edit area' do
         visit spotlight.edit_exhibit_search_configuration_path(exhibit)
-        expect(page).to have_content('Sort fields')
+        expect(page).to have_text('Sort fields')
       end
 
       it 'updates sort options' do

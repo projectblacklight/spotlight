@@ -27,7 +27,7 @@ describe 'Add and update the site masthead', type: :feature do
 
     click_button 'Save changes'
 
-    expect(page).to have_content('The exhibit was successfully updated.')
+    expect(page).to have_text('The exhibit was successfully updated.')
 
     within '#sidebar' do
       click_link 'Appearance'
@@ -61,7 +61,7 @@ describe 'Add and update the site masthead', type: :feature do
 
     click_button 'Save changes'
 
-    expect(page).to have_content('The exhibit was successfully updated.')
+    expect(page).to have_text('The exhibit was successfully updated.')
 
     expect(page).to have_css('.image-masthead .background-container')
   end
@@ -81,7 +81,7 @@ describe 'Add and update the site masthead', type: :feature do
 
     click_button 'Save changes'
 
-    expect(page).to have_content('The exhibit was successfully updated.')
+    expect(page).to have_text('The exhibit was successfully updated.')
 
     expect(page).to have_no_css('.image-masthead .background-container')
   end
@@ -105,7 +105,7 @@ describe 'Add and update the site masthead', type: :feature do
 
     click_button 'Save changes'
 
-    expect(page).to have_content('The appearance was successfully updated.')
+    expect(page).to have_text('The appearance was successfully updated.')
 
     expect(page).to have_css('.image-masthead .background-container')
   end

@@ -51,11 +51,11 @@ describe 'spotlight/pages/show', type: :view do
     end
 
     it 'does not double-escape HTML entities in the HTML title' do
-      expect(rendered).to have_content('Abbott & Costello | Blacklight')
+      expect(rendered).to have_text('Abbott & Costello | Blacklight')
     end
 
     it 'includes analytics reporting' do
-      expect(rendered).to have_content 'analytics'
+      expect(rendered).to have_text 'analytics'
     end
   end
 
@@ -86,6 +86,6 @@ describe 'spotlight/pages/show', type: :view do
     allow(page).to receive_messages(content?: false)
     stub_template 'spotlight/pages/_empty.html.erb' => 'Empty message'
     render
-    expect(rendered).to have_content('Empty message')
+    expect(rendered).to have_text('Empty message')
   end
 end

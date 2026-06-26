@@ -43,8 +43,8 @@ describe 'Browse Category Administration', type: :feature do
       expect(page).to have_css('h1 small', text: 'Edit browse category')
       expect(find_field('search_title').value).to eq search.title
       within '.appliedParams' do
-        expect(page).to have_content 'Genre'
-        expect(page).to have_content 'Value'
+        expect(page).to have_text 'Genre'
+        expect(page).to have_text 'Value'
       end
     end
 
@@ -54,7 +54,7 @@ describe 'Browse Category Administration', type: :feature do
       it 'enables group selection' do
         visit spotlight.edit_exhibit_search_path(exhibit, search)
         click_link 'Group'
-        expect(page).to have_content 'You can add this browse category'
+        expect(page).to have_text 'You can add this browse category'
 
         within '#search-group' do
           expect(find('input[type="checkbox"]')).not_to be_checked
@@ -62,7 +62,7 @@ describe 'Browse Category Administration', type: :feature do
         end
 
         click_button 'Save changes'
-        expect(page).to have_content('The browse category was successfully updated.')
+        expect(page).to have_text('The browse category was successfully updated.')
         visit spotlight.edit_exhibit_search_path(exhibit, search)
         click_link 'Group'
 
@@ -76,7 +76,7 @@ describe 'Browse Category Administration', type: :feature do
       it 'displays no group help text' do
         visit spotlight.edit_exhibit_search_path(exhibit, search)
         click_link 'Group'
-        expect(page).to have_content 'You cannot add this browse category'
+        expect(page).to have_text 'You cannot add this browse category'
       end
     end
 
@@ -95,7 +95,7 @@ describe 'Browse Category Administration', type: :feature do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The browse category was successfully updated.')
+      expect(page).to have_text('The browse category was successfully updated.')
 
       search.reload
 
@@ -115,7 +115,7 @@ describe 'Browse Category Administration', type: :feature do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The browse category was successfully updated.')
+      expect(page).to have_text('The browse category was successfully updated.')
 
       search.reload
 
@@ -129,7 +129,7 @@ describe 'Browse Category Administration', type: :feature do
       check 'Display search box'
 
       click_button 'Save changes'
-      expect(page).to have_content('The browse category was successfully updated.')
+      expect(page).to have_text('The browse category was successfully updated.')
       search.reload
 
       expect(search.search_box).to eq true
@@ -141,7 +141,7 @@ describe 'Browse Category Administration', type: :feature do
 
       click_button 'Save changes'
 
-      expect(page).to have_content('The browse category was successfully updated.')
+      expect(page).to have_text('The browse category was successfully updated.')
 
       search.reload
 
@@ -156,8 +156,8 @@ describe 'Browse Category Administration', type: :feature do
       within('.card .search') do
         click_link('Delete')
       end
-      expect(page).to have_content('Search was deleted')
-      expect(page).to have_no_content(search.title)
+      expect(page).to have_text('Search was deleted')
+      expect(page).to have_no_text(search.title)
     end
   end
 end

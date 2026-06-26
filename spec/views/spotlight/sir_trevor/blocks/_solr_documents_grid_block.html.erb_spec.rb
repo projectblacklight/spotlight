@@ -32,7 +32,7 @@ describe 'spotlight/sir_trevor/blocks/_solr_documents_grid_block', type: :view d
 
   it 'has a slideshow block' do
     expect(rendered).to have_selector 'h3', text: 'Some title'
-    expect(rendered).to have_content 'Some text'
+    expect(rendered).to have_text 'Some text'
     expect(rendered).to have_selector '.box img', count: 3
     expect(rendered).to have_selector '.items-col'
     expect(rendered).to have_selector '.text-col'

@@ -40,7 +40,7 @@ describe 'Uploading a non-repository item', type: :feature do
       within '#new_resources_upload' do
         click_button 'Add item'
       end
-      expect(page).to have_content 'Object uploaded successfully.'
+      expect(page).to have_text 'Object uploaded successfully.'
 
       expect(Spotlight::Resource.last.upload.image.file.path).to end_with '800x600.png'
     ensure
@@ -58,7 +58,7 @@ describe 'Uploading a non-repository item', type: :feature do
       within '#new_resources_upload' do
         click_button 'Add item'
       end
-      expect(page).to have_content 'Object uploaded successfully.'
+      expect(page).to have_text 'Object uploaded successfully.'
       expect(Spotlight::Resource.last.data['full_title_tesim']).to eq 'no-image'
     ensure
       Blacklight.default_index.connection.delete_by_query 'spotlight_resource_type_ssim:spotlight/resources/uploads'
@@ -125,7 +125,7 @@ describe 'Uploading a non-repository item', type: :feature do
 
       click_button 'Save'
 
-      expect(page).to have_content 'This is a now an avatar'
+      expect(page).to have_text 'This is a now an avatar'
       expect(Spotlight::Resource.last.upload.image.path).to end_with 'avatar.png'
     ensure
       Blacklight.default_index.connection.delete_by_query 'spotlight_resource_type_ssim:spotlight/resources/uploads'

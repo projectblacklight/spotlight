@@ -29,15 +29,15 @@ describe 'spotlight/search_configurations/_facets', type: :view do
   end
 
   it 'shows the config for the non-empty personal name facet' do
-    expect(rendered).to have_content 'Personal names'
+    expect(rendered).to have_text 'Personal names'
   end
 
   it 'shows the config for the empty custom facet' do
-    expect(rendered).to have_content 'Foobar'
+    expect(rendered).to have_text 'Foobar'
   end
 
   it 'hides the config for the empty genre facet' do
-    expect(rendered).to have_no_content 'Genre'
+    expect(rendered).to have_no_text 'Genre'
   end
 
   describe do
@@ -48,7 +48,7 @@ describe 'spotlight/search_configurations/_facets', type: :view do
     end
 
     it 'hides the config facets configured not to display' do
-      expect(rendered).to have_no_content 'Some hidden field'
+      expect(rendered).to have_no_text 'Some hidden field'
     end
   end
 end

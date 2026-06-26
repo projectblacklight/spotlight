@@ -28,7 +28,7 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
 
     add_new_via_button('My New Page')
 
-    expect(page).to have_content 'The feature page was created.'
+    expect(page).to have_text 'The feature page was created.'
     expect(page).to have_css('li.dd-item')
     expect(page).to have_css('h3', text: 'My New Page')
   end
@@ -39,7 +39,7 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
     click_link 'Feature pages'
     within("[data-id='#{page1.id}']") do
       within('h3') do
-        expect(page).to have_content('FeaturePage1')
+        expect(page).to have_text('FeaturePage1')
         expect(page).to have_css('.title-field', visible: false)
         click_link('FeaturePage1')
         expect(page).to have_css('.title-field', visible: true)
@@ -49,7 +49,7 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
     click_button('Save changes')
     within("[data-id='#{page1.id}']") do
       within('h3') do
-        expect(page).to have_content('NewFeaturePage1')
+        expect(page).to have_text('NewFeaturePage1')
       end
     end
   end
@@ -91,7 +91,7 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
 
     within("[data-id='#{page1.id}']") do
       within('h3') do
-        expect(page).to have_content('FeaturePage1')
+        expect(page).to have_text('FeaturePage1')
         expect(page).to have_css('.title-field', visible: false)
         click_link('FeaturePage1')
         expect(page).to have_css('.title-field', visible: true)
@@ -104,9 +104,9 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
         click_link 'Home'
       end
     end
-    expect(page).to have_no_content('Feature pages were successfully updated.')
+    expect(page).to have_no_text('Feature pages were successfully updated.')
     # NOTE: get flash message about unsaved changes
-    expect(page).to have_content('Welcome to your new exhibit')
+    expect(page).to have_text('Welcome to your new exhibit')
 
     # ensure page title not changed
     click_link exhibit_curator.email
@@ -116,7 +116,7 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
     click_link 'Feature pages'
     within("[data-id='#{page1.id}']") do
       within('h3') do
-        expect(page).to have_content('FeaturePage1') # old title
+        expect(page).to have_text('FeaturePage1') # old title
       end
     end
   end
@@ -128,7 +128,7 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
 
     within('.home_page') do
       within('h3.card-title') do
-        expect(page).to have_content(exhibit.home_page.title)
+        expect(page).to have_text(exhibit.home_page.title)
         expect(page).to have_css('.title-field', visible: false)
         click_link(exhibit.home_page.title)
         expect(page).to have_css('.title-field', visible: true)
@@ -140,7 +140,7 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
 
     within('.home_page') do
       within('h3.card-title') do
-        expect(page).to have_content('New Home Page Title')
+        expect(page).to have_text('New Home Page Title')
       end
     end
   end

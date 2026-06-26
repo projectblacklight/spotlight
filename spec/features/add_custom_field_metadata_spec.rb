@@ -27,8 +27,8 @@ describe 'Adding custom metadata field data', type: :feature do
     sleep(1) # The data isn't commited to solr immediately.
 
     visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
-    expect(page).to have_content 'Some Field'
-    expect(page).to have_content 'My new custom field value'
+    expect(page).to have_text 'Some Field'
+    expect(page).to have_text 'My new custom field value'
   end
 
   context 'when given a read-only field' do

@@ -64,7 +64,7 @@ describe 'spotlight/translations/_page.html.erb', type: :view do
   context 'when there is no translated page' do
     it 'links to create a new one' do
       render
-      expect(rendered).to have_content 'No translated page.'
+      expect(rendered).to have_text 'No translated page.'
       expect(rendered).to have_link 'Create one now.'
     end
 

@@ -51,7 +51,7 @@ describe 'Search Configuration Administration', js: true do
       click_link 'Facets'
 
       facet = find('.edit-in-place', text: 'Genre')
-      expect(page).to have_no_content('Topic')
+      expect(page).to have_no_text('Topic')
       expect(page).to have_css("input##{input_id}", visible: false)
 
       facet.click
@@ -65,8 +65,8 @@ describe 'Search Configuration Administration', js: true do
 
       expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
-      expect(page).to have_no_content('Genre')
-      expect(page).to have_content('Topic')
+      expect(page).to have_no_text('Genre')
+      expect(page).to have_text('Topic')
     end
 
     it 'allows the curator to select a different facet sort order' do

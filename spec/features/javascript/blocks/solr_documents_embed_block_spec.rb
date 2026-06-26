@@ -26,7 +26,7 @@ describe 'Solr Documents Embed Block', js: true, type: :feature do
   end
 
   it 'does not display alternative text guidelines', js: true do
-    expect(page).to have_no_content('For each item, please enter alternative text')
+    expect(page).to have_no_text('For each item, please enter alternative text')
     expect(page).to have_no_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
   end
 
