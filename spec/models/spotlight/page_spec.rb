@@ -82,15 +82,19 @@ describe Spotlight::Page, type: :model do
   describe '#content?' do
     let(:page) { FactoryBot.create(:feature_page) }
 
+    # rubocop:disable Capybara/RSpec/HaveContent
+    # have_content invokes the model's has_content? predicate (alias of #content?).
+    # The cop's preferred have_text would call has_text?, which the model does not define.
     it 'does not have content when the page is empty' do
       page.content = []
-      expect(page).not_to have_text # rubocop:disable Capybara/RSpec/NegationMatcher
+      expect(page).not_to have_content # rubocop:disable Capybara/RSpec/NegationMatcher
     end
 
     it 'has content when the page has a widget' do
       page.content = [{ type: 'rule' }]
-      expect(page).to have_text
+      expect(page).to have_content
     end
+    # rubocop:enable Capybara/RSpec/HaveContent
   end
 
   describe '#content_type' do
