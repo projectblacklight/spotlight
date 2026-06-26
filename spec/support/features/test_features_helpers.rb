@@ -55,7 +55,7 @@ module Spotlight
 
       # click the item + image widget
       expect(page).to have_css("button[data-type='#{type}']")
-      find("button[data-type='#{type}']").click
+      first("button[data-type='#{type}']").click
     end
 
     def click_add_widget
