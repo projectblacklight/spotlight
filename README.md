@@ -3,7 +3,7 @@ spotlight
 
 ![CI](https://github.com/projectblacklight/spotlight/workflows/CI/badge.svg) | [![Gem Version](https://badge.fury.io/rb/blacklight-spotlight.png)](http://badge.fury.io/rb/blacklight-spotlight) | [Release Notes](https://github.com/projectblacklight/spotlight/releases) | [Design Documents](https://github.com/projectblacklight/spotlight/releases/tag/v0.0.0)
 
-Spotlight is open source software that enables librarians, curators, and other content experts to easily build feature-rich websites that showcase collections and objects from a digital repository, uploaded items, or a combination of the two. Spotlight is a plug-in for [Blacklight](https://github.com/projectblacklight/blacklight), an open source, Ruby on Rails Engine that provides a basic discovery interface for searching an Apache Solr index.
+Spotlight is open source software that enables librarians, curators, and other content experts to easily build feature-rich websites that showcase collections and objects from a digital repository, uploaded items, or a combination of the two. Spotlight is a Ruby on Rails engine that extends [Blacklight](https://github.com/projectblacklight/blacklight), which provides a basic discovery interface for searching an Apache Solr index.
 
 In addition to the information found below, you can read more about what Spotlight is, our motivations for creating it, and how to configure it in the [wiki pages](https://github.com/projectblacklight/spotlight/wiki). You might also want to take a look at our demo videos, especially the [tour of a completed Spotlight exhibit](https://www.youtube.com/watch?v=_A7vTbbiF4g) and the walkthrough of [building an exhibit with Spotlight](https://www.youtube.com/watch?v=qPJtgajJ4ic).
 
@@ -248,6 +248,23 @@ From the project root, delete the test app (if you want to regenerate from scrat
 ```
 $ rake engine_cart:clean
 ```
+
+### Core Architecture
+
+A brief orientation to this codebase
+
+#### Key Concepts & Models
+- **Exhibits (`Spotlight::Exhibit`):** The primary organizational container for exhibits.
+- **Pages (`Spotlight::Page` / `Spotlight::HomePage`):** Curated pages inside an exhibit. It uses Sir Trevor for rich text block editing.
+- **Custom Fields (`Spotlight::CustomField`):** Admin-defined fields added to exhibit items (e.g., multivalued text fields, read-only metadata fields).
+- **Sidecars (`Spotlight::SolrDocumentSidecar`):** Database-backed extensions to Solr documents, allowing exhibit-specific metadata to persist locally.
+- **Resources (`Spotlight::Resource`):** External or uploaded content that gets converted into Solr documents.
+
+#### Frontend Asset Structure
+- **Source JavaScript:** Resides in `app/javascript/spotlight/` (e.g., admin widgets, custom field behaviors).
+- **Core Orchestration:** `app/javascript/spotlight/index.js` listens to page loads and instantiates class components (e.g., `new AddAnother().connect()`).
+- **Standard:** Spotlight prefers standard, modern JavaScript (ES6+) and is migrating away from jQuery dependencies.
+
 ## Spotlight Community
 
 See [Contributing to Spotlight](/CONTRIBUTING.md) for general information about participation in the Spotlight community.
