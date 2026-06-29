@@ -6,19 +6,22 @@
   and any provided text
   and displays them.
 */
-import Core from 'spotlight/core'
+import Core from "spotlight/core"
 
-SirTrevor.Blocks.Oembed =  (function(){
-
+SirTrevor.Blocks.Oembed = (function () {
   return Core.Block.extend({
     plustextable: true,
 
-    id_key:"url",
+    id_key: "url",
 
     type: "oembed",
-    
-    title: function() { return i18n.t('blocks:oembed:title'); },
-    description: function() { return i18n.t('blocks:oembed:description'); },
+
+    title: function () {
+      return i18n.t("blocks:oembed:title")
+    },
+    description: function () {
+      return i18n.t("blocks:oembed:description")
+    },
 
     icon_name: "oembed",
     show_heading: false,
@@ -36,6 +39,6 @@ SirTrevor.Blocks.Oembed =  (function(){
       </div>
       ${this.text_area()}
     </div>`
-    }
-  });
-})();
+    },
+  })
+})()

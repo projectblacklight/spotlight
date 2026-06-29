@@ -1,0 +1,6 @@
+node_modules/
+vendor/
+coverage/
+.internal_test_app/
+pkg/
+**/*.min.js

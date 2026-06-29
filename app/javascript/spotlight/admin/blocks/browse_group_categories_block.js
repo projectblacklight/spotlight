@@ -1,42 +1,44 @@
 /*
   Sir Trevor BrowseGroupCategories
 */
-import Core from 'spotlight/core'
+import Core from "spotlight/core"
 
-SirTrevor.Blocks.BrowseGroupCategories = (function(){
-
+SirTrevor.Blocks.BrowseGroupCategories = (function () {
   return Core.Block.Resources.extend({
     type: "browse_group_categories",
     icon_name: "browse",
 
-    autocomplete_control: function() {
-      const autocompleteID = this.blockID + '-autocomplete';
+    autocomplete_control: function () {
+      const autocompleteID = this.blockID + "-autocomplete"
       return `<auto-complete src="${this.autocomplete_url()}" for="${autocompleteID}-popup" fetch-on-empty>
         <input type="text" name="${autocompleteID}" placeholder="${i18n.t("blocks:browse_group_categories:autocomplete")}" data-default-typeahead>
         <ul id="${autocompleteID}-popup"></ul>
         <div id="${autocompleteID}-popup-feedback" class="visually-hidden"></div>
       </auto-complete>`
     },
-    autocomplete_template: function(obj) {
-      return `<div class="autocomplete-item${!obj.published ? ' blacklight-private' : ''}">
+    autocomplete_template: function (obj) {
+      return `<div class="autocomplete-item${!obj.published ? " blacklight-private" : ""}">
       <span class="autocomplete-title">${this.highlight(obj.title)}</span><br/></div>`
     },
 
-    autocomplete_url: function() {
-      return document.getElementById(this.instanceID).closest('form[data-autocomplete-exhibit-browse-groups-path]').dataset.autocompleteExhibitBrowseGroupsPath;
+    autocomplete_url: function () {
+      return document
+        .getElementById(this.instanceID)
+        .closest("form[data-autocomplete-exhibit-browse-groups-path]").dataset
+        .autocompleteExhibitBrowseGroupsPath
     },
-    autocomplete_fetch: function(url) {
-      return this.fetchOnceAndFilterLocalResults(url);
+    autocomplete_fetch: function (url) {
+      return this.fetchOnceAndFilterLocalResults(url)
     },
-    _itemPanel: function(data) {
-      var index = "item_" + this.globalIndex++;
-      var checked;
+    _itemPanel: function (data) {
+      var index = "item_" + this.globalIndex++
+      var checked
       if (data.display == "true") {
         checked = "checked='checked'"
       } else {
-        checked = "";
+        checked = ""
       }
-      var resource_id = data.slug || data.id;
+      var resource_id = data.slug || data.id
       var markup = `
         <li class="field dd-item dd3-item" data-resource-id="${resource_id}" data-id="${index}" id="${this.formId(index)}">
           <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
@@ -48,8 +50,8 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
                 <div class="d-flex flex-grow-1">
                   <div class="checkbox">
                     <input name="item[${index}][display]" type="hidden" value="false" />
-                    <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                    <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                    <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + "_" + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                    <label class="visually-hidden" for="${this.formId(this.display_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                   </div>
                   <div class="main">
                     <div class="title card-title">${data.title}</div>
@@ -62,27 +64,27 @@ SirTrevor.Blocks.BrowseGroupCategories = (function(){
             </div>
           </li>`
 
-      const panel = $(markup);
-      var context = this;
+      const panel = $(markup)
+      var context = this
 
-      $('a[data-item-grid-panel-remove]', panel).on('click', function(e) {
-        e.preventDefault();
-        $(this).closest('.field').remove();
-        context.afterPanelDelete();
+      $("a[data-item-grid-panel-remove]", panel).on("click", function (e) {
+        e.preventDefault()
+        $(this).closest(".field").remove()
+        context.afterPanelDelete()
+      })
 
-      });
+      this.afterPanelRender(data, panel)
 
-      this.afterPanelRender(data, panel);
-
-      return panel;
+      return panel
     },
 
-    item_options: function() { return `
+    item_options: function () {
+      return `
       <label>
         <input type="hidden" name="display-item-counts" value="false" />
         <input type="checkbox" name="display-item-counts" value="true" checked />
         ${i18n.t("blocks:browse_group_categories:item_counts")}
       </label>`
     },
-  });
-})();
+  })
+})()

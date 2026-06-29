@@ -1,32 +1,39 @@
-import Core from 'spotlight/core'
-import SpotlightNestable from 'spotlight/admin/spotlight_nestable'
+import Core from "spotlight/core"
+import SpotlightNestable from "spotlight/admin/spotlight_nestable"
 
-Core.Block.Resources = (function(){
-
+Core.Block.Resources = (function () {
   return Core.Block.extend({
     type: "resources",
     formable: true,
     autocompleteable: true,
     show_heading: true,
     show_image_selection: true,
-    title: function() { return i18n.t("blocks:" + this.type + ":title"); },
-    description: function() { return i18n.t("blocks:" + this.type + ":description"); },
-    alt_text_guidelines: function() {
-      if (this.showAltText()) {
-        return i18n.t("blocks:alt_text_guidelines:intro");
-      }
-      return "";
+    title: function () {
+      return i18n.t("blocks:" + this.type + ":title")
     },
-    alt_text_guidelines_link: function() {
+    description: function () {
+      return i18n.t("blocks:" + this.type + ":description")
+    },
+    alt_text_guidelines: function () {
       if (this.showAltText()) {
-        var link_url = i18n.t("blocks:alt_text_guidelines:link_url");
-        var link_label = i18n.t("blocks:alt_text_guidelines:link_label");
-        return '<a target="_blank" href="' + link_url + '">' +  link_label + '</a>';
+        return i18n.t("blocks:alt_text_guidelines:intro")
       }
-      return "";
+      return ""
+    },
+    alt_text_guidelines_link: function () {
+      if (this.showAltText()) {
+        var link_url = i18n.t("blocks:alt_text_guidelines:link_url")
+        var link_label = i18n.t("blocks:alt_text_guidelines:link_label")
+        return (
+          '<a target="_blank" href="' + link_url + '">' + link_label + "</a>"
+        )
+      }
+      return ""
     },
     icon_name: "resources",
-    blockGroup: function() { return i18n.t("blocks:group:items") },
+    blockGroup: function () {
+      return i18n.t("blocks:group:items")
+    },
 
     primary_field_key: "primary-caption-field",
     show_primary_field_key: "show-primary-caption",
@@ -39,47 +46,48 @@ Core.Block.Resources = (function(){
 
     globalIndex: 0,
 
-    _itemPanelIiifFields: function(index, data) {
-      return [];
+    _itemPanelIiifFields: function (_index, _data) {
+      return []
     },
 
-    _altTextFieldsHTML: function(index, data) {
+    _altTextFieldsHTML: function (index, data) {
       if (this.showAltText()) {
-        return this.altTextHTML(index, data);
+        return this.altTextHTML(index, data)
       }
-      return "";
+      return ""
     },
 
-    showAltText: function() {
+    showAltText: function () {
       return this.editorOptions.altTextSettings[this._typeAsCamelCase()]
     },
 
-    _typeAsCamelCase: function() {
+    _typeAsCamelCase: function () {
       return this.type
-          .split('_')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join('');
+        .split("_")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join("")
     },
-    _itemSelectImageLink: function(block_item_id, doc_id, index) {
+    _itemSelectImageLink: function (block_item_id, doc_id, index) {
       // If image selection is not possible for this block, then do not show
       // image selection link
-      if (!this.show_image_selection) return ``;
-      var url = $('form[data-exhibit-path]').data('exhibit-path') + '/select_image?';
+      if (!this.show_image_selection) return ``
+      var url =
+        $("form[data-exhibit-path]").data("exhibit-path") + "/select_image?"
       var markup = `
           <a name="selectimage" href="${url}block_item_id=${block_item_id}&index_id=${index}" data-blacklight-modal="trigger">Select image area</a>
-        `;
-      return markup;
+        `
+      return markup
     },
-    _itemPanel: function(data) {
-      var index = "item_" + this.globalIndex++;
-      var checked;
+    _itemPanel: function (data) {
+      var index = "item_" + this.globalIndex++
+      var checked
       if (data.display == "true") {
         checked = "checked='checked'"
       } else {
-        checked = "";
+        checked = ""
       }
-      var resource_id = data.slug || data.id;
-      var block_item_id = this.formId(index);
+      var resource_id = data.slug || data.id
+      var block_item_id = this.formId(index)
       var markup = `
           <li class="field dd-item dd3-item" data-cropper="select_image_${block_item_id}" data-resource-id="${resource_id}" data-id="${index}" id="${block_item_id}" data-input-prefix="item[${index}]">
             <input type="hidden" name="item[${index}][id]" value="${resource_id}" />
@@ -94,20 +102,20 @@ Core.Block.Resources = (function(){
                       <div class="d-flex">
                         <div class="checkbox">
                           <input name="item[${index}][display]" type="hidden" value="false" />
-                          <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + '_' + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
-                          <label class="visually-hidden" for="${this.formId(this.display_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
+                          <input name="item[${index}][display]" id="${this.formId(this.display_checkbox + "_" + data.id)}" type="checkbox" ${checked} class="item-grid-checkbox" value="true"  />
+                          <label class="visually-hidden" for="${this.formId(this.display_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:panel:display")}</label>
                         </div>
                         <div class="pic">
-                          <img class="img-thumbnail" src="${(data.thumbnail_image_url || ((data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")))}" />
+                          <img class="img-thumbnail" src="${data.thumbnail_image_url || (data.iiif_tilesource || "").replace("/info.json", "/full/!100,100/0/default.jpg")}" />
                         </div>
                       </div>
                       <div class="d-inline-block">
-                        ${this._itemSelectImageLink(block_item_id,data.id, index)}
+                        ${this._itemSelectImageLink(block_item_id, data.id, index)}
                       </div>
                     </div>
                     <div class="main">
                       <div class="title card-title">${data.title}</div>
-                      <div>${(data.slug || data.id)}</div>
+                      <div>${data.slug || data.id}</div>
                       ${this._altTextFieldsHTML(index, data)}
                     </div>
                     <div class="remove float-end">
@@ -120,61 +128,60 @@ Core.Block.Resources = (function(){
             </li>
       `
 
-      const panel = $(markup);
-      var context = this;
+      const panel = $(markup)
+      var context = this
 
-      $('.remove a', panel).on('click', function(e) {
-        e.preventDefault();
-        $(this).closest('.field').remove();
-        context.afterPanelDelete();
+      $(".remove a", panel).on("click", function (e) {
+        e.preventDefault()
+        $(this).closest(".field").remove()
+        context.afterPanelDelete()
+      })
 
-      });
+      this.afterPanelRender(data, panel)
 
-      this.afterPanelRender(data, panel);
-
-      return panel;
+      return panel
     },
 
-    afterPanelRender: function(data, panel) {
-       
+    afterPanelRender: function (_data, _panel) {},
+
+    afterPanelDelete: function () {},
+
+    createItemPanel: function (data) {
+      var panel = this._itemPanel(data)
+      this.attachAltTextHandlers(panel)
+      $(panel).appendTo($(".panels > ol", this.inner))
+      $('[data-behavior="nestable"]', this.inner).trigger("change")
     },
 
-    afterPanelDelete: function() {
-
+    item_options: function () {
+      return ""
     },
 
-    createItemPanel: function(data) {
-      var panel = this._itemPanel(data);
-      this.attachAltTextHandlers(panel);
-      $(panel).appendTo($('.panels > ol', this.inner));
-      $('[data-behavior="nestable"]', this.inner).trigger('change');
-    },
-
-    item_options: function() { return ""; },
-
-    content: function() {
-      var templates = [this.items_selector()];
+    content: function () {
+      var templates = [this.items_selector()]
       if (this.plustextable) {
-        templates.push(this.text_area());
+        templates.push(this.text_area())
       }
-      return templates.join("<hr />\n");
+      return templates.join("<hr />\n")
     },
 
-    items_selector: function() { return [
-    '<div class="row">',
-      '<div class="col-md-8">',
+    items_selector: function () {
+      return [
+        '<div class="row">',
+        '<div class="col-md-8">',
         '<div class="form-group mb-3">',
         '<div class="panels dd nestable-item-grid" data-behavior="nestable" data-max-depth="1"><ol class="dd-list"></ol></div>',
-          this.autocomplete_control(),
-        '</div>',
-      '</div>',
-      '<div class="col-md-4">',
+        this.autocomplete_control(),
+        "</div>",
+        "</div>",
+        '<div class="col-md-4">',
         this.item_options(),
-      '</div>',
-    '</div>'].join("\n")
+        "</div>",
+        "</div>",
+      ].join("\n")
     },
 
-    editorHTML: function() {
+    editorHTML: function () {
       return `<div class="form resources-admin clearfix">
         <div class="widget-header">
           ${this.description()}
@@ -185,72 +192,98 @@ Core.Block.Resources = (function(){
       </div>`
     },
 
-    _altTextData: function(data) {
-      const isDecorative = data.decorative;
-      const altText = isDecorative ? '' : (data.alt_text || '');
-      const altTextBackup = data.alt_text_backup || '';
-      const placeholderAttr = isDecorative ? '' : `placeholder="${i18n.t("blocks:resources:alt_text:placeholder")}"`;
-      const disabledAttr = isDecorative ? 'disabled' : '';
+    _altTextData: function (data) {
+      const isDecorative = data.decorative
+      const altText = isDecorative ? "" : data.alt_text || ""
+      const altTextBackup = data.alt_text_backup || ""
+      const placeholderAttr = isDecorative
+        ? ""
+        : `placeholder="${i18n.t("blocks:resources:alt_text:placeholder")}"`
+      const disabledAttr = isDecorative ? "disabled" : ""
 
-      return { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr };
+      return {
+        isDecorative,
+        altText,
+        altTextBackup,
+        placeholderAttr,
+        disabledAttr,
+      }
     },
 
-    altTextHTML: function(index, data) {
-      const { isDecorative, altText, altTextBackup, placeholderAttr, disabledAttr } = this._altTextData(data);
+    altTextHTML: function (index, data) {
+      const {
+        isDecorative,
+        altText,
+        altTextBackup,
+        placeholderAttr,
+        disabledAttr,
+      } = this._altTextData(data)
       return `<div class="mt-2 pt-2 d-flex">
           <div class="me-2">
-            <label class="col-form-label pb-0 pt-1" for="${this.formId(this.alt_text_textarea + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
+            <label class="col-form-label pb-0 pt-1" for="${this.formId(this.alt_text_textarea + "_" + data.id)}">${i18n.t("blocks:resources:alt_text:alternative_text")}</label>
             <div class="form-check mb-1 justify-content-end">
               <input class="form-check-input" type="checkbox"
-                id="${this.formId(this.decorative_checkbox + '_' + data.id)}" name="item[${index}][decorative]" ${isDecorative ? 'checked' : ''}>
-              <label class="form-check-label" for="${this.formId(this.decorative_checkbox + '_' + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
+                id="${this.formId(this.decorative_checkbox + "_" + data.id)}" name="item[${index}][decorative]" ${isDecorative ? "checked" : ""}>
+              <label class="form-check-label" for="${this.formId(this.decorative_checkbox + "_" + data.id)}">${i18n.t("blocks:resources:alt_text:decorative")}</label>
             </div>
           </div>
           <div class="flex-grow-1 flex-fill d-flex">
             <input type="hidden" name="item[${index}][alt_text_backup]" value="${altTextBackup}" />
             <textarea class="form-control w-100" rows="2" ${placeholderAttr}
-              id="${this.formId(this.alt_text_textarea + '_' + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
+              id="${this.formId(this.alt_text_textarea + "_" + data.id)}" name="item[${index}][alt_text]" ${disabledAttr}>${altText}</textarea>
           </div>
         </div>`
     },
 
-    attachAltTextHandlers: function(panel) {
+    attachAltTextHandlers: function (panel) {
       if (this.showAltText()) {
-        const decorativeCheckbox = $('input[name$="[decorative]"]', panel);
-        const altTextInput = $('textarea[name$="[alt_text]"]', panel);
-        const altTextBackupInput = $('input[name$="[alt_text_backup]"]', panel);
+        const decorativeCheckbox = $('input[name$="[decorative]"]', panel)
+        const altTextInput = $('textarea[name$="[alt_text]"]', panel)
+        const altTextBackupInput = $('input[name$="[alt_text_backup]"]', panel)
 
-        decorativeCheckbox.on('change', function() {
-          const isDecorative = this.checked;
+        decorativeCheckbox.on("change", function () {
+          const isDecorative = this.checked
           if (isDecorative) {
-            altTextBackupInput.val(altTextInput.val());
-            altTextInput.val('');
+            altTextBackupInput.val(altTextInput.val())
+            altTextInput.val("")
           } else {
-            altTextInput.val(altTextBackupInput.val());
+            altTextInput.val(altTextBackupInput.val())
           }
           altTextInput
-            .prop('disabled', isDecorative)
-            .attr('placeholder', isDecorative ? '' : i18n.t("blocks:resources:alt_text:placeholder"));
-        });
+            .prop("disabled", isDecorative)
+            .attr(
+              "placeholder",
+              isDecorative
+                ? ""
+                : i18n.t("blocks:resources:alt_text:placeholder"),
+            )
+        })
 
-        altTextInput.on('input', function() {
-          $(this).data('lastValue', $(this).val());
-        });
+        altTextInput.on("input", function () {
+          $(this).data("lastValue", $(this).val())
+        })
       }
     },
 
-    onBlockRender: function() {
-      SpotlightNestable.init($('[data-behavior="nestable"]', this.inner));
-      $('[data-input-select-target]', this.inner).selectRelatedInput();
+    onBlockRender: function () {
+      SpotlightNestable.init($('[data-behavior="nestable"]', this.inner))
+      $("[data-input-select-target]", this.inner).selectRelatedInput()
     },
 
-    afterLoadData: function(data) {
-      var context = this;
-      $.each(Object.keys(data.item || {}).map(function(k) { return data.item[k]}).sort(function(a,b) { return a.weight - b.weight; }), function(index, item) {
-        context.createItemPanel(item);
-      });
-     
-    }
-  });
-
-})();
+    afterLoadData: function (data) {
+      var context = this
+      $.each(
+        Object.keys(data.item || {})
+          .map(function (k) {
+            return data.item[k]
+          })
+          .sort(function (a, b) {
+            return a.weight - b.weight
+          }),
+        function (index, item) {
+          context.createItemPanel(item)
+        },
+      )
+    },
+  })
+})()
