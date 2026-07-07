@@ -46,7 +46,7 @@ these collections.)
   s.add_dependency 'rails', '>= 7.1', '< 9'
   s.add_dependency 'redcarpet', '>= 2.0.1', '< 4'
   s.add_dependency 'riiif', '~> 2.0'
-  s.add_dependency 'view_component', '>= 2.66', '< 4'
+  s.add_dependency 'view_component', '>= 2.66', '< 5'
   s.add_development_dependency 'axe-core-rspec'
   s.add_development_dependency 'capybara', '~> 3.31'
   s.add_development_dependency 'engine_cart', '~> 2.0'
