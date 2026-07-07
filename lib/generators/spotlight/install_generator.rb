@@ -113,7 +113,7 @@ module Spotlight
 
     def add_osd_viewer
       unless Bundler.locked_gems.dependencies.key? 'blacklight-gallery'
-        gem 'blacklight-gallery', '~> 4.0'
+        gem 'blacklight-gallery'
         bundle_install
       end
       generate 'blacklight_gallery:install'
