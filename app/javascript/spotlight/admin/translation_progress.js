@@ -4,13 +4,17 @@
 // present (indicated by data attributes) in each tab's content
 export default class {
   connect() {
-    $('[data-behavior="translation-progress"]').each(function(){
-      var currentTab = $(this);
-      var tabName = $(this).attr('aria-controls');
-      var translationFields = $('#' + tabName).find('[data-translation-progress-item="true"]');
-      var completedTranslations = $('#' + tabName).find('[data-translation-present="true"]');
+    document.querySelectorAll('[data-behavior="translation-progress"]').forEach(function(tab) {
+      var tabName = tab.getAttribute('aria-controls');
+      var tabContent = tabName && document.getElementById(tabName);
+      if (!tabContent) return;
 
-      currentTab.find('span').text(completedTranslations.length + '/' + translationFields.length);
-    })
+      var translationFields = tabContent.querySelectorAll('[data-translation-progress-item="true"]');
+      var completedTranslations = tabContent.querySelectorAll('[data-translation-present="true"]');
+
+      tab.querySelectorAll('span').forEach(function(span) {
+        span.textContent = completedTranslations.length + '/' + translationFields.length;
+      });
+    });
   }
 }

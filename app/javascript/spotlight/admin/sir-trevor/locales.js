@@ -1,4 +1,4 @@
-SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
+SirTrevor.Locales.en.blocks = Object.assign(SirTrevor.Locales.en.blocks, {
   autocompleteable: {
     placeholder: "Enter a title..."
   },

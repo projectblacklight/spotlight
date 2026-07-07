@@ -16,9 +16,18 @@ SirTrevor.Blocks.SearchResults =  (function(){
 
     item_options: function() {
       var block = this;
-      var fields = $('[data-blacklight-configuration-search-views]').data('blacklight-configuration-search-views');
+      var element = document.querySelector('[data-blacklight-configuration-search-views]');
+      var fieldsData = element ? element.dataset.blacklightConfigurationSearchViews : null;
+      var fields = [];
+      if (fieldsData) {
+        try {
+          fields = JSON.parse(fieldsData);
+        } catch (e) {
+          // ignore parse errors
+        }
+      }
 
-      return $.map(fields, function(field) {
+      return fields.map(function(field) {
         return `<div>
           <label for='${block.formId(block.view_key + field.key)}'>
             <input id='${block.formId(block.view_key + field.key)}' name='${block.view_key}[]' type='checkbox' value='${field.key}' />
@@ -29,11 +38,15 @@ SirTrevor.Blocks.SearchResults =  (function(){
     },
 
     afterPanelRender: function(data, panel) {
-      $(this.inner).find('.item-input-field').attr("disabled", "disabled");
+      this.inner.querySelectorAll('.item-input-field').forEach(function(el) {
+        el.disabled = true;
+      });
     },
 
     afterPanelDelete: function() {
-      $(this.inner).find('.item-input-field').removeAttr("disabled");
+      this.inner.querySelectorAll('.item-input-field').forEach(function(el) {
+        el.disabled = false;
+      });
     },
 
   });

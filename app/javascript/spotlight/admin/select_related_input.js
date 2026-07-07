@@ -1,37 +1,37 @@
 /*
-  Simple plugin to select form elements
+  Simple helper to select form elements
   when other elements are clicked.
 */
-(function($) {
-  $.fn.selectRelatedInput = function() {
-    var clickElements = this;
+export function selectRelatedInput(elements) {
+  if (!elements) return
 
-    $(clickElements).each(function() {
-      var target = $($(this).data('input-select-target'));
+  const nodes =
+    elements instanceof NodeList || Array.isArray(elements)
+      ? Array.from(elements)
+      : [elements]
 
-      var event;
+  nodes.forEach(function (element) {
+    if (!element) return
+    const targetSelector = element.getAttribute("data-input-select-target")
+    if (!targetSelector) return
+    const target = document.querySelector(targetSelector)
+    if (!target) return
 
-      if ($(this).is("select")) {
-        event = 'change';
+    const event =
+      element.tagName.toLowerCase() === "select" ? "change" : "click"
+
+    element.addEventListener(event, function () {
+      if (target.type === "checkbox" || target.type === "radio") {
+        target.checked = true
       } else {
-        event = 'click';
+        target.focus()
       }
-
-      $(this).on(event, function() {
-        if (target.is(":checkbox") || target.is(":radio")) {
-          target.prop('checked', true);
-        } else {
-          target.focus();
-        }
-      });
-    });
-
-    return this;
-  };
-})(jQuery);
+    })
+  })
+}
 
 export default class {
   connect() {
-    $('[data-input-select-target]').selectRelatedInput();
+    selectRelatedInput(document.querySelectorAll("[data-input-select-target]"))
   }
 }

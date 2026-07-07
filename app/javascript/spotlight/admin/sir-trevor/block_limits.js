@@ -18,9 +18,11 @@ Core.BlockLimits.prototype.checkBlockTypeLimitOnAdd = function() {
   var editor = this.editor;
 
   return function(block) {
-    var control = $(".st-block-controls__button[data-type='" + block.type + "']", editor.blockControls.el);
+    var control = editor.blockControls.el.querySelector(".st-block-controls__button[data-type='" + block.type + "']");
 
-    control.prop("disabled", !editor.blockManager.canCreateBlock(block.class()));
+    if (control) {
+      control.disabled = !editor.blockManager.canCreateBlock(block.class());
+    }
   };
 };
 
@@ -29,11 +31,13 @@ Core.BlockLimits.prototype.checkGlobalBlockTypeLimit = function() {
   var editor = this.editor;
 
   return function() {
-    $.each(editor.blockManager.blockTypes, function(i, type) {
+    editor.blockManager.blockTypes.forEach(function(type) {
       var block_type = SirTrevor.Blocks[type].prototype;
 
-      var control = $(editor.blockControls.el).find(".st-block-controls__button[data-type='" + block_type.type + "']");
-      control.prop("disabled", !editor.blockManager.canCreateBlock(type));
+      var control = editor.blockControls.el.querySelector(".st-block-controls__button[data-type='" + block_type.type + "']");
+      if (control) {
+        control.disabled = !editor.blockManager.canCreateBlock(type);
+      }
     });
   };
 };

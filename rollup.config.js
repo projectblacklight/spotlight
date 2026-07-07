@@ -11,7 +11,6 @@ const external = [
   "blacklight-frontend",
   "bootstrap",
   "clipboard",
-  "jquery-serializejson",
   "jquery",
   "leaflet",
   "openseadragon",
