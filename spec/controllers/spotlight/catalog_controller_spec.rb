@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Spotlight::CatalogController, type: :controller do
+RSpec.describe Spotlight::CatalogController, type: :controller do
   include ActiveJob::TestHelper
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }

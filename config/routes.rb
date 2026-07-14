@@ -42,7 +42,7 @@ Spotlight::Engine.routes.draw do
 
     concern :searchable, Blacklight::Routes::Searchable.new
 
-    resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
+    resource :catalog, only: [], as: 'catalog', path: '/catalog', controller: 'catalog' do
       concerns :searchable
 
       collection do
@@ -124,7 +124,7 @@ Spotlight::Engine.routes.draw do
 
     resources :contacts, only: %i[edit update destroy]
 
-    resources :pages, only: [:update_all] do
+    resources :pages do
       collection do
         patch :update_all
       end
