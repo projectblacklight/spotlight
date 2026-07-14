@@ -1,13 +1,14 @@
-SirTrevor.Blocks.SolrDocuments = (function(){
-
+SirTrevor.Blocks.SolrDocuments = (function () {
   return SirTrevor.Blocks.SolrDocumentsBase.extend({
     type: "solr_documents",
 
     icon_name: "items",
 
-    item_options: function() { return this.caption_options() + this.zpr_option(); },
+    item_options: function () {
+      return this.caption_options() + this.zpr_option()
+    },
 
-    zpr_option: function() {
+    zpr_option: function () {
       return `
         <div>
         <input name="${this.zpr_key}" type="hidden" value="false" />
@@ -17,7 +18,6 @@ SirTrevor.Blocks.SolrDocuments = (function(){
       `
     },
 
-    zpr_key: 'zpr_link'
-  });
-
-})();
+    zpr_key: "zpr_link",
+  })
+})()

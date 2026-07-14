@@ -11,7 +11,7 @@ export default class {
       if (!tabpanel) return
 
       const tabElement = document.querySelector(
-        `a[role=tab][href="#${tabpanel.id}"]`
+        `a[role=tab][href="#${tabpanel.id}"]`,
       )
       if (!tabElement) return
 

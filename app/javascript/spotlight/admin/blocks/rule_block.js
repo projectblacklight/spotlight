@@ -7,17 +7,18 @@
   and displays them.
 */
 
-SirTrevor.Blocks.Rule = (function(){
-
+SirTrevor.Blocks.Rule = (function () {
   return SirTrevor.Block.extend({
     type: "rule",
-    
-    title: function() { return i18n.t('blocks:rule:title'); },
+
+    title: function () {
+      return i18n.t("blocks:rule:title")
+    },
 
     icon_name: "rule",
-    
-    editorHTML: function() {
-      return '<hr />'
-    }
-  });
-})();
+
+    editorHTML: function () {
+      return "<hr />"
+    },
+  })
+})()
