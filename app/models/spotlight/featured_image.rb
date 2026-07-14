@@ -62,7 +62,7 @@ module Spotlight
       if self[:iiif_tilesource]
         self[:iiif_tilesource]
       elsif file_present?
-        Spotlight::Engine.config.iiif_service.info_url(self)
+        Spotlight::Engine.config.spotlight.iiif_service.info_url(self)
       end
     end
 
@@ -75,7 +75,7 @@ module Spotlight
     private
 
     def image_size
-      Spotlight::Engine.config.featured_image_thumb_size
+      Spotlight::Engine.config.spotlight.featured_image_thumb_size
     end
 
     def iiif_service_base

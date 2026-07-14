@@ -65,7 +65,7 @@ module Spotlight
     # results when a partial match is passed in the "q" parameter.
     def autocomplete
       @response = search_service.search_results do |builder|
-        builder.with(search_state.params.merge(search_field: Spotlight::Engine.config.autocomplete_search_field, public: true, rows: 100))
+        builder.with(search_state.params.merge(search_field: Spotlight::Engine.config.spotlight.autocomplete_search_field, public: true, rows: 100))
       end
 
       respond_to do |format|

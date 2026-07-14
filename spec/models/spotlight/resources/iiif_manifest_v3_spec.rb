@@ -39,7 +39,7 @@ RSpec.describe Spotlight::Resources::IiifManifestV3 do
       end
 
       it 'indexes to multiple fields when configured' do
-        allow(Spotlight::Engine.config).to receive(:iiif_title_fields).at_least(:once).and_return(%w[title_field1 title_field2])
+        allow(Spotlight::Engine.config.spotlight).to receive(:iiif_title_fields).at_least(:once).and_return(%w[title_field1 title_field2])
 
         expect(subject.to_solr(exhibit:)['title_field1']).to eq 'A Map of the British and French settlements in North America'
         expect(subject.to_solr(exhibit:)['title_field2']).to eq 'A Map of the British and French settlements in North America'
@@ -114,7 +114,7 @@ RSpec.describe Spotlight::Resources::IiifManifestV3 do
 
       context 'with a custom metadata class' do
         before do
-          allow(Spotlight::Engine.config).to receive(:iiif_metadata_class).and_return(-> { TestMetadataClass })
+          allow(Spotlight::Engine.config.spotlight).to receive(:iiif_metadata_class).and_return(-> { TestMetadataClass })
         end
 
         it 'merges the solr hash from the configured custom metadata class' do
@@ -139,13 +139,13 @@ RSpec.describe Spotlight::Resources::IiifManifestV3 do
         end
 
         it 'extracts data using the configured default language' do
-          allow(Spotlight::Engine.config).to receive(:default_json_ld_language).and_return('fr')
+          allow(Spotlight::Engine.config.spotlight).to receive(:default_json_ld_language).and_return('fr')
           expect(subject.to_solr(exhibit:)).to include 'readonly_auteur_tesim' => ['Whistler, James Abbott McNeill'],
                                                        'readonly_sujet_tesim' => ['McNeill Anna Matilda, mère de Whistler (1804-1881)']
         end
 
         it 'falls back to a language from the manifest using the IIIF rules' do
-          allow(Spotlight::Engine.config).to receive(:default_json_ld_language).and_return('de')
+          allow(Spotlight::Engine.config.spotlight).to receive(:default_json_ld_language).and_return('de')
           expect(subject.to_solr(exhibit:)).to include 'readonly_creator_tesim' => ['Whistler, James Abbott McNeill'],
                                                        'readonly_subject_tesim' => ['McNeill Anna Matilda, mother of Whistler (1804-1881)']
         end

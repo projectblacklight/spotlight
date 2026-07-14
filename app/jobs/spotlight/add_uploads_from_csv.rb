@@ -75,7 +75,7 @@ module Spotlight
     end
 
     def delimiter
-      Spotlight::Engine.config.csv_upload_multivalued_field_delimiter
+      Spotlight::Engine.config.spotlight.csv_upload_multivalued_field_delimiter
     end
 
     def multivalued_fields(exhibit)

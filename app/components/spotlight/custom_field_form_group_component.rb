@@ -33,7 +33,7 @@ module Spotlight
 
     def render_deprecated_partial
       Spotlight.deprecator.warn "Rendering deprecated partial #{deprecated_partial}. " \
-                                'Configure a component in Spotlight::Engine.config.custom_field_types instead'
+                                'Configure a component in Spotlight::Engine.config.spotlight.custom_field_types instead'
       render(partial: deprecated_partial, locals: { inline:, f: form, field:, value: })
     end
   end

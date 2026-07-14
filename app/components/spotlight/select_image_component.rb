@@ -14,7 +14,7 @@ module Spotlight
     end
 
     def initial_crop_selection
-      Spotlight::Engine.config.thumbnail_initial_crop_selection
+      Spotlight::Engine.config.spotlight.thumbnail_initial_crop_selection
     end
 
     def help_text

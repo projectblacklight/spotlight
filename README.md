@@ -79,7 +79,7 @@ Spotlight introduces functionality that depends on being able to send emails to 
 
 Spotlight records a `Spotlight::JobTracker` row for each background job it runs (reindexing, CSV uploads, bulk updates, and so on) so curators can see the job's progress. These rows are never removed automatically, so the `spotlight_job_trackers` table grows over time.
 
-`Spotlight::CleanupJobTrackersJob` deletes completed job trackers that were last updated longer ago than `Spotlight::Engine.config.reindex_progress_window` (one hour by default). Failed and in-progress job trackers are kept. Spotlight does not enqueue this job itself, so schedule it to run periodically (for example, daily) with whatever scheduler your application uses.
+`Spotlight::CleanupJobTrackersJob` deletes completed job trackers that were last updated longer ago than `Spotlight::Engine.config.spotlight.reindex_progress_window` (one hour by default). Failed and in-progress job trackers are kept. Spotlight does not enqueue this job itself, so schedule it to run periodically (for example, daily) with whatever scheduler your application uses.
 
 With [Solid Queue](https://github.com/rails/solid_queue), add it to `config/recurring.yml`:
 

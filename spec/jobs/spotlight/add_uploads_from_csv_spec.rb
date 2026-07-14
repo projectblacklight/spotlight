@@ -86,11 +86,11 @@ RSpec.describe Spotlight::AddUploadsFromCsv do
 
     context 'with delimiter' do
       before do
-        Spotlight::Engine.config.csv_upload_multivalued_field_delimiter = '|'
+        Spotlight::Engine.config.spotlight.csv_upload_multivalued_field_delimiter = '|'
       end
 
       after do
-        Spotlight::Engine.config.csv_upload_multivalued_field_delimiter = nil
+        Spotlight::Engine.config.spotlight.csv_upload_multivalued_field_delimiter = nil
       end
 
       it 'splits into arrays' do

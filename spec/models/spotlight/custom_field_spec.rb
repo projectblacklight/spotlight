@@ -101,7 +101,7 @@ RSpec.describe Spotlight::CustomField, type: :model do
     end
 
     it 'uses the component configured for the field type' do
-      allow(Spotlight::Engine.config).to receive(:custom_field_types).and_return(text: { component: 'ViewComponent::Base' })
+      allow(Spotlight::Engine.config.spotlight).to receive(:custom_field_types).and_return(text: { component: 'ViewComponent::Base' })
       expect(described_class.new(field_type: 'text').component).to eq ViewComponent::Base
     end
   end
@@ -127,7 +127,7 @@ RSpec.describe Spotlight::CustomField, type: :model do
 
     context 'with a solr field prefix configured' do
       before do
-        allow(Spotlight::Engine.config.solr_fields).to receive(:prefix).and_return 'prefix_'
+        allow(Spotlight::Engine.config.spotlight.solr_fields).to receive(:prefix).and_return 'prefix_'
       end
 
       it 'uses the solr field prefix' do
