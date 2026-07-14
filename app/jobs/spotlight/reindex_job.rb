@@ -81,7 +81,7 @@ module Spotlight
     def job_data
       return unless job_tracker
 
-      @job_data ||= { Spotlight::Engine.config.job_tracker_id_field => job_tracker.top_level_job_tracker.job_id }
+      @job_data ||= { Spotlight::Engine.config.spotlight.job_tracker_id_field => job_tracker.top_level_job_tracker.job_id }
     end
 
     def resource_list(exhibit_or_resources, start: nil, finish: nil)

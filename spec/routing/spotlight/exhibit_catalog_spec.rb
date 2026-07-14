@@ -18,7 +18,7 @@ RSpec.describe 'Catalog controller', type: :routing do
 
     context 'when the routing constraint is set to allow periods' do
       before do
-        allow(Spotlight::Engine.config.routes).to receive(:solr_documents).and_return(constraints: { id: %r{[^/]+} })
+        allow(Spotlight::Engine.config.spotlight.routes).to receive(:solr_documents).and_return(constraints: { id: %r{[^/]+} })
         Rails.application.reload_routes!
       end
 

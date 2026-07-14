@@ -29,7 +29,7 @@ module Spotlight
 
     validates :title, presence: true, if: -> { I18n.locale == I18n.default_locale }
     validates :slug, uniqueness: { message: I18n.t('spotlight.exhibits.new_exhibit_form.errors.slug_taken') }
-    validates :theme, inclusion: { in: Spotlight::Engine.config.exhibit_themes }, allow_blank: true
+    validates :theme, inclusion: { in: Spotlight::Engine.config.spotlight.exhibit_themes }, allow_blank: true
 
     after_validation :move_friendly_id_error_to_slug
 
@@ -67,7 +67,7 @@ module Spotlight
     has_many :roles, as: :resource, dependent: :delete_all
     has_many :searches, dependent: :destroy, extend: FriendlyId::FinderMethods
     has_many :solr_document_sidecars, dependent: :delete_all
-    has_many :users, through: :roles, class_name: Spotlight::Engine.config.user_class
+    has_many :users, through: :roles, class_name: Spotlight::Engine.config.spotlight.user_class
 
     has_many :pages, dependent: :destroy
     has_many :filters, dependent: :delete_all
@@ -98,7 +98,7 @@ module Spotlight
 
     def themes
       @themes ||= begin
-        return Spotlight::Engine.config.exhibit_themes unless self.class.themes_selector
+        return Spotlight::Engine.config.spotlight.exhibit_themes unless self.class.themes_selector
 
         self.class.themes_selector.call(self)
       end
@@ -126,7 +126,7 @@ module Spotlight
     end
 
     def uploaded_resource_fields
-      Spotlight::Engine.config.upload_fields
+      Spotlight::Engine.config.spotlight.upload_fields
     end
 
     def searchable?

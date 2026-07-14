@@ -3,7 +3,7 @@
 RSpec.describe Spotlight::ContactFormsController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:honeypot_field_name) { Spotlight::Engine.config.spambot_honeypot_email_field }
+  let(:honeypot_field_name) { Spotlight::Engine.config.spotlight.spambot_honeypot_email_field }
 
   before do
     request.env['HTTP_REFERER'] = '/whatever'

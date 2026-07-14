@@ -35,7 +35,7 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
       end
 
       it 'instantiates the multi-image selector when an multi-image item is chosen in the typeahead (and again on edit)' do
-        allow(Spotlight::Engine.config).to receive(:exhibit_themes).and_return(['default'])
+        allow(Spotlight::Engine.config.spotlight).to receive(:exhibit_themes).and_return(['default'])
 
         visit spotlight.edit_exhibit_appearance_path(exhibit)
 
@@ -77,7 +77,7 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
 
     context 'for items that do not include a IIIF manifest' do
       before do
-        allow(Spotlight::Engine.config).to receive(:iiif_manifest_field).and_return('not_a_real_field')
+        allow(Spotlight::Engine.config.spotlight).to receive(:iiif_manifest_field).and_return('not_a_real_field')
       end
 
       it 'provides an alert informing the user that they cannot crop from that item' do

@@ -22,7 +22,7 @@ module Spotlight
     end
 
     def tilesource
-      Spotlight::Engine.config.iiif_service.info_url(@featured_image, request.host)
+      Spotlight::Engine.config.spotlight.iiif_service.info_url(@featured_image, request.host)
     end
 
     # The create action can be called from a number of different forms, so
