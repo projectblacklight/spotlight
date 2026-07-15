@@ -5,9 +5,9 @@ module Spotlight
   # Exhibit authorization roles
   class Role < ActiveRecord::Base
     belongs_to :resource, polymorphic: true, optional: true
-    belongs_to :user, class_name: Spotlight::Engine.config.user_class, autosave: true, optional: false
+    belongs_to :user, class_name: Spotlight::Engine.config.spotlight.user_class, autosave: true, optional: false
 
-    validates :role, inclusion: { in: Spotlight::Engine.config.exhibit_roles }
+    validates :role, inclusion: { in: Spotlight::Engine.config.spotlight.exhibit_roles }
     validate :user_must_be_unique, if: :user
 
     def user_key

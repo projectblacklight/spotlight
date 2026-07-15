@@ -8,7 +8,7 @@ module Spotlight
 
       delegate :size, to: :queue
 
-      def initialize(batch_size: Spotlight::Engine.config.solr_batch_size, solr_connection: nil)
+      def initialize(batch_size: Spotlight::Engine.config.spotlight.solr_batch_size, solr_connection: nil)
         @queue = Queue.new
         @batch_size = batch_size
         @blacklight_solr = solr_connection
@@ -85,7 +85,7 @@ module Spotlight
       end
 
       def write?
-        Spotlight::Engine.config.writable_index
+        Spotlight::Engine.config.spotlight.writable_index
       end
 
       def logger

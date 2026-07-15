@@ -143,7 +143,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
 
   describe 'Tag list' do
     before do
-      allow(Spotlight::Engine.config).to receive(:site_tags).and_return(site_tags)
+      allow(Spotlight::Engine.config.spotlight).to receive(:site_tags).and_return(site_tags)
     end
 
     context 'site_tags are set to a list' do

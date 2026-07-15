@@ -5,7 +5,7 @@
 <%= curation_page_title %>
 <div role="tabpanel">
   <ul class="nav nav-tabs" role="tablist">
-    <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
+    <% Spotlight::Engine.config.spotlight.resource_partials.each_with_index do |p, i| %>
       <% tab_name = p.split('/')[2] %>
       <li role="presentation" class="nav-item">
         <%= link_to t("#{p.gsub('/', '.')}.title"),
@@ -18,7 +18,7 @@
     <% end %>
   </ul>
   <div class="tab-content">
-    <% Spotlight::Engine.config.resource_partials.each_with_index do |p, i| %>
+    <% Spotlight::Engine.config.spotlight.resource_partials.each_with_index do |p, i| %>
       <% tab_name = p.split('/')[2] %>
       <%= content_tag :div, id: "#{tab_name}", role: 'tabpanel', class: "tab-pane #{"active" if @tab == tab_name}" do %>
         <%= render p %>

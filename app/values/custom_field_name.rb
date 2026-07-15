@@ -29,11 +29,11 @@ class CustomFieldName
   end
 
   def field_suffix
-    (field_type && Spotlight::Engine.config.custom_field_types[field_type.to_sym][:suffix]) ||
+    (field_type && Spotlight::Engine.config.spotlight.custom_field_types[field_type.to_sym][:suffix]) ||
       default_field_suffix
   end
 
   def default_field_suffix
-    Spotlight::Engine.config.solr_fields.text_suffix
+    Spotlight::Engine.config.spotlight.solr_fields.text_suffix
   end
 end

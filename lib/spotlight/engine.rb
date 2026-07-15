@@ -69,79 +69,86 @@ module Spotlight
       end
     end
 
+    # All Spotlight-specific configuration is encapsulated onto a single
+    # +spotlight+ entry in the Rails configuration namespace, rather than
+    # polluting the shared Railtie::Configuration namespace. Other railties
+    # follow the same convention.
+    spotlight_config = OpenStruct.new
+    config.spotlight = spotlight_config
+
     def self.user_class
-      Spotlight::Engine.config.user_class.constantize
+      Spotlight::Engine.config.spotlight.user_class.constantize
     end
 
     def self.catalog_controller
-      Spotlight::Engine.config.catalog_controller_class.constantize
+      Spotlight::Engine.config.spotlight.catalog_controller_class.constantize
     end
 
     def self.blacklight_config
-      Spotlight::Engine.config.default_blacklight_config || catalog_controller.blacklight_config
+      Spotlight::Engine.config.spotlight.default_blacklight_config || catalog_controller.blacklight_config
     end
 
-    config.user_class = '::User'
+    spotlight_config.user_class = '::User'
 
-    config.catalog_controller_class = '::CatalogController'
-    config.default_blacklight_config = nil
+    spotlight_config.catalog_controller_class = '::CatalogController'
+    spotlight_config.default_blacklight_config = nil
 
-    config.exhibit_main_navigation = %i[curated_features browse about]
+    spotlight_config.exhibit_main_navigation = %i[curated_features browse about]
 
-    config.resource_partials = [
+    spotlight_config.resource_partials = [
       'spotlight/resources/external_resources_form',
       'spotlight/resources/upload/form',
       'spotlight/resources/csv_upload/form',
       'spotlight/resources/json_upload/form',
       'spotlight/resources/iiif/form'
     ]
-    config.external_resources_partials = []
-    config.solr_batch_size = 20
+    spotlight_config.external_resources_partials = []
+    spotlight_config.solr_batch_size = 20
 
-    Spotlight::Engine.config.reindex_progress_window = 1.hour
+    spotlight_config.reindex_progress_window = 1.hour
 
     # Filter resources by exhibit by default
-    config.filter_resources_by_exhibit = true
+    spotlight_config.filter_resources_by_exhibit = true
 
     # Should Spotlight write to solr? If set to false, Spotlight will not initiate indexing.
-    config.writable_index = true
+    spotlight_config.writable_index = true
 
     # The allowed file extensions for uploading non-repository items.
-    config.allowed_upload_extensions = %w[jpg jpeg png]
+    spotlight_config.allowed_upload_extensions = %w[jpg jpeg png]
 
     # IIIF integration
-    config.iiif_service = Spotlight::RiiifService
+    spotlight_config.iiif_service = Spotlight::RiiifService
 
     # Suffixes for spotlight-created solr fields
-    config.solr_fields = OpenStruct.new
-    config.solr_fields.prefix = ''
-    config.solr_fields.boolean_suffix = '_bsi'
-    config.solr_fields.string_suffix = '_ssim'
-    config.solr_fields.text_suffix = '_tesim'
+    spotlight_config.solr_fields = OpenStruct.new
+    spotlight_config.solr_fields.prefix = ''
+    spotlight_config.solr_fields.boolean_suffix = '_bsi'
+    spotlight_config.solr_fields.string_suffix = '_ssim'
+    spotlight_config.solr_fields.text_suffix = '_tesim'
 
     # Suffixes for exhibit-specific solr fields
-    config.custom_field_types = {
+    spotlight_config.custom_field_types = {
       vocab: { suffix: '_ssim', facetable: true },
       text: { suffix: '_tesim' }
     }
 
-    config.resource_global_id_field = :"#{config.solr_fields.prefix}spotlight_resource_id#{config.solr_fields.string_suffix}"
-    config.job_tracker_id_field = :"#{config.solr_fields.prefix}spotlight_job_tracker_id#{config.solr_fields.string_suffix}"
+    spotlight_config.resource_global_id_field = :"#{spotlight_config.solr_fields.prefix}spotlight_resource_id#{spotlight_config.solr_fields.string_suffix}"
+    spotlight_config.job_tracker_id_field = :"#{spotlight_config.solr_fields.prefix}spotlight_job_tracker_id#{spotlight_config.solr_fields.string_suffix}"
 
     # Set to nil if you don't want to pull thumbnails from the index
-    config.full_image_field = :full_image_url_ssm
-    config.thumbnail_field = :thumbnail_url_ssm
+    spotlight_config.full_image_field = :full_image_url_ssm
+    spotlight_config.thumbnail_field = :thumbnail_url_ssm
 
-    Spotlight::Engine.config.site_tags = nil
+    spotlight_config.site_tags = nil
 
     # Defaults to the blacklight_config.index.title_field:
-    config.upload_title_field = nil # UploadFieldConfig.new(...)
-    config.upload_description_field = :spotlight_upload_description_tesim
+    spotlight_config.upload_title_field = nil # UploadFieldConfig.new(...)
+    spotlight_config.upload_description_field = :spotlight_upload_description_tesim
 
-    config.upload_fields = [
+    spotlight_config.upload_fields = [
       UploadFieldConfig.new(
-        field_name: config.upload_description_field,
-        label: -> { I18n.t(:"spotlight.search.fields.#{config.upload_description_field}") },
+        field_name: spotlight_config.upload_description_field,
+        label: -> { I18n.t(:"spotlight.search.fields.#{Spotlight::Engine.config.spotlight.upload_description_field}") },
         form_field_type: :text_area
       ),
       UploadFieldConfig.new(
@@ -154,39 +161,38 @@ module Spotlight
       )
     ]
 
-    config.iiif_manifest_field = :iiif_manifest_url_ssi
-    config.iiif_metadata_class = -> { Spotlight::Resources::IiifManifestMetadata }
-    config.iiif_collection_id_field = :collection_id_ssim
-    config.iiif_title_fields = nil
-    config.default_json_ld_language = 'en'
+    spotlight_config.iiif_manifest_field = :iiif_manifest_url_ssi
+    spotlight_config.iiif_metadata_class = -> { Spotlight::Resources::IiifManifestMetadata }
+    spotlight_config.iiif_collection_id_field = :collection_id_ssim
+    spotlight_config.iiif_title_fields = nil
+    spotlight_config.default_json_ld_language = 'en'
 
-    config.masthead_initial_crop_selection = [1200, 120]
-    config.thumbnail_initial_crop_selection = [120, 120]
+    spotlight_config.masthead_initial_crop_selection = [1200, 120]
+    spotlight_config.thumbnail_initial_crop_selection = [120, 120]
 
     # Configure the CarrierWave file storage mechanism
-    config.uploader_storage = :file
-    config.featured_image_masthead_size = [1800, 180]
-    config.featured_image_thumb_size = [400, 300]
-    config.featured_image_square_size = [400, 400]
-    config.contact_square_size = [70, 70]
+    spotlight_config.uploader_storage = :file
+    spotlight_config.featured_image_masthead_size = [1800, 180]
+    spotlight_config.featured_image_thumb_size = [400, 300]
+    spotlight_config.featured_image_square_size = [400, 400]
+    spotlight_config.contact_square_size = [70, 70]
 
     # Additional page configurations to be made available to page editing widgets
     # See Spotlight::PageConfigurations
-    config.page_configurations = {}
+    spotlight_config.page_configurations = {}
 
     # To present curators with analytics reports on the exhibit dashboard, you need to configure
     # an Analytics provider. Google Analytics support is provided out-of-the-box.
-    config.analytics_provider = nil
+    spotlight_config.analytics_provider = nil
 
     initializer 'analytics.initialize' do
       ActiveSupport::Reloader.to_prepare do
-        Spotlight::Engine.config.analytics_provider = Spotlight::Analytics::Ga
+        Spotlight::Engine.config.spotlight.analytics_provider = Spotlight::Analytics::Ga
       end
     end
 
     initializer 'components.initialize' do
       ActiveSupport::Reloader.to_prepare do
-        Spotlight::Engine.config.spotlight = OpenStruct.new
         Spotlight::Engine.config.spotlight.header_navigation_link_component = Spotlight::HeaderNavigationLinkComponent
         Spotlight::Engine.config.spotlight.title_component = Spotlight::TitleComponent
       end
@@ -200,19 +206,19 @@ module Spotlight
     # d) Set the ga_web_property_id. (located in admin -> Data collection and modification -> Web stream details and begins with G-)
     # ga_property_id is used for fetching analytics data from google's api, ga_web_property_id is used for sending events to GA analtyics
     # ga_web_property_id will probably change in V5 to ga_measurement_id for clarity
-    config.ga_json_key_path = nil
-    config.ga_web_property_id = nil
-    config.ga_property_id = nil
-    config.ga_analytics_options = {}
-    config.ga_page_analytics_options = config.ga_analytics_options.merge(limit: 5)
-    config.ga_date_range = { 'start_date' => nil, 'end_date' => nil }
-    config.ga_debug_mode = false
+    spotlight_config.ga_json_key_path = nil
+    spotlight_config.ga_web_property_id = nil
+    spotlight_config.ga_property_id = nil
+    spotlight_config.ga_analytics_options = {}
+    spotlight_config.ga_page_analytics_options = spotlight_config.ga_analytics_options.merge(limit: 5)
+    spotlight_config.ga_date_range = { 'start_date' => nil, 'end_date' => nil }
+    spotlight_config.ga_debug_mode = false
 
-    config.max_pages = 1000
+    spotlight_config.max_pages = 1000
 
     Blacklight::Engine.config.inject_blacklight_helpers = false
 
-    config.i18n_locales = {
+    spotlight_config.i18n_locales = {
       ar: 'العربية',
       de: 'Deutsch',
       en: 'English',
@@ -228,7 +234,7 @@ module Spotlight
 
     # Whitelisting the available_locales is necessary here, as any dependency we
     # add could add an available locale which could break things if unexpected.
-    config.i18n.available_locales = config.i18n_locales.keys
+    config.i18n.available_locales = spotlight_config.i18n_locales.keys
 
     # Copy of JbuilderHandler tweaked to spit out YAML for translation exports
     class TranslationYamlHandler
@@ -250,17 +256,17 @@ module Spotlight
     end
 
     # Query parameters for autocomplete requests
-    config.autocomplete_search_field = 'autocomplete'
-    config.default_autocomplete_params = { qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng',
-                                           facet: false,
-                                           'facet.field' => [] }
+    spotlight_config.autocomplete_search_field = 'autocomplete'
+    spotlight_config.default_autocomplete_params = { qf: 'id^1000 full_title_tesim^100 id_ng full_title_ng',
+                                                     facet: false,
+                                                     'facet.field' => [] }
 
-    config.default_browse_index_view_type = :gallery
+    spotlight_config.default_browse_index_view_type = :gallery
 
     # default email address to send "Report a Problem" feedback to (in addition to any exhibit-specific contacts)
-    config.default_contact_email = nil
+    spotlight_config.default_contact_email = nil
 
-    config.spambot_honeypot_email_field = :email_address
+    spotlight_config.spambot_honeypot_email_field = :email_address
 
     Blacklight::Configuration.default_configuration do
       # Field containing the last modified date for a Solr document
@@ -279,24 +285,24 @@ module Spotlight
     Blacklight::OpenStructWithHashAccess.send(:extend, ActiveModel::Translation)
     # rubocop:enable Lint/SendWithMixinArgument
 
-    config.exhibit_themes = ['default']
+    spotlight_config.exhibit_themes = ['default']
 
-    config.default_page_content_type = 'SirTrevor'
+    spotlight_config.default_page_content_type = 'SirTrevor'
 
     # Added here for backwards compatability with SirTrevor 0.6
     # and apps who have customized their avaialble widgets
-    config.sir_trevor_widgets = %w[
+    spotlight_config.sir_trevor_widgets = %w[
       Heading Text List Quote Iframe Video Oembed Rule UploadedItems Browse BrowseGroupCategories LinkToSearch
       FeaturedPages SolrDocuments SolrDocumentsCarousel SolrDocumentsEmbed
       SolrDocumentsFeatures SolrDocumentsGrid SearchResults
     ]
 
-    config.routes = OpenStruct.new
-    config.routes.solr_documents = {}
+    spotlight_config.routes = OpenStruct.new
+    spotlight_config.routes.solr_documents = {}
 
-    config.controller_tracking_method = 'track_catalog_path'
+    spotlight_config.controller_tracking_method = 'track_catalog_path'
 
-    config.exports = {
+    spotlight_config.exports = {
       attachments: true,
       blacklight_configuration: true,
       config: true,
@@ -304,22 +310,22 @@ module Spotlight
       resources: true
     }
 
-    config.reindexing_batch_size = nil
-    config.reindexing_batch_count = nil
-    config.hidden_job_classes = %w[Spotlight::ReindexJob]
+    spotlight_config.reindexing_batch_size = nil
+    spotlight_config.reindexing_batch_count = nil
+    spotlight_config.hidden_job_classes = %w[Spotlight::ReindexJob]
 
-    config.bulk_actions_batch_size = 1000
+    spotlight_config.bulk_actions_batch_size = 1000
 
-    config.bulk_updates = OpenStruct.new
-    config.bulk_updates.csv_id = 'Item ID'
-    config.bulk_updates.csv_title = 'Item Title'
-    config.bulk_updates.csv_visibility = 'Visibility'
-    config.bulk_updates.csv_tags_prefix = 'Tag:'
-    config.bulk_updates.csv_tags = 'Tag: %s'
+    spotlight_config.bulk_updates = OpenStruct.new
+    spotlight_config.bulk_updates.csv_id = 'Item ID'
+    spotlight_config.bulk_updates.csv_title = 'Item Title'
+    spotlight_config.bulk_updates.csv_visibility = 'Visibility'
+    spotlight_config.bulk_updates.csv_tags_prefix = 'Tag:'
+    spotlight_config.bulk_updates.csv_tags = 'Tag: %s'
 
-    config.assign_default_roles_to_first_user = true
+    spotlight_config.assign_default_roles_to_first_user = true
 
-    config.exhibit_roles = %w[admin curator viewer]
+    spotlight_config.exhibit_roles = %w[admin curator viewer]
     # PaperTrail serializes objects to YAML, so we need to permit these classes to be deserialized
     ActiveRecord.yaml_column_permitted_classes += [ActiveSupport::HashWithIndifferentAccess,
                                                    ActiveSupport::TimeWithZone,
