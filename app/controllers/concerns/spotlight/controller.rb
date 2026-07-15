@@ -85,19 +85,19 @@ module Spotlight
       end
     end
 
-    def search_action_url(*args, **kwargs)
+    def search_action_url(*, **)
       if current_exhibit
-        exhibit_search_action_url(*args, **kwargs)
+        exhibit_search_action_url(*, **)
       else
-        main_app.search_catalog_url(*args, **kwargs)
+        main_app.search_catalog_url(*, **)
       end
     end
 
-    def search_facet_path(*args, **kwargs)
+    def search_facet_path(*, **)
       if current_exhibit
-        exhibit_search_facet_path(*args, **kwargs)
+        exhibit_search_facet_path(*, **)
       else
-        main_app.facet_catalog_url(*args, **kwargs)
+        main_app.facet_catalog_url(*, **)
       end
     end
 

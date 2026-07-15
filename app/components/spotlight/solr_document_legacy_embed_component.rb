@@ -5,8 +5,8 @@ module Spotlight
   class SolrDocumentLegacyEmbedComponent < Blacklight::DocumentComponent
     attr_reader :block_context
 
-    def initialize(*args, block: nil, **kwargs)
-      super(*args, **kwargs)
+    def initialize(*, block: nil, **)
+      super(*, **)
 
       @block_context = block
     end
