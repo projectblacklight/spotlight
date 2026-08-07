@@ -37,7 +37,7 @@ module Spotlight
         req = Spotlight::Resources::IiifService.http_client.get(url) if req.status == 405
         return unless req.success?
 
-        valid_content_types.any? do |valid_type| # rubocop:disable Style/ArrayIntersect
+        valid_content_types.any? do |valid_type|
           req.headers['content-type'].include?(valid_type)
         end
       end
