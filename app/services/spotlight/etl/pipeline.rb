@@ -58,8 +58,8 @@ module Spotlight
       # @param [Hash] data the initial data structure to pass through to the transform steps
       # @yield (optioanlly..) each transformed document after it is transformed but before
       #        it is sent to the loaders
-      def call(context, data: {}, cache: nil, &block)
-        executor(context, cache:).call(data:, &block)
+      def call(context, data: {}, cache: nil, &)
+        executor(context, cache:).call(data:, &)
       end
 
       ##

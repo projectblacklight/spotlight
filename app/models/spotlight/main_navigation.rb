@@ -22,8 +22,8 @@ module Spotlight
       label.presence || default_label
     end
 
-    def default_label(**options)
-      I18n.t(:"spotlight.main_navigation.#{nav_type}", **options)
+    def default_label(**)
+      I18n.t(:"spotlight.main_navigation.#{nav_type}", **)
     end
 
     private
