@@ -26,7 +26,6 @@ module Spotlight
       def install_dependencies
         run 'yarn add @github/auto-complete-element'
         run 'yarn add @hotwired/turbo-rails'
-        run 'yarn add clipboard'
         run 'yarn add leaflet'
         run 'yarn add sir-trevor'
         run 'yarn add sortablejs'

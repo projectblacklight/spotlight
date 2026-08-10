@@ -23,6 +23,21 @@ RSpec.describe 'Site users management', js: true do
       expect(page).to have_no_css('div#admins_curators', text: existing_user.email)
       expect(page).to have_css('button.copy-email-addresses')
     end
+
+    it 'copies the email addresses to the clipboard' do
+      # Headless Chrome blocks real clipboard access, so replace writeText
+      # with a shim that stashes its argument on window for assertion.
+      page.execute_script(<<~JS)
+        window.__copied = null
+        navigator.clipboard.writeText = (text) => { window.__copied = text; return Promise.resolve() }
+      JS
+
+      click_button 'Copy'
+
+      copied = page.evaluate_script('window.__copied')
+      expect(copied).to include(user.email, exhibit_admin.email, exhibit_curator.email)
+      expect(copied).not_to include(existing_user.email)
+    end
   end
 
   it 'allows non-existing users to be invited' do
