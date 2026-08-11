@@ -1,14 +1,14 @@
-<% if Spotlight::Engine.config.ga_web_property_id %>
+<% if Spotlight::Engine.config.spotlight.ga_web_property_id %>
 <!-- Google tag (gtag.js) -->
-<% if Spotlight::Engine.config.ga_debug_mode %>
+<% if Spotlight::Engine.config.spotlight.ga_debug_mode %>
 <script>window.analyticsDebug = true;</script>
 <% end %>
-<script async src="https://www.googletagmanager.com/gtag/js?id=<%= Spotlight::Engine.config.ga_web_property_id %>"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=<%= Spotlight::Engine.config.spotlight.ga_web_property_id %>"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag() { dataLayer.push(arguments); }
   var opts = window.analyticsDebug ? {'debug_mode': true} : {};
   gtag("js", new Date());
-  gtag("config", "<%= Spotlight::Engine.config.ga_web_property_id %>", opts);
+  gtag("config", "<%= Spotlight::Engine.config.spotlight.ga_web_property_id %>", opts);
 </script>
 <% end %>

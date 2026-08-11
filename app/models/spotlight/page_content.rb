@@ -12,7 +12,7 @@ module Spotlight
     end
 
     def self.default_page_content_class
-      Spotlight::PageContent.const_get(Spotlight::Engine.config.default_page_content_type)
+      Spotlight::PageContent.const_get(Spotlight::Engine.config.spotlight.default_page_content_type)
     end
   end
 end

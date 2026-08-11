@@ -78,7 +78,7 @@ RSpec.describe Spotlight::Exhibit, type: :model do
     end
 
     it "uses the engine's configuration for default navigations" do
-      expect(Spotlight::Engine.config).to receive(:exhibit_main_navigation).and_return(%i[a b])
+      expect(Spotlight::Engine.config.spotlight).to receive(:exhibit_main_navigation).and_return(%i[a b])
       expect(subject.main_navigations).to have(2).main_navigations
       expect(subject.main_navigations.map(&:nav_type).compact).to match_array %w[a b]
     end
@@ -128,7 +128,7 @@ RSpec.describe Spotlight::Exhibit, type: :model do
   describe '#themes' do
     context 'when no themes_selector proc is set' do
       it 'is the configured themes' do
-        expect(subject.themes).to eq Spotlight::Engine.config.exhibit_themes
+        expect(subject.themes).to eq Spotlight::Engine.config.spotlight.exhibit_themes
       end
     end
 
@@ -180,7 +180,7 @@ RSpec.describe Spotlight::Exhibit, type: :model do
 
     context 'when not filtering by exhibit' do
       before do
-        allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(false)
+        allow(Spotlight::Engine.config.spotlight).to receive(:filter_resources_by_exhibit).and_return(false)
       end
 
       it 'is blank' do
@@ -190,7 +190,7 @@ RSpec.describe Spotlight::Exhibit, type: :model do
 
     context 'when no filters have been defined' do
       before do
-        allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(true)
+        allow(Spotlight::Engine.config.spotlight).to receive(:filter_resources_by_exhibit).and_return(true)
       end
 
       it 'provides a solr field with the exhibit slug' do
@@ -281,7 +281,7 @@ RSpec.describe Spotlight::Exhibit, type: :model do
 
     context 'with filter_resources_by_exhibit enabled' do
       before do
-        allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(true)
+        allow(Spotlight::Engine.config.spotlight).to receive(:filter_resources_by_exhibit).and_return(true)
       end
 
       it 'filters the solr results using the exhibit filter' do
@@ -293,7 +293,7 @@ RSpec.describe Spotlight::Exhibit, type: :model do
 
     context 'with filter_resources_by_exhibit disabled' do
       before do
-        allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(false)
+        allow(Spotlight::Engine.config.spotlight).to receive(:filter_resources_by_exhibit).and_return(false)
       end
 
       it 'does not filters the solr results' do

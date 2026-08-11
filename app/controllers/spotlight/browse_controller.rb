@@ -118,7 +118,7 @@ module Spotlight
     end
 
     def default_browse_index_view_type
-      Spotlight::Engine.config.default_browse_index_view_type
+      Spotlight::Engine.config.spotlight.default_browse_index_view_type
     end
 
     def render_save_this_search?

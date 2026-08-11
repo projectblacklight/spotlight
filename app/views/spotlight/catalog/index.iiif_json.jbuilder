@@ -8,9 +8,9 @@ json.viewingHint 'top'
 json.description current_exhibit.description if current_exhibit.description
 json.manifests do
   json.array!(@response.documents) do |doc|
-    next unless doc.first(Spotlight::Engine.config.iiif_manifest_field)
+    next unless doc.first(Spotlight::Engine.config.spotlight.iiif_manifest_field)
 
-    json.set! :@id, doc.first(Spotlight::Engine.config.iiif_manifest_field)
+    json.set! :@id, doc.first(Spotlight::Engine.config.spotlight.iiif_manifest_field)
     json.set! :@type, 'sc:manifest'
     json.label document_presenter(doc).heading
   end

@@ -12,7 +12,7 @@ module Spotlight
       end
 
       def uploaded_resource
-        @uploaded_resource ||= GlobalID::Locator.locate first(Spotlight::Engine.config.resource_global_id_field)
+        @uploaded_resource ||= GlobalID::Locator.locate first(Spotlight::Engine.config.spotlight.resource_global_id_field)
       rescue StandardError => e
         Rails.logger.info("Unable to locate uploaded resource: #{e}")
         nil
