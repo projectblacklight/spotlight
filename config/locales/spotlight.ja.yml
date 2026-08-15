@@ -1,0 +1,40 @@
+ja:
+  activemodel:
+    attributes:
+      spotlight/contact_form:
+        email: メールアドレス
+        message: お問い合わせ内容
+        name: お名前
+  helpers:
+    action:
+      cancel: キャンセル
+    submit:
+      contact_form:
+        create: 送信
+        created: 送信しました。ご意見ありがとうございます。
+  spotlight:
+    about_pages:
+      contacts:
+        header: 連絡先
+    browse:
+      search:
+        item_count:
+          one: "%{count} 件"
+          other: "%{count} 件"
+      search_box:
+        label: このカテゴリ内を検索
+        placeholder: 検索…
+        reset: 検索ボックスをクリア
+        submit: このカテゴリ内を検索
+        success:
+          expand_html: <a href="%{expand_search_url}">「%{browse_query}」で展示全体を検索</a>することもできます。
+          result_number_html: このカテゴリ内の <strong>%{parent_search_count} 件中 %{search_size} 件</strong>が検索条件に一致しました。
+        zero_results:
+          expand_html: <a href="%{clear_search_url}">検索条件をクリア</a>するか、<a href="%{expand_search_url}">「%{browse_query}」で展示全体を検索</a>してみてください。
+          result_number: このカテゴリ内に検索条件と一致する資料はありませんでした。
+    header_links:
+      contact: ご意見・お問い合わせ
+    shared:
+      report_a_problem:
+        honeypot_field_explanation: この入力欄は無視してください。スパム判定のために使用しています。ここに入力するとメッセージは送信されません。
+        title: お問い合わせ
