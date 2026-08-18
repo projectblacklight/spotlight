@@ -15,6 +15,7 @@ RSpec.describe Spotlight::LanguagesHelper, type: :helper do
         ['German', :de],
         ['Hungarian', :hu],
         ['Italian', :it],
+        ['Japanese', :ja],
         ['Portuguese - Brazil', :'pt-BR'],
         ['Spanish', :es]
       )
