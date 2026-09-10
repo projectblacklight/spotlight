@@ -6,3 +6,5 @@ when 'edge'
 else
   gem 'blacklight', ENV['BLACKLIGHT_VERSION'] if ENV['BLACKLIGHT_VERSION'] && !ENV['BLACKLIGHT_VERSION'].empty?
 end
+
+gem 'json', '~> 2.0' # No version of Rails is yet compatible with JSON 3
