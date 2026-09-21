@@ -86,11 +86,11 @@ module Spotlight
       redirect_to main_app.root_url, notice: t(:'helpers.submit.exhibit.destroyed', model: @exhibit.class.model_name.human.downcase)
     end
 
-    protected
-
     def current_exhibit
       @exhibit if @exhibit&.persisted?
     end
+
+    protected
 
     def exhibit_params
       params.require(:exhibit).permit(
