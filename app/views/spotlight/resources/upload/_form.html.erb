@@ -2,11 +2,11 @@
   <%= f.url_field :url, type: "file", help: t('.url-field.help', extensions: Spotlight::Engine.config.allowed_upload_extensions.join(' ')), label: "File" %>
   <%= f.fields_for :data do |d| %>
     <% Spotlight::Resources::Upload.fields(current_exhibit).each do |config| %>
-      <%= d.send(config.form_field_type, config.field_name, label: uploaded_field_label(config)) %>
+      <%= render Spotlight::SidecarFormFieldComponent.new(form: d, id: config.field_name, label: uploaded_field_label(config), field_type: config.form_field_type, value: nil, multiple: config.is_multiple, inline: true) %>
     <% end %>
 
     <% current_exhibit.custom_fields.each do |custom_field| %>
-      <%= render partial: "spotlight/custom_fields/form_group/#{custom_field.field_type}", locals: { inline: true, f: d, field: custom_field, value: nil } %>
+      <%= render Spotlight::SidecarFormFieldComponent.new(form: d, id: custom_field.slug, label: custom_field.label, field_type: custom_field.field_type, value: nil, multiple: custom_field.is_multiple?, readonly: custom_field.readonly_field?, inline: true) %>
     <% end %>
   <% end %>
   <div class="form-actions">

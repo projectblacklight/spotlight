@@ -346,20 +346,27 @@ module Spotlight
 
     def add_uploaded_resource_fields(config)
       exhibit.uploaded_resource_fields.each do |f|
-        add_uploaded_resource_field(config, f)
+        key = Array(f.solr_field || f.field_name).first.to_s
+        options = f.blacklight_options || {}
+        options[:label] = f.label if f.label
+        options[:type] = 'uploaded'
+
+        add_uploaded_resource_index_field(config, key, options)
+        add_uploaded_resource_facet_field(config, key, options) if f.facetable
       end
     end
 
-    def add_uploaded_resource_field(config, f)
-      key = Array(f.solr_field || f.field_name).first.to_s
-
+    def add_uploaded_resource_index_field(config, key, options)
       return if config.index_fields.any? { |_k, v| v.field == key }
 
-      options = f.blacklight_options || {}
-      options[:label] = f.label if f.label
-      options[:type] = 'uploaded'
-
       config.add_index_field key, options
+    end
+
+    def add_uploaded_resource_facet_field(config, key, options)
+      return if config.facet_fields.any? { |_k, v| v.field == key }
+      
+      options[:limit] = true
+      config.add_facet_field key, options
     end
 
     def add_autocomplete_field(config)
