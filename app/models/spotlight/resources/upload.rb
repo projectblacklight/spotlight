@@ -23,6 +23,12 @@ module Spotlight
         end
       end
 
+      def self.as_strong_params(exhibit)
+        fields(exhibit).map do |field|
+          field.is_multiple ? { field.field_name => [] } : field.field_name
+        end
+      end
+
       def self.indexing_pipeline
         @indexing_pipeline ||= super.dup.tap do |pipeline|
           pipeline.transforms = [

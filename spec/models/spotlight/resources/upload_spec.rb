@@ -19,6 +19,19 @@ RSpec.describe Spotlight::Resources::Upload, type: :model do
     end
   end
 
+  describe '.as_strong_params' do
+    it 'returns single-value fields by name and multi-value fields as empty arrays' do
+      single_field = instance_double(Spotlight::UploadFieldConfig, field_name: 'full_title_tesim', is_multiple: false)
+      multi_field = instance_double(Spotlight::UploadFieldConfig, field_name: 'spotlight_test_ssim', is_multiple: true)
+
+      allow(described_class).to receive(:fields).with(exhibit).and_return([single_field, multi_field])
+
+      expect(described_class.as_strong_params(exhibit)).to eq(
+        ['full_title_tesim', { 'spotlight_test_ssim' => [] }]
+      )
+    end
+  end
+
   describe '#compound_id' do
     it 'appends the object ID w/ the exhibit ID' do
       expect(upload.compound_id).to eq "#{exhibit.id}-42"

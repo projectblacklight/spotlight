@@ -7,14 +7,16 @@ module Spotlight
   # See Spotlight::Engine.config.upload_fields for where this is consumed
   # We should look into changing this to a standard blacklight field config in Blacklight 7
   class UploadFieldConfig
-    attr_reader :blacklight_options, :field_name, :form_field_type
+    attr_reader :blacklight_options, :field_name, :form_field_type, :facetable, :is_multiple
 
-    def initialize(field_name:, blacklight_options: {}, form_field_type: :text_field, label: nil, solr_fields: nil)
+    def initialize(field_name:, blacklight_options: {}, form_field_type: :text_field, label: nil, solr_fields: nil, facetable: false, is_multiple: false)
       @blacklight_options = blacklight_options
       @field_name = field_name
       @form_field_type = form_field_type
       @solr_fields = solr_fields
       @label = label || field_name
+      @facetable = facetable
+      @is_multiple = is_multiple
     end
 
     # Allows a proc to be set as the label
