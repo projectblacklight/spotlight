@@ -55,4 +55,22 @@ RSpec.describe Spotlight::AddUploadsFromCsv do
       )
     end
   end
+
+  context 'with pipe-delimited values' do
+    let(:data) do
+      [
+        { 'url' => 'x', 'field1' => 'a|b|c', 'field2' => 'hello', 'field3' => '' }
+      ]
+    end
+
+    it 'splits into arrays' do
+      expect(job.send(:processed_csv, data)).to eq(
+        [{
+          'url' => 'x',
+          'field1' => %w[a b c],
+          'field2' => 'hello'
+        }]
+      )
+    end
+  end
 end

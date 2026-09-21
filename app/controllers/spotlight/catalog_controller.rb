@@ -200,7 +200,7 @@ module Spotlight
 
     def uploaded_resource_params
       if @document.uploaded_resource?
-        [{ configured_fields: Spotlight::Resources::Upload.fields(current_exhibit).map(&:field_name) }]
+        [{ configured_fields: Spotlight::Resources::Upload.as_strong_params(current_exhibit) }]
       else
         []
       end

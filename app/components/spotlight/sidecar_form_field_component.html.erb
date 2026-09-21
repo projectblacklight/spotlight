@@ -1,0 +1,18 @@
+<div class="form-group mb-3 <%= "row" if inline %>">
+  <% value_list.each_with_index do |v, index| %>
+    <%= form.label field_id, label, namespace: "f#{index}", class: "col-form-label #{label_col if inline} #{'visually-hidden' if index > 0}" %>
+    <div class="mb-3 <%= control_col if inline %>">
+      <%= render_input(value: v, namespace: "f#{index}") %>
+    </div>
+  <% end %>
+
+  <% if multiple && !readonly %>
+    <%= content_tag :template, id: template_id do %>
+      <%= form.label @id, label, class: "col-form-label #{label_col if inline} visually-hidden" %>
+      <div class="form-group mb-3 <%= "#{offset_col} #{control_col}" if inline %>">
+        <%= render_input %>
+      </div>
+    <% end %>
+    <%= content_tag :button, t('helpers.action.add_another'), class: 'btn btn-info btn-sm col-auto h-100', data: { action: 'add-another', template_id: template_id } %>
+  <% end %>
+</div>
