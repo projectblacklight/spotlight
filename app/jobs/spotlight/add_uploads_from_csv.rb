@@ -56,6 +56,7 @@ module Spotlight
       csv.map do |row|
         row.map do |label, column|
           next if column.blank?
+
           [label, processed_value(column)]
         end.compact.to_h
       end.compact
@@ -67,8 +68,7 @@ module Spotlight
       return encoded_value unless encoded_value.include?('|')
 
       # Splits pipe-delimited values
-      encoded_value.split('|').map(&:strip).reject(&:blank?)
+      encoded_value.split('|').map(&:strip).compact_blank
     end
-
   end
 end

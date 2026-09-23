@@ -13,9 +13,9 @@ RSpec.describe Spotlight::SidecarFormFieldComponent, type: :component do
     form_helper
   end
 
-  context 'with a text field' do 
+  context 'with a text field' do
     let(:component) do
-      described_class.new(form: f, id: 'title', label: 'Title', field_type: 'text_field', value: "xyz", multiple: false, readonly: false, inline: false)
+      described_class.new(form: f, id: 'title', label: 'Title', field_type: 'text_field', value: 'xyz', multiple: false, readonly: false, inline: false)
     end
 
     it 'renders a label and a single text input' do
@@ -26,7 +26,8 @@ RSpec.describe Spotlight::SidecarFormFieldComponent, type: :component do
 
   context 'with a text area field' do
     let(:component) do
-      described_class.new(form: f, id: 'description', label: 'Description', field_type: 'text_area', value: nil, multiple: false, readonly: false, inline: false)
+      described_class.new(form: f, id: 'description', label: 'Description', field_type: 'text_area', value: nil, multiple: false, readonly: false,
+                          inline: false)
     end
 
     it 'renders a label and a single text area input' do
@@ -37,7 +38,7 @@ RSpec.describe Spotlight::SidecarFormFieldComponent, type: :component do
 
   context 'with a multivalued field' do
     let(:component) do
-      described_class.new(form: f, id: 'date', label: 'Date', field_type: 'text_field', value: ["x","y","z"], multiple: true, readonly: false, inline: false)
+      described_class.new(form: f, id: 'date', label: 'Date', field_type: 'text_field', value: %w[x y z], multiple: true, readonly: false, inline: false)
     end
 
     it 'renders a label and a multiple text inputs' do
@@ -47,5 +48,4 @@ RSpec.describe Spotlight::SidecarFormFieldComponent, type: :component do
       expect(rendered).to have_css("input[type='text'][class='form-control field-date'][value='z']")
     end
   end
-
 end
