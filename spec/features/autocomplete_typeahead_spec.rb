@@ -4,7 +4,10 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
-  before { login_as admin }
+  before do
+    login_as admin
+    stub_iiif_manifest_for 'gk446cj2442', 'xd327cm9378'
+  end
 
   describe 'IIIF Integration' do
     context 'for items that include a IIIF manifest' do
