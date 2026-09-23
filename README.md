@@ -195,6 +195,15 @@ The `spec:prepare` task generates css assets for use by the tests. You can delet
 
 Once you are set up, you can also run `rubocop` to enforce consistent coding style.
 
+#### External IIIF resources in JavaScript feature specs
+
+JavaScript feature specs run in a real browser, so WebMock can't intercept the requests it makes. To keep these specs from depending on external IIIF servers:
+
+* The test browser doesn't load images.
+* IIIF manifests are served from fixtures. When a document has a fixture at `spec/fixtures/iiif_manifests/<document_id>.json`, its autocomplete response points at that fixture instead of the live manifest (see `spec/support/iiif_manifest_fixtures.rb`). If a JavaScript spec selects a document that loads its manifest, add a fixture by saving the manifest from the document's `iiif_manifest_url_ssi` URL.
+
+IIIF image `info.json` requests, such as the ones the cropper makes, still go to the image server named in the manifest.
+
 
 ### Individual commands
 
