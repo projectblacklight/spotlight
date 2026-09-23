@@ -9,8 +9,10 @@ RSpec.describe 'About Pages Adminstration', js: true do
   it 'is able to create new pages' do
     login_as exhibit_curator
     visit spotlight.exhibit_dashboard_path(exhibit)
+    expect(page).to have_text('Recent site building activity')
 
     click_link 'About pages'
+    expect(page).to have_current_path(spotlight.exhibit_about_pages_path(exhibit))
 
     add_new_via_button('My New Page')
 
