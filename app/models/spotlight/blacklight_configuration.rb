@@ -364,7 +364,7 @@ module Spotlight
 
     def add_uploaded_resource_facet_field(config, key, options)
       return if config.facet_fields.any? { |_k, v| v.field == key }
-      
+
       options[:limit] = true
       config.add_facet_field key, options
     end
