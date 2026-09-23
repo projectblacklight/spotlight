@@ -29,6 +29,10 @@ Capybara.register_driver :selenium_chrome_headless do |app|
   browser_options.add_argument('--disable-background-timer-throttling')
   browser_options.add_argument('--disable-backgrounding-occluded-windows')
   browser_options.add_argument('--disable-dev-shm-usage') # Helps with resource limits
+  # Don't load images. Fixture documents reference images on external IIIF servers, and the admin
+  # javascript runs on the first turbo:load, which waits for every image on the page, so a slow
+  # external image can delay it past Capybara's wait time.
+  browser_options.add_argument('--blink-settings=imagesEnabled=false')
   browser_options.binary = ENV['CHROME_BIN'] if ENV['CHROME_BIN']
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end

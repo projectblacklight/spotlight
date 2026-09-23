@@ -24,7 +24,8 @@ RSpec.describe 'Solr Documents Carousel Block', js: true, type: :feature do
 
     within '.carousel-block' do
       expect(page).to have_css('.carousel-item', count: 1)
-      expect(page).to have_css('.carousel-caption .primary', text: "L'AMERIQUE")
+      # Images are disabled in tests, so the carousel item has no height
+      expect(page).to have_css('.carousel-caption .primary', text: "L'AMERIQUE", visible: :all)
     end
   end
 
