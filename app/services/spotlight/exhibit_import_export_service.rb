@@ -17,7 +17,7 @@ module Spotlight
 
     attr_reader :exhibit, :include
 
-    def initialize(exhibit, include: Spotlight::Engine.config.exports)
+    def initialize(exhibit, include: Spotlight::Engine.config.spotlight.exports)
       @exhibit = exhibit
       @include = include
     end

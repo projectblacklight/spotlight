@@ -51,8 +51,8 @@ end
 require 'spotlight'
 
 # configure spotlight with all the settings necessary to test functionality
-Spotlight::Engine.config.reindexing_batch_count = 1
-Spotlight::Engine.config.assign_default_roles_to_first_user = false
+Spotlight::Engine.config.spotlight.reindexing_batch_count = 1
+Spotlight::Engine.config.spotlight.assign_default_roles_to_first_user = false
 
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 

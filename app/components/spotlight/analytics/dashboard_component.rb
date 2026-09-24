@@ -22,11 +22,11 @@ module Spotlight
       end
 
       def min_date
-        Spotlight::Engine.config.ga_date_range['start_date'] || Date.new(2015, 8, 14) # This is the minimum date supported by GA
+        Spotlight::Engine.config.spotlight.ga_date_range['start_date'] || Date.new(2015, 8, 14) # This is the minimum date supported by GA
       end
 
       def max_date
-        Spotlight::Engine.config.ga_date_range['end_date'] || Time.zone.today
+        Spotlight::Engine.config.spotlight.ga_date_range['end_date'] || Time.zone.today
       end
 
       def note

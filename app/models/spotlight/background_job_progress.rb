@@ -42,7 +42,7 @@ module Spotlight
       return false unless most_relevant_job_tracker.persisted?
       return true if most_relevant_job_tracker.in_progress?
 
-      finished? && most_relevant_job_tracker.updated_at >= Spotlight::Engine.config.reindex_progress_window.ago
+      finished? && most_relevant_job_tracker.updated_at >= Spotlight::Engine.config.spotlight.reindex_progress_window.ago
     end
 
     def started_at

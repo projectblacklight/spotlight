@@ -42,7 +42,7 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     config.index.title_field = 'full_title_tesim'
     config.index.display_type_field = 'content_metadata_type_ssm'
-    config.index.thumbnail_field = Spotlight::Engine.config.thumbnail_field
+    config.index.thumbnail_field = Spotlight::Engine.config.spotlight.thumbnail_field
 
     config.add_results_collection_tool(:sort_widget)
     config.add_results_collection_tool(:per_page_widget)

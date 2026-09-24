@@ -14,7 +14,7 @@ module Spotlight
       end
 
       def write?
-        Spotlight::Engine.config.writable_index
+        Spotlight::Engine.config.spotlight.writable_index
       end
 
       private

@@ -98,16 +98,16 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
     end
   end
 
-  context 'Spotlight::Engine.config.ga_date_range is set' do
+  context 'Spotlight::Engine.config.spotlight.ga_date_range is set' do
     let(:start_date) { '2024-04-24' }
     let(:end_date) { '2024-07-24' }
 
     before do
-      Spotlight::Engine.config.ga_date_range = { 'start_date' => Date.new(2024, 4, 24), 'end_date' => Date.new(2024, 7, 24) }
+      Spotlight::Engine.config.spotlight.ga_date_range = { 'start_date' => Date.new(2024, 4, 24), 'end_date' => Date.new(2024, 7, 24) }
     end
 
     after do
-      Spotlight::Engine.config.ga_date_range = { 'start_date' => nil, 'end_date' => nil }
+      Spotlight::Engine.config.spotlight.ga_date_range = { 'start_date' => nil, 'end_date' => nil }
     end
 
     it 'has start and end date selectors' do

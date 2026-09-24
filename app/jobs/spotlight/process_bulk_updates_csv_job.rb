@@ -77,7 +77,7 @@ module Spotlight
     end
 
     def config
-      Spotlight::Engine.config.bulk_updates
+      Spotlight::Engine.config.spotlight.bulk_updates
     end
   end
 end

@@ -4,10 +4,10 @@ module Spotlight
   ##
   # Page, browse category, and exhibit featured image thumbnails
   class FeaturedImageUploader < CarrierWave::Uploader::Base
-    storage Spotlight::Engine.config.uploader_storage
+    storage Spotlight::Engine.config.spotlight.uploader_storage
 
     def extension_allowlist
-      Spotlight::Engine.config.allowed_upload_extensions
+      Spotlight::Engine.config.spotlight.allowed_upload_extensions
     end
 
     def store_dir

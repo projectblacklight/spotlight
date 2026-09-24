@@ -4,7 +4,7 @@ module Spotlight
   ##
   # Base page class. See {Spotlight::AboutPage}, {Spotlight::FeaturePage}, {Spotlight::HomePage}
   class Page < ActiveRecord::Base
-    MAX_PAGES = Spotlight::Engine.config.max_pages
+    MAX_PAGES = Spotlight::Engine.config.spotlight.max_pages
 
     extend FriendlyId
 
@@ -15,8 +15,8 @@ module Spotlight
     end
 
     belongs_to :exhibit, touch: true
-    belongs_to :created_by, class_name: Spotlight::Engine.config.user_class, optional: true
-    belongs_to :last_edited_by, class_name: Spotlight::Engine.config.user_class, optional: true
+    belongs_to :created_by, class_name: Spotlight::Engine.config.spotlight.user_class, optional: true
+    belongs_to :last_edited_by, class_name: Spotlight::Engine.config.spotlight.user_class, optional: true
 
     belongs_to :thumbnail, class_name: 'Spotlight::FeaturedImage', dependent: :destroy, optional: true
     belongs_to :default_locale_page, class_name: 'Spotlight::Page', optional: true, inverse_of: :translated_pages
@@ -69,7 +69,7 @@ module Spotlight
     end
 
     def content_type
-      self[:content_type] || Spotlight::Engine.config.default_page_content_type
+      self[:content_type] || Spotlight::Engine.config.spotlight.default_page_content_type
     end
 
     def content=(content)

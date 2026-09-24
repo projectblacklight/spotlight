@@ -10,7 +10,10 @@ module Spotlight
 
     include Spotlight::LimitConcurrency
 
-    def perform(exhibit, batch_size: Spotlight::Engine.config.reindexing_batch_size, batch_count: Spotlight::Engine.config.reindexing_batch_count, **)
+    def perform(exhibit,
+                batch_size: Spotlight::Engine.config.spotlight.reindexing_batch_size,
+                batch_count: Spotlight::Engine.config.spotlight.reindexing_batch_count,
+                **)
       count = exhibit.resources.count
 
       # Use the provided batch size, or calculate a reasonable default

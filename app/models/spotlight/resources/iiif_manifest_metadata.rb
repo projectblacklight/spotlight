@@ -8,7 +8,7 @@ module Spotlight
     #  This is intended to be overriden by an
     #  application if a different metadata
     #  strucure is used by the consumer
-    #  override with Spotlight::Engine.config.iiif_metadata_class
+    #  override with Spotlight::Engine.config.spotlight.iiif_metadata_class
     class IiifManifestMetadata
       def initialize(manifest)
         @manifest = manifest
@@ -154,7 +154,7 @@ module Spotlight
       end
 
       def default_json_ld_language
-        Spotlight::Engine.config.default_json_ld_language
+        Spotlight::Engine.config.spotlight.default_json_ld_language
       end
     end
   end

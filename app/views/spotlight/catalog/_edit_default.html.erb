@@ -6,7 +6,7 @@
   <% end %>
 
   <%= f.fields_for :uploaded_resource do |r| %>
-    <%= r.url_field :url, type: "file", help: t('.url-field.help', extensions: Spotlight::Engine.config.allowed_upload_extensions.join(' ')), label: "File" %>
+    <%= r.url_field :url, type: "file", help: t('.url-field.help', extensions: Spotlight::Engine.config.spotlight.allowed_upload_extensions.join(' ')), label: "File" %>
   <% end if document.uploaded_resource? %>
 
   <%= render partial: 'edit_sidecar', locals: { document: document, f: f } %>

@@ -109,7 +109,7 @@ RSpec.describe Spotlight::CustomField, type: :model do
 
     context 'with a solr field prefix configured' do
       before do
-        allow(Spotlight::Engine.config.solr_fields).to receive(:prefix).and_return 'prefix_'
+        allow(Spotlight::Engine.config.spotlight.solr_fields).to receive(:prefix).and_return 'prefix_'
       end
 
       it 'uses the solr field prefix' do
