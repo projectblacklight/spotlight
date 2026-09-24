@@ -223,7 +223,8 @@ module Spotlight
       nl: 'Nederlands',
       'pt-BR': 'Português brasileiro',
       sq: 'Shqip',
-      zh: '中文'
+      zh: '中文',
+      ja: '日本語'
     }
 
     # Whitelisting the available_locales is necessary here, as any dependency we
