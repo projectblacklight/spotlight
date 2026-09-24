@@ -39,7 +39,7 @@ module Spotlight
     def resources(csv_data, exhibit)
       return to_enum(:resources, csv_data, exhibit) unless block_given?
 
-      processed_csv(csv_data).each do |row|
+      processed_csv(csv_data, exhibit).each do |row|
         # Remove the URL from the row and skip if it's blank
         url = row.delete('url')
         next if url.blank?
@@ -52,22 +52,25 @@ module Spotlight
       end
     end
 
-    def processed_csv(csv)
+    def processed_csv(csv, exhibit)
       csv.map do |row|
         row.map do |label, column|
           next if column.blank?
 
-          [label, processed_value(column)]
+          [label, processed_value(label, column, exhibit)]
         end.compact.to_h
       end.compact
     end
 
-    def processed_value(value)
+    def processed_value(key, value, exhibit)
       # Encode the value to UTF-8
       encoded_value = value.encode('UTF-8', invalid: :replace, undef: :replace, replace: "\uFFFD")
-      return encoded_value unless encoded_value.include?('|')
 
-      # Splits pipe-delimited values
+      # Check if the key is a multivalued field and split pipe-delimited values if needed
+      multivalued_fields = exhibit.uploaded_resource_fields.filter_map { |field| field.field_name.to_s if field.is_multiple }
+      multivalued_custom_fields = exhibit.custom_fields.filter_map { |field| field.slug.to_s if field.is_multiple? }
+      return encoded_value unless encoded_value.include?('|') && (multivalued_fields + multivalued_custom_fields).include?(key)
+
       encoded_value.split('|').map(&:strip).compact_blank
     end
   end
