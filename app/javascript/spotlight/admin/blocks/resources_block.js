@@ -1,5 +1,6 @@
 import Core from "spotlight/core"
 import SpotlightNestable from "spotlight/admin/spotlight_nestable"
+import { selectRelatedInput } from "spotlight/admin/select_related_input"
 
 Core.Block.Resources = (function () {
   return Core.Block.extend({
@@ -71,8 +72,8 @@ Core.Block.Resources = (function () {
       // If image selection is not possible for this block, then do not show
       // image selection link
       if (!this.show_image_selection) return ``
-      var url =
-        $("form[data-exhibit-path]").data("exhibit-path") + "/select_image?"
+      var formEl = document.querySelector("form[data-exhibit-path]")
+      var url = (formEl ? formEl.dataset.exhibitPath : "") + "/select_image?"
       var markup = `
           <a name="selectimage" href="${url}block_item_id=${block_item_id}&index_id=${index}" data-blacklight-modal="trigger">Select image area</a>
         `
@@ -128,14 +129,19 @@ Core.Block.Resources = (function () {
             </li>
       `
 
-      const panel = $(markup)
+      const tempDiv = document.createElement("div")
+      tempDiv.innerHTML = markup.trim()
+      const panel = tempDiv.firstElementChild
       var context = this
 
-      $(".remove a", panel).on("click", function (e) {
-        e.preventDefault()
-        $(this).closest(".field").remove()
-        context.afterPanelDelete()
-      })
+      const removeLink = panel.querySelector(".remove a")
+      if (removeLink) {
+        removeLink.addEventListener("click", function (e) {
+          e.preventDefault()
+          this.closest(".field").remove()
+          context.afterPanelDelete()
+        })
+      }
 
       this.afterPanelRender(data, panel)
 
@@ -149,8 +155,10 @@ Core.Block.Resources = (function () {
     createItemPanel: function (data) {
       var panel = this._itemPanel(data)
       this.attachAltTextHandlers(panel)
-      $(panel).appendTo($(".panels > ol", this.inner))
-      $('[data-behavior="nestable"]', this.inner).trigger("change")
+      const ol = this.inner.querySelector(".panels > ol")
+      if (ol) ol.appendChild(panel)
+      const nestable = this.inner.querySelector('[data-behavior="nestable"]')
+      if (nestable) nestable.dispatchEvent(new Event("change"))
     },
 
     item_options: function () {
@@ -237,53 +245,64 @@ Core.Block.Resources = (function () {
 
     attachAltTextHandlers: function (panel) {
       if (this.showAltText()) {
-        const decorativeCheckbox = $('input[name$="[decorative]"]', panel)
-        const altTextInput = $('textarea[name$="[alt_text]"]', panel)
-        const altTextBackupInput = $('input[name$="[alt_text_backup]"]', panel)
+        const decorativeCheckbox = panel.querySelector(
+          'input[name$="[decorative]"]',
+        )
+        const altTextInput = panel.querySelector('textarea[name$="[alt_text]"]')
+        const altTextBackupInput = panel.querySelector(
+          'input[name$="[alt_text_backup]"]',
+        )
 
-        decorativeCheckbox.on("change", function () {
-          const isDecorative = this.checked
-          if (isDecorative) {
-            altTextBackupInput.val(altTextInput.val())
-            altTextInput.val("")
-          } else {
-            altTextInput.val(altTextBackupInput.val())
-          }
-          altTextInput
-            .prop("disabled", isDecorative)
-            .attr(
+        if (decorativeCheckbox) {
+          decorativeCheckbox.addEventListener("change", function () {
+            const isDecorative = this.checked
+            if (isDecorative) {
+              if (altTextBackupInput)
+                altTextBackupInput.value = altTextInput.value
+              altTextInput.value = ""
+            } else {
+              if (altTextBackupInput)
+                altTextInput.value = altTextBackupInput.value
+            }
+            altTextInput.disabled = isDecorative
+            altTextInput.setAttribute(
               "placeholder",
               isDecorative
                 ? ""
                 : i18n.t("blocks:resources:alt_text:placeholder"),
             )
-        })
+          })
+        }
 
-        altTextInput.on("input", function () {
-          $(this).data("lastValue", $(this).val())
-        })
+        if (altTextInput) {
+          altTextInput.addEventListener("input", function () {
+            this.dataset.lastValue = this.value
+          })
+        }
       }
     },
 
     onBlockRender: function () {
-      SpotlightNestable.init($('[data-behavior="nestable"]', this.inner))
-      $("[data-input-select-target]", this.inner).selectRelatedInput()
+      SpotlightNestable.init(
+        this.inner.querySelectorAll('[data-behavior="nestable"]'),
+      )
+      selectRelatedInput(
+        this.inner.querySelectorAll("[data-input-select-target]"),
+      )
     },
 
     afterLoadData: function (data) {
       var context = this
-      $.each(
-        Object.keys(data.item || {})
-          .map(function (k) {
-            return data.item[k]
-          })
-          .sort(function (a, b) {
-            return a.weight - b.weight
-          }),
-        function (index, item) {
+      Object.keys(data.item || {})
+        .map(function (k) {
+          return data.item[k]
+        })
+        .sort(function (a, b) {
+          return a.weight - b.weight
+        })
+        .forEach(function (item) {
           context.createItemPanel(item)
-        },
-      )
+        })
     },
   })
 })()
