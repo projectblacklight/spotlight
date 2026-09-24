@@ -30,7 +30,7 @@ jobs:
       ENGINE_CART_RAILS_OPTIONS: "--skip-git --skip-listen --skip-spring --skip-keeps --skip-coffee --skip-test --skip-kamal --skip-thruster --skip-solid --css bootstrap ${{ matrix.additional_engine_cart_rails_options }}"
     steps:
       - name: Install ImageMagick
-        run: sudo apt install imagemagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
       - uses: actions/checkout@v7
       - name: Set up Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1

@@ -1,0 +1,179 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "https://purl.stanford.edu/gk446cj2442/iiif/manifest",
+  "@type": "sc:Manifest",
+  "label": "[World map",
+  "attribution": "This work has been identified as being free of known restrictions under copyright law, including all related and neighboring rights. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.",
+  "logo": {
+    "@id": "https://stacks.stanford.edu/image/iiif/wy534zh7137/SULAIR_rosette/full/400,/0/default.jpg",
+    "service": {
+      "@context": "http://iiif.io/api/image/2/context.json",
+      "@id": "https://stacks.stanford.edu/image/iiif/wy534zh7137/SULAIR_rosette",
+      "profile": "http://iiif.io/api/image/2/level2.json"
+    }
+  },
+  "license": "https://creativecommons.org/publicdomain/mark/1.0/",
+  "seeAlso": {
+    "@id": "https://purl.stanford.edu/gk446cj2442.mods",
+    "format": "application/mods+xml"
+  },
+  "metadata": [
+    {
+      "label": "Available Online",
+      "value": "<a href='https://purl.stanford.edu/gk446cj2442'>https://purl.stanford.edu/gk446cj2442</a>"
+    },
+    {
+      "label": "Title",
+      "value": "[World map"
+    },
+    {
+      "label": "Contributor",
+      "value": "Weigel, Johann Christoph, 1661-1726."
+    },
+    {
+      "label": "Type",
+      "value": "Cartographic image"
+    },
+    {
+      "label": "Type",
+      "value": "Early maps."
+    },
+    {
+      "label": "Type",
+      "value": "Digital maps."
+    },
+    {
+      "label": "Type",
+      "value": "Maps"
+    },
+    {
+      "label": "Format",
+      "value": "4 maps on 4 sheets ; each 10.9 x 16.3 cm."
+    },
+    {
+      "label": "Language",
+      "value": "Latin"
+    },
+    {
+      "label": "Statement of responsibility",
+      "value": "Johann Christoph Weigel]."
+    },
+    {
+      "label": "Description",
+      "value": "Relief shown pictorially."
+    },
+    {
+      "label": "Description",
+      "value": "Each map includes a small cartouche surrounded by figures representing the continents."
+    },
+    {
+      "label": "Description",
+      "value": "Asiae - \"II. Th. pag. 21.\" at top right and \"G. Haupt Sc.\" at lower right. Europae - \"II. Th. pag. 20.\" at top right and \"G Haupt Sc.\" at lower right. Africae - \"II. Th. pag. 26.\" at top right and \"G Haupt Sc. a. v.\" at lower left."
+    },
+    {
+      "label": "Description",
+      "value": "McLaughlin map number 1245, 1246, 1247."
+    },
+    {
+      "label": "Description",
+      "value": "Map of America is McLaughlin map number 217."
+    },
+    {
+      "label": "Table of contents",
+      "value": "[Map 1]. Europae recens designatio -- [Map 2]. Africae emendata descriptio -- [Map 3]. Asiae nova delineatio -- [Map 4]. Americae"
+    },
+    {
+      "label": "Subject",
+      "value": "World maps"
+    },
+    {
+      "label": "Coverage",
+      "value": "Scale [approximately 1:170,000,000]"
+    },
+    {
+      "label": "Coverage",
+      "value": "180°00′00″W -- 180°00′00″E / 90°00′00″N -- 90°00′00″S"
+    },
+    {
+      "label": "Date",
+      "value": "1740s"
+    },
+    {
+      "label": "Date",
+      "value": "1740s"
+    },
+    {
+      "label": "Identifier",
+      "value": "https://purl.stanford.edu/gk446cj2442"
+    },
+    {
+      "label": "Publisher",
+      "value": "Weigel"
+    },
+    {
+      "label": "Relation",
+      "value": "The Glen McLaughlin Map Collection of California as an Island"
+    },
+    {
+      "label": "Record published",
+      "value": "2026-07-14"
+    }
+  ],
+  "description": "Relief shown pictorially.",
+  "thumbnail": {
+    "@id": "https://stacks.stanford.edu/image/iiif/gk446cj2442%2Fgk446cj2442_05_0001/full/!400,400/0/default.jpg",
+    "@type": "dctypes:Image",
+    "format": "image/jpeg",
+    "service": {
+      "@context": "http://iiif.io/api/image/2/context.json",
+      "@id": "https://stacks.stanford.edu/image/iiif/gk446cj2442%2Fgk446cj2442_05_0001",
+      "profile": "http://iiif.io/api/image/2/level2.json"
+    },
+    "width": 400,
+    "height": 318
+  },
+  "sequences": [
+    {
+      "@id": "https://purl.stanford.edu/gk446cj2442/iiif/manifest#sequence-1",
+      "@type": "sc:Sequence",
+      "label": "Current order",
+      "viewingDirection": "left-to-right",
+      "canvases": [
+        {
+          "@id": "https://purl.stanford.edu/gk446cj2442/iiif/canvas/cocina-fileSet-gk446cj2442-gk446cj2442_1",
+          "@type": "sc:Canvas",
+          "label": "mclaughlin_gk446cj2442",
+          "height": 3943,
+          "width": 4956,
+          "rendering": [
+            {
+              "@id": "https://stacks.stanford.edu/file/gk446cj2442/gk446cj2442_05_0001.jp2",
+              "label": "Original source file (3.51 MB)",
+              "format": "image/jp2"
+            }
+          ],
+          "images": [
+            {
+              "@id": "https://purl.stanford.edu/gk446cj2442/iiif/annotation/https:%2F%2Fcocina.sul.stanford.edu%2Ffile%2Fgk446cj2442-gk446cj2442_1%2Fgk446cj2442_05_0001.jp2",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "on": "https://purl.stanford.edu/gk446cj2442/iiif/canvas/cocina-fileSet-gk446cj2442-gk446cj2442_1",
+              "resource": {
+                "@id": "https://stacks.stanford.edu/image/iiif/gk446cj2442%2Fgk446cj2442_05_0001/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "height": 3943,
+                "width": 4956,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://stacks.stanford.edu/image/iiif/gk446cj2442%2Fgk446cj2442_05_0001",
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

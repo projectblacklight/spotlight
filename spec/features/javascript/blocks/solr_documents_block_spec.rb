@@ -13,6 +13,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30, versioni
 
   before do
     login_as exhibit_curator
+    stub_iiif_manifest_for 'dq287tq6352', 'gk446cj2442', 'xd327cm9378'
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
     add_widget 'solr_documents'
   end

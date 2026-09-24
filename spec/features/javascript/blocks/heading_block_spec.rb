@@ -7,6 +7,7 @@ RSpec.feature 'Heading block', :js do
 
   before do
     login_as exhibit_curator
+    stub_iiif_manifest_for 'dq287tq6352'
 
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
   end

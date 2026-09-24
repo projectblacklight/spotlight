@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Multi image selector', js: true, max_wait_time: 5, type: :feature, versioning: true do
+RSpec.describe 'Multi image selector', js: true, type: :feature, versioning: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:feature_page) { FactoryBot.create(:feature_page, exhibit:) }
 
-  before { login_as exhibit_curator }
+  before do
+    login_as exhibit_curator
+    stub_iiif_manifest_for 'xd327cm9378'
+  end
 
   it 'allows the user to select which image in a multi image object to display' do
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
@@ -14,10 +17,10 @@ RSpec.describe 'Multi image selector', js: true, max_wait_time: 5, type: :featur
 
     fill_in_typeahead_field with: 'xd327cm9378'
 
-    expect(page).to have_css '.card'
+    # The image pagination is only added after the manifest loads
+    expect(page).to have_css '.card [data-panel-image-pagination]', text: /Image 1 of 2/
 
     within('.card') do
-      expect(page).to have_text(/Image \d of \d/)
       expect(page).to have_link 'Change'
     end
 
@@ -30,7 +33,7 @@ RSpec.describe 'Multi image selector', js: true, max_wait_time: 5, type: :featur
     click_link('Edit')
     wait_for_sir_trevor
 
-    expect(page).to have_text(/Image \d of \d/)
+    expect(page).to have_css '[data-panel-image-pagination]', text: /Image 1 of 2/
     click_link 'Change'
 
     # Wait for the animation to finish
