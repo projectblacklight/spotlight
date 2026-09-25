@@ -55,4 +55,27 @@ RSpec.describe Spotlight::AddUploadsFromCsv do
       )
     end
   end
+
+  context 'with pipe-delimited values' do
+    before do
+      FactoryBot.create(:custom_field, exhibit:, slug: 'custom_field', is_multiple: true)
+      FactoryBot.create(:custom_field, exhibit:, slug: 'custom_field_2', is_multiple: false)
+    end
+
+    let(:data) do
+      [
+        { 'url' => 'x', 'custom_field' => 'a|b|c', 'custom_field_2' => 'hello | world', 'custom_field_3' => '' }
+      ]
+    end
+
+    it 'splits into arrays' do
+      expect(job.send(:processed_csv, data, exhibit)).to eq(
+        [{
+          'url' => 'x',
+          'custom_field' => %w[a b c],
+          'custom_field_2' => 'hello | world'
+        }]
+      )
+    end
+  end
 end
