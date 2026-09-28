@@ -11,10 +11,27 @@
     <button id="another-email" class="btn btn-sm btn-info"><%= t('.add_contact_email_button') %></button>
     <div class="form-text text-muted mb-3"><%= t(:'.fields.contact_emails.help_block') %></div>
   <% end %>
-  <%= f.form_group :published, label: { class: 'pt-0 col-md-2 col-form-label' }, help: nil do %>
-    <%= f.check_box_without_bootstrap :published %>
-    <div class="form-text text-muted mb-3"><%= t(:'.fields.published.help_block') %></div>
-  <% end %>
+  <fieldset class="row mb-3">
+    <legend class="col-md-2 col-form-label pt-0"><%= Spotlight::Exhibit.human_attribute_name(:published) %></legend>
+    <div class="col-md-10">
+      <p class="mb-4">
+        <span class="visually-hidden"><%= t(:'.fields.publishing.status_label') %></span>
+        <span class="badge <%= { published: 'text-bg-success', published_unlisted: 'text-bg-warning', unpublished: 'text-bg-secondary' }[@exhibit.publishing_status] %>">
+          <%= t(:".fields.publishing.status.#{@exhibit.publishing_status}") %>
+        </span>
+      </p>
+      <div class="form-check form-switch">
+        <%= f.check_box_without_bootstrap :published, class: 'form-check-input', role: 'switch', aria: { describedby: 'exhibit_published_help' } %>
+        <%= f.label :published, t(:'.fields.published.label'), class: 'form-check-label fw-semibold' %>
+        <div id="exhibit_published_help" class="form-text text-muted"><%= t(:'.fields.published.help_block') %></div>
+      </div>
+      <div class="form-check ms-3 mt-2">
+        <%= f.check_box_without_bootstrap :listed, class: 'form-check-input', disabled: !@exhibit.published?, aria: { describedby: 'exhibit_listed_help' } %>
+        <%= f.label :listed, t(:'.fields.listed.label'), class: 'form-check-label' %>
+        <div id="exhibit_listed_help" class="form-text text-muted"><%= t(:'.fields.listed.help_block') %></div>
+      </div>
+    </div>
+  </fieldset>
 
   <div class="form-actions">
 

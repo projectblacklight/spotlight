@@ -4499,6 +4499,15 @@
         );
       }
 
+      // Only published exhibits can be listed on the home page
+      const published = document.getElementById("exhibit_published");
+      published?.addEventListener("change", () => {
+        // includes the hidden "0" input Rails renders with the checkbox
+        document
+          .querySelectorAll('input[name="exhibit[listed]"]')
+          .forEach((input) => (input.disabled = !published.checked));
+      });
+
       // Put focus in saved search title input when Save this search modal is shown
       $("#save-modal").on("shown.bs.modal", function () {
         $("#search_title").focus();

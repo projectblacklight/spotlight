@@ -17,6 +17,7 @@ module Spotlight
 
     scope :published, -> { where(published: true) }
     scope :unpublished, -> { where(published: false) }
+    scope :listed, -> { where(listed: true) }
     scope :ordered_by_weight, -> { order(:weight) }
 
     paginates_per 48
@@ -87,6 +88,13 @@ module Spotlight
     accepts_nested_attributes_for :masthead, :thumbnail, update_only: true, reject_if: proc { |attr| attr['iiif_tilesource'].blank? }
     accepts_nested_attributes_for :contact_emails, reject_if: proc { |attr| attr['email'].blank? }
     accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: proc { |attr| attr['user_key'].blank? && attr['id'].blank? }
+
+    # @return [Symbol] :published, :published_unlisted, or :unpublished
+    def publishing_status
+      return :unpublished unless published?
+
+      listed? ? :published : :published_unlisted
+    end
 
     def main_about_page
       @main_about_page ||= about_pages.for_locale.published.first
