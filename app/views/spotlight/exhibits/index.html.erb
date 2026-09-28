@@ -12,10 +12,10 @@
 
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane active" id="published">
-    <% if @exhibits.published.none? %>
+    <% if @exhibits.published.listed.none? %>
       <%= render 'missing_exhibits' %>
     <% else %>
-      <%= render 'tags', tags: @exhibits.published.all_tags %>
+      <%= render 'tags', tags: @exhibits.published.listed.all_tags %>
       <%= render 'exhibits', exhibits: @published_exhibits %>
 
       <% if @published_exhibits.total_count > @published_exhibits.size %>

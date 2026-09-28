@@ -28,6 +28,7 @@
       <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
     <% end %>
     <%= csrf_meta_tags %>
+    <%= tag.meta(name: 'robots', content: 'noindex') if current_exhibit&.publishing_status == :published_unlisted %>
     <%= content_for(:head) %>
     <% if @document %>
       <% add_document_meta_content(@document) %>

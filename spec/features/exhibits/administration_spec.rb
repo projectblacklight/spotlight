@@ -141,6 +141,22 @@ RSpec.describe 'Exhibit Administration', type: :feature do
     end
   end
 
+  describe 'Publishing' do
+    let(:exhibit) { FactoryBot.create(:exhibit, published: false) }
+
+    it 'publishes the exhibit without listing it on the home page', js: true do
+      visit spotlight.edit_exhibit_path(exhibit)
+
+      expect(page).to have_checked_field 'Unpublished'
+      expect(page).to have_css '[data-clipboard-target="text"]', text: spotlight.exhibit_path(exhibit)
+      choose 'Preview (URL only)'
+      click_button 'Save changes'
+
+      expect(page).to have_text('The exhibit was successfully updated.')
+      expect(exhibit.reload).to have_attributes(published: true, listed: false)
+    end
+  end
+
   describe 'Tag list' do
     before do
       allow(Spotlight::Engine.config).to receive(:site_tags).and_return(site_tags)

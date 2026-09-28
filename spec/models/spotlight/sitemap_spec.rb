@@ -22,6 +22,7 @@ RSpec.describe Spotlight::Sitemap do
   describe '.add_all_exhibits' do
     let!(:second_exhibit) { FactoryBot.create(:exhibit, published: true) }
     let!(:unpublished_exhibit) { FactoryBot.create(:exhibit, published: false) }
+    let!(:unlisted_exhibit) { FactoryBot.create(:exhibit, published: true, listed: false) }
 
     it 'builds a sitemap for all published exhibits' do
       sitemaps = []
@@ -33,7 +34,7 @@ RSpec.describe Spotlight::Sitemap do
       described_class.add_all_exhibits(sitemap)
 
       expect(sitemaps.map(&:exhibit)).to include exhibit, second_exhibit
-      expect(sitemaps.map(&:exhibit)).not_to include unpublished_exhibit
+      expect(sitemaps.map(&:exhibit)).not_to include unpublished_exhibit, unlisted_exhibit
     end
   end
 
