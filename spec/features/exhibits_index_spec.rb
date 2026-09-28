@@ -11,6 +11,20 @@ RSpec.describe 'Exhibits index page', type: :feature do
       expect(page).to have_css '.exhibit-card h2', text: 'Some Exhibit Title'
     end
 
+    context 'with an unlisted exhibit' do
+      let!(:unlisted_exhibit) { FactoryBot.create(:exhibit, title: 'Some Unlisted Title', listed: false) }
+
+      it 'is left out of the listing but can still be viewed by its URL' do
+        visit spotlight.exhibits_path
+
+        expect(page).to have_css '.exhibit-card h2', text: 'Some Exhibit Title'
+        expect(page).to have_no_css '.exhibit-card h2', text: 'Some Unlisted Title'
+
+        visit spotlight.exhibit_path(unlisted_exhibit)
+        expect(page).to have_css 'h1', text: 'Some Unlisted Title'
+      end
+    end
+
     context 'with tagged exhibits' do
       before do
         exhibit.tag_list = %w[a]

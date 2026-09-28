@@ -575,6 +575,7 @@ en:
           heading: Basic settings
         header: General
       exhibit_card:
+        unlisted: Unlisted
         unpublished: Unpublished
       export:
         download: Export data
@@ -588,8 +589,20 @@ en:
         fields:
           contact_emails:
             help_block: Each recipient will receive submissions made through the feedback form
+          listed:
+            help_block: When checked, the exhibit will be discoverable on the home page and sitemap. When unchecked, the exhibit can be shared and visited by URL only.
+            label: Show exhibit on the home page
+            legend: Visibility
           published:
-            help_block: ''
+            help_block: When checked, anyone can visit the exhibit URL. When unchecked, only logged-in users with permission can view.
+            label: Publish exhibit
+          publishing:
+            copy_url: Copy URL
+            status:
+              published: Published
+              published_unlisted: Published (URL only)
+              unpublished: Unpublished
+            status_label: Status
         uneditable_non_default_language: This field is not editable in the current language. Switch to the default language to edit it.
         uneditable_non_default_language_form:
           default_language: Switch to default language
@@ -1034,6 +1047,7 @@ en:
         page_title: Order exhibits
       exhibit:
         published: Published
+        published_unlisted: Published (URL only)
         unpublished: Unpublished
       home: Exhibits
     tags:
