@@ -237,14 +237,14 @@
 
     .box {
       min-width: 150px;
-      -webkit-flex: 1 1 150px;
+      flex: 1 1 150px;
     }
 
     /* two items */
     .box:first-child:nth-last-child(2),
     .box:first-child:nth-last-child(2) ~ .box {
       min-width: 250px;
-      -webkit-flex: 1 1 250px;
+      flex: 1 1 250px;
     }
 
     /* only images, no text */
@@ -260,7 +260,7 @@
         }
 
         @media (max-width: breakpoint-max("md")) {
-          -webkit-flex: 1 1 175px;
+          flex: 1 1 175px;
         }
       }
     }
