@@ -29,6 +29,23 @@ Capybara.register_driver :selenium_chrome_headless do |app|
   browser_options.add_argument('--disable-background-timer-throttling')
   browser_options.add_argument('--disable-backgrounding-occluded-windows')
   browser_options.add_argument('--disable-dev-shm-usage') # Helps with resource limits
+  # Don't load images. Fixture documents reference images on external IIIF servers, and Spotlight's
+  # javascript doesn't start until the page loads every image, so a slow external image
+  # can delay it past Capybara's wait time. Why the javascript waits:
+  #
+  # 1. Module and defer scripts run after the document becomes "interactive".
+  # 2. Turbo only reacts to readystatechange events. It starts after "interactive", so the first change it
+  #    sees is "complete", after every image has loaded or failed, so the first turbo:load on a full
+  #    page load waits for images (Turbo visits aren't affected).
+  #    https://github.com/hotwired/turbo/blob/v8.0.23/src/observers/page_observer.js#L17-L58
+  #    https://github.com/hotwired/turbo/issues/1492
+  # 3. Blacklight.onLoad listens for turbo:load when Turbo is present.
+  #    https://github.com/projectblacklight/blacklight/blob/64da9c1bdde123e5f32aa3f8797f2176316eef08/app/javascript/blacklight-frontend/core.js#L17
+  # 4. Spotlight's layout loads the app javascript as a module or with defer, and activates
+  #    Spotlight from Blacklight.onLoad.
+  #    https://github.com/projectblacklight/spotlight/blob/354a810966ed5528a997b95e0325b007d51b6d12/app/views/layouts/spotlight/base.html.erb#L25-L29
+  #    https://github.com/projectblacklight/spotlight/blob/354a810966ed5528a997b95e0325b007d51b6d12/lib/generators/spotlight/assets/importmap_generator.rb#L62-L63
+  browser_options.add_argument('--blink-settings=imagesEnabled=false')
   browser_options.binary = ENV['CHROME_BIN'] if ENV['CHROME_BIN']
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
