@@ -8,7 +8,10 @@ const Module = (function () {
     handle: ".dd-handle",
     fallbackOnBody: true,
     swapThreshold: 0.65,
-    emptyInsertThreshold: 15,
+    // 0 turns off SortableJS's "drop near an empty list" check. The .dd-nesting drop
+    // zones in _nestable.scss decide nesting, so a vertical drag past an item's edge
+    // does not nest it by accident.
+    emptyInsertThreshold: 0,
     onStart: onStartHandler,
     onEnd: onEndHandler,
     onMove: onMoveHandler,
@@ -17,6 +20,7 @@ const Module = (function () {
   const nestedSortableClass = "dd-list"
   const nestedSortableSelector = ".dd-list"
   const nestedSortableNodeName = "ol"
+  const nestingClass = "dd-nesting"
   const findNode = (id, container) =>
     container.querySelector(`[data-id="${id}"]`)
   const setWeight = (node, weight) => (weightField(node).value = weight)
@@ -58,14 +62,23 @@ const Module = (function () {
   }
 
   function onStartHandler(evt) {
+    const nestableContainer = getNestableContainer(evt.item)
     makeEmptyChildSortablesForEligibleParents(
-      getNestableContainer(evt.item),
+      nestableContainer,
       getMaxNestingLevelSetting(evt.item),
     )
+    // Size the drop zone below each child list to match the dragged item, so that
+    // a drag straight to the right lands in the list of the item above.
+    nestableContainer.style.setProperty(
+      "--dd-nesting-zone-height",
+      `${evt.item.querySelector(sortableOptions.handle).offsetHeight}px`,
+    )
+    nestableContainer.classList.add(nestingClass)
   }
 
   function onEndHandler(evt) {
     const nestableContainer = getNestableContainer(evt.item)
+    nestableContainer.classList.remove(nestingClass)
     removeEmptySortables(nestableContainer)
     updateWeightsAndRelationships(nestableContainer)
   }

@@ -26,9 +26,26 @@ tr.dd-item {
   position: relative;
 }
 
+// SortableJS moves an item to the start of a list when the pointer is over the list more than
+// 10px left of its items.
+$dd-nested-list-padding-left: 5px;
+
 .dd-list { display: block; position: relative; margin: 0; padding: 0 0 5px 0; list-style: none; }
-.dd-list .dd-list { margin-left: 15px; padding-left: 15px; padding-bottom: 0; } // Having this mix of padding and margin improves the experience of dragging left to remove an item from a nested list.
+.dd-list .dd-list { margin-left: 25px; padding-left: $dd-nested-list-padding-left; padding-bottom: 0; }
 .dd-collapsed .dd-list { display: none; }
+
+// While a drag is in progress, extend each child list with a drop zone that covers the
+// indented part of the next item. Dragging an item to the right then nests it.
+.dd-nesting .dd-item > .dd-list::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: $dd-nested-list-padding-left; // Offset from the child list's padding box, so the zone starts where its items start
+  right: 0;
+  height: var(--dd-nesting-zone-height);
+  z-index: 1;
+}
+.dd-nesting .sortable-chosen > .dd-list::after { display: none; }
 
 .dd-item,
 .dd-empty,
