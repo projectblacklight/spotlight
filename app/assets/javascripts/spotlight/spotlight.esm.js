@@ -1,7 +1,7 @@
 import OpenSeadragon from 'openseadragon';
 import SirTrevor$1 from 'sir-trevor';
 import Sortable from 'sortablejs';
-import bootstrap from 'bootstrap';
+import { Tab } from 'bootstrap';
 import { Controller } from '@hotwired/stimulus';
 
 // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
@@ -5368,7 +5368,7 @@ class Tabs {
       );
       if (!tabElement) return
 
-      bootstrap.Tab.getOrCreateInstance(tabElement).show();
+      Tab.getOrCreateInstance(tabElement).show();
     }
   }
 }

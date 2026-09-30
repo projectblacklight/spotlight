@@ -1,4 +1,4 @@
-import bootstrap from "bootstrap"
+import { Tab } from "bootstrap"
 
 export default class {
   connect() {
@@ -15,7 +15,7 @@ export default class {
       )
       if (!tabElement) return
 
-      bootstrap.Tab.getOrCreateInstance(tabElement).show()
+      Tab.getOrCreateInstance(tabElement).show()
     }
   }
 }
