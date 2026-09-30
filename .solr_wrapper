@@ -3,4 +3,6 @@
 collection:
   dir: lib/generators/spotlight/templates/solr/conf
   name: blacklight-core
-version: 9.7.0
+version: latest
+env:
+  SOLR_MODULES: analysis-extras
