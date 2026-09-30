@@ -52,8 +52,8 @@ module Spotlight
       end
     end
 
-    def processed_csv(csv, exhibit)
-      csv.map do |row|
+    def processed_csv(csv_data, exhibit)
+      csv_data.map do |row|
         row.map do |label, column|
           next if column.blank?
 
@@ -66,12 +66,22 @@ module Spotlight
       # Encode the value to UTF-8
       encoded_value = value.encode('UTF-8', invalid: :replace, undef: :replace, replace: "\uFFFD")
 
-      # Check if the key is a multivalued field and split pipe-delimited values if needed
-      multivalued_fields = exhibit.uploaded_resource_fields.filter_map { |field| field.field_name.to_s if field.is_multiple }
-      multivalued_custom_fields = exhibit.custom_fields.filter_map { |field| field.slug.to_s if field.is_multiple? }
-      return encoded_value unless encoded_value.include?('|') && (multivalued_fields + multivalued_custom_fields).include?(key)
+      # Check if the key is a multivalued field and split values if delimiter is enabled and present in the value
+      if delimiter.present? && encoded_value.include?(delimiter) && multivalued_fields(exhibit).include?(key)
+        encoded_value.split(delimiter).map(&:strip).compact_blank
+      else
+        encoded_value
+      end
+    end
 
-      encoded_value.split('|').map(&:strip).compact_blank
+    def delimiter
+      Spotlight::Engine.config.csv_upload_multivalued_field_delimiter
+    end
+
+    def multivalued_fields(exhibit)
+      upload_fields = exhibit.uploaded_resource_fields.filter_map { |field| field.field_name.to_s if field.is_multiple }
+      custom_fields = exhibit.custom_fields.filter_map { |field| field.slug.to_s if field.is_multiple? }
+      upload_fields + custom_fields
     end
   end
 end
