@@ -132,6 +132,9 @@ module Spotlight
     config.full_image_field = :full_image_url_ssm
     config.thumbnail_field = :thumbnail_url_ssm
 
+    # Set delimiter character for multivalued fields in CSV uploads
+    config.csv_upload_multivalued_field_delimiter = nil
+
     Spotlight::Engine.config.site_tags = nil
 
     # Defaults to the blacklight_config.index.title_field:

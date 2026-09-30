@@ -41,7 +41,8 @@
 # Spotlight::Engine.config.thumbnail_field = :thumbnail_url_ssm
 
 # ==> Uploaded item configuration
-# Note: add `is_multiple : true` to Spotlight::UploadFieldConfig arguments to allow for multi-valued field data
+# Add `is_multiple : true` to Spotlight::UploadFieldConfig arguments to allow for multivalued field data
+# If is_multiple is enabled, Spotlight will send the field to Solr as an array, so ensure that your Solr configurations support this
 # Spotlight::Engine.config.upload_fields = [
 #   Spotlight::UploadFieldConfig.new(
 #     field_name: Spotlight::Engine.config.upload_description_field,
@@ -60,6 +61,9 @@
 # Spotlight::Engine.config.upload_title_field = nil # Spotlight::UploadFieldConfig.new(...)
 # Spotlight::Engine.config.uploader_storage = :file
 # Spotlight::Engine.config.allowed_upload_extensions = %w(jpg jpeg png)
+
+# Set a delimiter character for multivalued fields in CSV uploads (ex. "|") - disabled by default
+# Spotlight::Engine.config.csv_upload_multivalued_field_delimiter = nil
 
 # Spotlight::Engine.config.featured_image_thumb_size = [400, 300]
 # Spotlight::Engine.config.featured_image_square_size = [400, 400]
