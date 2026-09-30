@@ -58,6 +58,37 @@ module Spotlight
       expect(page).to have_no_selector('.alert-danger')
     end
 
+    # Capybara's HTML5 drag emulation sends the drag events to a given element. This drags
+    # to a point instead, so the test covers what is under the pointer.
+    def drag_horizontally(handle, by:)
+      # elementFromPoint returns null for a point outside the viewport
+      page.scroll_to(handle, align: :center)
+      page.driver.browser.action.click_and_hold(handle.native).perform
+      error = page.evaluate_async_script(DRAG_HORIZONTALLY_SCRIPT, handle, by)
+      page.driver.browser.action.release.perform
+      raise error if error
+    end
+
+    DRAG_HORIZONTALLY_SCRIPT = <<~JS
+      const [handle, offset, done] = arguments
+      const item = handle.closest('.dd-item')
+      const tick = () => new Promise((resolve) => setTimeout(resolve, 50))
+      const opts = { bubbles: true, cancelable: true, dataTransfer: new DataTransfer() }
+
+      item.dispatchEvent(new DragEvent('dragstart', opts))
+      tick().then(() => {
+        const rect = handle.getBoundingClientRect()
+        const point = { clientX: rect.left + rect.width / 2 + offset, clientY: rect.top + rect.height / 2 }
+        const target = document.elementFromPoint(point.clientX, point.clientY)
+        target.dispatchEvent(new DragEvent('dragover', { ...opts, ...point }))
+        return tick().then(() => {
+          target.dispatchEvent(new DragEvent('drop', { ...opts, ...point }))
+          item.dispatchEvent(new DragEvent('dragend', { ...opts, ...point }))
+          done()
+        })
+      }).catch((error) => done(String(error)))
+    JS
+
     RSpec::Matchers.define :have_breadcrumbs do |*expected|
       match do |actual|
         errors = []

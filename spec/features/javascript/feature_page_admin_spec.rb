@@ -33,20 +33,33 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
     expect(page).to have_css('h3', text: 'My New Page')
   end
 
-  it 'can order the pages' do
+  it 'can order and nest the pages' do
     visit spotlight.exhibit_dashboard_path(exhibit)
 
     click_link 'Feature pages'
 
     add_new_via_button('FeaturePage3')
 
-    page1 = find('.dd-item', text: 'FeaturePage1').find('.dd-handle')
-    page2 = find('.dd-item', text: 'FeaturePage2').find('.dd-handle')
-    page1.drag_to(page2)
+    page1_handle = find('.dd-item', text: 'FeaturePage1').find('.dd-handle')
+    page2_handle = find('.dd-item', text: 'FeaturePage2').find('.dd-handle')
+    page1_handle.drag_to(page2_handle)
+    # Dragging straight to the right nests a page under the page above it
+    drag_horizontally(page1_handle, by: 40)
 
     click_button('Save changes')
+    expect(page).to have_text 'Feature pages were successfully updated.'
     all_page_items = all('li.dd-item h3')
     expect(all_page_items.map(&:text)).to eq(%w[FeaturePage2 FeaturePage1 FeaturePage3])
+    expect(page1.reload.parent_page).to eq page2
+
+    # Dragging straight to the left moves a nested page out to the level above
+    # Dismiss the flash so the wait for it below ends only after the next save
+    find('.alert .btn-close').click
+    drag_horizontally(find("[data-id='#{page1.id}']").find('.dd-handle'), by: -40)
+
+    click_button('Save changes')
+    expect(page).to have_text 'Feature pages were successfully updated.'
+    expect(page1.reload.parent_page).to be_nil
 
     # This save is to make sure the weights are correctly initialized. We expect nothing to change
     click_button('Save changes')
