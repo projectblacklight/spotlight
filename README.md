@@ -107,7 +107,9 @@ You only need to update `package.json` and prepare/publish the JavaScript packag
 3. Run `npm i --package-lock-only` to update the version in `package-lock.json`
 4. Commit the changes e.g. `git commit -am "Bump version to X.X.X"`
 5. Push the release to rubygems and GitHub: `bundle exec rake release`
-6. Run `npm publish` to push the JavaScript package to https://npmjs.org/package/spotlight-frontend
+6. Log in to npm: `npm login`
+7. You can test the release by running `npm publish --dry-run`. Check the console output to make sure the version number looks correct.
+8. Run `npm publish` to push the JavaScript package to https://npmjs.org/package/spotlight-frontend
 
 See [Updating the JavaScript bundle](#updating-the-javascript-bundle) above for more details.
 
