@@ -1,4 +1,7 @@
-import bootstrap from "bootstrap"
+import * as bootstrap from "bootstrap"
+
+// Bootstrap's ESM build exports Tab by name; CDN-converted UMD builds (e.g. ga.jspm.io) only have a default export
+const Tab = bootstrap.Tab ?? bootstrap.default?.Tab
 
 export default class {
   connect() {
@@ -15,7 +18,7 @@ export default class {
       )
       if (!tabElement) return
 
-      bootstrap.Tab.getOrCreateInstance(tabElement).show()
+      Tab.getOrCreateInstance(tabElement).show()
     }
   }
 }

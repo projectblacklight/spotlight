@@ -1,7 +1,7 @@
 import OpenSeadragon from 'openseadragon';
 import SirTrevor$1 from 'sir-trevor';
 import Sortable from 'sortablejs';
-import bootstrap from 'bootstrap';
+import * as bootstrap from 'bootstrap';
 import { Controller } from '@hotwired/stimulus';
 
 // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
@@ -5353,6 +5353,9 @@ const Module = (function () {
   }
 })();
 
+// Bootstrap's ESM build exports Tab by name; CDN-converted UMD builds (e.g. ga.jspm.io) only have a default export
+const Tab = bootstrap.Tab ?? bootstrap.default?.Tab;
+
 class Tabs {
   connect() {
     if (document.querySelector("[role=tabpanel]") && window.location.hash) {
@@ -5368,7 +5371,7 @@ class Tabs {
       );
       if (!tabElement) return
 
-      bootstrap.Tab.getOrCreateInstance(tabElement).show();
+      Tab.getOrCreateInstance(tabElement).show();
     }
   }
 }

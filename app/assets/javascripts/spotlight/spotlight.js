@@ -4,6 +4,25 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.OpenSeadragon, global.SirTrevor, global.Sortable, global.bootstrap, global.Stimulus));
 })(this, (function (OpenSeadragon, SirTrevor$1, Sortable, bootstrap, stimulus) { 'use strict';
 
+  function _interopNamespaceDefault(e) {
+    const n = Object.create(null, { [Symbol.toStringTag]: { value: 'Module' } });
+    if (e) {
+      for (const k in e) {
+        if (k !== 'default') {
+          const d = Object.getOwnPropertyDescriptor(e, k);
+          Object.defineProperty(n, k, d.get ? d : {
+            enumerable: true,
+            get: () => e[k]
+          });
+        }
+      }
+    }
+    n.default = e;
+    return Object.freeze(n);
+  }
+
+  const bootstrap__namespace = /*#__PURE__*/_interopNamespaceDefault(bootstrap);
+
   // Includes an unreleased RTL support pull request: https://github.com/ganlanyuan/tiny-slider/pull/658
   // Includes "export default tns" at the end of the file for spotlight/user/browse_group_categories.js
   var tns = (function (){
@@ -5353,6 +5372,9 @@
     }
   })();
 
+  // Bootstrap's ESM build exports Tab by name; CDN-converted UMD builds (e.g. ga.jspm.io) only have a default export
+  const Tab = bootstrap__namespace.Tab ?? bootstrap__namespace.default?.Tab;
+
   class Tabs {
     connect() {
       if (document.querySelector("[role=tabpanel]") && window.location.hash) {
@@ -5368,7 +5390,7 @@
         );
         if (!tabElement) return
 
-        bootstrap.Tab.getOrCreateInstance(tabElement).show();
+        Tab.getOrCreateInstance(tabElement).show();
       }
     }
   }
