@@ -113,10 +113,17 @@ module Spotlight
 
     def add_osd_viewer
       unless Bundler.locked_gems.dependencies.key? 'blacklight-gallery'
-        gem 'blacklight-gallery', '~> 4.0'
+        gem 'blacklight-gallery', '~> 5.0'
         bundle_install
       end
       generate 'blacklight_gallery:install'
+
+      return unless defined?(Importmap)
+
+      # The Spotlight layout already loads jQuery and its plugins with script tags. A second jQuery
+      # added to the importmap from blacklight-gallery replaces window.jQuery and drops those plugins.
+      gsub_file 'config/importmap.rb', /^pin "jquery".*\n/, ''
+      gsub_file 'app/javascript/application.js', /^import 'jquery'\n/, ''
     end
 
     def add_oembed
