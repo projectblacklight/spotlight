@@ -68,14 +68,32 @@ RSpec.describe Spotlight::AddUploadsFromCsv do
       ]
     end
 
-    it 'splits into arrays' do
-      expect(job.send(:processed_csv, data, exhibit)).to eq(
-        [{
-          'url' => 'x',
-          'custom_field' => %w[a b c],
-          'custom_field_2' => 'hello | world'
-        }]
-      )
+    context 'without delimiter set in Spotlight::Engine.config' do
+      it 'does not split values' do
+        expect(job.send(:processed_csv, data, exhibit)).to eq(
+          [{
+            'url' => 'x',
+            'custom_field' => 'a|b|c',
+            'custom_field_2' => 'hello | world'
+          }]
+        )
+      end
+    end
+
+    context 'with delimiter' do
+      before do
+        Spotlight::Engine.config.csv_upload_multivalued_field_delimiter = '|'
+      end
+
+      it 'splits into arrays' do
+        expect(job.send(:processed_csv, data, exhibit)).to eq(
+          [{
+            'url' => 'x',
+            'custom_field' => %w[a b c],
+            'custom_field_2' => 'hello | world'
+          }]
+        )
+      end
     end
   end
 end

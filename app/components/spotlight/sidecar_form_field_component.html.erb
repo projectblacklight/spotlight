@@ -8,7 +8,7 @@
 
   <% if multiple && !readonly %>
     <%= content_tag :template, id: template_id do %>
-      <%= form.label @id, label, class: "col-form-label #{label_col if inline} visually-hidden" %>
+      <%= form.label field_id, label, class: "col-form-label #{label_col if inline} visually-hidden" %>
       <div class="form-group mb-3 <%= "#{offset_col} #{control_col}" if inline %>">
         <%= render_input %>
       </div>
