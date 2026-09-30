@@ -41,7 +41,6 @@
 # Spotlight::Engine.config.thumbnail_field = :thumbnail_url_ssm
 
 # ==> Uploaded item configuration
-# Note: add `facetable : true` to Spotlight::UploadFieldConfig arguments to add a facet field
 # Note: add `is_multiple : true` to Spotlight::UploadFieldConfig arguments to allow for multi-valued field data
 # Spotlight::Engine.config.upload_fields = [
 #   Spotlight::UploadFieldConfig.new(
