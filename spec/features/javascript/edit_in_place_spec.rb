@@ -104,18 +104,20 @@ RSpec.describe 'Edit in place', js: true, type: :feature do
         fill_in 'blacklight_configuration_index_fields_personal_name_ssm_label', with: 'Brand new name'
       end
 
-      click_button 'Save changes'
+      # Clicking 'Save changes' takes focus off the label field, which makes
+      # edit_in_place.js update the label text and show the 'Restore default'
+      # button right away, on the current page. Their presence doesn't mean the
+      # save finished, so wait for the new page before checking for them.
+      expect_new_page { click_button 'Save changes' }
 
-      expect(page).to have_button('Save changes', disabled: false) # Wait for new page
       within('.metadata_fields') do
         expect(page).to have_css('a[href="#edit-in-place"]', text: 'Brand new name')
         expect(page).to have_css('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default', visible: true)
       end
 
       click_button 'Restore default'
-      click_button 'Save changes'
+      expect_new_page { click_button 'Save changes' }
 
-      expect(page).to have_button('Save changes', disabled: false) # Wait for new page
       within('.metadata_fields') do
         expect(page).to have_css('a[href="#edit-in-place"]', text: 'Personal names')
         expect(page).to have_no_selector('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default')

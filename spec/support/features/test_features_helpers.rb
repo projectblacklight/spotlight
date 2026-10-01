@@ -51,6 +51,20 @@ module Spotlight
       expect(page).to have_css('.st-blocks.st-ready')
     end
 
+    # Run the block (e.g. submitting a form) and wait for Turbo to render the
+    # new page, so later steps don't act on the old one. Waiting for something
+    # like an enabled submit button isn't enough: Turbo disables the submitter
+    # only while the request is in flight, so the old page can satisfy the
+    # check before the submission starts and again after it finishes. Turbo
+    # replaces the body on every render, so wait for the marked body to go
+    # away.
+    def expect_new_page
+      page.execute_script("document.body.setAttribute('data-previous-page', '')")
+      yield
+      expect(page).to have_no_css('body[data-previous-page]')
+      expect(page).to have_no_css('html[aria-busy]')
+    end
+
     def save_page_changes
       click_button('Save changes')
       # verify that the page was created.
