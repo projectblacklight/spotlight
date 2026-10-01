@@ -46,6 +46,11 @@ Capybara.register_driver :selenium_chrome_headless do |app|
   #    https://github.com/projectblacklight/spotlight/blob/354a810966ed5528a997b95e0325b007d51b6d12/app/views/layouts/spotlight/base.html.erb#L25-L29
   #    https://github.com/projectblacklight/spotlight/blob/354a810966ed5528a997b95e0325b007d51b6d12/lib/generators/spotlight/assets/importmap_generator.rb#L62-L63
   browser_options.add_argument('--blink-settings=imagesEnabled=false')
+  # Bootstrap sets `scroll-behavior: smooth` unless the browser prefers reduced motion, so Turbo's
+  # scroll to the top after a visit animates. Selenium clicks an element by finding where it is on
+  # the screen and clicking that point. If the page is still scrolling, the element moves away before
+  # the click lands, and the click hits whatever has scrolled into that spot instead.
+  browser_options.add_argument('--force-prefers-reduced-motion')
   browser_options.binary = ENV['CHROME_BIN'] if ENV['CHROME_BIN']
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
