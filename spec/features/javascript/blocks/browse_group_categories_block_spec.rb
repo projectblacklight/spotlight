@@ -46,6 +46,22 @@ RSpec.describe 'Browse Group Categories', :js, type: :feature do
     expect(page).to have_no_css '.category-title', text: 'All of the good turtles', visible: false
   end
 
+  it 'displays a maximum of 4 categories per group' do
+    fill_in_typeahead_field with: 'Pets'
+    within '.dd-list' do
+      expect(page).to have_css '.title', text: 'Pets'
+    end
+
+    save_page_changes
+    expect(page).to have_css '.categories-4'
+    expect(page).to have_css '.category-title', text: 'All of the good dogs', visible: true
+    expect(page).to have_css '.category-title', text: 'All of the good cats', visible: true
+    expect(page).to have_css '.category-title', text: 'All of the good birds', visible: true
+    expect(page).to have_css '.category-title', text: 'All of the good pigs', visible: true
+    expect(page).to have_no_css '.category-title', text: 'All of the good tigers', visible: false
+    expect(page).to have_no_css '.category-title', text: 'All of the good ferrets', visible: false
+  end
+
   it 'displays the category item counts when the option is selected' do
     fill_in_typeahead_field with: 'Good animals'
     within '.dd-list' do

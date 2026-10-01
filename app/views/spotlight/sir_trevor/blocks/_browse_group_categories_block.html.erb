@@ -9,8 +9,8 @@
           </div>
         </div>
       </div>
-      <div class="spotlight-flexbox browse-categories categories-<%= [group.searches.count, 4].min %>" data-sidebar="<%= @page.display_sidebar? %>">
-        <% group.searches.published.first(4).each_with_index do |search, index| %>
+      <div class="spotlight-flexbox browse-categories categories-<%= [group.searches.published.count, 4].min %>" data-sidebar="<%= @page.display_sidebar? %>">
+        <% group.searches.published.first(4).each do |search| %>
           <div class="box category-1 justify-content-center justify-content-md-space-around">
             <%= link_to spotlight.exhibit_browse_group_path(current_exhibit, group, search), class: 'justify-content-center' do %>
               <div class="browse-category" style='background-image: url("<%= search.thumbnail.iiif_url if search.thumbnail %>")'>
