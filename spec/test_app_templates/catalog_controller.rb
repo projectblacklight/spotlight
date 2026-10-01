@@ -21,7 +21,6 @@ class CatalogController < ApplicationController
     config.show.embed_component = Blacklight::Gallery::OpenseadragonEmbedComponent
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = {
-      qt: 'search',
       rows: 10,
       fl: '*'
     }
