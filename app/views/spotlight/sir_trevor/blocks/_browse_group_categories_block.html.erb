@@ -1,6 +1,6 @@
 <% if browse_group_categories_block.groups? %>
   <% browse_group_categories_block.groups.each do |group| %>
-    <div class="browse-group-categories-block" data-browse-group-categories-count="<%= group.searches.count %>">
+    <div class="browse-group-categories-block">
       <div class="d-flex flex-column flex-md-row py-2">
         <div class="d-flex justify-content-between align-items-baseline">
           <h2 class="m-0"><%= group.title %></h2>
@@ -8,19 +8,9 @@
             <%= link_to t(:'.view_all'), exhibit_browse_groups_path(current_exhibit, group) %>
           </div>
         </div>
-        <% if group.searches.count > 1 %>
-          <ul class="browse-group-categories-controls p-0 pt-2 pt-md-0 ms-md-auto mb-0 d-flex justify-content-center align-items-end">
-            <li class="prev px-1 overflow-hidden">
-              <%= blacklight_icon 'arrow_alt_circle_left' %>
-            </li>
-            <li class="next px-1 overflow-hidden">
-              <%= blacklight_icon 'arrow_alt_circle_right' %>
-            </li>
-          </ul>
-        <% end %>
       </div>
-      <div class="spotlight-flexbox browse-categories categories-<%= [group.searches.count, (@page.display_sidebar? ? 3 : 4)].min %>" data-browse-group-categories-carousel data-sidebar="<%= @page.display_sidebar? %>" data-browse-group-categories-count="<%= group.searches.count %>">
-        <% group.searches.published.each_with_index do |search, index| %>
+      <div class="spotlight-flexbox browse-categories categories-<%= [group.searches.count, 4].min %>" data-sidebar="<%= @page.display_sidebar? %>">
+        <% group.searches.published.first(4).each_with_index do |search, index| %>
           <div class="box category-1 justify-content-center justify-content-md-space-around">
             <%= link_to spotlight.exhibit_browse_group_path(current_exhibit, group, search), class: 'justify-content-center' do %>
               <div class="browse-category" style='background-image: url("<%= search.thumbnail.iiif_url if search.thumbnail %>")'>

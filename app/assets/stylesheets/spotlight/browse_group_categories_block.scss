@@ -1,5 +1,3 @@
-@import "../../../../vendor/assets/stylesheets/tiny-slider";
-
 .browse-group-categories-block {
   padding-bottom: $spacer * .75;
   padding-top: $spacer * .75;
@@ -12,69 +10,5 @@
   
   .spotlight-flexbox.browse-categories .box {
     display: flex;
-  }
-
-  .browse-group-categories-controls {
-    list-style: none;
-    li {
-      display: inline-block;
-      cursor: pointer;
-    }
-
-    .blacklight-icons-arrow-alt-circle-left, .blacklight-icons-arrow-alt-circle-right {
-      display: inline-block;
-      fill: $gray-600;
-      height: 44px;
-      width: 44px;
-      
-      &:hover,&:focus {
-        fill: $gray-700;
-      }
-    }
-
-    li[aria-disabled="true"] {
-      cursor: auto;
-    }
-
-    [aria-disabled="true"] {
-      .blacklight-icons-arrow-alt-circle-left, .blacklight-icons-arrow-alt-circle-right {
-        fill: $gray-400;
-
-        &:hover,&:focus {
-          fill: $gray-400;
-        }
-      }
-    }
-  }
-
-  // Coming from tiny-slider, make sure these disappear when navigating via turbolinks
-  .tns-controls {
-    display: none;
-  }
-
-  @media screen and (min-width: breakpoint-min("md")) {
-    .browse-group-categories-controls {
-      .blacklight-icons-arrow-alt-circle-left, .blacklight-icons-arrow-alt-circle-right {
-        height: 32px;
-        width: 32px;
-      }
-    }
-
-    &[data-browse-group-categories-count="2"],&[data-browse-group-categories-count="3"] {
-      .browse-group-categories-controls {
-        display: none !important;
-      }
-    }
-  }
-}
-
-[dir="rtl"] {
-  .browse-group-categories-block .blacklight-icons-arrow-alt-circle-left, .blacklight-icons-arrow-alt-circle-right{
-    transform: rotate(180deg);
-  }
-  // Hack to override overflow issue not fixed in RTL upstream in tiny-slider
-  .tns-visually-hidden {
-    left: 0;
-    right: -10000em;
-  }
+  }  
 }

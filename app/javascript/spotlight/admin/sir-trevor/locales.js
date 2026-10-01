@@ -14,7 +14,7 @@ SirTrevor.Locales.en.blocks = $.extend(SirTrevor.Locales.en.blocks, {
     autocomplete: "Enter a browse group title...",
     title: "Browse Group Categories",
     description:
-      "This widget displays all browse categories associated with a selected browse group as a horizontally-scrolling row. Each selected browse group is displayed as a separate row. Each displayed category in a group links to the corresponding browse category results page.",
+      "This widget displays a limited number of browse categories from each selected browse group, with a link to view all categories in the group. Each selected group is displayed as a separate row. Each category links to the corresponding browse category results page.",
     item_counts: "Include category item counts?",
   },
 
