@@ -27,6 +27,7 @@ module Spotlight
 
       def add_stylesheet_dependencies
         run "yarn add blacklight-frontend@#{blacklight_yarn_version}"
+        run 'yarn add blacklight-gallery@^5.0'
         run "yarn add bootstrap@\"^#{bootstrap_yarn_version}\""
         run 'yarn add leaflet'
       end
