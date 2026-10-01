@@ -27,6 +27,27 @@ RSpec.describe 'Search within an exhibit', type: :feature do
     end
   end
 
+  context 'when an item has an exhibit tag' do
+    let(:document) { SolrDocument.new(id: 'dq287tq6352') }
+
+    before do
+      exhibit.tag(document.sidecar(exhibit), with: ['zzexhibittag'], on: :tags)
+      document.reindex
+      Blacklight.default_index.connection.commit
+    end
+
+    after do
+      exhibit.tag(document.sidecar(exhibit), with: [], on: :tags)
+      document.reindex
+      Blacklight.default_index.connection.commit
+    end
+
+    it 'finds the item by its tag' do
+      visit spotlight.search_exhibit_catalog_path(exhibit, q: 'zzexhibittag')
+      expect(page).to have_text "L'AMERIQUE"
+    end
+  end
+
   it 'has breadcrumbs' do
     visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
     expect(page).to have_breadcrumbs 'Home', 'Search results'
