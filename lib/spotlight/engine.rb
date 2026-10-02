@@ -302,7 +302,7 @@ module Spotlight
       blacklight_configuration: true,
       config: true,
       pages: true,
-      resources: true
+      resources: false # see https://github.com/projectblacklight/spotlight/issues/3641
     }
 
     config.reindexing_batch_size = nil

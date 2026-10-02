@@ -103,3 +103,13 @@
 # Spotlight::Engine.config.page_configurations = {
 #   'my-local-config': ->(context) { context.my_custom_data_path(context.current_exhibit) }
 # }
+#
+# ==> Export Configuration
+# This determines what data is exported when a admin uses the exhibit export feature.
+# Spotlight::Engine.config.exports = {
+#   attachments: true,
+#   blacklight_configuration: true,
+#   config: true,
+#   pages: true,
+#   resources: false
+# }

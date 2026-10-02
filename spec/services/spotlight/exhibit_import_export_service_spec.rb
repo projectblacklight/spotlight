@@ -4,8 +4,16 @@ RSpec.describe Spotlight::ExhibitImportExportService do
   subject { JSON.parse(described_class.new(source_exhibit).to_json) }
 
   let!(:source_exhibit) { FactoryBot.create(:exhibit) }
+  let(:exports) do
+    { attachments: true,
+      blacklight_configuration: true,
+      config: true,
+      pages: true,
+      resources: true }
+  end
 
   before do
+    allow(Spotlight::Engine.config).to receive(:exports).and_return(exports)
     allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
     allow_any_instance_of(SolrDocument).to receive(:reindex)
     allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
