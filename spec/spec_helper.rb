@@ -41,7 +41,7 @@ Capybara.register_driver :selenium_chrome_headless do |app|
   #    https://github.com/hotwired/turbo/issues/1492
   # 3. Blacklight.onLoad listens for turbo:load when Turbo is present.
   #    https://github.com/projectblacklight/blacklight/blob/64da9c1bdde123e5f32aa3f8797f2176316eef08/app/javascript/blacklight-frontend/core.js#L17
-  # 4. Spotlight's layout loads the app javascript as a module or with defer, and activates
+  # 4. Spotlight's layout loads the app javascript as a module, and activates
   #    Spotlight from Blacklight.onLoad.
   #    https://github.com/projectblacklight/spotlight/blob/354a810966ed5528a997b95e0325b007d51b6d12/app/views/layouts/spotlight/base.html.erb#L25-L29
   #    https://github.com/projectblacklight/spotlight/blob/354a810966ed5528a997b95e0325b007d51b6d12/lib/generators/spotlight/assets/importmap_generator.rb#L62-L63
