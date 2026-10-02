@@ -73,6 +73,7 @@ task :ci do
     Rake::Task['spotlight:fixtures'].invoke
     within_test_app do
       system 'bin/rake spec:prepare'
+      abort 'Error running spec:prepare' unless $?.success?
     end
 
     # run the tests

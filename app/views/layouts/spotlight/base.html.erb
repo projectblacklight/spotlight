@@ -25,7 +25,7 @@
     <% if defined? Importmap %>
       <%= javascript_importmap_tags %>
     <% else %>
-      <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+      <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
     <% end %>
     <%= csrf_meta_tags %>
     <%= content_for(:head) %>
