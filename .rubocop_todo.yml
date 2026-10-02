@@ -308,7 +308,6 @@ RSpec/ContextWording:
     - "spec/services/spotlight/etl/executor_spec.rb"
     - "spec/services/spotlight/etl/solr_loader_spec.rb"
     - "spec/services/spotlight/exhibit_import_export_service_spec.rb"
-    - "spec/services/spotlight/iiif_resource_resolver_spec.rb"
     - "spec/views/shared/_masthead.html.erb_spec.rb"
     - "spec/views/spotlight/dashboards/_reindexing_activity.html.erb_spec.rb"
     - "spec/views/spotlight/exhibits/_exhibit_card.html.erb_spec.rb"
@@ -317,7 +316,6 @@ RSpec/ContextWording:
 RSpec/ExpectInHook:
   Exclude:
     - "spec/lib/migration/iiif_spec.rb"
-    - "spec/services/spotlight/iiif_resource_resolver_spec.rb"
     - "spec/views/spotlight/catalog/_edit_default.html.erb_spec.rb"
 
 # Offense count: 2
@@ -446,7 +444,6 @@ RSpec/MessageSpies:
     - "spec/models/spotlight/resources/upload_spec.rb"
     - "spec/models/spotlight/sitemap_spec.rb"
     - "spec/models/spotlight/solr_document/atomic_updates_spec.rb"
-    - "spec/services/spotlight/iiif_resource_resolver_spec.rb"
     - "spec/views/spotlight/catalog/_edit_default.html.erb_spec.rb"
     - "spec/views/spotlight/catalog/admin.html.erb_spec.rb"
     - "spec/views/spotlight/pages/show.html.erb_spec.rb"
@@ -637,7 +634,6 @@ RSpec/StubbedMock:
     - "spec/models/spotlight/page_configurations_spec.rb"
     - "spec/models/spotlight/resource_spec.rb"
     - "spec/models/spotlight/user_spec.rb"
-    - "spec/services/spotlight/iiif_resource_resolver_spec.rb"
     - "spec/views/spotlight/catalog/_edit_default.html.erb_spec.rb"
     - "spec/views/spotlight/searches/index.html.erb_spec.rb"
 
@@ -665,7 +661,6 @@ RSpec/SubjectStub:
     - "spec/models/spotlight/solr_document_sidecar_spec.rb"
     - "spec/models/spotlight/user_spec.rb"
     - "spec/presenters/spotlight/iiif_manifest_presenter_spec.rb"
-    - "spec/services/spotlight/iiif_resource_resolver_spec.rb"
 
 # Offense count: 27
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
