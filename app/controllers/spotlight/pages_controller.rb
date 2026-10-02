@@ -118,10 +118,11 @@ module Spotlight
 
     # Add a Page specific search_results method that takes user params as
     # an option and passes that off to the search service to get results
-    # @param [Hash] the query parameters
+    # @param [Hash] user_params the query parameters
     # @return [Object] the search results object from the configured search service
     def search_results(user_params)
-      search_service(user_params).search_results
+      state = search_state_class.new(user_params, blacklight_config, self)
+      search_service_class.new(config: blacklight_config, search_state: state, **search_service_context).search_results
     end
 
     def undo_link
