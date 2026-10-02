@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('openseadragon'), require('sir-trevor'), require('sortablejs'), require('bootstrap'), require('@hotwired/stimulus')) :
-  typeof define === 'function' && define.amd ? define(['openseadragon', 'sir-trevor', 'sortablejs', 'bootstrap', '@hotwired/stimulus'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.OpenSeadragon, global.SirTrevor, global.Sortable, global.bootstrap, global.Stimulus));
-})(this, (function (OpenSeadragon, SirTrevor$1, Sortable, bootstrap, stimulus) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('bootstrap'), require('openseadragon'), require('sir-trevor'), require('sortablejs'), require('@hotwired/stimulus')) :
+  typeof define === 'function' && define.amd ? define(['bootstrap', 'openseadragon', 'sir-trevor', 'sortablejs', '@hotwired/stimulus'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Spotlight = factory(global.bootstrap, global.OpenSeadragon, global.SirTrevor, global.Sortable, global.Stimulus));
+})(this, (function (bootstrap, OpenSeadragon, SirTrevor$1, Sortable, stimulus) { 'use strict';
 
   function _interopNamespaceDefault(e) {
     const n = Object.create(null, { [Symbol.toStringTag]: { value: 'Module' } });
@@ -23,7 +23,76 @@
 
   const bootstrap__namespace = /*#__PURE__*/_interopNamespaceDefault(bootstrap);
 
-  class Carousel {
+  // Bootstrap's ESM build exports Carousel by name; CDN-converted UMD builds (e.g. ga.jspm.io) only have a default export
+  const Carousel = bootstrap__namespace.Carousel ?? bootstrap__namespace.default?.Carousel;
+
+  // Sets up accessible autoplay controls (https://www.w3.org/WAI/ARIA/apg/patterns/carousel/)
+  const setupAutoplay = function (carouselElement) {
+    const button = carouselElement.querySelector(".carousel-pause-play");
+    if (!button) return
+
+    const carousel = Carousel.getInstance(carouselElement);
+    let stopped = false;
+    let hovered = false;
+
+    const togglePauseButton = function () {
+      // Toggle pause/play icon
+      button.querySelector(".carousel-pause-icon").hidden = stopped;
+      button.querySelector(".carousel-play-icon").hidden = !stopped;
+
+      // Toggle button aria-label
+      button.setAttribute(
+        "aria-label",
+        stopped ? button.dataset.startLabel : button.dataset.stopLabel,
+      );
+      // Announce slide changes only when they are not happening automatically
+      carouselElement
+        .querySelector(".carousel-inner")
+        .setAttribute("aria-live", stopped ? "polite" : "off");
+    };
+
+    const updateRotation = function () {
+      if (stopped || hovered) {
+        carousel.pause();
+      } else {
+        carousel.cycle();
+      }
+    };
+
+    const toggleAutoplay = function (rotate) {
+      stopped = !rotate;
+      updateRotation();
+      togglePauseButton();
+    };
+
+    // Stop/start autoplay on button click
+    button.addEventListener("click", function () {
+      toggleAutoplay(stopped);
+    });
+
+    // Stop autoplay when keyboard focus moves to anything in the carousel other
+    // than the pause/play button
+    // Autoplay doesn't restart unless the user explicitly requests it
+    carouselElement.addEventListener("focusin", function (event) {
+      if (stopped || button.contains(event.target)) return
+      toggleAutoplay(false);
+    });
+
+    // Mouseover temporarily pauses rotation but does not toggle pause/play button
+    carouselElement.addEventListener("mouseenter", function () {
+      hovered = true;
+      updateRotation();
+    });
+
+    carouselElement.addEventListener("mouseleave", function () {
+      hovered = false;
+      updateRotation();
+    });
+
+    updateRotation();
+  };
+
+  class Carousel$1 {
     connect() {
       if ($.fn.carousel) {
         const $carousel = $(".carousel");
@@ -55,6 +124,7 @@
           const $this = $(this);
           $this.carousel();
           updateAriaDescribedBy($this);
+          setupAutoplay(this);
         });
 
         // on slide change
@@ -136,7 +206,7 @@
 
   class UserIndex {
     connect() {
-      new Carousel().connect();
+      new Carousel$1().connect();
       new ClearFormButton().connect();
       new ZprLinks().connect();
     }
