@@ -59,7 +59,7 @@ jobs:
 
   javascript:
     runs-on: ubuntu-latest
-    name: javascript (prettier & eslint)
+    name: javascript (prettier, eslint & build check)
     steps:
       - uses: actions/checkout@v4
       - name: Set up Node
@@ -73,3 +73,7 @@ jobs:
         run: npm run format:check
       - name: Lint
         run: npm run lint
+      - name: Check built package is current
+        run: |
+          npm run prepare
+          git diff --exit-code app/assets/javascripts
