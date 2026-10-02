@@ -1,0 +1,171 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "https://purl.stanford.edu/dq287tq6352/iiif/manifest",
+  "@type": "sc:Manifest",
+  "label": "Les tables de geographie, reduites en vn iev de cartes",
+  "attribution": "This work has been identified as being free of known restrictions under copyright law, including all related and neighboring rights. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.",
+  "logo": {
+    "@id": "https://stacks.stanford.edu/image/iiif/wy534zh7137/SULAIR_rosette/full/400,/0/default.jpg",
+    "service": {
+      "@context": "http://iiif.io/api/image/2/context.json",
+      "@id": "https://stacks.stanford.edu/image/iiif/wy534zh7137/SULAIR_rosette",
+      "profile": "http://iiif.io/api/image/2/level2.json"
+    }
+  },
+  "license": "https://creativecommons.org/publicdomain/mark/1.0/",
+  "seeAlso": {
+    "@id": "https://purl.stanford.edu/dq287tq6352.mods",
+    "format": "application/mods+xml"
+  },
+  "metadata": [
+    {
+      "label": "Available Online",
+      "value": "<a href='https://purl.stanford.edu/dq287tq6352'>https://purl.stanford.edu/dq287tq6352</a>"
+    },
+    {
+      "label": "Title",
+      "value": "Les tables de geographie, reduites en vn iev de cartes"
+    },
+    {
+      "label": "Contributor",
+      "value": "Duval, P. (Pierre), 1619-1682"
+    },
+    {
+      "label": "Type",
+      "value": "Digital Maps"
+    },
+    {
+      "label": "Type",
+      "value": "Early Maps"
+    },
+    {
+      "label": "Type",
+      "value": "Map"
+    },
+    {
+      "label": "Format",
+      "value": "1 of 4 maps as part of title cartouche: 4.5 x 4.9 cm. on sheet 41 x 54 cm."
+    },
+    {
+      "label": "Statement of responsibility",
+      "value": "Par P. Dv-Val Geographe du Roy."
+    },
+    {
+      "label": "Description",
+      "value": "California as an island with rounded northern coastline, with suggestion of sea passage to its north and large landmass to its northwest."
+    },
+    {
+      "label": "Description",
+      "value": "Dedication: A Monseigneur le Dauphin, parson tres-humble, tres-obeifsant, et tres-fidele serviteur, P. DvVal Geographe du Roy."
+    },
+    {
+      "label": "Description",
+      "value": "Engraved by: Cordier sculp. (within sheet title cartouche)."
+    },
+    {
+      "label": "Description",
+      "value": "On sheet: 52 playing cards (uncut), each describing a geographical region."
+    },
+    {
+      "label": "Description",
+      "value": "Sheet title cartouche is as follows: \"L'AFRIQUE\" map, identified crown and shield of \"Monseigneur le Dauphin\", \"L'AMERIQUE\" and \"L'EUROPE\" maps, title: LES TABLES de GEOGRAPHIE, reduites en vn IEV DE CARTES, and \"L'ASIE\" map. (top center of sheet)."
+    },
+    {
+      "label": "Description",
+      "value": "Original McLaughlin Book Number (1995 edition): 44"
+    },
+    {
+      "label": "Citation/Reference",
+      "value": "None found."
+    },
+    {
+      "label": "Subject",
+      "value": "America"
+    },
+    {
+      "label": "Coverage",
+      "value": "Scale not given"
+    },
+    {
+      "label": "Coverage",
+      "value": "160°00′00″W -- 20°00′00″E / 90°00′00″N -- 90°00′00″S"
+    },
+    {
+      "label": "Date",
+      "value": "1669"
+    },
+    {
+      "label": "Identifier",
+      "value": "https://purl.stanford.edu/dq287tq6352"
+    },
+    {
+      "label": "Publisher",
+      "value": "chez l'auteur sur le quay de l'orloge, pres le palais, avec privilege de sa Maiesté, pour 20 ans."
+    },
+    {
+      "label": "Relation",
+      "value": "The Glen McLaughlin Map Collection of California as an Island"
+    },
+    {
+      "label": "Record published",
+      "value": "2026-07-14"
+    }
+  ],
+  "description": "California as an island with rounded northern coastline, with suggestion of sea passage to its north and large landmass to its northwest.",
+  "thumbnail": {
+    "@id": "https://stacks.stanford.edu/image/iiif/dq287tq6352%2Fdq287tq6352_05_0001/full/!400,400/0/default.jpg",
+    "@type": "dctypes:Image",
+    "format": "image/jpeg",
+    "service": {
+      "@context": "http://iiif.io/api/image/2/context.json",
+      "@id": "https://stacks.stanford.edu/image/iiif/dq287tq6352%2Fdq287tq6352_05_0001",
+      "profile": "http://iiif.io/api/image/2/level2.json"
+    },
+    "width": 400,
+    "height": 296
+  },
+  "sequences": [
+    {
+      "@id": "https://purl.stanford.edu/dq287tq6352/iiif/manifest#sequence-1",
+      "@type": "sc:Sequence",
+      "label": "Current order",
+      "viewingDirection": "left-to-right",
+      "canvases": [
+        {
+          "@id": "https://purl.stanford.edu/dq287tq6352/iiif/canvas/cocina-fileSet-dq287tq6352-dq287tq6352_1",
+          "@type": "sc:Canvas",
+          "label": "0001",
+          "height": 11013,
+          "width": 14890,
+          "rendering": [
+            {
+              "@id": "https://stacks.stanford.edu/file/dq287tq6352/dq287tq6352_05_0001.jp2",
+              "label": "Original source file (29.5 MB)",
+              "format": "image/jp2"
+            }
+          ],
+          "images": [
+            {
+              "@id": "https://purl.stanford.edu/dq287tq6352/iiif/annotation/https:%2F%2Fcocina.sul.stanford.edu%2Ffile%2Fdq287tq6352-dq287tq6352_1%2Fdq287tq6352_05_0001.jp2",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "on": "https://purl.stanford.edu/dq287tq6352/iiif/canvas/cocina-fileSet-dq287tq6352-dq287tq6352_1",
+              "resource": {
+                "@id": "https://stacks.stanford.edu/image/iiif/dq287tq6352%2Fdq287tq6352_05_0001/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "height": 11013,
+                "width": 14890,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://stacks.stanford.edu/image/iiif/dq287tq6352%2Fdq287tq6352_05_0001",
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
