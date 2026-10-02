@@ -35,6 +35,7 @@ module Spotlight
 
     # Blacklight 9 moved facet_value_to_fq_string out of SearchBuilder and into
     # Blacklight::Solr::DefaultFilterQueryBuilder; call whichever is available.
+    # Remove the fallback when Blacklight 8 support is dropped.
     def exhibit_facet_value_to_fq_string(facet_field, value)
       if defined?(Blacklight::Solr::DefaultFilterQueryBuilder)
         Blacklight::Solr::DefaultFilterQueryBuilder.new(blacklight_config:).send(:facet_value_to_fq_string, facet_field, value)
