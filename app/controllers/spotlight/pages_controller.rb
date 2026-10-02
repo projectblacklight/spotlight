@@ -17,8 +17,7 @@ module Spotlight
     helper_method :get_search_results, :search_results, :fetch, :page_collection_name
 
     before_action do
-      blacklight_config.action_mapping.default = blacklight_config.index
-      blacklight_config.action_mapping.show = blacklight_config.index
+      blacklight_config.action_mapping.show.top_level_config = :index
       blacklight_config.view.gallery.classes = 'row-cols-2 row-cols-md-4' unless @page&.display_sidebar
     end
 
@@ -118,10 +117,11 @@ module Spotlight
 
     # Add a Page specific search_results method that takes user params as
     # an option and passes that off to the search service to get results
-    # @param [Hash] the query parameters
+    # @param [Hash] user_params the query parameters
     # @return [Object] the search results object from the configured search service
     def search_results(user_params)
-      search_service(user_params).search_results
+      state = search_state_class.new(user_params, blacklight_config, self)
+      search_service_class.new(config: blacklight_config, search_state: state, **search_service_context).search_results
     end
 
     def undo_link

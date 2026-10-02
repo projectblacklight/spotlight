@@ -65,7 +65,7 @@ module Spotlight
     def browse_category_search_builder
       @browse_category_search_builder ||= begin
         search_builder = self.class.new(@processor_chain, @scope)
-        search_builder.with(current_browse_category.query_params)
+        search_builder.with(search_state.reset(current_browse_category.query_params))
       end
     end
   end

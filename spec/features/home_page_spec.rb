@@ -45,7 +45,7 @@ RSpec.describe 'Home page', type: :feature, versioning: true do
     click_button 'Genre'
     click_link 'map'
     expect(page).to have_text exhibit.title
-    expect(page).to have_text 'You searched for: Genre map'
+    expect(page).to have_css '.constraint-value', text: 'Genre map'
   end
 
   it 'has a search box' do
@@ -54,7 +54,7 @@ RSpec.describe 'Home page', type: :feature, versioning: true do
     click_button 'Search'
 
     expect(page).to have_text exhibit.title
-    expect(page).to have_text 'You searched for: query'
+    expect(page).to have_css '.constraint-value', text: 'query'
   end
 
   it 'has <meta> tags' do
