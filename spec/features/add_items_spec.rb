@@ -21,10 +21,10 @@ RSpec.describe 'Uploading a non-repository item', type: :feature do
       within('form#new_resources_upload') do
         expect(page).to have_css('#resources_upload_url[type="file"]')
         expect(page).to have_css('.form-text', text: 'Valid file types: jpg jpeg png')
-        expect(page).to have_css('#resources_upload_data_full_title_tesim[type="text"]')
-        expect(page).to have_css('textarea#resources_upload_data_spotlight_upload_description_tesim')
-        expect(page).to have_css('#resources_upload_data_spotlight_upload_attribution_tesim[type="text"]')
-        expect(page).to have_css('#resources_upload_data_spotlight_upload_date_tesim[type="text"]')
+        expect(page).to have_css('#f0_resources_upload_data_full_title_tesim[type="text"]')
+        expect(page).to have_css('textarea#f0_resources_upload_data_spotlight_upload_description_tesim')
+        expect(page).to have_css('#f0_resources_upload_data_spotlight_upload_attribution_tesim[type="text"]')
+        expect(page).to have_css('#f0_resources_upload_data_spotlight_upload_date_tesim[type="text"]')
         expect(page).to have_css("#f0_resources_upload_data_#{custom_field.slug}[type='text']")
       end
     end
@@ -63,6 +63,41 @@ RSpec.describe 'Uploading a non-repository item', type: :feature do
     ensure
       Blacklight.default_index.connection.delete_by_query 'spotlight_resource_type_ssim:spotlight/resources/uploads'
       Blacklight.default_index.connection.commit
+    end
+
+    context 'with multivalued uploadfield' do
+      let(:upload_fields) do
+        [
+          Spotlight::UploadFieldConfig.new(
+            field_name: :spotlight_upload_test_multivalued_ssim,
+            label: -> { 'Multivalued Test Field' },
+            is_multiple: true
+          )
+        ]
+      end
+
+      before do
+        allow(Spotlight::Resources::Upload).to receive(:fields).with(exhibit).and_return(upload_fields)
+      end
+
+      it 'creates an item with a multivalued upload field', :js do
+        visit spotlight.new_exhibit_resource_path(exhibit)
+
+        click_link 'Upload item'
+
+        fill_in 'Multivalued Test Field', with: 'value 1'
+        click_on 'Add another'
+        fill_in 'resources_upload_data_spotlight_upload_test_multivalued_ssim_2', with: 'value 2'
+
+        within '#new_resources_upload' do
+          click_button 'Add item'
+        end
+        expect(page).to have_text 'Object uploaded successfully.'
+        expect(Spotlight::Resource.last.data['spotlight_upload_test_multivalued_ssim']).to eq ['value 1', 'value 2']
+      ensure
+        Blacklight.default_index.connection.delete_by_query 'spotlight_resource_type_ssim:spotlight/resources/uploads'
+        Blacklight.default_index.connection.commit
+      end
     end
 
     it 'displays the multi-item CSV upload form' do
