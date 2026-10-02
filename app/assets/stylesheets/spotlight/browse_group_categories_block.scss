@@ -1,14 +1,4 @@
 .browse-group-categories-block {
   padding-bottom: $spacer * .75;
   padding-top: $spacer * .75;
-  
-  .browse-categories .browse-category {
-    .category-caption {
-      z-index: 100;
-    }
-  }
-  
-  .spotlight-flexbox.browse-categories .box {
-    display: flex;
-  }  
 }
