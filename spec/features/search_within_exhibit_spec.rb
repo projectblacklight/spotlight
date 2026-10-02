@@ -23,7 +23,7 @@ RSpec.describe 'Search within an exhibit', type: :feature do
 
     it "has a 'Item Visiblity' facet" do
       visit spotlight.search_exhibit_catalog_path(exhibit)
-      expect(page).to have_css '.card-header', text: 'Item visibility'
+      expect(page).to have_css '.facet-field-heading', text: 'Item visibility'
     end
   end
 
