@@ -1018,6 +1018,8 @@ en:
           controls:
             next_item: Next item
             previous_item: Previous item
+            start_rotation: Start automatic slide show
+            stop_rotation: Stop automatic slide show
         uploaded_items_block:
           zpr_link_html: View <span class="visually-hidden">%{title}</span> larger
     sites:

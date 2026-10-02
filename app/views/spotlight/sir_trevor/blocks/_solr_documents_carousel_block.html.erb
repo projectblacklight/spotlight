@@ -3,8 +3,17 @@
 <% html_id = "carousel-#{solr_documents_carousel_block.object_id}" %>
 <div class="content-block carousel-block carousel-height-<%= solr_documents_carousel_block.max_height %>">
 <% if solr_documents_carousel_block.documents? %>
-  <div id="<%= html_id %>" class="carousel slide" <%= "data-bs-ride=carousel data-bs-interval=#{solr_documents_carousel_block.interval}" if solr_documents_carousel_block.autoplay? %>>
-    <div class="carousel-inner text-center">
+  <div id="<%= html_id %>" class="carousel slide" <%= "data-bs-interval=#{solr_documents_carousel_block.interval} data-bs-pause=false" if solr_documents_carousel_block.autoplay? %>>
+    <% if solr_documents_carousel_block.autoplay? %>
+      <button type="button" class="btn btn-dark carousel-pause-play"
+        aria-label="<%= t('spotlight.sir_trevor.blocks.solr_documents_carousel_block.controls.stop_rotation') %>"
+        data-stop-label="<%= t('spotlight.sir_trevor.blocks.solr_documents_carousel_block.controls.stop_rotation') %>"
+        data-start-label="<%= t('spotlight.sir_trevor.blocks.solr_documents_carousel_block.controls.start_rotation') %>">
+        <%= blacklight_icon('pause', classes: 'carousel-pause-icon') %>
+        <%= blacklight_icon('play_arrow', classes: 'carousel-play-icon', hidden: true) %>
+      </button>
+    <% end %>
+    <div class="carousel-inner text-center" aria-live="<%= solr_documents_carousel_block.autoplay? ? 'off' : 'polite' %>">
     <% solr_documents_carousel_block.each_document.each_with_index do |(block_options, document), index| %>
       <% doc_presenter = document_presenter(document) %>
       <div class="carousel-item <%= 'active' if index == 0 %>" data-id="<%= document.id %>">
