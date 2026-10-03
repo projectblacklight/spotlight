@@ -59,7 +59,7 @@ module Spotlight
     end
 
     def bulk_updates_config
-      Spotlight::Engine.config.bulk_updates
+      Spotlight::Engine.config.spotlight.bulk_updates
     end
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -76,7 +76,7 @@ module Spotlight
         response = exhibit.blacklight_config.repository.search(
           solr_params.merge(
             'q' => '*',
-            'rows' => Spotlight::Engine.config.bulk_actions_batch_size,
+            'rows' => Spotlight::Engine.config.spotlight.bulk_actions_batch_size,
             'cursorMark' => cursor_mark,
             'sort' => "#{exhibit.blacklight_config.document_model.unique_key} asc"
           )

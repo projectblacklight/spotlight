@@ -42,7 +42,7 @@ RSpec.describe Spotlight::Resources::IiifHarvester do
 
     before do
       stub_default_collection
-      allow(Spotlight::Engine.config).to receive(:writable_index).and_return(false)
+      allow(Spotlight::Engine.config.spotlight).to receive(:writable_index).and_return(false)
     end
 
     it 'indexes all the solr documents' do

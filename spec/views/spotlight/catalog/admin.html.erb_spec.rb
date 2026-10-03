@@ -33,13 +33,13 @@ RSpec.describe 'spotlight/catalog/admin.html.erb', type: :view do
   end
 
   it "renders the 'add items' link if any repository sources are configured" do
-    allow(Spotlight::Engine.config).to receive(:resource_partials).and_return(['a'])
+    allow(Spotlight::Engine.config.spotlight).to receive(:resource_partials).and_return(['a'])
     render
     expect(rendered).to have_link 'Add items'
   end
 
   it "does not render the 'add items' link if no repository sources are configured" do
-    allow(Spotlight::Engine.config).to receive(:resource_partials).and_return([])
+    allow(Spotlight::Engine.config.spotlight).to receive(:resource_partials).and_return([])
     render
     expect(rendered).to have_no_link 'Add items'
   end

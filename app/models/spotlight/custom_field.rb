@@ -15,7 +15,7 @@ module Spotlight
 
     friendly_id :slug_candidates, use: %i[slugged scoped finders], scope: :exhibit
 
-    scope :facetable, -> { where(field_type: Spotlight::Engine.config.custom_field_types.select { |_k, v| v[:facetable] }.keys) }
+    scope :facetable, -> { where(field_type: Spotlight::Engine.config.spotlight.custom_field_types.select { |_k, v| v[:facetable] }.keys) }
     scope :writeable, -> { where(readonly_field: false) }
 
     before_create do

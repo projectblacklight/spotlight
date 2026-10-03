@@ -8,7 +8,7 @@ RSpec.describe Spotlight::AddTagsJob do
   let(:tags) { 'hello,world' }
 
   before do
-    allow(Spotlight::Engine.config).to receive_messages(bulk_actions_batch_size: 5)
+    allow(Spotlight::Engine.config.spotlight).to receive_messages(bulk_actions_batch_size: 5)
   end
 
   it 'adds tags to SolrDocumentSidecar objects' do

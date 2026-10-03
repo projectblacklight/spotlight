@@ -552,7 +552,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
     end
 
     before do
-      allow(Spotlight::Engine.config).to receive(:exports).and_return(exports)
+      allow(Spotlight::Engine.config.spotlight).to receive(:exports).and_return(exports)
     end
 
     it 'includes nothing' do
@@ -566,7 +566,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
     end
 
     before do
-      allow(Spotlight::Engine.config).to receive(:exports).and_return(exports)
+      allow(Spotlight::Engine.config.spotlight).to receive(:exports).and_return(exports)
     end
 
     it 'includes only the page-related data' do

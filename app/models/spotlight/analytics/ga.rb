@@ -8,12 +8,12 @@ module Spotlight
     # Google Analytics data provider for the Exhibit dashboard
     class Ga
       def enabled?
-        Spotlight::Engine.config.ga_json_key_path && client
+        Spotlight::Engine.config.spotlight.ga_json_key_path && client
       end
 
       def client
         Google::Analytics::Data.analytics_data do |config|
-          config.credentials = Spotlight::Engine.config.ga_json_key_path
+          config.credentials = Spotlight::Engine.config.spotlight.ga_json_key_path
         end
       rescue StandardError => e
         Rails.logger.error(e)
@@ -48,7 +48,7 @@ module Spotlight
                                     metrics: [{ name: 'eventCount' }, { name: 'sessions' },
                                               { name: 'screenPageViewsPerSession' }, { name: 'engagementRate' }],
                                     order_bys: [{ metric: { metric_name: 'eventCount' },
-                                                  desc: true }] }).merge(Spotlight::Engine.config.ga_search_analytics_options)
+                                                  desc: true }] }).merge(Spotlight::Engine.config.spotlight.ga_search_analytics_options)
       end
 
       def page_params(path, dates)
@@ -57,7 +57,7 @@ module Spotlight
                                     order_bys: [{ metric: { metric_name: 'screenPageViews' }, desc: true }],
                                     metrics: [{ name: 'totalUsers' }, { name: 'activeUsers' },
                                               { name: 'screenPageViews' }]
-                                  }).merge(Spotlight::Engine.config.ga_page_analytics_options)
+                                  }).merge(Spotlight::Engine.config.spotlight.ga_page_analytics_options)
       end
 
       def report(params)
@@ -120,7 +120,7 @@ module Spotlight
       private
 
       def ga_property_id
-        Spotlight::Engine.config.ga_property_id
+        Spotlight::Engine.config.spotlight.ga_property_id
       end
     end
   end

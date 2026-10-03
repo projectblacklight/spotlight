@@ -8,7 +8,7 @@ RSpec.describe Spotlight::ChangeVisibilityJob do
   let(:visibility) { 'private' }
 
   before do
-    allow(Spotlight::Engine.config).to receive_messages(bulk_actions_batch_size: 5)
+    allow(Spotlight::Engine.config.spotlight).to receive_messages(bulk_actions_batch_size: 5)
   end
 
   it 'sets the items based off of the visibility' do

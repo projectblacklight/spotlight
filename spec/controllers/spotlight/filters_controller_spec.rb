@@ -7,7 +7,7 @@ RSpec.describe Spotlight::FiltersController do
     let(:exhibit) { FactoryBot.create(:exhibit) }
 
     before do
-      allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(false)
+      allow(Spotlight::Engine.config.spotlight).to receive(:filter_resources_by_exhibit).and_return(false)
     end
 
     context 'when not signed in' do
@@ -41,7 +41,7 @@ RSpec.describe Spotlight::FiltersController do
     let(:exhibit_filter) { exhibit.filters.first }
 
     before do
-      allow(Spotlight::Engine.config).to receive(:filter_resources_by_exhibit).and_return(true)
+      allow(Spotlight::Engine.config.spotlight).to receive(:filter_resources_by_exhibit).and_return(true)
     end
 
     context 'when not signed in' do

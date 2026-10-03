@@ -14,7 +14,7 @@ module Spotlight
         @fields ||= {}
         @fields[exhibit] ||= begin
           index_title_field = exhibit.blacklight_config.index.title_field
-          title_field = Spotlight::Engine.config.upload_title_field ||
+          title_field = Spotlight::Engine.config.spotlight.upload_title_field ||
                         Spotlight::UploadFieldConfig.new(
                           field_name: index_title_field,
                           label: I18n.t(:"spotlight.search.fields.#{index_title_field}")
@@ -43,13 +43,15 @@ module Spotlight
       def to_solr
         return {} unless upload&.file_present?
 
-        dimensions = Spotlight::Engine.config.iiif_service.info(upload.id)
+        spotlight_config = Spotlight::Engine.config.spotlight
+        iiif_service = spotlight_config.iiif_service
+        dimensions = iiif_service.info(upload.id)
 
         {
           spotlight_full_image_width_ssm: dimensions.width,
           spotlight_full_image_height_ssm: dimensions.height,
-          Spotlight::Engine.config.thumbnail_field => Spotlight::Engine.config.iiif_service.thumbnail_url(upload),
-          Spotlight::Engine.config.iiif_manifest_field => Spotlight::Engine.config.iiif_service.manifest_url(exhibit, self)
+          spotlight_config.thumbnail_field => iiif_service.thumbnail_url(upload),
+          spotlight_config.iiif_manifest_field => iiif_service.manifest_url(exhibit, self)
         }
       end
 

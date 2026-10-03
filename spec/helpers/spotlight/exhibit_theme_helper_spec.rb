@@ -38,7 +38,7 @@ RSpec.describe Spotlight::ExhibitThemeHelper, type: :helper do
 
     context 'for a themed exhibit' do
       before do
-        allow(Spotlight::Engine.config).to receive(:exhibit_themes).and_return(%w[default modern])
+        allow(Spotlight::Engine.config.spotlight).to receive(:exhibit_themes).and_return(%w[default modern])
         exhibit.update(theme: 'modern')
       end
 
