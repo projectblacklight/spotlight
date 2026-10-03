@@ -29,7 +29,7 @@ class TestAppGenerator < Rails::Generators::Base
 
   def add_gems
     gem 'blacklight', ENV['BLACKLIGHT_VERSION'] || '~> 8.0' unless Bundler.locked_gems.dependencies.key? 'blacklight'
-    gem 'blacklight-gallery', '~> 4.5' unless Bundler.locked_gems.dependencies.key? 'blacklight-gallery'
+    gem 'blacklight-gallery' unless Bundler.locked_gems.dependencies.key? 'blacklight-gallery'
     gem 'bootstrap_form' unless Bundler.locked_gems.dependencies.key? 'bootstrap_form'
 
     Bundler.with_unbundled_env do
