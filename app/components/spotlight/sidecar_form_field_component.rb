@@ -5,18 +5,19 @@ module Spotlight
   class SidecarFormFieldComponent < ViewComponent::Base
     attr_reader :form, :field_id, :label, :value_list, :multiple, :readonly, :inline
 
-    def initialize(form:, id:, label:, value: nil, **options)
+    # rubocop:disable Metrics/ParameterLists
+    def initialize(form:, id:, label:, value: nil, field_type: 'text_field', multiple: false, readonly: false, inline: false)
       super()
-
       @form = form
       @field_id = id
       @label = label
       @value_list = Array(value || '')
-      @field_type = options.fetch(:field_type, 'text_field').to_s
-      @multiple = options.fetch(:multiple, false)
-      @readonly = options.fetch(:readonly, false)
-      @inline = options.fetch(:inline, false)
+      @field_type = field_type.to_s
+      @multiple = multiple
+      @readonly = readonly
+      @inline = inline
     end
+    # rubocop:enable Metrics/ParameterLists
 
     def render_input(value: nil, namespace: nil)
       options = { value: value, class: "form-control field-#{field_id}" }
@@ -31,15 +32,15 @@ module Spotlight
       options[:namespace] = namespace if namespace.present?
 
       case @field_type
-      when 'text_field', 'vocab'
+      when 'text_field'
         form.text_field_without_bootstrap(field_id, **options)
-      when 'text_area', 'text'
+      when 'text_area'
         form.text_area_without_bootstrap(field_id, **options)
       end
     end
 
     def template_id
-      "spotlight-field-template-#{@field_id}"
+      "spotlight-field-template-#{field_id}"
     end
 
     def label_col

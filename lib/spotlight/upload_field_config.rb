@@ -7,16 +7,18 @@ module Spotlight
   # See Spotlight::Engine.config.upload_fields for where this is consumed
   # We should look into changing this to a standard blacklight field config in Blacklight 7
   class UploadFieldConfig
-    attr_reader :blacklight_options, :field_name, :form_field_type, :is_multiple
+    attr_reader :blacklight_options, :field_name, :form_field_type
 
-    def initialize(field_name:, blacklight_options: {}, **options)
+    # rubocop:disable Metrics/ParameterLists
+    def initialize(field_name:, blacklight_options: {}, form_field_type: :text_field, solr_fields: nil, label: field_name, is_multiple: false)
       @blacklight_options = blacklight_options
       @field_name = field_name
-      @form_field_type = options.fetch(:form_field_type, :text_field)
-      @solr_fields = options.fetch(:solr_fields, nil)
-      @label = options.fetch(:label, field_name)
-      @is_multiple = options.fetch(:is_multiple, false)
+      @form_field_type = form_field_type
+      @solr_fields = solr_fields
+      @label = label
+      @is_multiple = is_multiple
     end
+    # rubocop:enable Metrics/ParameterLists
 
     # Allows a proc to be set as the label
     def label
@@ -24,6 +26,12 @@ module Spotlight
 
       @label
     end
+
+    # rubocop:disable Naming/PredicatePrefix
+    def is_multiple?
+      @is_multiple
+    end
+    # rubocop:enable Naming/PredicatePrefix
 
     # aliasing for backwards compatability and consistency with blacklight config
     alias solr_field field_name

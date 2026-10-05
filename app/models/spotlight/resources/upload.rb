@@ -25,7 +25,7 @@ module Spotlight
 
       def self.as_strong_params(exhibit)
         fields(exhibit).map do |field|
-          field.is_multiple ? { field.field_name => [] } : field.field_name
+          field.is_multiple? ? { field.field_name => [] } : field.field_name
         end
       end
 

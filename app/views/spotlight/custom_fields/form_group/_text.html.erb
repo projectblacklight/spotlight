@@ -1,0 +1,12 @@
+<% inline = local_assigns[:inline].presence %>
+
+<%= render Spotlight::SidecarFormFieldComponent.new(
+  form: f,
+  id: field.slug,
+  label: field.label,
+  value: value,
+  field_type: 'text_area',
+  multiple: field.is_multiple?,
+  readonly: field.readonly_field?,
+  inline: inline
+) %>

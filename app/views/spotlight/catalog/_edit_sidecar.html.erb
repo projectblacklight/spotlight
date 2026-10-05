@@ -2,8 +2,20 @@
   <%= c.fields_for :data do |d| %>
     <% if document.uploaded_resource? %>
       <%= d.fields_for :configured_fields do |e| %>
-        <% Spotlight::Resources::Upload.fields(current_exhibit).each do |field| %>
-          <%= render Spotlight::SidecarFormFieldComponent.new(form: e, id: field.field_name, label: uploaded_field_label(field), field_type: field.form_field_type, value: (document.sidecar(current_exhibit).data["configured_fields"] || {})[field.field_name.to_s], multiple: field.is_multiple) %>
+        <% Spotlight::Resources::Upload.fields(current_exhibit).each do |config| %>
+          <% value = (document.sidecar(current_exhibit).data["configured_fields"] || {})[config.field_name.to_s] %>
+          <% if config.is_multiple? %>
+            <%= render Spotlight::SidecarFormFieldComponent.new(
+              form: e,
+              id: config.field_name,
+              label: uploaded_field_label(config),
+              value: value,
+              field_type: config.form_field_type,
+              multiple: true
+            ) %>
+          <% else %>
+            <%= e.send(config.form_field_type, config.field_name, value: value, label: uploaded_field_label(config)) %>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
@@ -11,7 +23,7 @@
     <%# Using `includes(:exhibit)` to ensure all fields are using the same exhibit object to take advantage of memoization %>
     <% current_exhibit.custom_fields.includes(:exhibit).each do |field| %>
       <% data = document.sidecar(current_exhibit).data %>
-      <%= render Spotlight::SidecarFormFieldComponent.new(form: d, id: field.slug, label: field.label, field_type: field.field_type, value: data[field.slug.to_s] || data[field.field.to_s], multiple: field.is_multiple?, readonly: field.readonly_field?) %>
+      <%= render partial: "spotlight/custom_fields/form_group/#{field.field_type}", locals: { f: d, field: field, value: data[field.slug.to_s] || data[field.field.to_s] } %>
       <% unless field.configured_to_display? %>
         <p class="bg-warning form-text">
           <%= t(:'.blank_field_warning_html',

@@ -21,8 +21,8 @@ RSpec.describe Spotlight::Resources::Upload, type: :model do
 
   describe '.as_strong_params' do
     it 'returns single-value fields by name and multi-value fields as empty arrays' do
-      single_field = instance_double(Spotlight::UploadFieldConfig, field_name: 'full_title_tesim', is_multiple: false)
-      multi_field = instance_double(Spotlight::UploadFieldConfig, field_name: 'spotlight_test_ssim', is_multiple: true)
+      single_field = instance_double(Spotlight::UploadFieldConfig, field_name: 'full_title_tesim', is_multiple?: false)
+      multi_field = instance_double(Spotlight::UploadFieldConfig, field_name: 'spotlight_test_ssim', is_multiple?: true)
 
       allow(described_class).to receive(:fields).with(exhibit).and_return([single_field, multi_field])
 
