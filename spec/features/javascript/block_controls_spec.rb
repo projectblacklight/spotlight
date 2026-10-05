@@ -37,6 +37,7 @@ RSpec.describe 'Block controls' do
       within(first('.st-controls-group')) do
         expect(page).to have_text 'Standard widgets'
         expect(page).to have_css('.st-block-controls__button')
+        expect(page).to have_button 'Pages'
       end
 
       within(all('.st-controls-group').last) do

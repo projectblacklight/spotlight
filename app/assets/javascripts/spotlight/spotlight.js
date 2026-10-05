@@ -3089,6 +3089,8 @@
 
       icon_name: "pages",
 
+      blockGroup: "undefined",
+
       show_image_selection: false,
 
       autocomplete_url: function () {
