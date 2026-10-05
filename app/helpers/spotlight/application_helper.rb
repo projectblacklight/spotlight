@@ -100,7 +100,7 @@ module Spotlight
     def path_to_saved_search(search)
       spotlight.search_exhibit_catalog_path(
         search.exhibit,
-        search.query_params.presence || { search_field: blacklight_config.default_search_field.key }
+        search.query_params.presence || { search_field: search.blacklight_config.default_search_field.key }
       )
     end
 
