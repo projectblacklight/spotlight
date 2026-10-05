@@ -601,6 +601,12 @@ en:
             help_block: Each recipient will receive submissions made through the feedback form
           published:
             help_block: ''
+            published:
+              help: Anyone can view the exhibit, and it appears on the home page.
+              label: Published
+            unpublished:
+              help: Only logged-in users with appropriate permission can view the exhibit.
+              label: Unpublished
         uneditable_non_default_language: This field is not editable in the current language. Switch to the default language to edit it.
         uneditable_non_default_language_form:
           default_language: Switch to default language
