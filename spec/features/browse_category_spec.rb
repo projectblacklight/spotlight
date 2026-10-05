@@ -136,12 +136,14 @@ RSpec.describe 'Browse pages' do
       it 'renders search box' do
         visit spotlight.exhibit_browse_path(exhibit, search)
         expect(page).to have_css '.browse-search-form'
-        expect(page).to have_no_css '.browse-search-expand'
+        expect(page).to have_link 'View this browse category with more search and filter options',
+                                  href: spotlight.search_exhibit_catalog_path(exhibit, search_field: 'all_fields')
+        expect(page).to have_no_text 'Your search matched'
 
         fill_in 'Search within this browse category', with: 'SEPTENTRIONALE'
         click_button 'Search within browse category'
 
-        expect(page).to have_css '.browse-search-expand'
+        expect(page).to have_text 'Your search matched'
       end
     end
 

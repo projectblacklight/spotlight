@@ -10,6 +10,7 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_link_to_search_block.html.erb', typ
   end
 
   before do
+    view.extend(Spotlight::ApplicationHelper)
     allow(block).to receive(:searches).and_return([search])
   end
 

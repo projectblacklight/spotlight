@@ -71,6 +71,26 @@ RSpec.describe Spotlight::ApplicationHelper, type: :helper do
     end
   end
 
+  describe '#path_to_saved_search' do
+    let(:exhibit) { FactoryBot.create(:exhibit) }
+    let(:blacklight_config) { exhibit.blacklight_config }
+
+    before do
+      allow(helper).to receive_messages(blacklight_config:)
+    end
+
+    it 'is a path for an exhibit search with the saved query' do
+      search = FactoryBot.create(:search, exhibit:, query_params: { 'q' => 'query' })
+      expect(helper.path_to_saved_search(search)).to eq spotlight.search_exhibit_catalog_path(exhibit, q: 'query')
+    end
+
+    it 'uses the default search field when there is no saved query' do
+      search = FactoryBot.create(:search, exhibit:, query_params: {})
+      expected = spotlight.search_exhibit_catalog_path(exhibit, search_field: blacklight_config.default_search_field.key)
+      expect(helper.path_to_saved_search(search)).to eq expected
+    end
+  end
+
   describe 'search block helpers' do
     describe 'selected_search_block_views' do
       let(:block) do

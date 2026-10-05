@@ -94,6 +94,17 @@ module Spotlight
     end
 
     ##
+    # Helper to search the exhibit with a saved search's query. Falls back to the
+    # default search field so that a search without a query still lands on the
+    # results page instead of being redirected to the exhibit home page
+    def path_to_saved_search(search)
+      spotlight.search_exhibit_catalog_path(
+        search.exhibit,
+        search.query_params.presence || { search_field: blacklight_config.default_search_field.key }
+      )
+    end
+
+    ##
     # Override Blacklight's #render_document_class to inject a private class
     def render_document_class(document = @document)
       [
