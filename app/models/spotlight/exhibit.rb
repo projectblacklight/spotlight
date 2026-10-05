@@ -18,6 +18,7 @@ module Spotlight
     scope :published, -> { where(published: true) }
     scope :unpublished, -> { where(published: false) }
     scope :listed, -> { where(listed: true) }
+    scope :unlisted, -> { where(listed: false) }
     scope :ordered_by_weight, -> { order(:weight) }
 
     paginates_per 48

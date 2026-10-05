@@ -2,7 +2,7 @@
 
 RSpec.describe 'spotlight/exhibits/index', type: :view do
   let(:exhibits) { Spotlight::Exhibit.none }
-  let(:published_exhibits) { exhibits.published.page(1) }
+  let(:published_exhibits) { exhibits.published.listed.page(1) }
 
   let(:ability) { Ability.new(user) }
   let(:user) { Spotlight::Engine.user_class.new }
@@ -17,6 +17,7 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
     let!(:exhibit_a) { FactoryBot.create(:exhibit, published: true) }
     let!(:exhibit_b) { FactoryBot.create(:exhibit, published: true) }
     let!(:exhibit_c) { FactoryBot.create(:exhibit, published: false) }
+    let!(:exhibit_d) { FactoryBot.create(:exhibit, published: true, listed: false) }
 
     let(:exhibits) { Spotlight::Exhibit.all }
 
@@ -27,6 +28,7 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
       expect(rendered).to have_text exhibit_a.title
       expect(rendered).to have_text exhibit_b.title
       expect(rendered).to have_no_text exhibit_c.title
+      expect(rendered).to have_no_text exhibit_d.title
 
       expect(rendered).not_to include 'Private exhibits'
     end
@@ -70,7 +72,7 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
     end
 
     context 'with paginated exhibits' do
-      let(:published_exhibits) { exhibits.published.page(1).per(1) }
+      let(:published_exhibits) { exhibits.published.listed.page(1).per(1) }
 
       it 'renders pagination controls' do
         render
@@ -97,6 +99,13 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
         expect(rendered).to have_css '.nav-tabs'
         expect(rendered).to have_no_link 'Unpublished exhibits'
       end
+
+      it 'does not include a tab for preview exhibits' do
+        render
+
+        expect(rendered).to have_css '.nav-tabs'
+        expect(rendered).to have_no_link 'Preview exhibits'
+      end
     end
 
     context 'with a site admin' do
@@ -112,6 +121,14 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
         expect(rendered).to have_css '.nav-tabs'
         expect(rendered).to have_link 'Unpublished exhibits'
         expect(rendered).to have_text exhibit_c.title
+      end
+
+      it 'includes a tab with preview (unlisted) exhibits' do
+        render
+
+        expect(rendered).to have_link 'Preview exhibits', href: '#unlisted'
+        expect(rendered).to have_css '#unlisted .exhibit-card', text: exhibit_d.title
+        expect(rendered).to have_no_css '#published .exhibit-card', text: exhibit_d.title
       end
     end
   end

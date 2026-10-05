@@ -592,8 +592,8 @@ en:
           publishing:
             copy_url: Copy
             help:
-              published: Anyone can view the exhibit, and it appears on the home page and sitemap.
-              published_unlisted: Anyone with the exhibit link can view. The exhibit does not appear on the home page or sitemap.
+              published: Anyone can view the exhibit, and it appears on the home page.
+              published_unlisted: Anyone with the exhibit link can view. The exhibit does not appear on the home page.
               unpublished: Only logged-in users with appropriate permission can view the exhibit.
             status:
               published: Published
@@ -613,6 +613,7 @@ en:
         instructions: You can import an exhibit JSON file exported from this application to use that data file to define this exhibit.
       index:
         published: Published exhibits
+        unlisted: Preview exhibits
         unpublished: Unpublished exhibits
         user: Your exhibits
       languages:

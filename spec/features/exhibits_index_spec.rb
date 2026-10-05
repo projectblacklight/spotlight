@@ -67,4 +67,33 @@ RSpec.describe 'Exhibits index page', type: :feature do
       expect(current_url).to eq spotlight.exhibit_root_url(exhibit)
     end
   end
+
+  context 'with a single unlisted exhibit' do
+    before { FactoryBot.create(:exhibit, title: 'Some Unlisted Title', listed: false) }
+
+    it 'does not redirect anonymous visitors to the unlisted exhibit' do
+      visit spotlight.exhibits_path
+
+      expect(current_url).to eq spotlight.exhibits_url
+      expect(page).to have_no_css '.exhibit-card h2', text: 'Some Unlisted Title'
+    end
+  end
+
+  context 'with an unlisted exhibit and an unpublished exhibit' do
+    before do
+      FactoryBot.create(:exhibit, title: 'Some Unlisted Title', listed: false)
+      FactoryBot.create(:exhibit, title: 'Some Unpublished Title', published: false)
+      login_as FactoryBot.create(:site_admin)
+    end
+
+    it 'shows the exhibits index with tabs for each instead of redirecting' do
+      visit spotlight.exhibits_path
+
+      expect(current_url).to eq spotlight.exhibits_url
+      expect(page).to have_link 'Preview exhibits'
+      expect(page).to have_link 'Unpublished exhibits'
+      expect(page).to have_css '#unlisted .exhibit-card h2', text: 'Some Unlisted Title', visible: :all
+      expect(page).to have_css '#unpublished .exhibit-card h2', text: 'Some Unpublished Title', visible: :all
+    end
+  end
 end

@@ -14,9 +14,8 @@ module Spotlight
     def index
       @published_exhibits = @exhibits.includes(:thumbnail).published.listed.ordered_by_weight.page(params[:page])
       @published_exhibits = @published_exhibits.tagged_with(params[:tag]) if params[:tag]
-      listable_exhibits = @exhibits.unpublished.or(@exhibits.listed)
-      if listable_exhibits.one?
-        redirect_to listable_exhibits.first, flash: flash.to_h
+      if redirect_to_single_exhibit?
+        redirect_to @exhibits.first, flash: flash.to_h
       else
         render layout: 'spotlight/home'
       end
@@ -88,6 +87,15 @@ module Spotlight
     end
 
     protected
+
+    # Skip the exhibits index when there is only one exhibit, unless it is an unlisted
+    # exhibit that the current user would not otherwise find on the index
+    def redirect_to_single_exhibit?
+      return false unless @exhibits.one?
+
+      exhibit = @exhibits.first
+      exhibit.listed? || can?(:curate, exhibit)
+    end
 
     def current_exhibit
       @exhibit if @exhibit&.persisted?

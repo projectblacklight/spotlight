@@ -149,7 +149,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
 
       expect(page).to have_checked_field 'Unpublished'
       expect(page).to have_css '[data-clipboard-target="text"]', text: spotlight.exhibit_path(exhibit)
-      choose 'Preview (URL only)'
+      choose 'Preview (link only)'
       click_button 'Save changes'
 
       expect(page).to have_text('The exhibit was successfully updated.')

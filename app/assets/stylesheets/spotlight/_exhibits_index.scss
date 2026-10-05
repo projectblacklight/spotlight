@@ -4,7 +4,8 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
   overflow-y: hidden;
   padding-bottom: 3rem;
 
-  .unpublished {
+  .unpublished,
+  .unlisted {
     @extend .mx-auto;
     display: block;
     font-size: $font-size-sm;
