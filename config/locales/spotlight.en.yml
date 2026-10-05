@@ -587,8 +587,8 @@ en:
         configurations_intro: 'Export Configurations:'
         download: Export data
         heading: Export data
-        instructions_1: You can export exhibit data as a JSON file. Exports include basic exhibit information (site title, site description, etc.), plus additional data as defined by the site's export configurations - see below.
-        instructions_2: The exported JSON file can be imported as a backup to this exhibit or as a starting point for a new exhibit. If item data is included, this export should only be used as a backup and should not be imported into a new exhibit or application, as this data may not fully transfer. This export will also not restore any uploaded files deleted from their storage location.
+        instructions_1: You can export exhibit data as a JSON file. Exports include basic exhibit information (site title, site description, etc.), plus additional data as defined by your site's export configurations - see below.
+        instructions_2: The exported JSON file can be imported as a backup to this exhibit or as a starting point for a new exhibit. If item data is included, this export should not be imported into a new exhibit, as this data may not fully transfer. This export will also not restore any uploaded files deleted from their original storage location.
         instructions_3: Please consult with your site administrator to change these site configurations, if needed.
         no_configurations: No export configurations defined.
       filter:
