@@ -128,6 +128,16 @@ module Spotlight
       copy_file 'config/initializers/oembed.rb'
     end
 
+    # Spotlight's layout loads jQuery and its plugins with script tags. blacklight-gallery's generator pins and
+    # imports another copy, which replaces window.jQuery without the plugins. Point the pin at the layout's copy.
+    # This runs after the gallery generator because the last pin for a name wins.
+    def pin_jquery_to_layout_copy
+      return unless defined?(Importmap)
+
+      copy_file 'javascript/jquery-shim.js', 'app/javascript/jquery-shim.js'
+      append_to_file 'config/importmap.rb', "pin \"jquery\", to: \"jquery-shim.js\"\n"
+    end
+
     def add_mailer_defaults
       if options[:mailer_default_url_host].present?
         say 'Injecting a placeholder config.action_mailer.default_url_options; be sure to update it for your environment', :yellow
