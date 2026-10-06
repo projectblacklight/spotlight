@@ -67,6 +67,25 @@ RSpec.describe 'Solr Documents Carousel Block', js: true, type: :feature do
     end
   end
 
+  it 'keeps autoplay stopped when the page is restored from browser history' do
+    fill_in_typeahead_field with: 'dq287tq6352'
+    save_page_changes
+
+    button = find('.carousel-block button.carousel-pause-play')
+    button.click
+    expect(page).to have_css('button.carousel-pause-play[aria-label="Start automatic slide show"]')
+
+    # Navigate away and back, so Turbo restores its cached copy of the stopped page
+    find('.site-title-container a').click
+    expect(page).to have_no_css('.carousel-block')
+    page.go_back
+
+    # The restored page starts out stopped, so the button starts autoplay again
+    button = find('.carousel-block button.carousel-pause-play')
+    button.click
+    expect(page).to have_css('button.carousel-pause-play[aria-label="Stop automatic slide show"]')
+  end
+
   it 'is accessible' do
     fill_in_typeahead_field with: 'dq287tq6352'
     check 'Primary caption'

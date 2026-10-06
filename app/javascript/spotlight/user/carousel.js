@@ -8,7 +8,9 @@ const setupAutoplay = function (carouselElement, carousel) {
   const button = carouselElement.querySelector(".carousel-pause-play")
   if (!button) return
 
-  let stopped = false
+  // Turbo restores a cached copy of a page when navigating back, so start
+  // from the state the button shows rather than assuming autoplay is on
+  let stopped = button.querySelector(".carousel-pause-icon").hidden
   let hovered = false
 
   const togglePauseButton = function () {
