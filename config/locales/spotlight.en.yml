@@ -570,7 +570,7 @@ en:
         email_input_aria_label: Recipient email %{index}
       delete:
         heading: Delete exhibit
-        warning_html: This action is irreversible. Be sure to back up the exhibit settings and content using the %{export_link} feature before proceeding.
+        warning_html: This action is irreversible. You can back up the exhibit configurations using the %{export_link} feature before proceeding.
       edit:
         basic_settings:
           heading: Basic settings
@@ -578,9 +578,19 @@ en:
       exhibit_card:
         unpublished: Unpublished
       export:
+        configurations:
+          attachments: 'Attachments: %{config}'
+          blacklight_configuration: 'Metadata/Search configurations: %{config}'
+          config: 'General configurations: %{config}'
+          pages: 'Pages: %{config}'
+          resources: 'Item data: %{config}'
+        configurations_intro: 'Export Configurations:'
         download: Export data
         heading: Export data
-        instructions: You can create a backup of this exhibit by exporting the data that defines it to a JSON file. You can then import that JSON file into new exhibit to restore the exhibit data or to use as a starting point for a new exhibit.
+        instructions_1: You can export exhibit data as a JSON file. Exports include data as defined by your site's export configurations - see below.
+        instructions_2: The exported JSON file can be imported as a backup to this exhibit or as a starting point for a new exhibit. If item data is included, this export should not be imported into a new exhibit, as this data is exhibit-specific and not portable. This export will also not restore any uploaded files deleted from their original storage location.
+        instructions_3: Please consult with your site administrator to change these site configurations, if needed.
+        no_configurations: No export configurations defined.
       filter:
         heading: Filter items
         instructions: You can limit the items included in this exhibit by applying a filter to your Solr index. When you apply a filter, only items with values that match the filter will be included in your exhibit. To apply a filter, enter both a field and a value that match the names used in your Solr index.
