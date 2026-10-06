@@ -1,6 +1,6 @@
 .translation-edit-form {
   .translation-complete {
-    svg { fill: $translation-available-color }
+    svg { fill: var(--translation-available-color) }
   }
 
   .browse-category-title {
@@ -51,11 +51,11 @@
 }
 
 .panel-translation {
-  background-color: $translation-panel-bg;
+  background-color: var(--translation-panel-bg);
   padding-bottom: 0;
 
   .form-text {
-    color: $translation-help-color;
+    color: var(--translation-help-color);
     padding-left: 12px;
   }
 }
