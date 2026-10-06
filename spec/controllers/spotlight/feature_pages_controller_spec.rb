@@ -17,6 +17,26 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller, versioning:
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
+
+    describe 'GET show for a locale redirect to a page the user cannot read' do
+      around { |example| I18n.with_locale(I18n.default_locale) { example.run } }
+
+      it 'does not redirect to a page in a private exhibit' do
+        private_exhibit = FactoryBot.create(:exhibit, published: false)
+        page = FactoryBot.create(:feature_page, exhibit: private_exhibit)
+        page_es = FactoryBot.create(:feature_page, exhibit: private_exhibit, title: 'Page in spanish', locale: 'es', default_locale_page: page)
+        get :show, params: { exhibit_id: private_exhibit.id, id: page_es.slug, locale: 'en' }
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
+
+      it 'does not redirect to an unpublished page' do
+        page = FactoryBot.create(:feature_page, exhibit:, published: false)
+        page_es = FactoryBot.create(:feature_page, exhibit:, title: 'Page in spanish', locale: 'es', default_locale_page: page, published: false)
+        get :show, params: { exhibit_id: exhibit.id, id: page_es.id, locale: 'en' }
+        expect(response).to redirect_to main_app.root_path
+        expect(flash['alert']).to eq 'You are not authorized to access this page.'
+      end
+    end
   end
 
   # This should return the minimal set of attributes required to create a valid
