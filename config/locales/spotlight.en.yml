@@ -37,6 +37,10 @@ en:
         page: Page
       spotlight/group: Browse group
       spotlight/search: Browse category
+  blacklight:
+    top_navbar:
+      aria:
+        container_label: User utility
   cancel: Cancel
   devise:
     mailer:
