@@ -68,6 +68,8 @@
 
     // Stop/start autoplay on button click
     button.addEventListener("click", function () {
+      // When play button is clicked, clear any hover so rotation resumes right away
+      if (stopped) hovered = false;
       toggleAutoplay(stopped);
     });
 
