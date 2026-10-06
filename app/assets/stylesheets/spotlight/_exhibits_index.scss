@@ -82,7 +82,7 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
 
   &:focus-within {
     // Use Bootstrap focus style
-    outline: $input-focus-border-color auto 5px;
+    outline: var(--spotlight-input-focus-border-color) auto 5px;
 
     // Use WebKit focus styles if available
     @supports (-webkit-appearance: none) {
