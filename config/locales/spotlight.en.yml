@@ -992,8 +992,6 @@ en:
           one: "%{count} item"
           other: "%{count} items"
         missing_description_html: "%{link} to add a description."
-    secondary:
-      label: Secondary
     shared:
       dd3_item:
         restore_default: Restore default

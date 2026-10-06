@@ -1,4 +1,3 @@
-<% content_for(:sidebar_label, current_exhibit.main_navigations.about.label_or_default) %>
 <% cache_unless current_user, [current_exhibit, @page, I18n.locale] do %>
   <nav aria-labelledby="about-pages-h">
     <h2 id="about-pages-h" class="nav-heading h4"><%= current_exhibit.main_navigations.about.label_or_default %></h2>
