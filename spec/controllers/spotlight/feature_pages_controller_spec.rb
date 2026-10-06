@@ -219,6 +219,17 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller, versioning:
           expect(response).to render_template('edit')
         end
       end
+
+      describe 'with a slug that has no page in the requested locale' do
+        around { |example| I18n.with_locale(I18n.default_locale) { example.run } }
+
+        it 'raises RecordNotFound instead of redirecting' do
+          page_es = FactoryBot.create(:feature_page, exhibit:, title: 'Page in spanish', locale: 'es', default_locale_page: page)
+          expect do
+            put :update, params: { id: page_es.slug, exhibit_id: page.exhibit.id, locale: 'fr', feature_page: valid_attributes }
+          end.to raise_exception ActiveRecord::RecordNotFound
+        end
+      end
     end
 
     describe 'POST update_all' do

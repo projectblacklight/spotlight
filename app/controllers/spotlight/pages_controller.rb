@@ -176,6 +176,8 @@ module Spotlight
     def load_locale_specific_page
       @page = current_exhibit.pages.for_locale.find(params[:id])
     rescue ActiveRecord::RecordNotFound
+      raise unless action_name == 'show'
+
       redirect_page_to_related_locale_version
     end
 
