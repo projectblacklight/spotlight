@@ -210,7 +210,8 @@ module Spotlight
     def redirect_to_page_in_its_locale(page, **options)
       authorize! :read, page
       # Pass the locale explicitly. A host app route default (e.g., `locale: nil`) overrides default_url_options.
-      redirect_to polymorphic_path([current_exhibit, page], locale: (page.locale unless page.default_locale?)), **options
+      locale = page.locale unless page.default_locale?
+      redirect_to polymorphic_path([current_exhibit, page], locale:, params: request.query_parameters.except('locale')), **options
     end
   end
 end

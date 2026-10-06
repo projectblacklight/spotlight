@@ -211,6 +211,19 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller, versioning:
           expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page_fr, locale: 'fr'))
           expect(response).to have_http_status(:moved_permanently)
         end
+
+        it 'keeps the query parameters when it redirects from an old slug' do
+          old_slug = page.slug
+          page.update(title: 'Renamed page')
+          get :show, params: { exhibit_id: exhibit.id, id: old_slug, page: '5', view: 'gallery' }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page, locale: nil, page: '5', view: 'gallery'))
+        end
+
+        it 'keeps the query parameters when it redirects to a translation' do
+          page_es = FactoryBot.create(:feature_page, exhibit:, title: 'Page in spanish', locale: 'es', default_locale_page: page)
+          get :show, params: { exhibit_id: exhibit.id, id: page.slug, locale: 'es', page: '5', view: 'gallery' }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page_es, locale: 'es', page: '5', view: 'gallery'))
+        end
       end
 
       context 'when the sidebar is set to not display' do
