@@ -4,11 +4,10 @@ import * as bootstrap from "bootstrap"
 const Carousel = bootstrap.Carousel ?? bootstrap.default?.Carousel
 
 // Sets up accessible autoplay controls (https://www.w3.org/WAI/ARIA/apg/patterns/carousel/)
-const setupAutoplay = function (carouselElement) {
+const setupAutoplay = function (carouselElement, carousel) {
   const button = carouselElement.querySelector(".carousel-pause-play")
   if (!button) return
 
-  const carousel = Carousel.getInstance(carouselElement)
   let stopped = false
   let hovered = false
 
@@ -69,45 +68,42 @@ const setupAutoplay = function (carouselElement) {
   updateRotation()
 }
 
+// updates the aria-describedby on the next and prev btns
+const updateAriaDescribedBy = function (carouselElement) {
+  const items = Array.from(carouselElement.querySelectorAll(".carousel-item"))
+  const curIndex = items.findIndex((item) => item.classList.contains("active"))
+  const prevIndex = (curIndex - 1 + items.length) % items.length
+  const nextIndex = (curIndex + 1) % items.length
+
+  const prevDataId = items[prevIndex]?.dataset.id
+  const nextDataId = items[nextIndex]?.dataset.id
+  if (prevDataId) {
+    carouselElement
+      .querySelector(".carousel-control-prev")
+      ?.setAttribute("aria-describedby", "carousel-caption-" + prevDataId)
+  }
+  if (nextDataId) {
+    carouselElement
+      .querySelector(".carousel-control-next")
+      ?.setAttribute("aria-describedby", "carousel-caption-" + nextDataId)
+  }
+}
+
 export default class {
   connect() {
-    if ($.fn.carousel) {
-      const $carousel = $(".carousel")
+    if (!Carousel) return
 
-      // updates the aria-describedby on the next and prev btns
-      const updateAriaDescribedBy = function ($carousel) {
-        const $activeItem = $carousel.find(".carousel-item.active")
-        const $items = $carousel.find(".carousel-item")
-        const curIndex = $items.index($activeItem)
-        const prevIndex = (curIndex - 1 + $items.length) % $items.length
-        const nextIndex = (curIndex + 1) % $items.length
-
-        const prevDataId = $items.eq(prevIndex).data("id")
-        const nextDataId = $items.eq(nextIndex).data("id")
-        if (prevDataId) {
-          $carousel
-            .find(".carousel-control-prev")
-            .attr("aria-describedby", "carousel-caption-" + prevDataId)
-        }
-        if (nextDataId) {
-          $carousel
-            .find(".carousel-control-next")
-            .attr("aria-describedby", "carousel-caption-" + nextDataId)
-        }
-      }
+    document.querySelectorAll(".carousel").forEach((carouselElement) => {
+      const carousel = Carousel.getOrCreateInstance(carouselElement)
 
       // on initial page load, set the aria-describedby on the btns for each carousel
-      $carousel.each(function () {
-        const $this = $(this)
-        $this.carousel()
-        updateAriaDescribedBy($this)
-        setupAutoplay(this)
-      })
+      updateAriaDescribedBy(carouselElement)
+      setupAutoplay(carouselElement, carousel)
 
       // on slide change
-      $carousel.on("slid.bs.carousel", function () {
-        updateAriaDescribedBy($(this))
+      carouselElement.addEventListener("slid.bs.carousel", function () {
+        updateAriaDescribedBy(carouselElement)
       })
-    }
+    })
   }
 }
