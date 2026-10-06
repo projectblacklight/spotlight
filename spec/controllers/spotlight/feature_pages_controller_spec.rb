@@ -160,9 +160,14 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller, versioning:
           expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page_de, locale: 'de'))
         end
 
-        it 'raises RecordNotFound for the english slug when the requested locale has no translation' do
+        it 'redirects from the english slug to the english page without a locale when the requested locale has no translation' do
+          get :show, params: { exhibit_id: exhibit.id, id: page.slug, locale: 'fr' }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page, locale: nil))
+        end
+
+        it 'raises RecordNotFound for a slug that matches no page' do
           expect do
-            get :show, params: { exhibit_id: exhibit.id, id: page.slug, locale: 'fr' }
+            get :show, params: { exhibit_id: exhibit.id, id: 'no-such-page', locale: 'fr' }
           end.to raise_exception ActiveRecord::RecordNotFound
         end
       end
