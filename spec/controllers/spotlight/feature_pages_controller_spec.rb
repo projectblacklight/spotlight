@@ -44,6 +44,20 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller, versioning:
         expect(response).to redirect_to main_app.root_path(locale: 'de')
         expect(flash['alert']).to eq 'You are not authorized to access this page.'
       end
+
+      it 'does not redirect from the id of an unpublished page to its current slug' do
+        page = FactoryBot.create(:feature_page, exhibit:, published: false)
+        get :show, params: { exhibit_id: exhibit.id, id: page.id }
+        expect(response).to redirect_to main_app.root_path
+        expect(flash['alert']).to eq 'You are not authorized to access this page.'
+      end
+
+      it 'does not redirect from the id of a page in a private exhibit to its current slug' do
+        private_exhibit = FactoryBot.create(:exhibit, published: false)
+        page = FactoryBot.create(:feature_page, exhibit: private_exhibit)
+        get :show, params: { exhibit_id: private_exhibit.id, id: page.id }
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
     end
 
     describe 'GET show for a locale whose translation is unpublished' do
@@ -172,13 +186,53 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller, versioning:
         end
       end
 
+      describe 'with an identifier that is not the current slug' do
+        around { |example| I18n.with_locale(I18n.default_locale) { example.run } }
+
+        let(:page) { FactoryBot.create(:feature_page, exhibit:) }
+
+        it 'permanently redirects from an old slug to the current slug' do
+          old_slug = page.slug
+          page.update(title: 'Renamed page')
+          get :show, params: { exhibit_id: exhibit.id, id: old_slug }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page, locale: nil))
+          expect(response).to have_http_status(:moved_permanently)
+        end
+
+        it 'permanently redirects from the page id to the current slug' do
+          get :show, params: { exhibit_id: exhibit.id, id: page.id }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page, locale: nil))
+          expect(response).to have_http_status(:moved_permanently)
+        end
+
+        it 'permanently redirects from the english slug to the current slug of the translation' do
+          page_fr = page.clone_for_locale('fr').tap(&:save).tap { |p| p.update(title: 'Page in french') }
+          get :show, params: { exhibit_id: exhibit.id, id: page.slug, locale: 'fr' }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page_fr, locale: 'fr'))
+          expect(response).to have_http_status(:moved_permanently)
+        end
+
+        it 'keeps the query parameters when it redirects from an old slug' do
+          old_slug = page.slug
+          page.update(title: 'Renamed page')
+          get :show, params: { exhibit_id: exhibit.id, id: old_slug, page: '5', view: 'gallery' }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page, locale: nil, page: '5', view: 'gallery'))
+        end
+
+        it 'keeps the query parameters when it redirects to a translation' do
+          page_es = FactoryBot.create(:feature_page, exhibit:, title: 'Page in spanish', locale: 'es', default_locale_page: page)
+          get :show, params: { exhibit_id: exhibit.id, id: page.slug, locale: 'es', page: '5', view: 'gallery' }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page_es, locale: 'es', page: '5', view: 'gallery'))
+        end
+      end
+
       context 'when the sidebar is set to not display' do
         let(:page) { FactoryBot.create(:feature_page, exhibit:, published: true) }
 
         before { page.update(display_sidebar: false) }
 
         it 'injects custom classes into the gallery view' do
-          get :show, params: { exhibit_id: exhibit.id, id: page.id }
+          get :show, params: { exhibit_id: exhibit.id, id: page }
           expect(assigns(:exhibit).blacklight_config.view.gallery.classes).to eq 'row-cols-2 row-cols-md-4'
         end
       end
