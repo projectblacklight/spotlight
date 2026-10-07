@@ -1,5 +1,5 @@
 #documents.table {
-  font-size: $font-size-base;
+  font-size: var(--bs-body-font-size);
 
   .thumbnail-column {
     box-sizing: content-box;
@@ -13,7 +13,7 @@
   }
 
   .document-thumbnail img {
-    border: 1px solid $gray-600;
+    border: 1px solid var(--bs-gray-600);
     width: 60px;
     height: 60px;
     object-fit: cover;
@@ -43,8 +43,7 @@
   ul.tags {
     text-align: center;
     li {
-      @extend .badge;
-      @extend .bg-secondary;
+      background-color: var(--bs-secondary) !important;
       a {
         color: #fff;
       }
@@ -61,12 +60,17 @@ li.dd-item,
     h1,
     .card-title,
     .autocomplete-title {
-      @include private-label;
+      &::after {
+        background-color: var(--bs-warning) !important;
+        content: "Private";
+        margin-left: 3px;
+        --spotlight-badge-color: black;
+      }
     }
   }
 }
 
-// Don't show the private label until Blacklight reports success
+/* Don't show the private label until Blacklight reports success */
 tr.doc-row:has(input.toggle-visibility:disabled:not(:checked)) {
   .index_title::after {
     display: none;
@@ -92,17 +96,21 @@ form.edit_solr_document {
 
 .blacklight-catalog-edit,
 .blacklight-catalog-show {
-  .img-thumbnail {
-    @extend .col-md-6;
-  }
-
+  .img-thumbnail,
   .tags,
   .dl-horizontal {
-    @extend .col-md-6;
+    @media (min-width: 768px) {
+      flex: 0 0 auto;
+      width: 50%;
+    }
   }
 
   #document {
-    @extend .clearfix;
+    &::after {
+      display: block;
+      clear: both;
+      content: "";
+    }
   }
 }
 
@@ -113,7 +121,7 @@ form.edit_solr_document {
 .search-widgets {
   align-items: flex-start;
   display: flex;
-  @media (min-width: breakpoint-min("md")) {
+  @media (min-width: 768px) {
     justify-content: flex-end;
   }
   flex-wrap: wrap;
@@ -129,7 +137,7 @@ form.edit_solr_document {
 .curator-actions {
   align-items: flex-start;
   display: flex;
-  @media (min-width: breakpoint-min("md")) {
+  @media (min-width: 768px) {
     justify-content: flex-end;
   }
   order: -1;
@@ -140,11 +148,10 @@ form.edit_solr_document {
 #document,
 .document {
   .blacklight-exhibit_tags a {
-    @extend .badge;
-    @extend .bg-secondary;
+    background-color: var(--bs-secondary) !important;
 
     &:not(:last-child) {
-      @extend .me-2;
+      margin-right: 0.5rem;
     }
   }
 }
@@ -163,4 +170,28 @@ form.edit_solr_document {
   input[type="submit"] {
     display: none;
   }
+}
+
+/* Shared badge styles (replaces scss @extend .badge) */
+#document ul.tags li,
+#document .blacklight-exhibit_tags a,
+.document .blacklight-exhibit_tags a,
+:is(.document, tr.doc-row, li.dd-item, .autocomplete-item).blacklight-private
+  :is(.index_title, h1, .card-title, .autocomplete-title)::after {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--spotlight-badge-color);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: var(--bs-border-radius);
+}
+
+#document ul.tags li:empty,
+#document .blacklight-exhibit_tags a:empty,
+.document .blacklight-exhibit_tags a:empty {
+  display: none;
 }
