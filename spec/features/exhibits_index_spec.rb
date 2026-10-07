@@ -114,6 +114,15 @@ RSpec.describe 'Exhibits index page', type: :feature do
         end
       end
 
+      it 'is accessible after a live search', :js do
+        visit spotlight.exhibits_path
+        fill_in 'Search exhibits', with: 'exhibit'
+
+        expect(page).to have_css '.tags [aria-disabled="true"]', text: 'b'
+        expect(page).to have_css '.exhibit-card mark', text: 'Exhibit'
+        expect(page).to be_axe_clean.within '#content'
+      end
+
       it 'keeps the selected tag when the user searches' do
         visit spotlight.exhibits_path(tag: 'b')
         fill_in 'Search exhibits', with: 'some'
