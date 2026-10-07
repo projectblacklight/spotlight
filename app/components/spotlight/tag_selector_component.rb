@@ -5,9 +5,10 @@ module Spotlight
   # This uses a plain text input that acts-as-taggable-on expects.
   class TagSelectorComponent < ViewComponent::Base
     # selected_tags_value is a comma delimited string of tags
-    def initialize(field_name:, all_tags:, selected_tags_value: nil, form: nil)
+    def initialize(field_name:, all_tags:, selected_tags_value: nil, form: nil, id: nil)
       @form = form
       @field_name = field_name
+      @id = id || field_name
       @selected_tags_value = selected_tags_value || ''
       @all_tags = all_tags&.sort_by { |tag| (tag.respond_to?(:name) ? tag.name : tag).downcase }
 
@@ -36,6 +37,6 @@ module Spotlight
       selected_tags.include?(tag.respond_to?(:name) ? tag.name : tag)
     end
 
-    attr_reader :form, :field_name, :selected_tags_value, :all_tags
+    attr_reader :form, :field_name, :selected_tags_value, :all_tags, :id
   end
 end
