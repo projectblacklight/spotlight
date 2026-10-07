@@ -17,8 +17,7 @@ module Spotlight
     helper_method :get_search_results, :search_results, :fetch, :page_collection_name
 
     before_action do
-      blacklight_config.action_mapping.default = blacklight_config.index
-      blacklight_config.action_mapping.show = blacklight_config.index
+      blacklight_config.action_mapping.show.top_level_config = :index
       blacklight_config.view.gallery.classes = 'row-cols-2 row-cols-md-4' unless @page&.display_sidebar
     end
 

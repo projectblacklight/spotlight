@@ -10,7 +10,7 @@ RSpec.describe Spotlight::BrowseCategorySearchBuilder do
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:scope) do
-    double(blacklight_config: exhibit.blacklight_config, current_exhibit: exhibit, search_state_class: nil)
+    double(blacklight_config: exhibit.blacklight_config, current_exhibit: exhibit, search_state_class: nil, action_name: 'index')
   end
   let(:solr_request) { Blacklight::Solr::Request.new }
   let(:blacklight_params) { { browse_category_id: search.id } }
