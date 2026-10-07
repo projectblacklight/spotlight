@@ -104,7 +104,7 @@ $xl-sidebar-five-tile-width: ($container-xl-sidebar * 0.2) - $tile-margin;
   }
 
   .item-count {
-    font-size: $font-size-base;
+    font-size: var(--bs-body-font-size);
     text-transform: uppercase;
 
     @media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-min("lg")) {

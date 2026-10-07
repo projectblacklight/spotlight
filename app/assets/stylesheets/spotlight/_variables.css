@@ -8,6 +8,7 @@
   --navbar-transparent-border: var(--bs-gray-500);
   --navbar-transparent-page-bg: rgba(0, 0, 0, 0.5);
 
+  --spotlight-badge-color: var(--bs-white);
   --spotlight-edit-in-place-highlighting-background: #f7f7d0;
   --spotlight-font-size-sm: calc(0.875 * var(--bs-body-font-size));
   --spotlight-input-focus-border-color: color-mix(in srgb, var(--bs-primary) 50%, white);
