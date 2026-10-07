@@ -1,8 +1,8 @@
 .page-links a {
   padding-left: 0;
   padding-right: 0;
-  line-height: $btn-line-height;
-  @include font-size($btn-font-size);
+  line-height: var(--bs-body-line-height);
+  font-size: var(--bs-body-font-size);
 }
 
 .missing-description {
@@ -12,17 +12,14 @@
   display: inline-block;
   .input-field {
     input[type='text'] {
-      @extend .form-control-sm;
+      min-height: calc(1.5em + 0.5rem + calc(var(--bs-border-width) * 2));
+      font-size: var(--spotlight-font-size-sm);
+      border-radius: var(--bs-border-radius-sm);
       height: auto;
       padding: 0 5px;
       width: 195px;
       color: black;
       border-color: white;
-    }
-    input[type='submit'] {
-      @extend .btn;
-      @extend .btn-primary;
-      @extend .btn-sm;
     }
     display: none;
   }
@@ -50,8 +47,8 @@
   }
 
   .btn-link.collapse-toggle {
-    // removing padding and margins to style this button as a simple link
-    // with the expected vertical alignment with the rest of the header.
+    /* removing padding and margins to style this button as a simple link */
+    /* with the expected vertical alignment with the rest of the header. */
     margin: 0;
     padding: 0;
   }
@@ -70,13 +67,13 @@
 
 .home_page .card {
   .card-body {
-    @extend .py-2;
-    @extend .px-3;
+    padding: 0.5rem 1rem;
   }
 
   .card-title {
-    @extend .mb-0;
-    @extend .py-2;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 }
 
@@ -86,7 +83,7 @@
 
 .card-header.item-grid {
   &:hover {
-    @include panel-hover-highlighting;
+    background: var(--bs-gray-300);
   }
   .main {
     width: 65%;
@@ -156,8 +153,8 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .facet-metadata {
-  @extend .text-muted;
-  font-size: $font-size-base;
+  color: var(--bs-secondary-color);
+  font-size: var(--bs-body-font-size);
   text-align: end;
 }
 
@@ -165,10 +162,10 @@ table#exhibit-specific-fields {
   margin-top: 1em;
   .field-label {
     min-width: 10em;
-    font-size: $h4-font-size;
+    font-size: calc(var(--bs-body-font-size) * 1.5);
   }
   .field-description {
-    font-size: $font-size-base;
+    font-size: var(--bs-body-font-size);
     vertical-align: middle;
   }
   .actions a {
@@ -197,6 +194,6 @@ table.tags {
 
 .card-title .subtitle::before {
   content: " \000B7 ";
-  color: $text-muted;
+  color: var(--bs-secondary-color);
   padding-right: 3px;
 }

@@ -145,7 +145,7 @@
   }
 
   .img-thumbnail {
-    border: 1px solid $gray-600;
+    border: 1px solid var(--bs-gray-600);
     border-radius: 0;
     height: 110px;
     object-fit: cover;
