@@ -1,0 +1,17 @@
+<%= content_tag :search, class: "#{container_classes} exhibit-search", data: { controller: 'exhibit-search' } do %>
+  <%= form_with url: exhibits_path, method: :get, local: true, data: { exhibit_search_target: 'form', action: 'submit->exhibit-search#submit' } do %>
+    <%= hidden_field_tag :tag, params[:tag], id: nil if params[:tag].present? %>
+    <%= label_tag 'exhibit-search-q', t('.label'), class: 'visually-hidden' %>
+    <div class="exhibit-search-field">
+      <%= render Blacklight::Icons::SearchComponent.new(classes: 'exhibit-search-icon', aria_hidden: true) %>
+      <%= search_field_tag :q, exhibit_search.query,
+                           id: 'exhibit-search-q',
+                           class: 'form-control',
+                           placeholder: t('.placeholder'),
+                           autocomplete: 'off',
+                           enterkeyhint: 'search',
+                           data: { exhibit_search_target: 'input', action: 'input->exhibit-search#queue keydown.esc->exhibit-search#escape' } %>
+    </div>
+    <%= content_tag :div, status, id: 'exhibit-search-status', class: 'visually-hidden', role: 'status', data: { exhibit_search_target: 'status' } %>
+  <% end %>
+<% end %>

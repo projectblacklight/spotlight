@@ -632,6 +632,29 @@ en:
           title:
             help_block: This can be changed later.
             label: Title
+      no_matches:
+        message: No exhibits match “%{query}”.
+      search:
+        label: Search exhibits
+        placeholder: Find exhibits by title or description
+        status:
+          all: Showing all exhibits.
+          matches:
+            one: 1 exhibit matches “%{query}”.
+            other: "%{count} exhibits match “%{query}”."
+            zero: No exhibits match “%{query}”.
+          published:
+            one: 1 published exhibit matches “%{query}”.
+            other: "%{count} published exhibits match “%{query}”."
+            zero: No published exhibits match “%{query}”.
+          unpublished:
+            one: 1 unpublished exhibit matches “%{query}”.
+            other: "%{count} unpublished exhibits match “%{query}”."
+            zero: No unpublished exhibits match “%{query}”.
+          user:
+            one: 1 of your exhibits matches “%{query}”.
+            other: "%{count} of your exhibits match “%{query}”."
+            zero: None of your exhibits match “%{query}”.
       tags:
         all: All
     exhibits_admin_invitation_mailer:

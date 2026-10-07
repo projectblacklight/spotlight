@@ -12,8 +12,10 @@ module Spotlight
     load_and_authorize_resource
 
     def index
-      @published_exhibits = @exhibits.includes(:thumbnail).published.ordered_by_weight.page(params[:page])
-      @published_exhibits = @published_exhibits.tagged_with(params[:tag]) if params[:tag]
+      @exhibit_search = Spotlight::ExhibitSearch.new(params[:q])
+      published_exhibits = @exhibits.includes(:thumbnail).published.ordered_by_weight
+      published_exhibits = published_exhibits.tagged_with(params[:tag]) if params[:tag]
+      @published_exhibits = @exhibit_search.paginate(published_exhibits, page: params[:page])
       if @exhibits.one?
         redirect_to @exhibits.first, flash: flash.to_h
       else

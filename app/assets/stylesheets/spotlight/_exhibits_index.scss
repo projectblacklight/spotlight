@@ -3,6 +3,7 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
 .exhibit-card {
   overflow-y: hidden;
   padding-bottom: 3rem;
+  --bs-highlight-bg: #{$yellow-200};
 
   .unpublished {
     @extend .mx-auto;
@@ -147,4 +148,42 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
       -webkit-line-clamp: 2;
     }
   }
+}
+
+.exhibit-search {
+  margin-bottom: $spacer * 1.5;
+  margin-top: $spacer;
+
+  form {
+    @include media-breakpoint-up(md) {
+      max-width: 50%;
+    }
+  }
+
+  .exhibit-search-field {
+    position: relative;
+
+    input {
+      padding-left: 2.5rem;
+    }
+  }
+
+  .exhibit-search-icon {
+    color: var(--bs-secondary-color);
+    display: flex;
+    left: 0.625rem;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    svg {
+      height: 1.25rem;
+      width: 1.25rem;
+    }
+  }
+}
+
+.exhibit-card mark {
+  padding: 0;
 }

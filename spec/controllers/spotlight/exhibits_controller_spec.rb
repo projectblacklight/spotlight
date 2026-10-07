@@ -47,6 +47,23 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
           expect(controller).to have_received(:redirect_to).with(exhibit, flash: {})
         end
       end
+
+      context 'with a search query' do
+        let!(:early_maps) { FactoryBot.create(:exhibit, title: 'Early Maps', tag_list: ['a']) }
+        let!(:later_maps) { FactoryBot.create(:exhibit, title: 'Later Maps') }
+
+        before { FactoryBot.create(:exhibit, title: 'Islands', tag_list: ['a']) }
+
+        it 'filters the published exhibits' do
+          get :index, params: { q: 'maps' }
+          expect(assigns(:published_exhibits)).to contain_exactly(early_maps, later_maps)
+        end
+
+        it 'filters within the selected tag' do
+          get :index, params: { q: 'maps', tag: 'a' }
+          expect(assigns(:published_exhibits)).to contain_exactly(early_maps)
+        end
+      end
     end
 
     describe 'GET new' do
