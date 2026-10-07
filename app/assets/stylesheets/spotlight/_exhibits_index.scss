@@ -1,4 +1,5 @@
 $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
+$exhibit-card-mark-bg: $yellow-200 !default;
 
 .exhibit-card {
   overflow-y: hidden;
@@ -72,6 +73,12 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
     font-size: $font-size-sm;
     -webkit-line-clamp: 15;
     overflow: hidden;
+  }
+
+  // Bootstrap pads <mark>, which moves the words around each match
+  mark {
+    background-color: $exhibit-card-mark-bg;
+    padding: 0;
   }
 
   &:hover {
