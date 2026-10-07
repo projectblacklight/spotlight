@@ -8,7 +8,7 @@
   .search_field {
     background: transparent;
     border: none;
-    font-size: $font-size-sm;
+    font-size: var(--spotlight-font-size-sm);
   }
 }
 

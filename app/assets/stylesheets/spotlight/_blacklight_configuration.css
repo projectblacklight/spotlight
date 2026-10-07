@@ -8,7 +8,8 @@
       text-decoration: none;
     }
     &:hover {
-      @include edit-in-place-highlighting;
+      background: var(--spotlight-edit-in-place-highlighting-background);
+      cursor: text;
     }
 
     .handle-wrap {
@@ -22,7 +23,7 @@
     }
   }
 
-  &.checkbox-cell  {
+  &.checkbox-cell {
     padding-top: 0;
     padding-bottom: 0;
 
@@ -35,7 +36,7 @@
 }
 
 .dd-table {
-  margin-top: 2 * $spacer;
+  margin-top: 2rem;
 
   th {
     &:first-child {
@@ -49,7 +50,7 @@
     padding: 0.75rem 0.25rem;
   }
   th {
-    font-size: $font-size-sm;
+    font-size: var(--spotlight-font-size-sm);
   }
   .metadata-label-edit {
     max-width: fit-content;
@@ -60,11 +61,11 @@
   }
 }
 
-// the table id
+/* the table id */
 #nested-fields {
   margin-bottom: 1em;
 
-  // the tbody class
+  /* the tbody class */
   .metadata_fields {
     .checkbox-cell {
       vertical-align: middle;
@@ -82,7 +83,9 @@
 }
 
 .disabled-sort-option, .disabled-search-option {
-  .card {margin-bottom: 0;}
+  .card {
+    margin-bottom: 0;
+  }
 }
 
 .sort_fields_admin, .search_fields_admin {

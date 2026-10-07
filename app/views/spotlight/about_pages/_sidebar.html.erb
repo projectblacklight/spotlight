@@ -1,6 +1,6 @@
 <% cache_unless current_user, [current_exhibit, @page, I18n.locale] do %>
   <nav aria-labelledby="about-pages-h">
-    <h2 id="about-pages-h" class="nav-heading h4"><%= current_exhibit.main_navigations.about.label_or_default %></h2>
+    <h2 id="about-pages-h" class="nav-heading h5"><%= current_exhibit.main_navigations.about.label_or_default %></h2>
     <ul class="nav sidenav flex-column">
       <% current_exhibit.about_pages.for_locale.published.each do |page| %>
         <li class="nav-item <%= 'active' if current_page? [spotlight, current_exhibit, page] %>">

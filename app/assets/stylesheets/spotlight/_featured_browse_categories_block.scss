@@ -84,7 +84,7 @@ $xl-sidebar-five-tile-width: ($container-xl-sidebar * 0.2) - $tile-margin;
     line-height: 1.2;
     text-align: center;
     margin: 0;
-    padding: $spacer * 0.25;
+    padding: 0.25rem;
 
     @media (min-width: breakpoint-min("sm")) {
       font-size: 1.125rem;
@@ -108,7 +108,7 @@ $xl-sidebar-five-tile-width: ($container-xl-sidebar * 0.2) - $tile-margin;
     text-transform: uppercase;
 
     @media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-min("lg")) {
-      font-size: $font-size-sm;
+      font-size: var(--spotlight-font-size-sm);
     }
   }
 }
@@ -228,7 +228,7 @@ $xl-sidebar-five-tile-width: ($container-xl-sidebar * 0.2) - $tile-margin;
 
     .item-count {
       @media (min-width: breakpoint-min("lg")) and (max-width: breakpoint-min("xl")) {
-        font-size: $font-size-sm;
+        font-size: var(--spotlight-font-size-sm);
       }
     }
   }

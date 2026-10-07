@@ -31,16 +31,16 @@
 
 .st-block__inner {
   div.field + div.field {
-    margin-top: 2 * $spacer;
+    margin-top: 2rem;
   }
 
   .field-select {
-    margin-bottom: $spacer;
+    margin-bottom: 1rem;
     @media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
-      margin-bottom: 2 * $spacer;
+      margin-bottom: 2rem;
 
       > select {
-        margin-left: 2 * $spacer * 0.25;
+        margin-left: 0.5rem;
       }
     }
   }
@@ -48,13 +48,13 @@
 
 #sidebar {
   li {
-    margin-top: $spacer * 0.5;
+    margin-top: 0.5rem;
   }
   h4 {
-    line-height: $line-height-lg;
+    line-height: 2;
   }
   .contacts-header {
-    margin-top: 4 * $spacer;
+    margin-top: 4rem;
   }
 
   .contact-properties {
@@ -70,7 +70,7 @@
 
     li {
       margin-bottom: 1rem;
-      margin-top: $spacer * 0.5;
+      margin-top: 0.5rem;
       word-break: break-word;
       .name {
         font-weight: bold;
@@ -81,16 +81,16 @@
   ol.sidenav {
     li {
       color: $gray-900;
-      margin-top: $spacer * 0.5;
+      margin-top: 0.5rem;
     }
 
     ol.subsection {
-      margin-bottom: $spacer;
+      margin-bottom: 1rem;
       padding-left: 0;
       li {
         list-style: square;
         margin-left: 18px;
-        margin-top: $spacer * 0.5;
+        margin-top: 0.5rem;
       }
     }
   }
@@ -131,7 +131,7 @@
     z-index: 1;
 
     @media (max-width: breakpoint-max("md")) {
-      margin-bottom: $line-height-lg;
+      margin-bottom: 2rem;
     }
   }
 
@@ -198,13 +198,13 @@
 .empty-page-block {
   @extend .alert;
   @extend .alert-info;
-  margin-top: $spacer;
+  margin-top: 1rem;
   h2 {
     margin-top: 0;
   }
   p,
   ol > li {
-    padding: $spacer * 0.5;
+    padding: 0.5rem;
   }
   ol > li:last-child {
     padding-bottom: 0;
@@ -213,7 +213,7 @@
 
 .oembed-block {
   @media (max-width: breakpoint-max("md")) {
-    margin-bottom: $spacer;
+    margin-bottom: 1rem;
   }
 
   iframe {
@@ -270,16 +270,16 @@
 .item-features .carousel-indicators {
   @media (max-width: breakpoint-max("sm")) {
     width: 100%;
-    margin-top: 2 * $spacer;
+    margin-top: 2rem;
   }
 }
 
 .carousel-block .carousel-caption h3 {
-  padding-left: 2 * $spacer;
-  padding-right: 2 * $spacer;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .zpr-link {
   @extend .btn-sm;
-  margin-top: $spacer * 0.75;
+  margin-top: 0.75rem;
 }

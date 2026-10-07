@@ -7,7 +7,7 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
   .unpublished {
     @extend .mx-auto;
     display: block;
-    font-size: $font-size-sm;
+    font-size: var(--spotlight-font-size-sm);
     margin-top: -1.5rem;
     position: absolute;
     left: 0;
