@@ -201,9 +201,7 @@ module Spotlight
     def redirect_page_to_related_locale_version(pages_for_id = current_exhibit.pages.find(params[:id]))
       default_page = pages_for_id.default_locale_page || pages_for_id
       translation = default_page.translated_page_for(I18n.locale)
-      translation = default_page if translation && cannot?(:read, translation)
-      target = translation || pages_for_id.default_locale_page
-      raise ActiveRecord::RecordNotFound unless target
+      target = translation && can?(:read, translation) ? translation : default_page
 
       authorize! :read, target
       # Pass the locale explicitly. A host app route default (e.g., `locale: nil`) overrides default_url_options.
