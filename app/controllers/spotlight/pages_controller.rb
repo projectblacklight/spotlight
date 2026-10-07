@@ -174,6 +174,7 @@ module Spotlight
 
     def load_locale_specific_page
       @page = current_exhibit.pages.for_locale.find(params[:id])
+      redirect_page_to_related_locale_version(@page) if action_name == 'show' && @page.default_locale_page && cannot?(:read, @page)
     rescue ActiveRecord::RecordNotFound
       raise unless action_name == 'show'
 
@@ -197,10 +198,11 @@ module Spotlight
       params.require(controller_name.singularize).permit(allowed_page_params)
     end
 
-    def redirect_page_to_related_locale_version
-      pages_for_id = current_exhibit.pages.find(params[:id])
+    def redirect_page_to_related_locale_version(pages_for_id = current_exhibit.pages.find(params[:id]))
       default_page = pages_for_id.default_locale_page || pages_for_id
-      target = default_page.translated_page_for(I18n.locale) || pages_for_id.default_locale_page
+      translation = default_page.translated_page_for(I18n.locale)
+      translation = default_page if translation && cannot?(:read, translation)
+      target = translation || pages_for_id.default_locale_page
       raise ActiveRecord::RecordNotFound unless target
 
       authorize! :read, target

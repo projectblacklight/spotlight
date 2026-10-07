@@ -36,6 +36,37 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller, versioning:
         expect(response).to redirect_to main_app.root_path
         expect(flash['alert']).to eq 'You are not authorized to access this page.'
       end
+
+      it 'does not redirect from an unpublished translation to an unpublished default page' do
+        page = FactoryBot.create(:feature_page, exhibit:, published: false)
+        page_de = FactoryBot.create(:feature_page, exhibit:, title: 'Page in german', locale: 'de', default_locale_page: page, published: false)
+        get :show, params: { exhibit_id: exhibit.id, id: page_de.id, locale: 'de' }
+        expect(response).to redirect_to main_app.root_path(locale: 'de')
+        expect(flash['alert']).to eq 'You are not authorized to access this page.'
+      end
+    end
+
+    describe 'GET show for a locale whose translation is unpublished' do
+      around { |example| I18n.with_locale(I18n.default_locale) { example.run } }
+
+      let(:page) { FactoryBot.create(:feature_page, exhibit:) }
+      let!(:page_de) { page.clone_for_locale('de').tap(&:save).tap { |p| p.update(title: 'Page in german') } }
+
+      it 'redirects from the english slug to the english page' do
+        get :show, params: { exhibit_id: exhibit.id, id: page.slug, locale: 'de' }
+        expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page, locale: nil))
+      end
+
+      it 'redirects from the german slug to the english page' do
+        get :show, params: { exhibit_id: exhibit.id, id: page_de.slug, locale: 'de' }
+        expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page, locale: nil))
+      end
+
+      it 'redirects from the english slug to the english page when the german page has no english slug history' do
+        FriendlyId::Slug.where(sluggable_id: page_de.id, slug: page.slug).delete_all
+        get :show, params: { exhibit_id: exhibit.id, id: page.slug, locale: 'de' }
+        expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page, locale: nil))
+      end
     end
   end
 
@@ -119,6 +150,12 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller, versioning:
 
         it 'redirects from the spanish slug to the german page when the german locale is selected' do
           page_de = FactoryBot.create(:feature_page, exhibit:, title: 'Page in german', locale: 'de', default_locale_page: page)
+          get :show, params: { exhibit_id: exhibit.id, id: page_es.slug, locale: 'de' }
+          expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page_de, locale: 'de'))
+        end
+
+        it 'redirects from the spanish slug to an unpublished german page' do
+          page_de = FactoryBot.create(:feature_page, exhibit:, title: 'Page in german', locale: 'de', default_locale_page: page, published: false)
           get :show, params: { exhibit_id: exhibit.id, id: page_es.slug, locale: 'de' }
           expect(response).to redirect_to(exhibit_feature_page_path(exhibit, page_de, locale: 'de'))
         end
