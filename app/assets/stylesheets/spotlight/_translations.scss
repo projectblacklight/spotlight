@@ -4,7 +4,7 @@
   }
 
   .browse-category-title {
-    margin-bottom: $spacer;
+    margin-bottom: 1rem;
 
     label {
       font-weight: normal;
@@ -12,7 +12,7 @@
   }
 
   .browse-category-description {
-    margin-bottom: $spacer * 2;
+    margin-bottom: 2rem;
   }
 
   .table.table-striped th {
@@ -28,11 +28,11 @@
 
 .form-group.translation-form {
   .col-form-label {
-    padding-top: $card-spacer-y + $spacer;
+    padding-top: $card-spacer-y + 1rem;
   }
 
   .translation-complete {
-    padding-top: $card-spacer-y + $spacer;
+    padding-top: $card-spacer-y + 1rem;
   }
 }
 
@@ -74,7 +74,7 @@
   display: block;
   font-size: $h4-font-size;
   font-weight: bold;
-  margin-bottom: $spacer * 2;
-  margin-top: $spacer;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
   padding-bottom: 3px;
 }

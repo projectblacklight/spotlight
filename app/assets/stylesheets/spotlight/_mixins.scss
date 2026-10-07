@@ -1,8 +1,3 @@
-@mixin edit-in-place-highlighting() {
-  background: #f7f7d0;
-  cursor: text;
-}
-
 @mixin panel-hover-highlighting() {
   background: $gray-300;
 }

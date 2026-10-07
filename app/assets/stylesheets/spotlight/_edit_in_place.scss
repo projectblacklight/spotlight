@@ -4,6 +4,7 @@
   &:hover {
     color: inherit;
     text-decoration: none;
-    @include edit-in-place-highlighting;
+    background: var(--spotlight-edit-in-place-highlighting-background);
+    cursor: text;
   }
 }

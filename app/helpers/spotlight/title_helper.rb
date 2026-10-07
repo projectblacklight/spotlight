@@ -25,10 +25,10 @@ module Spotlight
 
       html_content = safe_join([
         section.presence,
-        (content_tag(:small, title) if title.present?)
+        (content_tag(:small, title, class: 'h2 text-muted') if title.present?)
       ].compact, "\n")
 
-      content_tag(:h1, html_content, class: 'page-header')
+      content_tag(:h1, html_content, class: 'page-header mb-4')
     end
 
     def set_html_page_title(title = nil)

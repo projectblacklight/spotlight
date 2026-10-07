@@ -1,14 +1,12 @@
-$image-overlay-max-height: 300px;
-
 .long-description-text {
-  margin: ($spacer * 2) 0;
+  margin: 2rem 0;
   width: 40em;
 }
 
 .very-long-description-text {
   width: auto;
 
-  @media (min-width: breakpoint-min("md")) {
+  @media (min-width: 768px) {
     column-gap: 3em;
     column-width: 20em;
   }
@@ -28,21 +26,21 @@ $image-overlay-max-height: 300px;
 
 .blacklight-browse-show {
   .subtitle {
-    padding-right: $spacer;
+    padding-right: 1rem;
 
     &::before {
       content: " \000B7 ";
-      color: $text-muted;
-      padding-right: $spacer * 0.5;
+      color: var(--bs-secondary-color);
+      padding-right: 0.5rem;
     }
   }
 }
 
 #main-container .browse-group-navigation.nav {
-  margin-bottom: $spacer;
+  margin-bottom: 1rem;
 
   .nav-link {
-    margin-bottom: $spacer * 0.75;
+    margin-bottom: 0.75rem;
   }
 }
 
@@ -50,13 +48,13 @@ $image-overlay-max-height: 300px;
   text-align: center;
 
   .category {
-    margin-bottom: $spacer;
+    margin-bottom: 1rem;
   }
 
   .image-overlay {
     border: var(--bs-border-width) solid var(--bs-border-color-translucent);
     border-radius: var(--bs-border-radius);
-    max-height: 240px;
+    max-height: var(--spotlight-image-overlay-max-height);
     min-height: 140px;
     overflow: hidden;
     position: relative;
@@ -73,7 +71,7 @@ $image-overlay-max-height: 300px;
     height: 100%;
     width: 100%;
     background: linear-gradient(0deg, rgba(46, 45, 41, 0.7) 45%, rgba(46, 45, 41, 0) 100%);
-    color: $white;
+    color: var(--bs-white);
     padding: 5%;
     display: flex;
     flex-direction: column; 
@@ -84,7 +82,7 @@ $image-overlay-max-height: 300px;
     }
 
     .browse-category-title {
-      font-size: $h3-font-size;
+      font-size: calc(var(--bs-body-font-size) * 1.75);
       text-align: center;
 
       .category-subtitle {
@@ -93,42 +91,35 @@ $image-overlay-max-height: 300px;
 
       small {
         display: block;
-        color: $white;
-        margin-top: $spacer;
+        color: var(--bs-white);
+        margin-top: 1rem;
         text-transform: uppercase;
       }
     }
   }
 
-  @media screen and (max-width: breakpoint-max("sm")) {
-    $image-overlay-max-height: 240px;
+  @media screen and (max-width: 575.98px) {
     .image-overlay {
+      --spotlight-image-overlay-max-height: 240px;
       margin: 10px auto;
-      max-height: $image-overlay-max-height;
       max-width: 350px;
     }
     .text-overlay .browse-category-title {
-      font-size: $h3-font-size;
+      font-size: calc(var(--bs-body-font-size) * 1.75);
     }
   }
-  @media screen and (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("md")) {
-    $image-overlay-max-height: 240px;
+  @media screen and (min-width: 576px) and (max-width: 767.98px) {
     .image-overlay {
-      max-height: $image-overlay-max-height;
+      --spotlight-image-overlay-max-height: 240px;
     }
   }
-  @media screen and (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
-    $image-overlay-max-height: 250px;
+  @media screen and (min-width: 768px) and (max-width: 991.98px) {
+    .image-overlay {
+      --spotlight-image-overlay-max-height: 250px;
+    }
+
     .text-overlay .browse-category-title {
-      font-size: $h4-font-size;
-    }
-    .image-overlay {
-      max-height: $image-overlay-max-height;
-    }
-  }
-  @media screen and (min-width: breakpoint-min("lg")) {
-    .image-overlay {
-      max-height: $image-overlay-max-height;
+      font-size: calc(var(--bs-body-font-size) * 1.5);
     }
   }
 }
