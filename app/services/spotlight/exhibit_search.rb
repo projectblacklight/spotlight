@@ -24,6 +24,12 @@ module Spotlight
       exhibits.select { |exhibit| match?(exhibit) }
     end
 
+    # @param [String, nil] html
+    # @return [String] the text of the HTML, without tags and with entities decoded
+    def plain_text(html)
+      CGI.unescapeHTML(html_sanitizer.sanitize(html.to_s))
+    end
+
     private
 
     def match?(exhibit)
@@ -32,8 +38,7 @@ module Spotlight
     end
 
     def searchable_text(exhibit)
-      description = CGI.unescapeHTML(html_sanitizer.sanitize(exhibit.description.to_s))
-      [exhibit.title, exhibit.subtitle, description].compact.join("\n").downcase
+      [exhibit.title, exhibit.subtitle, plain_text(exhibit.description)].compact.join("\n").downcase
     end
 
     def html_sanitizer

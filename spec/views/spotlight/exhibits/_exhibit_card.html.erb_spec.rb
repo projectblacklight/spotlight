@@ -3,8 +3,10 @@
 RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:p) { 'spotlight/exhibits/exhibit_card' }
+  let(:query) { nil }
 
   before do
+    assign(:exhibit_search, Spotlight::ExhibitSearch.new(query))
     allow(view).to receive_messages(exhibit_path: '/')
   end
 
@@ -41,6 +43,19 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
       render(p, exhibit:)
 
       expect(rendered).to have_css '.description', text: 'Test description & more.'
+    end
+  end
+
+  context 'with a search query' do
+    let(:exhibit) { FactoryBot.create(:exhibit, title: 'Some Title', subtitle: 'Some Subtitle', description: 'Some <b>description</b>') }
+    let(:query) { 'some' }
+
+    it 'marks the matches in the title, subtitle, and description' do
+      render(p, exhibit:)
+
+      expect(rendered).to have_css '.card-title mark', text: 'Some'
+      expect(rendered).to have_css '.subtitle mark', text: 'Some'
+      expect(rendered).to have_css '.description mark', text: 'Some'
     end
   end
 
