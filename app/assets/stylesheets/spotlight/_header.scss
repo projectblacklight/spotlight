@@ -14,7 +14,7 @@
 .masthead {
   background-color: var(--masthead-bg);
   border-bottom: 1px solid $border-color;
-  margin-bottom: $spacer * 1.5;
+  margin-bottom: 1.5rem;
   padding: 0;
   position: relative;
 
@@ -23,8 +23,8 @@
   }
 
   .site-title-wrapper {
-    margin-top: $spacer * 1.25;
-    padding-bottom: $spacer * 0.75;
+    margin-top: 1.25rem;
+    padding-bottom: 0.75rem;
     position: relative;
     white-space: nowrap;
   }

@@ -3,20 +3,16 @@
 }
 
 .page-header {
-  @extend .mb-4;
-
   border-bottom: none;
   small {
-    @extend .text-muted;
-    font-size: $h2-font-size;
     display: block;
   }
 }
 
 .navbar-sm {
   li > a {
-    padding-top:$spacer !important;
-    padding-bottom:$spacer !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
   }
 
   margin-top: -10px;
@@ -26,9 +22,7 @@
   margin-bottom: 24px;
 
   .nav-heading {
-    @extend .h5;
-    @extend .border-bottom;
-    @extend .border-secondary;
+    border-bottom: var(--bs-border-width) var(--bs-border-style) rgba(var(--bs-secondary-rgb), 1) !important;
 
     padding-bottom: 0.25rem;
     margin-bottom: 0.25rem;
@@ -42,7 +36,7 @@
   }
 
   .nav-link.active {
-    color: $black;
+    color: var(--bs-black);
 
     &:hover {
       background-color: inherit;
@@ -52,16 +46,16 @@
 
 .nav-heading {
   margin: 0;
-  padding:$nav-link-padding-x $nav-link-padding-y;
+  padding: 1rem 0.5rem;
 }
 
 .btn-nav {
-  margin:$nav-link-padding-x $nav-link-padding-y;
+  margin: 1rem 0.5rem;
 }
 
 h1,h2,h3,h4,h5,h6 {
   .badge {
-    font-size: $font-size-base;
+    font-size: 1rem;
     vertical-align: super;
   }
 }
@@ -71,7 +65,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 #main-container .nav {
-  margin-bottom: $line-height-lg * 1rem;
+  margin-bottom: 2rem;
 }
 
 .nav-tabs {
@@ -81,19 +75,19 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 fieldset {
-  margin-bottom: $spacer * 2;
-  margin-top: $spacer * 1;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
 }
 
 legend {
-  margin-bottom: $spacer;
+  margin-bottom: 1rem;
 }
 
 div.form-check + input[type="file"] {
-  margin-top: $spacer;
+  margin-top: 1rem;
 }
 
-@media (max-width: breakpoint-max("md")) {
+@media (max-width: 767.98px) {
   aside.col-md-3 {
     padding-left: 0;
   }
