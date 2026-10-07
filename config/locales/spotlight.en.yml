@@ -625,6 +625,12 @@ en:
         instructions: You can import an exhibit JSON file exported from this application to use that data file to define this exhibit.
       index:
         published: Published exhibits
+        search_status:
+          all: Showing all exhibits.
+          matches:
+            one: 1 exhibit matches your search.
+            other: "%{count} exhibits match your search."
+            zero: No exhibits match your search.
         unpublished: Unpublished exhibits
         user: Your exhibits
       languages:

@@ -26,6 +26,33 @@ RSpec.describe 'Exhibits index page', type: :feature do
       expect(page).to have_text 'No exhibits match your search.'
     end
 
+    context 'with the live filter', :js do
+      it 'filters the exhibits as the user types, without a page load' do
+        visit spotlight.exhibits_path
+        page.execute_script('window.beforeFilter = true')
+        fill_in 'Search exhibits', with: 'other'
+
+        expect(page).to have_css '.exhibit-card', count: 1
+        expect(page).to have_current_path(/q=other/)
+        expect(page.evaluate_script('window.beforeFilter')).to be true
+      end
+
+      it 'tells screen readers how many exhibits match' do
+        visit spotlight.exhibits_path
+        fill_in 'Search exhibits', with: 'other'
+
+        expect(page).to have_css '[role="status"]', text: '1 exhibit matches your search.', visible: :all
+      end
+
+      it 'clears the search when the user presses Escape' do
+        visit spotlight.exhibits_path(q: 'other')
+        find_field('Search exhibits').send_keys(:escape)
+
+        expect(page).to have_css '.exhibit-card', count: 2
+        expect(page).to have_field 'Search exhibits', with: ''
+      end
+    end
+
     context 'with tagged exhibits' do
       before do
         exhibit.tag_list = %w[a]

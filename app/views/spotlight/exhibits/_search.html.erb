@@ -1,8 +1,10 @@
-<%= form_tag exhibits_path, method: :get, class: 'exhibit-search-form mb-3', role: 'search', 'aria-labelledby' => 'exhibit-search-form' do %>
+<%= form_tag exhibits_path, method: :get, class: 'exhibit-search-form mb-3', role: 'search', 'aria-labelledby' => 'exhibit-search-form',
+             data: { exhibit_search_target: 'form', action: 'exhibit-search#submit' } do %>
   <%= hidden_field_tag :tag, params[:tag], id: nil if params[:tag].present? %>
   <label id="exhibit-search-form" class="visually-hidden" for="exhibit_q"><%= t(:'.label') %></label>
   <div class="input-group">
-    <%= text_field_tag :q, @exhibit_search.query, placeholder: t(:'.placeholder'), class: 'form-control', id: 'exhibit_q' %>
+    <%= text_field_tag :q, @exhibit_search.query, placeholder: t(:'.placeholder'), class: 'form-control', id: 'exhibit_q',
+                       data: { exhibit_search_target: 'input', action: 'input->exhibit-search#queue keydown.esc->exhibit-search#clear' } %>
     <button type="submit" class="btn btn-primary search-btn">
       <span class="visually-hidden"><%= t(:'.submit') %></span>
       <%= blacklight_icon('search', aria_hidden: true) %>
