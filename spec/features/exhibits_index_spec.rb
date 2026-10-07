@@ -11,6 +11,21 @@ RSpec.describe 'Exhibits index page', type: :feature do
       expect(page).to have_css '.exhibit-card h2', text: 'Some Exhibit Title'
     end
 
+    it 'searches the exhibits' do
+      visit spotlight.exhibits_path
+      fill_in 'Search exhibits', with: 'other'
+      click_button 'Search exhibits'
+
+      expect(page).to have_css '.exhibit-card', count: 1
+      expect(page).to have_css '.exhibit-card h2', text: 'Some Other Title'
+    end
+
+    it 'shows a message when no exhibits match the search' do
+      visit spotlight.exhibits_path(q: 'unrelated')
+
+      expect(page).to have_text 'No exhibits match your search.'
+    end
+
     context 'with tagged exhibits' do
       before do
         exhibit.tag_list = %w[a]
@@ -39,6 +54,26 @@ RSpec.describe 'Exhibits index page', type: :feature do
         end
 
         expect(page).to have_css '.exhibit-card', count: 1
+      end
+
+      it 'keeps the search query when the user selects a tag' do
+        visit spotlight.exhibits_path(q: 'other')
+
+        within('.tags') { click_link 'a' }
+        expect(page).to have_css '.exhibit-card', count: 1
+
+        within('.tags') { click_link 'All' }
+        expect(page).to have_css '.exhibit-card', count: 1
+        expect(page).to have_field 'Search exhibits', with: 'other'
+      end
+
+      it 'keeps the selected tag when the user searches' do
+        visit spotlight.exhibits_path(tag: 'b')
+        fill_in 'Search exhibits', with: 'some'
+        click_button 'Search exhibits'
+
+        expect(page).to have_css '.exhibit-card', count: 1
+        expect(page).to have_css '.exhibit-card h2', text: 'Some Other Title'
       end
     end
   end

@@ -9,6 +9,7 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
 
   before do
     assign(:exhibits, exhibits)
+    assign(:exhibit_search, Spotlight::ExhibitSearch.new(nil))
     assign(:published_exhibits, published_exhibits)
     assign(:unpublished_exhibits, exhibits.unpublished)
     assign(:user_exhibits, user.exhibits)

@@ -580,6 +580,8 @@ en:
         header: General
       exhibit_card:
         unpublished: Unpublished
+      exhibits:
+        no_matches: No exhibits match your search.
       export:
         configurations:
           attachments: 'Attachments: %{config}'
@@ -651,6 +653,10 @@ en:
           title:
             help_block: This can be changed later.
             label: Title
+      search:
+        label: Search exhibits
+        placeholder: Search exhibits by title, subtitle, or description
+        submit: Search exhibits
       tags:
         all: All
     exhibits_admin_invitation_mailer:
