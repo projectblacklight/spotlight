@@ -14,8 +14,9 @@ module Spotlight
     def index
       @exhibit_search = Spotlight::ExhibitSearch.new(params[:q])
       @published_exhibits = paginate(@exhibit_search.filter(published_exhibits))
-      @unpublished_exhibits = @exhibit_search.filter(@exhibits.unpublished.ordered_by_weight.accessible_by(current_ability))
+      @unpublished_exhibits = @exhibit_search.filter(unpublished_exhibits)
       @user_exhibits = @exhibit_search.filter(current_user.exhibits) if current_user
+      @matching_tag_names = matching_tag_names if @exhibit_search.active?
       if @exhibits.one?
         redirect_to @exhibits.first, flash: flash.to_h
       else
@@ -99,10 +100,18 @@ module Spotlight
       params[:tag] ? exhibits.tagged_with(params[:tag]) : exhibits
     end
 
+    def unpublished_exhibits
+      @exhibits.unpublished.ordered_by_weight.accessible_by(current_ability)
+    end
+
     def paginate(exhibits)
       return exhibits.page(params[:page]) unless @exhibit_search.active?
 
       Kaminari.paginate_array(exhibits).page(params[:page]).per(Spotlight::Exhibit.default_per_page)
+    end
+
+    def matching_tag_names
+      @exhibit_search.filter(@exhibits.published.includes(:tags)).flat_map { |exhibit| exhibit.tags.map(&:name) }.uniq
     end
 
     def exhibit_params

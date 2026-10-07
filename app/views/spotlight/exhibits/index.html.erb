@@ -17,7 +17,7 @@
     <% if @exhibits.published.none? %>
       <%= render 'missing_exhibits' %>
     <% else %>
-      <%= render 'tags', tags: @exhibits.published.all_tags %>
+      <%= render 'tags', tags: @exhibits.published.all_tags, matching_tag_names: @matching_tag_names %>
       <%= render 'exhibits', exhibits: @published_exhibits %>
 
       <% if @published_exhibits.total_count > @published_exhibits.size %>

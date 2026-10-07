@@ -67,6 +67,26 @@ RSpec.describe 'Exhibits index page', type: :feature do
         expect(page).to have_field 'Search exhibits', with: 'other'
       end
 
+      it 'disables the tags without exhibits that match the search' do
+        visit spotlight.exhibits_path(q: 'exhibit')
+
+        within '.tags' do
+          expect(page).to have_link 'a'
+          expect(page).to have_no_link 'b'
+          expect(page).to have_css '[aria-disabled="true"]', text: 'b'
+        end
+      end
+
+      it 'enables tags with matches outside the selected tag, and the selected tag' do
+        visit spotlight.exhibits_path(q: 'exhibit', tag: 'b')
+
+        expect(page).to have_text 'No exhibits match your search.'
+        within '.tags' do
+          expect(page).to have_link 'a'
+          expect(page).to have_link 'b'
+        end
+      end
+
       it 'keeps the selected tag when the user searches' do
         visit spotlight.exhibits_path(tag: 'b')
         fill_in 'Search exhibits', with: 'some'
