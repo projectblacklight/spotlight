@@ -32,13 +32,13 @@
 
   <% if @exhibits.unpublished.accessible_by(current_ability).any? %>
     <div role="tabpanel" class="tab-pane" id="unpublished">
-      <%= render 'exhibits', exhibits: @exhibits.unpublished.ordered_by_weight.accessible_by(current_ability) %>
+      <%= render 'exhibits', exhibits: @unpublished_exhibits %>
     </div>
   <% end %>
 
   <% if current_user && current_user.exhibits.any? %>
     <div role="tabpanel" class="tab-pane" id="user">
-      <%= render 'exhibits', exhibits: current_user.exhibits %>
+      <%= render 'exhibits', exhibits: @user_exhibits %>
     </div>
   <% end %>
 </div>

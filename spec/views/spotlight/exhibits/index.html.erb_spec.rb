@@ -10,6 +10,8 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
   before do
     assign(:exhibits, exhibits)
     assign(:published_exhibits, published_exhibits)
+    assign(:unpublished_exhibits, exhibits.unpublished)
+    assign(:user_exhibits, user.exhibits)
     allow(view).to receive_messages(exhibits_path: '/', exhibit_path: '/', current_user: user, current_ability: ability)
   end
 

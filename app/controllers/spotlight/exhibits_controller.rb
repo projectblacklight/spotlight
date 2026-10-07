@@ -12,8 +12,10 @@ module Spotlight
     load_and_authorize_resource
 
     def index
-      @published_exhibits = @exhibits.includes(:thumbnail).published.ordered_by_weight.page(params[:page])
-      @published_exhibits = @published_exhibits.tagged_with(params[:tag]) if params[:tag]
+      @exhibit_search = Spotlight::ExhibitSearch.new(params[:q])
+      @published_exhibits = paginate(@exhibit_search.filter(published_exhibits))
+      @unpublished_exhibits = @exhibit_search.filter(@exhibits.unpublished.ordered_by_weight.accessible_by(current_ability))
+      @user_exhibits = @exhibit_search.filter(current_user.exhibits) if current_user
       if @exhibits.one?
         redirect_to @exhibits.first, flash: flash.to_h
       else
@@ -91,6 +93,17 @@ module Spotlight
     end
 
     protected
+
+    def published_exhibits
+      exhibits = @exhibits.includes(:thumbnail).published.ordered_by_weight
+      params[:tag] ? exhibits.tagged_with(params[:tag]) : exhibits
+    end
+
+    def paginate(exhibits)
+      return exhibits.page(params[:page]) unless @exhibit_search.active?
+
+      Kaminari.paginate_array(exhibits).page(params[:page]).per(Spotlight::Exhibit.default_per_page)
+    end
 
     def exhibit_params
       params.require(:exhibit).permit(
