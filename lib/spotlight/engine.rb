@@ -197,16 +197,30 @@ module Spotlight
     # b) generate and download the JSON key and make it accessible to your application
     # (https://console.cloud.google.com/iam-admin/iam -> Service accounts -> click on service account -> keys)
     # c) set ga_property_id below to your site's property id (located in admin -> Property -> Property details upper right hand corner)
-    # d) Set the ga_web_property_id. (located in admin -> Data collection and modification -> Web stream details and begins with G-)
-    # ga_property_id is used for fetching analytics data from google's api, ga_web_property_id is used for sending events to GA analtyics
-    # ga_web_property_id will probably change in V5 to ga_measurement_id for clarity
+    # d) Set the ga_measurement_id. (located in admin -> Data collection and modification -> Data Streams -> Web stream details and begins with G-)
+    # ga_measurement_id is used for sending events to GA analtyics
+    # ga_web_property_id is deprecated, use ga_measurement_id instead
+    # ga_property_id is used for fetching analytics data from google's api
     config.ga_json_key_path = nil
+    config.ga_measurement_id = nil
     config.ga_web_property_id = nil
     config.ga_property_id = nil
     config.ga_analytics_options = {}
     config.ga_page_analytics_options = config.ga_analytics_options.merge(limit: 5)
     config.ga_date_range = { 'start_date' => nil, 'end_date' => nil }
     config.ga_debug_mode = false
+
+    # For now, copy existing ga_web_property_id to a nil ga_measurement_id
+    # Remove this in a future release
+    config.after_initialize do
+      if Spotlight::Engine.config.ga_web_property_id.present?
+        Spotlight.deprecator.warn(
+          'Spotlight::Engine.config.ga_web_property_id is deprecated and will be removed in a future version. ' \
+          'Use Spotlight::Engine.config.ga_measurement_id instead.'
+        )
+        Spotlight::Engine.config.ga_measurement_id ||= Spotlight::Engine.config.ga_web_property_id
+      end
+    end
 
     config.max_pages = 1000
 
