@@ -167,11 +167,11 @@ module Spotlight
       end
     end
 
-    private
-
     def default_locale?
       locale.to_sym == I18n.default_locale
     end
+
+    private
 
     def parent_page_for(locale)
       parent_page&.translated_page_for(locale)
