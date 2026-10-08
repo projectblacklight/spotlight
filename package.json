@@ -41,6 +41,7 @@
   ],
   "dependencies": {
     "blacklight-frontend": "^8.4.0",
+    "blacklight-gallery": "^5.0.0",
     "leaflet": "^1.9.4",
     "leaflet-iiif": "^3.0.0",
     "openseadragon-rails": "^1.0.1",
