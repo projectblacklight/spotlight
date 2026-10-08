@@ -85,6 +85,10 @@ RSpec.describe Spotlight::AddUploadsFromCsv do
         Spotlight::Engine.config.csv_upload_multivalued_field_delimiter = '|'
       end
 
+      after do
+        Spotlight::Engine.config.csv_upload_multivalued_field_delimiter = nil
+      end
+
       it 'splits into arrays' do
         expect(job.send(:processed_csv, data, exhibit)).to eq(
           [{
