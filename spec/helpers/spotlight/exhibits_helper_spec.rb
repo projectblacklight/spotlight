@@ -4,6 +4,12 @@ RSpec.describe Spotlight::ExhibitsHelper, type: :helper do
   let(:search) { Spotlight::ExhibitSearch.new(query) }
 
   describe '#highlight_exhibit_search' do
+    context 'without a search' do
+      it 'returns the text unchanged' do
+        expect(helper.highlight_exhibit_search('Some Title', nil)).to eq 'Some Title'
+      end
+    end
+
     context 'with a blank query' do
       let(:query) { '' }
 

@@ -1,5 +1,5 @@
-<% exhibit_search = local_assigns[:exhibit_search] || Spotlight::ExhibitSearch.new(nil) %>
-<% if exhibit_search.active? && exhibits.none? %>
+<% exhibit_search = local_assigns[:exhibit_search] %>
+<% if exhibit_search&.active? && exhibits.none? %>
   <p class="text-center"><%= t(:'.no_matches') %></p>
 <% else %>
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">

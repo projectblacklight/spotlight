@@ -4,6 +4,7 @@ module Spotlight
   ##
   # Filters exhibits by a free-text query against their title, subtitle, and description.
   # Every word in the query must appear somewhere, in any order, ignoring case.
+  # Override with Spotlight::Engine.config.exhibit_search_class; a subclass can override #searchable_text.
   class ExhibitSearch
     attr_reader :query, :terms
 
@@ -38,15 +39,17 @@ module Spotlight
       exhibits.select { |exhibit| match?(exhibit) }
     end
 
+    # @param [Spotlight::Exhibit] exhibit
+    # @return [String] the downcased text that every query term must appear in
+    def searchable_text(exhibit)
+      [exhibit.title, exhibit.subtitle, self.class.plain_text(exhibit.description)].compact.join("\n").downcase
+    end
+
     private
 
     def match?(exhibit)
       text = searchable_text(exhibit)
       terms.all? { |term| text.include?(term) }
-    end
-
-    def searchable_text(exhibit)
-      [exhibit.title, exhibit.subtitle, self.class.plain_text(exhibit.description)].compact.join("\n").downcase
     end
   end
 end

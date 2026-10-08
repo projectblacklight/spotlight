@@ -107,6 +107,20 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
           expect(assigns(:published_exhibits)).to eq [later_match]
           expect(assigns(:published_exhibits).total_count).to eq 2
         end
+
+        it 'filters the published exhibits with the configured search class' do
+          tag_search_class = Class.new(Spotlight::ExhibitSearch) do
+            def searchable_text(exhibit)
+              exhibit.tag_list.join(' ')
+            end
+          end
+          allow(Spotlight::Engine.config).to receive(:exhibit_search_class).and_return(-> { tag_search_class })
+          history_exhibit = FactoryBot.create(:exhibit, tag_list: ['history'])
+
+          get :index, params: { q: 'history' }
+
+          expect(assigns(:published_exhibits)).to eq [history_exhibit]
+        end
       end
     end
 

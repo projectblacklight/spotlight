@@ -12,7 +12,7 @@ module Spotlight
     load_and_authorize_resource
 
     def index
-      @exhibit_search = Spotlight::ExhibitSearch.new(params[:q])
+      @exhibit_search = Spotlight::Engine.config.exhibit_search_class.call.new(params[:q])
       @published_exhibits = published_exhibits
       @matching_tag_names = matching_tag_names if @exhibit_search.active?
       @unpublished_exhibits = @exhibit_search.filter(unpublished_exhibits)

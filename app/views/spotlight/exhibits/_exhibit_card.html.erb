@@ -1,4 +1,4 @@
-<% exhibit_search = local_assigns[:exhibit_search] || Spotlight::ExhibitSearch.new(nil) %>
+<% exhibit_search = local_assigns[:exhibit_search] %>
 <div class="col mb-4">
   <div class="card exhibit-card">
     <%= link_to exhibit, aria: { hidden: true  }, tabindex: '-1' do %>
