@@ -57,7 +57,7 @@ RSpec.describe 'Browse Category Administration', type: :feature do
         visit spotlight.edit_exhibit_search_path(exhibit, search)
         fill_in 'search_title', with: title
         click_button 'Save changes'
-        expect(page).to have_text('1 error prohibited this page from being saved')
+        expect(page).to have_css('#error_explanation', text: '1 error prohibited this page from being saved')
       end
     end
 
