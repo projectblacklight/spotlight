@@ -407,6 +407,8 @@ en:
         reindex: Reindex items
       breadcrumb:
         index: Search results
+      document_admin_table:
+        thumbnail: Thumbnail
       document_visibility_control:
         inprogress: In progress
         make_private: Make private
