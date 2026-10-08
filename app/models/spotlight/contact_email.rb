@@ -33,8 +33,8 @@ module Spotlight
       errors.add :email, 'is not valid' if parsed.nil? || parsed.address != email || parsed.local == email
     end
 
-    def send_devise_notification(notification, *args)
-      notice = notification_mailer.send(notification, self, *args, exhibit:)
+    def send_devise_notification(notification, *)
+      notice = notification_mailer.send(notification, self, *, exhibit:)
       if notice.respond_to? :deliver_now
         notice.deliver_now
       else

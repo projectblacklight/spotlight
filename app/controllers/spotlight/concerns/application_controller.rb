@@ -29,8 +29,8 @@ module Spotlight
         end
       end
 
-      def enabled_in_spotlight_view_type_configuration?(config, *args)
-        if config.respond_to?(:original) && !blacklight_configuration_context.evaluate_if_unless_configuration(config.original, *args)
+      def enabled_in_spotlight_view_type_configuration?(config, *)
+        if config.respond_to?(:original) && !blacklight_configuration_context.evaluate_if_unless_configuration(config.original, *)
           false
         elsif current_exhibit.nil? || is_a?(Spotlight::PagesController)
           true
@@ -39,10 +39,10 @@ module Spotlight
         end
       end
 
-      def field_enabled?(field, *args)
+      def field_enabled?(field, *)
         if !field.enabled
           false
-        elsif field.respond_to?(:original) && !blacklight_configuration_context.evaluate_if_unless_configuration(field.original, *args)
+        elsif field.respond_to?(:original) && !blacklight_configuration_context.evaluate_if_unless_configuration(field.original, *)
           false
         elsif field.is_a?(Blacklight::Configuration::SortField) || field.is_a?(Blacklight::Configuration::SearchField)
           field.enabled
