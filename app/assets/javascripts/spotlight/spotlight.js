@@ -4996,6 +4996,7 @@
 
     queue() {
       clearTimeout(this.timeout);
+      this.abortController?.abort();
       this.timeout = setTimeout(() => this.search(), 300);
     }
 
@@ -5018,21 +5019,23 @@
       const url = this.url();
 
       this.abortController?.abort();
-      this.abortController = new AbortController();
+      const abortController = new AbortController();
+      this.abortController = abortController;
 
       try {
         const response = await fetch(url, {
           headers: { Accept: "text/html" },
-          signal: this.abortController.signal,
+          signal: abortController.signal,
         });
         if (!response.ok) throw new Error(response.statusText)
 
-        this.update(
-          new DOMParser().parseFromString(await response.text(), "text/html"),
-        );
+        const html = await response.text();
+        if (abortController.signal.aborted) return
+
+        this.update(new DOMParser().parseFromString(html, "text/html"));
         history.replaceState(history.state, "", url);
       } catch (error) {
-        if (error.name === "AbortError") return
+        if (abortController.signal.aborted || error.name === "AbortError") return
 
         window.location.assign(url);
       }
@@ -5047,6 +5050,10 @@
         pane.dataset.exhibitSearchStatus = source.dataset.exhibitSearchStatus;
       });
 
+      this.announce();
+    }
+
+    announce() {
       const activePane = this.paneTargets.find((pane) =>
         pane.classList.contains("active"),
       );

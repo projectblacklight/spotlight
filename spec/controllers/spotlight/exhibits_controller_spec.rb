@@ -70,6 +70,28 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
           expect(assigns(:published_exhibits).size).to eq 1
           expect(assigns(:published_exhibits).total_count).to eq 2
         end
+
+        it 'keeps matching tags outside the selected tag and current page available' do
+          untagged_exhibit.update!(tag_list: ['b'])
+          allow(Spotlight::Exhibit).to receive(:default_per_page).and_return(1)
+
+          get :index, params: { q: 'some', tag: 'a' }
+
+          expect(assigns(:published_exhibits)).to eq [tagged_exhibit]
+          expect(assigns(:matching_tag_names)).to contain_exactly('a', 'b')
+        end
+
+        it 'paginates after applying both the search and selected tag' do
+          tagged_exhibit.update!(weight: 1)
+          untagged_exhibit.update!(weight: 2)
+          later_match = FactoryBot.create(:exhibit, title: 'Some Later Title', tag_list: ['a'], weight: 3)
+          allow(Spotlight::Exhibit).to receive(:default_per_page).and_return(1)
+
+          get :index, params: { q: 'some', tag: 'a', page: 2 }
+
+          expect(assigns(:published_exhibits)).to eq [later_match]
+          expect(assigns(:published_exhibits).total_count).to eq 2
+        end
       end
     end
 

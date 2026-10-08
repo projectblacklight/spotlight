@@ -51,6 +51,75 @@ RSpec.describe 'Exhibits index page', type: :feature do
         expect(page).to have_css '.exhibit-card', count: 2
         expect(page).to have_field 'Search exhibits', with: ''
       end
+
+      it 'ignores a failed request after the user changes the query' do
+        visit spotlight.exhibits_path
+        page.execute_script <<~JS
+          window.beforeFilter = true;
+          const originalFetch = window.fetch;
+          window.fetch = (...args) => {
+            window.fetch = originalFetch;
+            document.body.dataset.searchRequestPending = "true";
+            return new Promise((_resolve, reject) => { window.rejectSearch = reject; });
+          };
+        JS
+        fill_in 'Search exhibits', with: 'other'
+        click_button 'Search exhibits'
+        expect(page).to have_css 'body[data-search-request-pending="true"]'
+
+        page.execute_script <<~JS
+          const input = document.getElementById("exhibit_q");
+          input.value = "exhibit";
+          input.dispatchEvent(new Event("input", { bubbles: true }));
+          window.rejectSearch(new Error("Network failure"));
+        JS
+
+        expect(page).to have_current_path(/q=exhibit/)
+        expect(page).to have_css '.exhibit-card h2', text: 'Some Exhibit Title'
+        expect(page).to have_field 'Search exhibits', with: 'exhibit'
+        expect(page.evaluate_script('window.beforeFilter')).to be true
+      end
+
+      it 'updates the announced count when the user switches tabs' do
+        user = FactoryBot.create(:site_admin)
+        FactoryBot.create(:exhibit, title: 'Some Unpublished One', published: false)
+        FactoryBot.create(:exhibit, title: 'Some Unpublished Two', published: false)
+        login_as(user, scope: :user)
+        visit spotlight.exhibits_path
+        fill_in 'Search exhibits', with: 'unpublished'
+
+        expect(page).to have_css '[role="status"]', text: 'No exhibits match your search.', visible: :all
+        click_link 'Unpublished exhibits'
+
+        expect(page).to have_css '#unpublished.active .exhibit-card', count: 2
+        expect(page).to have_css '[role="status"]', text: '2 exhibits match your search.', visible: :all
+      end
+    end
+
+    context 'with more exhibits than fit on one page' do
+      before do
+        allow(Spotlight::Exhibit).to receive(:default_per_page).and_return(1)
+        exhibit.update(weight: 1)
+        FactoryBot.create(:exhibit, title: 'Unrelated', weight: 2)
+        other_exhibit.update(weight: 3)
+      end
+
+      it 'keeps the search query on the next page' do
+        visit spotlight.exhibits_path(q: 'some')
+        expect(page).to have_css '.exhibit-card h2', text: 'Some Exhibit Title'
+
+        click_link 'Next'
+        expect(page).to have_css '.exhibit-card h2', text: 'Some Other Title'
+        expect(page).to have_field 'Search exhibits', with: 'some'
+      end
+
+      it 'returns to the first page when the user types', :js do
+        visit spotlight.exhibits_path(page: 2)
+        expect(page).to have_css '.exhibit-card h2', text: 'Unrelated'
+
+        fill_in 'Search exhibits', with: 'some'
+        expect(page).to have_css '.exhibit-card h2', text: 'Some Exhibit Title'
+      end
     end
 
     context 'with tagged exhibits' do

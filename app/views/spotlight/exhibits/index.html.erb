@@ -1,4 +1,4 @@
-<div data-controller="exhibit-search">
+<div data-controller="exhibit-search" data-action="shown.bs.tab->exhibit-search#announce">
   <%= render 'search' if @exhibits.any? %>
 
   <% if (current_user && current_user.exhibits.any?) || can?(:manage, Spotlight::Exhibit) %>
