@@ -29,7 +29,7 @@
 
           <% if exhibit.description %>
             <p class="description">
-              <%= highlight_exhibit_search(exhibit_search.plain_text(exhibit.description), exhibit_search) %>
+              <%= highlight_exhibit_search(Spotlight::ExhibitSearch.plain_text(exhibit.description), exhibit_search) %>
             </p>
           <% end %>
         <% end %>

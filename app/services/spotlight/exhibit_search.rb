@@ -7,6 +7,12 @@ module Spotlight
   class ExhibitSearch
     attr_reader :query, :terms
 
+    # @param [String, nil] html
+    # @return [String] the text of the HTML, without tags and with entities decoded
+    def self.plain_text(html)
+      CGI.unescapeHTML(Rails::Html::FullSanitizer.new.sanitize(html.to_s))
+    end
+
     def initialize(query)
       @query = query.to_s.squish
       @terms = @query.downcase.split
@@ -32,12 +38,6 @@ module Spotlight
       exhibits.select { |exhibit| match?(exhibit) }
     end
 
-    # @param [String, nil] html
-    # @return [String] the text of the HTML, without tags and with entities decoded
-    def plain_text(html)
-      CGI.unescapeHTML(html_sanitizer.sanitize(html.to_s))
-    end
-
     private
 
     def match?(exhibit)
@@ -46,11 +46,7 @@ module Spotlight
     end
 
     def searchable_text(exhibit)
-      [exhibit.title, exhibit.subtitle, plain_text(exhibit.description)].compact.join("\n").downcase
-    end
-
-    def html_sanitizer
-      @html_sanitizer ||= Rails::Html::FullSanitizer.new
+      [exhibit.title, exhibit.subtitle, self.class.plain_text(exhibit.description)].compact.join("\n").downcase
     end
   end
 end
