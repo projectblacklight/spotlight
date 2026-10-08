@@ -626,11 +626,9 @@ en:
       index:
         published: Published exhibits
         search_status:
-          all: Showing all exhibits.
-          matches:
-            one: 1 exhibit matches your search.
-            other: "%{count} exhibits match your search."
-            zero: No exhibits match your search.
+          one: Showing 1 exhibit.
+          other: Showing %{count} exhibits.
+          zero: No exhibits to show.
         unpublished: Unpublished exhibits
         user: Your exhibits
       languages:

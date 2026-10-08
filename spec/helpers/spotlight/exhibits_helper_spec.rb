@@ -68,22 +68,4 @@ RSpec.describe Spotlight::ExhibitsHelper, type: :helper do
       end
     end
   end
-
-  describe '#exhibit_search_status' do
-    context 'with a blank query' do
-      let(:query) { '' }
-
-      it 'says that all exhibits show' do
-        expect(helper.exhibit_search_status(search, 5)).to eq 'Showing all exhibits.'
-      end
-    end
-
-    context 'with a query' do
-      let(:query) { 'some' }
-
-      it 'gives the number of matches' do
-        expect(helper.exhibit_search_status(search, 2)).to eq '2 exhibits match your search.'
-      end
-    end
-  end
 end

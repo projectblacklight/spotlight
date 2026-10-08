@@ -41,7 +41,7 @@ RSpec.describe 'Exhibits index page', type: :feature do
         visit spotlight.exhibits_path
         fill_in 'Search exhibits', with: 'other'
 
-        expect(page).to have_css '[role="status"]', text: '1 exhibit matches your search.', visible: :all
+        expect(page).to have_css '[role="status"]', text: 'Showing 1 exhibit.', visible: :all
       end
 
       it 'clears the search when the user presses Escape' do
@@ -88,11 +88,11 @@ RSpec.describe 'Exhibits index page', type: :feature do
         visit spotlight.exhibits_path
         fill_in 'Search exhibits', with: 'unpublished'
 
-        expect(page).to have_css '[role="status"]', text: 'No exhibits match your search.', visible: :all
+        expect(page).to have_css '[role="status"]', text: 'No exhibits to show.', visible: :all
         click_link 'Unpublished exhibits'
 
         expect(page).to have_css '#unpublished.active .exhibit-card', count: 2
-        expect(page).to have_css '[role="status"]', text: '2 exhibits match your search.', visible: :all
+        expect(page).to have_css '[role="status"]', text: 'Showing 2 exhibits.', visible: :all
       end
     end
 

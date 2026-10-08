@@ -14,7 +14,7 @@
   <% end %>
 
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="published" data-exhibit-search-target="pane" data-exhibit-search-status="<%= exhibit_search_status(@exhibit_search, @published_exhibits.total_count) %>">
+    <div role="tabpanel" class="tab-pane active" id="published" data-exhibit-search-target="pane" data-exhibit-search-status="<%= t('.search_status', count: @published_exhibits.total_count) %>">
       <% if @exhibits.published.none? %>
         <%= render 'missing_exhibits' %>
       <% else %>
@@ -34,13 +34,13 @@
     </div>
 
     <% if @exhibits.unpublished.accessible_by(current_ability).any? %>
-      <div role="tabpanel" class="tab-pane" id="unpublished" data-exhibit-search-target="pane" data-exhibit-search-status="<%= exhibit_search_status(@exhibit_search, @unpublished_exhibits.size) %>">
+      <div role="tabpanel" class="tab-pane" id="unpublished" data-exhibit-search-target="pane" data-exhibit-search-status="<%= t('.search_status', count: @unpublished_exhibits.size) %>">
         <%= render 'exhibits', exhibits: @unpublished_exhibits, exhibit_search: @exhibit_search %>
       </div>
     <% end %>
 
     <% if current_user && current_user.exhibits.any? %>
-      <div role="tabpanel" class="tab-pane" id="user" data-exhibit-search-target="pane" data-exhibit-search-status="<%= exhibit_search_status(@exhibit_search, @user_exhibits.size) %>">
+      <div role="tabpanel" class="tab-pane" id="user" data-exhibit-search-target="pane" data-exhibit-search-status="<%= t('.search_status', count: @user_exhibits.size) %>">
         <%= render 'exhibits', exhibits: @user_exhibits, exhibit_search: @exhibit_search %>
       </div>
     <% end %>
