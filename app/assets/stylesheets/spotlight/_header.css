@@ -1,10 +1,12 @@
-@mixin masthead-background-containers() {
-  position: absolute;
-  left: 0;
-  right: 0;
-  display: block;
-  width: auto;
-  height: inherit;
+.image-masthead {
+  .background-container-gradient, .background-container  {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: block;
+    width: auto;
+    height: inherit;
+  }
 }
 
 .navbar-static-top {
@@ -13,7 +15,7 @@
 
 .masthead {
   background-color: var(--masthead-bg);
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid var(--bs-border-color);
   margin-bottom: 1.5rem;
   padding: 0;
   position: relative;
@@ -38,7 +40,7 @@
 
 .resource-masthead {
   .site-title {
-    @extend .text-center;
+    text-align: center !important;
   }
 
   .navbar {
@@ -57,17 +59,14 @@
 }
 
 .site-title-container {
-  @extend .px-4;
-  @extend .py-2;
-
+  padding-right: 0.5rem 1rem;
   max-height: calc(var(--masthead-height) - (1.25rem * var(--bs-body-line-height)));
 }
 
 .image-masthead {
-  background-color: $black;
+  background-color: var(--bs-black);
 
   .exhibit-navbar {
-    @extend .navbar-dark;
     background-color: var(--navbar-transparent-page-bg);
 
     .navbar-nav {
@@ -80,41 +79,39 @@
   }
 
   .h2 {
-    color: $white;
-    text-shadow: 1px 1px 0 $gray-900;
+    color: var(--bs-white);
+    text-shadow: 1px 1px 0 var(--bs-gray-900);
   }
 
   small {
-    color: $white;
+    color: var(--bs-white);
   }
 
-  // This is to add a background image to the masthead, in a way that
-  // enables the site title and subtitle text to be visible above it.
+  /* This is to add a background image to the masthead, in a way that */
+  /* enables the site title and subtitle text to be visible above it. */
   .background-container {
-    @include masthead-background-containers();
     background-repeat: no-repeat;
     background-size: cover;
 
-    // Add right border to image to hide lighter blurred edge
-    border-right: 1px solid $black;
+    /* Add right border to image to hide lighter blurred edge */
+    border-right: 1px solid var(--bs-black);
 
-    // Add small amount of blur to help text stand out
-    //filter: url(masthead/blur.svg#blur); // for older versions of FF
+    /* Add small amount of blur to help text stand out */
+    /* filter: url(masthead/blur.svg#blur); for older versions of FF */
     -webkit-filter: blur(var(--masthead-image-blur));
     filter: blur(var(--masthead-image-blur));
 
     height: 100%;
 
-    // Shift image slightly to hide blurred edge of image
+    /* Shift image slightly to hide blurred edge of image */
     margin-left: calc(-1 * var(--masthead-image-blur));
     margin-top: calc(-1 * var(--masthead-image-blur));
     overflow: hidden;
   }
 
-  // Include gradient to improve text legibility,
-  // especially on light background images.
+  /* Include gradient to improve text legibility, */
+  /* especially on light background images. */
   .background-container-gradient {
-    @include masthead-background-containers();
     background: linear-gradient(
       rgba(0, 0, 0, 0),
       rgba(0, 0, 0, 0.4),
@@ -127,9 +124,9 @@
 
 .col-md-4 {
   .submit-search-text {
-    // hide 'search' label
-    // copied from .sr-only, sadly can't seem to use @extend in a media
-    // query like this, have to copy.
+    /* hide 'search' label */
+    /* copied from .sr-only, sadly can't seem to use @extend in a media */
+    /* query like this, have to copy. */
     border: 0;
     clip: rect(0, 0, 0, 0);
     height: 1px;
