@@ -14,26 +14,26 @@ RSpec.describe 'Accessibility testing', :js do
 
   it 'validates site home page' do
     visit root_path
-    expect(page).to have_css('h2', text: 'Test Exhibit')
-    expect(page).to have_css('h2', text: 'Other Test Exhibit')
+    expect(page).to have_css('h2', text: exhibit.title)
+    expect(page).to have_css('h2', text: other_exhibit.title)
     expect(page).to be_axe_clean
   end
 
   it 'validates exhibit home page' do
     visit spotlight.exhibit_path(exhibit)
-    expect(page).to have_css('h1', text: 'Test Exhibit')
+    expect(page).to have_css('h1', text: exhibit.title)
     expect(page).to be_axe_clean
   end
 
   it 'validates feature page' do
     visit spotlight.exhibit_feature_page_path(exhibit, feature_page)
-    expect(page).to have_css('h2', text: 'Feature Page')
+    expect(page).to have_css('h2', text: feature_page.title)
     expect(page).to be_axe_clean
   end
 
   it 'validates about page' do
     visit spotlight.exhibit_about_page_path(exhibit, about_page)
-    expect(page).to have_css('h2', text: 'About')
+    expect(page).to have_css('h2', text: about_page.title)
     expect(page).to be_axe_clean
   end
 
@@ -56,7 +56,7 @@ RSpec.describe 'Accessibility testing', :js do
 
   it 'validates browse category page' do
     visit spotlight.exhibit_browse_path(exhibit, search)
-    expect(page).to have_css('h2', text: 'Browse Search')
+    expect(page).to have_css('h2', text: search.title)
     expect(page).to be_axe_clean
   end
 
