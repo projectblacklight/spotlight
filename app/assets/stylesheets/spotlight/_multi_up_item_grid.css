@@ -7,7 +7,7 @@
     padding: 1em;
     min-width: 125px;
 
-    @media (max-width: breakpoint-max("sm")) {
+    @media (max-width: 575.98px) {
       min-width: 200px;
       flex: 1 1 200px;
     }
