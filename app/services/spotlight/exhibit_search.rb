@@ -25,10 +25,7 @@ module Spotlight
 
     # Capture literal terms, longest first, so split preserves each complete match for highlighting.
     def highlight_pattern
-      @highlight_pattern ||= begin
-        longest_first = terms.sort_by { |term| -term.length }
-        Regexp.new("(#{Regexp.union(longest_first).source})", Regexp::IGNORECASE)
-      end
+      @highlight_pattern ||= /(#{Regexp.union(terms.sort_by { |term| -term.length }).source})/i
     end
 
     # @param [Enumerable<Spotlight::Exhibit>] exhibits
@@ -36,20 +33,16 @@ module Spotlight
     def filter(exhibits)
       return exhibits unless active?
 
-      exhibits.select { |exhibit| match?(exhibit) }
+      exhibits.select do |exhibit|
+        text = searchable_text(exhibit)
+        terms.all? { |term| text.include?(term) }
+      end
     end
 
     # @param [Spotlight::Exhibit] exhibit
     # @return [String] the downcased text that every query term must appear in
     def searchable_text(exhibit)
       [exhibit.title, exhibit.subtitle, self.class.plain_text(exhibit.description)].compact.join("\n").downcase
-    end
-
-    private
-
-    def match?(exhibit)
-      text = searchable_text(exhibit)
-      terms.all? { |term| text.include?(term) }
     end
   end
 end
