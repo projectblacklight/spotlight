@@ -98,14 +98,14 @@ module Spotlight
       exhibits = @exhibits.includes(:thumbnail).published.ordered_by_weight
       return search_published_exhibits(exhibits) if @exhibit_search.active?
 
-      params[:tag] ? exhibits.tagged_with(params[:tag]) : exhibits
+      params[:tag].present? ? exhibits.tagged_with(params[:tag]) : exhibits
     end
 
     def search_published_exhibits(exhibits)
       matches = @exhibit_search.filter(exhibits.includes(:tags))
       # Tag availability includes matches outside the selected tag and the current page.
       @matching_tag_names = matches.flat_map { |exhibit| exhibit.tags.map(&:name) }.uniq
-      return matches unless params[:tag]
+      return matches if params[:tag].blank?
 
       tagged_ids = exhibits.tagged_with(params[:tag]).pluck(:id).to_set
       matches.select { |exhibit| tagged_ids.include?(exhibit.id) }

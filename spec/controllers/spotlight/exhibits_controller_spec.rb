@@ -48,6 +48,16 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
         end
       end
 
+      context 'with an empty tag' do
+        let!(:tagged_exhibit) { FactoryBot.create(:exhibit, tag_list: ['a']) }
+        let!(:untagged_exhibit) { FactoryBot.create(:exhibit) }
+
+        it 'assigns all the published exhibits' do
+          get :index, params: { tag: '' }
+          expect(assigns(:published_exhibits)).to contain_exactly(tagged_exhibit, untagged_exhibit)
+        end
+      end
+
       context 'with a search query' do
         let!(:tagged_exhibit) { FactoryBot.create(:exhibit, title: 'Some Exhibit Title', tag_list: ['a']) }
         let!(:untagged_exhibit) { FactoryBot.create(:exhibit, title: 'Some Other Title') }
@@ -56,6 +66,11 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
 
         it 'assigns the published exhibits that match' do
           get :index, params: { q: 'some' }
+          expect(assigns(:published_exhibits)).to contain_exactly(tagged_exhibit, untagged_exhibit)
+        end
+
+        it 'ignores an empty tag' do
+          get :index, params: { q: 'some', tag: '' }
           expect(assigns(:published_exhibits)).to contain_exactly(tagged_exhibit, untagged_exhibit)
         end
 
