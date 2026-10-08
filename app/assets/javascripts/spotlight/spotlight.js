@@ -4988,6 +4988,9 @@
   // so the list filters as the user types without moving focus out of the field.
   class ExhibitSearchController extends stimulus.Controller {
     static targets = ["form", "input", "pane", "status"]
+    static values = {
+      debounceDelay: { type: Number, default: 300 },
+    }
 
     disconnect() {
       clearTimeout(this.timeout);
@@ -4997,7 +5000,7 @@
     debounce() {
       clearTimeout(this.timeout);
       this.abortController?.abort();
-      this.timeout = setTimeout(() => this.search(), 300);
+      this.timeout = setTimeout(() => this.search(), this.debounceDelayValue);
     }
 
     submit(event) {
