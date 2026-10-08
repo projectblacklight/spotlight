@@ -24,19 +24,12 @@ module Spotlight
 
       # Add multiple to options only if multiple is true
       options[:multiple] = true if multiple
-
       # Add readonly to options only if readonly is true
       options[:readonly] = true if readonly
-
       # Add namespace to options only if namespace is present
       options[:namespace] = namespace if namespace.present?
 
-      case @field_type
-      when 'text_field'
-        form.text_field_without_bootstrap(field_id, **options)
-      when 'text_area'
-        form.text_area_without_bootstrap(field_id, **options)
-      end
+      form.send("#{@field_type}_without_bootstrap", field_id, **options)
     end
 
     def template_id

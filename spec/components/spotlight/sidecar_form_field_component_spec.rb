@@ -48,4 +48,15 @@ RSpec.describe Spotlight::SidecarFormFieldComponent, type: :component do
       expect(rendered).to have_css("input[type='text'][class='form-control field-date'][value='z']")
     end
   end
+
+  context 'with another field type' do
+    let(:component) do
+      described_class.new(form: f, id: 'email', label: 'Email', field_type: 'email_field', value: %w[person@example.com], multiple: true)
+    end
+
+    it 'renders a label and field type input' do
+      expect(rendered).to have_css('div.form-group.mb-3 label', text: 'Email')
+      expect(rendered).to have_css('input[type="email"][class="form-control field-email"][value="person@example.com"]')
+    end
+  end
 end
