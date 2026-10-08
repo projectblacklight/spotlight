@@ -21,18 +21,20 @@ SirTrevor.Blocks.UploadedItems = (function () {
     upload_options: { html: "" },
 
     fileInput: function () {
-      return $(this.inner).find('input[type="file"]')
+      return this.inner.querySelector('input[type="file"]')
     },
 
     onBlockRender: function () {
-      SpotlightNestable.init($(this.inner).find('[data-behavior="nestable"]'))
-
-      this.fileInput().on(
-        "change",
-        function (ev) {
-          this.onDrop(ev.currentTarget)
-        }.bind(this),
+      SpotlightNestable.init(
+        this.inner.querySelectorAll('[data-behavior="nestable"]'),
       )
+
+      const input = this.fileInput()
+      if (input) {
+        input.addEventListener("change", (ev) => {
+          this.onDrop(ev.currentTarget)
+        })
+      }
     },
 
     onDrop: function (transferData) {
@@ -50,12 +52,15 @@ SirTrevor.Blocks.UploadedItems = (function () {
 
         this.uploader(
           file,
-          function (data) {
+          (data) => {
             this.createItemPanel(data)
-            this.fileInput().val("")
+            const input = this.fileInput()
+            if (input) {
+              input.value = ""
+            }
             this.ready()
           },
-          function (_error) {
+          () => {
             this.addMessage(i18n.t("blocks:image:upload_error"))
             this.ready()
           },
@@ -119,16 +124,27 @@ SirTrevor.Blocks.UploadedItems = (function () {
               </div>
             </li>`
 
-      const panel = $(markup)
-      panel.find('[data-field="caption"]').val(data.caption)
-      panel.find('[data-field="link"]').val(data.link)
-      var context = this
+      const tempDiv = document.createElement("div")
+      tempDiv.innerHTML = markup.trim()
+      const panel = tempDiv.firstElementChild
 
-      $(".remove a", panel).on("click", function (e) {
-        e.preventDefault()
-        $(this).closest(".field").remove()
-        context.afterPanelDelete()
-      })
+      const captionInput = panel.querySelector('[data-field="caption"]')
+      if (captionInput) {
+        captionInput.value = data.caption || ""
+      }
+      const linkInput = panel.querySelector('[data-field="link"]')
+      if (linkInput) {
+        linkInput.value = data.link || ""
+      }
+
+      const removeBtn = panel.querySelector(".remove a")
+      if (removeBtn) {
+        removeBtn.addEventListener("click", (e) => {
+          e.preventDefault()
+          panel.remove()
+          this.afterPanelDelete()
+        })
+      }
 
       this.afterPanelRender(data, panel)
 

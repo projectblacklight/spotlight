@@ -9,7 +9,6 @@ export default [
       sourceType: "module",
       globals: {
         ...globals.browser,
-        ...globals.jquery,
         Blacklight: "readonly",
         Spotlight: "readonly",
         URLify: "readonly",

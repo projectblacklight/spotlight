@@ -20,6 +20,13 @@ RSpec.describe 'Manage exhibit users and roles', js: true do
   it 'admins can edit existing roles' do
     find("[data-behavior='edit-user'][data-target='#{admin.id}']").click
     expect(page).to have_css("[data-edit-for='#{admin.id}']")
+    within("tr[data-edit-for='#{admin.id}']:has([data-behavior='cancel-edit'])") do
+      expect(page).to have_button 'Remove from exhibit'
+      expect(page).to have_button 'Save changes'
+      click_on 'Cancel'
+    end
+    expect(page).to have_no_selector("[data-edit-for='#{admin.id}']")
+    expect(page).to have_css("[data-show-for='#{admin.id}']")
   end
 
   it 'admins can cancel adding a new user' do

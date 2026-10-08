@@ -37,7 +37,7 @@ const Module = (function () {
         nestedContainers = document.querySelectorAll(nestableContainerSelector)
       }
 
-      // nestedContainers could be a jQuery selector result, normalize to an array.
+      // nestedContainers is a list of DOM nodes, normalize to an array.
       const containersToInit = Array.from(nestedContainers)
       containersToInit.forEach((container) => {
         // Sir Trevor listens for drag and drop events and will error on Sortable events.
@@ -167,10 +167,7 @@ const Module = (function () {
         )
         emptySortableElement.className = nestedSortableClass
         draggableElement.appendChild(emptySortableElement)
-        new Sortable(emptySortableElement, {
-          ...sortableOptions,
-          group: group,
-        })
+        new Sortable(emptySortableElement, { ...sortableOptions, group: group })
       }
       makeEmptyChildSortablesForEligibleParents(
         draggableElement,

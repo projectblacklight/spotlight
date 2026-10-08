@@ -22,10 +22,9 @@ SirTrevor.Blocks.BrowseGroupCategories = (function () {
     },
 
     autocomplete_url: function () {
-      return document
-        .getElementById(this.instanceID)
-        .closest("form[data-autocomplete-exhibit-browse-groups-path]").dataset
-        .autocompleteExhibitBrowseGroupsPath
+      return this.instance().closest(
+        "form[data-autocomplete-exhibit-browse-groups-path]",
+      ).dataset.autocompleteExhibitBrowseGroupsPath
     },
     autocomplete_fetch: function (url) {
       return this.fetchOnceAndFilterLocalResults(url)
@@ -64,14 +63,19 @@ SirTrevor.Blocks.BrowseGroupCategories = (function () {
             </div>
           </li>`
 
-      const panel = $(markup)
+      const tempDiv = document.createElement("div")
+      tempDiv.innerHTML = markup.trim()
+      const panel = tempDiv.firstElementChild
       var context = this
 
-      $("a[data-item-grid-panel-remove]", panel).on("click", function (e) {
-        e.preventDefault()
-        $(this).closest(".field").remove()
-        context.afterPanelDelete()
-      })
+      const removeLink = panel.querySelector("a[data-item-grid-panel-remove]")
+      if (removeLink) {
+        removeLink.addEventListener("click", function (e) {
+          e.preventDefault()
+          this.closest(".field").remove()
+          context.afterPanelDelete()
+        })
+      }
 
       this.afterPanelRender(data, panel)
 

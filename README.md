@@ -274,7 +274,7 @@ A brief orientation to this codebase
 #### Frontend Asset Structure
 - **Source JavaScript:** Resides in `app/javascript/spotlight/` (e.g., admin widgets, custom field behaviors).
 - **Core Orchestration:** `app/javascript/spotlight/index.js` listens to page loads and instantiates class components (e.g., `new AddAnother().connect()`).
-- **Standard:** Spotlight prefers standard, modern JavaScript (ES6+) and is migrating away from jQuery dependencies.
+- **Standard:** Spotlight prefers standard, modern JavaScript (ES6+) and does not depend on jQuery.
 
 ## Spotlight Community
 
