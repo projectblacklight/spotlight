@@ -198,7 +198,7 @@ module Spotlight
     # (https://console.cloud.google.com/iam-admin/iam -> Service accounts -> click on service account -> keys)
     # c) set ga_property_id below to your site's property id (located in admin -> Property -> Property details upper right hand corner)
     # d) Set the ga_measurement_id. (located in admin -> Data collection and modification -> Data Streams -> Web stream details and begins with G-)
-    # ga_measurement_id is used for sending events to GA analtyics
+    # ga_measurement_id is used for sending events to GA analytics
     # ga_web_property_id is deprecated, use ga_measurement_id instead
     # ga_property_id is used for fetching analytics data from google's api
     config.ga_json_key_path = nil
