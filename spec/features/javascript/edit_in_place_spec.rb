@@ -90,7 +90,7 @@ RSpec.describe 'Edit in place', js: true, type: :feature do
       end
     end
 
-    it 'updates the metadata label', max_wait_time: 10 do
+    it 'updates the metadata label' do
       visit spotlight.exhibit_dashboard_path(exhibit)
 
       within '#sidebar' do
