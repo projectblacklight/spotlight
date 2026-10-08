@@ -4975,7 +4975,7 @@ class ExhibitSearchController extends Controller {
     this.abortController?.abort();
   }
 
-  queue() {
+  debounce() {
     clearTimeout(this.timeout);
     this.abortController?.abort();
     this.timeout = setTimeout(() => this.search(), 300);
