@@ -5002,7 +5002,6 @@
 
     submit(event) {
       event.preventDefault();
-      clearTimeout(this.timeout);
       this.search();
     }
 
@@ -5011,11 +5010,11 @@
 
       event.preventDefault();
       this.inputTarget.value = "";
-      clearTimeout(this.timeout);
       this.search();
     }
 
     async search() {
+      clearTimeout(this.timeout);
       const url = this.url();
 
       this.abortController?.abort();
