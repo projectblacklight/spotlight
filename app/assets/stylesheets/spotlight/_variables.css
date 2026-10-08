@@ -9,10 +9,25 @@
   --navbar-transparent-page-bg: rgba(0, 0, 0, 0.5);
 
   --spotlight-badge-color: var(--bs-white);
+
+  /* This should get removed from _featured_browse_categories_block.scss
+  and replaced with a grid */
+  --spotlight-container-sm: 516px; /* Bootstrap container max-width minus gutter */
+  --spotlight-container-md: 696px;
+  --spotlight-container-lg: 936px;
+  --spotlight-container-xl: 1116px;
+  --spotlight-container-xl-sidebar: 831px;
+
   --spotlight-edit-in-place-highlighting-background: #f7f7d0;
   --spotlight-font-size-sm: calc(0.875 * var(--bs-body-font-size));
   --spotlight-input-focus-border-color: color-mix(in srgb, var(--bs-primary) 50%, white);
   --spotlight-image-overlay-max-height: 300px;
+  /* The aspect ratio factor determines the height of the tile.
+    Can use different values because images are background images
+    and will fit the container without distortion. */
+  --spotlight-aspect-ratio-factor-4x3: 0.75; /*  4:3 width:height */
+  --spotlight-tile-margin: 1rem;
+  
   --spotlight-zindex-autocomplete: 1000;
 
   /* Translations */
