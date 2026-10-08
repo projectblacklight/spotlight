@@ -16,11 +16,11 @@
     }
 
     .confirmed {
-      @extend .text-success;
+      color: rgba(var(--bs-success-rgb), 1) !important;
       white-space: nowrap;
     }
     .unconfirmed {
-      @extend .text-danger;
+      color: rgba(var(--bs-danger-rgb), 1) !important;
     }
 
     a {
@@ -35,8 +35,8 @@
   }
 
   .constraint-value {
-    border-top-right-radius: $border-radius-sm;
-    border-bottom-right-radius: $border-radius-sm;
+    border-top-right-radius: var(--bs-border-radius-sm);
+    border-bottom-right-radius: var(--bs-border-radius-sm);
   }
 
   .form-control-plaintext {
@@ -45,7 +45,7 @@
 }
 
 .analytics {
-  border-bottom: 1px solid $table-border-color;
+  border-bottom: 1px solid var(--bs-table-border-color);
   table-layout: fixed;
   text-align: center;
 
@@ -61,7 +61,7 @@
       border-left: 0;
     }
 
-    border-left: 1px solid $table-border-color;
+    border-left: 1px solid var(--bs-table-border-color);
   }
 }
 
@@ -84,9 +84,9 @@
   }
 }
 
-// In various admin views we use leaflet maps and autocomplete. They both set
-// the same z-index value, so we need to override the leaflet z-index to make
-// sure the leaflet controls don't appear over the autocomplete dropdown.
+/* In various admin views we use leaflet maps and autocomplete. They both set
+the same z-index value, so we need to override the leaflet z-index to make
+sure the leaflet controls don't appear over the autocomplete dropdown. */
 .leaflet-top, .leaflet-bottom {
   z-index: 950;
 }
