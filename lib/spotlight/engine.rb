@@ -210,7 +210,6 @@ module Spotlight
     config.ga_date_range = { 'start_date' => nil, 'end_date' => nil }
     config.ga_debug_mode = false
 
-    # For now, copy existing ga_web_property_id to a nil ga_measurement_id
     # Remove this in a future release
     config.after_initialize do
       if Spotlight::Engine.config.ga_web_property_id.present?
@@ -218,7 +217,6 @@ module Spotlight
           'Spotlight::Engine.config.ga_web_property_id is deprecated and will be removed in a future version. ' \
           'Use Spotlight::Engine.config.ga_measurement_id instead.'
         )
-        Spotlight::Engine.config.ga_measurement_id ||= Spotlight::Engine.config.ga_web_property_id
       end
     end
 
