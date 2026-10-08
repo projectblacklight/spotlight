@@ -1,0 +1,179 @@
+.browse-category {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: var(--bs-border-width) solid var(--bs-border-color-translucent);
+  border-radius: var(--bs-border-radius);
+  position: relative;
+
+  .category-caption {
+    bottom: 0px;
+    color: var(--bs-white);
+    position: absolute;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    padding: 5%;
+    background: linear-gradient(0deg, rgba(46, 45, 41, 0.7) 45%, rgba(46, 45, 41, 0) 100%);
+    border-radius: var(--bs-border-radius);
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-end;
+  
+    &:hover {
+      background: linear-gradient(rgba(46, 45, 41, 0.8), 0%, rgba(46, 45, 41, 0.8) 100%); 
+    }
+  }
+
+  .category-title {
+    font-size: calc(1.5 * var(--bs-body-font-size));
+    line-height: 1.2;
+    text-align: center;
+    margin: 0;
+    padding: 0.25rem;
+
+    @media (min-width: 576px) {
+      font-size: 1.125rem;
+    }
+
+    @media (min-width: 768px) {
+      font-size: calc(1.25 * var(--bs-body-font-size));
+    }
+
+    @media (min-width: 992px) {
+      font-size: calc(1.5 * var(--bs-body-font-size));
+    }
+  }
+
+  .category-subtitle {
+    display: block;
+  }
+
+  .item-count {
+    font-size: var(--bs-body-font-size);
+    text-transform: uppercase;
+
+    @media (min-width: 576px) and (max-width: 991.98px) {
+      font-size: var(--spotlight-font-size-sm);
+    }
+  }
+}
+
+.spotlight-flexbox.browse-categories {
+  justify-content: space-around;
+
+  .box {
+    flex: none;
+    margin-bottom: 1rem;
+    min-width: 150px;
+    padding: 0;
+  }
+}
+
+/* Tile width is (available width / number of columns) - margin, capped at 290px.
+   Breakpoints set --spotlight-tile-container (the available width) and each
+   .categories-N sets --spotlight-column-numbers. */
+[data-sidebar] {
+  &.categories-1, &.categories-2, &.categories-3,
+  &.categories-4, &.categories-5 {
+    .browse-category {
+      /* xs: always one full-width tile */
+      --spotlight-tile-container: calc(290px + var(--spotlight-tile-margin));
+      --spotlight-column-numbers: 1;
+      --spotlight-tile-width: calc((var(--spotlight-tile-container) / var(--spotlight-column-numbers)) - var(--spotlight-tile-margin));
+
+      max-width: 290px;
+      max-height: calc(290px * var(--spotlight-aspect-ratio-factor-4x3));
+      width: var(--spotlight-tile-width);
+      height: calc(var(--spotlight-tile-width) * var(--spotlight-aspect-ratio-factor-4x3));
+
+      @media (min-width: 576px) {
+        --spotlight-tile-container: var(--spotlight-container-sm);
+      }
+
+      @media (min-width: 768px) {
+        --spotlight-tile-container: var(--spotlight-container-md);
+      }
+
+      @media (min-width: 992px) {
+        --spotlight-tile-container: var(--spotlight-container-lg);
+      }
+
+      @media (min-width: 1200px) {
+        --spotlight-tile-container: var(--spotlight-container-xl);
+      }
+    }
+  }
+
+  &.categories-2 .browse-category {
+    @media (min-width: 576px) {
+      --spotlight-column-numbers: 2;
+    }
+  }
+
+  &.categories-3 .browse-category {
+    @media (min-width: 576px) {
+      --spotlight-column-numbers: 3;
+    }
+  }
+
+  &.categories-4 .browse-category {
+    @media (min-width: 576px) {
+      --spotlight-column-numbers: 2;
+    }
+
+    @media (min-width: 992px) {
+      --spotlight-column-numbers: 4;
+    }
+  }
+
+  &.categories-5 .browse-category {
+    @media (min-width: 576px) {
+      --spotlight-column-numbers: 3;
+    }
+
+    @media (min-width: 992px) {
+      --spotlight-column-numbers: 5;
+    }
+  }
+}
+
+/* With a sidebar, "lg" has the same available width (and column counts) as "md"
+   without a sidebar, and "xl" uses the narrower sidebar content width. */
+[data-sidebar="true"] {
+  &.browse-categories .browse-category {
+    @media (min-width: 992px) {
+      --spotlight-tile-container: var(--spotlight-container-md);
+    }
+
+    @media (min-width: 1200px) {
+      --spotlight-tile-container: var(--spotlight-container-xl-sidebar);
+    }
+  }
+
+  &.categories-4 .browse-category {
+    @media (min-width: 992px) and (max-width: 1199.98px) {
+      --spotlight-column-numbers: 2;
+    }
+  }
+
+  &.categories-5 .browse-category {
+    @media (min-width: 992px) and (max-width: 1199.98px) {
+      --spotlight-column-numbers: 3;
+    }
+  }
+}
+
+[data-sidebar="true"] {
+  /* Font size smaller at "lg" breakpoint only when there is a sidebar */
+  .browse-category {
+    @media (min-width: 992px) and (max-width: 1199.98px) {
+      .category-title {
+        font-size: calc(1.25 * var(--bs-body-font-size));
+      }
+      .item-count {
+        font-size: var(--spotlight-font-size-sm);
+      }
+    }
+  }
+}
