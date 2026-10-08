@@ -3,7 +3,7 @@
     <%= nav_link t('.all'), exhibits_path(q: params[:q].presence), active: params[:tag].blank? %>
 
     <% tags.sort_by(&:name).each do |tag| %>
-      <% if matching_tag_names && matching_tag_names.exclude?(tag.name) && params[:tag] != tag.name %>
+      <% if local_assigns[:matching_tag_names]&.exclude?(tag.name) && params[:tag] != tag.name %>
         <li class="nav-item"><a class="nav-link disabled" aria-disabled="true"><%= tag.name %></a></li>
       <% else %>
         <%= nav_link tag.name, exhibits_path(tag: tag.name, q: params[:q].presence), active: params[:tag] == tag.name %>

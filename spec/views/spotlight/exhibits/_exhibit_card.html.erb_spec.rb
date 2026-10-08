@@ -4,9 +4,9 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:p) { 'spotlight/exhibits/exhibit_card' }
   let(:query) { nil }
+  let(:exhibit_search) { Spotlight::ExhibitSearch.new(query) }
 
   before do
-    assign(:exhibit_search, Spotlight::ExhibitSearch.new(query))
     allow(view).to receive_messages(exhibit_path: '/')
   end
 
@@ -16,19 +16,25 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     end
 
     it 'has a placeholder thumbnail' do
-      render(p, exhibit:)
+      render(p, exhibit:, exhibit_search:)
 
       expect(rendered).to have_css 'img.default-thumbnail'
     end
   end
 
   it 'has a thumbnail' do
-    render(p, exhibit:)
+    render(p, exhibit:, exhibit_search:)
 
     expect(rendered).to have_css 'img'
   end
 
   it 'has a title' do
+    render(p, exhibit:, exhibit_search:)
+
+    expect(rendered).to have_css '.card-title', text: exhibit.title
+  end
+
+  it 'renders without an exhibit search' do
     render(p, exhibit:)
 
     expect(rendered).to have_css '.card-title', text: exhibit.title
@@ -40,7 +46,7 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     end
 
     it 'has a description that strips html tags' do
-      render(p, exhibit:)
+      render(p, exhibit:, exhibit_search:)
 
       expect(rendered).to have_css '.description', text: 'Test description & more.'
     end
@@ -51,7 +57,7 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     let(:query) { 'some' }
 
     it 'marks the matches in the title, subtitle, and description' do
-      render(p, exhibit:)
+      render(p, exhibit:, exhibit_search:)
 
       expect(rendered).to have_css '.card-title mark', text: 'Some'
       expect(rendered).to have_css '.subtitle mark', text: 'Some'
@@ -65,7 +71,7 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     end
 
     it 'has an unpublished banner' do
-      render(p, exhibit:)
+      render(p, exhibit:, exhibit_search:)
 
       expect(rendered).to have_css '.badge.unpublished', text: 'Unpublished'
     end

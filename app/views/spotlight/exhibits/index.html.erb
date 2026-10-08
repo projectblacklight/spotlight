@@ -19,7 +19,7 @@
         <%= render 'missing_exhibits' %>
       <% else %>
         <%= render 'tags', tags: @exhibits.published.all_tags, matching_tag_names: @matching_tag_names %>
-        <%= render 'exhibits', exhibits: @published_exhibits %>
+        <%= render 'exhibits', exhibits: @published_exhibits, exhibit_search: @exhibit_search %>
 
         <% if @published_exhibits.total_count > @published_exhibits.size %>
           <nav class="d-flex justify-content-center">
@@ -35,13 +35,13 @@
 
     <% if @exhibits.unpublished.accessible_by(current_ability).any? %>
       <div role="tabpanel" class="tab-pane" id="unpublished" data-exhibit-search-target="pane" data-exhibit-search-status="<%= exhibit_search_status(@exhibit_search, @unpublished_exhibits.size) %>">
-        <%= render 'exhibits', exhibits: @unpublished_exhibits %>
+        <%= render 'exhibits', exhibits: @unpublished_exhibits, exhibit_search: @exhibit_search %>
       </div>
     <% end %>
 
     <% if current_user && current_user.exhibits.any? %>
       <div role="tabpanel" class="tab-pane" id="user" data-exhibit-search-target="pane" data-exhibit-search-status="<%= exhibit_search_status(@exhibit_search, @user_exhibits.size) %>">
-        <%= render 'exhibits', exhibits: @user_exhibits %>
+        <%= render 'exhibits', exhibits: @user_exhibits, exhibit_search: @exhibit_search %>
       </div>
     <% end %>
   </div>

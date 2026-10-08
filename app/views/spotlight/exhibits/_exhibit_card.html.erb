@@ -1,3 +1,4 @@
+<% exhibit_search = local_assigns[:exhibit_search] || Spotlight::ExhibitSearch.new(nil) %>
 <div class="col mb-4">
   <div class="card exhibit-card">
     <%= link_to exhibit, aria: { hidden: true  }, tabindex: '-1' do %>
@@ -14,7 +15,7 @@
 
       <%= content_tag :h2, class: 'card-title h5 text-center', aria: { describedby: "exhibit-description-#{exhibit.to_param}" } do %>
         <%= link_to exhibit, class: 'stretched-link' do %>
-          <span><%= highlight_exhibit_search(exhibit.title, @exhibit_search) %></span>
+          <span><%= highlight_exhibit_search(exhibit.title, exhibit_search) %></span>
         <% end %>
       <% end %>
 
@@ -22,13 +23,13 @@
         <%= content_tag :div, id: "exhibit-description-#{exhibit.to_param}", class: 'card-text exhibit-description' do %>
           <% if exhibit.subtitle %>
             <p class="subtitle">
-              <%= highlight_exhibit_search(exhibit.subtitle, @exhibit_search) %>
+              <%= highlight_exhibit_search(exhibit.subtitle, exhibit_search) %>
             </p>
           <% end %>
 
           <% if exhibit.description %>
             <p class="description">
-              <%= highlight_exhibit_search(@exhibit_search.plain_text(exhibit.description), @exhibit_search) %>
+              <%= highlight_exhibit_search(exhibit_search.plain_text(exhibit.description), exhibit_search) %>
             </p>
           <% end %>
         <% end %>
