@@ -16,6 +16,14 @@ module Spotlight
       terms.any?
     end
 
+    # Capture literal terms, longest first, so split preserves each complete match for highlighting.
+    def highlight_pattern
+      @highlight_pattern ||= begin
+        longest_first = terms.sort_by { |term| -term.length }
+        Regexp.new("(#{Regexp.union(longest_first).source})", Regexp::IGNORECASE)
+      end
+    end
+
     # @param [Enumerable<Spotlight::Exhibit>] exhibits
     # @return [Enumerable<Spotlight::Exhibit>] the matching exhibits, or the exhibits unchanged when the query is blank
     def filter(exhibits)
