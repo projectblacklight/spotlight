@@ -14,6 +14,7 @@ module Spotlight
     def index
       @exhibit_search = Spotlight::ExhibitSearch.new(params[:q])
       @published_exhibits = paginate(published_exhibits)
+      @matching_tag_names = matching_tag_names if @exhibit_search.active?
       @unpublished_exhibits = @exhibit_search.filter(unpublished_exhibits)
       @user_exhibits = @exhibit_search.filter(current_user.exhibits) if current_user
       if @exhibits.one?
@@ -94,21 +95,30 @@ module Spotlight
 
     protected
 
-    def published_exhibits
-      exhibits = @exhibits.includes(:thumbnail).published.ordered_by_weight
-      return search_published_exhibits(exhibits) if @exhibit_search.active?
-
-      params[:tag].present? ? exhibits.tagged_with(params[:tag]) : exhibits
+    def published_scope
+      @exhibits.includes(:thumbnail).published.ordered_by_weight
     end
 
-    def search_published_exhibits(exhibits)
-      matches = @exhibit_search.filter(exhibits.includes(:tags))
-      # Tag availability includes matches outside the selected tag and the current page.
-      @matching_tag_names = matches.flat_map { |exhibit| exhibit.tags.map(&:name) }.uniq
-      return matches if params[:tag].blank?
+    def published_exhibits
+      return search_published_exhibits if @exhibit_search.active?
 
-      tagged_ids = exhibits.tagged_with(params[:tag]).pluck(:id).to_set
-      matches.select { |exhibit| tagged_ids.include?(exhibit.id) }
+      params[:tag].present? ? published_scope.tagged_with(params[:tag]) : published_scope
+    end
+
+    def search_published_exhibits
+      return published_matches if params[:tag].blank?
+
+      tagged_ids = published_scope.tagged_with(params[:tag]).pluck(:id).to_set
+      published_matches.select { |exhibit| tagged_ids.include?(exhibit.id) }
+    end
+
+    def published_matches
+      @published_matches ||= @exhibit_search.filter(published_scope.includes(:tags))
+    end
+
+    # Tag availability includes matches outside the selected tag and the current page.
+    def matching_tag_names
+      published_matches.flat_map { |exhibit| exhibit.tags.map(&:name) }.uniq
     end
 
     def unpublished_exhibits
