@@ -107,10 +107,13 @@ module Spotlight
         @exhibit_custom_fields = nil
       end
 
+      # Compare to the slug instead of the label in case the label has been modified
+      # by the user in the blacklight configuration. Without this you'll end up with
+      # proliferation of duplicate Spotlight::CustomFields.
       def missing_keys(keys)
-        custom_field_keys = exhibit_custom_fields.keys.map(&:downcase)
+        custom_field_slugs = exhibit_custom_fields.values.map(&:slug)
         keys.reject do |key|
-          custom_field_keys.include?(key.downcase)
+          custom_field_slugs.include?(key.parameterize)
         end
       end
 

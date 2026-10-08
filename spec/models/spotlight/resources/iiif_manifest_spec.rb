@@ -139,6 +139,27 @@ RSpec.describe Spotlight::Resources::IiifManifest do
           expect(subject.to_solr['readonly_test_field_tesim']).to eq 'metadata-to-solr'
         end
       end
+
+      context 'when a field label has been customized in the exhibit configuration' do
+        def reindex
+          described_class.new(url:, manifest:, collection:).tap { |r| r.with_exhibit(exhibit.reload) }.to_solr
+        end
+
+        before do
+          subject.to_solr
+          field = exhibit.custom_fields.find_by(slug: 'author')
+          exhibit.blacklight_configuration.index_fields[field.field] = { 'label' => 'Writer' }
+          exhibit.blacklight_configuration.save!
+        end
+
+        it 'does not create duplicate custom fields' do
+          expect { reindex }.not_to change(Spotlight::CustomField, :count)
+        end
+
+        it 'still indexes the metadata into the existing field' do
+          expect(reindex['readonly_author_tesim']).to eq ['John Doe', 'Jane Doe']
+        end
+      end
     end
   end
 
