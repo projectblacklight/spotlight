@@ -1,0 +1,72 @@
+/* Replaces @extend .form-control. Only the properties that the sir-trevor
+   input styles (loaded after Bootstrap) don't already override. */
+.st-block input[type="text"], .item-text-admin #item-text {
+  display: block;
+  width: 100%;
+  font-weight: 400;
+  line-height: 1.5;
+  appearance: none;
+  background-color: var(--bs-body-bg);
+  background-clip: padding-box;
+  border-radius: var(--bs-border-radius);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+  }
+
+  &::placeholder {
+    color: var(--bs-secondary-color);
+    opacity: 1;
+  }
+
+  &:disabled {
+    background-color: var(--bs-secondary-bg);
+  }
+}
+
+.primary-caption, .secondary-caption, .auto-cyle-images {
+  select {
+    margin-left: 10px;
+  }
+}
+
+.max-heights {
+  label.carousel-size {
+    margin-left: 5px;
+    padding-right: 10px;
+    font-weight: normal;
+  }
+}
+
+.item-text {
+  .items-col {
+    z-index: 1;
+  }
+}
+
+.item-text-admin {
+  .text-align {
+    margin-top: 15px;
+  }
+  .dd3-content {
+    &.card {
+      padding-left: 0;
+    }
+  }
+  #item-text {
+    min-height: 7em;
+    font-size: 1rem;
+
+    &:focus {
+      border-color: var(--spotlight-input-focus-border-color);
+    }
+
+    &, &:hover, &:active {
+      color: #42474b;
+      border: 0.1em solid #d4d4d4;
+      padding: 0 .6em;
+    }
+  }
+}
