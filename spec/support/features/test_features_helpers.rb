@@ -65,6 +65,15 @@ module Spotlight
       expect(page).to have_no_css('html[aria-busy]')
     end
 
+    # Headless Chrome blocks real clipboard access, so replace writeText
+    # with a shim that stashes its argument on window for assertion.
+    def stub_clipboard
+      page.execute_script(<<~JS)
+        window.__copied = null
+        navigator.clipboard.writeText = (text) => { window.__copied = text; return Promise.resolve() }
+      JS
+    end
+
     def save_page_changes
       click_button('Save changes')
       # verify that the page was created.

@@ -12,9 +12,9 @@ module Spotlight
     load_and_authorize_resource
 
     def index
-      @published_exhibits = @exhibits.includes(:thumbnail).published.ordered_by_weight.page(params[:page])
+      @published_exhibits = @exhibits.includes(:thumbnail).discoverable.ordered_by_weight.page(params[:page])
       @published_exhibits = @published_exhibits.tagged_with(params[:tag]) if params[:tag]
-      if @exhibits.one?
+      if redirect_to_only_exhibit?
         redirect_to @exhibits.first, flash: flash.to_h
       else
         render layout: 'spotlight/home'
@@ -98,6 +98,7 @@ module Spotlight
         :subtitle,
         :description,
         :published,
+        :publishing_status,
         :tag_list,
         tag_list: [],
         contact_emails_attributes: %i[id email],
@@ -107,6 +108,15 @@ module Spotlight
 
     def set_tab
       @tab = params[:tab]
+    end
+
+    # Redirect when the user can see only one exhibit, unless it isn't discoverable
+    # and the user is neither a superadmin nor has a role in it
+    def redirect_to_only_exhibit?
+      return false unless @exhibits.one?
+
+      exhibit = @exhibits.first
+      exhibit.discoverable? || can?(:manage, Spotlight::Exhibit) || current_user&.exhibits&.include?(exhibit)
     end
 
     def create_params

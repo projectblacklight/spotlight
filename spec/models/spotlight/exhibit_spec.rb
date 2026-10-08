@@ -21,6 +21,89 @@ RSpec.describe Spotlight::Exhibit, type: :model do
     end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Slug is reserved')
   end
 
+  describe '#previewable?' do
+    it 'is true when the exhibit is published but discovery is disabled' do
+      exhibit.assign_attributes(published: true, discovery_enabled: false)
+      expect(exhibit).to be_previewable
+    end
+
+    it 'is false when the exhibit is unpublished' do
+      exhibit.assign_attributes(published: false, discovery_enabled: false)
+      expect(exhibit).not_to be_previewable
+    end
+
+    it 'is false when the exhibit is discoverable' do
+      exhibit.assign_attributes(published: true, discovery_enabled: true)
+      expect(exhibit).not_to be_previewable
+    end
+  end
+
+  describe '#discoverable?' do
+    it 'is true when the exhibit is published and discovery is enabled' do
+      exhibit.assign_attributes(published: true, discovery_enabled: true)
+      expect(exhibit).to be_discoverable
+    end
+
+    it 'is false when the exhibit is unpublished, even if discovery is enabled' do
+      exhibit.assign_attributes(published: false, discovery_enabled: true)
+      expect(exhibit).not_to be_discoverable
+    end
+
+    it 'is false when discovery is disabled' do
+      exhibit.assign_attributes(published: true, discovery_enabled: false)
+      expect(exhibit).not_to be_discoverable
+    end
+  end
+
+  describe '#publishing_status' do
+    it 'is unpublished when the exhibit is not published' do
+      exhibit.published = false
+      expect(exhibit.publishing_status).to eq 'unpublished'
+    end
+
+    it 'is previewable when the exhibit is published but discovery is disabled' do
+      exhibit.assign_attributes(published: true, discovery_enabled: false)
+      expect(exhibit.publishing_status).to eq 'previewable'
+    end
+
+    it 'is discoverable when the exhibit is published and discovery is enabled' do
+      exhibit.assign_attributes(published: true, discovery_enabled: true)
+      expect(exhibit.publishing_status).to eq 'discoverable'
+    end
+  end
+
+  describe '#publishing_status=' do
+    it 'sets the published and discovery_enabled flags' do
+      exhibit.publishing_status = 'unpublished'
+      expect(exhibit).to have_attributes(published: false, discovery_enabled: true)
+
+      exhibit.publishing_status = 'previewable'
+      expect(exhibit).to have_attributes(published: true, discovery_enabled: false)
+
+      exhibit.publishing_status = 'discoverable'
+      expect(exhibit).to have_attributes(published: true, discovery_enabled: true)
+    end
+
+    it 'ignores unknown statuses' do
+      exhibit.assign_attributes(published: true, discovery_enabled: false)
+      exhibit.publishing_status = 'bogus'
+      expect(exhibit).to have_attributes(published: true, discovery_enabled: false)
+    end
+  end
+
+  describe 'publishing scopes' do
+    let!(:unpublished) { FactoryBot.create(:exhibit, published: false) }
+    let!(:previewable) { FactoryBot.create(:exhibit, published: true, discovery_enabled: false) }
+    let!(:discoverable) { FactoryBot.create(:exhibit, published: true, discovery_enabled: true) }
+
+    it 'scopes exhibits by publishing status' do
+      expect(described_class.published).to contain_exactly(previewable, discoverable)
+      expect(described_class.unpublished).to contain_exactly(unpublished)
+      expect(described_class.previewable).to contain_exactly(previewable)
+      expect(described_class.discoverable).to contain_exactly(discoverable)
+    end
+  end
+
   describe 'validations' do
     it 'validates the presence of the title' do
       exhibit.title = ''

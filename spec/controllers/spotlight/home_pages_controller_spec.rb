@@ -50,6 +50,23 @@ RSpec.describe Spotlight::HomePagesController, type: :controller do
   end
 
   describe 'GET show' do
+    it 'does not ask search engines to skip discoverable exhibits' do
+      allow(controller).to receive_messages(search_results: double)
+      get :show, params: { exhibit_id: exhibit }
+      expect(response.headers['X-Robots-Tag']).to be_nil
+    end
+
+    context 'with a previewable exhibit' do
+      let(:exhibit) { FactoryBot.create(:exhibit, published: true, discovery_enabled: false) }
+
+      it 'asks search engines not to index the exhibit' do
+        allow(controller).to receive_messages(search_results: double)
+        get :show, params: { exhibit_id: exhibit }
+        expect(response).to be_successful
+        expect(response.headers['X-Robots-Tag']).to eq 'noindex'
+      end
+    end
+
     it 'gets search results for display facets' do
       allow(controller).to receive_messages(search_results: double)
       get :show, params: { exhibit_id: exhibit }
