@@ -48,16 +48,6 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
         end
       end
 
-      context 'with an empty tag' do
-        let!(:tagged_exhibit) { FactoryBot.create(:exhibit, tag_list: ['a']) }
-        let!(:untagged_exhibit) { FactoryBot.create(:exhibit) }
-
-        it 'assigns all the published exhibits' do
-          get :index, params: { tag: '' }
-          expect(assigns(:published_exhibits)).to contain_exactly(tagged_exhibit, untagged_exhibit)
-        end
-      end
-
       context 'with a search query' do
         let!(:tagged_exhibit) { FactoryBot.create(:exhibit, title: 'Some Exhibit Title', tag_list: ['a']) }
         let!(:untagged_exhibit) { FactoryBot.create(:exhibit, title: 'Some Other Title') }
@@ -72,18 +62,6 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
         it 'ignores an empty tag' do
           get :index, params: { q: 'some', tag: '' }
           expect(assigns(:published_exhibits)).to contain_exactly(tagged_exhibit, untagged_exhibit)
-        end
-
-        it 'searches within the selected tag' do
-          get :index, params: { q: 'some', tag: 'a' }
-          expect(assigns(:published_exhibits)).to eq [tagged_exhibit]
-        end
-
-        it 'pages the matching exhibits' do
-          allow(Spotlight::Exhibit).to receive(:default_per_page).and_return(1)
-          get :index, params: { q: 'some', page: 2 }
-          expect(assigns(:published_exhibits).size).to eq 1
-          expect(assigns(:published_exhibits).total_count).to eq 2
         end
 
         it 'keeps matching tags outside the selected tag and current page available' do

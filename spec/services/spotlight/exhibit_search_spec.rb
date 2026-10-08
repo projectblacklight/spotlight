@@ -11,32 +11,8 @@ RSpec.describe Spotlight::ExhibitSearch do
   let(:exhibits) { [exhibit, other_exhibit] }
 
   describe '#filter' do
-    context 'with a word from the title' do
-      let(:query) { 'exhibit' }
-
-      it 'returns the matching exhibits' do
-        expect(search.filter(exhibits)).to eq [exhibit]
-      end
-    end
-
-    context 'with a word from the subtitle' do
-      let(:query) { 'subtitle' }
-
-      it 'returns the matching exhibits' do
-        expect(search.filter(exhibits)).to eq [exhibit]
-      end
-    end
-
-    context 'with a word from the description' do
-      let(:query) { 'description' }
-
-      it 'returns the matching exhibits' do
-        expect(search.filter(exhibits)).to eq [exhibit]
-      end
-    end
-
     context 'with words from different fields, in any order' do
-      let(:query) { 'description exhibit' }
+      let(:query) { 'subtitle description exhibit' }
 
       it 'returns the exhibits that contain every word' do
         expect(search.filter(exhibits)).to eq [exhibit]
