@@ -566,33 +566,6 @@ RSpec/RepeatedExampleGroupBody:
   Exclude:
     - "spec/controllers/spotlight/featured_images_controller_spec.rb"
 
-# Offense count: 54
-RSpec/StubbedMock:
-  Exclude:
-    - "spec/components/spotlight/exhibit_navbar_component_spec.rb"
-    - "spec/controllers/spotlight/about_pages_controller_spec.rb"
-    - "spec/controllers/spotlight/browse_controller_spec.rb"
-    - "spec/controllers/spotlight/contacts_controller_spec.rb"
-    - "spec/controllers/spotlight/dashboards_controller_spec.rb"
-    - "spec/controllers/spotlight/exhibits_controller_spec.rb"
-    - "spec/controllers/spotlight/resources/csv_upload_controller_spec.rb"
-    - "spec/controllers/spotlight/resources_controller_spec.rb"
-    - "spec/controllers/spotlight/searches_controller_spec.rb"
-    - "spec/features/add_iiif_manifest_spec.rb"
-    - "spec/helpers/spotlight/crud_link_helpers_spec.rb"
-    - "spec/helpers/spotlight/languages_helper_spec.rb"
-    - "spec/helpers/spotlight/pages_helper_spec.rb"
-    - "spec/jobs/spotlight/add_uploads_from_csv_spec.rb"
-    - "spec/lib/migration/iiif_spec.rb"
-    - "spec/models/solr_document_spec.rb"
-    - "spec/models/spotlight/exhibit_spec.rb"
-    - "spec/models/spotlight/featured_image_spec.rb"
-    - "spec/models/spotlight/page_configurations_spec.rb"
-    - "spec/models/spotlight/resource_spec.rb"
-    - "spec/models/spotlight/user_spec.rb"
-    - "spec/views/spotlight/catalog/_edit_default.html.erb_spec.rb"
-    - "spec/views/spotlight/searches/index.html.erb_spec.rb"
-
 # Offense count: 2
 RSpec/SubjectDeclaration:
   Exclude:

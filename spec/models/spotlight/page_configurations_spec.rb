@@ -28,14 +28,14 @@ RSpec.describe Spotlight::PageConfigurations, type: :model do
 
   describe 'downstream configured_params' do
     it 'merges the supplied hash into the configs' do
-      expect(page_config).to receive_messages(configured_params: { hello: 'goodbye' })
+      allow(page_config).to receive_messages(configured_params: { hello: 'goodbye' })
 
       expect(page_config.as_json).to include(hello: 'goodbye')
     end
 
     it 'sends the #call method to the value if it can respond (e.g. a lamda)' do
-      expect(view_context).to receive_messages(my_custom_plugin_path: 'my_custom_plugin/data.json')
-      expect(page_config).to receive_messages(
+      allow(view_context).to receive_messages(my_custom_plugin_path: 'my_custom_plugin/data.json')
+      allow(page_config).to receive_messages(
         configured_params: { 'my-custom-plugin-path': ->(config) { config.context.my_custom_plugin_path } }
       )
 

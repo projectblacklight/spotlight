@@ -138,7 +138,7 @@ RSpec.describe Spotlight::SearchesController, type: :controller do
       end
 
       it "renders edit if there's an error" do
-        expect_any_instance_of(Spotlight::Search).to receive(:update).and_return(false)
+        allow_any_instance_of(Spotlight::Search).to receive(:update).and_return(false)
         patch :update, params: {
           id: search,
           exhibit_id: search.exhibit,
