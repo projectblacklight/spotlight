@@ -3,7 +3,7 @@
 RSpec.describe 'Browse pages' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
-  context 'a browse page' do
+  context 'with mocked solr response' do
     let!(:search) { FactoryBot.create(:search, title: 'Some Saved Search', exhibit:, published: true) }
 
     let(:mock_documents) { [] }
@@ -15,7 +15,7 @@ RSpec.describe 'Browse pages' do
     end
 
     context 'with the standard exhibit masthead' do
-      it 'includes the search title and resource count in the body' do
+      it 'includes the search title, query form, and breadcrumbs' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
         within '#main-container' do
@@ -23,17 +23,7 @@ RSpec.describe 'Browse pages' do
         end
 
         expect(page).to have_no_selector '.masthead .h2', text: 'Some Saved Search'
-      end
-
-      it 'shows the search bar' do
-        visit spotlight.exhibit_browse_path(exhibit, search)
-
         expect(page).to have_css '.search-query-form'
-      end
-
-      it 'has breadcrumbs' do
-        visit spotlight.exhibit_browse_path(exhibit, search)
-
         expect(page).to have_css '.breadcrumbs-container'
       end
 
@@ -57,7 +47,7 @@ RSpec.describe 'Browse pages' do
         search.save!
       end
 
-      it 'has a contextual masthead with the title and resource count' do
+      it 'has a contextual masthead with the title and resource count. Query form and breadcrumbs are not shown.' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
         expect(page).to have_css '.masthead .h2', text: 'Some Saved Search'
@@ -67,24 +57,12 @@ RSpec.describe 'Browse pages' do
         end
 
         expect(page).to have_css '.masthead small.item-count', text: /\d+ items/
-      end
-
-      it 'does not show the search bar' do
-        visit spotlight.exhibit_browse_path(exhibit, search)
-
-        expect(page).to have_css '.masthead .h2', text: 'Some Saved Search'
         expect(page).to have_no_selector '.search-query-form'
-      end
-
-      it 'does not have breadcrumbs' do
-        visit spotlight.exhibit_browse_path(exhibit, search)
-
-        expect(page).to have_css '.masthead .h2', text: 'Some Saved Search'
         expect(page).to have_no_selector '.breadcrumbs-container'
       end
     end
 
-    context 'in an exhibit that is configured to not show metadata in the default view' do
+    context 'with an exhibit that is configured to not show metadata in the default view' do
       let(:mock_documents) do
         [SolrDocument.new(id: 'abc123', language_ssm: %w[English Flemish])]
       end
