@@ -45,7 +45,7 @@ module Spotlight
       initial_exception = nil
 
       ([self] + additional_locale_routing_scopes).each do |scope|
-        return scope.public_send(:url_for, params.to_unsafe_h.merge(locale:))
+        return scope.url_for(params.to_unsafe_h.merge(locale:))
       rescue ActionController::UrlGenerationError => e
         initial_exception ||= e
       end
