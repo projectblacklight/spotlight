@@ -59,6 +59,19 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
           expect(assigns[:published_exhibits]).to be_empty
         end
       end
+
+      context 'when there is one discoverable exhibit and a previewable exhibit' do
+        let!(:discoverable_exhibit) { FactoryBot.create(:exhibit) }
+
+        before do
+          FactoryBot.create(:exhibit, published: true, discovery_enabled: false)
+        end
+
+        it 'redirects to the discoverable exhibit' do
+          get :index
+          expect(response).to redirect_to(discoverable_exhibit)
+        end
+      end
     end
 
     describe 'GET new' do
@@ -140,6 +153,18 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
           expect(response).to redirect_to(previewable_exhibit)
         end
       end
+
+      context 'when there is one discoverable exhibit and a previewable exhibit' do
+        before do
+          FactoryBot.create(:exhibit)
+          FactoryBot.create(:exhibit, published: true, discovery_enabled: false)
+        end
+
+        it 'does not redirect' do
+          get :index
+          expect(response).to be_successful
+        end
+      end
     end
   end
 
@@ -164,6 +189,32 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
         it 'redirects to the exhibit' do
           get :index
           expect(response).to redirect_to(exhibit)
+        end
+      end
+
+      context "when a different user's previewable exhibit also exists" do
+        let(:exhibit) { FactoryBot.create(:exhibit, published: true, discovery_enabled: false) }
+
+        before do
+          FactoryBot.create(:exhibit, published: true, discovery_enabled: false)
+        end
+
+        it "redirects to the admin's exhibit" do
+          get :index
+          expect(response).to redirect_to(exhibit)
+        end
+      end
+
+      context "when there is a discoverable exhibit and the user's unpublished exhibit" do
+        let(:exhibit) { FactoryBot.create(:exhibit, published: false) }
+
+        before do
+          FactoryBot.create(:exhibit)
+        end
+
+        it 'does not redirect' do
+          get :index
+          expect(response).to be_successful
         end
       end
     end

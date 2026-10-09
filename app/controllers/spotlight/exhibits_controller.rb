@@ -8,13 +8,14 @@ module Spotlight
 
     before_action :authenticate_user!, except: [:index]
     before_action :set_tab, only: %i[edit update]
+    before_action :load_exhibits, only: [:index]
 
     load_and_authorize_resource
 
     def index
       @published_exhibits = @exhibits.includes(:thumbnail).discoverable.ordered_by_weight.page(params[:page])
       @published_exhibits = @published_exhibits.tagged_with(params[:tag]) if params[:tag]
-      if redirect_to_only_exhibit?
+      if @exhibits.one?
         redirect_to @exhibits.first, flash: flash.to_h
       else
         render layout: 'spotlight/home'
@@ -106,17 +107,21 @@ module Spotlight
       )
     end
 
-    def set_tab
-      @tab = params[:tab]
+    # Runs before load_and_authorize_resource to set @exhibits from discoverable
+    # exhibits, not just exhibits that can be accessed.
+    def load_exhibits
+      exhibits = Spotlight::Exhibit.accessible_by(current_ability)
+      return @exhibits = exhibits.discoverable unless current_user
+
+      @exhibits = if can?(:manage, Spotlight::Exhibit)
+                    exhibits
+                  else
+                    exhibits.discoverable.or(exhibits.where(id: current_user.exhibits.select(:id)))
+                  end
     end
 
-    # Redirect when the user can see only one exhibit, unless it isn't discoverable
-    # and the user is neither a superadmin nor has a role in it
-    def redirect_to_only_exhibit?
-      return false unless @exhibits.one?
-
-      exhibit = @exhibits.first
-      exhibit.discoverable? || can?(:manage, Spotlight::Exhibit) || current_user&.exhibits&.include?(exhibit)
+    def set_tab
+      @tab = params[:tab]
     end
 
     def create_params
