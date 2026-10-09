@@ -2,7 +2,7 @@
 
 RSpec.describe 'spotlight/sir_trevor/blocks/_browse_block.html.erb', type: :view do
   let(:partial) { 'spotlight/sir_trevor/blocks/browse_block' }
-  let(:page) { double('Page', display_sidebar?: true) }
+  let(:page) { instance_double(Spotlight::FeaturePage, display_sidebar?: true) }
   let(:search) { FactoryBot.create(:search) }
   let(:block) do
     assign(:page, page)

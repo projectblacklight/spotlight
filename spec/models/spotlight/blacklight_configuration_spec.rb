@@ -96,10 +96,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       end
 
       it 'defaults to not showing a custom field in the facets' do
-        field = double('field', new_record?: false, field: 'a', solr_field: 'a', configuration: {})
-        custom_fields = double('custom_fields', facetable: [field], reject: [])
-        allow(custom_fields).to receive(:map).and_yield(field)
-        allow(subject.exhibit).to receive(:custom_fields).and_return(custom_fields)
+        subject.exhibit.custom_fields.create! field: 'a', field_type: 'vocab'
         subject.facet_fields = { 'a' => { enabled: '1', label: 'Label' } }
         expect(subject.blacklight_config.facet_fields).to include('a')
         expect(subject.blacklight_config.facet_fields['a'].show).to be_falsey

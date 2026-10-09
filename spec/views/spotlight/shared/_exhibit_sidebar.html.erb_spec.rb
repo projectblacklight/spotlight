@@ -9,7 +9,7 @@ RSpec.describe 'spotlight/shared/_exhibit_sidebar', type: :view do
 
   context 'with a configured analytics integration' do
     before do
-      allow(current_exhibit).to receive(:analytics_provider).and_return(double(Spotlight::Analytics::Ga, enabled?: true))
+      allow(current_exhibit).to receive(:analytics_provider).and_return(instance_double(Spotlight::Analytics::Ga, enabled?: true))
     end
 
     it 'has an analytics link in the sidebar' do

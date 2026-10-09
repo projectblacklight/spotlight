@@ -26,7 +26,7 @@ RSpec.describe Spotlight::Controller do
   end
 
   describe '#exhibit_masthead?' do
-    let(:masthead) { double('masthead', display?: true) }
+    let(:masthead) { instance_double(Spotlight::Masthead, display?: true) }
 
     before do
       allow(subject).to receive_messages(current_exhibit: nil, current_masthead: nil)
@@ -53,9 +53,9 @@ RSpec.describe Spotlight::Controller do
   end
 
   describe '#current_masthead' do
-    let(:search_masthead) { double('search-masthead', display?: true) }
-    let(:no_display_search_masthead) { double('no-display-search-masthead', display?: false) }
-    let(:exhibit_masthead) { double('exhibit-masthead', display?: true) }
+    let(:search_masthead) { instance_double(Spotlight::Masthead, display?: true) }
+    let(:no_display_search_masthead) { instance_double(Spotlight::Masthead, display?: false) }
+    let(:exhibit_masthead) { instance_double(Spotlight::Masthead, display?: true) }
     let(:exhibit) { FactoryBot.create(:exhibit) }
     let(:search) { FactoryBot.create(:search) }
 
