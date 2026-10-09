@@ -6,9 +6,9 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
-  it { is_expected.to be_a_kind_of CatalogController }
-  it { is_expected.to be_a_kind_of Spotlight::Concerns::ApplicationController }
-  its(:view_context) { is_expected.to be_a_kind_of Spotlight::ApplicationHelper }
+  it { is_expected.to be_a CatalogController }
+  it { is_expected.to be_a Spotlight::Concerns::ApplicationController }
+  its(:view_context) { is_expected.to be_a Spotlight::ApplicationHelper }
 
   describe 'when the user is not authenticated' do
     describe 'GET admin' do
@@ -246,7 +246,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
         get :edit, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
         expect(response).to be_successful
         expect(assigns[:exhibit]).to eq exhibit
-        expect(assigns[:document]).to be_kind_of SolrDocument
+        expect(assigns[:document]).to be_a SolrDocument
       end
     end
 
@@ -414,8 +414,8 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
           pending 'Waiting to figure out how to construct previous/next documents'
           get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
 
-          expect(assigns(:previous_document)).to be_a_kind_of SolrDocument
-          expect(assigns(:next_document)).to be_a_kind_of SolrDocument
+          expect(assigns(:previous_document)).to be_a SolrDocument
+          expect(assigns(:next_document)).to be_a SolrDocument
         end
       end
 

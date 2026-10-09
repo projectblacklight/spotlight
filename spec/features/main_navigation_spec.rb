@@ -57,7 +57,7 @@ RSpec.describe 'Main navigation labels are settable', type: :feature do
     about_nav.save
   end
 
-  describe 'Restore default button functionality', js: true do
+  describe 'Restore default button functionality', :js do
     let(:user) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
     before { login_as user }

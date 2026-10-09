@@ -386,7 +386,7 @@ RSpec.describe 'Translation editing', type: :feature do
     end
   end
 
-  describe 'translation progress counter', js: true do
+  describe 'translation progress counter', :js do
     before do
       FactoryBot.create(:translation, exhibit:, locale: 'fr', key: "#{exhibit.slug}.title", value: 'Titre')
     end

@@ -58,7 +58,7 @@ RSpec.describe Spotlight::Exhibit, type: :model do
     before { subject.save! }
 
     it 'has a configuration' do
-      expect(subject.blacklight_configuration).to be_kind_of Spotlight::BlacklightConfiguration
+      expect(subject.blacklight_configuration).to be_a Spotlight::BlacklightConfiguration
     end
 
     it 'has an unpublished search' do
@@ -148,8 +148,8 @@ RSpec.describe Spotlight::Exhibit, type: :model do
   describe 'import' do
     it 'removes the default browse category' do
       subject.save
-      expect { subject.import({}) }.not_to change { subject.searches.count }
-      expect { subject.import('searches' => [{ 'title' => 'All exhibit items', 'slug' => 'all-exhibit-items' }]) }.not_to change { subject.searches.count }
+      expect { subject.import({}) }.not_to(change { subject.searches.count })
+      expect { subject.import('searches' => [{ 'title' => 'All exhibit items', 'slug' => 'all-exhibit-items' }]) }.not_to(change { subject.searches.count })
     end
 
     it 'imports nested attributes from the hash' do

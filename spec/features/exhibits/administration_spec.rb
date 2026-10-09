@@ -27,7 +27,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       expect(find_field(email_id_0).value).to eq email_address_0
     end
 
-    it "has new inputs added when clicking on the 'add contact' button", js: true do
+    it "has new inputs added when clicking on the 'add contact' button", :js do
       # Exhibit administration edit
       visit spotlight.edit_exhibit_path(exhibit)
 
@@ -64,7 +64,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
         second_email
       end
 
-      it 'allows deletion of contact email addresses', js: true do
+      it 'allows deletion of contact email addresses', :js do
         visit spotlight.edit_exhibit_path(exhibit)
 
         # saved entries have delete buttons and confirmation status

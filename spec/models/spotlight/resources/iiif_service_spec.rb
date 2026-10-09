@@ -12,7 +12,7 @@ RSpec.describe Spotlight::Resources::IiifService do
   describe '#collections' do
     it 'returns service objects for each top-level collection' do
       expect(subject.collections.length).to eq 2
-      expect(subject.collections).to be_all { |s| s.is_a?(described_class) }
+      expect(subject.collections).to(be_all { |s| s.is_a?(described_class) })
     end
 
     it 'returns service objects for nested collections' do

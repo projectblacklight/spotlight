@@ -302,7 +302,7 @@ module Spotlight
       if hash_or_array.is_a? Hash
         super(hash_or_array.select { |_, checked| checked == '1' }.keys)
       else
-        super(hash_or_array)
+        super
       end
     end
 
@@ -403,7 +403,7 @@ module Spotlight
       return if index_fields.present?
 
       views = default_blacklight_config.view.keys
-      field.merge! views.index_with { |_v| false }
+      field.merge!(views.index_with { |_v| false })
       field.enabled = true
       field.show = true
     end

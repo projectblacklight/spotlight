@@ -15,7 +15,7 @@ RSpec.describe 'Browse Category Administration', type: :feature do
   end
 
   describe 'create' do
-    it 'creates a new browse category with the current search parameters', js: true do
+    it 'creates a new browse category with the current search parameters', :js do
       visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
       click_button 'Save this search'
       expect(page).to have_css('#save-modal')
@@ -28,7 +28,7 @@ RSpec.describe 'Browse Category Administration', type: :feature do
       expect(exhibit.searches.last.query_params).to eq 'q' => 'xyz'
     end
 
-    it 'updates an existing browse category with the current search parameters', js: true do
+    it 'updates an existing browse category with the current search parameters', :js do
       visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
       click_button 'Save this search'
       expect(page).to have_css('#save-modal')

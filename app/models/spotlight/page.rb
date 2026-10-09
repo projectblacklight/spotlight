@@ -74,7 +74,7 @@ module Spotlight
 
     def content=(content)
       if content.is_a? Array
-        super content.to_json
+        super(content.to_json)
       else
         super
       end

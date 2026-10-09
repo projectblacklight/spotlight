@@ -10,7 +10,7 @@ RSpec.describe Spotlight::CarrierwaveFileResolver do
     subject { Riiif::Image.file_resolver.find(masthead.id) }
 
     it 'is found' do
-      expect(subject).to be_kind_of Riiif::File
+      expect(subject).to be_a Riiif::File
     end
   end
 end

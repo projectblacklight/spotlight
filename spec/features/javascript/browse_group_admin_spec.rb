@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Browse Group Adminstration', js: true do
+RSpec.describe 'Browse Group Adminstration', :js do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let!(:group1) do

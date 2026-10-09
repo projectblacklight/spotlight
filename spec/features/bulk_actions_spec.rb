@@ -23,7 +23,7 @@ RSpec.describe 'Bulk actions', type: :feature do
     Blacklight.default_index.connection.commit
   end
 
-  it 'setting item visibility', js: true do
+  it 'setting item visibility', :js do
     visit spotlight.search_exhibit_catalog_path(exhibit, { q: 'dq287tq6352' })
 
     click_button 'Bulk actions'
@@ -39,7 +39,7 @@ RSpec.describe 'Bulk actions', type: :feature do
     expect(SolrDocument.new(id: 'dq287tq6352').private?(exhibit)).to be true
   end
 
-  it 'adding and removing tags', js: true do
+  it 'adding and removing tags', :js do
     visit spotlight.search_exhibit_catalog_path(exhibit, { q: 'dq287tq6352' })
 
     click_button 'Bulk actions'
