@@ -62,11 +62,6 @@ Lint/ConstantDefinitionInBlock:
     - "spec/models/spotlight/access_controls_enforcement_search_builder_spec.rb"
     - "spec/models/spotlight/browse_category_search_builder_spec.rb"
 
-# Offense count: 1
-Lint/CopDirectiveSyntax:
-  Exclude:
-    - "spec/controllers/spotlight/catalog_controller_spec.rb"
-
 # Offense count: 2
 # Configuration parameters: IgnoreLiteralBranches, IgnoreConstantBranches, IgnoreDuplicateElseBranch.
 Lint/DuplicateBranch:
