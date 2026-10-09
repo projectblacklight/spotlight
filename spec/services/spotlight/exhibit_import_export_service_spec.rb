@@ -246,6 +246,18 @@ RSpec.describe Spotlight::ExhibitImportExportService do
       end
     end
 
+    context 'with an HTML feature page' do
+      before do
+        FactoryBot.create(:feature_page, exhibit: source_exhibit, content_type: 'Html', content: '<p>Hello <em>world</em></p>')
+      end
+
+      it 'keeps the content type and content' do
+        imported_page = subject.feature_pages.first
+        expect(imported_page.content_type).to eq 'Html'
+        expect(imported_page.read_attribute(:content)).to eq '<p>Hello <em>world</em></p>'
+      end
+    end
+
     context 'with a feature page' do
       let(:feature_page) { FactoryBot.create(:feature_page, exhibit: source_exhibit) }
       let(:thumbnail) { FactoryBot.create(:featured_image) }

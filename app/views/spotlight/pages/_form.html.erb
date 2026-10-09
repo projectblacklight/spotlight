@@ -40,7 +40,11 @@
         </div>
         <div class="form-group mb-3">
           <%= f.label :content, class: 'visually-hidden' %>
-          <%= f.text_area_without_bootstrap :content, value: { data: f.object.content.as_json }.to_json, class: content_editor_class(f.object), data: { 'block-types': SirTrevorRails::Block.custom_block_types, 'alt-text-settings': SirTrevorRails::Block.custom_block_type_alt_text_settings } %>
+          <% if f.object.html_content? %>
+            <%= f.text_area_without_bootstrap :content, value: f.object.read_attribute(:content), class: content_editor_class(f.object), data: { 'editor-labels': html_editor_labels } %>
+          <% else %>
+            <%= f.text_area_without_bootstrap :content, value: { data: f.object.content.as_json }.to_json, class: content_editor_class(f.object), data: { 'block-types': SirTrevorRails::Block.custom_block_types, 'alt-text-settings': SirTrevorRails::Block.custom_block_type_alt_text_settings } %>
+          <% end %>
         </div>
       </div>
 
