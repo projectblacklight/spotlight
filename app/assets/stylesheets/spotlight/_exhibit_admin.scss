@@ -90,3 +90,11 @@
 .leaflet-top, .leaflet-bottom {
   z-index: 950;
 }
+
+.export-config-enabled {
+  fill: green;
+}
+
+.export-config-disabled {
+  fill: red;
+}
