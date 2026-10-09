@@ -56,7 +56,7 @@ RSpec.describe Spotlight::ContactsController, type: :controller do
       end
 
       it 'fails by rendering edit' do
-        expect_any_instance_of(Spotlight::Contact).to receive(:update).and_return(false)
+        allow_any_instance_of(Spotlight::Contact).to receive(:update).and_return(false)
         patch :update, params: { id: contact, contact: { name: 'Chester' }, exhibit_id: contact.exhibit }
         expect(response).to render_template 'edit'
       end
@@ -85,7 +85,7 @@ RSpec.describe Spotlight::ContactsController, type: :controller do
 
     describe 'POST create' do
       it 'fails by rendering new' do
-        expect_any_instance_of(Spotlight::Contact).to receive(:update).and_return(false)
+        allow_any_instance_of(Spotlight::Contact).to receive(:update).and_return(false)
         post :create, params: { exhibit_id: exhibit, contact: { name: 'Chester' } }
         expect(response).to render_template 'new'
       end

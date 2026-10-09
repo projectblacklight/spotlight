@@ -213,7 +213,7 @@ RSpec.describe Spotlight::AboutPagesController, type: :controller do
       end
 
       it 'shows index on failure' do
-        expect_any_instance_of(Spotlight::Exhibit).to receive(:update).and_return(false)
+        allow_any_instance_of(Spotlight::Exhibit).to receive(:update).and_return(false)
         patch :update_contacts, params: {
           exhibit_id: exhibit,
           exhibit: { contacts_attributes: [

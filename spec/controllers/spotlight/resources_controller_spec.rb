@@ -58,7 +58,7 @@ RSpec.describe Spotlight::ResourcesController, type: :controller do
       let(:invalid_resource) { Spotlight::Resource.new.tap { |x| x.errors.add(:url, 'is invalid') } }
 
       it 'create a resource' do
-        expect_any_instance_of(Spotlight::Resource).to receive(:reindex_later).and_return(true)
+        allow_any_instance_of(Spotlight::Resource).to receive(:reindex_later).and_return(true)
         allow_any_instance_of(Spotlight::Resource).to receive(:blacklight_solr).and_return blacklight_solr
         post :create, params: { exhibit_id: exhibit, resource: { url: 'info:uri' } }
         expect(assigns[:resource]).to be_persisted

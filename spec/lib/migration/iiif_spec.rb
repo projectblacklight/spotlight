@@ -55,9 +55,9 @@ RSpec.describe Migration::IIIF do
     before do
       allow(File).to receive(:exist?).and_return(true)
       allow(File).to receive(:new).and_return(file)
-      expect_any_instance_of(Spotlight::Resources::Upload).to receive('read_attribute_before_type_cast').with('url').and_return('file1.jpg')
       # allow other calls (from rails 4)
       allow_any_instance_of(Spotlight::Resources::Upload).to receive('read_attribute_before_type_cast').with(anything).and_call_original
+      allow_any_instance_of(Spotlight::Resources::Upload).to receive('read_attribute_before_type_cast').with('url').and_return('file1.jpg')
     end
 
     it 'migrates and saves' do
@@ -76,9 +76,9 @@ RSpec.describe Migration::IIIF do
     before do
       allow(File).to receive(:exist?).and_return(true)
       allow(File).to receive(:new).and_return(file)
-      expect_any_instance_of(Spotlight::Contact).to receive('read_attribute_before_type_cast').with('avatar').and_return('file1.jpg')
       # allow other calls (from rails 4)
       allow_any_instance_of(Spotlight::Contact).to receive('read_attribute_before_type_cast').with(anything).and_call_original
+      allow_any_instance_of(Spotlight::Contact).to receive('read_attribute_before_type_cast').with('avatar').and_return('file1.jpg')
     end
 
     it 'migrates' do

@@ -78,7 +78,7 @@ RSpec.describe Spotlight::Exhibit, type: :model do
     end
 
     it "uses the engine's configuration for default navigations" do
-      expect(Spotlight::Engine.config).to receive(:exhibit_main_navigation).and_return(%i[a b])
+      allow(Spotlight::Engine.config).to receive(:exhibit_main_navigation).and_return(%i[a b])
       expect(subject.main_navigations).to have(2).main_navigations
       expect(subject.main_navigations.map(&:nav_type).compact).to match_array %w[a b]
     end
