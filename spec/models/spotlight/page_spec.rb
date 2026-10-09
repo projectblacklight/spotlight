@@ -106,6 +106,29 @@ RSpec.describe Spotlight::Page, type: :model do
     end
   end
 
+  describe 'HTML content' do
+    let(:page) { FactoryBot.create(:feature_page, content_type: 'Html', content: '<p onclick="x()">Hello</p>') }
+
+    it 'is an HTML page' do
+      expect(page).to be_html_content
+      expect(FactoryBot.build(:feature_page)).not_to be_html_content
+    end
+
+    it 'sanitizes the content when it is saved' do
+      expect(page.read_attribute(:content)).to eq '<p>Hello</p>'
+    end
+
+    it 'parses the content as HTML' do
+      expect(page.content.map(&:html)).to eq ['<p>Hello</p>']
+    end
+
+    it 'keeps the content type when cloned for another locale' do
+      clone = page.clone_for_locale('es')
+      expect(clone.content_type).to eq 'Html'
+      expect(clone.read_attribute(:content)).to eq '<p>Hello</p>'
+    end
+  end
+
   describe '#slug' do
     let(:page) { FactoryBot.create(:about_page) }
 

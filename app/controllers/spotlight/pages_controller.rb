@@ -57,7 +57,7 @@ module Spotlight
 
     # POST /exhibits/1/pages
     def create
-      @page.attributes = page_params
+      @page.attributes = new_page_params
       @page.last_edited_by = @page.created_by = current_user
 
       if @page.save
@@ -193,6 +193,14 @@ module Spotlight
     # Only allow trusted parameters through.
     def page_params
       params.require(controller_name.singularize).permit(allowed_page_params)
+    end
+
+    # The content type (editor) can only be chosen when the page is created,
+    # and only from the types configured in Spotlight::Engine.config.page_content_types
+    def new_page_params
+      new_params = params.require(controller_name.singularize).permit(allowed_page_params + [:content_type])
+      new_params.delete(:content_type) unless Spotlight::Engine.config.page_content_types.include?(new_params[:content_type])
+      new_params
     end
 
     def redirect_page_to_related_locale_version

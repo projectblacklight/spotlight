@@ -5,6 +5,7 @@ import Croppable from "spotlight/admin/croppable"
 import EditInPlace from "spotlight/admin/edit_in_place"
 import Exhibits from "spotlight/admin/exhibits"
 import FormObserver from "spotlight/admin/form_observer"
+import HtmlEditor from "spotlight/admin/html_editor"
 import Locks from "spotlight/admin/locks"
 import "spotlight/admin/multi_image_selector"
 import Pages from "spotlight/admin/pages"
@@ -55,6 +56,7 @@ export default class {
     new Locks().connect()
     new BlacklightConfiguration().connect()
     new Pages().connect()
+    new HtmlEditor().connect()
     new ProgressMonitor().connect()
     new ReadonlyCheckbox().connect()
     new SelectRelatedInput().connect()
