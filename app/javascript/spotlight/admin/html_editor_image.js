@@ -2,6 +2,12 @@
 // alignment and alt text, a dialog for inserting/editing images, and uploads
 // to the exhibit's attachments endpoint (the same one SirTrevor's image block uses).
 import Core from "spotlight/core"
+import {
+  EditorDialog,
+  checkbox,
+  field,
+  select,
+} from "spotlight/admin/html_editor_dialog"
 
 export const IMAGE_SIZES = ["small", "medium", "large", "full"]
 export const IMAGE_ALIGNMENTS = ["center", "left", "right"]
@@ -57,66 +63,17 @@ export function uploadImage(file, endpoint) {
     })
 }
 
-let dialogCounter = 0
-
-function field(labelText, control, help) {
-  const wrapper = document.createElement("div")
-  wrapper.className = "mb-3"
-  const label = document.createElement("label")
-  label.className = "form-label"
-  label.textContent = labelText
-  label.htmlFor = control.id
-  wrapper.append(label, control)
-  if (help) {
-    const helpEl = document.createElement("div")
-    helpEl.className = "form-text"
-    helpEl.id = `${control.id}-help`
-    helpEl.textContent = help
-    control.setAttribute("aria-describedby", helpEl.id)
-    wrapper.append(helpEl)
-  }
-  return wrapper
-}
-
-function select(id, name, values, labels) {
-  const el = document.createElement("select")
-  el.className = "form-select"
-  el.id = id
-  el.name = name
-  values.forEach((value) => {
-    const option = document.createElement("option")
-    option.value = value
-    option.textContent = labels[`image_${name}_${value}`] || value
-    el.append(option)
-  })
-  return el
-}
-
-// A <dialog> for choosing an image file and entering its alt text, size and alignment.
-// The form fields are not named after page attributes and live outside the page form,
-// so they're never submitted with it.
-export class ImageDialog {
+// A dialog for choosing an image file and entering its alt text, size and alignment
+export class ImageDialog extends EditorDialog {
   constructor(labels, endpoint) {
-    this.labels = labels
+    super(labels)
     this.endpoint = endpoint
     this.build()
   }
 
   build() {
-    const id = `html-editor-image-${++dialogCounter}`
+    const id = this.id
     const l = this.labels
-
-    this.dialog = document.createElement("dialog")
-    this.dialog.className = "html-editor-dialog"
-    this.dialog.setAttribute("aria-labelledby", `${id}-title`)
-
-    this.form = document.createElement("form")
-    this.form.method = "dialog"
-    this.form.noValidate = true
-
-    this.title = document.createElement("h2")
-    this.title.className = "h5 mb-3"
-    this.title.id = `${id}-title`
 
     this.fileInput = document.createElement("input")
     this.fileInput.type = "file"
@@ -140,23 +97,23 @@ export class ImageDialog {
       l.image_alt_help,
     )
 
-    this.decorative = document.createElement("input")
-    this.decorative.type = "checkbox"
-    this.decorative.className = "form-check-input"
-    this.decorative.id = `${id}-decorative`
-    const decorativeLabel = document.createElement("label")
-    decorativeLabel.className = "form-check-label"
-    decorativeLabel.htmlFor = this.decorative.id
-    decorativeLabel.textContent = l.image_decorative || "Decorative image"
-    const decorativeField = document.createElement("div")
-    decorativeField.className = "form-check mb-3"
-    decorativeField.append(this.decorative, decorativeLabel)
+    const decorative = checkbox(
+      `${id}-decorative`,
+      l.image_decorative || "Decorative image",
+    )
+    this.decorative = decorative.input
+    decorative.wrapper.classList.add("mb-3")
     this.decorative.addEventListener("change", () => {
       this.altInput.disabled = this.decorative.checked
     })
 
-    this.sizeSelect = select(`${id}-size`, "size", IMAGE_SIZES, l)
-    this.alignSelect = select(`${id}-align`, "align", IMAGE_ALIGNMENTS, l)
+    const optionLabels = (name, values) =>
+      values.map((value) => [value, l[`image_${name}_${value}`] || value])
+    this.sizeSelect = select(`${id}-size`, optionLabels("size", IMAGE_SIZES))
+    this.alignSelect = select(
+      `${id}-align`,
+      optionLabels("align", IMAGE_ALIGNMENTS),
+    )
     const layout = document.createElement("div")
     layout.className = "row"
     const sizeCol = field(l.image_size || "Size", this.sizeSelect)
@@ -165,52 +122,17 @@ export class ImageDialog {
     alignCol.classList.add("col")
     layout.append(sizeCol, alignCol)
 
-    this.error = document.createElement("div")
-    this.error.className = "alert alert-danger"
-    this.error.setAttribute("role", "alert")
-    this.error.hidden = true
-
-    this.cancelButton = document.createElement("button")
-    this.cancelButton.type = "button"
-    this.cancelButton.className = "btn btn-link"
-    this.cancelButton.textContent = l.cancel || "Cancel"
-    this.cancelButton.addEventListener("click", () => this.finish(null))
-
-    this.submitButton = document.createElement("button")
-    this.submitButton.type = "submit"
-    this.submitButton.className = "btn btn-primary"
-
-    const actions = document.createElement("div")
-    actions.className = "d-flex justify-content-end gap-2"
-    actions.append(this.cancelButton, this.submitButton)
-
-    this.form.append(
-      this.title,
+    this.body.append(
       this.fileField,
       this.preview,
       altField,
-      decorativeField,
+      decorative.wrapper,
       layout,
-      this.error,
-      actions,
     )
-    this.dialog.append(this.form)
-    document.body.append(this.dialog)
 
     this.fileInput.addEventListener("change", () => {
       this.file = this.fileInput.files[0]
       this.showPreview(this.file)
-    })
-    this.form.addEventListener("submit", (event) => {
-      event.preventDefault()
-      this.submit()
-    })
-    // Escape key. Cancelling (and finishing) are handled synchronously, rather than in
-    // the dialog's "close" event: that event fires asynchronously, and would end the
-    // next session if the dialog is reopened right away (e.g. cancel, then paste an image).
-    this.dialog.addEventListener("cancel", (event) => {
-      event.preventDefault()
-      this.finish(null)
     })
   }
 
@@ -229,12 +151,6 @@ export class ImageDialog {
     const editing = !!attrs
     this.attrs = attrs
     this.file = file
-    this.title.textContent = editing
-      ? l.image_edit || "Edit image"
-      : l.image_insert || "Insert image"
-    this.submitButton.textContent = editing
-      ? l.image_save || "Save"
-      : l.image_insert_button || "Insert"
     this.fileInput.value = ""
     this.fileField.hidden = editing || !!file
     this.preview.src = attrs?.src || ""
@@ -244,29 +160,16 @@ export class ImageDialog {
     this.altInput.disabled = this.decorative.checked
     this.sizeSelect.value = attrs?.size || "medium"
     this.alignSelect.value = attrs?.align || "center"
-    this.setError(null)
-    this.setBusy(false)
-    this.session = (this.session || 0) + 1
 
-    this.dialog.showModal()
-    ;(this.fileField.hidden ? this.altInput : this.fileInput).focus()
-
-    return new Promise((resolve) => {
-      this.onDone = (result) => {
-        this.onDone = null
-        resolve(result)
-      }
+    return this.show({
+      title: editing
+        ? l.image_edit || "Edit image"
+        : l.image_insert || "Insert image",
+      submitLabel: editing
+        ? l.image_save || "Save"
+        : l.image_insert_button || "Insert",
+      focus: this.fileField.hidden ? this.altInput : this.fileInput,
     })
-  }
-
-  setError(message) {
-    this.error.textContent = message || ""
-    this.error.hidden = !message
-  }
-
-  setBusy(busy) {
-    this.submitButton.disabled = busy
-    this.submitButton.setAttribute("aria-busy", busy ? "true" : "false")
   }
 
   submit() {
@@ -305,9 +208,9 @@ export class ImageDialog {
     // Ignore the upload's result if the dialog was cancelled (or reopened) meanwhile
     const session = this.session
     uploadImage(this.file, this.endpoint)
-      .then((src) => session === this.session && this.finish({ ...attrs, src }))
+      .then((src) => this.isCurrent(session) && this.finish({ ...attrs, src }))
       .catch((error) => {
-        if (session !== this.session) return
+        if (!this.isCurrent(session)) return
         console.error(error)
         this.setBusy(false)
         this.setError(
@@ -316,19 +219,9 @@ export class ImageDialog {
       })
   }
 
-  // Close the dialog and resolve the promise from open() with `result` (null if cancelled)
-  finish(result) {
-    const done = this.onDone
-    this.onDone = null
-    this.session += 1
+  cleanup() {
     if (this.objectUrl) URL.revokeObjectURL(this.objectUrl)
     this.objectUrl = null
-    if (this.dialog.open) this.dialog.close()
-    done?.(result)
-  }
-
-  destroy() {
-    this.dialog.remove()
   }
 }
 

@@ -4,6 +4,7 @@
 // Tiptap is loaded on demand from the prebuilt "spotlight-tiptap" bundle,
 // so it is only downloaded when an HTML page is being edited.
 import { SerializedForm } from "spotlight/admin/form_observer"
+import { EmbedDialog, spotlightEmbed } from "spotlight/admin/html_editor_embed"
 import {
   ImageDialog,
   imageDropAndPasteProps,
@@ -84,6 +85,12 @@ const TOOLBAR_GROUPS = [
       text: "🖼",
       action: "image",
       active: (e) => e.isActive("image"),
+    },
+    {
+      name: "embed",
+      text: "▦",
+      action: "embed",
+      active: (e) => e.isActive("spotlightEmbed"),
     },
   ],
   [
@@ -172,11 +179,20 @@ function serialize(editor) {
 }
 
 export function mountHtmlEditor(textarea, tiptap) {
-  const { Editor, Image, StarterKit, TableKit } = tiptap
+  const { Document, Editor, Image, Node, StarterKit, TableKit } = tiptap
   const labels = JSON.parse(textarea.dataset.editorLabels || "{}")
-  const attachmentEndpoint = textarea.closest("[data-attachment-endpoint]")
-    ?.dataset.attachmentEndpoint
-  const imageDialog = new ImageDialog(labels, attachmentEndpoint)
+  const embedTypes = JSON.parse(textarea.dataset.embedTypes || "[]")
+  // Page configuration (endpoints, caption fields) is on the page form, as for SirTrevor
+  const form = textarea.closest("form")
+  const formData = form?.dataset || {}
+  const imageDialog = new ImageDialog(labels, formData.attachmentEndpoint)
+  const embedDialog = new EmbedDialog(labels, {
+    embedTypes,
+    autocompleteUrl: formData.autocompleteExhibitCatalogPath,
+    captionFields: JSON.parse(
+      formData.blacklightConfigurationIndexFields || "[]",
+    ),
+  })
   let editor
 
   // Insert a new image (at `position`, or the selection), or edit the selected one
@@ -199,7 +215,38 @@ export function mountHtmlEditor(textarea, tiptap) {
       }
     })
   }
-  const actions = { image: () => openImageDialog() }
+
+  // Insert new embedded items at the selection, or edit the embed at `pos`
+  const openEmbedDialog = ({ pos = null } = {}) => {
+    const node = pos === null ? null : editor.state.doc.nodeAt(pos)
+    embedDialog.open({ attrs: node?.attrs }).then((result) => {
+      if (!result) return editor.commands.focus()
+      if (node) {
+        editor
+          .chain()
+          .focus()
+          .setNodeSelection(pos)
+          .updateAttributes("spotlightEmbed", result)
+          .run()
+      } else {
+        editor
+          .chain()
+          .focus()
+          .insertContent({ type: "spotlightEmbed", attrs: result })
+          .run()
+      }
+    })
+  }
+
+  const actions = {
+    image: () => openImageDialog(),
+    embed: () =>
+      openEmbedDialog({
+        pos: editor.isActive("spotlightEmbed")
+          ? editor.state.selection.from
+          : null,
+      }),
+  }
 
   const wrapper = document.createElement("div")
   wrapper.className = "html-editor"
@@ -214,7 +261,10 @@ export function mountHtmlEditor(textarea, tiptap) {
     element: content,
     content: textarea.value,
     extensions: [
+      // Embedded items may only be at the top level of the page, where the server renders them
+      Document.extend({ content: "(block | spotlightEmbed)+" }),
       StarterKit.configure({
+        document: false,
         heading: { levels: [2, 3, 4] },
         link: {
           openOnClick: false,
@@ -224,14 +274,21 @@ export function mountHtmlEditor(textarea, tiptap) {
       }),
       TableKit.configure({ table: { resizable: false } }),
       spotlightImage(Image),
+      spotlightEmbed(Node).configure({
+        labels,
+        embedTypes,
+        previewUrl: formData.previewUrl,
+        onEdit: (pos) => openEmbedDialog({ pos }),
+      }),
     ],
     editorProps: {
       ...imageDropAndPasteProps((file, position) =>
         openImageDialog({ file, position }),
       ),
-      handleDoubleClickOn: (_view, _pos, node) => {
-        if (node.type.name !== "image") return false
-        openImageDialog()
+      handleDoubleClickOn: (_view, pos, node) => {
+        if (node.type.name === "image") openImageDialog()
+        else if (node.type.name === "spotlightEmbed") openEmbedDialog({ pos })
+        else return false
         return true
       },
       attributes: {
@@ -245,6 +302,12 @@ export function mountHtmlEditor(textarea, tiptap) {
     },
     onTransaction: ({ editor }) => refreshToolbar(editor, buttons),
   })
+
+  // No embeddable widgets are configured (or there's nowhere to preview them)
+  if (embedTypes.length === 0 || !formData.previewUrl) {
+    const embedButton = buttons.find((b) => b.definition.name === "embed")
+    embedButton.button.hidden = embedButton.button.disabled = true
+  }
 
   buttons.forEach(({ button, definition }) => {
     button.addEventListener("click", () => {
