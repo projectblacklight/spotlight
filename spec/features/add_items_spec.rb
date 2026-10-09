@@ -65,6 +65,41 @@ RSpec.describe 'Uploading a non-repository item', type: :feature do
       Blacklight.default_index.connection.commit
     end
 
+    context 'with multivalued upload field' do
+      let(:upload_fields) do
+        [
+          Spotlight::UploadFieldConfig.new(
+            field_name: :spotlight_upload_test_multivalued_ssim,
+            label: -> { 'Multivalued Test Field' },
+            is_multiple: true
+          )
+        ]
+      end
+
+      before do
+        allow(Spotlight::Resources::Upload).to receive(:fields).with(exhibit).and_return(upload_fields)
+      end
+
+      it 'creates an item with a multivalued upload field', :js do
+        visit spotlight.new_exhibit_resource_path(exhibit)
+
+        click_link 'Upload item'
+
+        fill_in 'Multivalued Test Field', with: 'value 1'
+        click_on 'Add another'
+        fill_in 'resources_upload_data_spotlight_upload_test_multivalued_ssim_2', with: 'value 2'
+
+        within '#new_resources_upload' do
+          click_button 'Add item'
+        end
+        expect(page).to have_text 'Object uploaded successfully.'
+        expect(Spotlight::Resource.last.data['spotlight_upload_test_multivalued_ssim']).to eq ['value 1', 'value 2']
+      ensure
+        Blacklight.default_index.connection.delete_by_query 'spotlight_resource_type_ssim:spotlight/resources/uploads'
+        Blacklight.default_index.connection.commit
+      end
+    end
+
     it 'displays the multi-item CSV upload form' do
       visit spotlight.new_exhibit_resource_path(exhibit)
       expect(page).to have_css('h1', text: /Curation/)

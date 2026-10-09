@@ -3,7 +3,19 @@
     <% if document.uploaded_resource? %>
       <%= d.fields_for :configured_fields do |e| %>
         <% Spotlight::Resources::Upload.fields(current_exhibit).each do |config| %>
-          <%= e.send(config.form_field_type, config.field_name, value: (document.sidecar(current_exhibit).data["configured_fields"] || {})[config.field_name.to_s], label: uploaded_field_label(config)) %>
+          <% value = (document.sidecar(current_exhibit).data["configured_fields"] || {})[config.field_name.to_s] %>
+          <% if config.is_multiple? %>
+            <%= render Spotlight::SidecarFormFieldComponent.new(
+              form: e,
+              id: config.field_name,
+              label: uploaded_field_label(config),
+              value: value,
+              field_type: config.form_field_type,
+              multiple: true
+            ) %>
+          <% else %>
+            <%= e.send(config.form_field_type, config.field_name, value: value, label: uploaded_field_label(config)) %>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
@@ -12,7 +24,6 @@
     <% current_exhibit.custom_fields.includes(:exhibit).each do |field| %>
       <% data = document.sidecar(current_exhibit).data %>
       <%= render partial: "spotlight/custom_fields/form_group/#{field.field_type}", locals: { f: d, field: field, value: data[field.slug.to_s] || data[field.field.to_s] } %>
-
       <% unless field.configured_to_display? %>
         <p class="bg-warning form-text">
           <%= t(:'.blank_field_warning_html',
