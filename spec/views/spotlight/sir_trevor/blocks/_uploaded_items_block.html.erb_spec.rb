@@ -24,10 +24,10 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_uploaded_items_block', type: :view 
     expect(rendered).to have_text 'Some text'
     expect(rendered).to have_css '.caption', text: 'Caption 1'
     expect(rendered).to have_css '.caption', text: 'Caption 3'
-    expect(rendered).to have_css 'a[href="http://example.com/link1"]'
-    expect(rendered).to have_css 'a[href="http://example.com/link3"]'
+    expect(rendered).to have_link href: 'http://example.com/link1'
+    expect(rendered).to have_link href: 'http://example.com/link3'
     expect(rendered).to have_css 'img[src="http://example.com"]', count: 3
-    expect(rendered).to have_css 'button.zpr-link', count: 3
+    expect(rendered).to have_button class: 'zpr-link', count: 3
   end
 
   it 'uses the correct alt text' do

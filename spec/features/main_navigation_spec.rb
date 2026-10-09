@@ -69,11 +69,11 @@ RSpec.describe 'Main navigation labels are settable', type: :feature do
 
       within '.main_navigation_admin' do
         within first('li') do
-          expect(page).to have_no_css('button.restore-default', visible: true)
+          expect(page).to have_no_button(class: 'restore-default', visible: true)
         end
 
         within all('li').last do
-          expect(page).to have_css('button.restore-default', visible: true)
+          expect(page).to have_button(class: 'restore-default', visible: true)
         end
       end
     end

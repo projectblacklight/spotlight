@@ -16,7 +16,7 @@ RSpec.describe 'Editing the Home Page', js: true do
   it 'correctly saves a list widget' do
     visit spotlight.edit_exhibit_home_page_path(exhibit)
     click_add_widget
-    expect(page).to have_css('button.st-block-controls__button')
+    expect(page).to have_button(class: 'st-block-controls__button')
 
     find("button[data-type='list']").click
     expect(page).to have_css('ul.st-list-block__list')

@@ -13,13 +13,13 @@ RSpec.describe 'Item Administration', type: :feature do
     it "does not have a 'Save this search' button" do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
       expect(page).to have_css('tr[itemscope]')
-      expect(page).to have_no_css('button', text: 'Save this search')
+      expect(page).to have_no_button('Save this search')
     end
 
     it 'has catalog items' do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
       expect(page).to have_css('h1 small', text: 'Items')
-      expect(page).to have_css('table#documents')
+      expect(page).to have_table('documents')
       expect(page).to have_css('.pagination')
       expect(page).to have_css('.spotlight-admin-thumbnail')
 

@@ -166,7 +166,7 @@ end
 def add_new_via_button(title = 'New Page', alert:)
   add_link = find('[data-expanded-add-button]')
   within(add_link) do
-    expect(page).to have_css("input[type='text']", visible: false)
+    expect(page).to have_field(type: 'text', visible: false)
   end
   add_link.hover
   within(add_link) do

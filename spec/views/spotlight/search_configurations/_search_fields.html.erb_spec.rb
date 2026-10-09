@@ -35,17 +35,17 @@ RSpec.describe 'spotlight/search_configurations/_search_fields', type: :view do
   end
 
   it 'has search options for available search fields' do
-    expect(rendered).to have_css "input[name='blacklight_configuration[search_fields][title][enabled]']"
-    expect(rendered).to have_css "input[name='blacklight_configuration[search_fields][author][enabled]']"
+    expect(rendered).to have_field 'blacklight_configuration[search_fields][title][enabled]'
+    expect(rendered).to have_field 'blacklight_configuration[search_fields][author][enabled]'
   end
 
   it 'excludes search options that do not show up in the search dropdown' do
-    expect(rendered).to have_no_selector "input[name='blacklight_configuration[search_fields][autocomplete][enabled]']"
-    expect(rendered).to have_no_selector "input[name='blacklight_configuration[search_fields][some_hidden_field][enabled]']"
+    expect(rendered).to have_no_field 'blacklight_configuration[search_fields][autocomplete][enabled]'
+    expect(rendered).to have_no_field 'blacklight_configuration[search_fields][some_hidden_field][enabled]'
   end
 
   it 'excludes search options that have if/unless configuration that causes them not to be displayed' do
-    expect(rendered).to have_no_selector "input[name='blacklight_configuration[search_fields][some_field_with_a_condition][enabled]']"
+    expect(rendered).to have_no_field 'blacklight_configuration[search_fields][some_field_with_a_condition][enabled]'
   end
 
   it 'parameterizes the data-id attribute for search field key' do

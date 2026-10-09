@@ -183,7 +183,7 @@ RSpec.describe 'Translation editing', type: :feature do
     describe 'configured fields' do
       it 'has a text input for each metadata field' do
         within '#metadata' do
-          expect(page).to have_css('input[type="text"]', count: 17)
+          expect(page).to have_field(type: 'text', count: 17)
         end
       end
 
@@ -216,10 +216,10 @@ RSpec.describe 'Translation editing', type: :feature do
 
       it 'has text inputs for the exhibit-specific fields' do
         within '#metadata' do
-          expect(page).to have_css('input[type="text"]', count: 18)
+          expect(page).to have_field(type: 'text', count: 18)
 
           within '.translation-exhibit-specific-fields' do
-            expect(page).to have_css('input[type="text"]', count: 1)
+            expect(page).to have_field(type: 'text', count: 1)
           end
         end
       end
@@ -260,7 +260,7 @@ RSpec.describe 'Translation editing', type: :feature do
     describe 'field-based search fields' do
       it 'has a text input for each enabled search field' do
         within '#search_fields .translation-field-based-search-fields' do
-          expect(page).to have_css('input[type="text"]', count: 3)
+          expect(page).to have_field(type: 'text', count: 3)
         end
       end
 
@@ -281,7 +281,7 @@ RSpec.describe 'Translation editing', type: :feature do
     describe 'facet fields' do
       it 'has a text input for each facet field' do
         within '#search_fields .translation-facet-fields' do
-          expect(page).to have_css('input[type="text"]', count: 7)
+          expect(page).to have_field(type: 'text', count: 7)
         end
       end
 
@@ -302,7 +302,7 @@ RSpec.describe 'Translation editing', type: :feature do
     describe 'sort fields' do
       it 'has a text input for each sort field' do
         within '#search_fields .translation-sort-fields' do
-          expect(page).to have_css('input[type="text"]', count: 6)
+          expect(page).to have_field(type: 'text', count: 6)
         end
       end
 
@@ -330,7 +330,7 @@ RSpec.describe 'Translation editing', type: :feature do
 
     it 'has a title and description for every browse category' do
       within '#browse' do
-        expect(page).to have_css('input[type="text"]', count: 4)
+        expect(page).to have_field(type: 'text', count: 4)
         expect(page).to have_css('textarea', count: 2)
 
         expect(page).to have_field 'All exhibit items'
@@ -388,7 +388,7 @@ RSpec.describe 'Translation editing', type: :feature do
 
     it 'has a title browse group' do
       within '#groups' do
-        expect(page).to have_css('input[type="text"]', count: 2)
+        expect(page).to have_field(type: 'text', count: 2)
 
         expect(page).to have_field 'Browse Group 1'
         expect(page).to have_field 'Browse Group 2'

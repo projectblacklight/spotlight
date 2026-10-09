@@ -6,32 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 46
-Capybara/RSpec/SpecificMatcher:
-  Exclude:
-    - "spec/components/spotlight/select_image_component_spec.rb"
-    - "spec/features/add_iiif_manifest_spec.rb"
-    - "spec/features/edit_search_fields_spec.rb"
-    - "spec/features/exhibits/administration_spec.rb"
-    - "spec/features/exhibits/language_create_edit_spec.rb"
-    - "spec/features/exhibits/translation_editing_spec.rb"
-    - "spec/features/item_admin_spec.rb"
-    - "spec/features/javascript/edit_in_place_spec.rb"
-    - "spec/features/javascript/home_page_edit_spec.rb"
-    - "spec/features/javascript/locale_selector_spec.rb"
-    - "spec/features/javascript/metadata_admin_spec.rb"
-    - "spec/features/javascript/search_config_admin_spec.rb"
-    - "spec/features/main_navigation_spec.rb"
-    - "spec/features/site_users_management_spec.rb"
-    - "spec/spec_helper.rb"
-    - "spec/views/spotlight/about_pages/index.html.erb_spec.rb"
-    - "spec/views/spotlight/exhibits/_form.html.erb_spec.rb"
-    - "spec/views/spotlight/pages/index.html.erb_spec.rb"
-    - "spec/views/spotlight/search_configurations/_search_fields.html.erb_spec.rb"
-    - "spec/views/spotlight/search_configurations/_sort.html.erb_spec.rb"
-    - "spec/views/spotlight/sir_trevor/blocks/_uploaded_items_block.html.erb_spec.rb"
-    - "spec/views/spotlight/translations/_import.html.erb_spec.rb"
-
 # Offense count: 20
 # Configuration parameters: EnforcedStyle, AllowedGems.
 # SupportedStyles: Gemfile, gems.rb, gemspec
