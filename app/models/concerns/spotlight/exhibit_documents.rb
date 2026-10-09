@@ -14,12 +14,12 @@ module Spotlight
       start = 0
       search_params = exhibit_search_builder.merge(q: '*:*', fl: '*')
 
-      response = repository.search(search_params.start(start).to_h)
+      response = repository.search(params: search_params.start(start).to_h)
 
       while response.documents.present?
         response.documents.each(&)
         start += response.documents.length
-        response = repository.search(search_params.start(start).to_h)
+        response = repository.search(params: search_params.start(start).to_h)
       end
     end
 
