@@ -5,6 +5,8 @@ module Spotlight
   ##
   # Spotlight exhibit
   class Exhibit < ActiveRecord::Base
+    PUBLISHING_STATUSES = %w[unpublished previewable discoverable].freeze
+
     class_attribute :themes_selector
     include Spotlight::ExhibitAnalytics
     include Spotlight::ExhibitDefaults
@@ -17,6 +19,8 @@ module Spotlight
 
     scope :published, -> { where(published: true) }
     scope :unpublished, -> { where(published: false) }
+    scope :previewable, -> { published.where(discovery_enabled: false) }
+    scope :discoverable, -> { published.where(discovery_enabled: true) }
     scope :ordered_by_weight, -> { order(:weight) }
 
     paginates_per 48
@@ -94,6 +98,30 @@ module Spotlight
 
     def browse_categories?
       searches.published.any?
+    end
+
+    # Published, but only viewable by people with the exhibit link
+    def previewable?
+      published? && !discovery_enabled?
+    end
+
+    # Published, and included on the home page and in the sitemap
+    def discoverable?
+      published? && discovery_enabled?
+    end
+
+    def publishing_status
+      return 'unpublished' unless published?
+
+      discovery_enabled? ? 'discoverable' : 'previewable'
+    end
+
+    def publishing_status=(status)
+      status = status.to_s
+      return unless PUBLISHING_STATUSES.include?(status)
+
+      self.published = status != 'unpublished'
+      self.discovery_enabled = status != 'previewable'
     end
 
     def themes

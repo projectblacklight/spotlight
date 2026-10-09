@@ -8,11 +8,12 @@ module Spotlight
 
     before_action :authenticate_user!, except: [:index]
     before_action :set_tab, only: %i[edit update]
+    before_action :load_exhibits, only: [:index]
 
     load_and_authorize_resource
 
     def index
-      @published_exhibits = @exhibits.includes(:thumbnail).published.ordered_by_weight.page(params[:page])
+      @published_exhibits = @exhibits.includes(:thumbnail).discoverable.ordered_by_weight.page(params[:page])
       @published_exhibits = @published_exhibits.tagged_with(params[:tag]) if params[:tag]
       if @exhibits.one?
         redirect_to @exhibits.first, flash: flash.to_h
@@ -97,12 +98,25 @@ module Spotlight
         :title,
         :subtitle,
         :description,
-        :published,
+        :publishing_status,
         :tag_list,
         tag_list: [],
         contact_emails_attributes: %i[id email],
         languages_attributes: %i[id public]
       )
+    end
+
+    # Runs before load_and_authorize_resource to set @exhibits from discoverable
+    # exhibits, not just exhibits that can be accessed.
+    def load_exhibits
+      exhibits = Spotlight::Exhibit.accessible_by(current_ability)
+      return @exhibits = exhibits.discoverable unless current_user
+
+      @exhibits = if can?(:manage, Spotlight::Exhibit)
+                    exhibits
+                  else
+                    exhibits.discoverable.or(exhibits.where(id: current_user.exhibits.select(:id)))
+                  end
     end
 
     def set_tab

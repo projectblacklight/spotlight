@@ -170,4 +170,61 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       end
     end
   end
+
+  describe 'Exhibit link' do
+    it 'shows the exhibit link' do
+      visit spotlight.edit_exhibit_path(exhibit)
+      expect(page).to have_css '.exhibit-link', exact_text: spotlight.exhibit_root_url(exhibit)
+    end
+
+    it 'copies the exhibit link to the clipboard', js: true do
+      visit spotlight.edit_exhibit_path(exhibit)
+
+      stub_clipboard
+      click_button 'Copy'
+
+      expect(page.evaluate_script('window.__copied')).to eq find('.exhibit-link').text
+    end
+  end
+
+  describe 'Publishing status' do
+    let(:exhibit) { FactoryBot.create(:exhibit, published: false) }
+
+    it 'allows the exhibit to be previewable' do
+      visit spotlight.edit_exhibit_path(exhibit)
+      choose 'Preview (link only)'
+      click_button 'Save changes'
+
+      expect(page).to have_text('The exhibit was successfully updated.')
+      expect(exhibit.reload).to have_attributes(published: true, discovery_enabled: false)
+      visit spotlight.edit_exhibit_path(exhibit)
+      expect(page).to have_checked_field 'Preview (link only)'
+    end
+
+    it 'allows the exhibit to be published' do
+      visit spotlight.edit_exhibit_path(exhibit)
+      choose 'Published'
+      click_button 'Save changes'
+
+      expect(page).to have_text('The exhibit was successfully updated.')
+      expect(exhibit.reload).to have_attributes(published: true, discovery_enabled: true)
+      visit spotlight.edit_exhibit_path(exhibit)
+      expect(page).to have_checked_field 'Published'
+    end
+
+    context 'when the exhibit is published' do
+      let(:exhibit) { FactoryBot.create(:exhibit, published: true) }
+
+      it 'allows the exhibit to be unpublished' do
+        visit spotlight.edit_exhibit_path(exhibit)
+        choose 'Unpublished'
+        click_button 'Save changes'
+
+        expect(page).to have_text('The exhibit was successfully updated.')
+        expect(exhibit.reload).to have_attributes(published: false, discovery_enabled: true)
+        visit spotlight.edit_exhibit_path(exhibit)
+        expect(page).to have_checked_field 'Unpublished'
+      end
+    end
+  end
 end

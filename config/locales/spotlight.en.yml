@@ -579,6 +579,7 @@ en:
           heading: Basic settings
         header: General
       exhibit_card:
+        previewable: Preview
         unpublished: Unpublished
       export:
         configurations:
@@ -602,11 +603,17 @@ en:
         fields:
           contact_emails:
             help_block: Each recipient will receive submissions made through the feedback form
-          published:
-            help_block: ''
-            published:
+          exhibit_link:
+            copy: Copy
+            label: Exhibit link
+          publishing_status:
+            discoverable:
               help: Anyone can view the exhibit, and it appears on the home page.
               label: Published
+            help_block: ''
+            previewable:
+              help: Anyone with the exhibit link can view. The exhibit does not appear on the home page.
+              label: Preview (link only)
             unpublished:
               help: Only logged-in users with appropriate permission can view the exhibit.
               label: Unpublished
@@ -622,6 +629,7 @@ en:
         heading: Import data
         instructions: You can import an exhibit JSON file exported from this application to use that data file to define this exhibit.
       index:
+        previewable: Preview exhibits
         published: Published exhibits
         unpublished: Unpublished exhibits
         user: Your exhibits
@@ -1055,7 +1063,8 @@ en:
         instructions: Drag and drop the exhibits below to specify the order in which they are displayed on the exhibits homepage.
         page_title: Order exhibits
       exhibit:
-        published: Published
+        discoverable: Published
+        previewable: Preview
         unpublished: Unpublished
       home: Exhibits
     tags:

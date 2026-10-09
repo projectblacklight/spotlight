@@ -25,13 +25,7 @@ RSpec.describe 'Site users management', js: true do
     end
 
     it 'copies the email addresses to the clipboard' do
-      # Headless Chrome blocks real clipboard access, so replace writeText
-      # with a shim that stashes its argument on window for assertion.
-      page.execute_script(<<~JS)
-        window.__copied = null
-        navigator.clipboard.writeText = (text) => { window.__copied = text; return Promise.resolve() }
-      JS
-
+      stub_clipboard
       click_button 'Copy'
 
       copied = page.evaluate_script('window.__copied')
