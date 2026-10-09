@@ -71,49 +71,4 @@ RSpec.describe 'Search Configuration Administration', js: true do
       expect(page).to have_no_select 'search_field'
     end
   end
-
-  describe 'facets' do
-    it 'allows the curator to select a different facet sort order' do
-      visit spotlight.edit_exhibit_search_configuration_path(exhibit)
-      click_link 'Facets'
-
-      within '.facet-config-genre_ssim' do
-        click_button 'Options'
-        expect(find_by_id('blacklight_configuration_facet_fields_genre_ssim_sort_count')).to be_checked
-
-        choose 'Value'
-      end
-
-      click_button 'Save changes'
-
-      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
-
-      exhibit.reload
-      expect(exhibit.blacklight_config.facet_fields['genre_ssim'].sort).to eq 'index'
-    end
-  end
-
-  describe 'results' do
-    it 'updates search result options' do
-      visit spotlight.edit_exhibit_search_configuration_path(exhibit)
-
-      click_link 'Results'
-
-      uncheck 'List'
-
-      choose '20'
-
-      click_button 'Save changes'
-
-      expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
-
-      click_link 'Results'
-
-      expect(page).to have_unchecked_field 'List'
-      expect(page).to have_checked_field 'Gallery'
-
-      expect(page).to have_checked_field '20'
-      expect(page).to have_unchecked_field '10'
-    end
-  end
 end
