@@ -45,16 +45,28 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    name: build (Rails-provided Dockerfile)
+    env:
+      ENGINE_CART_RAILS_OPTIONS: "--skip-git --skip-listen --skip-spring --skip-keeps --skip-coffee --skip-test --skip-kamal --skip-thruster --skip-solid --css bootstrap -j importmap"
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: false
+          bundler: "latest"
+          ruby-version: "4.0"
+      - name: Install dependencies
+        run: bundle install
+      - name: Generate the test app
+        run: bundle exec rake engine_cart:generate
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
       - name: Build Docker image
         uses: docker/build-push-action@v7
         with:
-          context: .
-          file: ./Dockerfile
+          context: .internal_test_app
+          build-contexts: spotlight=.
           push: false
 
   javascript:
