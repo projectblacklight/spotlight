@@ -50,6 +50,7 @@ RSpec.describe 'Main navigation labels are settable', type: :feature do
     about_nav.display = false
     about_nav.save
     visit spotlight.exhibit_path(exhibit)
+    expect(page).to have_css('.navbar-nav li', text: 'New Browse Label')
     expect(page).to have_no_css('.navbar-nav li', text: 'New About Label')
     about_nav = exhibit.main_navigations.about
     about_nav.display = true

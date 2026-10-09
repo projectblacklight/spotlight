@@ -56,6 +56,7 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
   it 'displays a masthead image when one is uploaded and configured' do
     visit spotlight.edit_site_path
 
+    expect(page).to have_link 'Site masthead'
     expect(page).to have_no_css('.image-masthead')
 
     click_link 'Site masthead'
@@ -76,6 +77,7 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
   it 'does not display an uploaded masthead if configured to not display' do
     visit spotlight.edit_site_path
 
+    expect(page).to have_link 'Site masthead'
     expect(page).to have_no_css('.image-masthead')
 
     click_link 'Site masthead'

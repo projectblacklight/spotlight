@@ -68,6 +68,7 @@ RSpec.describe 'Adding custom metadata field data', type: :feature do
   it 'has a public toggle' do
     visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
 
+    expect(page).to have_link 'Edit'
     expect(page).to have_no_selector '.blacklight-private'
 
     click_on 'Edit'
