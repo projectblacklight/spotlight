@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spotlight::AboutPagesController, type: :controller, versioning: true do
+RSpec.describe Spotlight::AboutPagesController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:valid_attributes) { { 'title' => 'MyString', thumbnail: { iiif_url: '' } } }
 
@@ -156,7 +156,9 @@ RSpec.describe Spotlight::AboutPagesController, type: :controller, versioning: t
     describe 'PUT update' do
       let!(:page) { FactoryBot.create(:about_page, exhibit:) }
 
-      it 'redirects to the about page' do
+      # versioning: true turns on PaperTrail (paper_trail/frameworks/rspec disables it by default)
+      # so the update records a version and the flash includes an undo link.
+      it 'redirects to the about page', versioning: true do
         put :update, params: { id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes }
         page.reload
         expect(response).to redirect_to(exhibit_about_page_path(page.exhibit, page))
