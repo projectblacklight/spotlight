@@ -44,6 +44,7 @@ these collections.)
   s.add_dependency 'ostruct', '!= 0.3.0', '!= 0.3.1', '!= 0.3.2'
   s.add_dependency 'paper_trail', '>= 11.0', '< 18'
   s.add_dependency 'rails', '>= 7.1', '< 9'
+  s.add_dependency 'rails-i18n', '>= 7.0', '< 9'
   s.add_dependency 'redcarpet', '>= 2.0.1', '< 4'
   s.add_dependency 'riiif', '~> 2.0'
   s.add_dependency 'view_component', '>= 2.66', '< 5'
