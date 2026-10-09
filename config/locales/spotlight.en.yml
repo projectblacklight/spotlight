@@ -793,6 +793,7 @@ en:
         blockquote: Quote
         bold: Bold
         bullet_list: Bulleted list
+        cancel: Cancel
         content: Page content
         delete_column: Delete column
         delete_row: Delete row
@@ -801,6 +802,27 @@ en:
         heading3: Subheading
         heading4: Minor heading
         horizontal_rule: Horizontal rule
+        image: Image
+        image_align: Position
+        image_align_center: Centered
+        image_align_left: Left, with text wrapping
+        image_align_right: Right, with text wrapping
+        image_alt: Alternative text
+        image_alt_help: Describe the image for people who can't see it.
+        image_alt_required: Enter alternative text, or mark the image as decorative.
+        image_decorative: This image is decorative (it doesn't need alternative text)
+        image_edit: Edit image
+        image_file: Image file
+        image_file_required: Choose an image to upload.
+        image_insert: Insert image
+        image_insert_button: Insert
+        image_save: Save
+        image_size: Size
+        image_size_full: Full width
+        image_size_large: Large
+        image_size_medium: Medium
+        image_size_small: Small
+        image_upload_failed: The image could not be uploaded. Please try again.
         insert_table: Insert table
         italic: Italic
         link: Link
