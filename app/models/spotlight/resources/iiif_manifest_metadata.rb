@@ -120,13 +120,11 @@ module Spotlight
           if value.key? '@value'
             value['@value']
             # IIIF v3 multilingual(?), multivalued(?) values
-            # If all of the values are associated with the none key, the client must display all of those values.
-          elsif value.keys == ['none']
-            value['none']
             # If any of the values have a language associated with them, the client must display all of the values associated with the language
             # that best matches the language preference.
           elsif value.key? default_json_ld_language
             value[default_json_ld_language]
+            # If all of the values are associated with the none key, the client must display all of those values.
             # If some of the values have a language associated with them, but none match the language preference, the client must display all
             # of the values that do not have a language associated with them.
           elsif value.key? 'none'
