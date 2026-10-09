@@ -14,7 +14,15 @@ RSpec.describe 'Solr Documents Embed Block', :js, type: :feature do
   end
 
   it 'allows you to add a solr documents embed block widget' do
+    # unlike other item blocks, there is no alt text customization
+    expect(page).to have_no_text('For each item, please enter alternative text')
+    expect(page).to have_no_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
+
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
+    expect(page).to have_no_field('Alternative text')
+    expect(page).to have_no_field('Decorative')
+
+    fill_in 'Heading', with: 'A Heading'
 
     save_page_changes
 
@@ -23,23 +31,6 @@ RSpec.describe 'Solr Documents Embed Block', :js, type: :feature do
     within('picture') do
       expect(html).to have_css('source[media="openseadragon"][src="https://stacks.stanford.edu/image/iiif/dq287tq6352%2Fdq287tq6352_05_0001/info.json"]')
     end
-  end
-
-  it 'does not display alternative text guidelines' do
-    expect(page).to have_no_text('For each item, please enter alternative text')
-    expect(page).to have_no_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
-  end
-
-  it 'does not have alt text customization fields' do
-    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
-    expect(page).to have_no_field('Alternative text')
-    expect(page).to have_no_field('Decorative')
-  end
-
-  it 'is accessible' do
-    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
-    fill_in 'Heading', with: 'A Heading'
-    save_page_changes
 
     expect(page).to be_axe_clean.within '#content'
   end

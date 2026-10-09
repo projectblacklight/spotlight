@@ -62,7 +62,7 @@ RSpec.describe 'Main navigation labels are settable', type: :feature do
 
     before { login_as user }
 
-    it 'is present when the navigation label is not the default value' do
+    it 'is present only when the navigation label is not the default value, and restores the default value' do
       visit spotlight.edit_exhibit_appearance_path(exhibit)
 
       click_link 'Main menu'
@@ -74,22 +74,9 @@ RSpec.describe 'Main navigation labels are settable', type: :feature do
 
         within all('li').last do
           expect(page).to have_button(class: 'restore-default', visible: true)
-        end
-      end
-    end
-
-    context 'when the navigation label is not the default value' do
-      it 'restores the default value' do
-        visit spotlight.edit_exhibit_appearance_path(exhibit)
-
-        click_link 'Main menu'
-
-        within '.main_navigation_admin' do
-          within all('li').last do
-            expect(page).to have_css('a', text: 'New About Label')
-            click_button 'Restore default'
-            expect(page).to have_css('a', text: 'About')
-          end
+          expect(page).to have_css('a', text: 'New About Label')
+          click_button 'Restore default'
+          expect(page).to have_css('a', text: 'About')
         end
       end
     end

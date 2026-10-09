@@ -39,7 +39,7 @@ RSpec.describe 'Bulk actions', type: :feature do
     expect(SolrDocument.new(id: 'dq287tq6352').private?(exhibit)).to be true
   end
 
-  it 'adding tags', js: true do
+  it 'adding and removing tags', js: true do
     visit spotlight.search_exhibit_catalog_path(exhibit, { q: 'dq287tq6352' })
 
     click_button 'Bulk actions'
@@ -47,23 +47,19 @@ RSpec.describe 'Bulk actions', type: :feature do
     expect(page).to have_css('#add-tags-modal', visible: true)
     # Wait for modal
     expect(page).to have_css 'h4', text: 'Add tags', visible: true
-    find('.tag-selection-search-bar input').send_keys('good,stuff', :enter)
+    find('#add-tags-modal .tag-selection-search-bar input').send_keys('good,stuff', :enter)
     accept_confirm 'All items in the result set will be updated. Are you sure?' do
       click_button 'Add'
     end
     expect(page).to have_css '.alert', text: 'Tags are being added for 1 item.'
     expect(SolrDocument.new(id: 'dq287tq6352').sidecar(exhibit).all_tags_list).to include('foo', 'good', 'stuff')
-  end
-
-  it 'removing tags', js: true do
-    visit spotlight.search_exhibit_catalog_path(exhibit, { q: 'dq287tq6352' })
 
     click_button 'Bulk actions'
     click_link 'Remove tags'
     # wait for modal
     expect(page).to have_css('#remove-tags-modal', visible: true)
     expect(page).to have_css 'h4', text: 'Remove tags', visible: true
-    find('.tag-selection-search-bar input').send_keys('foo', :enter)
+    find('#remove-tags-modal .tag-selection-search-bar input').send_keys('foo,good,stuff', :enter)
     accept_confirm 'All items in the result set will be updated. Are you sure?' do
       click_button 'Remove'
     end
