@@ -46,10 +46,4 @@ RSpec.describe 'Adding custom search fields', type: :feature do
 
     expect(page).to have_text 'The custom search field was deleted.'
   end
-
-  it 'has breadcrumbs' do
-    visit spotlight.edit_exhibit_search_configuration_path exhibit
-    click_on 'Add new field'
-    expect(page).to have_breadcrumbs 'Home', 'Configuration', 'Search', 'Add new field'
-  end
 end

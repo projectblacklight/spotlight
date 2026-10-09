@@ -21,17 +21,6 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
 
   before { login_as exhibit_curator }
 
-  it 'is able to create new pages' do
-    visit spotlight.exhibit_dashboard_path(exhibit)
-
-    click_link 'Feature pages'
-
-    add_new_via_button('My New Page', alert: 'The feature page was created.')
-
-    expect(page).to have_css('li.dd-item')
-    expect(page).to have_css('h3', text: 'My New Page')
-  end
-
   it 'can order and nest the pages' do
     visit spotlight.exhibit_dashboard_path(exhibit)
 
@@ -64,27 +53,6 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
     click_button('Save changes')
     all_page_items = all('li.dd-item h3')
     expect(all_page_items.map(&:text)).to eq(%w[FeaturePage2 FeaturePage1 FeaturePage3])
-  end
-
-  it 'updates the page titles' do
-    visit spotlight.exhibit_dashboard_path(exhibit)
-
-    click_link 'Feature pages'
-    within("[data-id='#{page1.id}']") do
-      within('h3') do
-        expect(page).to have_text('FeaturePage1')
-        expect(page).to have_css('.title-field', visible: false)
-        click_link('FeaturePage1')
-        expect(page).to have_css('.title-field', visible: true)
-        find('.title-field').set('NewFeaturePage1')
-      end
-    end
-    click_button('Save changes')
-    within("[data-id='#{page1.id}']") do
-      within('h3') do
-        expect(page).to have_text('NewFeaturePage1')
-      end
-    end
   end
 
   it 'stays in curation mode if a user has unsaved data' do

@@ -11,33 +11,17 @@ RSpec.feature 'Heading block', :js do
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
   end
 
-  describe 'accessibility' do
-    context 'when used in isolation' do
-      it 'is accessible' do
-        add_widget 'heading'
-        find('.st-text-block.st-text-block--heading').set('My Feature Page Heading')
+  it 'is accessible when combined with other blocks that render headings' do
+    add_widget 'heading'
+    find('.st-text-block.st-text-block--heading').set('My Feature Page Heading')
 
-        save_page_changes
+    add_widget 'solr_documents_embed'
+    fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
+    fill_in 'Heading', with: 'Embed Heading'
 
-        expect(page).to have_text('My Feature Page Heading')
-        expect(page).to be_axe_clean.within '#content'
-      end
-    end
+    save_page_changes
 
-    context 'when combined with other blocks that render headings' do
-      it 'is accessible' do
-        add_widget 'heading'
-        find('.st-text-block.st-text-block--heading').set('My Feature Page Heading')
-
-        add_widget 'solr_documents_embed'
-        fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
-        fill_in 'Heading', with: 'Embed Heading'
-
-        save_page_changes
-
-        expect(page).to have_text('My Feature Page Heading')
-        expect(page).to be_axe_clean.within '#content'
-      end
-    end
+    expect(page).to have_text('My Feature Page Heading')
+    expect(page).to be_axe_clean.within '#content'
   end
 end

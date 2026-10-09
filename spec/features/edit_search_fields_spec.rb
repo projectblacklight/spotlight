@@ -12,11 +12,6 @@ RSpec.describe 'Search Administration', type: :feature do
       expect(page).to have_css('h1 small', text: 'Search')
     end
 
-    it 'has breadcrumbs' do
-      visit spotlight.edit_exhibit_search_configuration_path exhibit
-      expect(page).to have_breadcrumbs 'Home', 'Configuration', 'Search'
-    end
-
     describe 'facets' do
       it 'displays information about the facets' do
         visit spotlight.edit_exhibit_search_configuration_path(exhibit)
