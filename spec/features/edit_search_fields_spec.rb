@@ -37,6 +37,43 @@ RSpec.describe 'Search Administration', type: :feature do
         expect(exhibit.reload.blacklight_config.facet_fields.select { |_k, v| v.show }.keys).to include('subject_temporal_ssim')
         expect(exhibit.blacklight_config.facet_fields.select { |_k, v| v.show }.keys).not_to include('language_ssim', 'genre_ssim')
       end
+
+      it 'allows the curator to select a different facet sort order' do
+        visit spotlight.edit_exhibit_search_configuration_path(exhibit)
+
+        within '.facet-config-genre_ssim' do
+          expect(find_by_id('blacklight_configuration_facet_fields_genre_ssim_sort_count')).to be_checked
+
+          choose 'Value'
+        end
+
+        click_button 'Save changes'
+
+        expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.')
+
+        exhibit.reload
+        expect(exhibit.blacklight_config.facet_fields['genre_ssim'].sort).to eq 'index'
+      end
+    end
+
+    describe 'results' do
+      it 'updates search result options' do
+        visit spotlight.edit_exhibit_search_configuration_path(exhibit)
+
+        uncheck 'List'
+
+        choose '20'
+
+        click_button 'Save changes'
+
+        expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.')
+
+        expect(page).to have_unchecked_field 'List'
+        expect(page).to have_checked_field 'Gallery'
+
+        expect(page).to have_checked_field '20'
+        expect(page).to have_unchecked_field '10'
+      end
     end
 
     describe 'sort' do
