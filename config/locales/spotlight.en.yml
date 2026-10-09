@@ -582,16 +582,16 @@ en:
         unpublished: Unpublished
       export:
         configurations:
-          attachments: 'Attachments: %{config}'
-          blacklight_configuration: 'Metadata/Search configurations: %{config}'
-          config: 'General configurations: %{config}'
-          pages: 'Pages: %{config}'
-          resources: 'Item data: %{config}'
+          attachments_html: 'Attachments: %{config}'
+          blacklight_configuration_html: 'Metadata/Search configurations: %{config}'
+          config_html: 'General configurations: %{config}'
+          pages_html: 'Pages: %{config}'
+          resources_html: 'Item data: %{config}'
         configurations_intro: 'Export Configurations:'
         download: Export data
         heading: Export data
         instructions_1: You can export exhibit data as a JSON file. Exports include data as defined by your site's export configurations - see below.
-        instructions_2: The exported JSON file can be imported as a backup to this exhibit or as a starting point for a new exhibit. If item data is included, this export should not be imported into a new exhibit, as this data is exhibit-specific and not portable. This export will also not restore any uploaded files deleted from their original storage location.
+        instructions_2: The exported JSON file can be imported as a backup to this exhibit or as a starting point for a new exhibit. If item data is included, this export should not be imported into a new exhibit, as this data is exhibit-specific and not portable.
         instructions_3: Please consult with your site administrator to change these site configurations, if needed.
         no_configurations: No export configurations defined.
       filter:

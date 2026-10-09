@@ -8,7 +8,7 @@
       <% if Spotlight::Engine.config.exports.present? %>
         <ul>
           <% Spotlight::Engine.config.exports.each do |config, value| %>
-            <li><%= t ".configurations.#{config}", config: value.to_s.capitalize %></li>
+            <li><%= t ".configurations.#{config}_html", config: (value ? blacklight_icon('check', aria_hidden: true, classes: 'export-config-enabled') : blacklight_icon('close', aria_hidden: true, classes: 'export-config-disabled')) + value.to_s.capitalize %></li>
           <% end %>
         </ul>
       <% else %>
