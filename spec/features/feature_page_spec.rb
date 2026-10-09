@@ -67,6 +67,7 @@ RSpec.describe 'Feature page', type: :feature, versioning: true do
 
         it 'does not be present' do
           visit spotlight.exhibit_feature_page_path(parent_feature_page.exhibit, parent_feature_page)
+          expect(page).to have_css('.page-title', text: parent_feature_page.title)
           expect(page).to have_no_css('#sidebar')
           expect(page).to have_no_text(child_feature_page.title)
         end
@@ -145,6 +146,7 @@ RSpec.describe 'Feature page', type: :feature, versioning: true do
       # and then open the edit page again
       visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
 
+      expect(page).to have_button 'Save changes'
       expect(page).to have_no_css '.alert'
     end
   end

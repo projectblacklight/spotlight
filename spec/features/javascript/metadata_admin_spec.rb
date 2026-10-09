@@ -11,6 +11,7 @@ RSpec.describe 'Metadata Administration', js: true do
       visit spotlight.edit_exhibit_metadata_configuration_path exhibit
 
       # All checkboxes in the item details column should checked
+      expect(page).to have_css("tr td:nth-child(2) input[type='checkbox']:checked")
       expect(page).to have_no_css("tr td:nth-child(2) input[type='checkbox']:not(:checked)")
       # In the scope of the th element which contains the checkbox
       within('tr th:nth-child(2)') do
@@ -24,6 +25,7 @@ RSpec.describe 'Metadata Administration', js: true do
       visit spotlight.edit_exhibit_metadata_configuration_path exhibit
 
       # No checkboxes should be unchecked
+      expect(page).to have_css("tr td:nth-child(2) input[type='checkbox']:checked")
       expect(page).to have_no_css("tr td:nth-child(2) input[type='checkbox']:not(:checked)")
       # Find the "All" checkbox in the th field for the item details column
       first_checkbox_area = find('tr th:nth-child(2)')

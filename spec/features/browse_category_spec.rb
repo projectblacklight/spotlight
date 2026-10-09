@@ -43,6 +43,7 @@ RSpec.describe 'Browse pages' do
 
           visit spotlight.exhibit_browse_path(exhibit, search)
 
+          expect(page).to have_css 'h1', text: 'Some Saved Search'
           expect(page).to have_no_selector '.search-query-form'
         end
       end
@@ -71,12 +72,14 @@ RSpec.describe 'Browse pages' do
       it 'does not show the search bar' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
+        expect(page).to have_css '.masthead .h2', text: 'Some Saved Search'
         expect(page).to have_no_selector '.search-query-form'
       end
 
       it 'does not have breadcrumbs' do
         visit spotlight.exhibit_browse_path(exhibit, search)
 
+        expect(page).to have_css '.masthead .h2', text: 'Some Saved Search'
         expect(page).to have_no_selector '.breadcrumbs-container'
       end
     end

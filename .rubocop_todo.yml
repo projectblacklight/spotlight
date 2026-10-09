@@ -6,20 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 18
-Capybara/RSpec/NegationMatcherAfterVisit:
-  Exclude:
-    - "spec/features/add_custom_field_metadata_spec.rb"
-    - "spec/features/browse_category_spec.rb"
-    - "spec/features/exhibit_masthead_spec.rb"
-    - "spec/features/feature_page_spec.rb"
-    - "spec/features/home_page_spec.rb"
-    - "spec/features/item_admin_spec.rb"
-    - "spec/features/javascript/metadata_admin_spec.rb"
-    - "spec/features/main_navigation_spec.rb"
-    - "spec/features/report_a_problem_spec.rb"
-    - "spec/features/site_masthead_spec.rb"
-
 # Offense count: 46
 Capybara/RSpec/SpecificMatcher:
   Exclude:

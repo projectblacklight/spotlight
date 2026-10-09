@@ -43,6 +43,7 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
 
   it 'displays a masthead image when one is uploaded and configured' do
     visit spotlight.exhibit_dashboard_path(exhibit)
+    expect(page).to have_link 'Appearance'
     expect(page).to have_no_css('.image-masthead')
     within '#sidebar' do
       click_link 'Appearance'
@@ -68,6 +69,7 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
 
   it 'does not display an uploaded masthead if configured to not display' do
     visit spotlight.exhibit_dashboard_path(exhibit)
+    expect(page).to have_link 'Appearance'
     expect(page).to have_no_css('.image-masthead')
     within '#sidebar' do
       click_link 'Appearance'
@@ -90,6 +92,7 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
     skip "Capyabara and the cropping tool don't play well together.."
 
     visit spotlight.exhibit_dashboard_path(exhibit)
+    expect(page).to have_link 'Appearance'
     expect(page).to have_no_css('.image-masthead')
     within '#sidebar' do
       click_link 'Appearance'

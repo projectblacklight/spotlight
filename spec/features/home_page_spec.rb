@@ -94,6 +94,7 @@ RSpec.describe 'Home page', type: :feature, versioning: true do
 
     it 'does not display the facet sidebar' do
       visit spotlight.exhibit_home_page_path(exhibit)
+      expect(page).to have_css('#main-container h2')
       expect(page).to have_no_css('#sidebar')
     end
   end

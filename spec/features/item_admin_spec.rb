@@ -12,6 +12,7 @@ RSpec.describe 'Item Administration', type: :feature do
   describe 'admin' do
     it "does not have a 'Save this search' button" do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
+      expect(page).to have_css('tr[itemscope]')
       expect(page).to have_no_css('button', text: 'Save this search')
     end
 
@@ -41,6 +42,7 @@ RSpec.describe 'Item Administration', type: :feature do
     it "toggles the 'blacklight-private' label", js: true, max_wait_time: 5 do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
       # The label should be toggled when the checkbox is clicked
+      expect(page).to have_css('tr[itemscope]')
       expect(page).to have_no_css('tr.blacklight-private')
       within 'tr[itemscope]:first-child' do
         find("input.toggle-visibility[type='checkbox']").click
