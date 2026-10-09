@@ -41,7 +41,7 @@
         <div class="form-group mb-3">
           <%= f.label :content, class: 'visually-hidden' %>
           <% if f.object.html_content? %>
-            <%= f.text_area_without_bootstrap :content, value: f.object.read_attribute(:content), class: content_editor_class(f.object), data: { 'editor-labels': html_editor_labels } %>
+            <%= f.text_area_without_bootstrap :content, value: f.object.read_attribute(:content), class: content_editor_class(f.object), data: { 'editor-labels': html_editor_labels, 'embed-types': html_editor_embed_types } %>
           <% else %>
             <%= f.text_area_without_bootstrap :content, value: { data: f.object.content.as_json }.to_json, class: content_editor_class(f.object), data: { 'block-types': SirTrevorRails::Block.custom_block_types, 'alt-text-settings': SirTrevorRails::Block.custom_block_type_alt_text_settings } %>
           <% end %>

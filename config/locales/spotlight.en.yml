@@ -798,6 +798,38 @@ en:
         delete_column: Delete column
         delete_row: Delete row
         delete_table: Delete table
+        embed: Exhibit items
+        embed_alt_text: Alternative text
+        embed_autoplay: Automatically cycle images
+        embed_caption_placeholder: Select a field…
+        embed_decorative: Decorative
+        embed_edit: Edit exhibit items
+        embed_edit_button: Edit
+        embed_insert: Add exhibit items
+        embed_insert_button: Insert
+        embed_interval: Time between images
+        embed_interval_seconds: "%{seconds} seconds"
+        embed_items: Items
+        embed_loading: Loading preview…
+        embed_max_height: Maximum height
+        embed_max_height_large: Large
+        embed_max_height_medium: Medium
+        embed_max_height_small: Small
+        embed_move_down: Move down
+        embed_move_up: Move up
+        embed_no_items: Add at least one item.
+        embed_preview_failed: The preview could not be loaded.
+        embed_primary_caption: Primary caption
+        embed_primary_caption_field: Primary caption field
+        embed_remove: Remove
+        embed_remove_button: Remove
+        embed_save: Save
+        embed_search: Search for an item to add
+        embed_secondary_caption: Secondary caption
+        embed_secondary_caption_field: Secondary caption field
+        embed_show: Show
+        embed_type: Display as
+        embed_zpr: Offer "View larger" option
         heading2: Heading
         heading3: Subheading
         heading4: Minor heading
@@ -833,6 +865,22 @@ en:
         toolbar: Formatting
         underline: Underline
         undo: Undo
+      html_editor_embed_types:
+        solr_documents:
+          description: Displays exhibit items in a horizontal row.
+          label: Item Row
+        solr_documents_carousel:
+          description: Displays exhibit items in a carousel. You can configure the item captions, how the images are cycled, and the size of the carousel.
+          label: Item Carousel
+        solr_documents_embed:
+          description: Embeds an exhibit item in a viewer.
+          label: Item Embed
+        solr_documents_features:
+          description: Displays exhibit items in a static slideshow. Visitors move between items using the field you select as the primary caption.
+          label: Item Slideshow
+        solr_documents_grid:
+          description: Displays exhibit items in a multi-row grid.
+          label: Item Grid
       index:
         about_pages:
           header: About pages

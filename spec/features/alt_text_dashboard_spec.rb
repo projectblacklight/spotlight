@@ -25,6 +25,16 @@ RSpec.describe 'Alt text dashboard', type: :feature do
                                        content: '<img src="/a.png" alt="A map"><img src="/b.png" alt="" data-decorative="true"><img src="/c.png">')
     end
 
+    it 'counts its images and embedded items' do
+      embed_data = { 'item' => { 'item_0' => { id: 'a', display: 'true', alt_text: 'An item' }, 'item_1' => { id: 'b', display: 'true' } } }
+      FactoryBot.create(:feature_page, exhibit:, content_type: 'Html',
+                                       content: %(<p>x</p><div data-spotlight-block="solr_documents" data-spotlight-block-data="#{ERB::Util.html_escape(embed_data.to_json)}"></div>))
+
+      visit spotlight.exhibit_alt_text_path(exhibit.id)
+      expect(page).to have_text '5 of 8 have entered alt text'
+      expect(page.all('.alt-text-status').count).to be 4
+    end
+
     it 'counts its images' do
       visit spotlight.exhibit_alt_text_path(exhibit.id)
       expect(page).to have_text '4 of 6 have entered alt text'
