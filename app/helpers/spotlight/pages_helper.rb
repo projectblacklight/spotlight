@@ -21,6 +21,18 @@ module Spotlight
       t('spotlight.pages.html_editor')
     end
 
+    # The SirTrevor widgets that can be embedded in HTML pages, for the WYSIWYG editor
+    def html_editor_embed_types
+      Spotlight::PageContent::Html.embeddable_block_types.map do |type|
+        {
+          type:,
+          label: t(:label, scope: [:spotlight, :pages, :html_editor_embed_types, type]),
+          description: t(:description, scope: [:spotlight, :pages, :html_editor_embed_types, type]),
+          alt_text: SirTrevorRails::Block.block_class(type).supports_alt_text?
+        }
+      end
+    end
+
     # Options for choosing a page's content type (editor) when creating it
     def page_content_type_options
       Spotlight::Engine.config.page_content_types.map do |type|
