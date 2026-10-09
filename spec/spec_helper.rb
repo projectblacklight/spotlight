@@ -163,15 +163,15 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 end
 
-def add_new_via_button(title = 'New Page', alert:)
+def add_new_via_button(title = 'New Page', alert:, editor: nil)
   add_link = find('[data-expanded-add-button]')
   within(add_link) do
     expect(page).to have_field(type: 'text', visible: false)
   end
   add_link.hover
   within(add_link) do
-    input = find("input[type='text']", visible: true)
-    input.set(title)
+    find("input[type='text']", visible: true).set(title)
+    find('select').select(editor) if editor
     find("input[data-behavior='save']").click
   end
   # Wait for the new page to load, so later finders don't hit nodes from the old page

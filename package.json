@@ -6,7 +6,7 @@
   "type": "module",
   "module": "app/assets/javascripts/spotlight/spotlight.esm.js",
   "scripts": {
-    "prepare": "rollup --config rollup.config.js --sourcemap && ESM=true rollup --config rollup.config.js --sourcemap",
+    "prepare": "rollup --config rollup.tiptap.config.js && rollup --config rollup.config.js --sourcemap && ESM=true rollup --config rollup.config.js --sourcemap",
     "format": "prettier --write \"app/javascript/**/*.js\"",
     "format:check": "prettier --check \"app/javascript/**/*.js\"",
     "lint": "eslint \"app/javascript/**/*.js\"",
@@ -29,6 +29,12 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@tiptap/core": "^3.31.4",
+    "@tiptap/extension-table": "^3.31.4",
+    "@tiptap/pm": "^3.31.4",
+    "@tiptap/starter-kit": "^3.31.4",
     "eslint": "^10.5.0",
     "globals": "^17.7.0",
     "prettier": "^3.8.4",
