@@ -1,3 +1,3 @@
 <div class="html-page-content">
-  <%= sanitize html_fragment.html, tags: Spotlight::PageContent::Html::ALLOWED_TAGS, attributes: Spotlight::PageContent::Html::ALLOWED_ATTRIBUTES %>
+  <%= html_fragment.to_html %>
 </div>
