@@ -19,6 +19,19 @@ RSpec.describe 'Alt text dashboard', type: :feature do
     login_as curator
   end
 
+  context 'with an HTML page' do
+    before do
+      FactoryBot.create(:feature_page, exhibit:, content_type: 'Html',
+                                       content: '<img src="/a.png" alt="A map"><img src="/b.png" alt="" data-decorative="true"><img src="/c.png">')
+    end
+
+    it 'counts its images' do
+      visit spotlight.exhibit_alt_text_path(exhibit.id)
+      expect(page).to have_text '4 of 6 have entered alt text'
+      expect(page.all('.alt-text-status').count).to be 3
+    end
+  end
+
   describe 'alt_text dashboard' do
     it 'filters pages and gets alt_text totals' do
       visit spotlight.exhibit_alt_text_path(exhibit.id)
