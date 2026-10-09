@@ -38,7 +38,7 @@ RSpec.describe 'Item Administration', type: :feature do
       item.click_button 'Make public'
     end
 
-    it "toggles the 'blacklight-private' label", js: true, max_wait_time: 5 do
+    it "toggles the 'blacklight-private' label", js: true do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
       # The label should be toggled when the checkbox is clicked
       expect(page).to have_no_css('tr.blacklight-private')
