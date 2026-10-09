@@ -212,7 +212,7 @@ RSpec/BeEq:
 RSpec/BeforeAfterAll:
   Exclude:
     - "spec/features/exhibits/translation_editing_spec.rb"
-    - "spec/features/javascript/locale_selector_spec.rb"
+    - "spec/features/locale_selector_spec.rb"
 
 # Offense count: 25
 # This cop supports safe autocorrection (--autocorrect).
@@ -339,7 +339,7 @@ RSpec/LetSetup:
     - "spec/features/javascript/blocks/rule_block_spec.rb"
     - "spec/features/javascript/blocks/search_result_block_spec.rb"
     - "spec/features/javascript/feature_page_admin_spec.rb"
-    - "spec/features/javascript/locale_selector_spec.rb"
+    - "spec/features/locale_selector_spec.rb"
     - "spec/lib/migration/iiif_spec.rb"
     - "spec/models/sir_trevor_rails/blocks/browse_group_categories_block_spec.rb"
     - "spec/models/sir_trevor_rails/blocks/featured_pages_block_spec.rb"
@@ -446,7 +446,7 @@ RSpec/MetadataStyle:
     - "spec/features/javascript/edit_in_place_spec.rb"
     - "spec/features/javascript/feature_page_admin_spec.rb"
     - "spec/features/javascript/home_page_edit_spec.rb"
-    - "spec/features/javascript/locale_selector_spec.rb"
+    - "spec/features/locale_selector_spec.rb"
     - "spec/features/javascript/metadata_admin_spec.rb"
     - "spec/features/javascript/multi_image_select_spec.rb"
     - "spec/features/javascript/reindex_monitor_spec.rb"
