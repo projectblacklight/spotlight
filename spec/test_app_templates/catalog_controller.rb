@@ -16,7 +16,7 @@ class CatalogController < ApplicationController
     config.view.embed(if: false,
                       partials: [],
                       document_component: Spotlight::SolrDocumentLegacyEmbedComponent,
-                      embed_component: Blacklight::Gallery::OpenseadragonEmbedComponent)
+                      (Blacklight::VERSION < '9' ? :embed_component : :document_embed_component) => Blacklight::Gallery::OpenseadragonEmbedComponent)
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
     config.show.embed_component = Blacklight::Gallery::OpenseadragonEmbedComponent
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
