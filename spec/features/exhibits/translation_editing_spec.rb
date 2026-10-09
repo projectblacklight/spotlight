@@ -235,7 +235,7 @@ RSpec.describe 'Translation editing', type: :feature do
         expect(page).to have_link 'Edit'
         click_on 'Edit'
         fill_in custom_field.configuration['label'], with: 'Custom Field Data'
-        click_on 'Save changes'
+        click_on 'Modifier ce(tte) Solr document'
 
         expect(page).to have_css('dt', text: 'French Custom Field Label')
         expect(page).to have_css('dd', text: 'Custom Field Data')
