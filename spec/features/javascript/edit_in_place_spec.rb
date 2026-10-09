@@ -12,7 +12,7 @@ RSpec.describe 'Edit in place', js: true, type: :feature do
 
       click_link 'Feature pages'
 
-      add_new_via_button('My New Feature Page', alert: 'The feature page was created.')
+      add_new_via_button('My New Feature Page')
 
       expect(page).to have_css('h3', text: 'My New Feature Page')
 
@@ -38,7 +38,7 @@ RSpec.describe 'Edit in place', js: true, type: :feature do
 
       click_link 'Feature pages'
 
-      add_new_via_button('My New Feature Page', alert: 'The feature page was created.')
+      add_new_via_button('My New Feature Page')
 
       expect(page).to have_css('h3', text: 'My New Feature Page')
 

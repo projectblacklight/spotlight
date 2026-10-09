@@ -14,8 +14,9 @@ RSpec.describe 'About Pages Adminstration', js: true do
     click_link 'About pages'
     expect(page).to have_current_path(spotlight.exhibit_about_pages_path(exhibit))
 
-    add_new_via_button('My New Page', alert: 'The about page was created.')
+    add_new_via_button('My New Page')
 
+    expect(page).to have_text 'The about page was created.'
     expect(page).to have_css('li.dd-item')
     expect(page).to have_css('h3', text: 'My New Page')
   end
