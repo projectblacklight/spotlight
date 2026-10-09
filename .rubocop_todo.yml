@@ -953,13 +953,6 @@ Style/SelectByRegexp:
   Exclude:
     - "app/jobs/spotlight/process_bulk_updates_csv_job.rb"
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowSend.
-Style/SendWithLiteralMethodName:
-  Exclude:
-    - "app/helpers/spotlight/application_helper.rb"
-
 # Offense count: 5
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Mode.
