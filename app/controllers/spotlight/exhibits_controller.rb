@@ -98,7 +98,6 @@ module Spotlight
         :title,
         :subtitle,
         :description,
-        :published,
         :publishing_status,
         :tag_list,
         tag_list: [],
