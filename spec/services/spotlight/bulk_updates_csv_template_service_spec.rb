@@ -10,7 +10,11 @@ RSpec.describe Spotlight::BulkUpdatesCsvTemplateService do
   let!(:tag2) { FactoryBot.create(:tagging, tagger: exhibit, taggable: exhibit) }
 
   describe '#template' do
-    let(:view_context) { double('ViewContext', document_presenter: double('DocumentPresenter', heading: 'Document Title')) }
+    let(:view_context) { Spotlight::BulkUpdatesController.new.view_context }
+
+    before do
+      allow(view_context).to receive(:document_presenter).and_return(instance_double(Blacklight::ShowPresenter, heading: 'Document Title'))
+    end
 
     it 'has a row for every document (+ the header)' do
       template = CSV.parse(service.template(view_context:).to_a.join)
