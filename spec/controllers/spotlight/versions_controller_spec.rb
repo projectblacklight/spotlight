@@ -2,7 +2,7 @@
 
 # versioning: true turns on PaperTrail (paper_trail/frameworks/rspec disables it by default)
 # so creating a page records a version that can be reverted.
-RSpec.describe Spotlight::VersionsController, type: :controller, versioning: true do
+RSpec.describe Spotlight::VersionsController, :versioning, type: :controller do
   routes { Spotlight::Engine.routes }
 
   describe 'when not logged in' do

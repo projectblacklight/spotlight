@@ -88,7 +88,7 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
     expect(page).to have_no_css('.image-masthead .background-container')
   end
 
-  it 'displays a masthead image when one is uploaded from an exhibit item', js: true do
+  it 'displays a masthead image when one is uploaded from an exhibit item', :js do
     skip "Capyabara and the cropping tool don't play well together.."
 
     visit spotlight.exhibit_dashboard_path(exhibit)

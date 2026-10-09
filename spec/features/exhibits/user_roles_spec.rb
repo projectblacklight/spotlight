@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Manage exhibit users and roles', js: true do
+RSpec.describe 'Manage exhibit users and roles', :js do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 

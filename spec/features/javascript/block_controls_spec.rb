@@ -6,7 +6,7 @@ RSpec.describe 'Block controls' do
 
   before { login_as exhibit_curator }
 
-  it 'is split into separate sections', js: true do
+  it 'is split into separate sections', :js do
     # create page
     visit spotlight.exhibit_dashboard_path(exhibit)
 

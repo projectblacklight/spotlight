@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Search Configuration Administration', js: true do
+RSpec.describe 'Search Configuration Administration', :js do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit:) }
 

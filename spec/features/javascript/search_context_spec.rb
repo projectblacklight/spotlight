@@ -13,7 +13,7 @@ RSpec.describe 'Search contexts' do
 
   before { login_as exhibit_curator }
 
-  it 'adds context breadcrumbs back to the home page when navigating to an item from the home page', js: true do
+  it 'adds context breadcrumbs back to the home page when navigating to an item from the home page', :js do
     exhibit.home_page.content = [
       {
         type: 'solr_documents',
@@ -42,7 +42,7 @@ RSpec.describe 'Search contexts' do
     expect(page).to have_css '.breadcrumb a', text: 'Home'
   end
 
-  it 'adds context breadcrumb back to the feature page when navigating to an item from a feature page', js: true do
+  it 'adds context breadcrumb back to the feature page when navigating to an item from a feature page', :js do
     feature_page.content = [
       {
         type: 'solr_documents',
@@ -75,7 +75,7 @@ RSpec.describe 'Search contexts' do
   context 'from a browse page' do
     let!(:search) { FactoryBot.create(:search, title: 'Some Saved Search', exhibit:, published: true) }
 
-    it 'adds context breadcrumbs back to the browse page when navigating to an item', js: true do
+    it 'adds context breadcrumbs back to the browse page when navigating to an item', :js do
       visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
       click_link 'Browse'
       click_link 'Some Saved Search'

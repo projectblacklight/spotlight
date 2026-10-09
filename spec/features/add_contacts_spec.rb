@@ -44,7 +44,7 @@ RSpec.describe 'Add a contact to an exhibit', type: :feature do
     end
   end
 
-  it "allows the curator to crop the contact's avatar", js: true do
+  it "allows the curator to crop the contact's avatar", :js do
     skip "Capybara doesn't play well with the image cropper..."
 
     visit spotlight.exhibit_about_pages_path(exhibit)

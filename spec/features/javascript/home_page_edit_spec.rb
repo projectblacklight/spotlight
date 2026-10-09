@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Editing the Home Page', js: true do
+RSpec.describe 'Editing the Home Page', :js do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 

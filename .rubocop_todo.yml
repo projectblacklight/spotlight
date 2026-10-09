@@ -39,18 +39,6 @@ Gemspec/DevelopmentDependencies:
   Exclude:
     - "blacklight-spotlight.gemspec"
 
-# Offense count: 8
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowedMethods, AllowedPatterns.
-Lint/AmbiguousBlockAssociation:
-  Exclude:
-    - "app/models/spotlight/blacklight_configuration.rb"
-    - "spec/controllers/spotlight/roles_controller_spec.rb"
-    - "spec/features/report_a_problem_spec.rb"
-    - "spec/models/spotlight/exhibit_spec.rb"
-    - "spec/models/spotlight/resources/iiif_service_spec.rb"
-    - "spec/services/spotlight/invite_users_service_spec.rb"
-
 # Offense count: 6
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
@@ -97,12 +85,6 @@ Lint/MissingSuper:
 Lint/NoReturnInBeginEndBlocks:
   Exclude:
     - "app/models/spotlight/exhibit.rb"
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Lint/RedundantCopDisableDirective:
-  Exclude:
-    - "spec/models/spotlight/page_spec.rb"
 
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -239,24 +221,6 @@ RSpec/BeforeAfterAll:
   Exclude:
     - "spec/features/exhibits/translation_editing_spec.rb"
     - "spec/features/javascript/locale_selector_spec.rb"
-
-# Offense count: 25
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: be_a, be_kind_of
-RSpec/ClassCheck:
-  Exclude:
-    - "spec/controllers/application_controller_spec.rb"
-    - "spec/controllers/spotlight/about_pages_controller_spec.rb"
-    - "spec/controllers/spotlight/appearances_controller_spec.rb"
-    - "spec/controllers/spotlight/catalog_controller_spec.rb"
-    - "spec/models/sir_trevor_rails/block_spec.rb"
-    - "spec/models/solr_document_spec.rb"
-    - "spec/models/spotlight/blacklight_configuration_spec.rb"
-    - "spec/models/spotlight/exhibit_spec.rb"
-    - "spec/models/spotlight/solr_document/uploaded_resource_spec.rb"
-    - "spec/services/spotlight/carrierwave_file_resolver_spec.rb"
-    - "spec/services/spotlight/exhibit_import_export_service_spec.rb"
 
 # Offense count: 72
 # Configuration parameters: Prefixes, AllowedPatterns.
@@ -431,58 +395,6 @@ RSpec/MessageSpies:
     - "spec/views/spotlight/catalog/admin.html.erb_spec.rb"
     - "spec/views/spotlight/pages/show.html.erb_spec.rb"
     - "spec/views/spotlight/searches/index.html.erb_spec.rb"
-
-# Offense count: 87
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: hash, symbol
-RSpec/MetadataStyle:
-  Exclude:
-    - "spec/controllers/spotlight/about_pages_controller_spec.rb"
-    - "spec/controllers/spotlight/feature_pages_controller_spec.rb"
-    - "spec/controllers/spotlight/home_pages_controller_spec.rb"
-    - "spec/controllers/spotlight/versions_controller_spec.rb"
-    - "spec/features/about_page_spec.rb"
-    - "spec/features/add_contacts_spec.rb"
-    - "spec/features/add_custom_field_metadata_spec.rb"
-    - "spec/features/autocomplete_typeahead_spec.rb"
-    - "spec/features/browse_category_admin_spec.rb"
-    - "spec/features/bulk_actions_spec.rb"
-    - "spec/features/create_exhibit_spec.rb"
-    - "spec/features/exhibit_masthead_spec.rb"
-    - "spec/features/exhibits/administration_spec.rb"
-    - "spec/features/exhibits/edit_metadata_fields_spec.rb"
-    - "spec/features/exhibits/translation_editing_spec.rb"
-    - "spec/features/exhibits/user_roles_spec.rb"
-    - "spec/features/feature_page_spec.rb"
-    - "spec/features/home_page_spec.rb"
-    - "spec/features/import_exhibit_spec.rb"
-    - "spec/features/item_admin_spec.rb"
-    - "spec/features/javascript/about_page_admin_spec.rb"
-    - "spec/features/javascript/block_controls_spec.rb"
-    - "spec/features/javascript/blocks/featured_browse_categories_block_spec.rb"
-    - "spec/features/javascript/blocks/link_to_search_block_spec.rb"
-    - "spec/features/javascript/blocks/oembed_and_text_block_spec.rb"
-    - "spec/features/javascript/blocks/rule_block_spec.rb"
-    - "spec/features/javascript/blocks/search_result_block_spec.rb"
-    - "spec/features/javascript/blocks/solr_documents_block_spec.rb"
-    - "spec/features/javascript/blocks/solr_documents_carousel_block_spec.rb"
-    - "spec/features/javascript/blocks/uploaded_items_block_spec.rb"
-    - "spec/features/javascript/browse_group_admin_spec.rb"
-    - "spec/features/javascript/edit_in_place_spec.rb"
-    - "spec/features/javascript/feature_page_admin_spec.rb"
-    - "spec/features/javascript/home_page_edit_spec.rb"
-    - "spec/features/javascript/locale_selector_spec.rb"
-    - "spec/features/javascript/metadata_admin_spec.rb"
-    - "spec/features/javascript/multi_image_select_spec.rb"
-    - "spec/features/javascript/reindex_monitor_spec.rb"
-    - "spec/features/javascript/roles_admin_spec.rb"
-    - "spec/features/javascript/search_config_admin_spec.rb"
-    - "spec/features/javascript/search_context_spec.rb"
-    - "spec/features/main_navigation_spec.rb"
-    - "spec/features/report_a_problem_spec.rb"
-    - "spec/features/site_users_management_spec.rb"
-    - "spec/features/slideshow_spec.rb"
 
 # Offense count: 104
 # Configuration parameters: AllowSubject.
@@ -935,12 +847,6 @@ Style/RedundantInitialize:
     - "lib/migration/page_language.rb"
 
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantRegexpArgument:
-  Exclude:
-    - "app/models/spotlight/field_metadata.rb"
-
-# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowedMethods, AllowedPatterns.
 Style/ReturnNilInPredicateMethodDefinition:
@@ -969,20 +875,6 @@ Style/StringConcatenation:
     - "spec/features/feature_page_spec.rb"
     - "spec/support/features/test_features_helpers.rb"
     - "spec/views/spotlight/sir_trevor/blocks/_solr_documents_features_block.html.erb_spec.rb"
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Style/SuperArguments:
-  Exclude:
-    - "app/models/spotlight/blacklight_configuration.rb"
-    - "app/models/spotlight/featured_image.rb"
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Style/SuperWithArgsParentheses:
-  Exclude:
-    - "app/models/spotlight/featured_image.rb"
-    - "app/models/spotlight/page.rb"
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).

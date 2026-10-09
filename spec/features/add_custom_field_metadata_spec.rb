@@ -45,7 +45,7 @@ RSpec.describe 'Adding custom metadata field data', type: :feature do
     end
   end
 
-  context 'with a multivalued field', js: true do
+  context 'with a multivalued field', :js do
     let(:custom_field) { FactoryBot.create(:custom_field, exhibit:, is_multiple: true) }
 
     it 'can add multiple values' do

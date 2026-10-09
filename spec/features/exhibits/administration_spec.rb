@@ -34,7 +34,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       expect(find_field(email_id_0).value).to eq email_address_0
     end
 
-    it "has new inputs added when clicking on the 'add contact' button", js: true do
+    it "has new inputs added when clicking on the 'add contact' button", :js do
       # Exhibit administration edit
       visit spotlight.edit_exhibit_path(exhibit)
 
@@ -60,7 +60,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       expect(find_field(email_id_1).value).to eq email_address_1
     end
 
-    it 'updates the aria-labels properly', js: true do
+    it 'updates the aria-labels properly', :js do
       visit spotlight.edit_exhibit_path(exhibit)
 
       expect(find_field(email_id_0)['aria-label']).to eq 'Recipient email 1'
@@ -68,7 +68,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       expect(find_field(email_id_1)['aria-label']).to eq 'Recipient email 2'
     end
 
-    it 'allows deletion of contact email addresses', js: true do
+    it 'allows deletion of contact email addresses', :js do
       # go to edit page, fill in first email field, click the + (add contact) button, fill in the second email field, click save.
       visit spotlight.edit_exhibit_path(exhibit)
       fill_in email_id_0, with: email_address_0
@@ -103,7 +103,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       expect(find("##{hidden_input_id_0}", visible: false).value).to eq hidden_input_val_1
     end
 
-    it 'creates an empty form field with no associated delete command or confirmation status when creating a blank row for a new contact', js: true do
+    it 'creates an empty form field with no associated delete command or confirmation status when creating a blank row for a new contact', :js do
       # create a contact email address and save (shouldn't see delete button or confirmation status on unsaved entries)
       visit spotlight.edit_exhibit_path(exhibit)
       fill_in email_id_0, with: email_address_0
@@ -124,7 +124,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       expect(find_all('.contact-email-delete-wrapper').length).to eq 1
     end
 
-    it 'displays the error message from the server if there is one', js: true do
+    it 'displays the error message from the server if there is one', :js do
       visit spotlight.edit_exhibit_path(exhibit)
       fill_in email_id_0, with: email_address_0
       find_by_id('another-email').click
@@ -149,7 +149,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
     context 'site_tags are set to a list' do
       let(:site_tags) { ['tag 1', 'tag 2', 'tag 3'] }
 
-      it 'site_tags listed on the page', js: true do
+      it 'site_tags listed on the page', :js do
         visit spotlight.edit_exhibit_path(exhibit)
         expect(page).to have_css('#exhibit_tag_list_tag_1')
         find('label', text: 'tag 1').click
@@ -165,7 +165,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
     context 'site_tags are set to nil' do
       let(:site_tags) { nil }
 
-      it 'has free text tag_list field', js: true do
+      it 'has free text tag_list field', :js do
         visit spotlight.edit_exhibit_path(exhibit)
         expect(page).to have_css('#exhibit_tag_list')
         fill_in 'exhibit_tag_list', with: 'tag 1, tag 2'

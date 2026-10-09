@@ -175,7 +175,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
           expect(subject.contacts.count).to eq 1
           contact = subject.contacts.first
           expect(contact.contact_info[:title]).to eq 'xyz'
-          expect(contact.avatar).to be_kind_of Spotlight::ContactImage
+          expect(contact.avatar).to be_a Spotlight::ContactImage
         end
       end
 
@@ -269,7 +269,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
       it 'copies the content' do
         expect(JSON.parse(subject.feature_pages.first.read_attribute(:content))).to have_key 'data'
         expect(subject.feature_pages.first.content.length).to eq 1
-        expect(subject.feature_pages.first.content.first).to be_a_kind_of SirTrevorRails::Blocks::TextBlock
+        expect(subject.feature_pages.first.content.first).to be_a SirTrevorRails::Blocks::TextBlock
       end
 
       context 'with a translation' do
@@ -283,7 +283,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
           expect(subject.feature_pages.first.translated_pages.length).to eq 1
           expect(JSON.parse(subject.feature_pages.first.translated_page_for('ar').read_attribute(:content))).to have_key 'data'
           expect(subject.feature_pages.first.translated_page_for('ar').content.length).to eq 1
-          expect(subject.feature_pages.first.translated_page_for('ar').content.first).to be_a_kind_of SirTrevorRails::Blocks::TextBlock
+          expect(subject.feature_pages.first.translated_page_for('ar').content.first).to be_a SirTrevorRails::Blocks::TextBlock
         end
       end
     end
