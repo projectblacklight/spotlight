@@ -85,18 +85,6 @@ RSpec.describe 'Translation editing', type: :feature do
         expect(I18n.t(:'spotlight.curation.nav.home')).to eq 'Maison'
         I18n.locale = I18n.default_locale
       end
-
-      it 'adds translations to user-facing breadcrumbs' do
-        expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
-        visit spotlight.exhibit_browse_index_path(exhibit, locale: 'fr')
-        expect(page).to have_breadcrumbs 'Maison', 'parcourir ceci!'
-      end
-
-      it 'does not translate admin breadcrumbs' do
-        expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
-        visit spotlight.exhibit_searches_path(exhibit, locale: 'fr')
-        expect(page).to have_breadcrumbs 'Home', 'Curation', 'Browse'
-      end
     end
 
     describe 'breadcrumbs' do

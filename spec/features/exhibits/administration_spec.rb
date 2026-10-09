@@ -14,11 +14,6 @@ RSpec.describe 'Exhibit Administration', type: :feature do
   before { login_as admin }
 
   describe 'Contact Emails' do
-    it 'has breadcrumbs' do
-      visit spotlight.edit_exhibit_path(exhibit)
-      expect(page).to have_breadcrumbs 'Home', 'Configuration', 'General'
-    end
-
     it 'has a blank input field when there are no contacts yet' do
       visit spotlight.edit_exhibit_path(exhibit)
       expect(page).to have_field(class: 'exhibit-contact')

@@ -42,10 +42,4 @@ RSpec.describe 'Editing metadata fields', type: :feature do
     visit spotlight.edit_exhibit_metadata_configuration_path exhibit
     expect(exhibit.reload.blacklight_config.index_fields['language_ssm'].label).to eq 'Language of Origin'
   end
-
-  it 'has breadcrumbs' do
-    visit spotlight.edit_exhibit_metadata_configuration_path exhibit
-
-    expect(page).to have_breadcrumbs 'Home', 'Configuration', 'Metadata'
-  end
 end

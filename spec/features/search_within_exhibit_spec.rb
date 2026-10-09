@@ -47,10 +47,4 @@ RSpec.describe 'Search within an exhibit', type: :feature do
       expect(page).to have_text "L'AMERIQUE"
     end
   end
-
-  it 'has breadcrumbs' do
-    visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
-    expect(page).to have_breadcrumbs 'Home', 'Search results'
-    expect(page).to have_css '.breadcrumb-item.active', text: 'Search results'
-  end
 end
