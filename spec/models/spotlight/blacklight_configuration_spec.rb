@@ -546,7 +546,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
                                                       ])
 
       expect(subject.custom_facet_fields).to include 'abc', 'xyz'
-      expect(subject.custom_facet_fields['abc']).to be_a_kind_of Blacklight::Configuration::Field
+      expect(subject.custom_facet_fields['abc']).to be_a Blacklight::Configuration::Field
       expect(subject.custom_facet_fields['abc'].a).to eq 1
       expect(subject.custom_facet_fields['abc'].custom_field).to eq true
     end
@@ -560,7 +560,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
                                                  ])
       custom_index_fields = subject.custom_index_fields(blacklight_config)
       expect(custom_index_fields).to include 'abc', 'xyz'
-      expect(custom_index_fields['abc']).to be_a_kind_of Blacklight::Configuration::Field
+      expect(custom_index_fields['abc']).to be_a Blacklight::Configuration::Field
       expect(custom_index_fields['abc'].a).to eq 1
       expect(custom_index_fields['abc'].custom_field).to eq true
     end
@@ -574,7 +574,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
                                                  ])
       custom_search_fields = subject.custom_search_fields(blacklight_config)
       expect(custom_search_fields).to include 'a', 'b'
-      expect(custom_search_fields['a']).to be_a_kind_of Blacklight::Configuration::Field
+      expect(custom_search_fields['a']).to be_a Blacklight::Configuration::Field
       expect(custom_search_fields['a'].solr_parameters).to eq(qf: 'abc')
       expect(custom_search_fields['a'].custom_field).to eq true
     end

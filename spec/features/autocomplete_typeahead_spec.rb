@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
+RSpec.describe 'Autocomplete typeahead', :js, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:admin) { FactoryBot.create(:exhibit_admin, exhibit:) }
 

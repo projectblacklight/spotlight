@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Locale Selector', js: true do
+RSpec.describe 'Locale Selector', :js do
   let(:exhibit) { FactoryBot.create(:exhibit, published: true) }
   let!(:language_es) { FactoryBot.create(:language, exhibit:, locale: 'es', public: true) }
   let!(:language_zh) { FactoryBot.create(:language, exhibit:, locale: 'zh') }

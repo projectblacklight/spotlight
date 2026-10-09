@@ -2,7 +2,7 @@
 
 require 'tempfile'
 
-RSpec.describe 'Allow exhibit admins to import and export content from an exhibit', js: true, type: :feature do
+RSpec.describe 'Allow exhibit admins to import and export content from an exhibit', :js, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:user) { FactoryBot.create(:exhibit_admin, exhibit:) }
 

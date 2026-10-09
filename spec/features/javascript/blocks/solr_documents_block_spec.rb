@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
+RSpec.describe 'Solr Document Block', :feature, max_wait_time: 30 do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:feature_page) do
@@ -17,7 +17,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     add_widget 'solr_documents'
   end
 
-  it 'allows you to add the solr document block widget', js: true do
+  it 'allows you to add the solr document block widget', :js do
     expect(page).to have_text 'This widget displays exhibit items in a horizontal row.'
     expect(page).to have_text 'Optionally, you can add a heading and/or text to be displayed adjacent to the items.'
     expect(page).to have_text 'Primary caption'
@@ -27,7 +27,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     expect(page).to have_text 'Text'
   end
 
-  it 'allows you to add a solr document to the widget', js: true do
+  it 'allows you to add a solr document to the widget', :js do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
     within(:css, '.card') do
       expect(page).to have_text "L'AMERIQUE"
@@ -42,7 +42,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     end
   end
 
-  it 'allows you to add multiple solr documents to the widget', js: true do
+  it 'allows you to add multiple solr documents to the widget', :js do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
     expect(page).to have_css '.panels li', count: 2, visible: true
@@ -52,7 +52,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     expect(page).to have_css '.items-block .box', count: 2, visible: true
   end
 
-  it 'allows you to choose from a multi-image solr document (and persist through edits)', js: true do
+  it 'allows you to choose from a multi-image solr document (and persist through edits)', :js do
     fill_in_solr_document_block_typeahead_field with: 'xd327cm9378'
 
     expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
@@ -83,7 +83,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     expect(thumb['src']).to include('xd327cm9378_05_0002/full')
   end
 
-  it 'allows you to toggle visibility of solr documents', js: true do
+  it 'allows you to toggle visibility of solr documents', :js do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     within(:css, '.card') do
@@ -118,7 +118,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     expect(page).to have_no_text '[World map]'
   end
 
-  it 'allows you to optionally display captions with the image', js: true do
+  it 'allows you to optionally display captions with the image', :js do
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     # display the title as the primary caption
@@ -144,7 +144,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     expect(page).to be_axe_clean.within '#content'
   end
 
-  it 'allows you to optionally display a ZPR link with the image', js: true do
+  it 'allows you to optionally display a ZPR link with the image', :js do
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     check 'Offer "View larger" option'
@@ -162,7 +162,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     end
   end
 
-  it 'allows you to add text to the image', js: true do
+  it 'allows you to add text to the image', :js do
     # fill in the content-editable div
     content_editable = find('.st-text-block')
     content_editable.set('zzz')
@@ -176,7 +176,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     end
   end
 
-  it 'allows you to choose which side the text will be on', js: true do
+  it 'allows you to choose which side the text will be on', :js do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     # Select to align the text right
@@ -198,12 +198,12 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     end
   end
 
-  it 'displays alternative text guidelines', js: true do
+  it 'displays alternative text guidelines', :js do
     expect(page).to have_text('For each item, please enter alternative text')
     expect(page).to have_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
   end
 
-  it 'toggles alt text input when marking an image as decorative', js: true do
+  it 'toggles alt text input when marking an image as decorative', :js do
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     fill_in 'Alternative text', with: 'custom alt text'
@@ -213,7 +213,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
   end
 
-  it 'retains custom alt text after marking as decorative and saving', js: true do
+  it 'retains custom alt text after marking as decorative and saving', :js do
     fill_in_solr_document_block_typeahead_field with: 'gk446cj2442'
 
     fill_in 'Alternative text', with: 'custom alt text'
@@ -231,7 +231,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
   end
 
-  it 'displays the select image area link to open up a modal for cropping', js: true do
+  it 'displays the select image area link to open up a modal for cropping', :js do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     item_id = page.find('li[data-resource-id="dq287tq6352"]')[:id]
@@ -241,7 +241,7 @@ RSpec.describe 'Solr Document Block', feature: true, max_wait_time: 30 do
     expect(page).to have_link('Select image area', href: image_selection_url)
   end
 
-  it 'round-trip data', js: true do
+  it 'round-trip data', :js do
     fill_in_solr_document_block_typeahead_field with: 'dq287tq6352'
 
     within(:css, '.card') do

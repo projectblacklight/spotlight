@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Uploaded Items Block', feature: true, js: true do
+RSpec.describe 'Uploaded Items Block', :feature, :js do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:fixture_file1) { File.join(FIXTURES_PATH, '800x600.png') }
@@ -68,7 +68,7 @@ RSpec.describe 'Uploaded Items Block', feature: true, js: true do
     end
   end
 
-  it 'displays alternative text guidelines', js: true do
+  it 'displays alternative text guidelines', :js do
     expect(page).to have_text('For each item, please enter alternative text')
     expect(page).to have_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
   end

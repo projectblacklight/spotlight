@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Site users management', js: true do
+RSpec.describe 'Site users management', :js do
   let(:user) { FactoryBot.create(:site_admin) }
   let!(:existing_user) { FactoryBot.create(:exhibit_visitor) }
   let!(:exhibit_admin) { FactoryBot.create(:exhibit_admin) }

@@ -187,7 +187,7 @@ RSpec.describe 'Translation editing', type: :feature do
         end
       end
 
-      it 'allows users to translate both index and show metadata field labels', js: true do
+      it 'allows users to translate both index and show metadata field labels', :js do
         click_link 'Metadata field labels'
 
         within('#metadata', visible: true) do
@@ -264,7 +264,7 @@ RSpec.describe 'Translation editing', type: :feature do
         end
       end
 
-      it 'allows users to translate field-based search fields', js: true do
+      it 'allows users to translate field-based search fields', :js do
         click_link 'Search field labels'
 
         within('#search_fields', visible: true) do
@@ -285,7 +285,7 @@ RSpec.describe 'Translation editing', type: :feature do
         end
       end
 
-      it 'allows users to translate facet fields', js: true do
+      it 'allows users to translate facet fields', :js do
         click_link 'Search field labels'
 
         within('#search_fields', visible: true) do
@@ -306,7 +306,7 @@ RSpec.describe 'Translation editing', type: :feature do
         end
       end
 
-      it 'allows users to translation sort fields', js: true do
+      it 'allows users to translation sort fields', :js do
         click_link 'Search field labels'
 
         within('#search_fields', visible: true) do
@@ -350,7 +350,7 @@ RSpec.describe 'Translation editing', type: :feature do
       expect(page).to have_css '.nav-tabs .nav-link.active', text: 'Browse categories'
     end
 
-    it 'persists changes', js: true do
+    it 'persists changes', :js do
       click_link 'Browse categories'
 
       within('#browse', visible: true) do
@@ -406,7 +406,7 @@ RSpec.describe 'Translation editing', type: :feature do
       expect(page).to have_css '.nav-tabs .nav-link.active', text: 'Browse groups'
     end
 
-    it 'persists changes', js: true do
+    it 'persists changes', :js do
       click_link 'Browse groups'
 
       within('#groups', visible: true) do
@@ -455,7 +455,7 @@ RSpec.describe 'Translation editing', type: :feature do
     end
   end
 
-  describe 'translation progress counter', js: true do
+  describe 'translation progress counter', :js do
     before do
       FactoryBot.create(:translation, exhibit:, locale: 'fr', key: "#{exhibit.slug}.title", value: 'Titre')
     end

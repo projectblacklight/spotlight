@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Oembed and text block', feature: true, max_wait_time: 15 do
+RSpec.describe 'Oembed and text block', :feature, max_wait_time: 15 do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:feature_page) do
@@ -17,7 +17,7 @@ RSpec.describe 'Oembed and text block', feature: true, max_wait_time: 15 do
     add_widget 'oembed'
   end
 
-  it 'allows you to add the oembed block widget', js: true do
+  it 'allows you to add the oembed block widget', :js do
     expect(page).to have_text 'This widget embeds an oEmbed-supported web resource and a text block to the left or right of it.'
     expect(page).to have_text 'Examples of oEmbed-supported resources include those from YouTube, Twitter, Flickr, and SlideShare.'
     expect(page).to have_text 'Display text on'
