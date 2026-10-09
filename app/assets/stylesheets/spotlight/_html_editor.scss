@@ -1,0 +1,29 @@
+// WYSIWYG (Tiptap) page editor, see spotlight/admin/html_editor.js
+.html-editor-content {
+  height: auto;
+  min-height: 20rem;
+
+  .ProseMirror {
+    min-height: 18rem;
+    outline: none;
+  }
+}
+
+// Shared by the editor and published HTML pages
+.html-editor-content,
+.html-page-content {
+  table {
+    @extend .table;
+    @extend .table-bordered;
+  }
+
+  blockquote {
+    @extend .blockquote;
+    border-left: 4px solid var(--bs-border-color);
+    padding-left: 1rem;
+  }
+
+  .selectedCell {
+    background-color: var(--bs-secondary-bg);
+  }
+}

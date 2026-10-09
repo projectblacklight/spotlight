@@ -45,6 +45,8 @@ module Spotlight
       self.display_sidebar = true
     end
 
+    before_save :sanitize_html_content, if: :html_content?
+
     after_update :update_translated_pages_weights_and_parent_page
 
     def title
@@ -79,6 +81,11 @@ module Spotlight
         super
       end
       content_changed!
+    end
+
+    # Is this page edited with the WYSIWYG editor (stored as HTML) rather than SirTrevor?
+    def html_content?
+      content_type == 'Html'
     end
 
     def content?
@@ -172,6 +179,10 @@ module Spotlight
     end
 
     private
+
+    def sanitize_html_content
+      self[:content] = Spotlight::PageContent::Html.sanitize(self[:content]) if will_save_change_to_content?
+    end
 
     def parent_page_for(locale)
       parent_page&.translated_page_for(locale)

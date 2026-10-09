@@ -19,6 +19,13 @@
       color: black;
       border-color: white;
     }
+    select {
+      @extend .form-select;
+      @extend .form-select-sm;
+      display: inline-block;
+      width: auto;
+      margin-right: 4px;
+    }
     input[type='submit'] {
       @extend .btn;
       @extend .btn-primary;
