@@ -5,3 +5,4 @@
 export { Editor, Mark, Node, Extension, mergeAttributes } from "@tiptap/core"
 export { default as StarterKit } from "@tiptap/starter-kit"
 export { TableKit } from "@tiptap/extension-table"
+export { default as Image } from "@tiptap/extension-image"

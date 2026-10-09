@@ -27,3 +27,66 @@
     background-color: var(--bs-secondary-bg);
   }
 }
+
+// Images: data-size and data-align are set by the editor's image dialog
+.html-editor-content .ProseMirror,
+.html-page-content {
+  display: flow-root; // contain floated images
+
+  img {
+    display: block;
+    height: auto;
+    margin: 0 auto 1rem;
+    max-width: 100%;
+  }
+
+  img[data-size='small'] { width: 25%; }
+  img[data-size='medium'] { width: 50%; }
+  img[data-size='large'] { width: 75%; }
+  img[data-size='full'] { width: 100%; }
+
+  @include media-breakpoint-up(sm) {
+    img[data-align='left'] {
+      float: left;
+      margin: 0 1rem 1rem 0;
+    }
+
+    img[data-align='right'] {
+      float: right;
+      margin: 0 0 1rem 1rem;
+    }
+  }
+
+  // Narrow screens: images are full width and don't float
+  @include media-breakpoint-down(sm) {
+    img[data-size] { width: 100%; }
+  }
+}
+
+// Keep images selectable in the editor even before (or if they fail to) load
+.html-editor-content .ProseMirror img {
+  min-height: 2rem;
+  min-width: 2rem;
+}
+
+.html-editor-content .ProseMirror img.ProseMirror-selectednode {
+  outline: 3px solid var(--bs-primary);
+}
+
+.html-editor-dialog {
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius-lg);
+  max-width: 32rem;
+  padding: 1.5rem;
+  width: 100%;
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.html-editor-dialog-preview {
+  display: block;
+  max-height: 10rem;
+  max-width: 100%;
+}
