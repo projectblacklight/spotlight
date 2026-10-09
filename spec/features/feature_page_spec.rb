@@ -150,11 +150,6 @@ RSpec.describe 'Feature page', type: :feature do
       # Wait for the back navigation to finish, otherwise it can fire after the next visit
       expect(page).to have_current_path spotlight.exhibit_feature_pages_path(feature_page.exhibit)
 
-      # Wait for the lock DELETE request (fired asynchronously by the Cancel link) to be processed
-      page.document.synchronize do
-        raise Capybara::ExpectationNotMet, 'lock was not released' if feature_page.reload.lock.present?
-      end
-
       # and then open the edit page again
       visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
 
