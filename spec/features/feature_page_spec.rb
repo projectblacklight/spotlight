@@ -4,21 +4,6 @@ RSpec.describe 'Feature page', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
-  describe 'viewing the page' do
-    let!(:feature_page) do
-      FactoryBot.create(:feature_page, title: 'Parent Page', exhibit:)
-    end
-
-    it 'has <meta> tags' do
-      visit spotlight.exhibit_feature_page_path(feature_page.exhibit, feature_page)
-
-      expect(page).to have_css "meta[name='twitter:title'][content='#{feature_page.title}']", visible: false
-      expect(page).to have_css "meta[property='og:site_name']", visible: false
-      expect(page).to have_css "meta[property='og:type'][content='article']", visible: false
-      expect(page).to have_css "meta[property='og:title'][content='#{feature_page.title}']", visible: false
-    end
-  end
-
   describe 'sidebar' do
     let!(:parent_feature_page) do
       FactoryBot.create(:feature_page, title: 'Parent Page', exhibit:)

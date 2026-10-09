@@ -6,8 +6,10 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
 
   before { login_as user }
 
-  it 'updates exhibit masthead options' do
+  it 'updates and displays the exhibit masthead' do
     visit spotlight.exhibit_dashboard_path(exhibit)
+    expect(page).to have_link 'Appearance'
+    expect(page).to have_no_css('.image-masthead')
 
     within '#sidebar' do
       click_link 'Appearance'
@@ -28,6 +30,7 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
     click_button 'Save changes'
 
     expect(page).to have_text('The exhibit was successfully updated.')
+    expect(page).to have_css('.image-masthead .background-container')
 
     within '#sidebar' do
       click_link 'Appearance'
@@ -39,32 +42,6 @@ RSpec.describe 'Add and update the site masthead', type: :feature do
       expect(page).to have_checked_field 'Show background image in masthead'
       expect(page).to have_checked_field 'Upload an image'
     end
-  end
-
-  it 'displays a masthead image when one is uploaded and configured' do
-    visit spotlight.exhibit_dashboard_path(exhibit)
-    expect(page).to have_link 'Appearance'
-    expect(page).to have_no_css('.image-masthead')
-    within '#sidebar' do
-      click_link 'Appearance'
-    end
-
-    click_link 'Exhibit masthead'
-
-    within '#site-masthead' do
-      check 'Show background image in masthead'
-
-      # attach_file('exhibit_masthead_attributes_image', File.absolute_path(File.join(FIXTURES_PATH, 'avatar.png')))
-      # The JS fills in these fields:
-      find_by_id('exhibit_masthead_attributes_iiif_tilesource', visible: false).set 'http://test.host/images/7'
-      find_by_id('exhibit_masthead_attributes_iiif_region', visible: false).set '0,0,100,200'
-    end
-
-    click_button 'Save changes'
-
-    expect(page).to have_text('The exhibit was successfully updated.')
-
-    expect(page).to have_css('.image-masthead .background-container')
   end
 
   it 'does not display an uploaded masthead if configured to not display' do
