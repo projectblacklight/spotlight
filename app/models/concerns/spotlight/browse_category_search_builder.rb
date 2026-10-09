@@ -57,9 +57,9 @@ module Spotlight
     end
 
     def current_browse_category
-      return unless current_exhibit && blacklight_params[:browse_category_id].present?
+      return unless current_exhibit && search_state.params[:browse_category_id].present?
 
-      @current_browse_category ||= current_exhibit.searches.find(blacklight_params[:browse_category_id])
+      @current_browse_category ||= current_exhibit.searches.find(search_state.params[:browse_category_id])
     end
 
     def browse_category_search_builder
