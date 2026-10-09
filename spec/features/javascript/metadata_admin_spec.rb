@@ -30,7 +30,7 @@ RSpec.describe 'Metadata Administration', js: true do
       # Find the "All" checkbox in the th field for the item details column
       first_checkbox_area = find('tr th:nth-child(2)')
       within first_checkbox_area do
-        expect(page).to have_css("input[type='checkbox']")
+        expect(page).to have_field(type: 'checkbox')
         expect(page).to have_css('label', text: 'All')
       end
       # Uncheck first metadata field checkbox in the item details column

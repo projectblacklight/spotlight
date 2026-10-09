@@ -21,7 +21,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
 
     it 'has a blank input field when there are no contacts yet' do
       visit spotlight.edit_exhibit_path(exhibit)
-      expect(page).to have_css('input.exhibit-contact')
+      expect(page).to have_field(class: 'exhibit-contact')
       expect(find_field(email_id_0).value).to be_blank
     end
 

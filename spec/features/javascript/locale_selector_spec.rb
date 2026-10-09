@@ -51,7 +51,7 @@ RSpec.describe 'Locale Selector', js: true do
     it 'allows the user to select the language most appropriate for them' do
       visit spotlight.exhibit_path(exhibit)
 
-      expect(page).to have_css('input[placeholder="Search..."]')
+      expect(page).to have_field(placeholder: 'Search...')
 
       click_link 'English'
 
@@ -59,8 +59,8 @@ RSpec.describe 'Locale Selector', js: true do
         click_link 'Español'
       end
 
-      expect(page).to have_no_css('input[placeholder="Search..."]')
-      expect(page).to have_css('input[placeholder="Buscar..."]')
+      expect(page).to have_no_field(placeholder: 'Search...')
+      expect(page).to have_field(placeholder: 'Buscar...')
     end
   end
 end

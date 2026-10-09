@@ -53,7 +53,7 @@ RSpec.describe 'Search Administration', type: :feature do
       it 'updates sort options' do
         visit spotlight.edit_exhibit_search_configuration_path(exhibit)
 
-        expect(page).to have_css("input[name='blacklight_configuration[sort_fields][relevance][enable]'][disabled='disabled']")
+        expect(page).to have_field('blacklight_configuration[sort_fields][relevance][enable]', disabled: true)
         expect(page).to have_css('#nested-sort-fields .dd-item:nth-child(5) h3', text: 'date (new to old)')
 
         uncheck 'blacklight_configuration_sort_fields_title_enabled'
@@ -65,7 +65,7 @@ RSpec.describe 'Search Administration', type: :feature do
 
         click_link 'Results'
 
-        expect(page).to have_css("input[name='blacklight_configuration[sort_fields][relevance][enable]'][disabled='disabled']")
+        expect(page).to have_field('blacklight_configuration[sort_fields][relevance][enable]', disabled: true)
         expect(find_by_id('blacklight_configuration_sort_fields_type_enabled')).to be_checked
         expect(find_by_id('blacklight_configuration_sort_fields_date_enabled')).to be_checked
         expect(find_by_id('blacklight_configuration_sort_fields_title_enabled')).not_to be_checked

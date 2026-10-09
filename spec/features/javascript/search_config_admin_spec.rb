@@ -9,17 +9,17 @@ RSpec.describe 'Search Configuration Administration', js: true do
   describe 'search fields' do
     it 'allows the curator to disable all search fields' do
       visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
-      expect(page).to have_css 'select#search_field'
+      expect(page).to have_select 'search_field'
 
       visit spotlight.edit_exhibit_search_configuration_path(exhibit)
-      expect(page).to have_css 'input#enable_feature', visible: true
+      expect(page).to have_field 'enable_feature', visible: true
       uncheck 'Display search box'
 
       click_button 'Save changes'
 
       expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.', visible: true)
 
-      expect(page).to have_no_css 'select#search_field'
+      expect(page).to have_no_select 'search_field'
     end
 
     it 'allows the curator to update search field options' do
