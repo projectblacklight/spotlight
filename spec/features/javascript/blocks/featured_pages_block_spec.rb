@@ -34,22 +34,14 @@ RSpec.describe 'Featured Pages Blocks', :js, type: :feature do
 
     fill_in_typeahead_field with: feature_page2.title
 
+    # Unlike item blocks, featured pages don't offer a select image area link
+    expect(page).to have_no_link('Select image area')
+
     save_page_changes
 
     expect(page).to have_text feature_page2.title
 
     expect(page).to be_axe_clean.within '#content'
-  end
-
-  it 'does not display the select image area link' do
-    visit spotlight.edit_exhibit_home_page_path(exhibit)
-
-    add_widget 'featured_pages'
-
-    fill_in_typeahead_field with: feature_page2.title
-
-    # Verify that select image area link is not visible
-    expect(page).to have_no_link('Select image area')
   end
 
   pending 'persists the user selected sort order' do

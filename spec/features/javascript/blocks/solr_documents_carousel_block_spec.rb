@@ -26,9 +26,11 @@ RSpec.describe 'Solr Documents Carousel Block', js: true, type: :feature do
       # Images are disabled in tests, so the carousel item has no height
       expect(page).to have_css('.carousel-caption .primary', text: "L'AMERIQUE", visible: :all)
     end
+
+    expect(page).to be_axe_clean.within '#content'
   end
 
-  it 'allows users to stop and start autoplay with button' do
+  it 'allows users to stop and start autoplay with button, and keeps it stopped when restored from browser history' do
     fill_in_typeahead_field with: 'dq287tq6352'
     save_page_changes
 
@@ -43,7 +45,20 @@ RSpec.describe 'Solr Documents Carousel Block', js: true, type: :feature do
       expect(button).to have_css('[aria-label="Stop automatic slide show"] .carousel-pause-icon')
       expect(button).to have_no_css('.carousel-play-icon')
       expect(page).to have_css('.carousel-inner[aria-live="off"]', visible: :all)
+
+      button.click
+      expect(page).to have_css('button.carousel-pause-play[aria-label="Start automatic slide show"]')
     end
+
+    # Navigate away and back, so Turbo restores its cached copy of the stopped page
+    find('.site-title-container a').click
+    expect(page).to have_no_css('.carousel-block')
+    page.go_back
+
+    # The restored page starts out stopped, so the button starts autoplay again
+    button = find('.carousel-block button.carousel-pause-play')
+    button.click
+    expect(page).to have_css('button.carousel-pause-play[aria-label="Stop automatic slide show"]')
   end
 
   it 'stops autoplay when keyboard focus enters the carousel' do
@@ -65,33 +80,5 @@ RSpec.describe 'Solr Documents Carousel Block', js: true, type: :feature do
       expect(button).to have_no_css('.carousel-pause-icon')
       expect(page).to have_css('.carousel-inner[aria-live="polite"]', visible: :all)
     end
-  end
-
-  it 'keeps autoplay stopped when the page is restored from browser history' do
-    fill_in_typeahead_field with: 'dq287tq6352'
-    save_page_changes
-
-    button = find('.carousel-block button.carousel-pause-play')
-    button.click
-    expect(page).to have_css('button.carousel-pause-play[aria-label="Start automatic slide show"]')
-
-    # Navigate away and back, so Turbo restores its cached copy of the stopped page
-    find('.site-title-container a').click
-    expect(page).to have_no_css('.carousel-block')
-    page.go_back
-
-    # The restored page starts out stopped, so the button starts autoplay again
-    button = find('.carousel-block button.carousel-pause-play')
-    button.click
-    expect(page).to have_css('button.carousel-pause-play[aria-label="Stop automatic slide show"]')
-  end
-
-  it 'is accessible' do
-    fill_in_typeahead_field with: 'dq287tq6352'
-    check 'Primary caption'
-    select 'Title', from: 'primary-caption-field'
-    save_page_changes
-
-    expect(page).to be_axe_clean.within '#content'
   end
 end
