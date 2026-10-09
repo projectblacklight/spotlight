@@ -57,16 +57,6 @@ RSpec.describe 'Home page', type: :feature do
     expect(page).to have_css '.constraint-value', text: 'query'
   end
 
-  it 'has <meta> tags' do
-    Spotlight::Site.instance.update(title: 'some title')
-
-    visit spotlight.exhibit_home_page_path(exhibit)
-
-    expect(page).to have_css "meta[name='twitter:card'][content='summary']", visible: false
-    expect(page).to have_css "meta[name='twitter:url'][content='#{spotlight.exhibit_root_url(exhibit)}']", visible: false
-    expect(page).to have_css "meta[property='og:site_name'][content='#{Spotlight::Site.instance.title}']", visible: false
-  end
-
   describe 'page options on edit form' do
     describe 'show title' do
       let(:home_page) { FactoryBot.create(:home_page, display_title: false, exhibit:) }

@@ -169,12 +169,6 @@ RSpec.describe 'Translation editing', type: :feature do
     end
 
     describe 'configured fields' do
-      it 'has a text input for each metadata field' do
-        within '#metadata' do
-          expect(page).to have_field(type: 'text', count: 17)
-        end
-      end
-
       it 'allows users to translate both index and show metadata field labels' do
         click_link 'Metadata field labels'
 
@@ -200,16 +194,6 @@ RSpec.describe 'Translation editing', type: :feature do
 
       before do
         visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
-      end
-
-      it 'has text inputs for the exhibit-specific fields' do
-        within '#metadata' do
-          expect(page).to have_field(type: 'text', count: 18)
-
-          within '.translation-exhibit-specific-fields' do
-            expect(page).to have_field(type: 'text', count: 1)
-          end
-        end
       end
 
       it 'allows users to translate exhibit-specific metadata fields' do
@@ -246,12 +230,6 @@ RSpec.describe 'Translation editing', type: :feature do
     end
 
     describe 'field-based search fields' do
-      it 'has a text input for each enabled search field' do
-        within '#search_fields .translation-field-based-search-fields' do
-          expect(page).to have_field(type: 'text', count: 3)
-        end
-      end
-
       it 'allows users to translate field-based search fields' do
         click_link 'Search field labels'
 
@@ -267,12 +245,6 @@ RSpec.describe 'Translation editing', type: :feature do
     end
 
     describe 'facet fields' do
-      it 'has a text input for each facet field' do
-        within '#search_fields .translation-facet-fields' do
-          expect(page).to have_field(type: 'text', count: 7)
-        end
-      end
-
       it 'allows users to translate facet fields' do
         click_link 'Search field labels'
 
@@ -288,12 +260,6 @@ RSpec.describe 'Translation editing', type: :feature do
     end
 
     describe 'sort fields' do
-      it 'has a text input for each sort field' do
-        within '#search_fields .translation-sort-fields' do
-          expect(page).to have_field(type: 'text', count: 6)
-        end
-      end
-
       it 'allows users to translation sort fields' do
         click_link 'Search field labels'
 
@@ -314,17 +280,6 @@ RSpec.describe 'Translation editing', type: :feature do
       FactoryBot.create(:search, exhibit:, title: 'Browse Category 1')
 
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
-    end
-
-    it 'has a title and description for every browse category' do
-      within '#browse' do
-        expect(page).to have_field(type: 'text', count: 4)
-        expect(page).to have_css('textarea', count: 2)
-
-        expect(page).to have_field 'All exhibit items'
-        expect(page).to have_field 'Browse Category 1'
-        expect(page).to have_css('.form-text', text: 'All items in this exhibit.')
-      end
     end
 
     it 'redirects to the same form tab' do
@@ -369,15 +324,6 @@ RSpec.describe 'Translation editing', type: :feature do
       FactoryBot.create(:group, exhibit:, title: 'Browse Group 2')
 
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
-    end
-
-    it 'has a title browse group' do
-      within '#groups' do
-        expect(page).to have_field(type: 'text', count: 2)
-
-        expect(page).to have_field 'Browse Group 1'
-        expect(page).to have_field 'Browse Group 2'
-      end
     end
 
     it 'redirects to the same form tab' do

@@ -100,6 +100,8 @@ RSpec.configure do |config|
     config.include Devise::TestHelpers, type: :view
   end
 
+  config.include Devise::Test::IntegrationHelpers, type: :request
+
   config.include Spotlight::TestViewHelpers, type: :view
   config.include Warden::Test::Helpers, type: :feature
 
