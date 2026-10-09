@@ -26,10 +26,7 @@ module Spotlight
       DESCRIPTION
 
       def add_stylesheet_dependencies
-        run "yarn add blacklight-frontend@#{blacklight_yarn_version}"
         run "yarn add bootstrap@\"^#{bootstrap_yarn_version}\""
-        run 'yarn add blacklight-gallery@^5.0'
-        run 'yarn add leaflet'
       end
 
       # Needed for the stylesheets
@@ -74,14 +71,6 @@ module Spotlight
             @import "spotlight";
           CONTENT
         end
-      end
-
-      private
-
-      def bootstrap_frontend_version
-        yarn_lock = File.read('yarn.lock')
-        bootstrap_entry = yarn_lock.match(/^"?bootstrap@.+:\n  version "(.+)"/)
-        bootstrap_entry ? bootstrap_entry[1] : nil
       end
     end
   end
