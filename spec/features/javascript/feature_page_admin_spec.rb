@@ -26,9 +26,8 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
 
     click_link 'Feature pages'
 
-    add_new_via_button('My New Page')
+    add_new_via_button('My New Page', alert: 'The feature page was created.')
 
-    expect(page).to have_text 'The feature page was created.'
     expect(page).to have_css('li.dd-item')
     expect(page).to have_css('h3', text: 'My New Page')
   end
@@ -38,7 +37,7 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
 
     click_link 'Feature pages'
 
-    add_new_via_button('FeaturePage3')
+    add_new_via_button('FeaturePage3', alert: 'The feature page was created.')
 
     page1_handle = find('.dd-item', text: 'FeaturePage1').find('.dd-handle')
     page2_handle = find('.dd-item', text: 'FeaturePage2').find('.dd-handle')
