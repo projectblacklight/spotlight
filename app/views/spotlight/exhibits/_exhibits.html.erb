@@ -1,3 +1,8 @@
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
-  <%= render collection: exhibits, partial: 'exhibit_card', as: 'exhibit' %>
-</div>
+<% exhibit_search = local_assigns[:exhibit_search] %>
+<% if exhibit_search&.active? && exhibits.none? %>
+  <p class="text-center"><%= t(:'.no_matches') %></p>
+<% else %>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+    <%= render collection: exhibits, partial: 'exhibit_card', as: 'exhibit', locals: { exhibit_search: exhibit_search } %>
+  </div>
+<% end %>

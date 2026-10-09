@@ -580,6 +580,8 @@ en:
         header: General
       exhibit_card:
         unpublished: Unpublished
+      exhibits:
+        no_matches: No exhibits match your search.
       export:
         configurations:
           attachments: 'Attachments: %{config}'
@@ -623,6 +625,10 @@ en:
         instructions: You can import an exhibit JSON file exported from this application to use that data file to define this exhibit.
       index:
         published: Published exhibits
+        search_status:
+          one: Showing 1 exhibit.
+          other: Showing %{count} exhibits.
+          zero: No exhibits to show.
         unpublished: Unpublished exhibits
         user: Your exhibits
       languages:
@@ -651,6 +657,10 @@ en:
           title:
             help_block: This can be changed later.
             label: Title
+      search:
+        label: Search exhibits
+        placeholder: Search exhibits by title, subtitle, or description
+        submit: Search exhibits
       tags:
         all: All
     exhibits_admin_invitation_mailer:

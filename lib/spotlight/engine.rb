@@ -87,6 +87,7 @@ module Spotlight
     config.default_blacklight_config = nil
 
     config.exhibit_main_navigation = %i[curated_features browse about]
+    config.exhibit_search_class = -> { Spotlight::ExhibitSearch }
 
     config.resource_partials = [
       'spotlight/resources/external_resources_form',

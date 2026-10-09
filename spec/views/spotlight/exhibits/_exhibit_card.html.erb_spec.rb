@@ -42,6 +42,31 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
 
       expect(rendered).to have_css '.description', text: 'Test description & more.'
     end
+
+    it 'converts the description with the configured search class' do
+      upcase_search_class = Class.new(Spotlight::ExhibitSearch) do
+        def self.plain_text(html)
+          super.upcase
+        end
+      end
+      allow(Spotlight::Engine.config).to receive(:exhibit_search_class).and_return(-> { upcase_search_class })
+
+      render(p, exhibit:)
+
+      expect(rendered).to have_css '.description', text: 'TEST DESCRIPTION & MORE.'
+    end
+  end
+
+  context 'with a search query' do
+    let(:exhibit) { FactoryBot.create(:exhibit, title: 'Some Title', subtitle: 'Some Subtitle', description: 'Some <b>description</b>') }
+
+    it 'marks the matches in the title, subtitle, and description' do
+      render(p, exhibit:, exhibit_search: Spotlight::ExhibitSearch.new('some'))
+
+      expect(rendered).to have_css '.card-title mark', text: 'Some'
+      expect(rendered).to have_css '.subtitle mark', text: 'Some'
+      expect(rendered).to have_css '.description mark', text: 'Some'
+    end
   end
 
   context 'for an unpublished exhibit' do

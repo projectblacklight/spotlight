@@ -1,46 +1,52 @@
-<% if (current_user && current_user.exhibits.any?) || can?(:manage, Spotlight::Exhibit) %>
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="nav-item"><a href="#published" aria-controls="published" role="tab" data-bs-toggle="tab" class="nav-link active"><%= t('.published') %></a></li>
-    <% if can?(:manage, Spotlight::Exhibit) && @exhibits.unpublished.accessible_by(current_ability).any? %>
-      <li role="presentation" class="nav-item"><a href="#unpublished" aria-controls="unpublished" role="tab" data-bs-toggle="tab" class="nav-link"><%= t('.unpublished') %></a></li>
-    <% end %>
-    <% if current_user && current_user.exhibits.any? %>
-      <li role="presentation" class="nav-item"><a href="#user" aria-controls="user" role="tab" data-bs-toggle="tab" class="nav-link"><%= t('.user') %></a></li>
-    <% end %>
-  </ul>
-<% end %>
+<div data-controller="exhibit-search" data-action="shown.bs.tab->exhibit-search#announce">
+  <%= render 'search' if @exhibits.any? %>
 
-<div class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="published">
-    <% if @exhibits.published.none? %>
-      <%= render 'missing_exhibits' %>
-    <% else %>
-      <%= render 'tags', tags: @exhibits.published.all_tags %>
-      <%= render 'exhibits', exhibits: @published_exhibits %>
-
-      <% if @published_exhibits.total_count > @published_exhibits.size %>
-        <nav class="d-flex justify-content-center">
-          <ul class="pagination">
-            <li class="page-item"><%= link_to_previous_page @published_exhibits, t('views.pagination.previous').html_safe, class: 'page-link' %></li>
-            <li class="page-item"><%= link_to_next_page @published_exhibits, t('views.pagination.next').html_safe, class: 'page-link' %></li>
-          </ul>
-        </nav>
+  <% if (current_user && current_user.exhibits.any?) || can?(:manage, Spotlight::Exhibit) %>
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="nav-item"><a href="#published" aria-controls="published" role="tab" data-bs-toggle="tab" class="nav-link active"><%= t('.published') %></a></li>
+      <% if can?(:manage, Spotlight::Exhibit) && @exhibits.unpublished.accessible_by(current_ability).any? %>
+        <li role="presentation" class="nav-item"><a href="#unpublished" aria-controls="unpublished" role="tab" data-bs-toggle="tab" class="nav-link"><%= t('.unpublished') %></a></li>
       <% end %>
+      <% if current_user && current_user.exhibits.any? %>
+        <li role="presentation" class="nav-item"><a href="#user" aria-controls="user" role="tab" data-bs-toggle="tab" class="nav-link"><%= t('.user') %></a></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="published" data-exhibit-search-target="pane" data-exhibit-search-status="<%= t('.search_status', count: @published_exhibits.total_count) %>">
+      <% if @exhibits.published.none? %>
+        <%= render 'missing_exhibits' %>
+      <% else %>
+        <%= render 'tags', tags: @exhibits.published.all_tags, matching_tag_names: @matching_tag_names %>
+        <%= render 'exhibits', exhibits: @published_exhibits, exhibit_search: @exhibit_search %>
+
+        <% if @published_exhibits.total_count > @published_exhibits.size %>
+          <nav class="d-flex justify-content-center">
+            <ul class="pagination">
+              <li class="page-item"><%= link_to_previous_page @published_exhibits, t('views.pagination.previous').html_safe, class: 'page-link' %></li>
+              <li class="page-item"><%= link_to_next_page @published_exhibits, t('views.pagination.next').html_safe, class: 'page-link' %></li>
+            </ul>
+          </nav>
+        <% end %>
+      <% end %>
+
+    </div>
+
+    <% if @exhibits.unpublished.accessible_by(current_ability).any? %>
+      <div role="tabpanel" class="tab-pane" id="unpublished" data-exhibit-search-target="pane" data-exhibit-search-status="<%= t('.search_status', count: @unpublished_exhibits.size) %>">
+        <%= render 'exhibits', exhibits: @unpublished_exhibits, exhibit_search: @exhibit_search %>
+      </div>
     <% end %>
 
+    <% if current_user && current_user.exhibits.any? %>
+      <div role="tabpanel" class="tab-pane" id="user" data-exhibit-search-target="pane" data-exhibit-search-status="<%= t('.search_status', count: @user_exhibits.size) %>">
+        <%= render 'exhibits', exhibits: @user_exhibits, exhibit_search: @exhibit_search %>
+      </div>
+    <% end %>
   </div>
 
-  <% if @exhibits.unpublished.accessible_by(current_ability).any? %>
-    <div role="tabpanel" class="tab-pane" id="unpublished">
-      <%= render 'exhibits', exhibits: @exhibits.unpublished.ordered_by_weight.accessible_by(current_ability) %>
-    </div>
-  <% end %>
-
-  <% if current_user && current_user.exhibits.any? %>
-    <div role="tabpanel" class="tab-pane" id="user">
-      <%= render 'exhibits', exhibits: current_user.exhibits %>
-    </div>
-  <% end %>
+  <div class="visually-hidden" role="status" data-exhibit-search-target="status"></div>
 </div>
 
 <% content_for(:sidebar_position) { 'order-last' } %>

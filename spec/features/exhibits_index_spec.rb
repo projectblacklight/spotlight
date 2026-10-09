@@ -11,6 +11,102 @@ RSpec.describe 'Exhibits index page', type: :feature do
       expect(page).to have_css '.exhibit-card h2', text: 'Some Exhibit Title'
     end
 
+    it 'searches the exhibits' do
+      visit spotlight.exhibits_path
+      fill_in 'Search exhibits', with: 'other'
+      click_button 'Search exhibits'
+
+      expect(page).to have_css '.exhibit-card', count: 1
+      expect(page).to have_css '.exhibit-card h2', text: 'Some Other Title'
+    end
+
+    context 'with the live filter', :js do
+      it 'filters the exhibits as the user types and clears the search on Escape, without a page load' do
+        visit spotlight.exhibits_path
+        page.execute_script('window.beforeFilter = true')
+        fill_in 'Search exhibits', with: 'other'
+
+        expect(page).to have_css '.exhibit-card', count: 1
+        expect(page).to have_css '[role="status"]', text: 'Showing 1 exhibit.', visible: :all
+        expect(page).to have_current_path(/q=other/)
+
+        find_field('Search exhibits').send_keys(:escape)
+
+        expect(page).to have_css '.exhibit-card', count: 2
+        expect(page).to have_field 'Search exhibits', with: ''
+        expect(page.evaluate_script('window.beforeFilter')).to be true
+      end
+
+      it 'ignores a failed request after the user changes the query' do
+        visit spotlight.exhibits_path
+        page.execute_script <<~JS
+          window.beforeFilter = true;
+          const originalFetch = window.fetch;
+          window.fetch = (...args) => {
+            window.fetch = originalFetch;
+            document.body.dataset.searchRequestPending = "true";
+            return new Promise((_resolve, reject) => { window.rejectSearch = reject; });
+          };
+        JS
+        fill_in 'Search exhibits', with: 'other'
+        click_button 'Search exhibits'
+        expect(page).to have_css 'body[data-search-request-pending="true"]'
+
+        page.execute_script <<~JS
+          const input = document.getElementById("exhibit_q");
+          input.value = "exhibit";
+          input.dispatchEvent(new Event("input", { bubbles: true }));
+          window.rejectSearch(new Error("Network failure"));
+        JS
+
+        expect(page).to have_current_path(/q=exhibit/)
+        expect(page).to have_css '.exhibit-card h2', text: 'Some Exhibit Title'
+        expect(page).to have_field 'Search exhibits', with: 'exhibit'
+        expect(page.evaluate_script('window.beforeFilter')).to be true
+      end
+
+      it 'updates the announced count when the user switches tabs' do
+        user = FactoryBot.create(:site_admin)
+        FactoryBot.create(:exhibit, title: 'Some Unpublished One', published: false)
+        FactoryBot.create(:exhibit, title: 'Some Unpublished Two', published: false)
+        login_as(user, scope: :user)
+        visit spotlight.exhibits_path
+        fill_in 'Search exhibits', with: 'unpublished'
+
+        expect(page).to have_css '[role="status"]', text: 'No exhibits to show.', visible: :all
+        click_link 'Unpublished exhibits'
+
+        expect(page).to have_css '#unpublished.active .exhibit-card', count: 2
+        expect(page).to have_css '[role="status"]', text: 'Showing 2 exhibits.', visible: :all
+      end
+    end
+
+    context 'with more exhibits than fit on one page' do
+      before do
+        allow(Spotlight::Exhibit).to receive(:default_per_page).and_return(1)
+        exhibit.update(weight: 1)
+        FactoryBot.create(:exhibit, title: 'Unrelated', weight: 2)
+        other_exhibit.update(weight: 3)
+      end
+
+      it 'keeps the search query on the next page' do
+        visit spotlight.exhibits_path(q: 'some')
+        expect(page).to have_css '.exhibit-card h2', text: 'Some Exhibit Title'
+
+        click_link 'Next'
+        expect(page).to have_css '.exhibit-card h2', text: 'Some Other Title'
+        expect(page).to have_field 'Search exhibits', with: 'some'
+      end
+
+      it 'returns to the first page when the user types', :js do
+        visit spotlight.exhibits_path(page: 2)
+        expect(page).to have_css '.exhibit-card h2', text: 'Unrelated'
+
+        fill_in 'Search exhibits', with: 'some'
+        expect(page).to have_css '.exhibit-card h2', text: 'Some Exhibit Title'
+      end
+    end
+
     context 'with tagged exhibits' do
       before do
         exhibit.tag_list = %w[a]
@@ -39,6 +135,53 @@ RSpec.describe 'Exhibits index page', type: :feature do
         end
 
         expect(page).to have_css '.exhibit-card', count: 1
+      end
+
+      it 'keeps the search query when the user selects a tag' do
+        visit spotlight.exhibits_path(q: 'other')
+
+        within('.tags') { click_link 'a' }
+        expect(page).to have_css '.exhibit-card', count: 1
+
+        within('.tags') { click_link 'All' }
+        expect(page).to have_css '.exhibit-card', count: 1
+        expect(page).to have_field 'Search exhibits', with: 'other'
+      end
+
+      it 'disables the tags without exhibits that match the search, unless the tag is selected' do
+        visit spotlight.exhibits_path(q: 'exhibit')
+
+        within '.tags' do
+          expect(page).to have_link 'a'
+          expect(page).to have_no_link 'b'
+          expect(page).to have_css '[aria-disabled="true"]', text: 'b'
+        end
+
+        visit spotlight.exhibits_path(q: 'exhibit', tag: 'b')
+
+        expect(page).to have_text 'No exhibits match your search.'
+        within '.tags' do
+          expect(page).to have_link 'a'
+          expect(page).to have_link 'b'
+        end
+      end
+
+      it 'is accessible after a live search', :js do
+        visit spotlight.exhibits_path
+        fill_in 'Search exhibits', with: 'exhibit'
+
+        expect(page).to have_css '.tags [aria-disabled="true"]', text: 'b'
+        expect(page).to have_css '.exhibit-card mark', text: 'Exhibit'
+        expect(page).to be_axe_clean.within '#content'
+      end
+
+      it 'keeps the selected tag when the user searches' do
+        visit spotlight.exhibits_path(tag: 'b')
+        fill_in 'Search exhibits', with: 'some'
+        click_button 'Search exhibits'
+
+        expect(page).to have_css '.exhibit-card', count: 1
+        expect(page).to have_css '.exhibit-card h2', text: 'Some Other Title'
       end
     end
   end
