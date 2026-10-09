@@ -16,6 +16,18 @@ module Spotlight
       end
     end
 
+    # Labels for the WYSIWYG editor toolbar, passed to the JS as a data attribute
+    def html_editor_labels
+      t('spotlight.pages.html_editor')
+    end
+
+    # Options for choosing a page's content type (editor) when creating it
+    def page_content_type_options
+      Spotlight::Engine.config.page_content_types.map do |type|
+        [t(type, scope: 'spotlight.pages.content_types', default: type), type]
+      end
+    end
+
     def sir_trevor_format(text, format: :markdown)
       if format.to_s.to_sym == :html
         sir_trevor_html(text)

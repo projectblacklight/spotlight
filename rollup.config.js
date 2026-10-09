@@ -13,7 +13,8 @@ const external = [
   "leaflet",
   "openseadragon",
   "sir-trevor",
-  "sortablejs"
+  "sortablejs",
+  "spotlight-tiptap",
 ]
 const globals = {
   "@github/auto-complete-element": "AutoCompleteElement",
@@ -23,17 +24,17 @@ const globals = {
   leaflet: "L",
   openseadragon: "OpenSeadragon",
   "sir-trevor": "SirTrevor",
-  sortablejs: "Sortable"
+  sortablejs: "Sortable",
 }
 let includePathOptions = {
   include: {},
   paths: [
     "app/javascript",
     "app/javascript/controllers",
-    "vendor/assets/javascripts"
+    "vendor/assets/javascripts",
   ],
   external: [],
-  extensions: [".js", ".es6"]
+  extensions: [".js", ".es6"],
 }
 
 const rollupConfig = {
@@ -42,11 +43,19 @@ const rollupConfig = {
     file: `app/assets/javascripts/spotlight/${fileDest}.js`,
     format: ESM ? "es" : "umd",
     globals,
+    // The prebuilt Tiptap bundle is loaded on demand. Importmap apps resolve the bare
+    // "spotlight-tiptap" pin; bundler apps resolve this path inside the spotlight-frontend package.
+    paths: ESM
+      ? {
+          "spotlight-tiptap":
+            "../../../../vendor/assets/javascripts/spotlight-tiptap.js",
+        }
+      : {},
     generatedCode: { preset: "es2015" },
-    name: ESM ? undefined : "Spotlight"
+    name: ESM ? undefined : "Spotlight",
   },
   external,
-  plugins: [includePaths(includePathOptions), commonjs()]
+  plugins: [includePaths(includePathOptions), commonjs()],
 }
 
 export default rollupConfig

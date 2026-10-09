@@ -294,7 +294,13 @@ module Spotlight
 
     config.exhibit_themes = ['default']
 
+    # The content type used for pages that don't have one recorded (all pages created before
+    # content types could be chosen). Changing this changes how those existing pages are parsed.
     config.default_page_content_type = 'SirTrevor'
+
+    # The content types curators may choose from when creating a page; the first is preselected.
+    # Add 'Html' to offer the WYSIWYG (Tiptap) editor, e.g. %w[SirTrevor Html]
+    config.page_content_types = %w[SirTrevor]
 
     # Added here for backwards compatability with SirTrevor 0.6
     # and apps who have customized their avaialble widgets
