@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spotlight::FeaturePagesController, type: :controller, versioning: true do
+RSpec.describe Spotlight::FeaturePagesController, type: :controller do
   routes { Spotlight::Engine.routes }
 
   let(:valid_attributes) { { 'title' => 'MyString', thumbnail_attributes: { iiif_url: '' } } }
@@ -196,7 +196,9 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller, versioning:
           expect(assigns(:page)).to eq(page)
         end
 
-        it 'redirects to the feature page' do
+        # versioning: true turns on PaperTrail (paper_trail/frameworks/rspec disables it by default)
+        # so the update records a version and the flash includes an undo link.
+        it 'redirects to the feature page', versioning: true do
           put :update, params: { id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes }
           page.reload
           expect(response).to redirect_to(exhibit_feature_page_path(page.exhibit, page))
