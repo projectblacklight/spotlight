@@ -1,5 +1,5 @@
 <%= form_tag exhibits_path, method: :get, class: 'exhibit-search-form mb-3', role: 'search', 'aria-labelledby' => 'exhibit-search-label',
-             data: { exhibit_search_target: 'form', action: 'exhibit-search#submit' } do %>
+             data: { action: 'exhibit-search#submit' } do %>
   <%= hidden_field_tag :tag, params[:tag], id: nil if params[:tag].present? %>
   <label id="exhibit-search-label" class="visually-hidden" for="exhibit_q"><%= t(:'.label') %></label>
   <div class="input-group">

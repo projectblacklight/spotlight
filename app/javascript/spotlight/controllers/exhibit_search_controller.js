@@ -4,7 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 // Fetches the exhibits index for the current query and swaps in each tab pane,
 // so the list filters as the user types without moving focus out of the field.
 export default class extends Controller {
-  static targets = ["form", "input", "pane", "status"]
+  static targets = ["input", "pane", "status"]
   static values = {
     debounceDelay: { type: Number, default: 300 },
   }
@@ -15,14 +15,22 @@ export default class extends Controller {
   }
 
   debounce() {
+    this.searchLater(this.inputTarget.value)
+  }
+
+  query({ detail: { q } }) {
+    this.searchLater(q)
+  }
+
+  searchLater(query) {
     clearTimeout(this.timeout)
     this.abortController?.abort()
-    this.timeout = setTimeout(() => this.search(), this.debounceDelayValue)
+    this.timeout = setTimeout(() => this.search(query), this.debounceDelayValue)
   }
 
   submit(event) {
     event.preventDefault()
-    this.search()
+    this.search(this.inputTarget.value)
   }
 
   clear(event) {
@@ -30,12 +38,12 @@ export default class extends Controller {
 
     event.preventDefault()
     this.inputTarget.value = ""
-    this.search()
+    this.search("")
   }
 
-  async search() {
+  async search(query) {
     clearTimeout(this.timeout)
-    const url = this.url()
+    const url = this.url(query)
 
     this.abortController?.abort()
     const abortController = new AbortController()
@@ -80,12 +88,15 @@ export default class extends Controller {
       activePane?.dataset.exhibitSearchStatus ?? ""
   }
 
-  url() {
-    const params = new URLSearchParams(new FormData(this.formTarget))
-    if (!params.get("q").trim()) params.delete("q")
-
-    const url = new URL(this.formTarget.action)
-    url.search = params.toString()
+  // Start from the current URL so the selected tag stays, but a new query starts at the first page.
+  url(query) {
+    const url = new URL(window.location.href)
+    url.searchParams.delete("page")
+    if (query.trim()) {
+      url.searchParams.set("q", query)
+    } else {
+      url.searchParams.delete("q")
+    }
     return url
   }
 }

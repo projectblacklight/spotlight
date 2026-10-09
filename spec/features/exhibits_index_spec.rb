@@ -65,6 +65,17 @@ RSpec.describe 'Exhibits index page', type: :feature do
         expect(page.evaluate_script('window.beforeFilter')).to be true
       end
 
+      it 'filters the exhibits for a query sent from outside the search form' do
+        visit spotlight.exhibits_path
+        page.execute_script <<~JS
+          document.querySelector(".exhibit-search-form").remove();
+          document.body.dispatchEvent(new CustomEvent("exhibit-search:query", { bubbles: true, detail: { q: "other" } }));
+        JS
+
+        expect(page).to have_css '.exhibit-card', count: 1
+        expect(page).to have_current_path(/q=other/)
+      end
+
       it 'updates the announced count when the user switches tabs' do
         user = FactoryBot.create(:site_admin)
         FactoryBot.create(:exhibit, title: 'Some Unpublished One', published: false)
@@ -182,6 +193,14 @@ RSpec.describe 'Exhibits index page', type: :feature do
 
         expect(page).to have_css '.exhibit-card', count: 1
         expect(page).to have_css '.exhibit-card h2', text: 'Some Other Title'
+      end
+
+      it 'keeps the selected tag when the user types', :js do
+        visit spotlight.exhibits_path(tag: 'b')
+        fill_in 'Search exhibits', with: 'some'
+
+        expect(page).to have_current_path(/q=some/)
+        expect(page).to have_css '.exhibit-card', count: 1
       end
     end
   end
