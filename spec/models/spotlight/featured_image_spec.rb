@@ -103,7 +103,7 @@ RSpec.describe Spotlight::FeaturedImage do
     end
 
     it 'is true when the image file is present' do
-      expect(subject).to receive(:image).and_return(double('CarrierWaveUpload', file: 'uploaded file content'))
+      expect(subject).to receive(:image).and_return(instance_double(Spotlight::FeaturedImageUploader, file: 'uploaded file content'))
       expect(subject.file_present?).to be true
     end
   end

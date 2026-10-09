@@ -5,7 +5,7 @@ RSpec.describe Spotlight::IiifManifestPresenter do
 
   let(:resource) { SolrDocument.new(id: '1-1') }
   let(:uploaded_resource) { FactoryBot.build(:uploaded_resource) }
-  let(:controller) { double(Spotlight::CatalogController) }
+  let(:controller) { instance_double(Spotlight::CatalogController) }
 
   let(:subject) { described_class.new(resource, controller) }
 
@@ -23,7 +23,7 @@ RSpec.describe Spotlight::IiifManifestPresenter do
     let(:endpoint) { IIIFManifest::IIIFEndpoint.new(iiif_url, profile: profile_url) }
     let(:manifest_url) { 'https://iiif.test/spotlight/test/catalog/1-1/manifest' }
     let(:spotlight_route_helper) { double }
-    let(:blacklight_config) { double(Spotlight::BlacklightConfiguration) }
+    let(:blacklight_config) { instance_double(Blacklight::Configuration) }
 
     let(:id) { 123 }
     let(:title_field_name) { 'title_field_name' }

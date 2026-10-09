@@ -644,31 +644,6 @@ RSpec/SubjectStub:
     - "spec/models/spotlight/user_spec.rb"
     - "spec/presenters/spotlight/iiif_manifest_presenter_spec.rb"
 
-# Offense count: 27
-# Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
-RSpec/VerifiedDoubles:
-  Exclude:
-    - "spec/controllers/spotlight/dashboards_controller_spec.rb"
-    - "spec/helpers/spotlight/pages_helper_spec.rb"
-    - "spec/jobs/spotlight/default_thumbnail_job_spec.rb"
-    - "spec/lib/spotlight/controller_spec.rb"
-    - "spec/models/spotlight/blacklight_configuration_spec.rb"
-    - "spec/models/spotlight/exhibit_spec.rb"
-    - "spec/models/spotlight/featured_image_spec.rb"
-    - "spec/models/spotlight/page_configurations_spec.rb"
-    - "spec/presenters/spotlight/iiif_manifest_presenter_spec.rb"
-    - "spec/services/spotlight/bulk_updates_csv_template_service_spec.rb"
-    - "spec/views/spotlight/dashboards/analytics.html.erb_spec.rb"
-    - "spec/views/spotlight/search_configurations/_facets.html.erb_spec.rb"
-    - "spec/views/spotlight/shared/_exhibit_sidebar.html.erb_spec.rb"
-    - "spec/views/spotlight/sir_trevor/blocks/_browse_block.html.erb_spec.rb"
-    - "spec/views/spotlight/sir_trevor/blocks/_link_to_search_block.html.erb_spec.rb"
-    - "spec/views/spotlight/sir_trevor/blocks/_solr_documents_block.html.erb_spec.rb"
-    - "spec/views/spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb_spec.rb"
-    - "spec/views/spotlight/sir_trevor/blocks/_solr_documents_grid_block.html.erb_spec.rb"
-    - "spec/views/spotlight/sir_trevor/blocks/_uploaded_items_block.html.erb_spec.rb"
-    - "spec/views/spotlight/translations/_page.html.erb_spec.rb"
-
 # Offense count: 4
 RSpec/VoidExpect:
   Exclude:

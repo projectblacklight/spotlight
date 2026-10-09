@@ -3,22 +3,19 @@
 RSpec.describe Spotlight::PageConfigurations, type: :model do
   subject(:page_config) { described_class.new(context: view_context, page:) }
 
-  let(:view_context) do
-    double(
-      'ViewContext',
+  let(:view_context) { Spotlight::PagesController.new.view_context }
+  let(:exhibit) { FactoryBot.create(:exhibit) }
+  let(:page) { FactoryBot.create(:feature_page, exhibit:) }
+
+  before do
+    allow(view_context).to receive_messages(
       available_view_fields: [],
       current_exhibit: exhibit,
       blacklight_config: exhibit.blacklight_config,
-      document_show_link_field: 'document_show_link_field',
-      index_field_label: 'index_field_label',
-      index_fields: [],
       spotlight:,
       t: 'translated-content'
     )
   end
-
-  let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
   describe '#as_json' do
     it 'is a json-able object (hash)' do

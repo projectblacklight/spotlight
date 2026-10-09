@@ -213,7 +213,7 @@ RSpec.describe Spotlight::Exhibit, type: :model do
     subject { FactoryBot.create(:exhibit) }
 
     let(:ga_data) { OpenStruct.new({ totals: OpenStruct.new(pageviews: 123), rows: OpenStruct.new }) }
-    let(:mock_analytics) { double(Spotlight::Analytics::Ga) }
+    let(:mock_analytics) { instance_double(Spotlight::Analytics::Ga) }
 
     before do
       allow(Spotlight::Analytics::Ga).to receive(:new).and_return(mock_analytics)
@@ -230,7 +230,7 @@ RSpec.describe Spotlight::Exhibit, type: :model do
     subject { FactoryBot.create(:exhibit) }
 
     let(:ga_data) { [OpenStruct.new(pageviews: 123)] }
-    let(:mock_analytics) { double(Spotlight::Analytics::Ga) }
+    let(:mock_analytics) { instance_double(Spotlight::Analytics::Ga) }
 
     before do
       allow(Spotlight::Analytics::Ga).to receive(:new).and_return(mock_analytics)

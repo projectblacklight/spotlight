@@ -12,7 +12,7 @@ RSpec.describe 'spotlight/translations/_page.html.erb', type: :view do
       edit_exhibit_feature_page_path: '/',
       edit_exhibit_home_page_path: '/',
       exhibit_feature_page_path: '/',
-      f: double('form', fields_for: {}), # mockform builder
+      f: instance_double(BootstrapForm::FormBuilder, fields_for: {}), # mockform builder
       page:
     )
     assign(:language, 'es')
