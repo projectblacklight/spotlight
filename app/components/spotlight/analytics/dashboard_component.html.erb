@@ -24,7 +24,7 @@
   <%= render Spotlight::Analytics::AggregationComponent.new(data: search_analytics.totals, exclude_fields: [:eventCount] ) %>
 
   <% unless page_analytics.rows.empty? %>
-    <h3 class="h5 mt-4"><%= I18n.t("spotlight.dashboards.analytics.pages.header") %></h4>
+    <h3 class="h5 mt-4"><%= I18n.t("spotlight.dashboards.analytics.pages.header") %></h3>
     <table class="table table-striped popular-pages">
       <thead>
         <tr>

@@ -7,7 +7,7 @@
     <%= render 'search_title', search: @search %>
   <% end %>
 <% else %>
-  <h1><%= render 'search_title', search: @search %></h1>
+  <h2 class='h1'><%= render 'search_title', search: @search %></h2>
 <% end %>
 <% if @search.long_description.present? %>
   <div class="long-description-text <%= 'very-long-description-text' if @search.long_description.length > 600 %>">

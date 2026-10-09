@@ -18,14 +18,14 @@ RSpec.describe 'spotlight/browse/show', type: :view do
 
   it 'has a heading and item count when there is no current search masthead' do
     render
-    expect(response).to have_css 'h1', text: search.title
+    expect(response).to have_css 'h2', text: search.title
     expect(response).to have_css '.item-count', text: "#{search.count} items"
   end
 
   it 'does not have the heading and item count when there is a current search masthead' do
     allow(view).to receive_messages(resource_masthead?: true)
     render
-    expect(response).to have_no_selector 'h1', text: search.title
+    expect(response).to have_no_selector 'h2', text: search.title
     expect(response).to have_no_selector '.item-count', text: "#{search.count} items"
   end
 
