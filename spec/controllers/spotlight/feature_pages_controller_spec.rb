@@ -17,6 +17,26 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller do
         expect(response).to redirect_to main_app.new_user_session_path
       end
     end
+
+    describe 'GET show for a locale redirect to a page the user cannot read' do
+      around { |example| I18n.with_locale(I18n.default_locale) { example.run } }
+
+      it 'does not redirect to a page in a private exhibit' do
+        private_exhibit = FactoryBot.create(:exhibit, published: false)
+        page = FactoryBot.create(:feature_page, exhibit: private_exhibit)
+        page_es = FactoryBot.create(:feature_page, exhibit: private_exhibit, title: 'Page in spanish', locale: 'es', default_locale_page: page)
+        get :show, params: { exhibit_id: private_exhibit.id, id: page_es.slug, locale: 'en' }
+        expect(response).to redirect_to main_app.new_user_session_path
+      end
+
+      it 'does not redirect to an unpublished page' do
+        page = FactoryBot.create(:feature_page, exhibit:, published: false)
+        page_es = FactoryBot.create(:feature_page, exhibit:, title: 'Page in spanish', locale: 'es', default_locale_page: page, published: false)
+        get :show, params: { exhibit_id: exhibit.id, id: page_es.id, locale: 'en' }
+        expect(response).to redirect_to main_app.root_path
+        expect(flash['alert']).to eq 'You are not authorized to access this page.'
+      end
+    end
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -219,6 +239,17 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller do
           allow_any_instance_of(Spotlight::FeaturePage).to receive(:save).and_return(false)
           put :update, params: { id: page, exhibit_id: page.exhibit.id, feature_page: { 'title' => 'invalid value' } }
           expect(response).to render_template('edit')
+        end
+      end
+
+      describe 'with a slug that has no page in the requested locale' do
+        around { |example| I18n.with_locale(I18n.default_locale) { example.run } }
+
+        it 'raises RecordNotFound instead of redirecting' do
+          page_es = FactoryBot.create(:feature_page, exhibit:, title: 'Page in spanish', locale: 'es', default_locale_page: page)
+          expect do
+            put :update, params: { id: page_es.slug, exhibit_id: page.exhibit.id, locale: 'fr', feature_page: valid_attributes }
+          end.to raise_exception ActiveRecord::RecordNotFound
         end
       end
     end
