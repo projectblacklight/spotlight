@@ -40,9 +40,7 @@ module Spotlight
       end
 
       def field_enabled?(field, *)
-        if !field.enabled
-          false
-        elsif field.respond_to?(:original) && !blacklight_configuration_context.evaluate_if_unless_configuration(field.original, *)
+        if !field.enabled || (field.respond_to?(:original) && !blacklight_configuration_context.evaluate_if_unless_configuration(field.original, *))
           false
         elsif field.is_a?(Blacklight::Configuration::SortField) || field.is_a?(Blacklight::Configuration::SearchField)
           field.enabled

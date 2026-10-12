@@ -42,13 +42,6 @@ Lint/CopDirectiveSyntax:
     - "spec/controllers/spotlight/catalog_controller_spec.rb"
 
 # Offense count: 2
-# Configuration parameters: IgnoreLiteralBranches, IgnoreConstantBranches, IgnoreDuplicateElseBranch.
-Lint/DuplicateBranch:
-  Exclude:
-    - "app/controllers/spotlight/concerns/application_controller.rb"
-    - "app/models/spotlight/resources/iiif_manifest_metadata.rb"
-
-# Offense count: 2
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
 Lint/EmptyBlock:
   Exclude:
