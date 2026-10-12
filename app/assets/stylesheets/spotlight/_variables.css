@@ -18,6 +18,7 @@
   --spotlight-container-xl: 1116px;
   --spotlight-container-xl-sidebar: 831px;
 
+  --spotlight-dd-nested-list-padding-left: 5px;
   --spotlight-edit-in-place-highlighting-background: #f7f7d0;
   --spotlight-font-size-sm: calc(0.875 * var(--bs-body-font-size));
   --spotlight-input-focus-border-color: color-mix(in srgb, var(--bs-primary) 50%, white);
