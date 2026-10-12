@@ -47,6 +47,59 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
           expect(controller).to have_received(:redirect_to).with(exhibit, flash: {})
         end
       end
+
+      context 'with a search query' do
+        let!(:tagged_exhibit) { FactoryBot.create(:exhibit, title: 'Some Exhibit Title', tag_list: ['a']) }
+        let!(:untagged_exhibit) { FactoryBot.create(:exhibit, title: 'Some Other Title') }
+
+        before { FactoryBot.create(:exhibit, title: 'Unrelated', tag_list: ['a']) }
+
+        it 'assigns the published exhibits that match' do
+          get :index, params: { q: 'some' }
+          expect(assigns(:published_exhibits)).to contain_exactly(tagged_exhibit, untagged_exhibit)
+        end
+
+        it 'ignores an empty tag' do
+          get :index, params: { q: 'some', tag: '' }
+          expect(assigns(:published_exhibits)).to contain_exactly(tagged_exhibit, untagged_exhibit)
+        end
+
+        it 'keeps matching tags outside the selected tag and current page available' do
+          untagged_exhibit.update!(tag_list: ['b'])
+          allow(Spotlight::Exhibit).to receive(:default_per_page).and_return(1)
+
+          get :index, params: { q: 'some', tag: 'a' }
+
+          expect(assigns(:published_exhibits)).to eq [tagged_exhibit]
+          expect(assigns(:matching_tag_names)).to contain_exactly('a', 'b')
+        end
+
+        it 'paginates after applying both the search and selected tag' do
+          tagged_exhibit.update!(weight: 1)
+          untagged_exhibit.update!(weight: 2)
+          later_match = FactoryBot.create(:exhibit, title: 'Some Later Title', tag_list: ['a'], weight: 3)
+          allow(Spotlight::Exhibit).to receive(:default_per_page).and_return(1)
+
+          get :index, params: { q: 'some', tag: 'a', page: 2 }
+
+          expect(assigns(:published_exhibits)).to eq [later_match]
+          expect(assigns(:published_exhibits).total_count).to eq 2
+        end
+
+        it 'filters the published exhibits with the configured search class' do
+          tag_search_class = Class.new(Spotlight::ExhibitSearch) do
+            def searchable_text(exhibit)
+              exhibit.tag_list.join(' ')
+            end
+          end
+          allow(Spotlight::Engine.config).to receive(:exhibit_search_class).and_return(-> { tag_search_class })
+          history_exhibit = FactoryBot.create(:exhibit, tag_list: ['history'])
+
+          get :index, params: { q: 'history' }
+
+          expect(assigns(:published_exhibits)).to eq [history_exhibit]
+        end
+      end
     end
 
     describe 'GET new' do
@@ -90,6 +143,17 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
 
     before { sign_in user }
 
+    describe 'GET index' do
+      let!(:matching_exhibit) { FactoryBot.create(:exhibit, title: 'Some Exhibit Title', published: false) }
+
+      before { FactoryBot.create(:exhibit, title: 'Other Title', published: false) }
+
+      it 'assigns the unpublished exhibits that match the search query' do
+        get :index, params: { q: 'some' }
+        expect(assigns(:unpublished_exhibits)).to eq [matching_exhibit]
+      end
+    end
+
     describe 'GET new' do
       it 'is successful' do
         get :new
@@ -124,6 +188,17 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
     let(:user) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
     before { sign_in user }
+
+    describe 'GET index' do
+      let(:matching_exhibit) { FactoryBot.create(:exhibit, title: 'Some Exhibit Title') }
+
+      before { user.roles.create(role: 'admin', resource: matching_exhibit) }
+
+      it 'assigns the exhibits of the user that match the search query' do
+        get :index, params: { q: 'some' }
+        expect(assigns(:user_exhibits)).to eq [matching_exhibit]
+      end
+    end
 
     describe 'GET new' do
       it 'is not allowed' do

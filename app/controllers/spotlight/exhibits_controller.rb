@@ -12,8 +12,11 @@ module Spotlight
     load_and_authorize_resource
 
     def index
-      @published_exhibits = @exhibits.includes(:thumbnail).published.ordered_by_weight.page(params[:page])
-      @published_exhibits = @published_exhibits.tagged_with(params[:tag]) if params[:tag]
+      @exhibit_search = Spotlight::Engine.config.exhibit_search_class.call.new(params[:q])
+      @published_exhibits = published_exhibits
+      @matching_tag_names = matching_tag_names if @exhibit_search.active?
+      @unpublished_exhibits = @exhibit_search.filter(unpublished_exhibits)
+      @user_exhibits = @exhibit_search.filter(current_user.exhibits) if current_user
       if @exhibits.one?
         redirect_to @exhibits.first, flash: flash.to_h
       else
@@ -91,6 +94,26 @@ module Spotlight
     end
 
     protected
+
+    def published_exhibits
+      exhibits = @exhibits.includes(:thumbnail).published.ordered_by_weight
+      exhibits = exhibits.where(id: published_matches.map(&:id)) if @exhibit_search.active?
+      exhibits = exhibits.tagged_with(params[:tag]) if params[:tag].present?
+      exhibits.page(params[:page])
+    end
+
+    def published_matches
+      @published_matches ||= @exhibit_search.filter(@exhibits.published.includes(:tags))
+    end
+
+    # Tag availability includes matches outside the selected tag and the current page.
+    def matching_tag_names
+      published_matches.flat_map { |exhibit| exhibit.tags.map(&:name) }.uniq
+    end
+
+    def unpublished_exhibits
+      @exhibits.unpublished.ordered_by_weight.accessible_by(current_ability)
+    end
 
     def exhibit_params
       params.require(:exhibit).permit(

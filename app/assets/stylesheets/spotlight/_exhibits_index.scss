@@ -74,6 +74,11 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
     overflow: hidden;
   }
 
+  /* Bootstrap pads <mark>, which moves the words around each match */
+  mark {
+    padding: 0;
+  }
+
   &:hover {
     .exhibit-description {
       max-height: 450px;
