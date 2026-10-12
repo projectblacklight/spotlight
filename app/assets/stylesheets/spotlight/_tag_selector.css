@@ -17,7 +17,7 @@
 
       &:hover,
       &.active {
-        background-color: $light;
+        background-color: var(--bs-light);
       }
     }
   }

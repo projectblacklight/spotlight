@@ -1,0 +1,168 @@
+/* CSS for use across sir-trevor widgets */
+
+.widget-header {
+  padding: 5px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #D4D4D4;
+}
+
+.blacklight-home_pages-edit {
+  [data-type="search_results"] {
+    display: none;
+  }
+}
+
+.content-block {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+/* Sir-trevor sets the overflow to hidden which */
+/* obscures the bottom of things like the typeahead */
+.st-blocks {
+  overflow: visible;
+}
+
+.st-block__inner {
+  border: 1px solid var(--bs-gray-700);
+  box-shadow: 3px 3px 15px var(--bs-gray-700);
+  margin: 1em 20px;
+  padding: 1.875em 1.875em 2.8em;
+}
+
+.st-block--textable .st-block__inner {
+  margin: 1em 20px;
+  transition: padding-left .2s ease;
+}
+
+.st-block--empty.st-block--textable .st-block__inner {
+  padding-left: 75px;
+}
+
+.st-block-replacer {
+  top: 40%;
+}
+
+.form-group .st-text-block {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  appearance: none;
+  background-color: var(--bs-body-bg);
+  background-clip: padding-box;
+  border-radius: var(--bs-border-radius);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  height: auto !important;
+  min-height: 6em;
+
+  &:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+  }
+}
+
+.st-block .st-block-ui-btn__delete {
+  display: block !important;
+}
+
+.st-block-addition {
+  display: block !important;
+}
+
+.st-block-addition-top {
+  text-align: start;
+}
+
+.st-block-controls {
+  display: none !important;
+}
+
+.st-block--controls-active .st-block__inner {
+  display: none;
+}
+
+.spotlight-block-controls {
+  border: 1px solid var(--bs-gray-700);
+  border-radius: 4px;
+  box-shadow: 3px 3px 15px var(--bs-gray-700);
+  margin: 1em 20px;
+  padding: 1.875em 1.875em 2.8em 70px;
+}
+
+.st-block-controls__button {
+  --bs-btn-padding-x: 0.75rem;
+  --bs-btn-padding-y: 0.375rem;
+  --bs-btn-font-weight: 400;
+  --bs-btn-line-height: 1.5;
+  --bs-btn-color: var(--bs-primary);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-width: var(--bs-border-width);
+  --bs-btn-border-color: var(--bs-primary);
+  --bs-btn-border-radius: var(--bs-border-radius);
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: var(--bs-primary);
+  --bs-btn-hover-border-color: var(--bs-primary);
+  --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+  --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--bs-btn-focus-shadow-rgb), .5);
+  --bs-btn-active-color: var(--bs-white);
+  --bs-btn-active-bg: var(--bs-primary);
+  --bs-btn-active-border-color: var(--bs-primary);
+  --bs-btn-disabled-color: var(--bs-primary);
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: var(--bs-primary);
+  --bs-btn-disabled-opacity: 0.65;
+
+  padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+  font-weight: var(--bs-btn-font-weight);
+  line-height: var(--bs-btn-line-height);
+  color: var(--bs-btn-color);
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  user-select: none;
+  border-radius: var(--bs-btn-border-radius);
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border: 1px solid var(--bs-gray-700);
+
+  &:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+  }
+
+  &:focus-visible {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+    outline: 0;
+    box-shadow: var(--bs-btn-focus-box-shadow);
+  }
+
+  &:active, &.active {
+    color: var(--bs-btn-active-color);
+    background-color: var(--bs-btn-active-bg);
+    border-color: var(--bs-btn-active-border-color);
+
+    &:focus-visible {
+      box-shadow: var(--bs-btn-focus-box-shadow);
+    }
+  }
+
+  &:disabled, &.disabled {
+    color: var(--bs-btn-disabled-color);
+    pointer-events: none;
+    background-color: var(--bs-btn-disabled-bg);
+    border-color: var(--bs-btn-disabled-border-color);
+    opacity: var(--bs-btn-disabled-opacity);
+  }
+
+  .st-icon {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
