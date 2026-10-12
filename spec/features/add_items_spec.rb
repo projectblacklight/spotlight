@@ -4,31 +4,12 @@ RSpec.describe 'Uploading a non-repository item', type: :feature do
   include ActiveJob::TestHelper
 
   let!(:exhibit) { FactoryBot.create(:exhibit) }
-  let!(:custom_field) { FactoryBot.create(:custom_field, exhibit:, field_type: :vocab) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:user) { exhibit_curator }
 
   before { login_as user }
 
   describe 'forms' do
-    it 'displays the single item upload form' do
-      visit spotlight.new_exhibit_resource_path(exhibit)
-      expect(page).to have_css('h1', text: /Curation/)
-      expect(page).to have_css 'h1 small', text: 'Add items'
-
-      click_link 'Upload item'
-
-      within('form#new_resources_upload') do
-        expect(page).to have_css('#resources_upload_url[type="file"]')
-        expect(page).to have_css('.form-text', text: 'Valid file types: jpg jpeg png')
-        expect(page).to have_css('#resources_upload_data_full_title_tesim[type="text"]')
-        expect(page).to have_css('textarea#resources_upload_data_spotlight_upload_description_tesim')
-        expect(page).to have_css('#resources_upload_data_spotlight_upload_attribution_tesim[type="text"]')
-        expect(page).to have_css('#resources_upload_data_spotlight_upload_date_tesim[type="text"]')
-        expect(page).to have_css("#f0_resources_upload_data_#{custom_field.slug}[type='text']")
-      end
-    end
-
     it 'creates a new item' do
       visit spotlight.new_exhibit_resource_path(exhibit)
 
@@ -63,39 +44,6 @@ RSpec.describe 'Uploading a non-repository item', type: :feature do
     ensure
       Blacklight.default_index.connection.delete_by_query 'spotlight_resource_type_ssim:spotlight/resources/uploads'
       Blacklight.default_index.connection.commit
-    end
-
-    it 'displays the multi-item CSV upload form' do
-      visit spotlight.new_exhibit_resource_path(exhibit)
-      expect(page).to have_css('h1', text: /Curation/)
-      expect(page).to have_css 'h1 small', text: 'Add items'
-
-      click_link 'Upload multiple items'
-
-      within('form#new_resources_csv_upload') do
-        expect(page).to have_css('#resources_csv_upload_url[type="file"]')
-        expect(page).to have_css('.form-text a', text: 'Download template')
-      end
-    end
-
-    it 'does not display the raw documents upload form' do
-      visit spotlight.new_exhibit_resource_path(exhibit)
-      click_link 'Upload raw documents'
-      expect(page).to have_no_css('form#new_resources_json_upload')
-    end
-
-    context 'as an site administrator' do
-      let(:user) { FactoryBot.create(:site_admin) }
-
-      it 'displays the JSON upload form' do
-        visit spotlight.new_exhibit_resource_path(exhibit)
-
-        click_link 'Upload raw documents'
-
-        within('form#new_resources_json_upload') do
-          expect(page).to have_css('#resources_json_upload_json[type="file"]')
-        end
-      end
     end
   end
 

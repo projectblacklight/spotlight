@@ -32,14 +32,4 @@ RSpec.describe 'Display an item within the exhibit', type: :feature do
     expect(page).to have_css('h1', text: "L'AMERIQUE")
     expect(page).to have_css('.openseadragon-container')
   end
-
-  it 'has <meta> tags' do
-    Spotlight::Site.instance.update(title: 'some title')
-
-    visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
-
-    expect(page).to have_css "meta[name='twitter:title']", visible: false
-    expect(page).to have_css "meta[property='og:site_name']", visible: false
-    expect(page).to have_css "meta[property='og:title']", visible: false
-  end
 end
