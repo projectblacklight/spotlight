@@ -1,10 +1,10 @@
 .site-footer {
-  background-color: $gray-700;
+  background-color: var(--bs-gray-700);
   color: var(--bs-gray-600);
   margin-top: var(--footer-top-margin);
   padding: 10px;
 
-  // Styles below keep footer at bottom of viewport
+  /* Styles below keep footer at bottom of viewport */
   position: absolute;
   bottom: 0;
   height: var(--footer-height);
