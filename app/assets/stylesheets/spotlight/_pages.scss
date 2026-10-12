@@ -202,9 +202,6 @@
   h2 {
     margin-top: 0;
   }
-  a {
-    @extend .alert-link;
-  }
   p,
   ol > li {
     padding: $spacer * 0.5;
