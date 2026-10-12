@@ -48,10 +48,13 @@ RSpec.describe 'Item Administration', type: :feature do
         find("input.toggle-visibility[type='checkbox']").click
       end
       expect(page).to have_css('tr.blacklight-private')
+      # The class is toggled immediately on click, so wait for the AJAX request to finish
+      # (the checkbox is re-enabled) before reloading the page.
+      expect(page).to have_css("tr[itemscope]:first-child input.toggle-visibility[type='checkbox']:not([disabled]):not(:checked)")
 
       # The label should show up on page load
-      expect(page).to have_css('tr.blacklight-private')
       visit spotlight.admin_exhibit_catalog_path(exhibit)
+      expect(page).to have_css('tr.blacklight-private')
       within 'tr[itemscope]:first-child' do
         find("input.toggle-visibility[type='checkbox']").click
       end
