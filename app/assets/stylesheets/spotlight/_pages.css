@@ -8,11 +8,15 @@
 }
 
 .form-actions {
-  @extend .clearfix;
+  &::after {
+    display: block;
+    clear: both;
+    content: "";
+  }
 }
 
 .primary-actions {
-  @extend .float-end;
+  float: right !important;
 }
 
 #nested-pages {
@@ -23,9 +27,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: theme-colors("secondary");
+  background-color: var(--bs-secondary);
   padding: 3px 8px;
-  color: $body-color;
+  color: var(--bs-body-color);
   font-weight: bold;
 }
 
@@ -36,7 +40,7 @@
 
   .field-select {
     margin-bottom: 1rem;
-    @media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
+    @media (min-width: 768px) and (max-width: 991.98px) {
       margin-bottom: 2rem;
 
       > select {
@@ -80,7 +84,7 @@
 
   ol.sidenav {
     li {
-      color: $gray-900;
+      color: var(--bs-gray-900);
       margin-top: 0.5rem;
     }
 
@@ -103,14 +107,14 @@
 
 .contact-photo {
   border: 1px solid #ccc;
-  border-radius: $border-radius;
+  border-radius: var(--bs-border-radius);
   height: 70px;
   margin-right: 15px;
   margin-top: 3px;
   min-width: 70px;
 }
 
-// Indent contact fields so they align evenly, only when there is a contact photo
+/* Indent contact fields so they align evenly, only when there is a contact photo */
 .sidenav.contacts .contact-photo + div[itemprop] ~ div[itemprop] {
   margin-left: 85px;
 }
@@ -130,7 +134,7 @@
     margin-bottom: 1em;
     z-index: 1;
 
-    @media (max-width: breakpoint-max("md")) {
+    @media (max-width: 767.98px) {
       margin-bottom: 2rem;
     }
   }
@@ -153,9 +157,9 @@
     padding: 0;
     width: 100%;
 
-    @media (min-width: breakpoint-min("lg")) {
-      height: 160px; // default: no sidebar, no text column
-      // reduce height if on a page with a sidebar or text column, because will be less wide
+    @media (min-width: 992px) {
+      height: 160px; /* default: no sidebar, no text column */
+      /* reduce height if on a page with a sidebar or text column, because will be less wide */
       .col-md-9 & {
         height: 125px;
       }
@@ -196,8 +200,6 @@
 }
 
 .empty-page-block {
-  @extend .alert;
-  @extend .alert-info;
   margin-top: 1rem;
   h2 {
     margin-top: 0;
@@ -212,12 +214,12 @@
 }
 
 .oembed-block {
-  @media (max-width: breakpoint-max("md")) {
+  @media (max-width: 767.98px) {
     margin-bottom: 1rem;
   }
 
   iframe {
-    @media (min-width: breakpoint-min("md")) {
+    @media (min-width: 768px) {
       max-width: 100%;
     }
   }
@@ -231,7 +233,7 @@
   .items-col {
     z-index: 1;
 
-    @media (max-width: breakpoint-max("md")) {
+    @media (max-width: 767.98px) {
       margin-bottom: 0;
     }
 
@@ -254,12 +256,12 @@
         img {
           max-height: 250px;
           object-fit: cover;
-          @media (max-width: breakpoint-max("md")) {
+          @media (max-width: 767.98px) {
             max-height: 175px;
           }
         }
 
-        @media (max-width: breakpoint-max("md")) {
+        @media (max-width: 767.98px) {
           flex: 1 1 175px;
         }
       }
@@ -268,7 +270,7 @@
 }
 
 .item-features .carousel-indicators {
-  @media (max-width: breakpoint-max("sm")) {
+  @media (max-width: 575.98px) {
     width: 100%;
     margin-top: 2rem;
   }
@@ -280,6 +282,5 @@
 }
 
 .zpr-link {
-  @extend .btn-sm;
   margin-top: 0.75rem;
 }
