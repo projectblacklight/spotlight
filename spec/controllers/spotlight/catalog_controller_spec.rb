@@ -312,7 +312,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
       it 'has a solr_json serialization' do
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352', format: :solr_json }
         expect(response).to be_successful
-        data = JSON.parse(response.body).with_indifferent_access # rubocop:disable Rails/ResponseParsedBody https://github.com/rubocop/rubocop-rails/issues/940
+        data = JSON.parse(response.body).with_indifferent_access # rubocop:disable Rails/ResponseParsedBody -- https://github.com/rubocop/rubocop-rails/issues/940
         expect(data).to include id: 'dq287tq6352'
         expect(data).to include exhibit.solr_data
       end
