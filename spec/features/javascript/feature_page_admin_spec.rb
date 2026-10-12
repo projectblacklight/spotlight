@@ -19,14 +19,20 @@ RSpec.describe 'Feature Pages Adminstration', js: true do
     )
   end
 
+  let!(:page3) do
+    FactoryBot.create(
+      :feature_page,
+      title: 'FeaturePage3',
+      exhibit:
+    )
+  end
+
   before { login_as exhibit_curator }
 
   it 'can order and nest the pages' do
     visit spotlight.exhibit_dashboard_path(exhibit)
 
     click_link 'Feature pages'
-
-    add_new_via_button('FeaturePage3', alert: 'The feature page was created.')
 
     page1_handle = find('.dd-item', text: 'FeaturePage1').find('.dd-handle')
     page2_handle = find('.dd-item', text: 'FeaturePage2').find('.dd-handle')

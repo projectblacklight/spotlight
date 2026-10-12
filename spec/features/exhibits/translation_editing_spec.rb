@@ -175,7 +175,7 @@ RSpec.describe 'Translation editing', type: :feature do
         end
       end
 
-      it 'allows users to translate both index and show metadata field labels', js: true do
+      it 'allows users to translate both index and show metadata field labels' do
         click_link 'Metadata field labels'
 
         within('#metadata', visible: true) do
@@ -252,7 +252,7 @@ RSpec.describe 'Translation editing', type: :feature do
         end
       end
 
-      it 'allows users to translate field-based search fields', js: true do
+      it 'allows users to translate field-based search fields' do
         click_link 'Search field labels'
 
         within('#search_fields', visible: true) do
@@ -273,7 +273,7 @@ RSpec.describe 'Translation editing', type: :feature do
         end
       end
 
-      it 'allows users to translate facet fields', js: true do
+      it 'allows users to translate facet fields' do
         click_link 'Search field labels'
 
         within('#search_fields', visible: true) do
@@ -294,7 +294,7 @@ RSpec.describe 'Translation editing', type: :feature do
         end
       end
 
-      it 'allows users to translation sort fields', js: true do
+      it 'allows users to translation sort fields' do
         click_link 'Search field labels'
 
         within('#search_fields', visible: true) do
@@ -338,16 +338,13 @@ RSpec.describe 'Translation editing', type: :feature do
       expect(page).to have_css '.nav-tabs .nav-link.active', text: 'Browse categories'
     end
 
-    it 'persists changes', js: true do
+    it 'persists changes' do
       click_link 'Browse categories'
 
       within('#browse', visible: true) do
         fill_in 'All exhibit items', with: "Tous les objets d'exposition"
 
-        first('.translation-description-toggle').click
-
-        textarea = page.find('textarea')
-        textarea.set('Tous les articles de cette exposition.')
+        first('textarea').set('Tous les articles de cette exposition.')
 
         click_button 'Save changes'
       end
@@ -394,7 +391,7 @@ RSpec.describe 'Translation editing', type: :feature do
       expect(page).to have_css '.nav-tabs .nav-link.active', text: 'Browse groups'
     end
 
-    it 'persists changes', js: true do
+    it 'persists changes' do
       click_link 'Browse groups'
 
       within('#groups', visible: true) do

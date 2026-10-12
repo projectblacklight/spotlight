@@ -53,7 +53,7 @@ RSpec.describe 'Browse Category Administration', type: :feature do
     context 'when a reserved word is used to title a browse category' do
       let(:title) { 'images' }
 
-      it 'displays an error message', js: true do
+      it 'displays an error message' do
         visit spotlight.edit_exhibit_search_path(exhibit, search)
         fill_in 'search_title', with: title
         click_button 'Save changes'

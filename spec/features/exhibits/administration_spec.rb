@@ -120,11 +120,11 @@ RSpec.describe 'Exhibit Administration', type: :feature do
     context 'site_tags are set to a list' do
       let(:site_tags) { ['tag 1', 'tag 2', 'tag 3'] }
 
-      it 'site_tags listed on the page', js: true do
+      it 'site_tags listed on the page' do
         visit spotlight.edit_exhibit_path(exhibit)
         expect(page).to have_css('#exhibit_tag_list_tag_1')
-        find('label', text: 'tag 1').click
-        find('label', text: 'tag 3').click
+        check 'exhibit_tag_list_tag_1'
+        check 'exhibit_tag_list_tag_3'
         click_button 'Save changes'
         expect(page).to have_text('The exhibit was successfully updated.')
         expect(find_field('exhibit_tag_list_tag_1').checked?).to be true
@@ -136,7 +136,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
     context 'site_tags are set to nil' do
       let(:site_tags) { nil }
 
-      it 'has free text tag_list field', js: true do
+      it 'has free text tag_list field' do
         visit spotlight.edit_exhibit_path(exhibit)
         expect(page).to have_css('#exhibit_tag_list')
         fill_in 'exhibit_tag_list', with: 'tag 1, tag 2'
