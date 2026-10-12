@@ -8,7 +8,7 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
 
   describe 'IIIF Integration' do
     context 'for items that include a IIIF manifest' do
-      it 'instantiates a cropper and persists all levels of the IIIF manifest' do
+      it 'instantiates a cropper, removes the multi-image selector for single-image items, and persists all levels of the IIIF manifest' do
         visit spotlight.edit_exhibit_appearance_path(exhibit)
         click_link 'Exhibit masthead'
 
@@ -16,7 +16,12 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
 
         check 'Show background image in masthead'
 
+        fill_in_typeahead_field(with: 'xd327cm9378', type: 'featured-image')
+        expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
+
+        # Choosing a single-image item removes the multi-image selector
         fill_in_typeahead_field(with: 'gk446cj2442', type: 'featured-image')
+        expect(page).to have_no_css('[data-panel-image-pagination]', text: /Image 1 of 2/)
 
         expect(page).to have_css('.leaflet-container', visible: true)
 
@@ -56,19 +61,6 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
         save_page_changes
 
         expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/)
-      end
-
-      it 'removes the multi-image selector when a non multi-image item is selected' do
-        visit spotlight.edit_exhibit_appearance_path(exhibit)
-        click_link 'Exhibit masthead'
-
-        fill_in_typeahead_field(with: 'xd327cm9378', type: 'featured-image')
-
-        expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
-
-        fill_in_typeahead_field(with: 'gk446cj2442', type: 'featured-image')
-
-        expect(page).to have_no_css('[data-panel-image-pagination]', text: /Image 1 of 2/)
       end
     end
 
