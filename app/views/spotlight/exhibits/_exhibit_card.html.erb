@@ -8,8 +8,10 @@
       <% end %>
     <% end %>
     <div class="card-img-overlay pb-0">
-      <% unless exhibit.published? %>
+      <% if !exhibit.published? %>
         <div class="badge bg-warning unpublished"><%= t('.unpublished') %></div>
+      <% elsif exhibit.previewable? %>
+        <div class="badge bg-info previewable"><%= t('.previewable') %></div>
       <% end %>
 
       <%= content_tag :h2, class: 'card-title h5 text-center', aria: { describedby: "exhibit-description-#{exhibit.to_param}" } do %>

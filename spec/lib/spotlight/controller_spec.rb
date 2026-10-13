@@ -25,6 +25,31 @@ RSpec.describe Spotlight::Controller do
     end
   end
 
+  describe '#add_previewable_exhibit_robots_header' do
+    let(:response) { ActionDispatch::Response.new }
+
+    before do
+      allow(subject).to receive_messages(response:)
+    end
+
+    it 'adds a noindex header for previewable exhibits' do
+      allow(subject).to receive_messages(current_exhibit: FactoryBot.build(:exhibit, published: true, discovery_enabled: false))
+      subject.add_previewable_exhibit_robots_header
+      expect(response.headers['X-Robots-Tag']).to eq 'noindex'
+    end
+
+    it 'does not add the header for discoverable exhibits' do
+      allow(subject).to receive_messages(current_exhibit: FactoryBot.build(:exhibit, published: true, discovery_enabled: true))
+      subject.add_previewable_exhibit_robots_header
+      expect(response.headers['X-Robots-Tag']).to be_nil
+    end
+
+    it 'does not add the header outside of an exhibit' do
+      subject.add_previewable_exhibit_robots_header
+      expect(response.headers['X-Robots-Tag']).to be_nil
+    end
+  end
+
   describe '#exhibit_masthead?' do
     let(:masthead) { double('masthead', display?: true) }
 

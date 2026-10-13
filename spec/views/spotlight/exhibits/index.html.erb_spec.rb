@@ -2,7 +2,7 @@
 
 RSpec.describe 'spotlight/exhibits/index', type: :view do
   let(:exhibits) { Spotlight::Exhibit.none }
-  let(:published_exhibits) { exhibits.published.page(1) }
+  let(:published_exhibits) { exhibits.discoverable.page(1) }
 
   let(:ability) { Ability.new(user) }
   let(:user) { Spotlight::Engine.user_class.new }
@@ -70,7 +70,7 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
     end
 
     context 'with paginated exhibits' do
-      let(:published_exhibits) { exhibits.published.page(1).per(1) }
+      let(:published_exhibits) { exhibits.discoverable.page(1).per(1) }
 
       it 'renders pagination controls' do
         render
@@ -96,6 +96,18 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
 
         expect(rendered).to have_css '.nav-tabs'
         expect(rendered).to have_no_link 'Unpublished exhibits'
+        expect(rendered).to have_no_css '#unpublished'
+      end
+
+      context 'with previewable exhibits' do
+        before { FactoryBot.create(:exhibit, published: true, discovery_enabled: false) }
+
+        it 'does not include a tab for previewable exhibits' do
+          render
+
+          expect(rendered).to have_no_link 'Preview exhibits'
+          expect(rendered).to have_no_css '#previewable'
+        end
       end
     end
 
@@ -112,6 +124,24 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
         expect(rendered).to have_css '.nav-tabs'
         expect(rendered).to have_link 'Unpublished exhibits'
         expect(rendered).to have_text exhibit_c.title
+      end
+
+      it 'does not include a tab for previewable exhibits when there are none' do
+        render
+
+        expect(rendered).to have_no_link 'Preview exhibits'
+      end
+
+      context 'with previewable exhibits' do
+        let!(:exhibit_d) { FactoryBot.create(:exhibit, published: true, discovery_enabled: false) }
+
+        it 'includes a tab with previewable exhibits' do
+          render
+
+          expect(rendered).to have_link 'Preview exhibits'
+          expect(rendered).to have_css '#previewable .exhibit-card', text: exhibit_d.title
+          expect(rendered).to have_no_css '#published .exhibit-card', text: exhibit_d.title
+        end
       end
     end
   end

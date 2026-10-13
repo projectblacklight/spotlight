@@ -13,6 +13,7 @@ module Spotlight
     included do
       helper_method :current_site, :current_exhibit, :current_masthead, :exhibit_masthead?, :resource_masthead?, :breadcrumbs
       before_action :set_exhibit_locale_scope, :set_locale
+      after_action :add_previewable_exhibit_robots_header
       # If your app overrides search_state_class, subclass Spotlight::SearchState (rather than
       # Blacklight::SearchState) to keep exhibit-scoped document routing.
       self.search_state_class = Spotlight::SearchState
@@ -20,6 +21,11 @@ module Spotlight
 
     def set_exhibit_locale_scope
       Translation.current_exhibit = current_exhibit
+    end
+
+    # Previewable exhibits are only meant to be reachable by link, so ask search engines not to index them
+    def add_previewable_exhibit_robots_header
+      response.headers['X-Robots-Tag'] = 'noindex' if current_exhibit&.previewable?
     end
 
     def current_site

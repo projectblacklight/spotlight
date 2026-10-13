@@ -47,6 +47,31 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
           expect(controller).to have_received(:redirect_to).with(exhibit, flash: {})
         end
       end
+
+      context 'when the only exhibit is previewable' do
+        before do
+          FactoryBot.create(:exhibit, published: true, discovery_enabled: false)
+        end
+
+        it 'does not redirect to the exhibit' do
+          get :index
+          expect(response).to be_successful
+          expect(assigns[:published_exhibits]).to be_empty
+        end
+      end
+
+      context 'when there is one discoverable exhibit and a previewable exhibit' do
+        let!(:discoverable_exhibit) { FactoryBot.create(:exhibit) }
+
+        before do
+          FactoryBot.create(:exhibit, published: true, discovery_enabled: false)
+        end
+
+        it 'redirects to the discoverable exhibit' do
+          get :index
+          expect(response).to redirect_to(discoverable_exhibit)
+        end
+      end
     end
 
     describe 'GET new' do
@@ -118,12 +143,81 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
         expect(user.exhibits).to include exhibit
       end
     end
+
+    describe 'GET index' do
+      context 'when the only exhibit is previewable' do
+        let!(:previewable_exhibit) { FactoryBot.create(:exhibit, published: true, discovery_enabled: false) }
+
+        it 'redirects to the exhibit' do
+          get :index
+          expect(response).to redirect_to(previewable_exhibit)
+        end
+      end
+
+      context 'when there is one discoverable exhibit and a previewable exhibit' do
+        before do
+          FactoryBot.create(:exhibit)
+          FactoryBot.create(:exhibit, published: true, discovery_enabled: false)
+        end
+
+        it 'does not redirect' do
+          get :index
+          expect(response).to be_successful
+        end
+      end
+    end
   end
 
   describe 'when signed in as an exhibit admin' do
     let(:user) { FactoryBot.create(:exhibit_admin, exhibit:) }
 
     before { sign_in user }
+
+    describe 'GET index' do
+      context "when the only exhibit is the user's previewable exhibit" do
+        let(:exhibit) { FactoryBot.create(:exhibit, published: true, discovery_enabled: false) }
+
+        it 'redirects to the exhibit' do
+          get :index
+          expect(response).to redirect_to(exhibit)
+        end
+      end
+
+      context "when the only exhibit is the user's unpublished exhibit" do
+        let(:exhibit) { FactoryBot.create(:exhibit, published: false) }
+
+        it 'redirects to the exhibit' do
+          get :index
+          expect(response).to redirect_to(exhibit)
+        end
+      end
+
+      context "when a different user's previewable exhibit also exists" do
+        let(:exhibit) { FactoryBot.create(:exhibit, published: true, discovery_enabled: false) }
+
+        before do
+          FactoryBot.create(:exhibit, published: true, discovery_enabled: false)
+        end
+
+        it "redirects to the admin's exhibit" do
+          get :index
+          expect(response).to redirect_to(exhibit)
+        end
+      end
+
+      context "when there is a discoverable exhibit and the user's unpublished exhibit" do
+        let(:exhibit) { FactoryBot.create(:exhibit, published: false) }
+
+        before do
+          FactoryBot.create(:exhibit)
+        end
+
+        it 'does not redirect' do
+          get :index
+          expect(response).to be_successful
+        end
+      end
+    end
 
     describe 'GET new' do
       it 'is not allowed' do
@@ -210,6 +304,22 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
         expect(Spotlight::Exhibit).not_to exist(exhibit.id)
         expect(flash[:notice]).to eq 'The exhibit was deleted.'
         expect(response).to redirect_to main_app.root_path
+      end
+    end
+  end
+
+  describe 'when signed in as an exhibit viewer' do
+    let(:exhibit) { FactoryBot.create(:exhibit, published: true, discovery_enabled: false) }
+    let(:user) { FactoryBot.create(:user, :with_exhibit_role, role: 'viewer', exhibit:) }
+
+    before { sign_in user }
+
+    describe 'GET index' do
+      context "when the only exhibit is the user's previewable exhibit" do
+        it 'redirects to the exhibit' do
+          get :index
+          expect(response).to redirect_to(exhibit)
+        end
       end
     end
   end

@@ -12,7 +12,7 @@ module Spotlight
     def self.add_all_exhibits(sitemap)
       SitemapGenerator::Interpreter.send :include, Spotlight::Engine.routes.url_helpers
 
-      Spotlight::Exhibit.published.find_each do |e|
+      Spotlight::Exhibit.discoverable.find_each do |e|
         add_exhibit(sitemap, e)
       end
     end
@@ -39,7 +39,7 @@ module Spotlight
     ##
     # Add all exhibit resources to the sitemap
     def add_resources!
-      return unless exhibit.published?
+      return unless exhibit.discoverable?
 
       add_exhibit_root
       add_pages

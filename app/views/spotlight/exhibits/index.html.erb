@@ -1,8 +1,13 @@
 <% if (current_user && current_user.exhibits.any?) || can?(:manage, Spotlight::Exhibit) %>
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="nav-item"><a href="#published" aria-controls="published" role="tab" data-bs-toggle="tab" class="nav-link active"><%= t('.published') %></a></li>
-    <% if can?(:manage, Spotlight::Exhibit) && @exhibits.unpublished.accessible_by(current_ability).any? %>
-      <li role="presentation" class="nav-item"><a href="#unpublished" aria-controls="unpublished" role="tab" data-bs-toggle="tab" class="nav-link"><%= t('.unpublished') %></a></li>
+    <% if can?(:manage, Spotlight::Exhibit) %>
+      <% if @exhibits.previewable.any? %>
+        <li role="presentation" class="nav-item"><a href="#previewable" aria-controls="previewable" role="tab" data-bs-toggle="tab" class="nav-link"><%= t('.previewable') %></a></li>
+      <% end %>
+      <% if @exhibits.unpublished.any? %>
+        <li role="presentation" class="nav-item"><a href="#unpublished" aria-controls="unpublished" role="tab" data-bs-toggle="tab" class="nav-link"><%= t('.unpublished') %></a></li>
+      <% end %>
     <% end %>
     <% if current_user && current_user.exhibits.any? %>
       <li role="presentation" class="nav-item"><a href="#user" aria-controls="user" role="tab" data-bs-toggle="tab" class="nav-link"><%= t('.user') %></a></li>
@@ -12,10 +17,10 @@
 
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane active" id="published">
-    <% if @exhibits.published.none? %>
+    <% if @exhibits.discoverable.none? %>
       <%= render 'missing_exhibits' %>
     <% else %>
-      <%= render 'tags', tags: @exhibits.published.all_tags %>
+      <%= render 'tags', tags: @exhibits.discoverable.all_tags %>
       <%= render 'exhibits', exhibits: @published_exhibits %>
 
       <% if @published_exhibits.total_count > @published_exhibits.size %>
@@ -30,10 +35,18 @@
 
   </div>
 
-  <% if @exhibits.unpublished.accessible_by(current_ability).any? %>
-    <div role="tabpanel" class="tab-pane" id="unpublished">
-      <%= render 'exhibits', exhibits: @exhibits.unpublished.ordered_by_weight.accessible_by(current_ability) %>
-    </div>
+  <% if can?(:manage, Spotlight::Exhibit) %>
+    <% if @exhibits.previewable.any? %>
+      <div role="tabpanel" class="tab-pane" id="previewable">
+        <%= render 'exhibits', exhibits: @exhibits.previewable.ordered_by_weight %>
+      </div>
+    <% end %>
+
+    <% if @exhibits.unpublished.any? %>
+      <div role="tabpanel" class="tab-pane" id="unpublished">
+        <%= render 'exhibits', exhibits: @exhibits.unpublished.ordered_by_weight %>
+      </div>
+    <% end %>
   <% end %>
 
   <% if current_user && current_user.exhibits.any? %>

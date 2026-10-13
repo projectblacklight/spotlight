@@ -22,8 +22,9 @@ RSpec.describe Spotlight::Sitemap do
   describe '.add_all_exhibits' do
     let!(:second_exhibit) { FactoryBot.create(:exhibit, published: true) }
     let!(:unpublished_exhibit) { FactoryBot.create(:exhibit, published: false) }
+    let!(:previewable_exhibit) { FactoryBot.create(:exhibit, published: true, discovery_enabled: false) }
 
-    it 'builds a sitemap for all published exhibits' do
+    it 'builds a sitemap for all discoverable exhibits' do
       sitemaps = []
 
       allow_any_instance_of(described_class).to receive(:add_resources!) do |s|
@@ -33,7 +34,7 @@ RSpec.describe Spotlight::Sitemap do
       described_class.add_all_exhibits(sitemap)
 
       expect(sitemaps.map(&:exhibit)).to include exhibit, second_exhibit
-      expect(sitemaps.map(&:exhibit)).not_to include unpublished_exhibit
+      expect(sitemaps.map(&:exhibit)).not_to include unpublished_exhibit, previewable_exhibit
     end
   end
 
@@ -57,6 +58,17 @@ RSpec.describe Spotlight::Sitemap do
 
     it 'does not publish sitemaps for unpublished exhibits' do
       exhibit.published = false
+
+      expect(subject).not_to receive(:add_exhibit_root)
+      expect(subject).not_to receive(:add_pages)
+      expect(subject).not_to receive(:add_resources)
+      expect(subject).not_to receive(:add_browse_categories)
+
+      subject.add_resources!
+    end
+
+    it 'does not publish sitemaps for previewable exhibits' do
+      exhibit.discovery_enabled = false
 
       expect(subject).not_to receive(:add_exhibit_root)
       expect(subject).not_to receive(:add_pages)

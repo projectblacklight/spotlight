@@ -55,4 +55,25 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
       expect(rendered).to have_css '.badge.unpublished', text: 'Unpublished'
     end
   end
+
+  context 'for a previewable exhibit' do
+    before do
+      exhibit.update(published: true, discovery_enabled: false)
+    end
+
+    it 'has a preview banner' do
+      render(p, exhibit:)
+
+      expect(rendered).to have_css '.badge.previewable', text: 'Preview'
+      expect(rendered).to have_no_css '.badge.unpublished'
+    end
+  end
+
+  context 'for a discoverable exhibit' do
+    it 'has no banner' do
+      render(p, exhibit:)
+
+      expect(rendered).to have_no_css '.badge'
+    end
+  end
 end
