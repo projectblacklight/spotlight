@@ -16,7 +16,7 @@ module Spotlight
       return redirect_to @exhibits.first, flash: flash.to_h if @exhibits.one?
 
       @published_exhibits = @exhibits.includes(:thumbnail).discoverable.ordered_by_weight.page(params[:page])
-      @published_exhibits = @published_exhibits.tagged_with(params[:tag]) if params[:tag]
+      @published_exhibits = @published_exhibits.tagged_with(params[:tag]) if params[:tag].present?
       render layout: 'spotlight/home'
     end
 

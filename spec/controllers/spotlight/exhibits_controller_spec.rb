@@ -72,6 +72,16 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
           expect(response).to redirect_to(discoverable_exhibit)
         end
       end
+
+      context 'with an empty tag' do
+        let!(:tagged_exhibit) { FactoryBot.create(:exhibit, tag_list: ['a']) }
+        let!(:untagged_exhibit) { FactoryBot.create(:exhibit) }
+
+        it 'assigns all the published exhibits' do
+          get :index, params: { tag: '' }
+          expect(assigns(:published_exhibits)).to contain_exactly(tagged_exhibit, untagged_exhibit)
+        end
+      end
     end
 
     describe 'GET new' do
