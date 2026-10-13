@@ -13,13 +13,11 @@ module Spotlight
     load_and_authorize_resource
 
     def index
+      return redirect_to @exhibits.first, flash: flash.to_h if @exhibits.one?
+
       @published_exhibits = @exhibits.includes(:thumbnail).discoverable.ordered_by_weight.page(params[:page])
       @published_exhibits = @published_exhibits.tagged_with(params[:tag]) if params[:tag]
-      if @exhibits.one?
-        redirect_to @exhibits.first, flash: flash.to_h
-      else
-        render layout: 'spotlight/home'
-      end
+      render layout: 'spotlight/home'
     end
 
     def show
