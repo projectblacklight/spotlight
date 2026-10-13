@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# versioning: true turns on PaperTrail (paper_trail/frameworks/rspec disables it by default)
+# so creating a page records a version that can be reverted.
 RSpec.describe Spotlight::VersionsController, type: :controller, versioning: true do
   routes { Spotlight::Engine.routes }
 

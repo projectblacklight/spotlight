@@ -33,8 +33,7 @@ de:
         reset: Zurücksetzen
         submit: Innerhalb dieser Kategorie suchen
         success:
-          expand_html: Suche erweitern <a href="%{expand_search_url}">"%{browse_query}"</a>.
           result_number_html: <strong> %{search_size} Suchergebnisse von %{parent_search_count} Gesamteinheiten in dieser Suchkategorie gefunden</strong>.
+        view_search: Diese Kategorie mit weiteren Such- und Filteroptionen anzeigen
         zero_results:
-          expand_html: <a href="%{clear_search_url}">Suche zurücksetzen</a> oder <a href="%{expand_search_url}"> erweitern "%{browse_query}"</a>.
           result_number: Es können keine Suchergebnisse gefunden werden.

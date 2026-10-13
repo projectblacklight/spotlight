@@ -15,7 +15,7 @@ RSpec.describe 'spotlight/searches/index.html.erb', type: :view do
   describe 'Without searches' do
     it 'disables the update button' do
       assign(:searches, [])
-      expect(exhibit).to receive(:searchable?).and_return(true)
+      allow(exhibit).to receive(:searchable?).and_return(true)
       render
       expect(rendered).to have_text 'You can save search results'
     end
@@ -24,7 +24,7 @@ RSpec.describe 'spotlight/searches/index.html.erb', type: :view do
   describe 'When the exhibit is not searchable' do
     it 'displays a warning' do
       assign(:searches, [])
-      expect(exhibit).to receive(:searchable?).and_return(false)
+      allow(exhibit).to receive(:searchable?).and_return(false)
       render
       expect(rendered).to have_css '.alert-warning', text: %(\
 This exhibit is not currently searchable. To perform searches that can \

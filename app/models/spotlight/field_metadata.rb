@@ -24,10 +24,15 @@ module Spotlight
     end
 
     def search_params
-      search_service.search_builder.merge(rows: 0, 'facet.limit' => FACET_LIMIT + 1)
+      search_service.search_builder.with(search_state).merge(rows: 0, 'facet.limit' => FACET_LIMIT + 1)
     end
 
     private
+
+    # Field metadata queries aren't scoped to a user query, so use an empty search state
+    def search_state
+      Blacklight::SearchState.new({}, blacklight_config)
+    end
 
     def field_name(key)
       if blacklight_config.facet_fields[key]

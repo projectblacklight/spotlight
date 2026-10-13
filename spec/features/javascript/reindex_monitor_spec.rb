@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Reindex Monitor', js: true, max_wait_time: 10 do
+RSpec.describe 'Reindex Monitor', js: true do
   let(:resources) do
     FactoryBot.create_list(:resource, 1)
   end
@@ -14,10 +14,12 @@ RSpec.describe 'Reindex Monitor', js: true, max_wait_time: 10 do
   end
 
   it 'is rendered on the item admin page' do
-    expect(page).to have_css('.card.index-status', visible: true)
-    within('.card.index-status') do
-      expect(page).to have_css('p', text: /Began reindexing a total of \d+ items/)
-      expect(page).to have_css('p', text: /Reindexed \d+ of \d+ items/)
+    using_wait_time(10) do
+      expect(page).to have_css('.card.index-status', visible: true)
+      within('.card.index-status') do
+        expect(page).to have_css('p', text: /Began reindexing a total of \d+ items/)
+        expect(page).to have_css('p', text: /Reindexed \d+ of \d+ items/)
+      end
     end
   end
 end

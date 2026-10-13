@@ -59,7 +59,8 @@ module SirTrevorRails
         return unless caption_field
         return presenter.heading if caption_field == Spotlight::PageConfigurations::DOCUMENT_TITLE_KEY
 
-        presenter.field_value(solr_helper.blacklight_config.index_fields[caption_field] || null_display_field_class.new(caption_field))
+        field_config = solr_helper.blacklight_config.index_fields[caption_field] || null_display_field_class.new(caption_field)
+        Array.wrap(presenter.field_value(field_config, join: true)).first
       end
 
       def secondary_caption?

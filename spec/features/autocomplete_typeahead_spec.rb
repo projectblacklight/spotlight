@@ -8,9 +8,7 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
 
   describe 'IIIF Integration' do
     context 'for items that include a IIIF manifest' do
-      it 'instantiates a cropper and persists all levels of the IIIF manifest' do
-        skip "The data on Purl for annotations has changed; let's fix this via #2817"
-
+      it 'instantiates a cropper, removes the multi-image selector for single-image items, and persists all levels of the IIIF manifest' do
         visit spotlight.edit_exhibit_appearance_path(exhibit)
         click_link 'Exhibit masthead'
 
@@ -18,7 +16,12 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
 
         check 'Show background image in masthead'
 
+        fill_in_typeahead_field(with: 'xd327cm9378', type: 'featured-image')
+        expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
+
+        # Choosing a single-image item removes the multi-image selector
         fill_in_typeahead_field(with: 'gk446cj2442', type: 'featured-image')
+        expect(page).to have_no_css('[data-panel-image-pagination]', text: /Image 1 of 2/)
 
         expect(page).to have_css('.leaflet-container', visible: true)
 
@@ -27,10 +30,9 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
 
         featured_image = Spotlight::FeaturedImage.last
 
-        expect(featured_image.iiif_manifest_url).to eq 'https://purl.stanford.edu/gk446cj2442/iiif/manifest.json'
-        # TODO: this data is fetched by a javascript widget and thus isn't captured by webmock see #2817
+        expect(featured_image.iiif_manifest_url).to eq '/iiif_manifest_fixtures/gk446cj2442.json'
         expect(featured_image.iiif_canvas_id).to eq 'https://purl.stanford.edu/gk446cj2442/iiif/canvas/cocina-fileSet-gk446cj2442-gk446cj2442_1'
-        expect(featured_image.iiif_image_id).to eq 'https://purl.stanford.edu/gk446cj2442/iiif/annotation/cocina-fileSet-gk446cj2442-gk446cj2442_1'
+        expect(featured_image.iiif_image_id).to eq 'https://purl.stanford.edu/gk446cj2442/iiif/annotation/https:%2F%2Fcocina.sul.stanford.edu%2Ffile%2Fgk446cj2442-gk446cj2442_1%2Fgk446cj2442_05_0001.jp2'
         expect(featured_image.iiif_tilesource).to eq 'https://stacks.stanford.edu/image/iiif/gk446cj2442%2Fgk446cj2442_05_0001/info.json'
       end
 
@@ -59,19 +61,6 @@ RSpec.describe 'Autocomplete typeahead', js: true, type: :feature do
         save_page_changes
 
         expect(page).to have_css('[data-panel-image-pagination]', text: /Image 2 of 2/)
-      end
-
-      it 'removes the multi-image selector when a non multi-image item is selected' do
-        visit spotlight.edit_exhibit_appearance_path(exhibit)
-        click_link 'Exhibit masthead'
-
-        fill_in_typeahead_field(with: 'xd327cm9378', type: 'featured-image')
-
-        expect(page).to have_css('[data-panel-image-pagination]', text: /Image 1 of 2/, visible: true)
-
-        fill_in_typeahead_field(with: 'gk446cj2442', type: 'featured-image')
-
-        expect(page).to have_no_css('[data-panel-image-pagination]', text: /Image 1 of 2/)
       end
     end
 

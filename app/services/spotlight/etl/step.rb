@@ -37,8 +37,8 @@ module Spotlight
       end
       # rubocop:enable Metrics/MethodLength
 
-      def finalize(*args)
-        action.finalize(*args) if action.respond_to? :finalize
+      def finalize(*)
+        action.finalize(*) if action.respond_to? :finalize
       end
 
       private

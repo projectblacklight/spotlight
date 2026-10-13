@@ -13,6 +13,12 @@ RSpec.describe Spotlight::Controller do
     allow(subject).to receive_messages(params: ActionController::Parameters.new(params))
   end
 
+  describe '.search_state_class' do
+    it 'uses the exhibit-aware search state' do
+      expect(MockController.search_state_class).to eq Spotlight::SearchState
+    end
+  end
+
   describe '#current_exhibit' do
     it 'is nil by default' do
       expect(subject.current_exhibit).to be_nil

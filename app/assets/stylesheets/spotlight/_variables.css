@@ -1,0 +1,15 @@
+:root {
+  --footer-top-margin: 3rem;
+  --footer-height: 7.5rem;
+
+  --masthead-bg: var(--bs-body-bg);
+  --masthead-height: 11.25rem;
+  --masthead-image-blur: 1px;
+  --navbar-transparent-border: var(--bs-gray-500);
+  --navbar-transparent-page-bg: rgba(0, 0, 0, 0.5);
+
+  /* Translations */
+  --translation-available-color: #80bf77;
+  --translation-panel-bg: #f5f5f5;
+  --translation-help-color: #555;
+}

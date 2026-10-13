@@ -7,7 +7,7 @@ function highlight(value, query) {
   const queryValue = query.trim()
   return queryValue
     ? value.replace(new RegExp(queryValue, "gi"), "<strong>$&</strong>")
-    : value
+    : ""
 }
 
 function templateFunc(obj, query) {
@@ -49,13 +49,18 @@ async function fetchResult(url) {
 }
 
 export function addAutocompletetoFeaturedImage() {
-  const autocompletePath = $(
+  const autocompletePathElement = document.querySelector(
     "form[data-autocomplete-exhibit-catalog-path]",
-  ).data("autocomplete-exhibit-catalog-path")
-  const featuredImageTypeaheads = $("[data-featured-image-typeahead]")
+  )
+  const autocompletePath =
+    autocompletePathElement &&
+    autocompletePathElement.dataset.autocompleteExhibitCatalogPath
+  const featuredImageTypeaheads = document.querySelectorAll(
+    "[data-featured-image-typeahead]",
+  )
   if (featuredImageTypeaheads.length === 0) return
 
-  $.each(featuredImageTypeaheads, function (index, autoCompleteInput) {
+  featuredImageTypeaheads.forEach((autoCompleteInput) => {
     const autoCompleteElement = autoCompleteInput.closest("auto-complete")
 
     autoCompleteElement.setAttribute("src", autocompletePath)
@@ -66,12 +71,16 @@ export function addAutocompletetoFeaturedImage() {
       )
       if (!data) return
 
-      const inputElement = $(e.relatedTarget)
-      const panel = document.querySelector(e.relatedTarget.dataset.targetPanel)
-      e.relatedTarget.value = data.title
-      addImageSelector(inputElement, $(panel), data.iiif_manifest, true)
-      $(inputElement.data("id-field")).val(data["global_id"])
-      inputElement.attr("type", "text")
+      const inputElement = e.relatedTarget
+      const panel = document.querySelector(inputElement.dataset.targetPanel)
+      inputElement.value = data.title
+      addImageSelector(inputElement, panel, data.iiif_manifest, true)
+      const idFieldSelector = inputElement.dataset.idField
+      const idField = document.querySelector(idFieldSelector)
+      if (idField) {
+        idField.value = data["global_id"]
+      }
+      inputElement.setAttribute("type", "text")
     })
   })
 }

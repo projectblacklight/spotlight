@@ -1,18 +1,20 @@
 <% cache_unless current_user, [current_exhibit, @page, I18n.locale] do %>
-  <ol class="nav sidenav flex-column">
-    <% @exhibit.feature_pages.for_locale.published.at_top_level.each do |feature_section| %>
-      <li class="<%= 'active' if current_page? [spotlight, @exhibit, feature_section] %>">
-        <h2 class="h6"><%= link_to_unless_current feature_section.title, [spotlight, @exhibit, feature_section] %></h2>
-        <% child_pages = feature_section.child_pages.published %>
+  <nav aria-label="<%= current_exhibit.main_navigations.curated_features.label_or_default %>">
+    <ol class="nav sidenav flex-column">
+      <% @exhibit.feature_pages.for_locale.published.at_top_level.each do |feature_section| %>
+        <li class="<%= 'active' if current_page? [spotlight, @exhibit, feature_section] %>">
+          <%= link_to_unless_current feature_section.title, [spotlight, @exhibit, feature_section] %>
+          <% child_pages = feature_section.child_pages.published %>
 
-        <% if child_pages.any? %>
-          <ol class="subsection">
-            <% child_pages.each do |page| %>
-              <li class="<%= 'active' if current_page? [spotlight, @exhibit, page] %>"><%= link_to_unless_current page.title, [spotlight, @exhibit, page] %></li>
-            <% end %>
-          </ol>
-        <% end %>
-      </li>
-    <% end %>
-  </ol>
+          <% if child_pages.any? %>
+            <ol class="subsection">
+              <% child_pages.each do |page| %>
+                <li class="<%= 'active' if current_page? [spotlight, @exhibit, page] %>"><%= link_to_unless_current page.title, [spotlight, @exhibit, page] %></li>
+              <% end %>
+            </ol>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+  </nav>
 <% end %>

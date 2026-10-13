@@ -6,13 +6,14 @@ SirTrevor.Blocks.FeaturedPages = (function () {
 
     icon_name: "pages",
 
+    blockGroup: "undefined",
+
     show_image_selection: false,
 
     autocomplete_url: function () {
-      return document
-        .getElementById(this.instanceID)
-        .closest("form[data-autocomplete-exhibit-pages-path]").dataset
-        .autocompleteExhibitPagesPath
+      return this.instance().closest(
+        "form[data-autocomplete-exhibit-pages-path]",
+      ).dataset.autocompleteExhibitPagesPath
     },
     autocomplete_fetch: function (url) {
       return this.fetchOnceAndFilterLocalResults(url)

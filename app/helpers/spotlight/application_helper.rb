@@ -45,7 +45,7 @@ module Spotlight
       initial_exception = nil
 
       ([self] + additional_locale_routing_scopes).each do |scope|
-        return scope.public_send(:url_for, params.to_unsafe_h.merge(locale:))
+        return scope.url_for(params.to_unsafe_h.merge(locale:))
       rescue ActionController::UrlGenerationError => e
         initial_exception ||= e
       end
@@ -59,9 +59,9 @@ module Spotlight
 
     # Can search for named routes directly in the main app, omitting
     # the "main_app." prefix
-    def method_missing(method, *args, &)
+    def method_missing(method, *, &)
       if main_app_url_helper?(method)
-        main_app.send(method, *args)
+        main_app.send(method, *)
       else
         super
       end
@@ -91,6 +91,17 @@ module Spotlight
       else
         search_action_url(q: tag)
       end
+    end
+
+    ##
+    # Helper to search the exhibit with a saved search's query. Falls back to the
+    # default search field so that a search without a query still lands on the
+    # results page instead of being redirected to the exhibit home page
+    def path_to_saved_search(search)
+      spotlight.search_exhibit_catalog_path(
+        search.exhibit,
+        search.query_params.presence || { search_field: search.blacklight_config.default_search_field.key }
+      )
     end
 
     ##

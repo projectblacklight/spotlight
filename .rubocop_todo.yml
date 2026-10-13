@@ -6,46 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 18
-Capybara/RSpec/NegationMatcherAfterVisit:
-  Exclude:
-    - "spec/features/add_custom_field_metadata_spec.rb"
-    - "spec/features/browse_category_spec.rb"
-    - "spec/features/exhibit_masthead_spec.rb"
-    - "spec/features/feature_page_spec.rb"
-    - "spec/features/home_page_spec.rb"
-    - "spec/features/item_admin_spec.rb"
-    - "spec/features/javascript/metadata_admin_spec.rb"
-    - "spec/features/main_navigation_spec.rb"
-    - "spec/features/report_a_problem_spec.rb"
-    - "spec/features/site_masthead_spec.rb"
-
-# Offense count: 46
-Capybara/RSpec/SpecificMatcher:
-  Exclude:
-    - "spec/components/spotlight/select_image_component_spec.rb"
-    - "spec/features/add_iiif_manifest_spec.rb"
-    - "spec/features/edit_search_fields_spec.rb"
-    - "spec/features/exhibits/administration_spec.rb"
-    - "spec/features/exhibits/language_create_edit_spec.rb"
-    - "spec/features/exhibits/translation_editing_spec.rb"
-    - "spec/features/item_admin_spec.rb"
-    - "spec/features/javascript/edit_in_place_spec.rb"
-    - "spec/features/javascript/home_page_edit_spec.rb"
-    - "spec/features/javascript/locale_selector_spec.rb"
-    - "spec/features/javascript/metadata_admin_spec.rb"
-    - "spec/features/javascript/search_config_admin_spec.rb"
-    - "spec/features/main_navigation_spec.rb"
-    - "spec/features/site_users_management_spec.rb"
-    - "spec/spec_helper.rb"
-    - "spec/views/spotlight/about_pages/index.html.erb_spec.rb"
-    - "spec/views/spotlight/exhibits/_form.html.erb_spec.rb"
-    - "spec/views/spotlight/pages/index.html.erb_spec.rb"
-    - "spec/views/spotlight/search_configurations/_search_fields.html.erb_spec.rb"
-    - "spec/views/spotlight/search_configurations/_sort.html.erb_spec.rb"
-    - "spec/views/spotlight/sir_trevor/blocks/_uploaded_items_block.html.erb_spec.rb"
-    - "spec/views/spotlight/translations/_import.html.erb_spec.rb"
-
 # Offense count: 20
 # Configuration parameters: EnforcedStyle, AllowedGems.
 # SupportedStyles: Gemfile, gems.rb, gemspec
@@ -75,18 +35,6 @@ Lint/ConstantDefinitionInBlock:
     - "spec/models/sir_trevor_rails/blocks/textable_spec.rb"
     - "spec/models/spotlight/access_controls_enforcement_search_builder_spec.rb"
     - "spec/models/spotlight/browse_category_search_builder_spec.rb"
-
-# Offense count: 1
-Lint/CopDirectiveSyntax:
-  Exclude:
-    - "spec/controllers/spotlight/catalog_controller_spec.rb"
-
-# Offense count: 2
-# Configuration parameters: IgnoreLiteralBranches, IgnoreConstantBranches, IgnoreDuplicateElseBranch.
-Lint/DuplicateBranch:
-  Exclude:
-    - "app/controllers/spotlight/concerns/application_controller.rb"
-    - "app/models/spotlight/resources/iiif_manifest_metadata.rb"
 
 # Offense count: 2
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
@@ -252,7 +200,7 @@ RSpec/BeEq:
 RSpec/BeforeAfterAll:
   Exclude:
     - "spec/features/exhibits/translation_editing_spec.rb"
-    - "spec/features/javascript/locale_selector_spec.rb"
+    - "spec/features/locale_selector_spec.rb"
 
 # Offense count: 25
 # This cop supports safe autocorrection (--autocorrect).
@@ -379,7 +327,7 @@ RSpec/LetSetup:
     - "spec/features/javascript/blocks/rule_block_spec.rb"
     - "spec/features/javascript/blocks/search_result_block_spec.rb"
     - "spec/features/javascript/feature_page_admin_spec.rb"
-    - "spec/features/javascript/locale_selector_spec.rb"
+    - "spec/features/locale_selector_spec.rb"
     - "spec/lib/migration/iiif_spec.rb"
     - "spec/models/sir_trevor_rails/blocks/browse_group_categories_block_spec.rb"
     - "spec/models/sir_trevor_rails/blocks/featured_pages_block_spec.rb"
@@ -486,7 +434,7 @@ RSpec/MetadataStyle:
     - "spec/features/javascript/edit_in_place_spec.rb"
     - "spec/features/javascript/feature_page_admin_spec.rb"
     - "spec/features/javascript/home_page_edit_spec.rb"
-    - "spec/features/javascript/locale_selector_spec.rb"
+    - "spec/features/locale_selector_spec.rb"
     - "spec/features/javascript/metadata_admin_spec.rb"
     - "spec/features/javascript/multi_image_select_spec.rb"
     - "spec/features/javascript/reindex_monitor_spec.rb"
@@ -605,33 +553,6 @@ RSpec/RepeatedDescription:
 RSpec/RepeatedExampleGroupBody:
   Exclude:
     - "spec/controllers/spotlight/featured_images_controller_spec.rb"
-
-# Offense count: 54
-RSpec/StubbedMock:
-  Exclude:
-    - "spec/components/spotlight/exhibit_navbar_component_spec.rb"
-    - "spec/controllers/spotlight/about_pages_controller_spec.rb"
-    - "spec/controllers/spotlight/browse_controller_spec.rb"
-    - "spec/controllers/spotlight/contacts_controller_spec.rb"
-    - "spec/controllers/spotlight/dashboards_controller_spec.rb"
-    - "spec/controllers/spotlight/exhibits_controller_spec.rb"
-    - "spec/controllers/spotlight/resources/csv_upload_controller_spec.rb"
-    - "spec/controllers/spotlight/resources_controller_spec.rb"
-    - "spec/controllers/spotlight/searches_controller_spec.rb"
-    - "spec/features/add_iiif_manifest_spec.rb"
-    - "spec/helpers/spotlight/crud_link_helpers_spec.rb"
-    - "spec/helpers/spotlight/languages_helper_spec.rb"
-    - "spec/helpers/spotlight/pages_helper_spec.rb"
-    - "spec/jobs/spotlight/add_uploads_from_csv_spec.rb"
-    - "spec/lib/migration/iiif_spec.rb"
-    - "spec/models/solr_document_spec.rb"
-    - "spec/models/spotlight/exhibit_spec.rb"
-    - "spec/models/spotlight/featured_image_spec.rb"
-    - "spec/models/spotlight/page_configurations_spec.rb"
-    - "spec/models/spotlight/resource_spec.rb"
-    - "spec/models/spotlight/user_spec.rb"
-    - "spec/views/spotlight/catalog/_edit_default.html.erb_spec.rb"
-    - "spec/views/spotlight/searches/index.html.erb_spec.rb"
 
 # Offense count: 2
 RSpec/SubjectDeclaration:
@@ -966,13 +887,6 @@ Style/ReturnNilInPredicateMethodDefinition:
 Style/SelectByRegexp:
   Exclude:
     - "app/jobs/spotlight/process_bulk_updates_csv_job.rb"
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowSend.
-Style/SendWithLiteralMethodName:
-  Exclude:
-    - "app/helpers/spotlight/application_helper.rb"
 
 # Offense count: 5
 # This cop supports unsafe autocorrection (--autocorrect-all).

@@ -93,17 +93,17 @@ RSpec.describe Spotlight::ExhibitNavbarComponent, type: :component do
     end
 
     it 'includes the search bar when the exhibit is searchable' do
-      expect(current_exhibit).to receive(:searchable?).and_return(true)
+      allow(current_exhibit).to receive(:searchable?).and_return(true)
       expect(rendered).to have_text 'Search'
     end
 
     it 'does not include the search bar when the exhibit is not searchable' do
-      expect(current_exhibit).to receive(:searchable?).and_return(false)
+      allow(current_exhibit).to receive(:searchable?).and_return(false)
       expect(rendered).to have_no_text 'Search'
     end
 
     it 'does not include any navigation menu items that are not configured' do
-      expect(current_exhibit.main_navigations).to receive_messages(displayable: [])
+      allow(current_exhibit.main_navigations).to receive_messages(displayable: [])
       expect(rendered).to have_css('.navbar-nav li', count: 1)
       expect(rendered).to have_css('.navbar-nav li', text: 'Home')
     end

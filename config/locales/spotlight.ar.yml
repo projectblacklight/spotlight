@@ -29,10 +29,9 @@ ar:
         reset: مسح استعلام البحث
         submit: ابحث في فئة التصفح
         success:
-          expand_html: "يمكنك ايضاً <a href=\"%{expand_search_url}\">البحث في كل مواد المعرض عن \"%{browse_query}\"</a>."
           result_number_html: "طابق استعلام البحث <strong> %{search_size} من %{parent_search_count} عنصر</strong> في هذه الفئة."
+        view_search: اعرض فئة التصفح هذه مع مزيد من خيارات البحث والتصفية
         zero_results:
-          expand_html: "تستطيع أن <a href=\"%{clear_search_url}\"> تمسح استعلام البحث </a> أو محاولة <a href=\"%{expand_search_url}\"> البحث في كل المواد المعروضة لاستعلام البحث ل\"%{browse_query}\"</a>"
           result_number: لم يتطابق بحثك مع أي عنصر في هذه الفئة.
     exhibits:
       groups:

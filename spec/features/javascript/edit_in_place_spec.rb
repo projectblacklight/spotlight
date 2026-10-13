@@ -12,7 +12,7 @@ RSpec.describe 'Edit in place', js: true, type: :feature do
 
       click_link 'Feature pages'
 
-      add_new_via_button('My New Feature Page')
+      add_new_via_button('My New Feature Page', alert: 'The feature page was created.')
 
       expect(page).to have_css('h3', text: 'My New Feature Page')
 
@@ -38,7 +38,7 @@ RSpec.describe 'Edit in place', js: true, type: :feature do
 
       click_link 'Feature pages'
 
-      add_new_via_button('My New Feature Page')
+      add_new_via_button('My New Feature Page', alert: 'The feature page was created.')
 
       expect(page).to have_css('h3', text: 'My New Feature Page')
 
@@ -90,7 +90,7 @@ RSpec.describe 'Edit in place', js: true, type: :feature do
       end
     end
 
-    it 'updates the metadata label', max_wait_time: 10 do
+    it 'updates the metadata label' do
       visit spotlight.exhibit_dashboard_path(exhibit)
 
       within '#sidebar' do
@@ -111,7 +111,7 @@ RSpec.describe 'Edit in place', js: true, type: :feature do
       expect_new_page { click_button 'Save changes' }
 
       within('.metadata_fields') do
-        expect(page).to have_css('a[href="#edit-in-place"]', text: 'Brand new name')
+        expect(page).to have_link('Brand new name', href: '#edit-in-place')
         expect(page).to have_css('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default', visible: true)
       end
 
@@ -119,7 +119,7 @@ RSpec.describe 'Edit in place', js: true, type: :feature do
       expect_new_page { click_button 'Save changes' }
 
       within('.metadata_fields') do
-        expect(page).to have_css('a[href="#edit-in-place"]', text: 'Personal names')
+        expect(page).to have_link('Personal names', href: '#edit-in-place')
         expect(page).to have_no_selector('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default')
       end
     end

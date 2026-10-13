@@ -1,5 +1,6 @@
 <% set_html_page_title @page.title if @page.should_display_title? %>
 <% add_page_meta_content(@page) %>
+<%= content_for(:no_content_label, 'true') %>
 
 <% content_for(:sidebar) do %>
   <%= render 'sidebar' %>

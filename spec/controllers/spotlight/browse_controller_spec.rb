@@ -11,27 +11,24 @@ RSpec.describe Spotlight::BrowseController, type: :controller do
 
   describe 'protected methods' do
     it 'uses the blacklight.browse configuration for the document actions when additional configuration layers are not defined' do
-      expect(controller).to receive(:view_available?).and_return true
+      allow(controller).to receive(:view_available?).and_return true
       expect(controller.send(:document_index_view_type)).to equal :gallery
     end
 
     it 'uses the blacklight_config view configuration when there are no params' do
-      allow(controller).to receive(:current_exhibit).and_return exhibit
-      expect(controller).to receive(:view_available?).and_return false
+      allow(controller).to receive_messages(current_exhibit: exhibit, view_available?: false)
       expect(controller.send(:document_index_view_type)).to equal :list
     end
 
     it 'returns document_index_view_type from a search object' do
-      allow(controller).to receive(:current_exhibit).and_return exhibit
-      expect(controller).to receive(:view_available?).and_return true
+      allow(controller).to receive_messages(current_exhibit: exhibit, view_available?: true)
       search.default_index_view_type = 'gallery'
       controller.instance_variable_set(:@search, search)
       expect(controller.send(:default_document_index_view_type)).to equal :gallery
     end
 
     it 'returns default_document_index_view_type from super when there is no view available' do
-      allow(controller).to receive(:current_exhibit).and_return exhibit
-      expect(controller).to receive(:view_available?).and_return false
+      allow(controller).to receive_messages(current_exhibit: exhibit, view_available?: false)
       expect(controller.send(:default_document_index_view_type)).to equal :list
     end
 

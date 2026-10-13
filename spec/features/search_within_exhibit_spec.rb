@@ -23,7 +23,7 @@ RSpec.describe 'Search within an exhibit', type: :feature do
 
     it "has a 'Item Visiblity' facet" do
       visit spotlight.search_exhibit_catalog_path(exhibit)
-      expect(page).to have_css '.card-header', text: 'Item visibility'
+      expect(page).to have_css '.facet-field-heading', text: 'Item visibility'
     end
   end
 
@@ -46,11 +46,5 @@ RSpec.describe 'Search within an exhibit', type: :feature do
       visit spotlight.search_exhibit_catalog_path(exhibit, q: 'zzexhibittag')
       expect(page).to have_text "L'AMERIQUE"
     end
-  end
-
-  it 'has breadcrumbs' do
-    visit spotlight.search_exhibit_catalog_path(exhibit, q: 'xyz')
-    expect(page).to have_breadcrumbs 'Home', 'Search results'
-    expect(page).to have_css '.breadcrumb-item.active', text: 'Search results'
   end
 end

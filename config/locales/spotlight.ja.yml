@@ -27,10 +27,9 @@ ja:
         reset: 検索ボックスをクリア
         submit: このカテゴリ内を検索
         success:
-          expand_html: <a href="%{expand_search_url}">「%{browse_query}」で展示全体を検索</a>することもできます。
           result_number_html: このカテゴリ内の <strong>%{parent_search_count} 件中 %{search_size} 件</strong>が検索条件に一致しました。
+        view_search: より多くの検索・絞り込みオプションでこのカテゴリを表示
         zero_results:
-          expand_html: <a href="%{clear_search_url}">検索条件をクリア</a>するか、<a href="%{expand_search_url}">「%{browse_query}」で展示全体を検索</a>してみてください。
           result_number: このカテゴリ内に検索条件と一致する資料はありませんでした。
     header_links:
       contact: ご意見・お問い合わせ

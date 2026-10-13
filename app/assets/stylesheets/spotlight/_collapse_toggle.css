@@ -1,5 +1,5 @@
-// Rotate collapse-chevron element (has a ❯ in it)
-// with the previous siblings collapsed status
+/* Rotate collapse-chevron element (has a ❯ in it)
+with the previous siblings collapsed status */
 .btn.collapse-toggle {
   & + .collapse-chevron {
     display: inline-block;

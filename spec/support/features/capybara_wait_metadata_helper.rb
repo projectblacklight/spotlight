@@ -5,7 +5,9 @@ module CapybaraWaitMetadataHelper
 
   included do
     around do |example|
-      using_wait_time example.metadata[:max_wait_time] || Capybara.default_max_wait_time do
+      next example.run unless example.metadata.key?(:max_wait_time)
+
+      using_wait_time example.metadata[:max_wait_time] do
         example.run
       end
     end

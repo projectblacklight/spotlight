@@ -185,6 +185,16 @@ RSpec.describe Spotlight::Page, type: :model do
     end
   end
 
+  describe '#default_locale?' do
+    let(:page) { FactoryBot.create(:feature_page, exhibit:) }
+    let(:page_es) { FactoryBot.create(:feature_page, exhibit:, locale: 'es', default_locale_page: page) }
+
+    it 'checks if the page is in the default locale' do
+      expect(page).to be_default_locale
+      expect(page_es).not_to be_default_locale
+    end
+  end
+
   describe 'clone_for_locale' do
     subject!(:cloned_page) { page.clone_for_locale('es') }
 

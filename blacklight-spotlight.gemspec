@@ -18,11 +18,11 @@ these collections.)
 
   s.files = Dir['{app,config,db,lib,vendor}/**/*', 'Rakefile', 'README.md', 'LICENSE', 'spec/{factories,fixtures}/*', 'spec/support/**/*']
 
-  s.required_ruby_version = '>= 3.1'
+  s.required_ruby_version = '>= 3.3'
 
   s.add_dependency 'activejob-status'
   s.add_dependency 'acts-as-taggable-on', '>= 5.0', '< 14'
-  s.add_dependency 'blacklight', '>= 8.7.0', '< 9'
+  s.add_dependency 'blacklight', '>= 8.7.0', '< 10'
   s.add_dependency 'blacklight-gallery', '>= 3.0', '< 7'
   s.add_dependency 'bootstrap_form', '>= 5.4', '< 6'
   s.add_dependency 'cancancan'
@@ -46,7 +46,7 @@ these collections.)
   s.add_dependency 'rails', '>= 7.1', '< 9'
   s.add_dependency 'redcarpet', '>= 2.0.1', '< 4'
   s.add_dependency 'riiif', '~> 2.0'
-  s.add_dependency 'view_component', '>= 2.66', '< 4'
+  s.add_dependency 'view_component', '>= 2.66', '< 5'
   s.add_development_dependency 'axe-core-rspec'
   s.add_development_dependency 'capybara', '~> 3.31'
   s.add_development_dependency 'engine_cart', '~> 2.0'

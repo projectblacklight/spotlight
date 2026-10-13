@@ -22,7 +22,7 @@ module Spotlight
 
       current_exhibit.solr_data.each do |facet_field, values|
         Array(values).each do |value|
-          solr_params.append_filter_query send(:facet_value_to_fq_string, facet_field, value)
+          solr_params.append_filter_query exhibit_facet_value_to_fq_string(facet_field, value)
         end
       end
     end
@@ -31,6 +31,17 @@ module Spotlight
 
     def current_exhibit
       blacklight_config.current_exhibit
+    end
+
+    # Blacklight 9 moved facet_value_to_fq_string out of SearchBuilder and into
+    # Blacklight::Solr::DefaultFilterQueryBuilder; call whichever is available.
+    # Remove the fallback when Blacklight 8 support is dropped.
+    def exhibit_facet_value_to_fq_string(facet_field, value)
+      if defined?(Blacklight::Solr::DefaultFilterQueryBuilder)
+        Blacklight::Solr::DefaultFilterQueryBuilder.new(blacklight_config:).send(:facet_value_to_fq_string, facet_field, value)
+      else
+        send(:facet_value_to_fq_string, facet_field, value)
+      end
     end
   end
 end

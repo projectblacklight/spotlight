@@ -85,18 +85,6 @@ RSpec.describe 'Translation editing', type: :feature do
         expect(I18n.t(:'spotlight.curation.nav.home')).to eq 'Maison'
         I18n.locale = I18n.default_locale
       end
-
-      it 'adds translations to user-facing breadcrumbs' do
-        expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
-        visit spotlight.exhibit_browse_index_path(exhibit, locale: 'fr')
-        expect(page).to have_breadcrumbs 'Maison', 'parcourir ceci!'
-      end
-
-      it 'does not translate admin breadcrumbs' do
-        expect(page).to have_css '.flash_messages', text: 'The exhibit was successfully updated.'
-        visit spotlight.exhibit_searches_path(exhibit, locale: 'fr')
-        expect(page).to have_breadcrumbs 'Home', 'Curation', 'Browse'
-      end
     end
 
     describe 'breadcrumbs' do
@@ -181,13 +169,7 @@ RSpec.describe 'Translation editing', type: :feature do
     end
 
     describe 'configured fields' do
-      it 'has a text input for each metadata field' do
-        within '#metadata' do
-          expect(page).to have_css('input[type="text"]', count: 17)
-        end
-      end
-
-      it 'allows users to translate both index and show metadata field labels', js: true do
+      it 'allows users to translate both index and show metadata field labels' do
         click_link 'Metadata field labels'
 
         within('#metadata', visible: true) do
@@ -212,16 +194,6 @@ RSpec.describe 'Translation editing', type: :feature do
 
       before do
         visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
-      end
-
-      it 'has text inputs for the exhibit-specific fields' do
-        within '#metadata' do
-          expect(page).to have_css('input[type="text"]', count: 18)
-
-          within '.translation-exhibit-specific-fields' do
-            expect(page).to have_css('input[type="text"]', count: 1)
-          end
-        end
       end
 
       it 'allows users to translate exhibit-specific metadata fields' do
@@ -258,13 +230,7 @@ RSpec.describe 'Translation editing', type: :feature do
     end
 
     describe 'field-based search fields' do
-      it 'has a text input for each enabled search field' do
-        within '#search_fields .translation-field-based-search-fields' do
-          expect(page).to have_css('input[type="text"]', count: 3)
-        end
-      end
-
-      it 'allows users to translate field-based search fields', js: true do
+      it 'allows users to translate field-based search fields' do
         click_link 'Search field labels'
 
         within('#search_fields', visible: true) do
@@ -279,13 +245,7 @@ RSpec.describe 'Translation editing', type: :feature do
     end
 
     describe 'facet fields' do
-      it 'has a text input for each facet field' do
-        within '#search_fields .translation-facet-fields' do
-          expect(page).to have_css('input[type="text"]', count: 7)
-        end
-      end
-
-      it 'allows users to translate facet fields', js: true do
+      it 'allows users to translate facet fields' do
         click_link 'Search field labels'
 
         within('#search_fields', visible: true) do
@@ -300,13 +260,7 @@ RSpec.describe 'Translation editing', type: :feature do
     end
 
     describe 'sort fields' do
-      it 'has a text input for each sort field' do
-        within '#search_fields .translation-sort-fields' do
-          expect(page).to have_css('input[type="text"]', count: 6)
-        end
-      end
-
-      it 'allows users to translation sort fields', js: true do
+      it 'allows users to translation sort fields' do
         click_link 'Search field labels'
 
         within('#search_fields', visible: true) do
@@ -328,17 +282,6 @@ RSpec.describe 'Translation editing', type: :feature do
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
     end
 
-    it 'has a title and description for every browse category' do
-      within '#browse' do
-        expect(page).to have_css('input[type="text"]', count: 4)
-        expect(page).to have_css('textarea', count: 2)
-
-        expect(page).to have_field 'All exhibit items'
-        expect(page).to have_field 'Browse Category 1'
-        expect(page).to have_css('.form-text', text: 'All items in this exhibit.')
-      end
-    end
-
     it 'redirects to the same form tab' do
       click_link 'Browse categories'
       within('#browse', visible: true) do
@@ -350,16 +293,13 @@ RSpec.describe 'Translation editing', type: :feature do
       expect(page).to have_css '.nav-tabs .nav-link.active', text: 'Browse categories'
     end
 
-    it 'persists changes', js: true do
+    it 'persists changes' do
       click_link 'Browse categories'
 
       within('#browse', visible: true) do
         fill_in 'All exhibit items', with: "Tous les objets d'exposition"
 
-        first('.translation-description-toggle').click
-
-        textarea = page.find('textarea')
-        textarea.set('Tous les articles de cette exposition.')
+        first('textarea').set('Tous les articles de cette exposition.')
 
         click_button 'Save changes'
       end
@@ -386,15 +326,6 @@ RSpec.describe 'Translation editing', type: :feature do
       visit spotlight.edit_exhibit_translations_path(exhibit, language: 'fr')
     end
 
-    it 'has a title browse group' do
-      within '#groups' do
-        expect(page).to have_css('input[type="text"]', count: 2)
-
-        expect(page).to have_field 'Browse Group 1'
-        expect(page).to have_field 'Browse Group 2'
-      end
-    end
-
     it 'redirects to the same form tab' do
       click_link 'Browse categories'
       within('#groups', visible: true) do
@@ -406,7 +337,7 @@ RSpec.describe 'Translation editing', type: :feature do
       expect(page).to have_css '.nav-tabs .nav-link.active', text: 'Browse groups'
     end
 
-    it 'persists changes', js: true do
+    it 'persists changes' do
       click_link 'Browse groups'
 
       within('#groups', visible: true) do

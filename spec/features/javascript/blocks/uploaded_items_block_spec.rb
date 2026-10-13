@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Uploaded Items Block', feature: true, js: true, versioning: true do
+RSpec.describe 'Uploaded Items Block', feature: true, js: true do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:fixture_file1) { File.join(FIXTURES_PATH, '800x600.png') }
@@ -13,6 +13,9 @@ RSpec.describe 'Uploaded Items Block', feature: true, js: true, versioning: true
   end
 
   it 'users can upload images with text' do
+    expect(page).to have_text('For each item, please enter alternative text')
+    expect(page).to have_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
+
     heading = 'Some Uploaded Images'
     text = 'Take a look at these images I just uploaded!'
     fill_in 'Heading', with: heading
@@ -51,12 +54,19 @@ RSpec.describe 'Uploaded Items Block', feature: true, js: true, versioning: true
     end
   end
 
-  it 'users can toggle individual images to not display' do
+  it 'users can mark images as decorative and toggle individual images to not display' do
     attach_file('uploaded_item_url', fixture_file1)
+
+    fill_in 'Alternative text', with: 'custom alt text'
+    check 'Decorative'
+    expect(page).to have_field('Alternative text', type: 'textarea', disabled: true, placeholder: '', with: '')
+    uncheck 'Decorative'
+    expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
+
     attach_file('uploaded_item_url', fixture_file2)
 
     # This line blocks until the javascript has added the file to the page:
-    expect(find('input[name="item[file_0][display]"]')).to be_present
+    expect(find('input[name="item[file_1][display]"]')).to be_present
 
     # Uncheck the first checkbox
     first('input[type="checkbox"]').click
@@ -66,21 +76,6 @@ RSpec.describe 'Uploaded Items Block', feature: true, js: true, versioning: true
     within('.uploaded-items-block') do
       expect(page).to have_css('img[alt=""]', count: 1)
     end
-  end
-
-  it 'displays alternative text guidelines', js: true do
-    expect(page).to have_text('For each item, please enter alternative text')
-    expect(page).to have_link('Guidelines for writing alt text.', href: 'https://www.w3.org/WAI/tutorials/images/')
-  end
-
-  it 'toggles alt text input when marking an image as decorative' do
-    attach_file('uploaded_item_url', fixture_file1)
-
-    fill_in 'Alternative text', with: 'custom alt text'
-    check 'Decorative'
-    expect(page).to have_field('Alternative text', type: 'textarea', disabled: true, placeholder: '', with: '')
-    uncheck 'Decorative'
-    expect(page).to have_field('Alternative text', type: 'textarea', disabled: false, with: 'custom alt text')
   end
 
   it 'may have ZPR links' do

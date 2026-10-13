@@ -6,6 +6,7 @@ RSpec.describe 'Report a Problem', type: :feature do
 
   it 'does not have a header link' do
     visit root_path
+    expect(page).to have_link exhibit.title
     expect(page).to have_no_text 'Feedback'
   end
 

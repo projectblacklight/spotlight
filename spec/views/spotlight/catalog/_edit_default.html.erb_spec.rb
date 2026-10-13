@@ -16,8 +16,8 @@ RSpec.describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
     allow(view).to receive(:uploaded_field_label) do |config|
       "#{config.field_name} label"
     end
-    expect(view).to receive_messages(current_exhibit: exhibit)
-    expect(view).to receive_messages(document:)
+    allow(view).to receive_messages(current_exhibit: exhibit)
+    allow(view).to receive_messages(document:)
     expect(view).to receive(:can?).at_least(:once).and_return(true)
   end
 
@@ -35,7 +35,7 @@ RSpec.describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
   end
 
   it 'has special metadata fields for an uploaded resource' do
-    expect(document).to receive_messages(uploaded_resource?: true)
+    allow(document).to receive_messages(uploaded_resource?: true)
     render
     expect(rendered).to have_field 'full_title_tesim label'
     expect(rendered).to have_field 'spotlight_upload_description_tesim label'

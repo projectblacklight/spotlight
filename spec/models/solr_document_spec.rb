@@ -205,7 +205,7 @@ RSpec.describe SolrDocument, type: :model do
     let(:doc) { described_class.new id: 1 }
 
     it 'reindexes all solr documents' do
-      expect(described_class).to receive(:find_each).and_yield(doc)
+      allow(described_class).to receive(:find_each).and_yield(doc)
       expect(doc).to receive(:reindex)
 
       described_class.reindex_all

@@ -43,5 +43,5 @@ html {
   min-height: 100%;
 }
 body {
-  margin-bottom: $footer-height + $footer-top-margin;
+  margin-bottom: calc(var(--footer-height) + var(--footer-top-margin));
 }

@@ -12,11 +12,6 @@ RSpec.describe 'Search Administration', type: :feature do
       expect(page).to have_css('h1 small', text: 'Search')
     end
 
-    it 'has breadcrumbs' do
-      visit spotlight.edit_exhibit_search_configuration_path exhibit
-      expect(page).to have_breadcrumbs 'Home', 'Configuration', 'Search'
-    end
-
     describe 'facets' do
       it 'displays information about the facets' do
         visit spotlight.edit_exhibit_search_configuration_path(exhibit)
@@ -42,6 +37,43 @@ RSpec.describe 'Search Administration', type: :feature do
         expect(exhibit.reload.blacklight_config.facet_fields.select { |_k, v| v.show }.keys).to include('subject_temporal_ssim')
         expect(exhibit.blacklight_config.facet_fields.select { |_k, v| v.show }.keys).not_to include('language_ssim', 'genre_ssim')
       end
+
+      it 'allows the curator to select a different facet sort order' do
+        visit spotlight.edit_exhibit_search_configuration_path(exhibit)
+
+        within '.facet-config-genre_ssim' do
+          expect(find_by_id('blacklight_configuration_facet_fields_genre_ssim_sort_count')).to be_checked
+
+          choose 'Value'
+        end
+
+        click_button 'Save changes'
+
+        expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.')
+
+        exhibit.reload
+        expect(exhibit.blacklight_config.facet_fields['genre_ssim'].sort).to eq 'index'
+      end
+    end
+
+    describe 'results' do
+      it 'updates search result options' do
+        visit spotlight.edit_exhibit_search_configuration_path(exhibit)
+
+        uncheck 'List'
+
+        choose '20'
+
+        click_button 'Save changes'
+
+        expect(page).to have_css('.alert', text: 'The exhibit was successfully updated.')
+
+        expect(page).to have_unchecked_field 'List'
+        expect(page).to have_checked_field 'Gallery'
+
+        expect(page).to have_checked_field '20'
+        expect(page).to have_unchecked_field '10'
+      end
     end
 
     describe 'sort' do
@@ -53,7 +85,7 @@ RSpec.describe 'Search Administration', type: :feature do
       it 'updates sort options' do
         visit spotlight.edit_exhibit_search_configuration_path(exhibit)
 
-        expect(page).to have_css("input[name='blacklight_configuration[sort_fields][relevance][enable]'][disabled='disabled']")
+        expect(page).to have_field('blacklight_configuration[sort_fields][relevance][enable]', disabled: true)
         expect(page).to have_css('#nested-sort-fields .dd-item:nth-child(5) h3', text: 'date (new to old)')
 
         uncheck 'blacklight_configuration_sort_fields_title_enabled'
@@ -65,7 +97,7 @@ RSpec.describe 'Search Administration', type: :feature do
 
         click_link 'Results'
 
-        expect(page).to have_css("input[name='blacklight_configuration[sort_fields][relevance][enable]'][disabled='disabled']")
+        expect(page).to have_field('blacklight_configuration[sort_fields][relevance][enable]', disabled: true)
         expect(find_by_id('blacklight_configuration_sort_fields_type_enabled')).to be_checked
         expect(find_by_id('blacklight_configuration_sort_fields_date_enabled')).to be_checked
         expect(find_by_id('blacklight_configuration_sort_fields_title_enabled')).not_to be_checked

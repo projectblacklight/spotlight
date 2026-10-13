@@ -12,25 +12,26 @@ RSpec.describe Spotlight::Resource, type: :model do
     end
 
     it 'saves the object' do
-      expect(subject).to receive(:save).and_return(true)
+      allow(subject).to receive(:save).and_return(true)
       subject.save_and_index
+      expect(subject).to have_received(:save)
     end
 
     it 'reindexes after save' do
-      expect(subject).to receive(:save).and_return(true)
+      allow(subject).to receive(:save).and_return(true)
       expect(subject).to receive(:reindex_later)
       subject.save_and_index
     end
 
     it 'passes through reindexing options' do
-      expect(subject).to receive(:save).and_return(true)
+      allow(subject).to receive(:save).and_return(true)
       expect(subject).to receive(:reindex_later).with(a: 1)
       subject.save_and_index(reindex_options: { a: 1 })
     end
 
     context 'if the save fails' do
       it 'does not reindex' do
-        expect(subject).to receive(:save).and_return(false)
+        allow(subject).to receive(:save).and_return(false)
         expect(subject).not_to receive(:reindex_later)
         subject.save_and_index
       end

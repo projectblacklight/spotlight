@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Locale Selector', js: true do
+RSpec.describe 'Locale Selector' do
   let(:exhibit) { FactoryBot.create(:exhibit, published: true) }
   let!(:language_es) { FactoryBot.create(:language, exhibit:, locale: 'es', public: true) }
   let!(:language_zh) { FactoryBot.create(:language, exhibit:, locale: 'zh') }
@@ -12,16 +12,17 @@ RSpec.describe 'Locale Selector', js: true do
     I18n.fallbacks[:es] = [:es, I18n.default_locale]
   end
 
+  def locale_menu
+    find('li.dropdown', text: 'English').find('.dropdown-menu')
+  end
+
   context 'with an anonymous user' do
     let(:user) { FactoryBot.create(:exhibit_visitor) }
 
     it 'only sees public languages' do
       visit spotlight.exhibit_path(exhibit)
 
-      expect(page).to have_css('li.dropdown', text: 'English')
-      click_link 'English'
-
-      within('.dropdown-menu', visible: true) do
+      within(locale_menu) do
         expect(page).to have_css('li', count: 1)
         expect(page).to have_css('li', text: 'Español')
       end
@@ -34,10 +35,7 @@ RSpec.describe 'Locale Selector', js: true do
     it 'can see any saved languages' do
       visit spotlight.exhibit_path(exhibit)
 
-      expect(page).to have_css('li.dropdown', text: 'English')
-      click_link 'English'
-
-      within('.dropdown-menu', visible: true) do
+      within(locale_menu) do
         expect(page).to have_css('li', count: 2)
         expect(page).to have_css('li', text: '中文')
         expect(page).to have_css('li', text: 'Español')
@@ -51,16 +49,14 @@ RSpec.describe 'Locale Selector', js: true do
     it 'allows the user to select the language most appropriate for them' do
       visit spotlight.exhibit_path(exhibit)
 
-      expect(page).to have_css('input[placeholder="Search..."]')
+      expect(page).to have_field(placeholder: 'Search...')
 
-      click_link 'English'
-
-      within('.dropdown-menu', visible: true) do
+      within(locale_menu) do
         click_link 'Español'
       end
 
-      expect(page).to have_no_css('input[placeholder="Search..."]')
-      expect(page).to have_css('input[placeholder="Buscar..."]')
+      expect(page).to have_no_field(placeholder: 'Search...')
+      expect(page).to have_field(placeholder: 'Buscar...')
     end
   end
 end

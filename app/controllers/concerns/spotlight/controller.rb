@@ -13,6 +13,9 @@ module Spotlight
     included do
       helper_method :current_site, :current_exhibit, :current_masthead, :exhibit_masthead?, :resource_masthead?, :breadcrumbs
       before_action :set_exhibit_locale_scope, :set_locale
+      # If your app overrides search_state_class, subclass Spotlight::SearchState (rather than
+      # Blacklight::SearchState) to keep exhibit-scoped document routing.
+      self.search_state_class = Spotlight::SearchState
     end
 
     def set_exhibit_locale_scope
@@ -77,27 +80,19 @@ module Spotlight
       end
     end
 
-    def search_state
+    def search_action_url(*, **)
       if current_exhibit
-        @search_state ||= Spotlight::SearchState.new(super, current_exhibit)
+        exhibit_search_action_url(*, **)
       else
-        super
+        main_app.search_catalog_url(*, **)
       end
     end
 
-    def search_action_url(*args, **kwargs)
+    def search_facet_path(*, **)
       if current_exhibit
-        exhibit_search_action_url(*args, **kwargs)
+        exhibit_search_facet_path(*, **)
       else
-        main_app.search_catalog_url(*args, **kwargs)
-      end
-    end
-
-    def search_facet_path(*args, **kwargs)
-      if current_exhibit
-        exhibit_search_facet_path(*args, **kwargs)
-      else
-        main_app.facet_catalog_url(*args, **kwargs)
+        main_app.facet_catalog_url(*, **)
       end
     end
 

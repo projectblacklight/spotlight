@@ -51,18 +51,19 @@ RSpec.describe Spotlight::Resources::CsvUploadController, type: :controller do
       end
 
       it 'starts an AddUploadsFromCsv job with the serialized CSV' do
-        expect(Spotlight::AddUploadsFromCsv).to receive(:perform_later).with(serialized_csv, exhibit, user).and_return(nil)
+        allow(Spotlight::AddUploadsFromCsv).to receive(:perform_later).and_return(nil)
         post :create, params: { exhibit_id: exhibit, resources_csv_upload: { url: csv } }
+        expect(Spotlight::AddUploadsFromCsv).to have_received(:perform_later).with(serialized_csv, exhibit, user)
       end
 
       it 'sets the flash message' do
-        expect(Spotlight::AddUploadsFromCsv).to receive(:perform_later).and_return(nil)
+        allow(Spotlight::AddUploadsFromCsv).to receive(:perform_later).and_return(nil)
         post :create, params: { exhibit_id: exhibit, resources_csv_upload: { url: csv } }
         expect(flash[:notice]).to eq "'csv-upload-fixture.csv' has been uploaded.  An email will be sent to you once indexing is complete."
       end
 
       it 'redirects back' do
-        expect(Spotlight::AddUploadsFromCsv).to receive(:perform_later).and_return(nil)
+        allow(Spotlight::AddUploadsFromCsv).to receive(:perform_later).and_return(nil)
         post :create, params: { exhibit_id: exhibit, resources_csv_upload: { url: csv } }
         expect(response).to redirect_to "http://test.host/spotlight/#{exhibit.slug}/catalog/admin"
       end

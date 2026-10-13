@@ -96,6 +96,7 @@ RSpec.describe 'shared/_user_util_links', type: :view do
       expect(rendered).to have_link 'Site administration'
       expect(rendered).to have_link 'Exhibit dashboard'
       expect(rendered).to have_link 'Create new exhibit'
+      expect(rendered).to have_link 'Change Password'
       expect(rendered).to have_link 'Sign out'
     end
   end

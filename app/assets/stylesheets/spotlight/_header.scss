@@ -12,7 +12,7 @@
 }
 
 .masthead {
-  background-color: $masthead-bg;
+  background-color: var(--masthead-bg);
   border-bottom: 1px solid $border-color;
   margin-bottom: $spacer * 1.5;
   padding: 0;
@@ -42,7 +42,7 @@
   }
 
   .navbar {
-    border-bottom: 1px solid $navbar-transparent-border;
+    border-bottom: 1px solid var(--navbar-transparent-border);
     border-top: 0;
     margin-bottom: 0;
   }
@@ -60,7 +60,7 @@
   @extend .px-4;
   @extend .py-2;
 
-  max-height: $masthead-height - $navbar-brand-height;
+  max-height: calc(var(--masthead-height) - (1.25rem * var(--bs-body-line-height)));
 }
 
 .image-masthead {
@@ -68,7 +68,7 @@
 
   .exhibit-navbar {
     @extend .navbar-dark;
-    background-color: $navbar-transparent-page-bg;
+    background-color: var(--navbar-transparent-page-bg);
 
     .navbar-nav {
       text-transform: uppercase;
@@ -100,14 +100,14 @@
 
     // Add small amount of blur to help text stand out
     //filter: url(masthead/blur.svg#blur); // for older versions of FF
-    -webkit-filter: blur($masthead-image-blur);
-    filter: blur($masthead-image-blur);
+    -webkit-filter: blur(var(--masthead-image-blur));
+    filter: blur(var(--masthead-image-blur));
 
     height: 100%;
 
     // Shift image slightly to hide blurred edge of image
-    margin-left: -$masthead-image-blur;
-    margin-top: -$masthead-image-blur;
+    margin-left: calc(-1 * var(--masthead-image-blur));
+    margin-top: calc(-1 * var(--masthead-image-blur));
     overflow: hidden;
   }
 

@@ -100,6 +100,8 @@ RSpec.configure do |config|
     config.include Devise::TestHelpers, type: :view
   end
 
+  config.include Devise::Test::IntegrationHelpers, type: :request
+
   config.include Spotlight::TestViewHelpers, type: :view
   config.include Warden::Test::Helpers, type: :feature
 
@@ -163,10 +165,10 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 end
 
-def add_new_via_button(title = 'New Page')
+def add_new_via_button(title = 'New Page', alert:)
   add_link = find('[data-expanded-add-button]')
   within(add_link) do
-    expect(page).to have_css("input[type='text']", visible: false)
+    expect(page).to have_field(type: 'text', visible: false)
   end
   add_link.hover
   within(add_link) do
@@ -174,4 +176,6 @@ def add_new_via_button(title = 'New Page')
     input.set(title)
     find("input[data-behavior='save']").click
   end
+  # Wait for the new page to load, so later finders don't hit nodes from the old page
+  expect(page).to have_css '.alert', text: alert
 end

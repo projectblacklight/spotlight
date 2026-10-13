@@ -33,8 +33,7 @@ zh:
         reset: 清除
         submit: 检索所有资料
         success:
-          expand_html: <a href="%{expand_search_url}">您也可检索所有资料 "%{browse_query}"</a>.
           result_number_html: 您的检索在本专题 <strong> %{search_size} of %{parent_search_count} 条资料中检索到</strong> 条.
+        view_search: 使用更多检索和筛选选项查看该类资料
         zero_results:
-          expand_html: <a href="%{clear_search_url}">您可取消本次专题检索</a> 或检索所有资料 <a href="%{expand_search_url}">"%{browse_query}"</a>.
           result_number: 找到0条结果

@@ -1,5 +1,20 @@
 .carousel-block {
 
+  .carousel-pause-play {
+    position: absolute;
+    top: $spacer * .5;
+    right: $spacer * .5;
+    z-index: 3; // above .carousel-control-prev/next and .carousel-indicators
+    display: inline-flex;
+    align-items: center;
+    padding: $spacer * .25;
+    opacity: .8;
+
+    &:hover, &:focus {
+      opacity: 1;
+    }
+  }
+
   .carousel-inner > .carousel-item > a > img {
     // center and fill the image
     margin-left: auto;

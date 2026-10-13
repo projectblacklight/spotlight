@@ -113,7 +113,7 @@ module Spotlight
 
     def add_osd_viewer
       unless Bundler.locked_gems.dependencies.key? 'blacklight-gallery'
-        gem 'blacklight-gallery', '~> 4.0'
+        gem 'blacklight-gallery', '>= 5.1', '< 7'
         bundle_install
       end
       generate 'blacklight_gallery:install'
@@ -182,9 +182,7 @@ module Spotlight
     private
 
     def bundle_install
-      inside destination_root do
-        Bundler.with_unbundled_env { run 'bundle install' }
-      end
+      Bundler.with_original_env { system 'bundle install' }
     end
   end
 end

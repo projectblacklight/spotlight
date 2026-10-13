@@ -37,4 +37,30 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_carousel_block.html.
     expect(rendered).to have_css '.carousel-item img[alt="custom alt text"]'
     expect(rendered).to have_css '.carousel-item img[alt="blah"]'
   end
+
+  it 'does not render a pause/play button when autoplay is off' do
+    expect(rendered).to have_no_css '.carousel-pause-play'
+  end
+
+  it 'announces slide changes when autoplay is off' do
+    expect(rendered).to have_css '.carousel-inner[aria-live="polite"]'
+  end
+
+  context 'with autoplay enabled' do
+    let(:block) do
+      SirTrevorRails::Blocks::SolrDocumentsCarouselBlock.new(
+        { type: 'block', data: { 'auto-play-images' => 'true', 'auto-play-images-interval' => '5000' } }, page
+      )
+    end
+
+    it 'renders a button to stop and restart rotation' do
+      expect(rendered).to have_css 'button.carousel-pause-play[aria-label="Stop automatic slide show"]'
+      expect(rendered).to have_css 'button.carousel-pause-play .carousel-pause-icon'
+      expect(rendered).to have_no_css 'button.carousel-pause-play .carousel-play-icon'
+    end
+
+    it 'does not announce automatic slide changes' do
+      expect(rendered).to have_css '.carousel-inner[aria-live="off"]'
+    end
+  end
 end

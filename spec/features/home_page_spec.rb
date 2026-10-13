@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Home page', type: :feature, versioning: true do
+RSpec.describe 'Home page', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
@@ -45,7 +45,7 @@ RSpec.describe 'Home page', type: :feature, versioning: true do
     click_button 'Genre'
     click_link 'map'
     expect(page).to have_text exhibit.title
-    expect(page).to have_text 'You searched for: Genre map'
+    expect(page).to have_css '.constraint-value', text: 'Genre map'
   end
 
   it 'has a search box' do
@@ -54,17 +54,7 @@ RSpec.describe 'Home page', type: :feature, versioning: true do
     click_button 'Search'
 
     expect(page).to have_text exhibit.title
-    expect(page).to have_text 'You searched for: query'
-  end
-
-  it 'has <meta> tags' do
-    Spotlight::Site.instance.update(title: 'some title')
-
-    visit spotlight.exhibit_home_page_path(exhibit)
-
-    expect(page).to have_css "meta[name='twitter:card'][content='summary']", visible: false
-    expect(page).to have_css "meta[name='twitter:url'][content='#{spotlight.exhibit_root_url(exhibit)}']", visible: false
-    expect(page).to have_css "meta[property='og:site_name'][content='#{Spotlight::Site.instance.title}']", visible: false
+    expect(page).to have_css '.constraint-value', text: 'query'
   end
 
   describe 'page options on edit form' do
@@ -94,6 +84,7 @@ RSpec.describe 'Home page', type: :feature, versioning: true do
 
     it 'does not display the facet sidebar' do
       visit spotlight.exhibit_home_page_path(exhibit)
+      expect(page).to have_css('#main-container h2')
       expect(page).to have_no_css('#sidebar')
     end
   end

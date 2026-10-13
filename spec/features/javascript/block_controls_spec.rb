@@ -3,23 +3,12 @@
 RSpec.describe 'Block controls' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
+  let(:feature_page) { FactoryBot.create(:feature_page, exhibit:) }
 
   before { login_as exhibit_curator }
 
   it 'is split into separate sections', js: true do
-    # create page
-    visit spotlight.exhibit_dashboard_path(exhibit)
-
-    click_link 'Feature pages'
-
-    add_new_via_button('My New Feature Page')
-
-    expect(page).to have_css('h3', text: 'My New Feature Page')
-
-    expect(page).to have_text('The feature page was created.')
-    within('li.dd-item') do
-      click_link 'Edit'
-    end
+    visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
     # fill in title
     fill_in 'feature_page_title', with: 'Exhibit Title'
     # click to add widget
@@ -37,6 +26,7 @@ RSpec.describe 'Block controls' do
       within(first('.st-controls-group')) do
         expect(page).to have_text 'Standard widgets'
         expect(page).to have_css('.st-block-controls__button')
+        expect(page).to have_button 'Pages'
       end
 
       within(all('.st-controls-group').last) do

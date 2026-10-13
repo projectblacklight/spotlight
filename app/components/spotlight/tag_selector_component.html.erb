@@ -1,6 +1,6 @@
 <div data-controller="tag-selector" class="tag-selector" data-tag-selector-translations-value="<%= translation_data.to_json %>" data-tag-selector-tags-value="<%= selected_tags %>">
   <% if form.nil? %>
-    <%= text_field_tag field_name, selected_tags_value, class: 'tag-selector-input', placeholder: t('.no_js_placeholder'), data: { tag_selector_target: "tagsField" } %>
+    <%= text_field_tag field_name, selected_tags_value, id: id, class: 'tag-selector-input', placeholder: t('.no_js_placeholder'), data: { tag_selector_target: "tagsField" } %>
   <% else %>
     <%= form.text_field field_name, value: selected_tags_value, class: 'tag-selector-input', placeholder: t('.no_js_placeholder'), data: { tag_selector_target: "tagsField" } %>
   <% end %>

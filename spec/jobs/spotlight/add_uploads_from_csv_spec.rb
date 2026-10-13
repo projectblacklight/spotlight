@@ -24,8 +24,9 @@ RSpec.describe Spotlight::AddUploadsFromCsv do
     let(:data) { [] }
 
     it 'sends the user an email after the indexing job is complete' do
-      expect(Spotlight::IndexingCompleteMailer).to receive(:documents_indexed).and_return(double(deliver_now: true))
+      allow(Spotlight::IndexingCompleteMailer).to receive(:documents_indexed).and_return(double(deliver_now: true))
       job.perform_now
+      expect(Spotlight::IndexingCompleteMailer).to have_received(:documents_indexed)
     end
   end
 

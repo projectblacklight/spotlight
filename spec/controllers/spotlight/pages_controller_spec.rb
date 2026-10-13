@@ -63,6 +63,31 @@ RSpec.describe Spotlight::PagesController, type: :controller do
     end
   end
 
+  describe '#search_results' do
+    let(:search_states) { [] }
+
+    before do
+      controller.params = ActionController::Parameters.new(exhibit_id: exhibit.slug)
+      allow(Blacklight::SearchService).to receive(:new).and_wrap_original do |original, **kwargs|
+        search_states << kwargs[:search_state]
+        original.call(**kwargs)
+      end
+    end
+
+    it 'searches Solr with a search state built from the given params' do
+      response = controller.send(:search_results, { 'q' => 'xyz' })
+
+      expect(response).to be_a Blacklight::Solr::Response
+      expect(search_states.last).to be_a(Spotlight::SearchState).and(have_attributes(query_param: 'xyz'))
+    end
+
+    it 'routes documents in the results through the exhibit' do
+      document = controller.send(:search_results, {}).documents.first
+
+      expect(search_states.last.url_for_document(document)).to eq [controller.spotlight, exhibit, document]
+    end
+  end
+
   describe 'when user is not authenticated' do
     it 'does not allow publishing pages' do
       put :update_all, params: update_all_params.merge(exhibit_id: exhibit.id)

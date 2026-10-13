@@ -21,7 +21,7 @@ RSpec.describe 'Site users management', js: true do
       expect(page).to have_css('div#admins_curators', text: exhibit_admin.email)
       expect(page).to have_css('div#admins_curators', text: exhibit_curator.email)
       expect(page).to have_no_css('div#admins_curators', text: existing_user.email)
-      expect(page).to have_css('button.copy-email-addresses')
+      expect(page).to have_button(class: 'copy-email-addresses')
     end
 
     it 'copies the email addresses to the clipboard' do

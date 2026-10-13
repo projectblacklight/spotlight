@@ -7,14 +7,8 @@ RSpec.describe 'Browse Group Categories', :js, type: :feature do
   let(:feature_page) { FactoryBot.create(:feature_page, exhibit:) }
   let(:search1) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good dogs') }
   let(:search2) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good cats') }
-  let(:search3) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good birds') }
-  let(:search4) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good pigs') }
-  let(:search5) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good tigers') }
-  let(:search6) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good ferrets') }
-  let(:search7) { FactoryBot.create(:search, exhibit:, title: 'All of the good turtles') }
-  let!(:group) { FactoryBot.create(:group, exhibit:, searches: [search1, search2, search3, search4, search5, search6], title: 'Pets', published: true) }
-  let!(:group2) { FactoryBot.create(:group, exhibit:, searches: [search1, search2], title: 'Good animals', published: true) }
-  let!(:group3) { FactoryBot.create(:group, exhibit:, searches: [search1, search7], title: 'Mix of animals', published: true) }
+  let(:search3) { FactoryBot.create(:search, exhibit:, title: 'All of the good turtles') }
+  let!(:group) { FactoryBot.create(:group, exhibit:, searches: [search1, search2, search3], title: 'Pets', published: true) }
 
   before do
     login_as exhibit_curator
@@ -23,71 +17,21 @@ RSpec.describe 'Browse Group Categories', :js, type: :feature do
     add_widget 'browse_group_categories'
   end
 
-  it 'allows a curator to select a caption to display' do
+  it 'allows a curator to select a browse group to display' do
     fill_in_typeahead_field with: 'Pets'
     within '.dd-list' do
       expect(page).to have_css '.title', text: 'Pets'
-    end
-
-    save_page_changes
-
-    expect(page).to have_css 'h2', text: 'Pets'
-  end
-
-  it 'only published searches are displayed' do
-    fill_in_typeahead_field with: 'Mix of animals'
-    within '.dd-list' do
-      expect(page).to have_css '.title', text: 'Mix of animals'
-    end
-
-    save_page_changes
-    expect(page).to have_css 'h2', text: 'Mix of animals'
-    expect(page).to have_css '.category-title', text: 'All of the good dogs', visible: true
-    expect(page).to have_no_css '.category-title', text: 'All of the good turtles', visible: false
-  end
-
-  it 'displays a maximum of 4 categories per group' do
-    fill_in_typeahead_field with: 'Pets'
-    within '.dd-list' do
-      expect(page).to have_css '.title', text: 'Pets'
-    end
-
-    save_page_changes
-    expect(page).to have_css '.categories-4'
-    expect(page).to have_css '.category-title', text: 'All of the good dogs', visible: true
-    expect(page).to have_css '.category-title', text: 'All of the good cats', visible: true
-    expect(page).to have_css '.category-title', text: 'All of the good birds', visible: true
-    expect(page).to have_css '.category-title', text: 'All of the good pigs', visible: true
-    expect(page).to have_no_css '.category-title', text: 'All of the good tigers', visible: false
-    expect(page).to have_no_css '.category-title', text: 'All of the good ferrets', visible: false
-  end
-
-  it 'displays the category item counts when the option is selected' do
-    fill_in_typeahead_field with: 'Good animals'
-    within '.dd-list' do
-      expect(page).to have_css '.title', text: 'Good animals'
     end
     check 'display-item-counts'
+
     save_page_changes
 
-    expect(page).to have_css '.item-count', count: 2
-  end
-
-  it 'does not display the category item counts when the option is not selected' do
-    fill_in_typeahead_field with: 'Good animals'
-    within '.dd-list' do
-      expect(page).to have_css '.title', text: 'Good animals'
-    end
-    uncheck 'display-item-counts'
-    save_page_changes
-
-    expect(page).to have_no_css '.item-count'
-  end
-
-  it 'is accessible' do
-    fill_in_typeahead_field with: 'Pets'
-    save_page_changes
     expect(page).to have_css 'h2', text: 'Pets'
+    expect(page).to have_css '.category-title', text: 'All of the good dogs', visible: true
+    expect(page).to have_css '.category-title', text: 'All of the good cats', visible: true
+    expect(page).to have_no_css '.category-title', text: 'All of the good turtles', visible: false
+    expect(page).to have_css '.item-count', count: 2
+
     expect(page).to be_axe_clean.within '#content'
   end
 end

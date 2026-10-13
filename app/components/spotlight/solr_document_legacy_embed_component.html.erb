@@ -1,9 +1,5 @@
 <% if body.present? %>
   <%= body %>
-<% elsif partials? %>
-  <% partials.each do |partial| %>
-    <%= partial %>
-  <% end %>
 <% elsif embed? %>
   <%= embed %>
 <% elsif thumbnail? %>

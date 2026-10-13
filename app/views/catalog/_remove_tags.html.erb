@@ -20,8 +20,8 @@
         <% end %>
 
         <div class="form-group mb-3 mt-4">
-          <%= label_tag :tags, t(:'spotlight.bulk_actions.remove_tags.label') %>
-          <%= render Spotlight::TagSelectorComponent.new(field_name: :tags, all_tags: current_exhibit.owned_tags) %>
+          <%= label_tag 'remove_tags', t(:'spotlight.bulk_actions.remove_tags.label') %>
+          <%= render Spotlight::TagSelectorComponent.new(field_name: :tags, id: 'remove_tags', all_tags: current_exhibit.owned_tags) %>
         </div>
         <%= render Blacklight::HiddenSearchStateComponent.new(params: search_state.params_for_search) %>
       </div>

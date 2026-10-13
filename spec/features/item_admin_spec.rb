@@ -12,13 +12,14 @@ RSpec.describe 'Item Administration', type: :feature do
   describe 'admin' do
     it "does not have a 'Save this search' button" do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
-      expect(page).to have_no_css('button', text: 'Save this search')
+      expect(page).to have_css('tr[itemscope]')
+      expect(page).to have_no_button('Save this search')
     end
 
     it 'has catalog items' do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
       expect(page).to have_css('h1 small', text: 'Items')
-      expect(page).to have_css('table#documents')
+      expect(page).to have_table('documents')
       expect(page).to have_css('.pagination')
       expect(page).to have_css('.spotlight-admin-thumbnail')
 
@@ -38,18 +39,22 @@ RSpec.describe 'Item Administration', type: :feature do
       item.click_button 'Make public'
     end
 
-    it "toggles the 'blacklight-private' label", js: true, max_wait_time: 5 do
+    it "toggles the 'blacklight-private' label", js: true do
       visit spotlight.admin_exhibit_catalog_path(exhibit)
       # The label should be toggled when the checkbox is clicked
+      expect(page).to have_css('tr[itemscope]')
       expect(page).to have_no_css('tr.blacklight-private')
       within 'tr[itemscope]:first-child' do
         find("input.toggle-visibility[type='checkbox']").click
       end
       expect(page).to have_css('tr.blacklight-private')
+      # The class is toggled immediately on click, so wait for the AJAX request to finish
+      # (the checkbox is re-enabled) before reloading the page.
+      expect(page).to have_css("tr[itemscope]:first-child input.toggle-visibility[type='checkbox']:not([disabled]):not(:checked)")
 
       # The label should show up on page load
-      expect(page).to have_css('tr.blacklight-private')
       visit spotlight.admin_exhibit_catalog_path(exhibit)
+      expect(page).to have_css('tr.blacklight-private')
       within 'tr[itemscope]:first-child' do
         find("input.toggle-visibility[type='checkbox']").click
       end

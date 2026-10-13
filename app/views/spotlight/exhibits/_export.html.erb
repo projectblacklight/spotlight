@@ -1,6 +1,22 @@
 <div role="tabpanel" class="tab-pane <%= 'active' if @tab == 'export' %>" id="export">
   <div class="row col-md-12">
-    <p class="instructions"><%= t :'.instructions' %></p>
+    <div class="instructions">
+      <p><%= t :'.instructions_1' %></p>
+      <p><%= t :'.instructions_2' %></p>
+
+      <p><b><%= t :'.configurations_intro' %></b></p>
+      <% if Spotlight::Engine.config.exports.present? %>
+        <ul>
+          <% Spotlight::Engine.config.exports.each do |config, value| %>
+            <li><%= t ".configurations.#{config}", config: value.to_s.capitalize %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p><%= t :'.no_configurations' %></p>
+      <% end %>
+      <p><%= t :'.instructions_3' %></p>
+    </div>
+
     <div class="primary-actions">
       <%= link_to t(:'.download'), get_exhibit_path(current_exhibit, format: 'json'), class: 'btn btn-primary' %>
     </div>

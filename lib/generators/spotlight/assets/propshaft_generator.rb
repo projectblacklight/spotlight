@@ -60,7 +60,6 @@ module Spotlight
       end
 
       def add_javascript
-        copy_file 'javascript/jquery-shim.js', 'app/javascript/jquery-shim.js'
         gsub_file 'app/javascript/application.js', 'import "controllers"', '// import "controllers"'
 
         # This may have been added from Blacklight, but it is a Spotlight dependency so ensure it is present.
@@ -83,10 +82,11 @@ module Spotlight
       end
 
       def configure_esbuild
-        custom_options = '--alias:jquery=./app/javascript/jquery-shim.js'
+        return unless options[:test]
+
         # A linked spotlight-frontend resolves imports from the Spotlight checkout's node_modules first.
         # Its bootstrap would be a second copy, which causes issues (e.g., a click on a dropdown causes two competing actions)
-        custom_options = "#{custom_options} --preserve-symlinks --alias:bootstrap=./node_modules/bootstrap" if options[:test]
+        custom_options = '--preserve-symlinks --alias:bootstrap=./node_modules/bootstrap'
         gsub_file 'package.json',
                   'esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets',
                   "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets #{custom_options}"

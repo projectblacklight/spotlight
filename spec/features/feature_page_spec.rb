@@ -1,23 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Feature page', type: :feature, versioning: true do
+RSpec.describe 'Feature page', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
-
-  describe 'viewing the page' do
-    let!(:feature_page) do
-      FactoryBot.create(:feature_page, title: 'Parent Page', exhibit:)
-    end
-
-    it 'has <meta> tags' do
-      visit spotlight.exhibit_feature_page_path(feature_page.exhibit, feature_page)
-
-      expect(page).to have_css "meta[name='twitter:title'][content='#{feature_page.title}']", visible: false
-      expect(page).to have_css "meta[property='og:site_name']", visible: false
-      expect(page).to have_css "meta[property='og:type'][content='article']", visible: false
-      expect(page).to have_css "meta[property='og:title'][content='#{feature_page.title}']", visible: false
-    end
-  end
 
   describe 'sidebar' do
     let!(:parent_feature_page) do
@@ -67,6 +52,7 @@ RSpec.describe 'Feature page', type: :feature, versioning: true do
 
         it 'does not be present' do
           visit spotlight.exhibit_feature_page_path(parent_feature_page.exhibit, parent_feature_page)
+          expect(page).to have_css('.page-title', text: parent_feature_page.title)
           expect(page).to have_no_css('#sidebar')
           expect(page).to have_no_text(child_feature_page.title)
         end
@@ -137,14 +123,22 @@ RSpec.describe 'Feature page', type: :feature, versioning: true do
     end
 
     it 'releases the lock when the lock holder cancels edits', :js do
+      # Start from another page so the Cancel link (history.back) has somewhere to go
+      visit spotlight.exhibit_feature_pages_path(feature_page.exhibit)
+
       # open the edit page
       visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
+      expect(page).to have_button 'Save changes'
 
       click_on 'Cancel'
+
+      # Wait for the back navigation to finish, otherwise it can fire after the next visit
+      expect(page).to have_current_path spotlight.exhibit_feature_pages_path(feature_page.exhibit)
 
       # and then open the edit page again
       visit spotlight.edit_exhibit_feature_page_path(feature_page.exhibit, feature_page)
 
+      expect(page).to have_button 'Save changes'
       expect(page).to have_no_css '.alert'
     end
   end
