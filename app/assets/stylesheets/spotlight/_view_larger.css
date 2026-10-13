@@ -12,11 +12,11 @@
       z-index: 999;
     }
     svg {
-      fill: $white;
+      fill: var(--bs-white);
     }
   }
   #osd-div {
-    background: $gray-700;
+    background: var(--bs-gray-700);
     height: calc(100vh - 80px);
   }
 }
