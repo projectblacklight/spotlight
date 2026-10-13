@@ -54,6 +54,57 @@ RSpec.describe Spotlight::PageContent::Html do
     end
   end
 
+  describe 'embedded blocks' do
+    def embed(type, data)
+      %(<div data-spotlight-block="#{type}" data-spotlight-block-data="#{ERB::Util.html_escape(data.to_json)}"></div>)
+    end
+
+    let(:grid_data) { { 'item' => { 'item_0' => { 'id' => 'dq287tq6352', 'display' => 'true', 'weight' => '0' } } } }
+
+    describe '.sanitize' do
+      it 'keeps valid embedded blocks' do
+        html = "<p>Before</p>#{embed('solr_documents_grid', grid_data)}<p>After</p>"
+        expect(described_class.sanitize(html)).to eq html
+      end
+
+      it 'drops block data that HTML pages do not use' do
+        sanitized = described_class.sanitize(embed('solr_documents', grid_data.merge('text' => '<script>x()</script>', 'title' => 'T')))
+        expect(sanitized).to eq embed('solr_documents', grid_data)
+      end
+
+      it 'removes embeds of other block types, with invalid data, or nested in other content' do
+        html = "#{embed('rule', {})}<div data-spotlight-block=\"solr_documents\" data-spotlight-block-data=\"nope\"></div>" \
+               "<blockquote>#{embed('solr_documents', grid_data)}</blockquote>"
+        expect(described_class.sanitize(html)).to eq '<blockquote></blockquote>'
+      end
+
+      it 'unwraps other divs, checking what they contain' do
+        html = "<div><p>Text</p><div>#{embed('solr_documents', grid_data)}</div></div>"
+        expect(described_class.sanitize(html)).to eq '<p>Text</p>'
+      end
+
+      it 'removes embeds of widgets that are not configured' do
+        allow(Spotlight::Engine.config).to receive(:sir_trevor_widgets).and_return(%w[SolrDocuments])
+        expect(described_class.sanitize(embed('solr_documents_grid', grid_data))).to eq ''
+      end
+    end
+
+    describe '.parse' do
+      let(:html) { "<h2>Title</h2><p>Before</p>#{embed('solr_documents_grid', grid_data)}<p>After</p>#{embed('solr_documents_carousel', {})}" }
+
+      it 'splits the content into HTML fragments and SirTrevor blocks' do
+        content = described_class.parse(page, :content)
+        expect(content.map(&:class)).to eq [
+          Spotlight::PageContent::Html::Fragment, SirTrevorRails::Blocks::SolrDocumentsGridBlock,
+          Spotlight::PageContent::Html::Fragment, SirTrevorRails::Blocks::SolrDocumentsCarouselBlock
+        ]
+        expect(content.first.html).to eq '<h2>Title</h2><p>Before</p>'
+        expect(content.second.item_ids).to eq ['dq287tq6352']
+        expect(content.second.parent).to eq page
+      end
+    end
+  end
+
   describe Spotlight::PageContent::Html::Fragment do
     subject(:fragment) { described_class.new(html) }
 
