@@ -35,6 +35,14 @@ module Spotlight
 
     def default_content
       self.title ||= Spotlight::HomePage.default_title_text
+      self[:content_type] ||= default_content_type
+    end
+
+    # Home pages are created with the exhibit, so curators don't get to pick an editor.
+    # When there is a choice of editors, use the first (preselected) one, like the "Add new page" form.
+    def default_content_type
+      content_types = Spotlight::Engine.config.page_content_types
+      content_types.first if content_types.many?
     end
   end
 end

@@ -159,6 +159,17 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller do
           expect(assigns(:page)).to be_persisted
         end
 
+        it 'ignores content types that are not configured' do
+          post :create, params: { feature_page: { title: 'MyString', content_type: 'Html' }, exhibit_id: exhibit }
+          expect(assigns(:page).content_type).to eq 'SirTrevor'
+        end
+
+        it 'creates a page with the chosen content type when it is configured' do
+          allow(Spotlight::Engine.config).to receive(:page_content_types).and_return(%w[SirTrevor Html])
+          post :create, params: { feature_page: { title: 'MyString', content_type: 'Html' }, exhibit_id: exhibit }
+          expect(assigns(:page).reload.content_type).to eq 'Html'
+        end
+
         it 'redirects to the feature page index' do
           post :create, params: { feature_page: { title: 'MyString' }, exhibit_id: exhibit }
           expect(response).to redirect_to(exhibit_feature_pages_path(Spotlight::FeaturePage.last.exhibit))
@@ -194,6 +205,12 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller do
         it 'assigns the requested page as @page' do
           put :update, params: { id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes }
           expect(assigns(:page)).to eq(page)
+        end
+
+        it 'does not change the content type' do
+          allow(Spotlight::Engine.config).to receive(:page_content_types).and_return(%w[SirTrevor Html])
+          put :update, params: { id: page, exhibit_id: page.exhibit.id, feature_page: { title: 'x', content_type: 'Html' } }
+          expect(page.reload.content_type).to eq 'SirTrevor'
         end
 
         # versioning: true turns on PaperTrail (paper_trail/frameworks/rspec disables it by default)

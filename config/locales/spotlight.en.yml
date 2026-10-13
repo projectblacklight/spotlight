@@ -772,6 +772,9 @@ en:
           custom-field: Exhibit-specific
           uploaded: Upload
     pages:
+      content_types:
+        Html: Rich text editor
+        SirTrevor: Widget editor
       edit:
         header: Edit page
         locked: This page is currently being edited by %{user} (%{created_at})
@@ -784,6 +787,30 @@ en:
         thumbnail:
           help: You can select and crop an image to visually represent this page. It will be used as the thumbnail image if you include this page in the Pages widget.
         title_placeholder: Title
+      html_editor:
+        add_column: Add column
+        add_row: Add row
+        blockquote: Quote
+        bold: Bold
+        bullet_list: Bulleted list
+        content: Page content
+        delete_column: Delete column
+        delete_row: Delete row
+        delete_table: Delete table
+        heading2: Heading
+        heading3: Subheading
+        heading4: Minor heading
+        horizontal_rule: Horizontal rule
+        insert_table: Insert table
+        italic: Italic
+        link: Link
+        link_prompt: Link URL (leave empty to remove the link)
+        ordered_list: Numbered list
+        redo: Redo
+        strike: Strikethrough
+        toolbar: Formatting
+        underline: Underline
+        undo: Undo
       index:
         about_pages:
           header: About pages
@@ -799,6 +826,7 @@ en:
         header: New page
       order_pages:
         cancel: Cancel
+        content_type: Editor
         instructions_html: |
           <p>Add new pages below. Drag and drop pages to change the order in which they are displayed in the sidebar.</p>
           <p><b>Note About Page Titles and URLs</b></p>
