@@ -52,14 +52,14 @@ module Spotlight
 
     def documents(&)
       start = 0
-      response = repository.search(search_params.start(start))
+      response = repository.search(params: search_params.start(start))
 
       return to_enum(:documents) { response['response']['numFound'] } unless block_given?
 
       while response.documents.present?
         response.documents.each(&)
         start += response.documents.length
-        response = repository.search(search_params.start(start))
+        response = repository.search(params: search_params.start(start))
       end
     end
 

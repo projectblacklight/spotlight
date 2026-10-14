@@ -2,11 +2,11 @@
 
 RSpec.describe Spotlight::AccessControlsEnforcementSearchBuilder do
   class MockSearchBuilder < Blacklight::SearchBuilder
-    attr_reader :blacklight_params, :scope
+    attr_reader :search_state, :scope
 
-    def initialize(blacklight_params, scope)
-      @blacklight_params = blacklight_params
+    def initialize(params, scope)
       @scope = scope
+      @search_state = Blacklight::SearchState.new(params, scope.current_exhibit.blacklight_config, scope)
     end
     include Spotlight::AccessControlsEnforcementSearchBuilder
     include Blacklight::Solr::SearchBuilderBehavior

@@ -13,7 +13,7 @@ RSpec.describe Spotlight::AddTagsJob do
 
   it 'adds tags to SolrDocumentSidecar objects' do
     subject.perform_now
-    response = exhibit.blacklight_config.repository.search(solr_params.merge('rows' => 999_999_999))
+    response = exhibit.blacklight_config.repository.search(params: solr_params.merge('rows' => 999_999_999))
     expect(response.total).to eq 55
     expect(Spotlight::JobTracker.last).to have_attributes(
       status: 'completed',

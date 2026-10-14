@@ -43,9 +43,9 @@ module Spotlight
     end
 
     def solr_response
-      @solr_response ||= repository.search(search_params.merge('facet.query' => facet_fields.map { |_key, fields| "#{fields.field}:[* TO *]" },
-                                                               'rows' => 0,
-                                                               'facet' => true))
+      @solr_response ||= repository.search(params: search_params.merge('facet.query' => facet_fields.map { |_key, fields| "#{fields.field}:[* TO *]" },
+                                                                       'rows' => 0,
+                                                                       'facet' => true))
     end
 
     # This gets the number of *documents* with a field

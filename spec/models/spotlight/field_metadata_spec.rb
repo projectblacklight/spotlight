@@ -32,7 +32,7 @@ RSpec.describe Spotlight::FieldMetadata do
   end
 
   before do
-    allow(repository).to receive(:search).with(an_instance_of(SearchBuilder)).and_return(Blacklight::Solr::Response.new(facet_response, {}))
+    allow(repository).to receive(:search).with(params: an_instance_of(SearchBuilder)).and_return(Blacklight::Solr::Response.new(facet_response, {}))
   end
 
   describe '#field' do

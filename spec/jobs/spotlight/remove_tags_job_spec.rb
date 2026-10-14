@@ -12,14 +12,14 @@ RSpec.describe Spotlight::RemoveTagsJob do
   end
 
   it 'removes tags from SolrDocumentSidecar objects' do
-    response = exhibit.blacklight_config.repository.search(solr_params.merge('rows' => 999_999_999))
+    response = exhibit.blacklight_config.repository.search(params: solr_params.merge('rows' => 999_999_999))
     expect(response.total).to eq 55
     response.documents.each do |document|
       exhibit.tag(document.sidecar(exhibit), with: %w[hello world], on: :tags)
       document.reindex
     end
     subject.perform_now
-    response = exhibit.blacklight_config.repository.search(solr_params.merge('rows' => 999_999_999))
+    response = exhibit.blacklight_config.repository.search(params: solr_params.merge('rows' => 999_999_999))
     expect(response.total).to eq 55
     expect(Spotlight::JobTracker.last).to have_attributes(
       status: 'completed',

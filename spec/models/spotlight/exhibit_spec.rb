@@ -356,8 +356,8 @@ RSpec.describe Spotlight::Exhibit, type: :model do
 
     it 'pages through the index' do
       allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).and_return(double(documents: [1, 2, 3]))
-      allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(start: 3)).and_return(double(documents: [4, 5, 6]))
-      allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(start: 6)).and_return(double(documents: []))
+      allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(params: hash_including(start: 3)).and_return(double(documents: [4, 5, 6]))
+      allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(params: hash_including(start: 6)).and_return(double(documents: []))
 
       expect(subject.solr_documents.to_a).to contain_exactly(1, 2, 3, 4, 5, 6)
     end
@@ -369,7 +369,8 @@ RSpec.describe Spotlight::Exhibit, type: :model do
 
       it 'filters the solr results using the exhibit filter' do
         expected_query_params = { fq: ["{!term f=spotlight_exhibit_slug_#{subject.slug}_bsi}true"] }
-        allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_including(expected_query_params)).and_return(double(documents: []))
+        allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search)
+          .with(params: hash_including(expected_query_params)).and_return(double(documents: []))
         expect(subject.solr_documents.to_a).to be_blank
       end
     end
@@ -380,7 +381,8 @@ RSpec.describe Spotlight::Exhibit, type: :model do
       end
 
       it 'does not filters the solr results' do
-        allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search).with(hash_excluding(fq: [subject.solr_data])).and_return(double(documents: []))
+        allow_any_instance_of(Blacklight::Solr::Repository).to receive(:search)
+          .with(params: hash_excluding(fq: [subject.solr_data])).and_return(double(documents: []))
         expect(subject.solr_documents.to_a).to be_blank
       end
     end

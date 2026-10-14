@@ -24,12 +24,12 @@ module Spotlight
 
           start = 0
           search_params = { q: '*:*', fl: 'id', facet: false }
-          response = index.search(search_params.merge(start:))
+          response = index.search(params: search_params.merge(start:))
 
           while response.documents.present?
             response.documents.each(&)
             start += response.documents.length
-            response = index.search(search_params.merge(start:))
+            response = index.search(params: search_params.merge(start:))
           end
         end
 
