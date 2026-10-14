@@ -3378,7 +3378,7 @@
         const ol = this.inner.querySelector(".panels > ol");
         if (ol) ol.appendChild(panel);
         const nestable = this.inner.querySelector('[data-behavior="nestable"]');
-        if (nestable) nestable.dispatchEvent(new Event("change", { bubbles: true }));
+        if (nestable) nestable.dispatchEvent(new Event("change"));
       },
 
       item_options: function () {
