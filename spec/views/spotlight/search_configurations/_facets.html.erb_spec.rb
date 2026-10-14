@@ -6,7 +6,7 @@ RSpec.describe 'spotlight/search_configurations/_facets', type: :view do
   let(:config) do
     exhibit.blacklight_configuration
   end
-  let(:field_metadata) { double('field_metadata') }
+  let(:field_metadata) { instance_double(Spotlight::FieldMetadata) }
   let(:empty_facet) { { document_count: 0, value_count: 0, terms: [] } }
   let(:nonempty_facet) { { document_count: 1, value_count: 3, terms: %w[a b c] } }
   let(:f) do

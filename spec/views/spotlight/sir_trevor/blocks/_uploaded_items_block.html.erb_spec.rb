@@ -2,7 +2,7 @@
 
 RSpec.describe 'spotlight/sir_trevor/blocks/_uploaded_items_block', type: :view do
   let(:partial) { 'spotlight/sir_trevor/blocks/uploaded_items_block' }
-  let(:page) { double('Page') }
+  let(:page) { instance_double(Spotlight::FeaturePage) }
   let(:block) do
     SirTrevorRails::Blocks::UploadedItemsBlock.new(
       { type: 'block', data: { title: 'Some title', text: 'Some text', 'text-align' => 'right', zpr_link: 'true' } }, page

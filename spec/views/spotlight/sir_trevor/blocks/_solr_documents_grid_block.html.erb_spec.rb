@@ -2,7 +2,7 @@
 
 RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_grid_block', type: :view do
   let(:partial) { 'spotlight/sir_trevor/blocks/solr_documents_grid_block' }
-  let(:page) { double('Page') }
+  let(:page) { instance_double(Spotlight::FeaturePage) }
   let(:block) do
     SirTrevorRails::Blocks::SolrDocumentsGridBlock.new({ type: 'block', data: { title: 'Some title', text: 'Some text', 'text-align' => 'right' } }, page)
   end
