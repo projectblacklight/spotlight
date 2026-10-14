@@ -153,7 +153,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       expect(page).to have_css '.exhibit-link', exact_text: spotlight.exhibit_root_url(exhibit)
     end
 
-    it 'copies the exhibit link to the clipboard', js: true do
+    it 'copies the exhibit link to the clipboard', :js do
       visit spotlight.edit_exhibit_path(exhibit)
 
       stub_clipboard
