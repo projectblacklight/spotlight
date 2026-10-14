@@ -3359,7 +3359,7 @@ Spotlight$1.Block.Resources = (function () {
       const ol = this.inner.querySelector(".panels > ol");
       if (ol) ol.appendChild(panel);
       const nestable = this.inner.querySelector('[data-behavior="nestable"]');
-      if (nestable) nestable.dispatchEvent(new Event("change"));
+      if (nestable) nestable.dispatchEvent(new Event("change", { bubbles: true }));
     },
 
     item_options: function () {
