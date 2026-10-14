@@ -38,7 +38,7 @@ module Spotlight
     # If the image is local, this step will fail, which is okay since the only
     # consumer is CSV uploads and the URL is intended to be remote
     def remote_image_url=(url)
-      super url unless url.starts_with? '/'
+      super unless url.starts_with? '/'
     end
 
     def document

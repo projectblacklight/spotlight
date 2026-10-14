@@ -63,7 +63,7 @@ RSpec.describe 'Create a new exhibit', type: :feature do
     expect(page).to have_text 'Slug is already taken'
   end
 
-  it 'suggests a slug based on the title', js: true do
+  it 'suggests a slug based on the title', :js do
     visit spotlight.new_exhibit_path
 
     fill_in 'Title', with: 'My exhibit title'

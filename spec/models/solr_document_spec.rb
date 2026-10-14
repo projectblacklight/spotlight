@@ -37,7 +37,7 @@ RSpec.describe SolrDocument, type: :model do
   end
 
   it 'has find' do
-    expect(described_class.find('dq287tq6352')).to be_kind_of described_class
+    expect(described_class.find('dq287tq6352')).to be_a described_class
   end
 
   it 'has ==' do
@@ -60,7 +60,7 @@ RSpec.describe SolrDocument, type: :model do
 
   describe '#sidecar' do
     it 'returns a sidecar for adding exhibit-specific fields' do
-      expect(subject.sidecar(exhibit)).to be_kind_of Spotlight::SolrDocumentSidecar
+      expect(subject.sidecar(exhibit)).to be_a Spotlight::SolrDocumentSidecar
       expect(subject.sidecar(exhibit).exhibit).to eq exhibit
     end
 
@@ -169,11 +169,11 @@ RSpec.describe SolrDocument, type: :model do
     end
 
     it 'does not include Spotlight::SolrDocument::UploadedResource when the correct fields are present' do
-      expect(subject).not_to be_kind_of Spotlight::SolrDocument::UploadedResource
+      expect(subject).not_to be_a Spotlight::SolrDocument::UploadedResource
     end
 
     it 'includes Spotlight::SolrDocument::UploadedResource when the correct fields are present' do
-      expect(uploaded_resource).to be_kind_of Spotlight::SolrDocument::UploadedResource
+      expect(uploaded_resource).to be_a Spotlight::SolrDocument::UploadedResource
     end
 
     describe '#uploaded_resource?' do

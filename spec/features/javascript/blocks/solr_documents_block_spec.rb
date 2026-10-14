@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Solr Document Block', feature: true, js: true, max_wait_time: 30 do
+RSpec.describe 'Solr Document Block', :feature, :js, max_wait_time: 30 do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:feature_page) do

@@ -32,7 +32,7 @@ RSpec.describe 'Report a Problem', type: :feature do
       expect(page).to have_css('#contact_form_name', count: 1)
     end
 
-    it 'accepts a problem report', js: true do
+    it 'accepts a problem report', :js do
       visit spotlight.exhibit_solr_document_path(exhibit, id: 'dq287tq6352')
       click_on 'Feedback'
       expect(page).to have_css('.alert-info', text: '/dq287tq6352')
@@ -47,7 +47,7 @@ RSpec.describe 'Report a Problem', type: :feature do
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
 
-    it 'rejects a spammy looking problem report', js: true do
+    it 'rejects a spammy looking problem report', :js do
       visit spotlight.exhibit_solr_document_path(exhibit, id: 'dq287tq6352')
       click_on 'Feedback'
       expect(find_by_id('contact_form_current_url', visible: false).value).to end_with spotlight.exhibit_solr_document_path(exhibit, id: 'dq287tq6352')
@@ -58,7 +58,7 @@ RSpec.describe 'Report a Problem', type: :feature do
 
       expect do
         click_on 'Send'
-      end.not_to change { ActionMailer::Base.deliveries.count }
+      end.not_to(change { ActionMailer::Base.deliveries.count })
     end
   end
 end

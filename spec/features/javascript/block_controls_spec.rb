@@ -7,7 +7,7 @@ RSpec.describe 'Block controls' do
 
   before { login_as exhibit_curator }
 
-  it 'is split into separate sections', js: true do
+  it 'is split into separate sections', :js do
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)
     # fill in title
     fill_in 'feature_page_title', with: 'Exhibit Title'

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Reindex Monitor', js: true do
+RSpec.describe 'Reindex Monitor', :js do
   let(:resources) do
     FactoryBot.create_list(:resource, 1)
   end

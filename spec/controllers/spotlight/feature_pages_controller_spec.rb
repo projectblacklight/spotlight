@@ -198,7 +198,7 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller do
 
         # versioning: true turns on PaperTrail (paper_trail/frameworks/rspec disables it by default)
         # so the update records a version and the flash includes an undo link.
-        it 'redirects to the feature page', versioning: true do
+        it 'redirects to the feature page', :versioning do
           put :update, params: { id: page, exhibit_id: page.exhibit.id, feature_page: valid_attributes }
           page.reload
           expect(response).to redirect_to(exhibit_feature_page_path(page.exhibit, page))

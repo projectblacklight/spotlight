@@ -39,7 +39,7 @@ RSpec.describe Spotlight::AppearancesController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Appearance', edit_exhibit_appearance_path(exhibit))
         get :edit, params: { exhibit_id: exhibit }
         expect(response).to be_successful
-        expect(assigns[:exhibit]).to be_kind_of Spotlight::Exhibit
+        expect(assigns[:exhibit]).to be_a Spotlight::Exhibit
       end
     end
 

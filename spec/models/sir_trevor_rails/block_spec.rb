@@ -36,7 +36,7 @@ RSpec.describe SirTrevorRails::Block do
     let(:block) { described_class.from_hash(source_hash, nil) }
 
     it 'initializes new block based on type field' do
-      expect(block).to be_a_kind_of SirTrevorRails::Blocks::TestBlock
+      expect(block).to be_a SirTrevorRails::Blocks::TestBlock
     end
 
     it 'creates accessors for all fields defined in data field' do

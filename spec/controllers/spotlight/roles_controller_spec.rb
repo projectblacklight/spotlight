@@ -89,7 +89,7 @@ RSpec.describe Spotlight::RolesController, type: :controller do
               }
             }
           }
-        end.not_to change { exhibit.roles.length }
+        end.not_to(change { exhibit.roles.length })
       end
 
       it 'authorizes records' do

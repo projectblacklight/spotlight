@@ -4,7 +4,7 @@ RSpec.describe ApplicationController, type: :controller do
   routes { Spotlight::Engine.routes }
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
-  it { is_expected.to be_a_kind_of Spotlight::Controller }
+  it { is_expected.to be_a Spotlight::Controller }
 
   describe 'exhibit-specific routing' do
     context 'with a current exhibit' do

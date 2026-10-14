@@ -139,7 +139,7 @@ RSpec.describe Spotlight::AboutPagesController, type: :controller do
         expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
         expect(controller).to receive(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
         get :index, params: { exhibit_id: exhibit }
-        expect(assigns(:page)).to be_kind_of Spotlight::Page
+        expect(assigns(:page)).to be_a Spotlight::Page
         expect(assigns(:page)).to be_new_record
         expect(assigns(:pages)).to include page
         expect(assigns(:exhibit)).to eq exhibit
@@ -158,7 +158,7 @@ RSpec.describe Spotlight::AboutPagesController, type: :controller do
 
       # versioning: true turns on PaperTrail (paper_trail/frameworks/rspec disables it by default)
       # so the update records a version and the flash includes an undo link.
-      it 'redirects to the about page', versioning: true do
+      it 'redirects to the about page', :versioning do
         put :update, params: { id: page, exhibit_id: page.exhibit.id, about_page: valid_attributes }
         page.reload
         expect(response).to redirect_to(exhibit_about_page_path(page.exhibit, page))
