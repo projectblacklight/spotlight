@@ -3,6 +3,11 @@
 RSpec.describe 'Search within an exhibit', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
+  it 'is accessible', :js do
+    visit spotlight.search_exhibit_catalog_path(exhibit, q: 'america')
+    expect(page).to be_axe_clean
+  end
+
   context 'when signed in as an exhibit curator' do
     let(:curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 

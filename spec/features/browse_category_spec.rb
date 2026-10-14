@@ -127,6 +127,12 @@ RSpec.describe 'Browse pages' do
         expect(page).to have_text 'Your search matched'
       end
     end
+
+    it 'is accessible', :js do
+      visit spotlight.exhibit_browse_path(exhibit, search)
+      expect(page).to have_css('h2', text: search.title)
+      expect(page).to be_axe_clean
+    end
   end
 
   context 'with a search field based browse category' do
