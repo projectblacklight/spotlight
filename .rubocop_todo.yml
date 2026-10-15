@@ -651,11 +651,6 @@ Rails/UnknownEnv:
     - "spec/test_app_templates/carrierwave.rb"
 
 # Offense count: 1
-Rails/UnusedRenderContent:
-  Exclude:
-    - "app/controllers/spotlight/lock_controller.rb"
-
-# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/CombinableLoops:
   Exclude:

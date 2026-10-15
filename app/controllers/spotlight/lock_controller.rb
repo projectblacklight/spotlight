@@ -10,7 +10,7 @@ module Spotlight
     def destroy
       @lock.destroy
 
-      render plain: '', status: :no_content
+      head :no_content
     end
   end
 end
