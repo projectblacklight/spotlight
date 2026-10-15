@@ -259,10 +259,11 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
 
     describe 'GET edit' do
       it 'is successful' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('General', edit_exhibit_path(exhibit))
+        allow(controller).to receive(:add_breadcrumb)
         get :edit, params: { id: exhibit }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('General', edit_exhibit_path(exhibit))
         expect(response).to be_successful
       end
     end

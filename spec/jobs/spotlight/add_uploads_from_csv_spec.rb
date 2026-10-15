@@ -32,14 +32,17 @@ RSpec.describe Spotlight::AddUploadsFromCsv do
 
   it 'creates uploaded resources for each row of data' do
     upload = FactoryBot.create(:uploaded_resource)
-    expect(Spotlight::Resources::Upload).to receive(:new).exactly(3).times.and_return(upload)
-
-    expect(upload).to receive(:build_upload).with(remote_image_url: 'x').and_call_original
-    expect(upload).to receive(:build_upload).with(remote_image_url: 'y').and_call_original
-    expect(upload).not_to receive(:build_upload).with(remote_image_url: '~')
-    expect(upload).to receive(:save_and_index).at_least(:once)
+    allow(Spotlight::Resources::Upload).to receive(:new).and_return(upload)
+    allow(upload).to receive(:build_upload).and_call_original
+    allow(upload).to receive(:save_and_index)
 
     job.perform_now
+
+    expect(Spotlight::Resources::Upload).to have_received(:new).exactly(3).times
+    expect(upload).to have_received(:build_upload).with(remote_image_url: 'x')
+    expect(upload).to have_received(:build_upload).with(remote_image_url: 'y')
+    expect(upload).not_to have_received(:build_upload).with(remote_image_url: '~')
+    expect(upload).to have_received(:save_and_index).at_least(:once)
   end
 
   context 'with errors' do

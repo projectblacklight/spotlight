@@ -11,11 +11,12 @@ RSpec.describe Spotlight::CustomFieldsController, type: :controller do
 
     describe 'GET new' do
       it 'assigns a new custom field' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Metadata', edit_exhibit_metadata_configuration_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Add new field', new_exhibit_custom_field_path(exhibit))
+        allow(controller).to receive(:add_breadcrumb)
         get :new, params: { exhibit_id: exhibit }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Metadata', edit_exhibit_metadata_configuration_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Add new field', new_exhibit_custom_field_path(exhibit))
         expect(assigns(:custom_field)).to be_a_new(Spotlight::CustomField)
       end
     end
@@ -24,11 +25,12 @@ RSpec.describe Spotlight::CustomFieldsController, type: :controller do
       let(:field) { FactoryBot.create(:custom_field, exhibit:) }
 
       it 'assigns the requested custom_field' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Metadata', edit_exhibit_metadata_configuration_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with(field.label, edit_exhibit_custom_field_path(exhibit, field))
+        allow(controller).to receive(:add_breadcrumb)
         get :edit, params: { exhibit_id: exhibit, id: field }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Configuration', exhibit_dashboard_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Metadata', edit_exhibit_metadata_configuration_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with(field.label, edit_exhibit_custom_field_path(exhibit, field))
         expect(assigns(:custom_field)).to eq field
         expect(assigns(:exhibit)).to eq exhibit
       end

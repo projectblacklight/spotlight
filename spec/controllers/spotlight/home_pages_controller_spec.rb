@@ -20,19 +20,21 @@ RSpec.describe Spotlight::HomePagesController, type: :controller do
         end
 
         it 'shows breadcrumbs' do
-          expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('Exhibit home', [:edit, exhibit, page])
+          allow(controller).to receive(:add_breadcrumb)
           get :edit, params: { id: page, exhibit_id: page.exhibit }
+          expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
+          expect(controller).to have_received(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
+          expect(controller).to have_received(:add_breadcrumb).with('Exhibit home', [:edit, exhibit, page])
           expect(response).to be_successful
         end
       end
 
       it 'shows breadcrumbs' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with(page.title, [:edit, exhibit, page])
+        allow(controller).to receive(:add_breadcrumb)
         get :edit, params: { id: page, exhibit_id: page.exhibit }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with(page.title, [:edit, exhibit, page])
         expect(response).to be_successful
       end
     end
@@ -76,10 +78,11 @@ RSpec.describe Spotlight::HomePagesController, type: :controller do
     end
 
     it 'does not render breadcrumbs' do
-      expect(controller).not_to receive(:add_breadcrumb)
+      allow(controller).to receive(:add_breadcrumb)
       allow(controller).to receive_messages(search_results: double)
       get :show, params: { exhibit_id: exhibit }
       expect(response).to be_successful
+      expect(controller).not_to have_received(:add_breadcrumb)
     end
 
     it 'does not do the search when the sidebar is hidden' do
@@ -134,11 +137,11 @@ RSpec.describe Spotlight::HomePagesController, type: :controller do
     before { sign_in user }
 
     it 'calls the CloneTranslatedPageFromLocale service' do
-      expect(
-        Spotlight::CloneTranslatedPageFromLocale
-      ).to receive(:call).with(locale: 'es', page:).and_call_original
+      allow(Spotlight::CloneTranslatedPageFromLocale).to receive(:call).and_call_original
 
       get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
+
+      expect(Spotlight::CloneTranslatedPageFromLocale).to have_received(:call).with(locale: 'es', page:)
     end
   end
 end

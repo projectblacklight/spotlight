@@ -21,9 +21,10 @@ RSpec.describe Spotlight::DashboardsController, type: :controller do
         # TODO: restore test for: .with(sort: 'timestamp_field desc')
         search_response = instance_double(Blacklight::Solr::Response, documents: [SolrDocument.new(id: 1)])
         allow(controller).to receive(:search_service).and_return(instance_double(Blacklight::SearchService, search_results: search_response))
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Dashboard', exhibit_dashboard_path(exhibit))
+        allow(controller).to receive(:add_breadcrumb)
         get :show, params: { exhibit_id: exhibit.id }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Dashboard', exhibit_dashboard_path(exhibit))
         expect(response).to render_template 'spotlight/dashboards/show'
         expect(assigns[:exhibit]).to eq exhibit
         expect(assigns[:pages].length).to eq exhibit.pages.length
@@ -33,9 +34,10 @@ RSpec.describe Spotlight::DashboardsController, type: :controller do
 
     describe 'GET analytics' do
       it 'loads the exhibit' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Analytics', analytics_exhibit_dashboard_path(exhibit))
+        allow(controller).to receive(:add_breadcrumb)
         get :analytics, params: { exhibit_id: exhibit.id }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Analytics', analytics_exhibit_dashboard_path(exhibit))
         expect(response).to render_template 'spotlight/dashboards/analytics'
         expect(assigns[:exhibit]).to eq exhibit
       end

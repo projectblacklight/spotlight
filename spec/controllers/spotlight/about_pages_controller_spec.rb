@@ -36,14 +36,15 @@ RSpec.describe Spotlight::AboutPagesController, type: :controller do
     before { sign_in user }
 
     describe 'GET show' do
-      let(:page) { FactoryBot.create(:about_page, weight: 0, exhibit:) }
+      let!(:page) { FactoryBot.create(:about_page, weight: 0, exhibit:) }
       let(:page2) { FactoryBot.create(:about_page, weight: 5, exhibit:) }
 
       describe 'on the main about page' do
         it 'is successful' do
-          expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('About', [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
+          allow(controller).to receive(:add_breadcrumb)
           get :show, params: { id: page, exhibit_id: exhibit }
+          expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
+          expect(controller).to have_received(:add_breadcrumb).with('About', [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
           expect(assigns(:page)).to eq page
           expect(assigns(:exhibit)).to eq exhibit
         end
@@ -51,10 +52,11 @@ RSpec.describe Spotlight::AboutPagesController, type: :controller do
 
       describe 'on a different about page' do
         it 'is successful' do
-          expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('About', [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
-          expect(controller).to receive(:add_breadcrumb).with(page2.title, [exhibit, page2])
+          allow(controller).to receive(:add_breadcrumb)
           get :show, params: { id: page2, exhibit_id: exhibit }
+          expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
+          expect(controller).to have_received(:add_breadcrumb).with('About', [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
+          expect(controller).to have_received(:add_breadcrumb).with(page2.title, [exhibit, page2])
           expect(assigns(:page)).to eq page2
           expect(assigns(:exhibit)).to eq exhibit
         end
@@ -111,9 +113,10 @@ RSpec.describe Spotlight::AboutPagesController, type: :controller do
 
       describe 'on the main about page' do
         it 'is successful' do
-          expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
+          allow(controller).to receive(:add_breadcrumb)
           get :edit, params: { id: page, exhibit_id: exhibit }
+          expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
+          expect(controller).to have_received(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
           expect(assigns(:page)).to eq page
           expect(assigns(:exhibit)).to eq exhibit
         end
@@ -121,10 +124,11 @@ RSpec.describe Spotlight::AboutPagesController, type: :controller do
 
       describe 'on a different about page' do
         it 'is successful' do
-          expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with(page2.title, [:edit, exhibit, page2])
+          allow(controller).to receive(:add_breadcrumb)
           get :edit, params: { id: page2, exhibit_id: exhibit }
+          expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
+          expect(controller).to have_received(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
+          expect(controller).to have_received(:add_breadcrumb).with(page2.title, [:edit, exhibit, page2])
           expect(assigns(:page)).to eq page2
           expect(assigns(:exhibit)).to eq exhibit
         end
@@ -135,10 +139,11 @@ RSpec.describe Spotlight::AboutPagesController, type: :controller do
       let!(:page) { FactoryBot.create(:about_page, exhibit:) }
 
       it 'is successful' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
+        allow(controller).to receive(:add_breadcrumb)
         get :index, params: { exhibit_id: exhibit }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
         expect(assigns(:page)).to be_a Spotlight::Page
         expect(assigns(:page)).to be_new_record
         expect(assigns(:pages)).to include page
@@ -230,11 +235,11 @@ RSpec.describe Spotlight::AboutPagesController, type: :controller do
       let(:page) { FactoryBot.create(:about_page, exhibit:) }
 
       it 'calls the CloneTranslatedPageFromLocale service' do
-        expect(
-          Spotlight::CloneTranslatedPageFromLocale
-        ).to receive(:call).with(locale: 'es', page:).and_call_original
+        allow(Spotlight::CloneTranslatedPageFromLocale).to receive(:call).and_call_original
 
         get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
+
+        expect(Spotlight::CloneTranslatedPageFromLocale).to have_received(:call).with(locale: 'es', page:)
       end
     end
   end

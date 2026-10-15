@@ -22,11 +22,12 @@ RSpec.describe Spotlight::ContactsController, type: :controller do
 
     describe 'GET edit' do
       it 'is successful' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with(contact.name, edit_exhibit_contact_path(exhibit, contact))
+        allow(controller).to receive(:add_breadcrumb)
         get :edit, params: { id: contact, exhibit_id: contact.exhibit }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with(contact.name, edit_exhibit_contact_path(exhibit, contact))
         expect(response).to be_successful
       end
     end
@@ -74,11 +75,12 @@ RSpec.describe Spotlight::ContactsController, type: :controller do
 
     describe 'GET new' do
       it 'is successful' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Add contact', new_exhibit_contact_path(exhibit))
+        allow(controller).to receive(:add_breadcrumb)
         get :new, params: { exhibit_id: exhibit }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('About pages', exhibit_about_pages_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Add contact', new_exhibit_contact_path(exhibit))
         expect(response).to be_successful
       end
     end
