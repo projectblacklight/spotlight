@@ -40,6 +40,17 @@ RSpec.describe Spotlight::SolrController, type: :controller do
         expect(doc.first).to include a: 1
       end
 
+      it 'sends each unique key once in a JSON request' do
+        expect(connection).to receive(:update) do |params|
+          expect(params[:data].scan('"id":').size).to eq 1
+          expect(JSON.parse(params[:data]).first).to include('id' => 'test-1', 'full_title_tesim' => 'hello')
+        end
+
+        post :update, body: '[{"id":"test-1","full_title_tesim":"hello"}]', params: { exhibit_id: exhibit }, as: :json
+
+        expect(response).to be_successful
+      end
+
       context 'when the index is not writable' do
         before do
           allow(Spotlight::Engine.config).to receive_messages(writable_index: false)
@@ -94,6 +105,18 @@ RSpec.describe Spotlight::SolrController, type: :controller do
 
       context 'with a file upload' do
         let(:json) { fixture_file_upload(File.expand_path(File.join('..', 'spec', 'fixtures', 'json-upload-fixture.json'), Rails.root), 'application/json') }
+
+        it 'sends each unique key once in an uploaded JSON file' do
+          json = Rack::Test::UploadedFile.new(StringIO.new('[{"id":"test-1","full_title_tesim":"hello"}]'), 'application/json', original_filename: 'items.json')
+          expect(connection).to receive(:update) do |params|
+            expect(params[:data].scan('"id":').size).to eq 1
+            expect(JSON.parse(params[:data]).first).to include('id' => 'test-1', 'full_title_tesim' => 'hello')
+          end
+
+          post :update, params: { resources_json_upload: { json: }, exhibit_id: exhibit }
+
+          expect(response).to redirect_to exhibit_resources_path(exhibit)
+        end
 
         it 'parses the uploaded file' do
           doc = {}
