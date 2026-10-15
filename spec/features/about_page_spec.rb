@@ -7,9 +7,12 @@ RSpec.describe 'About page', type: :feature do
   let!(:about_page2) { FactoryBot.create(:about_page, title: 'Second Page', exhibit:) }
   let(:unpublished_page) { FactoryBot.create(:about_page, title: 'Unpublished Page', published: false, exhibit:) }
 
-  describe 'sidebar' do
-    it 'displays' do
+  describe 'about page with sidebar' do
+    before do
       visit spotlight.exhibit_about_page_path(about_page1.exhibit, about_page1)
+    end
+
+    it 'displays sidebar' do
       # the sidebar should display
       within('#sidebar') do
         # within the sidebar navigation
@@ -20,6 +23,11 @@ RSpec.describe 'About page', type: :feature do
           expect(page).to have_css('li a', text: about_page2.title)
         end
       end
+    end
+
+    it 'is accessible', :js do
+      expect(page).to have_css('h2', text: about_page1.title)
+      expect(page).to be_axe_clean
     end
   end
 

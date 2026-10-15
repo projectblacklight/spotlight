@@ -2,7 +2,7 @@
   <h2>Welcome to your new exhibit!</h2>
 
   <% unless current_user %>
-    <p>In order to curate exhibit content, you need to <%= link_to t('spotlight.header_links.login'), main_app.new_user_session_path %></p>
+    <p>In order to curate exhibit content, you need to <%= link_to t('spotlight.header_links.login'), main_app.new_user_session_path, class: "alert-link" %></p>
   <% end %>
 
   <% if can? :edit, @page %>
@@ -10,24 +10,24 @@
 
     <ol>
       <% if can? :update, current_exhibit %>
-        <li>Visit the <%= link_to "Configuration > General", edit_exhibit_path(current_exhibit) %> page to configure the exhibit title and subtitle.</li>
+        <li>Visit the <%= link_to "Configuration > General", edit_exhibit_path(current_exhibit), class: "alert-link" %> page to configure the exhibit title and subtitle.</li>
 
-        <li>Next, go to the <%= link_to "Configuration > Appearance", edit_exhibit_appearance_path(current_exhibit) %> page to add a site masthead image and configure other appearance options.</li>
+        <li>Next, go to the <%= link_to "Configuration > Appearance", edit_exhibit_appearance_path(current_exhibit), class: "alert-link" %> page to add a site masthead image and configure other appearance options.</li>
       <% end %>
 
       <% if can? :manage, Spotlight::Role.new(resource: current_exhibit) %>
-        <li>If you want help building the exhibit, use the <%= link_to "Configuration > Users", exhibit_roles_path(current_exhibit) %> page to add other user accounts.</li>
+        <li>If you want help building the exhibit, use the <%= link_to "Configuration > Users", exhibit_roles_path(current_exhibit), class: "alert-link" %> page to add other user accounts.</li>
       <% end %>
 
       <% if Spotlight::Engine.config.resource_partials.any? %>
-        <li>Add items to the exhibit. Go to the <%= link_to "Curation > Items", admin_exhibit_catalog_path(current_exhibit) %> page and select <b>Add items</b>. You can add items individually or in bulk via a CSV file.</li>
+        <li>Add items to the exhibit. Go to the <%= link_to "Curation > Items", admin_exhibit_catalog_path(current_exhibit), class: "alert-link" %> page and select <b>Add items</b>. You can add items individually or in bulk via a CSV file.</li>
       <% end %>
 
       <% if can? :update, current_exhibit.blacklight_configuration %>
-        <li>Use the other curation pages, such as <%= link_to "Curation > Metadata", edit_exhibit_metadata_configuration_path(current_exhibit) %> and <%= link_to "Curation > Search", edit_exhibit_search_configuration_path(current_exhibit) %>, to customize the way various features are presented to exhibit visitors.</li>
+        <li>Use the other curation pages, such as <%= link_to "Curation > Metadata", edit_exhibit_metadata_configuration_path(current_exhibit), class: "alert-link" %> and <%= link_to "Curation > Search", edit_exhibit_search_configuration_path(current_exhibit), class: "alert-link" %>, to customize the way various features are presented to exhibit visitors.</li>
       <% end %>
 
-      <li>Visit the Spotlight <%= link_to "documentation pages", "https://github.com/projectblacklight/spotlight/wiki" %> to learn how to add and edit feature pages, about pages, custom browse categories, and more.</li>
+      <li>Visit the Spotlight <%= link_to "documentation pages", "https://github.com/projectblacklight/spotlight/wiki", class: "alert-link" %> to learn how to add and edit feature pages, about pages, custom browse categories, and more.</li>
     </ol>
   <% end %>
 </div>

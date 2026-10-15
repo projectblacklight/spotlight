@@ -40,5 +40,10 @@ RSpec.describe 'Browse pages' do
       expect(page).to have_css 'ol.breadcrumb li.breadcrumb-item', count: 4
       expect(page).to have_css 'li.breadcrumb-item', text: 'Awesome group'
     end
+
+    it 'is accessible', :js do
+      expect(page).to have_css('h2', text: 'Browse')
+      expect(page).to be_axe_clean
+    end
   end
 end
