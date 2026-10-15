@@ -39,26 +39,49 @@ module Spotlight
     def resources(csv_data, exhibit)
       return to_enum(:resources, csv_data, exhibit) unless block_given?
 
-      encoded_csv(csv_data).each do |row|
+      processed_csv(csv_data, exhibit).each do |row|
+        # Remove the URL from the row and skip if it's blank
         url = row.delete('url')
         next if url.blank?
 
-        resource = Spotlight::Resources::Upload.new(
-          data: row,
-          exhibit:
-        )
+        # Create a new resource for each row of data, and build the upload if the URL is not '~'
+        resource = Spotlight::Resources::Upload.new(data: row, exhibit: exhibit)
         resource.build_upload(remote_image_url: url) unless url == '~'
 
         yield resource
       end
     end
 
-    def encoded_csv(csv)
-      csv.map do |row|
+    def processed_csv(csv_data, exhibit)
+      csv_data.map do |row|
         row.map do |label, column|
-          [label, column.encode('UTF-8', invalid: :replace, undef: :replace, replace: "\uFFFD")] if column.present?
+          next if column.blank?
+
+          [label, processed_value(label, column, exhibit)]
         end.compact.to_h
       end.compact
+    end
+
+    def processed_value(key, value, exhibit)
+      # Encode the value to UTF-8
+      encoded_value = value.encode('UTF-8', invalid: :replace, undef: :replace, replace: "\uFFFD")
+
+      # Check if the key is a multivalued field and split values if delimiter is enabled and present in the value
+      if delimiter.present? && encoded_value.include?(delimiter) && multivalued_fields(exhibit).include?(key)
+        encoded_value.split(delimiter).map(&:strip).compact_blank
+      else
+        encoded_value
+      end
+    end
+
+    def delimiter
+      Spotlight::Engine.config.csv_upload_multivalued_field_delimiter
+    end
+
+    def multivalued_fields(exhibit)
+      upload_fields = Spotlight::Resources::Upload.fields(exhibit).filter_map { |field| field.field_name.to_s if field.is_multiple? }
+      custom_fields = exhibit.custom_fields.filter_map { |field| field.slug.to_s if field.is_multiple? }
+      upload_fields + custom_fields
     end
   end
 end

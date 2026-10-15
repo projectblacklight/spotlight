@@ -48,7 +48,7 @@ module Spotlight
       end
 
       def data_param_keys
-        Spotlight::Resources::Upload.fields(current_exhibit).map(&:field_name) +
+        Spotlight::Resources::Upload.as_strong_params(current_exhibit) +
           current_exhibit.custom_fields.as_strong_params
       end
     end
