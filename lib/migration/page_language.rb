@@ -9,8 +9,6 @@ module Migration
       new.run
     end
 
-    def initialize; end
-
     def run
       migrate_pages
     end
