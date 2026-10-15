@@ -31,8 +31,9 @@ RSpec.describe 'spotlight/pages/show', type: :view do
   end
 
   it 'injects the page title into the html title' do
-    expect(view).to receive(:set_html_page_title)
+    allow(view).to receive(:set_html_page_title)
     render
+    expect(view).to have_received(:set_html_page_title)
   end
 
   context 'when rendering with layout' do
@@ -65,8 +66,9 @@ RSpec.describe 'spotlight/pages/show', type: :view do
 
   it 'includes a default visually hidden title if the page does not display a title' do
     allow(page).to receive_messages(should_display_title?: false)
-    expect(view).not_to receive(:set_html_page_title)
+    allow(view).to receive(:set_html_page_title)
     render
+    expect(view).not_to have_received(:set_html_page_title)
     expect(rendered).to have_css('.visually-hidden', text: 'Main Content')
   end
 

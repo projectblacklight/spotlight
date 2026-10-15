@@ -30,26 +30,28 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
       let(:search) { FactoryBot.create(:search, exhibit:) }
 
       it 'shows the item' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb) do |title, path|
-          expect(title).to eq(title.html_safe? ? 'L&#39;AMERIQUE' : "L'AMERIQUE")
-          expect(path).to eq exhibit_solr_document_path(exhibit, document)
-        end
+        allow(controller).to receive(:add_breadcrumb)
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with(
+          satisfy { |title| title == (title.html_safe? ? 'L&#39;AMERIQUE' : "L'AMERIQUE") },
+          exhibit_solr_document_path(exhibit, document)
+        )
         expect(response).to be_successful
       end
 
       it 'shows the item with breadcrumbs to the browse page' do
         allow(controller).to receive_messages(current_browse_category: search)
 
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with(search.title, exhibit_browse_path(exhibit, search))
-        expect(controller).to receive(:add_breadcrumb) do |title, path|
-          expect(title).to eq(title.html_safe? ? 'L&#39;AMERIQUE' : "L'AMERIQUE")
-          expect(path).to eq exhibit_solr_document_path(exhibit, document)
-        end
+        allow(controller).to receive(:add_breadcrumb)
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with(search.title, exhibit_browse_path(exhibit, search))
+        expect(controller).to have_received(:add_breadcrumb).with(
+          satisfy { |title| title == (title.html_safe? ? 'L&#39;AMERIQUE' : "L'AMERIQUE") },
+          exhibit_solr_document_path(exhibit, document)
+        )
         expect(response).to be_successful
       end
 
@@ -57,13 +59,14 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
         feature_page = FactoryBot.create(:feature_page, exhibit:)
         allow(controller).to receive_messages(current_page_context: feature_page)
 
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with(feature_page.title, [exhibit, feature_page])
-        expect(controller).to receive(:add_breadcrumb) do |title, path|
-          expect(title).to eq(title.html_safe? ? 'L&#39;AMERIQUE' : "L'AMERIQUE")
-          expect(path).to eq exhibit_solr_document_path(exhibit, document)
-        end
+        allow(controller).to receive(:add_breadcrumb)
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with(feature_page.title, [exhibit, feature_page])
+        expect(controller).to have_received(:add_breadcrumb).with(
+          satisfy { |title| title == (title.html_safe? ? 'L&#39;AMERIQUE' : "L'AMERIQUE") },
+          exhibit_solr_document_path(exhibit, document)
+        )
         expect(response).to be_successful
       end
 
@@ -71,12 +74,13 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
         home_page = FactoryBot.create(:home_page)
         allow(controller).to receive_messages(current_page_context: home_page)
 
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb) do |title, path|
-          expect(title).to eq(title.html_safe? ? 'L&#39;AMERIQUE' : "L'AMERIQUE")
-          expect(path).to eq exhibit_solr_document_path(exhibit, document)
-        end
+        allow(controller).to receive(:add_breadcrumb)
         get :show, params: { exhibit_id: exhibit, id: 'dq287tq6352' }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with(
+          satisfy { |title| title == (title.html_safe? ? 'L&#39;AMERIQUE' : "L'AMERIQUE") },
+          exhibit_solr_document_path(exhibit, document)
+        )
         expect(response).to be_successful
       end
 
@@ -88,9 +92,10 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
 
     describe 'GET index' do
       it 'shows the index when there are parameters' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Search results', search_exhibit_catalog_path(exhibit, q: 'map'), current: true)
+        allow(controller).to receive(:add_breadcrumb)
         get :index, params: { exhibit_id: exhibit, q: 'map' }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Search results', search_exhibit_catalog_path(exhibit, q: 'map'), current: true)
         expect(response).to be_successful
       end
 
@@ -223,10 +228,11 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
     before { sign_in FactoryBot.create(:exhibit_curator, exhibit:) }
 
     it 'shows all the items' do
-      expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_path(exhibit))
-      expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-      expect(controller).to receive(:add_breadcrumb).with('Items', admin_exhibit_catalog_path(exhibit))
+      allow(controller).to receive(:add_breadcrumb)
       get :admin, params: { exhibit_id: exhibit }
+      expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_path(exhibit))
+      expect(controller).to have_received(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
+      expect(controller).to have_received(:add_breadcrumb).with('Items', admin_exhibit_catalog_path(exhibit))
       expect(response).to be_successful
       expect(assigns[:response]&.documents).to be_a Array
       expect(assigns[:exhibit]).to eq exhibit

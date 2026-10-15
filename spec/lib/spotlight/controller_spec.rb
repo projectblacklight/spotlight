@@ -115,8 +115,9 @@ RSpec.describe Spotlight::Controller do
     end
 
     it 'adds the current exhibit context to the route' do
-      expect(subject.spotlight).to receive(:facet_exhibit_catalog_url).with(exhibit, id: 'some_field', q: 'xyz')
+      allow(subject.spotlight).to receive(:facet_exhibit_catalog_url)
       subject.exhibit_search_facet_path(id: 'some_field')
+      expect(subject.spotlight).to have_received(:facet_exhibit_catalog_url).with(exhibit, id: 'some_field', q: 'xyz')
     end
   end
 end

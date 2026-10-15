@@ -48,34 +48,49 @@ RSpec.describe Spotlight::Sitemap do
 
   describe '#add_resources!' do
     it 'builds a sitemap for all exhibit resources' do
-      expect(subject).to receive(:add_exhibit_root)
-      expect(subject).to receive(:add_pages)
-      expect(subject).to receive(:add_resources)
-      expect(subject).to receive(:add_browse_categories)
+      allow(subject).to receive(:add_exhibit_root)
+      allow(subject).to receive(:add_pages)
+      allow(subject).to receive(:add_resources)
+      allow(subject).to receive(:add_browse_categories)
 
       subject.add_resources!
+
+      expect(subject).to have_received(:add_exhibit_root)
+      expect(subject).to have_received(:add_pages)
+      expect(subject).to have_received(:add_resources)
+      expect(subject).to have_received(:add_browse_categories)
     end
 
     it 'does not publish sitemaps for unpublished exhibits' do
       exhibit.published = false
 
-      expect(subject).not_to receive(:add_exhibit_root)
-      expect(subject).not_to receive(:add_pages)
-      expect(subject).not_to receive(:add_resources)
-      expect(subject).not_to receive(:add_browse_categories)
+      allow(subject).to receive(:add_exhibit_root)
+      allow(subject).to receive(:add_pages)
+      allow(subject).to receive(:add_resources)
+      allow(subject).to receive(:add_browse_categories)
 
       subject.add_resources!
+
+      expect(subject).not_to have_received(:add_exhibit_root)
+      expect(subject).not_to have_received(:add_pages)
+      expect(subject).not_to have_received(:add_resources)
+      expect(subject).not_to have_received(:add_browse_categories)
     end
 
     it 'does not publish sitemaps for previewable exhibits' do
       exhibit.discovery_enabled = false
 
-      expect(subject).not_to receive(:add_exhibit_root)
-      expect(subject).not_to receive(:add_pages)
-      expect(subject).not_to receive(:add_resources)
-      expect(subject).not_to receive(:add_browse_categories)
+      allow(subject).to receive(:add_exhibit_root)
+      allow(subject).to receive(:add_pages)
+      allow(subject).to receive(:add_resources)
+      allow(subject).to receive(:add_browse_categories)
 
       subject.add_resources!
+
+      expect(subject).not_to have_received(:add_exhibit_root)
+      expect(subject).not_to have_received(:add_pages)
+      expect(subject).not_to have_received(:add_resources)
+      expect(subject).not_to have_received(:add_browse_categories)
     end
   end
 

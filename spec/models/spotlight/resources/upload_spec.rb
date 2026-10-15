@@ -59,7 +59,13 @@ RSpec.describe Spotlight::Resources::Upload, type: :model do
     end
 
     it 'the sidecar is updated with the apporpriate data from configured fields' do
-      expect(upload.sidecar).to receive(:update).with(
+      allow(upload.sidecar).to receive(:update)
+
+      upload.data = { 'full_title_tesim' => 'My Upload Title', 'spotlight_upload_date_tesim' => 'My Upload Date' }
+
+      upload.save
+
+      expect(upload.sidecar).to have_received(:update).with(
         data: {
           'configured_fields' => {
             'full_title_tesim' => 'My Upload Title',
@@ -67,23 +73,21 @@ RSpec.describe Spotlight::Resources::Upload, type: :model do
           }
         }
       )
-
-      upload.data = { 'full_title_tesim' => 'My Upload Title', 'spotlight_upload_date_tesim' => 'My Upload Date' }
-
-      upload.save
     end
 
     it 'the sidecar is updated with the appropriate data from custom fields' do
       FactoryBot.create(:custom_field, exhibit:, slug: 'custom_field_1')
       FactoryBot.create(:custom_field, exhibit:, slug: 'custom_field_2')
 
-      expect(upload.sidecar).to receive(:update).with(
-        data: hash_including('custom_field_1' => 'Custom Field 1 Data', 'custom_field_2' => 'Custom Field 2 Data')
-      )
+      allow(upload.sidecar).to receive(:update)
 
       upload.data = { 'custom_field_1' => 'Custom Field 1 Data', 'custom_field_2' => 'Custom Field 2 Data' }
 
       upload.save
+
+      expect(upload.sidecar).to have_received(:update).with(
+        data: hash_including('custom_field_1' => 'Custom Field 1 Data', 'custom_field_2' => 'Custom Field 2 Data')
+      )
     end
   end
 end

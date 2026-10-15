@@ -28,8 +28,8 @@ RSpec.describe 'spotlight/catalog/admin.html.erb', type: :view do
   end
 
   it 'renders the search header' do
-    expect(search_header_component).to receive(:render_in)
     render
+    expect(search_header_component).to have_received(:render_in)
   end
 
   it "renders the 'add items' link if any repository sources are configured" do
