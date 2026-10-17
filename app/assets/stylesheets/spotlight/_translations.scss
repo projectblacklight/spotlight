@@ -70,7 +70,7 @@
 
 .browse-translations-header {
   border-bottom: 1px solid $border-color;
-  color: $gray-600;
+  color: var(--bs-gray-600);
   display: block;
   font-size: $h4-font-size;
   font-weight: bold;
