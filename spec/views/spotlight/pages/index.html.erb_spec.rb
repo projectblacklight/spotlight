@@ -38,7 +38,7 @@ RSpec.describe 'spotlight/pages/index.html.erb', type: :view do
     it 'does not disable the update button' do
       assign(:pages, [])
       render
-      expect(rendered).to have_no_selector 'button[disabled]', text: 'Save changes'
+      expect(rendered).to have_no_css 'button[disabled]', text: 'Save changes'
       expect(rendered).to have_button 'Save changes'
     end
   end
@@ -54,8 +54,8 @@ RSpec.describe 'spotlight/pages/index.html.erb', type: :view do
 
     it 'removes the form and displays a translations message' do
       expect(rendered).to have_text 'Please use the translations editor'
-      expect(rendered).to have_no_selector '.card-title', text: 'Title1'
-      expect(rendered).to have_no_selector '.card-title', text: 'Title2'
+      expect(rendered).to have_no_css '.card-title', text: 'Title1'
+      expect(rendered).to have_no_css '.card-title', text: 'Title2'
     end
   end
 end

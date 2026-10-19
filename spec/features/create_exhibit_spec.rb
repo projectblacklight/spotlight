@@ -24,7 +24,7 @@ RSpec.describe 'Create a new exhibit', type: :feature do
 
     fill_in 'Title', with: 'My exhibit title'
 
-    find('input[name="commit"]').click
+    click_button(name: 'commit')
 
     expect(page).to have_text 'The exhibit was created.'
     expect(Spotlight::Exhibit.last.slug).to eq 'my-exhibit-title'
@@ -39,7 +39,7 @@ RSpec.describe 'Create a new exhibit', type: :feature do
     fill_in 'Title', with: 'My exhibit title'
     fill_in 'URL slug', with: 'custom-slug'
 
-    find('input[name="commit"]').click
+    click_button(name: 'commit')
 
     expect(page).to have_text 'The exhibit was created.'
     expect(Spotlight::Exhibit.last.slug).to eq 'custom-slug'
@@ -51,14 +51,14 @@ RSpec.describe 'Create a new exhibit', type: :feature do
     fill_in 'Title', with: 'My exhibit title'
     fill_in 'URL slug', with: 'custom-slug'
 
-    find('input[name="commit"]').click
+    click_button(name: 'commit')
 
     visit spotlight.new_exhibit_path
 
     fill_in 'Title', with: 'My exhibit title'
     fill_in 'URL slug', with: 'custom-slug'
 
-    find('input[name="commit"]').click
+    click_button(name: 'commit')
 
     expect(page).to have_text 'Slug is already taken'
   end

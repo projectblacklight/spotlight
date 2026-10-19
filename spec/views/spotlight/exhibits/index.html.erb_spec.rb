@@ -34,19 +34,19 @@ RSpec.describe 'spotlight/exhibits/index', type: :view do
     it 'does not include the tab bar' do
       render
 
-      expect(rendered).to have_no_selector '.nav-tabs'
+      expect(rendered).to have_no_css '.nav-tabs'
     end
 
     it 'does not include tags controls' do
       render
 
-      expect(rendered).to have_no_selector '.tags'
+      expect(rendered).to have_no_css '.tags'
     end
 
     it 'does not include pagination controls' do
       render
 
-      expect(rendered).to have_no_selector '.pager'
+      expect(rendered).to have_no_css '.pager'
     end
 
     context 'with tagged exhibits' do

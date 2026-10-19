@@ -78,7 +78,7 @@ module Spotlight
       click_button('Save changes')
       # verify that the page was created.
       expect(page).to have_css('.alert-info', text: 'was successfully updated')
-      expect(page).to have_no_selector('.alert-danger')
+      expect(page).to have_no_css('.alert-danger')
     end
 
     # Capybara's HTML5 drag emulation sends the drag events to a given element. This drags

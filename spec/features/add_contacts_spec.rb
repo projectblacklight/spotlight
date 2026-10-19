@@ -17,7 +17,7 @@ RSpec.describe 'Add a contact to an exhibit', type: :feature do
       fill_in 'Location', with: 'Rome'
       fill_in 'Telephone', with: '(555) 555-5555 ext. 12345 (mobile)'
 
-      find('input[name="commit"]').click
+      click_button(name: 'commit')
     end
     expect(page).to have_text 'The contact was created.'
 
@@ -40,7 +40,7 @@ RSpec.describe 'Add a contact to an exhibit', type: :feature do
       expect(page).to have_css 'div', text: 'Emperor'
       expect(page).to have_css 'div', text: 'Rome'
       expect(page).to have_css 'div', text: '(555) 555-5555 ext. 12345 (mobile)'
-      expect(page).to have_no_selector 'img.contact-photo'
+      expect(page).to have_no_css 'img.contact-photo'
     end
   end
 

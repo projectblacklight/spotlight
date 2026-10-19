@@ -69,7 +69,7 @@ RSpec.describe 'Adding custom metadata field data', type: :feature do
     visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
 
     expect(page).to have_link 'Edit'
-    expect(page).to have_no_selector '.blacklight-private'
+    expect(page).to have_no_css '.blacklight-private'
 
     click_on 'Edit'
 
@@ -85,6 +85,6 @@ RSpec.describe 'Adding custom metadata field data', type: :feature do
 
     click_on 'Save changes'
 
-    expect(page).to have_no_selector '.blacklight-private'
+    expect(page).to have_no_css '.blacklight-private'
   end
 end
