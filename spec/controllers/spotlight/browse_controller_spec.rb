@@ -43,9 +43,10 @@ RSpec.describe Spotlight::BrowseController, type: :controller do
 
     describe 'GET index' do
       it 'does not show unpublished categories' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
+        allow(controller).to receive(:add_breadcrumb)
         get :index, params: { exhibit_id: exhibit }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
         expect(response).to be_successful
         expect(assigns[:searches]).to eq [search]
         expect(assigns[:searches]).not_to include unpublished
@@ -54,10 +55,11 @@ RSpec.describe Spotlight::BrowseController, type: :controller do
       end
 
       it 'includes the browse groups' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Good group', exhibit_browse_groups_path(exhibit, group))
+        allow(controller).to receive(:add_breadcrumb)
         get :index, params: { exhibit_id: exhibit, group_id: group.id }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Good group', exhibit_browse_groups_path(exhibit, group))
         expect(response).to be_successful
         expect(assigns[:groups]).to eq [group]
         expect(response).to render_template 'spotlight/browse/index'
@@ -68,9 +70,10 @@ RSpec.describe Spotlight::BrowseController, type: :controller do
   describe 'when unauthenticated' do
     describe 'GET index' do
       it 'shows the list of browse categories' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
+        allow(controller).to receive(:add_breadcrumb)
         get :index, params: { exhibit_id: exhibit }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
         expect(response).to be_successful
         expect(assigns[:searches]).to eq [search]
         expect(assigns[:searches]).not_to include unpublished
@@ -87,10 +90,11 @@ RSpec.describe Spotlight::BrowseController, type: :controller do
       end
 
       it 'shows the items in the category' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with(search.title, exhibit_browse_path(exhibit, search))
+        allow(controller).to receive(:add_breadcrumb)
         get :show, params: { id: search, exhibit_id: exhibit }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with(search.title, exhibit_browse_path(exhibit, search))
         expect(response).to be_successful
         expect(assigns[:search]).to be_a Spotlight::Search
         expect(assigns[:response]).to eq mock_response
@@ -98,11 +102,12 @@ RSpec.describe Spotlight::BrowseController, type: :controller do
       end
 
       it 'includes the browse group when a group_id is provided' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Good group', exhibit_browse_groups_path(exhibit, group))
-        expect(controller).to receive(:add_breadcrumb).with(search.title, exhibit_browse_group_path(exhibit, group, search))
+        allow(controller).to receive(:add_breadcrumb)
         get :show, params: { id: search, exhibit_id: exhibit, group_id: group.id }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Browse', exhibit_browse_index_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Good group', exhibit_browse_groups_path(exhibit, group))
+        expect(controller).to have_received(:add_breadcrumb).with(search.title, exhibit_browse_group_path(exhibit, group, search))
         expect(response).to be_successful
         expect(assigns[:group]).to eq group
         expect(response).to render_template 'spotlight/browse/show'

@@ -23,8 +23,9 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
   end
 
   it 'touches the exhibit' do
-    expect(subject.exhibit).to receive :touch
+    allow(subject.exhibit).to receive(:touch)
     subject.save!
+    expect(subject.exhibit).to have_received(:touch)
   end
 
   it 'adds a default thumbnail field' do

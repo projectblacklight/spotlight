@@ -18,16 +18,18 @@ RSpec.describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
     end
     allow(view).to receive_messages(current_exhibit: exhibit)
     allow(view).to receive_messages(document:)
-    expect(view).to receive(:can?).at_least(:once).and_return(true)
+    allow(view).to receive(:can?).and_return(true)
   end
 
   it 'has a edit tag form' do
     render
+    expect(view).to have_received(:can?).at_least(:once)
     expect(rendered).to have_field 'solr_document_exhibit_tag_list'
   end
 
   it 'does not have special metadata editing fields for non-uploaded resources' do
     render
+    expect(view).to have_received(:can?).at_least(:once)
     expect(rendered).to have_no_field 'full_title_tesim label'
     expect(rendered).to have_no_field 'spotlight_upload_description_tesim label'
     expect(rendered).to have_no_field 'spotlight_upload_attribution_tesim label'
@@ -37,6 +39,7 @@ RSpec.describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
   it 'has special metadata fields for an uploaded resource' do
     allow(document).to receive_messages(uploaded_resource?: true)
     render
+    expect(view).to have_received(:can?).at_least(:once)
     expect(rendered).to have_field 'full_title_tesim label'
     expect(rendered).to have_field 'spotlight_upload_description_tesim label'
     expect(rendered).to have_field 'spotlight_upload_attribution_tesim label'
@@ -48,6 +51,7 @@ RSpec.describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
 
     render
 
+    expect(view).to have_received(:can?).at_least(:once)
     expect(rendered).to have_field 'Some Field', type: 'textarea'
   end
 
@@ -56,6 +60,7 @@ RSpec.describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
 
     render
 
+    expect(view).to have_received(:can?).at_least(:once)
     expect(rendered).to have_field 'Some Field', type: 'text'
   end
 end

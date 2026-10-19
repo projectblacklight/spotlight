@@ -12,9 +12,12 @@ RSpec.describe Spotlight::DefaultThumbnailJob do
   end
 
   it 'calls #set_default_thumbnail on the object passed in and saves' do
-    expect(thumbnailable).to receive(:set_default_thumbnail)
-    expect(thumbnailable).to receive(:save)
+    allow(thumbnailable).to receive(:set_default_thumbnail)
+    allow(thumbnailable).to receive(:save)
 
     subject.perform_now
+
+    expect(thumbnailable).to have_received(:set_default_thumbnail)
+    expect(thumbnailable).to have_received(:save)
   end
 end

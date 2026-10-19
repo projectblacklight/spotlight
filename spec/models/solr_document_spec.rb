@@ -74,8 +74,9 @@ RSpec.describe SolrDocument, type: :model do
     it 'stores sidecar data on the sidecar object' do
       mock_sidecar = double
       allow(subject).to receive_messages(sidecar: mock_sidecar)
-      expect(mock_sidecar).to receive(:update).with({ data: { 'a' => 1 } })
+      allow(mock_sidecar).to receive(:update)
       subject.update exhibit, sidecar: { data: { 'a' => 1 } }
+      expect(mock_sidecar).to have_received(:update).with({ data: { 'a' => 1 } })
     end
 
     it 'stores tags' do
@@ -86,15 +87,17 @@ RSpec.describe SolrDocument, type: :model do
     it 'converts empty strings to nil' do
       mock_sidecar = double
       allow(subject).to receive_messages(sidecar: mock_sidecar)
-      expect(mock_sidecar).to receive(:update).with({ data: { 'a' => nil } })
+      allow(mock_sidecar).to receive(:update)
       subject.update exhibit, sidecar: { data: { 'a' => '' } }
+      expect(mock_sidecar).to have_received(:update).with({ data: { 'a' => nil } })
     end
 
     it 'compacts arrays of empty or nil values' do
       mock_sidecar = double
       allow(subject).to receive_messages(sidecar: mock_sidecar)
-      expect(mock_sidecar).to receive(:update).with({ data: { 'a' => ['a'] } })
+      allow(mock_sidecar).to receive(:update)
       subject.update exhibit, sidecar: { data: { 'a' => ['', nil, 'a'] } }
+      expect(mock_sidecar).to have_received(:update).with({ data: { 'a' => ['a'] } })
     end
   end
 
@@ -206,9 +209,11 @@ RSpec.describe SolrDocument, type: :model do
 
     it 'reindexes all solr documents' do
       allow(described_class).to receive(:find_each).and_yield(doc)
-      expect(doc).to receive(:reindex)
+      allow(doc).to receive(:reindex)
 
       described_class.reindex_all
+
+      expect(doc).to have_received(:reindex)
     end
   end
 end
