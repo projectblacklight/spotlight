@@ -71,7 +71,7 @@ RSpec.describe 'Feature Pages Adminstration', :js do
     page.dismiss_confirm do
       click_link 'Cancel'
     end
-    expect(page).to have_no_selector 'a', text: 'Edit'
+    expect(page).to have_no_css 'a', text: 'Edit'
   end
 
   it 'stays in curation mode if a user has unsaved contenteditable data' do
@@ -86,7 +86,7 @@ RSpec.describe 'Feature Pages Adminstration', :js do
     page.accept_confirm do
       click_link 'Cancel'
     end
-    expect(page).to have_no_selector 'a', text: 'Edit'
+    expect(page).to have_no_css 'a', text: 'Edit'
   end
 
   it 'does not update the pages list when the user has unsaved changes' do

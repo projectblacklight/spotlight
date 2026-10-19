@@ -25,8 +25,8 @@ RSpec.describe 'spotlight/browse/show', type: :view do
   it 'does not have the heading and item count when there is a current search masthead' do
     allow(view).to receive_messages(resource_masthead?: true)
     render
-    expect(response).to have_no_selector 'h1', text: search.title
-    expect(response).to have_no_selector '.item-count', text: "#{search.count} items"
+    expect(response).to have_no_css 'h1', text: search.title
+    expect(response).to have_no_css '.item-count', text: "#{search.count} items"
   end
 
   it 'has an edit button' do
@@ -39,7 +39,7 @@ RSpec.describe 'spotlight/browse/show', type: :view do
     allow(search).to receive_messages(long_description: 'Long description')
     render
     expect(response).to have_css '.long-description-text p', text: search.long_description
-    expect(response).to have_no_selector '.very-long-description-text'
+    expect(response).to have_no_css '.very-long-description-text'
   end
 
   it 'adds markup for very long descriptions' do

@@ -39,7 +39,7 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_embed_block.html.erb
     expect(rendered).to have_css '.box'
     expect(rendered).to have_css '.items-col'
     expect(rendered).to have_css '.text-col'
-    expect(rendered).to have_no_selector '.col-md-12'
+    expect(rendered).to have_no_css '.col-md-12'
   end
 
   context 'with a block with no text' do

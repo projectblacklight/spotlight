@@ -31,8 +31,8 @@ RSpec.describe 'spotlight/metadata_configurations/edit', type: :view do
 
     it 'removes the form and displays a translations message' do
       expect(rendered).to have_text 'Please use the translations editor'
-      expect(rendered).to have_no_selector 'th', text: 'Some View Type'
-      expect(rendered).to have_no_selector 'th', text: 'Another View Type'
+      expect(rendered).to have_no_css 'th', text: 'Some View Type'
+      expect(rendered).to have_no_css 'th', text: 'Another View Type'
     end
   end
 end

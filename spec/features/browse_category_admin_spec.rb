@@ -70,7 +70,7 @@ RSpec.describe 'Browse Category Administration', type: :feature do
         expect(page).to have_text 'You can add this browse category'
 
         within '#search-group' do
-          expect(find('input[type="checkbox"]')).not_to be_checked
+          expect(find_field(type: 'checkbox')).not_to be_checked
           check 'Good group'
         end
 
@@ -80,7 +80,7 @@ RSpec.describe 'Browse Category Administration', type: :feature do
         click_link 'Group'
 
         within '#search-group' do
-          expect(find('input[type="checkbox"]')).to be_checked
+          expect(find_field(type: 'checkbox')).to be_checked
         end
       end
     end

@@ -99,7 +99,7 @@ RSpec.describe 'Edit in place', :js, type: :feature do
 
       within('.metadata_fields') do
         expect(page).to have_css("[data-id='personal_name_ssm'][data-behavior='restore-default']", visible: true)
-        expect(page).to have_no_selector('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default')
+        expect(page).to have_no_css('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default')
         click_link('Personal names')
         fill_in 'blacklight_configuration_index_fields_personal_name_ssm_label', with: 'Brand new name'
       end
@@ -120,7 +120,7 @@ RSpec.describe 'Edit in place', :js, type: :feature do
 
       within('.metadata_fields') do
         expect(page).to have_link('Personal names', href: '#edit-in-place')
-        expect(page).to have_no_selector('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default')
+        expect(page).to have_no_css('button[name="button"][type="submit"][data-restore-default="true"]', text: 'Restore default')
       end
     end
   end
