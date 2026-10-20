@@ -2,6 +2,7 @@
 
 require 'iiif/presentation'
 require 'iiif/v3/presentation'
+require 'ssrf_filter'
 module Spotlight
   module Resources
     ###
@@ -64,8 +65,8 @@ module Spotlight
 
       class << self
         def iiif_response(url)
-          Spotlight::Resources::IiifService.http_client.get(url).body
-        rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
+          SsrfFilter.get(url, http_options: { response_body_encoding: true }).body
+        rescue SsrfFilter::Error, SocketError, SystemCallError, Timeout::Error, OpenSSL::SSL::SSLError => e
           Rails.logger.warn("HTTP GET for #{url} failed with #{e}")
           {}.to_json
         end

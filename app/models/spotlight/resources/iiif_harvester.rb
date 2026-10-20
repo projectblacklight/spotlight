@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'iiif/presentation'
+require 'ssrf_filter'
 
 module Spotlight
   module Resources
@@ -33,13 +34,16 @@ module Spotlight
 
       def url_is_iiif?(url)
         valid_content_types = ['application/json', 'application/ld+json']
-        req = Spotlight::Resources::IiifService.http_client.head(url)
-        req = Spotlight::Resources::IiifService.http_client.get(url) if req.status == 405
-        return unless req.success?
+        req = SsrfFilter.head(url)
+        req = SsrfFilter.get(url) if req.code == '405'
+        return unless req.is_a?(Net::HTTPSuccess)
 
         valid_content_types.any? do |valid_type|
-          req.headers['content-type'].include?(valid_type)
+          req['content-type'].to_s.include?(valid_type)
         end
+      rescue SsrfFilter::Error => e
+        Rails.logger.warn("Refusing to fetch #{url}: #{e.message}")
+        false
       end
     end
   end

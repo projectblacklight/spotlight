@@ -35,6 +35,16 @@ RSpec.describe Spotlight::Resources::IiifHarvester do
         expect(subject.errors).not_to be_present
       end
     end
+
+    context 'when given a URL on a private network' do
+      let(:url) { 'http://169.254.169.254/latest/meta-data/' }
+
+      it 'errors without making the request' do
+        expect(subject).not_to be_valid
+        expect(subject.errors[:url]).to eq ['Invalid IIIF URL']
+        expect(a_request(:any, url)).not_to have_been_made
+      end
+    end
   end
 
   describe '#reindex' do
