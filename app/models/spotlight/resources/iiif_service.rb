@@ -33,13 +33,6 @@ module Spotlight
         recursive_manifests(new(url))
       end
 
-      def self.http_client
-        Faraday.new do |b|
-          b.response :follow_redirects
-          b.adapter Faraday.default_adapter
-        end
-      end
-
       protected
 
       def object
