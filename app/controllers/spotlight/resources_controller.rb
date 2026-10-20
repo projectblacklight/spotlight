@@ -28,7 +28,7 @@ module Spotlight
         redirect_to spotlight.admin_exhibit_catalog_path(@resource.exhibit, sort: :timestamp)
       else
         flash[:error] = @resource.errors.full_messages.to_sentence if @resource.errors.present?
-        render action: 'new'
+        render action: 'new', status: :unprocessable_content
       end
     end
     alias update create
