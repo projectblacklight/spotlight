@@ -69,6 +69,7 @@ RSpec.describe Spotlight::ResourcesController, type: :controller do
         allow_any_instance_of(Spotlight::Resource).to receive(:errors).and_return invalid_resource.errors
         post :create, params: { exhibit_id: exhibit, resource: { url: 'info:uri' } }
         expect(assigns[:resource]).not_to be_persisted
+        expect(response).to have_http_status(:unprocessable_content)
         expect(flash[:error]).to include 'Url is invalid'
       end
     end
