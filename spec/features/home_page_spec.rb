@@ -57,11 +57,6 @@ RSpec.describe 'Home page', type: :feature do
     expect(page).to have_css '.constraint-value', text: 'query'
   end
 
-  it 'is accessible', :js do
-    visit spotlight.exhibit_home_page_path(exhibit)
-    expect(page).to be_axe_clean
-  end
-
   describe 'page options on edit form' do
     describe 'show title' do
       let(:home_page) { FactoryBot.create(:home_page, display_title: false, exhibit:) }

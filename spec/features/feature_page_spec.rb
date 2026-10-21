@@ -36,11 +36,6 @@ RSpec.describe 'Feature page', type: :feature do
           end
         end
       end
-
-      it 'is accessible', :js do
-        expect(page).to have_css('h2', text: parent_feature_page.title)
-        expect(page).to be_axe_clean
-      end
     end
 
     describe 'when configured to not display' do

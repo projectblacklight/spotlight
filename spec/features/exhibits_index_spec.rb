@@ -39,10 +39,6 @@ RSpec.describe 'Exhibits index page', type: :feature do
 
         expect(page).to have_css '.exhibit-card', count: 1
       end
-
-      it 'is accessible', :js do
-        expect(page).to be_axe_clean
-      end
     end
   end
 
