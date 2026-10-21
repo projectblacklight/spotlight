@@ -9,6 +9,14 @@ module Spotlight
     # Wrapper around IIIF-Presentation's IIIF::Service that provides the
     # ability to recursively traverse through all collections and manifests
     class IiifService
+      # Errors from a failed fetch, covering what Faraday::ConnectionFailed used to wrap
+      FETCH_ERRORS = [
+        SsrfFilter::Error, URI::Error, IOError, SocketError, SystemCallError, Timeout::Error,
+        Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError,
+        OpenSSL::SSL::SSLError, Zlib::Error
+      ].freeze
+      MAX_REDIRECTS = 3
+
       def initialize(url)
         @url = url
       end
@@ -31,6 +39,19 @@ module Spotlight
 
       def self.parse(url)
         recursive_manifests(new(url))
+      end
+
+      # SsrfFilter only resolves redirects whose Location starts with "/", so
+      # follow them here instead; each hop still goes through SsrfFilter.
+      def self.fetch(verb, url, **)
+        (MAX_REDIRECTS + 1).times do
+          response = SsrfFilter.public_send(verb, url, max_redirects: 0, allow_unfollowed_redirects: true, **)
+          return response unless response.is_a?(Net::HTTPRedirection) && response['location']
+
+          url = URI.join(url, response['location']).to_s
+        end
+
+        raise SsrfFilter::TooManyRedirects, "Got #{MAX_REDIRECTS} redirects fetching #{url}"
       end
 
       protected
@@ -58,8 +79,8 @@ module Spotlight
 
       class << self
         def iiif_response(url)
-          SsrfFilter.get(url, http_options: { response_body_encoding: true }).body
-        rescue SsrfFilter::Error, SocketError, SystemCallError, Timeout::Error, OpenSSL::SSL::SSLError => e
+          fetch(:get, url, http_options: { response_body_encoding: true }).body
+        rescue *FETCH_ERRORS => e
           Rails.logger.warn("HTTP GET for #{url} failed with #{e}")
           {}.to_json
         end
