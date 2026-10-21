@@ -11,7 +11,7 @@ If you have questions or are interested in contributing, please reach out to the
 
 ## Requirements
 
-- [Ruby](https://www.ruby-lang.org/) 3.2+
+- [Ruby](https://www.ruby-lang.org/) 3.3+
 - [Ruby on Rails](https://rubyonrails.org/) 7.1+
 - Java (11 or greater) *for Solr*
 - [ImageMagick](http://www.imagemagick.org/script/index.php) if using riiif (current default for `config.iiif_service`)
@@ -111,13 +111,18 @@ You only need to update `package.json` and prepare/publish the JavaScript packag
 7. You can test the release by running `npm publish --dry-run`. Check the console output to make sure the version number looks correct.
 8. Run `npm publish` to push the JavaScript package to https://npmjs.org/package/spotlight-frontend
 
+For a prerelease (e.g. `6.0.0.rc1` in `version.rb` and `6.0.0-rc.1` in `package.json`), publish with `npm publish --tag next` so the `latest` tag stays on the current stable release.
+
+For a release from a backport branch (e.g. `release-5.x`), publish with `npm publish --tag release-5.x` so it doesn't replace the `latest` tag.
+
 See [Updating the JavaScript bundle](#updating-the-javascript-bundle) above for more details.
 
 ## Developing Spotlight
 
 ### Branches
 
-* The `main` branch is for development of the 5.x series.
+* The `main` branch is for development of the 6.x series.
+* The `5.x` series is on the [release-5.x](https://github.com/projectblacklight/spotlight/tree/release-5.x) branch for backports of features and bug fixes.
 * The `4.x` series is on the [release-4.x](https://github.com/projectblacklight/spotlight/tree/release-4.x) branch for backports of features and bug fixes.
 
 ### Tooling
