@@ -35,6 +35,8 @@ module Spotlight
           run "yarn add file:#{Spotlight::Engine.root}"
         elsif options[:test]
           run 'yarn link spotlight-frontend'
+          # yarn link doesn't install the linked package's dependencies; the stylesheets need leaflet
+          run 'yarn add leaflet'
 
         # If a branch was specified (e.g. you are running a template.rb build
         # against a test branch), use the latest version available on npm
