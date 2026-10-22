@@ -40,7 +40,7 @@
     <%= render blacklight_config.skip_link_component.new(render_search_link: should_render_spotlight_search_bar?) do %>
       <%= content_for(:skip_links) %>
     <% end %>
-    <%= render partial: 'shared/header_navbar' %>
+    <%= render blacklight_config.header_component.new(blacklight_config:) %>
     <%= render Spotlight::MastheadComponent.new(current_exhibit:, current_masthead:, resource_masthead: resource_masthead?) %>
     <%= content_for?(:header_content) ? yield(:header_content) : "" %>
 

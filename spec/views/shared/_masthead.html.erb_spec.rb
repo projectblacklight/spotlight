@@ -4,9 +4,17 @@ RSpec.describe 'shared/_masthead', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit, subtitle: 'Some exhibit') }
   let(:masthead) { nil }
 
+  let(:navbar_component) do
+    stub_const('StubNavbarComponent', Class.new(ViewComponent::Base) do
+      def call
+        'navbar'
+      end
+    end)
+  end
+
   before do
-    stub_template 'shared/_exhibit_navbar.html.erb' => 'navbar'
-    allow(view).to receive_messages(current_exhibit: exhibit,
+    allow(view).to receive_messages(blacklight_config: Blacklight::Configuration.new(exhibit_navbar_component: navbar_component),
+                                    current_exhibit: exhibit,
                                     current_masthead: masthead,
                                     masthead_heading_content: exhibit.title,
                                     masthead_subheading_content: exhibit.subtitle,
