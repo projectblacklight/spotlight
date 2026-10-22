@@ -60,6 +60,9 @@
 # Spotlight::Engine.config.uploader_storage = :file
 # Spotlight::Engine.config.allowed_upload_extensions = %w(jpg jpeg png)
 
+# Set a delimiter character for multivalued fields in CSV uploads (ex. "|") - disabled by default
+# Spotlight::Engine.config.csv_upload_multivalued_field_delimiter = nil
+
 # Spotlight::Engine.config.featured_image_thumb_size = [400, 300]
 # Spotlight::Engine.config.featured_image_square_size = [400, 400]
 
