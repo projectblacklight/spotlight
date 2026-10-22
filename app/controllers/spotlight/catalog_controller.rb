@@ -35,7 +35,6 @@ module Spotlight
       blacklight_config.view.select! { |k, _v| k == :admin_table }
       unless blacklight_config.view.key? :admin_table
         blacklight_config.view.admin_table(document_component: Spotlight::DocumentAdminTableComponent,
-                                           partials: [:index_compact],
                                            document_actions: [])
       end
 
