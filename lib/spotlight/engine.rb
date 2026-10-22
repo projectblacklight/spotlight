@@ -8,8 +8,6 @@ require 'devise_invitable'
 
 require 'activejob-status'
 require 'blacklight'
-require 'faraday'
-require 'faraday/follow_redirects'
 require 'friendly_id'
 require 'i18n/active_record'
 require 'paper_trail'

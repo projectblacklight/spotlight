@@ -5,7 +5,7 @@ RSpec.describe Spotlight::SolrDocument::AtomicUpdates, type: :model do
     SolrDocument.new.extend(described_class)
   end
 
-  let(:blacklight_solr) { double }
+  let(:blacklight_solr) { double(update: nil) }
 
   before do
     allow(subject).to receive_messages(blacklight_solr:)
@@ -22,8 +22,8 @@ RSpec.describe Spotlight::SolrDocument::AtomicUpdates, type: :model do
       end
 
       it "doesn't write" do
-        expect(blacklight_solr).not_to receive(:update)
         subject.reindex
+        expect(blacklight_solr).not_to have_received(:update)
       end
     end
 
@@ -33,8 +33,8 @@ RSpec.describe Spotlight::SolrDocument::AtomicUpdates, type: :model do
         data: [{ id: 'doc_id', a: { set: 1 }, b: { set: 2 }, timestamp: { set: nil } }].to_json,
         headers: { 'Content-Type' => 'application/json' }
       }
-      expect(blacklight_solr).to receive(:update).with(expected)
       subject.reindex
+      expect(blacklight_solr).to have_received(:update).with(expected)
     end
 
     it 'update parameters can be specified to modify commitWithin' do
@@ -43,14 +43,14 @@ RSpec.describe Spotlight::SolrDocument::AtomicUpdates, type: :model do
         data: [{ id: 'doc_id', a: { set: 1 }, b: { set: 2 }, timestamp: { set: nil } }].to_json,
         headers: { 'Content-Type' => 'application/json' }
       }
-      expect(blacklight_solr).to receive(:update).with(expected)
       subject.reindex(update_params: { commitWithin: 5001 })
+      expect(blacklight_solr).to have_received(:update).with(expected)
     end
 
     it 'cowardlies refuse to index a document if the only value is an id' do
       allow(subject).to receive_messages(to_solr: { id: 'doc_id' }, timestamp: { set: nil })
-      expect(blacklight_solr).not_to receive(:update)
       subject.reindex
+      expect(blacklight_solr).not_to have_received(:update)
     end
   end
 end

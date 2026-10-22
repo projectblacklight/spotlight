@@ -15,8 +15,9 @@ RSpec.describe Spotlight::ReindexJob do
     subject { described_class.new(resource) }
 
     it 'attempts to reindex every resource in the exhibit' do
-      expect(resource).to receive(:reindex)
+      allow(resource).to receive(:reindex)
       subject.perform_now
+      expect(resource).to have_received(:reindex)
     end
 
     it 'adds some job tracking events' do
@@ -40,16 +41,20 @@ RSpec.describe Spotlight::ReindexJob do
 
     it 'does nothing if the token is no longer valid' do
       allow(mock_checker).to receive(:check).with(subject, validity_token: 'xyz').and_return(false)
-      expect(resource).not_to receive(:reindex)
+      allow(resource).to receive(:reindex)
 
       subject.perform_now
+
+      expect(resource).not_to have_received(:reindex)
     end
 
     it 'indexes the resource if the token is valid' do
       allow(mock_checker).to receive(:check).with(subject, validity_token: 'xyz').and_return(true)
-      expect(resource).to receive(:reindex)
+      allow(resource).to receive(:reindex)
 
       subject.perform_now
+
+      expect(resource).to have_received(:reindex)
     end
   end
 

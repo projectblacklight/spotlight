@@ -15,7 +15,7 @@ RSpec.describe 'Metadata Administration', :js do
       expect(page).to have_no_css("tr td:nth-child(2) input[type='checkbox']:not(:checked)")
       # In the scope of the th element which contains the checkbox
       within('tr th:nth-child(2)') do
-        find("input[type='checkbox']").set(false)
+        find_field(type: 'checkbox').set(false)
       end
       # After unchecking the all checkbox, all checkboxes in the item details column should be unchecked
       expect(page).to have_no_css("tr td:nth-child(2) input[type='checkbox']:checked")
@@ -41,7 +41,7 @@ RSpec.describe 'Metadata Administration', :js do
         # Unchecking one of the checkboxes should also uncheck "All"
         expect(page).to have_css("input[type='checkbox']:not(:checked)")
         # Check the "All" checkbox for the item details column
-        find("input[type='checkbox']").set(true)
+        find_field(type: 'checkbox').set(true)
       end
       # After clicking "All", all checkboxes should be checked
       expect(page).to have_no_css("tr td:nth-child(2) input[type='checkbox']:not(:checked)")

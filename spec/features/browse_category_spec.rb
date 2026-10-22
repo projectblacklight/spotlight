@@ -22,7 +22,7 @@ RSpec.describe 'Browse pages' do
           expect(page).to have_css 'h2', text: 'Some Saved Search'
         end
 
-        expect(page).to have_no_selector '.masthead .h2', text: 'Some Saved Search'
+        expect(page).to have_no_css '.masthead .h2', text: 'Some Saved Search'
         expect(page).to have_css '.search-query-form'
         expect(page).to have_css '.breadcrumbs-container'
       end
@@ -33,8 +33,8 @@ RSpec.describe 'Browse pages' do
 
           visit spotlight.exhibit_browse_path(exhibit, search)
 
-          expect(page).to have_css 'h2', text: 'Some Saved Search'
-          expect(page).to have_no_selector '.search-query-form'
+          expect(page).to have_css 'h1', text: 'Some Saved Search'
+          expect(page).to have_no_css '.search-query-form'
         end
       end
     end
@@ -53,12 +53,12 @@ RSpec.describe 'Browse pages' do
         expect(page).to have_css '.masthead .h2', text: 'Some Saved Search'
 
         within '#main-container' do
-          expect(page).to have_no_selector 'h2', text: 'Some Saved Search'
+          expect(page).to have_no_css 'h1', text: 'Some Saved Search'
         end
 
         expect(page).to have_css '.masthead small.item-count', text: /\d+ items/
-        expect(page).to have_no_selector '.search-query-form'
-        expect(page).to have_no_selector '.breadcrumbs-container'
+        expect(page).to have_no_css '.search-query-form'
+        expect(page).to have_no_css '.breadcrumbs-container'
       end
     end
 

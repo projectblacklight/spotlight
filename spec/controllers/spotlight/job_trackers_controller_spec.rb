@@ -26,10 +26,11 @@ RSpec.describe Spotlight::JobTrackersController, type: :controller do
 
     describe 'GET show' do
       it 'assigns breadcrumbs' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Dashboard', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Job status', [exhibit, job_tracker])
+        allow(controller).to receive(:add_breadcrumb)
         get :show, params: { exhibit_id: exhibit, id: job_tracker }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Dashboard', exhibit_dashboard_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Job status', [exhibit, job_tracker])
         expect(response).to be_successful
       end
     end

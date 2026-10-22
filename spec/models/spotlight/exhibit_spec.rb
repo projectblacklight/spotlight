@@ -331,8 +331,9 @@ RSpec.describe Spotlight::Exhibit, type: :model do
     subject { FactoryBot.create(:exhibit) }
 
     it 'queues a reindex job for the exhibit' do
-      expect(Spotlight::ReindexExhibitJob).to receive(:perform_later).with(subject, user: nil)
+      allow(Spotlight::ReindexExhibitJob).to receive(:perform_later)
       subject.reindex_later
+      expect(Spotlight::ReindexExhibitJob).to have_received(:perform_later).with(subject, user: nil)
     end
   end
 

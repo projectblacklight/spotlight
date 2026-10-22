@@ -51,10 +51,11 @@ RSpec.describe Spotlight::SearchesController, type: :controller do
       let(:group) { FactoryBot.create(:group, published: true, title: 'Good group', exhibit:, searches: [search]) }
 
       it 'shows all the items' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit)
-        expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Browse', exhibit_searches_path(exhibit))
+        allow(controller).to receive(:add_breadcrumb)
         get :index, params: { exhibit_id: search.exhibit_id }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit)
+        expect(controller).to have_received(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Browse', exhibit_searches_path(exhibit))
         expect(response).to be_successful
         expect(assigns[:exhibit]).to eq search.exhibit
         expect(assigns[:searches]).to include search

@@ -33,10 +33,11 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller do
       let!(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
       it 'assigns all feature pages as @pages' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
+        allow(controller).to receive(:add_breadcrumb)
         get :index, params: { exhibit_id: exhibit }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Curation', exhibit_dashboard_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
         expect(assigns(:pages)).to include page
         expect(assigns(:exhibit)).to eq exhibit
       end
@@ -47,9 +48,10 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller do
         let(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
         it 'assigns the requested page as @page' do
-          expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with(page.title, [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
+          allow(controller).to receive(:add_breadcrumb)
           get :show, params: { exhibit_id: page.exhibit.id, id: page }
+          expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
+          expect(controller).to have_received(:add_breadcrumb).with(page.title, [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
           expect(assigns(:page)).to eq(page)
         end
       end
@@ -58,12 +60,13 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller do
         let(:page) { FactoryBot.create(:feature_subpage, exhibit:) }
 
         it 'assigns the requested page as @page' do
-          expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-          expect(controller).to receive(:add_breadcrumb).with(
+          allow(controller).to receive(:add_breadcrumb)
+          get :show, params: { exhibit_id: page.exhibit, id: page }
+          expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
+          expect(controller).to have_received(:add_breadcrumb).with(
             page.parent_page.title, [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page.parent_page]
           )
-          expect(controller).to receive(:add_breadcrumb).with(page.title, [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
-          get :show, params: { exhibit_id: page.exhibit, id: page }
+          expect(controller).to have_received(:add_breadcrumb).with(page.title, [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page])
           expect(assigns(:page)).to eq(page)
         end
       end
@@ -134,13 +137,14 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller do
       let(:page) { FactoryBot.create(:feature_subpage, exhibit:) }
 
       it 'assigns the requested page as @page' do
-        expect(controller).to receive(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
-        expect(controller).to receive(:add_breadcrumb).with(
+        allow(controller).to receive(:add_breadcrumb)
+        get :edit, params: { exhibit_id: page.exhibit.id, id: page.id }
+        expect(controller).to have_received(:add_breadcrumb).with('Home', exhibit_root_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with('Feature pages', exhibit_feature_pages_path(exhibit))
+        expect(controller).to have_received(:add_breadcrumb).with(
           page.parent_page.title, [a_kind_of(ActionDispatch::Routing::RoutesProxy), exhibit, page.parent_page]
         )
-        expect(controller).to receive(:add_breadcrumb).with(page.title, [:edit, exhibit, page])
-        get :edit, params: { exhibit_id: page.exhibit.id, id: page.id }
+        expect(controller).to have_received(:add_breadcrumb).with(page.title, [:edit, exhibit, page])
         expect(assigns(:page)).to eq page
       end
     end
@@ -259,11 +263,11 @@ RSpec.describe Spotlight::FeaturePagesController, type: :controller do
       let!(:page) { FactoryBot.create(:feature_page, exhibit:) }
 
       it 'calls the CloneTranslatedPageFromLocale service' do
-        expect(
-          Spotlight::CloneTranslatedPageFromLocale
-        ).to receive(:call).with(locale: 'es', page:).and_call_original
+        allow(Spotlight::CloneTranslatedPageFromLocale).to receive(:call).and_call_original
 
         get :clone, params: { exhibit_id: exhibit.id, id: page.id, language: 'es' }
+
+        expect(Spotlight::CloneTranslatedPageFromLocale).to have_received(:call).with(locale: 'es', page:)
       end
     end
   end

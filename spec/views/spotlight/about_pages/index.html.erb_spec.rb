@@ -65,7 +65,7 @@ RSpec.describe 'spotlight/about_pages/index.html.erb', type: :view do
       allow(view).to receive(:disable_save_pages_button?).and_return(false)
       assign(:pages, [{}])
       render
-      expect(rendered).to have_no_selector 'button[disabled]', text: 'Save changes'
+      expect(rendered).to have_no_css 'button[disabled]', text: 'Save changes'
       expect(rendered).to have_button 'Save changes'
     end
   end
@@ -81,8 +81,8 @@ RSpec.describe 'spotlight/about_pages/index.html.erb', type: :view do
 
     it 'removes the form and displays a translations message' do
       expect(rendered).to have_text 'Please use the translations editor'
-      expect(rendered).to have_no_selector '.card-title', text: 'Title1'
-      expect(rendered).to have_no_selector '.card-title', text: 'Title2'
+      expect(rendered).to have_no_css '.card-title', text: 'Title1'
+      expect(rendered).to have_no_css '.card-title', text: 'Title2'
     end
   end
 end

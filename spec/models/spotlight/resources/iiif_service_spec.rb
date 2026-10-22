@@ -65,4 +65,16 @@ RSpec.describe Spotlight::Resources::IiifService do
       end
     end
   end
+
+  describe '.iiif_response' do
+    let(:url) { 'http://example.com/manifest' }
+
+    before { allow(described_class).to receive(:iiif_response).with(url).and_call_original }
+
+    it 'logs and returns empty JSON when the server sends a malformed response' do
+      stub_request(:get, url).to_raise(Net::HTTPBadResponse)
+
+      expect(described_class.iiif_response(url)).to eq '{}'
+    end
+  end
 end

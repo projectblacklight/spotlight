@@ -25,7 +25,7 @@ RSpec.describe Spotlight::TitleHelper, type: :helper do
       title = helper.page_title('Section')
 
       expect(title).to have_css 'h1', text: 'Section'
-      expect(title).to have_no_selector 'h1 small'
+      expect(title).to have_no_css 'h1 small'
 
       title = helper.instance_variable_get(:@page_title)
       expect(title).to eq 'Section | Application'

@@ -26,10 +26,7 @@ module Spotlight
       DESCRIPTION
 
       def add_stylesheet_dependencies
-        run "yarn add blacklight-frontend@#{blacklight_yarn_version}"
         run "yarn add bootstrap@\"^#{bootstrap_yarn_version}\""
-        run 'yarn add blacklight-gallery@^5.0'
-        run 'yarn add leaflet'
       end
 
       # Needed for the stylesheets
@@ -38,6 +35,8 @@ module Spotlight
           run "yarn add file:#{Spotlight::Engine.root}"
         elsif options[:test]
           run 'yarn link spotlight-frontend'
+          # yarn link doesn't install the linked package's dependencies; the stylesheets need leaflet
+          run 'yarn add leaflet'
 
         # If a branch was specified (e.g. you are running a template.rb build
         # against a test branch), use the latest version available on npm
@@ -74,14 +73,6 @@ module Spotlight
             @import "spotlight";
           CONTENT
         end
-      end
-
-      private
-
-      def bootstrap_frontend_version
-        yarn_lock = File.read('yarn.lock')
-        bootstrap_entry = yarn_lock.match(/^"?bootstrap@.+:\n  version "(.+)"/)
-        bootstrap_entry ? bootstrap_entry[1] : nil
       end
     end
   end

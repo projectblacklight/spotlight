@@ -25,7 +25,7 @@ RSpec.describe 'Manage exhibit users and roles', :js do
       expect(page).to have_button 'Save changes'
       click_on 'Cancel'
     end
-    expect(page).to have_no_selector("[data-edit-for='#{admin.id}']")
+    expect(page).to have_no_css("[data-edit-for='#{admin.id}']")
     expect(page).to have_css("[data-show-for='#{admin.id}']")
   end
 
@@ -33,6 +33,6 @@ RSpec.describe 'Manage exhibit users and roles', :js do
     click_on 'Add a new user'
     expect(page).to have_css('[data-edit-for="new"]')
     click_on 'Cancel'
-    expect(page).to have_no_selector('[data-edit-for="new"]')
+    expect(page).to have_no_css('[data-edit-for="new"]')
   end
 end

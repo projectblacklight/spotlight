@@ -30,13 +30,14 @@ RSpec.describe Spotlight::SolrController, type: :controller do
     describe 'POST update' do
       it 'passes through the request data' do
         doc = {}
-        expect(connection).to receive(:update) do |params|
+        allow(connection).to receive(:update) do |params|
           doc = JSON.parse(params[:data], symbolize_names: true)
         end
 
         post_update_with_json_body(exhibit, a: 1)
 
         expect(response).to be_successful
+        expect(connection).to have_received(:update)
         expect(doc.first).to include a: 1
       end
 
@@ -54,19 +55,20 @@ RSpec.describe Spotlight::SolrController, type: :controller do
 
       it 'enriches the request with exhibit solr data' do
         doc = {}
-        expect(connection).to receive(:update) do |params|
+        allow(connection).to receive(:update) do |params|
           doc = JSON.parse(params[:data], symbolize_names: true)
         end
 
         post_update_with_json_body(exhibit, a: 1)
 
         expect(response).to be_successful
+        expect(connection).to have_received(:update)
         expect(doc.first).to include exhibit.solr_data
       end
 
       it 'enriches the request with sidecar data' do
         doc = {}
-        expect(connection).to receive(:update) do |params|
+        allow(connection).to receive(:update) do |params|
           doc = JSON.parse(params[:data], symbolize_names: true)
         end
 
@@ -75,12 +77,13 @@ RSpec.describe Spotlight::SolrController, type: :controller do
         post_update_with_json_body(exhibit, a: 1)
 
         expect(response).to be_successful
+        expect(connection).to have_received(:update)
         expect(doc.first).to include b: 1
       end
 
       it 'creates sidecars for data that matches custom field slugs' do
         doc = {}
-        expect(connection).to receive(:update) do |params|
+        allow(connection).to receive(:update) do |params|
           doc = JSON.parse(params[:data], symbolize_names: true)
         end
 
@@ -89,6 +92,7 @@ RSpec.describe Spotlight::SolrController, type: :controller do
         end.to change(Spotlight::SolrDocumentSidecar, :count).by(1)
 
         expect(response).to be_successful
+        expect(connection).to have_received(:update)
         expect(doc.first).to include a: 1
       end
 
@@ -97,12 +101,13 @@ RSpec.describe Spotlight::SolrController, type: :controller do
 
         it 'parses the uploaded file' do
           doc = {}
-          expect(connection).to receive(:update) do |params|
+          allow(connection).to receive(:update) do |params|
             doc = JSON.parse(params[:data], symbolize_names: true)
           end
           post :update, params: { resources_json_upload: { json: }, exhibit_id: exhibit }
 
           expect(response).to redirect_to exhibit_resources_path(exhibit)
+          expect(connection).to have_received(:update)
           expect(doc.first).to include a: 1
         end
       end

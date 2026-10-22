@@ -312,52 +312,6 @@ RSpec/MessageChain:
     - "spec/models/spotlight/blacklight_configuration_spec.rb"
     - "spec/views/spotlight/browse/_search.html.erb_spec.rb"
 
-# Offense count: 204
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: have_received, receive
-RSpec/MessageSpies:
-  Exclude:
-    - "spec/components/spotlight/exhibit_navbar_component_spec.rb"
-    - "spec/controllers/spotlight/about_pages_controller_spec.rb"
-    - "spec/controllers/spotlight/appearances_controller_spec.rb"
-    - "spec/controllers/spotlight/browse_controller_spec.rb"
-    - "spec/controllers/spotlight/catalog_controller_spec.rb"
-    - "spec/controllers/spotlight/contacts_controller_spec.rb"
-    - "spec/controllers/spotlight/custom_fields_controller_spec.rb"
-    - "spec/controllers/spotlight/custom_search_fields_controller_spec.rb"
-    - "spec/controllers/spotlight/dashboards_controller_spec.rb"
-    - "spec/controllers/spotlight/exhibits_controller_spec.rb"
-    - "spec/controllers/spotlight/feature_pages_controller_spec.rb"
-    - "spec/controllers/spotlight/home_pages_controller_spec.rb"
-    - "spec/controllers/spotlight/job_trackers_controller_spec.rb"
-    - "spec/controllers/spotlight/metadata_configurations_controller_spec.rb"
-    - "spec/controllers/spotlight/resources/csv_upload_controller_spec.rb"
-    - "spec/controllers/spotlight/roles_controller_spec.rb"
-    - "spec/controllers/spotlight/search_configurations_controller_spec.rb"
-    - "spec/controllers/spotlight/searches_controller_spec.rb"
-    - "spec/controllers/spotlight/solr_controller_spec.rb"
-    - "spec/controllers/spotlight/tags_controller_spec.rb"
-    - "spec/controllers/spotlight/translations_controller_spec.rb"
-    - "spec/helpers/spotlight/crud_link_helpers_spec.rb"
-    - "spec/helpers/spotlight/pages_helper_spec.rb"
-    - "spec/jobs/spotlight/add_uploads_from_csv_spec.rb"
-    - "spec/jobs/spotlight/default_thumbnail_job_spec.rb"
-    - "spec/jobs/spotlight/reindex_job_spec.rb"
-    - "spec/lib/spotlight/controller_spec.rb"
-    - "spec/models/solr_document_spec.rb"
-    - "spec/models/spotlight/blacklight_configuration_spec.rb"
-    - "spec/models/spotlight/custom_field_spec.rb"
-    - "spec/models/spotlight/exhibit_spec.rb"
-    - "spec/models/spotlight/featured_image_spec.rb"
-    - "spec/models/spotlight/resource_spec.rb"
-    - "spec/models/spotlight/resources/upload_spec.rb"
-    - "spec/models/spotlight/sitemap_spec.rb"
-    - "spec/models/spotlight/solr_document/atomic_updates_spec.rb"
-    - "spec/views/spotlight/catalog/_edit_default.html.erb_spec.rb"
-    - "spec/views/spotlight/catalog/admin.html.erb_spec.rb"
-    - "spec/views/spotlight/pages/show.html.erb_spec.rb"
-    - "spec/views/spotlight/searches/index.html.erb_spec.rb"
-
 # Offense count: 104
 # Configuration parameters: AllowSubject.
 RSpec/MultipleMemoizedHelpers:
@@ -651,11 +605,6 @@ Rails/UnknownEnv:
     - "spec/test_app_templates/carrierwave.rb"
 
 # Offense count: 1
-Rails/UnusedRenderContent:
-  Exclude:
-    - "app/controllers/spotlight/lock_controller.rb"
-
-# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/CombinableLoops:
   Exclude:
@@ -748,13 +697,6 @@ Style/RedundantArgument:
 Style/RedundantFilterChain:
   Exclude:
     - "spec/models/spotlight/blacklight_configuration_spec.rb"
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowComments.
-Style/RedundantInitialize:
-  Exclude:
-    - "lib/migration/page_language.rb"
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
