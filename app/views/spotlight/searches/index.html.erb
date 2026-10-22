@@ -66,8 +66,8 @@
             <%= t(:'.add_new_group') %> <%= blacklight_icon('chevron_right') %>
             <span data-title-field="true" class="input-field">
               <%= f.text_field(:title) %>
-              <%= f.submit t(:'.save'), data: {behavior: "save"} %>
-              <%= f.submit t(:'.cancel'), data: {behavior: "cancel"} %>
+              <%= f.submit t(:'.save'), class: 'btn btn-sm btn-primary', data: {behavior: "save"} %>
+              <%= f.submit t(:'.cancel'), class: 'btn btn-sm btn-primary', data: {behavior: "cancel"} %>
             </span>
           </a>
         <%- end -%>
