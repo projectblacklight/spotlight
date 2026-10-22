@@ -75,7 +75,7 @@ tr.doc-row:has(input.toggle-visibility:disabled:not(:checked)) {
 
 .blacklight-catalog-admin {
   .add-items-nav {
-    margin-bottom: $spacer;
+    margin-bottom: 1rem;
   }
 
   .sort-pagination {
@@ -118,11 +118,11 @@ form.edit_solr_document {
   }
   flex-wrap: wrap;
   width: 60%;
-  margin-left: -1 * $spacer * 0.1;
+  margin-left: -0.1rem;
 
   .btn,
   .btn-group {
-    margin-top: $spacer * 0.25;
+    margin-top: 0.25rem;
   }
 }
 
@@ -134,7 +134,7 @@ form.edit_solr_document {
   }
   order: -1;
   width: 100%;
-  margin-left: -1 * $spacer * 0.1;
+  margin-left: -0.1rem;
 }
 
 #document,
