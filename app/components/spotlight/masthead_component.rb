@@ -25,7 +25,7 @@ module Spotlight
 
     def masthead_navbar
       if current_exhibit
-        render 'shared/exhibit_navbar'
+        render helpers.blacklight_config.exhibit_navbar_component.new
       else
         render 'shared/site_navbar'
       end

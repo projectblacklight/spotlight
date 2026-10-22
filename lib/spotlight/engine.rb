@@ -283,6 +283,8 @@ module Spotlight
       Blacklight::Configuration.default_values[:search_state_fields] ||= []
       Blacklight::Configuration.default_values[:search_state_fields] += %i[id exhibit_id browse_category_id]
       Blacklight::Configuration.default_values[:skip_link_component] = Spotlight::SkipLinkComponent
+      Blacklight::Configuration.default_values[:header_component] = Spotlight::HeaderComponent
+      Blacklight::Configuration.property :exhibit_navbar_component, default: Spotlight::ExhibitNavbarComponent
     end
 
     # make blacklight configuration play nice with bootstrap_form

@@ -1,6 +1,0 @@
-<% if blacklight_config.header_component.present? && blacklight_config.header_component != Blacklight::HeaderComponent %>
-  <%= render blacklight_config.header_component.new(blacklight_config: blacklight_config) %>
-<% else %>
-  <%= render Spotlight::HeaderComponent.new(blacklight_config: blacklight_config) %>
-  <% Spotlight.deprecator.warn("_header_navbar.html.erb will be deprecated in future versions. Please use Blacklight configuration to specify your HeaderComponent.") %>
-<% end %>
