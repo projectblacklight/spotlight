@@ -33,7 +33,7 @@ RSpec.describe 'Browse pages' do
 
           visit spotlight.exhibit_browse_path(exhibit, search)
 
-          expect(page).to have_css 'h1', text: 'Some Saved Search'
+          expect(page).to have_css 'h2', text: 'Some Saved Search'
           expect(page).to have_no_css '.search-query-form'
         end
       end
