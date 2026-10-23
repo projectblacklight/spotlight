@@ -5,8 +5,10 @@ module Spotlight
   class SolrDocumentLegacyEmbedComponent < Blacklight::DocumentComponent
     attr_reader :block_context
 
-    def initialize(*, block: nil, **)
-      super(*, **)
+    # Name `document` explicitly: ViewComponent 3 doesn't count an anonymous `**`
+    # as accepting the collection parameter.
+    def initialize(*, document: nil, block: nil, **)
+      super(*, document:, **)
 
       @block_context = block
     end

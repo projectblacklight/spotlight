@@ -26,9 +26,15 @@ jobs:
           - rails_version: "~> 8.1"
             ruby: "4.0"
             blacklight_version: "~> 9.2"
+          - rails_version: "~> 8.1"
+            ruby: "4.0"
+            blacklight_version: "~> 8.0"
+            view_component_version: "~> 3.0"
+            additional_name: "/ ViewComponent 3"
     env:
       RAILS_VERSION: ${{ matrix.rails_version }}
       BLACKLIGHT_VERSION: ${{ matrix.blacklight_version }}
+      VIEW_COMPONENT_VERSION: ${{ matrix.view_component_version }}
       BOOTSTRAP_VERSION: ${{ matrix.bootstrap_version }}
       ENGINE_CART_RAILS_OPTIONS: "--skip-git --skip-listen --skip-spring --skip-keeps --skip-coffee --skip-test --skip-kamal --skip-thruster --skip-solid --css bootstrap ${{ matrix.additional_engine_cart_rails_options }}"
     steps:

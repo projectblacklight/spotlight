@@ -29,6 +29,7 @@ class TestAppGenerator < Rails::Generators::Base
 
   def add_gems
     gem 'blacklight', ENV['BLACKLIGHT_VERSION'] || '~> 8.0' unless Bundler.locked_gems.dependencies.key? 'blacklight'
+    gem 'view_component', ENV.fetch('VIEW_COMPONENT_VERSION') if ENV['VIEW_COMPONENT_VERSION'].present?
     gem 'bootstrap_form' unless Bundler.locked_gems.dependencies.key? 'bootstrap_form'
 
     Bundler.with_unbundled_env do
