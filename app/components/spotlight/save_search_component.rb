@@ -3,6 +3,10 @@
 module Spotlight
   # Displays the "Save this search" button and modal
   class SaveSearchComponent < ViewComponent::Base
+    # Call bootstrap_form_for on the component itself, not through `helpers`:
+    # on ViewComponent 3, a block passed to `helpers` renders as escaped text.
+    include BootstrapForm::ActionViewExtensions::FormHelper
+
     def initialize(button_classes: 'btn btn-outline-primary')
       @button_classes = button_classes
       super()
