@@ -24,11 +24,6 @@ RSpec.describe 'About page', type: :feature do
         end
       end
     end
-
-    it 'is accessible', :js do
-      expect(page).to have_css('h2', text: about_page1.title)
-      expect(page).to be_axe_clean
-    end
   end
 
   describe 'page options' do

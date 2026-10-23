@@ -12,6 +12,7 @@ RSpec.describe 'Slideshow', :js, type: :feature do
   it 'has slideshow' do
     visit spotlight.search_exhibit_catalog_path(exhibit, f: { genre_ssim: ['map'] })
     expect(page).to have_css '.constraint-value', text: 'map'
+    expect(page).to be_axe_clean
     within '.view-type' do
       click_link 'Slideshow'
     end

@@ -65,6 +65,7 @@ RSpec.describe 'Search contexts' do
       expect(page).to have_css('.img-thumbnail')
       expect(page).to have_no_css('.title')
     end
+    expect(page).to be_axe_clean
 
     find('.items-block a').click
 
@@ -77,9 +78,17 @@ RSpec.describe 'Search contexts' do
 
     it 'adds context breadcrumbs back to the browse page when navigating to an item', :js do
       visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
+      expect(page).to have_css('h1', text: exhibit.title)
+      expect(page).to be_axe_clean
       click_link 'Browse'
+      expect(page).to have_css('h2', text: 'Browse')
+      expect(page).to be_axe_clean
       click_link 'Some Saved Search'
+      expect(page).to have_css('h2', text: 'Some Saved Search')
+      expect(page).to be_axe_clean
       click_link 'A MAP of AMERICA from the latest and best Observations'
+      expect(page).to have_css('h1', text: 'A MAP of AMERICA')
+      expect(page).to be_axe_clean
       expect(page).to have_link 'Home'
       expect(page).to have_link 'Browse'
       expect(page).to have_link 'Some Saved Search', href: spotlight.exhibit_browse_path(exhibit, search)

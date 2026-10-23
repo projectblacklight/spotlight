@@ -9,6 +9,8 @@ RSpec.describe 'Edit in place', :js, type: :feature do
   describe 'Feature Pages' do
     it 'updates the label' do
       visit spotlight.exhibit_dashboard_path(exhibit)
+      expect(page).to have_css('h2', text: 'Recently updated items')
+      expect(page).to be_axe_clean
 
       click_link 'Feature pages'
 

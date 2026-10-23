@@ -32,9 +32,4 @@ RSpec.describe 'Display an item within the exhibit', type: :feature do
     expect(page).to have_css('h1', text: "L'AMERIQUE")
     expect(page).to have_css('.openseadragon-container')
   end
-
-  it 'is accessible', :js do
-    visit spotlight.exhibit_solr_document_path(exhibit, 'dq287tq6352')
-    expect(page).to be_axe_clean
-  end
 end
