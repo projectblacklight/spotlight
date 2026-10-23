@@ -96,6 +96,29 @@ RSpec.describe Spotlight::SolrController, type: :controller do
         expect(doc.first).to include a: 1
       end
 
+      it 'does not store the unique key in the sidecar data' do
+        allow(connection).to receive(:update)
+
+        post_update_with_json_body(exhibit, id: 'test-1', a: 1, custom_field: 'abc')
+
+        sidecar = Spotlight::SolrDocumentSidecar.find_by(document_id: 'test-1', exhibit:)
+        expect(sidecar.data).not_to have_key 'id'
+        expect(sidecar.data).to include 'custom_field' => 'abc'
+      end
+
+      it 'indexes a document whose payload is only the unique key' do
+        doc = {}
+        allow(connection).to receive(:update) do |params|
+          doc = JSON.parse(params[:data], symbolize_names: true)
+        end
+
+        post_update_with_json_body(exhibit, id: 'test-1')
+
+        expect(response).to be_successful
+        expect(connection).to have_received(:update)
+        expect(doc.first).to include id: 'test-1'
+      end
+
       context 'with a file upload' do
         let(:json) { fixture_file_upload(File.expand_path(File.join('..', 'spec', 'fixtures', 'json-upload-fixture.json'), Rails.root), 'application/json') }
 
