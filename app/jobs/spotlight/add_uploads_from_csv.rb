@@ -79,7 +79,9 @@ module Spotlight
     end
 
     def multivalued_fields(exhibit)
-      exhibit.custom_fields.filter_map { |field| field.slug.to_s if field.is_multiple? }
+      upload_fields = Spotlight::Resources::Upload.fields(exhibit).filter_map { |field| field.field_name.to_s if field.is_multiple? }
+      custom_fields = exhibit.custom_fields.filter_map { |field| field.slug.to_s if field.is_multiple? }
+      upload_fields + custom_fields
     end
   end
 end

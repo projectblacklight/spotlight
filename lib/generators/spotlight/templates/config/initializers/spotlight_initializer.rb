@@ -41,6 +41,8 @@
 # Spotlight::Engine.config.thumbnail_field = :thumbnail_url_ssm
 
 # ==> Uploaded item configuration
+# Add `is_multiple : true` to Spotlight::UploadFieldConfig arguments to allow for multivalued field data
+# If is_multiple is enabled, Spotlight will send the field to Solr as an array, so ensure that your Solr configurations support this
 # Spotlight::Engine.config.upload_fields = [
 #   Spotlight::UploadFieldConfig.new(
 #     field_name: Spotlight::Engine.config.upload_description_field,
