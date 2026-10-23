@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module Spotlight
-  VERSION = '5.3.2'
+  VERSION = '6.0.0.rc1'
 end
