@@ -4,7 +4,7 @@ RSpec.describe 'Feature page', type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
-  describe 'sidebar' do
+  describe 'feature page with sidebar' do
     let!(:parent_feature_page) do
       FactoryBot.create(:feature_page, title: 'Parent Page', exhibit:)
     end
@@ -17,12 +17,14 @@ RSpec.describe 'Feature page', type: :feature do
     end
 
     describe 'when configured to display' do
-      before { parent_feature_page.update display_sidebar: true }
+      before do
+        parent_feature_page.update display_sidebar: true
+        visit spotlight.exhibit_feature_page_path(parent_feature_page.exhibit, parent_feature_page)
+      end
 
       after { parent_feature_page.update display_sidebar: false }
 
       it 'is present' do
-        visit spotlight.exhibit_feature_page_path(parent_feature_page.exhibit, parent_feature_page)
         # the sidebar should display
         within('#sidebar') do
           # the current page should be the sidebar header
@@ -33,6 +35,11 @@ RSpec.describe 'Feature page', type: :feature do
             expect(page).to have_css('li a', text: child_feature_page.title)
           end
         end
+      end
+
+      it 'is accessible', :js do
+        expect(page).to have_css('h2', text: parent_feature_page.title)
+        expect(page).to be_axe_clean
       end
     end
 
