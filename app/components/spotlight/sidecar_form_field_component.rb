@@ -36,6 +36,26 @@ module Spotlight
       "spotlight-field-template-#{field_id}"
     end
 
+    # add_another.js finds the field's existing values through the .form-group wrapper
+    def wrapper_class
+      inline ? 'form-group mb-3 row gy-2' : 'form-group mb-3'
+    end
+
+    def label_class(hidden: false)
+      classes = inline ? ['col-form-label', label_col] : ['form-label']
+      classes << 'visually-hidden' if hidden
+      classes.join(' ')
+    end
+
+    # In a horizontal form only the first input sits beside the label, so later inputs are offset to line up under it
+    def value_wrapper_class(first:)
+      if inline
+        first ? control_col : "#{offset_col} #{control_col}"
+      elsif multiple
+        'mb-2'
+      end
+    end
+
     def label_col
       form&.label_col
     end
