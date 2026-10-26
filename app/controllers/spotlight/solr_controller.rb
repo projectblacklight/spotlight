@@ -69,6 +69,10 @@ module Spotlight
     end
 
     def create_or_update_solr_document_sidecar(doc, data)
+      # The sidecar already records the unique key as its document_id. (The payload is a raw
+      # Solr document, so here "id" is always the unique key; in other sidecar data it may be
+      # the slug of an "ID" custom field.)
+      data = data.except(doc.class.unique_key.to_s)
       return if data.blank?
 
       sidecar = doc.sidecar(@exhibit)
