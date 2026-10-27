@@ -28,10 +28,6 @@ module Spotlight
         solr_hash
       end
 
-      def with_exhibit(e)
-        @exhibit = e
-      end
-
       def compound_id
         Digest::MD5.hexdigest("#{exhibit.id}-#{url}")
       end
