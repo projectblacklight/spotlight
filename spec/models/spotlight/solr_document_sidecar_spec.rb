@@ -55,4 +55,23 @@ RSpec.describe Spotlight::SolrDocumentSidecar, type: :model do
       its(:to_solr) { is_expected.to include 'a_hash_field' => ['b'] }
     end
   end
+
+  describe 'saving' do
+    subject(:sidecar) { described_class.new(exhibit:, document_id: 'doc_id', document_type: 'SolrDocument') }
+
+    it 'strips blank entries from multivalued fields' do
+      sidecar.data = {
+        'a_blank_field' => '',
+        'a_multivalued_field' => ['', 'a', ''],
+        'configured_fields' => { 'an_upload_field' => ['b', ''], 'a_single_field' => 'c' }
+      }
+      sidecar.save!
+
+      expect(sidecar.reload.data).to eq(
+        'a_blank_field' => '',
+        'a_multivalued_field' => ['a'],
+        'configured_fields' => { 'an_upload_field' => ['b'], 'a_single_field' => 'c' }
+      )
+    end
+  end
 end

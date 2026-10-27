@@ -22,6 +22,8 @@ module Spotlight
 
     delegate :has_key?, :key?, to: :data
 
+    before_save :strip_blank_values_from_data
+
     def to_solr
       { document.class.unique_key.to_sym => document.id,
         visibility_field => public? }
@@ -47,6 +49,22 @@ module Spotlight
     end
 
     private
+
+    # Remove blank entries (e.g. from an empty "Add another value" input) from multivalued fields
+    def strip_blank_values_from_data
+      self.data = strip_blank_values(data)
+    end
+
+    def strip_blank_values(value)
+      case value
+      when Array
+        value.compact_blank
+      when Hash
+        value.transform_values { |v| strip_blank_values(v) }
+      else
+        value
+      end
+    end
 
     def document_type_class
       return default_document_type unless document_type.is_a?(String)
