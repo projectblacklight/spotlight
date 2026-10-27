@@ -43,12 +43,6 @@ module Spotlight
       @job_status ||= ActiveJob::Status.get(job_id)
     end
 
-    def progress_label
-      return number_with_delimiter(progress) unless total?
-
-      "#{number_with_delimiter(progress)} / #{number_with_delimiter(total)}"
-    end
-
     def progress
       data[:progress] || job_status[:progress] || 0
     end
@@ -59,12 +53,6 @@ module Spotlight
 
     def total?
       total(default: 0).positive?
-    end
-
-    def percent
-      return nil unless total?
-
-      (100.0 * progress) / total
     end
 
     def status
@@ -103,12 +91,6 @@ module Spotlight
       else
         self
       end
-    end
-
-    private
-
-    def number_with_delimiter(*)
-      ActiveSupport::NumberHelper.number_to_delimited(*)
     end
   end
 end
