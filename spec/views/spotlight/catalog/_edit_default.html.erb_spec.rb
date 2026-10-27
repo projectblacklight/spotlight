@@ -13,6 +13,7 @@ RSpec.describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
   let(:custom_field) { FactoryBot.create(:custom_field, exhibit:) }
 
   before do
+    view.extend Spotlight::ApplicationHelper
     allow(view).to receive(:uploaded_field_label) do |config|
       "#{config.field_name} label"
     end

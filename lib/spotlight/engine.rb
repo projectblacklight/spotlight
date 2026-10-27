@@ -117,10 +117,13 @@ module Spotlight
     config.solr_fields.string_suffix = '_ssim'
     config.solr_fields.text_suffix = '_tesim'
 
-    # Suffixes for exhibit-specific solr fields
+    # Suffixes for exhibit-specific solr fields. Each type may also set:
+    #   form_field_type: the form builder method used for the input (default: :text_field)
+    #   component: the component used to render the field on the upload and edit forms
+    #              (default: Spotlight::SidecarFormFieldComponent)
     config.custom_field_types = {
       vocab: { suffix: '_ssim', facetable: true },
-      text: { suffix: '_tesim' }
+      text: { suffix: '_tesim', form_field_type: :text_area }
     }
 
     config.resource_global_id_field = :"#{config.solr_fields.prefix}spotlight_resource_id#{config.solr_fields.string_suffix}"

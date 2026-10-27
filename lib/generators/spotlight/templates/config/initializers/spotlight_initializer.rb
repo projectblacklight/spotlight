@@ -37,11 +37,17 @@
 # Spotlight::Engine.config.solr_fields.string_suffix = '_ssim'.freeze
 # Spotlight::Engine.config.solr_fields.text_suffix = '_tesim'.freeze
 # Spotlight::Engine.config.resource_global_id_field = :"#{config.solr_fields.prefix}spotlight_resource_id#{config.solr_fields.string_suffix}"
+# Exhibit custom field types; `form_field_type` and `component` control how the field renders on the upload and edit forms
+# Spotlight::Engine.config.custom_field_types = {
+#   vocab: { suffix: '_ssim', facetable: true },
+#   text: { suffix: '_tesim', form_field_type: :text_area, component: 'Spotlight::SidecarFormFieldComponent' }
+# }
 # Spotlight::Engine.config.full_image_field = :full_image_url_ssm
 # Spotlight::Engine.config.thumbnail_field = :thumbnail_url_ssm
 
 # ==> Uploaded item configuration
 # Add `is_multiple: true` to Spotlight::UploadFieldConfig arguments to allow for multivalued field data
+# Add `component: MyFieldComponent` to render the field with a custom component (default: Spotlight::SidecarFormFieldComponent)
 # If is_multiple is enabled, Spotlight will send the field to Solr as an array, so ensure that your Solr configurations support this
 # Spotlight::Engine.config.upload_fields = [
 #   Spotlight::UploadFieldConfig.new(

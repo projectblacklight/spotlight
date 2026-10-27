@@ -16,6 +16,20 @@ RSpec.describe Spotlight::UploadFieldConfig do
     end
   end
 
+  describe '#component' do
+    it 'defaults to the SidecarFormFieldComponent' do
+      expect(described_class.new(field_name: 'something').component).to eq Spotlight::SidecarFormFieldComponent
+    end
+
+    it 'accepts a component class' do
+      expect(described_class.new(field_name: 'something', component: ViewComponent::Base).component).to eq ViewComponent::Base
+    end
+
+    it 'accepts a component class name' do
+      expect(described_class.new(field_name: 'something', component: 'ViewComponent::Base').component).to eq ViewComponent::Base
+    end
+  end
+
   describe '#solr_field' do
     it 'is an alias of the #solr_field method so it can be polymorphic with other Blacklight configurations' do
       expect(described_class.new(field_name: 'something').solr_field).to eq 'something'

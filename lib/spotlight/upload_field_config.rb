@@ -10,13 +10,15 @@ module Spotlight
     attr_reader :blacklight_options, :field_name, :form_field_type
 
     # rubocop:disable Metrics/ParameterLists
-    def initialize(field_name:, blacklight_options: {}, form_field_type: :text_field, solr_fields: nil, label: nil, is_multiple: false)
+    def initialize(field_name:, blacklight_options: {}, form_field_type: :text_field, solr_fields: nil, label: nil, is_multiple: false,
+                   component: nil)
       @blacklight_options = blacklight_options
       @field_name = field_name
       @form_field_type = form_field_type
       @solr_fields = solr_fields
       @label = label || field_name
       @is_multiple = is_multiple
+      @component = component
     end
     # rubocop:enable Metrics/ParameterLists
 
@@ -32,6 +34,13 @@ module Spotlight
       @is_multiple
     end
     # rubocop:enable Naming/PredicatePrefix
+
+    # The component used to render the field on the upload and edit forms
+    def component
+      return Spotlight::SidecarFormFieldComponent if @component.blank?
+
+      @component.is_a?(String) ? @component.constantize : @component
+    end
 
     # aliasing for backwards compatability and consistency with blacklight config
     alias solr_field field_name
