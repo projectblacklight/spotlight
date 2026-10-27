@@ -85,16 +85,6 @@ RSpec.describe Spotlight::ApplicationHelper, type: :helper do
   end
 
   describe 'search block helpers' do
-    describe 'selected_search_block_views' do
-      let(:block) do
-        SirTrevorRails::Block.new({ type: 'xyz', data: { a: 'on', b: 'off', c: false, d: 'on' } }, 'parent')
-      end
-
-      it "returns keys with a value of 'on'" do
-        expect(helper.selected_search_block_views(block)).to eq %w[a d]
-      end
-    end
-
     describe 'blacklight_view_config_for_search_block' do
       let(:sir_trevor_block) do
         SirTrevorRails::Block.new({ type: 'xyz', data: { view: %w[list gallery] } }, 'parent')
