@@ -4,6 +4,9 @@ RSpec.describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
   let(:blacklight_config) do
     Blacklight::Configuration.new do |config|
       config.index.title_field = :title_field
+      %w[full_title_tesim spotlight_upload_description_tesim spotlight_upload_attribution_tesim spotlight_upload_date_tesim].each do |field|
+        config.add_index_field field, label: "#{field} label"
+      end
     end
   end
 
@@ -14,10 +17,7 @@ RSpec.describe 'spotlight/catalog/_edit_default.html.erb', type: :view do
 
   before do
     view.extend Spotlight::ApplicationHelper
-    allow(view).to receive(:uploaded_field_label) do |config|
-      "#{config.field_name} label"
-    end
-    allow(view).to receive_messages(current_exhibit: exhibit)
+    allow(view).to receive_messages(blacklight_config:, current_exhibit: exhibit)
     allow(view).to receive_messages(document:)
     allow(view).to receive(:can?).and_return(true)
   end

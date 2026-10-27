@@ -2,11 +2,11 @@
   <%= f.url_field :url, type: "file", help: t('.url-field.help', extensions: Spotlight::Engine.config.allowed_upload_extensions.join(' ')), label: "File" %>
   <%= f.fields_for :data do |d| %>
     <% Spotlight::Resources::Upload.fields(current_exhibit).each do |config| %>
-      <%= render_upload_field_form_field(d, config, inline: true) %>
+      <%= render Spotlight::UploadFieldFormGroupComponent.new(form: d, config:, inline: true) %>
     <% end %>
 
     <% current_exhibit.custom_fields.each do |custom_field| %>
-      <%= render_custom_field_form_field(d, custom_field, inline: true) %>
+      <%= render Spotlight::CustomFieldFormGroupComponent.new(form: d, field: custom_field, inline: true) %>
     <% end %>
   <% end %>
   <div class="form-actions">

@@ -1,0 +1,18 @@
+<%= form.fields_for :sidecar, sidecar do |c| %>
+  <%= c.fields_for :data do |d| %>
+    <% if document.uploaded_resource? %>
+      <%= d.fields_for :configured_fields do |e| %>
+        <% upload_fields.each do |config| %>
+          <%= render Spotlight::UploadFieldFormGroupComponent.new(form: e, config:, value: upload_field_value(config)) %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% custom_fields.each do |field| %>
+      <%= render Spotlight::CustomFieldFormGroupComponent.new(form: d, field:, value: custom_field_value(field)) %>
+      <% unless field.configured_to_display? %>
+        <p class="bg-warning form-text"><%= blank_field_warning %></p>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

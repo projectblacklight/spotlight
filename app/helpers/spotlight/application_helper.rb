@@ -154,43 +154,6 @@ module Spotlight
       )
     end
 
-    def uploaded_field_label(config)
-      solr_field = Array(config.solr_field || config.field_name).first.to_s
-      blacklight_config.index_fields[solr_field]&.label || config.label || t(".#{solr_field}")
-    end
-
-    # Render a sidecar form field for an upload field (Spotlight::UploadFieldConfig) through its configured component
-    def render_upload_field_form_field(form, config, value: nil, inline: false)
-      render config.component.new(
-        form:,
-        id: config.field_name,
-        label: uploaded_field_label(config),
-        value:,
-        field_type: config.form_field_type,
-        multiple: config.is_multiple?,
-        inline:
-      )
-    end
-
-    # Render a sidecar form field for an exhibit custom field through its configured component
-    def render_custom_field_form_field(form, field, value: nil, inline: false)
-      deprecated_partial = render_deprecated_custom_field_form_group(form, field, value:, inline:)
-      return deprecated_partial if deprecated_partial
-
-      render field.component.new(form:, id: field.slug, label: field.label, value:, field_type: field.form_field_type,
-                                 multiple: field.is_multiple?, readonly: field.readonly_field?, inline:)
-    end
-
-    # Applications could previously customize custom field inputs by overriding these partials
-    def render_deprecated_custom_field_form_group(form, field, value:, inline:)
-      partial = "spotlight/custom_fields/form_group/#{field.field_type}"
-      return unless lookup_context.exists?(partial, [], true)
-
-      Spotlight.deprecator.warn "Rendering deprecated partial #{partial}. " \
-                                'Configure a component in Spotlight::Engine.config.custom_field_types instead'
-      render(partial:, locals: { inline:, f: form, field:, value: })
-    end
-
     def available_view_fields
       current_exhibit.blacklight_configuration.default_blacklight_config.view.to_h.reject { |_k, v| v.if == false }
     end
