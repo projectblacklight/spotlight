@@ -120,10 +120,6 @@ module Spotlight
       Spotlight::Engine.config.default_browse_index_view_type
     end
 
-    def render_save_this_search?
-      false
-    end
-
     def render_curator_actions?
       false
     end
