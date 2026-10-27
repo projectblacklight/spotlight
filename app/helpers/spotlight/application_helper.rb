@@ -163,17 +163,6 @@ module Spotlight
       current_exhibit.blacklight_configuration.default_blacklight_config.view.to_h.reject { |_k, v| v.if == false }
     end
 
-    def render_search_bar
-      return super if defined?(super)
-
-      render((blacklight_config&.view_config(document_index_view_type)&.search_bar_component || Blacklight::SearchBarComponent).new(
-               url: search_action_url,
-               advanced_search_url: search_action_url(action: 'advanced_search'),
-               params: search_state.params_for_search.except(:qt),
-               autocomplete_path: suggest_index_catalog_path
-             ))
-    end
-
     def render_constraints(localized_params = nil, local_search_state = nil)
       return super if defined?(super)
 
