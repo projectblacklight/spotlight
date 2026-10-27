@@ -75,10 +75,6 @@ module Spotlight
 
     delegate :blacklight_config, to: :exhibit
 
-    def display_masthead?
-      masthead&.display?
-    end
-
     def search_params
       search_service.search_builder.with(search_state).merge(facet: false)
     end
