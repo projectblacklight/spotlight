@@ -136,13 +136,6 @@ module Spotlight
       selected_view || default_document_index_view_type
     end
 
-    # Return the list of views that are configured to display for a block
-    def selected_search_block_views(block)
-      block.as_json[:data].select do |_key, value|
-        value == 'on'
-      end.keys.map(&:to_s)
-    end
-
     # Create checkbox for selecting/deselecting metadata fields for a given view in metadata configuration
     def select_deselect_action(id)
       check_box_tag(
