@@ -13,10 +13,6 @@ module SirTrevorRails
         @solr_helper = solr_helper
       end
 
-      def search_options(id)
-        items.detect { |x| x[:id] == id } || {}
-      end
-
       def searches
         @searches ||= parent.exhibit.searches.published.where(slug: item_ids).sort do |a, b|
           ordered_items.index(a.slug) <=> ordered_items.index(b.slug)
