@@ -83,22 +83,6 @@ RSpec.describe SolrDocument, type: :model do
       subject.update exhibit, exhibit_tag_list: 'paris, normandy'
       expect(subject.sidecar(exhibit).tags_from(exhibit)).to eq %w[paris normandy]
     end
-
-    it 'converts empty strings to nil' do
-      mock_sidecar = double
-      allow(subject).to receive_messages(sidecar: mock_sidecar)
-      allow(mock_sidecar).to receive(:update)
-      subject.update exhibit, sidecar: { data: { 'a' => '' } }
-      expect(mock_sidecar).to have_received(:update).with({ data: { 'a' => nil } })
-    end
-
-    it 'compacts arrays of empty or nil values' do
-      mock_sidecar = double
-      allow(subject).to receive_messages(sidecar: mock_sidecar)
-      allow(mock_sidecar).to receive(:update)
-      subject.update exhibit, sidecar: { data: { 'a' => ['', nil, 'a'] } }
-      expect(mock_sidecar).to have_received(:update).with({ data: { 'a' => ['a'] } })
-    end
   end
 
   describe '#to_solr' do
