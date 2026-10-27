@@ -136,7 +136,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
       expect(subject.blacklight_configuration.blacklight_config.index_fields['language_ssm'].to_h).to include some_value: true
     end
 
-    context 'for an exhibit without search fields' do
+    context 'when the exhibit has no search fields' do
       before do
         source_exhibit.blacklight_configuration.search_fields = {}
         source_exhibit.blacklight_configuration.save
@@ -163,8 +163,8 @@ RSpec.describe Spotlight::ExhibitImportExportService do
       expect(subject.solr_document_sidecars.first.data['configured_fields']['full_title_tesim']).to eq 'Test Title'
     end
 
-    context 'for an exhibit with contacts' do
-      context 'for a contact with an avatar' do
+    context 'when the exhibit has contacts' do
+      context 'when a contact has an avatar' do
         let!(:curator) do
           FactoryBot.create(:contact, :with_avatar,
                             exhibit: source_exhibit,
@@ -179,7 +179,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
         end
       end
 
-      context 'for a contact without an avatar' do
+      context 'when a contact has no avatar' do
         let!(:curator) do
           FactoryBot.create(:contact, exhibit: source_exhibit, avatar: nil)
         end
@@ -190,7 +190,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
       end
     end
 
-    context 'for exhibits with languages and translations' do
+    context 'when the exhibit has languages and translations' do
       let!(:language) do
         source_exhibit.languages.create!(locale: 'zz', public: true, text: 'abc')
       end
@@ -238,7 +238,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
       expect(subject.feature_pages.first.child_pages.length).to eq 1
     end
 
-    context 'page slugs' do
+    context 'with a feature page slug' do
       let!(:feature_page) { FactoryBot.create(:feature_page, exhibit: source_exhibit, slug: 'xyz') }
 
       it 'uses the existing slug for the page' do
@@ -348,7 +348,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
         end
       end
 
-      context 'remote thumbnail with existing tilesource' do
+      context 'with a remote thumbnail with an existing tilesource' do
         it do
           search.thumbnail.iiif_tilesource
           search.thumbnail.save
@@ -386,7 +386,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
         end
       end
 
-      context 'in a group' do
+      context 'when the search is in a group' do
         let!(:group) { FactoryBot.create(:group, title: 'blah', exhibit: source_exhibit) }
 
         before do
@@ -435,7 +435,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
     end
   end
 
-  context 'testing idempotency' do
+  describe 'idempotency' do
     let(:masthead) { FactoryBot.create(:masthead) }
     let(:thumbnail) { FactoryBot.create(:exhibit_thumbnail) }
     let!(:search) { FactoryBot.create(:search, exhibit: source_exhibit, masthead: FactoryBot.create(:masthead), thumbnail: FactoryBot.create(:featured_image)) }

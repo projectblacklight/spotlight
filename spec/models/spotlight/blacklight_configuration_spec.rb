@@ -90,7 +90,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.blacklight_config.facet_fields['a'].if).to eq false
     end
 
-    context 'custom fields' do
+    context 'with custom fields' do
       it 'includes any custom fields' do
         allow(subject).to receive_messages(custom_facet_fields: { 'a' => double(if: nil, :if= => true, merge!: true, validate!: true, normalize!: true) })
         expect(subject.blacklight_config.facet_fields).to include('a')
@@ -117,7 +117,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       end
     end
 
-    context 'exhibit fields' do
+    context 'with the engine default configuration' do
       before do
         # undo the stubbing we've used elsewhere..
         allow(subject).to receive(:default_blacklight_config).and_call_original
@@ -214,7 +214,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.blacklight_config.index_fields['a'].another).to eq 'immutable'
     end
 
-    context 'custom fields' do
+    context 'with custom fields' do
       it 'includes any custom fields' do
         subject.index_fields['a'] = { enabled: true, list: true }
         allow(subject).to receive_messages(custom_index_fields: { 'a' => Blacklight::Configuration::IndexField.new(field: 'a') })
@@ -309,7 +309,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.blacklight_config.show_fields.keys).to eq %w[c a b]
     end
 
-    context 'title only configuration' do
+    context 'with a title only configuration' do
       before do
         blacklight_config.configure do |config|
           config.view.gallery(title_only_by_default: true)
@@ -420,7 +420,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.blacklight_config.search_fields['a'].enabled).to eq false
     end
 
-    context 'custom fields' do
+    context 'with custom fields' do
       it 'includes any custom fields' do
         allow(subject).to receive_messages(custom_search_fields: { 'a' => Blacklight::Configuration::SearchField.new(field: 'a') })
         expect(subject.blacklight_config.search_fields).to include('a')

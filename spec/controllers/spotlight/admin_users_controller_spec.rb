@@ -5,7 +5,7 @@ RSpec.describe Spotlight::AdminUsersController, type: :controller do
 
   before { sign_in(user) }
 
-  context 'by a non-admin' do
+  context 'when the user is not an admin' do
     let(:user) { FactoryBot.create(:exhibit_visitor) }
 
     it 'redirects with an error message' do
@@ -15,7 +15,7 @@ RSpec.describe Spotlight::AdminUsersController, type: :controller do
     end
   end
 
-  context 'by an admin user' do
+  context 'when the user is an admin' do
     before { request.env['HTTP_REFERER'] = 'http://example.com' }
 
     let(:user) { FactoryBot.create(:site_admin) }

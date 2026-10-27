@@ -19,7 +19,7 @@ RSpec.describe Spotlight::ContactEmailController, type: :controller do
   context 'when logged in' do
     before { sign_in user }
 
-    context 'as a visitor' do
+    context 'when the user is a visitor' do
       let(:user) { FactoryBot.create(:exhibit_visitor) }
 
       describe 'DELETE destroy' do
@@ -31,7 +31,7 @@ RSpec.describe Spotlight::ContactEmailController, type: :controller do
       end
     end
 
-    context 'as an exhibit curator' do
+    context 'when the user is an exhibit curator' do
       let(:user) { FactoryBot.create(:exhibit_curator, exhibit: contact_email.exhibit) }
 
       describe 'DELETE destroy' do
@@ -43,7 +43,7 @@ RSpec.describe Spotlight::ContactEmailController, type: :controller do
       end
     end
 
-    context 'as an exhibit admin' do
+    context 'when the user is an exhibit admin' do
       let(:user) { FactoryBot.create(:exhibit_admin, exhibit: contact_email.exhibit) }
 
       describe 'DELETE destroy' do

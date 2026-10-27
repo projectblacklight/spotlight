@@ -73,7 +73,7 @@ RSpec.describe 'Search contexts' do
     expect(page).to have_link 'FeaturePage1', href: spotlight.exhibit_feature_page_path(exhibit, feature_page)
   end
 
-  context 'from a browse page' do
+  context 'when navigating from a browse page' do
     let!(:search) { FactoryBot.create(:search, title: 'Some Saved Search', exhibit:, published: true) }
 
     it 'adds context breadcrumbs back to the browse page when navigating to an item', :js do

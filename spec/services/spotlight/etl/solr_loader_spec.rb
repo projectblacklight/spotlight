@@ -46,7 +46,7 @@ RSpec.describe Spotlight::Etl::SolrLoader do
       expect(mock_connection).not_to have_received(:commit)
     end
 
-    context 'error handling' do
+    context 'when the batch update fails' do
       it 'tries documents individually if the whole batch fails' do
         allow(mock_connection).to receive(:update) do |data:, **|
           raise '???' if JSON.parse(data).length > 1

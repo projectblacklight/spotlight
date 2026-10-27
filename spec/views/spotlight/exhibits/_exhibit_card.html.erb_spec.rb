@@ -8,7 +8,7 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     allow(view).to receive_messages(exhibit_path: '/')
   end
 
-  context 'for an exhibit without a thumbnail' do
+  context 'when the exhibit has no thumbnail' do
     before do
       exhibit.update(thumbnail_id: nil)
     end
@@ -32,7 +32,7 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     expect(rendered).to have_css '.card-title', text: exhibit.title
   end
 
-  context 'for an exhibit with a description' do
+  context 'when the exhibit has a description' do
     before do
       exhibit.update(description: 'Test <b>description</b> & more.')
     end
@@ -44,7 +44,7 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     end
   end
 
-  context 'for an unpublished exhibit' do
+  context 'when the exhibit is unpublished' do
     before do
       exhibit.update(published: false)
     end
@@ -56,7 +56,7 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     end
   end
 
-  context 'for a previewable exhibit' do
+  context 'when the exhibit is previewable' do
     before do
       exhibit.update(published: true, discovery_enabled: false)
     end
@@ -69,7 +69,7 @@ RSpec.describe 'spotlight/exhibits/_exhibit_card.html.erb', type: :view do
     end
   end
 
-  context 'for a discoverable exhibit' do
+  context 'when the exhibit is discoverable' do
     it 'has no banner' do
       render(p, exhibit:)
 

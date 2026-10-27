@@ -26,7 +26,7 @@ RSpec.describe Spotlight::ExhibitsController, type: :controller do
 
   describe 'when not logged in' do
     describe 'GET index' do
-      context 'where there are no exhibits' do
+      context 'when there are no exhibits' do
         it 'is allowed' do
           get :index
           expect(response).to be_successful

@@ -18,7 +18,7 @@ RSpec.describe Spotlight::IndexingCompleteMailer do
     expect(subject.body.encoded).to match '3 documents'
   end
 
-  context 'single item' do
+  context 'when a single item was indexed' do
     subject { described_class.documents_indexed [1], exhibit, user }
 
     it 'handles pluralization when only a single item was indexed' do

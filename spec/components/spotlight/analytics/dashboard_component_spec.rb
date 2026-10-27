@@ -28,7 +28,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
     { min: field[:min], max: field[:max] }
   end
 
-  context 'default page load' do
+  context 'without date params' do
     it 'has start and end date selectors' do
       expect(get_min_max('start_date')).to eq({ max: default_end_date, min: default_min_date })
       expect(get_min_max('end_date')).to eq({ max: default_end_date, min: default_min_date })
@@ -60,7 +60,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
     end
   end
 
-  context 'has valid start and end date params' do
+  context 'with valid start and end date params' do
     it 'updates the header and selector to param values' do
       start_date = '2024-01-01'
       end_date = '2024-01-02'
@@ -74,7 +74,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
     end
   end
 
-  context 'has invalid start and end date params' do
+  context 'with invalid start and end date params' do
     it 'updates the header and selector to default values' do
       vc_test_controller.params[:start_date] = '2024-41-01'
       vc_test_controller.params[:end_date] = '2024-31-02'
@@ -86,7 +86,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
     end
   end
 
-  context 'has a start date larger than end date' do
+  context 'with a start date later than the end date' do
     it 'updates the header and selector to default values' do
       vc_test_controller.params[:start_date] = '2024-02-02'
       vc_test_controller.params[:end_date] = '2024-02-01'
@@ -98,7 +98,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
     end
   end
 
-  context 'Spotlight::Engine.config.ga_date_range is set' do
+  context 'when Spotlight::Engine.config.ga_date_range is set' do
     let(:start_date) { '2024-04-24' }
     let(:end_date) { '2024-07-24' }
 
@@ -129,7 +129,7 @@ RSpec.describe Spotlight::Analytics::DashboardComponent, type: :component do
     end
   end
 
-  context 'does not have any anayltics data' do
+  context 'without any analytics data' do
     let(:data) { OpenStruct.new(rows: [], totals: OpenStruct.new) }
 
     it 'has a no analytics message' do

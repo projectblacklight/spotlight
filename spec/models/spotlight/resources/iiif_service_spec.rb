@@ -39,7 +39,7 @@ RSpec.describe Spotlight::Resources::IiifService do
   describe '#parse' do
     let(:parsed) { described_class.parse(url) }
 
-    context 'for a collection manifest' do
+    context 'with a collection manifest' do
       it 'recursively traverses all all the collections and returns manifests' do
         expect(parsed).to be_all do |manifest|
           manifest.is_a?(Spotlight::Resources::IiifManifest)
@@ -56,7 +56,7 @@ RSpec.describe Spotlight::Resources::IiifService do
       end
     end
 
-    context 'for a v3 manifest' do
+    context 'with a v3 manifest' do
       let(:url) { 'uri://for-v3-manifest' }
 
       it 'returns a v3 manifest object' do

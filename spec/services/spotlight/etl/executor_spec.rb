@@ -97,7 +97,7 @@ RSpec.describe Spotlight::Etl::Executor do
       expect(context).to have_received(:on_error).with(executor, e, {})
     end
 
-    context 'after processing the data' do
+    context 'when the data has been processed' do
       it 'calls finalize on the loaders' do
         loader = Spotlight::Etl::SolrLoader.new
         pipeline.sources = [->(*) { [{}, {}, {}] }]

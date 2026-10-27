@@ -109,7 +109,7 @@ RSpec.describe Spotlight::ExhibitNavbarComponent, type: :component do
     end
   end
 
-  context 'on browse page' do
+  context 'when on the browse page' do
     before do
       FactoryBot.create(:published_search, exhibit: current_exhibit)
       allow(vc_test_controller).to receive(:params).and_return(controller: 'spotlight/browse')
@@ -120,7 +120,7 @@ RSpec.describe Spotlight::ExhibitNavbarComponent, type: :component do
     end
   end
 
-  context 'on about page' do
+  context 'when on the about page' do
     before do
       allow(current_exhibit).to receive_messages(main_about_page: about_page)
       allow(vc_test_controller).to receive(:params).and_return(controller: 'spotlight/about_pages')

@@ -16,7 +16,7 @@ RSpec.describe Spotlight::ExhibitThemeHelper, type: :helper do
       end
     end
 
-    context 'for an exhibit without a selected theme' do
+    context 'when the exhibit has no selected theme' do
       before do
         exhibit.update(theme: nil)
       end
@@ -26,7 +26,7 @@ RSpec.describe Spotlight::ExhibitThemeHelper, type: :helper do
       end
     end
 
-    context 'for an exhibit with an invalid theme' do
+    context 'when the exhibit has an invalid theme' do
       before do
         exhibit.update(theme: 'garbage')
       end
@@ -36,7 +36,7 @@ RSpec.describe Spotlight::ExhibitThemeHelper, type: :helper do
       end
     end
 
-    context 'for a themed exhibit' do
+    context 'when the exhibit has a theme' do
       before do
         allow(Spotlight::Engine.config).to receive(:exhibit_themes).and_return(%w[default modern])
         exhibit.update(theme: 'modern')

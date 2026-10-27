@@ -10,7 +10,7 @@ RSpec.describe Spotlight::Resources::Upload, type: :model do
       expect(described_class.fields(exhibit)).to include(*exhibit.uploaded_resource_fields)
     end
 
-    context 'title field' do
+    describe 'title field' do
       it 'is an UploadFieldConfig object for the configured index title_field' do
         upload_config = described_class.fields(exhibit).first
         expect(upload_config).to be_a Spotlight::UploadFieldConfig

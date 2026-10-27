@@ -31,11 +31,11 @@ RSpec.describe Spotlight::Masthead, type: :model do
         masthead.iiif_region = '100,0,200,300'
       end
 
-      context 'but the masthead is set to not display' do
+      context 'when the masthead is set to not display' do
         it { is_expected.to be_falsey }
       end
 
-      context 'and the masthead is set to display' do
+      context 'when the masthead is set to display' do
         before { masthead.display = true }
 
         it { is_expected.to be_truthy }

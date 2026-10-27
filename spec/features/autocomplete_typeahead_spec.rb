@@ -7,7 +7,7 @@ RSpec.describe 'Autocomplete typeahead', :js, type: :feature do
   before { login_as admin }
 
   describe 'IIIF Integration' do
-    context 'for items that include a IIIF manifest' do
+    context 'with items that include a IIIF manifest' do
       it 'instantiates a cropper, removes the multi-image selector for single-image items, and persists all levels of the IIIF manifest' do
         visit spotlight.edit_exhibit_appearance_path(exhibit)
         click_link 'Exhibit masthead'
@@ -64,7 +64,7 @@ RSpec.describe 'Autocomplete typeahead', :js, type: :feature do
       end
     end
 
-    context 'for items that do not include a IIIF manifest' do
+    context 'with items that do not include a IIIF manifest' do
       before do
         allow(Spotlight::Engine.config).to receive(:iiif_manifest_field).and_return('not_a_real_field')
       end

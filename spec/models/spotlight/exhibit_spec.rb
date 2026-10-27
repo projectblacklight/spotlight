@@ -399,7 +399,7 @@ RSpec.describe Spotlight::Exhibit, type: :model do
       end
     end
 
-    context 'if no user has roles on the exhibit' do
+    context 'when no user has roles on the exhibit' do
       it 'is nil' do
         expect(subject.requested_by).to be_nil
       end
