@@ -117,10 +117,6 @@ module Spotlight
         self[self.class.resource_type_field].include?('spotlight/resources/uploads')
     end
 
-    def attribute_present?(*_args)
-      false
-    end
-
     protected
 
     def tags_to_solr
