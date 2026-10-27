@@ -665,12 +665,10 @@ en:
         all: All
     exhibits_admin_invitation_mailer:
       invitation_instructions:
-        accept: Accept invitation
         accept_invitation: You can accept this invitation by selecting the link below.
         hello: Hello!
         ignore: If you don't want to accept the invitation, please ignore this email. Your exhibits administrator account won't be created until you access the link above.
         someone_invited_you: The Exhibits Administrator has invited you to help manage exhibits.
-        subject: Invitation to manage \"%{exhibit_name}\"
     feature_pages:
       page_options:
         published: Publish
@@ -724,8 +722,6 @@ en:
         hello: Hello!
         ignore: If you don't want to accept the invitation, please ignore this email. Your account won't be created until you access the link above.
         someone_invited_you: The Exhibits Administrator has invited you to help work on the "%{exhibit_name}" exhibit.
-        subject: Invitation to manage \"%{exhibit_name}\"
-        visit: Visit exhibit
     job_trackers:
       show:
         headers:
