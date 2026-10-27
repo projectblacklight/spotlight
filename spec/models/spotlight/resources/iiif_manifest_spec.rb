@@ -22,30 +22,29 @@ RSpec.describe Spotlight::Resources::IiifManifest do
 
   before do
     stub_iiif_response_for_url(url, manifest_fixture)
-    subject.with_exhibit(exhibit)
   end
 
   describe '#to_solr' do
     let(:manifest) { Spotlight::Resources::IiifService.new(url).send(:object) }
-    let(:exhibit) { FactoryBot.create(:exhibit) }
+    let!(:exhibit) { FactoryBot.create(:exhibit) }
 
     describe 'id' do
       it 'is an MD5 hexdigest of the exhibit id and the and the url' do
         expected = Digest::MD5.hexdigest("#{exhibit.id}-#{url}")
-        expect(subject.to_solr[:id]).to eq expected
+        expect(subject.to_solr(exhibit:)[:id]).to eq expected
       end
     end
 
     describe 'label' do
       it 'is included in the solr document when present' do
-        expect(subject.to_solr['full_title_tesim']).to eq 'Test Manifest 1'
+        expect(subject.to_solr(exhibit:)['full_title_tesim']).to eq 'Test Manifest 1'
       end
 
       it 'indexes to multiple fields when configured' do
         allow(Spotlight::Engine.config).to receive(:iiif_title_fields).at_least(:once).and_return(%w[title_field1 title_field2])
 
-        expect(subject.to_solr['title_field1']).to eq 'Test Manifest 1'
-        expect(subject.to_solr['title_field2']).to eq 'Test Manifest 1'
+        expect(subject.to_solr(exhibit:)['title_field1']).to eq 'Test Manifest 1'
+        expect(subject.to_solr(exhibit:)['title_field2']).to eq 'Test Manifest 1'
       end
     end
 
@@ -54,10 +53,10 @@ RSpec.describe Spotlight::Resources::IiifManifest do
         let(:manifest_fixture) { test_manifest3 }
 
         it 'uses the configured language to find a value' do
-          expect(subject.to_solr['full_title_tesim']).to eq 'Test Manifest 3'
+          expect(subject.to_solr(exhibit:)['full_title_tesim']).to eq 'Test Manifest 3'
 
           allow(Spotlight::Engine.config).to receive(:default_json_ld_language).and_return('fr')
-          expect(subject.to_solr['full_title_tesim']).to eq "Manifeste d'essai 3"
+          expect(subject.to_solr(exhibit:)['full_title_tesim']).to eq "Manifeste d'essai 3"
         end
       end
 
@@ -65,69 +64,69 @@ RSpec.describe Spotlight::Resources::IiifManifest do
         let(:manifest_fixture) { test_manifest2 }
 
         it 'is parsed correctly' do
-          expect(subject.to_solr['full_title_tesim']).to eq 'Test Manifest 2'
+          expect(subject.to_solr(exhibit:)['full_title_tesim']).to eq 'Test Manifest 2'
         end
       end
     end
 
     describe 'collection id' do
       it 'is included when a collection is given' do
-        expect(subject.to_solr[:collection_id_ssim]).to eq ['1']
+        expect(subject.to_solr(exhibit:)[:collection_id_ssim]).to eq ['1']
       end
     end
 
     describe 'manifest url' do
       it 'is inlcuded in the solr document when present' do
-        expect(subject.to_solr[:iiif_manifest_url_ssi]).to eq url
+        expect(subject.to_solr(exhibit:)[:iiif_manifest_url_ssi]).to eq url
       end
     end
 
     describe 'thumbnail url' do
       it 'is inlcuded in the solr document when present' do
-        expect(subject.to_solr[:thumbnail_url_ssm]).to eq 'uri://to-thumbnail'
+        expect(subject.to_solr(exhibit:)[:thumbnail_url_ssm]).to eq 'uri://to-thumbnail'
       end
     end
 
     describe 'full size image url' do
       it 'is included in the solr document' do
-        expect(subject.to_solr[:full_image_url_ssm]).to eq 'uri://full-image'
+        expect(subject.to_solr(exhibit:)[:full_image_url_ssm]).to eq 'uri://full-image'
       end
     end
 
     describe 'image urls' do
       it 'is included in the solr document when present' do
-        expect(subject.to_solr[:content_metadata_image_iiif_info_ssm]).to eq ['uri://to-image-service/info.json']
+        expect(subject.to_solr(exhibit:)[:content_metadata_image_iiif_info_ssm]).to eq ['uri://to-image-service/info.json']
       end
     end
 
     describe 'metadata' do
       it 'includes the top-level attribution' do
-        expect(subject.to_solr['readonly_attribution_tesim']).to eq ['Attribution Data']
+        expect(subject.to_solr(exhibit:)['readonly_attribution_tesim']).to eq ['Attribution Data']
       end
 
       it 'includes the top-level description' do
-        expect(subject.to_solr['readonly_description_tesim']).to eq ['A test IIIF manifest']
+        expect(subject.to_solr(exhibit:)['readonly_description_tesim']).to eq ['A test IIIF manifest']
       end
 
       it 'includes the top-level license' do
-        expect(subject.to_solr['readonly_license_tesim']).to eq ['http://www.example.org/license.html']
+        expect(subject.to_solr(exhibit:)['readonly_license_tesim']).to eq ['http://www.example.org/license.html']
       end
 
       it 'includes fields for each label/value pair in the metadata section' do
-        expect(subject.to_solr['readonly_author_tesim']).to include 'John Doe'
-        expect(subject.to_solr['readonly_another-field_tesim']).to eq ['Some data']
+        expect(subject.to_solr(exhibit:)['readonly_author_tesim']).to include 'John Doe'
+        expect(subject.to_solr(exhibit:)['readonly_another-field_tesim']).to eq ['Some data']
       end
 
       it 'collects items with the same label into an array' do
-        expect(subject.to_solr['readonly_author_tesim']).to eq ['John Doe', 'Jane Doe']
+        expect(subject.to_solr(exhibit:)['readonly_author_tesim']).to eq ['John Doe', 'Jane Doe']
       end
 
       it 'exhibit custom fields are created for the necessary fields' do
-        expect { subject.to_solr }.to change(Spotlight::CustomField, :count).by(5)
+        expect { subject.to_solr(exhibit:) }.to change(Spotlight::CustomField, :count).by(5)
       end
 
       it 'creates read-only custom fields' do
-        expect { subject.to_solr }.to change(Spotlight::CustomField.where(readonly_field: true), :count).by(5)
+        expect { subject.to_solr(exhibit:) }.to change(Spotlight::CustomField.where(readonly_field: true), :count).by(5)
       end
 
       context 'custom class' do
@@ -136,7 +135,7 @@ RSpec.describe Spotlight::Resources::IiifManifest do
         end
 
         it 'merges the solr hash from the configured custom metadata class' do
-          expect(subject.to_solr['readonly_test_field_tesim']).to eq 'metadata-to-solr'
+          expect(subject.to_solr(exhibit:)['readonly_test_field_tesim']).to eq 'metadata-to-solr'
         end
       end
     end
@@ -147,30 +146,30 @@ RSpec.describe Spotlight::Resources::IiifManifest do
 
     describe '#to_solr' do
       let(:manifest) { Spotlight::Resources::IiifService.new(url).send(:object) }
-      let(:exhibit) { FactoryBot.create(:exhibit) }
+      let!(:exhibit) { FactoryBot.create(:exhibit) }
 
       describe 'label' do
         it 'is included in the solr document when present' do
-          expect(subject.to_solr['full_title_tesim']).to eq 'Murasaki Shikibu: Genji monogatari - BSB Cod.jap. 18(53'
+          expect(subject.to_solr(exhibit:)['full_title_tesim']).to eq 'Murasaki Shikibu: Genji monogatari - BSB Cod.jap. 18(53'
         end
       end
 
       describe 'metadata' do
         it 'extracts labels and values out of multivalued data and removes HTML markup' do
-          expect(subject.to_solr).to include 'readonly_author_tesim' => ['Murasaki Shikibu -- (GND: 118985655)'],
-                                             'readonly_language_tesim' => ['Japanese']
+          expect(subject.to_solr(exhibit:)).to include 'readonly_author_tesim' => ['Murasaki Shikibu -- (GND: 118985655)'],
+                                                       'readonly_language_tesim' => ['Japanese']
         end
 
         it 'extracts data using the configured default language' do
           allow(Spotlight::Engine.config).to receive(:default_json_ld_language).and_return('de')
-          expect(subject.to_solr).to include 'readonly_verfasser_tesim' => ['Murasaki Shikibu -- (GND: 118985655)'],
-                                             'readonly_sprache_tesim' => ['Japanisch']
+          expect(subject.to_solr(exhibit:)).to include 'readonly_verfasser_tesim' => ['Murasaki Shikibu -- (GND: 118985655)'],
+                                                       'readonly_sprache_tesim' => ['Japanisch']
         end
 
         it 'falls back to a language from the manifest using the IIIF rules' do
           allow(Spotlight::Engine.config).to receive(:default_json_ld_language).and_return('fr')
-          expect(subject.to_solr).to include 'readonly_verfasser_tesim' => ['Murasaki Shikibu -- (GND: 118985655)'],
-                                             'readonly_sprache_tesim' => ['Japanisch']
+          expect(subject.to_solr(exhibit:)).to include 'readonly_verfasser_tesim' => ['Murasaki Shikibu -- (GND: 118985655)'],
+                                                       'readonly_sprache_tesim' => ['Japanisch']
         end
       end
     end
