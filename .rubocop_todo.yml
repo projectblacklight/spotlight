@@ -456,13 +456,12 @@ Rails/ApplicationController:
   Exclude:
     - "spec/lib/spotlight/controller_spec.rb"
 
-# Offense count: 3
+# Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/ApplicationMailer:
   Exclude:
     - "app/mailers/spotlight/confirmation_mailer.rb"
     - "app/mailers/spotlight/indexing_complete_mailer.rb"
-    - "app/mailers/spotlight/invitation_mailer.rb"
 
 # Offense count: 23
 # This cop supports unsafe autocorrection (--autocorrect-all).
