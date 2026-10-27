@@ -160,6 +160,68 @@ RSpec.describe Spotlight::ApplicationHelper, type: :helper do
     end
   end
 
+  describe '#render_upload_field_form_field' do
+    let(:form) { instance_double(BootstrapForm::FormBuilder) }
+    let(:config) { Spotlight::UploadFieldConfig.new(field_name: 'x', label: 'X', form_field_type: :text_area, is_multiple: true, component:) }
+    let(:component) { nil }
+
+    before do
+      allow(helper).to receive_messages(blacklight_config: Blacklight::Configuration.new, render: 'rendered')
+    end
+
+    it 'renders the field with the SidecarFormFieldComponent by default' do
+      expect(helper.render_upload_field_form_field(form, config, value: 'a', inline: true)).to eq 'rendered'
+      expect(helper).to have_received(:render).with(
+        an_instance_of(Spotlight::SidecarFormFieldComponent).and(
+          have_attributes(form:, field_id: 'x', label: 'X', value_list: ['a'], multiple: true, inline: true)
+        )
+      )
+    end
+
+    context 'with a configured component' do
+      let(:component) { Class.new(Spotlight::SidecarFormFieldComponent) }
+
+      it 'renders the field with that component' do
+        helper.render_upload_field_form_field(form, config)
+        expect(helper).to have_received(:render).with(an_instance_of(component))
+      end
+    end
+  end
+
+  describe '#render_custom_field_form_field' do
+    let(:form) { instance_double(BootstrapForm::FormBuilder) }
+    let(:field) { FactoryBot.build(:custom_field, slug: 'y', field_type: 'text', is_multiple: true) }
+
+    before do
+      allow(field).to receive_messages(label: 'Y')
+      allow(helper).to receive_messages(render: 'rendered')
+    end
+
+    it 'renders the field with its configured component and input type' do
+      expect(helper.render_custom_field_form_field(form, field, value: 'b')).to eq 'rendered'
+      expect(helper).to have_received(:render).with(
+        an_instance_of(Spotlight::SidecarFormFieldComponent).and(
+          have_attributes(form:, field_id: 'y', label: 'Y', value_list: ['b'], multiple: true, readonly: false, inline: false)
+        )
+      )
+    end
+
+    context 'when the application overrides the form_group partial' do
+      before do
+        allow(helper.lookup_context).to receive(:exists?).with('spotlight/custom_fields/form_group/text', [], true).and_return(true)
+      end
+
+      it 'renders the partial with a deprecation warning' do
+        allow(Spotlight.deprecator).to receive(:warn)
+        helper.render_custom_field_form_field(form, field, value: 'b', inline: true)
+        expect(Spotlight.deprecator).to have_received(:warn).with(/form_group/)
+        expect(helper).to have_received(:render).with(
+          partial: 'spotlight/custom_fields/form_group/text', locals: { inline: true, f: form, field:, value: 'b' }
+        )
+      end
+    end
+  end
+
   describe '#available_view_fields' do
     let(:blacklight_config) { Blacklight::Configuration.new }
 

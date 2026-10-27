@@ -95,6 +95,24 @@ RSpec.describe Spotlight::CustomField, type: :model do
     end
   end
 
+  describe '#component' do
+    it 'defaults to the SidecarFormFieldComponent' do
+      expect(described_class.new(field_type: 'text').component).to eq Spotlight::SidecarFormFieldComponent
+    end
+
+    it 'uses the component configured for the field type' do
+      allow(Spotlight::Engine.config).to receive(:custom_field_types).and_return(text: { component: 'ViewComponent::Base' })
+      expect(described_class.new(field_type: 'text').component).to eq ViewComponent::Base
+    end
+  end
+
+  describe '#form_field_type' do
+    it 'uses the input type configured for the field type' do
+      expect(described_class.new(field_type: 'text').form_field_type).to eq :text_area
+      expect(described_class.new(field_type: 'vocab').form_field_type).to eq :text_field
+    end
+  end
+
   describe '#solr_field' do
     subject { custom_field.solr_field }
 

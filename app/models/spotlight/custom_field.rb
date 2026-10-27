@@ -59,6 +59,19 @@ module Spotlight
         end
     end
 
+    # The component used to render the field on the upload and edit forms,
+    # from the `component` option of the field's entry in Spotlight::Engine.config.custom_field_types
+    def component
+      component = field_type_config[:component]
+      return Spotlight::SidecarFormFieldComponent if component.blank?
+
+      component.is_a?(String) ? component.constantize : component
+    end
+
+    def form_field_type
+      field_type_config.fetch(:form_field_type, :text_field)
+    end
+
     def solr_field
       if field&.starts_with?(solr_field_prefix)
         # backwards compatibility with pre-0.9 custom fields
@@ -69,6 +82,10 @@ module Spotlight
     end
 
     protected
+
+    def field_type_config
+      Spotlight::Engine.config.custom_field_types.fetch(field_type.to_s.to_sym, {})
+    end
 
     def blacklight_configuration
       exhibit&.blacklight_configuration

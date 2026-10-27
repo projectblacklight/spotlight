@@ -27,10 +27,10 @@ RSpec.describe 'Adding items', type: :request do
         upload_form = page.find('form#new_resources_upload')
         expect(upload_form).to have_field('resources_upload_url', type: 'file')
         expect(upload_form).to have_css('.form-text', text: 'Valid file types: jpg jpeg png')
-        expect(upload_form).to have_field('resources_upload_data_full_title_tesim', type: 'text')
-        expect(upload_form).to have_field('resources_upload_data_spotlight_upload_description_tesim', type: 'textarea')
-        expect(upload_form).to have_field('resources_upload_data_spotlight_upload_attribution_tesim', type: 'text')
-        expect(upload_form).to have_field('resources_upload_data_spotlight_upload_date_tesim', type: 'text')
+        expect(upload_form).to have_field('f0_resources_upload_data_full_title_tesim', type: 'text')
+        expect(upload_form).to have_field('f0_resources_upload_data_spotlight_upload_description_tesim', type: 'textarea')
+        expect(upload_form).to have_field('f0_resources_upload_data_spotlight_upload_attribution_tesim', type: 'text')
+        expect(upload_form).to have_field('f0_resources_upload_data_spotlight_upload_date_tesim', type: 'text')
         expect(upload_form).to have_field("f0_resources_upload_data_#{custom_field.slug}", type: 'text')
       end
 
