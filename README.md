@@ -75,6 +75,27 @@ Go to http://localhost:3000 in your browser.
 
 Spotlight introduces functionality that depends on being able to send emails to exhibit curators and contacts. Be sure to configure your application's environments appropriately (see the Rails Guide for [Action Mailer Configuration](https://guides.rubyonrails.org/v7.2/action_mailer_basics.html#action-mailer-configuration)).
 
+### Cleaning up job trackers
+
+Spotlight records a `Spotlight::JobTracker` row for each background job it runs (reindexing, CSV uploads, bulk updates, and so on) so curators can see the job's progress. These rows are never removed automatically, so the `spotlight_job_trackers` table grows over time.
+
+`Spotlight::CleanupJobTrackersJob` deletes completed job trackers that were last updated longer ago than `Spotlight::Engine.config.reindex_progress_window` (one hour by default). Failed and in-progress job trackers are kept. Spotlight does not enqueue this job itself, so schedule it to run periodically (for example, daily) with whatever scheduler your application uses.
+
+With [Solid Queue](https://github.com/rails/solid_queue), add it to `config/recurring.yml`:
+
+```yaml
+production:
+  cleanup_job_trackers:
+    class: Spotlight::CleanupJobTrackersJob
+    schedule: every day at 3am
+```
+
+Or, with cron:
+
+```sh
+0 3 * * * cd /path/to/app && bin/rails runner -e production 'Spotlight::CleanupJobTrackersJob.perform_later'
+```
+
 See the [Spotlight wiki](https://github.com/projectblacklight/spotlight/wiki) for more detailed information on configuring Spotlight.
 
 ## Translations

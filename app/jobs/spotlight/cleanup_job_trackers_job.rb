@@ -2,8 +2,10 @@
 
 module Spotlight
   ###
-  # Calls the #set_default_thumbnail method
-  # on the object passed in and calls save
+  # Deletes completed job trackers that were last updated before
+  # Spotlight::Engine.config.reindex_progress_window. Spotlight does not
+  # enqueue this job itself; applications should schedule it to run
+  # periodically (see the README).
   ###
   class CleanupJobTrackersJob < Spotlight::ApplicationJob
     def perform
