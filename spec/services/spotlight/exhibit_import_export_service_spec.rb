@@ -349,12 +349,6 @@ RSpec.describe Spotlight::ExhibitImportExportService do
       end
 
       context 'with a remote thumbnail with an existing tilesource' do
-        it do
-          search.thumbnail.iiif_tilesource
-          search.thumbnail.save
-          source_exhibit.reload
-        end
-
         it 'unsets the iiif_tilesource' do
           subject
           existing_search.reload
