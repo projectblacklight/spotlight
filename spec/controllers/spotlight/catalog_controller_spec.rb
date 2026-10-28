@@ -132,7 +132,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
     end
 
     describe 'GET manifest' do
-      context 'document is an uploaded resource' do
+      context 'when the document is an uploaded resource' do
         let(:uploaded_resource) { FactoryBot.create(:uploaded_resource) }
 
         it 'returns the json manifest produced by Spotlight::IiifManifestPresenter, based on the retrieved document and the controller' do
@@ -166,7 +166,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
         end
       end
 
-      context 'document is not an uploaded resource' do
+      context 'when the document is not an uploaded resource' do
         it 'returns a 404 when called on something other than an uploaded resource' do
           get :manifest, params: { exhibit_id: exhibit, id: 'dx157dh4345' }
           expect(response).not_to be_successful
@@ -449,7 +449,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
       allow(field).to receive(:enabled).and_return(true)
     end
 
-    context 'for sort fields' do
+    context 'with a sort field' do
       let(:field) { Blacklight::Configuration::SortField.new enabled: true }
 
       it 'uses the enabled property for sort fields' do
@@ -457,7 +457,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
       end
     end
 
-    context 'for search fields' do
+    context 'with a search field' do
       let(:field) { Blacklight::Configuration::SearchField.new enabled: true }
 
       it 'uses the enabled property for search fields' do

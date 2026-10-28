@@ -28,7 +28,7 @@ RSpec.describe 'shared/_masthead', type: :view do
     expect(rendered).to have_css 'small', text: exhibit.subtitle
   end
 
-  context 'for an exhibit without a subtitle' do
+  context 'when the exhibit has no subtitle' do
     before do
       allow(view).to receive_messages(masthead_subheading_content: nil)
     end

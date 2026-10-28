@@ -135,7 +135,7 @@ RSpec.describe Spotlight::CustomField, type: :model do
       end
     end
 
-    context 'for a legacy solr field name' do
+    context 'with a legacy solr field name' do
       before do
         custom_field.field = "exhibit_#{exhibit.to_param}_xyz_tesim"
       end

@@ -184,44 +184,6 @@ RSpec/BeforeAfterAll:
     - "spec/features/exhibits/translation_editing_spec.rb"
     - "spec/features/locale_selector_spec.rb"
 
-# Offense count: 72
-# Configuration parameters: Prefixes, AllowedPatterns.
-# Prefixes: when, with, without
-RSpec/ContextWording:
-  Exclude:
-    - "spec/components/spotlight/analytics/dashboard_component_spec.rb"
-    - "spec/components/spotlight/exhibit_navbar_component_spec.rb"
-    - "spec/controllers/spotlight/admin_users_controller_spec.rb"
-    - "spec/controllers/spotlight/catalog_controller_spec.rb"
-    - "spec/controllers/spotlight/contact_email_controller_spec.rb"
-    - "spec/controllers/spotlight/exhibits_controller_spec.rb"
-    - "spec/controllers/spotlight/pages_controller_spec.rb"
-    - "spec/features/add_items_spec.rb"
-    - "spec/features/autocomplete_typeahead_spec.rb"
-    - "spec/features/browse_category_spec.rb"
-    - "spec/features/exhibits/administration_spec.rb"
-    - "spec/features/javascript/search_context_spec.rb"
-    - "spec/helpers/spotlight/exhibit_theme_helper_spec.rb"
-    - "spec/helpers/spotlight/main_app_helpers_spec.rb"
-    - "spec/helpers/spotlight/pages_helper_spec.rb"
-    - "spec/mailers/spotlight/indexing_complete_mailer_spec.rb"
-    - "spec/models/spotlight/blacklight_configuration_spec.rb"
-    - "spec/models/spotlight/custom_field_spec.rb"
-    - "spec/models/spotlight/exhibit_spec.rb"
-    - "spec/models/spotlight/field_metadata_spec.rb"
-    - "spec/models/spotlight/masthead_spec.rb"
-    - "spec/models/spotlight/resource_spec.rb"
-    - "spec/models/spotlight/resources/iiif_manifest_spec.rb"
-    - "spec/models/spotlight/resources/iiif_manifest_v3_spec.rb"
-    - "spec/models/spotlight/resources/iiif_service_spec.rb"
-    - "spec/models/spotlight/resources/upload_spec.rb"
-    - "spec/services/spotlight/etl/executor_spec.rb"
-    - "spec/services/spotlight/etl/solr_loader_spec.rb"
-    - "spec/services/spotlight/exhibit_import_export_service_spec.rb"
-    - "spec/views/shared/_masthead.html.erb_spec.rb"
-    - "spec/views/spotlight/dashboards/_reindexing_activity.html.erb_spec.rb"
-    - "spec/views/spotlight/exhibits/_exhibit_card.html.erb_spec.rb"
-
 # Offense count: 7
 RSpec/ExpectInHook:
   Exclude:

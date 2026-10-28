@@ -117,7 +117,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       allow(Spotlight::Engine.config).to receive(:site_tags).and_return(site_tags)
     end
 
-    context 'site_tags are set to a list' do
+    context 'when site_tags are set to a list' do
       let(:site_tags) { ['tag 1', 'tag 2', 'tag 3'] }
 
       it 'site_tags listed on the page' do
@@ -133,7 +133,7 @@ RSpec.describe 'Exhibit Administration', type: :feature do
       end
     end
 
-    context 'site_tags are set to nil' do
+    context 'when site_tags are set to nil' do
       let(:site_tags) { nil }
 
       it 'has free text tag_list field' do

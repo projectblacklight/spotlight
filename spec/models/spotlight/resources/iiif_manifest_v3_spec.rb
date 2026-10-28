@@ -112,7 +112,7 @@ RSpec.describe Spotlight::Resources::IiifManifestV3 do
         expect { subject.to_solr(exhibit:) }.to change(Spotlight::CustomField.where(readonly_field: true), :count).by(8)
       end
 
-      context 'custom class' do
+      context 'with a custom metadata class' do
         before do
           allow(Spotlight::Engine.config).to receive(:iiif_metadata_class).and_return(-> { TestMetadataClass })
         end

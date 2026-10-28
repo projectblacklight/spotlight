@@ -48,7 +48,7 @@ RSpec.describe Spotlight::FieldMetadata do
       expect(subject.field('some_key')[:value_count]).to eq 3
     end
 
-    context 'for a missing field' do
+    context 'with a missing field' do
       it 'has reasonable default values' do
         expect(subject.field('d')[:document_count]).to eq 0
         expect(subject.field('d')[:value_count]).to eq 0

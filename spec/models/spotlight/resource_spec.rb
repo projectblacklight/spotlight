@@ -29,7 +29,7 @@ RSpec.describe Spotlight::Resource, type: :model do
       expect(subject).to have_received(:reindex_later).with(a: 1)
     end
 
-    context 'if the save fails' do
+    context 'when the save fails' do
       it 'does not reindex' do
         allow(subject).to receive(:save).and_return(false)
         subject.save_and_index

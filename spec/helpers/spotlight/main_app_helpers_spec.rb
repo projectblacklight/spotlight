@@ -37,7 +37,7 @@ RSpec.describe Spotlight::MainAppHelpers, type: :helper do
       its(:show_contact_form?) { is_expected.to be_falsey }
     end
 
-    context 'outside the context of an exhibit' do
+    context 'without a current exhibit' do
       before { allow(helper).to receive_messages current_exhibit: nil }
 
       its(:show_contact_form?) { is_expected.to be_falsey }

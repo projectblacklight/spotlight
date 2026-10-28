@@ -31,8 +31,8 @@ RSpec.describe Spotlight::PagesController, type: :controller do
       sign_in user
     end
 
-    context 'as JSON' do
-      context 'as a curator' do
+    context 'with the JSON format' do
+      context 'when the user is a curator' do
         let(:user) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
         it 'returns all the published exhibit pages' do

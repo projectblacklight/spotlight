@@ -9,7 +9,7 @@ RSpec.describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view
     allow(view).to receive(:current_exhibit).and_return(exhibit)
   end
 
-  context 'the reindexing log is empty' do
+  context 'when the reindexing log is empty' do
     let(:recent_reindexing) { [] }
 
     before do
@@ -25,7 +25,7 @@ RSpec.describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view
     end
   end
 
-  context 'the reindexing log has entries' do
+  context 'when the reindexing log has entries' do
     # recent reindexing entries should be sorted by start_time in descending order, so mock that behavior
     let(:recent_reindexing) do
       [
@@ -75,7 +75,7 @@ RSpec.describe 'spotlight/dashboards/_reindexing_activity.html.erb', type: :view
     end
   end
 
-  context 'a reindexing log entry has a null user' do
+  context 'when a reindexing log entry has a null user' do
     let(:recent_reindexing) do
       [FactoryBot.build(:job_tracker, status: 'completed', data: { progress: 10 }, user: nil)]
     end
