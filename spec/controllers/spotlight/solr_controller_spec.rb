@@ -42,14 +42,15 @@ RSpec.describe Spotlight::SolrController, type: :controller do
       end
 
       it 'sends each unique key once in a JSON request' do
-        expect(connection).to receive(:update) do |params|
-          expect(params[:data].scan('"id":').size).to eq 1
-          expect(JSON.parse(params[:data]).first).to include('id' => 'test-1', 'full_title_tesim' => 'hello')
-        end
+        allow(connection).to receive(:update)
 
         post :update, body: '[{"id":"test-1","full_title_tesim":"hello"}]', params: { exhibit_id: exhibit }, as: :json
 
         expect(response).to be_successful
+        expect(connection).to have_received(:update) do |params|
+          expect(params[:data].scan('"id":').size).to eq 1
+          expect(JSON.parse(params[:data]).first).to include('id' => 'test-1', 'full_title_tesim' => 'hello')
+        end
       end
 
       context 'when the index is not writable' do
@@ -135,14 +136,15 @@ RSpec.describe Spotlight::SolrController, type: :controller do
 
         it 'sends each unique key once in an uploaded JSON file' do
           json = Rack::Test::UploadedFile.new(StringIO.new('[{"id":"test-1","full_title_tesim":"hello"}]'), 'application/json', original_filename: 'items.json')
-          expect(connection).to receive(:update) do |params|
-            expect(params[:data].scan('"id":').size).to eq 1
-            expect(JSON.parse(params[:data]).first).to include('id' => 'test-1', 'full_title_tesim' => 'hello')
-          end
+          allow(connection).to receive(:update)
 
           post :update, params: { resources_json_upload: { json: }, exhibit_id: exhibit }
 
           expect(response).to redirect_to exhibit_resources_path(exhibit)
+          expect(connection).to have_received(:update) do |params|
+            expect(params[:data].scan('"id":').size).to eq 1
+            expect(JSON.parse(params[:data]).first).to include('id' => 'test-1', 'full_title_tesim' => 'hello')
+          end
         end
 
         it 'parses the uploaded file' do
