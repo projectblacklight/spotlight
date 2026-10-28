@@ -50,7 +50,7 @@ module Spotlight
 
         create_or_update_solr_document_sidecar(doc, r)
 
-        doc.to_solr.merge(@exhibit.solr_data).merge(other_field_data)
+        doc.to_solr.stringify_keys.merge(@exhibit.solr_data.stringify_keys).merge(other_field_data)
       end
     end
 
