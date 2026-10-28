@@ -9,7 +9,7 @@
     <%= r.url_field :url, type: "file", help: t('.url-field.help', extensions: Spotlight::Engine.config.allowed_upload_extensions.join(' ')), label: "File" %>
   <% end if document.uploaded_resource? %>
 
-  <%= render partial: 'edit_sidecar', locals: { document: document, f: f } %>
+  <%= render Spotlight::EditSidecarComponent.new(form: f, document: document, exhibit: current_exhibit) %>
 
   <% if can? :tag, current_exhibit %>
   <div class="edit-tags">
