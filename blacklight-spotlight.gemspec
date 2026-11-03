@@ -29,7 +29,7 @@ these collections.)
   s.add_dependency 'carrierwave', '> 2.2.1', '< 4'
   s.add_dependency 'csv'
   s.add_dependency 'devise', '>= 4.9', '< 6'
-  s.add_dependency 'devise_invitable'
+  s.add_dependency 'devise_invitable', '~> 2.0'
   s.add_dependency 'friendly_id', '~> 5.5'
   s.add_dependency 'google-analytics-data'
   s.add_dependency 'i18n'
