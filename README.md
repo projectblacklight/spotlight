@@ -269,11 +269,11 @@ rake engine_cart:generate
 ```
 From `./internal_test_app`, create the initial admin user:
 
-*With [default credientials](https://github.com/projectblacklight/spotlight/blob/9acd4bf5d4f2806b6e76aa03c31176ea5f6943de/lib/tasks/spotlight_tasks.rake#L20-L21)*
+*With [default credentials](https://github.com/projectblacklight/spotlight/blob/9acd4bf5d4f2806b6e76aa03c31176ea5f6943de/lib/tasks/spotlight_tasks.rake#L20-L21)*
 ```
 rake spotlight:seed_admin_user
 ```
-*With user-provided credientials*
+*With user-provided credentials*
 ```
 bin/rails spotlight:initialize
 ```
