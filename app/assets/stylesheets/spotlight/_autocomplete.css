@@ -1,15 +1,14 @@
 auto-complete {
   width: 100%;
-  z-index: $zindex-dropdown !important; /* get typeahead to float on top of e.g. leaflet */
+  z-index: var(--spotlight-zindex-autocomplete) !important; /* get typeahead to float on top of e.g. leaflet */
   ul {
     list-style-type: none;
-    z-index: $zindex-dropdown !important;
+    z-index: var(--spotlight-zindex-autocomplete) !important;
     margin-top: 2px;
     max-height: 360px;
     overflow-y: auto;
     padding: 8px 0;
     background-color: #fff;
-    border: 1px solid #ccc;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     box-shadow: 0 5px 10px rgba(0,0,0,.2);
