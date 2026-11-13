@@ -11,6 +11,32 @@ RSpec.describe Spotlight::FeaturedImageUploader do
     end
   end
 
+  describe '#content_type_allowlist' do
+    it 'allows images' do
+      expect(featured_image_uploader.content_type_allowlist).to all(be_a(Regexp))
+      expect(featured_image_uploader.content_type_allowlist).to include(match('image/jpeg'))
+    end
+  end
+
+  describe 'uploading a file with an image extension that is not an image' do
+    let(:not_an_image) do
+      Tempfile.new(['corrupt', '.jpg']).tap do |file|
+        file.binmode
+        file.write("\x00" * 1024)
+        file.rewind
+      end
+    end
+
+    after { not_an_image.close! }
+
+    it 'is invalid' do
+      featured_image = FactoryBot.build(:featured_image, image: Rack::Test::UploadedFile.new(not_an_image.path, 'image/jpeg'))
+
+      expect(featured_image).not_to be_valid
+      expect(featured_image.errors[:image]).to be_present
+    end
+  end
+
   describe '#store_dir' do
     let(:store_dir) { featured_image_uploader.store_dir }
 
