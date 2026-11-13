@@ -73,7 +73,7 @@ module Spotlight
         return data.inspect.truncate(truncate) unless data.is_a?(Hash)
         return "id #{context.unique_key(data) || data&.first(5)&.inspect}" unless verbose
 
-        JSON.fast_generate(data).truncate(truncate)
+        JSON.generate(data).truncate(truncate)
       end
 
       ##
