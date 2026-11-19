@@ -30,4 +30,16 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_link_to_search_block.html.erb', typ
       expect(rendered).to have_css '.item-count', text: '5 items'
     end
   end
+
+  context 'with more than five browse categories' do
+    before do
+      allow(block).to receive(:searches).and_return([search] * 6)
+    end
+
+    it 'uses the five-up layout so the tiles are sized and wrap' do
+      render partial:, locals: { link_to_search_block: block }
+      expect(rendered).to have_css '.browse-categories.categories-5'
+      expect(rendered).to have_css '.box', count: 6
+    end
+  end
 end
