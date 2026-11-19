@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/projectblacklight/spotlight#readme",
   "devDependencies": {
-    "@eslint/js": "^9.39.5",
+    "@eslint/js": "^10.0.1",
     "@rollup/plugin-commonjs": "^29.0.3",
     "eslint": "^10.11.0",
     "globals": "^17.7.0",
