@@ -53,12 +53,6 @@ module Spotlight
       end
     end
 
-    def nestable_data_attributes(type)
-      nestable_data_attributes_hash(type).map do |attr, val|
-        "#{attr}='#{val}'"
-      end.join(' ')
-    end
-
     def nestable_data_attributes_hash(type)
       case type
       when 'feature_pages'
