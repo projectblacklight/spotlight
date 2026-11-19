@@ -1,8 +1,5 @@
 ruby:
   config_file: .rubocop.yml
 
-scss:
-  config_file: .scss-lint.yml
-
 javascript:
   config_file: .jshintrc

@@ -10,7 +10,7 @@
 
   --spotlight-badge-color: var(--bs-white);
 
-  /* This should get removed from _featured_browse_categories_block.scss
+  /* This should get removed from _featured_browse_categories_block.css
   and replaced with a grid */
   --spotlight-container-sm: 516px; /* Bootstrap container max-width minus gutter */
   --spotlight-container-md: 696px;

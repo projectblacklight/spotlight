@@ -2373,7 +2373,7 @@
       fallbackOnBody: true,
       swapThreshold: 0.65,
       // 0 turns off SortableJS's "drop near an empty list" check. The .dd-nesting drop
-      // zones in _nestable.scss decide nesting, so a vertical drag past an item's edge
+      // zones in _nestable.css decide nesting, so a vertical drag past an item's edge
       // does not nest it by accident.
       emptyInsertThreshold: 0,
       onStart: onStartHandler,
