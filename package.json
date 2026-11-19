@@ -28,8 +28,8 @@
   "homepage": "https://github.com/projectblacklight/spotlight#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@rollup/plugin-commonjs": "^26.0.1",
-    "eslint": "^10.5.0",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "eslint": "^10.11.0",
     "globals": "^17.7.0",
     "prettier": "^3.8.4",
     "rollup": "^4.0.0",
