@@ -1,5 +1,5 @@
 <% if featured_pages_block.pages? %>
-  <div class="spotlight-flexbox browse-categories categories-<%= featured_pages_block.pages.length %>" data-sidebar="<%= @page.display_sidebar? %>">
+  <div class="spotlight-flexbox browse-categories categories-<%= [featured_pages_block.pages.length, 5].min %>" data-sidebar="<%= @page.display_sidebar? %>">
     <% featured_pages_block.pages.each_with_index do |page, index| %>
       <div class="box category-<%= (index + 1) %>">
         <%= link_to [spotlight, current_exhibit, page] do %>
