@@ -21,11 +21,13 @@
   <div class="text-center">
     <p><%= link_to(t(:'.view_search'), path_to_saved_search(search)) %></p>
     <% if params[:q].present? %>
-      <% if @response.size > 0 %>
-        <p><%= t(:'.success.result_number_html', search_size: @response.size, parent_search_count: parent_search_count) %></p>
-      <% else %>
-        <p><%= t(:'.zero_results.result_number') %></p>
-      <% end %>
+      <p>
+        <% if @response.size > 0 %>
+          <%= t(:'.success.result_number_html', search_size: @response.size, parent_search_count: parent_search_count) %>
+        <% else %>
+          <%= t(:'.zero_results.result_number') %>
+        <% end %>
+      </p>
     <% end %>
   </div>
 </div>

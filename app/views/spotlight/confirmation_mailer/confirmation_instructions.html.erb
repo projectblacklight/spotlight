@@ -1,5 +1,5 @@
 <p><%= t(:'.welcome', email: @email) %></p>
-<br /><br />
+<br><br>
 <%= simple_format t(:'.instructions', exhibit_title: @exhibit&.title) %>
-<br /><br />
+<br><br>
 <p><%= link_to t(:'.confirm'), spotlight.contact_email_confirmation_url(:confirmation_token => @token) %></p>

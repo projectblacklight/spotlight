@@ -1,0 +1,29 @@
+# Herb (https://herb-tools.dev) configuration for ERB parsing and linting.
+version: 0.11.2
+
+framework: actionview
+
+files:
+  exclude:
+    - '.internal_test_app/**/*'
+    - 'lib/generators/spotlight/templates/solr/**/*'
+
+linter:
+  enabled: true
+
+  rules:
+    # Spotlight is a Rails engine whose partials are designed to be overridden
+    # by host applications, and many of them rely on controller-assigned
+    # instance variables. Converting them all to locals would be a breaking
+    # change for downstream overrides.
+    erb-no-instance-variables-in-partials:
+      enabled: false
+
+    # Templates intentionally call helpers for their side effects (e.g.
+    # set_html_page_title, add_*_meta_content, with_solr_helper); outputting
+    # their return values would render unwanted content.
+    erb-no-unused-expressions:
+      enabled: false
+
+formatter:
+  enabled: false

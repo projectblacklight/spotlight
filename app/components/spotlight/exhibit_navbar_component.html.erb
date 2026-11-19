@@ -6,7 +6,7 @@
 
     <ul class="navbar-nav <%= helpers.resource_masthead? ? 'justify-content-md-end' : 'me-auto' %>">
       <li class="nav-item <%= "active" if helpers.current_page?([helpers.spotlight, helpers.current_exhibit]) %>"><%= link_to t(:'spotlight.curation.nav.home'), [helpers.spotlight, helpers.current_exhibit], class: 'nav-link' %></li>
-      <% helpers.current_exhibit.main_navigations.displayable.each do |navigation| %>
+      <% helpers.current_exhibit.main_navigations.displayable.each do |navigation| %> <%# herb:disable actionview-prefer-collection-render %>
         <%= render partial: "shared/#{navigation.nav_type}_navbar", locals: { navigation: navigation } %>
       <% end %>
     </ul>

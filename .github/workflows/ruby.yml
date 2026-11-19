@@ -60,6 +60,28 @@ jobs:
           file: ./Dockerfile
           push: false
 
+  herb:
+    runs-on: ubuntu-latest
+    name: herb (ERB analyze & lint)
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0"
+          bundler-cache: true
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+      - name: Install Node dependencies
+        run: npm ci
+      - name: Analyze ERB templates
+        run: bundle exec herb analyze .
+      - name: Lint ERB templates
+        run: npm run lint:erb
+
   javascript:
     runs-on: ubuntu-latest
     name: javascript (prettier, eslint & build check)

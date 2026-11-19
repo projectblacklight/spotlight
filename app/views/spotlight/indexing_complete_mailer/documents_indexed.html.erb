@@ -6,7 +6,7 @@
   <p><%= t :".errors",  default: :'spotlight.catalog.reindex_progress_panel.error' %></p>
   <ul>
     <% @errors.each do |index, message| %>
-      <li><%= t :'.error', index: index, message: message.to_sentence %>
+      <li><%= t :'.error', index: index, message: message.to_sentence %></li>
     <% end %>
   </ul>
-<% end  %>
+<% end %>

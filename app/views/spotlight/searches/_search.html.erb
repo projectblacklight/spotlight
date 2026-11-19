@@ -1,6 +1,7 @@
 <% search = f.object %>
 <%= render layout: 'spotlight/shared/dd3_item', locals: { id: search.id.to_s, field: f, index: f.index, dd3_content_classes: "search" , enabled_method: :published, label_method: :title, label: search.title } do |_, section| %>
-  <% case section when nil %>
+  <% case section %>
+  <% when nil %>
   <div class="d-flex flex-grow-1">
     <div>
       <%= f.check_box :published, inline: true, hide_label: true %>
@@ -23,7 +24,8 @@
         <%= f.hidden_field :weight, data: {property: "weight"} %>
       </div>
     </div>
-  <% when :additional_options  %>
+  </div>
+  <% when :additional_options %>
     <div class="flex-grow-1 mx-2 description">
       <div class="card-text">
         <% if search.long_description.present? %>
