@@ -1,0 +1,47 @@
+/* Entry point for app/assets/builds/spotlight.css; build it with `npm run build:css`. */
+@import "sir-trevor/build/sir-trevor.css";
+@import "./_variables.css";
+@import "./_sir-trevor_overrides.css";
+@import "./_attachments.css";
+@import "./_pages.css";
+@import "./_breadcrumbs.css";
+@import "./_browse.css";
+@import "./browse_group_categories_block.css";
+@import "./_header.css";
+@import "./_footer.css";
+@import "./_catalog.css";
+@import "./_croppable.css";
+@import "./_curation.css";
+@import "./_exhibit_admin.css";
+@import "./_exhibit_navbar.css";
+@import "./_edit_in_place.css";
+@import "./_featured_browse_categories_block.css";
+@import "./_item_text_block.css";
+@import "./_uploaded_items_block.css";
+@import "./_modals.css";
+@import "./_multi_image_selector.css";
+@import "./_multi_up_item_grid.css";
+@import "./_slideshow_block.css";
+@import "./_nestable.css";
+@import "./_blacklight_configuration.css";
+@import "./_bootstrap_overrides.css";
+@import "./_blacklight_overrides.css";
+@import "./_report_a_problem.css";
+@import "./_exhibits_index.css";
+@import "./_collapse_toggle.css";
+@import "./_tag_selector.css";
+@import "./_translations.css";
+@import "./_utilities.css";
+@import "./_view_larger.css";
+@import "./_accessibility.css";
+@import "./_admin_users.css";
+@import "./_autocomplete.css";
+
+/* Styles below keep footer at bottom of viewport */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: calc(var(--footer-height) + var(--footer-top-margin));
+}
