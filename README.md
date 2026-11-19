@@ -267,7 +267,7 @@ Build the test app:
 ```
 rake engine_cart:generate
 ```
-From `./internal_test_app`, create the initial admin user:
+From `.internal_test_app`, create the initial admin user:
 
 *With [default credientials](https://github.com/projectblacklight/spotlight/blob/9acd4bf5d4f2806b6e76aa03c31176ea5f6943de/lib/tasks/spotlight_tasks.rake#L20-L21)*
 ```
@@ -277,7 +277,7 @@ rake spotlight:seed_admin_user
 ```
 bin/rails spotlight:initialize
 ```
-From `./internal_test_app`, start Rails to run the test app:
+From `.internal_test_app`, start Rails to run the test app:
 ```
 bin/dev
 ```
