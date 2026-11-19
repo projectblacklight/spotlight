@@ -1,5 +1,10 @@
 /* CSS for use across sir-trevor widgets */
 
+/* Keep the default color on hover instead of sir-trevor's accent color */
+.st-block-controls__button:hover {
+  color: inherit;
+}
+
 .widget-header {
   padding: 5px;
   margin-bottom: 20px;
