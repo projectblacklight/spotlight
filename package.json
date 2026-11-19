@@ -6,7 +6,8 @@
   "type": "module",
   "module": "app/assets/javascripts/spotlight/spotlight.esm.js",
   "scripts": {
-    "prepare": "rollup --config rollup.config.js --sourcemap && ESM=true rollup --config rollup.config.js --sourcemap",
+    "prepare": "rollup --config rollup.config.js --sourcemap && ESM=true rollup --config rollup.config.js --sourcemap && npm run build:css",
+    "build:css": "esbuild app/assets/stylesheets/spotlight/build.css --bundle --outfile=app/assets/builds/spotlight.css",
     "format": "prettier --write \"app/javascript/**/*.js\"",
     "format:check": "prettier --check \"app/javascript/**/*.js\"",
     "lint": "eslint \"app/javascript/**/*.js\"",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@rollup/plugin-commonjs": "^26.0.1",
+    "esbuild": "0.28.2",
     "eslint": "^10.5.0",
     "globals": "^17.7.0",
     "prettier": "^3.8.4",

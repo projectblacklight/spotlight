@@ -79,4 +79,4 @@ jobs:
       - name: Check built package is current
         run: |
           npm run prepare
-          git diff --exit-code app/assets/javascripts
+          git diff --exit-code app/assets/javascripts app/assets/builds

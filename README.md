@@ -120,6 +120,11 @@ following steps:
 3. Run `npm run prepare` to build the bundle
 4. If you are releasing a new version of the gem, follow the release instructions below.
 
+The stylesheets are built the same way: `npm run prepare` (or `npm run build:css` on its own)
+bundles the plain CSS in `app/assets/stylesheets/spotlight`, starting from `build.css`, together
+with sir-trevor's stylesheet into `app/assets/builds/spotlight.css`. Rebuild it after changing
+any of the stylesheets, and don't edit the built file by hand.
+
 ## Releasing a new version and publishing the JavaScript
 
 You only need to update `package.json` and prepare/publish the JavaScript package for npm if there are changes to the JavaScript.
