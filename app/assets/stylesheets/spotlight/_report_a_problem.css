@@ -1,0 +1,9 @@
+#report-problem-form {
+  border-bottom: 1px solid var(--bs-gray-600);
+}
+
+@media (min-width: 576px) {
+  #new_contact_form .col-form-label {
+    text-align: end;
+  }
+}
