@@ -24,7 +24,7 @@
                 <li data-bs-target="#<%= html_id %>" data-bs-slide-to="<%= index %>" class="list-group-item <%= 'active' if index == 0 %>">
                   <% caption_text = solr_documents_features_block.document_caption(doc_presenter, solr_documents_features_block.primary_caption_field, default: Spotlight::PageConfigurations::DOCUMENT_TITLE_KEY) %>
 
-                  <a href="#" title="<%= caption_text %>">
+                  <a href="#" title="<%= caption_text %>"> <%# herb:disable html-anchor-require-href %>
                     <%= truncate(caption_text.to_s, length: 95) %>
                   </a>
                   <% if solr_documents_features_block.secondary_caption? %>

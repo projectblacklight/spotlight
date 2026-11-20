@@ -50,6 +50,7 @@ these collections.)
   s.add_development_dependency 'capybara', '~> 3.31'
   s.add_development_dependency 'engine_cart', '~> 2.0'
   s.add_development_dependency 'factory_bot', '~> 6.0'
+  s.add_development_dependency 'herb', '~> 0.11.2'
   s.add_development_dependency 'i18n-tasks'
   s.add_development_dependency 'rails-controller-testing'
   s.add_development_dependency 'rspec-activemodel-mocks'

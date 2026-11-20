@@ -1,12 +1,13 @@
 <%= render layout: 'spotlight/shared/dd3_item', locals: { id: f.object.id.to_s, field: f, index: f.index, enabled_method: :show_in_sidebar, label_method: :name } do |_, section| %>
-  <% case section when nil %>
+  <% case section %>
+  <% when nil %>
     <div class="d-flex flex-grow-1">
       <%= f.check_box :show_in_sidebar, hide_label: true, inline: true %>
       <%= f.hidden_field :id %>
       <%= f.hidden_field :weight, data: {property: "weight"} %>
       <%= render partial: "contact_properties", locals: {contact: f.object} %>
     </div>
-  <% when :additional_options  %>
+  <% when :additional_options %>
     <div class="contact-links page-links">
       <%= exhibit_edit_link f.object %> &middot;
       <%= exhibit_delete_link f.object %>

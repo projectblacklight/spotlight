@@ -210,7 +210,7 @@ en:
           can_have_alt_text: Total items on page
           has_alt_text: Items with alt text
           page_title: Page title
-        total_items: Of the items displayed via widgets, <b>%{has_alt_text} of %{total_alt_items}</b> have entered alt text (or a checked decorative box).
+        total_items_html: Of the items displayed via widgets, <b>%{has_alt_text} of %{total_alt_items}</b> have entered alt text (or a checked decorative box).
         unpublished: Unpublished
       header: Accessibility
     admin_users:

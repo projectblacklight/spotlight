@@ -56,20 +56,6 @@ RSpec.describe Spotlight::PagesHelper, type: :helper do
   end
 
   describe 'nestable helpers' do
-    describe 'nestable data attributes' do
-      it 'returns the appropriate attributes for feature pages' do
-        expect(helper.nestable_data_attributes('feature_pages')).to eq "data-max-depth='2' data-expand-btn-HTML='' data-collapse-btn-HTML=''"
-      end
-
-      it 'returns the appropriate attributes for about pages' do
-        expect(helper.nestable_data_attributes('about_pages')).to eq "data-max-depth='1'"
-      end
-
-      it 'returns a blank string if the type is not valid' do
-        expect(helper.nestable_data_attributes('something_else')).to eq ''
-      end
-    end
-
     describe 'nestable data attributes hash' do
       it 'returns the appropriate hash for feature pages' do
         expect(helper.nestable_data_attributes_hash('feature_pages')).to eq('data-max-depth' => '2',

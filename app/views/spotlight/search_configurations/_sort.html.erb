@@ -13,7 +13,7 @@
                   <%= sort.check_box_without_bootstrap :enable, checked: true, disabled: true, data: { readonly: true } %>
                   <%= sort.hidden_field :enabled, value: '1', readonly: true %>
                   <%= sort.hidden_field :label, readonly: true %>
-                  <%= sort.hidden_field :weight, value: "-1", readonly: true  %>
+                  <%= sort.hidden_field :weight, value: "-1", readonly: true %>
                   <%= default_field.label %>
                 <% end %>
               </h3>
@@ -31,9 +31,10 @@
 
           <%= vt.fields_for k, config do |field| %>
             <%= render layout: 'spotlight/shared/dd3_item', locals: { id: k, index: index, field: field, card_data: { behavior: 'restore-default' }, label: config.label } do |_, section| %>
-              <% case section when :card_body %>
+              <% case section %>
+              <% when :card_body %>
                 <p class="card-text"><%= translate_sort_fields(config) %></p>
-              <% end  %>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>

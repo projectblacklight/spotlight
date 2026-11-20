@@ -2,14 +2,14 @@
 <% if ga_id.present? %>
 <!-- Google tag (gtag.js) -->
 <% if Spotlight::Engine.config.ga_debug_mode %>
-<script>window.analyticsDebug = true;</script>
+<script nonce="<%= content_security_policy_nonce %>">window.analyticsDebug = true;</script>
 <% end %>
-<script async src="https://www.googletagmanager.com/gtag/js?id=<%= ga_id %>"></script>
-<script>
+<script async nonce="<%= content_security_policy_nonce %>" src="https://www.googletagmanager.com/gtag/js?id=<%= ga_id %>"></script>
+<script nonce="<%= content_security_policy_nonce %>">
   window.dataLayer = window.dataLayer || [];
   function gtag() { dataLayer.push(arguments); }
   var opts = window.analyticsDebug ? {'debug_mode': true} : {};
   gtag("js", new Date());
-  gtag("config", "<%= ga_id %>", opts);
+  gtag("config", <%= raw ga_id.to_json %>, opts);
 </script>
 <% end %>

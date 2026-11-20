@@ -6,7 +6,7 @@
       <%= render partial: 'header', locals: {f: f} %>
       <h2 class="mt-4"><%= t :'.pages_header' %></h2>
       <div class="instructions"><%= t :'.instructions_html' %></div>
-      <div class="panel-group dd <%= page_collection_name %>_admin" id="nested-pages" data-behavior="nestable" <%= nestable_data_attributes(page_collection_name).html_safe %> >
+      <%= tag.div class: "panel-group dd #{page_collection_name}_admin", id: 'nested-pages', data: { behavior: 'nestable' }, **nestable_data_attributes_hash(page_collection_name) do %>
         <ol class="dd-list">
           <%= f.fields_for page_collection_name do |p| %>
             <%- if p.object.about_page? || p.object.top_level_page? -%>
@@ -14,7 +14,7 @@
             <%- end -%>
           <% end %>
         </ol>
-      </div>
+      <% end %>
       <div class="form-actions float-end">
         <div class="primary-actions">
           <%= button_tag action_label(page_collection_name, :update_all), class: "btn btn-primary", disabled: disable_save_pages_button? %>

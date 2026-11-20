@@ -15,7 +15,7 @@
             <button type="button" aria-label="toggle dropdown" class="btn btn-link text-secondary me-1 px-2" data-action="click->tag-selector#tagDropdown">
               <span><%= search_icon_svg %></span>
             </button>
-            <input class="flex-grow-1" data-action="input->tag-selector#search input->tag-selector#updateSearchResultsPlaceholder input->tag-selector#updateTagToAdd focus->tag-selector#tagDropdown keydown->tag-selector#handleKeydown" 
+            <input class="flex-grow-1" data-action="input->tag-selector#search input->tag-selector#updateSearchResultsPlaceholder input->tag-selector#updateTagToAdd focus->tag-selector#tagDropdown keydown->tag-selector#handleKeydown"
               data-tag-selector-target="tagSearch" placeholder="<%= t('.search') %>" aria-label="<%= t('.search') %>">
             <button type="button" aria-label="toggle dropdown" class="dropdown-toggle btn btn-link text-secondary" data-bs-toggle="dropdown" data-action="click->tag-selector#tagDropdown"></button>
           </div>
@@ -23,7 +23,7 @@
         <div data-tag-selector-target="dropdownContent" class="dropdown-content d-none tags-group border rounded">
           <% all_tags.each do |tag| %>
             <label class="d-block">
-              <input type="checkbox" <%= 'checked' if selected?(tag) %> data-action="click->tag-selector#tagUpdate" data-tag-selector-target="searchResultTags" data-tag="<%= tag %>">
+              <input type="checkbox" <% if selected?(tag) %>checked<% end %> data-action="click->tag-selector#tagUpdate" data-tag-selector-target="searchResultTags" data-tag="<%= tag %>">
               <%= tag %>
             </label>
           <% end %>
